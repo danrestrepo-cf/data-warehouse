@@ -12,87 +12,107 @@
       <parameter>
         <name>input_csv_path_and_filename</name>
         <default_value/>
-        <description/>
+        <description>The full file path where the input CSV file is located.</description>
       </parameter>
       <parameter>
         <name>log_channel_table_name</name>
-        <default_value/>
-        <description/>
+        <default_value>encompass_log_enc0001_channel</default_value>
+        <description>Name of the channel logging table.</description>
       </parameter>
       <parameter>
         <name>log_interval</name>
-        <default_value/>
-        <description/>
+        <default_value>5</default_value>
+        <description>How often to flush logs to the disk/database (in seconds).</description>
       </parameter>
       <parameter>
         <name>log_metrics_table_name</name>
-        <default_value/>
-        <description/>
+        <default_value>encompass_log_enc0001_metrics</default_value>
+        <description>Name of the metrics logging table.</description>
       </parameter>
       <parameter>
         <name>log_performance_table_name</name>
-        <default_value/>
-        <description/>
+        <default_value>encompass_log_enc0001_performance</default_value>
+        <description>Name of the performance logging table.</description>
       </parameter>
       <parameter>
         <name>log_record_timeout</name>
-        <default_value/>
-        <description/>
+        <default_value>90</default_value>
+        <description>How often to remove logs from the database (in days).</description>
       </parameter>
       <parameter>
         <name>log_step_table_name</name>
-        <default_value/>
-        <description/>
+        <default_value>encompass_log_enc0001_step</default_value>
+        <description>Name of the step logging table.</description>
       </parameter>
       <parameter>
         <name>log_table_schema</name>
-        <default_value/>
-        <description/>
+        <default_value>encompass</default_value>
+        <description>The name of the database schema the log tables are in.</description>
       </parameter>
       <parameter>
         <name>log_transformation_table_name</name>
+        <default_value>encompass_log_enc0001_transformation</default_value>
+        <description>Name of the transformation logging table.</description>
+      </parameter>
+      <parameter>
+        <name>output_success_filename_parse_fail_insert_fail</name>
         <default_value/>
-        <description/>
+        <description>The full path to the log file that contains the records if the data in the row failed to parse and could not be inserted into the database.</description>
+      </parameter>
+      <parameter>
+        <name>output_success_filename_parse_fail_insert_ok</name>
+        <default_value/>
+        <description>The full path to the log file that contains the records if the data in the row failed to parse but could be inserted into the database.</description>
+      </parameter>
+      <parameter>
+        <name>output_success_filename_parse_ok_insert_fail</name>
+        <default_value/>
+        <description>The full path to the log file that contains the records if the data in the row is parsed successfully but could not be inserted into the database.</description>
+      </parameter>
+      <parameter>
+        <name>output_success_filename_parse_ok_insert_ok</name>
+        <default_value/>
+        <description>The full path to the log file that contains the records if the data in the row is parsed successfully and could be inserted into the database.</description>
       </parameter>
       <parameter>
         <name>postgres_transform_database_name</name>
         <default_value/>
-        <description/>
+        <description>The name of the database the transform will use.</description>
       </parameter>
       <parameter>
         <name>postgres_transform_hostname</name>
         <default_value/>
-        <description/>
+        <description>The hostname to the database system.</description>
       </parameter>
       <parameter>
         <name>postgres_transform_password</name>
         <default_value/>
-        <description/>
+        <description>The password to connect to the database system.</description>
       </parameter>
       <parameter>
         <name>postgres_transform_port</name>
         <default_value/>
-        <description/>
+        <description>The port to connect to the database system.</description>
       </parameter>
       <parameter>
         <name>postgres_transform_username</name>
         <default_value/>
-        <description/>
+        <description>The username to connect to the database system.</description>
       </parameter>
       <parameter>
         <name>sql_schema_name</name>
         <default_value/>
-        <description/>
+        <description>The name of the database schema the Encompass data will flow into.</description>
       </parameter>
       <parameter>
         <name>sql_target_table_name_error</name>
         <default_value/>
-        <description/>
+        <description>The name of the table where errors are saved if they contain data that can't be validated.</description>
       </parameter>
       <parameter>
         <name>sql_target_table_name_success</name>
         <default_value/>
-        <description/>
+        <description>The name of the table where rows are successfully submitted into the data lake 3.</description>
       </parameter>
     </parameters>
     <log>
