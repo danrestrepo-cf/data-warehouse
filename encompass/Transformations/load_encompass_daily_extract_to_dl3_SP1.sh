@@ -26,6 +26,6 @@
 
 
 export pan_batch_script_file_location="/pdi/data-integration/pan.sh"
-export transformation_file_location="./load_encompass_daily_extract_to_dl3_NP7.ktr"
+export transformation_file_location="./load_encompass_daily_extract_to_dl3_SP1.ktr"
 export pan_log_level="Debug"
 ${pan_batch_script_file_location} -file:"${transformation_file_location}" -level:${pan_log_level} -param:"log_transformation_table_name=${log_transformation_table_name}" -param:"log_channel_table_name=${log_channel_table_name}" -param:"input_csv_path_and_filename=${input_csv_path_and_filename}" -param:"log_interval=${log_interval}" -param:"log_metrics_table_name=${log_metrics_table_name}" -param:"log_performance_table_name=${log_performance_table_name}" -param:"log_record_timeout=${log_record_timeout}" -param:"log_step_table_name=${log_step_table_name}" -param:"log_table_schema=${log_table_schema}" -param:"postgres_transform_database_name=${postgres_transform_database_name}" -param:"postgres_transform_hostname=${postgres_transform_hostname}" -param:"postgres_transform_password=${postgres_transform_password}" -param:"postgres_transform_port=${postgres_transform_port}" -param:"postgres_transform_username=${postgres_transform_username}" -param:"sql_schema_name=${sql_schema_name}" -param:"sql_target_table_name_error=${sql_target_table_name_error}" -param:"sql_target_table_name_success=${sql_target_table_name_success}"
