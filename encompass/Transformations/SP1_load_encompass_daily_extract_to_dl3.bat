@@ -3,6 +3,8 @@ rem Environment Variables/Parameters
 rem 
 rem log_transformation_table_name - Name of the transformation logging table.
 rem log_channel_table_name - Name of the channel logging table.
+rem log_file_extension_for_aws - The file extension for the log file that contains the records if the data in the row is parsed successfully and could be inserted into the database.
+rem log_path_for_aws - The path for the log file that contains the records if the data in the row is parsed successfully or not.
 rem input_csv_path_and_filename - The full file path where the input CSV file is located.
 rem log_interval - How often to flush logs to the disk/database (in seconds).
 rem log_metrics_table_name - Name of the metrics logging table.
@@ -10,10 +12,10 @@ rem log_performance_table_name - Name of the performance logging table.
 rem log_record_timeout - How often to remove logs from the database (in days).
 rem log_step_table_name - Name of the step logging table.
 rem log_table_schema - The name of the database schema the log tables are in.
-rem output_success_filename_parse_ok_insert_fail - The full path to the log file that contains the records if the data in the row is parsed successfully but could not be inserted into the database.
-rem output_success_filename_parse_ok_insert_ok - The full path to the log file that contains the records if the data in the row is parsed successfully and could be inserted into the database.
-rem output_success_filename_parse_fail_insert_ok - The full path to the log file that contains the records if the data in the row failed to parse but could be inserted into the database.
-rem output_success_filename_parse_fail_insert_fail - The full path to the log file that contains the records if the data in the row failed to parse and could not be inserted into the database.
+rem log_filename_parse_ok_insert_fail - The filename for the log file that contains the records if the data in the row is parsed successfully but could not be inserted into the database.
+rem log_filename_parse_ok_insert_ok - The filename for the log file that contains the records if the data in the row is parsed successfully and could be inserted into the database.
+rem log_filename_parse_fail_insert_ok - The filename for the log file that contains the records if the data in the row failed to parse but could be inserted into the database.
+rem log_filename_parse_fail_insert_fail - The filename for the log file that contains the records if the data in the row failed to parse and could not be inserted into the database.
 rem postgres_transform_database_name - The name of the database the transform will use.
 rem postgres_transform_hostname - The hostname to the database system.
 rem postgres_transform_password - The password to connect to the database system.
