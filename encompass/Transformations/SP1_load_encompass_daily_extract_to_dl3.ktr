@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>load_encompass_daily_extract_to_dl3_SP1</name>
+    <name>SP1_load_encompass_daily_extract_to_dl3</name>
     <description>Load Encompass data from CSV to DL3</description>
     <extended_description/>
-    <trans_version>1.0.1</trans_version>
+    <trans_version>1.2.0</trans_version>
     <trans_type>Normal</trans_type>
     <trans_status>0</trans_status>
     <directory>/</directory>
@@ -56,27 +56,27 @@
       </parameter>
       <parameter>
         <name>output_success_filename_parse_fail_insert_fail</name>
-        <default_value>c:\pdi\Data\fail_fail</default_value>
+        <default_value/>
         <description>The full path to the log file that contains the records if the data in the row failed to parse and could not be inserted into the database.</description>
       </parameter>
       <parameter>
         <name>output_success_filename_parse_fail_insert_ok</name>
-        <default_value>c:\pdi\Data\fail_ok</default_value>
+        <default_value/>
         <description>The full path to the log file that contains the records if the data in the row failed to parse but could be inserted into the database.</description>
       </parameter>
       <parameter>
         <name>output_success_filename_parse_ok_insert_fail</name>
-        <default_value>c:\pdi\Data\ok_fail</default_value>
+        <default_value/>
         <description>The full path to the log file that contains the records if the data in the row is parsed successfully but could not be inserted into the database.</description>
       </parameter>
       <parameter>
         <name>output_success_filename_parse_ok_insert_ok</name>
-        <default_value>c:\pdi\Data\ok_ok</default_value>
+        <default_value/>
         <description>The full path to the log file that contains the records if the data in the row is parsed successfully and could be inserted into the database.</description>
       </parameter>
       <parameter>
         <name>postgres_transform_database_name</name>
-        <default_value>ingress</default_value>
+        <default_value/>
         <description>The name of the database the transform will use.</description>
       </parameter>
       <parameter>
@@ -96,7 +96,7 @@
       </parameter>
       <parameter>
         <name>postgres_transform_username</name>
-        <default_value>pentaho</default_value>
+        <default_value/>
         <description>The username to connect to the database system.</description>
       </parameter>
       <parameter>
@@ -19822,7 +19822,7 @@
     <fileNameField/>
     <create_parent_folder>Y</create_parent_folder>
     <file>
-      <name>${output_success_filename_parse_fail_insert_ok}</name>
+      <name>${output_text_file_path}${output_success_file_name_parse_fail_insert_ok}</name>
       <servlet_output>N</servlet_output>
       <do_not_open_new_file_init>N</do_not_open_new_file_init>
       <extention>txt</extention>
