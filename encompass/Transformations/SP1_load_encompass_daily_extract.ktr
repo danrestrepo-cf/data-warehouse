@@ -30,19 +30,9 @@
         <description>The port to connect to the database system.</description>
       </parameter>
       <parameter>
-        <name>database_schema_name</name>
+        <name>database_schema</name>
         <default_value>encompass</default_value>
         <description>The name of the database schema the Encompass data will flow into.</description>
-      </parameter>
-      <parameter>
-        <name>database_target_table_name_error</name>
-        <default_value>encompass_loan_raw_error</default_value>
-        <description>The name of the table where errors are saved if they contain data that can't be validated.</description>
-      </parameter>
-      <parameter>
-        <name>database_target_table_name_success</name>
-        <default_value>encompass_loan_raw</default_value>
-        <description>The name of the table where rows are successfully submitted into the data lake 3.</description>
       </parameter>
       <parameter>
         <name>database_username</name>
@@ -118,6 +108,16 @@
         <name>log_transformation_table_name</name>
         <default_value>encompass_log_SP1_transformation</default_value>
         <description>Name of the transformation logging table.</description>
+      </parameter>
+      <parameter>
+        <name>target_table_name_error</name>
+        <default_value>encompass_loan_raw_error</default_value>
+        <description>The name of the table where errors are saved if they contain data that can't be validated.</description>
+      </parameter>
+      <parameter>
+        <name>target_table_name_success</name>
+        <default_value>encompass_loan_raw</default_value>
+        <description>The name of the table where rows are successfully submitted into the data lake 3.</description>
       </parameter>
     </parameters>
     <log>
@@ -686,7 +686,7 @@
       <name>${input_csv_path_and_filename}</name>
       <filemask/>
       <exclude_filemask/>
-      <file_required>N</file_required>
+      <file_required>Y</file_required>
       <include_subfolders>N</include_subfolders>
       <type>CSV</type>
       <compression>None</compression>
@@ -5201,8 +5201,8 @@
       <schema_name/>
     </partitioning>
     <connection>PostgreSQL Local Transform Environment</connection>
-    <schema>${database_schema_name}</schema>
-    <table>${database_target_table_name_error}</table>
+    <schema>${database_schema}</schema>
+    <table>${target_table_name_error}</table>
     <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
@@ -6449,8 +6449,8 @@
       <schema_name/>
     </partitioning>
     <connection>PostgreSQL Local Transform Environment</connection>
-    <schema>${database_schema_name}</schema>
-    <table>${database_target_table_name_error}</table>
+    <schema>${database_schema}</schema>
+    <table>${target_table_name_error}</table>
     <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
@@ -7697,8 +7697,8 @@
       <schema_name/>
     </partitioning>
     <connection>PostgreSQL Local Transform Environment</connection>
-    <schema>${database_schema_name}</schema>
-    <table>${database_target_table_name_error}</table>
+    <schema>${database_schema}</schema>
+    <table>${target_table_name_error}</table>
     <commit>1000</commit>
     <truncate>Y</truncate>
     <ignore_errors>N</ignore_errors>
@@ -8945,8 +8945,8 @@
       <schema_name/>
     </partitioning>
     <connection>PostgreSQL Local Transform Environment</connection>
-    <schema>${database_schema_name}</schema>
-    <table>${database_target_table_name_success}</table>
+    <schema>${database_schema}</schema>
+    <table>${target_table_name_success}</table>
     <commit>1000</commit>
     <truncate>Y</truncate>
     <ignore_errors>N</ignore_errors>
