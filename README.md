@@ -29,4 +29,4 @@ The basic folder structure
 
 > **Q: How do I reserve a process name?**
 >
-> **A:** Open the [production job matrix](https://docs.google.com/spreadsheets/d/1njphL7PpykrfqUUY8kxImsQBhrrwPz9ICqW727QnAA0/) and add a row to the bottom of the sheet. 
+> **A:** Open the [production job matrix](https://docs.google.com/spreadsheets/d/1njphL7PpykrfqUUY8kxImsQBhrrwPz9ICqW727QnAA0/) and add a row to the bottom of the sheet. NOTE: This name reservation should occur at the beginning of the development process (if there isn't one already) so the name can be referenced throughout the lifecycle of the project.
