@@ -42,6 +42,96 @@
       <description>The username to connect to the database system.</description>
     </parameter>
     <parameter>
+      <name>error_email sender_name</name>
+      <default_value />
+      <description />
+    </parameter>
+    <parameter>
+      <name>error_email_attachments_zip_name</name>
+      <default_value />
+      <description />
+    </parameter>
+    <parameter>
+      <name>error_email_authentication_password</name>
+      <default_value />
+      <description />
+    </parameter>
+    <parameter>
+      <name>error_email_authentication_username</name>
+      <default_value />
+      <description />
+    </parameter>
+    <parameter>
+      <name>error_email_contact_person</name>
+      <default_value />
+      <description />
+    </parameter>
+    <parameter>
+      <name>error_email_contact_phone</name>
+      <default_value />
+      <description />
+    </parameter>
+    <parameter>
+      <name>error_email_destination_bcc_address</name>
+      <default_value />
+      <description />
+    </parameter>
+    <parameter>
+      <name>error_email_destination_cc_address</name>
+      <default_value />
+      <description />
+    </parameter>
+    <parameter>
+      <name>error_email_destination_to_address</name>
+      <default_value />
+      <description />
+    </parameter>
+    <parameter>
+      <name>error_email_encryption_type</name>
+      <default_value />
+      <description />
+    </parameter>
+    <parameter>
+      <name>error_email_message_comment</name>
+      <default_value />
+      <description />
+    </parameter>
+    <parameter>
+      <name>error_email_message_subject</name>
+      <default_value />
+      <description />
+    </parameter>
+    <parameter>
+      <name>error_email_reply_to_address</name>
+      <default_value />
+      <description />
+    </parameter>
+    <parameter>
+      <name>error_email_sender_address</name>
+      <default_value />
+      <description />
+    </parameter>
+    <parameter>
+      <name>error_email_smtp_hostname</name>
+      <default_value />
+      <description />
+    </parameter>
+    <parameter>
+      <name>error_email_smtp_server_hostname</name>
+      <default_value />
+      <description />
+    </parameter>
+    <parameter>
+      <name>error_email_smtp_server_port</name>
+      <default_value />
+      <description />
+    </parameter>
+    <parameter>
+      <name>error_email_smtp_use_authentication</name>
+      <default_value />
+      <description />
+    </parameter>
+    <parameter>
       <name>log_channel_table_name</name>
       <default_value>as</default_value>
       <description>Name of the channel logging table.</description>
@@ -389,7 +479,7 @@
   <shared_objects_file />
   <entries>
     <entry>
-      <name>Start</name>
+      <name>Begin</name>
       <description />
       <type>SPECIAL</type>
       <attributes />
@@ -406,12 +496,12 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>96</xloc>
-      <yloc>160</yloc>
+      <xloc>64</xloc>
+      <yloc>256</yloc>
       <attributes_kjc />
     </entry>
     <entry>
-      <name>Success</name>
+      <name>End</name>
       <description />
       <type>SUCCESS</type>
       <attributes />
@@ -419,7 +509,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>1056</xloc>
-      <yloc>576</yloc>
+      <yloc>656</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -456,7 +546,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>256</xloc>
-      <yloc>160</yloc>
+      <yloc>256</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -493,7 +583,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>656</xloc>
-      <yloc>160</yloc>
+      <yloc>256</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -536,7 +626,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>256</xloc>
-      <yloc>288</yloc>
+      <yloc>384</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -551,7 +641,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>256</xloc>
-      <yloc>416</yloc>
+      <yloc>512</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -564,7 +654,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>256</xloc>
-      <yloc>560</yloc>
+      <yloc>656</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -607,7 +697,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>656</xloc>
-      <yloc>288</yloc>
+      <yloc>384</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -622,7 +712,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>656</xloc>
-      <yloc>416</yloc>
+      <yloc>512</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -635,7 +725,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>656</xloc>
-      <yloc>560</yloc>
+      <yloc>656</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -650,7 +740,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>864</xloc>
-      <yloc>160</yloc>
+      <yloc>256</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -665,7 +755,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>448</xloc>
-      <yloc>160</yloc>
+      <yloc>256</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -687,13 +777,13 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>1056</xloc>
-      <yloc>160</yloc>
+      <yloc>256</yloc>
       <attributes_kjc />
     </entry>
   </entries>
   <hops>
     <hop>
-      <from>Start</from>
+      <from>Begin</from>
       <to>Execute SP1</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -784,7 +874,7 @@
     </hop>
     <hop>
       <from>No Operation</from>
-      <to>Success</to>
+      <to>End</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -804,10 +894,57 @@
   <notepads>
     <notepad>
       <note>SP6 - Execute Encompass Full ETL</note>
-      <xloc>96</xloc>
-      <yloc>64</yloc>
+      <xloc>48</xloc>
+      <yloc>32</yloc>
       <width>221</width>
       <heigth>26</heigth>
+      <fontname>.AppleSystemUIFont</fontname>
+      <fontsize>13</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>SP1 
+Load Encompass data exported
+from ExportIt and load the CSV
+to the raw table in DL3.</note>
+      <xloc>224</xloc>
+      <yloc>160</yloc>
+      <width>201</width>
+      <heigth>74</heigth>
+      <fontname>.AppleSystemUIFont</fontname>
+      <fontsize>13</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>SP2
+Transform Encompass data to 
+Octane domain values.</note>
+      <xloc>624</xloc>
+      <yloc>160</yloc>
+      <width>195</width>
+      <heigth>58</heigth>
       <fontname>.AppleSystemUIFont</fontname>
       <fontsize>13</fontsize>
       <fontbold>N</fontbold>
