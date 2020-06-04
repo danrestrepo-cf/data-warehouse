@@ -28,7 +28,7 @@
     </parameter>
     <parameter>
       <name>database_port</name>
-      <default_value>5433</default_value>
+      <default_value>5432</default_value>
       <description />
     </parameter>
     <parameter>
@@ -621,7 +621,7 @@
   </hops>
   <notepads>
     <notepad>
-      <note>SP1
+      <note>SP1 - Load Encompass Extract Data
 Looks for a file named Encompass.csv in the path provided and loads it
 to a table in a database. Change environments by changing input
 parameters.</note>
