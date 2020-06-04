@@ -481,19 +481,19 @@
       <attributes_kjc />
     </entry>
     <entry>
-      <name>End</name>
+      <name>SP6_FULL_End</name>
       <description />
       <type>SUCCESS</type>
       <attributes />
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1056</xloc>
-      <yloc>656</yloc>
+      <xloc>848</xloc>
+      <yloc>256</yloc>
       <attributes_kjc />
     </entry>
     <entry>
-      <name>Execute SP1</name>
+      <name>SP6_FULL_Execute SP1</name>
       <description />
       <type>JOB</type>
       <attributes />
@@ -521,131 +521,91 @@
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
         <parameter>
-          <name>database_hostname</name>
-          <stream_name>database_hostname</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>database_name</name>
-          <stream_name>database_name</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>database_password</name>
-          <stream_name>database_password</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>database_port</name>
-          <stream_name>database_port</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>database_schema</name>
-          <stream_name>database_schema</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>database_username</name>
-          <stream_name>database_username</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>input_csv_path</name>
-          <stream_name>input_csv_path</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>input_csv_filename</name>
-          <stream_name>Encompass.csv</stream_name>
-          <value />
-        </parameter>
-        <parameter>
           <name>log_channel_table_name</name>
-          <stream_name>encompass_log_SP1_channel</stream_name>
-          <value />
+          <stream_name />
+          <value>encompass_log_SP1_channel</value>
         </parameter>
         <parameter>
           <name>log_filename_parse_fail_insert_fail</name>
-          <stream_name>sp1_parse_fail_insert_fail</stream_name>
-          <value />
+          <stream_name />
+          <value>sp1_parse_fail_insert_fail</value>
         </parameter>
         <parameter>
           <name>log_filename_parse_fail_insert_ok</name>
-          <stream_name>sp1_parse_fail_insert_ok</stream_name>
-          <value />
+          <stream_name />
+          <value>sp1_parse_fail_insert_ok</value>
         </parameter>
         <parameter>
           <name>log_filename_parse_ok_insert_fail</name>
-          <stream_name>sp1_parse_ok_insert_fail</stream_name>
-          <value />
+          <stream_name />
+          <value>sp1_parse_ok_insert_fail</value>
         </parameter>
         <parameter>
           <name>log_filename_parse_ok_insert_ok</name>
-          <stream_name>sp1_parse_ok_insert_ok</stream_name>
-          <value />
+          <stream_name />
+          <value>sp1_parse_ok_insert_ok</value>
         </parameter>
         <parameter>
           <name>log_interval</name>
-          <stream_name>90</stream_name>
-          <value />
+          <stream_name />
+          <value>90</value>
         </parameter>
         <parameter>
           <name>log_metrics_table_name</name>
-          <stream_name>encompass_log_SP1_metrics</stream_name>
-          <value />
+          <stream_name />
+          <value>encompass_log_SP1_metrics</value>
         </parameter>
         <parameter>
           <name>log_path</name>
-          <stream_name>/Volumes/Elements/data-integration/</stream_name>
-          <value />
+          <stream_name />
+          <value>/Volumes/Elements/data-integration/</value>
         </parameter>
         <parameter>
           <name>log_performance_table_name</name>
-          <stream_name>encompass_log_SP1_performance</stream_name>
-          <value />
+          <stream_name />
+          <value>encompass_log_SP1_performance</value>
         </parameter>
         <parameter>
           <name>log_record_timeout</name>
-          <stream_name>5</stream_name>
-          <value />
+          <stream_name />
+          <value>5</value>
         </parameter>
         <parameter>
           <name>log_step_table_name</name>
-          <stream_name>encompass_log_SP1_step</stream_name>
-          <value />
+          <stream_name />
+          <value>encompass_log_SP1_step</value>
         </parameter>
         <parameter>
           <name>log_table_schema</name>
-          <stream_name>encompass</stream_name>
-          <value />
+          <stream_name />
+          <value>encompass</value>
         </parameter>
         <parameter>
           <name>log_transformation_table_name</name>
-          <stream_name>encompass_log_SP1_transformation</stream_name>
-          <value />
+          <stream_name />
+          <value>encompass_log_SP1_transformation</value>
         </parameter>
         <parameter>
           <name>target_table_name_error</name>
-          <stream_name>encompass_loan_raw_error</stream_name>
-          <value />
+          <stream_name />
+          <value>encompass_loan_raw_error</value>
         </parameter>
         <parameter>
           <name>target_table_name_success</name>
-          <stream_name>encompass_loan_raw</stream_name>
-          <value />
+          <stream_name />
+          <value>encompass_loan_raw</value>
         </parameter>
       </parameters>
       <set_append_logfile>N</set_append_logfile>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>256</xloc>
+      <xloc>384</xloc>
       <yloc>256</yloc>
       <attributes_kjc />
     </entry>
     <entry>
-      <name>Send Email Notification for Failed SP1</name>
+      <name>SP6_FULL_Send Email Notification for Failed SP1</name>
       <description />
       <type>MAIL</type>
       <attributes />
@@ -683,12 +643,12 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>256</xloc>
+      <xloc>384</xloc>
       <yloc>384</yloc>
       <attributes_kjc />
     </entry>
     <entry>
-      <name>Write SP1 Error to Log</name>
+      <name>SP6_FULL_Write SP1 Error to Log</name>
       <description />
       <type>WRITE_TO_LOG</type>
       <attributes />
@@ -698,12 +658,12 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>256</xloc>
+      <xloc>384</xloc>
       <yloc>512</yloc>
       <attributes_kjc />
     </entry>
     <entry>
-      <name>Abort Due to SP1 Failure</name>
+      <name>SP6_FULL_Abort Due to SP1 Failure</name>
       <description />
       <type>ABORT</type>
       <attributes />
@@ -711,76 +671,82 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>256</xloc>
+      <xloc>384</xloc>
       <yloc>656</yloc>
       <attributes_kjc />
     </entry>
     <entry>
-      <name>Add SP2 Success Message to Log</name>
+      <name>SP6_FULL_Add SP1 Success Message to Log</name>
       <description />
       <type>WRITE_TO_LOG</type>
       <attributes />
-      <logmessage />
+      <logmessage>SP6_FULL_Add SP1 Success Message to Log</logmessage>
       <loglevel>Basic</loglevel>
-      <logsubject />
+      <logsubject>SP6_FULL_Add SP1 Success Message to Log</logsubject>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>864</xloc>
+      <xloc>640</xloc>
       <yloc>256</yloc>
       <attributes_kjc />
     </entry>
     <entry>
-      <name>Add SP1 Success Message to Log</name>
+      <name>SP6_FULL_Set variables</name>
       <description />
-      <type>WRITE_TO_LOG</type>
+      <type>SET_VARIABLES</type>
       <attributes />
-      <logmessage />
-      <loglevel>Basic</loglevel>
-      <logsubject />
+      <replacevars>Y</replacevars>
+      <filename />
+      <file_variable_type>JVM</file_variable_type>
+      <fields>
+        <field>
+          <variable_name>database_hostname</variable_name>
+          <variable_value>${database_hostname}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>database_name</variable_name>
+          <variable_value>${database_name}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>database_password</variable_name>
+          <variable_value>${database_password}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>database_port</variable_name>
+          <variable_value>${database_port}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>database_schema</variable_name>
+          <variable_value>${database_schema}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>database_username</variable_name>
+          <variable_value>${database_username}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>input_csv_path</variable_name>
+          <variable_value>${input_csv_path}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+      </fields>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>448</xloc>
-      <yloc>256</yloc>
-      <attributes_kjc />
-    </entry>
-    <entry>
-      <name>No Operation</name>
-      <description />
-      <type>SPECIAL</type>
-      <attributes />
-      <start>N</start>
-      <dummy>Y</dummy>
-      <repeat>N</repeat>
-      <schedulerType>0</schedulerType>
-      <intervalSeconds>0</intervalSeconds>
-      <intervalMinutes>60</intervalMinutes>
-      <hour>12</hour>
-      <minutes>0</minutes>
-      <weekDay>1</weekDay>
-      <DayOfMonth>1</DayOfMonth>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>1056</xloc>
+      <xloc>208</xloc>
       <yloc>256</yloc>
       <attributes_kjc />
     </entry>
   </entries>
   <hops>
     <hop>
-      <from>Start</from>
-      <to>Execute SP1</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>Execute SP1</from>
-      <to>Send Email Notification for Failed SP1</to>
+      <from>SP6_FULL_Execute SP1</from>
+      <to>SP6_FULL_Send Email Notification for Failed SP1</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -788,8 +754,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Send Email Notification for Failed SP1</from>
-      <to>Write SP1 Error to Log</to>
+      <from>SP6_FULL_Send Email Notification for Failed SP1</from>
+      <to>SP6_FULL_Write SP1 Error to Log</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -797,8 +763,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Write SP1 Error to Log</from>
-      <to>Abort Due to SP1 Failure</to>
+      <from>SP6_FULL_Write SP1 Error to Log</from>
+      <to>SP6_FULL_Abort Due to SP1 Failure</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -806,8 +772,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Execute SP1</from>
-      <to>Add SP1 Success Message to Log</to>
+      <from>SP6_FULL_Execute SP1</from>
+      <to>SP6_FULL_Add SP1 Success Message to Log</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -815,8 +781,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>No Operation</from>
-      <to>End</to>
+      <from>Start</from>
+      <to>SP6_FULL_Set variables</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -824,8 +790,8 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Add SP2 Success Message to Log</from>
-      <to>No Operation</to>
+      <from>SP6_FULL_Set variables</from>
+      <to>SP6_FULL_Execute SP1</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -833,8 +799,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Add SP1 Success Message to Log</from>
-      <to>No Operation</to>
+      <from>SP6_FULL_Add SP1 Success Message to Log</from>
+      <to>SP6_FULL_End</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -873,29 +839,6 @@ to the raw table in DL3.</note>
       <yloc>128</yloc>
       <width>201</width>
       <heigth>74</heigth>
-      <fontname>.AppleSystemUIFont</fontname>
-      <fontsize>13</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>205</backgroundcolorgreen>
-      <backgroundcolorblue>112</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
-    <notepad>
-      <note>SP2
-Transform Encompass data to 
-Octane domain values.</note>
-      <xloc>624</xloc>
-      <yloc>128</yloc>
-      <width>195</width>
-      <heigth>58</heigth>
       <fontname>.AppleSystemUIFont</fontname>
       <fontsize>13</fontsize>
       <fontbold>N</fontbold>
