@@ -11,8 +11,8 @@
     <parameters>
       <parameter>
         <name>database_hostname</name>
-        <default_value />
-        <description>The hostname to the database system.</description>
+        <default_value>localhost</default_value>
+        <description>*The hostname to the database system.</description>
       </parameter>
       <parameter>
         <name>database_name</name>
@@ -21,8 +21,8 @@
       </parameter>
       <parameter>
         <name>database_password</name>
-        <default_value />
-        <description>The password to connect to the database system.</description>
+        <default_value>Gdcae4e5!c</default_value>
+        <description>*The password to connect to the database system.</description>
       </parameter>
       <parameter>
         <name>database_port</name>
@@ -36,13 +36,18 @@
       </parameter>
       <parameter>
         <name>database_username</name>
-        <default_value />
-        <description>The username to connect to the database system.</description>
+        <default_value>postgres</default_value>
+        <description>*The username to connect to the database system.</description>
       </parameter>
       <parameter>
-        <name>input_csv_path_and_filename</name>
-        <default_value />
-        <description>The full file path where the input CSV file is located.</description>
+        <name>input_csv_filename</name>
+        <default_value>Encompass.csv</default_value>
+        <description />
+      </parameter>
+      <parameter>
+        <name>input_csv_path</name>
+        <default_value>/Volumes/Elements/data-integration/</default_value>
+        <description>*The full file path where the input CSV file is located.</description>
       </parameter>
       <parameter>
         <name>log_channel_table_name</name>
@@ -81,8 +86,8 @@
       </parameter>
       <parameter>
         <name>log_path</name>
-        <default_value>c:\pdi\Data\</default_value>
-        <description>The path for the log file that contains the records if the data in the row is parsed successfully and could be inserted into the database.</description>
+        <default_value>/Volumes/Elements/data-integration/</default_value>
+        <description>*The path for the log file that contains the records if the data in the row is parsed successfully and could be inserted into the database.</description>
       </parameter>
       <parameter>
         <name>log_performance_table_name</name>
@@ -711,7 +716,7 @@ tool and load it to the raw table in data lake 3.</note>
     <length>Characters</length>
     <add_to_result_filenames>Y</add_to_result_filenames>
     <file>
-      <name>${input_csv_path_and_filename}</name>
+      <name>${input_csv_path}${input_csv_filename}</name>
       <filemask />
       <exclude_filemask />
       <file_required>Y</file_required>
