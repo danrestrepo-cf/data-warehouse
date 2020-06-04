@@ -10,46 +10,6 @@
     <directory>/</directory>
     <parameters>
       <parameter>
-        <name>database_hostname</name>
-        <default_value>localhost</default_value>
-        <description>*The hostname to the database system.</description>
-      </parameter>
-      <parameter>
-        <name>database_name</name>
-        <default_value>ingress</default_value>
-        <description>The name of the database the transform will use.</description>
-      </parameter>
-      <parameter>
-        <name>database_password</name>
-        <default_value>Gdcae4e5!c</default_value>
-        <description>*The password to connect to the database system.</description>
-      </parameter>
-      <parameter>
-        <name>database_port</name>
-        <default_value>5432</default_value>
-        <description>The port to connect to the database system.</description>
-      </parameter>
-      <parameter>
-        <name>database_schema</name>
-        <default_value>encompass</default_value>
-        <description>The name of the database schema the Encompass data will flow into.</description>
-      </parameter>
-      <parameter>
-        <name>database_username</name>
-        <default_value>postgres</default_value>
-        <description>*The username to connect to the database system.</description>
-      </parameter>
-      <parameter>
-        <name>input_csv_filename</name>
-        <default_value>Encompass.csv</default_value>
-        <description />
-      </parameter>
-      <parameter>
-        <name>input_csv_path</name>
-        <default_value>/Volumes/Elements/data-integration/</default_value>
-        <description>*The full file path where the input CSV file is located.</description>
-      </parameter>
-      <parameter>
         <name>log_channel_table_name</name>
         <default_value>encompass_log_SP1_channel</default_value>
         <description>Name of the channel logging table.</description>
@@ -87,7 +47,7 @@
       <parameter>
         <name>log_path</name>
         <default_value>/Volumes/Elements/data-integration/</default_value>
-        <description>*The path for the log file that contains the records if the data in the row is parsed successfully and could be inserted into the database.</description>
+        <description />
       </parameter>
       <parameter>
         <name>log_performance_table_name</name>
@@ -127,12 +87,12 @@
     </parameters>
     <log>
       <trans-log-table>
-        <connection>PostgreSQL Local Transform Environment</connection>
-        <schema>${log_table_schema}</schema>
-        <table>${log_transformation_table_name}</table>
+        <connection />
+        <schema />
+        <table />
         <size_limit_lines />
-        <interval>${log_interval}</interval>
-        <timeout_days>${log_record_timeout}</timeout_days>
+        <interval />
+        <timeout_days />
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -241,11 +201,11 @@
         </field>
       </trans-log-table>
       <perf-log-table>
-        <connection>PostgreSQL Local Transform Environment</connection>
-        <schema>${log_table_schema}</schema>
-        <table>${log_performance_table_name}</table>
-        <interval>${log_interval}</interval>
-        <timeout_days>${log_record_timeout}</timeout_days>
+        <connection />
+        <schema />
+        <table />
+        <interval />
+        <timeout_days />
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -323,10 +283,10 @@
         </field>
       </perf-log-table>
       <channel-log-table>
-        <connection>PostgreSQL Local Transform Environment</connection>
-        <schema>${log_table_schema}</schema>
-        <table>${log_channel_table_name}</table>
-        <timeout_days>${log_record_timeout}</timeout_days>
+        <connection />
+        <schema />
+        <table />
+        <timeout_days />
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -389,10 +349,10 @@
         </field>
       </channel-log-table>
       <step-log-table>
-        <connection>PostgreSQL Local Transform Environment</connection>
-        <schema>${log_table_schema}</schema>
-        <table>${log_step_table_name}</table>
-        <timeout_days>${log_record_timeout}</timeout_days>
+        <connection />
+        <schema />
+        <table />
+        <timeout_days />
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -465,10 +425,10 @@
         </field>
       </step-log-table>
       <metrics-log-table>
-        <connection>PostgreSQL Local Transform Environment</connection>
-        <schema>${log_table_schema}</schema>
-        <table>${log_metrics_table_name}</table>
-        <timeout_days>${log_record_timeout}</timeout_days>
+        <connection />
+        <schema />
+        <table />
+        <timeout_days />
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -664,7 +624,7 @@ tool and load it to the raw table in data lake 3.</note>
     <hop>
       <from>SP1_LOAD_RAW_Validate Data Types</from>
       <to>SP1_LOAD_RAW_Output Validated Rows to Table</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>SP1_LOAD_RAW_Load CSV File</from>
@@ -674,6 +634,11 @@ tool and load it to the raw table in data lake 3.</note>
     <hop>
       <from>UTILITY_clean raw data</from>
       <to>SP1_LOAD_RAW_Validate Data Types</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Get variables</from>
+      <to>SP1_LOAD_RAW_Load CSV File</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -30846,6 +30811,117 @@ tool and load it to the raw table in data lake 3.</note>
     <GUI>
       <xloc>320</xloc>
       <yloc>304</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Get variables</name>
+    <type>GetVariable</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>database_hostname</name>
+        <variable>${database_hostname}</variable>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>database_name</name>
+        <variable>${database_name}</variable>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>database_password</name>
+        <variable>${database_password}</variable>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>database_port</name>
+        <variable>${database_port}</variable>
+        <type>Integer</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>database_schema</name>
+        <variable>${database_schema}</variable>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>database_username</name>
+        <variable>${database_username}</variable>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>input_csv_filename</name>
+        <variable>${input_csv_filename}</variable>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>112</xloc>
+      <yloc>464</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

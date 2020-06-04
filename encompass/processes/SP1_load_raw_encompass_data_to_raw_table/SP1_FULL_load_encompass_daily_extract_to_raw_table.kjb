@@ -11,7 +11,37 @@
   <modified_user>-</modified_user>
   <modified_date>2020/06/03 20:37:35.720</modified_date>
   <parameters>
-    </parameters>
+    <parameter>
+      <name>database_hostname</name>
+      <default_value>localhost</default_value>
+      <description />
+    </parameter>
+    <parameter>
+      <name>database_name</name>
+      <default_value>ingress</default_value>
+      <description />
+    </parameter>
+    <parameter>
+      <name>database_password</name>
+      <default_value>Gdcae4e5!c</default_value>
+      <description />
+    </parameter>
+    <parameter>
+      <name>database_port</name>
+      <default_value>5433</default_value>
+      <description />
+    </parameter>
+    <parameter>
+      <name>database_schema</name>
+      <default_value>encompass</default_value>
+      <description />
+    </parameter>
+    <parameter>
+      <name>database_username</name>
+      <default_value>postgres</default_value>
+      <description />
+    </parameter>
+  </parameters>
   <slaveservers>
     </slaveservers>
   <job-log-table>
@@ -396,41 +426,6 @@
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
         <parameter>
-          <name>database_hostname</name>
-          <stream_name>database_hostname</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>database_name</name>
-          <stream_name>database_name</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>database_password</name>
-          <stream_name>database_password</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>database_port</name>
-          <stream_name>database_port</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>database_schema</name>
-          <stream_name>database_schema</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>database_username</name>
-          <stream_name>database_username</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>input_csv_path_and_filename</name>
-          <stream_name>input_csv_path_and_filename</stream_name>
-          <value />
-        </parameter>
-        <parameter>
           <name>log_channel_table_name</name>
           <stream_name>log_channel_table_name</stream_name>
           <value />
@@ -637,31 +632,59 @@
       <attributes_kjc />
     </entry>
     <entry>
-      <name>Write to log 3</name>
+      <name>Set variables</name>
       <description />
-      <type>WRITE_TO_LOG</type>
+      <type>SET_VARIABLES</type>
       <attributes />
-      <logmessage>database_hostname=${database_hostname}</logmessage>
-      <loglevel>Basic</loglevel>
-      <logsubject>hi</logsubject>
+      <replacevars>Y</replacevars>
+      <filename />
+      <file_variable_type>JVM</file_variable_type>
+      <fields>
+        <field>
+          <variable_name>database_hostname</variable_name>
+          <variable_value>${database_hostname}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>database_port</variable_name>
+          <variable_value>${database_port}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>database_username</variable_name>
+          <variable_value>${database_username}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>database_password</variable_name>
+          <variable_value>${database_password}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>database_schema</variable_name>
+          <variable_value>${database_schema}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>database_name</variable_name>
+          <variable_value>${database_name}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>input_csv_filename</variable_name>
+          <variable_value>${input_csv_filename}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+      </fields>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>80</xloc>
-      <yloc>176</yloc>
+      <xloc>464</xloc>
+      <yloc>64</yloc>
       <attributes_kjc />
     </entry>
   </entries>
   <hops>
-    <hop>
-      <from>Start</from>
-      <to>SP1_FULL_verify input file exists</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
     <hop>
       <from>SP1_VERIFY_ensure data loaded correctly</from>
       <to>Success</to>
@@ -772,12 +795,21 @@
     </hop>
     <hop>
       <from>Start</from>
-      <to>Write to log 3</to>
+      <to>Set variables</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Set variables</from>
+      <to>SP1_FULL_verify input file exists</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
     </hop>
   </hops>
   <notepads>
