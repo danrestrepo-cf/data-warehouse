@@ -340,19 +340,19 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>256</xloc>
+      <xloc>336</xloc>
       <yloc>64</yloc>
       <attributes_kjc />
     </entry>
     <entry>
-      <name>Success</name>
+      <name>SP1_FULL_End</name>
       <description />
       <type>SUCCESS</type>
       <attributes />
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>880</xloc>
+      <xloc>1040</xloc>
       <yloc>64</yloc>
       <attributes_kjc />
     </entry>
@@ -390,12 +390,12 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>704</xloc>
+      <xloc>736</xloc>
       <yloc>64</yloc>
       <attributes_kjc />
     </entry>
     <entry>
-      <name>Abort job</name>
+      <name>SP1_FULL_Abort after FAILED log operation</name>
       <description />
       <type>ABORT</type>
       <attributes />
@@ -403,27 +403,27 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>704</xloc>
+      <xloc>736</xloc>
       <yloc>320</yloc>
       <attributes_kjc />
     </entry>
     <entry>
-      <name>Write to log</name>
+      <name>SP1_FULL_Write SP1_LOAD_RAW failure to log</name>
       <description />
       <type>WRITE_TO_LOG</type>
       <attributes />
       <logmessage />
-      <loglevel>Basic</loglevel>
+      <loglevel>Error</loglevel>
       <logsubject />
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>704</xloc>
+      <xloc>736</xloc>
       <yloc>192</yloc>
       <attributes_kjc />
     </entry>
     <entry>
-      <name>Abort job 2</name>
+      <name>SP1_FULL_Abort after successful log operation</name>
       <description />
       <type>ABORT</type>
       <attributes />
@@ -431,12 +431,12 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>880</xloc>
+      <xloc>1040</xloc>
       <yloc>192</yloc>
       <attributes_kjc />
     </entry>
     <entry>
-      <name>Set variables</name>
+      <name>SP1_FULL_Set variables</name>
       <description />
       <type>SET_VARIABLES</type>
       <attributes />
@@ -558,7 +558,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>464</xloc>
+      <xloc>512</xloc>
       <yloc>64</yloc>
       <attributes_kjc />
     </entry>
@@ -566,7 +566,7 @@
   <hops>
     <hop>
       <from>SP1_FULL_load encompass daily extract</from>
-      <to>Write to log</to>
+      <to>SP1_FULL_Write SP1_LOAD_RAW failure to log</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -574,8 +574,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Write to log</from>
-      <to>Abort job</to>
+      <from>SP1_FULL_Write SP1_LOAD_RAW failure to log</from>
+      <to>SP1_FULL_Abort after FAILED log operation</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -583,8 +583,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Write to log</from>
-      <to>Abort job 2</to>
+      <from>SP1_FULL_Write SP1_LOAD_RAW failure to log</from>
+      <to>SP1_FULL_Abort after successful log operation</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -593,7 +593,7 @@
     </hop>
     <hop>
       <from>Start</from>
-      <to>Set variables</to>
+      <to>SP1_FULL_Set variables</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -601,7 +601,7 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Set variables</from>
+      <from>SP1_FULL_Set variables</from>
       <to>SP1_FULL_load encompass daily extract</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -611,7 +611,7 @@
     </hop>
     <hop>
       <from>SP1_FULL_load encompass daily extract</from>
-      <to>Success</to>
+      <to>SP1_FULL_End</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
