@@ -534,7 +534,7 @@
       <slave_server_name />
       <wait_until_finished>Y</wait_until_finished>
       <follow_abort_remote>N</follow_abort_remote>
-      <expand_remote_job>N</expand_remote_job>
+      <expand_remote_job>Y</expand_remote_job>
       <create_parent_folder>N</create_parent_folder>
       <pass_export>N</pass_export>
       <run_configuration>Pentaho local</run_configuration>
@@ -583,7 +583,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>656</xloc>
-      <yloc>256</yloc>
+      <yloc>288</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -823,7 +823,7 @@
       <to>Send Email Notification for Failed SP2</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>N</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -850,7 +850,7 @@
       <to>Add SP2 Success Message to Log</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -868,7 +868,7 @@
       <to>Execute SP2</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -883,6 +883,15 @@
     </hop>
     <hop>
       <from>Add SP2 Success Message to Log</from>
+      <to>No Operation</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Add SP1 Success Message to Log</from>
       <to>No Operation</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
