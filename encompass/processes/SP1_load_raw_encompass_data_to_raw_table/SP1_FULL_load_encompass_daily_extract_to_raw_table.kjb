@@ -41,6 +41,11 @@
       <default_value>postgres</default_value>
       <description />
     </parameter>
+    <parameter>
+      <name>input_csv_path</name>
+      <default_value>/Volumes/Elements/data-integration/</default_value>
+      <description />
+    </parameter>
   </parameters>
   <slaveservers>
     </slaveservers>
@@ -340,50 +345,6 @@
       <attributes_kjc />
     </entry>
     <entry>
-      <name>SP1_FULL_verify input file exists</name>
-      <description />
-      <type>SPECIAL</type>
-      <attributes />
-      <start>N</start>
-      <dummy>Y</dummy>
-      <repeat>N</repeat>
-      <schedulerType>0</schedulerType>
-      <intervalSeconds>0</intervalSeconds>
-      <intervalMinutes>60</intervalMinutes>
-      <hour>12</hour>
-      <minutes>0</minutes>
-      <weekDay>1</weekDay>
-      <DayOfMonth>1</DayOfMonth>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>256</xloc>
-      <yloc>176</yloc>
-      <attributes_kjc />
-    </entry>
-    <entry>
-      <name>SP1_VERIFY_ensure data loaded correctly</name>
-      <description />
-      <type>SPECIAL</type>
-      <attributes />
-      <start>N</start>
-      <dummy>Y</dummy>
-      <repeat>N</repeat>
-      <schedulerType>0</schedulerType>
-      <intervalSeconds>0</intervalSeconds>
-      <intervalMinutes>60</intervalMinutes>
-      <hour>12</hour>
-      <minutes>0</minutes>
-      <weekDay>1</weekDay>
-      <DayOfMonth>1</DayOfMonth>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>256</xloc>
-      <yloc>640</yloc>
-      <attributes_kjc />
-    </entry>
-    <entry>
       <name>Success</name>
       <description />
       <type>SUCCESS</type>
@@ -391,8 +352,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>256</xloc>
-      <yloc>768</yloc>
+      <xloc>880</xloc>
+      <yloc>64</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -408,7 +369,7 @@
       <params_from_previous>N</params_from_previous>
       <exec_per_row>N</exec_per_row>
       <clear_rows>Y</clear_rows>
-      <clear_files>Y</clear_files>
+      <clear_files>N</clear_files>
       <set_logfile>N</set_logfile>
       <logfile />
       <logext />
@@ -418,94 +379,19 @@
       <cluster>N</cluster>
       <slave_server_name />
       <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>Y</wait_until_finished>
+      <wait_until_finished>N</wait_until_finished>
       <follow_abort_remote>N</follow_abort_remote>
       <create_parent_folder>N</create_parent_folder>
       <logging_remote_work>N</logging_remote_work>
       <run_configuration>Pentaho local</run_configuration>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>log_channel_table_name</name>
-          <stream_name>log_channel_table_name</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>log_filename_parse_fail_insert_fail</name>
-          <stream_name>log_filename_parse_fail_insert_fail</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>log_filename_parse_fail_insert_ok</name>
-          <stream_name>log_filename_parse_fail_insert_ok</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>log_filename_parse_ok_insert_fail</name>
-          <stream_name>log_filename_parse_ok_insert_fail</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>log_filename_parse_ok_insert_ok</name>
-          <stream_name>log_filename_parse_ok_insert_ok</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>log_interval</name>
-          <stream_name>log_interval</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>log_metrics_table_name</name>
-          <stream_name>log_metrics_table_name</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>log_path</name>
-          <stream_name>log_path</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>log_performance_table_name</name>
-          <stream_name>log_performance_table_name</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>log_record_timeout</name>
-          <stream_name>log_record_timeout</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>log_step_table_name</name>
-          <stream_name>log_step_table_name</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>log_table_schema</name>
-          <stream_name>log_table_schema</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>log_transformation_table_name</name>
-          <stream_name>log_transformation_table_name</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>target_table_name_error</name>
-          <stream_name>target_table_name_error</stream_name>
-          <value />
-        </parameter>
-        <parameter>
-          <name>target_table_name_success</name>
-          <stream_name>target_table_name_success</stream_name>
-          <value />
-        </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>256</xloc>
-      <yloc>400</yloc>
+      <xloc>704</xloc>
+      <yloc>64</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -517,8 +403,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>576</xloc>
-      <yloc>400</yloc>
+      <xloc>704</xloc>
+      <yloc>320</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -532,8 +418,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>464</xloc>
-      <yloc>400</yloc>
+      <xloc>704</xloc>
+      <yloc>192</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -545,90 +431,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>464</xloc>
-      <yloc>512</yloc>
-      <attributes_kjc />
-    </entry>
-    <entry>
-      <name>Abort job 3</name>
-      <description />
-      <type>ABORT</type>
-      <attributes />
-      <message />
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>576</xloc>
-      <yloc>176</yloc>
-      <attributes_kjc />
-    </entry>
-    <entry>
-      <name>Write to log 2</name>
-      <description />
-      <type>WRITE_TO_LOG</type>
-      <attributes />
-      <logmessage />
-      <loglevel>Basic</loglevel>
-      <logsubject />
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>464</xloc>
-      <yloc>176</yloc>
-      <attributes_kjc />
-    </entry>
-    <entry>
-      <name>Abort job 2 2</name>
-      <description />
-      <type>ABORT</type>
-      <attributes />
-      <message />
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>464</xloc>
-      <yloc>288</yloc>
-      <attributes_kjc />
-    </entry>
-    <entry>
-      <name>Abort job 3 2</name>
-      <description />
-      <type>ABORT</type>
-      <attributes />
-      <message />
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>576</xloc>
-      <yloc>640</yloc>
-      <attributes_kjc />
-    </entry>
-    <entry>
-      <name>Write to log 2 2</name>
-      <description />
-      <type>WRITE_TO_LOG</type>
-      <attributes />
-      <logmessage />
-      <loglevel>Basic</loglevel>
-      <logsubject />
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>464</xloc>
-      <yloc>640</yloc>
-      <attributes_kjc />
-    </entry>
-    <entry>
-      <name>Abort job 2 2 2</name>
-      <description />
-      <type>ABORT</type>
-      <attributes />
-      <message />
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>464</xloc>
-      <yloc>752</yloc>
+      <xloc>880</xloc>
+      <yloc>192</yloc>
       <attributes_kjc />
     </entry>
     <entry>
@@ -672,7 +476,82 @@
         </field>
         <field>
           <variable_name>input_csv_filename</variable_name>
-          <variable_value>${input_csv_filename}</variable_value>
+          <variable_value>Encompass.csv</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>KETTLE_EMPTY_STRING_DIFFERS_FROM_NULL</variable_name>
+          <variable_value>Y</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>input_csv_path</variable_name>
+          <variable_value>${input_csv_path}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>log_channel_table_name</variable_name>
+          <variable_value>${log_channel_table_name}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>log_filename_parse_fail_insert_fail</variable_name>
+          <variable_value>${log_filename_parse_fail_insert_fail}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>log_filename_parse_fail_insert_ok</variable_name>
+          <variable_value>${log_filename_parse_fail_insert_ok}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>log_filename_parse_ok_insert_fail</variable_name>
+          <variable_value>${log_filename_parse_ok_insert_fail}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>log_filename_parse_ok_insert_ok</variable_name>
+          <variable_value>${log_filename_parse_ok_insert_ok}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>log_interval</variable_name>
+          <variable_value>${log_interval}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>log_metrics_table_name</variable_name>
+          <variable_value>${log_metrics_table_name}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>log_path</variable_name>
+          <variable_value>${log_path}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>log_performance_table_name</variable_name>
+          <variable_value>${log_performance_table_name}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>log_record_timeout</variable_name>
+          <variable_value>${log_record_timeout}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>log_step_table_name</variable_name>
+          <variable_value>${log_step_table_name}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>log_table_schema</variable_name>
+          <variable_value>${log_table_schema}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>log_transformation_table_name</variable_name>
+          <variable_value>${log_transformation_table_name}</variable_value>
           <variable_type>JVM</variable_type>
         </field>
       </fields>
@@ -685,33 +564,6 @@
     </entry>
   </entries>
   <hops>
-    <hop>
-      <from>SP1_VERIFY_ensure data loaded correctly</from>
-      <to>Success</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>SP1_FULL_verify input file exists</from>
-      <to>SP1_FULL_load encompass daily extract</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>SP1_FULL_load encompass daily extract</from>
-      <to>SP1_VERIFY_ensure data loaded correctly</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
     <hop>
       <from>SP1_FULL_load encompass daily extract</from>
       <to>Write to log</to>
@@ -727,7 +579,7 @@
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
+      <evaluation>N</evaluation>
       <unconditional>N</unconditional>
     </hop>
     <hop>
@@ -736,61 +588,7 @@
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>SP1_FULL_verify input file exists</from>
-      <to>Write to log 2</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>N</enabled>
       <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>Write to log 2</from>
-      <to>Abort job 3</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Write to log 2</from>
-      <to>Abort job 2 2</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>SP1_VERIFY_ensure data loaded correctly</from>
-      <to>Write to log 2 2</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>N</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>Write to log 2 2</from>
-      <to>Abort job 3 2</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Write to log 2 2</from>
-      <to>Abort job 2 2 2</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
       <unconditional>N</unconditional>
     </hop>
     <hop>
@@ -804,7 +602,16 @@
     </hop>
     <hop>
       <from>Set variables</from>
-      <to>SP1_FULL_verify input file exists</to>
+      <to>SP1_FULL_load encompass daily extract</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SP1_FULL_load encompass daily extract</from>
+      <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>

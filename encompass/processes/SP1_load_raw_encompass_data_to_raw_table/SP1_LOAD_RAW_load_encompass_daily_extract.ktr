@@ -594,7 +594,7 @@ tool and load it to the raw table in data lake 3.</note>
     <hop>
       <from>SP1_LOAD_RAW_Output Validated Rows to Table</from>
       <to>SP1_LOAD_RAW_Write Successful Rows to File (Parse OK, Insert OK)</to>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
     </hop>
     <hop>
       <from>SP1_LOAD_RAW_Output Invalid Data Rows to Table</from>
@@ -624,7 +624,7 @@ tool and load it to the raw table in data lake 3.</note>
     <hop>
       <from>SP1_LOAD_RAW_Validate Data Types</from>
       <to>SP1_LOAD_RAW_Output Validated Rows to Table</to>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
     </hop>
     <hop>
       <from>SP1_LOAD_RAW_Load CSV File</from>
@@ -30920,8 +30920,40 @@ tool and load it to the raw table in data lake 3.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>112</xloc>
-      <yloc>464</yloc>
+      <xloc>64</xloc>
+      <yloc>432</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Write to log</name>
+    <type>WriteToLog</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <loglevel>log_level_basic</loglevel>
+    <displayHeader>Y</displayHeader>
+    <limitRows>N</limitRows>
+    <limitRowsNumber>0</limitRowsNumber>
+    <logmessage />
+    <fields>
+      </fields>
+    <attributes />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>224</xloc>
+      <yloc>448</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
