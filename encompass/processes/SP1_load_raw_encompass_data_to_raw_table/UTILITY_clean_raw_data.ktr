@@ -2,21 +2,21 @@
 <transformation>
   <info>
     <name>UTILITY_clean_raw_data</name>
-    <description />
-    <extended_description />
-    <trans_version />
+    <description/>
+    <extended_description/>
+    <trans_version/>
     <trans_type>Normal</trans_type>
     <directory>/</directory>
     <parameters>
     </parameters>
     <log>
       <trans-log-table>
-        <connection />
-        <schema />
-        <table />
-        <size_limit_lines />
-        <interval />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <size_limit_lines/>
+        <interval/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -41,37 +41,37 @@
           <id>LINES_READ</id>
           <enabled>Y</enabled>
           <name>LINES_READ</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_WRITTEN</id>
           <enabled>Y</enabled>
           <name>LINES_WRITTEN</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_UPDATED</id>
           <enabled>Y</enabled>
           <name>LINES_UPDATED</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_INPUT</id>
           <enabled>Y</enabled>
           <name>LINES_INPUT</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_OUTPUT</id>
           <enabled>Y</enabled>
           <name>LINES_OUTPUT</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_REJECTED</id>
           <enabled>Y</enabled>
           <name>LINES_REJECTED</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>ERRORS</id>
@@ -125,11 +125,11 @@
         </field>
       </trans-log-table>
       <perf-log-table>
-        <connection />
-        <schema />
-        <table />
-        <interval />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <interval/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -207,10 +207,10 @@
         </field>
       </perf-log-table>
       <channel-log-table>
-        <connection />
-        <schema />
-        <table />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -273,10 +273,10 @@
         </field>
       </channel-log-table>
       <step-log-table>
-        <connection />
-        <schema />
-        <table />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -349,10 +349,10 @@
         </field>
       </step-log-table>
       <metrics-log-table>
-        <connection />
-        <schema />
-        <table />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -401,9 +401,9 @@
       </metrics-log-table>
     </log>
     <maxdate>
-      <connection />
-      <table />
-      <field />
+      <connection/>
+      <table/>
+      <field/>
       <offset>0.0</offset>
       <maxdiff>0.0</maxdiff>
     </maxdate>
@@ -414,7 +414,7 @@
     <feedback_shown>Y</feedback_shown>
     <feedback_size>50000</feedback_size>
     <using_thread_priorities>Y</using_thread_priorities>
-    <shared_objects_file />
+    <shared_objects_file/>
     <capture_step_performance>N</capture_step_performance>
     <step_performance_capturing_delay>1000</step_performance_capturing_delay>
     <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
@@ -430,7 +430,7 @@
     <created_date>2020/06/03 15:04:48.595</created_date>
     <modified_user>-</modified_user>
     <modified_date>2020/06/03 15:04:48.595</modified_date>
-    <key_for_session_key />
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
@@ -440,8 +440,8 @@ This prepares raw data for entering Data Lake 3
 or any other of our data stores.</note>
       <xloc>112</xloc>
       <yloc>48</yloc>
-      <width>299</width>
-      <heigth>58</heigth>
+      <width>360</width>
+      <heigth>67</heigth>
       <fontname>.AppleSystemUIFont</fontname>
       <fontsize>13</fontsize>
       <fontbold>N</fontbold>
@@ -461,8 +461,8 @@ or any other of our data stores.</note>
       <note>This ktr may need to go up a directory.</note>
       <xloc>527</xloc>
       <yloc>105</yloc>
-      <width>244</width>
-      <heigth>26</heigth>
+      <width>292</width>
+      <heigth>29</heigth>
       <fontname>.AppleSystemUIFont</fontname>
       <fontsize>13</fontsize>
       <fontbold>N</fontbold>
@@ -497,21 +497,50 @@ or any other of our data stores.</note>
     </hop>
   </order>
   <step>
-    <name>UTILITY_Mapping input specification</name>
-    <type>MappingInput</type>
-    <description />
+    <name>UTILITY_Abort</name>
+    <type>Abort</type>
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
+    </partitioning>
+    <row_threshold>0</row_threshold>
+    <message>Could not prepare raw data for entering our data stores.</message>
+    <always_log_rows>Y</always_log_rows>
+    <abort_option>ABORT</abort_option>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>400</xloc>
+      <yloc>368</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>UTILITY_Mapping input specification</name>
+    <type>MappingInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
     </partitioning>
     <fields>
       <select_unspecified>N</select_unspecified>
     </fields>
-    <attributes />
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -527,16 +556,16 @@ or any other of our data stores.</note>
   <step>
     <name>UTILITY_Mapping output specification</name>
     <type>MappingOutput</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
-    <attributes />
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -552,23 +581,23 @@ or any other of our data stores.</note>
   <step>
     <name>UTILITY_Trim spaces from all fields</name>
     <type>StringOperations</type>
-    <description />
+    <description/>
     <distribute>N</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <fields>
       <field>
         <in_stream_name>elr_trans_details_loan_number</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -576,12 +605,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_info_loan_id</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -589,12 +618,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_info_loan_created_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -602,12 +631,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_officer_lead_id</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -615,12 +644,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_officer_lead_source</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -628,12 +657,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_officer_lead_source_reference_id</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -641,12 +670,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borrower_intends_to_continue_chkbx</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -654,12 +683,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_lien_position</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -667,12 +696,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_loan_amt</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -680,12 +709,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_interest_rate</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -693,12 +722,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_loan_purpose</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -706,12 +735,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_info_refi_purpose</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -719,12 +748,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_loan_program</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -732,12 +761,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_down_pmt_percent</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -745,12 +774,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_qual_ratio_top</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -758,12 +787,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_qual_ratio_bottom</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -771,12 +800,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_fannie_mae_loan_doc_type_code</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -784,12 +813,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_purchase_price</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -797,12 +826,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_comb_loan_to_value_cltv</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -810,12 +839,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_apr</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -823,12 +852,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_term_mos</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -836,12 +865,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_interest_only_indicator</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -849,12 +878,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_prepayment_penalty</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -862,12 +891,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_mlds_prepymt_penalty_period</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -875,12 +904,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_amort_type</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -888,12 +917,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_sebonic_custom_impound_field</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -901,12 +930,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borrower_first_name</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -914,12 +943,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borrower_middle_name</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -927,12 +956,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borrower_last_name</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -940,12 +969,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_email</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -953,12 +982,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_home_phone</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -966,12 +995,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_business_phone</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -979,12 +1008,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_cell</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -992,12 +1021,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_present_addr</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1005,12 +1034,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_present_city</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1018,12 +1047,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_present_state</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1031,12 +1060,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_present_zip</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1044,12 +1073,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_ssn</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1057,12 +1086,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_dob</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1070,12 +1099,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_sex_male_female</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1083,12 +1112,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_ethnicity</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1096,12 +1125,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_race_american_indian</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1109,12 +1138,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_race_asian</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1122,12 +1151,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_race_black</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1135,12 +1164,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_race_native_hawaiian</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1148,12 +1177,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_race_white</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1161,12 +1190,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_race_info_not_provided</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1174,12 +1203,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_race_not_applicable</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1187,12 +1216,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_first_time_homebuyer</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1200,12 +1229,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_self_employed</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1213,12 +1242,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_income_borr_total_income</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1226,12 +1255,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_financed_property_ownership_count</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1239,12 +1268,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_borr_lmedian_fico</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1252,12 +1281,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborr_lmedian_fico</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1265,12 +1294,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_va_loan_summ_credit_score</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1278,12 +1307,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborrower_first_name</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1291,12 +1320,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborrower_middle_name</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1304,12 +1333,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborrower_last_name</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1317,12 +1346,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborr_email</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1330,12 +1359,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborr_home_phone</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1343,12 +1372,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborr_business_phone</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1356,12 +1385,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborr_cell</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1369,12 +1398,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborr_present_addr</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1382,12 +1411,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborr_present_city</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1395,12 +1424,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborr_present_state</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1408,12 +1437,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborr_present_zip</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1421,12 +1450,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborr_dob</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1434,12 +1463,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborr_sex_male_female</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1447,12 +1476,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborr_experian_fico</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1460,12 +1489,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborr_ssn</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1473,12 +1502,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborr_ethnicity</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1486,12 +1515,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborr_race_american_indian</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1499,12 +1528,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborr_race_asian</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1512,12 +1541,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborr_race_black</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1525,12 +1554,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborr_race_native_hawaiian</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1538,12 +1567,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborr_race_white</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1551,12 +1580,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborr_race_info_not_provided</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1564,12 +1593,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coborr_race_not_applicable</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1577,12 +1606,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_income_verification_available_b1</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1590,12 +1619,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_income_verification_available_c1</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1603,12 +1632,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_subject_property_type</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1616,12 +1645,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_subject_property_occupancy_status</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1629,12 +1658,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_subject_property_street</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1642,12 +1671,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_subject_property_street_2</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1655,12 +1684,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_subject_property_city</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1668,12 +1697,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_subject_property_state</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1681,12 +1710,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_subject_property_zip</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1694,12 +1723,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_subject_property_county</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1707,12 +1736,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_subject_property_msa_number</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1720,12 +1749,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_subject_property_county_code</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1733,12 +1762,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_subject_property_number_units</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1746,12 +1775,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_subject_property_yr_built</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1759,12 +1788,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_subject_property_est_value</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1772,12 +1801,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_subject_property_appraised_value</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1785,12 +1814,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_subject_property_estate_held</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1798,12 +1827,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_occupancy_type</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1811,12 +1840,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_property_type</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1824,12 +1853,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_document_date_received_credit_report</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1837,12 +1866,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_credit_rpt_ref_number</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1850,12 +1879,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_payoff_junior_lien_holder_company</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1863,12 +1892,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_payoff_primary_lien_holder_company</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1876,12 +1905,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_appraisal_retrieval_relative_value</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1889,12 +1918,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_appraisal_report_asis</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1902,12 +1931,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_lo_compensation_fee_line_802_discount_point_percent_line_2</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1915,12 +1944,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_lo_compensation_fee_line_802_discount_point_percent_line_4</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1928,12 +1957,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_lo_compensation_fee_line_802_user_defined_fee_2_amount</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1941,12 +1970,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_fees_line_801_borr_paid_orig_chrg</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1954,12 +1983,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_fees_line_801_user_defined_fee_2_borr_amt</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1967,12 +1996,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_fees_line_801_broker_compensation_borrower_paid</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1980,12 +2009,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_fees_line_801_user_defined_fee_2_descr</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -1993,12 +2022,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_fees_line_802_borr_credit_points</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2006,12 +2035,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_fees_line_803_borr_paid_adj_orig_chrgs</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2019,12 +2048,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_fees_loan_origination_fee_borr</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2032,12 +2061,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_fees_orig_charge_amt_borr</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2045,12 +2074,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_fees_compensation_to_broker_1</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2058,12 +2087,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_lo_compensation_lender_compensation_credit_amount_line_2</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2071,12 +2100,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_lo_compensation_borrower_paid_discount_point_amount_line_3</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2084,12 +2113,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_requested_lo_concession_amount</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2097,12 +2126,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_officer_manager_concession_amount</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2110,12 +2139,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_lo_compensation_borrower_paid_discount_point_amount_line_1</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2123,12 +2152,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_total_credit_for_rate_chosen</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2136,12 +2165,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_lo_compensation_totalborrower_discount_point_amount_line_4</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2149,12 +2178,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_hud1_borr_paid_by_for_borr_oth_1_amt</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2162,12 +2191,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_fees_line_801_user_def_fee_1_borr</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2175,12 +2204,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_disclosed_fees_total_finance_charges</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2188,12 +2217,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_document_date_received_loan_officer_preapproval_letter</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2201,12 +2230,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_underwriting_risk_assess_type</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2214,12 +2243,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_underwriting_suspended_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2227,12 +2256,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_underwriting_level_of_prpty_review_form_number</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2240,12 +2269,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_uw_suspended_cleared_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2253,12 +2282,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_credit_committee_fico_exception</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2266,12 +2295,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_fnma_cu_risk_score</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2279,12 +2308,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_day_1_income_verification_available</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2292,12 +2321,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_du_fail_reason</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2305,12 +2334,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_acceptable_du</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2318,12 +2347,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_acceptable_lp</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2331,12 +2360,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_atr_qm_eligibility_abilitytorepay_loan_type</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2344,12 +2373,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_request_fulfilled_date_time_most_recent</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2357,12 +2386,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_request_fulfilled_date_time</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2370,12 +2399,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_trans_details_loan_program_most_recent</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2383,12 +2412,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_lock_request_loan_type_most_recent</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2396,12 +2425,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_buy_side_base_margin</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2409,12 +2438,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_lock_request_loan_amnt_excluding_mip_pmi_most_recent</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2422,12 +2451,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_lock_request_subject_property_number_units_most_recent</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2435,12 +2464,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_buy_side_lock_expires_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2448,12 +2477,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_buy_side_lock_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2461,12 +2490,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_first_lock_lock_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2474,12 +2503,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_lock_request_impounds_waived_most_recent</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2487,12 +2516,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_lock_request_loan_amount_most_recent</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2500,12 +2529,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_trans_details_amort_type_most_recent</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2513,12 +2542,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_request_rate_sheet_id</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2526,12 +2555,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_buy_side_investor_commitment</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2539,12 +2568,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_buy_side_comments</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2552,12 +2581,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_sell_side_lock_expires_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2565,12 +2594,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_sell_side_number_of_days</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2578,12 +2607,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_sell_side_total_sell_price</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2591,12 +2620,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_sell_side_investor_lock_type</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2604,12 +2633,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_sell_investor_name</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2617,12 +2646,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_sell_side_investor_loan_number</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2630,12 +2659,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_sell_side_lock_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2643,12 +2672,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_sell_side_lock_date_most_recent</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2656,12 +2685,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_sell_side_base_rate</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2669,12 +2698,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_sell_side_investor_delivery_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2682,12 +2711,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_sell_side_base_rate_adjust_1_rate_most_recent</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2695,12 +2724,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_sell_side_investor_commitment_most_recent</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2708,12 +2737,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_sell_side_net_sell_price</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2721,12 +2750,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_sell_side_net_buy_rate</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2734,12 +2763,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_trans_details_term_mos_most_recent</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2747,12 +2776,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_buy_side_number_of_days</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2760,12 +2789,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_first_lock_ltv</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2773,12 +2802,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_first_lock_cltv</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2786,12 +2815,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_first_lock_net_buy_price</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2799,12 +2828,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_lock_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2812,12 +2841,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_rate_lock_expires</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2825,12 +2854,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_rate_lock_number_days</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2838,12 +2867,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_lock_extension_original_lock_term</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2851,12 +2880,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_lock_extension_original_lock_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2864,12 +2893,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_lock_extension_original_lock_expiration_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2877,12 +2906,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_lock_extension_new_expiration_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2890,12 +2919,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_initial_capture_of_lock_number_days</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2903,12 +2932,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_first_pymt_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2916,12 +2945,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_first_pymt_adj_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2929,12 +2958,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_loan_maturity_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2942,12 +2971,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_total_loan_amt_w_mip_ff</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2955,12 +2984,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_info_arm_disclosure_type</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2968,12 +2997,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_info_arm_margin</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2981,12 +3010,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_freddie_mac_lender_rate_adj_convertible</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -2994,12 +3023,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_freddie_mac_loan_to_value_ltv</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3007,12 +3036,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_regz_loan_info_document_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3020,12 +3049,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_loan_type</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3033,12 +3062,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_sub_fin_second_mtg_loan_amt</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3046,12 +3075,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_aus_eligibility_for_miac</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3059,12 +3088,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_total_number_of_borrowers_on_loan</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3072,12 +3101,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_mo_pymt_p_and_i</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3085,12 +3114,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_extension_cost_total_amount</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3098,12 +3127,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_homeready_eligibility</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3111,12 +3140,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_homeready_eligibility_review_complete</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3124,12 +3153,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_homeready_borrower_acceptance</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3137,12 +3166,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_homepossible_eligibility</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3150,12 +3179,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_homepossible_eligibility_review_complete</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3163,12 +3192,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_underwriting_investor_eligibility_fannie_mae</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3176,12 +3205,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_underwriting_investor_eligibility_freddie_mac</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3189,12 +3218,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_morgan_stanley_upload</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3202,12 +3231,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_info_arm_first_period_change</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3215,12 +3244,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_info_arm_first_rate_adj_cap</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3228,12 +3257,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_info_arm_floor_rate</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3241,12 +3270,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_info_arm_rate_adj_period</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3254,12 +3283,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_info_arm_rate_cap</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3267,12 +3296,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_info_arm_max_life_interest_cap</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3280,12 +3309,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_mi_company_name_type</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3293,12 +3322,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_file_contacts_mtg_ins_co_name</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3306,12 +3335,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_insurance_mtg_ins_coverage_factor</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3319,12 +3348,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_private_mortgage_insurance_indicator</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3332,12 +3361,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_uldd_mortgage_insurance_premium_source_type</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3345,12 +3374,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_lpmi_estimated_amount_of_lender_paid_mi_premium</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3358,12 +3387,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_lpmi_final_price_of_lpmi</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3371,12 +3400,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_lo_workksheet_mi_premium_frequency</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3384,12 +3413,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_file_contacts_mtg_ins_co_file_number</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3397,12 +3426,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_document_date_received_postfunding_disbursement_ledger</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3410,12 +3439,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_warehouse_curtailment</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3423,12 +3452,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_funding_executed_docs_in_date_time</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3436,12 +3465,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_funding_funds_ordered_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3449,12 +3478,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_funding_funds_sent_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3462,12 +3491,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_funding_funds_released</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3475,12 +3504,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_fund_outstanding_docs_funding_authorized</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3488,12 +3517,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_delivery_work_completed_checkbox</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3501,12 +3530,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_file_contacts_warehouse_co_name</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3514,12 +3543,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coll_to_warehouse_warehouse_company</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3527,12 +3556,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_bb_and_t_elds_maturity</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3540,12 +3569,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_intrm_serv_pymnt_summary_prncpl_balance</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3553,12 +3582,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coll_delivery_dmi_id</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3566,12 +3595,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_intrm_serv_next_pymnt_pymnt_due_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3579,12 +3608,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_dmi_upload_p_and_i_change_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3592,12 +3621,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_shipping_investor_delivery_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3605,12 +3634,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_shipping_actual_shipping_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3618,12 +3647,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coll_delivery_cust_to_inv_ship_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3631,12 +3660,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coll_to_investor_work_completed_date_stamp</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3644,12 +3673,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_coll_delivery_to_custodian_ship_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3657,12 +3686,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_purchase_advice_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3670,12 +3699,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_purchase_advice_actual_sell_price</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3683,12 +3712,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_purchase_advice_date_first_payment_to_investor</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3696,12 +3725,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_purchase_advice_first_payment_to</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3709,12 +3738,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_purchase_advice_actual_sell_side_srp</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3722,12 +3751,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_purchase_advice_payouts_1_amount</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3735,12 +3764,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_purchase_advice_payouts_2_amount</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3748,12 +3777,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_purchase_advice_payouts_3_amount</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3761,12 +3790,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_purchase_advice_payouts_4_amount</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3774,12 +3803,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_purchase_advice_payouts_5_amount</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3787,12 +3816,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_purchase_advice_payouts_6_amount</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3800,12 +3829,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_purchase_advice_payouts_7_amount</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3813,12 +3842,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_purchase_advice_payouts_8_amount</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3826,12 +3855,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_purchase_advice_payouts_9_amount</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3839,12 +3868,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_purchase_advice_payouts_10_amount</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3852,12 +3881,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_purchase_advice_payouts_11_amount</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3865,12 +3894,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_purchase_advice_payouts_12_amount</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3878,12 +3907,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_purchase_advice_premium</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3891,12 +3920,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_purchase_advice_srp_received</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3904,12 +3933,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_underwriting_investor_eligibility_texas_50a6_cashout</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3917,12 +3946,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_underwriting_investor_eligibility_wells_fargo</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3930,12 +3959,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_underwriting_investor_eligibility_chase_jp_morgan</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3943,12 +3972,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_shipping_mers_registration_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3956,12 +3985,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_mers_min_number</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3969,12 +3998,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_rate_lock_sell_side_investor_mers_number_most_recent</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3982,12 +4011,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_uldd_pool_id</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -3995,12 +4024,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_uldd_property_valuation_effective_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4008,12 +4037,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_uldd_first_unit_bedrooms</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4021,12 +4050,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_uldd_first_unit_subject_property_gross_rent</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4034,12 +4063,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_estimate_le_date_issued</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4047,12 +4076,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_appraisal_retrieval_work_completed_date_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4060,12 +4089,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_tracking_current_milestone_name</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4073,12 +4102,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_tracking_current_milestone_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4086,12 +4115,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_application_milestone_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4099,12 +4128,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_current_status_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4112,12 +4141,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_current_loan_status</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4125,12 +4154,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_underwriting_clear_to_close_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4138,12 +4167,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_est_closing_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4151,12 +4180,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_closing_scheduled_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4164,12 +4193,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_tracking_doc_signed_milestone_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4177,12 +4206,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_cl_docs_delivered_date_stamp</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4190,12 +4219,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_total_wire_transfer</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4203,12 +4232,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_trans_details_closed_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4216,12 +4245,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_closing_docs_regz_loan_info_disbursement_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4229,12 +4258,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_folder_name</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4242,12 +4271,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_file_contacts_buyers_agent_name</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4255,12 +4284,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_file_contacts_buyers_agent_contact_name</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4268,12 +4297,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_file_contacts_buyers_agent_email</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4281,12 +4310,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_file_contacts_loan_officer_name</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4294,12 +4323,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_file_contacts_loan_processor_name</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4307,12 +4336,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_team_member_name_fd_funder</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4320,12 +4349,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_team_member_name_cl_document_fmls</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4333,12 +4362,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_nmls_loan_originator_id</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4346,12 +4375,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_processing_resub_worker_assigned_date_stamp</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4359,12 +4388,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_team_member_name_uw_conditions_fmls</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4372,12 +4401,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_team_member_name_uw_underwriter</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4385,12 +4414,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_officer_appraisal_onhold_estimated_release_date</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4398,12 +4427,12 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_officer_appraisal_onhold_date_time_stamp</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
@@ -4411,20 +4440,20 @@ or any other of our data stores.</note>
       </field>
       <field>
         <in_stream_name>elr_loan_officer_appraisal_cleared_date_time_stamp</in_stream_name>
-        <out_stream_name />
+        <out_stream_name/>
         <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
+        <lower_upper>none</lower_upper>
         <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
+        <pad_char/>
+        <pad_len/>
         <init_cap>N</init_cap>
         <mask_xml>None</mask_xml>
         <digits>none</digits>
         <remove_special_characters>none</remove_special_characters>
       </field>
     </fields>
-    <attributes />
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -4437,51 +4466,22 @@ or any other of our data stores.</note>
       <draw>Y</draw>
     </GUI>
   </step>
-  <step>
-    <name>UTILITY_Abort</name>
-    <type>Abort</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <row_threshold>0</row_threshold>
-    <message>Could not prepare raw data for entering our data stores.</message>
-    <always_log_rows>Y</always_log_rows>
-    <abort_option>ABORT</abort_option>
-    <attributes />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>400</xloc>
-      <yloc>368</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
   <step_error_handling>
     <error>
       <source_step>UTILITY_Trim spaces from all fields</source_step>
       <target_step>UTILITY_Abort</target_step>
       <is_enabled>Y</is_enabled>
-      <nr_valuename />
-      <descriptions_valuename />
-      <fields_valuename />
-      <codes_valuename />
-      <max_errors />
-      <max_pct_errors />
-      <min_pct_rows />
+      <nr_valuename/>
+      <descriptions_valuename/>
+      <fields_valuename/>
+      <codes_valuename/>
+      <max_errors/>
+      <max_pct_errors/>
+      <min_pct_rows/>
     </error>
   </step_error_handling>
   <slave-step-copy-partition-distribution>
   </slave-step-copy-partition-distribution>
   <slave_transformation>N</slave_transformation>
-  <attributes />
+  <attributes/>
 </transformation>
