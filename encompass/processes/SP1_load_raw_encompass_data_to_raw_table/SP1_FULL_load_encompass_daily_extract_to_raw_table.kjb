@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
   <name>SP1_FULL_load_encompass_daily_extract_to_raw_table</name>
-  <description />
-  <extended_description />
-  <job_version />
+  <description/>
+  <extended_description/>
+  <job_version/>
   <job_status>0</job_status>
   <directory>/</directory>
   <created_user>-</created_user>
@@ -14,48 +14,48 @@
     <parameter>
       <name>database_hostname</name>
       <default_value>localhost</default_value>
-      <description />
+      <description/>
     </parameter>
     <parameter>
       <name>database_name</name>
       <default_value>ingress</default_value>
-      <description />
+      <description/>
     </parameter>
     <parameter>
       <name>database_password</name>
       <default_value>Gdcae4e5!c</default_value>
-      <description />
+      <description/>
     </parameter>
     <parameter>
       <name>database_port</name>
       <default_value>5432</default_value>
-      <description />
+      <description/>
     </parameter>
     <parameter>
       <name>database_schema</name>
       <default_value>encompass</default_value>
-      <description />
+      <description/>
     </parameter>
     <parameter>
       <name>database_username</name>
       <default_value>postgres</default_value>
-      <description />
+      <description/>
     </parameter>
     <parameter>
       <name>input_csv_path</name>
       <default_value>/Volumes/Elements/data-integration/</default_value>
-      <description />
+      <description/>
     </parameter>
   </parameters>
   <slaveservers>
     </slaveservers>
   <job-log-table>
-    <connection />
-    <schema />
-    <table />
-    <size_limit_lines />
-    <interval />
-    <timeout_days />
+    <connection/>
+    <schema/>
+    <table/>
+    <size_limit_lines/>
+    <interval/>
+    <timeout_days/>
     <field>
       <id>ID_JOB</id>
       <enabled>Y</enabled>
@@ -163,10 +163,10 @@
     </field>
   </job-log-table>
   <jobentry-log-table>
-    <connection />
-    <schema />
-    <table />
-    <timeout_days />
+    <connection/>
+    <schema/>
+    <table/>
+    <timeout_days/>
     <field>
       <id>ID_BATCH</id>
       <enabled>Y</enabled>
@@ -254,10 +254,10 @@
     </field>
   </jobentry-log-table>
   <channel-log-table>
-    <connection />
-    <schema />
-    <table />
-    <timeout_days />
+    <connection/>
+    <schema/>
+    <table/>
+    <timeout_days/>
     <field>
       <id>ID_BATCH</id>
       <enabled>Y</enabled>
@@ -320,13 +320,13 @@
     </field>
   </channel-log-table>
   <pass_batchid>N</pass_batchid>
-  <shared_objects_file />
+  <shared_objects_file/>
   <entries>
     <entry>
       <name>Start</name>
-      <description />
+      <description/>
       <type>SPECIAL</type>
-      <attributes />
+      <attributes/>
       <start>Y</start>
       <dummy>N</dummy>
       <repeat>N</repeat>
@@ -342,42 +342,42 @@
       <nr>0</nr>
       <xloc>48</xloc>
       <yloc>176</yloc>
-      <attributes_kjc />
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>SP1_FULL_End</name>
-      <description />
+      <description/>
       <type>SUCCESS</type>
-      <attributes />
+      <attributes/>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>752</xloc>
       <yloc>176</yloc>
-      <attributes_kjc />
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>SP1_FULL_load encompass daily extract</name>
-      <description />
+      <description/>
       <type>TRANS</type>
-      <attributes />
+      <attributes/>
       <specification_method>filename</specification_method>
-      <trans_object_id />
+      <trans_object_id/>
       <filename>/Users/ramon.ecung/Documents/GitHub/etl/encompass/processes/SP1_load_raw_encompass_data_to_raw_table/SP1_LOAD_RAW_load_encompass_daily_extract.ktr</filename>
-      <transname />
+      <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
       <exec_per_row>N</exec_per_row>
       <clear_rows>Y</clear_rows>
       <clear_files>N</clear_files>
       <set_logfile>N</set_logfile>
-      <logfile />
-      <logext />
+      <logfile/>
+      <logext/>
       <add_date>N</add_date>
       <add_time>N</add_time>
       <loglevel>Basic</loglevel>
       <cluster>N</cluster>
-      <slave_server_name />
+      <slave_server_name/>
       <set_append_logfile>N</set_append_logfile>
       <wait_until_finished>N</wait_until_finished>
       <follow_abort_remote>N</follow_abort_remote>
@@ -392,56 +392,56 @@
       <nr>0</nr>
       <xloc>448</xloc>
       <yloc>176</yloc>
-      <attributes_kjc />
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>SP1_FULL_Abort after FAILED log operation</name>
-      <description />
+      <description/>
       <type>ABORT</type>
-      <attributes />
-      <message />
+      <attributes/>
+      <message/>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>448</xloc>
       <yloc>432</yloc>
-      <attributes_kjc />
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>SP1_FULL_Write SP1_LOAD_RAW failure to log</name>
-      <description />
+      <description/>
       <type>WRITE_TO_LOG</type>
-      <attributes />
-      <logmessage />
+      <attributes/>
+      <logmessage/>
       <loglevel>Error</loglevel>
-      <logsubject />
+      <logsubject/>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>448</xloc>
       <yloc>304</yloc>
-      <attributes_kjc />
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>SP1_FULL_Abort after successful log operation</name>
-      <description />
+      <description/>
       <type>ABORT</type>
-      <attributes />
-      <message />
+      <attributes/>
+      <message/>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>752</xloc>
       <yloc>304</yloc>
-      <attributes_kjc />
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>SP1_FULL_Set variables</name>
-      <description />
+      <description/>
       <type>SET_VARIABLES</type>
-      <attributes />
+      <attributes/>
       <replacevars>Y</replacevars>
-      <filename />
+      <filename/>
       <file_variable_type>JVM</file_variable_type>
       <fields>
         <field>
@@ -560,7 +560,7 @@
       <nr>0</nr>
       <xloc>224</xloc>
       <yloc>176</yloc>
-      <attributes_kjc />
+      <attributes_kjc/>
     </entry>
   </entries>
   <hops>
@@ -627,8 +627,8 @@ to a table in a database. Change environments by changing input
 parameters.</note>
       <xloc>32</xloc>
       <yloc>32</yloc>
-      <width>440</width>
-      <heigth>74</heigth>
+      <width>528</width>
+      <heigth>86</heigth>
       <fontname>.AppleSystemUIFont</fontname>
       <fontsize>13</fontsize>
       <fontbold>N</fontbold>
@@ -645,5 +645,5 @@ parameters.</note>
       <drawshadow>Y</drawshadow>
     </notepad>
   </notepads>
-  <attributes />
+  <attributes/>
 </job>

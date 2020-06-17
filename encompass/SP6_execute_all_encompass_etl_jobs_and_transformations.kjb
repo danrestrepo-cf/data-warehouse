@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>SP6_execute_encompass_full_etl_processes</name>
+  <name>SP3_execute_all_encompass_etl_jobs_and_transformations</name>
   <description/>
   <extended_description/>
   <job_version/>
@@ -42,78 +42,8 @@
       <description>The username to connect to the database system.</description>
     </parameter>
     <parameter>
-      <name>error_email sender_name</name>
-      <default_value>SP6 Error Alert</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_authentication_password</name>
-      <default_value>pw</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_authentication_username</name>
-      <default_value>un</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_contact_person</name>
-      <default_value>ramon.ecung@cardinalfinancial.com</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_contact_phone</name>
-      <default_value>617-299-1123</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_destination_to_address</name>
-      <default_value>${error_email_contact_person},joey.ecung@cardinalfinancial.com</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_message_comment</name>
-      <default_value>SP6 Error Alert Email Body</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_message_subject</name>
-      <default_value>SP6 Error Alert Email Subject</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_reply_to_address</name>
-      <default_value>${error_email_contact_person}</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_sender_address</name>
-      <default_value>${error_email_contact_person}</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_smtp_server_hostname</name>
-      <default_value>localhost</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_smtp_server_port</name>
-      <default_value>523</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_smtp_use_authentication</name>
-      <default_value>true</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>input_csv_path</name>
-      <default_value>/</default_value>
-      <description/>
-    </parameter>
-    <parameter>
       <name>log_channel_table_name</name>
-      <default_value>encompass_log_sp6_channel</default_value>
+      <default_value>as</default_value>
       <description>Name of the channel logging table.</description>
     </parameter>
     <parameter>
@@ -130,11 +60,6 @@
       <name>log_table_schema</name>
       <default_value>encompass</default_value>
       <description>The name of the database schema the log tables are in.</description>
-    </parameter>
-    <parameter>
-      <name>log_transformation_table_name</name>
-      <default_value>encompass_log_sp6_transformation</default_value>
-      <description/>
     </parameter>
   </parameters>
   <connection>
@@ -481,333 +406,157 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>64</xloc>
-      <yloc>256</yloc>
+      <xloc>160</xloc>
+      <yloc>160</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SP6_FULL_End</name>
+      <name>Transformation</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename/>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration/>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>272</xloc>
+      <yloc>160</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Transformation 2</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename/>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration/>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>384</xloc>
+      <yloc>160</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Mail</name>
+      <description/>
+      <type>MAIL</type>
+      <attributes/>
+      <server>smtp.gmail.com</server>
+      <port>993</port>
+      <destination>success@ramonecung.com</destination>
+      <destinationCc/>
+      <destinationBCc/>
+      <replyto>success@ramonecung.com</replyto>
+      <replytoname>test</replytoname>
+      <subject>pentaho</subject>
+      <include_date>Y</include_date>
+      <contact_person>ww</contact_person>
+      <contact_phone>22</contact_phone>
+      <comment>it worked!</comment>
+      <include_files>Y</include_files>
+      <zip_files>N</zip_files>
+      <zip_name/>
+      <use_auth>Y</use_auth>
+      <use_secure_auth>Y</use_secure_auth>
+      <auth_user>success@ramonecung.com</auth_user>
+      <auth_password>Encrypted 2be98e8ac09c697d0ae4cef62df9fa0d4</auth_password>
+      <only_comment>N</only_comment>
+      <use_HTML>Y</use_HTML>
+      <use_Priority>N</use_Priority>
+      <encoding>UTF-8</encoding>
+      <priority>normal</priority>
+      <importance>normal</importance>
+      <sensitivity>normal</sensitivity>
+      <secureconnectiontype>TLS</secureconnectiontype>
+      <replyToAddresses>success@ramonecung.com</replyToAddresses>
+      <filetypes>
+        <filetype>LOG</filetype>
+      </filetypes>
+      <embeddedimages>
+      </embeddedimages>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>160</xloc>
+      <yloc>304</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Success</name>
       <description/>
       <type>SUCCESS</type>
       <attributes/>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>848</xloc>
-      <yloc>256</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>SP6_FULL_Execute SP1</name>
-      <description/>
-      <type>JOB</type>
-      <attributes/>
-      <specification_method>filename</specification_method>
-      <job_object_id/>
-      <filename>/Users/ramon.ecung/Documents/GitHub/etl/encompass/processes/SP1_load_raw_encompass_data_to_raw_table/SP1_FULL_load_encompass_daily_extract_to_raw_table.kjb</filename>
-      <jobname/>
-      <directory/>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Nothing</loglevel>
-      <slave_server_name/>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <expand_remote_job>Y</expand_remote_job>
-      <create_parent_folder>N</create_parent_folder>
-      <pass_export>N</pass_export>
-      <run_configuration>Pentaho local</run_configuration>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>log_channel_table_name</name>
-          <stream_name/>
-          <value>encompass_log_SP1_channel</value>
-        </parameter>
-        <parameter>
-          <name>log_filename_parse_fail_insert_fail</name>
-          <stream_name/>
-          <value>sp1_parse_fail_insert_fail</value>
-        </parameter>
-        <parameter>
-          <name>log_filename_parse_fail_insert_ok</name>
-          <stream_name/>
-          <value>sp1_parse_fail_insert_ok</value>
-        </parameter>
-        <parameter>
-          <name>log_filename_parse_ok_insert_fail</name>
-          <stream_name/>
-          <value>sp1_parse_ok_insert_fail</value>
-        </parameter>
-        <parameter>
-          <name>log_filename_parse_ok_insert_ok</name>
-          <stream_name/>
-          <value>sp1_parse_ok_insert_ok</value>
-        </parameter>
-        <parameter>
-          <name>log_interval</name>
-          <stream_name/>
-          <value>90</value>
-        </parameter>
-        <parameter>
-          <name>log_metrics_table_name</name>
-          <stream_name/>
-          <value>encompass_log_SP1_metrics</value>
-        </parameter>
-        <parameter>
-          <name>log_path</name>
-          <stream_name>${log_path}</stream_name>
-          <value/>
-        </parameter>
-        <parameter>
-          <name>log_performance_table_name</name>
-          <stream_name/>
-          <value>encompass_log_SP1_performance</value>
-        </parameter>
-        <parameter>
-          <name>log_record_timeout</name>
-          <stream_name/>
-          <value>5</value>
-        </parameter>
-        <parameter>
-          <name>log_step_table_name</name>
-          <stream_name/>
-          <value>encompass_log_SP1_step</value>
-        </parameter>
-        <parameter>
-          <name>log_table_schema</name>
-          <stream_name/>
-          <value>encompass</value>
-        </parameter>
-        <parameter>
-          <name>log_transformation_table_name</name>
-          <stream_name/>
-          <value>encompass_log_SP1_transformation</value>
-        </parameter>
-        <parameter>
-          <name>target_table_name_error</name>
-          <stream_name/>
-          <value>encompass_loan_raw_error</value>
-        </parameter>
-        <parameter>
-          <name>target_table_name_success</name>
-          <stream_name/>
-          <value>encompass_loan_raw</value>
-        </parameter>
-        <parameter>
-          <name>input_csv_path</name>
-          <stream_name/>
-          <value>input_csv_path</value>
-        </parameter>
-      </parameters>
-      <set_append_logfile>N</set_append_logfile>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>384</xloc>
-      <yloc>256</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>SP6_FULL_Send Email Notification for Failed SP1</name>
-      <description/>
-      <type>MAIL</type>
-      <attributes/>
-      <server/>
-      <port/>
-      <destination/>
-      <destinationCc/>
-      <destinationBCc/>
-      <replyto/>
-      <replytoname/>
-      <subject/>
-      <include_date>N</include_date>
-      <contact_person/>
-      <contact_phone/>
-      <comment/>
-      <include_files>N</include_files>
-      <zip_files>N</zip_files>
-      <zip_name/>
-      <use_auth>N</use_auth>
-      <use_secure_auth>N</use_secure_auth>
-      <auth_user/>
-      <auth_password>Encrypted </auth_password>
-      <only_comment>N</only_comment>
-      <use_HTML>N</use_HTML>
-      <use_Priority>N</use_Priority>
-      <encoding>UTF-8</encoding>
-      <priority>normal</priority>
-      <importance>normal</importance>
-      <sensitivity>normal</sensitivity>
-      <secureconnectiontype>SSL</secureconnectiontype>
-      <replyToAddresses/>
-      <filetypes>      </filetypes>
-      <embeddedimages>
-      </embeddedimages>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>384</xloc>
-      <yloc>384</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>SP6_FULL_Write SP1 Error to Log</name>
-      <description/>
-      <type>WRITE_TO_LOG</type>
-      <attributes/>
-      <logmessage/>
-      <loglevel>Basic</loglevel>
-      <logsubject/>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>384</xloc>
-      <yloc>512</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>SP6_FULL_Abort Due to SP1 Failure</name>
-      <description/>
-      <type>ABORT</type>
-      <attributes/>
-      <message>SP6 has aborted without successfully completing SP1.</message>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>384</xloc>
-      <yloc>656</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>SP6_FULL_Add SP1 Success Message to Log</name>
-      <description/>
-      <type>WRITE_TO_LOG</type>
-      <attributes/>
-      <logmessage>SP6_FULL_Add SP1 Success Message to Log</logmessage>
-      <loglevel>Basic</loglevel>
-      <logsubject>SP6_FULL_Add SP1 Success Message to Log</logsubject>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>640</xloc>
-      <yloc>256</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>SP6_FULL_Set variables</name>
-      <description/>
-      <type>SET_VARIABLES</type>
-      <attributes/>
-      <replacevars>Y</replacevars>
-      <filename/>
-      <file_variable_type>JVM</file_variable_type>
-      <fields>
-        <field>
-          <variable_name>database_hostname</variable_name>
-          <variable_value>${database_hostname}</variable_value>
-          <variable_type>JVM</variable_type>
-        </field>
-        <field>
-          <variable_name>database_name</variable_name>
-          <variable_value>${database_name}</variable_value>
-          <variable_type>JVM</variable_type>
-        </field>
-        <field>
-          <variable_name>database_password</variable_name>
-          <variable_value>${database_password}</variable_value>
-          <variable_type>JVM</variable_type>
-        </field>
-        <field>
-          <variable_name>database_port</variable_name>
-          <variable_value>${database_port}</variable_value>
-          <variable_type>JVM</variable_type>
-        </field>
-        <field>
-          <variable_name>database_schema</variable_name>
-          <variable_value>${database_schema}</variable_value>
-          <variable_type>JVM</variable_type>
-        </field>
-        <field>
-          <variable_name>database_username</variable_name>
-          <variable_value>${database_username}</variable_value>
-          <variable_type>JVM</variable_type>
-        </field>
-        <field>
-          <variable_name>input_csv_path</variable_name>
-          <variable_value>${input_csv_path}</variable_value>
-          <variable_type>JVM</variable_type>
-        </field>
-        <field>
-          <variable_name>log_interval</variable_name>
-          <variable_value>${log_interval}</variable_value>
-          <variable_type>JVM</variable_type>
-        </field>
-        <field>
-          <variable_name>log_record_timeout</variable_name>
-          <variable_value>${log_record_timeout}</variable_value>
-          <variable_type>JVM</variable_type>
-        </field>
-        <field>
-          <variable_name>log_path</variable_name>
-          <variable_value>${log_path}</variable_value>
-          <variable_type>JVM</variable_type>
-        </field>
-      </fields>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>208</xloc>
-      <yloc>256</yloc>
+      <xloc>496</xloc>
+      <yloc>160</yloc>
       <attributes_kjc/>
     </entry>
   </entries>
   <hops>
     <hop>
-      <from>SP6_FULL_Execute SP1</from>
-      <to>SP6_FULL_Send Email Notification for Failed SP1</to>
+      <from>Transformation 2</from>
+      <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>SP6_FULL_Send Email Notification for Failed SP1</from>
-      <to>SP6_FULL_Write SP1 Error to Log</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>SP6_FULL_Write SP1 Error to Log</from>
-      <to>SP6_FULL_Abort Due to SP1 Failure</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>SP6_FULL_Execute SP1</from>
-      <to>SP6_FULL_Add SP1 Success Message to Log</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
     <hop>
       <from>Start</from>
-      <to>SP6_FULL_Set variables</to>
+      <to>Mail</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -815,70 +564,25 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>SP6_FULL_Set variables</from>
-      <to>SP6_FULL_Execute SP1</to>
+      <from>Start</from>
+      <to>Transformation</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
+      <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>SP6_FULL_Add SP1 Success Message to Log</from>
-      <to>SP6_FULL_End</to>
+      <from>Transformation</from>
+      <to>Transformation 2</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
   </hops>
   <notepads>
-    <notepad>
-      <note>SP6 - Execute Encompass Full ETL</note>
-      <xloc>48</xloc>
-      <yloc>32</yloc>
-      <width>270</width>
-      <heigth>29</heigth>
-      <fontname>.AppleSystemUIFont</fontname>
-      <fontsize>13</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>205</backgroundcolorgreen>
-      <backgroundcolorblue>112</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
-    <notepad>
-      <note>SP1 
-Load Encompass data exported
-from ExportIt and load the CSV
-to the raw table in DL3.</note>
-      <xloc>224</xloc>
-      <yloc>128</yloc>
-      <width>240</width>
-      <heigth>86</heigth>
-      <fontname>.AppleSystemUIFont</fontname>
-      <fontsize>13</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>205</backgroundcolorgreen>
-      <backgroundcolorblue>112</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
   </notepads>
   <attributes/>
 </job>
