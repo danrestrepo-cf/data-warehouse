@@ -1,14 +1,14 @@
 <job>
   <name>SP1_FULL_load_encompass_daily_extract_to_raw_table</name>
-  <description/>
+  <description>SP1</description>
   <extended_description/>
   <job_version/>
   <job_status>0</job_status>
-  <directory>/</directory>
+  <directory>/import/SP1</directory>
   <created_user>-</created_user>
   <created_date>2020/06/03 20:37:35.720</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2020/06/30 11:54:30.196</modified_date>
+  <modified_date>2020/06/30 18:35:32.226</modified_date>
   <parameters>
     <parameter>
       <name>database_hostname</name>
@@ -322,7 +322,7 @@
   <shared_objects_file/>
   <entries>
     <entry>
-      <name>SP1_FULL_Start</name>
+      <name>Start</name>
       <description/>
       <type>SPECIAL</type>
       <attributes/>
@@ -340,7 +340,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>528</xloc>
-      <yloc>256</yloc>
+      <yloc>272</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -369,7 +369,7 @@
       <params_from_previous>N</params_from_previous>
       <exec_per_row>N</exec_per_row>
       <clear_rows>Y</clear_rows>
-      <clear_files>N</clear_files>
+      <clear_files>Y</clear_files>
       <set_logfile>N</set_logfile>
       <logfile/>
       <logext/>
@@ -379,8 +379,8 @@
       <cluster>N</cluster>
       <slave_server_name/>
       <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>N</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>Y</follow_abort_remote>
       <create_parent_folder>N</create_parent_folder>
       <logging_remote_work>N</logging_remote_work>
       <run_configuration>Pentaho local</run_configuration>
@@ -602,7 +602,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>SP1_FULL_Start</from>
+      <from>Start</from>
       <to>SP1_FULL_Set variables</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
