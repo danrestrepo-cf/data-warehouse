@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
     <name>SP1_LOAD_RAW_load_encompass_daily_extract</name>
@@ -430,7 +429,7 @@
     <created_user>-</created_user>
     <created_date>2020/03/11 16:18:28.855</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/03/31 12:18:04.573</modified_date>
+    <modified_date>2020/06/30 11:15:51.295</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -438,13 +437,184 @@
     <notepad>
       <note>SP1
 Load Encompass data in CSV from Export It
-tool and load it to the raw table in data lake 3.</note>
-      <xloc>80</xloc>
-      <yloc>96</yloc>
-      <width>337</width>
-      <heigth>67</heigth>
+tool and load it to the raw table in a Data Lake
+environment.</note>
+      <xloc>144</xloc>
+      <yloc>32</yloc>
+      <width>531</width>
+      <heigth>130</heigth>
       <fontname>.AppleSystemUIFont</fontname>
       <fontsize>13</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Data in a row failed to match the expected format.</note>
+      <xloc>1152</xloc>
+      <yloc>1088</yloc>
+      <width>408</width>
+      <heigth>34</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>9</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>128</backgroundcolorgreen>
+      <backgroundcolorblue>128</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>The row failed to be written to the "_raw_error" table.</note>
+      <xloc>1728</xloc>
+      <yloc>1088</yloc>
+      <width>426</width>
+      <heigth>34</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>9</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>128</backgroundcolorgreen>
+      <backgroundcolorblue>128</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>The row was not able to be inserted to the "_raw" table.</note>
+      <xloc>1136</xloc>
+      <yloc>1552</yloc>
+      <width>447</width>
+      <heigth>34</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>9</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>128</backgroundcolorgreen>
+      <backgroundcolorblue>128</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Data types validated; insert valid rows into Data Lake.</note>
+      <xloc>160</xloc>
+      <yloc>1552</yloc>
+      <width>431</width>
+      <heigth>34</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>9</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>No need to write successful rows to a text file.
+This step is used for debugging generally.</note>
+      <xloc>208</xloc>
+      <yloc>1840</yloc>
+      <width>372</width>
+      <heigth>58</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>9</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Validate data in CSV matches expected data types.</note>
+      <xloc>192</xloc>
+      <yloc>1120</yloc>
+      <width>407</width>
+      <heigth>34</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>9</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Prepare data read from CSV (trim whitespace, etc).</note>
+      <xloc>192</xloc>
+      <yloc>816</yloc>
+      <width>406</width>
+      <heigth>34</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>9</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Load CSV data from ${input_csv_path}${input_csv_filename}
+variables.</note>
+      <xloc>144</xloc>
+      <yloc>560</yloc>
+      <width>479</width>
+      <heigth>58</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>9</fontsize>
       <fontbold>N</fontbold>
       <fontitalic>N</fontitalic>
       <fontcolorred>0</fontcolorred>
@@ -519,7 +689,7 @@ tool and load it to the raw table in data lake 3.</note>
     <hop>
       <from>SP1_LOAD_RAW_Output Validated Rows to Table</from>
       <to>SP1_LOAD_RAW_Write Successful Rows to File (Parse OK, Insert OK)</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>SP1_LOAD_RAW_Output Invalid Data Rows to Table</from>
@@ -552,23 +722,28 @@ tool and load it to the raw table in data lake 3.</note>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>SP1_LOAD_RAW_Load CSV File</from>
-      <to>UTILITY_clean raw data</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>UTILITY_clean raw data</from>
       <to>SP1_LOAD_RAW_Validate Data Types</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Get variables</from>
+      <from>SP1_LOAD_RAW_Get variables</from>
+      <to>SP1_LOAD_RAW_Write variables to log</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>SP1_LOAD_RAW_Write variables to log</from>
       <to>SP1_LOAD_RAW_Load CSV File</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>SP1_LOAD_RAW_Load CSV File</from>
+      <to>UTILITY_clean raw data</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Get variables</name>
+    <name>SP1_LOAD_RAW_Get variables</name>
     <type>GetVariable</type>
     <description/>
     <distribute>Y</distribute>
@@ -663,6 +838,18 @@ tool and load it to the raw table in data lake 3.</note>
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
+      <field>
+        <name>input_csv_path</name>
+        <variable>${input_csv_path}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -673,8 +860,8 @@ tool and load it to the raw table in data lake 3.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>80</xloc>
-      <yloc>432</yloc>
+      <xloc>656</xloc>
+      <yloc>224</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -5218,8 +5405,8 @@ tool and load it to the raw table in data lake 3.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>80</xloc>
-      <yloc>304</yloc>
+      <xloc>656</xloc>
+      <yloc>608</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -6466,8 +6653,8 @@ tool and load it to the raw table in data lake 3.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1568</xloc>
-      <yloc>512</yloc>
+      <xloc>1936</xloc>
+      <yloc>1312</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -7714,8 +7901,8 @@ tool and load it to the raw table in data lake 3.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1568</xloc>
-      <yloc>240</yloc>
+      <xloc>1344</xloc>
+      <yloc>1904</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -8962,8 +9149,8 @@ tool and load it to the raw table in data lake 3.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>848</xloc>
-      <yloc>432</yloc>
+      <xloc>1344</xloc>
+      <yloc>1168</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -10194,8 +10381,8 @@ tool and load it to the raw table in data lake 3.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1072</xloc>
-      <yloc>176</yloc>
+      <xloc>656</xloc>
+      <yloc>1632</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -16162,8 +16349,8 @@ tool and load it to the raw table in data lake 3.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>592</xloc>
-      <yloc>304</yloc>
+      <xloc>656</xloc>
+      <yloc>1168</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -19831,8 +20018,8 @@ tool and load it to the raw table in data lake 3.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1072</xloc>
-      <yloc>512</yloc>
+      <xloc>1936</xloc>
+      <yloc>1168</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -23500,8 +23687,8 @@ tool and load it to the raw table in data lake 3.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1072</xloc>
-      <yloc>352</yloc>
+      <xloc>1344</xloc>
+      <yloc>1312</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -27169,8 +27356,8 @@ tool and load it to the raw table in data lake 3.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1264</xloc>
-      <yloc>208</yloc>
+      <xloc>1344</xloc>
+      <yloc>1632</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -30790,8 +30977,46 @@ tool and load it to the raw table in data lake 3.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1264</xloc>
-      <yloc>96</yloc>
+      <xloc>656</xloc>
+      <yloc>1904</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>SP1_LOAD_RAW_Write variables to log</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <loglevel>log_level_rowlevel</loglevel>
+    <displayHeader>Y</displayHeader>
+    <limitRows>N</limitRows>
+    <limitRowsNumber>0</limitRowsNumber>
+    <logmessage/>
+    <fields>
+      <field>
+        <name>input_csv_filename</name>
+      </field>
+      <field>
+        <name>input_csv_path</name>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>656</xloc>
+      <yloc>384</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -30806,11 +31031,11 @@ tool and load it to the raw table in data lake 3.</note>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <specification_method>filename</specification_method>
+    <specification_method>rep_name</specification_method>
     <trans_object_id/>
-    <trans_name/>
-    <filename>${Internal.Entry.Current.Directory}/UTILITY_clean_raw_data.ktr</filename>
-    <directory_path/>
+    <trans_name>UTILITY_clean_raw_data</trans_name>
+    <filename/>
+    <directory_path>/common</directory_path>
     <mappings>
       <input>
         <mapping>
@@ -30845,8 +31070,8 @@ tool and load it to the raw table in data lake 3.</note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>320</xloc>
-      <yloc>304</yloc>
+      <xloc>656</xloc>
+      <yloc>880</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
