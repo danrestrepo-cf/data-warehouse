@@ -8,7 +8,7 @@
   <created_user/>
   <created_date>2020/05/05 12:35:31.924</created_date>
   <modified_user/>
-  <modified_date>2020/06/30 18:35:08.181</modified_date>
+  <modified_date>2020/06/30 18:42:35.137</modified_date>
   <parameters>
     <parameter>
       <name>database_hostname</name>
@@ -41,74 +41,9 @@
       <description>The username to connect to the database system.</description>
     </parameter>
     <parameter>
-      <name>error_email sender_name</name>
-      <default_value>SP6 Error Alert</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_authentication_password</name>
-      <default_value>pw</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_authentication_username</name>
-      <default_value>un</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_contact_person</name>
-      <default_value>ramon.ecung@cardinalfinancial.com</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_contact_phone</name>
-      <default_value>617-299-1123</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_destination_to_address</name>
-      <default_value>${error_email_contact_person},joey.ecung@cardinalfinancial.com</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_message_comment</name>
-      <default_value>SP6 Error Alert Email Body</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_message_subject</name>
-      <default_value>SP6 Error Alert Email Subject</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_reply_to_address</name>
-      <default_value>${error_email_contact_person}</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_sender_address</name>
-      <default_value>${error_email_contact_person}</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_smtp_server_hostname</name>
-      <default_value>localhost</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_smtp_server_port</name>
-      <default_value>523</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>error_email_smtp_use_authentication</name>
-      <default_value>true</default_value>
-      <description/>
-    </parameter>
-    <parameter>
       <name>input_csv_path</name>
       <default_value>C:\pdi\Data\</default_value>
-      <description/>
+      <description>The path to the folder location containing the input csv file. Include a trailing slash.</description>
     </parameter>
     <parameter>
       <name>log_channel_table_name</name>
