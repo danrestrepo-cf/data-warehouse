@@ -8,7 +8,7 @@
   <created_user>-</created_user>
   <created_date>2020/06/03 20:37:35.720</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2020/07/24 14:36:21.450</modified_date>
+  <modified_date>2020/07/24 16:46:16.819</modified_date>
   <parameters>
     <parameter>
       <name>database_hostname</name>
@@ -340,11 +340,11 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>528</xloc>
-      <yloc>272</yloc>
+      <yloc>160</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SP6.1_FULL_End</name>
+      <name>SP6_FULL_End</name>
       <description/>
       <type>SUCCESS</type>
       <attributes/>
@@ -356,7 +356,7 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SP6.1_FULL_execute transformation load encompass daily extract</name>
+      <name>SP6_FULL_execute transformation load encompass daily extract</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
@@ -395,7 +395,7 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SP6.1_FULL_Abort after FAILED log operation</name>
+      <name>SP6_FULL_Abort after FAILED log operation</name>
       <description/>
       <type>ABORT</type>
       <attributes/>
@@ -408,7 +408,7 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SP6.1_FULL_Write SP1_LOAD_RAW failure to log</name>
+      <name>SP6_FULL_Write SP1_LOAD_RAW failure to log</name>
       <description/>
       <type>WRITE_TO_LOG</type>
       <attributes/>
@@ -423,7 +423,7 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SP6.1_FULL_Abort after successful log operation</name>
+      <name>SP6_FULL_Abort after successful log operation</name>
       <description/>
       <type>ABORT</type>
       <attributes/>
@@ -436,7 +436,7 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SP6.1_FULL_Set variables</name>
+      <name>SP6_FULL_Set variables</name>
       <description/>
       <type>SET_VARIABLES</type>
       <attributes/>
@@ -572,11 +572,65 @@
       <yloc>432</yloc>
       <attributes_kjc/>
     </entry>
+    <entry>
+      <name>SP6_FULL Execute set_variable_internal_batch_id</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>rep_name</specification_method>
+      <trans_object_id/>
+      <filename/>
+      <transname>set_variable_internal_batch_id</transname>
+      <directory>/common</directory>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>528</xloc>
+      <yloc>288</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>SP6_FULL Write Variables to Log</name>
+      <description/>
+      <type>LogParametersPlugin</type>
+      <attributes/>
+      <logLevel>Rowlevel</logLevel>
+      <variableType>1</variableType>
+      <regexFilter/>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>528</xloc>
+      <yloc>512</yloc>
+      <attributes_kjc/>
+    </entry>
   </entries>
   <hops>
     <hop>
-      <from>SP6.1_FULL_execute transformation load encompass daily extract</from>
-      <to>SP6.1_FULL_Write SP1_LOAD_RAW failure to log</to>
+      <from>SP6_FULL_execute transformation load encompass daily extract</from>
+      <to>SP6_FULL_Write SP1_LOAD_RAW failure to log</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -584,8 +638,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>SP6.1_FULL_Write SP1_LOAD_RAW failure to log</from>
-      <to>SP6.1_FULL_Abort after FAILED log operation</to>
+      <from>SP6_FULL_Write SP1_LOAD_RAW failure to log</from>
+      <to>SP6_FULL_Abort after FAILED log operation</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -593,8 +647,17 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>SP6.1_FULL_Write SP1_LOAD_RAW failure to log</from>
-      <to>SP6.1_FULL_Abort after successful log operation</to>
+      <from>SP6_FULL_Write SP1_LOAD_RAW failure to log</from>
+      <to>SP6_FULL_Abort after successful log operation</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SP6_FULL_execute transformation load encompass daily extract</from>
+      <to>SP6_FULL_End</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -603,7 +666,7 @@
     </hop>
     <hop>
       <from>Start</from>
-      <to>SP6.1_FULL_Set variables</to>
+      <to>SP6_FULL Execute set_variable_internal_batch_id</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -611,8 +674,8 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>SP6.1_FULL_Set variables</from>
-      <to>SP6.1_FULL_execute transformation load encompass daily extract</to>
+      <from>SP6_FULL Execute set_variable_internal_batch_id</from>
+      <to>SP6_FULL_Set variables</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -620,13 +683,22 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>SP6.1_FULL_execute transformation load encompass daily extract</from>
-      <to>SP6.1_FULL_End</to>
+      <from>SP6_FULL_Set variables</from>
+      <to>SP6_FULL Write Variables to Log</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>SP6_FULL Write Variables to Log</from>
+      <to>SP6_FULL_execute transformation load encompass daily extract</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
+      <unconditional>Y</unconditional>
     </hop>
   </hops>
   <notepads>
