@@ -1,48 +1,48 @@
 <job>
-  <name>SP1_FULL_load_encompass_daily_extract_to_raw_table</name>
-  <description>SP1</description>
+  <name>load_encompass_daily_extract_to_raw_table_jb</name>
+  <description>SP6.1_jb</description>
   <extended_description/>
   <job_version/>
   <job_status>0</job_status>
-  <directory>/import/SP1</directory>
+  <directory>/import/SP6.1</directory>
   <created_user>-</created_user>
   <created_date>2020/06/03 20:37:35.720</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2020/07/07 14:37:07.956</modified_date>
+  <modified_date>2020/07/24 14:36:21.450</modified_date>
   <parameters>
     <parameter>
       <name>database_hostname</name>
-      <default_value/>
+      <default_value>localhost</default_value>
       <description/>
     </parameter>
     <parameter>
       <name>database_name</name>
       <default_value>ingress</default_value>
-      <description/>
+      <description>-</description>
     </parameter>
     <parameter>
       <name>database_password</name>
-      <default_value/>
+      <default_value>Gdcae4e5!c</default_value>
       <description/>
     </parameter>
     <parameter>
       <name>database_port</name>
       <default_value>5432</default_value>
-      <description/>
+      <description>-</description>
     </parameter>
     <parameter>
       <name>database_schema</name>
       <default_value>encompass</default_value>
-      <description/>
+      <description>-</description>
     </parameter>
     <parameter>
       <name>database_username</name>
-      <default_value/>
+      <default_value>postgres</default_value>
       <description/>
     </parameter>
     <parameter>
       <name>input_path</name>
-      <default_value/>
+      <default_value>C:\pdi\Data\</default_value>
       <description/>
     </parameter>
   </parameters>
@@ -344,7 +344,7 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SP1_FULL_End</name>
+      <name>SP6.1_FULL_End</name>
       <description/>
       <type>SUCCESS</type>
       <attributes/>
@@ -356,15 +356,15 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SP1_FULL_load encompass daily extract</name>
+      <name>SP6.1_FULL_execute transformation load encompass daily extract</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
       <specification_method>rep_name</specification_method>
       <trans_object_id/>
       <filename/>
-      <transname>SP1_LOAD_RAW_load_encompass_daily_extract</transname>
-      <directory>/import/SP1</directory>
+      <transname>load_encompass_daily_extract_to_raw_table_tr01</transname>
+      <directory>/import/SP6.1</directory>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
       <exec_per_row>N</exec_per_row>
@@ -395,7 +395,7 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SP1_FULL_Abort after FAILED log operation</name>
+      <name>SP6.1_FULL_Abort after FAILED log operation</name>
       <description/>
       <type>ABORT</type>
       <attributes/>
@@ -408,7 +408,7 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SP1_FULL_Write SP1_LOAD_RAW failure to log</name>
+      <name>SP6.1_FULL_Write SP1_LOAD_RAW failure to log</name>
       <description/>
       <type>WRITE_TO_LOG</type>
       <attributes/>
@@ -423,7 +423,7 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SP1_FULL_Abort after successful log operation</name>
+      <name>SP6.1_FULL_Abort after successful log operation</name>
       <description/>
       <type>ABORT</type>
       <attributes/>
@@ -436,7 +436,7 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SP1_FULL_Set variables</name>
+      <name>SP6.1_FULL_Set variables</name>
       <description/>
       <type>SET_VARIABLES</type>
       <attributes/>
@@ -575,8 +575,8 @@
   </entries>
   <hops>
     <hop>
-      <from>SP1_FULL_load encompass daily extract</from>
-      <to>SP1_FULL_Write SP1_LOAD_RAW failure to log</to>
+      <from>SP6.1_FULL_execute transformation load encompass daily extract</from>
+      <to>SP6.1_FULL_Write SP1_LOAD_RAW failure to log</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -584,8 +584,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>SP1_FULL_Write SP1_LOAD_RAW failure to log</from>
-      <to>SP1_FULL_Abort after FAILED log operation</to>
+      <from>SP6.1_FULL_Write SP1_LOAD_RAW failure to log</from>
+      <to>SP6.1_FULL_Abort after FAILED log operation</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -593,8 +593,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>SP1_FULL_Write SP1_LOAD_RAW failure to log</from>
-      <to>SP1_FULL_Abort after successful log operation</to>
+      <from>SP6.1_FULL_Write SP1_LOAD_RAW failure to log</from>
+      <to>SP6.1_FULL_Abort after successful log operation</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -603,7 +603,7 @@
     </hop>
     <hop>
       <from>Start</from>
-      <to>SP1_FULL_Set variables</to>
+      <to>SP6.1_FULL_Set variables</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -611,8 +611,8 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>SP1_FULL_Set variables</from>
-      <to>SP1_FULL_load encompass daily extract</to>
+      <from>SP6.1_FULL_Set variables</from>
+      <to>SP6.1_FULL_execute transformation load encompass daily extract</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -620,8 +620,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>SP1_FULL_load encompass daily extract</from>
-      <to>SP1_FULL_End</to>
+      <from>SP6.1_FULL_execute transformation load encompass daily extract</from>
+      <to>SP6.1_FULL_End</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -631,14 +631,14 @@
   </hops>
   <notepads>
     <notepad>
-      <note>SP1 - Load Encompass Extract Data
+      <note>SP6.1 - Load Encompass Extract Data
 Looks for a file named Encompass.csv in the path provided and loads it
 to a table in a database. Change environments by changing input
 parameters.</note>
       <xloc>32</xloc>
       <yloc>32</yloc>
-      <width>824</width>
-      <heigth>130</heigth>
+      <width>528</width>
+      <heigth>86</heigth>
       <fontname>.AppleSystemUIFont</fontname>
       <fontsize>13</fontsize>
       <fontbold>N</fontbold>
