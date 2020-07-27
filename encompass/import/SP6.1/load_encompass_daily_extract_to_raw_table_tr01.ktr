@@ -429,7 +429,7 @@
     <created_user>-</created_user>
     <created_date>2020/03/11 16:18:28.855</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/07/24 16:54:39.259</modified_date>
+    <modified_date>2020/07/24 22:28:55.296</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -736,16 +736,11 @@ variables.</note>
     </hop>
     <hop>
       <from>SP6.1_LOAD_RAW_Load CSV File</from>
-      <to>SP6.1_LOAD_RAW Execute utility_clean raw data</to>
+      <to>SP6.1_LOAD_RAW Execute clean raw data</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>SP6.1_LOAD_RAW add internal_batch_id to a field</from>
-      <to>SP6.1_LOAD_RAW Join internal_batch_id and input data</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>SP6.1_LOAD_RAW Execute utility_clean raw data</from>
       <to>SP6.1_LOAD_RAW Join internal_batch_id and input data</to>
       <enabled>Y</enabled>
     </hop>
@@ -759,9 +754,19 @@ variables.</note>
       <to>SP6.1_LOAD_RAW add internal_batch_id to a field</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>SP6.1_LOAD_RAW Execute clean raw data</from>
+      <to>Sort rows</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Sort rows</from>
+      <to>SP6.1_LOAD_RAW Join internal_batch_id and input data</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
   <step>
-    <name>SP6.1_LOAD_RAW Execute utility_clean raw data</name>
+    <name>SP6.1_LOAD_RAW Execute clean raw data</name>
     <type>Mapping</type>
     <description/>
     <distribute>N</distribute>
@@ -828,11 +833,12 @@ variables.</note>
     </partitioning>
     <join_type>FULL OUTER</join_type>
     <step1>SP6.1_LOAD_RAW add internal_batch_id to a field</step1>
-    <step2>SP6.1_LOAD_RAW Execute utility_clean raw data</step2>
+    <step2>Sort rows</step2>
     <keys_1>
       <key>elr_internal_batch_id</key>
     </keys_1>
     <keys_2>
+      <key>elr_trans_details_loan_number</key>
     </keys_2>
     <attributes/>
     <cluster_schema/>
@@ -986,6 +992,18 @@ variables.</note>
       <field>
         <name>input_path</name>
         <variable>${input_path}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>internal_batch_id</name>
+        <variable>${internal_batch_id}</variable>
         <type>String</type>
         <format/>
         <currency/>
@@ -31857,6 +31875,48 @@ variables.</note>
     <GUI>
       <xloc>960</xloc>
       <yloc>448</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort rows</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>tmp</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>elr_trans_details_loan_number</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>784</xloc>
+      <yloc>832</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
