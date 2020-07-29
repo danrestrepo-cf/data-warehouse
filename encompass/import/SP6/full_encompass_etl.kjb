@@ -8,47 +8,52 @@
   <created_user/>
   <created_date>2020/05/05 12:35:31.924</created_date>
   <modified_user/>
-  <modified_date>2020/07/24 13:58:14.472</modified_date>
+  <modified_date>2020/07/29 12:12:13.867</modified_date>
   <parameters>
     <parameter>
       <name>database_hostname</name>
-      <default_value/>
+      <default_value>localhost</default_value>
       <description>The hostname to the database system.</description>
     </parameter>
     <parameter>
       <name>database_name</name>
       <default_value>ingress</default_value>
-      <description>The name of the database the transform will use.</description>
+      <description>-The name of the database the transform will use.</description>
     </parameter>
     <parameter>
       <name>database_password</name>
-      <default_value/>
+      <default_value>Gdcae4e5!c</default_value>
       <description>The password to connect to the database system.</description>
     </parameter>
     <parameter>
       <name>database_port</name>
       <default_value>5432</default_value>
-      <description>The port to connect to the database system.</description>
+      <description>-The port to connect to the database system.</description>
     </parameter>
     <parameter>
       <name>database_schema</name>
       <default_value>encompass</default_value>
-      <description>The name of the database schema the Encompass data will flow into.</description>
+      <description>-The name of the database schema the Encompass data will flow into.</description>
     </parameter>
     <parameter>
       <name>database_username</name>
-      <default_value/>
+      <default_value>postgres</default_value>
       <description>The username to connect to the database system.</description>
     </parameter>
     <parameter>
       <name>input_path</name>
-      <default_value/>
+      <default_value>C:\pdi\Data\</default_value>
       <description>The path to the folder location containing the input csv file. Include a trailing slash.</description>
     </parameter>
     <parameter>
       <name>log_channel_table_name</name>
-      <default_value>encompass_log_sp6_channel</default_value>
-      <description>Name of the channel logging table.</description>
+      <default_value>log_encompass_etl_job_channel</default_value>
+      <description>-Name of the channel logging table.</description>
+    </parameter>
+    <parameter>
+      <name>log_entry_table_name</name>
+      <default_value>log_encompass_etl_job_entry</default_value>
+      <description>-Name of the entry logging table.</description>
     </parameter>
     <parameter>
       <name>log_interval</name>
@@ -56,19 +61,19 @@
       <description>How often to flush logs to the disk/database (in seconds).</description>
     </parameter>
     <parameter>
+      <name>log_job_table_name</name>
+      <default_value>log_encompass_etl_job_log</default_value>
+      <description>-Name of the job log table.</description>
+    </parameter>
+    <parameter>
       <name>log_record_timeout</name>
       <default_value>90</default_value>
-      <description>How often to remove logs from the database (in days).</description>
+      <description>-How often to remove logs from the database (in days).</description>
     </parameter>
     <parameter>
       <name>log_table_schema</name>
       <default_value>encompass</default_value>
-      <description>The name of the database schema the log tables are in.</description>
-    </parameter>
-    <parameter>
-      <name>log_transformation_table_name</name>
-      <default_value>encompass_log_sp6_transformation</default_value>
-      <description/>
+      <description>-The name of the database schema the log tables are in.</description>
     </parameter>
   </parameters>
   <connection>
@@ -131,18 +136,18 @@
   <job-log-table>
     <connection>DB Connection</connection>
     <schema>${log_table_schema}</schema>
-    <table>${log_transformation_table_name}</table>
+    <table>${log_job_table_name}</table>
     <size_limit_lines/>
     <interval>${log_interval}</interval>
     <timeout_days>${log_record_timeout}</timeout_days>
     <field>
       <id>ID_JOB</id>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <name>ID_JOB</name>
     </field>
     <field>
       <id>CHANNEL_ID</id>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <name>CHANNEL_ID</name>
     </field>
     <field>
@@ -182,7 +187,7 @@
     </field>
     <field>
       <id>LINES_REJECTED</id>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <name>LINES_REJECTED</name>
     </field>
     <field>
@@ -217,35 +222,35 @@
     </field>
     <field>
       <id>LOG_FIELD</id>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <name>LOG_FIELD</name>
     </field>
     <field>
       <id>EXECUTING_SERVER</id>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <name>EXECUTING_SERVER</name>
     </field>
     <field>
       <id>EXECUTING_USER</id>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <name>EXECUTING_USER</name>
     </field>
     <field>
       <id>START_JOB_ENTRY</id>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <name>START_JOB_ENTRY</name>
     </field>
     <field>
       <id>CLIENT</id>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <name>CLIENT</name>
     </field>
   </job-log-table>
   <jobentry-log-table>
-    <connection/>
-    <schema/>
-    <table/>
-    <timeout_days/>
+    <connection>DB Connection</connection>
+    <schema>${log_table_schema}</schema>
+    <table>${log_entry_table_name}</table>
+    <timeout_days>${log_record_timeout}</timeout_days>
     <field>
       <id>ID_BATCH</id>
       <enabled>Y</enabled>
@@ -323,12 +328,12 @@
     </field>
     <field>
       <id>LOG_FIELD</id>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <name>LOG_FIELD</name>
     </field>
     <field>
       <id>COPY_NR</id>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <name>COPY_NR</name>
     </field>
   </jobentry-log-table>
@@ -436,15 +441,15 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SP6_FULL_Execute SP1</name>
+      <name>SP6_FULL_Execute SP6.1</name>
       <description/>
       <type>JOB</type>
       <attributes/>
       <specification_method>rep_name</specification_method>
       <job_object_id/>
       <filename/>
-      <jobname>SP1_FULL_load_encompass_daily_extract_to_raw_table</jobname>
-      <directory>/import/SP1</directory>
+      <jobname>load_encompass_daily_extract_to_raw_table_jb</jobname>
+      <directory>/import/SP6.1</directory>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
       <exec_per_row>N</exec_per_row>
@@ -545,29 +550,24 @@
       <file_variable_type>JVM</file_variable_type>
       <fields>
         <field>
-          <variable_name>log_channel_table_name</variable_name>
-          <variable_value>encompass_log_SP1_channel</variable_value>
-          <variable_type>CURRENT_JOB</variable_type>
-        </field>
-        <field>
           <variable_name>log_filename_parse_fail_insert_fail</variable_name>
-          <variable_value>sp1_parse_fail_insert_fail</variable_value>
-          <variable_type>CURRENT_JOB</variable_type>
+          <variable_value>encompass_raw_parse_fail_insert_fail</variable_value>
+          <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>log_filename_parse_fail_insert_ok</variable_name>
-          <variable_value>sp1_parse_fail_insert_ok</variable_value>
-          <variable_type>CURRENT_JOB</variable_type>
+          <variable_value>encompass_raw_parse_fail_insert_ok</variable_value>
+          <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>log_filename_parse_ok_insert_fail</variable_name>
-          <variable_value>sp1_parse_ok_insert_fail</variable_value>
-          <variable_type>CURRENT_JOB</variable_type>
+          <variable_value>encompass_raw_parse_ok_insert_fail</variable_value>
+          <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>log_filename_parse_ok_insert_ok</variable_name>
-          <variable_value>sp1_parse_ok_insert_ok</variable_value>
-          <variable_type>CURRENT_JOB</variable_type>
+          <variable_value>encompass_raw_parse_ok_insert_ok</variable_value>
+          <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>log_interval</variable_name>
@@ -575,34 +575,14 @@
           <variable_type>JVM</variable_type>
         </field>
         <field>
-          <variable_name>log_metrics_table_name</variable_name>
-          <variable_value>encompass_log_SP1_metrics</variable_value>
-          <variable_type>CURRENT_JOB</variable_type>
-        </field>
-        <field>
-          <variable_name>log_performance_table_name</variable_name>
-          <variable_value>encompass_log_SP1_performance</variable_value>
-          <variable_type>CURRENT_JOB</variable_type>
-        </field>
-        <field>
           <variable_name>log_record_timeout</variable_name>
           <variable_value>5</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
-          <variable_name>log_step_table_name</variable_name>
-          <variable_value>encompass_log_SP1_step</variable_value>
-          <variable_type>CURRENT_JOB</variable_type>
-        </field>
-        <field>
           <variable_name>log_table_schema</variable_name>
           <variable_value>encompass</variable_value>
           <variable_type>JVM</variable_type>
-        </field>
-        <field>
-          <variable_name>log_transformation_table_name</variable_name>
-          <variable_value>encompass_log_SP1_transformation</variable_value>
-          <variable_type>CURRENT_JOB</variable_type>
         </field>
         <field>
           <variable_name>target_table_name_error</variable_name>
@@ -638,7 +618,7 @@
   </entries>
   <hops>
     <hop>
-      <from>SP6_FULL_Execute SP1</from>
+      <from>SP6_FULL_Execute SP6.1</from>
       <to>SP6_FULL_Add SP1 Success Message to Log</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -656,7 +636,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>SP6_FULL_Execute SP1</from>
+      <from>SP6_FULL_Execute SP6.1</from>
       <to>SP6_FULL_Abort Due to SP1 Failure</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -675,7 +655,7 @@
     </hop>
     <hop>
       <from>SP6_FULL_Set variables</from>
-      <to>SP6_FULL_Execute SP1</to>
+      <to>SP6_FULL_Execute SP6.1</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -697,8 +677,8 @@
       <note>SP6 - Encompass Full ETL</note>
       <xloc>48</xloc>
       <yloc>32</yloc>
-      <width>207</width>
-      <heigth>29</heigth>
+      <width>218</width>
+      <heigth>30</heigth>
       <fontname>.AppleSystemUIFont</fontname>
       <fontsize>13</fontsize>
       <fontbold>N</fontbold>
