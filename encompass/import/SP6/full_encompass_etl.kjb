@@ -8,72 +8,72 @@
   <created_user/>
   <created_date>2020/05/05 12:35:31.924</created_date>
   <modified_user/>
-  <modified_date>2020/07/29 13:14:05.913</modified_date>
+  <modified_date>2020/08/06 07:59:58.206</modified_date>
   <parameters>
     <parameter>
       <name>database_hostname</name>
-      <default_value/>
+      <default_value>localhost</default_value>
       <description>The hostname to the database system.</description>
     </parameter>
     <parameter>
       <name>database_name</name>
       <default_value>ingress</default_value>
-      <description>-The name of the database the transform will use.</description>
+      <description>The name of the database the transform will use.</description>
     </parameter>
     <parameter>
       <name>database_password</name>
-      <default_value/>
+      <default_value>Gdcae4e5!c</default_value>
       <description>The password to connect to the database system.</description>
     </parameter>
     <parameter>
       <name>database_port</name>
       <default_value>5432</default_value>
-      <description>-The port to connect to the database system.</description>
+      <description>The port to connect to the database system.</description>
     </parameter>
     <parameter>
       <name>database_schema</name>
       <default_value>encompass</default_value>
-      <description>-The name of the database schema the Encompass data will flow into.</description>
+      <description>The name of the database schema the Encompass data will flow into.</description>
     </parameter>
     <parameter>
       <name>database_username</name>
-      <default_value/>
+      <default_value>postgres</default_value>
       <description>The username to connect to the database system.</description>
     </parameter>
     <parameter>
       <name>input_path</name>
-      <default_value/>
+      <default_value>c:\pdi\Data\</default_value>
       <description>The path to the folder location containing the input csv file. Include a trailing slash.</description>
     </parameter>
     <parameter>
       <name>log_channel_table_name</name>
       <default_value>log_encompass_etl_job_channel</default_value>
-      <description>-Name of the channel logging table.</description>
+      <description>Name of the channel logging table.</description>
     </parameter>
     <parameter>
       <name>log_entry_table_name</name>
       <default_value>log_encompass_etl_job_entry</default_value>
-      <description>-Name of the entry logging table.</description>
+      <description>Name of the entry logging table.</description>
     </parameter>
     <parameter>
       <name>log_interval</name>
-      <default_value/>
+      <default_value>5</default_value>
       <description>How often to flush logs to the disk/database (in seconds).</description>
     </parameter>
     <parameter>
       <name>log_job_table_name</name>
       <default_value>log_encompass_etl_job_log</default_value>
-      <description>-Name of the job log table.</description>
+      <description>Name of the job log table.</description>
     </parameter>
     <parameter>
       <name>log_record_timeout</name>
       <default_value>90</default_value>
-      <description>-How often to remove logs from the database (in days).</description>
+      <description>How often to remove logs from the database (in days).</description>
     </parameter>
     <parameter>
       <name>log_table_schema</name>
       <default_value>encompass</default_value>
-      <description>-The name of the database schema the log tables are in.</description>
+      <description>The name of the database schema the log tables are in.</description>
     </parameter>
   </parameters>
   <connection>
@@ -513,7 +513,7 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SP6_FULL_Abort Due to SP1 Failure</name>
+      <name>SP6_FULL_Abort Due to SP6.1 Failure</name>
       <description/>
       <type>ABORT</type>
       <attributes/>
@@ -526,13 +526,13 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SP6_FULL_Add SP1 Success Message to Log</name>
+      <name>SP6_FULL_Add SP6.1 Success Message to Log</name>
       <description/>
       <type>WRITE_TO_LOG</type>
       <attributes/>
-      <logmessage>SP6_FULL_Add SP1 Success Message to Log</logmessage>
+      <logmessage>SP6_FULL_Add SP6.1 Success Message to Log</logmessage>
       <loglevel>Basic</loglevel>
-      <logsubject>SP6_FULL_Add SP1 Success Message to Log</logsubject>
+      <logsubject>SP6_FULL_Add SP6.1 Success Message to Log</logsubject>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
@@ -619,7 +619,7 @@
   <hops>
     <hop>
       <from>SP6_FULL_Execute SP6.1</from>
-      <to>SP6_FULL_Add SP1 Success Message to Log</to>
+      <to>SP6_FULL_Add SP6.1 Success Message to Log</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -627,7 +627,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>SP6_FULL_Add SP1 Success Message to Log</from>
+      <from>SP6_FULL_Add SP6.1 Success Message to Log</from>
       <to>SP6_FULL_End</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -637,7 +637,7 @@
     </hop>
     <hop>
       <from>SP6_FULL_Execute SP6.1</from>
-      <to>SP6_FULL_Abort Due to SP1 Failure</to>
+      <to>SP6_FULL_Abort Due to SP6.1 Failure</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
