@@ -1,0 +1,2241 @@
+<transformation>
+  <info>
+    <name>encompass_OpsTasksProductivityExport</name>
+    <description/>
+    <extended_description/>
+    <trans_version/>
+    <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
+    <directory>/</directory>
+    <parameters>
+    </parameters>
+    <log>
+      <trans-log-table>
+        <connection/>
+        <schema/>
+        <table/>
+        <size_limit_lines/>
+        <interval/>
+        <timeout_days/>
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>TRANSNAME</id>
+          <enabled>Y</enabled>
+          <name>TRANSNAME</name>
+        </field>
+        <field>
+          <id>STATUS</id>
+          <enabled>Y</enabled>
+          <name>STATUS</name>
+        </field>
+        <field>
+          <id>LINES_READ</id>
+          <enabled>Y</enabled>
+          <name>LINES_READ</name>
+          <subject/>
+        </field>
+        <field>
+          <id>LINES_WRITTEN</id>
+          <enabled>Y</enabled>
+          <name>LINES_WRITTEN</name>
+          <subject/>
+        </field>
+        <field>
+          <id>LINES_UPDATED</id>
+          <enabled>Y</enabled>
+          <name>LINES_UPDATED</name>
+          <subject/>
+        </field>
+        <field>
+          <id>LINES_INPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_INPUT</name>
+          <subject/>
+        </field>
+        <field>
+          <id>LINES_OUTPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_OUTPUT</name>
+          <subject/>
+        </field>
+        <field>
+          <id>LINES_REJECTED</id>
+          <enabled>Y</enabled>
+          <name>LINES_REJECTED</name>
+          <subject/>
+        </field>
+        <field>
+          <id>ERRORS</id>
+          <enabled>Y</enabled>
+          <name>ERRORS</name>
+        </field>
+        <field>
+          <id>STARTDATE</id>
+          <enabled>Y</enabled>
+          <name>STARTDATE</name>
+        </field>
+        <field>
+          <id>ENDDATE</id>
+          <enabled>Y</enabled>
+          <name>ENDDATE</name>
+        </field>
+        <field>
+          <id>LOGDATE</id>
+          <enabled>Y</enabled>
+          <name>LOGDATE</name>
+        </field>
+        <field>
+          <id>DEPDATE</id>
+          <enabled>Y</enabled>
+          <name>DEPDATE</name>
+        </field>
+        <field>
+          <id>REPLAYDATE</id>
+          <enabled>Y</enabled>
+          <name>REPLAYDATE</name>
+        </field>
+        <field>
+          <id>LOG_FIELD</id>
+          <enabled>Y</enabled>
+          <name>LOG_FIELD</name>
+        </field>
+        <field>
+          <id>EXECUTING_SERVER</id>
+          <enabled>N</enabled>
+          <name>EXECUTING_SERVER</name>
+        </field>
+        <field>
+          <id>EXECUTING_USER</id>
+          <enabled>N</enabled>
+          <name>EXECUTING_USER</name>
+        </field>
+        <field>
+          <id>CLIENT</id>
+          <enabled>N</enabled>
+          <name>CLIENT</name>
+        </field>
+      </trans-log-table>
+      <perf-log-table>
+        <connection/>
+        <schema/>
+        <table/>
+        <interval/>
+        <timeout_days/>
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>SEQ_NR</id>
+          <enabled>Y</enabled>
+          <name>SEQ_NR</name>
+        </field>
+        <field>
+          <id>LOGDATE</id>
+          <enabled>Y</enabled>
+          <name>LOGDATE</name>
+        </field>
+        <field>
+          <id>TRANSNAME</id>
+          <enabled>Y</enabled>
+          <name>TRANSNAME</name>
+        </field>
+        <field>
+          <id>STEPNAME</id>
+          <enabled>Y</enabled>
+          <name>STEPNAME</name>
+        </field>
+        <field>
+          <id>STEP_COPY</id>
+          <enabled>Y</enabled>
+          <name>STEP_COPY</name>
+        </field>
+        <field>
+          <id>LINES_READ</id>
+          <enabled>Y</enabled>
+          <name>LINES_READ</name>
+        </field>
+        <field>
+          <id>LINES_WRITTEN</id>
+          <enabled>Y</enabled>
+          <name>LINES_WRITTEN</name>
+        </field>
+        <field>
+          <id>LINES_UPDATED</id>
+          <enabled>Y</enabled>
+          <name>LINES_UPDATED</name>
+        </field>
+        <field>
+          <id>LINES_INPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_INPUT</name>
+        </field>
+        <field>
+          <id>LINES_OUTPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_OUTPUT</name>
+        </field>
+        <field>
+          <id>LINES_REJECTED</id>
+          <enabled>Y</enabled>
+          <name>LINES_REJECTED</name>
+        </field>
+        <field>
+          <id>ERRORS</id>
+          <enabled>Y</enabled>
+          <name>ERRORS</name>
+        </field>
+        <field>
+          <id>INPUT_BUFFER_ROWS</id>
+          <enabled>Y</enabled>
+          <name>INPUT_BUFFER_ROWS</name>
+        </field>
+        <field>
+          <id>OUTPUT_BUFFER_ROWS</id>
+          <enabled>Y</enabled>
+          <name>OUTPUT_BUFFER_ROWS</name>
+        </field>
+      </perf-log-table>
+      <channel-log-table>
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>LOG_DATE</id>
+          <enabled>Y</enabled>
+          <name>LOG_DATE</name>
+        </field>
+        <field>
+          <id>LOGGING_OBJECT_TYPE</id>
+          <enabled>Y</enabled>
+          <name>LOGGING_OBJECT_TYPE</name>
+        </field>
+        <field>
+          <id>OBJECT_NAME</id>
+          <enabled>Y</enabled>
+          <name>OBJECT_NAME</name>
+        </field>
+        <field>
+          <id>OBJECT_COPY</id>
+          <enabled>Y</enabled>
+          <name>OBJECT_COPY</name>
+        </field>
+        <field>
+          <id>REPOSITORY_DIRECTORY</id>
+          <enabled>Y</enabled>
+          <name>REPOSITORY_DIRECTORY</name>
+        </field>
+        <field>
+          <id>FILENAME</id>
+          <enabled>Y</enabled>
+          <name>FILENAME</name>
+        </field>
+        <field>
+          <id>OBJECT_ID</id>
+          <enabled>Y</enabled>
+          <name>OBJECT_ID</name>
+        </field>
+        <field>
+          <id>OBJECT_REVISION</id>
+          <enabled>Y</enabled>
+          <name>OBJECT_REVISION</name>
+        </field>
+        <field>
+          <id>PARENT_CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>PARENT_CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>ROOT_CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>ROOT_CHANNEL_ID</name>
+        </field>
+      </channel-log-table>
+      <step-log-table>
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>LOG_DATE</id>
+          <enabled>Y</enabled>
+          <name>LOG_DATE</name>
+        </field>
+        <field>
+          <id>TRANSNAME</id>
+          <enabled>Y</enabled>
+          <name>TRANSNAME</name>
+        </field>
+        <field>
+          <id>STEPNAME</id>
+          <enabled>Y</enabled>
+          <name>STEPNAME</name>
+        </field>
+        <field>
+          <id>STEP_COPY</id>
+          <enabled>Y</enabled>
+          <name>STEP_COPY</name>
+        </field>
+        <field>
+          <id>LINES_READ</id>
+          <enabled>Y</enabled>
+          <name>LINES_READ</name>
+        </field>
+        <field>
+          <id>LINES_WRITTEN</id>
+          <enabled>Y</enabled>
+          <name>LINES_WRITTEN</name>
+        </field>
+        <field>
+          <id>LINES_UPDATED</id>
+          <enabled>Y</enabled>
+          <name>LINES_UPDATED</name>
+        </field>
+        <field>
+          <id>LINES_INPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_INPUT</name>
+        </field>
+        <field>
+          <id>LINES_OUTPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_OUTPUT</name>
+        </field>
+        <field>
+          <id>LINES_REJECTED</id>
+          <enabled>Y</enabled>
+          <name>LINES_REJECTED</name>
+        </field>
+        <field>
+          <id>ERRORS</id>
+          <enabled>Y</enabled>
+          <name>ERRORS</name>
+        </field>
+        <field>
+          <id>LOG_FIELD</id>
+          <enabled>N</enabled>
+          <name>LOG_FIELD</name>
+        </field>
+      </step-log-table>
+      <metrics-log-table>
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>LOG_DATE</id>
+          <enabled>Y</enabled>
+          <name>LOG_DATE</name>
+        </field>
+        <field>
+          <id>METRICS_DATE</id>
+          <enabled>Y</enabled>
+          <name>METRICS_DATE</name>
+        </field>
+        <field>
+          <id>METRICS_CODE</id>
+          <enabled>Y</enabled>
+          <name>METRICS_CODE</name>
+        </field>
+        <field>
+          <id>METRICS_DESCRIPTION</id>
+          <enabled>Y</enabled>
+          <name>METRICS_DESCRIPTION</name>
+        </field>
+        <field>
+          <id>METRICS_SUBJECT</id>
+          <enabled>Y</enabled>
+          <name>METRICS_SUBJECT</name>
+        </field>
+        <field>
+          <id>METRICS_TYPE</id>
+          <enabled>Y</enabled>
+          <name>METRICS_TYPE</name>
+        </field>
+        <field>
+          <id>METRICS_VALUE</id>
+          <enabled>Y</enabled>
+          <name>METRICS_VALUE</name>
+        </field>
+      </metrics-log-table>
+    </log>
+    <maxdate>
+      <connection/>
+      <table/>
+      <field/>
+      <offset>0.0</offset>
+      <maxdiff>0.0</maxdiff>
+    </maxdate>
+    <size_rowset>10000</size_rowset>
+    <sleep_time_empty>50</sleep_time_empty>
+    <sleep_time_full>50</sleep_time_full>
+    <unique_connections>N</unique_connections>
+    <feedback_shown>Y</feedback_shown>
+    <feedback_size>50000</feedback_size>
+    <using_thread_priorities>Y</using_thread_priorities>
+    <shared_objects_file/>
+    <capture_step_performance>N</capture_step_performance>
+    <step_performance_capturing_delay>1000</step_performance_capturing_delay>
+    <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
+    <dependencies>
+    </dependencies>
+    <partitionschemas>
+    </partitionschemas>
+    <slaveservers>
+    </slaveservers>
+    <clusterschemas>
+    </clusterschemas>
+    <created_user/>
+    <created_date>2019/12/03 14:22:47.762</created_date>
+    <modified_user>-</modified_user>
+    <modified_date>2019/06/05 09:42:13.518</modified_date>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
+    <is_key_private>N</is_key_private>
+  </info>
+  <notepads>
+  </notepads>
+  <connection>
+    <name>DL_UAT</name>
+    <server>uat-bi.cu4k887uaksz.us-east-1.rds.amazonaws.com</server>
+    <type>MSSQLNATIVE</type>
+    <access>Native</access>
+    <database>DL_UAT</database>
+    <port>1433</port>
+    <username>SWayment</username>
+    <password>Encrypted 2be98afc823c1b8d0f335b966fa98fbd9</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>MSSQLUseIntegratedSecurity</code>
+        <attribute>false</attribute>
+      </attribute>
+      <attribute>
+        <code>MSSQL_DOUBLE_DECIMAL_SEPARATOR</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>1433</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
+  <order>
+    <hop>
+      <from>CSV file input</from>
+      <to>Table output</to>
+      <enabled>Y</enabled>
+    </hop>
+  </order>
+  <step>
+    <name>CSV file input</name>
+    <type>CsvInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <filename>G:\Shared drives\Data Integration\Data Integration\Encompass\D-OpsTasksProductivityExport.txt</filename>
+    <filename_field/>
+    <rownum_field/>
+    <include_filename>N</include_filename>
+    <separator>,</separator>
+    <enclosure>"</enclosure>
+    <header>Y</header>
+    <buffer_size>50000</buffer_size>
+    <lazy_conversion>Y</lazy_conversion>
+    <add_filename_result>N</add_filename_result>
+    <parallel>N</parallel>
+    <newline_possible>N</newline_possible>
+    <encoding/>
+    <fields>
+      <field>
+        <name>Trans Details Loan #</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Loan Info Loan Created Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>FHA Task Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>VA Tasks Work Competed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Appraisal Work Ordered Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Appraisal Retrieval Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Welcome Call Needs List Sent Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Welcome Call Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Title Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Tax Transcripts Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Flood Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>HOI Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Payoff Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>HOA Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Fraud Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>VOE Written Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Subordination Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>IFW Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>LT GFE Request Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Tech Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>LT Appraisal Escalation Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>LT Resend Request Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>LT Redisclosure Completed Date/Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>UW Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>UW Resubmittal Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Underwriting Suspended Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Processing Resub Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Suspended Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Verbal VOE Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Closing Sched Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CL Docs Delivered Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CL HUD Approved Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Signing Confirm Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>FD | System Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Funding Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Fund Oustanding Docs Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Inv Cond Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>MERS Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>MIP Remittance Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Coll to Investor Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Collateral Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Delivery Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>MERS Transfer Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Coll Delivery Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Condo Approval Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Imaging Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Final Docs Delivery Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Govt Ins Work Completed Date Stamp</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Purchase Advice Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>UW Suspended Cleared Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CS Feedback Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Processing Resub Work Ordered Date Stamp</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>FP Assignment backfilled Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Suspended Requests Assigned Date Stamp</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Adverse Action Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Collateral Work Ordered Date Stamp</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Closing Sched Work Ordered Date Stamp</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CL Instr Released Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CL HUD Rev Requested Date Stamp</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CS | Rework Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Closing Review Audit Work Completed Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>FP Cond to UW | Conditions 1 Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>FP Cond to UW | Conditions 2 Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>FP Cond to UW | Conditions 3 Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>FP Cond to UW | Conditions 4 Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>FP Cond to UW | Conditions 5 Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>UW Resub to FP | Processor 1 Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>UW Resub to FP | Processor 2 Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>UW Resub to FP | Processor 3 Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>UW Resub to FP | Processor 4 Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>UW Resub to FP | Processor 5 Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>LT Resend Request Completed Date/Time</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Tech Dicslosure Input Completed date/time stamp</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Tech Transmission Completed date/time stamp</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Tech Work Completed Date Stamp</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Closing Sched - Contact Attempt Date 1</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Closing Sched - Contact Attempt Date 2</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Closing Sched - Contact Attempt Date 3</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Closing Sched - Contact Attempt Date 4</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Closing Sched - Contact Attempt Date 5</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>UW Delivery Work Completed Date Stamp</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CL Pre-Work Completed Date Stamp</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CL Docs Delivered Date Stamp</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Closing Review Audit Work Completed Date Stamp</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Title Work Ordered Date Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Welcome Call Escrow Contact Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Welcome Call Work Completed Date Stamp</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Welcome Call Title Contact Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Title Worker Assigned Date Stamp</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Welcome Call Work Ordered Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Welcome Call - Last Contact Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Welcome Call - Next Scheduled Contact Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Document Date Received - Current Homeowner's Insurance Policy</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Document Date Received - Current Flood Insurance Policy</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Document Date Received - Flood Insurance Binder</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>HOI - Last Contact Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>HOI Next Scheduled Contact Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>HOI Work Ordered Date Stamp</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Welcome Call Homeowners Agt Contact Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>HOI Work Completed Date Stamp</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Flood Policy Ordered Date Stamp</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Document Date Received - VA Notice of Value</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Loan Info Loan ID</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>38</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>224</xloc>
+      <yloc>224</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Table output</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>DL_UAT</connection>
+    <schema>encompass</schema>
+    <table>OpsTasksProductivityExport</table>
+    <commit>1000</commit>
+    <truncate>Y</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+      <field>
+        <column_name>Trans_Details_Loan
+</column_name>
+        <stream_name>Trans Details Loan #</stream_name>
+      </field>
+      <field>
+        <column_name>Loan_Info_Loan_Created_Date
+</column_name>
+        <stream_name>Loan Info Loan Created Date</stream_name>
+      </field>
+      <field>
+        <column_name>FHA_Task_Work_Completed_Date_Date
+</column_name>
+        <stream_name>FHA Task Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>VA_Tasks_Work_Competed_Date_Date
+</column_name>
+        <stream_name>VA Tasks Work Competed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Appraisal_Work_Ordered_Date_Date
+</column_name>
+        <stream_name>Appraisal Work Ordered Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Appraisal_Retrieval_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Appraisal Retrieval Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Welcome_Call_Needs_List_Sent_Date_Date
+</column_name>
+        <stream_name>Welcome Call Needs List Sent Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Welcome_Call_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Welcome Call Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Title_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Title Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Tax_Transcripts_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Tax Transcripts Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Flood_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Flood Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>HOI_Work_Completed_Date_Date
+</column_name>
+        <stream_name>HOI Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Payoff_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Payoff Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>HOA_Work_Completed_Date_Date
+</column_name>
+        <stream_name>HOA Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Fraud_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Fraud Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>VOE_Written_Work_Completed_Date_Date
+</column_name>
+        <stream_name>VOE Written Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Subordination_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Subordination Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>IFW_Work_Completed_Date_Date
+</column_name>
+        <stream_name>IFW Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>LT_GFE_Request_Completed_Date_Date
+</column_name>
+        <stream_name>LT GFE Request Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Tech_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Tech Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>LT_Appraisal_Escalation_Work_Completed_Date_Date
+</column_name>
+        <stream_name>LT Appraisal Escalation Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>LT_Resend_Request_Completed_Date_Date
+</column_name>
+        <stream_name>LT Resend Request Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>LT_Redisclosure_Completed_Date_Date
+</column_name>
+        <stream_name>LT Redisclosure Completed Date/Date</stream_name>
+      </field>
+      <field>
+        <column_name>UW_Work_Completed_Date_Date
+</column_name>
+        <stream_name>UW Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>UW_Resubmittal_Work_Completed_Date_Date
+</column_name>
+        <stream_name>UW Resubmittal Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Underwriting_Suspended_Date
+</column_name>
+        <stream_name>Underwriting Suspended Date</stream_name>
+      </field>
+      <field>
+        <column_name>Processing_Resub_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Processing Resub Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Suspended_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Suspended Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Verbal_VOE_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Verbal VOE Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Closing_Sched_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Closing Sched Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>CL_Docs_Delivered_Date_Date
+</column_name>
+        <stream_name>CL Docs Delivered Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>CL_HUD_Approved_Date_Date
+</column_name>
+        <stream_name>CL HUD Approved Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Signing_Confirm_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Signing Confirm Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>FD_System_Work_Completed_Date_Date
+</column_name>
+        <stream_name>FD | System Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Funding_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Funding Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Fund_Oustanding_Docs_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Fund Oustanding Docs Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Inv_Cond_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Inv Cond Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>MERS_Work_Completed_Date_Date
+</column_name>
+        <stream_name>MERS Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>MIP_Remittance_Work_Completed_Date_Date
+</column_name>
+        <stream_name>MIP Remittance Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Coll_to_Investor_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Coll to Investor Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Collateral_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Collateral Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Delivery_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Delivery Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>MERS_Transfer_Work_Completed_Date_Date
+</column_name>
+        <stream_name>MERS Transfer Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Coll_Delivery_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Coll Delivery Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Condo_Approval_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Condo Approval Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Imaging_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Imaging Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Final_Docs_Delivery_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Final Docs Delivery Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Govt_Ins_Work_Completed_Date_Stamp
+</column_name>
+        <stream_name>Govt Ins Work Completed Date Stamp</stream_name>
+      </field>
+      <field>
+        <column_name>Purchase_Advice_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Purchase Advice Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>UW_Suspended_Cleared_Date
+</column_name>
+        <stream_name>UW Suspended Cleared Date</stream_name>
+      </field>
+      <field>
+        <column_name>CS_Feedback_Work_Completed_Date_Date
+</column_name>
+        <stream_name>CS Feedback Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Processing_Resub_Work_Ordered_Date_Stamp
+</column_name>
+        <stream_name>Processing Resub Work Ordered Date Stamp</stream_name>
+      </field>
+      <field>
+        <column_name>FP_Assignment_backfilled_Date
+</column_name>
+        <stream_name>FP Assignment backfilled Date</stream_name>
+      </field>
+      <field>
+        <column_name>Suspended_Requests_Assigned_Date_Stamp
+</column_name>
+        <stream_name>Suspended Requests Assigned Date Stamp</stream_name>
+      </field>
+      <field>
+        <column_name>Adverse_Action_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Adverse Action Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Collateral_Work_Ordered_Date_Stamp
+</column_name>
+        <stream_name>Collateral Work Ordered Date Stamp</stream_name>
+      </field>
+      <field>
+        <column_name>Closing_Sched_Work_Ordered_Date_Stamp
+</column_name>
+        <stream_name>Closing Sched Work Ordered Date Stamp</stream_name>
+      </field>
+      <field>
+        <column_name>CL_Instr_Released_Date_Date
+</column_name>
+        <stream_name>CL Instr Released Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>CL_HUD_Rev_Requested_Date_Stamp
+</column_name>
+        <stream_name>CL HUD Rev Requested Date Stamp</stream_name>
+      </field>
+      <field>
+        <column_name>CS_Rework_Work_Completed_Date_Date
+</column_name>
+        <stream_name>CS | Rework Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Closing_Review_Audit_Work_Completed_Date_Date
+</column_name>
+        <stream_name>Closing Review Audit Work Completed Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>FP_Cond_to_UW_Conditions_1_Date_Date
+</column_name>
+        <stream_name>FP Cond to UW | Conditions 1 Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>FP_Cond_to_UW_Conditions_2_Date_Date
+</column_name>
+        <stream_name>FP Cond to UW | Conditions 2 Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>FP_Cond_to_UW_Conditions_3_Date_Date
+</column_name>
+        <stream_name>FP Cond to UW | Conditions 3 Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>FP_Cond_to_UW_Conditions_4_Date_Date
+</column_name>
+        <stream_name>FP Cond to UW | Conditions 4 Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>FP_Cond_to_UW_Conditions_5_Date_Date
+</column_name>
+        <stream_name>FP Cond to UW | Conditions 5 Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>UW_Resub_to_FP_Processor_1_Date_Date
+</column_name>
+        <stream_name>UW Resub to FP | Processor 1 Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>UW_Resub_to_FP_Processor_2_Date_Date
+</column_name>
+        <stream_name>UW Resub to FP | Processor 2 Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>UW_Resub_to_FP_Processor_3_Date_Date
+</column_name>
+        <stream_name>UW Resub to FP | Processor 3 Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>UW_Resub_to_FP_Processor_4_Date_Date
+</column_name>
+        <stream_name>UW Resub to FP | Processor 4 Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>UW_Resub_to_FP_Processor_5_Date_Date
+</column_name>
+        <stream_name>UW Resub to FP | Processor 5 Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>LT_Resend_Request_Completed_Date_Time
+</column_name>
+        <stream_name>LT Resend Request Completed Date/Time</stream_name>
+      </field>
+      <field>
+        <column_name>Tech_Dicslosure_Input_Completed_date_time_stamp
+</column_name>
+        <stream_name>Tech Dicslosure Input Completed date/time stamp</stream_name>
+      </field>
+      <field>
+        <column_name>Tech_Transmission_Completed_date_time_stamp
+</column_name>
+        <stream_name>Tech Transmission Completed date/time stamp</stream_name>
+      </field>
+      <field>
+        <column_name>Tech_Work_Completed_Date_Stamp
+</column_name>
+        <stream_name>Tech Work Completed Date Stamp</stream_name>
+      </field>
+      <field>
+        <column_name>Closing_Sched_Contact_Attempt_Date_1
+</column_name>
+        <stream_name>Closing Sched - Contact Attempt Date 1</stream_name>
+      </field>
+      <field>
+        <column_name>Closing_Sched_Contact_Attempt_Date_2
+</column_name>
+        <stream_name>Closing Sched - Contact Attempt Date 2</stream_name>
+      </field>
+      <field>
+        <column_name>Closing_Sched_Contact_Attempt_Date_3
+</column_name>
+        <stream_name>Closing Sched - Contact Attempt Date 3</stream_name>
+      </field>
+      <field>
+        <column_name>Closing_Sched_Contact_Attempt_Date_4
+</column_name>
+        <stream_name>Closing Sched - Contact Attempt Date 4</stream_name>
+      </field>
+      <field>
+        <column_name>Closing_Sched_Contact_Attempt_Date_5
+</column_name>
+        <stream_name>Closing Sched - Contact Attempt Date 5</stream_name>
+      </field>
+      <field>
+        <column_name>UW_Delivery_Work_Completed_Date_Stamp
+</column_name>
+        <stream_name>UW Delivery Work Completed Date Stamp</stream_name>
+      </field>
+      <field>
+        <column_name>CL_Pre_Work_Completed_Date_Stamp
+</column_name>
+        <stream_name>CL Pre-Work Completed Date Stamp</stream_name>
+      </field>
+      <field>
+        <column_name>CL_Docs_Delivered_Date_Stamp
+</column_name>
+        <stream_name>CL Docs Delivered Date Stamp</stream_name>
+      </field>
+      <field>
+        <column_name>Closing_Review_Audit_Work_Completed_Date_Stamp
+</column_name>
+        <stream_name>Closing Review Audit Work Completed Date Stamp</stream_name>
+      </field>
+      <field>
+        <column_name>Title_Work_Ordered_Date_Date
+</column_name>
+        <stream_name>Title Work Ordered Date Date</stream_name>
+      </field>
+      <field>
+        <column_name>Welcome_Call_Escrow_Contact_Date
+</column_name>
+        <stream_name>Welcome Call Escrow Contact Date</stream_name>
+      </field>
+      <field>
+        <column_name>Welcome_Call_Work_Completed_Date_Stamp
+</column_name>
+        <stream_name>Welcome Call Work Completed Date Stamp</stream_name>
+      </field>
+      <field>
+        <column_name>Welcome_Call_Title_Contact_Date
+</column_name>
+        <stream_name>Welcome Call Title Contact Date</stream_name>
+      </field>
+      <field>
+        <column_name>Title_Worker_Assigned_Date_Stamp
+</column_name>
+        <stream_name>Title Worker Assigned Date Stamp</stream_name>
+      </field>
+      <field>
+        <column_name>Welcome_Call_Work_Ordered_Date
+</column_name>
+        <stream_name>Welcome Call Work Ordered Date</stream_name>
+      </field>
+      <field>
+        <column_name>Welcome_Call_Last_Contact_Date
+</column_name>
+        <stream_name>Welcome Call - Last Contact Date</stream_name>
+      </field>
+      <field>
+        <column_name>Welcome_Call_Next_Scheduled_Contact_Date
+</column_name>
+        <stream_name>Welcome Call - Next Scheduled Contact Date</stream_name>
+      </field>
+      <field>
+        <column_name>Document_Date_Received_Current_Homeowner_s_Insurance_Policy
+</column_name>
+        <stream_name>Document Date Received - Current Homeowner's Insurance Policy</stream_name>
+      </field>
+      <field>
+        <column_name>Document_Date_Received_Current_Flood_Insurance_Policy
+</column_name>
+        <stream_name>Document Date Received - Current Flood Insurance Policy</stream_name>
+      </field>
+      <field>
+        <column_name>Document_Date_Received_Flood_Insurance_Binder
+</column_name>
+        <stream_name>Document Date Received - Flood Insurance Binder</stream_name>
+      </field>
+      <field>
+        <column_name>HOI_Last_Contact_Date
+</column_name>
+        <stream_name>HOI - Last Contact Date</stream_name>
+      </field>
+      <field>
+        <column_name>HOI_Next_Scheduled_Contact_Date
+</column_name>
+        <stream_name>HOI Next Scheduled Contact Date</stream_name>
+      </field>
+      <field>
+        <column_name>HOI_Work_Ordered_Date_Stamp
+</column_name>
+        <stream_name>HOI Work Ordered Date Stamp</stream_name>
+      </field>
+      <field>
+        <column_name>Welcome_Call_Homeowners_Agt_Contact_Date
+</column_name>
+        <stream_name>Welcome Call Homeowners Agt Contact Date</stream_name>
+      </field>
+      <field>
+        <column_name>HOI_Work_Completed_Date_Stamp
+</column_name>
+        <stream_name>HOI Work Completed Date Stamp</stream_name>
+      </field>
+      <field>
+        <column_name>Flood_Policy_Ordered_Date_Stamp
+</column_name>
+        <stream_name>Flood Policy Ordered Date Stamp</stream_name>
+      </field>
+      <field>
+        <column_name>Document_Date_Received_VA_Notice_of_Value
+</column_name>
+        <stream_name>Document Date Received - VA Notice of Value</stream_name>
+      </field>
+      <field>
+        <column_name>Loan_Info_Loan_ID_Key</column_name>
+        <stream_name>Loan Info Loan ID</stream_name>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>592</xloc>
+      <yloc>224</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step_error_handling>
+  </step_error_handling>
+  <slave-step-copy-partition-distribution>
+  </slave-step-copy-partition-distribution>
+  <slave_transformation>N</slave_transformation>
+  <attributes/>
+</transformation>

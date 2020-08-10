@@ -1,0 +1,2784 @@
+<transformation>
+  <info>
+    <name>encompass_NightlyCompassTape</name>
+    <description/>
+    <extended_description/>
+    <trans_version/>
+    <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
+    <directory>/</directory>
+    <parameters>
+    </parameters>
+    <log>
+      <trans-log-table>
+        <connection/>
+        <schema/>
+        <table/>
+        <size_limit_lines/>
+        <interval/>
+        <timeout_days/>
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>TRANSNAME</id>
+          <enabled>Y</enabled>
+          <name>TRANSNAME</name>
+        </field>
+        <field>
+          <id>STATUS</id>
+          <enabled>Y</enabled>
+          <name>STATUS</name>
+        </field>
+        <field>
+          <id>LINES_READ</id>
+          <enabled>Y</enabled>
+          <name>LINES_READ</name>
+          <subject/>
+        </field>
+        <field>
+          <id>LINES_WRITTEN</id>
+          <enabled>Y</enabled>
+          <name>LINES_WRITTEN</name>
+          <subject/>
+        </field>
+        <field>
+          <id>LINES_UPDATED</id>
+          <enabled>Y</enabled>
+          <name>LINES_UPDATED</name>
+          <subject/>
+        </field>
+        <field>
+          <id>LINES_INPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_INPUT</name>
+          <subject/>
+        </field>
+        <field>
+          <id>LINES_OUTPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_OUTPUT</name>
+          <subject/>
+        </field>
+        <field>
+          <id>LINES_REJECTED</id>
+          <enabled>Y</enabled>
+          <name>LINES_REJECTED</name>
+          <subject/>
+        </field>
+        <field>
+          <id>ERRORS</id>
+          <enabled>Y</enabled>
+          <name>ERRORS</name>
+        </field>
+        <field>
+          <id>STARTDATE</id>
+          <enabled>Y</enabled>
+          <name>STARTDATE</name>
+        </field>
+        <field>
+          <id>ENDDATE</id>
+          <enabled>Y</enabled>
+          <name>ENDDATE</name>
+        </field>
+        <field>
+          <id>LOGDATE</id>
+          <enabled>Y</enabled>
+          <name>LOGDATE</name>
+        </field>
+        <field>
+          <id>DEPDATE</id>
+          <enabled>Y</enabled>
+          <name>DEPDATE</name>
+        </field>
+        <field>
+          <id>REPLAYDATE</id>
+          <enabled>Y</enabled>
+          <name>REPLAYDATE</name>
+        </field>
+        <field>
+          <id>LOG_FIELD</id>
+          <enabled>Y</enabled>
+          <name>LOG_FIELD</name>
+        </field>
+        <field>
+          <id>EXECUTING_SERVER</id>
+          <enabled>N</enabled>
+          <name>EXECUTING_SERVER</name>
+        </field>
+        <field>
+          <id>EXECUTING_USER</id>
+          <enabled>N</enabled>
+          <name>EXECUTING_USER</name>
+        </field>
+        <field>
+          <id>CLIENT</id>
+          <enabled>N</enabled>
+          <name>CLIENT</name>
+        </field>
+      </trans-log-table>
+      <perf-log-table>
+        <connection/>
+        <schema/>
+        <table/>
+        <interval/>
+        <timeout_days/>
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>SEQ_NR</id>
+          <enabled>Y</enabled>
+          <name>SEQ_NR</name>
+        </field>
+        <field>
+          <id>LOGDATE</id>
+          <enabled>Y</enabled>
+          <name>LOGDATE</name>
+        </field>
+        <field>
+          <id>TRANSNAME</id>
+          <enabled>Y</enabled>
+          <name>TRANSNAME</name>
+        </field>
+        <field>
+          <id>STEPNAME</id>
+          <enabled>Y</enabled>
+          <name>STEPNAME</name>
+        </field>
+        <field>
+          <id>STEP_COPY</id>
+          <enabled>Y</enabled>
+          <name>STEP_COPY</name>
+        </field>
+        <field>
+          <id>LINES_READ</id>
+          <enabled>Y</enabled>
+          <name>LINES_READ</name>
+        </field>
+        <field>
+          <id>LINES_WRITTEN</id>
+          <enabled>Y</enabled>
+          <name>LINES_WRITTEN</name>
+        </field>
+        <field>
+          <id>LINES_UPDATED</id>
+          <enabled>Y</enabled>
+          <name>LINES_UPDATED</name>
+        </field>
+        <field>
+          <id>LINES_INPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_INPUT</name>
+        </field>
+        <field>
+          <id>LINES_OUTPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_OUTPUT</name>
+        </field>
+        <field>
+          <id>LINES_REJECTED</id>
+          <enabled>Y</enabled>
+          <name>LINES_REJECTED</name>
+        </field>
+        <field>
+          <id>ERRORS</id>
+          <enabled>Y</enabled>
+          <name>ERRORS</name>
+        </field>
+        <field>
+          <id>INPUT_BUFFER_ROWS</id>
+          <enabled>Y</enabled>
+          <name>INPUT_BUFFER_ROWS</name>
+        </field>
+        <field>
+          <id>OUTPUT_BUFFER_ROWS</id>
+          <enabled>Y</enabled>
+          <name>OUTPUT_BUFFER_ROWS</name>
+        </field>
+      </perf-log-table>
+      <channel-log-table>
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>LOG_DATE</id>
+          <enabled>Y</enabled>
+          <name>LOG_DATE</name>
+        </field>
+        <field>
+          <id>LOGGING_OBJECT_TYPE</id>
+          <enabled>Y</enabled>
+          <name>LOGGING_OBJECT_TYPE</name>
+        </field>
+        <field>
+          <id>OBJECT_NAME</id>
+          <enabled>Y</enabled>
+          <name>OBJECT_NAME</name>
+        </field>
+        <field>
+          <id>OBJECT_COPY</id>
+          <enabled>Y</enabled>
+          <name>OBJECT_COPY</name>
+        </field>
+        <field>
+          <id>REPOSITORY_DIRECTORY</id>
+          <enabled>Y</enabled>
+          <name>REPOSITORY_DIRECTORY</name>
+        </field>
+        <field>
+          <id>FILENAME</id>
+          <enabled>Y</enabled>
+          <name>FILENAME</name>
+        </field>
+        <field>
+          <id>OBJECT_ID</id>
+          <enabled>Y</enabled>
+          <name>OBJECT_ID</name>
+        </field>
+        <field>
+          <id>OBJECT_REVISION</id>
+          <enabled>Y</enabled>
+          <name>OBJECT_REVISION</name>
+        </field>
+        <field>
+          <id>PARENT_CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>PARENT_CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>ROOT_CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>ROOT_CHANNEL_ID</name>
+        </field>
+      </channel-log-table>
+      <step-log-table>
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>LOG_DATE</id>
+          <enabled>Y</enabled>
+          <name>LOG_DATE</name>
+        </field>
+        <field>
+          <id>TRANSNAME</id>
+          <enabled>Y</enabled>
+          <name>TRANSNAME</name>
+        </field>
+        <field>
+          <id>STEPNAME</id>
+          <enabled>Y</enabled>
+          <name>STEPNAME</name>
+        </field>
+        <field>
+          <id>STEP_COPY</id>
+          <enabled>Y</enabled>
+          <name>STEP_COPY</name>
+        </field>
+        <field>
+          <id>LINES_READ</id>
+          <enabled>Y</enabled>
+          <name>LINES_READ</name>
+        </field>
+        <field>
+          <id>LINES_WRITTEN</id>
+          <enabled>Y</enabled>
+          <name>LINES_WRITTEN</name>
+        </field>
+        <field>
+          <id>LINES_UPDATED</id>
+          <enabled>Y</enabled>
+          <name>LINES_UPDATED</name>
+        </field>
+        <field>
+          <id>LINES_INPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_INPUT</name>
+        </field>
+        <field>
+          <id>LINES_OUTPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_OUTPUT</name>
+        </field>
+        <field>
+          <id>LINES_REJECTED</id>
+          <enabled>Y</enabled>
+          <name>LINES_REJECTED</name>
+        </field>
+        <field>
+          <id>ERRORS</id>
+          <enabled>Y</enabled>
+          <name>ERRORS</name>
+        </field>
+        <field>
+          <id>LOG_FIELD</id>
+          <enabled>N</enabled>
+          <name>LOG_FIELD</name>
+        </field>
+      </step-log-table>
+      <metrics-log-table>
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>LOG_DATE</id>
+          <enabled>Y</enabled>
+          <name>LOG_DATE</name>
+        </field>
+        <field>
+          <id>METRICS_DATE</id>
+          <enabled>Y</enabled>
+          <name>METRICS_DATE</name>
+        </field>
+        <field>
+          <id>METRICS_CODE</id>
+          <enabled>Y</enabled>
+          <name>METRICS_CODE</name>
+        </field>
+        <field>
+          <id>METRICS_DESCRIPTION</id>
+          <enabled>Y</enabled>
+          <name>METRICS_DESCRIPTION</name>
+        </field>
+        <field>
+          <id>METRICS_SUBJECT</id>
+          <enabled>Y</enabled>
+          <name>METRICS_SUBJECT</name>
+        </field>
+        <field>
+          <id>METRICS_TYPE</id>
+          <enabled>Y</enabled>
+          <name>METRICS_TYPE</name>
+        </field>
+        <field>
+          <id>METRICS_VALUE</id>
+          <enabled>Y</enabled>
+          <name>METRICS_VALUE</name>
+        </field>
+      </metrics-log-table>
+    </log>
+    <maxdate>
+      <connection/>
+      <table/>
+      <field/>
+      <offset>0.0</offset>
+      <maxdiff>0.0</maxdiff>
+    </maxdate>
+    <size_rowset>10000</size_rowset>
+    <sleep_time_empty>50</sleep_time_empty>
+    <sleep_time_full>50</sleep_time_full>
+    <unique_connections>N</unique_connections>
+    <feedback_shown>Y</feedback_shown>
+    <feedback_size>50000</feedback_size>
+    <using_thread_priorities>Y</using_thread_priorities>
+    <shared_objects_file/>
+    <capture_step_performance>N</capture_step_performance>
+    <step_performance_capturing_delay>1000</step_performance_capturing_delay>
+    <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
+    <dependencies>
+    </dependencies>
+    <partitionschemas>
+    </partitionschemas>
+    <slaveservers>
+    </slaveservers>
+    <clusterschemas>
+    </clusterschemas>
+    <created_user/>
+    <created_date>2019/12/03 14:22:47.721</created_date>
+    <modified_user>-</modified_user>
+    <modified_date>2019/06/05 09:42:13.518</modified_date>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
+    <is_key_private>N</is_key_private>
+  </info>
+  <notepads>
+  </notepads>
+  <connection>
+    <name>DL_UAT</name>
+    <server>uat-bi.cu4k887uaksz.us-east-1.rds.amazonaws.com</server>
+    <type>MSSQLNATIVE</type>
+    <access>Native</access>
+    <database>DL_UAT</database>
+    <port>1433</port>
+    <username>SWayment</username>
+    <password>Encrypted 2be98afc823c1b8d0f335b966fa98fbd9</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>MSSQLUseIntegratedSecurity</code>
+        <attribute>false</attribute>
+      </attribute>
+      <attribute>
+        <code>MSSQL_DOUBLE_DECIMAL_SEPARATOR</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>1433</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
+  <order>
+    <hop>
+      <from>CSV file input</from>
+      <to>Table output 2</to>
+      <enabled>Y</enabled>
+    </hop>
+  </order>
+  <step>
+    <name>CSV file input</name>
+    <type>CsvInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <filename>G:\Shared drives\Data Integration\Data Integration\Encompass\NightlyCompassTape.txt</filename>
+    <filename_field/>
+    <rownum_field/>
+    <include_filename>N</include_filename>
+    <separator>,</separator>
+    <enclosure>"</enclosure>
+    <header>Y</header>
+    <buffer_size>50000</buffer_size>
+    <lazy_conversion>Y</lazy_conversion>
+    <add_filename_result>N</add_filename_result>
+    <parallel>N</parallel>
+    <newline_possible>N</newline_possible>
+    <encoding/>
+    <fields>
+      <field>
+        <name>Trans Details Loan #</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Trans Details Loan Program</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>71</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Trans Details Interest Rate</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>5</length>
+        <precision>3</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Trans Details Total Loan Amt (w/ MIP/FF)</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>10</length>
+        <precision>2</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock Buy Side Lock Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock Buy Side Lock Expires Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock Sell Side Lock Expires Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock - Rate Lock Sell Side Investor MERS Number (Most Recent)</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>14</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Tracking - Current Milestone Name</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>8</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Funding Funds Released</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock - Rate Lock Sell Side Lock Date (Most Recent)</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Trans Details Est Closing Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Purchase Advice Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock - Rate Lock Sell Side Investor Commitment (Most Recent)</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>14</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock - Lock Request Subject Property Occupancy Status (Most Recent)</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>16</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock - Lock Request Subject Property Type (Most Recent)</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>19</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Subject Property Type</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>30</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Subject Property State</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>2</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Subject Property Zip</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock - Lock Request Subject Property # Units (Most Recent)</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Trans Details Purchase Price</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>10</length>
+        <precision>2</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Subject Property Appraised Value</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock - Lock Request Impounds Waived (Most Recent)</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>10</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock - Lock Request Loan to Value (LTV) (Most Recent)</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>7</length>
+        <precision>3</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>First Lock - LTV</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>7</length>
+        <precision>3</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock - Lock RequestCOmbined Loan to Value (CLTV) (Most Recent)</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>7</length>
+        <precision>3</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>First Lock - CLTV</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>7</length>
+        <precision>3</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock - Lock Request Credit Score for Decision Making (Most Recent)</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Fannie Mae Loan Doc Type Code</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>24</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock - Trans Details Qual Ratio Bottom (Most Recent)</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>10</length>
+        <precision>3</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Prepayment Penalty</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>MLDS Prepymt Penalty Period</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Trans Details Interest Only Indicator</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock Sell Side Investor Lock Type</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>2</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock - Rate Lock Sell Side Number of Days (Most Recent)</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Loan Team Member Name - PD | Loan Officer</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>19</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Loan Officer Lead Source</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>18</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock Sell Investor Name</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>44</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Purchase Advice Actual Sell Price</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>10</length>
+        <precision>6</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock Sell Side Investor Loan Number</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>14</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>File Contacts Mtg Ins Co Name</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>34</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Insurance Mtg Ins Coverage Factor</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>7</length>
+        <precision>3</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>File Contacts Mtg Ins Co File #</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Fees Line 802 Borr Credit/Points</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>8</length>
+        <precision>2</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Funding Executed Docs In Date/Time</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>20</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>REGZ Loan Info Document Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Trans Details Closed Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Trans Details First Pymt Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>BB&amp;T ELDS maturity</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Intrm Serv Next Pymnt Pymnt Due Date</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Loan Info ARM Margin</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>5</length>
+        <precision>3</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Trans Details First Pymt Adj Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Loan Info ARM First Period Change</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Loan Info ARM First Rate Adj Cap</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>5</length>
+        <precision>3</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Loan Info ARM Floor Rate</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>5</length>
+        <precision>3</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Loan Info ARM Max Life Interest Cap</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>6</length>
+        <precision>3</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>DMI Upload P&amp;I Change Date</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Loan Info ARM Rate Adj Period</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Loan Info ARM Rate Cap</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>5</length>
+        <precision>3</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Freddie Mac Lender Rate Adj Convertible</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Loan Info ARM Disclosure Type</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>8</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Coll to Warehouse - Warehouse Company</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Trans Details Total Wire Transfer</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>10</length>
+        <precision>2</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Trans Details Current Loan Status</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock - Lock Request Loan Type (Most Recent)</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>25</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>HUD1 Borr - Paid By/For Borr Oth 1 Amt</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Fees Line 801 User Def Fee 1 Borr</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>6</length>
+        <precision>2</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>UW Suspended Cleared Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Underwriting Suspended Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Fees Line 801 Borr Paid Orig Chrg</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>7</length>
+        <precision>2</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock - Trans Details Amort Type (Most Recent)</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>14</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Milestone Names - Status</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Subject Property MSA #</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>18</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Subject Property County Code</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>5</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Coll Delivery Cust to Inv Ship Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Coll Delivery to Custodian Ship Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Borrower Last Name</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>18</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Purchase Advice Payouts 2 Amount</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>4</length>
+        <precision>2</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Purchase Advice Payouts 4 Amount</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Purchase Advice Payouts 6 Amount</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>8</length>
+        <precision>2</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Purchase Advice Payouts 7 Amount</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Purchase Advice Payouts 8 Amount</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Purchase Advice Payouts 5 Amount</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock Sell Side Total Sell Price</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>14</length>
+        <precision>10</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock Request Fulfilled Date Time</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>22</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock Request Rate Sheet ID</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>14</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Trans Details Current Status Date</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Underwriting Risk Assess Type</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>19</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock Buy Side Base Margin</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>5</length>
+        <precision>3</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>ULDD - Pool ID</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>6</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>File Contacts Warehouse Co Name</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>3</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Underwriting - Investor Eligibility - Wells Fargo</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Underwriting - Investor Eligibility - CHase | JP Morgan</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>DU Fail reason</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>17</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>LPMI - Final Price of LPMI</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>4</length>
+        <precision>2</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>LT Appraisal Escalation Requires LPMI</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>LT Appraisal Escalation LPMI BPS</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>MI Company Name Type</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>20</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>LO Workksheet - MI Premium Frequency</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>14</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>LPMI - Estimated Amount of Lender Paid MI Premium</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>ULDD - Mortgage Insurance Premium Source Type</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>8</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock - Lock Request Loan Amount (Most Recent)</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>10</length>
+        <precision>2</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock - Trans Details Loan Program (Most Recent)</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>71</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock Sell Side Net Buy Rate</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>5</length>
+        <precision>3</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Document Date Received - Post-Funding Disbursement Ledger</name>
+        <type>Date</type>
+        <format>MM/dd/yyyy</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock Buy Side Investor Commitment</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>9</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock Buy Side Comments</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>41</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>AUS Eligibility for MIAC</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>4</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Underwriting - Investor Eligibility - Texas 50a(6) Cash-out</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Acceptable DU</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>3</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Acceptable LP</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>3</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>FInanced Property Ownership Count</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Payoff Primary Lien Holder Company</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>38</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Payoff Junior Lien Holder Company</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>22</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Rate Lock - Lock Request Loan Amnt Excluding MIP/PMI (Most Recent)</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>10</length>
+        <precision>2</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Fund Outstanding Docs - Funding Authorized</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Credit Committee FICO Exception</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>HomeReady Eligibility</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>HomeReady Borrower Acceptance</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>HomeReady Eligibility Review Complete</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>HomePossible Eligibility</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>HomePossible Eligibility Review Complete</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Fees Line 801 User Defined Fee 2 Descr</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>21</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Fees Line 801 User Defined Fee 2 - Borr Amt</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>6</length>
+        <precision>2</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Underwriting - Investor Eligibility - Fannie Mae</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Underwriting - Investor Eligibility - Freddie Mac</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Underwriting Level of Prpty Review Form #</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>11</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Extension Cost Total Amount</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>8</length>
+        <precision>2</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>FNMA CU Risk Score</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>3</length>
+        <precision>1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Income Verification Available - B1</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Income Verification Available - C1</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Day 1 Income Verification Available</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Subject Property Est Value</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Total Credit for Rate Chosen</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>7</length>
+        <precision>2</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>LO Compensation - TotalBorrower Paid Discount Point Amount Line 4</name>
+        <type>Number</type>
+        <format>#.#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>8</length>
+        <precision>2</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Fees Line 801 Broker Compensation Borrower Paid</name>
+        <type>Boolean</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Loan Info Loan ID</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>38</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>224</xloc>
+      <yloc>224</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Table output 2</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>DL_UAT</connection>
+    <schema>encompass</schema>
+    <table>NightlyEncompassTape</table>
+    <commit>1000</commit>
+    <truncate>Y</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+      <field>
+        <column_name>Trans_Details_Loan
+</column_name>
+        <stream_name>Trans Details Loan #</stream_name>
+      </field>
+      <field>
+        <column_name>Trans_Details_Loan_Program
+</column_name>
+        <stream_name>Trans Details Loan Program</stream_name>
+      </field>
+      <field>
+        <column_name>Trans_Details_Interest_Rate
+</column_name>
+        <stream_name>Trans Details Interest Rate</stream_name>
+      </field>
+      <field>
+        <column_name>Trans_Details_Total_Loan_Amt_w_MIP_FF
+</column_name>
+        <stream_name>Trans Details Total Loan Amt (w/ MIP/FF)</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Buy_Side_Lock_Date
+</column_name>
+        <stream_name>Rate Lock Buy Side Lock Date</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Buy_Side_Lock_Expires_Date
+</column_name>
+        <stream_name>Rate Lock Buy Side Lock Expires Date</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Sell_Side_Lock_Expires_Date
+</column_name>
+        <stream_name>Rate Lock Sell Side Lock Expires Date</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Rate_Lock_Sell_Side_Investor_MERS_Number_Most_Recent
+</column_name>
+        <stream_name>Rate Lock - Rate Lock Sell Side Investor MERS Number (Most Recent)</stream_name>
+      </field>
+      <field>
+        <column_name>Tracking_Current_Milestone_Name
+</column_name>
+        <stream_name>Tracking - Current Milestone Name</stream_name>
+      </field>
+      <field>
+        <column_name>Funding_Funds_Released
+</column_name>
+        <stream_name>Funding Funds Released</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Rate_Lock_Sell_Side_Lock_Date_Most_Recent
+</column_name>
+        <stream_name>Rate Lock - Rate Lock Sell Side Lock Date (Most Recent)</stream_name>
+      </field>
+      <field>
+        <column_name>Trans_Details_Est_Closing_Date
+</column_name>
+        <stream_name>Trans Details Est Closing Date</stream_name>
+      </field>
+      <field>
+        <column_name>Purchase_Advice_Date
+</column_name>
+        <stream_name>Purchase Advice Date</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Rate_Lock_Sell_Side_Investor_Commitment_Most_Recent
+</column_name>
+        <stream_name>Rate Lock - Rate Lock Sell Side Investor Commitment (Most Recent)</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Lock_Request_Subject_Property_Occupancy_Status_Most_Recent
+</column_name>
+        <stream_name>Rate Lock - Lock Request Subject Property Occupancy Status (Most Recent)</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Lock_Request_Subject_Property_Type_Most_Recent
+</column_name>
+        <stream_name>Rate Lock - Lock Request Subject Property Type (Most Recent)</stream_name>
+      </field>
+      <field>
+        <column_name>Subject_Property_Type
+</column_name>
+        <stream_name>Subject Property Type</stream_name>
+      </field>
+      <field>
+        <column_name>Subject_Property_State
+</column_name>
+        <stream_name>Subject Property State</stream_name>
+      </field>
+      <field>
+        <column_name>Subject_Property_Zip
+</column_name>
+        <stream_name>Subject Property Zip</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Lock_Request_Subject_Property_Units_Most_Recent
+</column_name>
+        <stream_name>Rate Lock - Lock Request Subject Property # Units (Most Recent)</stream_name>
+      </field>
+      <field>
+        <column_name>Trans_Details_Purchase_Price
+</column_name>
+        <stream_name>Trans Details Purchase Price</stream_name>
+      </field>
+      <field>
+        <column_name>Subject_Property_Appraised_Value
+</column_name>
+        <stream_name>Subject Property Appraised Value</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Lock_Request_Impounds_Waived_Most_Recent
+</column_name>
+        <stream_name>Rate Lock - Lock Request Impounds Waived (Most Recent)</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Lock_Request_Loan_to_Value_LTV_Most_Recent
+</column_name>
+        <stream_name>Rate Lock - Lock Request Loan to Value (LTV) (Most Recent)</stream_name>
+      </field>
+      <field>
+        <column_name>First_Lock_LTV
+</column_name>
+        <stream_name>First Lock - LTV</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Lock_RequestCOmbined_Loan_to_Value_CLTV_Most_Recent
+</column_name>
+        <stream_name>Rate Lock - Lock RequestCOmbined Loan to Value (CLTV) (Most Recent)</stream_name>
+      </field>
+      <field>
+        <column_name>First_Lock_CLTV
+</column_name>
+        <stream_name>First Lock - CLTV</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Lock_Request_Credit_Score_for_Decision_Making_Most_Recent
+</column_name>
+        <stream_name>Rate Lock - Lock Request Credit Score for Decision Making (Most Recent)</stream_name>
+      </field>
+      <field>
+        <column_name>Fannie_Mae_Loan_Doc_Type_Code
+</column_name>
+        <stream_name>Fannie Mae Loan Doc Type Code</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Trans_Details_Qual_Ratio_Bottom_Most_Recent
+</column_name>
+        <stream_name>Rate Lock - Trans Details Qual Ratio Bottom (Most Recent)</stream_name>
+      </field>
+      <field>
+        <column_name>Prepayment_Penalty
+</column_name>
+        <stream_name>Prepayment Penalty</stream_name>
+      </field>
+      <field>
+        <column_name>MLDS_Prepymt_Penalty_Period
+</column_name>
+        <stream_name>MLDS Prepymt Penalty Period</stream_name>
+      </field>
+      <field>
+        <column_name>Trans_Details_Interest_Only_Indicator
+</column_name>
+        <stream_name>Trans Details Interest Only Indicator</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Sell_Side_Investor_Lock_Type
+</column_name>
+        <stream_name>Rate Lock Sell Side Investor Lock Type</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Rate_Lock_Sell_Side_Number_of_Days_Most_Recent</column_name>
+        <stream_name>Rate Lock - Rate Lock Sell Side Number of Days (Most Recent)</stream_name>
+      </field>
+      <field>
+        <column_name>Loan_Team_Member_Name_PD_Loan_Officer
+</column_name>
+        <stream_name>Loan Team Member Name - PD | Loan Officer</stream_name>
+      </field>
+      <field>
+        <column_name>Loan_Officer_Lead_Source
+</column_name>
+        <stream_name>Loan Officer Lead Source</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Sell_Investor_Name
+</column_name>
+        <stream_name>Rate Lock Sell Investor Name</stream_name>
+      </field>
+      <field>
+        <column_name>Purchase_Advice_Actual_Sell_Price
+</column_name>
+        <stream_name>Purchase Advice Actual Sell Price</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Sell_Side_Investor_Loan_Number
+</column_name>
+        <stream_name>Rate Lock Sell Side Investor Loan Number</stream_name>
+      </field>
+      <field>
+        <column_name>File_Contacts_Mtg_Ins_Co_Name
+</column_name>
+        <stream_name>File Contacts Mtg Ins Co Name</stream_name>
+      </field>
+      <field>
+        <column_name>Insurance_Mtg_Ins_Coverage_Factor
+</column_name>
+        <stream_name>Insurance Mtg Ins Coverage Factor</stream_name>
+      </field>
+      <field>
+        <column_name>File_Contacts_Mtg_Ins_Co_File
+</column_name>
+        <stream_name>File Contacts Mtg Ins Co File #</stream_name>
+      </field>
+      <field>
+        <column_name>Fees_Line_802_Borr_Credit_Points
+</column_name>
+        <stream_name>Fees Line 802 Borr Credit/Points</stream_name>
+      </field>
+      <field>
+        <column_name>Funding_Executed_Docs_In_Date_Time
+</column_name>
+        <stream_name>Funding Executed Docs In Date/Time</stream_name>
+      </field>
+      <field>
+        <column_name>REGZ_Loan_Info_Document_Date
+</column_name>
+        <stream_name>REGZ Loan Info Document Date</stream_name>
+      </field>
+      <field>
+        <column_name>Trans_Details_Closed_Date
+</column_name>
+        <stream_name>Trans Details Closed Date</stream_name>
+      </field>
+      <field>
+        <column_name>Trans_Details_First_Pymt_Date
+</column_name>
+        <stream_name>Trans Details First Pymt Date</stream_name>
+      </field>
+      <field>
+        <column_name>BB_T_ELDS_maturity
+</column_name>
+        <stream_name>BB&amp;T ELDS maturity</stream_name>
+      </field>
+      <field>
+        <column_name>Intrm_Serv_Next_Pymnt_Pymnt_Due_Date
+</column_name>
+        <stream_name>Intrm Serv Next Pymnt Pymnt Due Date</stream_name>
+      </field>
+      <field>
+        <column_name>Loan_Info_ARM_Margin
+</column_name>
+        <stream_name>Loan Info ARM Margin</stream_name>
+      </field>
+      <field>
+        <column_name>Trans_Details_First_Pymt_Adj_Date
+</column_name>
+        <stream_name>Trans Details First Pymt Adj Date</stream_name>
+      </field>
+      <field>
+        <column_name>Loan_Info_ARM_First_Period_Change
+</column_name>
+        <stream_name>Loan Info ARM First Period Change</stream_name>
+      </field>
+      <field>
+        <column_name>Loan_Info_ARM_First_Rate_Adj_Cap
+</column_name>
+        <stream_name>Loan Info ARM First Rate Adj Cap</stream_name>
+      </field>
+      <field>
+        <column_name>Loan_Info_ARM_Floor_Rate
+</column_name>
+        <stream_name>Loan Info ARM Floor Rate</stream_name>
+      </field>
+      <field>
+        <column_name>Loan_Info_ARM_Max_Life_Interest_Cap
+</column_name>
+        <stream_name>Loan Info ARM Max Life Interest Cap</stream_name>
+      </field>
+      <field>
+        <column_name>DMI_Upload_P_I_Change_Date
+</column_name>
+        <stream_name>DMI Upload P&amp;I Change Date</stream_name>
+      </field>
+      <field>
+        <column_name>Loan_Info_ARM_Rate_Adj_Period
+</column_name>
+        <stream_name>Loan Info ARM Rate Adj Period</stream_name>
+      </field>
+      <field>
+        <column_name>Loan_Info_ARM_Rate_Cap
+</column_name>
+        <stream_name>Loan Info ARM Rate Cap</stream_name>
+      </field>
+      <field>
+        <column_name>Freddie_Mac_Lender_Rate_Adj_Convertible
+</column_name>
+        <stream_name>Freddie Mac Lender Rate Adj Convertible</stream_name>
+      </field>
+      <field>
+        <column_name>Loan_Info_ARM_Disclosure_Type
+</column_name>
+        <stream_name>Loan Info ARM Disclosure Type</stream_name>
+      </field>
+      <field>
+        <column_name>Coll_to_Warehouse_Warehouse_Company
+</column_name>
+        <stream_name>Coll to Warehouse - Warehouse Company</stream_name>
+      </field>
+      <field>
+        <column_name>Trans_Details_Total_Wire_Transfer
+</column_name>
+        <stream_name>Trans Details Total Wire Transfer</stream_name>
+      </field>
+      <field>
+        <column_name>Trans_Details_Current_Loan_Status
+</column_name>
+        <stream_name>Trans Details Current Loan Status</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Lock_Request_Loan_Type_Most_Recent
+</column_name>
+        <stream_name>Rate Lock - Lock Request Loan Type (Most Recent)</stream_name>
+      </field>
+      <field>
+        <column_name>HUD1_Borr_Paid_By_For_Borr_Oth_1_Amt
+</column_name>
+        <stream_name>HUD1 Borr - Paid By/For Borr Oth 1 Amt</stream_name>
+      </field>
+      <field>
+        <column_name>Fees_Line_801_User_Def_Fee_1_Borr
+</column_name>
+        <stream_name>Fees Line 801 User Def Fee 1 Borr</stream_name>
+      </field>
+      <field>
+        <column_name>UW_Suspended_Cleared_Date
+</column_name>
+        <stream_name>UW Suspended Cleared Date</stream_name>
+      </field>
+      <field>
+        <column_name>Underwriting_Suspended_Date
+</column_name>
+        <stream_name>Underwriting Suspended Date</stream_name>
+      </field>
+      <field>
+        <column_name>Fees_Line_801_Borr_Paid_Orig_Chrg
+</column_name>
+        <stream_name>Fees Line 801 Borr Paid Orig Chrg</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Trans_Details_Amort_Type_Most_Recent
+</column_name>
+        <stream_name>Rate Lock - Trans Details Amort Type (Most Recent)</stream_name>
+      </field>
+      <field>
+        <column_name>Milestone_Names_Status
+</column_name>
+        <stream_name>Milestone Names - Status</stream_name>
+      </field>
+      <field>
+        <column_name>Subject_Property_MSA
+</column_name>
+        <stream_name>Subject Property MSA #</stream_name>
+      </field>
+      <field>
+        <column_name>Subject_Property_County_Code
+</column_name>
+        <stream_name>Subject Property County Code</stream_name>
+      </field>
+      <field>
+        <column_name>Coll_Delivery_Cust_to_Inv_Ship_Date
+</column_name>
+        <stream_name>Coll Delivery Cust to Inv Ship Date</stream_name>
+      </field>
+      <field>
+        <column_name>Coll_Delivery_to_Custodian_Ship_Date
+</column_name>
+        <stream_name>Coll Delivery to Custodian Ship Date</stream_name>
+      </field>
+      <field>
+        <column_name>Borrower_Last_Name
+</column_name>
+        <stream_name>Borrower Last Name</stream_name>
+      </field>
+      <field>
+        <column_name>Purchase_Advice_Payouts_2_Amount
+</column_name>
+        <stream_name>Purchase Advice Payouts 2 Amount</stream_name>
+      </field>
+      <field>
+        <column_name>Purchase_Advice_Payouts_4_Amount
+</column_name>
+        <stream_name>Purchase Advice Payouts 4 Amount</stream_name>
+      </field>
+      <field>
+        <column_name>Purchase_Advice_Payouts_6_Amount
+</column_name>
+        <stream_name>Purchase Advice Payouts 6 Amount</stream_name>
+      </field>
+      <field>
+        <column_name>Purchase_Advice_Payouts_7_Amount
+</column_name>
+        <stream_name>Purchase Advice Payouts 7 Amount</stream_name>
+      </field>
+      <field>
+        <column_name>Purchase_Advice_Payouts_8_Amount
+</column_name>
+        <stream_name>Purchase Advice Payouts 8 Amount</stream_name>
+      </field>
+      <field>
+        <column_name>Purchase_Advice_Payouts_5_Amount
+</column_name>
+        <stream_name>Purchase Advice Payouts 5 Amount</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Sell_Side_Total_Sell_Price
+</column_name>
+        <stream_name>Rate Lock Sell Side Total Sell Price</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Request_Fulfilled_Date_Time
+</column_name>
+        <stream_name>Rate Lock Request Fulfilled Date Time</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Request_Rate_Sheet_ID
+</column_name>
+        <stream_name>Rate Lock Request Rate Sheet ID</stream_name>
+      </field>
+      <field>
+        <column_name>Trans_Details_Current_Status_Date
+</column_name>
+        <stream_name>Trans Details Current Status Date</stream_name>
+      </field>
+      <field>
+        <column_name>Underwriting_Risk_Assess_Type
+</column_name>
+        <stream_name>Underwriting Risk Assess Type</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Buy_Side_Base_Margin
+</column_name>
+        <stream_name>Rate Lock Buy Side Base Margin</stream_name>
+      </field>
+      <field>
+        <column_name>ULDD_Pool_ID
+</column_name>
+        <stream_name>ULDD - Pool ID</stream_name>
+      </field>
+      <field>
+        <column_name>File_Contacts_Warehouse_Co_Name
+</column_name>
+        <stream_name>File Contacts Warehouse Co Name</stream_name>
+      </field>
+      <field>
+        <column_name>Underwriting_Investor_Eligibility_Wells_Fargo
+</column_name>
+        <stream_name>Underwriting - Investor Eligibility - Wells Fargo</stream_name>
+      </field>
+      <field>
+        <column_name>Underwriting_Investor_Eligibility_CHase_JP_Morgan
+</column_name>
+        <stream_name>Underwriting - Investor Eligibility - CHase | JP Morgan</stream_name>
+      </field>
+      <field>
+        <column_name>DU_Fail_reason
+</column_name>
+        <stream_name>DU Fail reason</stream_name>
+      </field>
+      <field>
+        <column_name>LPMI_Final_Price_of_LPMI
+</column_name>
+        <stream_name>LPMI - Final Price of LPMI</stream_name>
+      </field>
+      <field>
+        <column_name>LT_Appraisal_Escalation_Requires_LPMI
+</column_name>
+        <stream_name>LT Appraisal Escalation Requires LPMI</stream_name>
+      </field>
+      <field>
+        <column_name>LT_Appraisal_Escalation_LPMI_BPS
+</column_name>
+        <stream_name>LT Appraisal Escalation LPMI BPS</stream_name>
+      </field>
+      <field>
+        <column_name>MI_Company_Name_Type
+</column_name>
+        <stream_name>MI Company Name Type</stream_name>
+      </field>
+      <field>
+        <column_name>LO_Workksheet_MI_Premium_Frequency
+</column_name>
+        <stream_name>LO Workksheet - MI Premium Frequency</stream_name>
+      </field>
+      <field>
+        <column_name>LPMI_Estimated_Amount_of_Lender_Paid_MI_Premium
+</column_name>
+        <stream_name>LPMI - Estimated Amount of Lender Paid MI Premium</stream_name>
+      </field>
+      <field>
+        <column_name>ULDD_Mortgage_Insurance_Premium_Source_Type
+</column_name>
+        <stream_name>ULDD - Mortgage Insurance Premium Source Type</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Lock_Request_Loan_Amount_Most_Recent
+</column_name>
+        <stream_name>Rate Lock - Lock Request Loan Amount (Most Recent)</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Trans_Details_Loan_Program_Most_Recent
+</column_name>
+        <stream_name>Rate Lock - Trans Details Loan Program (Most Recent)</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Sell_Side_Net_Buy_Rate
+</column_name>
+        <stream_name>Rate Lock Sell Side Net Buy Rate</stream_name>
+      </field>
+      <field>
+        <column_name>Document_Date_Received_Post_Funding_Disbursement_Ledger
+</column_name>
+        <stream_name>Document Date Received - Post-Funding Disbursement Ledger</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Buy_Side_Investor_Commitment
+</column_name>
+        <stream_name>Rate Lock Buy Side Investor Commitment</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Buy_Side_Comments
+</column_name>
+        <stream_name>Rate Lock Buy Side Comments</stream_name>
+      </field>
+      <field>
+        <column_name>AUS_Eligibility_for_MIAC
+</column_name>
+        <stream_name>AUS Eligibility for MIAC</stream_name>
+      </field>
+      <field>
+        <column_name>Underwriting_Investor_Eligibility_Texas_50a_6_Cash_out
+</column_name>
+        <stream_name>Underwriting - Investor Eligibility - Texas 50a(6) Cash-out</stream_name>
+      </field>
+      <field>
+        <column_name>Acceptable_DU
+</column_name>
+        <stream_name>Acceptable DU</stream_name>
+      </field>
+      <field>
+        <column_name>Acceptable_LP
+</column_name>
+        <stream_name>Acceptable LP</stream_name>
+      </field>
+      <field>
+        <column_name>FInanced_Property_Ownership_Count
+</column_name>
+        <stream_name>FInanced Property Ownership Count</stream_name>
+      </field>
+      <field>
+        <column_name>Payoff_Primary_Lien_Holder_Company
+</column_name>
+        <stream_name>Payoff Primary Lien Holder Company</stream_name>
+      </field>
+      <field>
+        <column_name>Payoff_Junior_Lien_Holder_Company
+</column_name>
+        <stream_name>Payoff Junior Lien Holder Company</stream_name>
+      </field>
+      <field>
+        <column_name>Rate_Lock_Lock_Request_Loan_Amnt_Excluding_MIP_PMI_Most_Recent
+</column_name>
+        <stream_name>Rate Lock - Lock Request Loan Amnt Excluding MIP/PMI (Most Recent)</stream_name>
+      </field>
+      <field>
+        <column_name>Fund_Outstanding_Docs_Funding_Authorized
+</column_name>
+        <stream_name>Fund Outstanding Docs - Funding Authorized</stream_name>
+      </field>
+      <field>
+        <column_name>Credit_Committee_FICO_Exception
+</column_name>
+        <stream_name>Credit Committee FICO Exception</stream_name>
+      </field>
+      <field>
+        <column_name>HomeReady_Eligibility
+</column_name>
+        <stream_name>HomeReady Eligibility</stream_name>
+      </field>
+      <field>
+        <column_name>HomeReady_Borrower_Acceptance
+</column_name>
+        <stream_name>HomeReady Borrower Acceptance</stream_name>
+      </field>
+      <field>
+        <column_name>HomeReady_Eligibility_Review_Complete
+</column_name>
+        <stream_name>HomeReady Eligibility Review Complete</stream_name>
+      </field>
+      <field>
+        <column_name>HomePossible_Eligibility
+</column_name>
+        <stream_name>HomePossible Eligibility</stream_name>
+      </field>
+      <field>
+        <column_name>HomePossible_Eligibility_Review_Complete
+</column_name>
+        <stream_name>HomePossible Eligibility Review Complete</stream_name>
+      </field>
+      <field>
+        <column_name>Fees_Line_801_User_Defined_Fee_2_Descr
+</column_name>
+        <stream_name>Fees Line 801 User Defined Fee 2 Descr</stream_name>
+      </field>
+      <field>
+        <column_name>Fees_Line_801_User_Defined_Fee_2_Borr_Amt
+</column_name>
+        <stream_name>Fees Line 801 User Defined Fee 2 - Borr Amt</stream_name>
+      </field>
+      <field>
+        <column_name>Underwriting_Investor_Eligibility_Fannie_Mae
+</column_name>
+        <stream_name>Underwriting - Investor Eligibility - Fannie Mae</stream_name>
+      </field>
+      <field>
+        <column_name>Underwriting_Investor_Eligibility_Freddie_Mac
+</column_name>
+        <stream_name>Underwriting - Investor Eligibility - Freddie Mac</stream_name>
+      </field>
+      <field>
+        <column_name>Underwriting_Level_of_Prpty_Review_Form
+</column_name>
+        <stream_name>Underwriting Level of Prpty Review Form #</stream_name>
+      </field>
+      <field>
+        <column_name>Extension_Cost_Total_Amount
+</column_name>
+        <stream_name>Extension Cost Total Amount</stream_name>
+      </field>
+      <field>
+        <column_name>FNMA_CU_Risk_Score
+</column_name>
+        <stream_name>FNMA CU Risk Score</stream_name>
+      </field>
+      <field>
+        <column_name>Income_Verification_Available_B1
+</column_name>
+        <stream_name>Income Verification Available - B1</stream_name>
+      </field>
+      <field>
+        <column_name>Income_Verification_Available_C1
+</column_name>
+        <stream_name>Income Verification Available - C1</stream_name>
+      </field>
+      <field>
+        <column_name>Day_1_Income_Verification_Available
+</column_name>
+        <stream_name>Day 1 Income Verification Available</stream_name>
+      </field>
+      <field>
+        <column_name>Subject_Property_Est_Value
+</column_name>
+        <stream_name>Subject Property Est Value</stream_name>
+      </field>
+      <field>
+        <column_name>Total_Credit_for_Rate_Chosen
+</column_name>
+        <stream_name>Total Credit for Rate Chosen</stream_name>
+      </field>
+      <field>
+        <column_name>LO_Compensation_TotalBorrower_Paid_Discount_Point_Amount_Line_4
+</column_name>
+        <stream_name>LO Compensation - TotalBorrower Paid Discount Point Amount Line 4</stream_name>
+      </field>
+      <field>
+        <column_name>Fees_Line_801_Broker_Compensation_Borrower_Paid
+</column_name>
+        <stream_name>Fees Line 801 Broker Compensation Borrower Paid</stream_name>
+      </field>
+      <field>
+        <column_name>Loan_Info_Loan_ID_Key</column_name>
+        <stream_name>Loan Info Loan ID</stream_name>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>544</xloc>
+      <yloc>224</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step_error_handling>
+  </step_error_handling>
+  <slave-step-copy-partition-distribution>
+  </slave-step-copy-partition-distribution>
+  <slave_transformation>N</slave_transformation>
+  <attributes/>
+</transformation>
