@@ -1,0 +1,2335 @@
+<transformation>
+  <info>
+    <name>DMI_Daily_Master_Daily</name>
+    <description/>
+    <extended_description/>
+    <trans_version/>
+    <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
+    <directory>/DW_1_to_DW_2/Transformation</directory>
+    <parameters>
+    </parameters>
+    <log>
+      <trans-log-table>
+        <connection>etl</connection>
+        <schema>etl</schema>
+        <table>PentahoTransformation</table>
+        <size_limit_lines/>
+        <interval/>
+        <timeout_days/>
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>TRANSNAME</id>
+          <enabled>Y</enabled>
+          <name>TRANSNAME</name>
+        </field>
+        <field>
+          <id>STATUS</id>
+          <enabled>Y</enabled>
+          <name>STATUS</name>
+        </field>
+        <field>
+          <id>LINES_READ</id>
+          <enabled>Y</enabled>
+          <name>LINES_READ</name>
+          <subject/>
+        </field>
+        <field>
+          <id>LINES_WRITTEN</id>
+          <enabled>Y</enabled>
+          <name>LINES_WRITTEN</name>
+          <subject/>
+        </field>
+        <field>
+          <id>LINES_UPDATED</id>
+          <enabled>Y</enabled>
+          <name>LINES_UPDATED</name>
+          <subject/>
+        </field>
+        <field>
+          <id>LINES_INPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_INPUT</name>
+          <subject/>
+        </field>
+        <field>
+          <id>LINES_OUTPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_OUTPUT</name>
+          <subject/>
+        </field>
+        <field>
+          <id>LINES_REJECTED</id>
+          <enabled>Y</enabled>
+          <name>LINES_REJECTED</name>
+          <subject/>
+        </field>
+        <field>
+          <id>ERRORS</id>
+          <enabled>Y</enabled>
+          <name>ERRORS</name>
+        </field>
+        <field>
+          <id>STARTDATE</id>
+          <enabled>Y</enabled>
+          <name>STARTDATE</name>
+        </field>
+        <field>
+          <id>ENDDATE</id>
+          <enabled>Y</enabled>
+          <name>ENDDATE</name>
+        </field>
+        <field>
+          <id>LOGDATE</id>
+          <enabled>Y</enabled>
+          <name>LOGDATE</name>
+        </field>
+        <field>
+          <id>DEPDATE</id>
+          <enabled>Y</enabled>
+          <name>DEPDATE</name>
+        </field>
+        <field>
+          <id>REPLAYDATE</id>
+          <enabled>Y</enabled>
+          <name>REPLAYDATE</name>
+        </field>
+        <field>
+          <id>LOG_FIELD</id>
+          <enabled>N</enabled>
+          <name>LOG_FIELD</name>
+        </field>
+        <field>
+          <id>EXECUTING_SERVER</id>
+          <enabled>N</enabled>
+          <name>EXECUTING_SERVER</name>
+        </field>
+        <field>
+          <id>EXECUTING_USER</id>
+          <enabled>N</enabled>
+          <name>EXECUTING_USER</name>
+        </field>
+        <field>
+          <id>CLIENT</id>
+          <enabled>N</enabled>
+          <name>CLIENT</name>
+        </field>
+      </trans-log-table>
+      <perf-log-table>
+        <connection/>
+        <schema/>
+        <table/>
+        <interval/>
+        <timeout_days/>
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>SEQ_NR</id>
+          <enabled>Y</enabled>
+          <name>SEQ_NR</name>
+        </field>
+        <field>
+          <id>LOGDATE</id>
+          <enabled>Y</enabled>
+          <name>LOGDATE</name>
+        </field>
+        <field>
+          <id>TRANSNAME</id>
+          <enabled>Y</enabled>
+          <name>TRANSNAME</name>
+        </field>
+        <field>
+          <id>STEPNAME</id>
+          <enabled>Y</enabled>
+          <name>STEPNAME</name>
+        </field>
+        <field>
+          <id>STEP_COPY</id>
+          <enabled>Y</enabled>
+          <name>STEP_COPY</name>
+        </field>
+        <field>
+          <id>LINES_READ</id>
+          <enabled>Y</enabled>
+          <name>LINES_READ</name>
+        </field>
+        <field>
+          <id>LINES_WRITTEN</id>
+          <enabled>Y</enabled>
+          <name>LINES_WRITTEN</name>
+        </field>
+        <field>
+          <id>LINES_UPDATED</id>
+          <enabled>Y</enabled>
+          <name>LINES_UPDATED</name>
+        </field>
+        <field>
+          <id>LINES_INPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_INPUT</name>
+        </field>
+        <field>
+          <id>LINES_OUTPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_OUTPUT</name>
+        </field>
+        <field>
+          <id>LINES_REJECTED</id>
+          <enabled>Y</enabled>
+          <name>LINES_REJECTED</name>
+        </field>
+        <field>
+          <id>ERRORS</id>
+          <enabled>Y</enabled>
+          <name>ERRORS</name>
+        </field>
+        <field>
+          <id>INPUT_BUFFER_ROWS</id>
+          <enabled>Y</enabled>
+          <name>INPUT_BUFFER_ROWS</name>
+        </field>
+        <field>
+          <id>OUTPUT_BUFFER_ROWS</id>
+          <enabled>Y</enabled>
+          <name>OUTPUT_BUFFER_ROWS</name>
+        </field>
+      </perf-log-table>
+      <channel-log-table>
+        <connection>etl</connection>
+        <schema>etl</schema>
+        <table>PentahoChannel</table>
+        <timeout_days/>
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>LOG_DATE</id>
+          <enabled>Y</enabled>
+          <name>LOG_DATE</name>
+        </field>
+        <field>
+          <id>LOGGING_OBJECT_TYPE</id>
+          <enabled>Y</enabled>
+          <name>LOGGING_OBJECT_TYPE</name>
+        </field>
+        <field>
+          <id>OBJECT_NAME</id>
+          <enabled>Y</enabled>
+          <name>OBJECT_NAME</name>
+        </field>
+        <field>
+          <id>OBJECT_COPY</id>
+          <enabled>Y</enabled>
+          <name>OBJECT_COPY</name>
+        </field>
+        <field>
+          <id>REPOSITORY_DIRECTORY</id>
+          <enabled>Y</enabled>
+          <name>REPOSITORY_DIRECTORY</name>
+        </field>
+        <field>
+          <id>FILENAME</id>
+          <enabled>Y</enabled>
+          <name>FILENAME</name>
+        </field>
+        <field>
+          <id>OBJECT_ID</id>
+          <enabled>Y</enabled>
+          <name>OBJECT_ID</name>
+        </field>
+        <field>
+          <id>OBJECT_REVISION</id>
+          <enabled>Y</enabled>
+          <name>OBJECT_REVISION</name>
+        </field>
+        <field>
+          <id>PARENT_CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>PARENT_CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>ROOT_CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>ROOT_CHANNEL_ID</name>
+        </field>
+      </channel-log-table>
+      <step-log-table>
+        <connection>etl</connection>
+        <schema>etl</schema>
+        <table>PentahoStep</table>
+        <timeout_days/>
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>LOG_DATE</id>
+          <enabled>Y</enabled>
+          <name>LOG_DATE</name>
+        </field>
+        <field>
+          <id>TRANSNAME</id>
+          <enabled>Y</enabled>
+          <name>TRANSNAME</name>
+        </field>
+        <field>
+          <id>STEPNAME</id>
+          <enabled>Y</enabled>
+          <name>STEPNAME</name>
+        </field>
+        <field>
+          <id>STEP_COPY</id>
+          <enabled>Y</enabled>
+          <name>STEP_COPY</name>
+        </field>
+        <field>
+          <id>LINES_READ</id>
+          <enabled>Y</enabled>
+          <name>LINES_READ</name>
+        </field>
+        <field>
+          <id>LINES_WRITTEN</id>
+          <enabled>Y</enabled>
+          <name>LINES_WRITTEN</name>
+        </field>
+        <field>
+          <id>LINES_UPDATED</id>
+          <enabled>Y</enabled>
+          <name>LINES_UPDATED</name>
+        </field>
+        <field>
+          <id>LINES_INPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_INPUT</name>
+        </field>
+        <field>
+          <id>LINES_OUTPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_OUTPUT</name>
+        </field>
+        <field>
+          <id>LINES_REJECTED</id>
+          <enabled>Y</enabled>
+          <name>LINES_REJECTED</name>
+        </field>
+        <field>
+          <id>ERRORS</id>
+          <enabled>Y</enabled>
+          <name>ERRORS</name>
+        </field>
+        <field>
+          <id>LOG_FIELD</id>
+          <enabled>N</enabled>
+          <name>LOG_FIELD</name>
+        </field>
+      </step-log-table>
+      <metrics-log-table>
+        <connection>etl</connection>
+        <schema>etl</schema>
+        <table>PentahoMetric</table>
+        <timeout_days/>
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>LOG_DATE</id>
+          <enabled>Y</enabled>
+          <name>LOG_DATE</name>
+        </field>
+        <field>
+          <id>METRICS_DATE</id>
+          <enabled>Y</enabled>
+          <name>METRICS_DATE</name>
+        </field>
+        <field>
+          <id>METRICS_CODE</id>
+          <enabled>Y</enabled>
+          <name>METRICS_CODE</name>
+        </field>
+        <field>
+          <id>METRICS_DESCRIPTION</id>
+          <enabled>Y</enabled>
+          <name>METRICS_DESCRIPTION</name>
+        </field>
+        <field>
+          <id>METRICS_SUBJECT</id>
+          <enabled>Y</enabled>
+          <name>METRICS_SUBJECT</name>
+        </field>
+        <field>
+          <id>METRICS_TYPE</id>
+          <enabled>Y</enabled>
+          <name>METRICS_TYPE</name>
+        </field>
+        <field>
+          <id>METRICS_VALUE</id>
+          <enabled>Y</enabled>
+          <name>METRICS_VALUE</name>
+        </field>
+      </metrics-log-table>
+    </log>
+    <maxdate>
+      <connection/>
+      <table/>
+      <field/>
+      <offset>0.0</offset>
+      <maxdiff>0.0</maxdiff>
+    </maxdate>
+    <size_rowset>10000</size_rowset>
+    <sleep_time_empty>50</sleep_time_empty>
+    <sleep_time_full>50</sleep_time_full>
+    <unique_connections>N</unique_connections>
+    <feedback_shown>Y</feedback_shown>
+    <feedback_size>50000</feedback_size>
+    <using_thread_priorities>Y</using_thread_priorities>
+    <shared_objects_file/>
+    <capture_step_performance>N</capture_step_performance>
+    <step_performance_capturing_delay>1000</step_performance_capturing_delay>
+    <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
+    <dependencies>
+    </dependencies>
+    <partitionschemas>
+    </partitionschemas>
+    <slaveservers>
+    </slaveservers>
+    <clusterschemas>
+    </clusterschemas>
+    <created_user/>
+    <created_date>2019/12/03 14:22:47.297</created_date>
+    <modified_user>-</modified_user>
+    <modified_date>2019/11/14 16:19:47.424</modified_date>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
+    <is_key_private>N</is_key_private>
+  </info>
+  <notepads>
+  </notepads>
+  <connection>
+    <name>etl</name>
+    <server>${db_host}</server>
+    <type>MSSQLNATIVE</type>
+    <access>Native</access>
+    <database>${db_name}</database>
+    <port>${db_port}</port>
+    <username>${username}</username>
+    <password>${password}</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>MSSQLUseIntegratedSecurity</code>
+        <attribute>false</attribute>
+      </attribute>
+      <attribute>
+        <code>MSSQL_DOUBLE_DECIMAL_SEPARATOR</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>${db_port}</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
+  <connection>
+    <name>MySQL</name>
+    <server>${my_host}</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>${my_name}</database>
+    <port>${my_port}</port>
+    <username>${my_username}</username>
+    <password>${my_password}</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>${my_port}</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>STREAM_RESULTS</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
+  <connection>
+    <name>SQL Server</name>
+    <server>${db_host}</server>
+    <type>MSSQLNATIVE</type>
+    <access>Native</access>
+    <database>${db_name}</database>
+    <port>${db_port}</port>
+    <username>${username}</username>
+    <password>${password}</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>MSSQLUseIntegratedSecurity</code>
+        <attribute>false</attribute>
+      </attribute>
+      <attribute>
+        <code>MSSQL_DOUBLE_DECIMAL_SEPARATOR</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>${db_port}</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
+  <order>
+    <hop>
+      <from>Latest Date</from>
+      <to>Latest Date Sort</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Latest Date Sort</from>
+      <to>Merge join</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>dw_1 sort</from>
+      <to>Merge join</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>DW_1 2</from>
+      <to>dw_1 sort</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Merge join</from>
+      <to>Filter rows</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter rows</from>
+      <to>Table output</to>
+      <enabled>Y</enabled>
+    </hop>
+  </order>
+  <step>
+    <name>DW_1 2</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>MySQL</connection>
+    <sql> SELECT distinct
+    a.DATADATE	,
+    LOANNO	,
+    OLDLOANNO	,
+    CLIENTNO	,
+    INVESTLOAN	,
+    INVESTORID	,
+    CATERGORYCODE	,
+    GSECODE	,
+    GSECODEDESC	,
+    POOLNUM	,
+    POOLCONTRA	,
+    INVREQMARG	,
+    ANNSERFEE	,
+    GTYFEEAFTERBUYUPDOWNFC	,
+    NETSRVFEE	,
+    FHASECTION	,
+    FHANUMBER	,
+    MERSID	,
+    FIRSTSERVFEERT	,
+    ZONECODE	,
+    AQNSALEID	,
+case when     AQNDATE>1 then     AQNDATE else null end as    AQNDATE	,
+    ACQPRINBAL	,
+case when     NEWLOANSETUP>1 then     NEWLOANSETUP else null end as    NEWLOANSETUP	,
+case when     ASSUMPDATE>1 then     ASSUMPDATE else null end as    ASSUMPDATE	,
+case when     LNSERVSOLDDT>1 then     LNSERVSOLDDT else null end as    LNSERVSOLDDT	,
+    LNSERVSOLD	,
+    HITYPE	,
+    LOTYPE	,
+    LOTYPEDESC	,
+    NUMOFUNITS	,
+    ORIGMTGAMT	,
+case when     NOTEDATE>1 then     NOTEDATE else null end as    NOTEDATE	,
+case when     LOANDATE>1 then     LOANDATE else null end as    LOANDATE	,
+case when     FSTPAYDATE>1 then     FSTPAYDATE else null end as    FSTPAYDATE	,
+case when     MATDATE>1 then     MATDATE else null end as    MATDATE	,
+    INSPSVCCOD	,
+    BRHOFFCODE	,
+    BUILDBROKE	,
+    POINTSPAID	,
+    PNTSRPTYR	,
+    LOANPURPCODE	,
+    LOANPURPCODEDESC	,
+    PRODLINECD	,
+    PRODLINECDDESC	,
+    PRPTYTYPEFNMA	,
+    PRPTYTYPEFNMADESC	,
+    LOANTERM	,
+    ESCROWBAL	,
+    FIRSTPRINBAL	,
+    ESCADVBAL	,
+    SUSPBAL	,
+    ACCLATECHG	,
+    RESTRESCBAL	,
+    ANNUALINT	,
+    FIRSTPI	,
+    TANDIMTHLY	,
+    TOTPAYMENT	,
+    OCCPYCODE	,
+    OCCPYCODEDESC	,
+    OCCPYSTATUS	,
+    OCCPYSTATUSDESC	,
+    AVGDALYPB	,
+case when     PIFDATE>1 then     PIFDATE else null end as    PIFDATE	,
+case when     DUEDATE>1 then     DUEDATE else null end as    DUEDATE	,
+    GRACEDAYS	,
+    RECCORPADV	,
+    NONRECCORP	,
+    CORPADBAL3	,
+case when     LASTTRANDT>1 then     LASTTRANDT else null end as    LASTTRANDT	,
+    TRANCODE	,
+    TRANCODEDESC	,
+case when     LASTFULLPMTDT>1 then     LASTFULLPMTDT else null end as    LASTFULLPMTDT	,
+    MANCODE	,
+    MANCODEDESC	,
+    ACRLSTATUS	,
+    PROCSTOP	,
+    PROCSTOPDESC	,
+case when     PROCSTEXDT>1 then     PROCSTEXDT else null end as    PROCSTEXDT	,
+case when     PIFREQDT>1 then     PIFREQDT else null end as    PIFREQDT	,
+case when     APPRREQDT>1 then     APPRREQDT else null end as    APPRREQDT	,
+    PIFSTOP	,
+    NONOTICES	,
+case when     NONOTEXPDT>1 then     NONOTEXPDT else null end as    NONOTEXPDT	,
+    DONTANAL	,
+case when     DNTANZDATE>1 then     DNTANZDATE else null end as    DNTANZDATE	,
+    LTECHGSTOP	,
+case when     LCSTPEXPDT>1 then     LCSTPEXPDT else null end as    LCSTPEXPDT	,
+    DISBSTOP	,
+    BILLMODE	,
+    BILLMODEDESC	,
+    SILVESTAT	,
+    GOLDESTAT	,
+    DRFTOPTCODE	,
+    DRFTIND	,
+    THRDPARTDRFTIND	,
+    THRDPARTDRFTINDDESC	,
+    THRDPARTDRFTSTATUS	,
+    THRDPARTDRFTSTATUSDESC	,
+    LTECHGCODE	,
+    LTECHGDESC	,
+    LTECHGFCTR	,
+case when     OVERSHORTSTOP>1 then     OVERSHORTSTOP else null end as    OVERSHORTSTOP	,
+    DLQCLASSCD	,
+    DLQIND	,
+    DLQINDDESC	,
+    DELQTABLE	,
+    BADCHKTBLE	,
+case when     LASTLATEYR>1 then     LASTLATEYR else null end as    LASTLATEYR	,
+case when     FORCLSDATE>1 then     FORCLSDATE else null end as    FORCLSDATE	,
+    FORECLSTOP	,
+    FORECLSTOPDESC	,
+    FCSTATUS	,
+    FCSTATUSDESC	,
+case when     FCSTARTDATE>1 then     FCSTARTDATE else null end as    FCSTARTDATE	,
+case when     FCSALEDATE>1 then     FCSALEDATE else null end as    FCSALEDATE	,
+    BNKCHAPTER	,
+case when     BNKRPTDATE>1 then     BNKRPTDATE else null end as    BNKRPTDATE	,
+    BNKSTATUS	,
+    BNKSTATUSDESC	,
+    BNKREMOVCD	,
+    BNKREMOVCDDESC	,
+case when     BNKREMOVDATE>1 then     BNKREMOVDATE else null end as    BNKREMOVDATE	,
+case when     LMSTARTDATE>1 then     LMSTARTDATE else null end as    LMSTARTDATE	,
+    LMTEMPLATENAME	,
+    LMSTATCODE	,
+    LMSTATCODEDESC	,
+    LNMODCD	,
+    LNMODCDDESC	,
+case when     LNMODDATE>1 then     LNMODDATE else null end as    LNMODDATE	,
+    LMDENIALREAS	,
+    LMDENIALREASDESC	,
+    LC_YTD	,
+    NSF_YTD	,
+    OTHRFEEYTD	,
+    LATECHGMTD	,
+    NSFCHGMTD	,
+    OTHFEESCHGMTD	,
+    COUNTYTAX	,
+    CITYTAX	,
+    HAZPREM	,
+    MIP	,
+    LIEN	,
+    MISCAMT	,
+    FHLBBPURPR	,
+    ORGPROPVAL	,
+    CURPROPVAL	,
+    PROPADD	,
+    PROPUNIT	,
+    PROPERTYCTY	,
+    PROPSTATE	,
+    PROPERTYZP	,
+    HAZINSPOLICYNO	,
+case when     HAZPOLICYEXPIRDATE>1 then     HAZPOLICYEXPIRDATE else null end as    HAZPOLICYEXPIRDATE	,
+    FLDCERTNO	,
+    FLOODZONE1	,
+    FLOODZONE2	,
+    COUNTYCODE	,
+    CITYCODE	,
+    EMPLCODE	,
+    MORTTELE1	,
+    MORTTELE2	,
+    COMORTTELE	,
+    FIRSTEMAIL	,
+    SECEMAIL	,
+    ABBRNAME	,
+    MTGRFMTLFM	,
+    MTGRFIRSTNAME	,
+    MTGRMIDNAME	,
+    MTGRLASTNAME	,
+    CMTGRLFM	,
+    CMTGRFIRSTNAME	,
+    CMTGRMIDNAME	,
+    CMTGRLASTNAME	,
+    BILLNAME	,
+    BILLADDR1	,
+    BILLADDR2	,
+    BILLADDR3	,
+    BILLADDR4	,
+    BILLCITY	,
+    BILLSTATE	,
+    ZIPCODE	,
+    FOREIGNADDRIND	,
+    TAXNAME	,
+    TAXFIRNAME	,
+    MTGRSSNO	,
+    COMTGRSSN	,
+    SSNVERIFY	,
+    SSNCTFYCDE	,
+case when     SSNCTFDATE>1 then     SSNCTFDATE else null end as    SSNCTFDATE	,
+    ORIGCREDITMTGR	,
+    ORIGCREDITCMTGR	,
+    CREDITMTGR	,
+    CREDITCMTGR	,
+    CREDINDSW	,
+    CREDSTATUS	,
+case when     PMIREVCANCDT>1 then     PMIREVCANCDT else null end as    PMIREVCANCDT	,
+case when     MITERMDATE>1 then     MITERMDATE else null end as    MITERMDATE	,
+    MIPUFPREM	,
+    MIPFINAMT	,
+    POOLPAYEE	,
+    POLICYNO	,
+    PMIRATE	,
+    MITYPE	,
+    FMLGTYRATE	,
+    MIPDBYLENDCD	,
+    FORCEDCOVIND	,
+case when     FORCEDCOVDATE>1 then     FORCEDCOVDATE else null end as    FORCEDCOVDATE	,
+    ARMPLANID	,
+    ARMPLANIDDESC	,
+    ARMINDEXCD1	,
+    ARMINDEXCD1DESC	,
+    ARMORGIR	,
+    ARMNEWIR	,
+    ARMMARGIN	,
+case when     ARMORGIRCHGDT>1 then     ARMORGIRCHGDT else null end as    ARMORGIRCHGDT	,
+case when     ARMNEXTIRCALCDT>1 then     ARMNEXTIRCALCDT else null end as    ARMNEXTIRCALCDT	,
+case when     ARMNEXTIREFFDT>1 then     ARMNEXTIREFFDT else null end as    ARMNEXTIREFFDT	,
+    ARMIRCHGPD	,
+    ARMORGPI	,
+    ARMNEWPI	,
+case when     ARMORGPICHGDT>1 then     ARMORGPICHGDT else null end as    ARMORGPICHGDT	,
+case when     ARMNEXTPICALCDT>1 then     ARMNEXTPICALCDT else null end as    ARMNEXTPICALCDT	,
+case when     ARMNEXTPIEFFDT>1 then     ARMNEXTPIEFFDT else null end as    ARMNEXTPIEFFDT	,
+    ARMPICHGPD	,
+    ARMPICALCMTHDCDNEG	,
+    ARMPICALCMTHDCDNEGDESC	,
+    ARMIRLEADDAYS	,
+    ARMINITIALINDEXRT	,
+    ARMORIGPIAMT	,
+    ARMORIGIRRT	,
+    ARMIRMARGINRT	,
+    ARMIRMAXINCRT	,
+    ARMIRMININCRT	,
+    ARMIRMAXDECRT	,
+    ARMIRMINDECRT	,
+    ARMIRMXLIFECLRT	,
+    ARMIRMXLIFEFLRRT	,
+    ARMIRMAXLIFEINCRT	,
+    ARMIRMAXLIFEDECRT	,
+    BALLOONUSER	,
+    BALLOONUSERDESC	,
+    PMTOPTCODE	,
+    PMTOPTCODEDESC	,
+    ARMPBNEGAMORTBAL	,
+    ARMPINEGAMRTCAPCD	,
+    ARMPINEGAMRTCAPCDDESC	,
+    PPPCODE	,
+case when     PPPEXPIREDT>1 then     PPPEXPIREDT else null end as    PPPEXPIREDT	,
+    INTONLYIND	,
+case when     INTONLYEXPDT>1 then     INTONLYEXPDT else null end as    INTONLYEXPDT	,
+    INTONESCIND	,
+case when     LASTANALYSDT>1 then     LASTANALYSDT else null end as    LASTANALYSDT	,
+    ESCBALBEG	,
+    COUPONMO	,
+    OSSPREAD	,
+    AVGDALYESC	,
+    TAXSERTYPE	,
+    TAXSERVNUM	,
+    TAXSERCODE	,
+case when     TAXSERDATE>1 then     TAXSERDATE else null end as    TAXSERDATE	,
+    TAXSERFEE	,
+    IOECREDIT	,
+    IOERESCRED	,
+    ESCDOCTYPE	,
+    INITSTMTCD	,
+case when     INEXSTMTDT>1 then     INEXSTMTDT else null end as    INEXSTMTDT	,
+    DOCMINBAL	,
+    IOEWHOLD	,
+    IOEREHOLD	,
+    IOEWHSW	,
+    PRINBALBEG	,
+    INTRESTYTD	,
+    PPHONE	,
+    SECPHONE	,
+    COMORTPHONE	,
+    TRDPARTYPHONE	,
+    OTHERPHONE1	,
+    OTHERPHONE2	,
+    OTHERPHONE3	,
+    FREEFORMPHONE	
+FROM DMI_Daily.MasterDaily a
+join 
+(
+  select distinct datadate
+  from DMI_Daily.MasterDaily
+  order by datadate desc
+  limit 2
+)b on a.DATADATE = b.DATADATE</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>144</xloc>
+      <yloc>304</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Filter rows</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to>Table output</send_true_to>
+    <send_false_to/>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>null_value</leftvalue>
+        <function>=</function>
+        <rightvalue/>
+        <value>
+          <name>constant</name>
+          <type>Integer</type>
+          <text/>
+          <length>-1</length>
+          <precision>0</precision>
+          <isnull>Y</isnull>
+          <mask>####0;-####0</mask>
+        </value>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>432</xloc>
+      <yloc>192</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Latest Date</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>SQL Server</connection>
+    <sql>
+SELECT distinct top 2 [DATADATE], 1 as null_value
+  FROM [dmi].[Daily_Master_Daily]
+order by datadate desc</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>160</xloc>
+      <yloc>96</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Latest Date Sort</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>DATADATE</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>240</xloc>
+      <yloc>144</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Merge join</name>
+    <type>MergeJoin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <join_type>LEFT OUTER</join_type>
+    <step1>dw_1 sort</step1>
+    <step2>Latest Date Sort</step2>
+    <keys_1>
+      <key>DATADATE</key>
+    </keys_1>
+    <keys_2>
+      <key>DATADATE</key>
+    </keys_2>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>336</xloc>
+      <yloc>192</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Table output</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>SQL Server</connection>
+    <schema>dmi</schema>
+    <table>Daily_Master_Daily</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+      <field>
+        <column_name>DATADATE</column_name>
+        <stream_name>DATADATE</stream_name>
+      </field>
+      <field>
+        <column_name>LOANNO</column_name>
+        <stream_name>LOANNO</stream_name>
+      </field>
+      <field>
+        <column_name>OLDLOANNO</column_name>
+        <stream_name>OLDLOANNO</stream_name>
+      </field>
+      <field>
+        <column_name>CLIENTNO</column_name>
+        <stream_name>CLIENTNO</stream_name>
+      </field>
+      <field>
+        <column_name>INVESTLOAN</column_name>
+        <stream_name>INVESTLOAN</stream_name>
+      </field>
+      <field>
+        <column_name>INVESTORID</column_name>
+        <stream_name>INVESTORID</stream_name>
+      </field>
+      <field>
+        <column_name>CATERGORYCODE</column_name>
+        <stream_name>CATERGORYCODE</stream_name>
+      </field>
+      <field>
+        <column_name>GSECODE</column_name>
+        <stream_name>GSECODE</stream_name>
+      </field>
+      <field>
+        <column_name>GSECODEDESC</column_name>
+        <stream_name>GSECODEDESC</stream_name>
+      </field>
+      <field>
+        <column_name>POOLNUM</column_name>
+        <stream_name>POOLNUM</stream_name>
+      </field>
+      <field>
+        <column_name>POOLCONTRA</column_name>
+        <stream_name>POOLCONTRA</stream_name>
+      </field>
+      <field>
+        <column_name>INVREQMARG</column_name>
+        <stream_name>INVREQMARG</stream_name>
+      </field>
+      <field>
+        <column_name>ANNSERFEE</column_name>
+        <stream_name>ANNSERFEE</stream_name>
+      </field>
+      <field>
+        <column_name>GTYFEEAFTERBUYUPDOWNFC</column_name>
+        <stream_name>GTYFEEAFTERBUYUPDOWNFC</stream_name>
+      </field>
+      <field>
+        <column_name>NETSRVFEE</column_name>
+        <stream_name>NETSRVFEE</stream_name>
+      </field>
+      <field>
+        <column_name>FHASECTION</column_name>
+        <stream_name>FHASECTION</stream_name>
+      </field>
+      <field>
+        <column_name>FHANUMBER</column_name>
+        <stream_name>FHANUMBER</stream_name>
+      </field>
+      <field>
+        <column_name>MERSID</column_name>
+        <stream_name>MERSID</stream_name>
+      </field>
+      <field>
+        <column_name>FIRSTSERVFEERT</column_name>
+        <stream_name>FIRSTSERVFEERT</stream_name>
+      </field>
+      <field>
+        <column_name>ZONECODE</column_name>
+        <stream_name>ZONECODE</stream_name>
+      </field>
+      <field>
+        <column_name>AQNSALEID</column_name>
+        <stream_name>AQNSALEID</stream_name>
+      </field>
+      <field>
+        <column_name>AQNDATE</column_name>
+        <stream_name>AQNDATE</stream_name>
+      </field>
+      <field>
+        <column_name>ACQPRINBAL</column_name>
+        <stream_name>ACQPRINBAL</stream_name>
+      </field>
+      <field>
+        <column_name>NEWLOANSETUP</column_name>
+        <stream_name>NEWLOANSETUP</stream_name>
+      </field>
+      <field>
+        <column_name>ASSUMPDATE</column_name>
+        <stream_name>ASSUMPDATE</stream_name>
+      </field>
+      <field>
+        <column_name>LNSERVSOLDDT</column_name>
+        <stream_name>LNSERVSOLDDT</stream_name>
+      </field>
+      <field>
+        <column_name>LNSERVSOLD</column_name>
+        <stream_name>LNSERVSOLD</stream_name>
+      </field>
+      <field>
+        <column_name>HITYPE</column_name>
+        <stream_name>HITYPE</stream_name>
+      </field>
+      <field>
+        <column_name>LOTYPE</column_name>
+        <stream_name>LOTYPE</stream_name>
+      </field>
+      <field>
+        <column_name>LOTYPEDESC</column_name>
+        <stream_name>LOTYPEDESC</stream_name>
+      </field>
+      <field>
+        <column_name>NUMOFUNITS</column_name>
+        <stream_name>NUMOFUNITS</stream_name>
+      </field>
+      <field>
+        <column_name>ORIGMTGAMT</column_name>
+        <stream_name>ORIGMTGAMT</stream_name>
+      </field>
+      <field>
+        <column_name>NOTEDATE</column_name>
+        <stream_name>NOTEDATE</stream_name>
+      </field>
+      <field>
+        <column_name>LOANDATE</column_name>
+        <stream_name>LOANDATE</stream_name>
+      </field>
+      <field>
+        <column_name>FSTPAYDATE</column_name>
+        <stream_name>FSTPAYDATE</stream_name>
+      </field>
+      <field>
+        <column_name>MATDATE</column_name>
+        <stream_name>MATDATE</stream_name>
+      </field>
+      <field>
+        <column_name>INSPSVCCOD</column_name>
+        <stream_name>INSPSVCCOD</stream_name>
+      </field>
+      <field>
+        <column_name>BRHOFFCODE</column_name>
+        <stream_name>BRHOFFCODE</stream_name>
+      </field>
+      <field>
+        <column_name>BUILDBROKE</column_name>
+        <stream_name>BUILDBROKE</stream_name>
+      </field>
+      <field>
+        <column_name>POINTSPAID</column_name>
+        <stream_name>POINTSPAID</stream_name>
+      </field>
+      <field>
+        <column_name>PNTSRPTYR</column_name>
+        <stream_name>PNTSRPTYR</stream_name>
+      </field>
+      <field>
+        <column_name>LOANPURPCODE</column_name>
+        <stream_name>LOANPURPCODE</stream_name>
+      </field>
+      <field>
+        <column_name>LOANPURPCODEDESC</column_name>
+        <stream_name>LOANPURPCODEDESC</stream_name>
+      </field>
+      <field>
+        <column_name>PRODLINECD</column_name>
+        <stream_name>PRODLINECD</stream_name>
+      </field>
+      <field>
+        <column_name>PRODLINECDDESC</column_name>
+        <stream_name>PRODLINECDDESC</stream_name>
+      </field>
+      <field>
+        <column_name>PRPTYTYPEFNMA</column_name>
+        <stream_name>PRPTYTYPEFNMA</stream_name>
+      </field>
+      <field>
+        <column_name>PRPTYTYPEFNMADESC</column_name>
+        <stream_name>PRPTYTYPEFNMADESC</stream_name>
+      </field>
+      <field>
+        <column_name>LOANTERM</column_name>
+        <stream_name>LOANTERM</stream_name>
+      </field>
+      <field>
+        <column_name>ESCROWBAL</column_name>
+        <stream_name>ESCROWBAL</stream_name>
+      </field>
+      <field>
+        <column_name>FIRSTPRINBAL</column_name>
+        <stream_name>FIRSTPRINBAL</stream_name>
+      </field>
+      <field>
+        <column_name>ESCADVBAL</column_name>
+        <stream_name>ESCADVBAL</stream_name>
+      </field>
+      <field>
+        <column_name>SUSPBAL</column_name>
+        <stream_name>SUSPBAL</stream_name>
+      </field>
+      <field>
+        <column_name>ACCLATECHG</column_name>
+        <stream_name>ACCLATECHG</stream_name>
+      </field>
+      <field>
+        <column_name>RESTRESCBAL</column_name>
+        <stream_name>RESTRESCBAL</stream_name>
+      </field>
+      <field>
+        <column_name>ANNUALINT</column_name>
+        <stream_name>ANNUALINT</stream_name>
+      </field>
+      <field>
+        <column_name>FIRSTPI</column_name>
+        <stream_name>FIRSTPI</stream_name>
+      </field>
+      <field>
+        <column_name>TANDIMTHLY</column_name>
+        <stream_name>TANDIMTHLY</stream_name>
+      </field>
+      <field>
+        <column_name>TOTPAYMENT</column_name>
+        <stream_name>TOTPAYMENT</stream_name>
+      </field>
+      <field>
+        <column_name>OCCPYCODE</column_name>
+        <stream_name>OCCPYCODE</stream_name>
+      </field>
+      <field>
+        <column_name>OCCPYCODEDESC</column_name>
+        <stream_name>OCCPYCODEDESC</stream_name>
+      </field>
+      <field>
+        <column_name>OCCPYSTATUS</column_name>
+        <stream_name>OCCPYSTATUS</stream_name>
+      </field>
+      <field>
+        <column_name>OCCPYSTATUSDESC</column_name>
+        <stream_name>OCCPYSTATUSDESC</stream_name>
+      </field>
+      <field>
+        <column_name>AVGDALYPB</column_name>
+        <stream_name>AVGDALYPB</stream_name>
+      </field>
+      <field>
+        <column_name>PIFDATE</column_name>
+        <stream_name>PIFDATE</stream_name>
+      </field>
+      <field>
+        <column_name>DUEDATE</column_name>
+        <stream_name>DUEDATE</stream_name>
+      </field>
+      <field>
+        <column_name>GRACEDAYS</column_name>
+        <stream_name>GRACEDAYS</stream_name>
+      </field>
+      <field>
+        <column_name>RECCORPADV</column_name>
+        <stream_name>RECCORPADV</stream_name>
+      </field>
+      <field>
+        <column_name>NONRECCORP</column_name>
+        <stream_name>NONRECCORP</stream_name>
+      </field>
+      <field>
+        <column_name>CORPADBAL3</column_name>
+        <stream_name>CORPADBAL3</stream_name>
+      </field>
+      <field>
+        <column_name>LASTTRANDT</column_name>
+        <stream_name>LASTTRANDT</stream_name>
+      </field>
+      <field>
+        <column_name>TRANCODE</column_name>
+        <stream_name>TRANCODE</stream_name>
+      </field>
+      <field>
+        <column_name>TRANCODEDESC</column_name>
+        <stream_name>TRANCODEDESC</stream_name>
+      </field>
+      <field>
+        <column_name>LASTFULLPMTDT</column_name>
+        <stream_name>LASTFULLPMTDT</stream_name>
+      </field>
+      <field>
+        <column_name>MANCODE</column_name>
+        <stream_name>MANCODE</stream_name>
+      </field>
+      <field>
+        <column_name>MANCODEDESC</column_name>
+        <stream_name>MANCODEDESC</stream_name>
+      </field>
+      <field>
+        <column_name>ACRLSTATUS</column_name>
+        <stream_name>ACRLSTATUS</stream_name>
+      </field>
+      <field>
+        <column_name>PROCSTOP</column_name>
+        <stream_name>PROCSTOP</stream_name>
+      </field>
+      <field>
+        <column_name>PROCSTOPDESC</column_name>
+        <stream_name>PROCSTOPDESC</stream_name>
+      </field>
+      <field>
+        <column_name>PROCSTEXDT</column_name>
+        <stream_name>PROCSTEXDT</stream_name>
+      </field>
+      <field>
+        <column_name>PIFREQDT</column_name>
+        <stream_name>PIFREQDT</stream_name>
+      </field>
+      <field>
+        <column_name>APPRREQDT</column_name>
+        <stream_name>APPRREQDT</stream_name>
+      </field>
+      <field>
+        <column_name>PIFSTOP</column_name>
+        <stream_name>PIFSTOP</stream_name>
+      </field>
+      <field>
+        <column_name>NONOTICES</column_name>
+        <stream_name>NONOTICES</stream_name>
+      </field>
+      <field>
+        <column_name>NONOTEXPDT</column_name>
+        <stream_name>NONOTEXPDT</stream_name>
+      </field>
+      <field>
+        <column_name>DONTANAL</column_name>
+        <stream_name>DONTANAL</stream_name>
+      </field>
+      <field>
+        <column_name>DNTANZDATE</column_name>
+        <stream_name>DNTANZDATE</stream_name>
+      </field>
+      <field>
+        <column_name>LTECHGSTOP</column_name>
+        <stream_name>LTECHGSTOP</stream_name>
+      </field>
+      <field>
+        <column_name>LCSTPEXPDT</column_name>
+        <stream_name>LCSTPEXPDT</stream_name>
+      </field>
+      <field>
+        <column_name>DISBSTOP</column_name>
+        <stream_name>DISBSTOP</stream_name>
+      </field>
+      <field>
+        <column_name>BILLMODE</column_name>
+        <stream_name>BILLMODE</stream_name>
+      </field>
+      <field>
+        <column_name>BILLMODEDESC</column_name>
+        <stream_name>BILLMODEDESC</stream_name>
+      </field>
+      <field>
+        <column_name>SILVESTAT</column_name>
+        <stream_name>SILVESTAT</stream_name>
+      </field>
+      <field>
+        <column_name>GOLDESTAT</column_name>
+        <stream_name>GOLDESTAT</stream_name>
+      </field>
+      <field>
+        <column_name>DRFTOPTCODE</column_name>
+        <stream_name>DRFTOPTCODE</stream_name>
+      </field>
+      <field>
+        <column_name>DRFTIND</column_name>
+        <stream_name>DRFTIND</stream_name>
+      </field>
+      <field>
+        <column_name>THRDPARTDRFTIND</column_name>
+        <stream_name>THRDPARTDRFTIND</stream_name>
+      </field>
+      <field>
+        <column_name>THRDPARTDRFTINDDESC</column_name>
+        <stream_name>THRDPARTDRFTINDDESC</stream_name>
+      </field>
+      <field>
+        <column_name>THRDPARTDRFTSTATUS</column_name>
+        <stream_name>THRDPARTDRFTSTATUS</stream_name>
+      </field>
+      <field>
+        <column_name>THRDPARTDRFTSTATUSDESC</column_name>
+        <stream_name>THRDPARTDRFTSTATUSDESC</stream_name>
+      </field>
+      <field>
+        <column_name>LTECHGCODE</column_name>
+        <stream_name>LTECHGCODE</stream_name>
+      </field>
+      <field>
+        <column_name>LTECHGDESC</column_name>
+        <stream_name>LTECHGDESC</stream_name>
+      </field>
+      <field>
+        <column_name>LTECHGFCTR</column_name>
+        <stream_name>LTECHGFCTR</stream_name>
+      </field>
+      <field>
+        <column_name>OVERSHORTSTOP</column_name>
+        <stream_name>OVERSHORTSTOP</stream_name>
+      </field>
+      <field>
+        <column_name>DLQCLASSCD</column_name>
+        <stream_name>DLQCLASSCD</stream_name>
+      </field>
+      <field>
+        <column_name>DLQIND</column_name>
+        <stream_name>DLQIND</stream_name>
+      </field>
+      <field>
+        <column_name>DLQINDDESC</column_name>
+        <stream_name>DLQINDDESC</stream_name>
+      </field>
+      <field>
+        <column_name>DELQTABLE</column_name>
+        <stream_name>DELQTABLE</stream_name>
+      </field>
+      <field>
+        <column_name>BADCHKTBLE</column_name>
+        <stream_name>BADCHKTBLE</stream_name>
+      </field>
+      <field>
+        <column_name>LASTLATEYR</column_name>
+        <stream_name>LASTLATEYR</stream_name>
+      </field>
+      <field>
+        <column_name>FORCLSDATE</column_name>
+        <stream_name>FORCLSDATE</stream_name>
+      </field>
+      <field>
+        <column_name>FORECLSTOP</column_name>
+        <stream_name>FORECLSTOP</stream_name>
+      </field>
+      <field>
+        <column_name>FORECLSTOPDESC</column_name>
+        <stream_name>FORECLSTOPDESC</stream_name>
+      </field>
+      <field>
+        <column_name>FCSTATUS</column_name>
+        <stream_name>FCSTATUS</stream_name>
+      </field>
+      <field>
+        <column_name>FCSTATUSDESC</column_name>
+        <stream_name>FCSTATUSDESC</stream_name>
+      </field>
+      <field>
+        <column_name>FCSTARTDATE</column_name>
+        <stream_name>FCSTARTDATE</stream_name>
+      </field>
+      <field>
+        <column_name>FCSALEDATE</column_name>
+        <stream_name>FCSALEDATE</stream_name>
+      </field>
+      <field>
+        <column_name>BNKCHAPTER</column_name>
+        <stream_name>BNKCHAPTER</stream_name>
+      </field>
+      <field>
+        <column_name>BNKRPTDATE</column_name>
+        <stream_name>BNKRPTDATE</stream_name>
+      </field>
+      <field>
+        <column_name>BNKSTATUS</column_name>
+        <stream_name>BNKSTATUS</stream_name>
+      </field>
+      <field>
+        <column_name>BNKSTATUSDESC</column_name>
+        <stream_name>BNKSTATUSDESC</stream_name>
+      </field>
+      <field>
+        <column_name>BNKREMOVCD</column_name>
+        <stream_name>BNKREMOVCD</stream_name>
+      </field>
+      <field>
+        <column_name>BNKREMOVCDDESC</column_name>
+        <stream_name>BNKREMOVCDDESC</stream_name>
+      </field>
+      <field>
+        <column_name>BNKREMOVDATE</column_name>
+        <stream_name>BNKREMOVDATE</stream_name>
+      </field>
+      <field>
+        <column_name>LMSTARTDATE</column_name>
+        <stream_name>LMSTARTDATE</stream_name>
+      </field>
+      <field>
+        <column_name>LMTEMPLATENAME</column_name>
+        <stream_name>LMTEMPLATENAME</stream_name>
+      </field>
+      <field>
+        <column_name>LMSTATCODE</column_name>
+        <stream_name>LMSTATCODE</stream_name>
+      </field>
+      <field>
+        <column_name>LMSTATCODEDESC</column_name>
+        <stream_name>LMSTATCODEDESC</stream_name>
+      </field>
+      <field>
+        <column_name>LNMODCD</column_name>
+        <stream_name>LNMODCD</stream_name>
+      </field>
+      <field>
+        <column_name>LNMODCDDESC</column_name>
+        <stream_name>LNMODCDDESC</stream_name>
+      </field>
+      <field>
+        <column_name>LNMODDATE</column_name>
+        <stream_name>LNMODDATE</stream_name>
+      </field>
+      <field>
+        <column_name>LMDENIALREAS</column_name>
+        <stream_name>LMDENIALREAS</stream_name>
+      </field>
+      <field>
+        <column_name>LMDENIALREASDESC</column_name>
+        <stream_name>LMDENIALREASDESC</stream_name>
+      </field>
+      <field>
+        <column_name>LC_YTD</column_name>
+        <stream_name>LC_YTD</stream_name>
+      </field>
+      <field>
+        <column_name>NSF_YTD</column_name>
+        <stream_name>NSF_YTD</stream_name>
+      </field>
+      <field>
+        <column_name>OTHRFEEYTD</column_name>
+        <stream_name>OTHRFEEYTD</stream_name>
+      </field>
+      <field>
+        <column_name>LATECHGMTD</column_name>
+        <stream_name>LATECHGMTD</stream_name>
+      </field>
+      <field>
+        <column_name>NSFCHGMTD</column_name>
+        <stream_name>NSFCHGMTD</stream_name>
+      </field>
+      <field>
+        <column_name>OTHFEESCHGMTD</column_name>
+        <stream_name>OTHFEESCHGMTD</stream_name>
+      </field>
+      <field>
+        <column_name>COUNTYTAX</column_name>
+        <stream_name>COUNTYTAX</stream_name>
+      </field>
+      <field>
+        <column_name>CITYTAX</column_name>
+        <stream_name>CITYTAX</stream_name>
+      </field>
+      <field>
+        <column_name>HAZPREM</column_name>
+        <stream_name>HAZPREM</stream_name>
+      </field>
+      <field>
+        <column_name>MIP</column_name>
+        <stream_name>MIP</stream_name>
+      </field>
+      <field>
+        <column_name>LIEN</column_name>
+        <stream_name>LIEN</stream_name>
+      </field>
+      <field>
+        <column_name>MISCAMT</column_name>
+        <stream_name>MISCAMT</stream_name>
+      </field>
+      <field>
+        <column_name>FHLBBPURPR</column_name>
+        <stream_name>FHLBBPURPR</stream_name>
+      </field>
+      <field>
+        <column_name>ORGPROPVAL</column_name>
+        <stream_name>ORGPROPVAL</stream_name>
+      </field>
+      <field>
+        <column_name>CURPROPVAL</column_name>
+        <stream_name>CURPROPVAL</stream_name>
+      </field>
+      <field>
+        <column_name>PROPADD</column_name>
+        <stream_name>PROPADD</stream_name>
+      </field>
+      <field>
+        <column_name>PROPUNIT</column_name>
+        <stream_name>PROPUNIT</stream_name>
+      </field>
+      <field>
+        <column_name>PROPERTYCTY</column_name>
+        <stream_name>PROPERTYCTY</stream_name>
+      </field>
+      <field>
+        <column_name>PROPSTATE</column_name>
+        <stream_name>PROPSTATE</stream_name>
+      </field>
+      <field>
+        <column_name>PROPERTYZP</column_name>
+        <stream_name>PROPERTYZP</stream_name>
+      </field>
+      <field>
+        <column_name>HAZINSPOLICYNO</column_name>
+        <stream_name>HAZINSPOLICYNO</stream_name>
+      </field>
+      <field>
+        <column_name>HAZPOLICYEXPIRDATE</column_name>
+        <stream_name>HAZPOLICYEXPIRDATE</stream_name>
+      </field>
+      <field>
+        <column_name>FLDCERTNO</column_name>
+        <stream_name>FLDCERTNO</stream_name>
+      </field>
+      <field>
+        <column_name>FLOODZONE1</column_name>
+        <stream_name>FLOODZONE1</stream_name>
+      </field>
+      <field>
+        <column_name>FLOODZONE2</column_name>
+        <stream_name>FLOODZONE2</stream_name>
+      </field>
+      <field>
+        <column_name>COUNTYCODE</column_name>
+        <stream_name>COUNTYCODE</stream_name>
+      </field>
+      <field>
+        <column_name>CITYCODE</column_name>
+        <stream_name>CITYCODE</stream_name>
+      </field>
+      <field>
+        <column_name>EMPLCODE</column_name>
+        <stream_name>EMPLCODE</stream_name>
+      </field>
+      <field>
+        <column_name>MORTTELE1</column_name>
+        <stream_name>MORTTELE1</stream_name>
+      </field>
+      <field>
+        <column_name>MORTTELE2</column_name>
+        <stream_name>MORTTELE2</stream_name>
+      </field>
+      <field>
+        <column_name>COMORTTELE</column_name>
+        <stream_name>COMORTTELE</stream_name>
+      </field>
+      <field>
+        <column_name>FIRSTEMAIL</column_name>
+        <stream_name>FIRSTEMAIL</stream_name>
+      </field>
+      <field>
+        <column_name>SECEMAIL</column_name>
+        <stream_name>SECEMAIL</stream_name>
+      </field>
+      <field>
+        <column_name>ABBRNAME</column_name>
+        <stream_name>ABBRNAME</stream_name>
+      </field>
+      <field>
+        <column_name>MTGRFMTLFM</column_name>
+        <stream_name>MTGRFMTLFM</stream_name>
+      </field>
+      <field>
+        <column_name>MTGRFIRSTNAME</column_name>
+        <stream_name>MTGRFIRSTNAME</stream_name>
+      </field>
+      <field>
+        <column_name>MTGRMIDNAME</column_name>
+        <stream_name>MTGRMIDNAME</stream_name>
+      </field>
+      <field>
+        <column_name>MTGRLASTNAME</column_name>
+        <stream_name>MTGRLASTNAME</stream_name>
+      </field>
+      <field>
+        <column_name>CMTGRLFM</column_name>
+        <stream_name>CMTGRLFM</stream_name>
+      </field>
+      <field>
+        <column_name>CMTGRFIRSTNAME</column_name>
+        <stream_name>CMTGRFIRSTNAME</stream_name>
+      </field>
+      <field>
+        <column_name>CMTGRMIDNAME</column_name>
+        <stream_name>CMTGRMIDNAME</stream_name>
+      </field>
+      <field>
+        <column_name>CMTGRLASTNAME</column_name>
+        <stream_name>CMTGRLASTNAME</stream_name>
+      </field>
+      <field>
+        <column_name>BILLNAME</column_name>
+        <stream_name>BILLNAME</stream_name>
+      </field>
+      <field>
+        <column_name>BILLADDR1</column_name>
+        <stream_name>BILLADDR1</stream_name>
+      </field>
+      <field>
+        <column_name>BILLADDR2</column_name>
+        <stream_name>BILLADDR2</stream_name>
+      </field>
+      <field>
+        <column_name>BILLADDR3</column_name>
+        <stream_name>BILLADDR3</stream_name>
+      </field>
+      <field>
+        <column_name>BILLADDR4</column_name>
+        <stream_name>BILLADDR4</stream_name>
+      </field>
+      <field>
+        <column_name>BILLCITY</column_name>
+        <stream_name>BILLCITY</stream_name>
+      </field>
+      <field>
+        <column_name>BILLSTATE</column_name>
+        <stream_name>BILLSTATE</stream_name>
+      </field>
+      <field>
+        <column_name>ZIPCODE</column_name>
+        <stream_name>ZIPCODE</stream_name>
+      </field>
+      <field>
+        <column_name>FOREIGNADDRIND</column_name>
+        <stream_name>FOREIGNADDRIND</stream_name>
+      </field>
+      <field>
+        <column_name>TAXNAME</column_name>
+        <stream_name>TAXNAME</stream_name>
+      </field>
+      <field>
+        <column_name>TAXFIRNAME</column_name>
+        <stream_name>TAXFIRNAME</stream_name>
+      </field>
+      <field>
+        <column_name>MTGRSSNO</column_name>
+        <stream_name>MTGRSSNO</stream_name>
+      </field>
+      <field>
+        <column_name>COMTGRSSN</column_name>
+        <stream_name>COMTGRSSN</stream_name>
+      </field>
+      <field>
+        <column_name>SSNVERIFY</column_name>
+        <stream_name>SSNVERIFY</stream_name>
+      </field>
+      <field>
+        <column_name>SSNCTFYCDE</column_name>
+        <stream_name>SSNCTFYCDE</stream_name>
+      </field>
+      <field>
+        <column_name>SSNCTFDATE</column_name>
+        <stream_name>SSNCTFDATE</stream_name>
+      </field>
+      <field>
+        <column_name>ORIGCREDITMTGR</column_name>
+        <stream_name>ORIGCREDITMTGR</stream_name>
+      </field>
+      <field>
+        <column_name>ORIGCREDITCMTGR</column_name>
+        <stream_name>ORIGCREDITCMTGR</stream_name>
+      </field>
+      <field>
+        <column_name>CREDITMTGR</column_name>
+        <stream_name>CREDITMTGR</stream_name>
+      </field>
+      <field>
+        <column_name>CREDITCMTGR</column_name>
+        <stream_name>CREDITCMTGR</stream_name>
+      </field>
+      <field>
+        <column_name>CREDINDSW</column_name>
+        <stream_name>CREDINDSW</stream_name>
+      </field>
+      <field>
+        <column_name>CREDSTATUS</column_name>
+        <stream_name>CREDSTATUS</stream_name>
+      </field>
+      <field>
+        <column_name>PMIREVCANCDT</column_name>
+        <stream_name>PMIREVCANCDT</stream_name>
+      </field>
+      <field>
+        <column_name>MITERMDATE</column_name>
+        <stream_name>MITERMDATE</stream_name>
+      </field>
+      <field>
+        <column_name>MIPUFPREM</column_name>
+        <stream_name>MIPUFPREM</stream_name>
+      </field>
+      <field>
+        <column_name>MIPFINAMT</column_name>
+        <stream_name>MIPFINAMT</stream_name>
+      </field>
+      <field>
+        <column_name>POOLPAYEE</column_name>
+        <stream_name>POOLPAYEE</stream_name>
+      </field>
+      <field>
+        <column_name>POLICYNO</column_name>
+        <stream_name>POLICYNO</stream_name>
+      </field>
+      <field>
+        <column_name>PMIRATE</column_name>
+        <stream_name>PMIRATE</stream_name>
+      </field>
+      <field>
+        <column_name>MITYPE</column_name>
+        <stream_name>MITYPE</stream_name>
+      </field>
+      <field>
+        <column_name>FMLGTYRATE</column_name>
+        <stream_name>FMLGTYRATE</stream_name>
+      </field>
+      <field>
+        <column_name>MIPDBYLENDCD</column_name>
+        <stream_name>MIPDBYLENDCD</stream_name>
+      </field>
+      <field>
+        <column_name>FORCEDCOVIND</column_name>
+        <stream_name>FORCEDCOVIND</stream_name>
+      </field>
+      <field>
+        <column_name>FORCEDCOVDATE</column_name>
+        <stream_name>FORCEDCOVDATE</stream_name>
+      </field>
+      <field>
+        <column_name>ARMPLANID</column_name>
+        <stream_name>ARMPLANID</stream_name>
+      </field>
+      <field>
+        <column_name>ARMPLANIDDESC</column_name>
+        <stream_name>ARMPLANIDDESC</stream_name>
+      </field>
+      <field>
+        <column_name>ARMINDEXCD1</column_name>
+        <stream_name>ARMINDEXCD1</stream_name>
+      </field>
+      <field>
+        <column_name>ARMINDEXCD1DESC</column_name>
+        <stream_name>ARMINDEXCD1DESC</stream_name>
+      </field>
+      <field>
+        <column_name>ARMORGIR</column_name>
+        <stream_name>ARMORGIR</stream_name>
+      </field>
+      <field>
+        <column_name>ARMNEWIR</column_name>
+        <stream_name>ARMNEWIR</stream_name>
+      </field>
+      <field>
+        <column_name>ARMMARGIN</column_name>
+        <stream_name>ARMMARGIN</stream_name>
+      </field>
+      <field>
+        <column_name>ARMORGIRCHGDT</column_name>
+        <stream_name>ARMORGIRCHGDT</stream_name>
+      </field>
+      <field>
+        <column_name>ARMNEXTIRCALCDT</column_name>
+        <stream_name>ARMNEXTIRCALCDT</stream_name>
+      </field>
+      <field>
+        <column_name>ARMNEXTIREFFDT</column_name>
+        <stream_name>ARMNEXTIREFFDT</stream_name>
+      </field>
+      <field>
+        <column_name>ARMIRCHGPD</column_name>
+        <stream_name>ARMIRCHGPD</stream_name>
+      </field>
+      <field>
+        <column_name>ARMORGPI</column_name>
+        <stream_name>ARMORGPI</stream_name>
+      </field>
+      <field>
+        <column_name>ARMNEWPI</column_name>
+        <stream_name>ARMNEWPI</stream_name>
+      </field>
+      <field>
+        <column_name>ARMORGPICHGDT</column_name>
+        <stream_name>ARMORGPICHGDT</stream_name>
+      </field>
+      <field>
+        <column_name>ARMNEXTPICALCDT</column_name>
+        <stream_name>ARMNEXTPICALCDT</stream_name>
+      </field>
+      <field>
+        <column_name>ARMNEXTPIEFFDT</column_name>
+        <stream_name>ARMNEXTPIEFFDT</stream_name>
+      </field>
+      <field>
+        <column_name>ARMPICHGPD</column_name>
+        <stream_name>ARMPICHGPD</stream_name>
+      </field>
+      <field>
+        <column_name>ARMPICALCMTHDCDNEG</column_name>
+        <stream_name>ARMPICALCMTHDCDNEG</stream_name>
+      </field>
+      <field>
+        <column_name>ARMPICALCMTHDCDNEGDESC</column_name>
+        <stream_name>ARMPICALCMTHDCDNEGDESC</stream_name>
+      </field>
+      <field>
+        <column_name>ARMIRLEADDAYS</column_name>
+        <stream_name>ARMIRLEADDAYS</stream_name>
+      </field>
+      <field>
+        <column_name>ARMINITIALINDEXRT</column_name>
+        <stream_name>ARMINITIALINDEXRT</stream_name>
+      </field>
+      <field>
+        <column_name>ARMORIGPIAMT</column_name>
+        <stream_name>ARMORIGPIAMT</stream_name>
+      </field>
+      <field>
+        <column_name>ARMORIGIRRT</column_name>
+        <stream_name>ARMORIGIRRT</stream_name>
+      </field>
+      <field>
+        <column_name>ARMIRMARGINRT</column_name>
+        <stream_name>ARMIRMARGINRT</stream_name>
+      </field>
+      <field>
+        <column_name>ARMIRMAXINCRT</column_name>
+        <stream_name>ARMIRMAXINCRT</stream_name>
+      </field>
+      <field>
+        <column_name>ARMIRMININCRT</column_name>
+        <stream_name>ARMIRMININCRT</stream_name>
+      </field>
+      <field>
+        <column_name>ARMIRMAXDECRT</column_name>
+        <stream_name>ARMIRMAXDECRT</stream_name>
+      </field>
+      <field>
+        <column_name>ARMIRMINDECRT</column_name>
+        <stream_name>ARMIRMINDECRT</stream_name>
+      </field>
+      <field>
+        <column_name>ARMIRMXLIFECLRT</column_name>
+        <stream_name>ARMIRMXLIFECLRT</stream_name>
+      </field>
+      <field>
+        <column_name>ARMIRMXLIFEFLRRT</column_name>
+        <stream_name>ARMIRMXLIFEFLRRT</stream_name>
+      </field>
+      <field>
+        <column_name>ARMIRMAXLIFEINCRT</column_name>
+        <stream_name>ARMIRMAXLIFEINCRT</stream_name>
+      </field>
+      <field>
+        <column_name>ARMIRMAXLIFEDECRT</column_name>
+        <stream_name>ARMIRMAXLIFEDECRT</stream_name>
+      </field>
+      <field>
+        <column_name>BALLOONUSER</column_name>
+        <stream_name>BALLOONUSER</stream_name>
+      </field>
+      <field>
+        <column_name>BALLOONUSERDESC</column_name>
+        <stream_name>BALLOONUSERDESC</stream_name>
+      </field>
+      <field>
+        <column_name>PMTOPTCODE</column_name>
+        <stream_name>PMTOPTCODE</stream_name>
+      </field>
+      <field>
+        <column_name>PMTOPTCODEDESC</column_name>
+        <stream_name>PMTOPTCODEDESC</stream_name>
+      </field>
+      <field>
+        <column_name>ARMPBNEGAMORTBAL</column_name>
+        <stream_name>ARMPBNEGAMORTBAL</stream_name>
+      </field>
+      <field>
+        <column_name>ARMPINEGAMRTCAPCD</column_name>
+        <stream_name>ARMPINEGAMRTCAPCD</stream_name>
+      </field>
+      <field>
+        <column_name>ARMPINEGAMRTCAPCDDESC</column_name>
+        <stream_name>ARMPINEGAMRTCAPCDDESC</stream_name>
+      </field>
+      <field>
+        <column_name>PPPCODE</column_name>
+        <stream_name>PPPCODE</stream_name>
+      </field>
+      <field>
+        <column_name>PPPEXPIREDT</column_name>
+        <stream_name>PPPEXPIREDT</stream_name>
+      </field>
+      <field>
+        <column_name>INTONLYIND</column_name>
+        <stream_name>INTONLYIND</stream_name>
+      </field>
+      <field>
+        <column_name>INTONLYEXPDT</column_name>
+        <stream_name>INTONLYEXPDT</stream_name>
+      </field>
+      <field>
+        <column_name>INTONESCIND</column_name>
+        <stream_name>INTONESCIND</stream_name>
+      </field>
+      <field>
+        <column_name>LASTANALYSDT</column_name>
+        <stream_name>LASTANALYSDT</stream_name>
+      </field>
+      <field>
+        <column_name>ESCBALBEG</column_name>
+        <stream_name>ESCBALBEG</stream_name>
+      </field>
+      <field>
+        <column_name>COUPONMO</column_name>
+        <stream_name>COUPONMO</stream_name>
+      </field>
+      <field>
+        <column_name>OSSPREAD</column_name>
+        <stream_name>OSSPREAD</stream_name>
+      </field>
+      <field>
+        <column_name>AVGDALYESC</column_name>
+        <stream_name>AVGDALYESC</stream_name>
+      </field>
+      <field>
+        <column_name>TAXSERTYPE</column_name>
+        <stream_name>TAXSERTYPE</stream_name>
+      </field>
+      <field>
+        <column_name>TAXSERVNUM</column_name>
+        <stream_name>TAXSERVNUM</stream_name>
+      </field>
+      <field>
+        <column_name>TAXSERCODE</column_name>
+        <stream_name>TAXSERCODE</stream_name>
+      </field>
+      <field>
+        <column_name>TAXSERDATE</column_name>
+        <stream_name>TAXSERDATE</stream_name>
+      </field>
+      <field>
+        <column_name>TAXSERFEE</column_name>
+        <stream_name>TAXSERFEE</stream_name>
+      </field>
+      <field>
+        <column_name>IOECREDIT</column_name>
+        <stream_name>IOECREDIT</stream_name>
+      </field>
+      <field>
+        <column_name>IOERESCRED</column_name>
+        <stream_name>IOERESCRED</stream_name>
+      </field>
+      <field>
+        <column_name>ESCDOCTYPE</column_name>
+        <stream_name>ESCDOCTYPE</stream_name>
+      </field>
+      <field>
+        <column_name>INITSTMTCD</column_name>
+        <stream_name>INITSTMTCD</stream_name>
+      </field>
+      <field>
+        <column_name>INEXSTMTDT</column_name>
+        <stream_name>INEXSTMTDT</stream_name>
+      </field>
+      <field>
+        <column_name>DOCMINBAL</column_name>
+        <stream_name>DOCMINBAL</stream_name>
+      </field>
+      <field>
+        <column_name>IOEWHOLD</column_name>
+        <stream_name>IOEWHOLD</stream_name>
+      </field>
+      <field>
+        <column_name>IOEREHOLD</column_name>
+        <stream_name>IOEREHOLD</stream_name>
+      </field>
+      <field>
+        <column_name>IOEWHSW</column_name>
+        <stream_name>IOEWHSW</stream_name>
+      </field>
+      <field>
+        <column_name>PRINBALBEG</column_name>
+        <stream_name>PRINBALBEG</stream_name>
+      </field>
+      <field>
+        <column_name>INTRESTYTD</column_name>
+        <stream_name>INTRESTYTD</stream_name>
+      </field>
+      <field>
+        <column_name>PPHONE</column_name>
+        <stream_name>PPHONE</stream_name>
+      </field>
+      <field>
+        <column_name>SECPHONE</column_name>
+        <stream_name>SECPHONE</stream_name>
+      </field>
+      <field>
+        <column_name>COMORTPHONE</column_name>
+        <stream_name>COMORTPHONE</stream_name>
+      </field>
+      <field>
+        <column_name>TRDPARTYPHONE</column_name>
+        <stream_name>TRDPARTYPHONE</stream_name>
+      </field>
+      <field>
+        <column_name>OTHERPHONE1</column_name>
+        <stream_name>OTHERPHONE1</stream_name>
+      </field>
+      <field>
+        <column_name>OTHERPHONE2</column_name>
+        <stream_name>OTHERPHONE2</stream_name>
+      </field>
+      <field>
+        <column_name>OTHERPHONE3</column_name>
+        <stream_name>OTHERPHONE3</stream_name>
+      </field>
+      <field>
+        <column_name>FREEFORMPHONE</column_name>
+        <stream_name>FREEFORMPHONE</stream_name>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>576</xloc>
+      <yloc>192</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>dw_1 sort</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>DATADATE</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>240</xloc>
+      <yloc>256</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step_error_handling>
+  </step_error_handling>
+  <slave-step-copy-partition-distribution>
+  </slave-step-copy-partition-distribution>
+  <slave_transformation>N</slave_transformation>
+  <attributes/>
+</transformation>
