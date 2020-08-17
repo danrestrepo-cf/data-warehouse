@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+    database:
+        # we build the image so we may copy an init script in.
+        # trying to copy the init script as a volume leads to errors reading it.  this works.
+        image: postgres:11
+        environment:
+            - POSTGRES_PASSWORD=testonly
+        volumes:
+            - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+        ports:
+            - "5432:5432"
+    flyway-ingress:
+        image: flyway/flyway:6
+        command: -url=jdbc:postgresql://database:5432/ingress -schemas=flyway -user=postgres -password=testonly -connectRetries=60 migrate
+        volumes:
+            - ./database/migrations/ingress:/flyway/sql
+            - ./database/baseline/ingress/beforeMigrate.sql:/flyway/sql/beforeMigrate.sql
+        depends_on:
+            - database
+    flyway-staging:
+        image: flyway/flyway:6
+        command: -url=jdbc:postgresql://database:5432/staging -schemas=flyway -user=postgres -password=testonly -connectRetries=60 migrate
+        volumes:
+            - ./database/migrations/staging:/flyway/sql
+            - ./database/baseline/config/beforeMigrate.sql:/flyway/sql/beforeMigrate.sql
+        depends_on:
+            - database
+    flyway-config:
+        image: flyway/flyway:6
+        command: -url=jdbc:postgresql://database:5432/config -schemas=flyway -user=postgres -password=testonly -connectRetries=60 migrate
+        volumes:
+            - ./database/migrations/config:/flyway/sql
+            - ./database/baseline/staging/beforeMigrate.sql:/flyway/sql/beforeMigrate.sql
+        depends_on:
+            - database
