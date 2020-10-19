@@ -1,38 +1,6 @@
 -- Asana: https://app.asana.com/0/0/1198065847802233
 
 
-
-
---
--- This example pulls a list of misconfigured process names for the table output step
---
-
-
--- Table: step_metadata_table_output
-SELECT
-	'mdi.step_metadata_table_output' AS "Misconfigured Table Name"
-	, smto.smto_step_definition_id AS "Step Definition ID"
-	, smto.smto_process_name AS "Misconfigured Process Name"
-FROM
-	mdi.step_metadata_table_output smto
-WHERE
-	-- check values are in valid domains
-	(smto.smto_use_batch_update NOT IN ('Y', 'N')) -- 'ERROR: column is not configured with a value in the settings domain'
-	OR (smto.smto_ignore_insert_errors NOT IN ('Y', 'N'))
-	OR smto.smto_truncate_table != 'N' -- Valid domains are Y, N, and NULL but we do not want to truncate any tables. Removed to flag any jobs that ARE configured to truncate.
-	OR (smto.smto_specify_database_fields NOT IN ('Y', 'N'))
-	OR (smto.smto_table_name_defined_in_field NOT IN ('Y', 'N'))
-	OR (smto.smto_return_auto_generated_key_field IN ('Y', 'N'))
-	OR smto.smto_connectionname IN ('Config DB Connection.kdb', 'Ingress DB Connection.kdb', 'Staging DB Connection.kdb',
-	                                'Sta DB Connection.kdb')
-
-	-- 'ERROR: if smto_table_name_defined_in_field=Y then smto_table_name_field should not be blank'
-	OR (smto.smto_table_name_defined_in_field = 'Y' AND
-		(smto.smto_table_name_field != '' OR smto.smto_table_name_field IS NOT NULL))
-;
-
-
-
 --
 -- This example shows how we can identify the exact field that is erroring but is less readable (these tables will rarely change)
 --
@@ -109,3 +77,46 @@ SELECT
 
 FROM
 	mdi.step_metadata_table_output smto;
+
+
+
+--
+-- Verify all step definition IDs in row_metadata_table_output are configured with at least one row in step_metadata_table_output
+--
+SELECT
+	rmto_row_definition_id
+	, rmto_step_definition_id
+	, 'ERROR: A row is configured with a value that is not in step_metadata_table_output. This record seems to have been orphaned!' AS "Error Message"
+FROM
+	mdi.row_metadata_table_output
+WHERE
+		row_metadata_table_output.rmto_step_definition_id NOT IN
+		(SELECT step_metadata_table_output.smto_step_definition_id FROM mdi.step_metadata_table_output);
+
+
+--
+-- Verify all step definition IDs in step_metadata_table_output are configured with at least one row in row_metadata_table_output
+--
+SELECT
+	smto_process_name
+	, smto_step_definition_id
+	, 'ERROR: A row is configured with a value that is not row_metadata_table_output. Either rows need to be added to row_metadata_table_output to finish configuring this or this step definition id needs to be deleted.' AS "Error Message"
+FROM
+	mdi.step_metadata_table_output
+WHERE
+		step_metadata_table_output.smto_step_definition_id NOT IN
+		(SELECT row_metadata_table_output.rmto_step_definition_id FROM mdi.row_metadata_table_output);
+
+
+--
+-- Verify all step definition IDs in step_metadata_table_output are configured with at least one row in row_metadata_table_output
+--
+SELECT
+	pr_process_name
+	, pr_sp_name
+	, pr_description
+	, 'ERROR: A row is configured with a value that is not in step_metadata_table_output. Either rows need to be added to step_metadata_table_output and row_metadata_table_output to finish configuring this or this process name needs to be deleted.' AS "Error Message"
+FROM
+	mdi.process
+WHERE
+		process.pr_process_name NOT IN (SELECT smto_process_name FROM mdi.step_metadata_table_output)
