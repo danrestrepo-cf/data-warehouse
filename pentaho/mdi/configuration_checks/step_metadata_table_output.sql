@@ -3,7 +3,6 @@
 
 
 
-
 --
 -- This example pulls a list of misconfigured process names for the table output step
 --
@@ -12,7 +11,7 @@
 -- Table: step_metadata_table_output
 SELECT
 	'mdi.step_metadata_table_output' AS "Misconfigured Table Name"
-	, smto.smto_step_definition_id as "Step Definition ID"
+	, smto.smto_step_definition_id AS "Step Definition ID"
 	, smto.smto_process_name AS "Misconfigured Process Name"
 FROM
 	mdi.step_metadata_table_output smto
@@ -24,16 +23,13 @@ WHERE
 	OR (smto.smto_specify_database_fields NOT IN ('Y', 'N'))
 	OR (smto.smto_table_name_defined_in_field NOT IN ('Y', 'N'))
 	OR (smto.smto_return_auto_generated_key_field IN ('Y', 'N'))
+	OR smto.smto_connectionname IN ('Config DB Connection.kdb', 'Ingress DB Connection.kdb', 'Staging DB Connection.kdb',
+	                                'Sta DB Connection.kdb')
 
 	-- 'ERROR: if smto_table_name_defined_in_field=Y then smto_table_name_field should not be blank'
-	OR (smto.smto_table_name_defined_in_field = 'Y' AND (smto.smto_table_name_field != '' OR smto.smto_table_name_field IS NOT NULL))
+	OR (smto.smto_table_name_defined_in_field = 'Y' AND
+		(smto.smto_table_name_field != '' OR smto.smto_table_name_field IS NOT NULL))
 ;
-
-
-
-
-
-
 
 
 
@@ -102,10 +98,12 @@ SELECT
 	, CASE
 		  WHEN smto.smto_table_name_defined_in_field = 'Y' AND
 			   (smto.smto_table_name_field != '' OR smto.smto_table_name_field IS NOT NULL)
-		      OR
+			  OR
 			   smto.smto_table_name_defined_in_field = 'N'
 			  THEN ''
-		  WHEN smto.smto_table_name_defined_in_field = 'N' AND (smto.smto_table_name_field IS NOT NULL OR smto.smto_table_name_field != '') THEN 'ERROR: if smto_table_name_defined_in_field=N then smto_table_name_field should be null or blank'
+		  WHEN smto.smto_table_name_defined_in_field = 'N' AND
+			   (smto.smto_table_name_field IS NOT NULL OR smto.smto_table_name_field != '')
+			  THEN 'ERROR: if smto_table_name_defined_in_field=N then smto_table_name_field should be null or blank'
 		  ELSE 'ERROR: if smto_table_name_defined_in_field=Y then smto_table_name_field should not be blank'
 	END AS smto_table_name_defined_in_field_config_status
 
