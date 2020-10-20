@@ -119,4 +119,123 @@ SELECT
 FROM
 	mdi.process
 WHERE
-		process.pr_process_name NOT IN (SELECT smto_process_name FROM mdi.step_metadata_table_output)
+		process.pr_process_name NOT IN (SELECT smto_process_name FROM mdi.step_metadata_table_output);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--
+-- Verify all rows in row_metadata_csv_file_input are configured correctly based on the data type of the row compared to what else is configured in the table
+--
+
+
+SELECT
+	'mdi.row_metadata_csv_file_input' AS "Misconfigured Table Name"
+	, smcfi.smcfi_process_name
+	, smcfi.smcfi_step_definition_id
+	, rmcfi.rmcfi_field_name as "Misconfigured Field Name"
+
+	-- check values are in valid domains
+	, CASE
+		  WHEN LENGTH(rmcfi.rmcfi_field_name) > 0
+			  THEN ''
+		  ELSE 'ERROR: column is not at least 1 character long'
+	END AS rmcfi_field_name_status
+
+	, CASE
+		  WHEN rmcfi.rmcfi_field_type IN ('String', 'Integer', 'Date', 'Boolean', 'Number', 'Timestamp', 'BigNumber', 'Boolean')
+			  THEN ''
+		  WHEN rmcfi.rmcfi_field_type IS NULL
+			  THEN ''
+		  ELSE 'ERROR: column is not configured with a value in the setting''s domain. Expected values: String, Integer, Date, Boolean, Number, Timestamp, BigNumber, Boolean. Configured value is ''' || rmcfi.rmcfi_field_type || ''''
+	END AS rmcfi_field_type_status
+
+	, CASE
+		  WHEN rmcfi.rmcfi_field_currency = '$'
+			  THEN ''
+		  WHEN rmcfi.rmcfi_field_currency IS NULL
+			  THEN ''
+		  ELSE 'ERROR: column is not configured with a value in the setting''s domain. Expected values: ''$'' but the configured value is ''' || rmcfi.rmcfi_field_currency || ''''
+	END AS rmcfi_field_currency_status
+
+	, CASE
+		  WHEN rmcfi.rmcfi_field_decimal = '.'
+			  THEN ''
+		  WHEN rmcfi.rmcfi_field_decimal IS NULL
+			  THEN ''
+		  ELSE 'ERROR: column is not configured with a value in the setting''s domain. Expected values: ''.'' but the configured value is ''' || rmcfi.rmcfi_field_decimal || ''''
+	END AS rmcfi_field_decimal_status
+
+	, CASE
+		  WHEN rmcfi.rmcfi_field_group = ','
+			  THEN ''
+		  WHEN rmcfi.rmcfi_field_group IS NULL
+			  THEN ''
+		  ELSE 'ERROR: column is not configured with a value in the setting''s domain. Expected values: '','' but the configured value is ''' || rmcfi.rmcfi_field_group || ''''
+	END AS rmcfi_field_group_status
+
+	, CASE
+		  WHEN rmcfi.rmcfi_field_trim_type IN ('both', 'none', 'left', 'right')
+			  THEN ''
+		  WHEN rmcfi.rmcfi_field_trim_type IS NULL
+			  THEN ''
+		  ELSE 'ERROR: column is not configured with a value in the setting''s domain. Expected values: both, none, left, right. Configured value is ''' || rmcfi.rmcfi_field_trim_type || ''''
+	END AS rmcfi_field_trim_type_status
+
+	, CASE
+	    -- String
+	    WHEN rmcfi.rmcfi_field_type = 'String' AND rmcfi.rmcfi_field_format IS NOT NULL THEN 'ERROR: rmcfi_field_type is configured as ' || rmcfi.rmcfi_field_type || ' but rmcfi_field_format is *not* NULL.'
+		WHEN rmcfi.rmcfi_field_type = 'String' AND rmcfi.rmcfi_field_length IS NOT NULL THEN 'ERROR: rmcfi_field_type is configured as ' || rmcfi.rmcfi_field_type || ' but rmcfi_field_length is *not* NULL.'
+		WHEN rmcfi.rmcfi_field_type = 'String' AND rmcfi.rmcfi_field_precision IS NOT NULL THEN 'ERROR: rmcfi_field_type is configured as ' || rmcfi.rmcfi_field_type || ' but rmcfi_field_precision is *not* NULL.'
+		WHEN rmcfi.rmcfi_field_type = 'String' AND rmcfi.rmcfi_field_currency != '$' THEN 'ERROR: rmcfi_field_type is configured as ' || rmcfi.rmcfi_field_type || ' but rmcfi_field_currency is *not* ''$''.'
+		WHEN rmcfi.rmcfi_field_type = 'String' AND rmcfi.rmcfi_field_decimal != '.' THEN 'ERROR: rmcfi_field_type is configured as ' || rmcfi.rmcfi_field_type || ' but rmcfi_field_decimal is *not* ''.''.'
+		WHEN rmcfi.rmcfi_field_type = 'String' AND rmcfi.rmcfi_field_group != ',' THEN 'ERROR: rmcfi_field_type is configured as ' || rmcfi.rmcfi_field_type || ' but rmcfi_field_group is *not* '',''.'
+		WHEN rmcfi.rmcfi_field_type = 'String' AND rmcfi.rmcfi_field_trim_type != 'none' THEN 'ERROR: rmcfi_field_type is configured as ' || rmcfi.rmcfi_field_type || ' but rmcfi_field_trim_type is *not* ''none''.'
+		-- Integer
+	    WHEN rmcfi.rmcfi_field_type = 'Integer' AND rmcfi.rmcfi_field_format IS NOT NULL THEN 'ERROR: rmcfi_field_type is configured as ' || rmcfi.rmcfi_field_type || ' but rmcfi_field_format is *not* NULL'
+		WHEN rmcfi.rmcfi_field_type = 'Integer' AND rmcfi.rmcfi_field_decimal != '.' THEN 'ERROR: rmcfi_field_type is configured as ' || rmcfi.rmcfi_field_type || ' but rmcfi_field_decimal is *not* ''.''.'
+		WHEN rmcfi.rmcfi_field_type = 'Integer' AND rmcfi.rmcfi_field_group != ',' THEN 'ERROR: rmcfi_field_type is configured as ' || rmcfi.rmcfi_field_type || ' but rmcfi_field_group is *not* '',''.'
+		WHEN rmcfi.rmcfi_field_type = 'Integer' AND rmcfi.rmcfi_field_trim_type != 'none' THEN 'ERROR: rmcfi_field_type is configured as ' || rmcfi.rmcfi_field_type || ' but rmcfi_field_trim_type is *not* ''none''.'
+
+	    -- Number
+		WHEN rmcfi.rmcfi_field_type = 'Number' AND rmcfi.rmcfi_field_decimal != '.' THEN 'ERROR: rmcfi_field_type is configured as ' || rmcfi.rmcfi_field_type || ' but rmcfi_field_decimal is *not* ''.''.'
+		WHEN rmcfi.rmcfi_field_type = 'Number' AND rmcfi.rmcfi_field_group != ',' THEN 'ERROR: rmcfi_field_type is configured as ' || rmcfi.rmcfi_field_type || ' but rmcfi_field_group is *not* '',''.'
+		WHEN rmcfi.rmcfi_field_type = 'Number' AND rmcfi.rmcfi_field_trim_type != 'none' THEN 'ERROR: rmcfi_field_type is configured as ' || rmcfi.rmcfi_field_type || ' but rmcfi_field_trim_type is *not* ''none''.'
+
+	    -- Date
+		WHEN rmcfi.rmcfi_field_type = 'Date' AND rmcfi.rmcfi_field_format IS NULL THEN 'ERROR: rmcfi_field_type is configured as ' || rmcfi.rmcfi_field_type || ' but rmcfi_field_format *is* NULL.'
+		WHEN rmcfi.rmcfi_field_type = 'Date' AND rmcfi.rmcfi_field_precision IS NOT NULL THEN 'ERROR: rmcfi_field_type is configured as ' || rmcfi.rmcfi_field_type || ' but rmcfi_field_precision is *not* NULL.'
+		WHEN rmcfi.rmcfi_field_type = 'Date' AND rmcfi.rmcfi_field_currency != '$' THEN 'ERROR: rmcfi_field_type is configured as ' || rmcfi.rmcfi_field_type || ' but rmcfi_field_currency is *not* ''$''.'
+		WHEN rmcfi.rmcfi_field_type = 'Date' AND rmcfi.rmcfi_field_decimal != '.' THEN 'ERROR: rmcfi_field_type is configured as ' || rmcfi.rmcfi_field_type || ' but rmcfi_field_decimal is *not* ''.''.'
+		WHEN rmcfi.rmcfi_field_type = 'Date' AND rmcfi.rmcfi_field_group != ',' THEN 'ERROR: rmcfi_field_type is configured as ' || rmcfi.rmcfi_field_type || ' but rmcfi_field_group is *not* '',''.'
+		WHEN rmcfi.rmcfi_field_type = 'Date' AND rmcfi.rmcfi_field_trim_type != 'none' THEN 'ERROR: rmcfi_field_type is configured as ' || rmcfi.rmcfi_field_type || ' but rmcfi_field_trim_type is *not* ''none''.'
+
+	    ELSE ''
+	end as rmcfi_field_type_config_status
+
+FROM
+	mdi.row_metadata_csv_file_input AS rmcfi
+		JOIN mdi.step_metadata_csv_file_input AS smcfi
+		ON smcfi.smcfi_step_definition_id = rmcfi.rmcfi_step_definition_id
+Order By
+	smcfi.smcfi_process_name DESC
+	, rmcfi.rmcfi_last_updated DESC;
+
+
+
+
+
