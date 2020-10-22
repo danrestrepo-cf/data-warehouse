@@ -464,7 +464,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.089</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/10/14 19:30:07.865</modified_date>
+    <modified_date>2020/10/22 12:20:15.526</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -484,10 +484,6 @@
     <index_tablespace/>
     <attributes>
       <attribute>
-        <code>EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code>
-        <attribute>pentaho_logging_sequence</attribute>
-      </attribute>
-      <attribute>
         <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
         <attribute>N</attribute>
       </attribute>
@@ -496,16 +492,8 @@
         <attribute>N</attribute>
       </attribute>
       <attribute>
-        <code>INITIAL_POOL_SIZE</code>
-        <attribute>10</attribute>
-      </attribute>
-      <attribute>
         <code>IS_CLUSTERED</code>
         <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>MAXIMUM_POOL_SIZE</code>
-        <attribute>1000</attribute>
       </attribute>
       <attribute>
         <code>PORT_NUMBER</code>
@@ -533,29 +521,29 @@
       </attribute>
       <attribute>
         <code>USE_POOLING</code>
-        <attribute>Y</attribute>
+        <attribute>N</attribute>
       </attribute>
     </attributes>
   </connection>
   <order>
     <hop>
-      <from>performer_excel_to_table-Load Excel and Table Output Settings</from>
-      <to>performer_excel_to_table-Inject and Execute template_excel_to_table</to>
+      <from>[performer_excel_to_table] Load Excel and Table Output Settings</from>
+      <to>[performer_excel_to_table] Inject and Execute template_excel_to_table</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>performer_excel_to_table-Load Table Output Settings</from>
-      <to>performer_excel_to_table-Inject and Execute template_excel_to_table</to>
+      <from>[performer_excel_to_table] Load Table Output Settings</from>
+      <to>[performer_excel_to_table] Inject and Execute template_excel_to_table</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>performer_excel_to_table-Load Excel Row Settings</from>
-      <to>performer_excel_to_table-Inject and Execute template_excel_to_table</to>
+      <from>[performer_excel_to_table] Load Excel Field Settings</from>
+      <to>[performer_excel_to_table] Inject and Execute template_excel_to_table</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>performer_excel_to_table-Inject and Execute template_excel_to_table</name>
+    <name>[performer_excel_to_table] Inject and Execute template_excel_to_table</name>
     <type>MetaInject</type>
     <description/>
     <distribute>Y</distribute>
@@ -581,133 +569,133 @@
         <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
         <target_attribute_key>INCLUDE_SUBFOLDERS</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smei_include_subfolders</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Table output</target_step_name>
         <target_attribute_key>SPECIFY_DATABASE_FIELDS</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smto_specify_database_fields</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
         <target_attribute_key>TYPE</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>performer_excel_to_table-Load Excel Row Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
         <source_field>rmei_field_type</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
         <target_attribute_key>FILENAME</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smei_filename</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Table output</target_step_name>
         <target_attribute_key>CONNECTIONNAME</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smto_connectionname</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Table output</target_step_name>
         <target_attribute_key>DATABASE_FIELD_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>performer_excel_to_table-Load Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Table Output Settings</source_step>
         <source_field>rmto_field_name_in_db</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Table output</target_step_name>
         <target_attribute_key>DATABASE_STREAM_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>performer_excel_to_table-Load Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Table Output Settings</source_step>
         <source_field>rmto_field_name_in_stream</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
         <target_attribute_key>GROUP</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>performer_excel_to_table-Load Excel Row Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
         <source_field>rmei_field_group</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Table output</target_step_name>
         <target_attribute_key>RETURN_AUTO_GENERATED_KEY</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smto_return_auto_generated_key_field</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
         <target_attribute_key>DECIMAL</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>performer_excel_to_table-Load Excel Row Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
         <source_field>rmei_field_decimal</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Table output</target_step_name>
         <target_attribute_key>TABLE_NAME_DEFINED_IN_FIELD</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smto_table_name_defined_in_field</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
         <target_attribute_key>FILE_REQUIRED</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smei_file_required</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Table output</target_step_name>
         <target_attribute_key>TARGET_SCHEMA</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smto_target_schema</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
         <target_attribute_key>PRECISION</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>performer_excel_to_table-Load Excel Row Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
         <source_field>rmei_field_precision</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
         <target_attribute_key>SHEET_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smei_sheet_name</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Table output</target_step_name>
         <target_attribute_key>COMMIT_SIZE</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smto_commit_size</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Table output</target_step_name>
         <target_attribute_key>TARGET_TABLE</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smto_target_table</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Table output</target_step_name>
         <target_attribute_key>PARTITION_OVER_TABLES</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smto_partition_over_tables</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
         <target_attribute_key>FORMAT</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>performer_excel_to_table-Load Excel Row Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
         <source_field>rmei_field_format</source_field>
       </mapping>
       <mapping>
@@ -721,70 +709,70 @@
         <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
         <target_attribute_key>LENGTH</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>performer_excel_to_table-Load Excel Row Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
         <source_field>rmei_field_length</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Table output</target_step_name>
         <target_attribute_key>PARTITION_DATA_PER</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smto_partition_data_per</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
         <target_attribute_key>EXCLUDE_FILEMASK</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smei_exclude_filemask</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Table output</target_step_name>
         <target_attribute_key>PARTITIONING_FIELD</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smto_partitioning_field</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
         <target_attribute_key>SHEET_START_ROW</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smei_sheet_start_row</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
         <target_attribute_key>FILEMASK</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smei_filemask</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Table output</target_step_name>
         <target_attribute_key>IGNORE_INSERT_ERRORS</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smto_ignore_insert_errors</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
         <target_attribute_key>SPREADSHEET_TYPE</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smei_spreadsheet_type</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
         <target_attribute_key>TRIM_TYPE</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>performer_excel_to_table-Load Excel Row Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
         <source_field>rmei_field_trim_type</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Table output</target_step_name>
         <target_attribute_key>AUTO_GENERATED_KEY_FIELD</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smto_auto_generated_key_field</source_field>
       </mapping>
       <mapping>
@@ -798,42 +786,42 @@
         <target_step_name>template_excel_to_table-Table output</target_step_name>
         <target_attribute_key>TRUNCATE_TABLE</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smto_truncate_table</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Table output</target_step_name>
         <target_attribute_key>TABLE_NAME_FIELD</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smto_table_name_field</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
         <target_attribute_key>NAME</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>performer_excel_to_table-Load Excel Row Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
         <source_field>rmei_field_name</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
         <target_attribute_key>CURRENCY</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>performer_excel_to_table-Load Excel Row Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
         <source_field>rmei_field_currency</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
         <target_attribute_key>SHEET_START_COL</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smei_sheet_start_col</source_field>
       </mapping>
       <mapping>
         <target_step_name>template_excel_to_table-Table output</target_step_name>
         <target_attribute_key>USE_BATCH_UPDATE</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>performer_excel_to_table-Load Excel and Table Output Settings</source_step>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
         <source_field>smto_use_batch_update</source_field>
       </mapping>
       <mapping>
@@ -859,7 +847,7 @@
     </GUI>
   </step>
   <step>
-    <name>performer_excel_to_table-Load Excel Row Settings</name>
+    <name>[performer_excel_to_table] Load Excel Field Settings</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1140,7 +1128,7 @@ order by row_metadata_excel_input.rmei_field_order ASC</sql>
     </GUI>
   </step>
   <step>
-    <name>performer_excel_to_table-Load Excel and Table Output Settings</name>
+    <name>[performer_excel_to_table] Load Excel and Table Output Settings</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1806,7 +1794,7 @@ WHERE
     </GUI>
   </step>
   <step>
-    <name>performer_excel_to_table-Load Table Output Settings</name>
+    <name>[performer_excel_to_table] Load Table Output Settings</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>

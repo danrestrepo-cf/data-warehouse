@@ -459,7 +459,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/10/15 13:19:37.085</modified_date>
+    <modified_date>2020/10/22 12:20:21.998</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -479,10 +479,6 @@
     <index_tablespace/>
     <attributes>
       <attribute>
-        <code>EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code>
-        <attribute>pentaho_logging_sequence</attribute>
-      </attribute>
-      <attribute>
         <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
         <attribute>N</attribute>
       </attribute>
@@ -491,16 +487,8 @@
         <attribute>N</attribute>
       </attribute>
       <attribute>
-        <code>INITIAL_POOL_SIZE</code>
-        <attribute>10</attribute>
-      </attribute>
-      <attribute>
         <code>IS_CLUSTERED</code>
         <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>MAXIMUM_POOL_SIZE</code>
-        <attribute>1000</attribute>
       </attribute>
       <attribute>
         <code>PORT_NUMBER</code>
@@ -528,7 +516,7 @@
       </attribute>
       <attribute>
         <code>USE_POOLING</code>
-        <attribute>Y</attribute>
+        <attribute>N</attribute>
       </attribute>
     </attributes>
   </connection>
@@ -546,10 +534,6 @@
     <index_tablespace/>
     <attributes>
       <attribute>
-        <code>EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code>
-        <attribute>pentaho_logging_sequence</attribute>
-      </attribute>
-      <attribute>
         <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
         <attribute>N</attribute>
       </attribute>
@@ -558,16 +542,8 @@
         <attribute>N</attribute>
       </attribute>
       <attribute>
-        <code>INITIAL_POOL_SIZE</code>
-        <attribute>10</attribute>
-      </attribute>
-      <attribute>
         <code>IS_CLUSTERED</code>
         <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>MAXIMUM_POOL_SIZE</code>
-        <attribute>1000</attribute>
       </attribute>
       <attribute>
         <code>PORT_NUMBER</code>
@@ -591,44 +567,44 @@
       </attribute>
       <attribute>
         <code>USE_POOLING</code>
-        <attribute>Y</attribute>
+        <attribute>N</attribute>
       </attribute>
     </attributes>
   </connection>
   <order>
     <hop>
-      <from>[load_csv_to_table] add a blank field for etl_batch_id to valid stream</from>
-      <to>[load_csv_to_table] Set etl_batch_id field value to parameter etl_batch_id</to>
+      <from>[template_csv_to_table] add a blank field for etl_batch_id to valid stream</from>
+      <to>[template_csv_to_table] Set etl_batch_id field value to parameter etl_batch_id</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[load_csv_to_table] CSV file input</from>
-      <to>[load_csv_to_table] add a blank field for etl_batch_id to valid stream</to>
+      <from>[template_csv_to_table] CSV file input</from>
+      <to>[template_csv_to_table] add a blank field for etl_batch_id to valid stream</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[load_csv_to_table] Set etl_batch_id field value to parameter etl_batch_id</from>
-      <to>[load_csv_to_table] Table output</to>
+      <from>[template_csv_to_table] Set etl_batch_id field value to parameter etl_batch_id</from>
+      <to>[template_csv_to_table] Table output</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[load_csv_to_table] Table output</from>
-      <to>[load_csv_to_table] Copy rows to result</to>
+      <from>[template_csv_to_table] Table output</from>
+      <to>[template_csv_to_table] Copy rows to result</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[load_csv_to_table] CSV file input</from>
-      <to>[load_csv_to_table] Abort CSV file input</to>
+      <from>[template_csv_to_table] CSV file input</from>
+      <to>[template_csv_to_table] Abort CSV file input</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[load_csv_to_table] Table output</from>
-      <to>[load_csv_to_table]-Abort Table Output</to>
+      <from>[template_csv_to_table] Table output</from>
+      <to>[template_csv_to_table]  Abort Table Output</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>[load_csv_to_table] Abort CSV file input</name>
+    <name>[template_csv_to_table] Abort CSV file input</name>
     <type>Abort</type>
     <description/>
     <distribute>Y</distribute>
@@ -657,20 +633,32 @@
     </GUI>
   </step>
   <step>
-    <name>[load_csv_to_table]-Abort Table Output</name>
-    <type>Abort</type>
+    <name>[template_csv_to_table] CSV file input</name>
+    <type>CsvInput</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <row_threshold>0</row_threshold>
-    <message>could not save data to table</message>
-    <always_log_rows>N</always_log_rows>
-    <abort_option>ABORT_WITH_ERROR</abort_option>
+    <filename/>
+    <filename_field/>
+    <rownum_field/>
+    <include_filename>N</include_filename>
+    <separator>,</separator>
+    <enclosure>"</enclosure>
+    <header>Y</header>
+    <buffer_size>50000</buffer_size>
+    <lazy_conversion>N</lazy_conversion>
+    <add_filename_result>N</add_filename_result>
+    <parallel>N</parallel>
+    <newline_possible>N</newline_possible>
+    <format>DOS</format>
+    <encoding>UTF-8</encoding>
+    <fields>
+    </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -680,13 +668,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>560</xloc>
-      <yloc>480</yloc>
+      <xloc>256</xloc>
+      <yloc>96</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[load_csv_to_table] Copy rows to result</name>
+    <name>[template_csv_to_table] Copy rows to result</name>
     <type>RowsToResult</type>
     <description/>
     <distribute>Y</distribute>
@@ -711,7 +699,7 @@
     </GUI>
   </step>
   <step>
-    <name>[load_csv_to_table] Set etl_batch_id field value to parameter etl_batch_id</name>
+    <name>[template_csv_to_table] Set etl_batch_id field value to parameter etl_batch_id</name>
     <type>SetValueConstant</type>
     <description/>
     <distribute>N</distribute>
@@ -745,87 +733,7 @@
     </GUI>
   </step>
   <step>
-    <name>[load_csv_to_table] add a blank field for etl_batch_id to valid stream</name>
-    <type>Constant</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>etl_batch_id</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>256</xloc>
-      <yloc>224</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[load_csv_to_table] CSV file input</name>
-    <type>CsvInput</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <filename/>
-    <filename_field/>
-    <rownum_field/>
-    <include_filename>N</include_filename>
-    <separator>,</separator>
-    <enclosure>"</enclosure>
-    <header>Y</header>
-    <buffer_size>50000</buffer_size>
-    <lazy_conversion>N</lazy_conversion>
-    <add_filename_result>N</add_filename_result>
-    <parallel>N</parallel>
-    <newline_possible>N</newline_possible>
-    <format>mixed</format>
-    <encoding>UTF-8</encoding>
-    <fields>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>256</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[load_csv_to_table] Table output</name>
+    <name>[template_csv_to_table] Table output</name>
     <type>TableOutput</type>
     <description/>
     <distribute>N</distribute>
@@ -868,22 +776,78 @@
       <draw>Y</draw>
     </GUI>
   </step>
+  <step>
+    <name>[template_csv_to_table] add a blank field for etl_batch_id to valid stream</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>etl_batch_id</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>256</xloc>
+      <yloc>224</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_csv_to_table]  Abort Table Output</name>
+    <type>Abort</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <row_threshold>0</row_threshold>
+    <message>could not save data to table</message>
+    <always_log_rows>N</always_log_rows>
+    <abort_option>ABORT_WITH_ERROR</abort_option>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>560</xloc>
+      <yloc>480</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
   <step_error_handling>
     <error>
-      <source_step>[load_csv_to_table] Set etl_batch_id field value to parameter etl_batch_id</source_step>
-      <target_step>[load_csv_to_table]-Abort Table Output</target_step>
-      <is_enabled>N</is_enabled>
-      <nr_valuename/>
-      <descriptions_valuename/>
-      <fields_valuename/>
-      <codes_valuename/>
-      <max_errors/>
-      <max_pct_errors/>
-      <min_pct_rows/>
-    </error>
-    <error>
-      <source_step>[load_csv_to_table] CSV file input</source_step>
-      <target_step>[load_csv_to_table] Abort CSV file input</target_step>
+      <source_step>[template_csv_to_table] CSV file input</source_step>
+      <target_step>[template_csv_to_table] Abort CSV file input</target_step>
       <is_enabled>Y</is_enabled>
       <nr_valuename/>
       <descriptions_valuename/>
@@ -894,8 +858,20 @@
       <min_pct_rows/>
     </error>
     <error>
-      <source_step>[load_csv_to_table] Table output</source_step>
-      <target_step>[load_csv_to_table]-Abort Table Output</target_step>
+      <source_step>[template_csv_to_table] Set etl_batch_id field value to parameter etl_batch_id</source_step>
+      <target_step>[template_csv_to_table]  Abort Table Output</target_step>
+      <is_enabled>N</is_enabled>
+      <nr_valuename/>
+      <descriptions_valuename/>
+      <fields_valuename/>
+      <codes_valuename/>
+      <max_errors/>
+      <max_pct_errors/>
+      <min_pct_rows/>
+    </error>
+    <error>
+      <source_step>[template_csv_to_table] Table output</source_step>
+      <target_step>[template_csv_to_table]  Abort Table Output</target_step>
       <is_enabled>Y</is_enabled>
       <nr_valuename/>
       <descriptions_valuename/>
