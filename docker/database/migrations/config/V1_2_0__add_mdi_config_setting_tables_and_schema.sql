@@ -70,7 +70,7 @@ CREATE TABLE csv_file_input_step
 
 CREATE TABLE csv_file_input_field
 (
-	step_id BIGINT NOT NULL
+	step_id BIGSERIAL NOT NULL
 		CONSTRAINT csv_file_input_field_csv_file_input_step_step_id_fk
 			REFERENCES csv_file_input_step
 			ON UPDATE CASCADE
@@ -99,7 +99,7 @@ CREATE TABLE excel_file_input_step
 			ON UPDATE CASCADE
 			ON DELETE CASCADE
 			DEFERRABLE INITIALLY DEFERRED,
-	step_id BIGINT NOT NULL
+	step_id BIGSERIAL NOT NULL
 		CONSTRAINT excel_input_step_pk
 			PRIMARY KEY,
 	spreadsheet_type mdi.PENTAHO_SPREADSHEET_TYPE NOT NULL,
@@ -144,7 +144,7 @@ CREATE TABLE table_output_step
 			ON UPDATE CASCADE
 			ON DELETE CASCADE
 			DEFERRABLE INITIALLY DEFERRED,
-	step_id BIGINT NOT NULL
+	step_id BIGSERIAL NOT NULL
 		CONSTRAINT table_output_step_pk
 			PRIMARY KEY,
 	target_schema TEXT NOT NULL,
@@ -179,3 +179,16 @@ CREATE TABLE table_output_field
 	field_name_in_stream TEXT NOT NULL,
 	field_order NUMERIC NOT NULL
 );
+
+INSERT INTO mdi.process (process_name, description) VALUES ('sp7_1_1', 'Load DMI NMLS Call Report - state');
+INSERT INTO mdi.process (process_name, description) VALUES ('sp7_1_2', 'Load DMI NMLS Call Report - national');
+INSERT INTO mdi.process (process_name, description) VALUES ('sp7_1_3', 'Load DMI NMLS Call Report - S540a');
+
+INSERT INTO mdi.table_output_step (process_name, step_id, target_schema, target_table, commit_size, partitioning_field, table_name_field, auto_generated_key_field, partition_data_per, table_name_defined_in_field, return_auto_generated_key_field, truncate_table, connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors, use_batch_update) VALUES ('sp7_1_1', 1, 'mdi', 'nmls_call_report_national_raw', 1000, null, null, null, null, 'N', null, 'N', 'Ingress DB Connection', 'N', 'Y', 'N', 'N');
+INSERT INTO mdi.table_output_step (process_name, step_id, target_schema, target_table, commit_size, partitioning_field, table_name_field, auto_generated_key_field, partition_data_per, table_name_defined_in_field, return_auto_generated_key_field, truncate_table, connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors, use_batch_update) VALUES ('sp7_1_2', 2, 'mdi', 'nmls_call_report_state_raw', 1000, null, null, null, null, 'N', null, 'N', 'Ingress DB Connection', 'N', 'Y', 'N', 'N');
+INSERT INTO mdi.table_output_step (process_name, step_id, target_schema, target_table, commit_size, partitioning_field, table_name_field, auto_generated_key_field, partition_data_per, table_name_defined_in_field, return_auto_generated_key_field, truncate_table, connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors, use_batch_update) VALUES ('sp7_1_3', 3, 'mdi', 'nmls_call_report_s540a_raw', 1000, null, null, null, null, 'N', null, 'N', 'Ingress DB Connection', 'N', 'Y', 'N', 'N');
+
+INSERT INTO mdi.csv_file_input_step (process_name, step_id, filename, header_present, csv_delimiter, enclosure, buffersize, lazy_conversion, newline_possible, add_filename_result, file_format, file_encoding, include_filename, process_in_parallel, filename_field, row_num_field) VALUES ('sp7_1_1', 1, 'c:\\pdi\\Data\\state.csv', 'Y', ',', '"', 1024, 'N', 'N', 'N', 'mixed', 'UTF-8', 'N', 'Y', null, null);
+INSERT INTO mdi.csv_file_input_step (process_name, step_id, filename, header_present, csv_delimiter, enclosure, buffersize, lazy_conversion, newline_possible, add_filename_result, file_format, file_encoding, include_filename, process_in_parallel, filename_field, row_num_field) VALUES ('sp7_1_2', 2, 'c:\\pdi\\Data\\national.csv', 'Y', ',', '"', 1024, 'N', 'N', 'N', 'mixed', 'UTF-8', 'N', 'Y', null, null);
+INSERT INTO mdi.csv_file_input_step (process_name, step_id, filename, header_present, csv_delimiter, enclosure, buffersize, lazy_conversion, newline_possible, add_filename_result, file_format, file_encoding, include_filename, process_in_parallel, filename_field, row_num_field) VALUES ('sp7_1_3', 3, 'c:\\pdi\\Data\\S540a.xls', 'Y', ',', '"', 1024, 'N', 'N', 'N', 'mixed', 'UTF-8', 'N', 'Y', null, null);
+
