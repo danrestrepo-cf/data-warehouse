@@ -40,7 +40,7 @@
       </parameter>
       <parameter>
         <name>process_name</name>
-        <default_value>v35_national</default_value>
+        <default_value>sp7_1_1</default_value>
         <description>The name that signifies what process should be run.</description>
       </parameter>
     </parameters>
@@ -464,7 +464,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.089</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/10/15 13:20:20.295</modified_date>
+    <modified_date>2020/10/22 12:20:23.424</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -484,10 +484,6 @@
     <index_tablespace/>
     <attributes>
       <attribute>
-        <code>EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code>
-        <attribute>pentaho_logging_sequence</attribute>
-      </attribute>
-      <attribute>
         <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
         <attribute>N</attribute>
       </attribute>
@@ -496,16 +492,8 @@
         <attribute>N</attribute>
       </attribute>
       <attribute>
-        <code>INITIAL_POOL_SIZE</code>
-        <attribute>10</attribute>
-      </attribute>
-      <attribute>
         <code>IS_CLUSTERED</code>
         <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>MAXIMUM_POOL_SIZE</code>
-        <attribute>1000</attribute>
       </attribute>
       <attribute>
         <code>PORT_NUMBER</code>
@@ -533,24 +521,24 @@
       </attribute>
       <attribute>
         <code>USE_POOLING</code>
-        <attribute>Y</attribute>
+        <attribute>N</attribute>
       </attribute>
     </attributes>
   </connection>
   <order>
     <hop>
       <from>[performer_csv_to_table] Load CSV Input and Table Output Settings</from>
-      <to>[performer_csv_to_table] Execute template_csv_to_table</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[performer_csv_to_table] Load CSV Row Settings</from>
-      <to>[performer_csv_to_table] Execute template_csv_to_table</to>
+      <to>[performer_csv_to_table] Inject and execute template_csv_to_table</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>[performer_csv_to_table] Load Table Output Row Settings</from>
-      <to>[performer_csv_to_table] Execute template_csv_to_table</to>
+      <to>[performer_csv_to_table] Inject and execute template_csv_to_table</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_csv_to_table] Load CSV Row Settings</from>
+      <to>[performer_csv_to_table] Inject and execute template_csv_to_table</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -566,45 +554,45 @@
       <schema_name/>
     </partitioning>
     <connection>Config DB Connection</connection>
-    <sql>select
-	process.pr_process_name
-	, process.pr_sp_name
-    , step_metadata_csv_file_input.smcfi_buffersize
- 	, step_metadata_csv_file_input.smcfi_csv_delimiter
-	, step_metadata_csv_file_input.smcfi_enclosure
-	, step_metadata_csv_file_input.smcfi_file_encoding
-	, step_metadata_csv_file_input.smcfi_file_format
-	, step_metadata_csv_file_input.smcfi_filename
-	, step_metadata_csv_file_input.smcfi_header_present
-	, step_metadata_csv_file_input.smcfi_include_filename
-	, step_metadata_csv_file_input.smcfi_lazy_conversion
-	, step_metadata_csv_file_input.smcfi_newline_possible
-	, step_metadata_csv_file_input.smcfi_process_in_parallel
-    , step_metadata_csv_file_input.smcfi_add_filename_result
-    , step_metadata_csv_file_input.smcfi_filename_field
-    , step_metadata_csv_file_input.smcfi_row_num_field
-	, step_metadata_table_output.smto_target_schema
-	, step_metadata_table_output.smto_target_table
-	, step_metadata_table_output.smto_commit_size
-	, step_metadata_table_output.smto_partitioning_field
-	, step_metadata_table_output.smto_table_name_field
-	, step_metadata_table_output.smto_auto_generated_key_field
-	, step_metadata_table_output.smto_partition_data_per
-	, step_metadata_table_output.smto_return_auto_generated_key_field
-	, step_metadata_table_output.smto_truncate_table
-	, step_metadata_table_output.smto_connectionname
-	, step_metadata_table_output.smto_partition_over_tables
-	, step_metadata_table_output.smto_specify_database_fields
-	, step_metadata_table_output.smto_ignore_insert_errors
-	, step_metadata_table_output.smto_use_batch_update
-	, step_metadata_table_output.smto_table_name_defined_in_field
-from
-	mdi.process
-		left join mdi.step_metadata_csv_file_input on step_metadata_csv_file_input.smcfi_process_name = process.pr_process_name
-		left join mdi.step_metadata_excel_input on step_metadata_excel_input.smei_process_name = process.pr_process_name
-		left join mdi.step_metadata_table_output on step_metadata_table_output.smto_process_name = process.pr_process_name
+    <sql>SELECT
+	p.process_name
+	, csv_input.buffersize as csv_buffersize
+	, csv_input.csv_delimiter as csv_csv_delimiter
+	, csv_input.enclosure as csv_enclosure
+	, csv_input.file_encoding as csv_file_encoding
+	, csv_input.file_format as csv_file_format
+	, csv_input.filename as csv_filename
+	, csv_input.header_present as csv_header_present
+	, csv_input.include_filename as csv_include_filename
+	, csv_input.lazy_conversion as csv_lazy_conversion
+	, csv_input.newline_possible as csv_newline_possible
+	, csv_input.process_in_parallel as csv_process_in_parallel
+	, csv_input.add_filename_result as csv_add_filename_result
+	, csv_input.filename_field as csv_filename_field
+	, csv_input.row_num_field as csv_row_num_field
+	, table_output.target_schema as table_target_schema
+	, table_output.target_table as table_target_table
+	, table_output.commit_size as table_commit_size
+	, table_output.partitioning_field as table_partitioning_field
+	, table_output.table_name_field as table_table_name_field
+	, table_output.auto_generated_key_field as table_auto_generated_key_field
+	, table_output.partition_data_per as table_partition_data_per
+	, table_output.return_auto_generated_key_field as table_return_auto_generated_key_field
+	, table_output.truncate_table as table_truncate_table
+	, table_output.connectionname as table_connectionname
+	, table_output.partition_over_tables as table_partition_over_tables
+	, table_output.specify_database_fields as table_specify_database_fields
+	, table_output.ignore_insert_errors as table_ignore_insert_errors
+	, table_output.use_batch_update as table_use_batch_update
+	, table_output.table_name_defined_in_field as table_table_name_defined_in_field
+FROM
+	mdi.process p
+		LEFT JOIN mdi.csv_file_input_step csv_input
+		ON p.process_name = csv_input.process_name
+		LEFT JOIN mdi.table_output_step table_output
+		ON p.process_name = table_output.process_name
 WHERE
-		process.pr_process_name =  '${process_name}'</sql>
+	p.process_name = '${process_name}'</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -615,34 +603,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>pr_process_name</name>
+        <name>process_name</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>pr_process_name</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>pr_sp_name</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>pr_sp_name</comments>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>process_name</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -661,11 +626,11 @@ WHERE
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>smcfi_buffersize</name>
+        <name>buffersize</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smcfi_buffersize</comments>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>buffersize</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -684,11 +649,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smcfi_csv_delimiter</name>
-        <length>2147483647</length>
+        <name>csv_delimiter</name>
+        <length>1</length>
         <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smcfi_csv_delimiter</comments>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>csv_delimiter</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -707,11 +672,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smcfi_enclosure</name>
-        <length>2147483647</length>
+        <name>enclosure</name>
+        <length>1</length>
         <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smcfi_enclosure</comments>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>enclosure</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -730,11 +695,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smcfi_file_encoding</name>
+        <name>file_encoding</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smcfi_file_encoding</comments>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>file_encoding</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -753,11 +718,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smcfi_file_format</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smcfi_file_format</comments>
+        <name>file_format</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>file_format</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -776,11 +741,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smcfi_filename</name>
+        <name>filename</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smcfi_filename</comments>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>filename</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -799,11 +764,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smcfi_header_present</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smcfi_header_present</comments>
+        <name>header_present</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>header_present</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -822,11 +787,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smcfi_include_filename</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smcfi_include_filename</comments>
+        <name>include_filename</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>include_filename</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -845,11 +810,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smcfi_lazy_conversion</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smcfi_lazy_conversion</comments>
+        <name>lazy_conversion</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>lazy_conversion</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -868,11 +833,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smcfi_newline_possible</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smcfi_newline_possible</comments>
+        <name>newline_possible</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>newline_possible</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -891,11 +856,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smcfi_process_in_parallel</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smcfi_process_in_parallel</comments>
+        <name>process_in_parallel</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>process_in_parallel</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -914,11 +879,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smcfi_add_filename_result</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smcfi_add_filename_result</comments>
+        <name>add_filename_result</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>add_filename_result</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -937,11 +902,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smcfi_filename_field</name>
+        <name>filename_field</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smcfi_filename_field</comments>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>filename_field</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -960,11 +925,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smcfi_row_num_field</name>
+        <name>row_num_field</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smcfi_row_num_field</comments>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>row_num_field</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -983,11 +948,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_target_schema</name>
+        <name>target_schema</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_target_schema</comments>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>target_schema</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1006,11 +971,57 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_target_table</name>
+        <name>target_table</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_target_table</comments>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>target_table</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>commit_size</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>commit_size</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>partitioning_field</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>partitioning_field</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1029,11 +1040,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_commit_size</name>
+        <name>table_name_field</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_commit_size</comments>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>table_name_field</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1052,11 +1063,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_partitioning_field</name>
+        <name>auto_generated_key_field</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_partitioning_field</comments>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>auto_generated_key_field</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1075,11 +1086,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_table_name_field</name>
+        <name>partition_data_per</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_table_name_field</comments>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>partition_data_per</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1098,11 +1109,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_auto_generated_key_field</name>
+        <name>return_auto_generated_key_field</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_auto_generated_key_field</comments>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>return_auto_generated_key_field</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1121,11 +1132,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_partition_data_per</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_partition_data_per</comments>
+        <name>truncate_table</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>truncate_table</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1144,11 +1155,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_return_auto_generated_key_field</name>
+        <name>connectionname</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_return_auto_generated_key_field</comments>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>connectionname</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1167,11 +1178,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_truncate_table</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_truncate_table</comments>
+        <name>partition_over_tables</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>partition_over_tables</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1190,11 +1201,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_connectionname</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_connectionname</comments>
+        <name>specify_database_fields</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>specify_database_fields</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1213,11 +1224,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_partition_over_tables</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_partition_over_tables</comments>
+        <name>ignore_insert_errors</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>ignore_insert_errors</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1236,11 +1247,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_specify_database_fields</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_specify_database_fields</comments>
+        <name>use_batch_update</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>use_batch_update</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1259,57 +1270,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_ignore_insert_errors</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_ignore_insert_errors</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>smto_use_batch_update</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_use_batch_update</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>smto_table_name_defined_in_field</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_table_name_defined_in_field</comments>
+        <name>table_name_defined_in_field</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>table_name_defined_in_field</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1335,8 +1300,8 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>560</xloc>
-      <yloc>192</yloc>
+      <xloc>432</xloc>
+      <yloc>80</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1352,23 +1317,26 @@ WHERE
       <schema_name/>
     </partitioning>
     <connection>Config DB Connection</connection>
-    <sql>select
-    rmcfi_field_name
-	, rmcfi_field_type
-	, rmcfi_field_format
-	, rmcfi_field_length
-	, rmcfi_field_precision
-	, rmcfi_field_currency
-	, rmcfi_field_decimal
-	, rmcfi_field_group
-	, rmcfi_field_trim_type
-	, rmcfi_field_order
-from
-    mdi.row_metadata_csv_file_input
-	join mdi.step_metadata_csv_file_input on
-	    step_metadata_csv_file_input.smcfi_step_definition_id = row_metadata_csv_file_input.rmcfi_step_definition_id
-		AND step_metadata_csv_file_input.smcfi_process_name = '${process_name}'
-order by row_metadata_csv_file_input.rmcfi_field_order ASC</sql>
+    <sql>SELECT
+	csv_field.field_name
+	, csv_field.field_format
+	, csv_field.field_length
+	, csv_field.field_precision
+	, csv_field.field_currency
+	, csv_field.field_decimal
+	, csv_field.field_group
+	, csv_field.field_trim_type
+	, csv_field.field_order
+, csv_field.field_type
+FROM
+	mdi.csv_file_input_step csv_step
+		LEFT JOIN mdi.csv_file_input_field csv_field
+		ON csv_step.step_id = csv_field.step_id
+WHERE
+	csv_step.process_name = '${process_name}'
+order by 
+	csv_field.field_order ASC
+;</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -1379,11 +1347,11 @@ order by row_metadata_csv_file_input.rmcfi_field_order ASC</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>rmcfi_field_name</name>
+        <name>field_name</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Row Settings</origin>
-        <comments>rmcfi_field_name</comments>
+        <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
+        <comments>field_name</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1402,11 +1370,80 @@ order by row_metadata_csv_file_input.rmcfi_field_order ASC</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>rmcfi_field_type</name>
+        <name>field_format</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Row Settings</origin>
-        <comments>rmcfi_field_type</comments>
+        <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
+        <comments>field_format</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>field_length</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
+        <comments>field_length</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>field_precision</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
+        <comments>field_precision</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>field_currency</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
+        <comments>field_currency</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1425,11 +1462,11 @@ order by row_metadata_csv_file_input.rmcfi_field_order ASC</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>rmcfi_field_format</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Row Settings</origin>
-        <comments>rmcfi_field_format</comments>
+        <name>field_decimal</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
+        <comments>field_decimal</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1448,11 +1485,11 @@ order by row_metadata_csv_file_input.rmcfi_field_order ASC</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>rmcfi_field_length</name>
+        <name>field_group</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Row Settings</origin>
-        <comments>rmcfi_field_length</comments>
+        <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
+        <comments>field_group</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1471,103 +1508,11 @@ order by row_metadata_csv_file_input.rmcfi_field_order ASC</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>rmcfi_field_precision</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Row Settings</origin>
-        <comments>rmcfi_field_precision</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>rmcfi_field_currency</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Row Settings</origin>
-        <comments>rmcfi_field_currency</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>rmcfi_field_decimal</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Row Settings</origin>
-        <comments>rmcfi_field_decimal</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>rmcfi_field_group</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Row Settings</origin>
-        <comments>rmcfi_field_group</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>rmcfi_field_trim_type</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Row Settings</origin>
-        <comments>rmcfi_field_trim_type</comments>
+        <name>field_trim_type</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
+        <comments>field_trim_type</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1586,14 +1531,37 @@ order by row_metadata_csv_file_input.rmcfi_field_order ASC</sql>
       <value-meta>
         <type>BigNumber</type>
         <storagetype>normal</storagetype>
-        <name>rmcfi_field_order</name>
+        <name>field_order</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>performer_csv_to_table-Load CSV Row Settings</origin>
-        <comments>rmcfi_field_order</comments>
+        <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
+        <comments>field_order</comments>
         <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol/>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>field_type</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
+        <comments>field_type</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -1616,8 +1584,8 @@ order by row_metadata_csv_file_input.rmcfi_field_order ASC</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>368</xloc>
-      <yloc>560</yloc>
+      <xloc>240</xloc>
+      <yloc>448</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1633,16 +1601,19 @@ order by row_metadata_csv_file_input.rmcfi_field_order ASC</sql>
       <schema_name/>
     </partitioning>
     <connection>Config DB Connection</connection>
-    <sql>select
-	row_metadata_table_output.rmto_field_name_in_db
-	, row_metadata_table_output.rmto_field_name_in_stream
-	, row_metadata_table_output.rmto_field_order
-from
-	mdi.row_metadata_table_output
-	join mdi.step_metadata_table_output on
-		step_metadata_table_output.smto_step_definition_id = row_metadata_table_output.rmto_step_definition_id
-		AND step_metadata_table_output.smto_process_name = '${process_name}'
-order by row_metadata_table_output.rmto_field_order</sql>
+    <sql>SELECT
+table_field.field_name_in_db
+, table_field.field_name_in_stream
+, table_field.field_order
+FROM
+	mdi.table_output_step table_step
+		LEFT JOIN mdi.table_output_field table_field
+		ON table_step.step_id = table_field.step_id
+WHERE
+	table_step.process_name = '${process_name}'
+ORDER BY
+	table_field.field_order ASC
+;</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -1653,11 +1624,11 @@ order by row_metadata_table_output.rmto_field_order</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>rmto_field_name_in_db</name>
+        <name>field_name_in_db</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>[performer_csv_to_table] Load Table Output Settings</origin>
-        <comments>rmto_field_name_in_db</comments>
+        <origin>[performer_csv_to_table] Load Table Output Row Settings</origin>
+        <comments>field_name_in_db</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1676,11 +1647,11 @@ order by row_metadata_table_output.rmto_field_order</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>rmto_field_name_in_stream</name>
+        <name>field_name_in_stream</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>[performer_csv_to_table] Load Table Output Settings</origin>
-        <comments>rmto_field_name_in_stream</comments>
+        <origin>[performer_csv_to_table] Load Table Output Row Settings</origin>
+        <comments>field_name_in_stream</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1699,11 +1670,11 @@ order by row_metadata_table_output.rmto_field_order</sql>
       <value-meta>
         <type>BigNumber</type>
         <storagetype>normal</storagetype>
-        <name>rmto_field_order</name>
+        <name>field_order</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>[performer_csv_to_table] Load Table Output Settings</origin>
-        <comments>rmto_field_order</comments>
+        <origin>[performer_csv_to_table] Load Table Output Row Settings</origin>
+        <comments>field_order</comments>
         <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol/>
@@ -1729,13 +1700,13 @@ order by row_metadata_table_output.rmto_field_order</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>768</xloc>
-      <yloc>560</yloc>
+      <xloc>640</xloc>
+      <yloc>448</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[performer_csv_to_table] Execute template_csv_to_table</name>
+    <name>[performer_csv_to_table] Inject and execute template_csv_to_table</name>
     <type>MetaInject</type>
     <description/>
     <distribute>Y</distribute>
@@ -1758,298 +1729,165 @@ order by row_metadata_table_output.rmto_field_order</sql>
     <stream_target_step/>
     <mappings>
       <mapping>
-        <target_step_name>[load_csv_to_table] Table output</target_step_name>
-        <target_attribute_key>PARTITIONING_FIELD</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smto_partitioning_field</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
-        <target_attribute_key>FIELD_TYPE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Row Settings</source_step>
-        <source_field>rmcfi_field_type</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
-        <target_attribute_key>ENCODING</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smcfi_file_encoding</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
-        <target_attribute_key>FIELD_CURRENCY</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Row Settings</source_step>
-        <source_field>rmcfi_field_currency</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
-        <target_attribute_key>INCLUDE_FILENAME</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step/>
-        <source_field/>
-      </mapping>
-      <mapping>
-        <target_step_name>[load_csv_to_table] Table output</target_step_name>
-        <target_attribute_key>IGNORE_INSERT_ERRORS</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smto_ignore_insert_errors</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
-        <target_attribute_key>NEWLINE_POSSIBLE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smcfi_newline_possible</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
-        <target_attribute_key>PARALLEL</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smcfi_process_in_parallel</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[load_csv_to_table] Table output</target_step_name>
-        <target_attribute_key>AUTO_GENERATED_KEY_FIELD</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smto_auto_generated_key_field</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
-        <target_attribute_key>FIELD_GROUP</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Row Settings</source_step>
-        <source_field>rmcfi_field_group</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[load_csv_to_table] Table output</target_step_name>
-        <target_attribute_key>TRUNCATE_TABLE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smto_truncate_table</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
-        <target_attribute_key>FILENAME_FIELD</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smcfi_filename_field</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
-        <target_attribute_key>ADD_FILENAME_RESULT</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smcfi_add_filename_result</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
-        <target_attribute_key>FIELD_PRECISION</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Row Settings</source_step>
-        <source_field>rmcfi_field_precision</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
-        <target_attribute_key>FIELD_FORMAT</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Row Settings</source_step>
-        <source_field>rmcfi_field_format</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[load_csv_to_table] Table output</target_step_name>
-        <target_attribute_key>TABLE_NAME_FIELD</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smto_table_name_field</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
-        <target_attribute_key>FIELD_DECIMAL</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Row Settings</source_step>
-        <source_field>rmcfi_field_decimal</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
-        <target_attribute_key>FIELD_LENGTH</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Row Settings</source_step>
-        <source_field>rmcfi_field_length</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[load_csv_to_table] Table output</target_step_name>
-        <target_attribute_key>USE_BATCH_UPDATE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smto_use_batch_update</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
-        <target_attribute_key>ENCLOSURE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smcfi_enclosure</source_field>
-      </mapping>
-      <mapping>
         <target_step_name>[load_csv_to_table] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
         <target_attribute_key>REPLACE_VALUE</target_attribute_key>
         <target_detail>Y</target_detail>
         <source_step/>
-        <source_field>${etl_batch_id}</source_field>
+        <source_field>{$etl_batch_id}</source_field>
       </mapping>
       <mapping>
         <target_step_name>[load_csv_to_table] Table output</target_step_name>
         <target_attribute_key>SPECIFY_DATABASE_FIELDS</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smto_specify_database_fields</source_field>
+        <source_field>table_specify_database_fields</source_field>
       </mapping>
       <mapping>
         <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>BUFFERSIZE</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smcfi_buffersize</source_field>
+        <source_field>csv_buffersize</source_field>
       </mapping>
       <mapping>
         <target_step_name>[load_csv_to_table] Table output</target_step_name>
         <target_attribute_key>DATABASE_STREAM_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
         <source_step>[performer_csv_to_table] Load Table Output Row Settings</source_step>
-        <source_field>rmto_field_name_in_stream</source_field>
+        <source_field>field_name_in_stream</source_field>
       </mapping>
       <mapping>
         <target_step_name>[load_csv_to_table] Table output</target_step_name>
         <target_attribute_key>CONNECTIONNAME</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smto_connectionname</source_field>
+        <source_field>table_connectionname</source_field>
       </mapping>
       <mapping>
         <target_step_name>[load_csv_to_table] Table output</target_step_name>
         <target_attribute_key>DATABASE_FIELD_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
         <source_step>[performer_csv_to_table] Load Table Output Row Settings</source_step>
-        <source_field>rmto_field_name_in_db</source_field>
+        <source_field>field_name_in_db</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_to_table] CSV file input</target_step_name>
+        <target_attribute_key>FILENAME</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
+        <source_field>csv_csv_delimiter</source_field>
       </mapping>
       <mapping>
         <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>FIELD_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
         <source_step>[performer_csv_to_table] Load CSV Row Settings</source_step>
-        <source_field>rmcfi_field_name</source_field>
+        <source_field>field_name</source_field>
       </mapping>
       <mapping>
         <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>LAZY_CONVERSION</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smcfi_lazy_conversion</source_field>
+        <source_field>csv_lazy_conversion</source_field>
       </mapping>
       <mapping>
         <target_step_name>[load_csv_to_table] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
         <target_attribute_key>FIELD_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
         <source_step/>
-        <source_field>etl_batch_id</source_field>
+        <source_field>elt_batch_id</source_field>
       </mapping>
       <mapping>
         <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>FIELD_TRIM_TYPE</target_attribute_key>
         <target_detail>Y</target_detail>
         <source_step>[performer_csv_to_table] Load CSV Row Settings</source_step>
-        <source_field>rmcfi_field_trim_type</source_field>
+        <source_field>field_trim_type</source_field>
       </mapping>
       <mapping>
         <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>FILENAME</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smcfi_filename</source_field>
+        <source_field>csv_filename</source_field>
       </mapping>
       <mapping>
         <target_step_name>[load_csv_to_table] Table output</target_step_name>
         <target_attribute_key>RETURN_AUTO_GENERATED_KEY</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smto_return_auto_generated_key_field</source_field>
+        <source_field>table_auto_generated_key_field</source_field>
       </mapping>
       <mapping>
         <target_step_name>[load_csv_to_table] Table output</target_step_name>
         <target_attribute_key>TABLE_NAME_DEFINED_IN_FIELD</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smto_table_name_defined_in_field</source_field>
+        <source_field>table_table_name_defined_in_field</source_field>
       </mapping>
       <mapping>
         <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>ROW_NUM_FIELD</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smcfi_row_num_field</source_field>
+        <source_field>csv_row_num_field</source_field>
       </mapping>
       <mapping>
         <target_step_name>[load_csv_to_table] Table output</target_step_name>
         <target_attribute_key>COMMIT_SIZE</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smto_commit_size</source_field>
+        <source_field>table_commit_size</source_field>
       </mapping>
       <mapping>
         <target_step_name>[load_csv_to_table] Table output</target_step_name>
         <target_attribute_key>TARGET_SCHEMA</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smto_target_schema</source_field>
+        <source_field>table_target_schema</source_field>
       </mapping>
       <mapping>
         <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>FORMAT</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smcfi_file_format</source_field>
+        <source_field>csv_file_format</source_field>
       </mapping>
       <mapping>
         <target_step_name>[load_csv_to_table] Table output</target_step_name>
         <target_attribute_key>PARTITION_OVER_TABLES</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smto_partition_over_tables</source_field>
+        <source_field>table_partition_over_tables</source_field>
       </mapping>
       <mapping>
         <target_step_name>[load_csv_to_table] Table output</target_step_name>
         <target_attribute_key>TARGET_TABLE</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smto_target_table</source_field>
+        <source_field>table_target_table</source_field>
       </mapping>
       <mapping>
         <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>DELIMITER</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smcfi_csv_delimiter</source_field>
+        <source_field>csv_csv_delimiter</source_field>
       </mapping>
       <mapping>
         <target_step_name>[load_csv_to_table] Table output</target_step_name>
         <target_attribute_key>PARTITION_DATA_PER</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smto_partition_data_per</source_field>
+        <source_field>table_partition_data_per</source_field>
       </mapping>
       <mapping>
         <target_step_name>[load_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>HEADER_PRESENT</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>smcfi_header_present</source_field>
+        <source_field>csv_header_present</source_field>
       </mapping>
     </mappings>
     <attributes/>
@@ -2061,8 +1899,8 @@ order by row_metadata_table_output.rmto_field_order</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>560</xloc>
-      <yloc>400</yloc>
+      <xloc>432</xloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

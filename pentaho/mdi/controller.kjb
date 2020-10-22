@@ -8,7 +8,7 @@
   <created_user>-</created_user>
   <created_date>2020/10/10 07:31:50.634</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2020/10/14 19:18:29.119</modified_date>
+  <modified_date>2020/10/22 12:13:34.339</modified_date>
   <parameters>
     <parameter>
       <name>database_hostname</name>
@@ -42,7 +42,7 @@
     </parameter>
     <parameter>
       <name>process_name</name>
-      <default_value>v35_state</default_value>
+      <default_value>sp7_1_1</default_value>
       <description>The name that signifies what process should be run.</description>
     </parameter>
   </parameters>
@@ -60,10 +60,6 @@
     <index_tablespace/>
     <attributes>
       <attribute>
-        <code>EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code>
-        <attribute>pentaho_logging_sequence</attribute>
-      </attribute>
-      <attribute>
         <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
         <attribute>N</attribute>
       </attribute>
@@ -72,16 +68,8 @@
         <attribute>N</attribute>
       </attribute>
       <attribute>
-        <code>INITIAL_POOL_SIZE</code>
-        <attribute>10</attribute>
-      </attribute>
-      <attribute>
         <code>IS_CLUSTERED</code>
         <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>MAXIMUM_POOL_SIZE</code>
-        <attribute>1000</attribute>
       </attribute>
       <attribute>
         <code>PORT_NUMBER</code>
@@ -109,7 +97,7 @@
       </attribute>
       <attribute>
         <code>USE_POOLING</code>
-        <attribute>Y</attribute>
+        <attribute>N</attribute>
       </attribute>
     </attributes>
   </connection>
@@ -411,7 +399,7 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Load MDI Configuration</name>
+      <name>[controller] Load MDI Configuration</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
@@ -480,16 +468,16 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>controller-Process CSV?</name>
+      <name>[controller] Process CSV?</name>
       <description/>
       <type>SIMPLE_EVAL</type>
       <attributes/>
       <valuetype>variable</valuetype>
       <fieldname/>
-      <variablename>has_csv_input_flag</variablename>
-      <fieldtype>number</fieldtype>
+      <variablename>input_template</variablename>
+      <fieldtype>string</fieldtype>
       <mask/>
-      <comparevalue>1</comparevalue>
+      <comparevalue>CSV</comparevalue>
       <minvalue/>
       <maxvalue/>
       <successcondition>equal</successcondition>
@@ -504,16 +492,16 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>controller-Process Excel?</name>
+      <name>[controller] Process Excel?</name>
       <description/>
       <type>SIMPLE_EVAL</type>
       <attributes/>
       <valuetype>variable</valuetype>
       <fieldname/>
-      <variablename>has_excel_input_flag</variablename>
-      <fieldtype>number</fieldtype>
+      <variablename>input_template</variablename>
+      <fieldtype>string</fieldtype>
       <mask/>
-      <comparevalue>1</comparevalue>
+      <comparevalue>EXCEL</comparevalue>
       <minvalue/>
       <maxvalue/>
       <successcondition>equal</successcondition>
@@ -523,142 +511,12 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>496</xloc>
+      <xloc>576</xloc>
       <yloc>336</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>controller-Notify RC Chat of Success</name>
-      <description/>
-      <type>MAIL</type>
-      <attributes/>
-      <server/>
-      <port/>
-      <destination/>
-      <destinationCc/>
-      <destinationBCc/>
-      <replyto/>
-      <replytoname/>
-      <subject/>
-      <include_date>N</include_date>
-      <contact_person/>
-      <contact_phone/>
-      <comment/>
-      <include_files>N</include_files>
-      <zip_files>N</zip_files>
-      <zip_name/>
-      <use_auth>N</use_auth>
-      <use_secure_auth>N</use_secure_auth>
-      <auth_user/>
-      <auth_password>Encrypted </auth_password>
-      <only_comment>N</only_comment>
-      <use_HTML>N</use_HTML>
-      <use_Priority>N</use_Priority>
-      <encoding>UTF-8</encoding>
-      <priority>normal</priority>
-      <importance>normal</importance>
-      <sensitivity>normal</sensitivity>
-      <secureconnectiontype>SSL</secureconnectiontype>
-      <replyToAddresses/>
-      <filetypes>      </filetypes>
-      <embeddedimages>
-      </embeddedimages>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>176</xloc>
-      <yloc>640</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>controller-Notify RC Chat of FAILURE</name>
-      <description/>
-      <type>MAIL</type>
-      <attributes/>
-      <server/>
-      <port/>
-      <destination/>
-      <destinationCc/>
-      <destinationBCc/>
-      <replyto/>
-      <replytoname/>
-      <subject/>
-      <include_date>N</include_date>
-      <contact_person/>
-      <contact_phone/>
-      <comment/>
-      <include_files>N</include_files>
-      <zip_files>N</zip_files>
-      <zip_name/>
-      <use_auth>N</use_auth>
-      <use_secure_auth>N</use_secure_auth>
-      <auth_user/>
-      <auth_password>Encrypted </auth_password>
-      <only_comment>N</only_comment>
-      <use_HTML>N</use_HTML>
-      <use_Priority>N</use_Priority>
-      <encoding>UTF-8</encoding>
-      <priority>normal</priority>
-      <importance>normal</importance>
-      <sensitivity>normal</sensitivity>
-      <secureconnectiontype>SSL</secureconnectiontype>
-      <replyToAddresses/>
-      <filetypes>      </filetypes>
-      <embeddedimages>
-      </embeddedimages>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>800</xloc>
-      <yloc>640</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>[controller] Forward Error CSV</name>
-      <description/>
-      <type>SPECIAL</type>
-      <attributes/>
-      <start>N</start>
-      <dummy>Y</dummy>
-      <repeat>N</repeat>
-      <schedulerType>0</schedulerType>
-      <intervalSeconds>0</intervalSeconds>
-      <intervalMinutes>60</intervalMinutes>
-      <hour>12</hour>
-      <minutes>0</minutes>
-      <weekDay>1</weekDay>
-      <DayOfMonth>1</DayOfMonth>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>704</xloc>
-      <yloc>480</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>controller-Forward Error Config</name>
-      <description/>
-      <type>SPECIAL</type>
-      <attributes/>
-      <start>N</start>
-      <dummy>Y</dummy>
-      <repeat>N</repeat>
-      <schedulerType>0</schedulerType>
-      <intervalSeconds>0</intervalSeconds>
-      <intervalMinutes>60</intervalMinutes>
-      <hour>12</hour>
-      <minutes>0</minutes>
-      <weekDay>1</weekDay>
-      <DayOfMonth>1</DayOfMonth>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>800</xloc>
-      <yloc>192</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>controller-Execute CSV to Table Performer</name>
+      <name>[controller] Execute CSV to Table Performer</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
@@ -732,7 +590,7 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>controller-Execute Excel to Table Performer</name>
+      <name>[controller] Execute Excel to Table Performer</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
@@ -801,15 +659,28 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>496</xloc>
-      <yloc>640</yloc>
+      <xloc>576</xloc>
+      <yloc>480</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] No data to process; Abort job</name>
+      <description/>
+      <type>ABORT</type>
+      <attributes/>
+      <message>The configuration failed both the CSV and Excel checks so no files were processed. This seems like it is a configuration error.</message>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>928</xloc>
+      <yloc>336</yloc>
       <attributes_kjc/>
     </entry>
   </entries>
   <hops>
     <hop>
       <from>Start</from>
-      <to>Load MDI Configuration</to>
+      <to>[controller] Load MDI Configuration</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -817,8 +688,8 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Load MDI Configuration</from>
-      <to>controller-Process CSV?</to>
+      <from>[controller] Load MDI Configuration</from>
+      <to>[controller] Process CSV?</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -826,44 +697,17 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>controller-Process CSV?</from>
-      <to>controller-Process Excel?</to>
+      <from>[controller] Process CSV?</from>
+      <to>[controller] Process Excel?</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>N</evaluation>
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>[controller] Forward Error CSV</from>
-      <to>controller-Notify RC Chat of FAILURE</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>N</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>Load MDI Configuration</from>
-      <to>controller-Forward Error Config</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>controller-Forward Error Config</from>
-      <to>controller-Notify RC Chat of FAILURE</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>N</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>controller-Process CSV?</from>
-      <to>controller-Execute CSV to Table Performer</to>
+      <from>[controller] Process CSV?</from>
+      <to>[controller] Execute CSV to Table Performer</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -871,26 +715,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>controller-Execute CSV to Table Performer</from>
-      <to>controller-Notify RC Chat of Success</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>N</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>controller-Execute CSV to Table Performer</from>
-      <to>[controller] Forward Error CSV</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>controller-Process Excel?</from>
-      <to>controller-Execute Excel to Table Performer</to>
+      <from>[controller] Process Excel?</from>
+      <to>[controller] Execute Excel to Table Performer</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -898,20 +724,11 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>controller-Execute Excel to Table Performer</from>
-      <to>controller-Notify RC Chat of Success</to>
+      <from>[controller] Process Excel?</from>
+      <to>[controller] No data to process; Abort job</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>N</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>controller-Execute Excel to Table Performer</from>
-      <to>controller-Notify RC Chat of FAILURE</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <evaluation>N</evaluation>
       <unconditional>N</unconditional>
     </hop>

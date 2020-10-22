@@ -459,8 +459,8 @@
     <created_user>-</created_user>
     <created_date>2020/10/10 13:25:09.606</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/10/13 11:58:56.799</modified_date>
-    <key_for_session_key/>
+    <modified_date>2020/10/22 12:20:27.014</modified_date>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
@@ -479,10 +479,6 @@
     <index_tablespace/>
     <attributes>
       <attribute>
-        <code>EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code>
-        <attribute>pentaho_logging_sequence</attribute>
-      </attribute>
-      <attribute>
         <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
         <attribute>N</attribute>
       </attribute>
@@ -491,16 +487,8 @@
         <attribute>N</attribute>
       </attribute>
       <attribute>
-        <code>INITIAL_POOL_SIZE</code>
-        <attribute>10</attribute>
-      </attribute>
-      <attribute>
         <code>IS_CLUSTERED</code>
         <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>MAXIMUM_POOL_SIZE</code>
-        <attribute>1000</attribute>
       </attribute>
       <attribute>
         <code>PORT_NUMBER</code>
@@ -528,19 +516,19 @@
       </attribute>
       <attribute>
         <code>USE_POOLING</code>
-        <attribute>Y</attribute>
+        <attribute>N</attribute>
       </attribute>
     </attributes>
   </connection>
   <order>
     <hop>
-      <from>load_mdi_configuration-Load settings based on process name</from>
-      <to>load_mdi_configuration-Set global process variables</to>
+      <from>[load_mdi_configuration] Load settings based on process name</from>
+      <to>[load_mdi_configuration] Set global process variables</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>load_mdi_configuration-Load settings based on process name</name>
+    <name>[load_mdi_configuration] Load settings based on process name</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -551,29 +539,20 @@
       <schema_name/>
     </partitioning>
     <connection>Config DB Connection</connection>
-    <sql>select
-	process.pr_process_name
-	, process.pr_sp_name
+    <sql>SELECT
+	p.process_name
 	, CASE
-		  WHEN (step_metadata_csv_file_input.smcfi_process_name IS NULL) then 0
-		  WHEN (step_metadata_csv_file_input.smcfi_process_name IS NOT NULL) THEN 1
-	END as has_csv_input_flag
-	, CASE
-		  WHEN step_metadata_excel_input.smei_process_name IS NULL then 0
-		  WHEN step_metadata_excel_input.smei_process_name IS NOT NULL THEN 1
-	END as has_excel_input_flag
-	, CASE
-		  WHEN step_metadata_table_output.smto_process_name IS NULL then 0
-		  WHEN step_metadata_table_output.smto_process_name IS NOT NULL THEN 1
-	END as has_table_output_flag
-
-from
-	mdi.process
-		left join mdi.step_metadata_csv_file_input on step_metadata_csv_file_input.smcfi_process_name = process.pr_process_name
-		left join mdi.step_metadata_excel_input on step_metadata_excel_input.smei_process_name = process.pr_process_name
-		left join mdi.step_metadata_table_output on step_metadata_table_output.smto_process_name = process.pr_process_name
+		  WHEN csv_input.process_name IS NOT NULL then 'CSV' 
+		  WHEN csv_input.process_name IS NULL then 'EXCEL'
+	      ELSE 'No input steps are configured for ' || p.process_name
+	END as input_template
+FROM
+	mdi.process p
+		LEFT JOIN mdi.csv_file_input_step csv_input ON p.process_name = csv_input.process_name
+		LEFT JOIN mdi.table_output_step table_output ON p.process_name = table_output.process_name
+		LEFT JOIN mdi.excel_file_input_step excel_input ON p.process_name = excel_input.process_name
 WHERE
-	mdi.process.pr_process_name = '${process_name}'</sql>
+	p.process_name = '${process_name}'</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -712,7 +691,7 @@ WHERE
     </GUI>
   </step>
   <step>
-    <name>load_mdi_configuration-Set global process variables</name>
+    <name>[load_mdi_configuration] Set global process variables</name>
     <type>SetVariable</type>
     <description/>
     <distribute>Y</distribute>
@@ -724,32 +703,14 @@ WHERE
     </partitioning>
     <fields>
       <field>
-        <field_name>pr_process_name</field_name>
+        <field_name>process_name</field_name>
         <variable_name>process_name</variable_name>
         <variable_type>JVM</variable_type>
         <default_value/>
       </field>
       <field>
-        <field_name>pr_sp_name</field_name>
-        <variable_name>sp_name</variable_name>
-        <variable_type>JVM</variable_type>
-        <default_value/>
-      </field>
-      <field>
-        <field_name>has_table_output_flag</field_name>
-        <variable_name>has_table_output_flag</variable_name>
-        <variable_type>JVM</variable_type>
-        <default_value/>
-      </field>
-      <field>
-        <field_name>has_excel_input_flag</field_name>
-        <variable_name>has_excel_input_flag</variable_name>
-        <variable_type>JVM</variable_type>
-        <default_value/>
-      </field>
-      <field>
-        <field_name>has_csv_input_flag</field_name>
-        <variable_name>has_csv_input_flag</variable_name>
+        <field_name>input_template</field_name>
+        <variable_name>input_template</variable_name>
         <variable_type>JVM</variable_type>
         <default_value/>
       </field>
