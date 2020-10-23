@@ -10,37 +10,37 @@
     <parameters>
       <parameter>
         <name>database_hostname</name>
-        <default_value/>
+        <default_value>localhost</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>database_password</name>
-        <default_value/>
+        <default_value>testonly</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>database_port</name>
-        <default_value/>
+        <default_value>5433</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>database_schema</name>
-        <default_value/>
+        <default_value>mdi</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>database_username</name>
-        <default_value/>
+        <default_value>postgres</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>etl_batch_id</name>
-        <default_value/>
+        <default_value>performer</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>process_name</name>
-        <default_value/>
+        <default_value>sp7_1_3</default_value>
         <description>The name that signifies what process should be run.</description>
       </parameter>
     </parameters>
@@ -464,7 +464,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.089</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/10/22 12:20:15.526</modified_date>
+    <modified_date>2020/10/23 17:38:48.952</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -483,6 +483,10 @@
     <data_tablespace/>
     <index_tablespace/>
     <attributes>
+      <attribute>
+        <code>EXTRA_OPTION_POSTGRESQL.>EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code>
+        <attribute>pentaho_logging_sequence</attribute>
+      </attribute>
       <attribute>
         <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
         <attribute>N</attribute>
@@ -528,324 +532,20 @@
   <order>
     <hop>
       <from>[performer_excel_to_table] Load Excel and Table Output Settings</from>
-      <to>[performer_excel_to_table] Inject and Execute template_excel_to_table</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[performer_excel_to_table] Load Table Output Settings</from>
-      <to>[performer_excel_to_table] Inject and Execute template_excel_to_table</to>
+      <to>ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>[performer_excel_to_table] Load Excel Field Settings</from>
-      <to>[performer_excel_to_table] Inject and Execute template_excel_to_table</to>
+      <to>ETL metadata injection</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_excel_to_table] Load Table Output Settings</from>
+      <to>ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
   </order>
-  <step>
-    <name>[performer_excel_to_table] Inject and Execute template_excel_to_table</name>
-    <type>MetaInject</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <specification_method>rep_name</specification_method>
-    <trans_object_id/>
-    <trans_name>template_excel_to_table</trans_name>
-    <filename/>
-    <directory_path>${Internal.Entry.Current.Directory}</directory_path>
-    <source_step/>
-    <source_output_fields>    </source_output_fields>
-    <target_file/>
-    <no_execution>N</no_execution>
-    <stream_source_step/>
-    <stream_target_step/>
-    <mappings>
-      <mapping>
-        <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
-        <target_attribute_key>INCLUDE_SUBFOLDERS</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smei_include_subfolders</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Table output</target_step_name>
-        <target_attribute_key>SPECIFY_DATABASE_FIELDS</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smto_specify_database_fields</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
-        <target_attribute_key>TYPE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
-        <source_field>rmei_field_type</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
-        <target_attribute_key>FILENAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smei_filename</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Table output</target_step_name>
-        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smto_connectionname</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Table output</target_step_name>
-        <target_attribute_key>DATABASE_FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Table Output Settings</source_step>
-        <source_field>rmto_field_name_in_db</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Table output</target_step_name>
-        <target_attribute_key>DATABASE_STREAM_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Table Output Settings</source_step>
-        <source_field>rmto_field_name_in_stream</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
-        <target_attribute_key>GROUP</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
-        <source_field>rmei_field_group</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Table output</target_step_name>
-        <target_attribute_key>RETURN_AUTO_GENERATED_KEY</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smto_return_auto_generated_key_field</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
-        <target_attribute_key>DECIMAL</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
-        <source_field>rmei_field_decimal</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Table output</target_step_name>
-        <target_attribute_key>TABLE_NAME_DEFINED_IN_FIELD</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smto_table_name_defined_in_field</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
-        <target_attribute_key>FILE_REQUIRED</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smei_file_required</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Table output</target_step_name>
-        <target_attribute_key>TARGET_SCHEMA</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smto_target_schema</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
-        <target_attribute_key>PRECISION</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
-        <source_field>rmei_field_precision</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
-        <target_attribute_key>SHEET_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smei_sheet_name</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Table output</target_step_name>
-        <target_attribute_key>COMMIT_SIZE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smto_commit_size</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Table output</target_step_name>
-        <target_attribute_key>TARGET_TABLE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smto_target_table</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Table output</target_step_name>
-        <target_attribute_key>PARTITION_OVER_TABLES</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smto_partition_over_tables</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
-        <target_attribute_key>FORMAT</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
-        <source_field>rmei_field_format</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
-        <target_attribute_key>REPEAT</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>N</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
-        <target_attribute_key>LENGTH</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
-        <source_field>rmei_field_length</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Table output</target_step_name>
-        <target_attribute_key>PARTITION_DATA_PER</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smto_partition_data_per</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
-        <target_attribute_key>EXCLUDE_FILEMASK</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smei_exclude_filemask</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Table output</target_step_name>
-        <target_attribute_key>PARTITIONING_FIELD</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smto_partitioning_field</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
-        <target_attribute_key>SHEET_START_ROW</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smei_sheet_start_row</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
-        <target_attribute_key>FILEMASK</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smei_filemask</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Table output</target_step_name>
-        <target_attribute_key>IGNORE_INSERT_ERRORS</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smto_ignore_insert_errors</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
-        <target_attribute_key>SPREADSHEET_TYPE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smei_spreadsheet_type</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
-        <target_attribute_key>TRIM_TYPE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
-        <source_field>rmei_field_trim_type</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Table output</target_step_name>
-        <target_attribute_key>AUTO_GENERATED_KEY_FIELD</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smto_auto_generated_key_field</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>etl_batch_id</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Table output</target_step_name>
-        <target_attribute_key>TRUNCATE_TABLE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smto_truncate_table</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Table output</target_step_name>
-        <target_attribute_key>TABLE_NAME_FIELD</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smto_table_name_field</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
-        <target_attribute_key>NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
-        <source_field>rmei_field_name</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
-        <target_attribute_key>CURRENCY</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
-        <source_field>rmei_field_currency</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Microsoft Excel input</target_step_name>
-        <target_attribute_key>SHEET_START_COL</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smei_sheet_start_col</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Table output</target_step_name>
-        <target_attribute_key>USE_BATCH_UPDATE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
-        <source_field>smto_use_batch_update</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>template_excel_to_table-Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>${etl_batch_id}</source_field>
-      </mapping>
-    </mappings>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>432</xloc>
-      <yloc>288</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
   <step>
     <name>[performer_excel_to_table] Load Excel Field Settings</name>
     <type>TableInput</type>
@@ -858,23 +558,27 @@
       <schema_name/>
     </partitioning>
     <connection>Config DB Connection</connection>
-    <sql>select
-	rmei_field_name
-	, rmei_field_type
-	, rmei_field_format
-	, rmei_field_length
-	, rmei_field_precision
-	, rmei_field_currency
-	, rmei_field_decimal
-	, rmei_field_group
-	, rmei_field_trim_type
-	, rmei_field_order
-from
-	mdi.row_metadata_excel_input
-		join mdi.step_metadata_excel_input on
-				step_metadata_excel_input.smei_step_id = row_metadata_excel_input.rmei_step_definition_id
-			AND step_metadata_excel_input.smei_process_name = '${process_name}'
-order by row_metadata_excel_input.rmei_field_order ASC</sql>
+    <sql>SELECT
+	excel_field.field_name
+	, excel_field.field_format
+	, excel_field.field_length
+	, excel_field.field_precision
+	, excel_field.field_currency
+	, excel_field.field_decimal
+	, excel_field.field_group
+	, excel_field.field_trim_type
+	, excel_field.field_order
+	, excel_field.field_type
+FROM
+	mdi.excel_file_input_step excel_step
+		LEFT JOIN mdi.excel_file_input_field excel_field
+		ON excel_step.step_id = excel_field.step_id
+WHERE
+		excel_step.process_name = '${process_name}'
+order by
+	excel_field.field_order ASC
+;
+</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -885,11 +589,11 @@ order by row_metadata_excel_input.rmei_field_order ASC</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>rmcfi_field_name</name>
+        <name>field_name</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_excel_to_table-Load Excel Row Settings</origin>
-        <comments>rmcfi_field_name</comments>
+        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
+        <comments>field_name</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -908,11 +612,80 @@ order by row_metadata_excel_input.rmei_field_order ASC</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>rmcfi_field_type</name>
+        <name>field_format</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_excel_to_table-Load Excel Row Settings</origin>
-        <comments>rmcfi_field_type</comments>
+        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
+        <comments>field_format</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>field_length</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
+        <comments>field_length</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>field_precision</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
+        <comments>field_precision</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>field_currency</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
+        <comments>field_currency</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -931,11 +704,11 @@ order by row_metadata_excel_input.rmei_field_order ASC</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>rmcfi_field_format</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_excel_to_table-Load Excel Row Settings</origin>
-        <comments>rmcfi_field_format</comments>
+        <name>field_decimal</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
+        <comments>field_decimal</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -954,11 +727,11 @@ order by row_metadata_excel_input.rmei_field_order ASC</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>rmcfi_field_length</name>
+        <name>field_group</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_excel_to_table-Load Excel Row Settings</origin>
-        <comments>rmcfi_field_length</comments>
+        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
+        <comments>field_group</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -977,103 +750,11 @@ order by row_metadata_excel_input.rmei_field_order ASC</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>rmcfi_field_precision</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_excel_to_table-Load Excel Row Settings</origin>
-        <comments>rmcfi_field_precision</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>rmcfi_field_currency</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_excel_to_table-Load Excel Row Settings</origin>
-        <comments>rmcfi_field_currency</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>rmcfi_field_decimal</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_excel_to_table-Load Excel Row Settings</origin>
-        <comments>rmcfi_field_decimal</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>rmcfi_field_group</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_excel_to_table-Load Excel Row Settings</origin>
-        <comments>rmcfi_field_group</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>rmcfi_field_trim_type</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_excel_to_table-Load Excel Row Settings</origin>
-        <comments>rmcfi_field_trim_type</comments>
+        <name>field_trim_type</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
+        <comments>field_trim_type</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1092,14 +773,37 @@ order by row_metadata_excel_input.rmei_field_order ASC</sql>
       <value-meta>
         <type>BigNumber</type>
         <storagetype>normal</storagetype>
-        <name>rmcfi_field_order</name>
+        <name>field_order</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>performer_excel_to_table-Load Excel Row Settings</origin>
-        <comments>rmcfi_field_order</comments>
+        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
+        <comments>field_order</comments>
         <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol/>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>field_type</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
+        <comments>field_type</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -1139,40 +843,40 @@ order by row_metadata_excel_input.rmei_field_order ASC</sql>
       <schema_name/>
     </partitioning>
     <connection>Config DB Connection</connection>
-    <sql>select
-	process.pr_process_name
-	, process.pr_sp_name
-    , step_metadata_excel_input.smei_spreadsheet_type
-	, step_metadata_excel_input.smei_filename
-	, step_metadata_excel_input.smei_filemask
-	, step_metadata_excel_input.smei_exclude_filemask
-	, step_metadata_excel_input.smei_file_required
-	, step_metadata_excel_input.smei_include_subfolders
-	, step_metadata_excel_input.smei_sheet_name
-	, step_metadata_excel_input.smei_sheet_start_row
-	, step_metadata_excel_input.smei_sheet_start_col
-	, step_metadata_table_output.smto_target_schema
-	, step_metadata_table_output.smto_target_table
-	, step_metadata_table_output.smto_commit_size
-	, step_metadata_table_output.smto_partitioning_field
-	, step_metadata_table_output.smto_table_name_field
-	, step_metadata_table_output.smto_auto_generated_key_field
-	, step_metadata_table_output.smto_partition_data_per
-	, step_metadata_table_output.smto_return_auto_generated_key_field
-	, step_metadata_table_output.smto_truncate_table
-	, step_metadata_table_output.smto_connectionname
-	, step_metadata_table_output.smto_partition_over_tables
-	, step_metadata_table_output.smto_specify_database_fields
-	, step_metadata_table_output.smto_ignore_insert_errors
-	, step_metadata_table_output.smto_use_batch_update
-	, step_metadata_table_output.smto_table_name_defined_in_field
-from
-	mdi.process
-		left join mdi.step_metadata_csv_file_input on step_metadata_csv_file_input.smcfi_process_name = process.pr_process_name
-		left join mdi.step_metadata_excel_input on step_metadata_excel_input.smei_process_name = process.pr_process_name
-		left join mdi.step_metadata_table_output on step_metadata_table_output.smto_process_name = process.pr_process_name
+    <sql>SELECT
+	p.process_name
+	, excel_input.spreadsheet_type as excel_spreadsheet_type
+	, excel_input.filename as excel_filename
+	, excel_input.filemask as excel_filemask
+	, excel_input.exclude_filemask as excel_exclude_filemask
+	, excel_input.file_required as excel_file_required
+	, excel_input.include_subfolders as excel_include_subfolders
+	, excel_input.sheet_name as excel_sheet_name
+	, excel_input.sheet_start_row as excel_sheet_start_row
+	, excel_input.sheet_start_col as excel_sheet_start_col
+	, table_output.target_schema as table_target_schema
+	, table_output.target_table as table_target_table
+	, table_output.commit_size as table_commit_size
+	, table_output.partitioning_field as table_partitioning_field
+	, table_output.table_name_field as table_table_name_field
+	, table_output.auto_generated_key_field as table_auto_generated_key_field
+	, table_output.partition_data_per as table_partition_data_per
+	, table_output.return_auto_generated_key_field as table_return_auto_generated_key_field
+	, table_output.truncate_table as table_truncate_table
+	, table_output.connectionname as table_connectionname
+	, table_output.partition_over_tables as table_partition_over_tables
+	, table_output.specify_database_fields as table_specify_database_fields
+	, table_output.ignore_insert_errors as table_ignore_insert_errors
+	, table_output.use_batch_update as table_use_batch_update
+	, table_output.table_name_defined_in_field as table_table_name_defined_in_field
+FROM
+	mdi.process p
+		LEFT JOIN mdi.excel_file_input_step excel_input
+		ON p.process_name = excel_input.process_name
+		LEFT JOIN mdi.table_output_step table_output
+		ON p.process_name = table_output.process_name
 WHERE
-		process.pr_process_name =  '${process_name}'</sql>
+		p.process_name = '${process_name}'</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -1183,11 +887,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>pr_process_name</name>
+        <name>process_name</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>pr_process_name</comments>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>process_name</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1206,11 +910,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>pr_sp_name</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>pr_sp_name</comments>
+        <name>excel_spreadsheet_type</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>excel_spreadsheet_type</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1229,11 +933,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smei_spreadsheet_type</name>
+        <name>excel_filename</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smei_spreadsheet_type</comments>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>excel_filename</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1252,11 +956,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smei_filename</name>
+        <name>excel_filemask</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smei_filename</comments>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>excel_filemask</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1275,11 +979,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smei_filemask</name>
+        <name>excel_exclude_filemask</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smei_filemask</comments>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>excel_exclude_filemask</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1298,11 +1002,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smei_exclude_filemask</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smei_exclude_filemask</comments>
+        <name>excel_file_required</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>excel_file_required</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1321,11 +1025,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smei_file_required</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smei_file_required</comments>
+        <name>excel_include_subfolders</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>excel_include_subfolders</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1344,34 +1048,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smei_include_subfolders</name>
+        <name>excel_sheet_name</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smei_include_subfolders</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>smei_sheet_name</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smei_sheet_name</comments>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>excel_sheet_name</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1390,11 +1071,11 @@ WHERE
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>smei_sheet_start_row</name>
+        <name>excel_sheet_start_row</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smei_sheet_start_row</comments>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>excel_sheet_start_row</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1413,11 +1094,11 @@ WHERE
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>smei_sheet_start_col</name>
+        <name>excel_sheet_start_col</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smei_sheet_start_col</comments>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>excel_sheet_start_col</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1436,11 +1117,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_target_schema</name>
+        <name>table_target_schema</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_target_schema</comments>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>table_target_schema</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1459,11 +1140,57 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_target_table</name>
+        <name>table_target_table</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_target_table</comments>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>table_target_table</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>table_commit_size</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>table_commit_size</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>table_partitioning_field</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>table_partitioning_field</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1482,11 +1209,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_commit_size</name>
+        <name>table_table_name_field</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_commit_size</comments>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>table_table_name_field</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1505,11 +1232,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_partitioning_field</name>
+        <name>table_auto_generated_key_field</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_partitioning_field</comments>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>table_auto_generated_key_field</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1528,11 +1255,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_table_name_field</name>
+        <name>table_partition_data_per</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_table_name_field</comments>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>table_partition_data_per</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1551,11 +1278,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_auto_generated_key_field</name>
+        <name>table_return_auto_generated_key_field</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_auto_generated_key_field</comments>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>table_return_auto_generated_key_field</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1574,11 +1301,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_partition_data_per</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_partition_data_per</comments>
+        <name>table_truncate_table</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>table_truncate_table</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1597,11 +1324,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_return_auto_generated_key_field</name>
+        <name>table_connectionname</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_return_auto_generated_key_field</comments>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>table_connectionname</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1620,11 +1347,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_truncate_table</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_truncate_table</comments>
+        <name>table_partition_over_tables</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>table_partition_over_tables</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1643,11 +1370,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_connectionname</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_connectionname</comments>
+        <name>table_specify_database_fields</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>table_specify_database_fields</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1666,11 +1393,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_partition_over_tables</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_partition_over_tables</comments>
+        <name>table_ignore_insert_errors</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>table_ignore_insert_errors</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1689,11 +1416,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_specify_database_fields</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_specify_database_fields</comments>
+        <name>table_use_batch_update</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>table_use_batch_update</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1712,57 +1439,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>smto_ignore_insert_errors</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_ignore_insert_errors</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>smto_use_batch_update</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_use_batch_update</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>smto_table_name_defined_in_field</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>performer_excel_to_table-Load CSV Input and Table Output Settings</origin>
-        <comments>smto_table_name_defined_in_field</comments>
+        <name>table_table_name_defined_in_field</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
+        <comments>table_table_name_defined_in_field</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1805,16 +1486,19 @@ WHERE
       <schema_name/>
     </partitioning>
     <connection>Config DB Connection</connection>
-    <sql>select
-	row_metadata_table_output.rmto_field_name_in_db
-	, row_metadata_table_output.rmto_field_name_in_stream
-	, row_metadata_table_output.rmto_field_order
-from
-	mdi.row_metadata_table_output
-	join mdi.step_metadata_table_output on
-		step_metadata_table_output.smto_step_definition_id = row_metadata_table_output.rmto_step_definition_id
-		AND step_metadata_table_output.smto_process_name = '${process_name}'
-order by row_metadata_table_output.rmto_field_order</sql>
+    <sql>SELECT
+table_field.field_name_in_db
+, table_field.field_name_in_stream
+, table_field.field_order
+FROM
+	mdi.table_output_step table_step
+		LEFT JOIN mdi.table_output_field table_field
+		ON table_step.step_id = table_field.step_id
+WHERE
+	table_step.process_name = '${process_name}'
+ORDER BY
+	table_field.field_order ASC
+;</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -1825,11 +1509,11 @@ order by row_metadata_table_output.rmto_field_order</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>rmto_field_name_in_db</name>
+        <name>field_name_in_db</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_excel_to_table-Load Table Output Settings</origin>
-        <comments>rmto_field_name_in_db</comments>
+        <origin>[performer_excel_to_table] Load Table Output Settings</origin>
+        <comments>field_name_in_db</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1848,11 +1532,11 @@ order by row_metadata_table_output.rmto_field_order</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>rmto_field_name_in_stream</name>
+        <name>field_name_in_stream</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>performer_excel_to_table-Load Table Output Settings</origin>
-        <comments>rmto_field_name_in_stream</comments>
+        <origin>[performer_excel_to_table] Load Table Output Settings</origin>
+        <comments>field_name_in_stream</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1871,11 +1555,11 @@ order by row_metadata_table_output.rmto_field_order</sql>
       <value-meta>
         <type>BigNumber</type>
         <storagetype>normal</storagetype>
-        <name>rmto_field_order</name>
+        <name>field_order</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>performer_excel_to_table-Load Table Output Settings</origin>
-        <comments>rmto_field_order</comments>
+        <origin>[performer_excel_to_table] Load Table Output Settings</origin>
+        <comments>field_order</comments>
         <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol/>
@@ -1903,6 +1587,310 @@ order by row_metadata_table_output.rmto_field_order</sql>
     <GUI>
       <xloc>640</xloc>
       <yloc>464</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>ETL metadata injection</name>
+    <type>MetaInject</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <specification_method>rep_name</specification_method>
+    <trans_object_id/>
+    <trans_name>template_excel_to_table</trans_name>
+    <filename/>
+    <directory_path>${Internal.Entry.Current.Directory}</directory_path>
+    <source_step/>
+    <source_output_fields>    </source_output_fields>
+    <target_file/>
+    <no_execution>N</no_execution>
+    <stream_source_step/>
+    <stream_target_step/>
+    <mappings>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
+        <target_attribute_key>NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
+        <source_field>field_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Table output</target_step_name>
+        <target_attribute_key>PARTITIONING_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>table_partitioning_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
+        <target_attribute_key>CURRENCY</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
+        <source_field>field_currency</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
+        <target_attribute_key>SHEET_START_COL</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>excel_sheet_start_col</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Table output</target_step_name>
+        <target_attribute_key>AUTO_GENERATED_KEY_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>table_auto_generated_key_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Table output</target_step_name>
+        <target_attribute_key>IGNORE_INSERT_ERRORS</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>table_ignore_insert_errors</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
+        <target_attribute_key>EXCLUDE_FILEMASK</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>excel_exclude_filemask</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Table output</target_step_name>
+        <target_attribute_key>TABLE_NAME_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>table_table_name_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Table output</target_step_name>
+        <target_attribute_key>TRUNCATE_TABLE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>table_truncate_table</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
+        <target_attribute_key>SHEET_START_ROW</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>excel_sheet_start_row</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
+        <target_attribute_key>FILEMASK</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>excel_filemask</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Table output</target_step_name>
+        <target_attribute_key>USE_BATCH_UPDATE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>table_use_batch_update</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
+        <target_attribute_key>SPREADSHEET_TYPE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>excel_spreadsheet_type</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
+        <target_attribute_key>TRIM_TYPE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
+        <source_field>field_trim_type</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
+        <target_attribute_key>DECIMAL</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
+        <source_field>field_decimal</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Table output</target_step_name>
+        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>table_connectionname</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Table output</target_step_name>
+        <target_attribute_key>DATABASE_FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_excel_to_table] Load Table Output Settings</source_step>
+        <source_field>field_name_in_db</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Table output</target_step_name>
+        <target_attribute_key>DATABASE_STREAM_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_excel_to_table] Load Table Output Settings</source_step>
+        <source_field>field_name_in_stream</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
+        <target_attribute_key>FILE_REQUIRED</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>excel_file_required</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Table output</target_step_name>
+        <target_attribute_key>SPECIFY_DATABASE_FIELDS</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>table_specify_database_fields</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Set field etl_batch_id to parameter etl_batch_id's value</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>${etl_batch_id}</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
+        <target_attribute_key>PRECISION</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
+        <source_field>field_precision</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
+        <target_attribute_key>SHEET_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>excel_sheet_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Table output</target_step_name>
+        <target_attribute_key>RETURN_AUTO_GENERATED_KEY</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>table_return_auto_generated_key_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Set field etl_batch_id to parameter etl_batch_id's value</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>etl_batch_id</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
+        <target_attribute_key>FORMAT</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
+        <source_field>field_format</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
+        <target_attribute_key>REPEAT</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>N</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
+        <target_attribute_key>LENGTH</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
+        <source_field>field_length</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
+        <target_attribute_key>INCLUDE_SUBFOLDERS</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>excel_include_subfolders</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Table output</target_step_name>
+        <target_attribute_key>TARGET_SCHEMA</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>table_target_schema</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Table output</target_step_name>
+        <target_attribute_key>COMMIT_SIZE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>table_commit_size</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
+        <target_attribute_key>TYPE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
+        <source_field>field_type</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
+        <target_attribute_key>FILENAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>excel_filename</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Table output</target_step_name>
+        <target_attribute_key>TABLE_NAME_DEFINED_IN_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>table_table_name_defined_in_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
+        <target_attribute_key>GROUP</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
+        <source_field>field_group</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Table output</target_step_name>
+        <target_attribute_key>PARTITION_DATA_PER</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>table_partition_data_per</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Table output</target_step_name>
+        <target_attribute_key>TARGET_TABLE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>table_target_table</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_excel_to_table] Table output</target_step_name>
+        <target_attribute_key>PARTITION_OVER_TABLES</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_excel_to_table] Load Excel and Table Output Settings</source_step>
+        <source_field>table_partition_over_tables</source_field>
+      </mapping>
+    </mappings>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>432</xloc>
+      <yloc>288</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
