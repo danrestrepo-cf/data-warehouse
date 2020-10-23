@@ -207,3 +207,41 @@ INSERT INTO mdi.csv_file_input_field (step_id, row_id, field_name, field_type, f
 INSERT INTO mdi.csv_file_input_field (step_id, row_id, field_name, field_type, field_format, field_length, field_precision, field_currency, field_decimal, field_group, field_trim_type, field_order) VALUES (1, 6, 'avg_loan_size', 'Number', '#', -1, -1, '$', '.', ',', 'none', 6);
 INSERT INTO mdi.csv_file_input_field (step_id, row_id, field_name, field_type, field_format, field_length, field_precision, field_currency, field_decimal, field_group, field_trim_type, field_order) VALUES (1, 4, 'unpaid_balance', 'Number', '#', -1, -1, '$', '.', ',', 'none', 4);
 INSERT INTO mdi.csv_file_input_field (step_id, row_id, field_name, field_type, field_format, field_length, field_precision, field_currency, field_decimal, field_group, field_trim_type, field_order) VALUES (1, 5, 'loan_count', 'Integer', '#', -1, -1, '$', '.', ',', 'none', 5);
+
+
+create table dmi.nmls_call_s540a_raw
+(
+	servicer_id bigint,
+	unpaid_balance numeric,
+	pool_number text,
+	state_code text,
+	loan_count bigint,
+	servicer_name text,
+	item_id bigint,
+	etl_batch_id text
+);
+
+create table dmi.nmls_call_state_raw
+(
+	mcr_code text not null,
+	mcr_desc text,
+	state_code text not null,
+	unpaid_balance numeric,
+	loan_count integer,
+	avg_loan_size numeric,
+	etl_batch_id text,
+	constraint nmls_call_state_pk
+		primary key (mcr_code, state_code)
+);
+
+create table dmi.nmls_call_national_raw
+(
+	state_code text,
+	itemid double precision,
+	servicerid text,
+	servicername text,
+	pool_number text,
+	upb double precision,
+	loancount double precision,
+	etl_batch_id text
+);
