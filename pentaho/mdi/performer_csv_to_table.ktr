@@ -464,7 +464,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.089</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/10/22 13:12:19.191</modified_date>
+    <modified_date>2020/10/23 12:24:01.149</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -483,6 +483,10 @@
     <data_tablespace/>
     <index_tablespace/>
     <attributes>
+      <attribute>
+        <code>EXTRA_OPTION_POSTGRESQL.>EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code>
+        <attribute>pentaho_logging_sequence</attribute>
+      </attribute>
       <attribute>
         <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
         <attribute>N</attribute>
@@ -532,12 +536,12 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_csv_to_table] Load CSV Row Settings</from>
+      <from>[performer_csv_to_table] Load CSV Field Settings</from>
       <to>ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_csv_to_table] Load Table Output Row Settings</from>
+      <from>[performer_csv_to_table] Load Table Output Field Settings</from>
       <to>ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
@@ -569,14 +573,14 @@
         <target_step_name>[template_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>INCLUDE_FILENAME</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Input and Table Output Settings</source_step>
-        <source_field>csv_include_filename</source_field>
+        <source_step/>
+        <source_field>N</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>FIELD_CURRENCY</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Row Settings</source_step>
+        <source_step>[performer_csv_to_table] Load CSV Field Settings</source_step>
         <source_field>field_currency</source_field>
       </mapping>
       <mapping>
@@ -604,7 +608,7 @@
         <target_step_name>[template_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>FIELD_TYPE</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Row Settings</source_step>
+        <source_step>[performer_csv_to_table] Load CSV Field Settings</source_step>
         <source_field>field_type</source_field>
       </mapping>
       <mapping>
@@ -650,10 +654,17 @@
         <source_field>table_table_name_defined_in_field</source_field>
       </mapping>
       <mapping>
+        <target_step_name>[template_csv_to_table] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
+        <target_attribute_key>USE_VARIABLE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>Y</source_field>
+      </mapping>
+      <mapping>
         <target_step_name>[template_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>FIELD_FORMAT</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Row Settings</source_step>
+        <source_step>[performer_csv_to_table] Load CSV Field Settings</source_step>
         <source_field>field_format</source_field>
       </mapping>
       <mapping>
@@ -667,7 +678,7 @@
         <target_step_name>[template_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>FIELD_PRECISION</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Row Settings</source_step>
+        <source_step>[performer_csv_to_table] Load CSV Field Settings</source_step>
         <source_field>field_precision</source_field>
       </mapping>
       <mapping>
@@ -688,7 +699,7 @@
         <target_step_name>[template_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>FIELD_GROUP</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Row Settings</source_step>
+        <source_step>[performer_csv_to_table] Load CSV Field Settings</source_step>
         <source_field>field_group</source_field>
       </mapping>
       <mapping>
@@ -702,7 +713,7 @@
         <target_step_name>[template_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>FIELD_LENGTH</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Row Settings</source_step>
+        <source_step>[performer_csv_to_table] Load CSV Field Settings</source_step>
         <source_field>field_length</source_field>
       </mapping>
       <mapping>
@@ -716,21 +727,21 @@
         <target_step_name>[template_csv_to_table] Table output</target_step_name>
         <target_attribute_key>DATABASE_FIELD_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>[performer_csv_to_table] Load Table Output Row Settings</source_step>
+        <source_step>[performer_csv_to_table] Load Table Output Field Settings</source_step>
         <source_field>field_name_in_db</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>FIELD_DECIMAL</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Row Settings</source_step>
+        <source_step>[performer_csv_to_table] Load CSV Field Settings</source_step>
         <source_field>field_decimal</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_csv_to_table] Table output</target_step_name>
         <target_attribute_key>DATABASE_STREAM_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>[performer_csv_to_table] Load Table Output Row Settings</source_step>
+        <source_step>[performer_csv_to_table] Load Table Output Field Settings</source_step>
         <source_field>field_name_in_stream</source_field>
       </mapping>
       <mapping>
@@ -765,7 +776,7 @@
         <target_step_name>[template_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>FIELD_TRIM_TYPE</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Row Settings</source_step>
+        <source_step>[performer_csv_to_table] Load CSV Field Settings</source_step>
         <source_field>field_trim_type</source_field>
       </mapping>
       <mapping>
@@ -786,7 +797,7 @@
         <target_step_name>[template_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>FIELD_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Row Settings</source_step>
+        <source_step>[performer_csv_to_table] Load CSV Field Settings</source_step>
         <source_field>field_name</source_field>
       </mapping>
       <mapping>
@@ -870,7 +881,7 @@
     </remotesteps>
     <GUI>
       <xloc>432</xloc>
-      <yloc>320</yloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -958,11 +969,11 @@ WHERE
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>buffersize</name>
+        <name>csv_buffersize</name>
         <length>9</length>
         <precision>0</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>buffersize</comments>
+        <comments>csv_buffersize</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -981,11 +992,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>csv_delimiter</name>
+        <name>csv_csv_delimiter</name>
         <length>1</length>
         <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>csv_delimiter</comments>
+        <comments>csv_csv_delimiter</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1004,11 +1015,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>enclosure</name>
+        <name>csv_enclosure</name>
         <length>1</length>
         <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>enclosure</comments>
+        <comments>csv_enclosure</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1027,11 +1038,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>file_encoding</name>
+        <name>csv_file_encoding</name>
         <length>2147483647</length>
         <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>file_encoding</comments>
+        <comments>csv_file_encoding</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1050,11 +1061,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>file_format</name>
+        <name>csv_file_format</name>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>file_format</comments>
+        <comments>csv_file_format</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1073,11 +1084,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>filename</name>
+        <name>csv_filename</name>
         <length>2147483647</length>
         <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>filename</comments>
+        <comments>csv_filename</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1096,11 +1107,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>header_present</name>
+        <name>csv_header_present</name>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>header_present</comments>
+        <comments>csv_header_present</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1119,11 +1130,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>include_filename</name>
+        <name>csv_include_filename</name>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>include_filename</comments>
+        <comments>csv_include_filename</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1142,11 +1153,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>lazy_conversion</name>
+        <name>csv_lazy_conversion</name>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>lazy_conversion</comments>
+        <comments>csv_lazy_conversion</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1165,11 +1176,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>newline_possible</name>
+        <name>csv_newline_possible</name>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>newline_possible</comments>
+        <comments>csv_newline_possible</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1188,11 +1199,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>process_in_parallel</name>
+        <name>csv_process_in_parallel</name>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>process_in_parallel</comments>
+        <comments>csv_process_in_parallel</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1211,11 +1222,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>add_filename_result</name>
+        <name>csv_add_filename_result</name>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>add_filename_result</comments>
+        <comments>csv_add_filename_result</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1234,11 +1245,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>filename_field</name>
+        <name>csv_filename_field</name>
         <length>2147483647</length>
         <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>filename_field</comments>
+        <comments>csv_filename_field</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1257,11 +1268,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>row_num_field</name>
+        <name>csv_row_num_field</name>
         <length>2147483647</length>
         <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>row_num_field</comments>
+        <comments>csv_row_num_field</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1280,11 +1291,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>target_schema</name>
+        <name>table_target_schema</name>
         <length>2147483647</length>
         <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>target_schema</comments>
+        <comments>table_target_schema</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1303,11 +1314,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>target_table</name>
+        <name>table_target_table</name>
         <length>2147483647</length>
         <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>target_table</comments>
+        <comments>table_target_table</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1326,11 +1337,11 @@ WHERE
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>commit_size</name>
+        <name>table_commit_size</name>
         <length>9</length>
         <precision>0</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>commit_size</comments>
+        <comments>table_commit_size</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1349,11 +1360,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>partitioning_field</name>
+        <name>table_partitioning_field</name>
         <length>2147483647</length>
         <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>partitioning_field</comments>
+        <comments>table_partitioning_field</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1372,11 +1383,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>table_name_field</name>
+        <name>table_table_name_field</name>
         <length>2147483647</length>
         <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>table_name_field</comments>
+        <comments>table_table_name_field</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1395,11 +1406,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>auto_generated_key_field</name>
+        <name>table_auto_generated_key_field</name>
         <length>2147483647</length>
         <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>auto_generated_key_field</comments>
+        <comments>table_auto_generated_key_field</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1418,11 +1429,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>partition_data_per</name>
+        <name>table_partition_data_per</name>
         <length>2147483647</length>
         <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>partition_data_per</comments>
+        <comments>table_partition_data_per</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1441,11 +1452,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>return_auto_generated_key_field</name>
+        <name>table_return_auto_generated_key_field</name>
         <length>2147483647</length>
         <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>return_auto_generated_key_field</comments>
+        <comments>table_return_auto_generated_key_field</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1464,11 +1475,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>truncate_table</name>
+        <name>table_truncate_table</name>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>truncate_table</comments>
+        <comments>table_truncate_table</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1487,11 +1498,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>connectionname</name>
+        <name>table_connectionname</name>
         <length>2147483647</length>
         <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>connectionname</comments>
+        <comments>table_connectionname</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1510,11 +1521,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>partition_over_tables</name>
+        <name>table_partition_over_tables</name>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>partition_over_tables</comments>
+        <comments>table_partition_over_tables</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1533,11 +1544,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>specify_database_fields</name>
+        <name>table_specify_database_fields</name>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>specify_database_fields</comments>
+        <comments>table_specify_database_fields</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1556,11 +1567,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>ignore_insert_errors</name>
+        <name>table_ignore_insert_errors</name>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>ignore_insert_errors</comments>
+        <comments>table_ignore_insert_errors</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1579,11 +1590,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>use_batch_update</name>
+        <name>table_use_batch_update</name>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>use_batch_update</comments>
+        <comments>table_use_batch_update</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1602,11 +1613,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>table_name_defined_in_field</name>
+        <name>table_table_name_defined_in_field</name>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
-        <comments>table_name_defined_in_field</comments>
+        <comments>table_table_name_defined_in_field</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1638,7 +1649,7 @@ WHERE
     </GUI>
   </step>
   <step>
-    <name>[performer_csv_to_table] Load CSV Row Settings</name>
+    <name>[performer_csv_to_table] Load CSV Field Settings</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1773,7 +1784,7 @@ order by
         <storagetype>normal</storagetype>
         <name>field_currency</name>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
         <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
         <comments>field_currency</comments>
         <conversion_Mask/>
@@ -1796,7 +1807,7 @@ order by
         <storagetype>normal</storagetype>
         <name>field_decimal</name>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
         <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
         <comments>field_decimal</comments>
         <conversion_Mask/>
@@ -1842,7 +1853,7 @@ order by
         <storagetype>normal</storagetype>
         <name>field_trim_type</name>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
         <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
         <comments>field_trim_type</comments>
         <conversion_Mask/>
@@ -1888,7 +1899,7 @@ order by
         <storagetype>normal</storagetype>
         <name>field_type</name>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
         <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
         <comments>field_type</comments>
         <conversion_Mask/>
@@ -1922,7 +1933,7 @@ order by
     </GUI>
   </step>
   <step>
-    <name>[performer_csv_to_table] Load Table Output Row Settings</name>
+    <name>[performer_csv_to_table] Load Table Output Field Settings</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
