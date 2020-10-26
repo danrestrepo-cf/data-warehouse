@@ -8,7 +8,7 @@
   <created_user>-</created_user>
   <created_date>2020/10/10 07:31:50.634</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2020/10/23 18:28:25.153</modified_date>
+  <modified_date>2020/10/26 10:34:31.839</modified_date>
   <parameters>
     <parameter>
       <name>database_hostname</name>
@@ -468,7 +468,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>176</xloc>
-      <yloc>192</yloc>
+      <yloc>336</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -492,7 +492,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>176</xloc>
-      <yloc>336</yloc>
+      <yloc>480</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -516,7 +516,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>576</xloc>
-      <yloc>336</yloc>
+      <yloc>480</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -590,7 +590,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>176</xloc>
-      <yloc>480</yloc>
+      <yloc>624</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -664,7 +664,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>576</xloc>
-      <yloc>480</yloc>
+      <yloc>624</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -677,20 +677,111 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>928</xloc>
+      <yloc>480</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Verify all parameters contain values or abort</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>rep_name</specification_method>
+      <trans_object_id/>
+      <filename/>
+      <transname>verify_all_parameters_contain_values_or_abort</transname>
+      <directory>/mdi</directory>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>Y</clear_rows>
+      <clear_files>Y</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>Y</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>database_hostname</name>
+          <stream_name/>
+          <value>${database_hostname}</value>
+        </parameter>
+        <parameter>
+          <name>database_port</name>
+          <stream_name/>
+          <value>${database_port}</value>
+        </parameter>
+        <parameter>
+          <name>database_username</name>
+          <stream_name/>
+          <value>${database_username}</value>
+        </parameter>
+        <parameter>
+          <name>database_password</name>
+          <stream_name/>
+          <value>${database_password}</value>
+        </parameter>
+        <parameter>
+          <name>database_schema</name>
+          <stream_name/>
+          <value>${database_schema}</value>
+        </parameter>
+        <parameter>
+          <name>etl_batch_id</name>
+          <stream_name/>
+          <value>${etl_batch_id}</value>
+        </parameter>
+        <parameter>
+          <name>process_name</name>
+          <stream_name/>
+          <value>${process_name}</value>
+        </parameter>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>176</xloc>
+      <yloc>192</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Abort job if parameters are invalid</name>
+      <description/>
+      <type>ABORT</type>
+      <attributes/>
+      <message>Could not verify that all parameters passed in contained valid values!</message>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>576</xloc>
+      <yloc>192</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Abort job if unable to load configuration</name>
+      <description/>
+      <type>ABORT</type>
+      <attributes/>
+      <message>An error occured while loading the MDI configuration!</message>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>576</xloc>
       <yloc>336</yloc>
       <attributes_kjc/>
     </entry>
   </entries>
   <hops>
-    <hop>
-      <from>Start</from>
-      <to>[controller] Load MDI Configuration</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
     <hop>
       <from>[controller] Load MDI Configuration</from>
       <to>[controller] Process CSV?</to>
@@ -730,6 +821,42 @@
     <hop>
       <from>[controller] Process Excel?</from>
       <to>[controller] No data to process; Abort job</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Start</from>
+      <to>[controller] Verify all parameters contain values or abort</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Verify all parameters contain values or abort</from>
+      <to>[controller] Load MDI Configuration</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Verify all parameters contain values or abort</from>
+      <to>[controller] Abort job if parameters are invalid</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Load MDI Configuration</from>
+      <to>[controller] Abort job if unable to load configuration</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
