@@ -48,7 +48,7 @@ CREATE TABLE csv_file_input_step
 			PRIMARY KEY,
 	filename TEXT NOT NULL,
 	header_present mdi.PENTAHO_Y_OR_N NOT NULL,
-	csv_delimiter CHAR NOT NULL,
+	delimiter CHAR NOT NULL,
 	enclosure CHAR NOT NULL,
 	buffersize INTEGER NOT NULL,
 	lazy_conversion mdi.PENTAHO_Y_OR_N NOT NULL,
@@ -169,8 +169,8 @@ CREATE TABLE table_output_field
 	row_id BIGSERIAL NOT NULL
 		CONSTRAINT table_output_field_pk
 			PRIMARY KEY,
-	field_name_in_db TEXT NOT NULL,
-	field_name_in_stream TEXT NOT NULL,
+	database_field_name TEXT NOT NULL,
+	database_stream_name TEXT NOT NULL,
 	field_order NUMERIC NOT NULL
 );
 
