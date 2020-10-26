@@ -16,154 +16,162 @@
 
 DROP SCHEMA IF EXISTS mdi CASCADE;
 
-create type pentaho_field_type as enum ('String', 'Date', 'Integer', 'Number', 'BigNumber', 'Binary', 'Timestamp', 'Internet Address');
-create type pentaho_field_currency as enum ('$');
-create type pentaho_field_decimal as enum ('.');
-create type pentaho_trim_type as enum ('both', 'right', 'left', 'none');
-create type pentaho_y_or_n as enum ('Y', 'N');
-create type pentaho_spreadsheet_type as enum ('JXL', 'POI', 'SAX_POI', 'ODS');
-create type pentaho_field_format as enum ('mixed', 'DOS', 'Unix');
-create type pentaho_db_connection_name as enum ('Ingress DB Connection', 'Config DB Connection', 'Staging DB Connection');
+CREATE SCHEMA mdi;
 
-create table process
+CREATE TYPE PENTAHO_FIELD_TYPE AS ENUM ('String', 'Date', 'Integer', 'Number', 'BigNumber', 'Binary', 'Timestamp', 'Internet Address');
+CREATE TYPE PENTAHO_FIELD_CURRENCY AS ENUM ('$');
+CREATE TYPE PENTAHO_FIELD_DECIMAL AS ENUM ('.');
+CREATE TYPE PENTAHO_TRIM_TYPE AS ENUM ('both', 'right', 'left', 'none');
+CREATE TYPE PENTAHO_Y_OR_N AS ENUM ('Y', 'N');
+CREATE TYPE PENTAHO_SPREADSHEET_TYPE AS ENUM ('JXL', 'POI', 'SAX_POI', 'ODS');
+CREATE TYPE PENTAHO_FIELD_FORMAT AS ENUM ('mixed', 'DOS', 'Unix');
+CREATE TYPE PENTAHO_DB_CONNECTION_NAME AS ENUM ('Ingress DB Connection', 'Config DB Connection', 'Staging DB Connection');
+
+CREATE TABLE process
 (
-	process_name text not null
-		constraint process_pk
-			primary key,
-	description text not null
+	process_name TEXT NOT NULL
+		CONSTRAINT process_pk
+			PRIMARY KEY,
+	description TEXT NOT NULL
 );
 
-create table csv_file_input_step
+CREATE TABLE csv_file_input_step
 (
-	process_name text not null
-		constraint csv_file_input_step_process_process_name_fk
-			references process
-			on update cascade on delete cascade
-			deferrable initially deferred,
-	step_id bigserial not null
-		constraint csv_file_input_step_pk
-			primary key,
-	filename text not null,
-	header_present mdi.pentaho_y_or_n not null,
-	csv_delimiter char not null,
-	enclosure char not null,
-	buffersize integer not null,
-	lazy_conversion mdi.pentaho_y_or_n not null,
-	newline_possible mdi.pentaho_y_or_n not null,
-	add_filename_result mdi.pentaho_y_or_n not null,
-	file_format mdi.pentaho_field_format not null,
-	file_encoding text not null,
-	include_filename mdi.pentaho_y_or_n not null,
-	process_in_parallel mdi.pentaho_y_or_n not null,
-	filename_field text,
-	row_num_field text
+	process_name TEXT NOT NULL
+		CONSTRAINT csv_file_input_step_process_process_name_fk
+			REFERENCES process
+			ON UPDATE CASCADE
+			ON DELETE CASCADE
+			DEFERRABLE INITIALLY DEFERRED,
+	step_id BIGSERIAL NOT NULL
+		CONSTRAINT csv_file_input_step_pk
+			PRIMARY KEY,
+	filename TEXT NOT NULL,
+	header_present mdi.PENTAHO_Y_OR_N NOT NULL,
+	csv_delimiter CHAR NOT NULL,
+	enclosure CHAR NOT NULL,
+	buffersize INTEGER NOT NULL,
+	lazy_conversion mdi.PENTAHO_Y_OR_N NOT NULL,
+	newline_possible mdi.PENTAHO_Y_OR_N NOT NULL,
+	add_filename_result mdi.PENTAHO_Y_OR_N NOT NULL,
+	file_format mdi.PENTAHO_FIELD_FORMAT NOT NULL,
+	file_encoding TEXT NOT NULL,
+	include_filename mdi.PENTAHO_Y_OR_N NOT NULL,
+	process_in_parallel mdi.PENTAHO_Y_OR_N NOT NULL,
+	filename_field TEXT,
+	row_num_field TEXT
 );
 
-create table csv_file_input_field
+CREATE TABLE csv_file_input_field
 (
-	step_id bigserial not null
-		constraint csv_file_input_field_csv_file_input_step_step_id_fk
-			references csv_file_input_step
-			on update cascade on delete cascade
-			deferrable initially deferred,
-	row_id bigserial not null
-		constraint csv_file_input_field_pk
-			primary key,
-	field_name text not null,
-	field_type mdi.pentaho_field_type not null,
-	field_format text,
-	field_length integer,
-	field_precision integer,
-	field_currency mdi.pentaho_field_currency,
-	field_decimal mdi.pentaho_field_decimal,
-	field_group text,
-	field_trim_type mdi.pentaho_trim_type,
-	field_order numeric not null
+	step_id BIGSERIAL NOT NULL
+		CONSTRAINT csv_file_input_field_csv_file_input_step_step_id_fk
+			REFERENCES csv_file_input_step
+			ON UPDATE CASCADE
+			ON DELETE CASCADE
+			DEFERRABLE INITIALLY DEFERRED,
+	row_id BIGSERIAL NOT NULL
+		CONSTRAINT csv_file_input_field_pk
+			PRIMARY KEY,
+	field_name TEXT NOT NULL,
+	field_type mdi.PENTAHO_FIELD_TYPE NOT NULL,
+	field_format TEXT,
+	field_length INTEGER,
+	field_precision INTEGER,
+	field_currency mdi.PENTAHO_FIELD_CURRENCY,
+	field_decimal mdi.PENTAHO_FIELD_DECIMAL,
+	field_group TEXT,
+	field_trim_type mdi.PENTAHO_TRIM_TYPE,
+	field_order NUMERIC NOT NULL
 );
 
-create table excel_file_input_step
+CREATE TABLE excel_file_input_step
 (
-	process_name text not null
-		constraint excel_input_step_process_process_name_fk
-			references process
-			on update cascade on delete cascade
-			deferrable initially deferred,
-	step_id bigserial not null
-		constraint excel_input_step_pk
-			primary key,
-	spreadsheet_type mdi.pentaho_spreadsheet_type not null,
-	filename text not null,
-	filemask text,
-	exclude_filemask text,
-	file_required mdi.pentaho_y_or_n not null,
-	include_subfolders mdi.pentaho_y_or_n not null,
-	sheet_name text not null,
-	sheet_start_row integer not null,
-	sheet_start_col integer not null
+	process_name TEXT NOT NULL
+		CONSTRAINT excel_input_step_process_process_name_fk
+			REFERENCES process
+			ON UPDATE CASCADE
+			ON DELETE CASCADE
+			DEFERRABLE INITIALLY DEFERRED,
+	step_id BIGSERIAL NOT NULL
+		CONSTRAINT excel_input_step_pk
+			PRIMARY KEY,
+	spreadsheet_type mdi.PENTAHO_SPREADSHEET_TYPE NOT NULL,
+	filename TEXT NOT NULL,
+	filemask TEXT,
+	exclude_filemask TEXT,
+	file_required mdi.PENTAHO_Y_OR_N NOT NULL,
+	include_subfolders mdi.PENTAHO_Y_OR_N NOT NULL,
+	sheet_name TEXT NOT NULL,
+	sheet_start_row INTEGER NOT NULL,
+	sheet_start_col INTEGER NOT NULL
 );
 
-create table excel_file_input_field
+CREATE TABLE excel_file_input_field
 (
-	step_id bigint not null
-		constraint excel_file_input_field_excel_file_input_step_step_id_fk
-			references excel_file_input_step
-			on update cascade on delete cascade
-			deferrable initially deferred,
-	row_id bigserial not null
-		constraint excel_file_input_field_pk
-			primary key,
-	field_name text not null,
-	field_type mdi.pentaho_field_type not null,
-	field_format text,
-	field_length integer,
-	field_precision integer,
-	field_currency mdi.pentaho_field_currency,
-	field_decimal mdi.pentaho_field_decimal,
-	field_group text,
-	field_trim_type mdi.pentaho_trim_type,
-	field_order numeric not null
+	step_id BIGINT NOT NULL
+		CONSTRAINT excel_file_input_field_excel_file_input_step_step_id_fk
+			REFERENCES excel_file_input_step
+			ON UPDATE CASCADE
+			ON DELETE CASCADE
+			DEFERRABLE INITIALLY DEFERRED,
+	row_id BIGSERIAL NOT NULL
+		CONSTRAINT excel_file_input_field_pk
+			PRIMARY KEY,
+	field_name TEXT NOT NULL,
+	field_type mdi.PENTAHO_FIELD_TYPE NOT NULL,
+	field_format TEXT,
+	field_length INTEGER,
+	field_precision INTEGER,
+	field_currency mdi.PENTAHO_FIELD_CURRENCY,
+	field_decimal mdi.PENTAHO_FIELD_DECIMAL,
+	field_group TEXT,
+	field_trim_type mdi.PENTAHO_TRIM_TYPE,
+	field_order NUMERIC NOT NULL
 );
 
-create table table_output_step
+CREATE TABLE table_output_step
 (
-	process_name text
-		constraint table_output_step_process_process_name_fk
-			references process
-			on update cascade on delete cascade
-			deferrable initially deferred,
-	step_id bigserial not null
-		constraint table_output_step_pk
-			primary key,
-	target_schema text not null,
-	target_table text not null,
-	commit_size integer not null,
-	partitioning_field text,
-	table_name_field text,
-	auto_generated_key_field text,
-	partition_data_per text,
-	table_name_defined_in_field mdi.pentaho_y_or_n not null,
-	return_auto_generated_key_field text,
-	truncate_table mdi.pentaho_y_or_n not null,
-	connectionname text not null,
-	partition_over_tables mdi.pentaho_y_or_n,
-	specify_database_fields mdi.pentaho_y_or_n not null,
-	ignore_insert_errors mdi.pentaho_y_or_n not null,
-	use_batch_update mdi.pentaho_y_or_n not null
+	process_name TEXT
+		CONSTRAINT table_output_step_process_process_name_fk
+			REFERENCES process
+			ON UPDATE CASCADE
+			ON DELETE CASCADE
+			DEFERRABLE INITIALLY DEFERRED,
+	step_id BIGSERIAL NOT NULL
+		CONSTRAINT table_output_step_pk
+			PRIMARY KEY,
+	target_schema TEXT NOT NULL,
+	target_table TEXT NOT NULL,
+	commit_size INTEGER NOT NULL,
+	partitioning_field TEXT,
+	table_name_field TEXT,
+	auto_generated_key_field TEXT,
+	partition_data_per TEXT,
+	table_name_defined_in_field mdi.PENTAHO_Y_OR_N NOT NULL,
+	return_auto_generated_key_field TEXT,
+	truncate_table mdi.PENTAHO_Y_OR_N NOT NULL,
+	connectionname TEXT NOT NULL,
+	partition_over_tables mdi.PENTAHO_Y_OR_N,
+	specify_database_fields mdi.PENTAHO_Y_OR_N NOT NULL,
+	ignore_insert_errors mdi.PENTAHO_Y_OR_N NOT NULL,
+	use_batch_update mdi.PENTAHO_Y_OR_N NOT NULL
 );
 
-create table table_output_field
+CREATE TABLE table_output_field
 (
-	step_id bigint not null
-		constraint table_output_field_table_output_step_step_id_fk
-			references table_output_step
-			on update cascade on delete cascade
-			deferrable initially deferred,
-	row_id bigserial not null
-		constraint table_output_field_pk
-			primary key,
-	field_name_in_db text not null,
-	field_name_in_stream text not null,
-	field_order numeric not null
+	step_id BIGINT NOT NULL
+		CONSTRAINT table_output_field_table_output_step_step_id_fk
+			REFERENCES table_output_step
+			ON UPDATE CASCADE
+			ON DELETE CASCADE
+			DEFERRABLE INITIALLY DEFERRED,
+	row_id BIGSERIAL NOT NULL
+		CONSTRAINT table_output_field_pk
+			PRIMARY KEY,
+	field_name_in_db TEXT NOT NULL,
+	field_name_in_stream TEXT NOT NULL,
+	field_order NUMERIC NOT NULL
 );
 
 
