@@ -14,41 +14,37 @@
 --
 -------------------------------------------------------------------------------
 
-DROP SCHEMA IF EXISTS mdi CASCADE;
+CREATE TYPE mdi.PENTAHO_FIELD_TYPE AS ENUM ('String', 'Date', 'Integer', 'Number', 'BigNumber', 'Binary', 'Timestamp', 'Internet Address');
+CREATE TYPE mdi.PENTAHO_FIELD_CURRENCY AS ENUM ('$');
+CREATE TYPE mdi.PENTAHO_FIELD_DECIMAL AS ENUM ('.');
+CREATE TYPE mdi.PENTAHO_TRIM_TYPE AS ENUM ('both', 'right', 'left', 'none');
+CREATE TYPE mdi.PENTAHO_Y_OR_N AS ENUM ('Y', 'N');
+CREATE TYPE mdi.PENTAHO_SPREADSHEET_TYPE AS ENUM ('JXL', 'POI', 'SAX_POI', 'ODS');
+CREATE TYPE mdi.PENTAHO_FIELD_FORMAT AS ENUM ('mixed', 'DOS', 'Unix');
+CREATE TYPE mdi.PENTAHO_DB_CONNECTION_NAME AS ENUM ('Ingress DB Connection', 'Config DB Connection', 'Staging DB Connection');
 
-CREATE SCHEMA mdi;
-
-CREATE TYPE PENTAHO_FIELD_TYPE AS ENUM ('String', 'Date', 'Integer', 'Number', 'BigNumber', 'Binary', 'Timestamp', 'Internet Address');
-CREATE TYPE PENTAHO_FIELD_CURRENCY AS ENUM ('$');
-CREATE TYPE PENTAHO_FIELD_DECIMAL AS ENUM ('.');
-CREATE TYPE PENTAHO_TRIM_TYPE AS ENUM ('both', 'right', 'left', 'none');
-CREATE TYPE PENTAHO_Y_OR_N AS ENUM ('Y', 'N');
-CREATE TYPE PENTAHO_SPREADSHEET_TYPE AS ENUM ('JXL', 'POI', 'SAX_POI', 'ODS');
-CREATE TYPE PENTAHO_FIELD_FORMAT AS ENUM ('mixed', 'DOS', 'Unix');
-CREATE TYPE PENTAHO_DB_CONNECTION_NAME AS ENUM ('Ingress DB Connection', 'Config DB Connection', 'Staging DB Connection');
-
-CREATE TABLE process
+CREATE TABLE mdi.process
 (
 	process_name TEXT NOT NULL
 		CONSTRAINT process_pk
 			PRIMARY KEY,
-	description TEXT NOT NULL
+	description TEXT
 );
 
-CREATE TABLE csv_file_input_step
+CREATE TABLE mdi.csv_file_input_step
 (
 	process_name TEXT NOT NULL
-		CONSTRAINT csv_file_input_step_process_process_name_fk
-			REFERENCES process
-			ON UPDATE CASCADE
-			ON DELETE CASCADE
+		CONSTRAINT fk_csv_file_input_step_1
+			REFERENCES mdi.process
+			ON UPDATE RESTRICT
+			ON DELETE RESTRICT
 			DEFERRABLE INITIALLY DEFERRED,
 	step_id BIGSERIAL NOT NULL
-		CONSTRAINT csv_file_input_step_pk
+		CONSTRAINT pk_csv_file_input_step_1
 			PRIMARY KEY,
 	filename TEXT NOT NULL,
 	header_present mdi.PENTAHO_Y_OR_N NOT NULL,
-	delimiter CHAR NOT NULL,
+	delimiter TEXT NOT NULL,
 	enclosure CHAR NOT NULL,
 	buffersize INTEGER NOT NULL,
 	lazy_conversion mdi.PENTAHO_Y_OR_N NOT NULL,
@@ -62,16 +58,16 @@ CREATE TABLE csv_file_input_step
 	row_num_field TEXT
 );
 
-CREATE TABLE csv_file_input_field
+CREATE TABLE mdi.csv_file_input_field
 (
 	step_id BIGSERIAL NOT NULL
-		CONSTRAINT csv_file_input_field_csv_file_input_step_step_id_fk
-			REFERENCES csv_file_input_step
-			ON UPDATE CASCADE
-			ON DELETE CASCADE
+		CONSTRAINT fk_csv_file_input_field_1
+			REFERENCES mdi.csv_file_input_step
+			ON UPDATE RESTRICT
+			ON DELETE RESTRICT
 			DEFERRABLE INITIALLY DEFERRED,
 	row_id BIGSERIAL NOT NULL
-		CONSTRAINT csv_file_input_field_pk
+		CONSTRAINT pk_csv_file_input_field_1
 			PRIMARY KEY,
 	field_name TEXT NOT NULL,
 	field_type mdi.PENTAHO_FIELD_TYPE NOT NULL,
@@ -85,16 +81,16 @@ CREATE TABLE csv_file_input_field
 	field_order NUMERIC NOT NULL
 );
 
-CREATE TABLE excel_file_input_step
+CREATE TABLE mdi.microsoft_excel_input_step
 (
 	process_name TEXT NOT NULL
-		CONSTRAINT excel_input_step_process_process_name_fk
-			REFERENCES process
-			ON UPDATE CASCADE
-			ON DELETE CASCADE
+		CONSTRAINT fk_microsoft_excel_input_step_1
+			REFERENCES mdi.process
+			ON UPDATE RESTRICT
+			ON DELETE RESTRICT
 			DEFERRABLE INITIALLY DEFERRED,
 	step_id BIGSERIAL NOT NULL
-		CONSTRAINT excel_input_step_pk
+		CONSTRAINT pk_microsoft_excel_input_step_1
 			PRIMARY KEY,
 	spreadsheet_type mdi.PENTAHO_SPREADSHEET_TYPE NOT NULL,
 	filename TEXT NOT NULL,
@@ -107,16 +103,16 @@ CREATE TABLE excel_file_input_step
 	sheet_start_col INTEGER NOT NULL
 );
 
-CREATE TABLE excel_file_input_field
+CREATE TABLE mdi.microsoft_excel_input_field
 (
 	step_id BIGINT NOT NULL
-		CONSTRAINT excel_file_input_field_excel_file_input_step_step_id_fk
-			REFERENCES excel_file_input_step
-			ON UPDATE CASCADE
-			ON DELETE CASCADE
+		CONSTRAINT fk_microsoft_excel_input_field_1
+			REFERENCES mdi.microsoft_excel_input_step
+			ON UPDATE RESTRICT
+			ON DELETE RESTRICT
 			DEFERRABLE INITIALLY DEFERRED,
 	row_id BIGSERIAL NOT NULL
-		CONSTRAINT excel_file_input_field_pk
+		CONSTRAINT pk_microsoft_excel_input_field_1
 			PRIMARY KEY,
 	field_name TEXT NOT NULL,
 	field_type mdi.PENTAHO_FIELD_TYPE NOT NULL,
@@ -130,16 +126,16 @@ CREATE TABLE excel_file_input_field
 	field_order NUMERIC NOT NULL
 );
 
-CREATE TABLE table_output_step
+CREATE TABLE mdi.table_output_step
 (
 	process_name TEXT
-		CONSTRAINT table_output_step_process_process_name_fk
-			REFERENCES process
-			ON UPDATE CASCADE
-			ON DELETE CASCADE
+		CONSTRAINT fk_table_output_step_1
+			REFERENCES mdi.process
+			ON UPDATE RESTRICT
+			ON DELETE RESTRICT
 			DEFERRABLE INITIALLY DEFERRED,
 	step_id BIGSERIAL NOT NULL
-		CONSTRAINT table_output_step_pk
+		CONSTRAINT pk_table_output_step_1
 			PRIMARY KEY,
 	target_schema TEXT NOT NULL,
 	target_table TEXT NOT NULL,
@@ -158,20 +154,18 @@ CREATE TABLE table_output_step
 	use_batch_update mdi.PENTAHO_Y_OR_N NOT NULL
 );
 
-CREATE TABLE table_output_field
+CREATE TABLE mdi.table_output_field
 (
 	step_id BIGINT NOT NULL
-		CONSTRAINT table_output_field_table_output_step_step_id_fk
-			REFERENCES table_output_step
-			ON UPDATE CASCADE
-			ON DELETE CASCADE
+		CONSTRAINT fk_table_output_field_1
+			REFERENCES mdi.table_output_step
+			ON UPDATE RESTRICT
+			ON DELETE RESTRICT
 			DEFERRABLE INITIALLY DEFERRED,
 	row_id BIGSERIAL NOT NULL
-		CONSTRAINT table_output_field_pk
+		CONSTRAINT pk_table_output_field_1
 			PRIMARY KEY,
 	database_field_name TEXT NOT NULL,
 	database_stream_name TEXT NOT NULL,
 	field_order NUMERIC NOT NULL
 );
-
-
