@@ -40,7 +40,7 @@ CREATE TABLE mdi.csv_file_input_step
 			ON DELETE RESTRICT
 			DEFERRABLE INITIALLY DEFERRED,
 	step_id BIGSERIAL NOT NULL
-		CONSTRAINT pk_csv_file_input_step_1
+		CONSTRAINT pk_csv_file_input_step
 			PRIMARY KEY,
 	filename TEXT NOT NULL,
 	header_present mdi.PENTAHO_Y_OR_N NOT NULL,
@@ -90,7 +90,7 @@ CREATE TABLE mdi.microsoft_excel_input_step
 			ON DELETE RESTRICT
 			DEFERRABLE INITIALLY DEFERRED,
 	step_id BIGSERIAL NOT NULL
-		CONSTRAINT pk_microsoft_excel_input_step_1
+		CONSTRAINT pk_microsoft_excel_input_step
 			PRIMARY KEY,
 	spreadsheet_type mdi.PENTAHO_SPREADSHEET_TYPE NOT NULL,
 	filename TEXT NOT NULL,
@@ -112,7 +112,7 @@ CREATE TABLE mdi.microsoft_excel_input_field
 			ON DELETE RESTRICT
 			DEFERRABLE INITIALLY DEFERRED,
 	row_id BIGSERIAL NOT NULL
-		CONSTRAINT pk_microsoft_excel_input_field_1
+		CONSTRAINT pk_microsoft_excel_input_field
 			PRIMARY KEY,
 	field_name TEXT NOT NULL,
 	field_type mdi.PENTAHO_FIELD_TYPE NOT NULL,
@@ -135,7 +135,7 @@ CREATE TABLE mdi.table_output_step
 			ON DELETE RESTRICT
 			DEFERRABLE INITIALLY DEFERRED,
 	step_id BIGSERIAL NOT NULL
-		CONSTRAINT pk_table_output_step_1
+		CONSTRAINT pk_table_output_step
 			PRIMARY KEY,
 	target_schema TEXT NOT NULL,
 	target_table TEXT NOT NULL,
@@ -163,7 +163,7 @@ CREATE TABLE mdi.table_output_field
 			ON DELETE RESTRICT
 			DEFERRABLE INITIALLY DEFERRED,
 	row_id BIGSERIAL NOT NULL
-		CONSTRAINT pk_table_output_field_1
+		CONSTRAINT pk_table_output_field
 			PRIMARY KEY,
 	database_field_name TEXT NOT NULL,
 	database_stream_name TEXT NOT NULL,
