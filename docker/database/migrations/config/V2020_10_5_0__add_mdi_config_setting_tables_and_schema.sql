@@ -67,7 +67,7 @@ CREATE TABLE mdi.csv_file_input_field
 			ON DELETE RESTRICT
 			DEFERRABLE INITIALLY DEFERRED,
 	row_id BIGSERIAL NOT NULL
-		CONSTRAINT pk_csv_file_input_field_1
+		CONSTRAINT pk_csv_file_input_field
 			PRIMARY KEY,
 	field_name TEXT NOT NULL,
 	field_type mdi.PENTAHO_FIELD_TYPE NOT NULL,
