@@ -876,7 +876,7 @@
 FROM
 	mdi.microsoft_excel_input_step excel_step
 		LEFT JOIN mdi.microsoft_excel_input_field excel_field
-		ON excel_step.step_id = excel_field.step_id
+		ON excel_step.microsoft_excel_input_step_id = excel_field.microsoft_excel_input_step_id
 WHERE
 		excel_step.process_name = '${process_name}'
 order by
@@ -1797,7 +1797,7 @@ WHERE
 FROM
 	mdi.table_output_step table_step
 		LEFT JOIN mdi.table_output_field table_field
-		ON table_step.step_id = table_field.step_id
+		ON table_step.table_output_step_id = table_field.table_output_step_id
 WHERE
 		table_step.process_name = '${process_name}'
 ORDER BY

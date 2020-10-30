@@ -904,7 +904,7 @@
 FROM
 	mdi.csv_file_input_step csv_step
 		LEFT JOIN mdi.csv_file_input_field csv_field
-		ON csv_step.step_id = csv_field.step_id
+		ON csv_step.csv_file_input_step_id = csv_field.csv_file_input_step_id
 WHERE
 	csv_step.process_name = '${process_name}'
 order by 
@@ -1944,7 +1944,7 @@ WHERE
 FROM
 	mdi.table_output_step table_step
 		LEFT JOIN mdi.table_output_field table_field
-		ON table_step.step_id = table_field.step_id
+		ON table_step.table_output_step_id = table_field.table_output_step_id
 WHERE
 		table_step.process_name = '${process_name}'
 ORDER BY
