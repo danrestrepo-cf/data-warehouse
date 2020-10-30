@@ -26,7 +26,7 @@ CREATE TYPE mdi.PENTAHO_DB_CONNECTION_NAME AS ENUM ('Ingress DB Connection', 'Co
 CREATE TABLE mdi.process
 (
 	process_name TEXT NOT NULL
-		CONSTRAINT process_pk
+		CONSTRAINT pk_process
 			PRIMARY KEY,
 	description TEXT
 );
@@ -39,7 +39,7 @@ CREATE TABLE mdi.csv_file_input_step
 			ON UPDATE RESTRICT
 			ON DELETE RESTRICT
 			DEFERRABLE INITIALLY DEFERRED,
-	step_id BIGSERIAL NOT NULL
+	csv_file_input_step_id BIGSERIAL NOT NULL
 		CONSTRAINT pk_csv_file_input_step
 			PRIMARY KEY,
 	filename TEXT NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE mdi.csv_file_input_step
 
 CREATE TABLE mdi.csv_file_input_field
 (
-	step_id BIGSERIAL NOT NULL
+	csv_file_input_step_id BIGSERIAL NOT NULL
 		CONSTRAINT fk_csv_file_input_field_1
 			REFERENCES mdi.csv_file_input_step
 			ON UPDATE RESTRICT
@@ -89,7 +89,7 @@ CREATE TABLE mdi.microsoft_excel_input_step
 			ON UPDATE RESTRICT
 			ON DELETE RESTRICT
 			DEFERRABLE INITIALLY DEFERRED,
-	step_id BIGSERIAL NOT NULL
+	microsoft_excel_input_step_id BIGSERIAL NOT NULL
 		CONSTRAINT pk_microsoft_excel_input_step
 			PRIMARY KEY,
 	spreadsheet_type mdi.PENTAHO_SPREADSHEET_TYPE NOT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE mdi.microsoft_excel_input_step
 
 CREATE TABLE mdi.microsoft_excel_input_field
 (
-	step_id BIGINT NOT NULL
+	microsoft_excel_input_step_id BIGINT NOT NULL
 		CONSTRAINT fk_microsoft_excel_input_field_1
 			REFERENCES mdi.microsoft_excel_input_step
 			ON UPDATE RESTRICT
@@ -134,7 +134,7 @@ CREATE TABLE mdi.table_output_step
 			ON UPDATE RESTRICT
 			ON DELETE RESTRICT
 			DEFERRABLE INITIALLY DEFERRED,
-	step_id BIGSERIAL NOT NULL
+	table_output_step_id BIGSERIAL NOT NULL
 		CONSTRAINT pk_table_output_step
 			PRIMARY KEY,
 	target_schema TEXT NOT NULL,
@@ -156,7 +156,7 @@ CREATE TABLE mdi.table_output_step
 
 CREATE TABLE mdi.table_output_field
 (
-	step_id BIGINT NOT NULL
+	table_output_step_id BIGINT NOT NULL
 		CONSTRAINT fk_table_output_field_1
 			REFERENCES mdi.table_output_step
 			ON UPDATE RESTRICT
