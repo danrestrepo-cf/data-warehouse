@@ -8,41 +8,41 @@
   <created_user>-</created_user>
   <created_date>2020/10/10 07:31:50.634</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2020/10/26 15:20:13.582</modified_date>
+  <modified_date>2020/11/05 16:50:29.175</modified_date>
   <parameters>
     <parameter>
       <name>database_hostname</name>
-      <default_value/>
+      <default_value>localhost</default_value>
       <description/>
     </parameter>
     <parameter>
       <name>database_password</name>
-      <default_value/>
+      <default_value>testonly</default_value>
       <description/>
     </parameter>
     <parameter>
       <name>database_port</name>
-      <default_value/>
+      <default_value>5433</default_value>
       <description/>
     </parameter>
     <parameter>
       <name>database_schema</name>
-      <default_value/>
+      <default_value>dmi</default_value>
       <description/>
     </parameter>
     <parameter>
       <name>database_username</name>
-      <default_value/>
+      <default_value>postgres</default_value>
       <description/>
     </parameter>
     <parameter>
       <name>etl_batch_id</name>
-      <default_value/>
+      <default_value>cont</default_value>
       <description/>
     </parameter>
     <parameter>
       <name>process_name</name>
-      <default_value/>
+      <default_value>SP9.1</default_value>
       <description>The name that signifies what process should be run.</description>
     </parameter>
   </parameters>
@@ -585,6 +585,11 @@
           <stream_name/>
           <value>${etl_batch_id}</value>
         </parameter>
+        <parameter>
+          <name>process_dwid</name>
+          <stream_name/>
+          <value>${process_dwid}</value>
+        </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
@@ -658,6 +663,11 @@
           <name>etl_batch_id</name>
           <stream_name/>
           <value>${etl_batch_id}</value>
+        </parameter>
+        <parameter>
+          <name>process_dwid</name>
+          <stream_name/>
+          <value>${process_dwid}</value>
         </parameter>
       </parameters>
       <parallel>N</parallel>
