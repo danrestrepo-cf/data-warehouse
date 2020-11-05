@@ -269,6 +269,86 @@ VALUES
 
 
 --
+-- MDI configs for SP9.1
+--
+INSERT
+INTO mdi.process (dwid, name, description)
+VALUES
+(2, 'SP9.1', 'Load DMI NMLS Call Report to ingress raw table - national');
+
+INSERT
+INTO mdi.csv_file_input_step ( process_dwid, dwid, filename, header_present, delimiter, enclosure, buffersize
+							 , lazy_conversion, newline_possible, add_filename_result, file_format, file_encoding
+							 , include_filename, process_in_parallel, filename_field, row_num_field)
+VALUES
+(2, 2, '\input\dmi-V35-national.csv', 'Y', ',', '"', 1024, 'N', 'N', 'N', 'mixed', 'UTF-8', 'N', 'Y', NULL, NULL);
+
+INSERT
+INTO mdi.csv_file_input_field ( csv_file_input_step_dwid, dwid, field_name, field_type, field_format, field_length
+							  , field_precision
+							  , field_currency, field_decimal, field_group, field_trim_type, field_order)
+VALUES
+(2, 7, 'mcr_desc', 'String', '', -1, -1, '$', '.', ',', 'none', 1);
+INSERT
+INTO mdi.csv_file_input_field ( csv_file_input_step_dwid, dwid, field_name, field_type, field_format, field_length
+							  , field_precision
+							  , field_currency, field_decimal, field_group, field_trim_type, field_order)
+VALUES
+(2, 8, 'mcr_desc', 'String', '', -1, -1, '$', '.', ',', 'none', 2);
+INSERT
+INTO mdi.csv_file_input_field ( csv_file_input_step_dwid, dwid, field_name, field_type, field_format, field_length
+							  , field_precision
+							  , field_currency, field_decimal, field_group, field_trim_type, field_order)
+VALUES
+(2, 9, 'mcr_desc', 'String', '', -1, -1, '$', '.', ',', 'none', 3);
+INSERT
+INTO mdi.csv_file_input_field ( csv_file_input_step_dwid, dwid, field_name, field_type, field_format, field_length
+							  , field_precision
+							  , field_currency, field_decimal, field_group, field_trim_type, field_order)
+VALUES
+(2, 10, 'mcr_desc', 'String', '', -1, -1, '$', '.', ',', 'none', 4);
+INSERT
+INTO mdi.csv_file_input_field ( csv_file_input_step_dwid, dwid, field_name, field_type, field_format, field_length
+							  , field_precision
+							  , field_currency, field_decimal, field_group, field_trim_type, field_order)
+VALUES
+(2, 11, 'mcr_desc', 'String', '', -1, -1, '$', '.', ',', 'none', 5);
+
+INSERT
+INTO mdi.table_output_step ( process_dwid, dwid, target_schema, target_table, commit_size, partitioning_field
+						   , table_name_field, auto_generated_key_field, partition_data_per, table_name_defined_in_field
+						   , return_auto_generated_key_field, truncate_table, connectionname, partition_over_tables
+						   , specify_database_fields, ignore_insert_errors, use_batch_update)
+VALUES
+( 2, 3, 'dmi', 'nmls_call_report_national_raw', 1000, NULL, NULL, NULL, NULL, 'N', NULL, 'Y', 'Ingress DB Connection', 'N', 'Y', 'N', 'N');
+
+INSERT
+INTO mdi.table_output_field (table_output_step_dwid, dwid, database_field_name, database_stream_name, field_order)
+VALUES
+(3, 16, 'mcr_code', 'mcr_code', 1);
+INSERT
+INTO mdi.table_output_field (table_output_step_dwid, dwid, database_field_name, database_stream_name, field_order)
+VALUES
+(3, 17, 'mcr_code', 'mcr_code', 2);
+INSERT
+INTO mdi.table_output_field (table_output_step_dwid, dwid, database_field_name, database_stream_name, field_order)
+VALUES
+(3, 18, 'mcr_code', 'mcr_code', 3);
+INSERT
+INTO mdi.table_output_field (table_output_step_dwid, dwid, database_field_name, database_stream_name, field_order)
+VALUES
+(3, 19, 'mcr_code', 'mcr_code', 4);
+INSERT
+INTO mdi.table_output_field (table_output_step_dwid, dwid, database_field_name, database_stream_name, field_order)
+VALUES
+(3, 20, 'mcr_code', 'mcr_code', 5);
+INSERT
+INTO mdi.table_output_field (table_output_step_dwid, dwid, database_field_name, database_stream_name, field_order)
+VALUES
+(3, 21, 'etl_batch_id', 'etl_batch_id', 6);
+
+
+--
 -- MDI configs for SP10.1
 --
 INSERT
