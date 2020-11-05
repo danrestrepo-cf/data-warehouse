@@ -288,7 +288,7 @@ INTO mdi.csv_file_input_field ( csv_file_input_step_dwid, dwid, field_name, fiel
 							  , field_precision
 							  , field_currency, field_decimal, field_group, field_trim_type, field_order)
 VALUES
-(2, 7, 'mcr_desc', 'String', '', -1, -1, '$', '.', ',', 'none', 1);
+(2, 7, 'mcr_code', 'String', '', -1, -1, '$', '.', ',', 'none', 1);
 INSERT
 INTO mdi.csv_file_input_field ( csv_file_input_step_dwid, dwid, field_name, field_type, field_format, field_length
 							  , field_precision
@@ -300,19 +300,19 @@ INTO mdi.csv_file_input_field ( csv_file_input_step_dwid, dwid, field_name, fiel
 							  , field_precision
 							  , field_currency, field_decimal, field_group, field_trim_type, field_order)
 VALUES
-(2, 9, 'mcr_desc', 'String', '', -1, -1, '$', '.', ',', 'none', 3);
+(2, 9, 'unpaid_balance', 'String', '', -1, -1, '$', '.', ',', 'none', 3);
 INSERT
 INTO mdi.csv_file_input_field ( csv_file_input_step_dwid, dwid, field_name, field_type, field_format, field_length
 							  , field_precision
 							  , field_currency, field_decimal, field_group, field_trim_type, field_order)
 VALUES
-(2, 10, 'mcr_desc', 'String', '', -1, -1, '$', '.', ',', 'none', 4);
+(2, 10, 'loan_count', 'String', '', -1, -1, '$', '.', ',', 'none', 4);
 INSERT
 INTO mdi.csv_file_input_field ( csv_file_input_step_dwid, dwid, field_name, field_type, field_format, field_length
 							  , field_precision
 							  , field_currency, field_decimal, field_group, field_trim_type, field_order)
 VALUES
-(2, 11, 'mcr_desc', 'String', '', -1, -1, '$', '.', ',', 'none', 5);
+(2, 11, 'avg_loan_size', 'String', '', -1, -1, '$', '.', ',', 'none', 5);
 
 INSERT
 INTO mdi.table_output_step ( process_dwid, dwid, target_schema, target_table, commit_size, partitioning_field
@@ -329,19 +329,19 @@ VALUES
 INSERT
 INTO mdi.table_output_field (table_output_step_dwid, dwid, database_field_name, database_stream_name, field_order)
 VALUES
-(3, 17, 'mcr_code', 'mcr_code', 2);
+(3, 17, 'mcr_desc', 'mcr_desc', 2);
 INSERT
 INTO mdi.table_output_field (table_output_step_dwid, dwid, database_field_name, database_stream_name, field_order)
 VALUES
-(3, 18, 'mcr_code', 'mcr_code', 3);
+(3, 18, 'unpaid_balance', 'unpaid_balance', 3);
 INSERT
 INTO mdi.table_output_field (table_output_step_dwid, dwid, database_field_name, database_stream_name, field_order)
 VALUES
-(3, 19, 'mcr_code', 'mcr_code', 4);
+(3, 19, 'loan_count', 'loan_count', 4);
 INSERT
 INTO mdi.table_output_field (table_output_step_dwid, dwid, database_field_name, database_stream_name, field_order)
 VALUES
-(3, 20, 'mcr_code', 'mcr_code', 5);
+(3, 20, 'avg_loan_size', 'avg_loan_size', 5);
 INSERT
 INTO mdi.table_output_field (table_output_step_dwid, dwid, database_field_name, database_stream_name, field_order)
 VALUES
