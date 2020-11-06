@@ -8,7 +8,7 @@
   <created_user>-</created_user>
   <created_date>2020/10/10 07:31:50.634</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2020/10/26 15:20:13.582</modified_date>
+  <modified_date>2020/11/06 06:45:43.121</modified_date>
   <parameters>
     <parameter>
       <name>database_hostname</name>
@@ -585,6 +585,11 @@
           <stream_name/>
           <value>${etl_batch_id}</value>
         </parameter>
+        <parameter>
+          <name>process_dwid</name>
+          <stream_name/>
+          <value>${process_dwid}</value>
+        </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
@@ -658,6 +663,11 @@
           <name>etl_batch_id</name>
           <stream_name/>
           <value>${etl_batch_id}</value>
+        </parameter>
+        <parameter>
+          <name>process_dwid</name>
+          <stream_name/>
+          <value>${process_dwid}</value>
         </parameter>
       </parameters>
       <parallel>N</parallel>

@@ -39,6 +39,11 @@
         <description/>
       </parameter>
       <parameter>
+        <name>process_dwid</name>
+        <default_value/>
+        <description/>
+      </parameter>
+      <parameter>
         <name>process_name</name>
         <default_value/>
         <description>The name that signifies what process should be run.</description>
@@ -464,11 +469,39 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.089</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/10/26 17:06:25.902</modified_date>
+    <modified_date>2020/11/06 12:00:41.745</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
+    <notepad>
+      <note>NOTE:
+The table output step uses the lables "DATABASE_FIELD_NAME"
+and "DATABASE_STREAM_NAME" but they are mislabled (it seems
+like a Pentaho bug). This is why the settings appear to be 
+backwards but they are *not*. The table_output_field.database_field_name 
+column maps to DATABASE_STREAM_NAME in the MDI step. The 
+table_output_field.database_stream_name gets mapped to 
+DATABASE_FIELD_NAME. </note>
+      <xloc>608</xloc>
+      <yloc>208</yloc>
+      <width>403</width>
+      <heigth>138</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>9</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <connection>
     <name>Config DB Connection</name>
@@ -721,7 +754,7 @@
         <target_attribute_key>DATABASE_FIELD_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
         <source_step>[performer_csv_to_table] Load Table Output Field Settings</source_step>
-        <source_field>database_field_name</source_field>
+        <source_field>database_stream_name</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_csv_to_table] CSV file input</target_step_name>
@@ -735,7 +768,7 @@
         <target_attribute_key>DATABASE_STREAM_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
         <source_step>[performer_csv_to_table] Load Table Output Field Settings</source_step>
-        <source_field>database_stream_name</source_field>
+        <source_field>database_field_name</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_csv_to_table] Table output</target_step_name>
@@ -900,16 +933,15 @@
 	, csv_field.field_group
 	, csv_field.field_trim_type
 	, csv_field.field_order
-, csv_field.field_type
+	, csv_field.field_type
 FROM
 	mdi.csv_file_input_step csv_step
-		LEFT JOIN mdi.csv_file_input_field csv_field
-		ON csv_step.step_id = csv_field.step_id
+		LEFT JOIN mdi.csv_file_input_field csv_field ON csv_step.dwid = csv_field.csv_file_input_step_dwid
 WHERE
-	csv_step.process_name = '${process_name}'
-order by 
+		csv_step.process_dwid = ${process_dwid}
+order by
 	csv_field.field_order ASC
-;</sql>
+; </sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -1175,8 +1207,7 @@ order by
     </partitioning>
     <connection>Config DB Connection</connection>
     <sql>SELECT
-	p.process_name
-	, csv_input.buffersize as csv_buffersize
+	csv_input.buffersize as csv_buffersize
 	, csv_input.delimiter as csv_delimiter
 	, csv_input.enclosure as csv_enclosure
 	, csv_input.file_encoding as csv_file_encoding
@@ -1207,12 +1238,10 @@ order by
 	, table_output.table_name_defined_in_field as table_table_name_defined_in_field
 FROM
 	mdi.process p
-		LEFT JOIN mdi.csv_file_input_step csv_input
-		ON p.process_name = csv_input.process_name
-		LEFT JOIN mdi.table_output_step table_output
-		ON p.process_name = table_output.process_name
+		LEFT JOIN mdi.csv_file_input_step csv_input ON p.dwid = csv_input.process_dwid
+		LEFT JOIN mdi.table_output_step table_output ON p.dwid = table_output.process_dwid
 WHERE
-	p.process_name = '${process_name}'</sql>
+		p.dwid = ${process_dwid}</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -1340,7 +1369,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>csv_file_format</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
         <comments>csv_file_format</comments>
         <conversion_Mask/>
@@ -1386,7 +1415,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>csv_header_present</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
         <comments>csv_header_present</comments>
         <conversion_Mask/>
@@ -1409,7 +1438,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>csv_include_filename</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
         <comments>csv_include_filename</comments>
         <conversion_Mask/>
@@ -1432,7 +1461,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>csv_lazy_conversion</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
         <comments>csv_lazy_conversion</comments>
         <conversion_Mask/>
@@ -1455,7 +1484,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>csv_newline_possible</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
         <comments>csv_newline_possible</comments>
         <conversion_Mask/>
@@ -1478,7 +1507,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>csv_process_in_parallel</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
         <comments>csv_process_in_parallel</comments>
         <conversion_Mask/>
@@ -1501,7 +1530,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>csv_add_filename_result</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
         <comments>csv_add_filename_result</comments>
         <conversion_Mask/>
@@ -1754,7 +1783,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>table_truncate_table</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
         <comments>table_truncate_table</comments>
         <conversion_Mask/>
@@ -1800,7 +1829,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>table_partition_over_tables</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
         <comments>table_partition_over_tables</comments>
         <conversion_Mask/>
@@ -1823,7 +1852,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>table_specify_database_fields</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
         <comments>table_specify_database_fields</comments>
         <conversion_Mask/>
@@ -1846,7 +1875,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>table_ignore_insert_errors</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
         <comments>table_ignore_insert_errors</comments>
         <conversion_Mask/>
@@ -1869,7 +1898,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>table_use_batch_update</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
         <comments>table_use_batch_update</comments>
         <conversion_Mask/>
@@ -1892,7 +1921,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>table_table_name_defined_in_field</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
         <comments>table_table_name_defined_in_field</comments>
         <conversion_Mask/>
@@ -1943,10 +1972,9 @@ WHERE
 	, table_field.field_order
 FROM
 	mdi.table_output_step table_step
-		LEFT JOIN mdi.table_output_field table_field
-		ON table_step.step_id = table_field.step_id
+		LEFT JOIN mdi.table_output_field table_field ON table_step.dwid = table_field.table_output_step_dwid
 WHERE
-		table_step.process_name = '${process_name}'
+		table_step.process_dwid = ${process_dwid}
 ORDER BY
 	table_field.field_order ASC
 ;</sql>

@@ -21,7 +21,5 @@
 --
 -------------------------------------------------------------------------------
 
-
--- Schema: encompass
--- DROP SCHEMA IF EXISTS encompass CASCADE; -- execute this line to test the rest of the script
 CREATE SCHEMA IF NOT EXISTS encompass;
+CREATE SCHEMA IF NOT EXISTS dmi;

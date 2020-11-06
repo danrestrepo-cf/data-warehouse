@@ -39,6 +39,11 @@
         <description/>
       </parameter>
       <parameter>
+        <name>process_dwid</name>
+        <default_value/>
+        <description/>
+      </parameter>
+      <parameter>
         <name>process_name</name>
         <default_value/>
         <description>The name that signifies what process should be run.</description>
@@ -464,11 +469,39 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.089</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/10/27 16:42:15.000</modified_date>
+    <modified_date>2020/11/06 12:01:01.341</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
+    <notepad>
+      <note>NOTE:
+The table output step uses the lables "DATABASE_FIELD_NAME"
+and "DATABASE_STREAM_NAME" but they are mislabled (it seems
+like a Pentaho bug). This is why the settings appear to be 
+backwards but they are *not*. The table_output_field.database_field_name 
+column maps to DATABASE_STREAM_NAME in the MDI step. The 
+table_output_field.database_stream_name gets mapped to 
+DATABASE_FIELD_NAME. </note>
+      <xloc>608</xloc>
+      <yloc>208</yloc>
+      <width>403</width>
+      <heigth>138</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>9</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <connection>
     <name>Config DB Connection</name>
@@ -686,14 +719,14 @@
         <target_attribute_key>DATABASE_FIELD_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
         <source_step>[performer_excel_to_table] Load Table Output Settings</source_step>
-        <source_field>database_field_name</source_field>
+        <source_field>database_stream_name</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_excel_to_table] Table output</target_step_name>
         <target_attribute_key>DATABASE_STREAM_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
         <source_step>[performer_excel_to_table] Load Table Output Settings</source_step>
-        <source_field>database_stream_name</source_field>
+        <source_field>database_field_name</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
@@ -875,10 +908,9 @@
 	, excel_field.field_type
 FROM
 	mdi.microsoft_excel_input_step excel_step
-		LEFT JOIN mdi.microsoft_excel_input_field excel_field
-		ON excel_step.step_id = excel_field.step_id
+		LEFT JOIN mdi.microsoft_excel_input_field excel_field ON excel_step.dwid = excel_field.microsoft_excel_input_step_dwid
 WHERE
-		excel_step.process_name = '${process_name}'
+		excel_step.process_dwid = ${process_dwid}
 order by
 	excel_field.field_order ASC
 ;
@@ -1148,7 +1180,7 @@ order by
     </partitioning>
     <connection>Config DB Connection</connection>
     <sql>SELECT
-	p.process_name
+	p.name
 	, excel_input.spreadsheet_type as excel_spreadsheet_type
 	, excel_input.filename as excel_filename
 	, excel_input.filemask as excel_filemask
@@ -1175,12 +1207,10 @@ order by
 	, table_output.table_name_defined_in_field as table_table_name_defined_in_field
 FROM
 	mdi.process p
-		LEFT JOIN mdi.microsoft_excel_input_step excel_input
-		ON p.process_name = excel_input.process_name
-		LEFT JOIN mdi.table_output_step table_output
-		ON p.process_name = table_output.process_name
+		LEFT JOIN mdi.microsoft_excel_input_step excel_input ON p.dwid = excel_input.process_dwid
+		LEFT JOIN mdi.table_output_step table_output ON p.dwid = table_output.process_dwid
 WHERE
-		p.process_name = '${process_name}'</sql>
+		p.dwid = ${process_dwid}</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -1191,11 +1221,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>process_name</name>
+        <name>name</name>
         <length>2147483647</length>
         <precision>-1</precision>
         <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>process_name</comments>
+        <comments>name</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1796,10 +1826,9 @@ WHERE
 	, table_field.field_order
 FROM
 	mdi.table_output_step table_step
-		LEFT JOIN mdi.table_output_field table_field
-		ON table_step.step_id = table_field.step_id
+		LEFT JOIN mdi.table_output_field table_field ON table_step.dwid = table_field.table_output_step_dwid
 WHERE
-		table_step.process_name = '${process_name}'
+		table_step.process_dwid = ${process_dwid}
 ORDER BY
 	table_field.field_order ASC
 ;</sql>
@@ -1813,11 +1842,11 @@ ORDER BY
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>field_name_in_db</name>
+        <name>database_field_name</name>
         <length>2147483647</length>
         <precision>-1</precision>
         <origin>[performer_excel_to_table] Load Table Output Settings</origin>
-        <comments>field_name_in_db</comments>
+        <comments>database_field_name</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1836,11 +1865,11 @@ ORDER BY
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>field_name_in_stream</name>
+        <name>database_stream_name</name>
         <length>2147483647</length>
         <precision>-1</precision>
         <origin>[performer_excel_to_table] Load Table Output Settings</origin>
-        <comments>field_name_in_stream</comments>
+        <comments>database_stream_name</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
