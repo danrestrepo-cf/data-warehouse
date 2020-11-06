@@ -11,7 +11,5 @@
 --
 -------------------------------------------------------------------------------
 
-
--- Schema: log
---DROP SCHEMA IF EXISTS log CASCADE; -- execute this line to test the rest of the script
 CREATE SCHEMA IF NOT EXISTS log;
+CREATE SCHEMA IF NOT EXISTS mdi; -- added for https://app.asana.com/0/0/1198065847802233

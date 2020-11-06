@@ -5,6 +5,3 @@ CREATE DATABASE config;
 -- GRANT ALL PRIVILEGES ON DATABASE config TO postgres;
 CREATE DATABASE staging;
 -- GRANT ALL PRIVILEGES ON DATABASE staging TO postgres;
-
-
-
