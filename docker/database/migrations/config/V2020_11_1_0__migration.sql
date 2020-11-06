@@ -390,7 +390,7 @@ INSERT
     INTO mdi.microsoft_excel_input_step ( process_dwid, dwid, spreadsheet_type, filename, filemask, exclude_filemask
                                         , file_required, include_subfolders, sheet_name, sheet_start_row
                                         , sheet_start_col )
-VALUES ( 3, 1, 'POI', 'c:\input\dmi-V35.xls', NULL, NULL, 'Y', 'N', 'S540A Layout #2', 5, 0 )
+VALUES ( 3, 1, 'POI', '\input\dmi-V35.xls', NULL, NULL, 'Y', 'N', 'S540A Layout #2', 5, 0 )
 ;
 
 INSERT
