@@ -464,7 +464,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.089</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/11/05 15:49:33.568</modified_date>
+    <modified_date>2020/11/06 10:55:25.820</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -496,16 +496,8 @@
         <attribute>N</attribute>
       </attribute>
       <attribute>
-        <code>INITIAL_POOL_SIZE</code>
-        <attribute>10</attribute>
-      </attribute>
-      <attribute>
         <code>IS_CLUSTERED</code>
         <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>MAXIMUM_POOL_SIZE</code>
-        <attribute>100</attribute>
       </attribute>
       <attribute>
         <code>PORT_NUMBER</code>
@@ -533,7 +525,7 @@
       </attribute>
       <attribute>
         <code>USE_POOLING</code>
-        <attribute>Y</attribute>
+        <attribute>N</attribute>
       </attribute>
     </attributes>
   </connection>
@@ -994,7 +986,7 @@ order by
         <storagetype>normal</storagetype>
         <name>field_currency</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
         <comments>field_currency</comments>
         <conversion_Mask/>
@@ -1017,7 +1009,7 @@ order by
         <storagetype>normal</storagetype>
         <name>field_decimal</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
         <comments>field_decimal</comments>
         <conversion_Mask/>
@@ -1063,7 +1055,7 @@ order by
         <storagetype>normal</storagetype>
         <name>field_trim_type</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
         <comments>field_trim_type</comments>
         <conversion_Mask/>
@@ -1109,7 +1101,7 @@ order by
         <storagetype>normal</storagetype>
         <name>field_type</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
         <comments>field_type</comments>
         <conversion_Mask/>
@@ -1221,7 +1213,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>excel_spreadsheet_type</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
         <comments>excel_spreadsheet_type</comments>
         <conversion_Mask/>
@@ -1313,7 +1305,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>excel_file_required</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
         <comments>excel_file_required</comments>
         <conversion_Mask/>
@@ -1336,7 +1328,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>excel_include_subfolders</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
         <comments>excel_include_subfolders</comments>
         <conversion_Mask/>
@@ -1612,7 +1604,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>table_truncate_table</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
         <comments>table_truncate_table</comments>
         <conversion_Mask/>
@@ -1658,7 +1650,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>table_partition_over_tables</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
         <comments>table_partition_over_tables</comments>
         <conversion_Mask/>
@@ -1681,7 +1673,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>table_specify_database_fields</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
         <comments>table_specify_database_fields</comments>
         <conversion_Mask/>
@@ -1704,7 +1696,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>table_ignore_insert_errors</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
         <comments>table_ignore_insert_errors</comments>
         <conversion_Mask/>
@@ -1727,7 +1719,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>table_use_batch_update</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
         <comments>table_use_batch_update</comments>
         <conversion_Mask/>
@@ -1750,7 +1742,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>table_table_name_defined_in_field</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
         <comments>table_table_name_defined_in_field</comments>
         <conversion_Mask/>
