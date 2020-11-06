@@ -79,7 +79,7 @@ CREATE TABLE mdi.csv_file_input_field
     field_length INTEGER,
     field_precision INTEGER,
     field_currency mdi.PENTAHO_FIELD_CURRENCY default '$'::mdi.pentaho_field_currency,
-    field_decimal mdi.PENTAHO_FIELD_DECIMAL default '.'::PENTAHO_FIELD_DECIMAL,
+    field_decimal mdi.PENTAHO_FIELD_DECIMAL default '.'::mdi.PENTAHO_FIELD_DECIMAL,
     field_group TEXT default ',',
     field_trim_type mdi.PENTAHO_TRIM_TYPE,
     field_order NUMERIC NOT NULL
@@ -126,7 +126,7 @@ CREATE TABLE mdi.microsoft_excel_input_field
     field_length INTEGER,
     field_precision INTEGER,
     field_currency mdi.PENTAHO_FIELD_CURRENCY default '$'::mdi.PENTAHO_FIELD_CURRENCY,
-    field_decimal mdi.PENTAHO_FIELD_DECIMAL default '.'::PENTAHO_FIELD_DECIMAL,
+    field_decimal mdi.PENTAHO_FIELD_DECIMAL default '.'::mdi.PENTAHO_FIELD_DECIMAL,
     field_group TEXT default ',',
     field_trim_type mdi.PENTAHO_TRIM_TYPE,
     field_order NUMERIC NOT NULL

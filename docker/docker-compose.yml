@@ -23,7 +23,7 @@ services:
         command: -url=jdbc:postgresql://database:5432/staging -schemas=flyway -user=postgres -password=testonly -connectRetries=60 migrate
         volumes:
             - ./database/migrations/staging:/flyway/sql
-            - ./database/baseline/config/beforeMigrate.sql:/flyway/sql/beforeMigrate.sql
+            - ./database/baseline/staging/beforeMigrate.sql:/flyway/sql/beforeMigrate.sql
         depends_on:
             - database
     flyway-config:
@@ -31,6 +31,6 @@ services:
         command: -url=jdbc:postgresql://database:5432/config -schemas=flyway -user=postgres -password=testonly -connectRetries=60 migrate
         volumes:
             - ./database/migrations/config:/flyway/sql
-            - ./database/baseline/staging/beforeMigrate.sql:/flyway/sql/beforeMigrate.sql
+            - ./database/baseline/config/beforeMigrate.sql:/flyway/sql/beforeMigrate.sql
         depends_on:
             - database
