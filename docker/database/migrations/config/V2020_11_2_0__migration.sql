@@ -204,5 +204,5 @@ update mdi.csv_file_input_step set filename='/input/dmi-V35-state.csv' where dwi
 update mdi.csv_file_input_step set filename='/input/dmi-V35-national.csv' where dwid=2;
 update mdi.microsoft_excel_input_step set filename='/input/dmi-V35.xls', sheet_start_row = 4 where dwid=1;
 
-update csv_file_input_field set field_type='Number' where dwid in (9,11);
-update csv_file_input_field set field_type='Integer' where dwid = 10;
+update mdi.csv_file_input_field set field_type='Number' where dwid in (9,11);
+update mdi.csv_file_input_field set field_type='Integer' where dwid = 10;
