@@ -8,29 +8,7 @@ export KETTLE_HOME=/jobs/
 set -e
 # Do not set echo of commands, as the password is passed in (see if we can load in another way)
 
-params=""
-echo "Has DB_ENDPOINT? ${DB_ENDPOINT}"
-if [[ -n "${DB_ENDPOINT}" ]]; then
-  params="${params} -param:database_hostname=${DB_ENDPOINT}"
-fi
-echo "Has DB_PORT? ${DB_PORT}"
-if [[ -n "${DB_PORT}" ]]; then
-  params="${params} -param:database_port=${DB_PORT}"
-fi
-echo "Has DB_USERNAME? ${DB_USERNAME}"
-if [[ -n "${DB_USERNAME}" ]]; then
-  params="${params} -param:database_username=${DB_USERNAME}"
-fi
-if [[ -n "${DB_PASSWORD}" ]]; then
-  echo "Has DB_PASSWORD."
-  params="${params} -param:database_password=${DB_PASSWORD}"
-else
-  echo "Missing DB_PASSWORD"
-fi
-echo "Has INPUT_PATH? ${INPUT_PATH}"
-if [[ -n "${INPUT_PATH}" ]]; then
-  params="${params} -param:input_path=${INPUT_PATH}"
-fi
+
 
 download() {
   if [[ -n "${S3_BUCKET}" && -n "${S3_KEY}" ]]; then
@@ -53,11 +31,45 @@ run_pan() {
 }
 
 run_kitchen() {
-  echo ./kitchen.sh -rep=PentahoFileRepository -level=Detailed -job=$@
+  params=""
+  echo "Has DB_ENDPOINT? ${DB_ENDPOINT}"
+  if [[ -n "${DB_ENDPOINT}" ]]; then
+    params="${params} -param:database_hostname=${DB_ENDPOINT}"
+  fi
+  echo "Has DB_PORT? ${DB_PORT}"
+  if [[ -n "${DB_PORT}" ]]; then
+    params="${params} -param:database_port=${DB_PORT}"
+  fi
+  echo "Has DB_USERNAME? ${DB_USERNAME}"
+  if [[ -n "${DB_USERNAME}" ]]; then
+    params="${params} -param:database_username=${DB_USERNAME}"
+  fi
+  if [[ -n "${DB_PASSWORD}" ]]; then
+    echo "Has DB_PASSWORD."
+    params="${params} -param:database_password=${DB_PASSWORD}"
+  else
+    echo "Missing DB_PASSWORD"
+  fi
+  echo "Has INPUT_PATH? ${INPUT_PATH}"
+  if [[ -n "${INPUT_PATH}" ]]; then
+    params="${params} -param:input_path=${INPUT_PATH}"
+  fi
+  if [[ -n "${PROCESS_ID}" ]]; then
+    params="${params} -param:process_name=${PROCESS_ID}"
+  fi
+  if [[ -n "${ETL_BATCH_ID}" ]]; then
+    params="${params} -param:etl_batch_id=${ETL_BATCH_ID}"
+  fi
+  if [[ -n "${DB_SCHEMA}" ]]; then
+    params="${params} -param:database_schema=${DB_SCHEMA}"
+  fi
+
+
+
+  echo -rep=PentahoFileRepository -level=Detailed -job=$@
   # we want "params" to split / expand, so ignore the shellcheck
   # shellcheck disable=SC2086
   kitchen.sh -rep=PentahoFileRepository -level=Detailed ${params} -job=$@
-  # kitchen.sh -rep=PentahoFileRepository -level=Detailed -job=/pentaho/encompass/import/SP6/full_encompass_etl -param:database_hostname=edw_database_1 -param:input_path=/inputs/ -param:log_path=/inputs/
 }
 
 print_usage() {
