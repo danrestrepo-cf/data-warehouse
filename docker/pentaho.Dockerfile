@@ -15,7 +15,7 @@ FROM amazoncorretto:8
 
 COPY --from=0 /data-integration /data-integration
 
-RUN yum install -y unzip
+RUN yum install -y unzip jq
 
 # install the aws cli and a script to download from S3 into the inputs folder
 RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" \
@@ -39,6 +39,9 @@ RUN pan.sh -file ./plugins/platform-utils-plugin/samples/showPlatformVersion.ktr
 
 ENV KETTLE_HOME=/jobs
 WORKDIR $KETTLE_HOME
+
+# Intentionally commented out, LEFT IN FOR TESTING.  Normally we want a random ID
+# COPY ecs-example.json /
 
 COPY pentaho.sh /
 RUN chmod +x /pentaho.sh /aws-s3-download.sh

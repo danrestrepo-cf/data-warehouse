@@ -48,6 +48,20 @@ fi
 params="${params} -param:etl_batch_id=${etl_batch_id}"
 
 
+echo "Has metadata endpoint? ${ECS_CONTAINER_METADATA_URI_V4}"
+if [[ -n "${ECS_CONTAINER_METADATA_URI_V4}" ]]; then
+  # https://docs.aws.amazon.com/AmazonECS/latest/userguide/task-metadata-endpoint-v4-fargate.html
+  etl_batch_id=$(curl "${ECS_CONTAINER_METADATA_URI_V4}" | jq -r '.Containers[0].LogOptions["awslogs-stream"]' | sed 's~.*/~~')
+# Intentionally commented out, LEFT IN FOR TESTING.  Normally we want a random ID
+#elif [[ -f "/ecs-example.json" ]]; then
+#  etl_batch_id=$(cat /ecs-example.json | jq -r '.Containers[0].LogOptions["awslogs-stream"]' | sed 's~.*/~~')
+fi
+
+if [[ "$etl_batch_id" -eq "" ]]; then
+  etl_batch_id=$(cat /proc/sys/kernel/random/uuid)
+fi
+params="${params} -param:etl_batch_id=${etl_batch_id}"
+
 download() {
   if [[ -n "${S3_BUCKET}" && -n "${S3_KEY}" ]]; then
     echo "Fetching input file from S3"
