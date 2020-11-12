@@ -50,12 +50,12 @@ fi
 
 filename=$2
 
-if [[ "$machine" -eq "Win" ]]; then
+if [[ "$machine" == "Win" ]]; then
   #set git bash so it does not convert paths using POSIX standard
   export MSYS_NO_PATHCONV=1
 fi
 
-if [[ "$execution_mode" -eq "job_mode" ]]; then
+if [[ "$execution_mode" == "job_mode" ]]; then
   echo "job"
   docker run -it  \
     --network ${project_name}_default \
@@ -65,7 +65,7 @@ if [[ "$execution_mode" -eq "job_mode" ]]; then
     --env DB_PORT=5432 \
     --env DB_USERNAME=postgres \
     --env DB_PASSWORD=testonly \
-    --env INPUT_PATH=/inputs/ \
+    --env INPUT_PATH=/input \
     --env INPUT_FILE="$filename" \
     --rm ${project_name}/pentaho \
     bash
@@ -73,7 +73,7 @@ if [[ "$execution_mode" -eq "job_mode" ]]; then
   #prod commandline (DW2, ETL02)
   # C:\pentaho\data-iazntegration\kitchen.bat param:rep:Pentaho_Saves param:job:/DW_2_to_DW_1/Job/Staging_TMP_OctaneUsersFix param:level:Detailed > C:\pentaho\LogFiles\Staging_TMP_OctaneUsersFix_%YYYYMMDD%.log
 
-elif [[ "$execution_mode" -eq "mdi_mode" ]]; then
+elif [[ "$execution_mode" == "mdi_mode" ]]; then
   echo "mdi"
   docker run -it  \
     --network ${project_name}_default \
@@ -92,7 +92,7 @@ elif [[ "$execution_mode" -eq "mdi_mode" ]]; then
 
 fi
 
-if [[ "$machine" -eq "Win" ]]; then
+if [[ "$machine" == "Win" ]]; then
   #remove the environment variable used so Git Bash won't convert paths to the POSIX standard for the system
   unset MSYS_NO_PATHCONV
 fi
