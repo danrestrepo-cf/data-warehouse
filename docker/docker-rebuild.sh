@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
 
-# this will remove any docker images that have this string on the line when runing 'docker images' commanmd
-image_tag="edw"
-
 echo 'starting...'
+
 echo "bringing containers down..."
 ./docker-down.sh
 
 echo "removing image(s)..."
-docker rmi $( docker images | grep ${image_tag}  | tr -s ' ' | cut -d ' ' -f 3)
+docker image rm -f edw/etl
+docker image rm -f edw/pentaho
 
 echo "building pentaho image..."
 ./build-pentaho.sh
