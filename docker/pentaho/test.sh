@@ -44,7 +44,7 @@ function run_docker()
     --env DB_PORT=5432 \
     --env DB_USERNAME=postgres \
     --env DB_PASSWORD=testonly \
-    --env PROCESS_ID=${process_name} \
+    --env process_name=${process_name} \
     --env INPUT_FILE="$filename" \
     --env INPUT_PATH=/input \
     ${project_name}/pentaho \

@@ -3,7 +3,7 @@ UPDATE mdi.microsoft_excel_input_step
 SET
     filename='\input\dmi-V35.xls'
 WHERE
-    microsoft_excel_input_step.dwid = 1; -- dwid 1 is for SP10.1
+    microsoft_excel_input_step.process_dwid in (select dwid from mdi.process where process.name = 'SP10.1');
 
 
 CREATE SEQUENCE IF NOT EXISTS log.pentaho_logging_sequence AS BIGINT START WITH 1 INCREMENT BY 1 NO CYCLE;

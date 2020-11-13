@@ -31,8 +31,8 @@ echo "Has INPUT_PATH? ${INPUT_PATH}"
 if [[ -n "${INPUT_PATH}" ]]; then
   params="${params} -param:input_path=${INPUT_PATH}"
 fi
-if [[ -n "${PROCESS_ID}" ]]; then
-  params="${params} -param:process_name=${PROCESS_ID}"
+if [[ -n "${process_name}" ]]; then
+  params="${params} -param:process_name=${process_name}"
 fi
 echo "Has metadata endpoint? ${ECS_CONTAINER_METADATA_URI_V4}"
 if [[ -n "${ECS_CONTAINER_METADATA_URI_V4}" ]]; then
