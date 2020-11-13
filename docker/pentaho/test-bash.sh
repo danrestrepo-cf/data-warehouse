@@ -29,7 +29,7 @@ docker run -it  \
   --env DB_PORT=5432 \
   --env DB_USERNAME=postgres \
   --env DB_PASSWORD=testonly \
-  --env INPUT_FILE="$filename" \
+  --env INPUT_FILE=dummy.file \
   --env INPUT_PATH=/input \
   ${project_name}/pentaho \
   bash
