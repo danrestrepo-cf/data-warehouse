@@ -70,7 +70,7 @@ run_pan() {
 run_kitchen() {
   # we purposefully do not echo the 'params' variable because it can contain a password.
   # script output already shows non sensitive parameter values that are passed in.
-  echo -rep=PentahoFileRepository -level=Detailed -job=$@
+  echo ./kitchen.sh -rep=PentahoFileRepository -level=Detailed -job=$@
   # we want "params" to split / expand, so ignore the shellcheck
   # shellcheck disable=SC2086
   kitchen.sh -rep=PentahoFileRepository -level=Detailed ${params} -job=$@

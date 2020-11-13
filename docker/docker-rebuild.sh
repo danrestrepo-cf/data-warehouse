@@ -1,21 +1,22 @@
 #!/usr/bin/env bash
 
-echo 'starting...'
+# Sets script to fail if any command fails.
+set -e
 
-echo "bringing containers down..."
+echo 'Starting...'
+
 ./docker-down.sh
 
-echo "removing image(s)..."
+echo "Removing image(s)..."
 docker image rm -f edw/etl
 docker image rm -f edw/pentaho
 
-echo "building pentaho image..."
+echo "Building pentaho image..."
 ./build-pentaho.sh
 
-echo "building etl image based on pentaho image..."
+echo "Building etl image based on pentaho image..."
 ./build-etl.sh
 
-echo "bringing containers up..."
 ./docker-up.sh
 
-echo 'done!'
+echo '... Finished rebuilding images!'
