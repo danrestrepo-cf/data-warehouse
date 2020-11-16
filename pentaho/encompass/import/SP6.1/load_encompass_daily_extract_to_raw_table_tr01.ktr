@@ -83,6 +83,16 @@
         <default_value>log_encompass_raw_transformation01_transformation</default_value>
         <description/>
       </parameter>
+      <parameter>
+        <name>target_table_name_error</name>
+        <default_value>encompass_loan_raw_error</default_value>
+        <description/>
+      </parameter>
+      <parameter>
+        <name>target_table_name_success</name>
+        <default_value>encompass_loan_raw</default_value>
+        <description/>
+      </parameter>
     </parameters>
     <log>
       <trans-log-table>
@@ -504,7 +514,7 @@
     <created_user>-</created_user>
     <created_date>2020/03/11 16:18:28.855</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/11/12 16:57:19.055</modified_date>
+    <modified_date>2020/11/16 15:28:11.453</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -581,7 +591,7 @@ rightward motion represents errors.</note>
     <notepad>
       <note>The row was not able to be inserted to the "_raw" table.</note>
       <xloc>1136</xloc>
-      <yloc>1616</yloc>
+      <yloc>1504</yloc>
       <width>447</width>
       <heigth>34</heigth>
       <fontname>Segoe UI</fontname>
@@ -602,7 +612,7 @@ rightward motion represents errors.</note>
     <notepad>
       <note>Data types validated; insert valid rows into Data Lake.</note>
       <xloc>176</xloc>
-      <yloc>1616</yloc>
+      <yloc>1504</yloc>
       <width>431</width>
       <heigth>34</heigth>
       <fontname>Segoe UI</fontname>
@@ -644,7 +654,7 @@ rightward motion represents errors.</note>
     <notepad>
       <note>Prepare data read from CSV (trim whitespace, etc).</note>
       <xloc>176</xloc>
-      <yloc>880</yloc>
+      <yloc>704</yloc>
       <width>406</width>
       <heigth>34</heigth>
       <fontname>Segoe UI</fontname>
@@ -666,9 +676,30 @@ rightward motion represents errors.</note>
       <note>Load CSV data from ${input_csv_path}${input_csv_filename}
 variables.</note>
       <xloc>144</xloc>
-      <yloc>624</yloc>
+      <yloc>480</yloc>
       <width>479</width>
       <heigth>58</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>9</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>128</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>128</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Remove SSN data from stream.</note>
+      <xloc>400</xloc>
+      <yloc>928</yloc>
+      <width>174</width>
+      <heigth>26</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>9</fontsize>
       <fontbold>N</fontbold>
@@ -828,12 +859,12 @@ variables.</note>
     <hop>
       <from>SP6.1_LOAD_RAW_Validate Data Types</from>
       <to>SP6.1_LOAD_RAW_Output Invalid Data Rows to Table</to>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
     </hop>
     <hop>
       <from>SP6.1_LOAD_RAW_Validate Data Types</from>
       <to>SP6.1_LOAD_RAW_Output Validated Rows to Table</to>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
     </hop>
     <hop>
       <from>SP6.1_LOAD_RAW_Load CSV File</from>
@@ -841,13 +872,18 @@ variables.</note>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>SP6.1_LOAD_RAW_Trim spaces from fields</from>
-      <to>SP6.1_LOAD_RAW_Validate Data Types</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
       <from>SP6.1_LOAD_RAW_Get variables</from>
       <to>SP6.1_LOAD_RAW_Load CSV File</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>SP6.1_LOAD_RAW_Trim spaces from fields</from>
+      <to>SP6.1_LOAD_RAW_Remove SSN values from stream</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>SP6.1_LOAD_RAW_Remove SSN values from stream</from>
+      <to>SP6.1_LOAD_RAW_Validate Data Types</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -5668,7 +5704,7 @@ variables.</note>
     </remotesteps>
     <GUI>
       <xloc>656</xloc>
-      <yloc>672</yloc>
+      <yloc>528</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -8236,7 +8272,7 @@ variables.</note>
     </remotesteps>
     <GUI>
       <xloc>1328</xloc>
-      <yloc>1968</yloc>
+      <yloc>1856</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -10753,6 +10789,30 @@ variables.</note>
         <column_name>elr_closing_disclosure_sent_date</column_name>
         <stream_name>elr_closing_disclosure_sent_date</stream_name>
       </field>
+      <field>
+        <column_name>elr_closing_disclosure_received_date</column_name>
+        <stream_name>elr_closing_disclosure_received_date</stream_name>
+      </field>
+      <field>
+        <column_name>elr_revised_closing_disclosure_sent_date</column_name>
+        <stream_name>elr_revised_closing_disclosure_sent_date</stream_name>
+      </field>
+      <field>
+        <column_name>elr_revised_closing_disclosure_received_date</column_name>
+        <stream_name>elr_revised_closing_disclosure_received_date</stream_name>
+      </field>
+      <field>
+        <column_name>elr_total_broker_fees_collected_amount</column_name>
+        <stream_name>elr_total_broker_fees_collected_amount</stream_name>
+      </field>
+      <field>
+        <column_name>elr_total_lender_fees_collected</column_name>
+        <stream_name>elr_total_lender_fees_collected</stream_name>
+      </field>
+      <field>
+        <column_name>elr_purchasing_beneficiary_investor_name</column_name>
+        <stream_name>elr_purchasing_beneficiary_investor_name</stream_name>
+      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -10764,7 +10824,7 @@ variables.</note>
     </remotesteps>
     <GUI>
       <xloc>656</xloc>
-      <yloc>1696</yloc>
+      <yloc>1584</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -10772,7 +10832,7 @@ variables.</note>
     <name>SP6.1_LOAD_RAW_Trim spaces from fields</name>
     <type>StringOperations</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
@@ -14717,7 +14777,7 @@ variables.</note>
     </remotesteps>
     <GUI>
       <xloc>656</xloc>
-      <yloc>944</yloc>
+      <yloc>768</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -14733,1217 +14793,7 @@ variables.</note>
       <schema_name/>
     </partitioning>
     <fields>
-      <field>
-        <name>elr_trans_details_loan_number</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_info_loan_id</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_info_loan_created_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_officer_lead_id</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_officer_lead_source</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_officer_lead_source_reference_id</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borrower_intends_to_continue_chkbx</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_lien_position</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_loan_amt</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_interest_rate</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_loan_purpose</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_info_refi_purpose</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_loan_program</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_down_pmt_percent</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_qual_ratio_top</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_qual_ratio_bottom</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_fannie_mae_loan_doc_type_code</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_purchase_price</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_comb_loan_to_value_cltv</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_apr</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_term_mos</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_interest_only_indicator</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_prepayment_penalty</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_mlds_prepymt_penalty_period</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_amort_type</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_sebonic_custom_impound_field</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borrower_first_name</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borrower_middle_name</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borrower_last_name</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_email</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_home_phone</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_business_phone</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_cell</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_present_addr</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_present_city</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_present_state</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_present_zip</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_ssn</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_dob</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_sex_male_female</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_ethnicity</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_race_american_indian</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_race_asian</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_race_black</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_race_native_hawaiian</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_race_white</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_race_info_not_provided</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_race_not_applicable</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_first_time_homebuyer</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_self_employed</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_income_borr_total_income</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_financed_property_ownership_count</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_borr_lmedian_fico</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborr_lmedian_fico</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_va_loan_summ_credit_score</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborrower_first_name</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborrower_middle_name</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborrower_last_name</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborr_email</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborr_home_phone</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborr_business_phone</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborr_cell</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborr_present_addr</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborr_present_city</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborr_present_state</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborr_present_zip</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborr_dob</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborr_sex_male_female</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborr_experian_fico</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborr_ssn</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborr_ethnicity</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborr_race_american_indian</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborr_race_asian</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborr_race_black</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborr_race_native_hawaiian</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborr_race_white</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborr_race_info_not_provided</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coborr_race_not_applicable</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_income_verification_available_b1</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_income_verification_available_c1</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_subject_property_type</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_subject_property_occupancy_status</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_subject_property_street</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_subject_property_street_2</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_subject_property_city</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_subject_property_state</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_subject_property_zip</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_subject_property_county</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_subject_property_msa_number</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_subject_property_county_code</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_subject_property_number_units</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_subject_property_yr_built</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_subject_property_est_value</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_subject_property_appraised_value</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_subject_property_estate_held</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_occupancy_type</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_property_type</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_document_date_received_credit_report</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_credit_rpt_ref_number</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_payoff_junior_lien_holder_company</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_payoff_primary_lien_holder_company</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_appraisal_retrieval_relative_value</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_appraisal_report_asis</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_lo_compensation_fee_line_802_discount_point_percent_line_2</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_lo_compensation_fee_line_802_discount_point_percent_line_4</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_lo_compensation_fee_line_802_user_defined_fee_2_amount</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_fees_line_801_borr_paid_orig_chrg</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_fees_line_801_user_defined_fee_2_borr_amt</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_fees_line_801_broker_compensation_borrower_paid</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_fees_line_801_user_defined_fee_2_descr</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_fees_line_802_borr_credit_points</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_fees_line_803_borr_paid_adj_orig_chrgs</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_fees_loan_origination_fee_borr</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_fees_orig_charge_amt_borr</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_fees_compensation_to_broker_1</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_lo_compensation_lender_compensation_credit_amount_line_2</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_lo_compensation_borrower_paid_discount_point_amount_line_3</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_requested_lo_concession_amount</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_officer_manager_concession_amount</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_lo_compensation_borrower_paid_discount_point_amount_line_1</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_total_credit_for_rate_chosen</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_lo_compensation_totalborrower_discount_point_amount_line_4</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_hud1_borr_paid_by_for_borr_oth_1_amt</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_fees_line_801_user_def_fee_1_borr</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_disclosed_fees_total_finance_charges</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_document_date_received_loan_officer_preapproval_letter</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_underwriting_risk_assess_type</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_underwriting_suspended_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_underwriting_level_of_prpty_review_form_number</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_uw_suspended_cleared_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_credit_committee_fico_exception</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_fnma_cu_risk_score</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_day_1_income_verification_available</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_du_fail_reason</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_acceptable_du</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_acceptable_lp</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_atr_qm_eligibility_abilitytorepay_loan_type</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_request_fulfilled_date_time_most_recent</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_request_fulfilled_date_time</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_trans_details_loan_program_most_recent</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_lock_request_loan_type_most_recent</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_buy_side_base_margin</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_lock_request_loan_amnt_excluding_mip_pmi_most_recent</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_lock_request_subject_property_number_units_most_recent</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_buy_side_lock_expires_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_buy_side_lock_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_first_lock_lock_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_lock_request_impounds_waived_most_recent</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_lock_request_loan_amount_most_recent</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_trans_details_amort_type_most_recent</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_request_rate_sheet_id</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_buy_side_investor_commitment</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_buy_side_comments</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_sell_side_lock_expires_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_sell_side_number_of_days</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_sell_side_total_sell_price</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_sell_side_investor_lock_type</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_sell_investor_name</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_sell_side_investor_loan_number</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_sell_side_lock_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_sell_side_lock_date_most_recent</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_sell_side_base_rate</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_sell_side_investor_delivery_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_sell_side_base_rate_adjust_1_rate_most_recent</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_sell_side_investor_commitment_most_recent</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_sell_side_net_sell_price</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_sell_side_net_buy_rate</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_trans_details_term_mos_most_recent</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_buy_side_number_of_days</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_first_lock_ltv</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_first_lock_cltv</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_first_lock_net_buy_price</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_lock_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_rate_lock_expires</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_rate_lock_number_days</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_lock_extension_original_lock_term</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_lock_extension_original_lock_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_lock_extension_original_lock_expiration_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_lock_extension_new_expiration_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_initial_capture_of_lock_number_days</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_first_pymt_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_first_pymt_adj_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_loan_maturity_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_total_loan_amt_w_mip_ff</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_info_arm_disclosure_type</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_info_arm_margin</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_freddie_mac_lender_rate_adj_convertible</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_freddie_mac_loan_to_value_ltv</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_regz_loan_info_document_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_loan_type</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_sub_fin_second_mtg_loan_amt</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_aus_eligibility_for_miac</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_total_number_of_borrowers_on_loan</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_mo_pymt_p_and_i</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_extension_cost_total_amount</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_homeready_eligibility</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_homeready_eligibility_review_complete</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_homeready_borrower_acceptance</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_homepossible_eligibility</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_homepossible_eligibility_review_complete</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_underwriting_investor_eligibility_fannie_mae</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_underwriting_investor_eligibility_freddie_mac</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_morgan_stanley_upload</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_info_arm_first_period_change</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_info_arm_first_rate_adj_cap</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_info_arm_floor_rate</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_info_arm_rate_adj_period</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_info_arm_rate_cap</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_info_arm_max_life_interest_cap</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_mi_company_name_type</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_file_contacts_mtg_ins_co_name</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_insurance_mtg_ins_coverage_factor</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_private_mortgage_insurance_indicator</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_uldd_mortgage_insurance_premium_source_type</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_lpmi_estimated_amount_of_lender_paid_mi_premium</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_lpmi_final_price_of_lpmi</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_lo_workksheet_mi_premium_frequency</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_file_contacts_mtg_ins_co_file_number</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_document_date_received_postfunding_disbursement_ledger</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_warehouse_curtailment</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_funding_executed_docs_in_date_time</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_funding_funds_ordered_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_funding_funds_sent_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_funding_funds_released</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_fund_outstanding_docs_funding_authorized</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_delivery_work_completed_checkbox</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_file_contacts_warehouse_co_name</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coll_to_warehouse_warehouse_company</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_bb_and_t_elds_maturity</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_intrm_serv_pymnt_summary_prncpl_balance</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coll_delivery_dmi_id</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_intrm_serv_next_pymnt_pymnt_due_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_dmi_upload_p_and_i_change_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_shipping_investor_delivery_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_shipping_actual_shipping_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coll_delivery_cust_to_inv_ship_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coll_to_investor_work_completed_date_stamp</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_coll_delivery_to_custodian_ship_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_purchase_advice_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_purchase_advice_actual_sell_price</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_purchase_advice_date_first_payment_to_investor</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_purchase_advice_first_payment_to</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_purchase_advice_actual_sell_side_srp</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_purchase_advice_payouts_1_amount</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_purchase_advice_payouts_2_amount</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_purchase_advice_payouts_3_amount</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_purchase_advice_payouts_4_amount</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_purchase_advice_payouts_5_amount</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_purchase_advice_payouts_6_amount</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_purchase_advice_payouts_7_amount</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_purchase_advice_payouts_8_amount</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_purchase_advice_payouts_9_amount</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_purchase_advice_payouts_10_amount</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_purchase_advice_payouts_11_amount</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_purchase_advice_payouts_12_amount</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_purchase_advice_premium</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_purchase_advice_srp_received</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_underwriting_investor_eligibility_texas_50a6_cashout</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_underwriting_investor_eligibility_wells_fargo</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_underwriting_investor_eligibility_chase_jp_morgan</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_shipping_mers_registration_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_mers_min_number</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_rate_lock_sell_side_investor_mers_number_most_recent</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_uldd_pool_id</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_uldd_property_valuation_effective_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_uldd_first_unit_bedrooms</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_uldd_first_unit_subject_property_gross_rent</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_estimate_le_date_issued</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_appraisal_retrieval_work_completed_date_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_tracking_current_milestone_name</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_tracking_current_milestone_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_application_milestone_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_current_status_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_current_loan_status</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_underwriting_clear_to_close_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_est_closing_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_closing_scheduled_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_tracking_doc_signed_milestone_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_cl_docs_delivered_date_stamp</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_total_wire_transfer</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_closed_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_closing_docs_regz_loan_info_disbursement_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_folder_name</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_file_contacts_buyers_agent_name</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_file_contacts_buyers_agent_contact_name</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_file_contacts_buyers_agent_email</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_file_contacts_loan_officer_name</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_file_contacts_loan_processor_name</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_team_member_name_fd_funder</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_team_member_name_cl_document_fmls</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_nmls_loan_originator_id</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_processing_resub_worker_assigned_date_stamp</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_team_member_name_uw_conditions_fmls</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_team_member_name_uw_underwriter</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_officer_appraisal_onhold_estimated_release_date</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_officer_appraisal_onhold_date_time_stamp</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_officer_appraisal_cleared_date_time_stamp</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_refinance_type</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_purchaser_type</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_trans_details_hoepa_status</name>
-        <rename/>
-      </field>
-      <field>
-        <name>elr_loan_info_channel</name>
-        <rename/>
-      </field>
       <select_unspecified>N</select_unspecified>
-      <remove>
-        <name>elr_borr_ssn</name>
-      </remove>
-      <remove>
-        <name>elr_coborr_ssn</name>
-      </remove>
       <meta>
         <name>elr_trans_details_loan_number</name>
         <rename>elr_trans_details_loan_number</rename>
@@ -15986,7 +14836,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -16581,7 +15431,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -17567,7 +16417,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -18043,7 +16893,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -18077,7 +16927,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -18111,7 +16961,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -18247,7 +17097,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -18264,7 +17114,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -18366,7 +17216,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -18383,7 +17233,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -18400,7 +17250,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -18519,7 +17369,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -18621,7 +17471,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -18638,7 +17488,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -18672,7 +17522,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -18842,7 +17692,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -18859,7 +17709,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -18910,7 +17760,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -18927,7 +17777,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -18944,7 +17794,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -18978,7 +17828,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -18995,7 +17845,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -19012,7 +17862,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -19114,7 +17964,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -19624,7 +18474,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -19675,7 +18525,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -19692,7 +18542,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -19709,7 +18559,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -19845,7 +18695,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -19862,7 +18712,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -19879,7 +18729,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -19896,7 +18746,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -19913,7 +18763,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -19930,7 +18780,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone/>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -19947,7 +18797,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -19964,7 +18814,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -19998,7 +18848,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -20338,7 +19188,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -20406,7 +19256,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -20457,7 +19307,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -20474,7 +19324,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -20508,7 +19358,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -20525,7 +19375,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -20542,7 +19392,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -20576,7 +19426,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -20593,7 +19443,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -20610,7 +19460,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -20627,7 +19477,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -20644,7 +19494,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -20678,7 +19528,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -20695,7 +19545,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -20865,7 +19715,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -20916,7 +19766,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -20933,7 +19783,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -20950,7 +19800,7 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
@@ -21035,8 +19885,110 @@ variables.</note>
         <precision>-2</precision>
         <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
         <date_format_lenient>false</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
+        <date_format_locale/>
         <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>
+      <meta>
+        <name>elr_closing_disclosure_received_date</name>
+        <rename>elr_closing_disclosure_received_date</rename>
+        <type>Timestamp</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>
+      <meta>
+        <name>elr_revised_closing_disclosure_sent_date</name>
+        <rename>elr_revised_closing_disclosure_sent_date</rename>
+        <type>Timestamp</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>
+      <meta>
+        <name>elr_revised_closing_disclosure_received_date</name>
+        <rename>elr_revised_closing_disclosure_received_date</rename>
+        <type>Timestamp</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask>M/d/yyyy h:mm:ss a</conversion_mask>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>
+      <meta>
+        <name>elr_total_broker_fees_collected_amount</name>
+        <rename>elr_total_broker_fees_collected_amount</rename>
+        <type>Number</type>
+        <length>17</length>
+        <precision>2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>
+      <meta>
+        <name>elr_total_lender_fees_collected</name>
+        <rename>elr_total_lender_fees_collected</rename>
+        <type>Number</type>
+        <length>17</length>
+        <precision>2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>
+      <meta>
+        <name>elr_purchasing_beneficiary_investor_name</name>
+        <rename>elr_purchasing_beneficiary_investor_name</rename>
+        <type>String</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
         <lenient_string_to_number>false</lenient_string_to_number>
         <encoding/>
         <decimal_symbol/>
@@ -32386,7 +31338,41 @@ variables.</note>
     </remotesteps>
     <GUI>
       <xloc>1328</xloc>
-      <yloc>1696</yloc>
+      <yloc>1584</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>SP6.1_LOAD_RAW_Remove SSN values from stream</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <select_unspecified>N</select_unspecified>
+      <remove>
+        <name>elr_borr_ssn</name>
+      </remove>
+      <remove>
+        <name>elr_coborr_ssn</name>
+      </remove>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>656</xloc>
+      <yloc>992</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
