@@ -31,6 +31,21 @@ echo "Has INPUT_PATH? ${INPUT_PATH}"
 if [[ -n "${INPUT_PATH}" ]]; then
   params="${params} -param:input_path=${INPUT_PATH}"
 fi
+if [[ -n "${PROCESS_NAME}" ]]; then
+  params="${params} -param:process_name=${PROCESS_NAME}"
+fi
+echo "Has metadata endpoint? ${ECS_CONTAINER_METADATA_URI_V4}"
+if [[ -n "${ECS_CONTAINER_METADATA_URI_V4}" ]]; then
+  # https://docs.aws.amazon.com/AmazonECS/latest/userguide/task-metadata-endpoint-v4-fargate.html
+  etl_batch_id=$(curl "${ECS_CONTAINER_METADATA_URI_V4}" | jq -r '.Containers[0].LogOptions["awslogs-stream"]' | sed 's~.*/~~')
+# Intentionally commented out, LEFT IN FOR TESTING.  Normally we want a random ID
+#elif [[ -f "/ecs-example.json" ]]; then
+#  etl_batch_id=$(cat /ecs-example.json | jq -r '.Containers[0].LogOptions["awslogs-stream"]' | sed 's~.*/~~')
+fi
+if [[ "$etl_batch_id" -eq "" ]]; then
+  etl_batch_id=$(cat /proc/sys/kernel/random/uuid)
+fi
+params="${params} -param:etl_batch_id=${etl_batch_id}"
 
 download() {
   if [[ -n "${S3_BUCKET}" && -n "${S3_KEY}" ]]; then
@@ -53,11 +68,12 @@ run_pan() {
 }
 
 run_kitchen() {
+  # we purposefully do not echo the 'params' variable because it can contain a password.
+  # script output already shows non sensitive parameter values that are passed in.
   echo ./kitchen.sh -rep=PentahoFileRepository -level=Detailed -job=$@
   # we want "params" to split / expand, so ignore the shellcheck
   # shellcheck disable=SC2086
   kitchen.sh -rep=PentahoFileRepository -level=Detailed ${params} -job=$@
-  # kitchen.sh -rep=PentahoFileRepository -level=Detailed -job=/pentaho/encompass/import/SP6/full_encompass_etl -param:database_hostname=edw_database_1 -param:input_path=/inputs/ -param:log_path=/inputs/
 }
 
 print_usage() {
