@@ -556,7 +556,7 @@
         <field>
           <variable_name>log_channel_table_name</variable_name>
           <variable_value>log_encompass_raw_job_channel</variable_value>
-          <variable_type>JVM</variable_type>
+          <variable_type>CURRENT_JOB</variable_type>
         </field>
         <field>
           <variable_name>log_filename_parse_fail_insert_fail</variable_name>
@@ -586,7 +586,7 @@
         <field>
           <variable_name>log_path</variable_name>
           <variable_value>${log_path}</variable_value>
-          <variable_type>JVM</variable_type>
+          <variable_type>PARENT_JOB</variable_type>
         </field>
         <field>
           <variable_name>log_record_timeout</variable_name>
