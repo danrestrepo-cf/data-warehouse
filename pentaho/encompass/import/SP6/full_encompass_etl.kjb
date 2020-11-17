@@ -8,7 +8,7 @@
   <created_user/>
   <created_date>2020/05/05 12:35:31.924</created_date>
   <modified_user/>
-  <modified_date>2020/08/28 14:39:04.971</modified_date>
+  <modified_date>2020/11/17 12:15:53.460</modified_date>
   <parameters>
     <parameter>
       <name>database_hostname</name>
@@ -42,7 +42,7 @@
     </parameter>
     <parameter>
       <name>input_path</name>
-      <default_value>/jobs/</default_value>
+      <default_value>/input/</default_value>
       <description>The path to the folder location containing the input csv file. Include a trailing slash.</description>
     </parameter>
     <parameter>
@@ -94,6 +94,10 @@
     <data_tablespace/>
     <index_tablespace/>
     <attributes>
+      <attribute>
+        <code>EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code>
+        <attribute>pentaho_logging_sequence</attribute>
+      </attribute>
       <attribute>
         <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
         <attribute>N</attribute>
@@ -796,8 +800,8 @@
       <note>SP6 - Encompass Full ETL</note>
       <xloc>48</xloc>
       <yloc>32</yloc>
-      <width>218</width>
-      <heigth>30</heigth>
+      <width>271</width>
+      <heigth>35</heigth>
       <fontname>.AppleSystemUIFont</fontname>
       <fontsize>13</fontsize>
       <fontbold>N</fontbold>
