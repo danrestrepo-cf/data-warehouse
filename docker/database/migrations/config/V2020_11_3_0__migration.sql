@@ -8,7 +8,7 @@ create table mdi.table_input_step
             primary key,
     process_dwid bigint NOT NULL,
     sql text not null,
-    limit_size integer,
+    limit_size integer default 0,
     execute_for_each_row mdi.pentaho_y_or_n default 'N'::mdi.pentaho_y_or_n not null,
     replace_variables_in_script mdi.pentaho_y_or_n default 'N'::mdi.pentaho_y_or_n not null,
     enable_lazy_conversion mdi.pentaho_y_or_n default 'N'::mdi.pentaho_y_or_n not null,
