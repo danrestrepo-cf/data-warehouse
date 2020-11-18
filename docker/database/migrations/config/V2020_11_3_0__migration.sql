@@ -99,7 +99,7 @@ INSERT INTO mdi.table_output_step (dwid, process_dwid, target_schema, target_tab
 VALUES
 (4, 4, 'mcr', 'nmls_call_report_national', 1000, null, null, null, null, 'N', null, 'Y', 'Staging DB Connection',
   'N', 'Y', 'N', 'N')
-;                                                                                                                                                                                                                                                                                                                                                                          (4, 4, 'mcr', 'nmls_call_report_national', 1000, null, null, null, null, 'N', null, 'Y', 'Staging DB Connection', 'N', 'Y', 'N', 'N');
+;
 
 INSERT INTO mdi.table_output_field
     (dwid, table_output_step_dwid, database_field_name, database_stream_name, field_order)
@@ -149,7 +149,7 @@ INSERT INTO mdi.table_output_step (dwid, process_dwid, target_schema, target_tab
 VALUES
 (6, 6, 'mcr', 'nmls_call_report_s540a', 1000, null, null, null, null, 'N', null, 'Y', 'Staging DB Connection', 'N',
  'Y', 'N', 'N')
-;                                                                                                                                                                                                                                                                                                                                                                          (4, 4, 'mcr', 'nmls_call_report_national', 1000, null, null, null, null, 'N', null, 'Y', 'Staging DB Connection', 'N', 'Y', 'N', 'N');
+;
 
 INSERT INTO mdi.table_output_field
 (dwid, table_output_step_dwid, database_field_name, database_stream_name, field_order)
