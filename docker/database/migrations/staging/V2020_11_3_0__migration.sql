@@ -31,7 +31,7 @@ create table mcr.nmls_call_report_national_raw
 --
 -- create target table for SP10.2
 --
-create table dmi.nmls_call_report_s540a_raw
+create table mcr.nmls_call_report_s540a_raw
 (
     state_type text,
     item_id bigint,
