@@ -1,7 +1,9 @@
+--create schema mcr
+
 --
 -- create target table for SP8.2
 --
-create table dmi.nmls_call_report_state_raw
+create table mcr.nmls_call_report_state_raw
 (
     mcr_code text not null,
     mcr_desc text,
