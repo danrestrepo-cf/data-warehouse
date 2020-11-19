@@ -46,7 +46,7 @@ function run_docker()
     --env DB_PASSWORD=testonly \
     --env PROCESS_NAME=${process_name} \
     --env INPUT_FILE="$filename" \
-    --env INPUT_PATH=/input \
+    --env INPUT_PATH=/input/ \
     ${project_name}/pentaho \
     j $job_name
 

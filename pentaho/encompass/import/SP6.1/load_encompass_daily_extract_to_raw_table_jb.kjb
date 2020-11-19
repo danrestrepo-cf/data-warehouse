@@ -8,7 +8,7 @@
   <created_user>-</created_user>
   <created_date>2020/06/03 20:37:35.720</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2020/08/27 15:10:56.364</modified_date>
+  <modified_date>2020/11/17 12:15:54.804</modified_date>
   <parameters>
     <parameter>
       <name>database_hostname</name>
@@ -42,7 +42,12 @@
     </parameter>
     <parameter>
       <name>input_path</name>
-      <default_value/>
+      <default_value>/input/</default_value>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>log_path</name>
+      <default_value>/input/</default_value>
       <description/>
     </parameter>
   </parameters>
@@ -59,6 +64,10 @@
     <data_tablespace/>
     <index_tablespace/>
     <attributes>
+      <attribute>
+        <code>EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code>
+        <attribute>pentaho_logging_sequence</attribute>
+      </attribute>
       <attribute>
         <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
         <attribute>N</attribute>
@@ -682,8 +691,8 @@ to a table in a database. Change environments by changing input
 parameters.</note>
       <xloc>32</xloc>
       <yloc>32</yloc>
-      <width>549</width>
-      <heigth>90</heigth>
+      <width>695</width>
+      <heigth>110</heigth>
       <fontname>.AppleSystemUIFont</fontname>
       <fontsize>13</fontsize>
       <fontbold>N</fontbold>
