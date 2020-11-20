@@ -1,0 +1,52 @@
+#DataSourceSettings#
+    #LocalDataSource: EDW - Prod
+    #BEGIN#
+<data-source source="LOCAL" name="EDW - Prod" read-only="true" uuid="73c4c26d-2e6d-404b-8bd0-a258014b7f3f">
+    <database-info product="PostgreSQL" version="11.6" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver"
+                   driver-version="42.2.5" dbms="POSTGRES" exact-version="11.6" exact-driver-version="42.2">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact"/>
+    <driver-ref>postgresql</driver-ref>
+    <synchronize>true</synchronize>
+    <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+    <jdbc-url>jdbc:postgresql://prod-data-warehouse.cluster-ro-cymvd4vzfjnm.us-east-1.rds.amazonaws.com:5432/ingress</jdbc-url>
+    <jdbc-additional-properties>
+        <property name="AWS.RegionId" value="us-east-1"/>
+        <property name="AWS.CredentialId" value="profile:prod-data-warehouse-readonly"/>
+    </jdbc-additional-properties>
+    <secret-storage>master_key</secret-storage>
+    <auth-provider>aws.rds.iam</auth-provider>
+    <user-name>readonly</user-name>
+    <schema-mapping>
+        <introspection-scope>
+            <node negative="1">
+                <node kind="database" qname="@">
+                    <node kind="schema" qname="@"/>
+                </node>
+                <node kind="database" qname="config">
+                    <node kind="schema">
+                        <name qname="flyway"/>
+                        <name qname="log"/>
+                    </node>
+                </node>
+                <node kind="database" qname="ingress">
+                    <node kind="schema">
+                        <name qname="encompass"/>
+                        <name qname="flyway"/>
+                    </node>
+                </node>
+                <node kind="database" qname="staging">
+                    <node kind="schema">
+                        <name qname="flyway"/>
+                        <name qname="loan"/>
+                    </node>
+                </node>
+            </node>
+        </introspection-scope>
+    </schema-mapping>
+    <keep-alive enable="true"/>
+    <auto-close timeout="0"/>
+</data-source>
+    #END#
+
