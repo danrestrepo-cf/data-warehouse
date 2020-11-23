@@ -20,11 +20,11 @@ function print_usage()
   echo " "
   echo " Job Mode - pass in the path to a job you want kitchen to run and a file you want to be processed."
   echo "    Usage: ${script_filename} job [job_name] [filename]"
-  echo "    Example: ./${script_filename} /encompass/import/SP6/full_encompass_etl encompass.csv"
+  echo "    Example: ./${script_filename} job /src/encompass/import/SP6/full_encompass_etl encompass.csv"
   echo " "
-  echo " MDI Mode - pass in the process name configured in the EDW, a file name that should be checked for existance and a unique identifier."
+  echo " MDI Mode - pass in the process name configured in the EDW, a file name that should be checked for existence and a unique identifier."
   echo "    Usage: ${script_filename} mdi [process_name] [filename]"
-  echo "    Example: ./${script_filename} SP10.1 dmi-V35.xls"
+  echo "    Example: ./${script_filename} mdi SP10.1 dmi-V35.xls"
 }
 
 
@@ -70,13 +70,13 @@ case "$1" in
 mdi)
   shift 1
   process_name=$1 # SP10.1
-  job_name="mdi/controller"
+  job_name="src/mdi/controller"
   filename=$2
   run_docker
   ;;
 job)
   shift 1
-  job_name=$1 # /encompass/import/SP6/full_encompass_etl
+  job_name=$1 # /src/encompass/import/SP6/full_encompass_etl
   filename=$2
   run_docker
   ;;
