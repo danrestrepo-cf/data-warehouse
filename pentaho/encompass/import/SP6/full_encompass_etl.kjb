@@ -1,54 +1,84 @@
 <job>
-  <name>load_encompass_daily_extract_to_raw_table_jb</name>
-  <description>SP6.1_jb</description>
+  <name>full_encompass_etl</name>
+  <description>SP6</description>
   <extended_description/>
   <job_version/>
   <job_status>0</job_status>
-  <directory>/src/encompass/import/SP6.1</directory>
-  <created_user>-</created_user>
-  <created_date>2020/06/03 20:37:35.720</created_date>
-  <modified_user>-</modified_user>
-  <modified_date>2020/11/17 12:15:54.804</modified_date>
+  <directory>/encompass/import/SP6</directory>
+  <created_user/>
+  <created_date>2020/05/05 12:35:31.924</created_date>
+  <modified_user/>
+  <modified_date>2020/11/17 12:15:53.460</modified_date>
   <parameters>
     <parameter>
       <name>database_hostname</name>
       <default_value/>
-      <description/>
+      <description>The hostname to the database system.</description>
     </parameter>
     <parameter>
       <name>database_name</name>
       <default_value>ingress</default_value>
-      <description/>
+      <description>The name of the database the transform will use.</description>
     </parameter>
     <parameter>
       <name>database_password</name>
       <default_value/>
-      <description/>
+      <description>The password to connect to the database system.</description>
     </parameter>
     <parameter>
       <name>database_port</name>
       <default_value>5432</default_value>
-      <description/>
+      <description>The port to connect to the database system.</description>
     </parameter>
     <parameter>
       <name>database_schema</name>
       <default_value>encompass</default_value>
-      <description/>
+      <description>The name of the database schema the Encompass data will flow into.</description>
     </parameter>
     <parameter>
       <name>database_username</name>
       <default_value/>
-      <description/>
+      <description>The username to connect to the database system.</description>
     </parameter>
     <parameter>
       <name>input_path</name>
       <default_value>/input/</default_value>
-      <description/>
+      <description>The path to the folder location containing the input csv file. Include a trailing slash.</description>
+    </parameter>
+    <parameter>
+      <name>log_channel_table_name</name>
+      <default_value>log_encompass_etl_job_channel</default_value>
+      <description>Name of the channel logging table.</description>
+    </parameter>
+    <parameter>
+      <name>log_entry_table_name</name>
+      <default_value>log_encompass_etl_job_entry</default_value>
+      <description>Name of the entry logging table.</description>
+    </parameter>
+    <parameter>
+      <name>log_interval</name>
+      <default_value>5</default_value>
+      <description>How often to flush logs to the disk/database (in seconds).</description>
+    </parameter>
+    <parameter>
+      <name>log_job_table_name</name>
+      <default_value>log_encompass_etl_job_log</default_value>
+      <description>Name of the job log table.</description>
     </parameter>
     <parameter>
       <name>log_path</name>
-      <default_value>/input/</default_value>
+      <default_value/>
       <description/>
+    </parameter>
+    <parameter>
+      <name>log_record_timeout</name>
+      <default_value>90</default_value>
+      <description>How often to remove logs from the database (in days).</description>
+    </parameter>
+    <parameter>
+      <name>log_table_schema</name>
+      <default_value>encompass</default_value>
+      <description>The name of the database schema the log tables are in.</description>
     </parameter>
   </parameters>
   <connection>
@@ -115,7 +145,7 @@
   <job-log-table>
     <connection>Config DB Connection</connection>
     <schema>log</schema>
-    <table>log_encompass_raw_job_log</table>
+    <table>log_encompass_etl_job_log</table>
     <size_limit_lines/>
     <interval>5</interval>
     <timeout_days>90</timeout_days>
@@ -228,7 +258,7 @@
   <jobentry-log-table>
     <connection>Config DB Connection</connection>
     <schema>log</schema>
-    <table>log_encompass_raw_job_entry</table>
+    <table>log_encompass_etl_job_entry</table>
     <timeout_days>90</timeout_days>
     <field>
       <id>ID_BATCH</id>
@@ -319,7 +349,7 @@
   <channel-log-table>
     <connection>Config DB Connection</connection>
     <schema>log</schema>
-    <table>log_encompass_raw_job_channel</table>
+    <table>log_encompass_etl_job_channel</table>
     <timeout_days>90</timeout_days>
     <field>
       <id>ID_BATCH</id>
@@ -403,104 +433,109 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>528</xloc>
-      <yloc>160</yloc>
+      <xloc>448</xloc>
+      <yloc>112</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SP6.1_FULL_End</name>
+      <name>SP6_FULL_End</name>
       <description/>
       <type>SUCCESS</type>
       <attributes/>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>528</xloc>
-      <yloc>896</yloc>
+      <xloc>448</xloc>
+      <yloc>976</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SP6.1_FULL_execute transformation load encompass daily extract</name>
+      <name>SP6_FULL_Execute SP6.1</name>
       <description/>
-      <type>TRANS</type>
+      <type>JOB</type>
       <attributes/>
       <specification_method>rep_name</specification_method>
-      <trans_object_id/>
+      <job_object_id/>
       <filename/>
-      <transname>load_encompass_daily_extract_to_raw_table_tr01</transname>
-      <directory>/src/encompass/import/SP6.1</directory>
+      <jobname>load_encompass_daily_extract_to_raw_table_jb</jobname>
+      <directory>/encompass/import/SP6.1</directory>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
       <exec_per_row>N</exec_per_row>
-      <clear_rows>Y</clear_rows>
-      <clear_files>Y</clear_files>
       <set_logfile>N</set_logfile>
       <logfile/>
       <logext/>
       <add_date>N</add_date>
       <add_time>N</add_time>
-      <loglevel>Basic</loglevel>
-      <cluster>N</cluster>
+      <loglevel>Nothing</loglevel>
       <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
       <wait_until_finished>Y</wait_until_finished>
       <follow_abort_remote>Y</follow_abort_remote>
+      <expand_remote_job>Y</expand_remote_job>
       <create_parent_folder>N</create_parent_folder>
-      <logging_remote_work>N</logging_remote_work>
+      <pass_export>N</pass_export>
       <run_configuration>Pentaho local</run_configuration>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>log_path</name>
+          <stream_name>${input_path}</stream_name>
+          <value/>
+        </parameter>
+        <parameter>
+          <name>input_path</name>
+          <stream_name>${input_path}</stream_name>
+          <value/>
+        </parameter>
+        <parameter>
+          <name>database_hostname</name>
+          <stream_name>${database_hostname}</stream_name>
+          <value/>
+        </parameter>
+        <parameter>
+          <name>database_port</name>
+          <stream_name>${database_port}</stream_name>
+          <value/>
+        </parameter>
+        <parameter>
+          <name>database_name</name>
+          <stream_name>${database_name}</stream_name>
+          <value/>
+        </parameter>
+        <parameter>
+          <name>database_username</name>
+          <stream_name>${database_username}</stream_name>
+          <value/>
+        </parameter>
+        <parameter>
+          <name>database_password</name>
+          <stream_name>${database_password}</stream_name>
+          <value/>
+        </parameter>
       </parameters>
+      <set_append_logfile>N</set_append_logfile>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>528</xloc>
-      <yloc>608</yloc>
+      <xloc>448</xloc>
+      <yloc>384</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SP6.1_FULL_Abort after FAILED log operation</name>
+      <name>SP6_FULL_Abort Due to SP6.1 Failure</name>
       <description/>
       <type>ABORT</type>
       <attributes/>
-      <message/>
+      <message>SP6 has aborted without successfully completing SP6.1.</message>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1616</xloc>
-      <yloc>608</yloc>
+      <xloc>800</xloc>
+      <yloc>384</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SP6.1_FULL_Write SP1_LOAD_RAW failure to log</name>
-      <description/>
-      <type>WRITE_TO_LOG</type>
-      <attributes/>
-      <logmessage/>
-      <loglevel>Error</loglevel>
-      <logsubject/>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>1040</xloc>
-      <yloc>608</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>SP6.1_FULL_Abort after successful log operation</name>
-      <description/>
-      <type>ABORT</type>
-      <attributes/>
-      <message/>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>1040</xloc>
-      <yloc>752</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>SP6.1_FULL_Set variables</name>
+      <name>SP6_FULL_Set variables</name>
       <description/>
       <type>SET_VARIABLES</type>
       <attributes/>
@@ -508,56 +543,6 @@
       <filename/>
       <file_variable_type>JVM</file_variable_type>
       <fields>
-        <field>
-          <variable_name>database_hostname</variable_name>
-          <variable_value>${database_hostname}</variable_value>
-          <variable_type>JVM</variable_type>
-        </field>
-        <field>
-          <variable_name>database_port</variable_name>
-          <variable_value>${database_port}</variable_value>
-          <variable_type>JVM</variable_type>
-        </field>
-        <field>
-          <variable_name>database_username</variable_name>
-          <variable_value>${database_username}</variable_value>
-          <variable_type>JVM</variable_type>
-        </field>
-        <field>
-          <variable_name>database_password</variable_name>
-          <variable_value>${database_password}</variable_value>
-          <variable_type>JVM</variable_type>
-        </field>
-        <field>
-          <variable_name>database_schema</variable_name>
-          <variable_value>${database_schema}</variable_value>
-          <variable_type>JVM</variable_type>
-        </field>
-        <field>
-          <variable_name>database_name</variable_name>
-          <variable_value>${database_name}</variable_value>
-          <variable_type>JVM</variable_type>
-        </field>
-        <field>
-          <variable_name>input_csv_filename</variable_name>
-          <variable_value>Encompass.csv</variable_value>
-          <variable_type>JVM</variable_type>
-        </field>
-        <field>
-          <variable_name>KETTLE_EMPTY_STRING_DIFFERS_FROM_NULL</variable_name>
-          <variable_value>Y</variable_value>
-          <variable_type>JVM</variable_type>
-        </field>
-        <field>
-          <variable_name>input_path</variable_name>
-          <variable_value>${input_path}</variable_value>
-          <variable_type>JVM</variable_type>
-        </field>
-        <field>
-          <variable_name>log_channel_table_name</variable_name>
-          <variable_value>log_encompass_raw_job_channel</variable_value>
-          <variable_type>CURRENT_JOB</variable_type>
-        </field>
         <field>
           <variable_name>log_filename_parse_fail_insert_fail</variable_name>
           <variable_value>encompass_raw_parse_fail_insert_fail</variable_value>
@@ -584,11 +569,6 @@
           <variable_type>JVM</variable_type>
         </field>
         <field>
-          <variable_name>log_path</variable_name>
-          <variable_value>${log_path}</variable_value>
-          <variable_type>PARENT_JOB</variable_type>
-        </field>
-        <field>
           <variable_name>log_record_timeout</variable_name>
           <variable_value>5</variable_value>
           <variable_type>JVM</variable_type>
@@ -608,65 +588,143 @@
           <variable_value>encompass_loan_raw</variable_value>
           <variable_type>JVM</variable_type>
         </field>
-        <field>
-          <variable_name>log_job_table_name</variable_name>
-          <variable_value>log_encompass_raw_job_log</variable_value>
-          <variable_type>CURRENT_JOB</variable_type>
-        </field>
-        <field>
-          <variable_name>log_entry_table_name</variable_name>
-          <variable_value>log_encompass_raw_job_entry</variable_value>
-          <variable_type>CURRENT_JOB</variable_type>
-        </field>
       </fields>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>528</xloc>
-      <yloc>304</yloc>
+      <xloc>448</xloc>
+      <yloc>240</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>SP6_FULL_Add SP6.1 Success Message to Log</name>
+      <description/>
+      <type>WRITE_TO_LOG</type>
+      <attributes/>
+      <logmessage>SP6_FULL_Add SP6.1 has completed successfully</logmessage>
+      <loglevel>Basic</loglevel>
+      <logsubject>SP6_FULL_Add SP6.1 Success Message to Log</logsubject>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>448</xloc>
+      <yloc>528</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>SP6_FULL_Execute SP6.2</name>
+      <description/>
+      <type>JOB</type>
+      <attributes/>
+      <specification_method>rep_name</specification_method>
+      <job_object_id/>
+      <filename/>
+      <jobname>transform_encompass_raw_data_to_octane_domains</jobname>
+      <directory>/encompass/import/SP6.2</directory>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <slave_server_name/>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>Y</follow_abort_remote>
+      <expand_remote_job>Y</expand_remote_job>
+      <create_parent_folder>N</create_parent_folder>
+      <pass_export>N</pass_export>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>log_path</name>
+          <stream_name>${input_path}</stream_name>
+          <value/>
+        </parameter>
+        <parameter>
+          <name>input_path</name>
+          <stream_name>${input_path}</stream_name>
+          <value/>
+        </parameter>
+        <parameter>
+          <name>database_hostname</name>
+          <stream_name>${database_hostname}</stream_name>
+          <value/>
+        </parameter>
+        <parameter>
+          <name>database_port</name>
+          <stream_name>${database_port}</stream_name>
+          <value/>
+        </parameter>
+        <parameter>
+          <name>database_name</name>
+          <stream_name>${database_name}</stream_name>
+          <value/>
+        </parameter>
+        <parameter>
+          <name>database_username</name>
+          <stream_name>${database_username}</stream_name>
+          <value/>
+        </parameter>
+        <parameter>
+          <name>database_password</name>
+          <stream_name>${database_password}</stream_name>
+          <value/>
+        </parameter>
+      </parameters>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>448</xloc>
+      <yloc>752</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>SP6_FULL_Abort Due to SP6.2 Failure</name>
+      <description/>
+      <type>ABORT</type>
+      <attributes/>
+      <message>SP6 has aborted without successfully completing SP6.2.</message>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>800</xloc>
+      <yloc>752</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>SP6_FULL_Add SP6.2 Success Message to Log</name>
+      <description/>
+      <type>WRITE_TO_LOG</type>
+      <attributes/>
+      <logmessage>SP6_FULL_Add SP6.2 has completed successfully</logmessage>
+      <loglevel>Basic</loglevel>
+      <logsubject>SP6_FULL_Add SP6.2 Success Message to Log</logsubject>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>448</xloc>
+      <yloc>864</yloc>
       <attributes_kjc/>
     </entry>
   </entries>
   <hops>
     <hop>
-      <from>SP6.1_FULL_execute transformation load encompass daily extract</from>
-      <to>SP6.1_FULL_Write SP1_LOAD_RAW failure to log</to>
+      <from>SP6_FULL_Execute SP6.1</from>
+      <to>SP6_FULL_Abort Due to SP6.1 Failure</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>SP6.1_FULL_Write SP1_LOAD_RAW failure to log</from>
-      <to>SP6.1_FULL_Abort after FAILED log operation</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>SP6.1_FULL_Write SP1_LOAD_RAW failure to log</from>
-      <to>SP6.1_FULL_Abort after successful log operation</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>SP6.1_FULL_execute transformation load encompass daily extract</from>
-      <to>SP6.1_FULL_End</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
     <hop>
       <from>Start</from>
-      <to>SP6.1_FULL_Set variables</to>
+      <to>SP6_FULL_Set variables</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -674,8 +732,62 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>SP6.1_FULL_Set variables</from>
-      <to>SP6.1_FULL_execute transformation load encompass daily extract</to>
+      <from>SP6_FULL_Set variables</from>
+      <to>SP6_FULL_Execute SP6.1</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SP6_FULL_Execute SP6.1</from>
+      <to>SP6_FULL_Add SP6.1 Success Message to Log</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SP6_FULL_Execute SP6.1</from>
+      <to>SP6_FULL_Add SP6.1 Success Message to Log</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SP6_FULL_Add SP6.1 Success Message to Log</from>
+      <to>SP6_FULL_Execute SP6.2</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SP6_FULL_Execute SP6.2</from>
+      <to>SP6_FULL_Abort Due to SP6.2 Failure</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SP6_FULL_Execute SP6.2</from>
+      <to>SP6_FULL_Add SP6.2 Success Message to Log</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SP6_FULL_Add SP6.2 Success Message to Log</from>
+      <to>SP6_FULL_End</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -685,14 +797,11 @@
   </hops>
   <notepads>
     <notepad>
-      <note>SP6.1 - Load Encompass Extract Data
-Looks for a file named Encompass.csv in the path provided and loads it
-to a table in a database. Change environments by changing input
-parameters.</note>
-      <xloc>32</xloc>
+      <note>SP6 - Encompass Full ETL</note>
+      <xloc>48</xloc>
       <yloc>32</yloc>
-      <width>695</width>
-      <heigth>110</heigth>
+      <width>271</width>
+      <heigth>35</heigth>
       <fontname>.AppleSystemUIFont</fontname>
       <fontsize>13</fontsize>
       <fontbold>N</fontbold>
