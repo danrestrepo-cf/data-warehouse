@@ -23,7 +23,7 @@ fi
 
 docker run -it  \
   --network ${project_name}_default \
-  -v $(pwd)/../../pentaho:/jobs/ \
+  -v $(pwd)/../../pentaho/src:/jobs/ \
   -v $(pwd)/inputs/:/input/ \
   --env DB_ENDPOINT=${project_name}_database_1 \
   --env DB_PORT=5432 \

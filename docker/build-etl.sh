@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-docker build -f etl.Dockerfile -t edw/etl ../pentaho
+docker build -f etl.Dockerfile -t edw/etl ../pentaho/src
