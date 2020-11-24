@@ -21,4 +21,7 @@ execute_test ${process_name} "dmi-V35-state.csv" ${mdi_controller_path}
 process_name="SP9.1"
 echo Now testing ${process_name}
 execute_test ${process_name} "dmi-V35-national.csv" ${mdi_controller_path}
-
+##########################################################################################
+process_name="SP10.1"
+echo Now testing ${process_name}
+execute_test ${process_name} "dmi-V35.xls" ${mdi_controller_path}
