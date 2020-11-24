@@ -22,7 +22,7 @@ function print_usage()
   echo "    Usage: ${script_filename} job [job_name] [filename]"
   echo "    Example: ./${script_filename} job /encompass/import/SP6/full_encompass_etl encompass.csv"
   echo " "
-  echo " MDI Mode - pass in the process name configured in the EDW, a file name that should be checked for existence and a unique identifier."
+  echo " MDI Mode - pass in the process name configured in the EDW and a file name that should be checked for existence."
   echo "    Usage: ${script_filename} mdi [process_name] [filename]"
   echo "    Example: ./${script_filename} mdi SP10.1 dmi-V35.xls"
 }
