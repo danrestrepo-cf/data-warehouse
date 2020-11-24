@@ -36,7 +36,8 @@ function print_usage()
   echo "    Usage: ${script_filename} mdi [process_name] [filename]"
   echo "    Example: ./${script_filename} mdi SP10.1 dmi-V35.xls"
   echo " "
-  echo " MDI Mode - pass in the process name configured in the EDW and a file name that should be checked for existence."
+  echo " Unit Test Mode - pass in the process name configured in the EDW, a file name that should be checked for "
+  echo "                  existence, and the path to the job/transformation that kitchen should execute."
   echo "    Usage: ${script_filename} test [process_name] [filename] [transformation/job to run]"
   echo "    Example: ./${script_filename} test \"SP8.1\" \"dmi-V35-state.csv\" \"mdi/controller\""
 }
