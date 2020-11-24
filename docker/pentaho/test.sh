@@ -1,7 +1,17 @@
 #!/usr/bin/env bash
 
+# stop script execution if any command fails
+set -e
+
+# set variable defaults
 script_filename=${0##*/}
 project_name=edw
+
+# set default directories docker will use to mount in the docker container
+pentaho_source_directory=($(pwd)/../../pentaho/src)
+pentaho_test_directory=($(pwd)/../../pentaho/test)
+pentaho_input_directory=($(pwd)/inputs/)
+
 
 # determine what type of machine we're running on
 unameOut="$(uname -s)"
@@ -25,6 +35,10 @@ function print_usage()
   echo " MDI Mode - pass in the process name configured in the EDW and a file name that should be checked for existence."
   echo "    Usage: ${script_filename} mdi [process_name] [filename]"
   echo "    Example: ./${script_filename} mdi SP10.1 dmi-V35.xls"
+  echo " "
+  echo " MDI Mode - pass in the process name configured in the EDW and a file name that should be checked for existence."
+  echo "    Usage: ${script_filename} test [process_name] [filename] [transformation/job to run]"
+  echo "    Example: ./${script_filename} test \"SP8.1\" \"dmi-V35-state.csv\" \"mdi/controller\""
 }
 
 function run_docker()
@@ -36,8 +50,8 @@ function run_docker()
 
   docker run -it  \
     --network ${project_name}_default \
-    -v $(pwd)/../../pentaho/src:/jobs/ \
-    -v $(pwd)/inputs/:/input/ \
+    -v ${pentaho_source_directory}:/jobs/ \
+    -v ${pentaho_input_directory}:/input/ \
     --env DB_ENDPOINT=${project_name}_database_1 \
     --env DB_PORT=5432 \
     --env DB_USERNAME=postgres \
@@ -54,14 +68,13 @@ function run_docker()
   fi
 }
 
-
-parameter_count=3
-if [[ $# -ne parameter_count ]]; then
-   echo "ERROR: Unexpected number of parameters found. Expected ${parameter_count} but found ${#}."
-   echo " "
-   print_usage
-  exit 1
-fi
+#parameter_count=3
+#if [[ $# -ge parameter_count ]]; then
+#   echo "ERROR: Unexpected number of parameters found. Expected ${parameter_count} but found ${#}."
+#   echo " "
+#   print_usage
+#  exit 1
+#fi
 
 
 case "$1" in
@@ -77,6 +90,15 @@ job)
   job_name=$1 # /src/encompass/import/SP6/full_encompass_etl
   filename=$2
   run_docker
+  ;;
+test)
+  shift 1
+  process_name=$1   # Ex: "SP10.1"
+  filename=$2       # Ex: "Encompass.csv"
+  job_name=$3       # Ex: "mdi/controller" or "/encompass/import/SP6/full_encompass_etl"
+  cp ${pentaho_test_directory}/${process_name}/${filename} ${pentaho_input_directory}
+  run_docker
+  rm -rf ${pentaho_input_directory}/${filename}
   ;;
 *)
   print_usage
