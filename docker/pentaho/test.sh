@@ -27,8 +27,6 @@ function print_usage()
   echo "    Example: ./${script_filename} mdi SP10.1 dmi-V35.xls"
 }
 
-
-
 function run_docker()
 {
   if [[ "$machine" == "Win" ]]; then
