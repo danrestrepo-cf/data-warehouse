@@ -70,7 +70,7 @@ case "$1" in
 mdi)
   shift 1
   process_name=$1 # SP10.1
-  job_name="src/mdi/controller"
+  job_name="mdi/controller"
   filename=$2
   run_docker
   ;;
