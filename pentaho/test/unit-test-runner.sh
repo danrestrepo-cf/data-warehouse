@@ -31,13 +31,15 @@ function print_usage()
 
 function generate_grep_phrase()
 {
-  if [[ $# -eq 1 ]]; then # if one parameter use that in the grep statement
+  if [[ "$1" != "" ]]; then # if one parameter use that in the grep statement
       grep_statement=$1
+      echo "Using supplied grep statement: \"$grep_statement\""
 
-      elif [[ $# -eq 0 ]]; then # if no parameters, use the default grep statement
-      echo "need to use default string"
+  elif [[ "$1" == "" ]]; then # if no parameters, use the default grep statement
+      echo "Using default grep statement: \"$grep_statement\""
 
-      else # the input isn't understood, show the usage statement
+  else # the input isn't understood, show the usage statement
+        echo "Unable to understand input parameters."
         print_usage
         exit 1
   fi
