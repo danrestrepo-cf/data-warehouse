@@ -71,7 +71,7 @@ function run_docker()
 
 parameter_count=3
 if [[ $parameter_count -ge $# ]]; then
-   echo "ERROR: Unexpected number of parameters found. Expected ${parameter_count} but found ${#}."
+   echo "ERROR: Unexpected number of parameters found. Expected ${parameter_count} or more but found ${#}."
    echo " "
    print_usage
   exit 1
@@ -88,7 +88,7 @@ mdi)
   ;;
 job)
   shift 1
-  job_name=$1 # /src/encompass/import/SP6/full_encompass_etl
+  job_name=$1 # /encompass/import/SP6/full_encompass_etl
   filename=$2
   run_docker
   ;;
