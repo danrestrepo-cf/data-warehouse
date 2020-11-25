@@ -69,13 +69,13 @@ function run_docker()
   fi
 }
 
-#parameter_count=3
-#if [[ $# -ge parameter_count ]]; then
-#   echo "ERROR: Unexpected number of parameters found. Expected ${parameter_count} but found ${#}."
-#   echo " "
-#   print_usage
-#  exit 1
-#fi
+parameter_count=3
+if [[ $parameter_count -ge $# ]]; then
+   echo "ERROR: Unexpected number of parameters found. Expected ${parameter_count} but found ${#}."
+   echo " "
+   print_usage
+  exit 1
+fi
 
 
 case "$1" in
