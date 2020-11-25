@@ -97,9 +97,8 @@ test)
   process_name=$1   # Ex: "SP10.1"
   filename=$2       # Ex: "Encompass.csv"
   job_name=$3       # Ex: "mdi/controller" or "/encompass/import/SP6/full_encompass_etl"
-  cp ${pentaho_test_directory}/${process_name}/${filename} ${pentaho_input_directory}
+  pentaho_input_directory=${pentaho_test_directory}/${process_name}/
   run_docker
-  rm -rf ${pentaho_input_directory}/${filename}
   ;;
 *)
   print_usage
