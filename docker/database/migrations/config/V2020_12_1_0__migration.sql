@@ -1,8 +1,15 @@
--- add field needed to identify sensitive fields
+-- add field needed to identify sensitive fields and set all fields
+-- that are configured to output to a table to not sensitive
 ALTER TABLE
     mdi.table_output_field
 ADD
-    is_sensitive BOOLEAN NOT NULL;
+    is_sensitive BOOLEAN default FALSE NOT NULL;
+
+-- remove default value from field
+ALTER TABLE
+    mdi.table_output_field
+    ALTER COLUMN
+        is_sensitive DROP default;
 
 -- set all fields that are configured to output to a table to not sensitive
 UPDATE
@@ -19,7 +26,7 @@ SET
 WHERE
         dwid IN
         (
-              4  -- unpaid_balance in SP8.1
+              4 -- unpaid_balance in SP8.1
             ,13 -- unpaid_balance in SP9.1
             ,18 -- unpaid_balance in SP10.1
         );
