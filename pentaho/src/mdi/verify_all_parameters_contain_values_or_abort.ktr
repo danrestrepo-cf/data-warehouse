@@ -1,6 +1,6 @@
 <transformation>
   <info>
-    <name>template_csv_to_table</name>
+    <name>verify_all_parameters_contain_values_or_abort</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -8,6 +8,16 @@
     <trans_status>0</trans_status>
     <directory>/mdi</directory>
     <parameters>
+      <parameter>
+        <name>ERROR_CODE</name>
+        <default_value>PARAMETER_NOT_VALID</default_value>
+        <description/>
+      </parameter>
+      <parameter>
+        <name>ERROR_DESCRIPTION</name>
+        <default_value>Unable to detect valid data passed in a parameter!</default_value>
+        <description/>
+      </parameter>
       <parameter>
         <name>database_hostname</name>
         <default_value/>
@@ -35,6 +45,11 @@
       </parameter>
       <parameter>
         <name>etl_batch_id</name>
+        <default_value/>
+        <description/>
+      </parameter>
+      <parameter>
+        <name>process_name</name>
         <default_value/>
         <description/>
       </parameter>
@@ -374,7 +389,7 @@
         </field>
         <field>
           <id>LOG_FIELD</id>
-          <enabled>Y</enabled>
+          <enabled>N</enabled>
           <name>LOG_FIELD</name>
         </field>
       </step-log-table>
@@ -457,9 +472,9 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2020/09/15 15:00:08.871</created_date>
+    <created_date>2020/10/26 09:42:02.552</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/10/27 08:18:42.418</modified_date>
+    <modified_date>2020/11/24 16:34:01.956</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -479,7 +494,7 @@
     <index_tablespace/>
     <attributes>
       <attribute>
-        <code>EXTRA_OPTION_POSTGRESQL.EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code>
+        <code>EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code>
         <attribute>pentaho_logging_sequence</attribute>
       </attribute>
       <attribute>
@@ -524,90 +539,20 @@
       </attribute>
     </attributes>
   </connection>
-  <connection>
-    <name>Ingress DB Connection</name>
-    <server>${database_hostname}</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>ingress</database>
-    <port>${database_port}</port>
-    <username>${database_username}</username>
-    <password>${database_password}</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute>
-        <code>EXTRA_OPTION_POSTGRESQL.EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code>
-        <attribute>pentaho_logging_sequence</attribute>
-      </attribute>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>IS_CLUSTERED</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>PORT_NUMBER</code>
-        <attribute>${database_port}</attribute>
-      </attribute>
-      <attribute>
-        <code>PRESERVE_RESERVED_WORD_CASE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>QUOTE_ALL_FIELDS</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>USE_POOLING</code>
-        <attribute>N</attribute>
-      </attribute>
-    </attributes>
-  </connection>
   <order>
     <hop>
-      <from>[template_csv_to_table] add a blank field for etl_batch_id to valid stream</from>
-      <to>[template_csv_to_table] Set etl_batch_id field value to parameter etl_batch_id</to>
+      <from>[verify_all_parameters_contain_values_or_abort] Load parameter values</from>
+      <to>[verify_all_parameters_contain_values_or_abort] Data validator</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_csv_to_table] CSV file input</from>
-      <to>[template_csv_to_table] add a blank field for etl_batch_id to valid stream</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[template_csv_to_table] Set etl_batch_id field value to parameter etl_batch_id</from>
-      <to>[template_csv_to_table] Table output</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[template_csv_to_table] CSV file input</from>
-      <to>[template_csv_to_table] Abort CSV file input</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[template_csv_to_table] Table output</from>
-      <to>[template_csv_to_table]  Abort Table Output</to>
+      <from>[verify_all_parameters_contain_values_or_abort] Data validator</from>
+      <to>[verify_all_parameters_contain_values_or_abort] Abort</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>[template_csv_to_table]  Abort Table Output</name>
+    <name>[verify_all_parameters_contain_values_or_abort] Abort</name>
     <type>Abort</type>
     <description/>
     <distribute>Y</distribute>
@@ -618,9 +563,9 @@
       <schema_name/>
     </partitioning>
     <row_threshold>0</row_threshold>
-    <message>could not save data to table</message>
+    <message>Missing data in required parameter!</message>
     <always_log_rows>Y</always_log_rows>
-    <abort_option>ABORT</abort_option>
+    <abort_option>ABORT_WITH_ERROR</abort_option>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -630,14 +575,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>560</xloc>
-      <yloc>480</yloc>
+      <xloc>752</xloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_csv_to_table] Abort CSV file input</name>
-    <type>Abort</type>
+    <name>[verify_all_parameters_contain_values_or_abort] Data validator</name>
+    <type>Validator</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -646,10 +591,177 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <row_threshold>0</row_threshold>
-    <message>could not load csv file</message>
-    <always_log_rows>Y</always_log_rows>
-    <abort_option>ABORT</abort_option>
+    <validate_all>Y</validate_all>
+    <concat_errors>Y</concat_errors>
+    <concat_separator>|</concat_separator>
+    <validator_field>
+      <name>database_hostname</name>
+      <validation_name>Verify parameter database_hostname is valid</validation_name>
+      <max_length/>
+      <min_length>1</min_length>
+      <null_allowed>N</null_allowed>
+      <only_null_allowed>N</only_null_allowed>
+      <only_numeric_allowed>N</only_numeric_allowed>
+      <data_type>String</data_type>
+      <data_type_verified>Y</data_type_verified>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <max_value/>
+      <min_value/>
+      <start_string/>
+      <end_string/>
+      <start_string_not_allowed/>
+      <end_string_not_allowed/>
+      <regular_expression/>
+      <regular_expression_not_allowed/>
+      <error_code>${ERROR_CODE}</error_code>
+      <error_description>${ERROR_DESCRIPTION}</error_description>
+      <is_sourcing_values>N</is_sourcing_values>
+      <sourcing_step/>
+      <sourcing_field/>
+      <allowed_value/>
+    </validator_field>
+    <validator_field>
+      <name>database_port</name>
+      <validation_name>Verify parameter database_port is valid</validation_name>
+      <max_length/>
+      <min_length/>
+      <null_allowed>N</null_allowed>
+      <only_null_allowed>N</only_null_allowed>
+      <only_numeric_allowed>Y</only_numeric_allowed>
+      <data_type>Integer</data_type>
+      <data_type_verified>Y</data_type_verified>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <max_value>65535</max_value>
+      <min_value>1024</min_value>
+      <start_string/>
+      <end_string/>
+      <start_string_not_allowed/>
+      <end_string_not_allowed/>
+      <regular_expression/>
+      <regular_expression_not_allowed/>
+      <error_code>${ERROR_CODE}</error_code>
+      <error_description>${ERROR_DESCRIPTION}</error_description>
+      <is_sourcing_values>N</is_sourcing_values>
+      <sourcing_step/>
+      <sourcing_field/>
+      <allowed_value/>
+    </validator_field>
+    <validator_field>
+      <name>database_username</name>
+      <validation_name>Verify parameter database_username is valid</validation_name>
+      <max_length/>
+      <min_length>1</min_length>
+      <null_allowed>N</null_allowed>
+      <only_null_allowed>N</only_null_allowed>
+      <only_numeric_allowed>N</only_numeric_allowed>
+      <data_type>String</data_type>
+      <data_type_verified>Y</data_type_verified>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <max_value/>
+      <min_value/>
+      <start_string/>
+      <end_string/>
+      <start_string_not_allowed/>
+      <end_string_not_allowed/>
+      <regular_expression/>
+      <regular_expression_not_allowed/>
+      <error_code>${ERROR_CODE}</error_code>
+      <error_description>${ERROR_DESCRIPTION}</error_description>
+      <is_sourcing_values>N</is_sourcing_values>
+      <sourcing_step/>
+      <sourcing_field/>
+      <allowed_value/>
+    </validator_field>
+    <validator_field>
+      <name>database_password</name>
+      <validation_name>Verify parameter database_password is valid</validation_name>
+      <max_length/>
+      <min_length>1</min_length>
+      <null_allowed>N</null_allowed>
+      <only_null_allowed>N</only_null_allowed>
+      <only_numeric_allowed>N</only_numeric_allowed>
+      <data_type>String</data_type>
+      <data_type_verified>Y</data_type_verified>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <max_value/>
+      <min_value/>
+      <start_string/>
+      <end_string/>
+      <start_string_not_allowed/>
+      <end_string_not_allowed/>
+      <regular_expression/>
+      <regular_expression_not_allowed/>
+      <error_code>${ERROR_CODE}</error_code>
+      <error_description>${ERROR_DESCRIPTION}</error_description>
+      <is_sourcing_values>N</is_sourcing_values>
+      <sourcing_step/>
+      <sourcing_field/>
+      <allowed_value/>
+    </validator_field>
+    <validator_field>
+      <name>etl_batch_id</name>
+      <validation_name>Verify parameter etl_batch_id is valid</validation_name>
+      <max_length/>
+      <min_length>1</min_length>
+      <null_allowed>N</null_allowed>
+      <only_null_allowed>N</only_null_allowed>
+      <only_numeric_allowed>N</only_numeric_allowed>
+      <data_type>String</data_type>
+      <data_type_verified>Y</data_type_verified>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <max_value/>
+      <min_value/>
+      <start_string/>
+      <end_string/>
+      <start_string_not_allowed/>
+      <end_string_not_allowed/>
+      <regular_expression/>
+      <regular_expression_not_allowed/>
+      <error_code>${ERROR_CODE}</error_code>
+      <error_description>${ERROR_DESCRIPTION}</error_description>
+      <is_sourcing_values>N</is_sourcing_values>
+      <sourcing_step/>
+      <sourcing_field/>
+      <allowed_value/>
+    </validator_field>
+    <validator_field>
+      <name>process_name</name>
+      <validation_name>Verify parameter process_name is valid</validation_name>
+      <max_length/>
+      <min_length>1</min_length>
+      <null_allowed>N</null_allowed>
+      <only_null_allowed>N</only_null_allowed>
+      <only_numeric_allowed>N</only_numeric_allowed>
+      <data_type>String</data_type>
+      <data_type_verified>Y</data_type_verified>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <max_value/>
+      <min_value/>
+      <start_string/>
+      <end_string/>
+      <start_string_not_allowed/>
+      <end_string_not_allowed/>
+      <regular_expression/>
+      <regular_expression_not_allowed/>
+      <error_code>${ERROR_CODE}</error_code>
+      <error_description>${ERROR_DESCRIPTION}</error_description>
+      <is_sourcing_values>N</is_sourcing_values>
+      <sourcing_step/>
+      <sourcing_field/>
+      <allowed_value/>
+    </validator_field>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -659,153 +771,106 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>560</xloc>
-      <yloc>96</yloc>
+      <xloc>272</xloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_csv_to_table] CSV file input</name>
-    <type>CsvInput</type>
+    <name>[verify_all_parameters_contain_values_or_abort] Load parameter values</name>
+    <type>GetVariable</type>
     <description/>
-    <distribute>N</distribute>
+    <distribute>Y</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename/>
-    <filename_field/>
-    <rownum_field/>
-    <include_filename>N</include_filename>
-    <separator>,</separator>
-    <enclosure>"</enclosure>
-    <header>Y</header>
-    <buffer_size>50000</buffer_size>
-    <lazy_conversion>N</lazy_conversion>
-    <add_filename_result>N</add_filename_result>
-    <parallel>N</parallel>
-    <newline_possible>N</newline_possible>
-    <format>DOS</format>
-    <encoding>UTF-8</encoding>
-    <fields>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>256</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_csv_to_table] Set etl_batch_id field value to parameter etl_batch_id</name>
-    <type>SetValueConstant</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <usevar>Y</usevar>
     <fields>
       <field>
-        <name>etl_batch_id</name>
-        <value>${etl_batch_id}</value>
-        <mask/>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>256</xloc>
-      <yloc>352</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_csv_to_table] Table output</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>Ingress DB Connection</connection>
-    <schema/>
-    <table/>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>N</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>256</xloc>
-      <yloc>480</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_csv_to_table] add a blank field for etl_batch_id to valid stream</name>
-    <type>Constant</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>etl_batch_id</name>
+        <name>database_hostname</name>
+        <variable>${database_hostname}</variable>
         <type>String</type>
         <format/>
         <currency/>
         <decimal/>
         <group/>
-        <nullif/>
         <length>-1</length>
         <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>etl_batch_id</name>
+        <variable>${etl_batch_id}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>process_name</name>
+        <variable>${process_name}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>database_password</name>
+        <variable>${database_password}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>database_port</name>
+        <variable>${database_port}</variable>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>database_username</name>
+        <variable>${database_username}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>database_schema</name>
+        <variable>${database_schema}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
       </field>
     </fields>
     <attributes/>
@@ -817,39 +882,15 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>256</xloc>
-      <yloc>224</yloc>
+      <xloc>272</xloc>
+      <yloc>96</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step_error_handling>
     <error>
-      <source_step>[template_csv_to_table] CSV file input</source_step>
-      <target_step>[template_csv_to_table] Abort CSV file input</target_step>
-      <is_enabled>Y</is_enabled>
-      <nr_valuename/>
-      <descriptions_valuename/>
-      <fields_valuename/>
-      <codes_valuename/>
-      <max_errors/>
-      <max_pct_errors/>
-      <min_pct_rows/>
-    </error>
-    <error>
-      <source_step>[template_csv_to_table] Set etl_batch_id field value to parameter etl_batch_id</source_step>
-      <target_step>[template_csv_to_table]  Abort Table Output</target_step>
-      <is_enabled>N</is_enabled>
-      <nr_valuename/>
-      <descriptions_valuename/>
-      <fields_valuename/>
-      <codes_valuename/>
-      <max_errors/>
-      <max_pct_errors/>
-      <min_pct_rows/>
-    </error>
-    <error>
-      <source_step>[template_csv_to_table] Table output</source_step>
-      <target_step>[template_csv_to_table]  Abort Table Output</target_step>
+      <source_step>[verify_all_parameters_contain_values_or_abort] Data validator</source_step>
+      <target_step>[verify_all_parameters_contain_values_or_abort] Abort</target_step>
       <is_enabled>Y</is_enabled>
       <nr_valuename/>
       <descriptions_valuename/>

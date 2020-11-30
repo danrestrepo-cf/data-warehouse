@@ -14,6 +14,10 @@ esac
 
 project_name=edw
 
+# set default directories docker will use to mount in the docker container
+pentaho_source_directory=($(pwd)/../../pentaho/src)
+pentaho_test_directory=($(pwd)/../../pentaho/test)
+pentaho_input_directory=($(pwd)/inputs/)
 
 if [[ "$machine" == "Win" ]]; then
   #set git bash so it does not convert paths using POSIX standard
@@ -23,8 +27,8 @@ fi
 
 docker run -it  \
   --network ${project_name}_default \
-  -v $(pwd)/../../pentaho:/jobs/ \
-  -v $(pwd)/inputs/:/input/ \
+    -v ${pentaho_source_directory}:/jobs/ \
+    -v ${pentaho_input_directory}:/input/ \
   --env DB_ENDPOINT=${project_name}_database_1 \
   --env DB_PORT=5432 \
   --env DB_USERNAME=postgres \
