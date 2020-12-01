@@ -50,7 +50,7 @@ function print_usage()
 function run_docker()
 {
   if [[ "$machine" == "Win" ]]; then
-    #set git bash so it does not convert paths using POSIX standard
+    # set git bash so it does not convert paths using POSIX standard
     export MSYS_NO_PATHCONV=1
   fi
 
@@ -69,13 +69,20 @@ function run_docker()
     $job_type $job_name
 
   if [[ "$machine" == "Win" ]]; then
-    #remove the environment variable used so Git Bash won't convert paths to the POSIX standard for the system
+    # remove the environment variable used so Git Bash won't convert paths to the POSIX standard for the system
     unset MSYS_NO_PATHCONV
   fi
 }
 
 case "$1" in
 mdi)
+  # ensure correct number of parameters passed in for MDI Mode
+  if [[ "$#" -ne "3" ]]; then
+    echo "Could not understand input parameters. Displaying script usage:"
+    print_usage
+    exit 1
+  fi
+
   shift 1
   process_name=$1 # SP10.1
   job_name="mdi/controller"
@@ -83,16 +90,30 @@ mdi)
   run_docker
   ;;
 job)
+  # ensure correct number of parameters passed in for Job Mode
+  if [[ "$#" -ne "3" ]]; then
+    echo "Could not understand input parameters. Displaying script usage:"
+    print_usage
+    exit 1
+  fi
+
   shift 1
   job_name="$1" # /encompass/import/SP6/full_encompass_etl
   filename=$2
   run_docker
   ;;
 test)
+  # ensure correct number of parameters passed in for MDI Mode
+  if [[ "$#" -ne "4" ]]; then
+    echo "Could not understand input parameters. Displaying script usage:"
+    print_usage
+    exit 1
+  fi
+
   shift 1
   process_name=$1   # Ex: "SP10.1"
   filename=$2       # Ex: "Encompass.csv"
-  job_name="$3"       # Ex: "mdi/controller" or "/encompass/import/SP6/full_encompass_etl"
+  job_name="$3"       # Ex: "mdi/controller" or "encompass/import/SP6/full_encompass_etl"
   pentaho_input_directory=${pentaho_test_directory}/${process_name}/
   run_docker
   ;;
@@ -109,5 +130,6 @@ bash)
 *)
   echo "Could not understand input parameters. Displaying script usage:"
   print_usage
+  exit 1
   ;;
 esac
