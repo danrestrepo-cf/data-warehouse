@@ -1,22 +1,22 @@
--- add field needed to identify sensitive fields and set all fields
--- that are configured to output to a table to not sensitive
+-- add field needed to identify sensitive fields
 ALTER TABLE
     mdi.table_output_field
 ADD
-    is_sensitive BOOLEAN default FALSE NOT NULL;
-
--- remove default value from field
-ALTER TABLE
-    mdi.table_output_field
-    ALTER COLUMN
-        is_sensitive DROP default;
+    is_sensitive BOOLEAN;
 
 -- set all fields that are configured to output to a table to not sensitive
 UPDATE
     mdi.table_output_field
 SET
     is_sensitive=FALSE
-WHERE 1=1;
+WHERE
+    table_output_field.is_sensitive IS NULL;
+
+-- add NOT NULL to newly created field
+ALTER TABLE
+    mdi.table_output_field
+    ALTER COLUMN
+        is_sensitive SET NOT NULL;
 
 -- -- manually set sensitive fields used for testing
 -- UPDATE
