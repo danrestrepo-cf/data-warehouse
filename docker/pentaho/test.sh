@@ -12,7 +12,7 @@ pentaho_source_directory=($(pwd)/../../pentaho/src)
 pentaho_test_directory=($(pwd)/../../pentaho/test)
 pentaho_input_directory=($(pwd)/inputs/)
 
-job_type="j "
+entrypoint_parameter="j "
 
 # determine what type of machine we're running on
 unameOut="$(uname -s)"
@@ -66,7 +66,7 @@ function run_docker()
     --env INPUT_FILE="$filename" \
     --env INPUT_PATH=/input/ \
     ${project_name}/pentaho \
-    $job_type $job_name
+    $entrypoint_parameter $job_name
 
   if [[ "$machine" == "Win" ]]; then
     # remove the environment variable used so Git Bash won't convert paths to the POSIX standard for the system
@@ -78,7 +78,8 @@ case "$1" in
 mdi)
   # ensure correct number of parameters passed in for MDI Mode
   if [[ "$#" -ne "3" ]]; then
-    echo "Could not understand input parameters. Displaying script usage:"
+    echo "Could not understand input parameters. MDI mode expects the first parameter to $script_filename to be 'mdi' and have 3 parameters in total but found $#."
+    echo "Displaying script usage:"
     print_usage
     exit 1
   fi
@@ -92,7 +93,8 @@ mdi)
 job)
   # ensure correct number of parameters passed in for Job Mode
   if [[ "$#" -ne "3" ]]; then
-    echo "Could not understand input parameters. Displaying script usage:"
+    echo "Could not understand input parameters. Job mode expects the first parameter to $script_filename to be 'job' and have 3 parameters in total but found $#."
+    echo "Displaying script usage:"
     print_usage
     exit 1
   fi
@@ -105,7 +107,8 @@ job)
 test)
   # ensure correct number of parameters passed in for MDI Mode
   if [[ "$#" -ne "4" ]]; then
-    echo "Could not understand input parameters. Displaying script usage:"
+    echo "Could not understand input parameters. Unit Test mode expects the first parameter to $script_filename to be 'test' and have 4 parameters in total but found $#."
+    echo "Displaying script usage:"
     print_usage
     exit 1
   fi
@@ -120,7 +123,7 @@ test)
 bash)
   shift 1
   filename="empty.file"
-  job_type=""
+  entrypoint_parameter=""
   pentaho_input_directory=("$pentaho_test_directory"/bash)
   process_name="bash"
   job_name="bash"
