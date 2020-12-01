@@ -474,7 +474,7 @@
     <created_user>-</created_user>
     <created_date>2020/10/26 09:42:02.552</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/11/24 16:34:01.956</modified_date>
+    <modified_date>2020/12/01 10:56:43.722</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -563,7 +563,7 @@
       <schema_name/>
     </partitioning>
     <row_threshold>0</row_threshold>
-    <message>Missing data in required parameter!</message>
+    <message>Missing data in a required parameter! Review the logs for transformation 'verify_all_parameters_contain_values_or_abort' to see more detailed info.</message>
     <always_log_rows>Y</always_log_rows>
     <abort_option>ABORT_WITH_ERROR</abort_option>
     <attributes/>
@@ -653,34 +653,6 @@
     <validator_field>
       <name>database_username</name>
       <validation_name>Verify parameter database_username is valid</validation_name>
-      <max_length/>
-      <min_length>1</min_length>
-      <null_allowed>N</null_allowed>
-      <only_null_allowed>N</only_null_allowed>
-      <only_numeric_allowed>N</only_numeric_allowed>
-      <data_type>String</data_type>
-      <data_type_verified>Y</data_type_verified>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <max_value/>
-      <min_value/>
-      <start_string/>
-      <end_string/>
-      <start_string_not_allowed/>
-      <end_string_not_allowed/>
-      <regular_expression/>
-      <regular_expression_not_allowed/>
-      <error_code>${ERROR_CODE}</error_code>
-      <error_description>${ERROR_DESCRIPTION}</error_description>
-      <is_sourcing_values>N</is_sourcing_values>
-      <sourcing_step/>
-      <sourcing_field/>
-      <allowed_value/>
-    </validator_field>
-    <validator_field>
-      <name>database_password</name>
-      <validation_name>Verify parameter database_password is valid</validation_name>
       <max_length/>
       <min_length>1</min_length>
       <null_allowed>N</null_allowed>
@@ -815,18 +787,6 @@
       <field>
         <name>process_name</name>
         <variable>${process_name}</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>database_password</name>
-        <variable>${database_password}</variable>
         <type>String</type>
         <format/>
         <currency/>
