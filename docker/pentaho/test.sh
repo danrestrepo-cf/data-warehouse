@@ -105,7 +105,7 @@ job)
   run_docker
   ;;
 test)
-  # ensure correct number of parameters passed in for MDI Mode
+  # ensure correct number of parameters passed in for Unit Test Mode
   if [[ "$#" -ne "4" ]]; then
     echo "Could not understand input parameters. Unit Test mode expects the first parameter to $script_filename to be 'test' and have 4 parameters in total but found $#."
     echo "Displaying script usage:"
