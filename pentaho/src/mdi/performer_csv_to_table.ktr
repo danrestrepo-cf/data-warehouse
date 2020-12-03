@@ -469,7 +469,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.089</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/12/03 11:58:34.158</modified_date>
+    <modified_date>2020/12/03 12:21:04.530</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -1036,24 +1036,24 @@ DATABASE_FIELD_NAME. </note>
     </partitioning>
     <connection>Config DB Connection</connection>
     <sql>SELECT
-	csv_field.field_name
-	, csv_field.field_format
-	, csv_field.field_length
-	, csv_field.field_precision
-	, csv_field.field_currency
-	, csv_field.field_decimal
-	, csv_field.field_group
-	, csv_field.field_trim_type
-	, csv_field.field_order
-	, csv_field.field_type
+    csv_file_input_field.field_name
+    , csv_file_input_field.field_format
+    , csv_file_input_field.field_length
+    , csv_file_input_field.field_precision
+    , csv_file_input_field.field_currency
+    , csv_file_input_field.field_decimal
+    , csv_file_input_field.field_group
+    , csv_file_input_field.field_trim_type
+    , csv_file_input_field.field_order
+    , csv_file_input_field.field_type
 FROM
-	mdi.csv_file_input_step csv_step
-		LEFT JOIN mdi.csv_file_input_field csv_field ON csv_step.dwid = csv_field.csv_file_input_step_dwid
+    mdi.csv_file_input_step csv_step
+        LEFT JOIN mdi.csv_file_input_field ON csv_step.dwid = csv_file_input_field.csv_file_input_step_dwid
 WHERE
-		csv_step.process_dwid = ${process_dwid}
+        csv_step.process_dwid = ${process_dwid}
 order by
-	csv_field.field_order ASC
-; </sql>
+    csv_file_input_field.field_order ASC
+;</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -1319,25 +1319,25 @@ order by
     </partitioning>
     <connection>Config DB Connection</connection>
     <sql>SELECT
-	csv_input.buffersize as buffersize
-	, csv_input.delimiter as delimiter
-	, csv_input.enclosure as enclosure
-	, csv_input.file_encoding as file_encoding
-	, csv_input.file_format as file_format
-	, csv_input.filename as filename
-	, csv_input.header_present as header_present
-	, csv_input.include_filename as include_filename
-	, csv_input.lazy_conversion as lazy_conversion
-	, csv_input.newline_possible as newline_possible
-	, csv_input.process_in_parallel as process_in_parallel
-	, csv_input.add_filename_result as add_filename_result
-	, csv_input.filename_field as filename_field
-	, csv_input.row_num_field as row_num_field
+    csv_file_input_step.buffersize
+    , csv_file_input_step.delimiter
+    , csv_file_input_step.enclosure
+    , csv_file_input_step.file_encoding
+    , csv_file_input_step.file_format
+    , csv_file_input_step.filename
+    , csv_file_input_step.header_present
+    , csv_file_input_step.include_filename
+    , csv_file_input_step.lazy_conversion
+    , csv_file_input_step.newline_possible
+    , csv_file_input_step.process_in_parallel
+    , csv_file_input_step.add_filename_result
+    , csv_file_input_step.filename_field
+    , csv_file_input_step.row_num_field
 FROM
-	mdi.process p
-		LEFT JOIN mdi.csv_file_input_step csv_input ON p.dwid = csv_input.process_dwid
+    mdi.process p
+        LEFT JOIN mdi.csv_file_input_step ON p.dwid = csv_file_input_step.process_dwid
 WHERE
-		p.dwid = ${process_dwid}
+        p.dwid = ${process_dwid}
 ;</sql>
     <limit>0</limit>
     <lookup/>
@@ -1696,16 +1696,16 @@ WHERE
     </partitioning>
     <connection>Config DB Connection</connection>
     <sql>SELECT
-	table_field.database_field_name
-	, table_field.database_stream_name
-	, table_field.field_order
+	table_output_field.database_field_name
+	, table_output_field.database_stream_name
+	, table_output_field.field_order
 FROM
 	mdi.table_output_step table_step
-		LEFT JOIN mdi.table_output_field table_field ON table_step.dwid = table_field.table_output_step_dwid
+		LEFT JOIN mdi.table_output_field ON table_step.dwid = table_output_field.table_output_step_dwid
 WHERE
 		table_step.process_dwid = ${process_dwid}
 ORDER BY
-	table_field.field_order ASC
+	table_output_field.field_order ASC
 ;</sql>
     <limit>0</limit>
     <lookup/>
@@ -1811,24 +1811,24 @@ ORDER BY
     </partitioning>
     <connection>Config DB Connection</connection>
     <sql>SELECT
-	table_output.target_schema as target_schema
-	, table_output.target_table as target_table
-	, table_output.commit_size as commit_size
-	, table_output.partitioning_field as partitioning_field
-	, table_output.table_name_field as table_name_field
-	, table_output.auto_generated_key_field as auto_generated_key_field
-	, table_output.partition_data_per as partition_data_per
-	, table_output.return_auto_generated_key_field as return_auto_generated_key_field
-	, table_output.truncate_table as truncate_table
-	, table_output.connectionname as connectionname
-	, table_output.partition_over_tables as partition_over_tables
-	, table_output.specify_database_fields as specify_database_fields
-	, table_output.ignore_insert_errors as ignore_insert_errors
-	, table_output.use_batch_update as use_batch_update
-	, table_output.table_name_defined_in_field as table_name_defined_in_field
+	table_output_step.target_schema
+	, table_output_step.target_table
+	, table_output_step.commit_size
+	, table_output_step.partitioning_field
+	, table_output_step.table_name_field
+	, table_output_step.auto_generated_key_field
+	, table_output_step.partition_data_per
+	, table_output_step.return_auto_generated_key_field
+	, table_output_step.truncate_table
+	, table_output_step.connectionname
+	, table_output_step.partition_over_tables
+	, table_output_step.specify_database_fields
+	, table_output_step.ignore_insert_errors
+	, table_output_step.use_batch_update
+	, table_output_step.table_name_defined_in_field
 FROM
 	mdi.process p
-		LEFT JOIN mdi.table_output_step table_output ON p.dwid = table_output.process_dwid
+		LEFT JOIN mdi.table_output_step ON p.dwid = table_output_step.process_dwid
 WHERE
 		p.dwid = ${process_dwid}
 ;</sql>
@@ -2557,16 +2557,16 @@ WHERE
     </partitioning>
     <connection>Config DB Connection</connection>
     <sql>SELECT
-	  table_field.database_field_name
-	, table_field.database_stream_name
+    table_output_field.database_field_name
+    , table_output_field.database_stream_name
 FROM
-	mdi.table_output_step table_step
-	LEFT JOIN mdi.table_output_field table_field ON table_step.dwid = table_field.table_output_step_dwid
+    mdi.table_output_step table_step
+        LEFT JOIN mdi.table_output_field ON table_step.dwid = table_output_field.table_output_step_dwid
 WHERE
-	table_step.process_dwid = ${process_dwid}
-	AND table_field.is_sensitive = TRUE
+        table_step.process_dwid = ${process_dwid}
+    AND table_output_field.is_sensitive = TRUE
 ORDER BY
-	table_field.field_order ASC
+    table_output_field.field_order ASC
 ;</sql>
     <limit>0</limit>
     <lookup/>
