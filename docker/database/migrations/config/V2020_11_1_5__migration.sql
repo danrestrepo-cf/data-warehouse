@@ -12,21 +12,8 @@ SET
 WHERE
     table_output_field.is_sensitive IS NULL;
 
--- add NOT NULL to newly created field
+-- add NOT NULL to newly created field since all rows have a value now
 ALTER TABLE
     mdi.table_output_field
     ALTER COLUMN
         is_sensitive SET NOT NULL;
-
--- -- manually set sensitive fields used for testing
--- UPDATE
---     mdi.table_output_field
--- SET
---     is_sensitive=TRUE
--- WHERE
---         dwid IN
---         (
---               4 -- unpaid_balance in SP8.1
---             ,13 -- unpaid_balance in SP9.1
---             ,18 -- unpaid_balance in SP10.1
---         );
