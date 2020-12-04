@@ -459,7 +459,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/12/04 12:35:48.386</modified_date>
+    <modified_date>2020/12/04 17:56:45.967</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -579,7 +579,7 @@
     </notepad>
     <notepad>
       <note>Add Data Source DWID to stream
-                                                                                                           
+                                                                                                                   
 
 
 
@@ -589,7 +589,7 @@
 </note>
       <xloc>128</xloc>
       <yloc>656</yloc>
-      <width>652</width>
+      <width>700</width>
       <heigth>260</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
@@ -739,21 +739,99 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_csv_to_table] add a blank field for data_source_id to valid stream</from>
-      <to>[template_csv_to_table] Set data_source_id field value to parameter data_source_id</to>
+      <from>[template_excel_to_table] add a blank field for etl_batch_id to valid stream</from>
+      <to>[template_excel_to_table] Set data_source_dwid field value to parameter data_source_dwid</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>[template_excel_to_table] Set field etl_batch_id to parameter etl_batch_id's value</from>
-      <to>[template_csv_to_table] add a blank field for data_source_id to valid stream</to>
+      <to>[template_excel_to_table] add a blank field for etl_batch_id to valid stream</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_csv_to_table] Set data_source_id field value to parameter data_source_id</from>
+      <from>[template_excel_to_table] Set data_source_dwid field value to parameter data_source_dwid</from>
       <to>[template_excel_to_table] Table output</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>Get variables</from>
+      <to>[template_excel_to_table] Microsoft Excel input</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
+  <step>
+    <name>[template_excel_to_table] Set data_source_dwid field value to parameter data_source_dwid</name>
+    <type>SetValueConstant</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <usevar>Y</usevar>
+    <fields>
+      <field>
+        <name>data_source_dwid</name>
+        <value/>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>832</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_excel_to_table] add a blank field for etl_batch_id to valid stream</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>etl_batch_id</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>704</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
   <step>
     <name>[template_excel_to_table] Abort Table Output</name>
     <type>Abort</type>
@@ -999,44 +1077,10 @@
     </GUI>
   </step>
   <step>
-    <name>[template_csv_to_table] Set data_source_id field value to parameter data_source_id</name>
-    <type>SetValueConstant</type>
+    <name>Get variables</name>
+    <type>GetVariable</type>
     <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <usevar>Y</usevar>
-    <fields>
-      <field>
-        <name>data_source_dwid</name>
-        <value>${data_source_dwid}</value>
-        <mask/>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>832</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_csv_to_table] add a blank field for data_source_id to valid stream</name>
-    <type>Constant</type>
-    <description/>
-    <distribute>N</distribute>
+    <distribute>Y</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
@@ -1045,16 +1089,88 @@
     </partitioning>
     <fields>
       <field>
-        <name>etl_batch_id</name>
+        <name>database_hostname</name>
+        <variable>${database_hostname}</variable>
         <type>String</type>
         <format/>
         <currency/>
         <decimal/>
         <group/>
-        <nullif/>
         <length>-1</length>
         <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>database_password</name>
+        <variable>${database_password}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>database_port</name>
+        <variable>${database_port}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>database_schema</name>
+        <variable>${database_schema}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>database_username</name>
+        <variable>${database_username}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>etl_batch_id</name>
+        <variable>${etl_batch_id}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>data_source_dwid</name>
+        <variable>${data_source_dwid}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
       </field>
     </fields>
     <attributes/>
@@ -1066,8 +1182,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>480</xloc>
-      <yloc>704</yloc>
+      <xloc>1024</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

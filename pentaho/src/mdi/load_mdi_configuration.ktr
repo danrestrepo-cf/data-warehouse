@@ -459,7 +459,7 @@
     <created_user>-</created_user>
     <created_date>2020/10/10 13:25:09.606</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/12/04 12:32:07.873</modified_date>
+    <modified_date>2020/01/01 00:00:00.001</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -544,24 +544,20 @@
     </partitioning>
     <connection>Config DB Connection</connection>
     <sql>SELECT
-    p.name AS process_name
-    , p.dwid AS process_dwid
-    , CASE
-          WHEN csv_file_input_step.process_dwid IS NOT NULL THEN 'CSV'
-          WHEN csv_file_input_step.process_dwid IS NULL THEN 'EXCEL'
-          ELSE 'No input steps are configured for ' || p.name
-      END AS input_template
-    , coalesce( csv_file_input_step.data_source_dwid,
-                microsoft_excel_input_step.data_source_dwid ) AS data_source_dwid
+	p.name as process_name
+	, p.dwid as process_dwid
+	, CASE
+		  WHEN csv_input.process_dwid IS NOT NULL then 'CSV'
+		  WHEN csv_input.process_dwid IS NULL then 'EXCEL'
+		  ELSE 'No input steps are configured for ' || p.name
+	END as input_template
 FROM
-    mdi.process p
-        LEFT JOIN mdi.csv_file_input_step ON p.dwid = csv_file_input_step.process_dwid
-        LEFT JOIN mdi.table_output_step ON p.dwid = table_output_step.process_dwid
-        LEFT JOIN mdi.microsoft_excel_input_step ON p.dwid = microsoft_excel_input_step.process_dwid
+	mdi.process p
+		LEFT JOIN mdi.csv_file_input_step csv_input ON p.dwid = csv_input.process_dwid
+		LEFT JOIN mdi.table_output_step table_output ON p.dwid = table_output.process_dwid
+		LEFT JOIN mdi.microsoft_excel_input_step excel_input ON p.dwid = excel_input.process_dwid
 WHERE
-    p.name ='${process_name}'
-;
-</sql>
+		p.name = '${process_name}'</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -726,12 +722,6 @@ WHERE
       <field>
         <field_name>process_dwid</field_name>
         <variable_name>process_dwid</variable_name>
-        <variable_type>JVM</variable_type>
-        <default_value/>
-      </field>
-      <field>
-        <field_name>data_source_dwid</field_name>
-        <variable_name>data_source_dwid</variable_name>
         <variable_type>JVM</variable_type>
         <default_value/>
       </field>
