@@ -459,11 +459,153 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/11/18 17:30:19.999</modified_date>
+    <modified_date>2020/12/07 14:01:13.452</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
+    <notepad>
+      <note>Load Data from Database Table
+                                                                                                           
+
+
+
+
+
+</note>
+      <xloc>128</xloc>
+      <yloc>80</yloc>
+      <width>652</width>
+      <heigth>232</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Add ETL Batch ID to stream
+                                                                                                           
+
+
+
+
+
+
+</note>
+      <xloc>128</xloc>
+      <yloc>352</yloc>
+      <width>652</width>
+      <heigth>260</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Save stream to table
+                                                                                                           
+
+
+
+
+
+</note>
+      <xloc>128</xloc>
+      <yloc>976</yloc>
+      <width>652</width>
+      <heigth>232</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Remove fields marked sensitive from stream before logging error
+                                                                                                                                             
+
+
+
+
+
+</note>
+      <xloc>816</xloc>
+      <yloc>976</yloc>
+      <width>856</width>
+      <heigth>232</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Add Data Source DWID to stream
+                                                                                                           
+
+
+
+
+
+
+</note>
+      <xloc>128</xloc>
+      <yloc>656</yloc>
+      <width>652</width>
+      <heigth>260</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <connection>
     <name>Config DB Connection</name>
@@ -479,7 +621,7 @@
     <index_tablespace/>
     <attributes>
       <attribute>
-        <code>EXTRA_OPTION_POSTGRESQL.EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code>
+        <code>EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code>
         <attribute>pentaho_logging_sequence</attribute>
       </attribute>
       <attribute>
@@ -538,10 +680,6 @@
     <index_tablespace/>
     <attributes>
       <attribute>
-        <code>EXTRA_OPTION_POSTGRESQL.EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code>
-        <attribute>pentaho_logging_sequence</attribute>
-      </attribute>
-      <attribute>
         <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
         <attribute>N</attribute>
       </attribute>
@@ -581,28 +719,48 @@
   </connection>
   <order>
     <hop>
-      <from>[template_excel_to_table] Add blank field named etl_batch_id to stream</from>
-      <to>[template_excel_to_table] Set field etl_batch_id to parameter etl_batch_id's value</to>
+      <from>[template_table_to_table] add a blank field for etl_batch_id to valid stream</from>
+      <to>[template_table_to_table] Set etl_batch_id field value to parameter etl_batch_id</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_excel_to_table] Set field etl_batch_id to parameter etl_batch_id's value</from>
-      <to>[template_excel_to_table] Table output</to>
+      <from>[template_table_to_table] CSV file input</from>
+      <to>[template_table_to_table] add a blank field for etl_batch_id to valid stream</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_excel_to_table] Table output</from>
-      <to>[template_excel_to_table] Abort Table Output</to>
+      <from>[template_table_to_table] CSV file input</from>
+      <to>[template_table_to_table] Abort CSV file input</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_excel_to_table] Table input</from>
-      <to>[template_excel_to_table] Add blank field named etl_batch_id to stream</to>
+      <from>[template_table_to_table] Table output</from>
+      <to>[template_table_to_table]  Remove sensitive values</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table]  Remove sensitive values</from>
+      <to>[template_table_to_table]  Abort Table Output</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table] add a blank field for data_source_dwid to valid stream</from>
+      <to>[template_table_to_table] Set data_source_dwid field value to parameter data_source_dwid</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table] Set etl_batch_id field value to parameter etl_batch_id</from>
+      <to>[template_table_to_table] add a blank field for data_source_dwid to valid stream</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table] Set data_source_dwid field value to parameter data_source_dwid</from>
+      <to>[template_table_to_table] Table output</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>[template_excel_to_table] Abort Table Output</name>
+    <name>[template_table_to_table]  Abort Table Output</name>
     <type>Abort</type>
     <description/>
     <distribute>Y</distribute>
@@ -625,13 +783,262 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>800</xloc>
+      <xloc>1472</xloc>
+      <yloc>1088</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table]  Remove sensitive values</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>976</xloc>
+      <yloc>1088</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table] Abort CSV file input</name>
+    <type>Abort</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <row_threshold>0</row_threshold>
+    <message>could not load csv file</message>
+    <always_log_rows>Y</always_log_rows>
+    <abort_option>ABORT</abort_option>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1472</xloc>
+      <yloc>192</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table] CSV file input</name>
+    <type>CsvInput</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <filename/>
+    <filename_field/>
+    <rownum_field/>
+    <include_filename>N</include_filename>
+    <separator>,</separator>
+    <enclosure>"</enclosure>
+    <header>Y</header>
+    <buffer_size>50000</buffer_size>
+    <lazy_conversion>N</lazy_conversion>
+    <add_filename_result>N</add_filename_result>
+    <parallel>N</parallel>
+    <newline_possible>N</newline_possible>
+    <format>DOS</format>
+    <encoding>UTF-8</encoding>
+    <fields>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>192</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table] Set data_source_dwid field value to parameter data_source_dwid</name>
+    <type>SetValueConstant</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <usevar>Y</usevar>
+    <fields>
+      <field>
+        <name>data_source_dwid</name>
+        <value/>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>832</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table] Set etl_batch_id field value to parameter etl_batch_id</name>
+    <type>SetValueConstant</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <usevar>Y</usevar>
+    <fields>
+      <field>
+        <name>etl_batch_id</name>
+        <value/>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
       <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_excel_to_table] Add blank field named etl_batch_id to stream</name>
+    <name>[template_table_to_table] Table output</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>Ingress DB Connection</connection>
+    <schema/>
+    <table/>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>N</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>1088</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table] add a blank field for data_source_dwid to valid stream</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>data_source_dwid</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>704</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table] add a blank field for etl_batch_id to valid stream</name>
     <type>Constant</type>
     <description/>
     <distribute>N</distribute>
@@ -664,127 +1071,27 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>416</xloc>
-      <yloc>240</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_excel_to_table] Set field etl_batch_id to parameter etl_batch_id's value</name>
-    <type>SetValueConstant</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <usevar>Y</usevar>
-    <fields>
-      <field>
-        <name>etl_batch_id</name>
-        <value/>
-        <mask/>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>416</xloc>
+      <xloc>480</xloc>
       <yloc>384</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_excel_to_table] Table output</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>Ingress DB Connection</connection>
-    <schema/>
-    <table/>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>N</use_batch>
-    <specify_fields>N</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>416</xloc>
-      <yloc>512</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_excel_to_table] Table input</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>Ingress DB Connection</connection>
-    <sql/>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>416</xloc>
-      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step_error_handling>
     <error>
-      <source_step>[template_excel_to_table] Set field etl_batch_id to parameter etl_batch_id's value</source_step>
-      <target_step>[template_excel_to_table] Abort Table Output</target_step>
+      <source_step>[template_table_to_table] CSV file input</source_step>
+      <target_step>[template_table_to_table] Abort CSV file input</target_step>
+      <is_enabled>Y</is_enabled>
+      <nr_valuename/>
+      <descriptions_valuename/>
+      <fields_valuename/>
+      <codes_valuename/>
+      <max_errors/>
+      <max_pct_errors/>
+      <min_pct_rows/>
+    </error>
+    <error>
+      <source_step>[template_table_to_table] Set etl_batch_id field value to parameter etl_batch_id</source_step>
+      <target_step>[template_table_to_table]  Abort Table Output</target_step>
       <is_enabled>N</is_enabled>
       <nr_valuename/>
       <descriptions_valuename/>
@@ -795,8 +1102,8 @@
       <min_pct_rows/>
     </error>
     <error>
-      <source_step>[template_excel_to_table] Table output</source_step>
-      <target_step>[template_excel_to_table] Abort Table Output</target_step>
+      <source_step>[template_table_to_table] Table output</source_step>
+      <target_step>[template_table_to_table]  Remove sensitive values</target_step>
       <is_enabled>Y</is_enabled>
       <nr_valuename/>
       <descriptions_valuename/>

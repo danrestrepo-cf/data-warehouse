@@ -9,6 +9,11 @@
     <directory>/mdi</directory>
     <parameters>
       <parameter>
+        <name>data_source_dwid</name>
+        <default_value/>
+        <description/>
+      </parameter>
+      <parameter>
         <name>database_hostname</name>
         <default_value/>
         <description/>
@@ -469,7 +474,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.089</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/11/18 17:39:56.494</modified_date>
+    <modified_date>2020/12/10 16:10:48.419</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -483,8 +488,8 @@ backwards but they are *not*. The table_output_field.database_field_name
 column maps to DATABASE_STREAM_NAME in the MDI step. The 
 table_output_field.database_stream_name gets mapped to 
 DATABASE_FIELD_NAME. </note>
-      <xloc>736</xloc>
-      <yloc>192</yloc>
+      <xloc>1280</xloc>
+      <yloc>656</yloc>
       <width>504</width>
       <heigth>170</heigth>
       <fontname>Segoe UI</fontname>
@@ -497,6 +502,104 @@ DATABASE_FIELD_NAME. </note>
       <backgroundcolorred>255</backgroundcolorred>
       <backgroundcolorgreen>205</backgroundcolorgreen>
       <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Table input
+                                                                                                      
+
+
+
+
+
+
+
+
+
+
+
+</note>
+      <xloc>32</xloc>
+      <yloc>160</yloc>
+      <width>622</width>
+      <heigth>400</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Table output
+                                                                                                      
+
+
+
+
+
+
+
+
+
+
+
+</note>
+      <xloc>32</xloc>
+      <yloc>608</yloc>
+      <width>622</width>
+      <heigth>400</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Select values (Remove sensitive fields in stream)
+                                                                                                      
+
+
+
+
+
+
+
+</note>
+      <xloc>32</xloc>
+      <yloc>1072</yloc>
+      <width>622</width>
+      <heigth>288</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
       <bordercolorred>100</bordercolorred>
       <bordercolorgreen>100</bordercolorgreen>
       <bordercolorblue>100</bordercolorblue>
@@ -517,7 +620,7 @@ DATABASE_FIELD_NAME. </note>
     <index_tablespace/>
     <attributes>
       <attribute>
-        <code>EXTRA_OPTION_POSTGRESQL.EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code>
+        <code>EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code>
         <attribute>pentaho_logging_sequence</attribute>
       </attribute>
       <attribute>
@@ -564,23 +667,28 @@ DATABASE_FIELD_NAME. </note>
   </connection>
   <order>
     <hop>
-      <from>[performer_excel_to_table] Load Table Input and Table Output Settings</from>
-      <to>[performer_excel_to_table] ETL metadata injection</to>
+      <from>[performer_table_to_table] Load Table Input step settings</from>
+      <to>[performer_table_to_table] ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_excel_to_table] Load Table Input</from>
-      <to>[performer_excel_to_table] ETL metadata injection</to>
+      <from>[performer_table_to_table] Load Table Output step settings</from>
+      <to>[performer_table_to_table] ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_excel_to_table] Load Table Output Settings</from>
-      <to>[performer_excel_to_table] ETL metadata injection</to>
+      <from>[performer_table_to_table] Load Table Output field settings</from>
+      <to>[performer_table_to_table] ETL metadata injection</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table] Load Table Output sensitive fields</from>
+      <to>[performer_table_to_table] ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>[performer_excel_to_table] Load Table Input</name>
+    <name>[performer_table_to_table] Load Table Input step settings</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -592,23 +700,18 @@ DATABASE_FIELD_NAME. </note>
     </partitioning>
     <connection>Config DB Connection</connection>
     <sql>SELECT
-	excel_field.field_name
-	, excel_field.field_format
-	, excel_field.field_length
-	, excel_field.field_precision
-	, excel_field.field_currency
-	, excel_field.field_decimal
-	, excel_field.field_group
-	, excel_field.field_trim_type
-	, excel_field.field_order
-	, excel_field.field_type
+    table_input_step.sql
+    , table_input_step.limit_size
+    , table_input_step.execute_for_each_row
+    , table_input_step.replace_variables
+    , table_input_step.enable_lazy_conversion
+    , table_input_step.cached_row_meta
+    , table_input_step.connectionname
 FROM
-	mdi.microsoft_excel_input_step excel_step
-		LEFT JOIN mdi.microsoft_excel_input_field excel_field ON excel_step.dwid = excel_field.microsoft_excel_input_step_dwid
+    mdi.process p
+        LEFT JOIN mdi.table_input_step ON p.dwid = table_input_step.process_dwid
 WHERE
-		excel_step.process_dwid = ${process_dwid}
-order by
-	excel_field.field_order ASC
+    p.dwid = ${process_dwid}
 ;
 </sql>
     <limit>0</limit>
@@ -621,34 +724,11 @@ order by
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>field_name</name>
+        <name>sql</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
-        <comments>field_name</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>field_format</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
-        <comments>field_format</comments>
+        <origin>[performer_table_to_table] Load Table Input step settings</origin>
+        <comments>sql</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -667,34 +747,11 @@ order by
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>field_length</name>
+        <name>limit_size</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
-        <comments>field_length</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>field_precision</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
-        <comments>field_precision</comments>
+        <origin>[performer_table_to_table] Load Table Input step settings</origin>
+        <comments>limit_size</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -713,11 +770,11 @@ order by
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>field_currency</name>
+        <name>execute_for_each_row</name>
         <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
-        <comments>field_currency</comments>
+        <precision>0</precision>
+        <origin>[performer_table_to_table] Load Table Input step settings</origin>
+        <comments>execute_for_each_row</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -736,11 +793,11 @@ order by
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>field_decimal</name>
+        <name>replace_variables</name>
         <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
-        <comments>field_decimal</comments>
+        <precision>0</precision>
+        <origin>[performer_table_to_table] Load Table Input step settings</origin>
+        <comments>replace_variables</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -759,11 +816,11 @@ order by
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>field_group</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
-        <comments>field_group</comments>
+        <name>enable_lazy_conversion</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_table_to_table] Load Table Input step settings</origin>
+        <comments>enable_lazy_conversion</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -782,11 +839,11 @@ order by
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>field_trim_type</name>
+        <name>cached_row_meta</name>
         <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
-        <comments>field_trim_type</comments>
+        <precision>0</precision>
+        <origin>[performer_table_to_table] Load Table Input step settings</origin>
+        <comments>cached_row_meta</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -803,36 +860,13 @@ order by
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>BigNumber</type>
-        <storagetype>normal</storagetype>
-        <name>field_order</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
-        <comments>field_order</comments>
-        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>field_type</name>
+        <name>connectionname</name>
         <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
-        <comments>field_type</comments>
+        <precision>0</precision>
+        <origin>[performer_table_to_table] Load Table Input step settings</origin>
+        <comments>connectionname</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -858,13 +892,13 @@ order by
       </output>
     </remotesteps>
     <GUI>
-      <xloc>240</xloc>
-      <yloc>464</yloc>
+      <xloc>304</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[performer_excel_to_table] Load Table Input and Table Output Settings</name>
+    <name>[performer_table_to_table] Load Table Output field settings</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -876,658 +910,18 @@ order by
     </partitioning>
     <connection>Config DB Connection</connection>
     <sql>SELECT
-	p.name
-	, excel_input.spreadsheet_type as excel_spreadsheet_type
-	, excel_input.filename as excel_filename
-	, excel_input.filemask as excel_filemask
-	, excel_input.exclude_filemask as excel_exclude_filemask
-	, excel_input.file_required as excel_file_required
-	, excel_input.include_subfolders as excel_include_subfolders
-	, excel_input.sheet_name as excel_sheet_name
-	, excel_input.sheet_start_row as excel_sheet_start_row
-	, excel_input.sheet_start_col as excel_sheet_start_col
-	, table_output.target_schema as table_target_schema
-	, table_output.target_table as table_target_table
-	, table_output.commit_size as table_commit_size
-	, table_output.partitioning_field as table_partitioning_field
-	, table_output.table_name_field as table_table_name_field
-	, table_output.auto_generated_key_field as table_auto_generated_key_field
-	, table_output.partition_data_per as table_partition_data_per
-	, table_output.return_auto_generated_key_field as table_return_auto_generated_key_field
-	, table_output.truncate_table as table_truncate_table
-	, table_output.connectionname as table_connectionname
-	, table_output.partition_over_tables as table_partition_over_tables
-	, table_output.specify_database_fields as table_specify_database_fields
-	, table_output.ignore_insert_errors as table_ignore_insert_errors
-	, table_output.use_batch_update as table_use_batch_update
-	, table_output.table_name_defined_in_field as table_table_name_defined_in_field
+    table_output_field.database_field_name
+    , table_output_field.database_stream_name
+    , table_output_field.field_order
 FROM
-	mdi.process p
-		LEFT JOIN mdi.microsoft_excel_input_step excel_input ON p.dwid = excel_input.process_dwid
-		LEFT JOIN mdi.table_output_step table_output ON p.dwid = table_output.process_dwid
+    mdi.table_output_step
+        LEFT JOIN mdi.table_output_field ON table_output_step.dwid = table_output_field.table_output_step_dwid
 WHERE
-		p.dwid = ${process_dwid}</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>name</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>name</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>excel_spreadsheet_type</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>excel_spreadsheet_type</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>excel_filename</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>excel_filename</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>excel_filemask</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>excel_filemask</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>excel_exclude_filemask</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>excel_exclude_filemask</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>excel_file_required</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>excel_file_required</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>excel_include_subfolders</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>excel_include_subfolders</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>excel_sheet_name</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>excel_sheet_name</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>excel_sheet_start_row</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>excel_sheet_start_row</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>excel_sheet_start_col</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>excel_sheet_start_col</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_target_schema</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_target_schema</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_target_table</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_target_table</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>table_commit_size</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_commit_size</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_partitioning_field</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_partitioning_field</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_table_name_field</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_table_name_field</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_auto_generated_key_field</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_auto_generated_key_field</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_partition_data_per</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_partition_data_per</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_return_auto_generated_key_field</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_return_auto_generated_key_field</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_truncate_table</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_truncate_table</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_connectionname</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_connectionname</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_partition_over_tables</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_partition_over_tables</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_specify_database_fields</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_specify_database_fields</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_ignore_insert_errors</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_ignore_insert_errors</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_use_batch_update</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_use_batch_update</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_table_name_defined_in_field</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_table_name_defined_in_field</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-    </row-meta>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>432</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[performer_excel_to_table] Load Table Output Settings</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>Config DB Connection</connection>
-    <sql>SELECT
-	table_field.database_field_name
-	, table_field.database_stream_name
-	, table_field.field_order
-FROM
-	mdi.table_output_step table_step
-		LEFT JOIN mdi.table_output_field table_field ON table_step.dwid = table_field.table_output_step_dwid
-WHERE
-		table_step.process_dwid = ${process_dwid}
+        table_output_step.process_dwid = ${process_dwid}
 ORDER BY
-	table_field.field_order ASC
-;</sql>
+    table_output_field.field_order ASC
+;
+</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -1541,7 +935,7 @@ ORDER BY
         <name>database_field_name</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Table Output Settings</origin>
+        <origin>[performer_table_to_table] Load Table Output field settings</origin>
         <comments>database_field_name</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -1564,7 +958,7 @@ ORDER BY
         <name>database_stream_name</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Table Output Settings</origin>
+        <origin>[performer_table_to_table] Load Table Output field settings</origin>
         <comments>database_stream_name</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -1587,7 +981,7 @@ ORDER BY
         <name>field_order</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Table Output Settings</origin>
+        <origin>[performer_table_to_table] Load Table Output field settings</origin>
         <comments>field_order</comments>
         <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
@@ -1614,13 +1008,511 @@ ORDER BY
       </output>
     </remotesteps>
     <GUI>
-      <xloc>640</xloc>
-      <yloc>464</yloc>
+      <xloc>288</xloc>
+      <yloc>848</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[performer_excel_to_table] ETL metadata injection</name>
+    <name>[performer_table_to_table] Load Table Output step settings</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>Config DB Connection</connection>
+    <sql>SELECT
+	table_output_step.target_schema
+	, table_output_step.target_table
+	, table_output_step.commit_size
+	, table_output_step.partitioning_field
+	, table_output_step.table_name_field
+	, table_output_step.auto_generated_key_field
+	, table_output_step.partition_data_per
+	, table_output_step.return_auto_generated_key_field
+	, table_output_step.truncate_table
+	, table_output_step.connectionname
+	, table_output_step.partition_over_tables
+	, table_output_step.specify_database_fields
+	, table_output_step.ignore_insert_errors
+	, table_output_step.use_batch_update
+	, table_output_step.table_name_defined_in_field
+FROM
+	mdi.process p
+		LEFT JOIN mdi.table_output_step ON p.dwid = table_output_step.process_dwid
+WHERE
+		p.dwid = ${process_dwid}
+;</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>target_schema</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_table_to_table] Load Table Output step settings</origin>
+        <comments>target_schema</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>target_table</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_table_to_table] Load Table Output step settings</origin>
+        <comments>target_table</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>commit_size</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>[performer_table_to_table] Load Table Output step settings</origin>
+        <comments>commit_size</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>partitioning_field</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_table_to_table] Load Table Output step settings</origin>
+        <comments>partitioning_field</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>table_name_field</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_table_to_table] Load Table Output step settings</origin>
+        <comments>table_name_field</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>auto_generated_key_field</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_table_to_table] Load Table Output step settings</origin>
+        <comments>auto_generated_key_field</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>partition_data_per</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_table_to_table] Load Table Output step settings</origin>
+        <comments>partition_data_per</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>return_auto_generated_key_field</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_table_to_table] Load Table Output step settings</origin>
+        <comments>return_auto_generated_key_field</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>truncate_table</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_table_to_table] Load Table Output step settings</origin>
+        <comments>truncate_table</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>connectionname</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_table_to_table] Load Table Output step settings</origin>
+        <comments>connectionname</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>partition_over_tables</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_table_to_table] Load Table Output step settings</origin>
+        <comments>partition_over_tables</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>specify_database_fields</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_table_to_table] Load Table Output step settings</origin>
+        <comments>specify_database_fields</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>ignore_insert_errors</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_table_to_table] Load Table Output step settings</origin>
+        <comments>ignore_insert_errors</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>use_batch_update</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_table_to_table] Load Table Output step settings</origin>
+        <comments>use_batch_update</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>table_name_defined_in_field</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_table_to_table] Load Table Output step settings</origin>
+        <comments>table_name_defined_in_field</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+    </row-meta>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>288</xloc>
+      <yloc>704</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[performer_table_to_table] Load Table Output sensitive fields</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>Config DB Connection</connection>
+    <sql>(SELECT -- hardcode a line that will never be found since the Select Values step requires at least one datum in it
+     'dummy_field_no_sensitive_columns' as database_field_name
+     , 'dummy_stream_no_sensitive_columns' as database_stream_name)
+UNION
+(SELECT
+     table_output_field.database_field_name
+     , table_output_field.database_stream_name
+ FROM
+     mdi.table_output_step
+         LEFT JOIN mdi.table_output_field ON table_output_step.dwid = table_output_field.table_output_step_dwid
+ WHERE
+         table_output_step.process_dwid = ${process_dwid}
+     AND table_output_field.is_sensitive = TRUE
+ ORDER BY
+     table_output_field.field_order ASC)
+;
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>database_field_name</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_table_to_table] Load Table Output sensitive fields</origin>
+        <comments>database_field_name</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>database_stream_name</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_table_to_table] Load Table Output sensitive fields</origin>
+        <comments>database_stream_name</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+    </row-meta>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>288</xloc>
+      <yloc>1184</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[performer_table_to_table] ETL metadata injection</name>
     <type>MetaInject</type>
     <description/>
     <distribute>Y</distribute>
@@ -1632,16 +1524,227 @@ ORDER BY
     </partitioning>
     <specification_method>rep_name</specification_method>
     <trans_object_id/>
-    <trans_name/>
+    <trans_name>template_table_to_table</trans_name>
     <filename/>
-    <directory_path/>
+    <directory_path>${Internal.Entry.Current.Directory}</directory_path>
     <source_step/>
     <source_output_fields>    </source_output_fields>
-    <target_file/>
+    <target_file>table.ktr</target_file>
     <no_execution>N</no_execution>
     <stream_source_step/>
     <stream_target_step/>
-    <mappings>    </mappings>
+    <mappings>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table output</target_step_name>
+        <target_attribute_key>TRUNCATE_TABLE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Output step settings</source_step>
+        <source_field>truncate_table</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table input</target_step_name>
+        <target_attribute_key>LAZY_CONVERSION</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Input step settings</source_step>
+        <source_field>enable_lazy_conversion</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>data_source_dwid</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>${etl_batch_id}</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table output</target_step_name>
+        <target_attribute_key>TABLE_NAME_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Output step settings</source_step>
+        <source_field>table_name_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>etl_batch_id</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>${data_source_dwid}</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table input</target_step_name>
+        <target_attribute_key>REPLACE_VARIABLES</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Input step settings</source_step>
+        <source_field>replace_variables</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table output</target_step_name>
+        <target_attribute_key>USE_BATCH_UPDATE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Output step settings</source_step>
+        <source_field>use_batch_update</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table output</target_step_name>
+        <target_attribute_key>PARTITIONING_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Output step settings</source_step>
+        <source_field>partitioning_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table input</target_step_name>
+        <target_attribute_key>LIMIT</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Input step settings</source_step>
+        <source_field>limit_size</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table output</target_step_name>
+        <target_attribute_key>IGNORE_INSERT_ERRORS</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Output step settings</source_step>
+        <source_field>ignore_insert_errors</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table output</target_step_name>
+        <target_attribute_key>AUTO_GENERATED_KEY_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Output step settings</source_step>
+        <source_field>auto_generated_key_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table input</target_step_name>
+        <target_attribute_key>EXECUTE_FOR_EACH_ROW</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Input step settings</source_step>
+        <source_field>execute_for_each_row</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table output</target_step_name>
+        <target_attribute_key>TABLE_NAME_DEFINED_IN_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Output step settings</source_step>
+        <source_field>table_name_defined_in_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table output</target_step_name>
+        <target_attribute_key>COMMIT_SIZE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Output step settings</source_step>
+        <source_field>commit_size</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table output</target_step_name>
+        <target_attribute_key>TARGET_SCHEMA</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Output step settings</source_step>
+        <source_field>target_schema</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table]  Remove sensitive values</target_step_name>
+        <target_attribute_key>SELECT_UNSPECIFIED</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step/>
+        <source_field>N</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table output</target_step_name>
+        <target_attribute_key>TARGET_TABLE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Output step settings</source_step>
+        <source_field>target_table</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table output</target_step_name>
+        <target_attribute_key>PARTITION_OVER_TABLES</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Output step settings</source_step>
+        <source_field>partition_over_tables</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table]  Remove sensitive values</target_step_name>
+        <target_attribute_key>REMOVE_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table] Load Table Output sensitive fields</source_step>
+        <source_field>database_stream_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table output</target_step_name>
+        <target_attribute_key>PARTITION_DATA_PER</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Output step settings</source_step>
+        <source_field>partition_data_per</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table output</target_step_name>
+        <target_attribute_key>SPECIFY_DATABASE_FIELDS</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Output step settings</source_step>
+        <source_field>specify_database_fields</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table output</target_step_name>
+        <target_attribute_key>DATABASE_STREAM_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table] Load Table Output field settings</source_step>
+        <source_field>database_field_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table input</target_step_name>
+        <target_attribute_key>CACHED_ROW_META</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Input step settings</source_step>
+        <source_field>cached_row_meta</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table output</target_step_name>
+        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Output step settings</source_step>
+        <source_field>connectionname</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table output</target_step_name>
+        <target_attribute_key>DATABASE_FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table] Load Table Output field settings</source_step>
+        <source_field>database_stream_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table input</target_step_name>
+        <target_attribute_key>SQL</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Input step settings</source_step>
+        <source_field>sql</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table input</target_step_name>
+        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Input step settings</source_step>
+        <source_field>connectionname</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table] Table output</target_step_name>
+        <target_attribute_key>RETURN_AUTO_GENERATED_KEY</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table] Load Table Output step settings</source_step>
+        <source_field>return_auto_generated_key_field</source_field>
+      </mapping>
+    </mappings>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1651,8 +1754,8 @@ ORDER BY
       </output>
     </remotesteps>
     <GUI>
-      <xloc>432</xloc>
-      <yloc>304</yloc>
+      <xloc>1072</xloc>
+      <yloc>784</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
