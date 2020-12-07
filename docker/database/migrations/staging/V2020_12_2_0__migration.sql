@@ -19,7 +19,7 @@ VALUES ( 0, 'Unspecified' )
 --
 -- create target table for SP8.2
 --
-CREATE TABLE mcr.nmls_call_report_state_raw
+CREATE TABLE mcr.nmls_call_report_state
 (
     mcr_code TEXT NOT NULL,
     mcr_desc TEXT,
@@ -34,7 +34,7 @@ CREATE TABLE mcr.nmls_call_report_state_raw
 --
 -- create target table for SP9.2
 --
-CREATE TABLE mcr.nmls_call_report_national_raw
+CREATE TABLE mcr.nmls_call_report_national
 (
     mcr_code TEXT NOT NULL,
     mcr_desc TEXT,
@@ -48,7 +48,7 @@ CREATE TABLE mcr.nmls_call_report_national_raw
 --
 -- create target table for SP10.2
 --
-CREATE TABLE mcr.nmls_call_report_s540a_raw
+CREATE TABLE mcr.nmls_call_report_s540a
 (
     state_type TEXT,
     item_id BIGINT,

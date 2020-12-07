@@ -59,9 +59,8 @@ VALUES ( 5, 'SP8.2', 'Transfer DMI NMLS Call Report data to staging db - state' 
 ;
 
 INSERT INTO mdi.table_input_step
-( dwid, process_dwid, sql, limit_size, execute_for_each_row, replace_variables_in_script, enable_lazy_conversion
-, cached_row_meta, connection )
-VALUES ( 2, 5, 'select
+( dwid, process_dwid, data_source_dwid, sql, limit_size, enable_lazy_conversion, cached_row_meta, connectionname )
+VALUES ( 2, 5, 3,'select
    mcr_code
    , mcr_desc
    , state_type
@@ -71,7 +70,7 @@ VALUES ( 2, 5, 'select
    , etl_batch_id
 from
    dmi.nmls_call_report_state_raw
-;', NULL, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT )
+;', NULL, DEFAULT, DEFAULT, 'Ingress DB Connection'::mdi.PENTAHO_DB_CONNECTION_NAME )
 ;
 
 INSERT INTO mdi.table_output_step ( dwid, process_dwid, target_schema, target_table, commit_size, partitioning_field
@@ -79,7 +78,7 @@ INSERT INTO mdi.table_output_step ( dwid, process_dwid, target_schema, target_ta
                                   , table_name_defined_in_field, return_auto_generated_key_field, truncate_table
                                   , connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors
                                   , use_batch_update )
-VALUES ( 5, 5, 'mcr', 'nmls_call_report_state', 1000, NULL, NULL, NULL, NULL, 'N', NULL, 'Y', 'Staging DB Connection'
+VALUES ( 5, 5, 'mcr', 'nmls_call_report_state', 1000, NULL, NULL, NULL, NULL, 'N', NULL, 'Y', 'Staging DB Connection'::mdi.PENTAHO_DB_CONNECTION_NAME
        , 'N', 'Y', 'N', 'N' )
 ;
 
@@ -104,9 +103,8 @@ VALUES ( 4, 'SP9.2', 'Transfer DMI NMLS Call Report data to staging db - nationa
 ;
 
 INSERT INTO mdi.table_input_step
-( dwid, process_dwid, sql, limit_size, execute_for_each_row, replace_variables_in_script, enable_lazy_conversion
-, cached_row_meta, connection )
-VALUES ( 1, 4, 'select
+( dwid, process_dwid, data_source_dwid, sql, limit_size, enable_lazy_conversion, cached_row_meta, connectionname )
+VALUES ( 1, 4, 3, 'select
    mcr_code
    , mcr_desc
    , unpaid_balance
@@ -115,7 +113,7 @@ VALUES ( 1, 4, 'select
    , etl_batch_id
 from
    dmi.nmls_call_report_national_raw
-;', NULL, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT )
+;', NULL, DEFAULT, DEFAULT, 'Ingress DB Connection'::mdi.PENTAHO_DB_CONNECTION_NAME )
 ;
 
 INSERT INTO mdi.table_output_step ( dwid, process_dwid, target_schema, target_table, commit_size, partitioning_field
@@ -123,7 +121,7 @@ INSERT INTO mdi.table_output_step ( dwid, process_dwid, target_schema, target_ta
                                   , table_name_defined_in_field, return_auto_generated_key_field, truncate_table
                                   , connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors
                                   , use_batch_update )
-VALUES ( 4, 4, 'mcr', 'nmls_call_report_national', 1000, NULL, NULL, NULL, NULL, 'N', NULL, 'Y', 'Staging DB Connection'
+VALUES ( 4, 4, 'mcr', 'nmls_call_report_national', 1000, NULL, NULL, NULL, NULL, 'N', NULL, 'Y', 'Staging DB Connection'::mdi.PENTAHO_DB_CONNECTION_NAME
        , 'N', 'Y', 'N', 'N' )
 ;
 
@@ -147,9 +145,8 @@ VALUES ( 6, 'SP8.2', 'Transfer DMI NMLS Call Report data to staging db - S540a' 
 ;
 
 INSERT INTO mdi.table_input_step
-( dwid, process_dwid, sql, limit_size, execute_for_each_row, replace_variables_in_script, enable_lazy_conversion
-, cached_row_meta, connection )
-VALUES ( 3, 6, 'select
+( dwid, process_dwid, data_source_dwid, sql, limit_size, enable_lazy_conversion, cached_row_meta, connectionname )
+VALUES ( 3, 6, 3, 'select
    state_type
    , item_id
    , servicer_id
@@ -160,7 +157,7 @@ VALUES ( 3, 6, 'select
    , etl_batch_id
 from
    dmi.nmls_call_report_s540a_raw
-;', NULL, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT )
+;', NULL, DEFAULT, DEFAULT, 'Ingress DB Connection'::mdi.PENTAHO_DB_CONNECTION_NAME )
 ;
 
 INSERT INTO mdi.table_output_step ( dwid, process_dwid, target_schema, target_table, commit_size, partitioning_field
@@ -168,7 +165,7 @@ INSERT INTO mdi.table_output_step ( dwid, process_dwid, target_schema, target_ta
                                   , table_name_defined_in_field, return_auto_generated_key_field, truncate_table
                                   , connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors
                                   , use_batch_update )
-VALUES ( 6, 6, 'mcr', 'nmls_call_report_s540a', 1000, NULL, NULL, NULL, NULL, 'N', NULL, 'Y', 'Staging DB Connection'
+VALUES ( 6, 6, 'mcr', 'nmls_call_report_s540a', 1000, NULL, NULL, NULL, NULL, 'N', NULL, 'Y', 'Staging DB Connection'::mdi.PENTAHO_DB_CONNECTION_NAME
        , 'N', 'Y', 'N', 'N' )
 ;
 
