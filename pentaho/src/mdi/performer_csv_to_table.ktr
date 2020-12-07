@@ -834,6 +834,13 @@ DATABASE_FIELD_NAME. </note>
         <source_field>filename_field</source_field>
       </mapping>
       <mapping>
+        <target_step_name>[template_csv_to_table] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>${data_source_dwid}</source_field>
+      </mapping>
+      <mapping>
         <target_step_name>[template_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>FIELD_GROUP</target_attribute_key>
         <target_detail>Y</target_detail>
@@ -888,6 +895,13 @@ DATABASE_FIELD_NAME. </note>
         <target_detail>N</target_detail>
         <source_step>[performer_csv_to_table] Load Table Output Step Settings</source_step>
         <source_field>specify_database_fields</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_to_table] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>data_source_dwid</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_csv_to_table] Table output</target_step_name>

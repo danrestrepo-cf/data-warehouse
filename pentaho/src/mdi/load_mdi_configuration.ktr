@@ -544,20 +544,27 @@
     </partitioning>
     <connection>Config DB Connection</connection>
     <sql>SELECT
-	p.name as process_name
-	, p.dwid as process_dwid
-	, CASE
-		  WHEN csv_input.process_dwid IS NOT NULL then 'CSV'
-		  WHEN csv_input.process_dwid IS NULL then 'EXCEL'
-		  ELSE 'No input steps are configured for ' || p.name
-	END as input_template
+    p.name as process_name
+    , p.dwid as process_dwid
+    , CASE
+          WHEN csv_file_input_step.process_dwid IS NOT NULL then 'CSV'
+          WHEN csv_file_input_step.process_dwid IS NULL then 'EXCEL'
+          ELSE 'No input steps are configured for ' || p.name
+      END as input_template
+    , CASE
+          WHEN csv_file_input_step.process_dwid IS NOT NULL then csv_file_input_step.data_source_dwid
+          WHEN microsoft_excel_input_step.process_dwid IS NOT NULL then microsoft_excel_input_step.data_source_dwid
+      END as data_source_dwid
+
 FROM
-	mdi.process p
-		LEFT JOIN mdi.csv_file_input_step csv_input ON p.dwid = csv_input.process_dwid
-		LEFT JOIN mdi.table_output_step table_output ON p.dwid = table_output.process_dwid
-		LEFT JOIN mdi.microsoft_excel_input_step excel_input ON p.dwid = excel_input.process_dwid
+    mdi.process p
+        LEFT JOIN mdi.csv_file_input_step ON p.dwid = csv_file_input_step.process_dwid
+        LEFT JOIN mdi.table_output_step ON p.dwid = table_output_step.process_dwid
+        LEFT JOIN mdi.microsoft_excel_input_step ON p.dwid = microsoft_excel_input_step.process_dwid
 WHERE
-		p.name = '${process_name}'</sql>
+        p.name = '${process_name}'
+;
+</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -722,6 +729,12 @@ WHERE
       <field>
         <field_name>process_dwid</field_name>
         <variable_name>process_dwid</variable_name>
+        <variable_type>JVM</variable_type>
+        <default_value/>
+      </field>
+      <field>
+        <field_name>data_source_dwid</field_name>
+        <variable_name>data_source_dwid</variable_name>
         <variable_type>JVM</variable_type>
         <default_value/>
       </field>
