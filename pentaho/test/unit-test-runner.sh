@@ -55,26 +55,29 @@ else
   generate_grep_phrase "$1"
 fi
 
+function execute_mdi_test ()
+{
+  mdi_controller_path="mdi/controller"
+  process_name="$1"
+  filename="$2"
+  mdi_database_username="$3"
+  echo "Now testing ${process_name}"
+  execute_test "$process_name" "$filename" "$mdi_controller_path" "$mdi_database_username"
+}
+
 
 # Non MDI Tests ##########################################################################
 process_name="SP6"
+database_username="encompass_SP6"
 sp6_job_path="encompass/import/SP6/full_encompass_etl"
 echo Now testing ${process_name}
-execute_test ${process_name} "Encompass.csv" encompass_SP6 ${sp6_job_path}
-
-
-# set MDI defaults
-mdi_controller_path="mdi/controller"
+execute_test ${process_name} "Encompass.csv" ${database_username} ${sp6_job_path}
 
 # MDI Tests ##############################################################################
-process_name="SP8.1"
-echo Now testing ${process_name}
-execute_test ${process_name} "dmi-V35-state.csv" dmi ${mdi_controller_path}
-##########################################################################################
-process_name="SP9.1"
-echo Now testing ${process_name}
-execute_test ${process_name} "dmi-V35-national.csv" dmi ${mdi_controller_path}
-##########################################################################################
-process_name="SP10.1"
-echo Now testing ${process_name}
-execute_test ${process_name} "dmi-V35.xls" dmi ${mdi_controller_path}
+database_username="dmi"
+execute_mdi_test "SP8.1" "dmi-V35-state.csv" ${database_username}
+# execute_mdi_test "SP8.2" "empty.file" ${database_username}
+execute_mdi_test "SP9.1" "dmi-V35-national.csv" ${database_username}
+# execute_mdi_test "SP9.2" "empty.file" ${database_username}
+execute_mdi_test "SP10.1" "dmi-V35.xls" ${database_username}
+# execute_mdi_test "SP10.2" "empty.file" ${database_username}
