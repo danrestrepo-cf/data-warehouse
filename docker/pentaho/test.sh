@@ -125,10 +125,10 @@ test)
   ;;
 bash)
   shift 1
+  filename="unit-test-runner.sh"
+  entrypoint_parameter=""
+  pentaho_input_directory=("$pentaho_test_directory") # mount this dir as /input/ when launching bash so there is access to all files
   process_name="bash"
-  filename="empty.file"
-  username="pentaho"
-  pentaho_input_directory=("$pentaho_test_directory"/bash)
   job_name="bash"
   entrypoint_parameter=""
   run_docker
