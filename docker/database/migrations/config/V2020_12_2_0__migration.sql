@@ -47,7 +47,7 @@ CREATE TABLE mdi.table_input_step
     replace_variables mdi.PENTAHO_Y_OR_N DEFAULT 'N'::mdi.PENTAHO_Y_OR_N NOT NULL,
     enable_lazy_conversion mdi.PENTAHO_Y_OR_N DEFAULT 'N'::mdi.PENTAHO_Y_OR_N NOT NULL,
     cached_row_meta mdi.PENTAHO_Y_OR_N DEFAULT 'N'::mdi.PENTAHO_Y_OR_N NOT NULL,
-    connectionname mdi.PENTAHO_DB_CONNECTION_NAME
+    connectionname mdi.PENTAHO_DB_CONNECTION_NAME NOT NULL
 );
 
 --
