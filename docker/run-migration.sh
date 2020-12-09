@@ -8,7 +8,7 @@ if [ $# -lt 1 ]; then
   exit 1
 fi
 
-# temporary hack to clean up the volume before we run it against a "real" database
+# clean up the dev setup before we run it against a "real" database
 rm -f database/migrations/*/beforeMigrate.sql
 
 # TODO: shove these into a property file (sops) and read it out
@@ -28,8 +28,9 @@ else
   exit 1
 fi
 AWS_REGION=us-east-1
-DEPLOY_USER=deployer
 
+# Deploy user runs the structure changes
+DEPLOY_USER="deployer"
 AUTH_TOKEN=$(aws rds generate-db-auth-token --hostname ${RDS_ENDPOINT} --port 5432 --region ${AWS_REGION} --username ${DEPLOY_USER} --output text)
 
 for database in ingress staging config; do
@@ -39,6 +40,22 @@ for database in ingress staging config; do
     -url=jdbc:postgresql://${RDS_ENDPOINT}:5432/${database}?requiressl=true \
     -schemas=flyway \
     -user=${DEPLOY_USER} \
+    -password="${AUTH_TOKEN}" \
+    -connectRetries=60 \
+    migrate
+done
+
+# This runs as the admin user to prevent permission escalation in the main migrations
+ADMIN_USER="admin"
+AUTH_TOKEN=$(aws rds generate-db-auth-token --hostname ${RDS_ENDPOINT} --port 5432 --region ${AWS_REGION} --username ${ADMIN_USER} --output text)
+
+for database in ingress staging config; do
+  docker run -it \
+    -v $(pwd)/database/migrations/${database}-permissions:/flyway/sql \
+    --rm flyway/flyway:6 \
+    -url=jdbc:postgresql://${RDS_ENDPOINT}:5432/${database}?requiressl=true \
+    -schemas=flyway \
+    -user=${ADMIN_USER} \
     -password="${AUTH_TOKEN}" \
     -connectRetries=60 \
     migrate
