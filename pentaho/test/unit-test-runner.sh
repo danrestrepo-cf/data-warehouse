@@ -76,7 +76,28 @@ echo Now testing ${process_name}
 execute_test ${process_name} ${database_username} ${sp6_job_path} ${input_type} "Encompass.csv"
 
 # MDI Tests ##############################################################################
-database_username="dmi"
-execute_mdi_test "SP8.1" ${database_username} "file" "dmi-V35-state.csv"
-execute_mdi_test "SP9.1" ${database_username} "file" "dmi-V35-national.csv"
-execute_mdi_test "SP10.1" ${database_username} "file" "dmi-V35.xls"
+process_name="SP8.1"
+echo Now testing ${process_name}
+execute_test ${process_name} "dmi-V35-state.csv" dmi ${mdi_controller_path}
+##########################################################################################
+process_name="SP8.2"
+echo Now testing ${process_name}
+execute_test ${process_name} "empty.file" ${mdi_controller_path}
+
+##########################################################################################
+process_name="SP9.1"
+echo Now testing ${process_name}
+execute_test ${process_name} "dmi-V35-national.csv" dmi ${mdi_controller_path}
+##########################################################################################
+process_name="SP9.2"
+echo Now testing ${process_name}
+execute_test ${process_name} "empty.file" ${mdi_controller_path}
+
+##########################################################################################
+process_name="SP10.1"
+echo Now testing ${process_name}
+execute_test ${process_name} "dmi-V35.xls" ${mdi_controller_path}
+##########################################################################################
+process_name="SP10.2"
+echo Now testing ${process_name}
+execute_test ${process_name} "empty.file" ${mdi_controller_path}
