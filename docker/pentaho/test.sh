@@ -65,6 +65,7 @@ function run_docker()
     --env PROCESS_NAME=${process_name} \
     --env INPUT_FILE="$filename" \
     --env INPUT_PATH=/input/ \
+    --env INPUT_REQUIRED_FLAG=0 \
     ${project_name}/pentaho \
     $entrypoint_parameter $job_name
 
@@ -121,6 +122,7 @@ test)
   username=$3
   job_name="$4"       # Ex: "mdi/controller" or "encompass/import/SP6/full_encompass_etl"
   pentaho_input_directory=${pentaho_test_directory}/${process_name}/
+  echo ${pentaho_input_directory}
   run_docker
   ;;
 bash)

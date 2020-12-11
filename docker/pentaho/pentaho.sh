@@ -31,6 +31,7 @@ echo "Has INPUT_PATH? ${INPUT_PATH}"
 if [[ -n "${INPUT_PATH}" ]]; then
   params="${params} -param:input_path=${INPUT_PATH}"
 fi
+echo "Has INPUT_REQUIRED_FLAG? ${INPUT_REQUIRED_FLAG}"
 if [[ -n "${PROCESS_NAME}" ]]; then
   params="${params} -param:process_name=${PROCESS_NAME}"
 fi
@@ -46,6 +47,23 @@ if [[ "$etl_batch_id" -eq "" ]]; then
   etl_batch_id=$(cat /proc/sys/kernel/random/uuid)
 fi
 params="${params} -param:etl_batch_id=${etl_batch_id}"
+
+function download_if_required()
+{
+  case "${INPUT_REQUIRED_FLAG}" in
+    0) # no need to download a file
+      echo "Input file is NOT required. Skipping download step."
+      ;;
+    1) # a file is required!
+      echo "Input file is required. Now downloading."
+      download
+      ;;
+    *)
+      echo "ERROR: Expected to find an environment variable named INPUT_REQUIRED_FLAG with a value of 0 or 1 but another value was detected."
+      exit 1
+      ;;
+  esac
+}
 
 download() {
   if [[ -n "${S3_BUCKET}" && -n "${S3_KEY}" ]]; then
@@ -92,12 +110,12 @@ help)
   ;;
 t)
   shift 1
-  download
+  download_if_required
   run_pan "$@"
   ;;
 j)
   shift 1
-  download
+  download_if_required
   run_kitchen "$@"
   ;;
 *)
