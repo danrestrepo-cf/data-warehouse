@@ -31,7 +31,7 @@ echo "Has INPUT_PATH? ${INPUT_PATH}"
 if [[ -n "${INPUT_PATH}" ]]; then
   params="${params} -param:input_path=${INPUT_PATH}"
 fi
-echo "Has INPUT_REQUIRED_FLAG? ${INPUT_REQUIRED_FLAG}"
+echo "Has INPUT_TYPE? ${INPUT_TYPE}" # expected values: none, file
 if [[ -n "${PROCESS_NAME}" ]]; then
   params="${params} -param:process_name=${PROCESS_NAME}"
 fi
@@ -50,16 +50,16 @@ params="${params} -param:etl_batch_id=${etl_batch_id}"
 
 function download_if_required()
 {
-  case "${INPUT_REQUIRED_FLAG}" in
-    0) # no need to download a file
+  case "${INPUT_TYPE}" in
+    none) # no need to download a file
       echo "Input file is NOT required. Skipping download step."
       ;;
-    1) # a file is required!
+    file) # a file is required!
       echo "Input file is required. Now downloading."
       download
       ;;
     *)
-      echo "ERROR: Expected to find an environment variable named INPUT_REQUIRED_FLAG with a value of 0 or 1 but another value was detected."
+      echo "ERROR: Expected to find an environment variable named INPUT_TYPE with a value of 'none' or 'file' but another value was detected."
       exit 1
       ;;
   esac

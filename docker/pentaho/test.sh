@@ -65,7 +65,7 @@ function run_docker()
     --env PROCESS_NAME=${process_name} \
     --env INPUT_FILE="$filename" \
     --env INPUT_PATH=/input/ \
-    --env INPUT_REQUIRED_FLAG=0 \
+    --env INPUT_TYPE=none \
     ${project_name}/pentaho \
     $entrypoint_parameter $job_name
 
@@ -127,7 +127,7 @@ test)
   ;;
 bash)
   shift 1
-  filename="unit-test-runner.sh"
+  filename="dummy_value"
   entrypoint_parameter=""
   pentaho_input_directory=("$pentaho_test_directory") # mount this dir as /input/ when launching bash so there is access to all files
   process_name="bash"
