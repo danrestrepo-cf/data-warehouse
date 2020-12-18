@@ -68,13 +68,13 @@ function execute_mdi_test ()
 
 # Non MDI Tests ##########################################################################
 process_name="SP6"
-database_username="encompass_SP6"
+database_username="postgres"
 sp6_job_path="encompass/import/SP6/full_encompass_etl"
 echo Now testing ${process_name}
-execute_test ${process_name} "Encompass.csv" ${database_username} ${sp6_job_path}
+execute_test ${process_name} "Encompass.csv" ${sp6_job_path} ${database_username}
 
 # MDI Tests ##############################################################################
-database_username="dmi"
+database_username="postgres"
 execute_mdi_test "SP8.1" "dmi-V35-state.csv" ${database_username}
 # execute_mdi_test "SP8.2" "empty.file" ${database_username}
 execute_mdi_test "SP9.1" "dmi-V35-national.csv" ${database_username}

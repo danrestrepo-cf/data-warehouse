@@ -54,7 +54,7 @@ function run_docker()
     export MSYS_NO_PATHCONV=1
   fi
 
-  docker run -it  \
+docker_command="docker run -it  \
     --network ${project_name}_default \
     -v ${pentaho_source_directory}:/jobs/ \
     -v ${pentaho_input_directory}:/input/ \
@@ -63,11 +63,14 @@ function run_docker()
     --env DB_USERNAME=${username} \
     --env DB_PASSWORD=testonly \
     --env PROCESS_NAME=${process_name} \
-    --env INPUT_FILE="$filename" \
+    --env INPUT_FILE=$filename \
     --env INPUT_PATH=/input/ \
     --env INPUT_TYPE=none \
     ${project_name}/pentaho \
-    $entrypoint_parameter $job_name
+    "$entrypoint_parameter" "$job_name""
+
+  echo Running command: ${docker_command}
+  ${docker_command}
 
   if [[ "$machine" == "Win" ]]; then
     # remove the environment variable used so Git Bash won't convert paths to the POSIX standard for the system
@@ -119,20 +122,20 @@ test)
   shift 1
   process_name=$1   # Ex: "SP10.1"
   filename=$2       # Ex: "Encompass.csv"
-  username=$3
-  job_name="$4"       # Ex: "mdi/controller" or "encompass/import/SP6/full_encompass_etl"
+  username=$4
+  job_name="$3"       # Ex: "mdi/controller" or "encompass/import/SP6/full_encompass_etl"
   pentaho_input_directory=${pentaho_test_directory}/${process_name}/
-  echo ${pentaho_input_directory}
   run_docker
   ;;
 bash)
   shift 1
   filename="dummy_value"
   entrypoint_parameter=""
-  pentaho_input_directory=("$pentaho_test_directory") # mount this dir as /input/ when launching bash so there is access to all files
+  pentaho_input_directory="$pentaho_test_directory" # mount this dir as /input/ when launching bash so there is access to all files
   process_name="bash"
   job_name="bash"
   entrypoint_parameter=""
+  username="dummy_value"
   run_docker
   exit 0
 ;;

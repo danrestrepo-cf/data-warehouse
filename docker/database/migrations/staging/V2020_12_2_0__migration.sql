@@ -13,4 +13,3 @@ VALUES ( 0, 'Unspecified' )
      , ( 1, 'Octane' )
      , ( 2, 'Encompass' )
      , ( 3, 'DMI' )
-;
