@@ -24,8 +24,7 @@ case "${unameOut}" in
     *)          machine="UNKNOWN:${unameOut}"
 esac
 
-function print_usage()
-{
+function print_usage() {
   echo "${script_filename} -- script usage"
   echo " "
   echo " Job Mode - pass in the path to a job you want kitchen to run and a file you want to be processed."
@@ -47,8 +46,7 @@ function print_usage()
   echo " "
 }
 
-function run_docker()
-{
+function run_docker() {
   if [[ "$machine" == "Win" ]]; then
     # set git bash so it does not convert paths using POSIX standard
     export MSYS_NO_PATHCONV=1

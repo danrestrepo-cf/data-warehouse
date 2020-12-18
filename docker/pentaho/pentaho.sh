@@ -48,8 +48,7 @@ if [[ "$etl_batch_id" -eq "" ]]; then
 fi
 params="${params} -param:etl_batch_id=${etl_batch_id}"
 
-function download_if_required()
-{
+function download_if_required() {
   case "${INPUT_TYPE}" in
     none) # no need to download a file
       echo "Input file is NOT required. Skipping download step."
