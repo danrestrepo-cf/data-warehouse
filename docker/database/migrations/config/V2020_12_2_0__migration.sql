@@ -11,7 +11,7 @@ UPDATE
 SET
     data_source_dwid=3
 WHERE
-    process_dwid in (1, 2) -- update for SP8.1 and SP9.1
+    process_dwid IN ( 1, 2 ) -- update for SP8.1 and SP9.1
 ;
 
 
@@ -28,7 +28,7 @@ UPDATE
 SET
     data_source_dwid=3
 WHERE
-        process_dwid=3 -- update for SP10.1
+    process_dwid = 3 -- update for SP10.1
 ;
 
 
@@ -41,9 +41,9 @@ CREATE TABLE mdi.table_input_step
         CONSTRAINT table_input_step_pk
             PRIMARY KEY,
     process_dwid BIGINT NOT NULL,
-    data_source_dwid BIGINT,
+    data_source_dwid BIGINT NULL,
     sql TEXT NOT NULL,
-    limit_size integer default 0, -- default to zero so Pentaho will return ALL rows queried
+    limit_size INTEGER DEFAULT 0 NOT NULL, -- default to zero so Pentaho will return ALL rows queried
     execute_for_each_row mdi.PENTAHO_Y_OR_N DEFAULT 'N'::mdi.PENTAHO_Y_OR_N NOT NULL,
     replace_variables mdi.PENTAHO_Y_OR_N DEFAULT 'N'::mdi.PENTAHO_Y_OR_N NOT NULL,
     enable_lazy_conversion mdi.PENTAHO_Y_OR_N DEFAULT 'N'::mdi.PENTAHO_Y_OR_N NOT NULL,

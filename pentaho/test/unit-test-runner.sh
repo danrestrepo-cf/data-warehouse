@@ -62,22 +62,19 @@ function execute_mdi_test ()
   filename="$2"
   mdi_database_username="$3"
   echo "Now testing ${process_name}"
-  execute_test "$process_name" "$filename" "$mdi_controller_path" "$mdi_database_username"
+  execute_test "$process_name" "$filename" "$mdi_database_username" "$mdi_controller_path"
 }
 
 
 # Non MDI Tests ##########################################################################
 process_name="SP6"
-database_username="postgres"
+database_username="encompass_SP6"
 sp6_job_path="encompass/import/SP6/full_encompass_etl"
 echo Now testing ${process_name}
-execute_test ${process_name} "Encompass.csv" ${sp6_job_path} ${database_username}
+execute_test ${process_name} "Encompass.csv" ${database_username} ${sp6_job_path}
 
 # MDI Tests ##############################################################################
-database_username="postgres"
+database_username="dmi"
 execute_mdi_test "SP8.1" "dmi-V35-state.csv" ${database_username}
-# execute_mdi_test "SP8.2" "empty.file" ${database_username}
 execute_mdi_test "SP9.1" "dmi-V35-national.csv" ${database_username}
-# execute_mdi_test "SP9.2" "empty.file" ${database_username}
 execute_mdi_test "SP10.1" "dmi-V35.xls" ${database_username}
-# execute_mdi_test "SP10.2" "empty.file" ${database_username}

@@ -9,33 +9,33 @@ set -e
 # Do not set echo of commands, as the password is passed in (see if we can load in another way)
 
 params=""
-echo "Has DB_ENDPOINT? ${DB_ENDPOINT}"
+echo "[INPUT] DB_ENDPOINT=${DB_ENDPOINT}"
 if [[ -n "${DB_ENDPOINT}" ]]; then
   params="${params} -param:database_hostname=${DB_ENDPOINT}"
 fi
-echo "Has DB_PORT? ${DB_PORT}"
+echo "[INPUT] DB_PORT=${DB_PORT}"
 if [[ -n "${DB_PORT}" ]]; then
   params="${params} -param:database_port=${DB_PORT}"
 fi
-echo "Has DB_USERNAME? ${DB_USERNAME}"
+echo "[INPUT] DB_USERNAME=${DB_USERNAME}"
 if [[ -n "${DB_USERNAME}" ]]; then
   params="${params} -param:database_username=${DB_USERNAME}"
 fi
 if [[ -n "${DB_PASSWORD}" ]]; then
-  echo "Has DB_PASSWORD."
+  echo "[INPUT] Has DB_PASSWORD."
   params="${params} -param:database_password=${DB_PASSWORD}"
 else
-  echo "Missing DB_PASSWORD"
+  echo "[INPUT] Missing DB_PASSWORD"
 fi
-echo "Has INPUT_PATH? ${INPUT_PATH}"
+echo "[INPUT] INPUT_PATH=${INPUT_PATH}"
 if [[ -n "${INPUT_PATH}" ]]; then
   params="${params} -param:input_path=${INPUT_PATH}"
 fi
-echo "Has INPUT_TYPE? ${INPUT_TYPE}" # expected values: none, file
+echo "[INPUT] PROCESS_NAME=${PROCESS_NAME}"
 if [[ -n "${PROCESS_NAME}" ]]; then
   params="${params} -param:process_name=${PROCESS_NAME}"
 fi
-echo "Has metadata endpoint? ${ECS_CONTAINER_METADATA_URI_V4}"
+echo "[INPUT] metadata endpoint=${ECS_CONTAINER_METADATA_URI_V4}"
 if [[ -n "${ECS_CONTAINER_METADATA_URI_V4}" ]]; then
   # https://docs.aws.amazon.com/AmazonECS/latest/userguide/task-metadata-endpoint-v4-fargate.html
   etl_batch_id=$(curl "${ECS_CONTAINER_METADATA_URI_V4}" | jq -r '.Containers[0].LogOptions["awslogs-stream"]' | sed 's~.*/~~')
@@ -46,9 +46,11 @@ fi
 if [[ "$etl_batch_id" -eq "" ]]; then
   etl_batch_id=$(cat /proc/sys/kernel/random/uuid)
 fi
+echo "[INPUT] etl_batch_id=${etl_batch_id}"
 params="${params} -param:etl_batch_id=${etl_batch_id}"
 
 function download_if_required() {
+  echo "[INPUT] INPUT_TYPE=${INPUT_TYPE}" # expected values: none, file
   case "${INPUT_TYPE}" in
     none) # no need to download a file
       echo "Input file is NOT required. Skipping download step."
