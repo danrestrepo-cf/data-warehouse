@@ -28,17 +28,19 @@ function print_usage() {
   echo "${script_filename} -- script usage"
   echo " "
   echo " Job Mode - pass in the path to a job you want kitchen to run and a file you want to be processed."
-  echo "    Usage: ${script_filename} job [job_name] [filename] [username]"
-  echo "    Example: ./${script_filename} job /encompass/import/SP6/full_encompass_etl encompass.csv encompass_SP6"
+  echo "    Usage: ${script_filename} job [job_name] [username] [input_type:none|file] [input filename]"
+  echo "    Example: ./${script_filename} job /encompass/import/SP6/full_encompass_etl encompass_SP6 file encompass.csv"
   echo " "
   echo " MDI Mode - pass in the process name configured in the EDW and a file name that should be checked for existence."
-  echo "    Usage: ${script_filename} mdi [process_name] [filename] [username]"
-  echo "    Example: ./${script_filename} mdi SP10.1 dmi-V35.xls dmi"
+  echo "    Usage: ${script_filename} mdi [process_name] [username] [input_type:none|file] [input filename]"
+  echo "    Example: ./${script_filename} mdi SP10.1 dmi file dmi-V35.xls"
   echo " "
   echo " Unit Test Mode - pass in the process name configured in the EDW, a file name that should be checked for "
   echo "                  existence, and the path to the job/transformation that kitchen should execute."
-  echo "    Usage: ${script_filename} test [process_name] [filename] [username] [transformation/job to run]"
-  echo "    Example: ./${script_filename} test \"SP8.1\" \"dmi-V35-state.csv\" dmi \"mdi/controller\""
+  echo "    Usage: ${script_filename} test [process_name] [username] [transformation/job to run] [input_type:none|file] [input filename]"
+  echo "    Example: ./${script_filename} test \"SP8.1\" dmi \"mdi/controller\" file \"dmi-V35-state.csv\""
+  echo "        or"
+  echo "    Example: ./${script_filename} test \"SP8.2\" dmi \"mdi/controller\" none"
   echo " "
   echo " Bash Mode - run docker and launch bash instead of executing a Pentaho process."
   echo "    Usage: ${script_filename} bash"
@@ -61,9 +63,9 @@ docker_command="docker run -it  \
     --env DB_USERNAME=${username} \
     --env DB_PASSWORD=testonly \
     --env PROCESS_NAME=${process_name} \
-    --env INPUT_FILE=$filename \
+    --env INPUT_FILE=${filename} \
     --env INPUT_PATH=/input/ \
-    --env INPUT_TYPE=none \
+    --env INPUT_TYPE=${input_type} \
     ${project_name}/pentaho \
     ${entrypoint_parameter} ${job_name}"
 
@@ -78,8 +80,8 @@ docker_command="docker run -it  \
 case "$1" in
 mdi)
   # ensure correct number of parameters passed in for MDI Mode
-  if [[ "$#" -ne "4" ]]; then
-    echo "Could not understand input parameters. MDI mode expects the first parameter to $script_filename to be 'mdi' and have 4 parameters in total but found $#."
+  if [[ "$#" -ne "5" ]]; then
+    echo "Could not understand input parameters. MDI mode expects the first parameter to $script_filename to be 'mdi' and have 5 parameters in total but found $#."
     echo "Displaying script usage:"
     print_usage
     exit 1
@@ -88,13 +90,14 @@ mdi)
   shift 1
   process_name=$1 # SP10.1
   job_name="mdi/controller"
-  filename=$2
-  username=$3
+  username=$2
+  input_type=$3
+  filename=$4
   run_docker
   ;;
 job)
   # ensure correct number of parameters passed in for Job Mode
-  if [[ "$#" -ne "4" ]]; then
+  if [[ "$#" -ne "5" ]]; then
     echo "Could not understand input parameters. Job mode expects the first parameter to $script_filename to be 'job' and have 4 parameters in total but found $#."
     echo "Displaying script usage:"
     print_usage
@@ -103,8 +106,9 @@ job)
 
   shift 1
   job_name="$1" # /encompass/import/SP6/full_encompass_etl
-  filename=$2
-  username=$3
+  username=$2
+  input_type=$3
+  filename=$4
   run_docker
   ;;
 test)
@@ -132,6 +136,7 @@ bash)
   process_name="bash"
   job_name="bash"
   entrypoint_parameter=""
+  input_type="none"
   username="dummy_value"
   run_docker
   exit 0
