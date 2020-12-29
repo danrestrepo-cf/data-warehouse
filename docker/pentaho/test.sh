@@ -113,7 +113,7 @@ job)
   ;;
 test)
   # ensure correct number of parameters passed in for Unit Test Mode
-  if [[ "$#" -ne "5" ]]; then
+  if [[ "$#" -ne "6" ]]; then
     echo "Could not understand input parameters. Unit Test mode expects the first parameter to $script_filename to be 'test' and have 5 parameters in total but found $#."
     echo "Displaying script usage:"
     print_usage
@@ -122,9 +122,10 @@ test)
 
   shift 1
   process_name=$1   # Ex: "SP10.1"
-  filename=$2       # Ex: "Encompass.csv"
-  username=$3
-  job_name=$4       # Ex: "mdi/controller" or "encompass/import/SP6/full_encompass_etl"
+  filename=$5       # Ex: "Encompass.csv"
+  username=$2
+  input_type=$4
+  job_name=$3       # Ex: "mdi/controller" or "encompass/import/SP6/full_encompass_etl"
   pentaho_input_directory=${pentaho_test_directory}/${process_name}/
   run_docker
   ;;

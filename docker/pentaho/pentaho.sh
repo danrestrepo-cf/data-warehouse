@@ -49,14 +49,14 @@ fi
 echo "[INPUT] etl_batch_id=${etl_batch_id}"
 params="${params} -param:etl_batch_id=${etl_batch_id}"
 
-function download_if_required() {
+download_if_required() {
   echo "[INPUT] INPUT_TYPE=${INPUT_TYPE}" # expected values: none, file
   case "${INPUT_TYPE}" in
     none) # no need to download a file
       echo "Input file is NOT required. Skipping download step."
       ;;
     file) # a file is required!
-      echo "Input file is required. Now downloading."
+      echo "Input file is required."
       download
       ;;
     *)
@@ -64,6 +64,14 @@ function download_if_required() {
       exit 1
       ;;
   esac
+}
+
+verify_input_file_exists() {
+  full_input_file="${INPUT_PATH}/${INPUT_FILE}"
+  if [[ ! -f $full_input_file ]]; then
+    echo "Expecting file ${full_input_file} to exist, but it does not."
+    exit 1
+  fi
 }
 
 download() {
@@ -74,11 +82,7 @@ download() {
     echo "Not downloading from S3."
   fi
 
-  full_input_file="${INPUT_PATH}/${INPUT_FILE}"
-  if [[ ! -f $full_input_file ]]; then
-    echo "Expecting file ${full_input_file} to exist, but it does not."
-    exit 1
-  fi
+  verify_input_file_exists
 }
 
 run_pan() {

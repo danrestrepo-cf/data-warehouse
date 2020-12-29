@@ -10,8 +10,8 @@ function execute_test()
 {
   # set current working directory to the folder with test.sh in it
   cd "$(pwd)/../../docker/pentaho/"
-  echo "Command for manual execution:  $(pwd)/../../docker/pentaho/test.sh test \"$1\" \"$2\" \"$3\" \"$4\" | grep \"$grep_statement\""
-  ./test.sh test "$1" "$2" "$3" "$4" | grep "$grep_statement"
+  echo "Command for manual execution:  $(pwd)/../../docker/pentaho/test.sh test \"$1\" \"$2\" \"$3\" \"$4\" "$5" | grep \"$grep_statement\""
+  ./test.sh test "$1" "$2" "$3" "$4" "$5" | grep "$grep_statement"
   echo " "
 }
 
@@ -59,10 +59,11 @@ function execute_mdi_test ()
 {
   mdi_controller_path="mdi/controller"
   process_name="$1"
-  filename="$2"
-  mdi_database_username="$3"
+  filename="$4"
+  mdi_database_username="$2"
+  input_type=$3
   echo "Now testing ${process_name}"
-  execute_test "$process_name" "$filename" "$mdi_database_username" "$mdi_controller_path"
+  execute_test "$process_name" "$mdi_database_username" "$mdi_controller_path" "$input_type" "$filename"
 }
 
 
@@ -70,11 +71,12 @@ function execute_mdi_test ()
 process_name="SP6"
 database_username="encompass_SP6"
 sp6_job_path="encompass/import/SP6/full_encompass_etl"
+input_type="file"
 echo Now testing ${process_name}
-execute_test ${process_name} "Encompass.csv" ${database_username} ${sp6_job_path}
+execute_test ${process_name} ${database_username} ${sp6_job_path} ${input_type} "Encompass.csv"
 
 # MDI Tests ##############################################################################
 database_username="dmi"
-execute_mdi_test "SP8.1" "dmi-V35-state.csv" ${database_username}
-execute_mdi_test "SP9.1" "dmi-V35-national.csv" ${database_username}
-execute_mdi_test "SP10.1" "dmi-V35.xls" ${database_username}
+execute_mdi_test "SP8.1" ${database_username} "file" "dmi-V35-state.csv"
+execute_mdi_test "SP9.1" ${database_username} "file" "dmi-V35-national.csv"
+execute_mdi_test "SP10.1" ${database_username} "file" "dmi-V35.xls"
