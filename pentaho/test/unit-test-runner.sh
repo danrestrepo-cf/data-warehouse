@@ -59,9 +59,9 @@ function execute_mdi_test ()
 {
   mdi_controller_path="mdi/controller"
   process_name="$1"
-  filename="$4"
   mdi_database_username="$2"
   input_type=$3
+  filename="$4"
   echo "Now testing ${process_name}"
   execute_test "$process_name" "$mdi_database_username" "$mdi_controller_path" "$input_type" "$filename"
 }
