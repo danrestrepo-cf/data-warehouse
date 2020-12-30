@@ -7,7 +7,7 @@ mkdir -p ~/.aws
 create_profile() {
   profile=$1
   account=$2
-  role_name=${3:-profile}
+  role_name=${3:-$profile}
   config=~/.aws/config
   if ! grep -q $profile $config; then
     echo "ADDING profile ${profile}"
