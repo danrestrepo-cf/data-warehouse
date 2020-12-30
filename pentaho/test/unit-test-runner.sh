@@ -10,8 +10,8 @@ function execute_test()
 {
   # set current working directory to the folder with test.sh in it
   cd "$(pwd)/../../docker/pentaho/"
-  echo "Command for manual execution:  $(pwd)/../../docker/pentaho/test.sh test \"$1\" \"$2\" \"$3\" \"$4\" | grep \"$grep_statement\""
-  ./test.sh test "$1" "$2" "$3" "$4" | grep "$grep_statement"
+  echo "Command for manual execution:  $(pwd)/../../docker/pentaho/test.sh test \"$1\" \"$2\" \"$3\" \"$4\" "$5" | grep \"$grep_statement\""
+  ./test.sh test "$1" "$2" "$3" "$4" "$5" | grep "$grep_statement"
   echo " "
 }
 
@@ -55,26 +55,28 @@ else
   generate_grep_phrase "$1"
 fi
 
+function execute_mdi_test ()
+{
+  mdi_controller_path="mdi/controller"
+  process_name="$1"
+  mdi_database_username="$2"
+  input_type=$3
+  filename="$4"
+  echo "Now testing ${process_name}"
+  execute_test "$process_name" "$mdi_database_username" "$mdi_controller_path" "$input_type" "$filename"
+}
+
 
 # Non MDI Tests ##########################################################################
 process_name="SP6"
+database_username="encompass_SP6"
 sp6_job_path="encompass/import/SP6/full_encompass_etl"
+input_type="file"
 echo Now testing ${process_name}
-execute_test ${process_name} "Encompass.csv" encompass_SP6 ${sp6_job_path}
-
-
-# set MDI defaults
-mdi_controller_path="mdi/controller"
+execute_test ${process_name} ${database_username} ${sp6_job_path} ${input_type} "Encompass.csv"
 
 # MDI Tests ##############################################################################
-process_name="SP8.1"
-echo Now testing ${process_name}
-execute_test ${process_name} "dmi-V35-state.csv" dmi ${mdi_controller_path}
-##########################################################################################
-process_name="SP9.1"
-echo Now testing ${process_name}
-execute_test ${process_name} "dmi-V35-national.csv" dmi ${mdi_controller_path}
-##########################################################################################
-process_name="SP10.1"
-echo Now testing ${process_name}
-execute_test ${process_name} "dmi-V35.xls" dmi ${mdi_controller_path}
+database_username="dmi"
+execute_mdi_test "SP8.1" ${database_username} "file" "dmi-V35-state.csv"
+execute_mdi_test "SP9.1" ${database_username} "file" "dmi-V35-national.csv"
+execute_mdi_test "SP10.1" ${database_username} "file" "dmi-V35.xls"
