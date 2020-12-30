@@ -1,0 +1,38 @@
+#DataSourceSettings#
+    #LocalDataSource: Octane QA
+    #BEGIN#
+<data-source source="LOCAL" name="Octane QA" read-only="true" uuid="c0c3c2fe-2b46-4dc0-9e4f-cfe3dc0b24e9">
+    <database-info product="MySQL" version="5.7.12-log" jdbc-version="4.2" driver-name="MySQL Connector/J"
+                   driver-version="mysql-connector-java-8.0.21 (Revision: 33f65445a1bcc544eb0120491926484da168f199)"
+                   dbms="MYSQL_AURORA" exact-version="2.9.0" exact-driver-version="8.0">
+        <extra-name-characters>#@</extra-name-characters>
+        <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
+    <driver-ref>mysql.8</driver-ref>
+    <synchronize>true</synchronize>
+    <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+    <jdbc-url>jdbc:mysql://qa-lura-db.cluster-c67hguplwubq.us-east-1.rds.amazonaws.com:3306/lura_qa</jdbc-url>
+    <jdbc-additional-properties>
+        <property name="AWS.RdsSigningPort" value="3306"/>
+        <property name="AWS.RegionId" value="us-east-1"/>
+        <property name="AWS.CredentialId" value="profile:octane-database-readonly"/>
+        <property name="AWS.RdsSigningHost" value="qa-lura-db.cluster-c67hguplwubq.us-east-1.rds.amazonaws.com"/>
+    </jdbc-additional-properties>
+    <secret-storage>master_key</secret-storage>
+    <auth-provider>aws.rds.iam</auth-provider>
+    <user-name>engineer.readonly</user-name>
+    <schema-mapping>
+        <introspection-scope>
+            <node kind="schema" qname="@"/>
+        </introspection-scope>
+    </schema-mapping>
+    <working-dir>$ProjectFileDir$</working-dir>
+    <auto-close enable="true" timeout="3600"/>
+    <ssl-config>
+        <enabled>true</enabled>
+        <mode>REQUIRE</mode>
+    </ssl-config>
+</data-source>
+    #END#
+

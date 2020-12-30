@@ -2,26 +2,28 @@
 
 set -e
 
-if [ $# -lt 1 ]; then
-  echo "Usage: ./aws-sso-configure.sh [environment]"
-  exit 1
-fi
+mkdir -p ~/.aws
 
-environment=$1
-if [ "$environment" == 'qa' ]; then
-  echo "Using QA environment."
-elif [ "$environment" == "uat" ]; then
-  echo "UAT not supported yet."
-elif [ "$environment" == "prod" ]; then
-  echo "Using Production environment."
-else
-  echo "Unknown $environment supplied."
-  exit 1
-fi
+create_profile() {
+  profile=$1
+  account=$2
+  role_name=${3:-profile}
+  config=~/.aws/config
+  if ! grep -q $profile $config; then
+    echo "ADDING profile ${profile}"
+    echo "" >>$config
+    echo "[profile $profile]" >>$config
+    echo "sso_start_url = https://cardinalfinancial.awsapps.com/start" >>$config
+    echo "sso_region = us-east-1" >>$config
+    echo "sso_account_id = ${account}" >>$config
+    echo "sso_role_name = ${role_name}" >>$config
+    echo "region = us-east-1" >>$config
+    echo "output = json" >>$config
+  else
+    echo "PROFILE ${profile} EXISTS"
+  fi
+}
 
-profile="${environment}-data-warehouse-readonly"
-
-# set MSYS_NO_PATHCONV to 1 so GitBash doesn't mangle path ~ gets turned into
-export MSYS_NO_PATHCONV=1
-
-docker run --rm -it -v ~/.aws:/root/.aws amazon/aws-cli configure sso --profile "${profile}"
+create_profile qa-data-warehouse-readonly 185672194546
+create_profile prod-data-warehouse-readonly 766879632060
+create_profile octane-database-readonly 188213074036
