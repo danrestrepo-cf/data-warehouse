@@ -76,38 +76,13 @@ echo Now testing ${process_name}
 execute_test ${process_name} ${database_username} ${sp6_job_path} ${input_type} "Encompass.csv"
 
 # MDI Tests ##############################################################################
-process_name="SP8.1"
-echo Now testing ${process_name}
-execute_test ${process_name} "dmi-V35-state.csv" dmi ${mdi_controller_path}
-##########################################################################################
-process_name="SP8.2"
-echo Now testing ${process_name}
-execute_test ${process_name} "empty.file" dmi ${mdi_controller_path}
+database_username="dmi"
+input_type="file"
+execute_mdi_test "SP8.1" ${database_username} ${input_type} "dmi-V35-state.csv"
+execute_mdi_test "SP9.1" ${database_username} ${input_type} "dmi-V35-national.csv"
+execute_mdi_test "SP10.1" ${database_username} ${input_type} "dmi-V35.xls"
 
-##########################################################################################
-process_name="SP8.2"
-echo Now testing ${process_name}
-execute_test ${process_name} "empty.file" dmi ${mdi_controller_path}
-
-##########################################################################################
-process_name="SP9.1"
-echo Now testing ${process_name}
-execute_test ${process_name} "dmi-V35-national.csv" dmi ${mdi_controller_path}
-##########################################################################################
-process_name="SP9.2"
-echo Now testing ${process_name}
-execute_test ${process_name} "empty.file" dmi ${mdi_controller_path}
-
-##########################################################################################
-process_name="SP9.2"
-echo Now testing ${process_name}
-execute_test ${process_name} "empty.file" dmi ${mdi_controller_path}
-
-##########################################################################################
-process_name="SP10.1"
-echo Now testing ${process_name}
-execute_test ${process_name} "dmi-V35.xls" dmi ${mdi_controller_path}
-##########################################################################################
-process_name="SP10.2"
-echo Now testing ${process_name}
-execute_test ${process_name} "empty.file" dmi ${mdi_controller_path}
+input_type="none"
+execute_mdi_test "SP8.2" ${database_username} ${input_type} ""
+execute_mdi_test "SP9.2" ${database_username} ${input_type} ""
+execute_mdi_test "SP10.2" ${database_username} ${input_type} ""
