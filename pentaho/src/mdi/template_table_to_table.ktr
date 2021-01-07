@@ -725,11 +725,11 @@
     </hop>
     <hop>
       <from>[template_table_to_table] Table output</from>
-      <to>[template_table_to_table]  Remove sensitive values</to>
+      <to>[template_table_to_table]  Specify logging fields (non-sensitive)</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table]  Remove sensitive values</from>
+      <from>[template_table_to_table]  Specify logging fields (non-sensitive)</from>
       <to>[template_table_to_table]  Abort Table Output</to>
       <enabled>Y</enabled>
     </hop>
@@ -784,7 +784,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table]  Remove sensitive values</name>
+    <name>[template_table_to_table]  Specify logging fields (non-sensitive)</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
@@ -1050,7 +1050,7 @@
     </error>
     <error>
       <source_step>[template_table_to_table] Table output</source_step>
-      <target_step>[template_table_to_table]  Remove sensitive values</target_step>
+      <target_step>[template_table_to_table]  Specify logging fields (non-sensitive)</target_step>
       <is_enabled>Y</is_enabled>
       <nr_valuename/>
       <descriptions_valuename/>

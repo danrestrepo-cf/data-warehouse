@@ -851,6 +851,13 @@ DATABASE_FIELD_NAME. </note>
         <source_field>partition_over_tables</source_field>
       </mapping>
       <mapping>
+        <target_step_name>[template_table_to_table]  Specify logging fields (non-sensitive)</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table] Load Table Output non-sensitive fields</source_step>
+        <source_field>database_stream_name</source_field>
+      </mapping>
+      <mapping>
         <target_step_name>[template_table_to_table]  Remove sensitive values</target_step_name>
         <target_attribute_key>REMOVE_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
