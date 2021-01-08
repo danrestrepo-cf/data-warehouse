@@ -74,16 +74,18 @@ database_username="encompass_SP6"
 input_type="file"
 echo Now testing ${process_name}
 execute_test ${process_name} ${database_username} ${sp6_job_path} ${input_type} "Encompass.csv"
+unset input_type
 
 # MDI Tests ##############################################################################
 database_username="dmi"
-input_type="file"
-execute_mdi_test "SP8.1"  ${database_username} ${input_type} "dmi-V35-state.csv"
-execute_mdi_test "SP9.1"  ${database_username} ${input_type} "dmi-V35-national.csv"
-execute_mdi_test "SP10.1" ${database_username} ${input_type} "dmi-V35.xls"
+# DMI NMLS Call Report - State
+execute_mdi_test "SP8.1"  ${database_username} "file" "dmi-V35-state.csv"
+execute_mdi_test "SP8.2"  ${database_username} "none" ""
 
-database_username="dmi"
-input_type="none"
-execute_mdi_test "SP8.2"  ${database_username} ${input_type} ""
-execute_mdi_test "SP9.2"  ${database_username} ${input_type} ""
-execute_mdi_test "SP10.2" ${database_username} ${input_type} ""
+# DMI NMLS Call Report - National
+execute_mdi_test "SP9.1"  ${database_username} "file" "dmi-V35-national.csv"
+execute_mdi_test "SP9.2"  ${database_username} "none" ""
+
+# DMI NMLS Call Report - s540a
+execute_mdi_test "SP10.1" ${database_username} "file" "dmi-V35.xls"
+execute_mdi_test "SP10.2" ${database_username} "none" ""
