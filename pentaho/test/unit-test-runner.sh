@@ -4,7 +4,7 @@
 set -e
 
 # set default grep statement
-grep_statement=" testing\| Start=\| Finished with errors"
+grep_statement=" testing\| Start=\| Finished with errors\| E=[1-9][0-9]*"
 
 function execute_test()
 {
@@ -69,8 +69,8 @@ function execute_mdi_test ()
 
 # Non MDI Tests ##########################################################################
 process_name="SP6"
-database_username="encompass_SP6"
 sp6_job_path="encompass/import/SP6/full_encompass_etl"
+database_username="encompass_SP6"
 input_type="file"
 echo Now testing ${process_name}
 execute_test ${process_name} ${database_username} ${sp6_job_path} ${input_type} "Encompass.csv"
@@ -78,11 +78,12 @@ execute_test ${process_name} ${database_username} ${sp6_job_path} ${input_type} 
 # MDI Tests ##############################################################################
 database_username="dmi"
 input_type="file"
-execute_mdi_test "SP8.1" ${database_username} ${input_type} "dmi-V35-state.csv"
-execute_mdi_test "SP9.1" ${database_username} ${input_type} "dmi-V35-national.csv"
+execute_mdi_test "SP8.1"  ${database_username} ${input_type} "dmi-V35-state.csv"
+execute_mdi_test "SP9.1"  ${database_username} ${input_type} "dmi-V35-national.csv"
 execute_mdi_test "SP10.1" ${database_username} ${input_type} "dmi-V35.xls"
 
+database_username="dmi"
 input_type="none"
-execute_mdi_test "SP8.2" ${database_username} ${input_type} ""
-execute_mdi_test "SP9.2" ${database_username} ${input_type} ""
+execute_mdi_test "SP8.2"  ${database_username} ${input_type} ""
+execute_mdi_test "SP9.2"  ${database_username} ${input_type} ""
 execute_mdi_test "SP10.2" ${database_username} ${input_type} ""
