@@ -71,7 +71,7 @@ VALUES ( 2, 5, 3,'select
    , etl_batch_id
 from
    dmi.nmls_call_report_state_raw
-;', NULL, DEFAULT, DEFAULT, 'Ingress DB Connection'::mdi.PENTAHO_DB_CONNECTION_NAME )
+;', 0, DEFAULT, DEFAULT, 'Ingress DB Connection'::mdi.PENTAHO_DB_CONNECTION_NAME )
 ;
 
 INSERT INTO mdi.table_output_step ( dwid, process_dwid, target_schema, target_table, commit_size, partitioning_field
@@ -114,7 +114,7 @@ VALUES ( 1, 4, 3, 'select
    , etl_batch_id
 from
    dmi.nmls_call_report_national_raw
-;', NULL, DEFAULT, DEFAULT, 'Ingress DB Connection'::mdi.PENTAHO_DB_CONNECTION_NAME )
+;', 0, DEFAULT, DEFAULT, 'Ingress DB Connection'::mdi.PENTAHO_DB_CONNECTION_NAME )
 ;
 
 INSERT INTO mdi.table_output_step ( dwid, process_dwid, target_schema, target_table, commit_size, partitioning_field
@@ -158,7 +158,7 @@ VALUES ( 3, 6, 3, 'select
    , etl_batch_id
 from
    dmi.nmls_call_report_s540a_raw
-;', NULL, DEFAULT, DEFAULT, 'Ingress DB Connection'::mdi.PENTAHO_DB_CONNECTION_NAME )
+;', 0, DEFAULT, DEFAULT, 'Ingress DB Connection'::mdi.PENTAHO_DB_CONNECTION_NAME )
 ;
 
 INSERT INTO mdi.table_output_step ( dwid, process_dwid, target_schema, target_table, commit_size, partitioning_field
