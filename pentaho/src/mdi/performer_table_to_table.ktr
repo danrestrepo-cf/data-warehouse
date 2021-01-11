@@ -1268,7 +1268,7 @@ ORDER BY
       <schema_name/>
     </partitioning>
     <connection>Config DB Connection</connection>
-    <sql>(SELECT
+    <sql>SELECT
      table_output_field.database_field_name
      , table_output_field.database_stream_name
  FROM
@@ -1278,7 +1278,7 @@ ORDER BY
          table_output_step.process_dwid = ${process_dwid}
      AND table_output_field.is_sensitive = FALSE
  ORDER BY
-     table_output_field.field_order ASC)
+     table_output_field.field_order ASC
 ;
 </sql>
     <limit>0</limit>
