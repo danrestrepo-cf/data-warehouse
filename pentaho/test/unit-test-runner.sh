@@ -8,7 +8,7 @@ set -e
 # regex explanation
 # -----------------------------
 # ' testing'  - looks for lines that the test.sh script output. Example line: "Now testing SP8.2"
-# ''          - looks for the last line output by Kettle/Pan that contains the start and end times of the job.
+# ' Start='          - looks for the last line output by Kettle/Pan that contains the start and end times of the job.
 # ' E=[1-9]'  - looks for steps that contain >0 errors.
 
 # set default grep statement
