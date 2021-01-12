@@ -67,7 +67,7 @@ VALUES ( 2, 5, 3,'select
    , state_type
    , unpaid_balance
    , loan_count
-   , avg_loan_size
+   , average_loan_size
    , etl_batch_id
 from
    dmi.nmls_call_report_state_raw
@@ -89,7 +89,7 @@ VALUES ( 29, 5, 'mcr_code', 'mcr_code', 1,FALSE)
      , ( 31, 5, 'state_type', 'state_type', 3,FALSE)
      , ( 32, 5, 'unpaid_balance', 'unpaid_balance', 4,FALSE)
      , ( 33, 5, 'loan_count', 'loan_count', 5,FALSE)
-     , ( 34, 5, 'avg_loan_size', 'avg_loan_size', 6,FALSE)
+     , ( 34, 5, 'avg_loan_size', 'average_loan_size', 6,FALSE)
      , ( 35, 5, 'etl_batch_id', 'etl_batch_id', 7 ,FALSE)
      , ( 36, 5, 'data_source_dwid', 'data_source_dwid', 8 ,FALSE)
 ;
@@ -109,7 +109,7 @@ VALUES ( 1, 4, 3, 'select
    , mcr_desc
    , unpaid_balance
    , loan_count
-   , avg_loan_size
+   , average_loan_size
    , etl_batch_id
 from
    dmi.nmls_call_report_national_raw
@@ -130,7 +130,7 @@ VALUES ( 22, 4, 'mcr_code', 'mcr_code', 1 ,FALSE)
      , ( 23, 4, 'mcr_desc', 'mcr_desc', 2 ,FALSE)
      , ( 24, 4, 'unpaid_balance', 'unpaid_balance', 3 ,FALSE)
      , ( 25, 4, 'loan_count', 'loan_count', 4 ,FALSE)
-     , ( 26, 4, 'avg_loan_size', 'avg_loan_size', 5 ,FALSE)
+     , ( 26, 4, 'avg_loan_size', 'average_loan_size', 5 ,FALSE)
      , ( 27, 4, 'etl_batch_id', 'etl_batch_id', 6 ,FALSE)
      , ( 28, 4, 'data_source_dwid', 'data_source_dwid', 7 ,FALSE)
 ;
@@ -171,7 +171,7 @@ INSERT INTO mdi.table_output_field
 ( dwid, table_output_step_dwid, database_field_name, database_stream_name, field_order,is_sensitive )
 VALUES ( 37, 6, 'state_type', 'state_type', 1,FALSE)
      , ( 38, 6, 'item_id', 'item_id', 3,FALSE)
-     , ( 39, 6, 'servicer_id', 'servicer_id', 4,FALSE)
+     , ( 39, 6, 'servicer_id', 'servicer_nmls_id', 4,FALSE)
      , ( 40, 6, 'servicer_name', 'servicer_name', 5,FALSE)
      , ( 41, 6, 'pool_number', 'pool_number', 6,FALSE)
      , ( 42, 6, 'unpaid_balance', 'unpaid_balance', 7 ,FALSE)
@@ -179,3 +179,14 @@ VALUES ( 37, 6, 'state_type', 'state_type', 1,FALSE)
      , ( 44, 6, 'etl_batch_id', 'etl_batch_id', 9,FALSE)
      , ( 45, 6, 'data_source_dwid', 'data_source_dwid', 10 ,FALSE)
 ;
+
+-- Reset sequences since we haven't been using them
+
+ALTER SEQUENCE mdi.table_input_step_dwid_seq RESTART WITH 100;
+ALTER SEQUENCE mdi.table_output_step_dwid_seq RESTART WITH 100;
+ALTER SEQUENCE mdi.table_output_field_dwid_seq RESTART WITH 100;
+ALTER SEQUENCE mdi.process_dwid_seq RESTART WITH 100;
+ALTER SEQUENCE mdi.microsoft_excel_input_step_dwid_seq RESTART WITH 100;
+ALTER SEQUENCE mdi.microsoft_excel_input_field_dwid_seq RESTART WITH 100;
+ALTER SEQUENCE mdi.csv_file_input_step_dwid_seq RESTART WITH 100;
+ALTER SEQUENCE mdi.csv_file_input_field_dwid_seq RESTART WITH 100;
