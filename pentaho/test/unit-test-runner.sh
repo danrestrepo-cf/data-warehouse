@@ -3,11 +3,20 @@
 #set the script to fail on any errors
 set -e
 
-# set default grep statement
-grep_statement=" testing\| Start=\| Finished with errors"
 
-function execute_test()
-{
+#
+# regex explanation
+# -----------------------------
+# ' testing'  - looks for lines that the test.sh script output. Example line: "Now testing SP8.2"
+# ' Start='          - looks for the last line output by Kettle/Pan that contains the start and end times of the job.
+# ' E=[1-9]'  - looks for steps that contain >0 errors.
+
+# set default grep statement
+grep_statement=" testing\| Start=\| Finished with errors\| E=[1-9]"
+
+
+
+function execute_test() {
   # set current working directory to the folder with test.sh in it
   cd "$(pwd)/../../docker/pentaho/"
   echo "Command for manual execution:  $(pwd)/../../docker/pentaho/test.sh test \"$1\" \"$2\" \"$3\" \"$4\" "$5" | grep \"$grep_statement\""
@@ -15,8 +24,7 @@ function execute_test()
   echo " "
 }
 
-function print_usage()
-{
+function print_usage() {
   # set script name
   script_filename=${0##*/}
   echo "${script_filename} -- script usage"
@@ -29,8 +37,7 @@ function print_usage()
 
 }
 
-function generate_grep_phrase()
-{
+function generate_grep_phrase() {
   if [[ "$1" != "" ]]; then # if one parameter use that in the grep statement
       grep_statement=$1
       echo "Using supplied grep statement: \"$grep_statement\""
@@ -55,8 +62,7 @@ else
   generate_grep_phrase "$1"
 fi
 
-function execute_mdi_test ()
-{
+function execute_mdi_test () {
   mdi_controller_path="mdi/controller"
   process_name="$1"
   mdi_database_username="$2"
@@ -71,12 +77,19 @@ function execute_mdi_test ()
 process_name="SP6"
 database_username="encompass_SP6"
 sp6_job_path="encompass/import/SP6/full_encompass_etl"
-input_type="file"
 echo Now testing ${process_name}
-execute_test ${process_name} ${database_username} ${sp6_job_path} ${input_type} "Encompass.csv"
+execute_test ${process_name} ${database_username} ${sp6_job_path} "file" "Encompass.csv"
 
 # MDI Tests ##############################################################################
 database_username="dmi"
-execute_mdi_test "SP8.1" ${database_username} "file" "dmi-V35-state.csv"
-execute_mdi_test "SP9.1" ${database_username} "file" "dmi-V35-national.csv"
+# DMI NMLS Call Report - State
+execute_mdi_test "SP8.1"  ${database_username} "file" "dmi-V35-state.csv"
+execute_mdi_test "SP8.2"  ${database_username} "none" ""
+
+# DMI NMLS Call Report - National
+execute_mdi_test "SP9.1"  ${database_username} "file" "dmi-V35-national.csv"
+execute_mdi_test "SP9.2"  ${database_username} "none" ""
+
+# DMI NMLS Call Report - s540a
 execute_mdi_test "SP10.1" ${database_username} "file" "dmi-V35.xls"
+execute_mdi_test "SP10.2" ${database_username} "none" ""

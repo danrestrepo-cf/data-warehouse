@@ -550,7 +550,7 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Remove fields marked sensitive from stream before logging error
+      <note>Specify logging fields, log them, and abort transformation as error                                                                                                                               
 
 
 
@@ -560,8 +560,8 @@
 </note>
       <xloc>816</xloc>
       <yloc>976</yloc>
-      <width>856</width>
-      <heigth>232</heigth>
+      <width>1024</width>
+      <heigth>179</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -725,11 +725,11 @@
     </hop>
     <hop>
       <from>[template_table_to_table] Table output</from>
-      <to>[template_table_to_table]  Remove sensitive values</to>
+      <to>[template_table_to_table]  Specify logging fields (non-sensitive)</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table]  Remove sensitive values</from>
+      <from>[template_table_to_table]  Specify logging fields (non-sensitive)</from>
       <to>[template_table_to_table]  Abort Table Output</to>
       <enabled>Y</enabled>
     </hop>
@@ -768,7 +768,7 @@
     <row_threshold>0</row_threshold>
     <message>could not save data to table</message>
     <always_log_rows>Y</always_log_rows>
-    <abort_option>ABORT</abort_option>
+    <abort_option>ABORT_WITH_ERROR</abort_option>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -784,7 +784,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table]  Remove sensitive values</name>
+    <name>[template_table_to_table]  Specify logging fields (non-sensitive)</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
@@ -1050,7 +1050,7 @@
     </error>
     <error>
       <source_step>[template_table_to_table] Table output</source_step>
-      <target_step>[template_table_to_table]  Remove sensitive values</target_step>
+      <target_step>[template_table_to_table]  Specify logging fields (non-sensitive)</target_step>
       <is_enabled>Y</is_enabled>
       <nr_valuename/>
       <descriptions_valuename/>
