@@ -71,7 +71,7 @@ VALUES ( 2, 5, 3,'select
    , etl_batch_id
 from
    dmi.nmls_call_report_state_raw
-;', 0, DEFAULT, DEFAULT, 'Ingress DB Connection'::mdi.PENTAHO_DB_CONNECTION_NAME )
+;', 0, DEFAULT, DEFAULT, 'Ingress DB Connection' )
 ;
 
 INSERT INTO mdi.table_output_step ( dwid, process_dwid, target_schema, target_table, commit_size, partitioning_field
@@ -79,8 +79,7 @@ INSERT INTO mdi.table_output_step ( dwid, process_dwid, target_schema, target_ta
                                   , table_name_defined_in_field, return_auto_generated_key_field, truncate_table
                                   , connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors
                                   , use_batch_update )
-VALUES ( 5, 5, 'staging_compliance', 'nmls_call_report_state', 1000, NULL, NULL, NULL, NULL, 'N', NULL, 'N', 'Staging DB Connection'::mdi.PENTAHO_DB_CONNECTION_NAME
-       , 'N', 'Y', 'N', 'N' )
+VALUES ( 5, 5, 'staging_compliance', 'nmls_call_report_state', 1000, NULL, NULL, NULL, NULL, 'N', NULL, 'N', 'Staging DB Connection', 'N', 'Y', 'N', 'N' )
 ;
 
 INSERT INTO mdi.table_output_field
@@ -114,7 +113,7 @@ VALUES ( 1, 4, 3, 'select
    , etl_batch_id
 from
    dmi.nmls_call_report_national_raw
-;', 0, DEFAULT, DEFAULT, 'Ingress DB Connection'::mdi.PENTAHO_DB_CONNECTION_NAME )
+;', 0, DEFAULT, DEFAULT, 'Ingress DB Connection' )
 ;
 
 INSERT INTO mdi.table_output_step ( dwid, process_dwid, target_schema, target_table, commit_size, partitioning_field
@@ -122,8 +121,7 @@ INSERT INTO mdi.table_output_step ( dwid, process_dwid, target_schema, target_ta
                                   , table_name_defined_in_field, return_auto_generated_key_field, truncate_table
                                   , connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors
                                   , use_batch_update )
-VALUES ( 4, 4, 'staging_compliance', 'nmls_call_report_national', 1000, NULL, NULL, NULL, NULL, 'N', NULL, 'N', 'Staging DB Connection'::mdi.PENTAHO_DB_CONNECTION_NAME
-       , 'N', 'Y', 'N', 'N' )
+VALUES ( 4, 4, 'staging_compliance', 'nmls_call_report_national', 1000, NULL, NULL, NULL, NULL, 'N', NULL, 'N', 'Staging DB Connection', 'N', 'Y', 'N', 'N' )
 ;
 
 INSERT INTO mdi.table_output_field
@@ -158,7 +156,7 @@ VALUES ( 3, 6, 3, 'select
    , etl_batch_id
 from
    dmi.nmls_call_report_s540a_raw
-;', 0, DEFAULT, DEFAULT, 'Ingress DB Connection'::mdi.PENTAHO_DB_CONNECTION_NAME )
+;', 0, DEFAULT, DEFAULT, 'Ingress DB Connection' )
 ;
 
 INSERT INTO mdi.table_output_step ( dwid, process_dwid, target_schema, target_table, commit_size, partitioning_field
@@ -166,8 +164,7 @@ INSERT INTO mdi.table_output_step ( dwid, process_dwid, target_schema, target_ta
                                   , table_name_defined_in_field, return_auto_generated_key_field, truncate_table
                                   , connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors
                                   , use_batch_update )
-VALUES ( 6, 6, 'staging_compliance', 'nmls_call_report_s540a', 1000, NULL, NULL, NULL, NULL, 'N', NULL, 'N', 'Staging DB Connection'::mdi.PENTAHO_DB_CONNECTION_NAME
-       , 'N', 'Y', 'N', 'N' )
+VALUES ( 6, 6, 'staging_compliance', 'nmls_call_report_s540a', 1000, NULL, NULL, NULL, NULL, 'N', NULL, 'N', 'Staging DB Connection', 'N', 'Y', 'N', 'N' )
 ;
 
 INSERT INTO mdi.table_output_field
