@@ -6,8 +6,7 @@ set -e
 # set default grep statement
 grep_statement=" testing\| Start=\| Finished with errors\| E=[1-9][0-9]*"
 
-function execute_test()
-{
+function execute_test() {
   # set current working directory to the folder with test.sh in it
   cd "$(pwd)/../../docker/pentaho/"
   echo "Command for manual execution:  $(pwd)/../../docker/pentaho/test.sh test \"$1\" \"$2\" \"$3\" \"$4\" "$5" | grep \"$grep_statement\""
@@ -15,8 +14,7 @@ function execute_test()
   echo " "
 }
 
-function print_usage()
-{
+function print_usage() {
   # set script name
   script_filename=${0##*/}
   echo "${script_filename} -- script usage"
@@ -29,8 +27,7 @@ function print_usage()
 
 }
 
-function generate_grep_phrase()
-{
+function generate_grep_phrase() {
   if [[ "$1" != "" ]]; then # if one parameter use that in the grep statement
       grep_statement=$1
       echo "Using supplied grep statement: \"$grep_statement\""
@@ -55,8 +52,7 @@ else
   generate_grep_phrase "$1"
 fi
 
-function execute_mdi_test ()
-{
+function execute_mdi_test () {
   mdi_controller_path="mdi/controller"
   process_name="$1"
   mdi_database_username="$2"
