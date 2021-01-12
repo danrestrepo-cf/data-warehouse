@@ -173,13 +173,12 @@ VALUES ( 37, 6, 'state_type', 'state_type', 1, FALSE )
      , ( 45, 6, 'data_source_dwid', 'data_source_dwid', 10, FALSE )
 ;
 
--- Reset sequences since we haven't been using them
-
-ALTER SEQUENCE mdi.table_input_step_dwid_seq RESTART WITH 100;
-ALTER SEQUENCE mdi.table_output_step_dwid_seq RESTART WITH 100;
-ALTER SEQUENCE mdi.table_output_field_dwid_seq RESTART WITH 100;
-ALTER SEQUENCE mdi.process_dwid_seq RESTART WITH 100;
-ALTER SEQUENCE mdi.microsoft_excel_input_step_dwid_seq RESTART WITH 100;
-ALTER SEQUENCE mdi.microsoft_excel_input_field_dwid_seq RESTART WITH 100;
-ALTER SEQUENCE mdi.csv_file_input_step_dwid_seq RESTART WITH 100;
-ALTER SEQUENCE mdi.csv_file_input_field_dwid_seq RESTART WITH 100;
+-- Set sequences since we haven't been using them yet
+SELECT setval('mdi.table_input_step_dwid_seq', (select max(dwid) from mdi.table_input_step), true);
+SELECT setval('mdi.table_output_step_dwid_seq', (select max(dwid) from mdi.table_output_step), true);
+SELECT setval('mdi.table_output_field_dwid_seq', (select max(dwid) from mdi.table_output_field), true);
+SELECT setval('mdi.process_dwid_seq', (select max(dwid) from mdi.process), true);
+SELECT setval('mdi.microsoft_excel_input_step_dwid_seq', (select max(dwid) from mdi.microsoft_excel_input_step), true);
+SELECT setval('mdi.microsoft_excel_input_field_dwid_seq', (select max(dwid) from mdi.microsoft_excel_input_field), true);
+SELECT setval('mdi.csv_file_input_step_dwid_seq', (select max(dwid) from mdi.csv_file_input_step), true);
+SELECT setval('mdi.csv_file_input_field_dwid_seq', (select max(dwid) from mdi.csv_file_input_field), true);

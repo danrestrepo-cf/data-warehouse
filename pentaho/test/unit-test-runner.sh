@@ -3,8 +3,18 @@
 #set the script to fail on any errors
 set -e
 
+
+#
+# regex explanation
+# -----------------------------
+# ' testing'  - looks for lines that the test.sh script output. Example line: "Now testing SP8.2"
+# ''          - looks for the last line output by Kettle/Pan that contains the start and end times of the job.
+# ' E=[1-9]'  - looks for steps that contain >0 errors.
+
 # set default grep statement
-grep_statement=" testing\| Start=\| Finished with errors\| E=[1-9][0-9]*"
+grep_statement=" testing\| Start=\| Finished with errors\| E=[1-9]"
+
+
 
 function execute_test() {
   # set current working directory to the folder with test.sh in it
@@ -65,8 +75,8 @@ function execute_mdi_test () {
 
 # Non MDI Tests ##########################################################################
 process_name="SP6"
-sp6_job_path="encompass/import/SP6/full_encompass_etl"
 database_username="encompass_SP6"
+sp6_job_path="encompass/import/SP6/full_encompass_etl"
 input_type="file"
 echo Now testing ${process_name}
 execute_test ${process_name} ${database_username} ${sp6_job_path} ${input_type} "Encompass.csv"
