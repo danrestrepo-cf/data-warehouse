@@ -1,6 +1,5 @@
 -- create data_source table
-CREATE TABLE star_common.data_source
-(
+CREATE TABLE star_common.data_source (
     dwid BIGSERIAL NOT NULL
         CONSTRAINT data_source_pk
             PRIMARY KEY,
@@ -18,8 +17,7 @@ VALUES ( 0, 'Unspecified' )
 --
 -- create target table for SP8.2
 --
-CREATE TABLE staging_compliance.nmls_call_report_state
-(
+CREATE TABLE staging_compliance.nmls_call_report_state (
     mcr_code TEXT NOT NULL,
     mcr_description TEXT,
     state_type TEXT NOT NULL,
@@ -33,8 +31,7 @@ CREATE TABLE staging_compliance.nmls_call_report_state
 --
 -- create target table for SP9.2
 --
-CREATE TABLE staging_compliance.nmls_call_report_national
-(
+CREATE TABLE staging_compliance.nmls_call_report_national (
     mcr_code TEXT NOT NULL,
     mcr_description TEXT,
     unpaid_balance NUMERIC(21,3),
@@ -47,8 +44,7 @@ CREATE TABLE staging_compliance.nmls_call_report_national
 --
 -- create target table for SP10.2
 --
-CREATE TABLE staging_compliance.nmls_call_report_s540a
-(
+CREATE TABLE staging_compliance.nmls_call_report_s540a (
     state_type TEXT,
     item_id BIGINT,
     servicer_nmls_id BIGINT,
