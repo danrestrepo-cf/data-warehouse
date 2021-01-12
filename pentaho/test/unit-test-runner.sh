@@ -77,10 +77,8 @@ function execute_mdi_test () {
 process_name="SP6"
 database_username="encompass_SP6"
 sp6_job_path="encompass/import/SP6/full_encompass_etl"
-input_type="file"
 echo Now testing ${process_name}
-execute_test ${process_name} ${database_username} ${sp6_job_path} ${input_type} "Encompass.csv"
-unset input_type
+execute_test ${process_name} ${database_username} ${sp6_job_path} "file" "Encompass.csv"
 
 # MDI Tests ##############################################################################
 database_username="dmi"
