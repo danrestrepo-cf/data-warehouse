@@ -61,7 +61,7 @@ VALUES ( 5, 'SP8.2', 'Transfer DMI NMLS Call Report data to staging db - state' 
 
 INSERT INTO mdi.table_input_step
 ( dwid, process_dwid, data_source_dwid, sql, limit_size, enable_lazy_conversion, cached_row_meta, connectionname )
-VALUES ( 2, 5, 3,'select
+VALUES ( 1, 5, 3,'select
    mcr_code
    , mcr_desc
    , state_type
@@ -79,19 +79,19 @@ INSERT INTO mdi.table_output_step ( dwid, process_dwid, target_schema, target_ta
                                   , table_name_defined_in_field, return_auto_generated_key_field, truncate_table
                                   , connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors
                                   , use_batch_update )
-VALUES ( 5, 5, 'staging_compliance', 'nmls_call_report_state', 1000, NULL, NULL, NULL, NULL, 'N', NULL, 'Y', 'Staging DB Connection', 'N', 'Y', 'N', 'N' )
+VALUES ( 4, 5, 'staging_compliance', 'nmls_call_report_state', 1000, NULL, NULL, NULL, NULL, 'N', NULL, 'Y', 'Staging DB Connection', 'N', 'Y', 'N', 'N' )
 ;
 
 INSERT INTO mdi.table_output_field
 ( dwid, table_output_step_dwid, database_field_name, database_stream_name, field_order, is_sensitive )
-VALUES ( 29, 5, 'mcr_code', 'mcr_code', 1, FALSE)
-     , ( 30, 5, 'mcr_description', 'mcr_desc', 2, FALSE)
-     , ( 31, 5, 'state_type', 'state_type', 3, FALSE)
-     , ( 32, 5, 'unpaid_balance', 'unpaid_balance', 4, FALSE)
-     , ( 33, 5, 'loan_count', 'loan_count', 5, FALSE)
-     , ( 34, 5, 'average_loan_size', 'avg_loan_size', 6, FALSE)
-     , ( 35, 5, 'etl_batch_id', 'etl_batch_id', 7 , FALSE)
-     , ( 36, 5, 'data_source_dwid', 'data_source_dwid', 8 , FALSE)
+VALUES ( 22, 4, 'mcr_code', 'mcr_code', 1, FALSE)
+     , ( 23, 4, 'mcr_description', 'mcr_desc', 2, FALSE)
+     , ( 24, 4, 'state_type', 'state_type', 3, FALSE)
+     , ( 25, 4, 'unpaid_balance', 'unpaid_balance', 4, FALSE)
+     , ( 26, 4, 'loan_count', 'loan_count', 5, FALSE)
+     , ( 27, 4, 'average_loan_size', 'avg_loan_size', 6, FALSE)
+     , ( 28, 4, 'etl_batch_id', 'etl_batch_id', 7 , FALSE)
+     , ( 29, 4, 'data_source_dwid', 'data_source_dwid', 8 , FALSE)
 ;
 
 --
@@ -104,7 +104,7 @@ VALUES ( 4, 'SP9.2', 'Transfer DMI NMLS Call Report data to staging db - nationa
 
 INSERT INTO mdi.table_input_step
 ( dwid, process_dwid, data_source_dwid, sql, limit_size, enable_lazy_conversion, cached_row_meta, connectionname )
-VALUES ( 1, 4, 3, 'select
+VALUES ( 2, 4, 3, 'select
    mcr_code
    , mcr_desc
    , unpaid_balance
@@ -121,18 +121,18 @@ INSERT INTO mdi.table_output_step ( dwid, process_dwid, target_schema, target_ta
                                   , table_name_defined_in_field, return_auto_generated_key_field, truncate_table
                                   , connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors
                                   , use_batch_update )
-VALUES ( 4, 4, 'staging_compliance', 'nmls_call_report_national', 1000, NULL, NULL, NULL, NULL, 'N', NULL, 'Y', 'Staging DB Connection', 'N', 'Y', 'N', 'N' )
+VALUES ( 5, 4, 'staging_compliance', 'nmls_call_report_national', 1000, NULL, NULL, NULL, NULL, 'N', NULL, 'Y', 'Staging DB Connection', 'N', 'Y', 'N', 'N' )
 ;
 
 INSERT INTO mdi.table_output_field
 ( dwid, table_output_step_dwid, database_field_name, database_stream_name, field_order, is_sensitive )
-VALUES ( 22, 4, 'mcr_code', 'mcr_code', 1 , FALSE)
-     , ( 23, 4, 'mcr_description', 'mcr_desc', 2 , FALSE)
-     , ( 24, 4, 'unpaid_balance', 'unpaid_balance', 3 , FALSE)
-     , ( 25, 4, 'loan_count', 'loan_count', 4 , FALSE)
-     , ( 26, 4, 'average_loan_size', 'avg_loan_size', 5 , FALSE)
-     , ( 27, 4, 'etl_batch_id', 'etl_batch_id', 6 , FALSE)
-     , ( 28, 4, 'data_source_dwid', 'data_source_dwid', 7 , FALSE)
+VALUES ( 30, 5, 'mcr_code', 'mcr_code', 1 , FALSE)
+     , ( 31, 5, 'mcr_description', 'mcr_desc', 2 , FALSE)
+     , ( 32, 5, 'unpaid_balance', 'unpaid_balance', 3 , FALSE)
+     , ( 33, 5, 'loan_count', 'loan_count', 4 , FALSE)
+     , ( 34, 5, 'average_loan_size', 'avg_loan_size', 5 , FALSE)
+     , ( 35, 5, 'etl_batch_id', 'etl_batch_id', 6 , FALSE)
+     , ( 36, 5, 'data_source_dwid', 'data_source_dwid', 7 , FALSE)
 ;
 
 --
