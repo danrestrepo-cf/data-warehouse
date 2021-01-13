@@ -6,35 +6,13 @@ This repository contains all code related to EDW, including SQL migrations and P
 
 ## Login
 
-Once AWS SSO is setup (below) you can retrieve a new session by invoking the `aws-sso-login.sh` script.
+Once AWS SSO is set up (below) you can retrieve a new session by invoking the `aws-sso-login.sh` script.
 
 ## One time setup
 
 AWS SSO generates temporary credentials for access to the data warehouse.
 
-To configure AWS SSO, use `scripts/aws-sso-configure.sh`.  It accepts a single argument, **environment**, which identifies the
-database to connect to.
-
-### Common parameters
-
-**SSO start URL** - https://cardinalfinancial.awsapps.com/start
-**Region** - us-east-1
-**Account** See the environment specific sections below.
-**CLI default client Region** - us-east-1
-**Client default output format** - text
-
-### QA
-
-Select the `Cardinal Analysis` account (without UAT / Prod). This creates the `qa-data-warehouse-readonly` profile.
-
-### UAT
-
-There is not a UAT environment for EDW (yet).
-
-### Prod
-
-Select the `Cardinal Analysis (prod)` account.  This creates the `prod-data-warehouse-readonly` profile.
-
+To configure AWS SSO, run `scripts/aws-sso-configure.sh` from the command line.
 
 ## FAQs
 > **Q: What does SP stand for in the acronyms SP1, SP2, SP999, etc?**
