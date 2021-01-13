@@ -54,7 +54,7 @@ for database in ingress staging config; do
     -v $(pwd)/database/migrations/${database}-permissions:/flyway/sql \
     --rm flyway/flyway:6 \
     -url=jdbc:postgresql://${RDS_ENDPOINT}:5432/${database}?requiressl=true \
-    -schemas=flyway \
+    -schemas=flyway-permissions \
     -user=${ADMIN_USER} \
     -password="${AUTH_TOKEN}" \
     -connectRetries=60 \

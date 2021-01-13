@@ -1,14 +1,14 @@
 -- GRANT CONNECT ON DATABASE ingress TO readonly;
--- GRANT CONNECT ON DATABASE ingress TO "encompass_SP6";
+-- GRANT CONNECT ON DATABASE ingress TO encompass_sp6;
 -- GRANT CONNECT ON DATABASE ingress TO dmi;
 
 GRANT SELECT ON ALL TABLES IN SCHEMA flyway TO readonly;
 
 -- encompass schema
 GRANT USAGE ON SCHEMA encompass TO readonly;
-GRANT USAGE ON SCHEMA encompass TO "encompass_SP6";
+GRANT USAGE ON SCHEMA encompass TO encompass_sp6;
 GRANT SELECT ON ALL TABLES IN SCHEMA encompass TO readonly;
-GRANT SELECT, INSERT, UPDATE, DELETE, TRUNCATE ON ALL TABLES IN SCHEMA encompass TO "encompass_SP6";
+GRANT SELECT, INSERT, UPDATE, DELETE, TRUNCATE ON ALL TABLES IN SCHEMA encompass TO encompass_sp6;
 
 -- dmi
 GRANT USAGE ON SCHEMA dmi TO readonly;

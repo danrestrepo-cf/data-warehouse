@@ -29,7 +29,7 @@ function print_usage() {
   echo " "
   echo " Job Mode - pass in the path to a job you want kitchen to run and a file you want to be processed."
   echo "    Usage: ${script_filename} job [job_name] [username] [input_type:none|file] [input filename]"
-  echo "    Example: ./${script_filename} job /encompass/import/SP6/full_encompass_etl encompass_SP6 file encompass.csv"
+  echo "    Example: ./${script_filename} job /encompass/import/SP6/full_encompass_etl encompass_sp6 file encompass.csv"
   echo " "
   echo " MDI Mode - pass in the process name configured in the EDW and a file name that should be checked for existence."
   echo "    Usage: ${script_filename} mdi [process_name] [username] [input_type:none|file] [input filename]"
