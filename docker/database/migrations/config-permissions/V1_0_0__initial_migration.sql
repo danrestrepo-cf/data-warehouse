@@ -1,5 +1,5 @@
 -- GRANT CONNECT ON DATABASE config TO readonly;
--- GRANT CONNECT ON DATABASE config TO "encompass_SP6";
+-- GRANT CONNECT ON DATABASE config TO encompass_sp6;
 -- GRANT CONNECT ON DATABASE config TO dmi;
 
 GRANT SELECT ON ALL TABLES IN SCHEMA flyway TO readonly;
