@@ -8,7 +8,7 @@
   <created_user>-</created_user>
   <created_date>2020/10/10 07:31:50.634</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2020/12/18 15:32:42.973</modified_date>
+  <modified_date>2021/01/19 15:03:15.966</modified_date>
   <parameters>
     <parameter>
       <name>database_hostname</name>
@@ -590,6 +590,11 @@
           <stream_name/>
           <value>${process_dwid}</value>
         </parameter>
+        <parameter>
+          <name>filename</name>
+          <stream_name/>
+          <value>${filename}</value>
+        </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
@@ -668,6 +673,11 @@
           <name>process_dwid</name>
           <stream_name/>
           <value>${process_dwid}</value>
+        </parameter>
+        <parameter>
+          <name>filename</name>
+          <stream_name/>
+          <value>${filename}</value>
         </parameter>
       </parameters>
       <parallel>N</parallel>
