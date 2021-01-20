@@ -5,7 +5,7 @@ set KETTLE_HOME=%HOMEDRIVE%%HOMEPATH%\Projects\data-warehouse\pentaho\src
 
 REM swap the repositories.xml file with the one with valid spoon settings
 echo Swapping repositories.xml with Windows version
-copy %HOMEDRIVE%%HOMEPATH%\Projects\data-warehouse\settings\repositories_spoon.xml %HOMEDRIVE%%HOMEPATH%\Projects\data-warehouse\pentaho\src\.kettle\repositories.xml
+copy %HOMEDRIVE%%HOMEPATH%\Projects\data-warehouse\settings\pentaho\repositories_spoon.xml %HOMEDRIVE%%HOMEPATH%\Projects\data-warehouse\pentaho\src\.kettle\repositories.xml
 if %errorlevel% neq 0 exit /b %errorlevel%
 TIMEOUT /T 2
 
@@ -24,5 +24,5 @@ TIMEOUT /T 60
 
 REM Spoon/PDI/Pentaho's UI should have loaded by now so replace the repositories.xml file with the one docker expects
 echo Swapping repositories.xml with docker version
-copy %HOMEPATH%\Projects\data-warehouse\settings\repositories_docker.xml %HOMEPATH%\Projects\data-warehouse\pentaho\src\.kettle\repositories.xml
+copy %HOMEPATH%\Projects\data-warehouse\settings\pentaho\repositories_docker.xml %HOMEPATH%\Projects\data-warehouse\pentaho\src\.kettle\repositories.xml
 if %errorlevel% neq 0 exit /b %errorlevel%
