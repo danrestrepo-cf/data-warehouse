@@ -10,7 +10,7 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 TIMEOUT /T 2
 
 REM replace the string 'first.name' with the logged in user's username and save the file in place
-Powershell.exe "(Get-Content %HOMEDRIVE%%HOMEPATH%\Projects\data-warehouse\pentaho\src\.kettle\repositories.xml).replace('first.last', '%USERNAME%') | Set-Content %HOMEDRIVE%%HOMEPATH%\Projects\data-warehouse\pentaho\src\.kettle\repositories.xml"
+Powershell.exe "(Get-Content %HOMEDRIVE%%HOMEPATH%\Projects\data-warehouse\pentaho\src\.kettle\repositories.xml).replace('HOMEPATH', '%HOMEDRIVE%%HOMEPATH%') | Set-Content %HOMEDRIVE%%HOMEPATH%\Projects\data-warehouse\pentaho\src\.kettle\repositories.xml"
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM start Spoon in a new process so we can replace the repositories.xml file sooner than waiting for the process to end
