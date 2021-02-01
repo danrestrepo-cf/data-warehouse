@@ -11,7 +11,8 @@ create table test.sp_01
     upb integer,
     loan_count integer,
     avg_loan_size integer,
-    report_quarter text
+    report_quarter text,
+    etl_batch_id text
 );
 
 create table test.sp_02
@@ -25,5 +26,6 @@ create table test.sp_02
     upb integer,
     loan_count integer,
     avg_loan_size integer,
-    report_quarter text
+    report_quarter text,
+    etl_batch_id text
 );

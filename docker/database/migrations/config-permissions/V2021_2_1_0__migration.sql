@@ -1,0 +1,11 @@
+GRANT CONNECT ON DATABASE config TO mditest;
+
+-- log schema
+GRANT USAGE ON SCHEMA log TO mditest;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA log TO mditest;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA log TO mditest;
+GRANT USAGE, SELECT ON SEQUENCE log.pentaho_logging_sequence TO mditest;
+
+-- mdi schema
+GRANT USAGE ON SCHEMA mdi TO mditest;
+GRANT SELECT ON ALL TABLES IN SCHEMA mdi TO mditest;

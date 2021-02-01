@@ -81,6 +81,12 @@ echo Now testing ${process_name}
 execute_test ${process_name} ${database_username} ${sp6_job_path} "file" "Encompass.csv"
 
 # MDI Tests ##############################################################################
+database_username="mditest"
+# MDI Checks
+execute_mdi_test "SP-0.1"  ${database_username} "file" "input.csv"   # test performer_csv_to_table.ktr
+execute_mdi_test "SP-0.2"  ${database_username} "file" "input.xlsx" # test performer_excel_to_table.ktr
+
+# DMI Tests ##############################################################################
 database_username="dmi"
 # DMI NMLS Call Report - State
 execute_mdi_test "SP8.1"  ${database_username} "file" "dmi-V35-state.csv"

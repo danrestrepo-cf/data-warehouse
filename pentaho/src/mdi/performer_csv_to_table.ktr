@@ -479,7 +479,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.089</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/01/29 19:55:25.973</modified_date>
+    <modified_date>2021/02/01 14:47:14.427</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -581,9 +581,7 @@ DATABASE_FIELD_NAME. </note>
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Select values (Remove sensitive fields in stream)
-                                                                                                      
-
+      <note>Get List of Fields to Log in Case of Error (Non-sensitive fields)                                                  
 
 
 
@@ -597,8 +595,8 @@ DATABASE_FIELD_NAME. </note>
 </note>
       <xloc>32</xloc>
       <yloc>1072</yloc>
-      <width>622</width>
-      <heigth>400</heigth>
+      <width>674</width>
+      <heigth>263</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -1480,7 +1478,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>file_format</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
         <comments>file_format</comments>
         <conversion_Mask/>
@@ -1503,7 +1501,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>header_present</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
         <comments>header_present</comments>
         <conversion_Mask/>
@@ -1526,7 +1524,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>include_filename</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
         <comments>include_filename</comments>
         <conversion_Mask/>
@@ -1549,7 +1547,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>lazy_conversion</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
         <comments>lazy_conversion</comments>
         <conversion_Mask/>
@@ -1572,7 +1570,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>newline_possible</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
         <comments>newline_possible</comments>
         <conversion_Mask/>
@@ -1595,7 +1593,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>process_in_parallel</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
         <comments>process_in_parallel</comments>
         <conversion_Mask/>
@@ -1618,7 +1616,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>add_filename_result</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
         <comments>add_filename_result</comments>
         <conversion_Mask/>
@@ -2570,17 +2568,17 @@ WHERE
       <schema_name/>
     </partitioning>
     <connection>Config DB Connection</connection>
-    <sql>(SELECT
+    <sql>SELECT
     table_output_field.database_field_name
     , table_output_field.database_stream_name
 FROM
     mdi.table_output_step
-        LEFT JOIN mdi.table_output_field ON table_output_step.dwid = table_output_field.table_output_step_dwid
+    LEFT JOIN mdi.table_output_field ON table_output_step.dwid = table_output_field.table_output_step_dwid
 WHERE
         table_output_step.process_dwid = ${process_dwid}
     AND table_output_field.is_sensitive = FALSE
 ORDER BY
-    table_output_field.field_order ASC)
+    table_output_field.field_order ASC
 ;</sql>
     <limit>0</limit>
     <lookup/>

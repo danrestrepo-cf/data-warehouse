@@ -469,7 +469,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/01/29 19:50:04.869</modified_date>
+    <modified_date>2021/02/01 13:48:22.419</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -560,8 +560,10 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Remove fields marked sensitive from stream before logging error
-                                                                                                                                             
+      <note>Specify logging fields, log them, and abort transformation as error                                                                                                                               
+
+
+
 
 
 
@@ -570,8 +572,8 @@
 </note>
       <xloc>816</xloc>
       <yloc>976</yloc>
-      <width>856</width>
-      <heigth>232</heigth>
+      <width>1024</width>
+      <heigth>221</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -740,11 +742,11 @@
     </hop>
     <hop>
       <from>[template_csv_to_table] Table output</from>
-      <to>[template_csv_to_table]  Remove sensitive values</to>
+      <to>[template_csv_to_table]  Specify logging fields (non-sensitive)</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_csv_to_table]  Remove sensitive values</from>
+      <from>[template_csv_to_table]  Specify logging fields (non-sensitive)</from>
       <to>[template_csv_to_table]  Abort Table Output</to>
       <enabled>Y</enabled>
     </hop>
@@ -775,6 +777,45 @@
     </hop>
   </order>
   <step>
+    <name>Get variables</name>
+    <type>GetVariable</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>imported_filename</name>
+        <variable>${input_path}/${input_file}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>256</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>[template_csv_to_table]  Abort Table Output</name>
     <type>Abort</type>
     <description/>
@@ -804,7 +845,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_csv_to_table]  Remove sensitive values</name>
+    <name>[template_csv_to_table]  Specify logging fields (non-sensitive)</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
@@ -1095,45 +1136,6 @@
       <draw>Y</draw>
     </GUI>
   </step>
-  <step>
-    <name>Get variables</name>
-    <type>GetVariable</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>imported_filename</name>
-        <variable>${input_path}/${input_file}</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>256</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
   <step_error_handling>
     <error>
       <source_step>[template_csv_to_table] CSV file input</source_step>
@@ -1161,7 +1163,7 @@
     </error>
     <error>
       <source_step>[template_csv_to_table] Table output</source_step>
-      <target_step>[template_csv_to_table]  Remove sensitive values</target_step>
+      <target_step>[template_csv_to_table]  Specify logging fields (non-sensitive)</target_step>
       <is_enabled>Y</is_enabled>
       <nr_valuename/>
       <descriptions_valuename/>
