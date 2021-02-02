@@ -66,6 +66,7 @@ download_if_required() {
       ;;
 
     file) # a file is required!
+      echo "Input file is required."
 
       if [[ -n "${INPUT_FILE}" ]]; then # if the environment variable is not zero length...
         echo "[INPUT] INPUT_FILE=${INPUT_FILE}"
@@ -83,7 +84,6 @@ download_if_required() {
         exit 1
       fi
 
-      echo "Input file is required."
       download
       ;;
 
