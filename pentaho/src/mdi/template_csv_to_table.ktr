@@ -469,7 +469,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/02/01 15:43:19.852</modified_date>
+    <modified_date>2021/02/02 13:30:46.043</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -767,17 +767,17 @@
     </hop>
     <hop>
       <from>[template_csv_to_table] CSV file input</from>
-      <to>Get variables</to>
+      <to>[template_csv_to_table] Add imported_filename parameter to stream</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Get variables</from>
+      <from>[template_csv_to_table] Add imported_filename parameter to stream</from>
       <to>[template_csv_to_table] add a blank field for etl_batch_id to valid stream</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Get variables</name>
+    <name>[template_csv_to_table] Add imported_filename parameter to stream</name>
     <type>GetVariable</type>
     <description/>
     <distribute>Y</distribute>
@@ -858,7 +858,6 @@
     <fields>
       <field>
         <name>etl_batch_id</name>
-        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>

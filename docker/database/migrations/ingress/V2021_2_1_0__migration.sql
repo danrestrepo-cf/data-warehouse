@@ -1,4 +1,4 @@
-create table test.sp_01
+create table test.sp_0_1_mdi_csv_file_to_table
 (
     imported_filename text,
     state text,
@@ -13,7 +13,7 @@ create table test.sp_01
     etl_batch_id text
 );
 
-create table test.sp_02
+create table test.sp_0_2_mdi_microsoft_excel_to_table
 (
     imported_filename text,
     state text,
