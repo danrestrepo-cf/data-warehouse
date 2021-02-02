@@ -51,10 +51,10 @@ if [[ -n "${ECS_CONTAINER_METADATA_URI_V4}" ]]; then
 #  etl_batch_id=$(cat /ecs-example.json | jq -r '.Containers[0].LogOptions["awslogs-stream"]' | sed 's~.*/~~')
 fi
 
-echo "[INPUT] etl_batch_id=${etl_batch_id}"
 if [[ "$etl_batch_id" -eq "" ]]; then
   etl_batch_id=$(cat /proc/sys/kernel/random/uuid)
 fi
+echo "[INPUT] etl_batch_id=${etl_batch_id}"
 
 params="${params} -param:etl_batch_id=${etl_batch_id}"
 
@@ -76,13 +76,14 @@ download_if_required() {
         parsed_filename=$(echo $S3_KEY | sed 's~^.*\/~~')
         echo "[INPUT] INPUT_FILE=${parsed_filename}"
         params="${params} -param:input_file=${parsed_filename}"
+        export INPUT_FILE="${parsed_filename}"
 
       else
         echo "Both environment variables INPUT_FILE and S3_KEY seem to be zero length. Cannot determine input filename."
         exit 1
       fi
 
-      echo "Input file is required for ${PROCESS_NAME} to run successfully."
+      echo "Input file is required."
       download
       ;;
 

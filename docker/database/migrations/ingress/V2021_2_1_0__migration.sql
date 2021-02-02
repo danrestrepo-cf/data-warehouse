@@ -1,5 +1,3 @@
-CREATE SCHEMA IF NOT EXISTS test;
-
 create table test.sp_01
 (
     imported_filename text,

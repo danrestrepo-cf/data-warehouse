@@ -1,10 +1,6 @@
 GRANT CONNECT ON DATABASE config TO mditest;
-
--- log schema
-GRANT USAGE ON SCHEMA log TO mditest;
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA log TO mditest;
-GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA log TO mditest;
-GRANT USAGE, SELECT ON SEQUENCE log.pentaho_logging_sequence TO mditest;
+GRANT pentaho_mdi TO mditest;
+GRANT pentaho_logging TO mditest;
 
 -- mdi schema
 GRANT USAGE ON SCHEMA mdi TO mditest;
