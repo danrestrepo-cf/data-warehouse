@@ -3,213 +3,6 @@ EDW | Create an Octane schema in staging, should copy the Octane schema minus an
 https://app.asana.com/0/0/1199681185367867
 */
 
-create table QRTZ_CALENDARS
-(
-    SCHED_NAME varchar(120) not null,
-    CALENDAR_NAME varchar(200) not null,
-    CALENDAR blob not null,
-    primary key (SCHED_NAME, CALENDAR_NAME)
-);
-
-create table QRTZ_FIRED_TRIGGERS
-(
-    SCHED_NAME varchar(120) not null,
-    ENTRY_ID varchar(95) not null,
-    TRIGGER_NAME varchar(200) not null,
-    TRIGGER_GROUP varchar(200) not null,
-    INSTANCE_NAME varchar(200) not null,
-    FIRED_TIME bigint(13) not null,
-    SCHED_TIME bigint(13) not null,
-    PRIORITY int not null,
-    STATE varchar(16) not null,
-    JOB_NAME varchar(200) null,
-    JOB_GROUP varchar(200) null,
-    IS_NONCONCURRENT varchar(1) null,
-    REQUESTS_RECOVERY varchar(1) null,
-    primary key (SCHED_NAME, ENTRY_ID)
-);
-
-create index IDX_QRTZ_FT_INST_JOB_REQ_RCVRY
-    on QRTZ_FIRED_TRIGGERS (SCHED_NAME, INSTANCE_NAME, REQUESTS_RECOVERY);
-
-create index IDX_QRTZ_FT_JG
-    on QRTZ_FIRED_TRIGGERS (SCHED_NAME, JOB_GROUP);
-
-create index IDX_QRTZ_FT_J_G
-    on QRTZ_FIRED_TRIGGERS (SCHED_NAME, JOB_NAME, JOB_GROUP);
-
-create index IDX_QRTZ_FT_TG
-    on QRTZ_FIRED_TRIGGERS (SCHED_NAME, TRIGGER_GROUP);
-
-create index IDX_QRTZ_FT_TRIG_INST_NAME
-    on QRTZ_FIRED_TRIGGERS (SCHED_NAME, INSTANCE_NAME);
-
-create index IDX_QRTZ_FT_T_G
-    on QRTZ_FIRED_TRIGGERS (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP);
-
-create table QRTZ_JOB_DETAILS
-(
-    SCHED_NAME varchar(120) not null,
-    JOB_NAME varchar(200) not null,
-    JOB_GROUP varchar(200) not null,
-    DESCRIPTION varchar(250) null,
-    JOB_CLASS_NAME varchar(250) not null,
-    IS_DURABLE varchar(1) not null,
-    IS_NONCONCURRENT varchar(1) not null,
-    IS_UPDATE_DATA varchar(1) not null,
-    REQUESTS_RECOVERY varchar(1) not null,
-    JOB_DATA blob null,
-    primary key (SCHED_NAME, JOB_NAME, JOB_GROUP)
-);
-
-create index IDX_QRTZ_J_GRP
-    on QRTZ_JOB_DETAILS (SCHED_NAME, JOB_GROUP);
-
-create index IDX_QRTZ_J_REQ_RECOVERY
-    on QRTZ_JOB_DETAILS (SCHED_NAME, REQUESTS_RECOVERY);
-
-create table QRTZ_LOCKS
-(
-    SCHED_NAME varchar(120) not null,
-    LOCK_NAME varchar(40) not null,
-    primary key (SCHED_NAME, LOCK_NAME)
-);
-
-create table QRTZ_PAUSED_TRIGGER_GRPS
-(
-    SCHED_NAME varchar(120) not null,
-    TRIGGER_GROUP varchar(200) not null,
-    primary key (SCHED_NAME, TRIGGER_GROUP)
-);
-
-create table QRTZ_SCHEDULER_STATE
-(
-    SCHED_NAME varchar(120) not null,
-    INSTANCE_NAME varchar(200) not null,
-    LAST_CHECKIN_TIME bigint(13) not null,
-    CHECKIN_INTERVAL bigint(13) not null,
-    primary key (SCHED_NAME, INSTANCE_NAME)
-);
-
-create table QRTZ_TRIGGERS
-(
-    SCHED_NAME varchar(120) not null,
-    TRIGGER_NAME varchar(200) not null,
-    TRIGGER_GROUP varchar(200) not null,
-    JOB_NAME varchar(200) not null,
-    JOB_GROUP varchar(200) not null,
-    DESCRIPTION varchar(250) null,
-    NEXT_FIRE_TIME bigint(13) null,
-    PREV_FIRE_TIME bigint(13) null,
-    PRIORITY int null,
-    TRIGGER_STATE varchar(16) not null,
-    TRIGGER_TYPE varchar(8) not null,
-    START_TIME bigint(13) not null,
-    END_TIME bigint(13) null,
-    CALENDAR_NAME varchar(200) null,
-    MISFIRE_INSTR smallint(2) null,
-    JOB_DATA blob null,
-    primary key (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP),
-    constraint QRTZ_TRIGGERS_ibfk_1
-        foreign key (SCHED_NAME, JOB_NAME, JOB_GROUP) references QRTZ_JOB_DETAILS (SCHED_NAME, JOB_NAME, JOB_GROUP)
-);
-
-create table QRTZ_BLOB_TRIGGERS
-(
-    SCHED_NAME varchar(120) not null,
-    TRIGGER_NAME varchar(200) not null,
-    TRIGGER_GROUP varchar(200) not null,
-    BLOB_DATA blob null,
-    primary key (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP),
-    constraint QRTZ_BLOB_TRIGGERS_ibfk_1
-        foreign key (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP) references QRTZ_TRIGGERS (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP)
-);
-
-create index SCHED_NAME
-    on QRTZ_BLOB_TRIGGERS (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP);
-
-create table QRTZ_CRON_TRIGGERS
-(
-    SCHED_NAME varchar(120) not null,
-    TRIGGER_NAME varchar(200) not null,
-    TRIGGER_GROUP varchar(200) not null,
-    CRON_EXPRESSION varchar(120) not null,
-    TIME_ZONE_ID varchar(80) null,
-    primary key (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP),
-    constraint QRTZ_CRON_TRIGGERS_ibfk_1
-        foreign key (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP) references QRTZ_TRIGGERS (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP)
-);
-
-create table QRTZ_SIMPLE_TRIGGERS
-(
-    SCHED_NAME varchar(120) not null,
-    TRIGGER_NAME varchar(200) not null,
-    TRIGGER_GROUP varchar(200) not null,
-    REPEAT_COUNT bigint(7) not null,
-    REPEAT_INTERVAL bigint(12) not null,
-    TIMES_TRIGGERED bigint(10) not null,
-    primary key (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP),
-    constraint QRTZ_SIMPLE_TRIGGERS_ibfk_1
-        foreign key (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP) references QRTZ_TRIGGERS (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP)
-);
-
-create table QRTZ_SIMPROP_TRIGGERS
-(
-    SCHED_NAME varchar(120) not null,
-    TRIGGER_NAME varchar(200) not null,
-    TRIGGER_GROUP varchar(200) not null,
-    STR_PROP_1 varchar(512) null,
-    STR_PROP_2 varchar(512) null,
-    STR_PROP_3 varchar(512) null,
-    INT_PROP_1 int null,
-    INT_PROP_2 int null,
-    LONG_PROP_1 bigint null,
-    LONG_PROP_2 bigint null,
-    DEC_PROP_1 decimal(13,4) null,
-    DEC_PROP_2 decimal(13,4) null,
-    BOOL_PROP_1 varchar(1) null,
-    BOOL_PROP_2 varchar(1) null,
-    primary key (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP),
-    constraint QRTZ_SIMPROP_TRIGGERS_ibfk_1
-        foreign key (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP) references QRTZ_TRIGGERS (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP)
-);
-
-create index IDX_QRTZ_T_C
-    on QRTZ_TRIGGERS (SCHED_NAME, CALENDAR_NAME);
-
-create index IDX_QRTZ_T_G
-    on QRTZ_TRIGGERS (SCHED_NAME, TRIGGER_GROUP);
-
-create index IDX_QRTZ_T_J
-    on QRTZ_TRIGGERS (SCHED_NAME, JOB_NAME, JOB_GROUP);
-
-create index IDX_QRTZ_T_JG
-    on QRTZ_TRIGGERS (SCHED_NAME, JOB_GROUP);
-
-create index IDX_QRTZ_T_NEXT_FIRE_TIME
-    on QRTZ_TRIGGERS (SCHED_NAME, NEXT_FIRE_TIME);
-
-create index IDX_QRTZ_T_NFT_MISFIRE
-    on QRTZ_TRIGGERS (SCHED_NAME, MISFIRE_INSTR, NEXT_FIRE_TIME);
-
-create index IDX_QRTZ_T_NFT_ST
-    on QRTZ_TRIGGERS (SCHED_NAME, TRIGGER_STATE, NEXT_FIRE_TIME);
-
-create index IDX_QRTZ_T_NFT_ST_MISFIRE
-    on QRTZ_TRIGGERS (SCHED_NAME, MISFIRE_INSTR, NEXT_FIRE_TIME, TRIGGER_STATE);
-
-create index IDX_QRTZ_T_NFT_ST_MISFIRE_GRP
-    on QRTZ_TRIGGERS (SCHED_NAME, MISFIRE_INSTR, NEXT_FIRE_TIME, TRIGGER_GROUP, TRIGGER_STATE);
-
-create index IDX_QRTZ_T_N_G_STATE
-    on QRTZ_TRIGGERS (SCHED_NAME, TRIGGER_GROUP, TRIGGER_STATE);
-
-create index IDX_QRTZ_T_N_STATE
-    on QRTZ_TRIGGERS (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP, TRIGGER_STATE);
-
-create index IDX_QRTZ_T_STATE
-    on QRTZ_TRIGGERS (SCHED_NAME, TRIGGER_STATE);
-
 create table account_event_type
 (
     code varchar(128) not null
@@ -2633,23 +2426,6 @@ create table lura_setting_type
     value varchar(1024) not null
 );
 
-create table lura_setting
-(
-    ls_pid bigint auto_increment
-        primary key,
-    ls_version int not null,
-    ls_lura_setting_type varchar(128) not null,
-    ls_value varchar(256) not null,
-    ls_from_date date not null,
-    constraint ls_from_date
-        unique (ls_from_date, ls_lura_setting_type),
-    constraint fkt_ls_lura_setting_type
-        foreign key (ls_lura_setting_type) references lura_setting_type (code)
-);
-
-create index idx_lura_setting_1
-    on lura_setting (ls_lura_setting_type);
-
 create table manufactured_home_certificate_of_title_type
 (
     code varchar(128) not null
@@ -4120,60 +3896,6 @@ create table sap_step_type
     value varchar(1024) not null
 );
 
-create table schema_version
-(
-    installed_rank int not null
-        primary key,
-    version varchar(50) null,
-    description varchar(200) not null,
-    type varchar(20) not null,
-    script varchar(1000) not null,
-    checksum int null,
-    installed_by varchar(100) not null,
-    installed_on timestamp default CURRENT_TIMESTAMP not null,
-    execution_time int not null,
-    success tinyint(1) not null
-);
-
-create index schema_version_s_idx
-    on schema_version (success);
-
-create table schema_version_post_data
-(
-    installed_rank int not null
-        primary key,
-    version varchar(50) null,
-    description varchar(200) not null,
-    type varchar(20) not null,
-    script varchar(1000) not null,
-    checksum int null,
-    installed_by varchar(100) not null,
-    installed_on timestamp default CURRENT_TIMESTAMP not null,
-    execution_time int not null,
-    success tinyint(1) not null
-);
-
-create index schema_version_post_data_s_idx
-    on schema_version_post_data (success);
-
-create table schema_version_pre_data
-(
-    installed_rank int not null
-        primary key,
-    version varchar(50) null,
-    description varchar(200) not null,
-    type varchar(20) not null,
-    script varchar(1000) not null,
-    checksum int null,
-    installed_by varchar(100) not null,
-    installed_on timestamp default CURRENT_TIMESTAMP not null,
-    execution_time int not null,
-    success tinyint(1) not null
-);
-
-create index schema_version_pre_data_s_idx
-    on schema_version_pre_data (success);
-
 create table secondary_admin_event_entity_type
 (
     code varchar(128) not null
@@ -5089,7 +4811,6 @@ create table admin_user
     au_first_name varchar(32) null,
     au_last_name varchar(32) not null,
     au_unparsed_name varchar(128) null,
-    au_password varchar(128) not null,
     au_office_phone varchar(32) null,
     au_office_phone_extension varchar(16) null,
     au_through_date date null,
@@ -5103,13 +4824,7 @@ create table admin_user
     au_management bit null,
     au_force_password_change bit null,
     au_last_password_change_date datetime null,
-    au_previous_password_1 varchar(128) null,
-    au_previous_password_2 varchar(128) null,
-    au_previous_password_3 varchar(128) null,
     au_last_sign_on_datetime datetime null,
-    au_mobile_phone varchar(32) null,
-    au_backup_phone varchar(32) null,
-    au_secret_key varchar(128) null,
     constraint au_username
         unique (au_username),
     constraint fkt_au_admin_user_status_type
@@ -5126,7 +4841,6 @@ create table borrower_user
     bu_account_pid bigint not null,
     bu_create_datetime datetime not null,
     bu_email varchar(256) not null,
-    bu_password varchar(128) null,
     bu_last_sign_on_datetime datetime null,
     bu_time_zone varchar(128) not null,
     bu_first_name varchar(32) not null,
@@ -5140,9 +4854,6 @@ create table borrower_user
     bu_borrower_user_account_status_type varchar(128) not null,
     bu_public_quote_request_cache_id int null,
     bu_create_sap_on_activation bit null,
-    bu_mobile_phone varchar(32) null,
-    bu_backup_phone varchar(32) null,
-    bu_secret_key varchar(128) null,
     bu_nickname varchar(32) not null,
     bu_plain_text_email bit not null,
     bu_preferred_first_name varchar(32) not null,
@@ -5160,23 +4871,6 @@ create table borrower_user
 
 create index idx_borrower_user_1
     on borrower_user (bu_borrower_activation_id);
-
-create table borrower_user_reset_password
-(
-    burp_pid bigint auto_increment
-        primary key,
-    burp_version int not null,
-    burp_borrower_user_pid bigint not null,
-    burp_create_datetime datetime not null,
-    burp_reset_password_id varchar(128) not null,
-    constraint burp_reset_password_id
-        unique (burp_reset_password_id),
-    constraint fk_borrower_user_reset_password_1
-        foreign key (burp_borrower_user_pid) references borrower_user (bu_pid)
-);
-
-create index idx_borrower_user_reset_password_1
-    on borrower_user_reset_password (burp_reset_password_id);
 
 create table timeout_time_zone_type
 (
@@ -6060,30 +5754,6 @@ create table company_license
         foreign key (cml_state_type) references state_type (code)
 );
 
-create table company_service_credentials
-(
-    cmsc_pid bigint auto_increment
-        primary key,
-    cmsc_version int not null,
-    cmsc_company_pid bigint not null,
-    cmsc_external_entity_type varchar(128) null,
-    cmsc_username varchar(256) null,
-    cmsc_password varchar(128) null,
-    cmsc_password2 varchar(128) null,
-    cmsc_additional_id varchar(32) null,
-    cmsc_additional_question bit null,
-    cmsc_credential_source_type_user varchar(128) null,
-    cmsc_credential_source_type_auto varchar(128) null,
-    constraint fk_company_service_credentials_1
-        foreign key (cmsc_company_pid) references company (cm_pid),
-    constraint fkt_company_service_credentials_1
-        foreign key (cmsc_external_entity_type) references external_entity_type (code),
-    constraint fkt_company_service_credentials_2
-        foreign key (cmsc_credential_source_type_user) references vendor_credential_source_type (code),
-    constraint fkt_company_service_credentials_3
-        foreign key (cmsc_credential_source_type_auto) references vendor_credential_source_type (code)
-);
-
 create table deal
 (
     d_pid bigint auto_increment
@@ -6908,7 +6578,6 @@ create table `lead`
     ld_borrower_home_phone varchar(32) null,
     ld_borrower_mobile_phone varchar(32) null,
     ld_borrower_email varchar(256) null,
-    ld_borrower_ssn varchar(128) null,
     ld_borrower_birth_date varchar(32) null,
     ld_borrower_residence_street varchar(128) null,
     ld_borrower_residence_city varchar(128) null,
@@ -6918,7 +6587,6 @@ create table `lead`
     ld_coborrower_middle_name varchar(32) null,
     ld_coborrower_last_name varchar(32) null,
     ld_coborrower_email varchar(256) null,
-    ld_coborrower_ssn varchar(128) null,
     ld_coborrower_birth_date varchar(32) null,
     ld_borrower_current_job_employer_name varchar(128) null,
     ld_borrower_current_job_position varchar(32) null,
@@ -6947,7 +6615,6 @@ create table lender_user
     lu_title varchar(128) null,
     lu_office_phone varchar(32) null,
     lu_office_phone_extension varchar(16) null,
-    lu_mobile_phone varchar(32) null,
     lu_email varchar(256) null,
     lu_fax varchar(32) null,
     lu_city varchar(128) null,
@@ -6959,7 +6626,6 @@ create table lender_user
     lu_office_phone_use_branch bit null,
     lu_fax_use_branch bit null,
     lu_address_use_branch bit null,
-    lu_password varchar(128) not null,
     lu_start_date date null,
     lu_through_date date null,
     lu_time_zone varchar(128) not null,
@@ -6973,16 +6639,11 @@ create table lender_user
     lu_company_user_id varchar(32) null,
     lu_force_password_change bit null,
     lu_last_password_change_date datetime null,
-    lu_previous_password_1 varchar(128) null,
-    lu_previous_password_2 varchar(128) null,
-    lu_previous_password_3 varchar(128) null,
     lu_challenge_question_type varchar(128) not null,
     lu_challenge_question_answer varchar(128) not null,
     lu_allow_external_ip bit null,
     lu_total_workload_cap int null,
     lu_schedule_once_booking_page_id varchar(128) null,
-    lu_backup_phone varchar(32) null,
-    lu_secret_key varchar(128) null,
     lu_performer_team_pid bigint null,
     lu_esign_only bit not null,
     lu_work_step_start_notices_enabled bit not null,
@@ -7492,24 +7153,6 @@ create table lender_user_notice
         foreign key (lun_lender_user_notice_type) references lender_user_notice_type (code)
 );
 
-create table lender_user_reset_password
-(
-    lurp_pid bigint auto_increment
-        primary key,
-    lurp_version int not null,
-    lurp_lender_user_pid bigint not null,
-    lurp_expire_datetime datetime null,
-    lurp_reset_password_id varchar(128) null,
-    lurp_lender_user_reset_type varchar(128) not null,
-    constraint fk_lender_user_reset_password_1
-        foreign key (lurp_lender_user_pid) references lender_user (lu_pid),
-    constraint fkt_lurp_lender_user_reset_type
-        foreign key (lurp_lender_user_reset_type) references lender_user_reset_type (code)
-);
-
-create index idx_lender_user_reset_password_1
-    on lender_user_reset_password (lurp_reset_password_id);
-
 create table lender_user_role
 (
     lur_pid bigint auto_increment
@@ -7582,8 +7225,6 @@ create table lender_user_service_credentials
     lusc_lender_user_pid bigint not null,
     lusc_external_entity_type varchar(128) null,
     lusc_username varchar(256) null,
-    lusc_password varchar(128) null,
-    lusc_password2 varchar(128) null,
     lusc_additional_id varchar(32) null,
     lusc_additional_question bit null,
     constraint fk_lender_user_service_credentials_1
@@ -9090,8 +8731,6 @@ create table du_request_credit
     durc_credit_report_identifier varchar(32) not null,
     durc_credit_report_name varchar(256) not null,
     durc_aus_credit_service_type varchar(128) not null,
-    durc_borrower_1_ssn varchar(128) null,
-    durc_borrower_2_ssn varchar(128) null,
     durc_borrower_1_borrower_tiny_id_type varchar(128) not null,
     durc_borrower_2_borrower_tiny_id_type varchar(128) null,
     constraint fk_du_request_credit_1
@@ -9355,7 +8994,6 @@ create table credit_request
     crdr_equifax_included bit null,
     crdr_experian_included bit null,
     crdr_trans_union_included bit null,
-    crdr_borrower1_ssn varchar(128) null,
     crdr_borrower1_first_name varchar(32) null,
     crdr_borrower1_middle_name varchar(32) null,
     crdr_borrower1_last_name varchar(32) null,
@@ -9373,7 +9011,6 @@ create table credit_request
     crdr_borrower1_equifax_credit_score_model_type varchar(128) not null,
     crdr_borrower1_experian_credit_score_model_type varchar(128) not null,
     crdr_borrower1_trans_union_credit_score_model_type varchar(128) not null,
-    crdr_borrower2_ssn varchar(128) null,
     crdr_borrower2_first_name varchar(32) null,
     crdr_borrower2_middle_name varchar(32) null,
     crdr_borrower2_last_name varchar(32) null,
@@ -9466,7 +9103,6 @@ create table borrower
     b_applicant_role_type varchar(128) not null,
     b_required_to_sign bit not null,
     b_spousal_homestead varchar(128) not null,
-    b_borrower_ssn varchar(128) null,
     b_has_no_ssn bit not null,
     b_citizenship_residency_type varchar(128) not null,
     b_credit_request_pid bigint null,
@@ -10384,8 +10020,6 @@ create table lp_request_credit
     lprc_credit_report_identifier varchar(32) not null,
     lprc_credit_report_name varchar(256) not null,
     lprc_aus_credit_service_type varchar(128) not null,
-    lprc_borrower_1_ssn varchar(128) null,
-    lprc_borrower_2_ssn varchar(128) null,
     lprc_borrower_1_borrower_tiny_id_type varchar(128) not null,
     lprc_borrower_2_borrower_tiny_id_type varchar(128) null,
     constraint fk_lp_request_credit_1
@@ -12797,7 +12431,6 @@ create table borrower_tax_filing
     btf_joint_filer_middle_name varchar(32) null,
     btf_joint_filer_last_name varchar(32) null,
     btf_joint_filer_suffix varchar(32) null,
-    btf_joint_filer_ssn varchar(128) null,
     constraint uk_borrower_tax_filing_1
         unique (btf_borrower_pid, btf_year),
     constraint fk_borrower_tax_filing_1
@@ -12831,7 +12464,6 @@ create table borrower_va
     bva_deceased_spouse_middle_name varchar(32) null,
     bva_deceased_spouse_last_name varchar(32) null,
     bva_deceased_spouse_name_suffix varchar(32) null,
-    bva_deceased_spouse_ssn varchar(128) null,
     bva_deceased_spouse_claim_folder_number varchar(32) null,
     bva_deceased_spouse_claim_folder_location varchar(32) null,
     bva_deceased_spouse_service_number varchar(32) null,
@@ -13244,9 +12876,6 @@ create table proposal_summary
     ps_b1_gender_type varchar(128) not null,
     ps_c1_gender_type varchar(128) not null,
     ps_b2_gender_type varchar(128) not null,
-    ps_b1_ssn varchar(128) null,
-    ps_c1_ssn varchar(128) null,
-    ps_b2_ssn varchar(128) null,
     ps_b1_hmda_race_2017_type varchar(128) not null,
     ps_c1_hmda_race_2017_type varchar(128) not null,
     ps_b2_hmda_race_2017_type varchar(128) not null,
@@ -14171,7 +13800,6 @@ create table tax_transcript_request
     ttr_company_street2 varchar(128) null,
     ttr_company_ein varchar(16) null,
     ttr_borrower1_pid bigint null,
-    ttr_borrower1_ssn varchar(128) null,
     ttr_borrower1_first_name varchar(32) null,
     ttr_borrower1_middle_name varchar(32) null,
     ttr_borrower1_last_name varchar(32) null,
@@ -14191,7 +13819,6 @@ create table tax_transcript_request
     ttr_borrower1_prior_street2 varchar(128) null,
     ttr_borrower1_monthly_income_amount decimal(15,2) not null,
     ttr_borrower2_pid bigint null,
-    ttr_borrower2_ssn varchar(128) null,
     ttr_borrower2_first_name varchar(32) null,
     ttr_borrower2_middle_name varchar(32) null,
     ttr_borrower2_last_name varchar(32) null,
@@ -14306,7 +13933,6 @@ create table liability
     lia_version int not null,
     lia_proposal_pid bigint not null,
     lia_creditor_pid bigint null,
-    lia_account_id varchar(32) null,
     lia_aggregate_description varchar(128) null,
     lia_credit_request_pid bigint null,
     lia_description varchar(128) null,
@@ -14395,7 +14021,6 @@ create table liability
     lia_net_escrow varchar(128) not null,
     lia_third_party_community_second_program_pid bigint null,
     lia_current_escrow_balance_amount decimal(15,2) not null,
-    lia_report_account_id varchar(32) not null,
     lia_first_payment_date date null,
     lia_closing_date date null,
     lia_mip_due_amount decimal(15,2) null,
