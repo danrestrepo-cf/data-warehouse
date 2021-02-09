@@ -18,5 +18,11 @@ docker wait ${waitFor}
 echo -e "== Applying permissions"
 
 docker-compose --project-name ${project_name}_permissions -f docker-compose-roles.yml up --detach
+waitFor=""
+for database in ingress staging config; do
+  waitFor="${waitFor} ${project_name}_permissions_flyway-${database}-permissions_1"
+done
+echo -e "== Waiting for permissions"
+docker wait ${waitFor}
 
 echo -e "= Finished infrastructure."
