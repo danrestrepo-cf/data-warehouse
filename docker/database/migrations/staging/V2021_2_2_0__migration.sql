@@ -1745,13 +1745,9 @@ create table staging_octane.interim_funder
     if_reimbursement_wire_credit_to_name varchar(128) null,
     if_reimbursement_wire_attention_unparsed_name varchar(128) null,
     if_reimbursement_wire_authorized_signer_unparsed_name varchar(128) null,
-    if_reimbursement_wire_routing_number varchar(16) null,
-    if_reimbursement_wire_account_number varchar(16) null,
     if_return_wire_credit_to_name varchar(128) null,
     if_return_wire_attention_unparsed_name varchar(128) null,
     if_return_wire_authorized_signer_unparsed_name varchar(128) null,
-    if_return_wire_routing_number varchar(16) null,
-    if_return_wire_account_number varchar(16) null,
     if_fnm_payee_id varchar(9) null,
     if_interim_funder_mers_registration_type varchar(128) null,
     if_fnm_warehouse_lender_id varchar(32) null,
@@ -3628,8 +3624,6 @@ create table staging_octane.settlement_agent_wire
     saw_settlement_agent_pid bigint null,
     saw_active bit null,
     saw_create_datetime timestamp null,
-    saw_bank_aba varchar(16) null,
-    saw_bank_account_number varchar(128) null,
     saw_bank_name varchar(128) null,
     saw_address_street1 varchar(128) null,
     saw_address_street2 varchar(128) null,
@@ -3645,8 +3639,6 @@ create table staging_octane.settlement_agent_wire
     saw_verifier varchar(128) null,
     saw_notes varchar(1024) null,
     saw_for_further_credit_type varchar(128) null,
-    saw_beneficiary_bank_aba varchar(16) null,
-    saw_beneficiary_bank_account_number varchar(128) null,
     saw_beneficiary_bank_name varchar(128) null,
     saw_beneficiary_address_street1 varchar(128) null,
     saw_beneficiary_address_street2 varchar(128) null,
@@ -4693,7 +4685,6 @@ create table staging_octane.asset
     as_pid bigint 
         primary key,
     as_version int null,
-    as_account_id varchar(32) null,
     as_aggregate_description varchar(256) null,
     as_application_pid bigint null,
     as_asset_type varchar(128) null,
@@ -4711,7 +4702,6 @@ create table staging_octane.asset
     as_gift_funds_donor_relationship varchar(128) null,
     as_gift_funds_donor_unparsed_name varchar(128) null,
     as_gift_funds_other_type_description varchar(32) null,
-    as_gift_funds_source_account_id varchar(32) null,
     as_gift_funds_depository_asset_pid bigint null,
     as_gift_amount decimal(15,2) null,
     as_gift_funds_source_account_type varchar(128) null,
@@ -6013,18 +6003,6 @@ create table staging_octane.lender_user_role_addendum
     lura_lender_user_pid bigint null,
     lura_lender_user_role_pid bigint null,
     lura_role_pid bigint null
-);
-
-create table staging_octane.lender_user_service_credentials
-(
-    lusc_pid bigint 
-        primary key,
-    lusc_version int null,
-    lusc_lender_user_pid bigint null,
-    lusc_external_entity_type varchar(128) null,
-    lusc_username varchar(256) null,
-    lusc_additional_id varchar(32) null,
-    lusc_additional_question bit null
 );
 
 create table staging_octane.lender_user_sign_on
@@ -12465,8 +12443,6 @@ create index idx_fkt_lender_user_role_4 on staging_octane.lender_user_role (lur_
 create index idx_fk_lender_user_role_addendum_1 on staging_octane.lender_user_role_addendum (lura_lender_user_pid);
 create index idx_fk_lender_user_role_addendum_2 on staging_octane.lender_user_role_addendum (lura_lender_user_role_pid);
 create index idx_fk_lender_user_role_addendum_3 on staging_octane.lender_user_role_addendum (lura_role_pid);
-create index idx_fk_lender_user_service_credentials_1 on staging_octane.lender_user_service_credentials (lusc_lender_user_pid);
-create index idx_fkt_lender_user_service_credentials_2 on staging_octane.lender_user_service_credentials (lusc_external_entity_type);
 create index idx_fk_lender_user_sign_on_1 on staging_octane.lender_user_sign_on (luso_lender_user_pid);
 create index idx_fk_lender_user_unavailable_1 on staging_octane.lender_user_unavailable (luu_lender_user_pid);
 create index idx_fk_liability_1 on staging_octane.liability (lia_proposal_pid);
