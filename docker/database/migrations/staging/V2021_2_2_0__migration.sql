@@ -13355,6 +13355,10 @@ create index idx_fk_wf_step_deal_tag_modifier_2 on staging_octane.wf_step_deal_t
 
 
 --
+-- EDW - Modify DMI NMLS Call Report processes (SP8/SP9/SP10) to add report_quarter and filename columns (https://app.asana.com/0/0/1199603976631072)
+--
+
+--
 -- SP8.2
 --
 ALTER TABLE staging_compliance.nmls_call_report_state RENAME COLUMN unpaid_balance to total_unpaid_balance;
@@ -13383,10 +13387,6 @@ UPDATE staging_compliance.nmls_call_report_national SET data_source_dwid_KTL=dat
 ALTER TABLE staging_compliance.nmls_call_report_national DROP COLUMN data_source_dwid;
 ALTER TABLE staging_compliance.nmls_call_report_national RENAME data_source_dwid_KTL TO data_source_dwid;
 
-
---
--- EDW - Modify DMI NMLS Call Report processes (SP8/SP9/SP10) to add report_quarter and filename columns (https://app.asana.com/0/0/1199603976631072)
---
 
 --
 -- SP10.2
