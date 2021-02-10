@@ -13411,3 +13411,44 @@ CREATE TABLE staging_compliance.nmls_call_report_s540a
     , average_unpaid_balance numeric
     , report_quarter text
 );
+
+--
+-- Expose DMI NMLS Call Report data to Octane AS a view (https://app.asana.com/0/0/1199574510798743)
+--
+CREATE VIEW octane_data_mart.nmls_call_report_national AS
+    SELECT
+        mcr_code
+        , average_unpaid_balance AS unpaid_balance
+        , mcr_description
+        , loan_count
+        , average_unpaid_balance AS average_loan_size
+        , report_quarter
+    FROM
+        staging_compliance.nmls_call_report_national;
+CREATE VIEW octane_data_mart.nmls_call_report_s540a AS
+
+    SELECT
+        state_type
+        , item_id
+        , servicer_nmls_id AS servicer_id
+        , servicer_name
+        , pool_number
+        , unpaid_balance
+        , loan_count
+        , average_unpaid_balance
+        , report_quarter
+    FROM
+        staging_compliance.nmls_call_report_s540a;
+
+CREATE VIEW octane_data_mart.nmls_call_report_state AS
+    SELECT
+        mcr_code
+        , state_type
+        , mcr_description
+
+        staging_compliance.nmls_call_report_state;
+    FROM
+        , report_quarter
+        , average_loan_size
+        , total_unpaid_balance AS unpaid_balance
+        , loan_count
