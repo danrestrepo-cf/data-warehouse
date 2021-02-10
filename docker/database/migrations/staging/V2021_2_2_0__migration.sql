@@ -13352,3 +13352,59 @@ create index idx_fk_wf_step_deal_check_dependency_1 on staging_octane.wf_step_de
 create index idx_fk_wf_step_deal_check_dependency_2 on staging_octane.wf_step_deal_check_dependency (wsdp_dependency_wf_step_pid);
 create index idx_fk_wf_step_deal_tag_modifier_1 on staging_octane.wf_step_deal_tag_modifier (wsdt_deal_tag_definition_pid);
 create index idx_fk_wf_step_deal_tag_modifier_2 on staging_octane.wf_step_deal_tag_modifier (wsdt_wf_step_pid);
+
+
+--
+-- SP8.2
+--
+ALTER TABLE staging_compliance.nmls_call_report_state RENAME COLUMN unpaid_balance to total_unpaid_balance;
+ALTER TABLE staging_compliance.nmls_call_report_state ADD COLUMN report_quarter text;
+
+
+--
+-- SP9.2
+--
+ALTER TABLE staging_compliance.nmls_call_report_national RENAME COLUMN unpaid_balance to total_unpaid_balance;
+ALTER TABLE staging_compliance.nmls_call_report_national RENAME COLUMN average_loan_size to average_unpaid_balance;
+ALTER TABLE staging_compliance.nmls_call_report_national ADD COLUMN report_quarter text;
+
+ALTER TABLE staging_compliance.nmls_call_report_national ADD COLUMN total_unpaid_balance_KTL DOUBLE PRECISION;
+UPDATE staging_compliance.nmls_call_report_national SET total_unpaid_balance_KTL=total_unpaid_balance;
+ALTER TABLE staging_compliance.nmls_call_report_national DROP COLUMN total_unpaid_balance;
+ALTER TABLE staging_compliance.nmls_call_report_national RENAME total_unpaid_balance_KTL TO total_unpaid_balance;
+
+ALTER TABLE staging_compliance.nmls_call_report_national ADD COLUMN average_unpaid_balance_KTL DOUBLE PRECISION;
+UPDATE staging_compliance.nmls_call_report_national SET average_unpaid_balance_KTL=average_unpaid_balance;
+ALTER TABLE staging_compliance.nmls_call_report_national DROP COLUMN average_unpaid_balance;
+ALTER TABLE staging_compliance.nmls_call_report_national RENAME average_unpaid_balance_KTL TO average_unpaid_balance;
+
+ALTER TABLE staging_compliance.nmls_call_report_national ADD COLUMN data_source_dwid_KTL TEXT;
+UPDATE staging_compliance.nmls_call_report_national SET data_source_dwid_KTL=data_source_dwid;
+ALTER TABLE staging_compliance.nmls_call_report_national DROP COLUMN data_source_dwid;
+ALTER TABLE staging_compliance.nmls_call_report_national RENAME data_source_dwid_KTL TO data_source_dwid;
+
+
+--
+-- EDW - Modify DMI NMLS Call Report processes (SP8/SP9/SP10) to add report_quarter and filename columns (https://app.asana.com/0/0/1199603976631072)
+--
+
+--
+-- SP10.2
+--
+ALTER TABLE staging_compliance.nmls_call_report_s540a DROP COLUMN state_type;
+ALTER TABLE staging_compliance.nmls_call_report_s540a DROP COLUMN item_id;
+ALTER TABLE staging_compliance.nmls_call_report_s540a DROP COLUMN servicer_nmls_id;
+ALTER TABLE staging_compliance.nmls_call_report_s540a DROP COLUMN pool_number;
+ALTER TABLE staging_compliance.nmls_call_report_s540a DROP COLUMN loan_count;
+ALTER TABLE staging_compliance.nmls_call_report_s540a DROP COLUMN servicer_name;
+ALTER TABLE staging_compliance.nmls_call_report_s540a DROP COLUMN unpaid_balance;
+
+ALTER TABLE staging_compliance.nmls_call_report_s540a ADD COLUMN state_type TEXT;
+ALTER TABLE staging_compliance.nmls_call_report_s540a ADD COLUMN item_id BIGINT;
+ALTER TABLE staging_compliance.nmls_call_report_s540a ADD COLUMN servicer_nmls_id BIGINT;
+ALTER TABLE staging_compliance.nmls_call_report_s540a ADD COLUMN servicer_name TEXT;
+ALTER TABLE staging_compliance.nmls_call_report_s540a ADD COLUMN pool_number TEXT;
+ALTER TABLE staging_compliance.nmls_call_report_s540a ADD COLUMN unpaid_balance NUMERIC;
+ALTER TABLE staging_compliance.nmls_call_report_s540a ADD COLUMN loan_count INTEGER;
+ALTER TABLE staging_compliance.nmls_call_report_s540a ADD COLUMN average_unpaid_balance NUMERIC;
+ALTER TABLE staging_compliance.nmls_call_report_s540a ADD COLUMN report_quarter TEXT;
