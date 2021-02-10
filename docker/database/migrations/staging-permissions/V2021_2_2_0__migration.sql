@@ -12,4 +12,4 @@ GRANT USAGE ON SCHEMA octane_data_mart TO readonly;
 GRANT SELECT ON ALL TABLES IN SCHEMA octane_data_mart TO readonly;
 
 GRANT USAGE ON SCHEMA octane_data_mart TO svc_octane;
-GRANT SELECT, INSERT, UPDATE, TRUNCATE, DELETE ON ALL TABLES IN SCHEMA octane_data_mart TO svc_octane;
+GRANT SELECT ON ALL TABLES IN SCHEMA octane_data_mart TO svc_octane;
