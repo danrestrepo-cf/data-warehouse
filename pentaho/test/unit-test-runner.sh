@@ -97,5 +97,5 @@ execute_mdi_test "SP9.1"  ${database_username} "file" "dmi-V35-national.csv"	exe
 execute_mdi_test "SP9.2"  ${database_username} "none" ""	execute_mdi_test "SP9.2"  ${database_username} "none" ""
 
 # DMI NMLS Call Report - s540a	# DMI NMLS Call Report - s540a (curl "https://api.mockaroo.com/api/3d9794e0?count=1000&key=8ff5d150" > "dmi-V35-s540a.csv")
-execute_mdi_test "SP10.1" ${database_username} "file" "dmi-V35.xls"	execute_mdi_test "SP10.1" ${database_username} "file" "dmi-V35-s540a.csv"
+execute_mdi_test "SP10.1" ${database_username} "file" "dmi-V35-s540a.csv"	execute_mdi_test "SP10.1" ${database_username} "file" "dmi-V35-s540a.csv"
 execute_mdi_test "SP10.2" ${database_username} "none" ""	execute_mdi_test "SP10.2" ${database_username} "none" ""
