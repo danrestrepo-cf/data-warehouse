@@ -3,7 +3,6 @@
 --
 
 DO $$
-    DECLARE sp8_field_order NUMERIC;
     DECLARE sp8_1_process_dwid BIGINT;
     DECLARE sp8_1_table_output_step_dwid BIGINT;
     DECLARE sp8_1_csv_file_input_step_dwid BIGINT;
@@ -29,16 +28,15 @@ DO $$
         WHERE csv_file_input_step_dwid = sp8_1_csv_file_input_step_dwid;
 
         -- replace deleted fields in csv_file_input_field
-        sp8_field_order = 0;
         INSERT INTO mdi.csv_file_input_field (csv_file_input_step_dwid, field_name, field_type, field_format, field_length, field_precision, field_currency, field_decimal, field_group, field_trim_type, field_order)
         VALUES
-            ( sp8_1_csv_file_input_step_dwid, 'mcr_code', 'String', NULL, -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', sp8_field_order + 1 )
-            , ( sp8_1_csv_file_input_step_dwid, 'mcr_description', 'String', NULL, -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', sp8_field_order + 1 )
-            ,( sp8_1_csv_file_input_step_dwid, 'state_code', 'String', NULL, -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', sp8_field_order + 1 )
-            ,( sp8_1_csv_file_input_step_dwid, 'sum_of_upb', 'Number', '#.#', -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', sp8_field_order + 1 )
-            ,( sp8_1_csv_file_input_step_dwid, 'loan_count', 'Integer', '#', -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', sp8_field_order + 1 )
-            ,( sp8_1_csv_file_input_step_dwid, 'avg_loan_size', 'Number', '#.#', -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', sp8_field_order + 1 )
-            ,( sp8_1_csv_file_input_step_dwid, 'report_quarter', 'String', NULL, -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', sp8_field_order + 1 );
+            ( sp8_1_csv_file_input_step_dwid, 'mcr_code', 'String', NULL, -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', 1 )
+            , ( sp8_1_csv_file_input_step_dwid, 'mcr_description', 'String', NULL, -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', 2 )
+            ,( sp8_1_csv_file_input_step_dwid, 'state_code', 'String', NULL, -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', 3 )
+            ,( sp8_1_csv_file_input_step_dwid, 'sum_of_upb', 'Number', '#.#', -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', 4 )
+            ,( sp8_1_csv_file_input_step_dwid, 'loan_count', 'Integer', '#', -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', 5 )
+            ,( sp8_1_csv_file_input_step_dwid, 'avg_loan_size', 'Number', '#.#', -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', 6 )
+            ,( sp8_1_csv_file_input_step_dwid, 'report_quarter', 'String', NULL, -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', 7 );
 
 
         UPDATE
@@ -56,19 +54,18 @@ DO $$
 
 
         -- add new fields to table_output_field
-        sp8_field_order = 0;
         INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name, field_order, is_sensitive )
         VALUES
-            ( sp8_1_table_output_step_dwid, 'mcr_code', 'mcr_code', sp8_field_order + 1, false )
-            , ( sp8_1_table_output_step_dwid, 'mcr_description', 'mcr_description', sp8_field_order + 1, false )
-            , ( sp8_1_table_output_step_dwid, 'state_code', 'state_code', sp8_field_order + 1, false )
-            , ( sp8_1_table_output_step_dwid, 'sum_of_upb', 'sum_of_upb', sp8_field_order + 1, false )
-            , ( sp8_1_table_output_step_dwid, 'loan_count', 'loan_count', sp8_field_order + 1, false )
-            , ( sp8_1_table_output_step_dwid, 'avg_loan_size', 'avg_loan_size', sp8_field_order, false )
-            , ( sp8_1_table_output_step_dwid, 'report_quarter', 'report_quarter', sp8_field_order, false )
-            , ( sp8_1_table_output_step_dwid, 'etl_batch_id', 'etl_batch_id', sp8_field_order, false )
-            , ( sp8_1_table_output_step_dwid, 'data_source_dwid', 'data_source_dwid', sp8_field_order, false )
-            , ( sp8_1_table_output_step_dwid, 'input_filename', 'imported_filename', sp8_field_order, false );
+            ( sp8_1_table_output_step_dwid, 'mcr_code', 'mcr_code', 1, false )
+            , ( sp8_1_table_output_step_dwid, 'mcr_description', 'mcr_description', 2, false )
+            , ( sp8_1_table_output_step_dwid, 'state_code', 'state_code', 3, false )
+            , ( sp8_1_table_output_step_dwid, 'sum_of_upb', 'sum_of_upb', 4, false )
+            , ( sp8_1_table_output_step_dwid, 'loan_count', 'loan_count', 5, false )
+            , ( sp8_1_table_output_step_dwid, 'avg_loan_size', 'avg_loan_size', 6, false )
+            , ( sp8_1_table_output_step_dwid, 'report_quarter', 'report_quarter', 7, false )
+            , ( sp8_1_table_output_step_dwid, 'etl_batch_id', 'etl_batch_id', 8, false )
+            , ( sp8_1_table_output_step_dwid, 'data_source_dwid', 'data_source_dwid', 9, false )
+            , ( sp8_1_table_output_step_dwid, 'input_filename', 'imported_filename', 10, false );
 
 
 
@@ -158,10 +155,9 @@ from
             AND database_stream_name = 'mcr_code';
 
 
-        sp8_field_order = ( SELECT MAX(field_order) FROM mdi.table_output_field WHERE table_output_step_dwid = sp8_2_table_output_step_dwid);
         INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
                                            , field_order, is_sensitive )
-        VALUES ( sp8_2_table_output_step_dwid, 'report_quarter', 'report_quarter', sp8_field_order + 1, false );
+        VALUES ( sp8_2_table_output_step_dwid, 'report_quarter', 'report_quarter', 9, false );
 
 END $$;
 
@@ -191,15 +187,14 @@ DO $$
         WHERE csv_file_input_step_dwid = sp9_1_csv_file_input_step_dwid;
 
         -- replace deleted fields in csv_file_input_field
-        sp9_field_order = 0;
         INSERT INTO mdi.csv_file_input_field (csv_file_input_step_dwid, field_name, field_type, field_format, field_length, field_precision, field_currency, field_decimal, field_group, field_trim_type, field_order)
         VALUES
-            ( sp9_1_csv_file_input_step_dwid, 'mcr_code', 'String', NULL, -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', sp9_field_order + 1 )
-            , ( sp9_1_csv_file_input_step_dwid, 'mcr_description', 'String', NULL, -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', sp9_field_order + 1 )
-            , ( sp9_1_csv_file_input_step_dwid, 'sum_of_upb', 'Number', '#.#', -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', sp9_field_order + 1 )
-            , ( sp9_1_csv_file_input_step_dwid, 'loan_count', 'Integer', '#', -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', sp9_field_order + 1 )
-            , ( sp9_1_csv_file_input_step_dwid, 'avg_loan_size', 'Number', '#.#', -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', sp9_field_order + 1 )
-            , ( sp9_1_csv_file_input_step_dwid, 'report_quarter', 'String', NULL, -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', sp9_field_order + 1 );
+            ( sp9_1_csv_file_input_step_dwid, 'mcr_code', 'String', NULL, -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', 1 )
+            , ( sp9_1_csv_file_input_step_dwid, 'mcr_description', 'String', NULL, -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', 2 )
+            , ( sp9_1_csv_file_input_step_dwid, 'sum_of_upb', 'Number', '#.#', -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', 3 )
+            , ( sp9_1_csv_file_input_step_dwid, 'loan_count', 'Integer', '#', -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', 4 )
+            , ( sp9_1_csv_file_input_step_dwid, 'avg_loan_size', 'Number', '#.#', -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', 5 )
+            , ( sp9_1_csv_file_input_step_dwid, 'report_quarter', 'String', NULL, -1, -1, DEFAULT, DEFAULT, DEFAULT, 'none', 6 );
 
 
         -- update csv_file_input_step config to reflect updated columns
@@ -207,20 +202,18 @@ DO $$
         WHERE table_output_step_dwid = (SELECT dwid FROM mdi.table_output_step WHERE process_dwid IN (SELECT dwid FROM mdi.process WHERE name = 'SP9.1' ));
 
         -- add new fields to table_output_field
-        sp9_field_order = 0;
-
         INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
                                            , field_order, is_sensitive )
         VALUES
-            ( sp9_1_table_output_step_dwid, 'etl_batch_id', 'etl_batch_id', sp9_field_order + 1, false )
-            , ( sp9_1_table_output_step_dwid, 'data_source_dwid', 'data_source_dwid', sp9_field_order + 1, false )
-            , ( sp9_1_table_output_step_dwid, 'input_filename', 'imported_filename', sp9_field_order + 1, false )
-            , ( sp9_1_table_output_step_dwid, 'mcr_code', 'mcr_code', sp9_field_order + 1, false )
-            , ( sp9_1_table_output_step_dwid, 'mcr_description', 'mcr_description', sp9_field_order + 1, false )
-            , ( sp9_1_table_output_step_dwid, 'sum_of_upb', 'sum_of_upb', sp9_field_order + 1, false )
-            , ( sp9_1_table_output_step_dwid, 'loan_count', 'loan_count', sp9_field_order + 1, false )
-            , ( sp9_1_table_output_step_dwid, 'avg_loan_size', 'avg_loan_size', sp9_field_order + 1, false )
-            , ( sp9_1_table_output_step_dwid, 'report_quarter', 'report_quarter', sp9_field_order + 1, false );
+            ( sp9_1_table_output_step_dwid, 'etl_batch_id', 'etl_batch_id', 1, false )
+            , ( sp9_1_table_output_step_dwid, 'data_source_dwid', 'data_source_dwid', 2, false )
+            , ( sp9_1_table_output_step_dwid, 'input_filename', 'imported_filename', 3, false )
+            , ( sp9_1_table_output_step_dwid, 'mcr_code', 'mcr_code', 4, false )
+            , ( sp9_1_table_output_step_dwid, 'mcr_description', 'mcr_description', 5, false )
+            , ( sp9_1_table_output_step_dwid, 'sum_of_upb', 'sum_of_upb', 6, false )
+            , ( sp9_1_table_output_step_dwid, 'loan_count', 'loan_count', 7, false )
+            , ( sp9_1_table_output_step_dwid, 'avg_loan_size', 'avg_loan_size', 8, false )
+            , ( sp9_1_table_output_step_dwid, 'report_quarter', 'report_quarter', 9, false );
 
         -- update table name to remove _raw
         UPDATE
@@ -264,18 +257,17 @@ from
         WHERE
                 table_output_step_dwid IN (SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp9_2_process_dwid);
 
-        sp9_field_order = 0;
         INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
                                            , field_order, is_sensitive )
         VALUES
-            ( sp9_2_table_output_step_dwid, 'mcr_field_id', 'mcr_code', sp9_field_order + 1, false )
-            , ( sp9_2_table_output_step_dwid, 'mcr_description', 'mcr_description', sp9_field_order + 1, false )
-            , ( sp9_2_table_output_step_dwid, 'total_unpaid_balance', 'sum_of_upb', sp9_field_order + 1, false )
-            , ( sp9_2_table_output_step_dwid, 'loan_count', 'loan_count', sp9_field_order + 1, false )
-            , ( sp9_2_table_output_step_dwid, 'average_unpaid_balance', 'avg_loan_size', sp9_field_order + 1, false )
-            , ( sp9_2_table_output_step_dwid, 'report_quarter', 'report_quarter', sp9_field_order + 1, false )
-            , ( sp9_2_table_output_step_dwid, 'data_source_dwid', 'data_source_dwid_value', sp9_field_order + 1, false )
-            , ( sp9_2_table_output_step_dwid, 'etl_batch_id', 'etl_batch_id', sp9_field_order + 1, false );
+            ( sp9_2_table_output_step_dwid, 'mcr_field_id', 'mcr_code', 1, false )
+            , ( sp9_2_table_output_step_dwid, 'mcr_description', 'mcr_description', 2, false )
+            , ( sp9_2_table_output_step_dwid, 'total_unpaid_balance', 'sum_of_upb', 3, false )
+            , ( sp9_2_table_output_step_dwid, 'loan_count', 'loan_count', 4, false )
+            , ( sp9_2_table_output_step_dwid, 'average_unpaid_balance', 'avg_loan_size', 5, false )
+            , ( sp9_2_table_output_step_dwid, 'report_quarter', 'report_quarter', 6, false )
+            , ( sp9_2_table_output_step_dwid, 'data_source_dwid', 'data_source_dwid_value', 7, false )
+            , ( sp9_2_table_output_step_dwid, 'etl_batch_id', 'etl_batch_id', 8, false );
 
 END $$;
 
@@ -324,19 +316,18 @@ DO $$
 
 
         -- create new csv_file_input_field records to replace old microsoft_excel_input_field records
-        sp10_field_order = 1;
         INSERT INTO mdi.csv_file_input_field ( csv_file_input_step_dwid, field_name, field_type, field_format, field_length,
                                                field_precision, field_currency, field_decimal, field_group, field_trim_type, field_order )
         VALUES
-            ( sp10_1_csv_file_input_step_dwid, 'state', 'String', NULL, -1, -1, '$', '.', ',', 'none', sp10_field_order )
-            , ( sp10_1_csv_file_input_step_dwid, 'item_id', 'Integer', '#', -1, -1, '$', '.', ',', 'none', sp10_field_order + 1 )
-            , ( sp10_1_csv_file_input_step_dwid, 'servicer_id', 'Integer', '#', -1, -1, '$', '.', ',', 'none', sp10_field_order + 1 )
-            , ( sp10_1_csv_file_input_step_dwid, 'servicer_name', 'String', NULL, -1, -1, '$', '.', ',', 'none', sp10_field_order + 1 )
-            , ( sp10_1_csv_file_input_step_dwid, 'pool_no', 'String', NULL, -1, -1, '$', '.', ',', 'none', sp10_field_order + 1 )
-            , ( sp10_1_csv_file_input_step_dwid, 'upb', 'Integer', '#', -1, -1, '$', '.', ',', 'none', sp10_field_order + 1 )
-            , ( sp10_1_csv_file_input_step_dwid, 'loan_count', 'Integer', '#', -1, -1, '$', '.', ',', 'none', sp10_field_order + 1 )
-            , ( sp10_1_csv_file_input_step_dwid, 'avg_loan_size', 'Integer', '#', -1, -1, '$', '.', ',', 'none', sp10_field_order + 1 )
-            , ( sp10_1_csv_file_input_step_dwid, 'report_quarter', 'String', '', -1, -1, '$', '.', ',', 'none', sp10_field_order + 1 );
+            ( sp10_1_csv_file_input_step_dwid, 'state', 'String', NULL, -1, -1, '$', '.', ',', 'none', 1 )
+            , ( sp10_1_csv_file_input_step_dwid, 'item_id', 'Integer', '#', -1, -1, '$', '.', ',', 'none', 2 )
+            , ( sp10_1_csv_file_input_step_dwid, 'servicer_id', 'Integer', '#', -1, -1, '$', '.', ',', 'none', 3 )
+            , ( sp10_1_csv_file_input_step_dwid, 'servicer_name', 'String', NULL, -1, -1, '$', '.', ',', 'none', 4 )
+            , ( sp10_1_csv_file_input_step_dwid, 'pool_no', 'String', NULL, -1, -1, '$', '.', ',', 'none', 5 )
+            , ( sp10_1_csv_file_input_step_dwid, 'upb', 'Integer', '#', -1, -1, '$', '.', ',', 'none', 6 )
+            , ( sp10_1_csv_file_input_step_dwid, 'loan_count', 'Integer', '#', -1, -1, '$', '.', ',', 'none', 7 )
+            , ( sp10_1_csv_file_input_step_dwid, 'avg_loan_size', 'Integer', '#', -1, -1, '$', '.', ',', 'none', 8 )
+            , ( sp10_1_csv_file_input_step_dwid, 'report_quarter', 'String', '', -1, -1, '$', '.', ',', 'none', 9 );
 
 
         -- update table name to remove _raw
@@ -354,22 +345,21 @@ DO $$
                 table_output_step_dwid = sp10_1_table_output_step_dwid;
 
         -- create new table_output_field records for all columns
-        sp10_field_order = 1;
         INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
                                            , field_order, is_sensitive )
         VALUES
-             ( sp10_1_table_output_step_dwid, 'etl_batch_id', 'etl_batch_id', sp10_field_order, false )
-             , ( sp10_1_table_output_step_dwid, 'data_source_dwid', 'data_source_dwid', sp10_field_order + 1, false )
-             , ( sp10_1_table_output_step_dwid, 'input_filename', 'imported_filename', sp10_field_order + 1, false )
-             , ( sp10_1_table_output_step_dwid, 'state', 'state', sp10_field_order + 1, false )
-             , ( sp10_1_table_output_step_dwid, 'item_id', 'item_id', sp10_field_order + 1, false )
-             , ( sp10_1_table_output_step_dwid, 'servicer_id', 'servicer_id', sp10_field_order + 1, false )
-             , ( sp10_1_table_output_step_dwid, 'servicer_name', 'servicer_name', sp10_field_order + 1, false )
-             , ( sp10_1_table_output_step_dwid, 'pool_no', 'pool_no', sp10_field_order + 1, false )
-             , ( sp10_1_table_output_step_dwid, 'upb', 'upb', sp10_field_order + 1, false )
-             , ( sp10_1_table_output_step_dwid, 'loan_count', 'loan_count', sp10_field_order + 1, false )
-             , ( sp10_1_table_output_step_dwid, 'avg_loan_size', 'avg_loan_size', sp10_field_order + 1, false )
-             , ( sp10_1_table_output_step_dwid, 'report_quarter', 'report_quarter', sp10_field_order + 1, false );
+             ( sp10_1_table_output_step_dwid, 'etl_batch_id', 'etl_batch_id', 1, false )
+             , ( sp10_1_table_output_step_dwid, 'data_source_dwid', 'data_source_dwid', 2, false )
+             , ( sp10_1_table_output_step_dwid, 'input_filename', 'imported_filename', 3, false )
+             , ( sp10_1_table_output_step_dwid, 'state', 'state', 4, false )
+             , ( sp10_1_table_output_step_dwid, 'item_id', 'item_id', 5, false )
+             , ( sp10_1_table_output_step_dwid, 'servicer_id', 'servicer_id', 6, false )
+             , ( sp10_1_table_output_step_dwid, 'servicer_name', 'servicer_name', 7, false )
+             , ( sp10_1_table_output_step_dwid, 'pool_no', 'pool_no', 8, false )
+             , ( sp10_1_table_output_step_dwid, 'upb', 'upb', 9, false )
+             , ( sp10_1_table_output_step_dwid, 'loan_count', 'loan_count', 10, false )
+             , ( sp10_1_table_output_step_dwid, 'avg_loan_size', 'avg_loan_size', 11, false )
+             , ( sp10_1_table_output_step_dwid, 'report_quarter', 'report_quarter', 12, false );
 
 
         --
@@ -401,20 +391,19 @@ from
                 table_output_step_dwid = sp10_2_table_output_step_dwid;
 
         -- create new table_output_field records for all columns
-        sp10_field_order = 1;
         INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
                                            , field_order, is_sensitive )
         VALUES
-            ( sp10_2_table_output_step_dwid, 'etl_batch_id', 'etl_batch_id', sp10_field_order, false )
-            , ( sp10_2_table_output_step_dwid, 'data_source_dwid', 'data_source_dwid_value', sp10_field_order, false )
-            , ( sp10_2_table_output_step_dwid, 'state_type', 'state', sp10_field_order, false )
-            , ( sp10_2_table_output_step_dwid, 'item_id', 'item_id', sp10_field_order, false )
-            , ( sp10_2_table_output_step_dwid, 'servicer_nmls_id', 'servicer_id', sp10_field_order, false )
-            , ( sp10_2_table_output_step_dwid, 'servicer_name', 'servicer_name', sp10_field_order, false )
-            , ( sp10_2_table_output_step_dwid, 'pool_number', 'pool_no', sp10_field_order, false )
-            , ( sp10_2_table_output_step_dwid, 'total_unpaid_balance', 'upb', sp10_field_order, false )
-            , ( sp10_2_table_output_step_dwid, 'loan_count', 'loan_count', sp10_field_order, false )
-            , ( sp10_2_table_output_step_dwid, 'average_unpaid_balance', 'avg_loan_size', sp10_field_order, false )
-            , ( sp10_2_table_output_step_dwid, 'report_quarter', 'report_quarter', sp10_field_order, false );
+            ( sp10_2_table_output_step_dwid, 'etl_batch_id', 'etl_batch_id', 1, false )
+            , ( sp10_2_table_output_step_dwid, 'data_source_dwid', 'data_source_dwid_value', 2, false )
+            , ( sp10_2_table_output_step_dwid, 'state_type', 'state', 3, false )
+            , ( sp10_2_table_output_step_dwid, 'item_id', 'item_id', 4, false )
+            , ( sp10_2_table_output_step_dwid, 'servicer_nmls_id', 'servicer_id', 5, false )
+            , ( sp10_2_table_output_step_dwid, 'servicer_name', 'servicer_name', 6, false )
+            , ( sp10_2_table_output_step_dwid, 'pool_number', 'pool_no', 7, false )
+            , ( sp10_2_table_output_step_dwid, 'total_unpaid_balance', 'upb', 8, false )
+            , ( sp10_2_table_output_step_dwid, 'loan_count', 'loan_count', 9, false )
+            , ( sp10_2_table_output_step_dwid, 'average_unpaid_balance', 'avg_loan_size', 10, false )
+            , ( sp10_2_table_output_step_dwid, 'report_quarter', 'report_quarter', 11, false );
 
 END $$;
