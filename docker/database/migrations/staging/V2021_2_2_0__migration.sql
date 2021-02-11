@@ -13419,9 +13419,9 @@ CREATE VIEW octane_data_mart.nmls_call_report_national AS
     SELECT
         mcr_field_id
         , mcr_description
-        , average_unpaid_balance
+        , average_unpaid_balance as average_unpaid_balance_amount
         , loan_count
-        , total_unpaid_balance
+        , total_unpaid_balance as total_unpaid_balance_amount
         , report_quarter
     FROM
         staging_compliance.nmls_call_report_national;
@@ -13433,9 +13433,9 @@ CREATE VIEW octane_data_mart.nmls_call_report_s540a AS
         , servicer_nmls_id
         , servicer_name
         , pool_number
-        , total_unpaid_balance
+        , total_unpaid_balance as total_unpaid_balance_amount
         , loan_count
-        , average_unpaid_balance
+        , average_unpaid_balance as average_unpaid_balance_amount
         , report_quarter
     FROM
         staging_compliance.nmls_call_report_s540a;
@@ -13445,9 +13445,9 @@ CREATE VIEW octane_data_mart.nmls_call_report_state AS
         mcr_field_id
         , mcr_description
         , state_type
-        , total_unpaid_balance
+        , total_unpaid_balance as total_unpaid_balance_amount
         , loan_count
-        , average_unpaid_balance
+        , average_unpaid_balance as average_unpaid_balance_amount
         , report_quarter
     FROM
         staging_compliance.nmls_call_report_state;
