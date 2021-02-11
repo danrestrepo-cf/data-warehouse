@@ -13447,7 +13447,7 @@ CREATE VIEW octane_data_mart.nmls_call_report_state AS
         , state_type
         , total_unpaid_balance as total_unpaid_balance_amount
         , loan_count
-        , average_unpaid_balance as average_unpaid_balance_amount
+        , average_loan_size as average_unpaid_balance_amount
         , report_quarter
     FROM
         staging_compliance.nmls_call_report_state;
