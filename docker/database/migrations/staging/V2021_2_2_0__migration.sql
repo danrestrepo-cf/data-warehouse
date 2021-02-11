@@ -13417,8 +13417,7 @@ CREATE TABLE staging_compliance.nmls_call_report_s540a
 --
 CREATE VIEW octane_data_mart.nmls_call_report_national AS
     SELECT
-        mcr_code
-        , average_unpaid_balance AS unpaid_balance
+        mcr_field_id
         , mcr_description
         , average_unpaid_balance AS unpaid_balance
         , loan_count
@@ -13443,8 +13442,7 @@ CREATE VIEW octane_data_mart.nmls_call_report_s540a AS
 
 CREATE VIEW octane_data_mart.nmls_call_report_state AS
     SELECT
-        mcr_code
-        , state_type
+        mcr_field_id
         , mcr_description
         , state_type
         , total_unpaid_balance AS unpaid_balance
