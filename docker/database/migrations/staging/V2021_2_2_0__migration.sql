@@ -13361,50 +13361,53 @@ create index idx_fk_wf_step_deal_tag_modifier_2 on staging_octane.wf_step_deal_t
 --
 -- SP8.2
 --
-ALTER TABLE staging_compliance.nmls_call_report_state RENAME COLUMN unpaid_balance to total_unpaid_balance;
-ALTER TABLE staging_compliance.nmls_call_report_state ADD COLUMN report_quarter text;
+DROP TABLE staging_compliance.nmls_call_report_state;
+CREATE TABLE staging_compliance.nmls_call_report_state
+(
+    data_source_dwid bigint
+    , etl_batch_id text
+    , mcr_code text not null
+    , mcr_description text
+    , state_type text not null
+    , total_unpaid_balance numeric
+    , loan_count integer
+    , average_loan_size numeric(21,3)
+    , report_quarter text
+);
 
 
 --
 -- SP9.2
 --
-ALTER TABLE staging_compliance.nmls_call_report_national RENAME COLUMN unpaid_balance to total_unpaid_balance;
-ALTER TABLE staging_compliance.nmls_call_report_national RENAME COLUMN average_loan_size to average_unpaid_balance;
-ALTER TABLE staging_compliance.nmls_call_report_national ADD COLUMN report_quarter text;
-
-ALTER TABLE staging_compliance.nmls_call_report_national ADD COLUMN total_unpaid_balance_KTL DOUBLE PRECISION;
-UPDATE staging_compliance.nmls_call_report_national SET total_unpaid_balance_KTL=total_unpaid_balance;
-ALTER TABLE staging_compliance.nmls_call_report_national DROP COLUMN total_unpaid_balance;
-ALTER TABLE staging_compliance.nmls_call_report_national RENAME total_unpaid_balance_KTL TO total_unpaid_balance;
-
-ALTER TABLE staging_compliance.nmls_call_report_national ADD COLUMN average_unpaid_balance_KTL DOUBLE PRECISION;
-UPDATE staging_compliance.nmls_call_report_national SET average_unpaid_balance_KTL=average_unpaid_balance;
-ALTER TABLE staging_compliance.nmls_call_report_national DROP COLUMN average_unpaid_balance;
-ALTER TABLE staging_compliance.nmls_call_report_national RENAME average_unpaid_balance_KTL TO average_unpaid_balance;
-
-ALTER TABLE staging_compliance.nmls_call_report_national ADD COLUMN data_source_dwid_KTL TEXT;
-UPDATE staging_compliance.nmls_call_report_national SET data_source_dwid_KTL=data_source_dwid;
-ALTER TABLE staging_compliance.nmls_call_report_national DROP COLUMN data_source_dwid;
-ALTER TABLE staging_compliance.nmls_call_report_national RENAME data_source_dwid_KTL TO data_source_dwid;
+DROP TABLE staging_compliance.nmls_call_report_national;
+CREATE TABLE staging_compliance.nmls_call_report_national
+(
+    mcr_code text not null
+    , mcr_description text
+    , total_unpaid_balance numeric
+    , loan_count integer
+    , average_unpaid_balance numeric
+    , etl_batch_id text
+    , data_source_dwid bigint
+    , report_quarter text
+);
 
 
 --
 -- SP10.2
 --
-ALTER TABLE staging_compliance.nmls_call_report_s540a DROP COLUMN state_type;
-ALTER TABLE staging_compliance.nmls_call_report_s540a DROP COLUMN item_id;
-ALTER TABLE staging_compliance.nmls_call_report_s540a DROP COLUMN servicer_nmls_id;
-ALTER TABLE staging_compliance.nmls_call_report_s540a DROP COLUMN pool_number;
-ALTER TABLE staging_compliance.nmls_call_report_s540a DROP COLUMN loan_count;
-ALTER TABLE staging_compliance.nmls_call_report_s540a DROP COLUMN servicer_name;
-ALTER TABLE staging_compliance.nmls_call_report_s540a DROP COLUMN unpaid_balance;
-
-ALTER TABLE staging_compliance.nmls_call_report_s540a ADD COLUMN state_type TEXT;
-ALTER TABLE staging_compliance.nmls_call_report_s540a ADD COLUMN item_id BIGINT;
-ALTER TABLE staging_compliance.nmls_call_report_s540a ADD COLUMN servicer_nmls_id BIGINT;
-ALTER TABLE staging_compliance.nmls_call_report_s540a ADD COLUMN servicer_name TEXT;
-ALTER TABLE staging_compliance.nmls_call_report_s540a ADD COLUMN pool_number TEXT;
-ALTER TABLE staging_compliance.nmls_call_report_s540a ADD COLUMN unpaid_balance NUMERIC;
-ALTER TABLE staging_compliance.nmls_call_report_s540a ADD COLUMN loan_count INTEGER;
-ALTER TABLE staging_compliance.nmls_call_report_s540a ADD COLUMN average_unpaid_balance NUMERIC;
-ALTER TABLE staging_compliance.nmls_call_report_s540a ADD COLUMN report_quarter TEXT;
+DROP TABLE staging_compliance.nmls_call_report_s540a;
+CREATE TABLE staging_compliance.nmls_call_report_s540a
+(
+    etl_batch_id text
+    , data_source_dwid bigint
+    , state_type text
+    , item_id bigint
+    , servicer_nmls_id bigint
+    , servicer_name text
+    , pool_number text
+    , total_unpaid_balance numeric
+    , loan_count integer
+    , average_unpaid_balance numeric
+    , report_quarter text
+);

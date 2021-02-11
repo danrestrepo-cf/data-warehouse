@@ -4,9 +4,9 @@
 
 DO $$
     DECLARE sp8_1_field_order NUMERIC;
-        DECLARE sp8_1_table_output_step_dwid BIGINT;
-        DECLARE sp8_1_csv_file_input_step_dwid BIGINT;
-        DECLARE sp8_2_process_dwid BIGINT;
+    DECLARE sp8_1_table_output_step_dwid BIGINT;
+    DECLARE sp8_1_csv_file_input_step_dwid BIGINT;
+    DECLARE sp8_2_process_dwid BIGINT;
 
     BEGIN
 
@@ -189,14 +189,14 @@ from
                                            , field_order, is_sensitive )
         VALUES ( ( SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp8_2_process_dwid ), 'report_quarter', 'report_quarter', ( SELECT MAX(field_order) + 1 FROM mdi.table_output_field WHERE table_output_step_dwid IN ( SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp8_2_process_dwid ) ), false );
 
-    END $$;
+END $$;
 
 DO $$
     DECLARE sp9_1_field_order NUMERIC;
-        DECLARE sp9_1_table_output_step_dwid BIGINT;
-        DECLARE sp9_1_csv_file_input_step_dwid BIGINT;
-        DECLARE sp9_2_process_dwid BIGINT;
-        DECLARE sp9_2_field_order NUMERIC;
+    DECLARE sp9_1_table_output_step_dwid BIGINT;
+    DECLARE sp9_1_csv_file_input_step_dwid BIGINT;
+    DECLARE sp9_2_process_dwid BIGINT;
+    DECLARE sp9_2_field_order NUMERIC;
 
     BEGIN
 
@@ -370,12 +370,12 @@ from
                                            , field_order, is_sensitive )
         VALUES ( ( SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp9_2_process_dwid ), 'etl_batch_id', 'etl_batch_id', sp9_2_field_order, false );
 
-    END $$;
+END $$;
 
 DO $$
     DECLARE sp10_1_field_order NUMERIC;
-        DECLARE sp10_1_csv_file_input_step_dwid BIGINT;
-        DECLARE sp10_2_process_dwid BIGINT;
+    DECLARE sp10_1_csv_file_input_step_dwid BIGINT;
+    DECLARE sp10_2_process_dwid BIGINT;
 
     BEGIN
 
@@ -625,7 +625,7 @@ from
         sp10_1_field_order = sp10_1_field_order + 1;
         INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
                                            , field_order, is_sensitive )
-        VALUES ( ( SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp10_2_process_dwid ), 'unpaid_balance', 'upb', sp10_1_field_order, false );
+        VALUES ( ( SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp10_2_process_dwid ), 'total_unpaid_balance', 'upb', sp10_1_field_order, false );
 
         sp10_1_field_order = sp10_1_field_order + 1;
         INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
@@ -642,4 +642,4 @@ from
                                            , field_order, is_sensitive )
         VALUES ( ( SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp10_2_process_dwid ), 'report_quarter', 'report_quarter', sp10_1_field_order, false );
 
-    END $$;
+END $$;
