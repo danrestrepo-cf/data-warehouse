@@ -68,14 +68,6 @@ DO $$
             , ( sp8_1_table_output_step_dwid, 'input_filename', 'imported_filename', 10, false );
 
 
-
-
-
-
-
-
-
-
         --
         -- SP8.2
         --
@@ -93,7 +85,6 @@ DO $$
     , sum_of_upb
     , loan_count
     , avg_loan_size
-    , etl_batch_id
     , report_quarter
 from
     dmi.nmls_call_report_state
@@ -311,7 +302,8 @@ DO $$
                                             , lazy_conversion, newline_possible, add_filename_result, file_format
                                             , file_encoding, include_filename
                                             , process_in_parallel, filename_field, row_num_field, data_source_dwid )
-        VALUES ( sp10_1_process_dwid, 'Y', ',', '"', 1024, 'N', 'N', 'N', 'mixed', 'UTF-8', 'N', 'N', NULL, NULL, 3 )
+        VALUES ( sp10_1_process_dwid, 'Y', ',', '"', 1024, 'N', 'N', 'N', 'mixed', 'UTF-8', 'N', 'Y', NULL, NULL, 3 )
+        RETURNING dwid INTO sp10_1_csv_file_input_step_dwid;
         RETURNING dwid INTO sp10_1_csv_file_input_step_dwid;
 
 
