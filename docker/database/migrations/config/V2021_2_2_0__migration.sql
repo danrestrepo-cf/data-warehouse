@@ -304,7 +304,6 @@ DO $$
                                             , process_in_parallel, filename_field, row_num_field, data_source_dwid )
         VALUES ( sp10_1_process_dwid, 'Y', ',', '"', 1024, 'N', 'N', 'N', 'mixed', 'UTF-8', 'N', 'Y', NULL, NULL, 3 )
         RETURNING dwid INTO sp10_1_csv_file_input_step_dwid;
-        RETURNING dwid INTO sp10_1_csv_file_input_step_dwid;
 
 
         -- create new csv_file_input_field records to replace old microsoft_excel_input_field records
