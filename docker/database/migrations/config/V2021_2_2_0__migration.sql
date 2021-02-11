@@ -139,6 +139,7 @@ from
                 table_output_step_dwid = sp8_2_table_output_step_dwid
             AND database_stream_name = 'data_source_dwid';
 
+
         UPDATE
             mdi.table_output_field
         SET
@@ -146,6 +147,15 @@ from
         WHERE
                 table_output_step_dwid = sp8_2_table_output_step_dwid
             AND database_stream_name = 'mcr_desc';
+
+
+        UPDATE
+            mdi.table_output_field
+        SET
+            database_stream_name = 'mcr_code', database_field_name = 'mcr_field_id'
+        WHERE
+                table_output_step_dwid = sp8_2_table_output_step_dwid
+            AND database_stream_name = 'mcr_code';
 
 
         sp8_field_order = ( SELECT MAX(field_order) FROM mdi.table_output_field WHERE table_output_step_dwid = sp8_2_table_output_step_dwid);
@@ -258,7 +268,7 @@ from
         INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
                                            , field_order, is_sensitive )
         VALUES
-            ( sp9_2_table_output_step_dwid, 'mcr_code', 'mcr_code', sp9_field_order + 1, false )
+            ( sp9_2_table_output_step_dwid, 'mcr_field_id', 'mcr_code', sp9_field_order + 1, false )
             , ( sp9_2_table_output_step_dwid, 'mcr_description', 'mcr_description', sp9_field_order + 1, false )
             , ( sp9_2_table_output_step_dwid, 'total_unpaid_balance', 'sum_of_upb', sp9_field_order + 1, false )
             , ( sp9_2_table_output_step_dwid, 'loan_count', 'loan_count', sp9_field_order + 1, false )

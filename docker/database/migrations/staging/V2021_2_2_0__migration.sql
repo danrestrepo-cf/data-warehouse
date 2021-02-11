@@ -13366,7 +13366,7 @@ CREATE TABLE staging_compliance.nmls_call_report_state
 (
     etl_batch_id text
     , data_source_dwid bigint
-    , mcr_code text not null
+    , mcr_field_id text not null
     , mcr_description text
     , state_type text not null
     , total_unpaid_balance numeric
@@ -13384,7 +13384,7 @@ CREATE TABLE staging_compliance.nmls_call_report_national
 (
     etl_batch_id text
     , data_source_dwid bigint
-    , mcr_code text not null
+    , mcr_field_id text not null
     , mcr_description text
     , total_unpaid_balance numeric
     , loan_count integer
