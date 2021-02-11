@@ -373,108 +373,63 @@ from
 END $$;
 
 DO $$
-    DECLARE sp10_1_field_order NUMERIC;
+    DECLARE sp10_field_order NUMERIC;
+    DECLARE sp10_1_process_dwid BIGINT;
+    DECLARE sp10_1_microsoft_excel_input_step_dwid BIGINT;
     DECLARE sp10_1_csv_file_input_step_dwid BIGINT;
+    DECLARE sp10_1_table_output_step_dwid BIGINT;
+
     DECLARE sp10_2_process_dwid BIGINT;
-
+    DECLARE sp10_2_table_output_step_dwid BIGINT;
+        
     BEGIN
+        sp10_1_process_dwid = (SELECT dwid FROM mdi.process WHERE name = 'SP10.1');
+        sp10_1_microsoft_excel_input_step_dwid = (SELECT dwid FROM mdi.microsoft_excel_input_step WHERE process_dwid = sp10_1_process_dwid);
+        sp10_1_table_output_step_dwid = (SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp10_1_process_dwid);
 
+        sp10_2_process_dwid = ( SELECT dwid from mdi.process WHERE name = 'SP10.2' );
+        sp10_2_table_output_step_dwid = (SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp10_2_process_dwid);
 
         --
-        -- SP10.1 and SP10.2
+        -- SP10.1
         --
 
         -- delete old microsoft_excel_input_field records
         DELETE FROM
             mdi.microsoft_excel_input_field
         WHERE
-                microsoft_excel_input_step_dwid IN (SELECT
-                                                        dwid
-                                                    FROM
-                                                        mdi.microsoft_excel_input_step
-                                                    WHERE process_dwid IN (SELECT
-                                                                               dwid
-                                                                           FROM mdi.process
-                                                                           WHERE name = 'SP10.1'));
-
-
+            microsoft_excel_input_step_dwid = sp10_1_microsoft_excel_input_step_dwid;
 
         -- delete old microsoft_excel_input_step record
-        DELETE FROM mdi.microsoft_excel_input_step WHERE process_dwid IN (SELECT dwid FROM mdi.process WHERE name = 'SP10.1');
-
+        DELETE FROM
+            mdi.microsoft_excel_input_step
+        WHERE
+            process_dwid = sp10_1_process_dwid;
 
         -- create new csv_file_input_step record to replace old microsoft_excel_input_step record
         INSERT INTO mdi.csv_file_input_step ( process_dwid, header_present, delimiter, enclosure, buffersize
                                             , lazy_conversion, newline_possible, add_filename_result, file_format
                                             , file_encoding, include_filename
                                             , process_in_parallel, filename_field, row_num_field, data_source_dwid )
-        VALUES ( (SELECT dwid FROM mdi.process WHERE name = 'SP10.1'), 'Y', ',', '"', 1024, 'N', 'N', 'N', 'mixed', 'UTF-8', 'N', 'N', NULL, NULL, 3 )
+        VALUES ( sp10_1_process_dwid, 'Y', ',', '"', 1024, 'N', 'N', 'N', 'mixed', 'UTF-8', 'N', 'N', NULL, NULL, 3 )
         RETURNING dwid INTO sp10_1_csv_file_input_step_dwid;
 
 
         -- create new csv_file_input_field records to replace old microsoft_excel_input_field records
-        sp10_1_field_order = 1;
-        INSERT INTO mdi.csv_file_input_field ( csv_file_input_step_dwid, field_name, field_type, field_format
-                                             , field_length, field_precision, field_currency, field_decimal, field_group
-                                             , field_trim_type, field_order )
-        VALUES ( sp10_1_csv_file_input_step_dwid, 'state', 'String', NULL, -1, -1, '$', '.', ',', 'none'
-               , sp10_1_field_order );
+        sp10_field_order = 1;
+        INSERT INTO mdi.csv_file_input_field ( csv_file_input_step_dwid, field_name, field_type, field_format, field_length,
+                                               field_precision, field_currency, field_decimal, field_group, field_trim_type, field_order )
+        VALUES
+            ( sp10_1_csv_file_input_step_dwid, 'state', 'String', NULL, -1, -1, '$', '.', ',', 'none', sp10_field_order )
+            , ( sp10_1_csv_file_input_step_dwid, 'item_id', 'Integer', '#', -1, -1, '$', '.', ',', 'none', sp10_field_order + 1 )
+            , ( sp10_1_csv_file_input_step_dwid, 'servicer_id', 'Integer', '#', -1, -1, '$', '.', ',', 'none', sp10_field_order + 1 )
+            , ( sp10_1_csv_file_input_step_dwid, 'servicer_name', 'String', NULL, -1, -1, '$', '.', ',', 'none', sp10_field_order + 1 )
+            , ( sp10_1_csv_file_input_step_dwid, 'pool_no', 'String', NULL, -1, -1, '$', '.', ',', 'none', sp10_field_order + 1 )
+            , ( sp10_1_csv_file_input_step_dwid, 'upb', 'Integer', '#', -1, -1, '$', '.', ',', 'none', sp10_field_order + 1 )
+            , ( sp10_1_csv_file_input_step_dwid, 'loan_count', 'Integer', '#', -1, -1, '$', '.', ',', 'none', sp10_field_order + 1 )
+            , ( sp10_1_csv_file_input_step_dwid, 'avg_loan_size', 'Integer', '#', -1, -1, '$', '.', ',', 'none', sp10_field_order + 1 )
+            , ( sp10_1_csv_file_input_step_dwid, 'report_quarter', 'String', '', -1, -1, '$', '.', ',', 'none', sp10_field_order + 1 );
 
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.csv_file_input_field ( csv_file_input_step_dwid, field_name, field_type, field_format
-                                             , field_length, field_precision, field_currency, field_decimal, field_group
-                                             , field_trim_type, field_order )
-        VALUES ( sp10_1_csv_file_input_step_dwid, 'item_id', 'Integer', '#', -1, -1, '$', '.', ',', 'none'
-               , sp10_1_field_order );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.csv_file_input_field ( csv_file_input_step_dwid, field_name, field_type, field_format
-                                             , field_length, field_precision, field_currency, field_decimal, field_group
-                                             , field_trim_type, field_order )
-        VALUES ( sp10_1_csv_file_input_step_dwid, 'servicer_id', 'Integer', '#', -1, -1, '$', '.', ',', 'none'
-               , sp10_1_field_order );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.csv_file_input_field ( csv_file_input_step_dwid, field_name, field_type, field_format
-                                             , field_length, field_precision, field_currency, field_decimal, field_group
-                                             , field_trim_type, field_order )
-        VALUES ( sp10_1_csv_file_input_step_dwid, 'servicer_name', 'String', NULL, -1, -1, '$', '.', ',', 'none'
-               , sp10_1_field_order );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.csv_file_input_field ( csv_file_input_step_dwid, field_name, field_type, field_format
-                                             , field_length, field_precision, field_currency, field_decimal, field_group
-                                             , field_trim_type, field_order )
-        VALUES ( sp10_1_csv_file_input_step_dwid, 'pool_no', 'String', NULL, -1, -1, '$', '.', ',', 'none'
-               , sp10_1_field_order );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.csv_file_input_field ( csv_file_input_step_dwid, field_name, field_type, field_format
-                                             , field_length, field_precision, field_currency, field_decimal, field_group
-                                             , field_trim_type, field_order )
-        VALUES ( sp10_1_csv_file_input_step_dwid, 'upb', 'Integer', '#', -1, -1, '$', '.', ',', 'none'
-               , sp10_1_field_order );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.csv_file_input_field ( csv_file_input_step_dwid, field_name, field_type, field_format
-                                             , field_length, field_precision, field_currency, field_decimal, field_group
-                                             , field_trim_type, field_order )
-        VALUES ( sp10_1_csv_file_input_step_dwid, 'loan_count', 'Integer', '#', -1, -1, '$', '.', ',', 'none'
-               , sp10_1_field_order );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.csv_file_input_field ( csv_file_input_step_dwid, field_name, field_type, field_format
-                                             , field_length, field_precision, field_currency, field_decimal, field_group
-                                             , field_trim_type, field_order )
-        VALUES ( sp10_1_csv_file_input_step_dwid, 'avg_loan_size', 'Integer', '#', -1, -1, '$', '.', ',', 'none'
-               , sp10_1_field_order );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.csv_file_input_field ( csv_file_input_step_dwid, field_name, field_type, field_format
-                                             , field_length, field_precision, field_currency, field_decimal, field_group
-                                             , field_trim_type, field_order )
-        VALUES ( sp10_1_csv_file_input_step_dwid, 'report_quarter', 'String', '', -1, -1, '$', '.', ',', 'none'
-               , sp10_1_field_order );
 
         -- update table name to remove _raw
         UPDATE
@@ -482,83 +437,36 @@ DO $$
         SET
             target_table = 'nmls_call_report_s540a'
         WHERE
-                process_dwid IN ( SELECT dwid FROM mdi.process WHERE name like 'SP10.1' );
+                process_dwid = sp10_1_process_dwid;
 
         -- delete table_output_field records
         DELETE FROM
             mdi.table_output_field
         WHERE
-                table_output_step_dwid IN (SELECT
-                                               dwid
-                                           FROM
-                                               mdi.table_output_step
-                                           WHERE process_dwid IN (SELECT
-                                                                      dwid
-                                                                  FROM mdi.process
-                                                                  WHERE name = 'SP10.1'));
+                table_output_step_dwid = sp10_1_table_output_step_dwid;
 
         -- create new table_output_field records for all columns
-        sp10_1_field_order = 1;
+        sp10_field_order = 1;
         INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
                                            , field_order, is_sensitive )
-        VALUES ( (SELECT dwid FROM mdi.table_output_step WHERE process_dwid IN (SELECT dwid from mdi.process WHERE name = 'SP10.1')), 'etl_batch_id', 'etl_batch_id', sp10_1_field_order, false );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
-                                           , field_order, is_sensitive )
-        VALUES ( (SELECT dwid FROM mdi.table_output_step WHERE process_dwid IN (SELECT dwid from mdi.process WHERE name = 'SP10.1')), 'data_source_dwid', 'data_source_dwid', sp10_1_field_order, false );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
-                                           , field_order, is_sensitive )
-        VALUES ( (SELECT dwid FROM mdi.table_output_step WHERE process_dwid IN (SELECT dwid from mdi.process WHERE name = 'SP10.1')), 'input_filename', 'imported_filename', sp10_1_field_order, false );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
-                                           , field_order, is_sensitive )
-        VALUES ( (SELECT dwid FROM mdi.table_output_step WHERE process_dwid IN (SELECT dwid from mdi.process WHERE name = 'SP10.1')), 'state', 'state', sp10_1_field_order, false );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
-                                           , field_order, is_sensitive )
-        VALUES ( (SELECT dwid FROM mdi.table_output_step WHERE process_dwid IN (SELECT dwid from mdi.process WHERE name = 'SP10.1')), 'item_id', 'item_id', sp10_1_field_order, false );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
-                                           , field_order, is_sensitive )
-        VALUES ( (SELECT dwid FROM mdi.table_output_step WHERE process_dwid IN (SELECT dwid from mdi.process WHERE name = 'SP10.1')), 'servicer_id', 'servicer_id', sp10_1_field_order, false );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
-                                           , field_order, is_sensitive )
-        VALUES ( (SELECT dwid FROM mdi.table_output_step WHERE process_dwid IN (SELECT dwid from mdi.process WHERE name = 'SP10.1')), 'servicer_name', 'servicer_name', sp10_1_field_order, false );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
-                                           , field_order, is_sensitive )
-        VALUES ( (SELECT dwid FROM mdi.table_output_step WHERE process_dwid IN (SELECT dwid from mdi.process WHERE name = 'SP10.1')), 'pool_no', 'pool_no', sp10_1_field_order, false );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
-                                           , field_order, is_sensitive )
-        VALUES ( (SELECT dwid FROM mdi.table_output_step WHERE process_dwid IN (SELECT dwid from mdi.process WHERE name = 'SP10.1')), 'upb', 'upb', sp10_1_field_order, false );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
-                                           , field_order, is_sensitive )
-        VALUES ( (SELECT dwid FROM mdi.table_output_step WHERE process_dwid IN (SELECT dwid from mdi.process WHERE name = 'SP10.1')), 'loan_count', 'loan_count', sp10_1_field_order, false );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
-                                           , field_order, is_sensitive )
-        VALUES ( (SELECT dwid FROM mdi.table_output_step WHERE process_dwid IN (SELECT dwid from mdi.process WHERE name = 'SP10.1')), 'avg_loan_size', 'avg_loan_size', sp10_1_field_order, false );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
-                                           , field_order, is_sensitive )
-        VALUES ( (SELECT dwid FROM mdi.table_output_step WHERE process_dwid IN (SELECT dwid from mdi.process WHERE name = 'SP10.1')), 'report_quarter', 'report_quarter', sp10_1_field_order, false );
+        VALUES
+             ( sp10_1_table_output_step_dwid, 'etl_batch_id', 'etl_batch_id', sp10_field_order, false )
+             , ( sp10_1_table_output_step_dwid, 'data_source_dwid', 'data_source_dwid', sp10_field_order + 1, false )
+             , ( sp10_1_table_output_step_dwid, 'input_filename', 'imported_filename', sp10_field_order + 1, false )
+             , ( sp10_1_table_output_step_dwid, 'state', 'state', sp10_field_order + 1, false )
+             , ( sp10_1_table_output_step_dwid, 'item_id', 'item_id', sp10_field_order + 1, false )
+             , ( sp10_1_table_output_step_dwid, 'servicer_id', 'servicer_id', sp10_field_order + 1, false )
+             , ( sp10_1_table_output_step_dwid, 'servicer_name', 'servicer_name', sp10_field_order + 1, false )
+             , ( sp10_1_table_output_step_dwid, 'pool_no', 'pool_no', sp10_field_order + 1, false )
+             , ( sp10_1_table_output_step_dwid, 'upb', 'upb', sp10_field_order + 1, false )
+             , ( sp10_1_table_output_step_dwid, 'loan_count', 'loan_count', sp10_field_order + 1, false )
+             , ( sp10_1_table_output_step_dwid, 'avg_loan_size', 'avg_loan_size', sp10_field_order + 1, false )
+             , ( sp10_1_table_output_step_dwid, 'report_quarter', 'report_quarter', sp10_field_order + 1, false );
 
 
+        --
+        -- SP10.2
+        --
         UPDATE
             mdi.table_input_step
         SET
@@ -576,70 +484,29 @@ DO $$
 from
    dmi.nmls_call_report_s540a
 ;'
-        WHERE process_dwid IN ( SELECT dwid from mdi.process WHERE name = 'SP10.2' )
-        RETURNING process_dwid INTO sp10_2_process_dwid;
-
+        WHERE process_dwid = sp10_2_process_dwid;
 
         -- delete table_output_field records
         DELETE FROM
             mdi.table_output_field
         WHERE
-                table_output_step_dwid IN ( SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp10_2_process_dwid);
+                table_output_step_dwid = sp10_2_table_output_step_dwid;
 
         -- create new table_output_field records for all columns
-        sp10_1_field_order = 1;
+        sp10_field_order = 1;
         INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
                                            , field_order, is_sensitive )
-        VALUES ( ( SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp10_2_process_dwid ), 'etl_batch_id', 'etl_batch_id', sp10_1_field_order, false );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
-                                           , field_order, is_sensitive )
-        VALUES ( ( SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp10_2_process_dwid ), 'data_source_dwid', 'data_source_dwid_value', sp10_1_field_order, false );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
-                                           , field_order, is_sensitive )
-        VALUES ( ( SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp10_2_process_dwid ), 'state_type', 'state', sp10_1_field_order, false );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
-                                           , field_order, is_sensitive )
-        VALUES ( ( SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp10_2_process_dwid ), 'item_id', 'item_id', sp10_1_field_order, false );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
-                                           , field_order, is_sensitive )
-        VALUES ( ( SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp10_2_process_dwid ), 'servicer_nmls_id', 'servicer_id', sp10_1_field_order, false );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
-                                           , field_order, is_sensitive )
-        VALUES ( ( SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp10_2_process_dwid ), 'servicer_name', 'servicer_name', sp10_1_field_order, false );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
-                                           , field_order, is_sensitive )
-        VALUES ( ( SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp10_2_process_dwid ), 'pool_number', 'pool_no', sp10_1_field_order, false );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
-                                           , field_order, is_sensitive )
-        VALUES ( ( SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp10_2_process_dwid ), 'total_unpaid_balance', 'upb', sp10_1_field_order, false );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
-                                           , field_order, is_sensitive )
-        VALUES ( ( SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp10_2_process_dwid ), 'loan_count', 'loan_count', sp10_1_field_order, false );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
-                                           , field_order, is_sensitive )
-        VALUES ( ( SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp10_2_process_dwid ), 'average_unpaid_balance', 'avg_loan_size', sp10_1_field_order, false );
-
-        sp10_1_field_order = sp10_1_field_order + 1;
-        INSERT INTO mdi.table_output_field ( table_output_step_dwid, database_field_name, database_stream_name
-                                           , field_order, is_sensitive )
-        VALUES ( ( SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp10_2_process_dwid ), 'report_quarter', 'report_quarter', sp10_1_field_order, false );
+        VALUES
+            ( sp10_2_table_output_step_dwid, 'etl_batch_id', 'etl_batch_id', sp10_field_order, false )
+            , ( sp10_2_table_output_step_dwid, 'data_source_dwid', 'data_source_dwid_value', sp10_field_order, false )
+            , ( sp10_2_table_output_step_dwid, 'state_type', 'state', sp10_field_order, false )
+            , ( sp10_2_table_output_step_dwid, 'item_id', 'item_id', sp10_field_order, false )
+            , ( sp10_2_table_output_step_dwid, 'servicer_nmls_id', 'servicer_id', sp10_field_order, false )
+            , ( sp10_2_table_output_step_dwid, 'servicer_name', 'servicer_name', sp10_field_order, false )
+            , ( sp10_2_table_output_step_dwid, 'pool_number', 'pool_no', sp10_field_order, false )
+            , ( sp10_2_table_output_step_dwid, 'total_unpaid_balance', 'upb', sp10_field_order, false )
+            , ( sp10_2_table_output_step_dwid, 'loan_count', 'loan_count', sp10_field_order, false )
+            , ( sp10_2_table_output_step_dwid, 'average_unpaid_balance', 'avg_loan_size', sp10_field_order, false )
+            , ( sp10_2_table_output_step_dwid, 'report_quarter', 'report_quarter', sp10_field_order, false );
 
 END $$;

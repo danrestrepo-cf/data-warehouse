@@ -13364,14 +13364,14 @@ create index idx_fk_wf_step_deal_tag_modifier_2 on staging_octane.wf_step_deal_t
 DROP TABLE staging_compliance.nmls_call_report_state;
 CREATE TABLE staging_compliance.nmls_call_report_state
 (
-    data_source_dwid bigint
-    , etl_batch_id text
+    etl_batch_id text
+    , data_source_dwid bigint
     , mcr_code text not null
     , mcr_description text
     , state_type text not null
     , total_unpaid_balance numeric
     , loan_count integer
-    , average_loan_size numeric(21,3)
+    , average_loan_size numeric
     , report_quarter text
 );
 
@@ -13382,13 +13382,13 @@ CREATE TABLE staging_compliance.nmls_call_report_state
 DROP TABLE staging_compliance.nmls_call_report_national;
 CREATE TABLE staging_compliance.nmls_call_report_national
 (
-    mcr_code text not null
+    etl_batch_id text
+    , data_source_dwid bigint
+    , mcr_code text not null
     , mcr_description text
     , total_unpaid_balance numeric
     , loan_count integer
     , average_unpaid_balance numeric
-    , etl_batch_id text
-    , data_source_dwid bigint
     , report_quarter text
 );
 
