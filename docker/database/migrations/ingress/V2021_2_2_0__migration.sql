@@ -5,26 +5,20 @@
 --
 -- SP8.1
 --
-ALTER TABLE dmi.nmls_call_report_state_raw RENAME TO nmls_call_report_state;
-
-ALTER TABLE dmi.nmls_call_report_state DROP COLUMN unpaid_balance;
-ALTER TABLE dmi.nmls_call_report_state DROP COLUMN state_type;
-ALTER TABLE dmi.nmls_call_report_state DROP COLUMN mcr_code;
-ALTER TABLE dmi.nmls_call_report_state DROP COLUMN mcr_desc;
-ALTER TABLE dmi.nmls_call_report_state DROP COLUMN loan_count;
-ALTER TABLE dmi.nmls_call_report_state DROP COLUMN avg_loan_size;
-ALTER TABLE dmi.nmls_call_report_state DROP COLUMN etl_batch_id;
-
-ALTER TABLE dmi.nmls_call_report_state ADD COLUMN etl_batch_id TEXT;
-ALTER TABLE dmi.nmls_call_report_state ADD COLUMN data_source_dwid BIGINT;
-ALTER TABLE dmi.nmls_call_report_state ADD COLUMN input_filename TEXT;
-ALTER TABLE dmi.nmls_call_report_state ADD COLUMN mcr_code TEXT;
-ALTER TABLE dmi.nmls_call_report_state ADD COLUMN mcr_description TEXT;
-ALTER TABLE dmi.nmls_call_report_state ADD COLUMN state_code TEXT;
-ALTER TABLE dmi.nmls_call_report_state ADD COLUMN sum_of_upb NUMERIC;
-ALTER TABLE dmi.nmls_call_report_state ADD COLUMN loan_count INTEGER;
-ALTER TABLE dmi.nmls_call_report_state ADD COLUMN avg_loan_size NUMERIC;
-ALTER TABLE dmi.nmls_call_report_state ADD COLUMN report_quarter TEXT;
+DROP TABLE dmi.nmls_call_report_state_raw;
+CREATE TABLE dmi.nmls_call_report_state
+(
+    etl_batch_id TEXT,
+    data_source_dwid BIGINT,
+    input_filename TEXT,
+    mcr_code TEXT,
+    mcr_description TEXT,
+    state_code TEXT,
+    sum_of_upb NUMERIC,
+    loan_count INTEGER,
+    avg_loan_size NUMERIC,
+    report_quarter TEXT
+);
 
 
 --
