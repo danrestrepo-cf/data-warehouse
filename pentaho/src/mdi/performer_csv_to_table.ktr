@@ -39,6 +39,16 @@
         <description/>
       </parameter>
       <parameter>
+        <name>input_file</name>
+        <default_value/>
+        <description/>
+      </parameter>
+      <parameter>
+        <name>input_path</name>
+        <default_value/>
+        <description/>
+      </parameter>
+      <parameter>
         <name>process_dwid</name>
         <default_value/>
         <description/>
@@ -469,7 +479,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.089</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/12/10 16:10:48.419</modified_date>
+    <modified_date>2021/02/01 15:37:44.800</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -571,9 +581,7 @@ DATABASE_FIELD_NAME. </note>
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Select values (Remove sensitive fields in stream)
-                                                                                                      
-
+      <note>Get List of Fields to Log in Case of Error (Non-sensitive fields)                                                  
 
 
 
@@ -587,8 +595,8 @@ DATABASE_FIELD_NAME. </note>
 </note>
       <xloc>32</xloc>
       <yloc>1072</yloc>
-      <width>622</width>
-      <heigth>400</heigth>
+      <width>674</width>
+      <heigth>263</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -911,13 +919,6 @@ DATABASE_FIELD_NAME. </note>
         <source_field>use_batch_update</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_csv_to_table]  Remove sensitive values</target_step_name>
-        <target_attribute_key>REMOVE_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Table Output Sensitive Fields</source_step>
-        <source_field>database_stream_name</source_field>
-      </mapping>
-      <mapping>
         <target_step_name>[template_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>BUFFERSIZE</target_attribute_key>
         <target_detail>N</target_detail>
@@ -925,18 +926,11 @@ DATABASE_FIELD_NAME. </note>
         <source_field>buffersize</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_csv_to_table]  Remove sensitive values</target_step_name>
-        <target_attribute_key>SELECT_UNSPECIFIED</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step/>
-        <source_field>N</source_field>
-      </mapping>
-      <mapping>
         <target_step_name>[template_csv_to_table] CSV file input</target_step_name>
         <target_attribute_key>FILENAME</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>[performer_csv_to_table] Load CSV Input Step Settings</source_step>
-        <source_field>filename</source_field>
+        <source_step/>
+        <source_field>${input_path}/${input_file}</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_csv_to_table] CSV file input</target_step_name>
@@ -1014,6 +1008,13 @@ DATABASE_FIELD_NAME. </note>
         <target_detail>N</target_detail>
         <source_step>[performer_csv_to_table] Load CSV Input Step Settings</source_step>
         <source_field>header_present</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_to_table]  Specify logging fields (non-sensitive)</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_excel_to_table] Load Table Output Sensitive Fields</source_step>
+        <source_field>database_stream_name</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_csv_to_table] CSV file input</target_step_name>
@@ -1352,7 +1353,6 @@ order by
     , csv_file_input_step.enclosure
     , csv_file_input_step.file_encoding
     , csv_file_input_step.file_format
-    , csv_file_input_step.filename
     , csv_file_input_step.header_present
     , csv_file_input_step.include_filename
     , csv_file_input_step.lazy_conversion
@@ -1474,29 +1474,6 @@ WHERE
         <precision>-1</precision>
         <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
         <comments>file_format</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>filename</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
-        <comments>filename</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -2584,21 +2561,17 @@ WHERE
       <schema_name/>
     </partitioning>
     <connection>Config DB Connection</connection>
-    <sql>(SELECT -- hardcode a line that will never be found since the Select Values step requires at least one datum in it
-    'dummy_field_no_sensitive_columns' as database_field_name
-    , 'dummy_stream_no_sensitive_columns' as database_stream_name)
-UNION
-(SELECT
+    <sql>SELECT
     table_output_field.database_field_name
     , table_output_field.database_stream_name
 FROM
     mdi.table_output_step
-        LEFT JOIN mdi.table_output_field ON table_output_step.dwid = table_output_field.table_output_step_dwid
+    LEFT JOIN mdi.table_output_field ON table_output_step.dwid = table_output_field.table_output_step_dwid
 WHERE
         table_output_step.process_dwid = ${process_dwid}
-    AND table_output_field.is_sensitive = TRUE
+    AND table_output_field.is_sensitive = FALSE
 ORDER BY
-    table_output_field.field_order ASC)
+    table_output_field.field_order ASC
 ;</sql>
     <limit>0</limit>
     <lookup/>

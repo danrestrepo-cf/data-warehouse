@@ -81,15 +81,21 @@ echo Now testing ${process_name}
 execute_test ${process_name} ${database_username} ${sp6_job_path} "file" "Encompass.csv"
 
 # MDI Tests ##############################################################################
+database_username="mditest"
+# MDI Checks
+execute_mdi_test "SP-0.1"  ${database_username} "file" "input.csv"   # test performer_csv_to_table.ktr
+execute_mdi_test "SP-0.2"  ${database_username} "file" "input.xlsx" # test performer_excel_to_table.ktr
+
+# DMI Tests ##############################################################################
 database_username="dmi"
-# DMI NMLS Call Report - State
+# DMI NMLS Call Report - State	# DMI NMLS Call Report - State (curl "https://api.mockaroo.com/api/faa92490?count=1000&key=8ff5d150" > "dmi-V35-state.csv")
 execute_mdi_test "SP8.1"  ${database_username} "file" "dmi-V35-state.csv"
 execute_mdi_test "SP8.2"  ${database_username} "none" ""
 
-# DMI NMLS Call Report - National
+# DMI NMLS Call Report - National	# DMI NMLS Call Report - National (curl "https://api.mockaroo.com/api/9011edb0?count=1000&key=8ff5d150" > "dmi-V35-national.csv")
 execute_mdi_test "SP9.1"  ${database_username} "file" "dmi-V35-national.csv"
 execute_mdi_test "SP9.2"  ${database_username} "none" ""
 
-# DMI NMLS Call Report - s540a
-execute_mdi_test "SP10.1" ${database_username} "file" "dmi-V35.xls"
+# DMI NMLS Call Report - s540a	# DMI NMLS Call Report - s540a (curl "https://api.mockaroo.com/api/3d9794e0?count=1000&key=8ff5d150" > "dmi-V35-s540a.csv")
+execute_mdi_test "SP10.1" ${database_username} "file" "dmi-V35-s540a.csv"
 execute_mdi_test "SP10.2" ${database_username} "none" ""
