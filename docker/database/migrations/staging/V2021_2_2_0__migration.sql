@@ -13352,3 +13352,62 @@ create index idx_fk_wf_step_deal_check_dependency_1 on staging_octane.wf_step_de
 create index idx_fk_wf_step_deal_check_dependency_2 on staging_octane.wf_step_deal_check_dependency (wsdp_dependency_wf_step_pid);
 create index idx_fk_wf_step_deal_tag_modifier_1 on staging_octane.wf_step_deal_tag_modifier (wsdt_deal_tag_definition_pid);
 create index idx_fk_wf_step_deal_tag_modifier_2 on staging_octane.wf_step_deal_tag_modifier (wsdt_wf_step_pid);
+
+
+--
+-- EDW - Modify DMI NMLS Call Report processes (SP8/SP9/SP10) to add report_quarter and filename columns (https://app.asana.com/0/0/1199603976631072)
+--
+
+--
+-- SP8.2
+--
+DROP TABLE staging_compliance.nmls_call_report_state;
+CREATE TABLE staging_compliance.nmls_call_report_state
+(
+    etl_batch_id text
+    , data_source_dwid bigint
+    , mcr_field_id text not null
+    , mcr_description text
+    , state_type text not null
+    , total_unpaid_balance numeric
+    , loan_count integer
+    , average_loan_size numeric
+    , report_quarter text
+);
+
+
+--
+-- SP9.2
+--
+DROP TABLE staging_compliance.nmls_call_report_national;
+CREATE TABLE staging_compliance.nmls_call_report_national
+(
+    etl_batch_id text
+    , data_source_dwid bigint
+    , mcr_field_id text not null
+    , mcr_description text
+    , total_unpaid_balance numeric
+    , loan_count integer
+    , average_unpaid_balance numeric
+    , report_quarter text
+);
+
+
+--
+-- SP10.2
+--
+DROP TABLE staging_compliance.nmls_call_report_s540a;
+CREATE TABLE staging_compliance.nmls_call_report_s540a
+(
+    etl_batch_id text
+    , data_source_dwid bigint
+    , state_type text
+    , item_id bigint
+    , servicer_nmls_id bigint
+    , servicer_name text
+    , pool_number text
+    , total_unpaid_balance numeric
+    , loan_count integer
+    , average_unpaid_balance numeric
+    , report_quarter text
+);
