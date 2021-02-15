@@ -26,16 +26,15 @@ function echo_connection_details() {
 # set variable defaults
 project_name=edw
 default_db_username=postgres
+database="${1}" # first parameter is always the database we connect to
 
 # validate input parameters
 case "$#" in
-  1)
-    database="${1}"
+  1) # if only one parameter then use the default username
     db_username="${default_db_username}"
     run_docker
     ;;
-  2)
-    database="${1}"
+  2) # if two parameters then use the 2nd parameter as the username
     db_username="${2}"
     run_docker
     ;;
