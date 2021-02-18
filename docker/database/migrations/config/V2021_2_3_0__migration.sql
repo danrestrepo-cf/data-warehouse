@@ -62,3 +62,189 @@ CREATE TABLE mdi.insert_update_field (
     , update_flag mdi.PENTAHO_Y_OR_N NOT NULL
     , is_sensitive BOOLEAN NOT NULL
 );
+
+-- Process records for SP-0.3 and SP-0.4
+INSERT INTO mdi.process (
+    name
+    , description
+)
+SELECT 'SP-0.3', 'Test Table Input -> Table Output'
+UNION ALL
+SELECT 'SP-0.4', 'Test Table Input -> Table Insert / Update'
+;
+
+
+-- Table input step records for SP-0.3 and SP-0.4
+INSERT INTO mdi.table_input_step (
+    process_dwid
+    , data_source_dwid
+    , sql
+    , limit_size
+
+    , connectionname
+)
+SELECT 9
+    , 3
+    , 'SELECT tool_pid
+            , tool_code
+            , tool_type
+            , tool_price
+            , tool_inventory_start_date
+            , tool_inventory_end_date
+        FROM test.unit_test_tools_input;'
+    , 0
+    , 'Ingress DB Connection'::mdi.pentaho_db_connection_name
+UNION ALL
+SELECT 10
+     , 3
+     , 'SELECT tool_pid
+            , tool_code
+            , tool_type
+            , tool_price
+            , tool_inventory_start_date
+            , tool_inventory_end_date
+        FROM test.unit_test_tools_input;'
+     , 0
+     , 'Ingress DB Connection'::mdi.pentaho_db_connection_name
+;
+
+-- Table output step record for SP-0.3
+INSERT INTO mdi.table_output_step (
+    process_dwid
+    , target_schema
+    , target_table
+    , commit_size
+    , table_name_defined_in_field
+    , truncate_table
+    , connectionname
+    , specify_database_fields
+    , ignore_insert_errors
+    , use_batch_update
+)
+SELECT 9
+    , 'test'
+    , 'unit_test_tools_output'
+    , 1000
+    , 'N'::mdi.pentaho_y_or_n
+    , 'Y'
+    , 'Ingress DB Connection'::mdi.pentaho_db_connection_name
+    , 'Y'::mdi.pentaho_y_or_n
+    , 'N'::mdi.pentaho_y_or_n
+    , 'N'::mdi.pentaho_y_or_n
+;
+
+-- Table output field records for SP-0.3
+INSERT INTO mdi.table_output_field (
+    table_output_step_dwid
+    , database_field_name
+    , database_stream_name
+    , field_order
+    , is_sensitive
+)
+SELECT 9
+    , 'tool_pid'
+    , 'tool_pid'
+    , 1
+    , FALSE
+UNION ALL
+SELECT 9
+    , 'tool_code'
+    , 'tool_code'
+    , 2
+    , FALSE
+UNION ALL
+SELECT 9
+    , 'tool_type'
+    , 'tool_type'
+    , 3
+    , FALSE
+UNION ALL
+SELECT 9
+    , 'tool_price'
+    , 'tool_price'
+    , 4
+    , FALSE
+UNION ALL
+SELECT 9
+    , 'tool_inventory_start_date'
+    , 'tool_inventory_start_date'
+    , 5
+    , FALSE
+UNION ALL
+SELECT 9
+    , 'tool_inventory_end_date'
+    , 'tool_inventory_end_date'
+    , 6
+    , FALSE
+;
+
+-- Insert / Update step record for SP-0.4
+INSERT INTO mdi.insert_update_step (
+    process_dwid
+    , connectionname
+    , schema_name
+    , table_name
+    , commit_size
+    , do_not
+)
+SELECT 10
+    , 'Ingress DB Connection'::mdi.pentaho_db_connection_name
+    , 'ingress'
+    , 'unit_test_tools_output'
+    , 1000
+    , 'N'::mdi.pentaho_y_or_n
+;
+
+-- Insert / Update key record for SP-0.4
+INSERT INTO mdi.insert_update_key (
+    insert_update_step_dwid
+    , key_lookup
+    , key_stream1
+    , key_stream2
+    , key_condition
+)
+SELECT 1
+    , 'tool_pid'
+    , 'tool_pid'
+    , 'N/A'
+    , '='
+;
+
+-- Insert / Update records for SP-0.4
+INSERT INTO mdi.insert_update_field (
+    insert_update_step_dwid
+    , update_lookup
+    , update_stream
+    , update_flag
+    , is_sensitive
+)
+SELECT 1
+    , 'tool_code'
+    , 'tool_code'
+    , 'Y'::mdi.pentaho_y_or_n
+    , FALSE
+UNION ALL
+SELECT 1
+    , 'tool_type'
+    , 'tool_type'
+    , 'Y'::mdi.pentaho_y_or_n
+    , FALSE
+UNION ALL
+SELECT 1
+    , 'tool_price'
+    , 'tool_price'
+    , 'Y'::mdi.pentaho_y_or_n
+    , FALSE
+UNION ALL
+SELECT 1
+    , 'tool_inventory_start_date'
+    , 'tool_inventory_start_date'
+    , 'Y'::mdi.pentaho_y_or_n
+    , FALSE
+UNION ALL
+SELECT 1
+    , 'tool_inventory_end_date'
+    , 'tool_inventory_end_date'
+    , 'Y'::mdi.pentaho_y_or_n
+    , FALSE
+;
