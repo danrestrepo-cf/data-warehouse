@@ -8,7 +8,7 @@
   <created_user>-</created_user>
   <created_date>2020/10/10 07:31:50.634</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2021/02/01 14:52:28.353</modified_date>
+  <modified_date>2021/02/17 20:06:37.678</modified_date>
   <parameters>
     <parameter>
       <name>database_hostname</name>
@@ -716,7 +716,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1168</xloc>
+      <xloc>1456</xloc>
       <yloc>480</yloc>
       <attributes_kjc/>
     </entry>
@@ -847,7 +847,7 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>[controller] Process Table?</name>
+      <name>[controller] Process Table Insert?</name>
       <description/>
       <type>SIMPLE_EVAL</type>
       <attributes/>
@@ -856,7 +856,7 @@
       <variablename>input_template</variablename>
       <fieldtype>string</fieldtype>
       <mask/>
-      <comparevalue>TABLE_INPUT</comparevalue>
+      <comparevalue>TABLE_INPUT_FOR_INSERT</comparevalue>
       <minvalue/>
       <maxvalue/>
       <successcondition>equal</successcondition>
@@ -871,14 +871,14 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>[controller] Execute Table to Table Performer</name>
+      <name>[controller] Execute Table to Table Insert Performer</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
       <specification_method>rep_name</specification_method>
       <trans_object_id/>
       <filename/>
-      <transname>performer_table_to_table</transname>
+      <transname>performer_table_to_table_insert</transname>
       <directory>/mdi</directory>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -955,7 +955,7 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>[controller] Abort job if Table Performer error</name>
+      <name>[controller] Abort job if Table Insert Performer error</name>
       <description/>
       <type>ABORT</type>
       <attributes/>
@@ -964,6 +964,127 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>1056</xloc>
+      <yloc>768</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Process table Insert / Update?</name>
+      <description/>
+      <type>SIMPLE_EVAL</type>
+      <attributes/>
+      <valuetype>field</valuetype>
+      <fieldname/>
+      <variablename/>
+      <fieldtype>string</fieldtype>
+      <mask/>
+      <comparevalue>TABLE_INPUT_FOR_INSERT_UPDATE</comparevalue>
+      <minvalue/>
+      <maxvalue/>
+      <successcondition>equal</successcondition>
+      <successnumbercondition>equal</successnumbercondition>
+      <successbooleancondition>false</successbooleancondition>
+      <successwhenvarset>N</successwhenvarset>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1168</xloc>
+      <yloc>480</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Execute Table to Table Insert / Update Performer</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>rep_name</specification_method>
+      <trans_object_id/>
+      <filename/>
+      <transname>performer_table_to_table_insert_update</transname>
+      <directory>/mdi</directory>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>Y</clear_rows>
+      <clear_files>Y</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>Y</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>process_name</name>
+          <stream_name/>
+          <value>${process_name}</value>
+        </parameter>
+        <parameter>
+          <name>database_hostname</name>
+          <stream_name/>
+          <value>${database_hostname}</value>
+        </parameter>
+        <parameter>
+          <name>database_password</name>
+          <stream_name/>
+          <value>${database_password}</value>
+        </parameter>
+        <parameter>
+          <name>database_port</name>
+          <stream_name/>
+          <value>${database_port}</value>
+        </parameter>
+        <parameter>
+          <name>database_schema</name>
+          <stream_name/>
+          <value>${database_schema}</value>
+        </parameter>
+        <parameter>
+          <name>database_username</name>
+          <stream_name/>
+          <value>${database_username}</value>
+        </parameter>
+        <parameter>
+          <name>etl_batch_id</name>
+          <stream_name/>
+          <value>${etl_batch_id}</value>
+        </parameter>
+        <parameter>
+          <name>process_dwid</name>
+          <stream_name/>
+          <value>${process_dwid}</value>
+        </parameter>
+        <parameter>
+          <name>data_source_dwid</name>
+          <stream_name/>
+          <value>${data_source_dwid}</value>
+        </parameter>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1168</xloc>
+      <yloc>624</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Abort job if Table Insert / Update error</name>
+      <description/>
+      <type>ABORT</type>
+      <attributes/>
+      <message/>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1360</xloc>
       <yloc>768</yloc>
       <attributes_kjc/>
     </entry>
@@ -1061,7 +1182,7 @@
     </hop>
     <hop>
       <from>[controller] Process Excel?</from>
-      <to>[controller] Process Table?</to>
+      <to>[controller] Process Table Insert?</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1069,8 +1190,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>[controller] Process Table?</from>
-      <to>[controller] Execute Table to Table Performer</to>
+      <from>[controller] Process Table Insert?</from>
+      <to>[controller] Execute Table to Table Insert Performer</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1078,7 +1199,25 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>[controller] Process Table?</from>
+      <from>[controller] Execute Table to Table Insert Performer</from>
+      <to>[controller] Abort job if Table Insert Performer error</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Process Table Insert?</from>
+      <to>[controller] Process table Insert / Update?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Process table Insert / Update?</from>
       <to>[controller] No data to process; Abort job</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -1087,8 +1226,17 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>[controller] Execute Table to Table Performer</from>
-      <to>[controller] Abort job if Table Performer error</to>
+      <from>[controller] Process table Insert / Update?</from>
+      <to>[controller] Execute Table to Table Insert / Update Performer</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Execute Table to Table Insert / Update Performer</from>
+      <to>[controller] Abort job if Table Insert / Update error</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
