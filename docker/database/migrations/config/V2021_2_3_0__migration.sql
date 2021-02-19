@@ -117,6 +117,7 @@ INSERT INTO mdi.table_output_step (
     , table_name_defined_in_field
     , truncate_table
     , connectionname
+    , partition_over_tables
     , specify_database_fields
     , ignore_insert_errors
     , use_batch_update
@@ -128,6 +129,7 @@ SELECT 9
     , 'N'::mdi.pentaho_y_or_n
     , 'Y'
     , 'Ingress DB Connection'::mdi.pentaho_db_connection_name
+    , 'N'::mdi.pentaho_y_or_n
     , 'Y'::mdi.pentaho_y_or_n
     , 'N'::mdi.pentaho_y_or_n
     , 'N'::mdi.pentaho_y_or_n
@@ -176,6 +178,18 @@ SELECT 9
     , 'tool_inventory_end_date'
     , 6
     , FALSE
+UNION ALL
+SELECT 9
+     , 'data_source_dwid'
+     , 'data_source_dwid'
+     , 7
+     , FALSE
+UNION ALL
+SELECT 9
+    , 'etl_batch_id'
+    , 'etl_batch_id'
+    , 8
+    , FALSE
 ;
 
 -- Insert / Update step record for SP-0.4
@@ -189,7 +203,7 @@ INSERT INTO mdi.insert_update_step (
 )
 SELECT 10
     , 'Ingress DB Connection'::mdi.pentaho_db_connection_name
-    , 'ingress'
+    , 'test'
     , 'unit_test_tools_output'
     , 1000
     , 'N'::mdi.pentaho_y_or_n
@@ -247,4 +261,16 @@ SELECT 1
     , 'tool_inventory_end_date'
     , 'Y'::mdi.pentaho_y_or_n
     , FALSE
+UNION ALL
+SELECT 1
+    , 'data_source_dwid'
+    , 'data_source_dwid'
+    , 'Y'::mdi.pentaho_y_or_n
+    , FALSE
+UNION ALL
+SELECT 1
+     , 'etl_batch_id'
+     , 'etl_batch_id'
+     , 'Y'::mdi.pentaho_y_or_n
+     , FALSE
 ;

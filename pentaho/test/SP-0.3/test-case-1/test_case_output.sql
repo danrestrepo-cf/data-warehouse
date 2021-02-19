@@ -1,0 +1,1 @@
+\COPY test.unit_test_tools_output TO '/input/actual_output.csv' WITH (FORMAT CSV,HEADER)
