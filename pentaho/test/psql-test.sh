@@ -7,8 +7,8 @@ set -e
 
 database=$1
 testpath=$2
-echo $(pwd)
-echo $testpath
+# echo $(pwd)
+# echo $testpath
 
 project_name=edw
 docker run -it \

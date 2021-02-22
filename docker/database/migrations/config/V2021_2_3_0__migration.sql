@@ -127,7 +127,7 @@ SELECT 9
     , 'unit_test_tools_output'
     , 1000
     , 'N'::mdi.pentaho_y_or_n
-    , 'Y'
+    , 'N'
     , 'Ingress DB Connection'::mdi.pentaho_db_connection_name
     , 'N'::mdi.pentaho_y_or_n
     , 'Y'::mdi.pentaho_y_or_n
