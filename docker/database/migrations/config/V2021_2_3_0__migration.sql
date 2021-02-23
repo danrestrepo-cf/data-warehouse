@@ -233,6 +233,12 @@ INSERT INTO mdi.insert_update_field (
     , is_sensitive
 )
 SELECT 1
+    , 'tool_pid'
+    , 'tool_pid'
+    , 'N'::mdi.pentaho_y_or_n
+    , FALSE
+UNION ALL
+SELECT 1
     , 'tool_code'
     , 'tool_code'
     , 'Y'::mdi.pentaho_y_or_n

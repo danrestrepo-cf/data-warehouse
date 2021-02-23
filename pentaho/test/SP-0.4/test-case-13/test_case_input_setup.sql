@@ -1,7 +1,7 @@
 /*
-SP-0.4 test case 8
-Scenario: Output table contains multiple records with the same update key value
-Expected output: Transform failure
+SP-0.4 test case 13
+Scenario: Input and output tables contain records with no matching update key values between the two
+Expected output: Output table appends data from input table
 */
 
 INSERT INTO ingress.test.unit_test_tools_input (
@@ -12,8 +12,8 @@ INSERT INTO ingress.test.unit_test_tools_input (
                                                , tool_inventory_start_date
                                                , tool_inventory_end_date
 )
-VALUES (1, 'LADW', 'Ladder', 50, '2021-01-01'::DATE, '2021-12-31'::DATE)
-,      (2, 'CHNS', 'Chainsaw', 175, '2021-01-01'::DATE, '2021-12-31'::DATE);
+VALUES (3, 'JAKH', 'Jackhammer', 350, '2021-01-01'::DATE, '2021-12-31'::DATE)
+,      (4, 'TSAW', 'Table saw', 225, '2021-01-01'::DATE, '2021-12-31'::DATE);
 
 
 INSERT INTO ingress.test.unit_test_tools_output (
@@ -26,5 +26,5 @@ INSERT INTO ingress.test.unit_test_tools_output (
                                                 , data_source_dwid
                                                 , etl_batch_id
 )
-VALUES (1, 'JAKH', 'Jackhammer', 350, '2021-01-01'::DATE, '2021-12-31'::DATE, 3, 'ETL-BATCH-ID')
-,      (1, 'CHNS', 'Chainsaw', 175, '2021-01-01'::DATE, '2021-12-31'::DATE, 3, 'ETL-BATCH-ID');
+VALUES (1, 'LADW', 'Ladder', 50, '2021-01-01'::DATE, '2021-12-31'::DATE, 3, 'ETL-BATCH-ID')
+,      (2, 'CHNS', 'Chainsaw', 175, '2021-01-01'::DATE, '2021-12-31'::DATE, 3, 'ETL-BATCH-ID');
