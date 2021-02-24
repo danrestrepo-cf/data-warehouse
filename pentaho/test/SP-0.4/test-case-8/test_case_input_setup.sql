@@ -1,7 +1,7 @@
 /*
 SP-0.4 test case 8
 Scenario: Output table contains multiple records with the same update key value
-Expected output: Transform failure
+Expected output: All corresponding output records match input record
 */
 
 INSERT INTO ingress.test.unit_test_tools_input (

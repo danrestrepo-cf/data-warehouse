@@ -2,7 +2,7 @@
 SP-0.4 test case 6
 Scenario: Input table contains a record with a NULL update key value, output table contains a record with a NULL
 update key value
-Expected output: NULL update key value record in output table matches NULL update key value record in input table
+Expected output: NULL update key value from input table is inserted into output table
 */
 INSERT INTO ingress.test.unit_test_tools_input (
                                                  tool_pid

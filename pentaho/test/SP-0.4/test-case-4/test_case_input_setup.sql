@@ -2,7 +2,7 @@
 SP-0.4 test case 4
 Scenario: Input table contains a record with a NULL update key value, output table does not contain record with NULL
 update key value
-Expected output: NULL update key value record is inserted the output table
+Expected output: NULL update key value record is inserted into the output table
 */
 INSERT INTO ingress.test.unit_test_tools_input (
                                                   tool_pid
