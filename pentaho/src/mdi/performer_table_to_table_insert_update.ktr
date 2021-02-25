@@ -51,17 +51,17 @@
       <parameter>
         <name>process_name</name>
         <default_value/>
-        <description/>
+        <description>The name that signifies what process should be run.</description>
       </parameter>
     </parameters>
     <log>
       <trans-log-table>
-        <connection/>
-        <schema/>
-        <table/>
+        <connection>Config DB Connection</connection>
+        <schema>log</schema>
+        <table>transformation_transformation</table>
         <size_limit_lines/>
-        <interval/>
-        <timeout_days/>
+        <interval>5</interval>
+        <timeout_days>90</timeout_days>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -155,26 +155,26 @@
         </field>
         <field>
           <id>EXECUTING_SERVER</id>
-          <enabled>N</enabled>
+          <enabled>Y</enabled>
           <name>EXECUTING_SERVER</name>
         </field>
         <field>
           <id>EXECUTING_USER</id>
-          <enabled>N</enabled>
+          <enabled>Y</enabled>
           <name>EXECUTING_USER</name>
         </field>
         <field>
           <id>CLIENT</id>
-          <enabled>N</enabled>
+          <enabled>Y</enabled>
           <name>CLIENT</name>
         </field>
       </trans-log-table>
       <perf-log-table>
-        <connection/>
-        <schema/>
-        <table/>
-        <interval/>
-        <timeout_days/>
+        <connection>Config DB Connection</connection>
+        <schema>log</schema>
+        <table>transformation_performance</table>
+        <interval>5</interval>
+        <timeout_days>90</timeout_days>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -252,10 +252,10 @@
         </field>
       </perf-log-table>
       <channel-log-table>
-        <connection/>
-        <schema/>
-        <table/>
-        <timeout_days/>
+        <connection>Config DB Connection</connection>
+        <schema>log</schema>
+        <table>transformation_channel</table>
+        <timeout_days>90</timeout_days>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -318,10 +318,10 @@
         </field>
       </channel-log-table>
       <step-log-table>
-        <connection/>
-        <schema/>
-        <table/>
-        <timeout_days/>
+        <connection>Config DB Connection</connection>
+        <schema>log</schema>
+        <table>transformation_step</table>
+        <timeout_days>90</timeout_days>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -389,15 +389,15 @@
         </field>
         <field>
           <id>LOG_FIELD</id>
-          <enabled>N</enabled>
+          <enabled>Y</enabled>
           <name>LOG_FIELD</name>
         </field>
       </step-log-table>
       <metrics-log-table>
-        <connection/>
-        <schema/>
-        <table/>
-        <timeout_days/>
+        <connection>Config DB Connection</connection>
+        <schema>log</schema>
+        <table>transformation_metrics</table>
+        <timeout_days>90</timeout_days>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -474,7 +474,7 @@
     <created_user>-</created_user>
     <created_date>2021/02/17 17:15:35.157</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/02/17 19:46:59.728</modified_date>
+    <modified_date>2021/02/25 17:19:12.782</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -657,7 +657,213 @@
     </hop>
   </order>
   <step>
-    <name>[performer_table_to_table_insert_update] Table input</name>
+    <name>[performer_table_to_table_insert_update] ETL metadata injection</name>
+    <type>MetaInject</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <specification_method>rep_name</specification_method>
+    <trans_object_id/>
+    <trans_name>template_table_to_table_insert_update</trans_name>
+    <filename/>
+    <directory_path>${Internal.Entry.Current.Directory}</directory_path>
+    <source_step/>
+    <source_output_fields>    </source_output_fields>
+    <target_file/>
+    <no_execution>N</no_execution>
+    <stream_source_step/>
+    <stream_target_step/>
+    <mappings>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
+        <target_attribute_key>SCHEMA_NAME</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Load Insert / update step settings</source_step>
+        <source_field>schema_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
+        <target_attribute_key>DO_NOT</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Load Insert / update step settings</source_step>
+        <source_field>do_not</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
+        <target_attribute_key>KEY_CONDITION</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Load Insert / update key settings</source_step>
+        <source_field>key_condition</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
+        <target_attribute_key>KEY_STREAM2</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Load Insert / update key settings</source_step>
+        <source_field>key_stream2</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
+        <target_attribute_key>COMMIT_SIZE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Load Insert / update step settings</source_step>
+        <source_field>commit_size</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
+        <target_attribute_key>KEY_LOOKUP</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Load Insert / update key settings</source_step>
+        <source_field>key_lookup</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update]  Specify logging fields (non-sensitive)</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Load Insert / update non-sensitive fields</source_step>
+        <source_field>update_stream</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
+        <target_attribute_key>CACHED_ROW_META</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
+        <source_field>cached_row_meta</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
+        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Load Insert / update step settings</source_step>
+        <source_field>connectionname</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
+        <target_attribute_key>SQL</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
+        <source_field>sql</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
+        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
+        <source_field>connectionname</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
+        <target_attribute_key>UPDATE_STREAM</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Load Insert / update field settings</source_step>
+        <source_field>update_stream</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>etl_batch_id</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
+        <target_attribute_key>REPLACE_VARIABLES</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
+        <source_field>replace_variables</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
+        <target_attribute_key>KEY_STREAM</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Load Insert / update key settings</source_step>
+        <source_field>key_stream1</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>${data_source_dwid}</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
+        <target_attribute_key>LAZY_CONVERSION</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
+        <source_field>enable_lazy_conversion</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>data_source_dwid</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
+        <target_attribute_key>UPDATE_LOOKUP</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Load Insert / update field settings</source_step>
+        <source_field>update_lookup</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>${etl_batch_id}</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
+        <target_attribute_key>UPDATE_FLAG</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Load Insert / update field settings</source_step>
+        <source_field>update_flag</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
+        <target_attribute_key>TABLE_NAME</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Load Insert / update step settings</source_step>
+        <source_field>table_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
+        <target_attribute_key>EXECUTE_FOR_EACH_ROW</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
+        <source_field>execute_for_each_row</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
+        <target_attribute_key>LIMIT</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
+        <source_field>limit_size</source_field>
+      </mapping>
+    </mappings>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>992</xloc>
+      <yloc>480</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[performer_table_to_table_insert_update] Load Insert / update field settings</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -669,20 +875,15 @@
     </partitioning>
     <connection>Config DB Connection</connection>
     <sql>SELECT
-    table_input_step.sql
-    , table_input_step.limit_size
-    , table_input_step.execute_for_each_row
-    , table_input_step.replace_variables
-    , table_input_step.enable_lazy_conversion
-    , table_input_step.cached_row_meta
-    , table_input_step.connectionname
+	insert_update_field.update_lookup
+	, insert_update_field.update_stream
+	, insert_update_field.update_flag
 FROM
-    mdi.process p
-        LEFT JOIN mdi.table_input_step ON p.dwid = table_input_step.process_dwid
+    mdi.insert_update_step
+        LEFT JOIN mdi.insert_update_field ON insert_update_step.dwid = insert_update_field.insert_update_step_dwid
 WHERE
-    p.dwid = ${process_dwid}
-;
-</sql>
+	insert_update_step.process_dwid = ${process_dwid}
+;</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -700,51 +901,7 @@ WHERE
     </remotesteps>
     <GUI>
       <xloc>224</xloc>
-      <yloc>128</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[performer_table_to_table_insert_update] Load Insert / update step settings</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>Config DB Connection</connection>
-    <sql>SELECT
-	insert_update_step.connectionname
-	, insert_update_step.schema_name
-	, insert_update_step.table_name
-	, insert_update_step.commit_size
-	, insert_update_step.do_not
-FROM
-	mdi.process p
-		LEFT JOIN mdi.insert_update_step ON p.dwid = insert_update_step.process_dwid
-WHERE
-		p.dwid = ${process_dwid}
-;</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>224</xloc>
-      <yloc>352</yloc>
+      <yloc>544</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -794,48 +951,6 @@ WHERE
     </GUI>
   </step>
   <step>
-    <name>[performer_table_to_table_insert_update] Load Insert / update field settings</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>Config DB Connection</connection>
-    <sql>SELECT
-	insert_update_field.update_lookup
-	, insert_update_field.update_stream
-	, insert_update_field.update_flag
-FROM
-    mdi.insert_update_step
-        LEFT JOIN mdi.insert_update_field ON insert_update_step.dwid = insert_update_field.insert_update_step_dwid
-WHERE
-	insert_update_step.process_dwid = ${process_dwid}
-;</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>224</xloc>
-      <yloc>544</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>[performer_table_to_table_insert_update] Load Insert / update non-sensitive fields</name>
     <type>TableInput</type>
     <description/>
@@ -863,6 +978,7 @@ WHERE
     <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
     <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta/>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -878,8 +994,8 @@ WHERE
     </GUI>
   </step>
   <step>
-    <name>[performer_table_to_table_insert_update] ETL metadata injection</name>
-    <type>MetaInject</type>
+    <name>[performer_table_to_table_insert_update] Load Insert / update step settings</name>
+    <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -888,187 +1004,26 @@ WHERE
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <specification_method>rep_name</specification_method>
-    <trans_object_id/>
-    <trans_name>template_table_to_table_insert_update</trans_name>
-    <filename/>
-    <directory_path>${Internal.Entry.Current.Directory}</directory_path>
-    <source_step/>
-    <source_output_fields>    </source_output_fields>
-    <target_file/>
-    <no_execution>N</no_execution>
-    <stream_source_step/>
-    <stream_target_step/>
-    <mappings>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>SCHEMA_NAME</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update step settings</source_step>
-        <source_field>schema_name</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>UPDATE_STREAM</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update field settings</source_step>
-        <source_field>update_stream</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>etl_batch_id</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>DO_NOT</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update step settings</source_step>
-        <source_field>do_not</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>KEY_CONDITION</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update key settings</source_step>
-        <source_field>key_condition</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>KEY_STREAM2</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update key settings</source_step>
-        <source_field>key_stream2</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
-        <target_attribute_key>REPLACE_VARIABLES</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
-        <source_field>replace_variables</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>KEY_STREAM</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update key settings</source_step>
-        <source_field>key_stream1</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>${data_source_dwid}</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
-        <target_attribute_key>LAZY_CONVERSION</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
-        <source_field>enable_lazy_conversion</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>data_source_dwid</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>COMMIT_SIZE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update step settings</source_step>
-        <source_field>commit_size</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>UPDATE_LOOKUP</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update field settings</source_step>
-        <source_field>update_lookup</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>${etl_batch_id}</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>UPDATE_FLAG</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update field settings</source_step>
-        <source_field>update_flag</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>TABLE_NAME</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update step settings</source_step>
-        <source_field>table_name</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>KEY_LOOKUP</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update key settings</source_step>
-        <source_field>key_lookup</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
-        <target_attribute_key>EXECUTE_FOR_EACH_ROW</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
-        <source_field>execute_for_each_row</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
-        <target_attribute_key>LIMIT</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
-        <source_field>limit_size</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update]  Specify logging fields (non-sensitive)</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update non-sensitive fields</source_step>
-        <source_field>update_stream</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
-        <target_attribute_key>CACHED_ROW_META</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
-        <source_field>cached_row_meta</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update step settings</source_step>
-        <source_field>connectionname</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
-        <target_attribute_key>SQL</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
-        <source_field>sql</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
-        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
-        <source_field>connectionname</source_field>
-      </mapping>
-    </mappings>
+    <connection>Config DB Connection</connection>
+    <sql>SELECT
+	insert_update_step.connectionname
+	, insert_update_step.schema_name
+	, insert_update_step.table_name
+	, insert_update_step.commit_size
+	, insert_update_step.do_not
+FROM
+	mdi.process
+		LEFT JOIN mdi.insert_update_step ON process.dwid = insert_update_step.process_dwid
+WHERE
+		process.dwid = ${process_dwid}
+;</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta/>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1078,8 +1033,56 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>992</xloc>
-      <yloc>480</yloc>
+      <xloc>224</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[performer_table_to_table_insert_update] Table input</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>Config DB Connection</connection>
+    <sql>SELECT
+    table_input_step.sql
+    , table_input_step.limit_size
+    , table_input_step.execute_for_each_row
+    , table_input_step.replace_variables
+    , table_input_step.enable_lazy_conversion
+    , table_input_step.cached_row_meta
+    , table_input_step.connectionname
+FROM
+    mdi.process
+        LEFT JOIN mdi.table_input_step ON process.dwid = table_input_step.process_dwid
+WHERE
+    process.dwid = ${process_dwid}
+;
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>224</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

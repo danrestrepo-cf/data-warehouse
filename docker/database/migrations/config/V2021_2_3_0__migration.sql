@@ -43,7 +43,7 @@ CREATE TABLE mdi.insert_update_key (
             DEFERRABLE INITIALLY DEFERRED
     , key_lookup TEXT NOT NULL
     , key_stream1 TEXT NOT NULL
-    , key_stream2 TEXT NOT NULL
+    , key_stream2 TEXT NULL
     , key_condition TEXT NOT NULL
 );
 
@@ -141,7 +141,7 @@ DO $$
 
         -- Insert / Update key record for SP-0.4
         INSERT INTO mdi.insert_update_key (insert_update_step_dwid, key_lookup, key_stream1, key_stream2, key_condition)
-        VALUES (sp_0_4_insert_update_step_dwid, 'tool_pid', 'tool_pid', 'N/A', '=');
+        VALUES (sp_0_4_insert_update_step_dwid, 'tool_pid', 'tool_pid', NULL, '=');
 
         -- Insert / Update records for SP-0.4
         INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)

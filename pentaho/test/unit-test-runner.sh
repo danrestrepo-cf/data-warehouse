@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
 
 test_dir=$(dirname "$0")
-#if [[ "$machine" == "Win" ]]; then
-# set git bash so it does not convert paths using POSIX standard
 export MSYS_NO_PATHCONV=1
-#fi
 
 #set the script to fail on any errors
 set -e
@@ -115,7 +112,8 @@ function execute_mdi_test_cases() {
   source_db="$5"
   target_db="$6"
   process_previous_diffs "$process_name"
-  echo $'\n'"Proceeding with ${process_name} test cases"
+  echo
+  echo "Proceeding with ${process_name} test cases"
   for dir in ${process_name}/*; do
     echo "Now resetting Docker..."
     docker_reset # reset docker
@@ -142,7 +140,7 @@ execute_test ${process_name} ${database_username} ${sp6_job_path} "file" "Encomp
 
 # MDI Tests ##############################################################################
 database_username="mditest"
-## MDI Checks
+# MDI Checks
 execute_mdi_test "SP-0.1"  ${database_username} "file" "input.csv"   # test performer_csv_to_table.ktr
 execute_mdi_test "SP-0.2"  ${database_username} "file" "input.xlsx" # test performer_excel_to_table.ktr
 
@@ -168,11 +166,13 @@ execute_mdi_test "SP10.2" ${database_username} "none" ""
 
 # Print test case diff status(es)
 diff_results=$(find . -name 'test_diff_output.diff') # using find, store any diff files in diff_results variable
-if [ -z "$diff_results" ]; then # check diff_results variable to determine whether there were any diffs
-  echo $'\n'"No test case diffs were detected; all test cases have passed"
+if [[ -z "$diff_results" ]]; then # check diff_results variable to determine whether there were any diffs
+  echo
+  echo "No test case diffs were detected; all test cases have passed"
   exit 0
 else
-  echo $'\n'"One or more test cases failed; refer to the following diff file(s) for more information:"
+  echo
+  echo "One or more test cases failed; refer to the following diff file(s) for more information:"
   echo "$diff_results"
   exit 1
 fi

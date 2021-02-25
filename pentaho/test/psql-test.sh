@@ -4,8 +4,8 @@ export MSYS_NO_PATHCONV=1
 
 #set the script to fail on any errors
 set -e
-if [ "$#" != 4 ]; then
-  echo "psql-test.sh requires four arguments"
+if [ "$#" -lt 3 ]; then
+  echo "Usage: ./push-image.sh [environment] [app] ... [psql arguments]"
   exit 1
 fi
 
