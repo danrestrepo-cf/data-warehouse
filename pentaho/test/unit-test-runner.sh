@@ -65,6 +65,7 @@ else
   generate_grep_phrase "$1"
 fi
 
+# function to reset docker between MDI test case runs
 function docker_reset() {
   cd ${test_dir}/../../docker/
   ./docker-down.sh
@@ -82,30 +83,37 @@ function execute_mdi_test() {
   execute_test "$process_name" "$mdi_database_username" "$mdi_controller_path" "$input_type" "$filename"
 }
 
+# function to output a diff between expected output and actual output for MDI test cases
 function output_file_diff() {
-  diff_results=$(diff --strip-trailing-cr ${1} ${2} || true)
-  if [[ $diff_results =~ .+ ]]; then
-    echo $diff_results > $3
+  test_case_diff_results=$(diff --strip-trailing-cr ${1} ${2} || true)
+  if [[ $test_case_diff_results =~ .+ ]]; then
+    echo $test_case_diff_results > $3
   fi
 }
 
+# function to run through MDI test cases
 function execute_mdi_test_cases() {
   mdi_controller_path="mdi/controller"
   process_name="$1"
   mdi_database_username="$2"
   input_type=$3
   filename="$4"
-  diff_results=""
+#  for dir in ${process_name}/*; do
+#    find . -name \*.diff -type f -delete # remove .diff files from previous runs
+#  done
+
+  echo $'\n'"Proceeding with test cases"
   for dir in ${process_name}/*; do
-    find . -name \*.diff -type f -delete
-  done
-  for dir in ${process_name}/*; do
-    docker_reset
-    echo "Now testing ${dir}"
-    truncate -s 0 ${dir}/actual_output.csv
-    input_setup_results=$(../../pentaho/test/psql-test.sh ingress ${dir} -f /input/test_case_input_setup.sql)
+    docker_reset # reset docker
+    echo "Now testing ${dir}" # indicate which test case is being run
+    truncate -s 0 ${dir}/actual_output.csv # truncate corresponding actual output file
+    # execute SQL insert into unit test tools input table
+    input_setup_results=$(../../pentaho/test/psql-test.sh ingress ${dir} -f /input/test_case_input_setup.sql) #
+    # run MDI configuration
     execute_test "$process_name" "$mdi_database_username" "$mdi_controller_path" "$input_type" "$filename"
+    # execute SQL export from unit test tools output table to actual output file
     output_setup_results=$(../../pentaho/test/psql-test.sh ingress ${dir} -f /input/test_case_output_setup.sql)
+    # run a diff between actual output and expected output files
     output_file_diff "${dir}/expected_output.csv" "${dir}/actual_output.csv"  "${dir}/test_diff_output.diff"
   done
 }
@@ -118,7 +126,7 @@ echo Now testing ${process_name}
 execute_test ${process_name} ${database_username} ${sp6_job_path} "file" "Encompass.csv"
 
 # MDI Tests ##############################################################################
-#database_username="mditest"
+database_username="mditest"
 # MDI Checks
 execute_mdi_test "SP-0.1"  ${database_username} "file" "input.csv"   # test performer_csv_to_table.ktr
 execute_mdi_test "SP-0.2"  ${database_username} "file" "input.xlsx" # test performer_excel_to_table.ktr
@@ -143,13 +151,13 @@ execute_mdi_test "SP9.2"  ${database_username} "none" ""
 execute_mdi_test "SP10.1" ${database_username} "file" "dmi-V35-s540a.csv"
 execute_mdi_test "SP10.2" ${database_username} "none" ""
 
-# Print SP-0.3/SP-0.4 test case diff status
-diff_results=$(find . -name '*.diff')
-if [ -z "$diff_results" ];
-then
+# Print test case diff status(es)
+diff_results=$(find . -name 'test_diff_output.diff') # using find, store any diff files in diff_results variable
+if [ -z "$diff_results" ]; then # check diff_results variable to determine whether there were any diffs
+  echo $'\n'"No test case diffs were detected; all test cases have passed"
   exit 0
 else
-  echo $'\n'"One or more SP-0.3/SP-0.4 test cases failed; refer to the following diff file(s) for more information:"
+  echo $'\n'"One or more test cases failed; refer to the following diff file(s) for more information:"
   echo "$diff_results"
   exit 1
 fi

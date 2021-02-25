@@ -21,6 +21,7 @@ CREATE TABLE test.unit_test_tools_input (
     , tool_price INT
     , tool_inventory_start_date DATE
     , tool_inventory_end_date DATE
+    , data_source_dwid INT
 );
 
 CREATE TABLE test.unit_test_tools_output (
