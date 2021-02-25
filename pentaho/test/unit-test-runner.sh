@@ -83,6 +83,20 @@ function execute_mdi_test() {
   execute_test "$process_name" "$mdi_database_username" "$mdi_controller_path" "$input_type" "$filename"
 }
 
+# function to detect, print, and remove previous diff files
+function process_previous_diffs() {
+  process_name="$1"
+  echo "Now checking for diff files from previous runs..."
+  previous_diff_results=$(find ./"$1"/ -name 'test_diff_output.diff' -type f) # print .diff files from previous runs
+  if [[ -n "$previous_diff_results" ]]; then
+    echo "Removing previous diff results:"
+    echo "$previous_diff_results"
+    find ./"$1"/ -name 'test_diff_output.diff' -type f -delete
+  else
+    echo "No previous diff files detected"
+  fi
+}
+
 # function to output a diff between expected output and actual output for MDI test cases
 function output_file_diff() {
   test_case_diff_results=$(diff --strip-trailing-cr ${1} ${2} || true)
@@ -98,21 +112,22 @@ function execute_mdi_test_cases() {
   mdi_database_username="$2"
   input_type=$3
   filename="$4"
-#  for dir in ${process_name}/*; do
-#    find . -name \*.diff -type f -delete # remove .diff files from previous runs
-#  done
-
-  echo $'\n'"Proceeding with test cases"
+  source_db="$5"
+  target_db="$6"
+  process_previous_diffs "$process_name"
+  echo $'\n'"Proceeding with ${process_name} test cases"
   for dir in ${process_name}/*; do
+    echo "Now resetting Docker..."
     docker_reset # reset docker
     echo "Now testing ${dir}" # indicate which test case is being run
-    truncate -s 0 ${dir}/actual_output.csv # truncate corresponding actual output file
-    # execute SQL insert into unit test tools input table
-    input_setup_results=$(../../pentaho/test/psql-test.sh ingress ${dir} -f /input/test_case_input_setup.sql) #
+    # execute SQL insert into unit test tools source table
+    source_setup_results=$(../../pentaho/test/psql-test.sh ${source_db} ${dir} -f /input/test_case_source_setup.sql)
+    # execute SQL insert into unit test tools target table
+    target_setup_results=$(../../pentaho/test/psql-test.sh ${target_db} ${dir} -f /input/test_case_target_setup.sql)
     # run MDI configuration
     execute_test "$process_name" "$mdi_database_username" "$mdi_controller_path" "$input_type" "$filename"
     # execute SQL export from unit test tools output table to actual output file
-    output_setup_results=$(../../pentaho/test/psql-test.sh ingress ${dir} -f /input/test_case_output_setup.sql)
+    output_setup_results=$(../../pentaho/test/psql-test.sh ${target_db} ${dir} -f /input/test_case_output_setup.sql)
     # run a diff between actual output and expected output files
     output_file_diff "${dir}/expected_output.csv" "${dir}/actual_output.csv"  "${dir}/test_diff_output.diff"
   done
@@ -127,15 +142,15 @@ execute_test ${process_name} ${database_username} ${sp6_job_path} "file" "Encomp
 
 # MDI Tests ##############################################################################
 database_username="mditest"
-# MDI Checks
+## MDI Checks
 execute_mdi_test "SP-0.1"  ${database_username} "file" "input.csv"   # test performer_csv_to_table.ktr
 execute_mdi_test "SP-0.2"  ${database_username} "file" "input.xlsx" # test performer_excel_to_table.ktr
 
 # MDI Test Cases #########################################################################
 database_username="mditest"
 # MDI Checks for SP-0.3 and SP-0.4
-execute_mdi_test_cases "SP-0.3" ${database_username} "none" ""
-execute_mdi_test_cases "SP-0.4" ${database_username} "none" ""
+execute_mdi_test_cases "SP-0.3" ${database_username} "none" "" "ingress" "ingress"
+execute_mdi_test_cases "SP-0.4" ${database_username} "none" "" "ingress" "ingress"
 
 # DMI Tests ##############################################################################
 database_username="dmi"

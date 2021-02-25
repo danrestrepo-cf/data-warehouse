@@ -98,7 +98,7 @@ DO $$
                     , tool_price
                     , tool_inventory_start_date
                     , tool_inventory_end_date
-                FROM test.unit_test_tools_input;'
+                FROM test.unit_test_tools_source;'
             , 0
             , 'Ingress DB Connection')
         , (sp_0_4_table_input_step_dwid
@@ -110,7 +110,7 @@ DO $$
                    , tool_price
                    , tool_inventory_start_date
                    , tool_inventory_end_date
-               FROM test.unit_test_tools_input;'
+               FROM test.unit_test_tools_source;'
             , 0
             , 'Ingress DB Connection');
 
@@ -119,7 +119,7 @@ DO $$
                                            table_name_defined_in_field, truncate_table, connectionname,
                                            partition_over_tables, specify_database_fields, ignore_insert_errors,
                                            use_batch_update)
-        VALUES (sp_0_3_table_output_step_dwid, sp_0_3_process_dwid, 'test', 'unit_test_tools_output', 1000, 'N', 'N',
+        VALUES (sp_0_3_table_output_step_dwid, sp_0_3_process_dwid, 'test', 'unit_test_tools_target', 1000, 'N', 'N',
                 'Ingress DB Connection', 'N', 'Y', 'N', 'N');
 
         -- Table output field records for SP-0.3
@@ -137,7 +137,7 @@ DO $$
         INSERT INTO mdi.insert_update_step (dwid, process_dwid, connectionname, schema_name, table_name, commit_size,
                                             do_not)
         VALUES (sp_0_4_insert_update_step_dwid, sp_0_4_process_dwid, 'Ingress DB Connection', 'test',
-                'unit_test_tools_output', 1000, 'N');
+                'unit_test_tools_target', 1000, 'N');
 
         -- Insert / Update key record for SP-0.4
         INSERT INTO mdi.insert_update_key (insert_update_step_dwid, key_lookup, key_stream1, key_stream2, key_condition)

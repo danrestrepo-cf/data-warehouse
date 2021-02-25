@@ -4,6 +4,10 @@ export MSYS_NO_PATHCONV=1
 
 #set the script to fail on any errors
 set -e
+if [ "$#" != 4 ]; then
+  echo "psql-test.sh requires four arguments"
+  exit 1
+fi
 
 database=$1
 testpath=$2

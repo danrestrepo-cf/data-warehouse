@@ -14,7 +14,7 @@
 --
 -------------------------------------------------------------------------------
 
-CREATE TABLE test.unit_test_tools_input (
+CREATE TABLE test.unit_test_tools_source (
     tool_pid INT
     , tool_code TEXT
     , tool_type TEXT
@@ -24,7 +24,7 @@ CREATE TABLE test.unit_test_tools_input (
     , data_source_dwid INT
 );
 
-CREATE TABLE test.unit_test_tools_output (
+CREATE TABLE test.unit_test_tools_target (
     tool_pid INT
     , tool_code TEXT
     , tool_type TEXT
