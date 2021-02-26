@@ -118,13 +118,13 @@ function execute_mdi_test_cases() {
     echo "Now resetting Docker..."
     docker_reset # reset docker
     echo "Now testing ${dir}" # indicate which test case is being run
-    # execute SQL insert into unit test tools source table
+    # run test setup SQL against the source database
     source_setup_results=$(../../pentaho/test/psql-test.sh ${source_db} ${dir} -f /input/test_case_source_setup.sql)
-    # execute SQL insert into unit test tools target table
+    # run test setup SQL against the target database
     target_setup_results=$(../../pentaho/test/psql-test.sh ${target_db} ${dir} -f /input/test_case_target_setup.sql)
     # run MDI configuration
     execute_test "$process_name" "$mdi_database_username" "$mdi_controller_path" "$input_type" "$filename"
-    # execute SQL export from unit test tools output table to actual output file
+    # run SQL export from target table to actual output file
     output_setup_results=$(../../pentaho/test/psql-test.sh ${target_db} ${dir} -f /input/test_case_output_setup.sql)
     # run a diff between actual output and expected output files
     output_file_diff "${dir}/expected_output.csv" "${dir}/actual_output.csv"  "${dir}/test_diff_output.diff"
