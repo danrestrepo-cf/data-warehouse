@@ -1,6 +1,6 @@
 <transformation>
   <info>
-    <name>load_mdi_configuration</name>
+    <name>template_table_to_table_insert_update</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -34,9 +34,9 @@
         <description/>
       </parameter>
       <parameter>
-        <name>process_name</name>
+        <name>etl_batch_id</name>
         <default_value/>
-        <description>The name that signifies what process should be run.</description>
+        <description/>
       </parameter>
     </parameters>
     <log>
@@ -457,13 +457,155 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2020/10/10 13:25:09.606</created_date>
+    <created_date>2020/09/15 15:00:08.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/02/19 11:41:26.911</modified_date>
+    <modified_date>2021/02/23 17:14:23.015</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
+    <notepad>
+      <note>Load Data from Database Table
+
+
+
+
+
+
+</note>
+      <xloc>128</xloc>
+      <yloc>80</yloc>
+      <width>652</width>
+      <heigth>232</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Add ETL Batch ID to stream
+
+
+
+
+
+
+
+</note>
+      <xloc>128</xloc>
+      <yloc>352</yloc>
+      <width>652</width>
+      <heigth>260</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Save stream to table
+
+
+
+
+
+
+</note>
+      <xloc>128</xloc>
+      <yloc>976</yloc>
+      <width>652</width>
+      <heigth>232</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Specify logging fields, log them, and abort transformation as error                                                                                                                               
+
+
+
+
+
+
+</note>
+      <xloc>816</xloc>
+      <yloc>976</yloc>
+      <width>1024</width>
+      <heigth>179</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Add Data Source DWID to stream
+
+
+
+
+
+
+
+</note>
+      <xloc>128</xloc>
+      <yloc>656</yloc>
+      <width>700</width>
+      <heigth>260</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <connection>
     <name>Config DB Connection</name>
@@ -524,16 +666,97 @@
       </attribute>
     </attributes>
   </connection>
+  <connection>
+    <name>Dummy DB Connection</name>
+    <server>use when a default connection is needed</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>.</database>
+    <port>5432</port>
+    <username>.</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce10bef2cf94</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>5432</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
   <order>
     <hop>
-      <from>[load_mdi_configuration] Load settings based on process_name parameter</from>
-      <to>[load_mdi_configuration] Set global process variables</to>
+      <from>[template_table_to_table_insert_update] add a blank field for etl_batch_id to valid stream</from>
+      <to>[template_table_to_table_insert_update] Set etl_batch_id field value to parameter etl_batch_id</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update]  Specify logging fields (non-sensitive)</from>
+      <to>[template_table_to_table_insert_update]  Abort Table Output</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update] add a blank field for data_source_dwid to valid stream</from>
+      <to>[template_table_to_table_insert_update] Set data_source_dwid field value to parameter data_source_dwid</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update] Set etl_batch_id field value to parameter etl_batch_id</from>
+      <to>[template_table_to_table_insert_update] add a blank field for data_source_dwid to valid stream</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update] Table input</from>
+      <to>[template_table_to_table_insert_update] add a blank field for etl_batch_id to valid stream</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update] Set data_source_dwid field value to parameter data_source_dwid</from>
+      <to>[template_table_to_table_insert_update] Insert / update</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update] Insert / update</from>
+      <to>[template_table_to_table_insert_update]  Specify logging fields (non-sensitive)</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>[load_mdi_configuration] Load settings based on process_name parameter</name>
-    <type>TableInput</type>
+    <name>[template_table_to_table_insert_update]  Abort Table Output</name>
+    <type>Abort</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -542,140 +765,10 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>Config DB Connection</connection>
-    <sql>SELECT process.name AS process_name
-    , process.dwid AS process_dwid
-    , CASE WHEN
-        CASE WHEN csv_file_input_step.process_dwid IS NOT NULL THEN 1 ELSE 0 END +
-        CASE WHEN microsoft_excel_input_step.process_dwid IS NOT NULL THEN 1 ELSE 0 END +
-        CASE WHEN table_input_step.process_dwid IS NOT NULL
-            AND table_output_step.process_dwid IS NOT NULL THEN 1 ELSE 0 END +
-        CASE WHEN table_input_step.process_dwid IS NOT NULL
-            AND insert_update_step.process_dwid IS NOT NULL THEN 1 ELSE 0 END
-        > 1 THEN 'MDI process cannot have more than one input step configured'
-        WHEN csv_file_input_step.process_dwid IS NOT NULL THEN 'CSV'
-        WHEN microsoft_excel_input_step.process_dwid IS NOT NULL THEN 'EXCEL'
-        WHEN table_input_step.process_dwid IS NOT NULL
-            AND table_output_step.process_dwid IS NOT NULL THEN 'TABLE_INPUT_FOR_INSERT'
-        WHEN table_input_step.process_dwid IS NOT NULL
-            AND insert_update_step.process_dwid IS NOT NULL THEN 'TABLE_INPUT_FOR_INSERT_UPDATE'
-        ELSE 'No input steps are configured for ' || process.name
-    END AS input_template
-    , CASE
-        WHEN csv_file_input_step.process_dwid IS NOT NULL THEN csv_file_input_step.data_source_dwid
-        WHEN microsoft_excel_input_step.process_dwid IS NOT NULL THEN microsoft_excel_input_step.data_source_dwid
-        WHEN table_input_step.process_dwid IS NOT NULL THEN table_input_step.data_source_dwid
-    END as data_source_dwid
-FROM mdi.process
-    LEFT JOIN mdi.csv_file_input_step ON process.dwid = csv_file_input_step.process_dwid
-    LEFT JOIN mdi.microsoft_excel_input_step ON process.dwid = microsoft_excel_input_step.process_dwid
-    LEFT JOIN mdi.table_input_step ON process.dwid = table_input_step.process_dwid
-    LEFT JOIN mdi.table_output_step ON process.dwid = table_output_step.process_dwid
-    LEFT JOIN mdi.insert_update_step ON process.dwid = insert_update_step.process_dwid
-WHERE
-        process.name = '${process_name}'
-;
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>process_name</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[load_mdi_configuration] Load settings based on process_name parameter</origin>
-        <comments>process_name</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>process_dwid</name>
-        <length>15</length>
-        <precision>0</precision>
-        <origin>[load_mdi_configuration] Load settings based on process_name parameter</origin>
-        <comments>process_dwid</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>input_template</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[load_mdi_configuration] Load settings based on process_name parameter</origin>
-        <comments>input_template</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>data_source_dwid</name>
-        <length>15</length>
-        <precision>0</precision>
-        <origin>[load_mdi_configuration] Load settings based on process_name parameter</origin>
-        <comments>data_source_dwid</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-    </row-meta>
+    <row_threshold>0</row_threshold>
+    <message>could not save data to table</message>
+    <always_log_rows>Y</always_log_rows>
+    <abort_option>ABORT_WITH_ERROR</abort_option>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -685,14 +778,14 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>304</xloc>
-      <yloc>144</yloc>
+      <xloc>1584</xloc>
+      <yloc>1088</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[load_mdi_configuration] Set global process variables</name>
-    <type>SetVariable</type>
+    <name>[template_table_to_table_insert_update]  Specify logging fields (non-sensitive)</name>
+    <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -702,32 +795,8 @@ WHERE
       <schema_name/>
     </partitioning>
     <fields>
-      <field>
-        <field_name>process_name</field_name>
-        <variable_name>process_name</variable_name>
-        <variable_type>JVM</variable_type>
-        <default_value/>
-      </field>
-      <field>
-        <field_name>input_template</field_name>
-        <variable_name>input_template</variable_name>
-        <variable_type>JVM</variable_type>
-        <default_value/>
-      </field>
-      <field>
-        <field_name>process_dwid</field_name>
-        <variable_name>process_dwid</variable_name>
-        <variable_type>JVM</variable_type>
-        <default_value/>
-      </field>
-      <field>
-        <field_name>data_source_dwid</field_name>
-        <variable_name>data_source_dwid</variable_name>
-        <variable_type>JVM</variable_type>
-        <default_value/>
-      </field>
+      <select_unspecified>N</select_unspecified>
     </fields>
-    <use_formatting>Y</use_formatting>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -737,12 +806,248 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>304</xloc>
-      <yloc>304</yloc>
+      <xloc>1040</xloc>
+      <yloc>1088</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_update] Insert / update</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>Dummy DB Connection</connection>
+    <commit>0</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table/>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>1088</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_update] Set data_source_dwid field value to parameter data_source_dwid</name>
+    <type>SetValueConstant</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <usevar>Y</usevar>
+    <fields>
+      <field>
+        <name>data_source_dwid</name>
+        <value/>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>832</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_update] Set etl_batch_id field value to parameter etl_batch_id</name>
+    <type>SetValueConstant</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <usevar>Y</usevar>
+    <fields>
+      <field>
+        <name>etl_batch_id</name>
+        <value/>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>512</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_update] Table input</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>Dummy DB Connection</connection>
+    <sql/>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>176</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_update] add a blank field for data_source_dwid to valid stream</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>data_source_dwid</name>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>704</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_update] add a blank field for etl_batch_id to valid stream</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>etl_batch_id</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>384</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step_error_handling>
+    <error>
+      <source_step>[template_table_to_table_insert_update] Insert / update</source_step>
+      <target_step>[template_table_to_table_insert_update]  Specify logging fields (non-sensitive)</target_step>
+      <is_enabled>Y</is_enabled>
+      <nr_valuename/>
+      <descriptions_valuename/>
+      <fields_valuename/>
+      <codes_valuename/>
+      <max_errors/>
+      <max_pct_errors/>
+      <min_pct_rows/>
+    </error>
+    <error>
+      <source_step>[template_table_to_table_insert_update] Set etl_batch_id field value to parameter etl_batch_id</source_step>
+      <target_step>[template_table_to_table_insert_update]  Abort Table Output</target_step>
+      <is_enabled>N</is_enabled>
+      <nr_valuename/>
+      <descriptions_valuename/>
+      <fields_valuename/>
+      <codes_valuename/>
+      <max_errors/>
+      <max_pct_errors/>
+      <min_pct_rows/>
+    </error>
   </step_error_handling>
   <slave-step-copy-partition-distribution>
   </slave-step-copy-partition-distribution>

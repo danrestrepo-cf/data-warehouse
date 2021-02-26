@@ -1,0 +1,1138 @@
+<transformation>
+  <info>
+    <name>performer_table_to_table_insert</name>
+    <description/>
+    <extended_description/>
+    <trans_version/>
+    <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
+    <directory>/mdi</directory>
+    <parameters>
+      <parameter>
+        <name>data_source_dwid</name>
+        <default_value/>
+        <description/>
+      </parameter>
+      <parameter>
+        <name>database_hostname</name>
+        <default_value/>
+        <description/>
+      </parameter>
+      <parameter>
+        <name>database_password</name>
+        <default_value/>
+        <description/>
+      </parameter>
+      <parameter>
+        <name>database_port</name>
+        <default_value/>
+        <description/>
+      </parameter>
+      <parameter>
+        <name>database_schema</name>
+        <default_value/>
+        <description/>
+      </parameter>
+      <parameter>
+        <name>database_username</name>
+        <default_value/>
+        <description/>
+      </parameter>
+      <parameter>
+        <name>etl_batch_id</name>
+        <default_value/>
+        <description/>
+      </parameter>
+      <parameter>
+        <name>process_dwid</name>
+        <default_value/>
+        <description/>
+      </parameter>
+      <parameter>
+        <name>process_name</name>
+        <default_value/>
+        <description>The name that signifies what process should be run.</description>
+      </parameter>
+    </parameters>
+    <log>
+      <trans-log-table>
+        <connection>Config DB Connection</connection>
+        <schema>log</schema>
+        <table>transformation_transformation</table>
+        <size_limit_lines/>
+        <interval>5</interval>
+        <timeout_days>90</timeout_days>
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>TRANSNAME</id>
+          <enabled>Y</enabled>
+          <name>TRANSNAME</name>
+        </field>
+        <field>
+          <id>STATUS</id>
+          <enabled>Y</enabled>
+          <name>STATUS</name>
+        </field>
+        <field>
+          <id>LINES_READ</id>
+          <enabled>Y</enabled>
+          <name>LINES_READ</name>
+          <subject/>
+        </field>
+        <field>
+          <id>LINES_WRITTEN</id>
+          <enabled>Y</enabled>
+          <name>LINES_WRITTEN</name>
+          <subject/>
+        </field>
+        <field>
+          <id>LINES_UPDATED</id>
+          <enabled>Y</enabled>
+          <name>LINES_UPDATED</name>
+          <subject/>
+        </field>
+        <field>
+          <id>LINES_INPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_INPUT</name>
+          <subject/>
+        </field>
+        <field>
+          <id>LINES_OUTPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_OUTPUT</name>
+          <subject/>
+        </field>
+        <field>
+          <id>LINES_REJECTED</id>
+          <enabled>Y</enabled>
+          <name>LINES_REJECTED</name>
+          <subject/>
+        </field>
+        <field>
+          <id>ERRORS</id>
+          <enabled>Y</enabled>
+          <name>ERRORS</name>
+        </field>
+        <field>
+          <id>STARTDATE</id>
+          <enabled>Y</enabled>
+          <name>STARTDATE</name>
+        </field>
+        <field>
+          <id>ENDDATE</id>
+          <enabled>Y</enabled>
+          <name>ENDDATE</name>
+        </field>
+        <field>
+          <id>LOGDATE</id>
+          <enabled>Y</enabled>
+          <name>LOGDATE</name>
+        </field>
+        <field>
+          <id>DEPDATE</id>
+          <enabled>Y</enabled>
+          <name>DEPDATE</name>
+        </field>
+        <field>
+          <id>REPLAYDATE</id>
+          <enabled>Y</enabled>
+          <name>REPLAYDATE</name>
+        </field>
+        <field>
+          <id>LOG_FIELD</id>
+          <enabled>Y</enabled>
+          <name>LOG_FIELD</name>
+        </field>
+        <field>
+          <id>EXECUTING_SERVER</id>
+          <enabled>Y</enabled>
+          <name>EXECUTING_SERVER</name>
+        </field>
+        <field>
+          <id>EXECUTING_USER</id>
+          <enabled>Y</enabled>
+          <name>EXECUTING_USER</name>
+        </field>
+        <field>
+          <id>CLIENT</id>
+          <enabled>Y</enabled>
+          <name>CLIENT</name>
+        </field>
+      </trans-log-table>
+      <perf-log-table>
+        <connection>Config DB Connection</connection>
+        <schema>log</schema>
+        <table>transformation_performance</table>
+        <interval>5</interval>
+        <timeout_days>90</timeout_days>
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>SEQ_NR</id>
+          <enabled>Y</enabled>
+          <name>SEQ_NR</name>
+        </field>
+        <field>
+          <id>LOGDATE</id>
+          <enabled>Y</enabled>
+          <name>LOGDATE</name>
+        </field>
+        <field>
+          <id>TRANSNAME</id>
+          <enabled>Y</enabled>
+          <name>TRANSNAME</name>
+        </field>
+        <field>
+          <id>STEPNAME</id>
+          <enabled>Y</enabled>
+          <name>STEPNAME</name>
+        </field>
+        <field>
+          <id>STEP_COPY</id>
+          <enabled>Y</enabled>
+          <name>STEP_COPY</name>
+        </field>
+        <field>
+          <id>LINES_READ</id>
+          <enabled>Y</enabled>
+          <name>LINES_READ</name>
+        </field>
+        <field>
+          <id>LINES_WRITTEN</id>
+          <enabled>Y</enabled>
+          <name>LINES_WRITTEN</name>
+        </field>
+        <field>
+          <id>LINES_UPDATED</id>
+          <enabled>Y</enabled>
+          <name>LINES_UPDATED</name>
+        </field>
+        <field>
+          <id>LINES_INPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_INPUT</name>
+        </field>
+        <field>
+          <id>LINES_OUTPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_OUTPUT</name>
+        </field>
+        <field>
+          <id>LINES_REJECTED</id>
+          <enabled>Y</enabled>
+          <name>LINES_REJECTED</name>
+        </field>
+        <field>
+          <id>ERRORS</id>
+          <enabled>Y</enabled>
+          <name>ERRORS</name>
+        </field>
+        <field>
+          <id>INPUT_BUFFER_ROWS</id>
+          <enabled>Y</enabled>
+          <name>INPUT_BUFFER_ROWS</name>
+        </field>
+        <field>
+          <id>OUTPUT_BUFFER_ROWS</id>
+          <enabled>Y</enabled>
+          <name>OUTPUT_BUFFER_ROWS</name>
+        </field>
+      </perf-log-table>
+      <channel-log-table>
+        <connection>Config DB Connection</connection>
+        <schema>log</schema>
+        <table>transformation_channel</table>
+        <timeout_days>90</timeout_days>
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>LOG_DATE</id>
+          <enabled>Y</enabled>
+          <name>LOG_DATE</name>
+        </field>
+        <field>
+          <id>LOGGING_OBJECT_TYPE</id>
+          <enabled>Y</enabled>
+          <name>LOGGING_OBJECT_TYPE</name>
+        </field>
+        <field>
+          <id>OBJECT_NAME</id>
+          <enabled>Y</enabled>
+          <name>OBJECT_NAME</name>
+        </field>
+        <field>
+          <id>OBJECT_COPY</id>
+          <enabled>Y</enabled>
+          <name>OBJECT_COPY</name>
+        </field>
+        <field>
+          <id>REPOSITORY_DIRECTORY</id>
+          <enabled>Y</enabled>
+          <name>REPOSITORY_DIRECTORY</name>
+        </field>
+        <field>
+          <id>FILENAME</id>
+          <enabled>Y</enabled>
+          <name>FILENAME</name>
+        </field>
+        <field>
+          <id>OBJECT_ID</id>
+          <enabled>Y</enabled>
+          <name>OBJECT_ID</name>
+        </field>
+        <field>
+          <id>OBJECT_REVISION</id>
+          <enabled>Y</enabled>
+          <name>OBJECT_REVISION</name>
+        </field>
+        <field>
+          <id>PARENT_CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>PARENT_CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>ROOT_CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>ROOT_CHANNEL_ID</name>
+        </field>
+      </channel-log-table>
+      <step-log-table>
+        <connection>Config DB Connection</connection>
+        <schema>log</schema>
+        <table>transformation_step</table>
+        <timeout_days>90</timeout_days>
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>LOG_DATE</id>
+          <enabled>Y</enabled>
+          <name>LOG_DATE</name>
+        </field>
+        <field>
+          <id>TRANSNAME</id>
+          <enabled>Y</enabled>
+          <name>TRANSNAME</name>
+        </field>
+        <field>
+          <id>STEPNAME</id>
+          <enabled>Y</enabled>
+          <name>STEPNAME</name>
+        </field>
+        <field>
+          <id>STEP_COPY</id>
+          <enabled>Y</enabled>
+          <name>STEP_COPY</name>
+        </field>
+        <field>
+          <id>LINES_READ</id>
+          <enabled>Y</enabled>
+          <name>LINES_READ</name>
+        </field>
+        <field>
+          <id>LINES_WRITTEN</id>
+          <enabled>Y</enabled>
+          <name>LINES_WRITTEN</name>
+        </field>
+        <field>
+          <id>LINES_UPDATED</id>
+          <enabled>Y</enabled>
+          <name>LINES_UPDATED</name>
+        </field>
+        <field>
+          <id>LINES_INPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_INPUT</name>
+        </field>
+        <field>
+          <id>LINES_OUTPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_OUTPUT</name>
+        </field>
+        <field>
+          <id>LINES_REJECTED</id>
+          <enabled>Y</enabled>
+          <name>LINES_REJECTED</name>
+        </field>
+        <field>
+          <id>ERRORS</id>
+          <enabled>Y</enabled>
+          <name>ERRORS</name>
+        </field>
+        <field>
+          <id>LOG_FIELD</id>
+          <enabled>Y</enabled>
+          <name>LOG_FIELD</name>
+        </field>
+      </step-log-table>
+      <metrics-log-table>
+        <connection>Config DB Connection</connection>
+        <schema>log</schema>
+        <table>transformation_metrics</table>
+        <timeout_days>90</timeout_days>
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>LOG_DATE</id>
+          <enabled>Y</enabled>
+          <name>LOG_DATE</name>
+        </field>
+        <field>
+          <id>METRICS_DATE</id>
+          <enabled>Y</enabled>
+          <name>METRICS_DATE</name>
+        </field>
+        <field>
+          <id>METRICS_CODE</id>
+          <enabled>Y</enabled>
+          <name>METRICS_CODE</name>
+        </field>
+        <field>
+          <id>METRICS_DESCRIPTION</id>
+          <enabled>Y</enabled>
+          <name>METRICS_DESCRIPTION</name>
+        </field>
+        <field>
+          <id>METRICS_SUBJECT</id>
+          <enabled>Y</enabled>
+          <name>METRICS_SUBJECT</name>
+        </field>
+        <field>
+          <id>METRICS_TYPE</id>
+          <enabled>Y</enabled>
+          <name>METRICS_TYPE</name>
+        </field>
+        <field>
+          <id>METRICS_VALUE</id>
+          <enabled>Y</enabled>
+          <name>METRICS_VALUE</name>
+        </field>
+      </metrics-log-table>
+    </log>
+    <maxdate>
+      <connection/>
+      <table/>
+      <field/>
+      <offset>0.0</offset>
+      <maxdiff>0.0</maxdiff>
+    </maxdate>
+    <size_rowset>10000</size_rowset>
+    <sleep_time_empty>50</sleep_time_empty>
+    <sleep_time_full>50</sleep_time_full>
+    <unique_connections>N</unique_connections>
+    <feedback_shown>Y</feedback_shown>
+    <feedback_size>50000</feedback_size>
+    <using_thread_priorities>Y</using_thread_priorities>
+    <shared_objects_file/>
+    <capture_step_performance>N</capture_step_performance>
+    <step_performance_capturing_delay>1000</step_performance_capturing_delay>
+    <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
+    <dependencies>
+    </dependencies>
+    <partitionschemas>
+    </partitionschemas>
+    <slaveservers>
+    </slaveservers>
+    <clusterschemas>
+    </clusterschemas>
+    <created_user>-</created_user>
+    <created_date>2020/09/15 15:00:08.089</created_date>
+    <modified_user>-</modified_user>
+    <modified_date>2021/02/17 17:05:20.623</modified_date>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
+    <is_key_private>N</is_key_private>
+  </info>
+  <notepads>
+    <notepad>
+      <note>NOTE:
+The table output step uses the labels "DATABASE_FIELD_NAME"
+and "DATABASE_STREAM_NAME" but they are mislabled (it seems
+like a Pentaho bug). This is why the settings appear to be
+backwards but they are *not*. The table_output_field.database_field_name
+column maps to DATABASE_STREAM_NAME in the MDI step. The
+table_output_field.database_stream_name gets mapped to
+DATABASE_FIELD_NAME. </note>
+      <xloc>1280</xloc>
+      <yloc>656</yloc>
+      <width>400</width>
+      <heigth>138</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>9</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Table input
+
+
+
+
+
+
+
+
+
+
+
+
+</note>
+      <xloc>32</xloc>
+      <yloc>160</yloc>
+      <width>622</width>
+      <heigth>400</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Table output
+
+
+
+
+
+
+
+
+
+
+
+
+</note>
+      <xloc>32</xloc>
+      <yloc>608</yloc>
+      <width>622</width>
+      <heigth>400</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Get List of Fields to Log in Case of Error (Non-sensitive fields)                                                  
+
+
+
+
+
+
+
+
+
+
+</note>
+      <xloc>32</xloc>
+      <yloc>1072</yloc>
+      <width>674</width>
+      <heigth>263</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+  </notepads>
+  <connection>
+    <name>Config DB Connection</name>
+    <server>${database_hostname}</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>config</database>
+    <port>${database_port}</port>
+    <username>${database_username}</username>
+    <password>${database_password}</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code>
+        <attribute>pentaho_logging_sequence</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>${database_port}</attribute>
+      </attribute>
+      <attribute>
+        <code>PREFERRED_SCHEMA_NAME</code>
+        <attribute>ingress</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
+  <order>
+    <hop>
+      <from>[performer_table_to_table_insert] Load Table Input step settings</from>
+      <to>[performer_table_to_table_insert] ETL metadata injection</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert] Load Table Output step settings</from>
+      <to>[performer_table_to_table_insert] ETL metadata injection</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert] Load Table Output field settings</from>
+      <to>[performer_table_to_table_insert] ETL metadata injection</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert] Load Table Output non-sensitive fields</from>
+      <to>[performer_table_to_table_insert] ETL metadata injection</to>
+      <enabled>Y</enabled>
+    </hop>
+  </order>
+  <step>
+    <name>[performer_table_to_table_insert] ETL metadata injection</name>
+    <type>MetaInject</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <specification_method>rep_name</specification_method>
+    <trans_object_id/>
+    <trans_name>template_table_to_table_insert</trans_name>
+    <filename/>
+    <directory_path>${Internal.Entry.Current.Directory}</directory_path>
+    <source_step/>
+    <source_output_fields>    </source_output_fields>
+    <target_file/>
+    <no_execution>N</no_execution>
+    <stream_source_step/>
+    <stream_target_step/>
+    <mappings>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>etl_batch_id</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table input</target_step_name>
+        <target_attribute_key>REPLACE_VARIABLES</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Input step settings</source_step>
+        <source_field>replace_variables</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>PARTITIONING_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
+        <source_field>partitioning_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table input</target_step_name>
+        <target_attribute_key>LAZY_CONVERSION</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Input step settings</source_step>
+        <source_field>enable_lazy_conversion</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert]  Specify logging fields (non-sensitive)</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output non-sensitive fields</source_step>
+        <source_field>database_stream_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table input</target_step_name>
+        <target_attribute_key>EXECUTE_FOR_EACH_ROW</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Input step settings</source_step>
+        <source_field>execute_for_each_row</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>USE_BATCH_UPDATE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
+        <source_field>use_batch_update</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>TRUNCATE_TABLE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
+        <source_field>truncate_table</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>TABLE_NAME_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
+        <source_field>table_name_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>${data_source_dwid}</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>DATABASE_STREAM_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output field settings</source_step>
+        <source_field>database_field_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>TARGET_TABLE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
+        <source_field>target_table</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>PARTITION_OVER_TABLES</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
+        <source_field>partition_over_tables</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table input</target_step_name>
+        <target_attribute_key>SQL</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Input step settings</source_step>
+        <source_field>sql</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table input</target_step_name>
+        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Input step settings</source_step>
+        <source_field>connectionname</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>TARGET_SCHEMA</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
+        <source_field>target_schema</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>IGNORE_INSERT_ERRORS</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
+        <source_field>ignore_insert_errors</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>AUTO_GENERATED_KEY_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
+        <source_field>auto_generated_key_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>${etl_batch_id}</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table input</target_step_name>
+        <target_attribute_key>LIMIT</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Input step settings</source_step>
+        <source_field>limit_size</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>RETURN_AUTO_GENERATED_KEY</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
+        <source_field>return_auto_generated_key_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>data_source_dwid</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>SPECIFY_DATABASE_FIELDS</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
+        <source_field>specify_database_fields</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
+        <source_field>connectionname</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>DATABASE_FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output field settings</source_step>
+        <source_field>database_stream_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>PARTITION_DATA_PER</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
+        <source_field>partition_data_per</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table input</target_step_name>
+        <target_attribute_key>CACHED_ROW_META</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Input step settings</source_step>
+        <source_field>cached_row_meta</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>TABLE_NAME_DEFINED_IN_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
+        <source_field>table_name_defined_in_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>COMMIT_SIZE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
+        <source_field>commit_size</source_field>
+      </mapping>
+    </mappings>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1072</xloc>
+      <yloc>784</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[performer_table_to_table_insert] Load Table Input step settings</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>Config DB Connection</connection>
+    <sql>SELECT
+    table_input_step.sql
+    , table_input_step.limit_size
+    , table_input_step.execute_for_each_row
+    , table_input_step.replace_variables
+    , table_input_step.enable_lazy_conversion
+    , table_input_step.cached_row_meta
+    , table_input_step.connectionname
+FROM
+    mdi.process p
+        LEFT JOIN mdi.table_input_step ON p.dwid = table_input_step.process_dwid
+WHERE
+    p.dwid = ${process_dwid}
+;
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta>
+    </row-meta>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>304</xloc>
+      <yloc>240</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[performer_table_to_table_insert] Load Table Output field settings</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>Config DB Connection</connection>
+    <sql>SELECT
+    table_output_field.database_field_name
+    , table_output_field.database_stream_name
+    , table_output_field.field_order
+FROM
+    mdi.table_output_step
+        LEFT JOIN mdi.table_output_field ON table_output_step.dwid = table_output_field.table_output_step_dwid
+WHERE
+        table_output_step.process_dwid = ${process_dwid}
+ORDER BY
+    table_output_field.field_order ASC
+;
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta>
+    </row-meta>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>288</xloc>
+      <yloc>848</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[performer_table_to_table_insert] Load Table Output non-sensitive fields</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>Config DB Connection</connection>
+    <sql>SELECT
+     table_output_field.database_field_name
+     , table_output_field.database_stream_name
+ FROM
+     mdi.table_output_step
+         LEFT JOIN mdi.table_output_field ON table_output_step.dwid = table_output_field.table_output_step_dwid
+ WHERE
+         table_output_step.process_dwid = ${process_dwid}
+     AND table_output_field.is_sensitive = FALSE
+ ORDER BY
+     table_output_field.field_order ASC
+;
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta>
+    </row-meta>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>288</xloc>
+      <yloc>1184</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[performer_table_to_table_insert] Load Table Output step settings</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>Config DB Connection</connection>
+    <sql>SELECT
+	table_output_step.target_schema
+	, table_output_step.target_table
+	, table_output_step.commit_size
+	, table_output_step.partitioning_field
+	, table_output_step.table_name_field
+	, table_output_step.auto_generated_key_field
+	, table_output_step.partition_data_per
+	, table_output_step.return_auto_generated_key_field
+	, table_output_step.truncate_table
+	, table_output_step.connectionname
+	, table_output_step.partition_over_tables
+	, table_output_step.specify_database_fields
+	, table_output_step.ignore_insert_errors
+	, table_output_step.use_batch_update
+	, table_output_step.table_name_defined_in_field
+FROM
+	mdi.process p
+		LEFT JOIN mdi.table_output_step ON p.dwid = table_output_step.process_dwid
+WHERE
+		p.dwid = ${process_dwid}
+;</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta>
+    </row-meta>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>288</xloc>
+      <yloc>704</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step_error_handling>
+  </step_error_handling>
+  <slave-step-copy-partition-distribution>
+  </slave-step-copy-partition-distribution>
+  <slave_transformation>N</slave_transformation>
+  <attributes/>
+</transformation>
