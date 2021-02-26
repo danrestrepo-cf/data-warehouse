@@ -5,7 +5,7 @@ export MSYS_NO_PATHCONV=1
 #set the script to fail on any errors
 set -e
 if [ "$#" -lt 3 ]; then
-  echo "Usage: ./push-image.sh [environment] [app] ... [psql arguments]"
+  echo "Usage: ./psql-test.sh [database] [testpath] ... [psql arguments]"
   exit 1
 fi
 
