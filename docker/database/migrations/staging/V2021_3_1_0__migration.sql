@@ -1,5 +1,5 @@
 ---
---- Add Encompass MCR related fields to EDW: https://app.asana.com/0/0/1193468447043569
+--- Date dimension phase 2: https://app.asana.com/0/0/1199527286976958
 ---
 
 -- add the fields to the date_dim table
