@@ -22,12 +22,12 @@ UPDATE star_common.date_dim
 SET   week_of_year = to_char(value, 'IW')::SMALLINT
     , quarter_of_year = to_char(value, 'Q')::SMALLINT
     , quarter_chronological = (date_part('year', value) - date_part('year', '01-01-1970'::DATE)) * 4 + to_char(value, 'Q')::INTEGER
-    , quarter_name = to_char(value, 'YYYY')::TEXT || 'Q' || to_char(value, 'Q')::TEXT
+    , quarter_name = to_char(value, 'YYYY')::TEXT || 'Q' || to_char(value, 'Q')::CHAR(6)
     , year = to_char(value, 'YYYY')::SMALLINT
     , month_of_year = to_char(value, 'MM')::SMALLINT
     , days_in_month = extract(day from (date_trunc('month', value) + '1 MONTH'::INTERVAL) - '1 DAY'::INTERVAL)::SMALLINT
     , first_day_of_month = date_trunc('month', value)::DATE
     , last_day_of_month = ((date_trunc('month', value) + '1 month'::INTERVAL) - '1 day'::INTERVAL)::DATE
+    , first_day_of_week = value - ((6 + cast(extract(ISODOW FROM value) AS int)) % 7)
     , week_name = 'Week of ' || (value - ((6 + cast(extract(ISODOW FROM value) AS int)) % 7))::TEXT
-    , week_format_iso_8601 = 'W' || to_char(value, 'IW')
-    , first_day_of_week = value - ((6 + cast(extract(ISODOW FROM value) AS int)) % 7);
+    , week_format_iso_8601 = 'W' || to_char(value, 'IW');
