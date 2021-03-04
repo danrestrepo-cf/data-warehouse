@@ -19,15 +19,15 @@ ALTER TABLE star_common.date_dim
 
 -- add values to the newly defined fields
 UPDATE star_common.date_dim
-SET   week_of_year = to_char(value, 'IW')::SMALLINT
-    , quarter_of_year = to_char(value, 'Q')::SMALLINT
-    , quarter_chronological = (date_part('year', value) - date_part('year', '01-01-1970'::DATE)) * 4 + to_char(value, 'Q')::INTEGER
-    , quarter_name = to_char(value, 'YYYY')::TEXT || 'Q' || to_char(value, 'Q')::CHAR(6)
-    , year = to_char(value, 'YYYY')::SMALLINT
-    , month_of_year = to_char(value, 'MM')::SMALLINT
-    , days_in_month = extract(day from (date_trunc('month', value) + '1 MONTH'::INTERVAL) - '1 DAY'::INTERVAL)::SMALLINT
-    , first_day_of_month = date_trunc('month', value)::DATE
-    , last_day_of_month = ((date_trunc('month', value) + '1 month'::INTERVAL) - '1 day'::INTERVAL)::DATE
-    , first_day_of_week = value - ((6 + cast(extract(ISODOW FROM value) AS int)) % 7)
-    , week_name = 'Week of ' || (value - ((6 + cast(extract(ISODOW FROM value) AS int)) % 7))::TEXT
-    , week_format_iso_8601 = 'W' || to_char(value, 'IW');
+SET   week_of_year = extract(week from value)
+    , quarter_of_year = extract(quarter from value)
+    , quarter_chronological = (extract(year from value) - extract(year from '01-01-1970'::DATE)) * 4 + extract(quarter from value)
+    , quarter_name = extract(year from value)  || 'Q' || extract(quarter from value)
+    , year = extract(year from value)
+    , month_of_year = extract(month from value)
+    , days_in_month = extract(day from (date_trunc('month', value) + '1 MONTH'::INTERVAL) - '1 DAY'::INTERVAL)
+    , first_day_of_month = date_trunc('month', value)
+    , last_day_of_month = ((date_trunc('month', value) + '1 month'::INTERVAL) - '1 day'::INTERVAL)
+    , first_day_of_week = value - ((6 + cast(extract(isodow from value) AS int)) % 7)
+    , week_name = 'Week of ' || (value - ((6 + cast(extract(isodow from value) AS int)) % 7))
+    , week_format_iso_8601 = 'W' || to_char(value, 'IW'); -- this is using to_char to simplify the logic since extract() returns a double and we want the leading zero
