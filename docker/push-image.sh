@@ -1,6 +1,8 @@
 #!/bin/bash
 
-./aws-ecr-login.sh
+path_to_script=$(dirname "$0")
+
+${path_to_script}/aws-ecr-login.sh
 
 if [ $# -lt 2 ]; then
   echo "Usage: ./push-image.sh [environment] [app]"
