@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 
-test_dir=$(dirname "$0")
 export MSYS_NO_PATHCONV=1
+
+# we change directory within this script, so need the absolute path for relative references
+path_to_script="$(pwd)/$(dirname "$0")"
+
+# docker-compose does not like absolute paths on windows (git bash), so we reference it with a relative path
+# it is important to never call this in a test directory, just between tests
+relative_docker_dir="$(dirname "$0")/../../docker"
+# absolute path to docker, used to trigger docker itself which isn't so picky
+absolute_test_dir="$(pwd)/../../docker/pentaho"
 
 #set the script to fail on any errors
 set -e
@@ -14,15 +22,22 @@ set -e
 # ' E=[1-9]'  - looks for steps that contain >0 errors.
 
 # set default grep statement
-grep_statement=" testing\| Start=\| Finished with errors\| E=[1-9]"
+grep_statement=" testing.*\| Start=.*\| Finished with errors.*\| E=[1-9].*"
 
 function execute_test() {
   # set current working directory to the folder with test.sh in it
-  cd "$(pwd)/../../docker/pentaho/"
-  echo "Command for manual execution:  $(pwd)/../../docker/pentaho/test.sh test \"$1\" \"$2\" \"$3\" \"$4\" "$5" | grep \"$grep_statement\""
-  ./test.sh test "$1" "$2" "$3" "$4" "$5" | grep "$grep_statement"
+  echo "Command for manual execution:  $(pwd)/../../docker/pentaho/test.sh test \"$1\" \"$2\" \"$3\" \"$4\" \"$5\"
+   | grep \"$grep_statement\""
+  set +e
+  results=$(${absolute_test_dir}/test.sh test "$1" "$2" "$3" "$4" "$5")
+  if [ $? != 0 ]; then
+    echo $results
+    echo "test.sh FAILED!!!"
+    exit 1
+  fi
+  echo $results | grep -o "$grep_statement"
+  set -e
   echo " "
-  cd -
 }
 
 function print_usage() {
@@ -64,10 +79,8 @@ fi
 
 # function to reset docker between MDI test case runs
 function docker_reset() {
-  cd ${test_dir}/../../docker/
-  ./docker-down.sh
-  ./docker-up.sh
-  cd -
+  ${relative_docker_dir}/docker-down.sh
+  ${relative_docker_dir}/docker-up.sh
 }
 
 function execute_mdi_test() {
@@ -77,7 +90,9 @@ function execute_mdi_test() {
   input_type=$3
   filename="$4"
   echo "Now testing ${process_name}"
+  cd ${process_name}
   execute_test "$process_name" "$mdi_database_username" "$mdi_controller_path" "$input_type" "$filename"
+  cd -
 }
 
 # function to detect, print, and remove previous diff files
@@ -116,33 +131,39 @@ function execute_mdi_test_cases() {
   echo "Proceeding with ${process_name} test cases"
   for dir in ${process_name}/*; do
     echo "Now resetting Docker..."
-    docker_reset # reset docker
+    docker_reset              # reset docker
+    cd ${dir}
     echo "Now testing ${dir}" # indicate which test case is being run
     # run test setup SQL against the source database
-    source_setup_results=$(../../pentaho/test/psql-test.sh ${source_db} ${dir} -f /input/test_case_source_setup.sql)
+    source_setup_results=$(${path_to_script}/psql-test.sh ${source_db} . -f /input/test_case_source_setup.sql)
     # run test setup SQL against the target database
-    target_setup_results=$(../../pentaho/test/psql-test.sh ${target_db} ${dir} -f /input/test_case_target_setup.sql)
+    target_setup_results=$(${path_to_script}/psql-test.sh ${target_db} . -f /input/test_case_target_setup.sql)
     # run MDI configuration
     execute_test "$process_name" "$mdi_database_username" "$mdi_controller_path" "$input_type" "$filename"
     # run SQL export from target table to actual output file
-    output_setup_results=$(../../pentaho/test/psql-test.sh ${target_db} ${dir} -f /input/test_case_output_setup.sql)
+    output_setup_results=$(${path_to_script}/psql-test.sh ${target_db} . -f /input/test_case_output_setup.sql)
     # run a diff between actual output and expected output files
-    output_file_diff "${dir}/expected_output.csv" "${dir}/actual_output.csv"  "${dir}/test_diff_output.diff"
+    output_file_diff "expected_output.csv" "actual_output.csv" "test_diff_output.diff"
+    cd -
   done
 }
+
+${relative_docker_dir}/docker-up.sh
 
 # Non MDI Tests ##########################################################################
 process_name="SP6"
 database_username="encompass_sp6"
 sp6_job_path="encompass/import/SP6/full_encompass_etl"
 echo Now testing ${process_name}
+cd ${process_name}
 execute_test ${process_name} ${database_username} ${sp6_job_path} "file" "Encompass.csv"
+cd -
 
 # MDI Tests ##############################################################################
 database_username="mditest"
 # MDI Checks
-execute_mdi_test "SP-0.1"  ${database_username} "file" "input.csv"   # test performer_csv_to_table.ktr
-execute_mdi_test "SP-0.2"  ${database_username} "file" "input.xlsx" # test performer_excel_to_table.ktr
+execute_mdi_test "SP-0.1" ${database_username} "file" "input.csv"  # test performer_csv_to_table.ktr
+execute_mdi_test "SP-0.2" ${database_username} "file" "input.xlsx" # test performer_excel_to_table.ktr
 
 # MDI Test Cases #########################################################################
 database_username="mditest"
@@ -153,12 +174,12 @@ execute_mdi_test_cases "SP-0.4" ${database_username} "none" "" "ingress" "ingres
 # DMI Tests ##############################################################################
 database_username="dmi"
 # DMI NMLS Call Report - State	# DMI NMLS Call Report - State (curl "https://api.mockaroo.com/api/faa92490?count=1000&key=8ff5d150" > "dmi-V35-state.csv")
-execute_mdi_test "SP8.1"  ${database_username} "file" "dmi-V35-state.csv"
-execute_mdi_test "SP8.2"  ${database_username} "none" ""
+execute_mdi_test "SP8.1" ${database_username} "file" "dmi-V35-state.csv"
+execute_mdi_test "SP8.2" ${database_username} "none" ""
 
 # DMI NMLS Call Report - National	# DMI NMLS Call Report - National (curl "https://api.mockaroo.com/api/9011edb0?count=1000&key=8ff5d150" > "dmi-V35-national.csv")
-execute_mdi_test "SP9.1"  ${database_username} "file" "dmi-V35-national.csv"
-execute_mdi_test "SP9.2"  ${database_username} "none" ""
+execute_mdi_test "SP9.1" ${database_username} "file" "dmi-V35-national.csv"
+execute_mdi_test "SP9.2" ${database_username} "none" ""
 
 # DMI NMLS Call Report - s540a	# DMI NMLS Call Report - s540a (curl "https://api.mockaroo.com/api/3d9794e0?count=1000&key=8ff5d150" > "dmi-V35-s540a.csv")
 execute_mdi_test "SP10.1" ${database_username} "file" "dmi-V35-s540a.csv"

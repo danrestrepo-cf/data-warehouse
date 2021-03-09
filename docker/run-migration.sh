@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # TODO: this must be executed via aws-vault
 
+path_to_script=$(dirname "$0")
+absolute_path="$(pwd)/${path_to_script}"
+
 set -e
 
 if [ $# -lt 1 ]; then
@@ -9,7 +12,7 @@ if [ $# -lt 1 ]; then
 fi
 
 # clean up the dev setup before we run it against a "real" database
-rm -f database/migrations/*/beforeMigrate.sql
+rm -f ${path_to_script}/database/migrations/*/beforeMigrate.sql
 
 # TODO: shove these into a property file (sops) and read it out
 environment=$1
@@ -35,7 +38,7 @@ AUTH_TOKEN=$(aws rds generate-db-auth-token --hostname ${RDS_ENDPOINT} --port 54
 
 for database in ingress staging config; do
   docker run -it \
-    -v $(pwd)/database/migrations/${database}:/flyway/sql \
+    -v ${absolute_path}/database/migrations/${database}:/flyway/sql \
     --rm flyway/flyway:6 \
     -url=jdbc:postgresql://${RDS_ENDPOINT}:5432/${database}?requiressl=true \
     -schemas=flyway \
@@ -51,7 +54,7 @@ AUTH_TOKEN=$(aws rds generate-db-auth-token --hostname ${RDS_ENDPOINT} --port 54
 
 for database in ingress staging config; do
   docker run -it \
-    -v $(pwd)/database/migrations/${database}-permissions:/flyway/sql \
+    -v ${absolute_path}/database/migrations/${database}-permissions:/flyway/sql \
     --rm flyway/flyway:6 \
     -url=jdbc:postgresql://${RDS_ENDPOINT}:5432/${database}?requiressl=true \
     -schemas=flyway-permissions \
