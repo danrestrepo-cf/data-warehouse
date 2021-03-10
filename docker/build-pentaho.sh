@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-docker build -f pentaho.Dockerfile -t edw/pentaho pentaho/
+path_to_script=$(dirname "$0")
+
+docker build -f ${path_to_script}/pentaho.Dockerfile -t edw/pentaho ${path_to_script}/pentaho/

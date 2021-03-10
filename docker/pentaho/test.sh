@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+path_to_script=$(dirname "$0")
+
 # stop script execution if any command fails
 set -e
 
@@ -8,20 +10,19 @@ script_filename=${0##*/}
 project_name=edw
 
 # set default directories docker will use to mount in the docker container
-pentaho_source_directory=($(pwd)/../../pentaho/src)
-pentaho_test_directory=($(pwd)/../../pentaho/test)
-pentaho_input_directory=($(pwd)/inputs/)
+pentaho_source_directory="${path_to_script}/../../pentaho/src"
+pentaho_input_directory="$(pwd)/inputs/"
 
 entrypoint_parameter="j "
 
 # determine what type of machine we're running on
 unameOut="$(uname -s)"
 case "${unameOut}" in
-    Linux*)     machine=Linux;;
-    Darwin*)    machine=Mac;;
-    CYGWIN*)    machine=Win;;
-    MINGW*)     machine=Win;;
-    *)          machine="UNKNOWN:${unameOut}"
+Linux*) machine=Linux ;;
+Darwin*) machine=Mac ;;
+CYGWIN*) machine=Win ;;
+MINGW*) machine=Win ;;
+*) machine="UNKNOWN:${unameOut}" ;;
 esac
 
 function print_usage() {
@@ -54,7 +55,7 @@ function run_docker() {
     export MSYS_NO_PATHCONV=1
   fi
 
-docker_command="docker run -it  \
+  docker_command="docker run -it  \
     --network ${project_name}_default \
     -v ${pentaho_source_directory}:/jobs/ \
     -v ${pentaho_input_directory}:/input/ \
@@ -121,19 +122,17 @@ test)
   fi
 
   shift 1
-  process_name=$1   # Ex: "SP10.1"
-  filename=$5       # Ex: "Encompass.csv"
+  process_name=$1 # Ex: "SP10.1"
+  filename=$5     # Ex: "Encompass.csv"
   username=$2
   input_type=$4
-  job_name=$3       # Ex: "mdi/controller" or "encompass/import/SP6/full_encompass_etl"
-  pentaho_input_directory=${pentaho_test_directory}/${process_name}/
+  job_name=$3 # Ex: "mdi/controller" or "encompass/import/SP6/full_encompass_etl"
   run_docker
   ;;
 bash)
   shift 1
   filename="dummy_value"
   entrypoint_parameter=""
-  pentaho_input_directory="$pentaho_test_directory" # mount this dir as /input/ when launching bash so there is access to all files
   process_name="bash"
   job_name="bash"
   entrypoint_parameter=""
@@ -141,7 +140,7 @@ bash)
   username="dummy_value"
   run_docker
   exit 0
-;;
+  ;;
 *)
   echo "Could not understand input parameters. Displaying script usage:"
   print_usage
