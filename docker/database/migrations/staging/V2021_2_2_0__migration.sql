@@ -12,7 +12,7 @@ create table staging_octane.account_event_type
 
 create table staging_octane.account_id_sequence
 (
-    ais_id bigint 
+    ais_id bigint
         primary key
 );
 
@@ -25,7 +25,7 @@ create table staging_octane.account_status_type
 
 create table staging_octane.account
 (
-    a_pid bigint 
+    a_pid bigint
         primary key,
     a_version int null,
     a_account_id bigint null,
@@ -77,7 +77,7 @@ create table staging_octane.account
 
 create table staging_octane.account_event
 (
-    ae_pid bigint 
+    ae_pid bigint
         primary key,
     ae_version int null,
     ae_account_pid bigint null,
@@ -104,7 +104,7 @@ create table staging_octane.admin_user_event_type
 
 create table staging_octane.admin_user_event
 (
-    aue_pid bigint 
+    aue_pid bigint
         primary key,
     aue_version int null,
     aue_create_datetime timestamp null,
@@ -138,7 +138,7 @@ create table staging_octane.agent_type
 
 create table staging_octane.announcement
 (
-    ann_pid bigint 
+    ann_pid bigint
         primary key,
     ann_version int null,
     ann_lender_text varchar(1024) null,
@@ -275,7 +275,7 @@ create table staging_octane.appraisal_underwriter_type
 
 create table staging_octane.area_median_income_table
 (
-    amit_pid bigint 
+    amit_pid bigint
         primary key,
     amit_version int null,
     amit_account_pid bigint null,
@@ -293,7 +293,7 @@ create table staging_octane.arm_index_type
 
 create table staging_octane.arm_index_rate
 (
-    air_pid bigint 
+    air_pid bigint
         primary key,
     air_version int null,
     air_arm_index_type varchar(128) null,
@@ -358,7 +358,7 @@ create table staging_octane.bid_pool_status_type
 
 create table staging_octane.bid_pool
 (
-    bp_pid bigint 
+    bp_pid bigint
         primary key,
     bp_version int null,
     bp_account_pid bigint null,
@@ -509,7 +509,7 @@ create table staging_octane.channel_type
 
 create table staging_octane.channel
 (
-    ch_pid bigint 
+    ch_pid bigint
         primary key,
     ch_version int null,
     ch_account_pid bigint null,
@@ -604,7 +604,7 @@ create table staging_octane.company_admin_event_entity_type
 
 create table staging_octane.company_admin_event
 (
-    cae_pid bigint 
+    cae_pid bigint
         primary key,
     cae_version int null,
     cae_account_pid bigint null,
@@ -692,7 +692,7 @@ create table staging_octane.consumer_privacy_request_type
 
 create table staging_octane.cost_center
 (
-    cosc_pid bigint 
+    cosc_pid bigint
         primary key,
     cosc_version int null,
     cosc_account_pid bigint null,
@@ -711,7 +711,7 @@ create table staging_octane.country_type
 
 create table staging_octane.account_contact
 (
-    ac_pid bigint 
+    ac_pid bigint
         primary key,
     ac_version int null,
     ac_account_pid bigint null,
@@ -843,7 +843,7 @@ create table staging_octane.credit_score_model_type
 
 create table staging_octane.criteria
 (
-    cr_pid bigint 
+    cr_pid bigint
         primary key,
     cr_version int null,
     cr_account_pid bigint null,
@@ -870,7 +870,7 @@ create table staging_octane.criteria_pid_operand_type
 
 create table staging_octane.custodian
 (
-    cu_pid bigint 
+    cu_pid bigint
         primary key,
     cu_version int null,
     cu_account_pid bigint null,
@@ -905,7 +905,7 @@ create table staging_octane.deal_cancel_reason_type
 
 create table staging_octane.deal_change_updater_time
 (
-    dcut_pid bigint 
+    dcut_pid bigint
         primary key,
     dcut_version int null,
     dcut_account_pid bigint null,
@@ -977,7 +977,7 @@ create table staging_octane.deal_child_type
 
 create table staging_octane.criteria_snippet
 (
-    crs_pid bigint 
+    crs_pid bigint
         primary key,
     crs_version int null,
     crs_account_pid bigint null,
@@ -1025,7 +1025,7 @@ create table staging_octane.deal_event_type
 
 create table staging_octane.deal_id_sequence
 (
-    dis_id bigint 
+    dis_id bigint
         primary key
 );
 
@@ -1087,7 +1087,7 @@ create table staging_octane.deal_tag_level_type
 
 create table staging_octane.deal_tag_definition
 (
-    dtd_pid bigint 
+    dtd_pid bigint
         primary key,
     dtd_version int null,
     dtd_account_pid bigint null,
@@ -1550,7 +1550,7 @@ create table staging_octane.gift_funds_type
 
 create table staging_octane.account_grant_program
 (
-    agp_pid bigint 
+    agp_pid bigint
         primary key,
     agp_version int null,
     agp_account_pid bigint null,
@@ -1644,7 +1644,7 @@ create table staging_octane.hmda_race_2017_type
 
 create table staging_octane.hoepa_thresholds
 (
-    ht_pid bigint 
+    ht_pid bigint
         primary key,
     ht_version int null,
     ht_effective_date date null,
@@ -1721,7 +1721,7 @@ create table staging_octane.interim_funder_mers_registration_type
 
 create table staging_octane.interim_funder
 (
-    if_pid bigint 
+    if_pid bigint
         primary key,
     if_version int null,
     if_account_pid bigint null,
@@ -1757,7 +1757,7 @@ create table staging_octane.interim_funder
 
 create table staging_octane.credit_limit
 (
-    cl_pid bigint 
+    cl_pid bigint
         primary key,
     cl_version int null,
     cl_interim_funder_pid bigint null,
@@ -1770,7 +1770,7 @@ create table staging_octane.credit_limit
 
 create table staging_octane.investor_group
 (
-    ig_pid bigint 
+    ig_pid bigint
         primary key,
     ig_version int null,
     ig_account_pid bigint null,
@@ -1913,7 +1913,7 @@ create table staging_octane.lender_concession_request_type
 
 create table staging_octane.lender_lock_id_ticker
 (
-    lltk_pid bigint 
+    lltk_pid bigint
         primary key,
     lltk_version int null,
     lltk_account_pid bigint null,
@@ -1936,7 +1936,7 @@ create table staging_octane.lender_toolbox_permission_type
 
 create table staging_octane.lender_trade_id_ticker
 (
-    lttk_pid bigint 
+    lttk_pid bigint
         primary key,
     lttk_version int null,
     lttk_account_pid bigint null,
@@ -1952,7 +1952,7 @@ create table staging_octane.lender_user_allowed_ip_status_type
 
 create table staging_octane.lender_user_interest
 (
-    lui_pid bigint 
+    lui_pid bigint
         primary key,
     lui_version int null,
     lui_lender_user_pid bigint null,
@@ -1968,7 +1968,7 @@ create table staging_octane.lender_user_interest_type
 
 create table staging_octane.lender_user_language
 (
-    lul_pid bigint 
+    lul_pid bigint
         primary key,
     lul_version int null,
     lul_lender_user_pid bigint null,
@@ -2110,7 +2110,7 @@ create table staging_octane.loan_amortization_type
 
 create table staging_octane.apor
 (
-    ap_pid bigint 
+    ap_pid bigint
         primary key,
     ap_version int null,
     ap_as_of_date date null,
@@ -2145,7 +2145,7 @@ create table staging_octane.loan_limit_table_type
 
 create table staging_octane.loan_limit_table
 (
-    llt_pid bigint 
+    llt_pid bigint
         primary key,
     llt_version int null,
     llt_account_pid bigint null,
@@ -2213,7 +2213,7 @@ create table staging_octane.lock_extension_status_type
 
 create table staging_octane.lock_term_setting
 (
-    lts_pid bigint 
+    lts_pid bigint
         primary key,
     lts_version int null,
     lts_account_pid bigint null,
@@ -2224,7 +2224,7 @@ create table staging_octane.lock_term_setting
 
 create table staging_octane.los_loan_id_ticker
 (
-    ltk_pid bigint 
+    ltk_pid bigint
         primary key,
     ltk_version int null,
     ltk_account_pid bigint null,
@@ -2352,7 +2352,7 @@ create table staging_octane.mcr_loan_status_type
 
 create table staging_octane.mercury_client_group
 (
-    mcg_pid bigint 
+    mcg_pid bigint
         primary key,
     mcg_version int null,
     mcg_account_pid bigint null,
@@ -2384,7 +2384,7 @@ create table staging_octane.mers_registration_status_type
 
 create table staging_octane.mers_transfer_batch
 (
-    metb_pid bigint 
+    metb_pid bigint
         primary key,
     metb_version int null,
     metb_account_pid bigint null,
@@ -2507,7 +2507,7 @@ create table staging_octane.mismo_version_type
 
 create table staging_octane.mortech_account
 (
-    ma_pid bigint 
+    ma_pid bigint
         primary key,
     ma_version int null,
     ma_account_pid bigint null,
@@ -2517,7 +2517,7 @@ create table staging_octane.mortech_account
 
 create table staging_octane.lead_source
 (
-    lds_pid bigint 
+    lds_pid bigint
         primary key,
     lds_version int null,
     lds_account_pid bigint null,
@@ -2534,7 +2534,7 @@ create table staging_octane.lead_source
 
 create table staging_octane.lead_campaign
 (
-    ldc_pid bigint 
+    ldc_pid bigint
         primary key,
     ldc_version int null,
     ldc_account_pid bigint null,
@@ -2546,7 +2546,7 @@ create table staging_octane.lead_campaign
 
 create table staging_octane.lead_supplemental_margin_table
 (
-    lsmt_pid bigint 
+    lsmt_pid bigint
         primary key,
     lsmt_version int null,
     lsmt_lead_source_pid bigint null,
@@ -2555,7 +2555,7 @@ create table staging_octane.lead_supplemental_margin_table
 
 create table staging_octane.lead_supplemental_margin_row
 (
-    lsmr_pid bigint 
+    lsmr_pid bigint
         primary key,
     lsmr_version int null,
     lsmr_lead_supplemental_margin_table_pid bigint null,
@@ -2566,7 +2566,7 @@ create table staging_octane.lead_supplemental_margin_row
 
 create table staging_octane.mortgage_credit_certificate_issuer
 (
-    mcci_pid bigint 
+    mcci_pid bigint
         primary key,
     mcci_version int null,
     mcci_account_pid bigint null,
@@ -2652,7 +2652,7 @@ create table staging_octane.obligation_type
 
 create table staging_octane.offering_group
 (
-    ofg_pid bigint 
+    ofg_pid bigint
         primary key,
     ofg_version int null,
     ofg_account_pid bigint null,
@@ -2661,7 +2661,7 @@ create table staging_octane.offering_group
 
 create table staging_octane.offering
 (
-    of_pid bigint 
+    of_pid bigint
         primary key,
     of_version int null,
     of_account_pid bigint null,
@@ -2676,7 +2676,7 @@ create table staging_octane.offering
 
 create table staging_octane.org_division
 (
-    orgd_pid bigint 
+    orgd_pid bigint
         primary key,
     orgd_version int null,
     orgd_account_pid bigint null,
@@ -2686,7 +2686,7 @@ create table staging_octane.org_division
 
 create table staging_octane.org_division_terms
 (
-    orgdt_pid bigint 
+    orgdt_pid bigint
         primary key,
     orgdt_version int null,
     orgdt_org_division_pid bigint null,
@@ -2700,7 +2700,7 @@ create table staging_octane.org_division_terms
 
 create table staging_octane.org_group
 (
-    orgg_pid bigint 
+    orgg_pid bigint
         primary key,
     orgg_version int null,
     orgg_account_pid bigint null,
@@ -2710,7 +2710,7 @@ create table staging_octane.org_group
 
 create table staging_octane.org_group_terms
 (
-    orggt_pid bigint 
+    orggt_pid bigint
         primary key,
     orggt_version int null,
     orggt_org_division_pid bigint null,
@@ -2732,7 +2732,7 @@ create table staging_octane.org_leader_position_type
 
 create table staging_octane.org_region
 (
-    orgr_pid bigint 
+    orgr_pid bigint
         primary key,
     orgr_version int null,
     orgr_account_pid bigint null,
@@ -2742,7 +2742,7 @@ create table staging_octane.org_region
 
 create table staging_octane.org_region_terms
 (
-    orgrt_pid bigint 
+    orgrt_pid bigint
         primary key,
     orgrt_version int null,
     orgrt_org_group_pid bigint null,
@@ -2757,7 +2757,7 @@ create table staging_octane.org_region_terms
 
 create table staging_octane.org_team
 (
-    orgt_pid bigint 
+    orgt_pid bigint
         primary key,
     orgt_version int null,
     orgt_account_pid bigint null,
@@ -2769,7 +2769,7 @@ create table staging_octane.org_team
 
 create table staging_octane.org_unit
 (
-    orgu_pid bigint 
+    orgu_pid bigint
         primary key,
     orgu_version int null,
     orgu_account_pid bigint null,
@@ -2779,7 +2779,7 @@ create table staging_octane.org_unit
 
 create table staging_octane.org_team_terms
 (
-    orgtt_pid bigint 
+    orgtt_pid bigint
         primary key,
     orgtt_version int null,
     orgtt_org_unit_pid bigint null,
@@ -2794,7 +2794,7 @@ create table staging_octane.org_team_terms
 
 create table staging_octane.org_unit_terms
 (
-    orgut_pid bigint 
+    orgut_pid bigint
         primary key,
     orgut_version int null,
     orgut_org_region_pid bigint null,
@@ -2886,7 +2886,7 @@ create table staging_octane.payoff_request_delivery_type
 
 create table staging_octane.performer_team
 (
-    ptm_pid bigint 
+    ptm_pid bigint
         primary key,
     ptm_version int null,
     ptm_account_pid bigint null,
@@ -2923,7 +2923,7 @@ create table staging_octane.prepay_penalty_type
 
 create table staging_octane.price_processing_time
 (
-    ppt_pid bigint 
+    ppt_pid bigint
         primary key,
     ppt_version int null,
     ppt_account_pid bigint null,
@@ -3143,7 +3143,7 @@ create table staging_octane.qualified_mortgage_status_type
 
 create table staging_octane.qualified_mortgage_thresholds
 (
-    qmt_pid bigint 
+    qmt_pid bigint
         primary key,
     qmt_version int null,
     qmt_effective_date date null,
@@ -3181,7 +3181,7 @@ create table staging_octane.quarter_type
 
 create table staging_octane.mcr_snapshot
 (
-    mcrs_pid bigint 
+    mcrs_pid bigint
         primary key,
     mcrs_version int null,
     mcrs_account_pid bigint null,
@@ -3191,7 +3191,7 @@ create table staging_octane.mcr_snapshot
 
 create table staging_octane.mcr_loan
 (
-    mcrl_pid bigint 
+    mcrl_pid bigint
         primary key,
     mcrl_version int null,
     mcrl_loan_pid bigint null,
@@ -3269,7 +3269,7 @@ create table staging_octane.refinance_improvements_type
 
 create table staging_octane.relock_fee_setting
 (
-    rfs_pid bigint 
+    rfs_pid bigint
         primary key,
     rfs_version int null,
     rfs_account_pid bigint null,
@@ -3300,7 +3300,7 @@ create table staging_octane.report_type
 
 create table staging_octane.report
 (
-    rp_pid bigint 
+    rp_pid bigint
         primary key,
     rp_version int null,
     rp_account_pid bigint null,
@@ -3319,7 +3319,7 @@ create table staging_octane.report
 
 create table staging_octane.report_row
 (
-    rprw_pid bigint 
+    rprw_pid bigint
         primary key,
     rprw_version int null,
     rprw_account_pid bigint null,
@@ -3331,7 +3331,7 @@ create table staging_octane.report_row
 
 create table staging_octane.formula_report_column
 (
-    frc_pid bigint 
+    frc_pid bigint
         primary key,
     frc_version int null,
     frc_report_row_pid bigint null,
@@ -3348,7 +3348,7 @@ create table staging_octane.formula_report_column
 
 create table staging_octane.report_column
 (
-    rpc_pid bigint 
+    rpc_pid bigint
         primary key,
     rpc_version int null,
     rpc_report_row_pid bigint null,
@@ -3401,7 +3401,7 @@ create table staging_octane.road_type
 
 create table staging_octane.role
 (
-    r_pid bigint 
+    r_pid bigint
         primary key,
     r_version int null,
     r_account_pid bigint null,
@@ -3414,7 +3414,7 @@ create table staging_octane.role
 
 create table staging_octane.key_role
 (
-    kr_pid bigint 
+    kr_pid bigint
         primary key,
     kr_version int null,
     kr_role_pid bigint null,
@@ -3424,7 +3424,7 @@ create table staging_octane.key_role
 
 create table staging_octane.role_charge_permissions
 (
-    rcp_pid bigint 
+    rcp_pid bigint
         primary key,
     rcp_version int null,
     rcp_role_pid bigint null,
@@ -3441,7 +3441,7 @@ create table staging_octane.role_charge_permissions
 
 create table staging_octane.role_config_export_permission
 (
-    rcep_pid bigint 
+    rcep_pid bigint
         primary key,
     rcep_version int null,
     rcep_role_pid bigint null,
@@ -3450,7 +3450,7 @@ create table staging_octane.role_config_export_permission
 
 create table staging_octane.role_deal_context
 (
-    rdc_pid bigint 
+    rdc_pid bigint
         primary key,
     rdc_version int null,
     rdc_role_pid bigint null,
@@ -3459,7 +3459,7 @@ create table staging_octane.role_deal_context
 
 create table staging_octane.role_export_permission
 (
-    rep_pid bigint 
+    rep_pid bigint
         primary key,
     rep_version int null,
     rep_role_pid bigint null,
@@ -3468,7 +3468,7 @@ create table staging_octane.role_export_permission
 
 create table staging_octane.role_lender_toolbox
 (
-    rlet_pid bigint 
+    rlet_pid bigint
         primary key,
     rlet_version int null,
     rlet_role_pid bigint null,
@@ -3477,7 +3477,7 @@ create table staging_octane.role_lender_toolbox
 
 create table staging_octane.role_loans_toolbox
 (
-    rlot_pid bigint 
+    rlot_pid bigint
         primary key,
     rlot_version int null,
     rlot_role_pid bigint null,
@@ -3486,7 +3486,7 @@ create table staging_octane.role_loans_toolbox
 
 create table staging_octane.role_performer_assign
 (
-    rpa_pid bigint 
+    rpa_pid bigint
         primary key,
     rpa_version int null,
     rpa_role_pid bigint null,
@@ -3495,7 +3495,7 @@ create table staging_octane.role_performer_assign
 
 create table staging_octane.role_report
 (
-    rrp_pid bigint 
+    rrp_pid bigint
         primary key,
     rrp_version int null,
     rrp_report_pid bigint null,
@@ -3525,7 +3525,7 @@ create table staging_octane.secondary_admin_event_entity_type
 
 create table staging_octane.secondary_admin_event
 (
-    sae_pid bigint 
+    sae_pid bigint
         primary key,
     sae_version int null,
     sae_account_pid bigint null,
@@ -3585,7 +3585,7 @@ create table staging_octane.servicing_transfer_type
 
 create table staging_octane.settlement_agent
 (
-    sa_pid bigint 
+    sa_pid bigint
         primary key,
     sa_version int null,
     sa_account_pid bigint null,
@@ -3598,7 +3598,7 @@ create table staging_octane.settlement_agent
 
 create table staging_octane.settlement_agent_office
 (
-    sao_pid bigint 
+    sao_pid bigint
         primary key,
     sao_version int null,
     sao_settlement_agent_pid bigint null,
@@ -3618,7 +3618,7 @@ create table staging_octane.settlement_agent_office
 
 create table staging_octane.settlement_agent_wire
 (
-    saw_pid bigint 
+    saw_pid bigint
         primary key,
     saw_version int null,
     saw_settlement_agent_pid bigint null,
@@ -3662,7 +3662,7 @@ create table staging_octane.sheet_format_type
 
 create table staging_octane.google_sheet_export
 (
-    gse_pid bigint 
+    gse_pid bigint
         primary key,
     gse_version int null,
     gse_name varchar(128) null,
@@ -3685,7 +3685,7 @@ create table staging_octane.signature_part_type
 
 create table staging_octane.site_allowed_ip
 (
-    saip_pid bigint 
+    saip_pid bigint
         primary key,
     saip_version int null,
     saip_account_pid bigint null,
@@ -3705,7 +3705,7 @@ create table staging_octane.smart_charge_apr_type
 
 create table staging_octane.smart_charge
 (
-    sc_pid bigint 
+    sc_pid bigint
         primary key,
     sc_version int null,
     sc_account_pid bigint null,
@@ -3718,7 +3718,7 @@ create table staging_octane.smart_charge
 
 create table staging_octane.smart_charge_group
 (
-    scg_pid bigint 
+    scg_pid bigint
         primary key,
     scg_version int null,
     scg_smart_charge_pid bigint null,
@@ -3727,7 +3727,7 @@ create table staging_octane.smart_charge_group
 
 create table staging_octane.smart_charge_group_case
 (
-    scgc_pid bigint 
+    scgc_pid bigint
         primary key,
     scgc_version int null,
     scgc_smart_charge_group_pid bigint null,
@@ -3737,7 +3737,7 @@ create table staging_octane.smart_charge_group_case
 
 create table staging_octane.smart_charge_case
 (
-    scc_pid bigint 
+    scc_pid bigint
         primary key,
     scc_version int null,
     scc_smart_charge_group_case_pid bigint null,
@@ -3790,7 +3790,7 @@ create table staging_octane.smart_message_source_type
 
 create table staging_octane.smart_mi
 (
-    sm_pid bigint 
+    sm_pid bigint
         primary key,
     sm_version int null,
     sm_account_pid bigint null,
@@ -3799,7 +3799,7 @@ create table staging_octane.smart_mi
 
 create table staging_octane.smart_mi_eligibility_case
 (
-    smec_pid bigint 
+    smec_pid bigint
         primary key,
     smec_version int null,
     smec_smart_mi_pid bigint null,
@@ -3810,7 +3810,7 @@ create table staging_octane.smart_mi_eligibility_case
 
 create table staging_octane.smart_mi_rate_card
 (
-    smrca_pid bigint 
+    smrca_pid bigint
         primary key,
     smrca_version int null,
     smrca_from_date date null,
@@ -3823,7 +3823,7 @@ create table staging_octane.smart_mi_rate_card
 
 create table staging_octane.smart_mi_rate_adjustment_case
 (
-    smrac_pid bigint 
+    smrac_pid bigint
         primary key,
     smrac_version int null,
     smrac_smart_mi_rate_card_pid bigint null,
@@ -3834,7 +3834,7 @@ create table staging_octane.smart_mi_rate_adjustment_case
 
 create table staging_octane.smart_mi_rate_case
 (
-    smrc_pid bigint 
+    smrc_pid bigint
         primary key,
     smrc_version int null,
     smrc_smart_mi_rate_card_pid bigint null,
@@ -3854,7 +3854,7 @@ create table staging_octane.smart_mi_rate_case
 
 create table staging_octane.smart_mi_surcharge
 (
-    sms_pid bigint 
+    sms_pid bigint
         primary key,
     sms_version int null,
     sms_account_pid bigint null,
@@ -3863,7 +3863,7 @@ create table staging_octane.smart_mi_surcharge
 
 create table staging_octane.smart_mi_surcharge_case
 (
-    smsc_pid bigint 
+    smsc_pid bigint
         primary key,
     smsc_version int null,
     smsc_smart_mi_surcharge_pid bigint null,
@@ -3875,7 +3875,7 @@ create table staging_octane.smart_mi_surcharge_case
 
 create table staging_octane.smart_stack
 (
-    ss_pid bigint 
+    ss_pid bigint
         primary key,
     ss_version int null,
     ss_account_pid bigint null,
@@ -3891,7 +3891,7 @@ create table staging_octane.smart_stack_doc_set_include_option_type
 
 create table staging_octane.smart_doc_set
 (
-    sdst_pid bigint 
+    sdst_pid bigint
         primary key,
     sdst_version int null,
     sdst_account_pid bigint null,
@@ -3903,7 +3903,7 @@ create table staging_octane.smart_doc_set
 
 create table staging_octane.key_package
 (
-    kp_pid bigint 
+    kp_pid bigint
         primary key,
     kp_version int null,
     kp_account_pid bigint null,
@@ -3976,7 +3976,7 @@ create table staging_octane.state_type
 
 create table staging_octane.county
 (
-    c_pid bigint 
+    c_pid bigint
         primary key,
     c_version int null,
     c_name varchar(128) null,
@@ -3990,7 +3990,7 @@ create table staging_octane.county
 
 create table staging_octane.area_median_income_row
 (
-    amir_pid bigint 
+    amir_pid bigint
         primary key,
     amir_version int null,
     amir_area_median_income_table_pid bigint null,
@@ -4005,7 +4005,7 @@ create index idx_county_1
 
 create table staging_octane.county_city
 (
-    cci_pid bigint 
+    cci_pid bigint
         primary key,
     cci_version int null,
     cci_county_pid bigint null,
@@ -4014,7 +4014,7 @@ create table staging_octane.county_city
 
 create table staging_octane.county_sub_jurisdiction
 (
-    csju_pid bigint 
+    csju_pid bigint
         primary key,
     csju_version int null,
     csju_county_pid bigint null,
@@ -4023,7 +4023,7 @@ create table staging_octane.county_sub_jurisdiction
 
 create table staging_octane.disaster_declaration
 (
-    dd_pid bigint 
+    dd_pid bigint
         primary key,
     dd_version int null,
     dd_account_pid bigint null,
@@ -4036,7 +4036,7 @@ create table staging_octane.disaster_declaration
 
 create table staging_octane.license_req
 (
-    mlr_pid bigint 
+    mlr_pid bigint
         primary key,
     mlr_version int null,
     mlr_account_pid bigint null,
@@ -4046,7 +4046,7 @@ create table staging_octane.license_req
 
 create table staging_octane.loan_limit_row
 (
-    llr_pid bigint 
+    llr_pid bigint
         primary key,
     llr_version int null,
     llr_loan_limit_table_pid bigint null,
@@ -4061,7 +4061,7 @@ create table staging_octane.loan_limit_row
 
 create table staging_octane.recording_city
 (
-    rc_pid bigint 
+    rc_pid bigint
         primary key,
     rc_version int null,
     rc_city_name varchar(128) null,
@@ -4071,7 +4071,7 @@ create table staging_octane.recording_city
 
 create table staging_octane.recording_district
 (
-    rdi_pid bigint 
+    rdi_pid bigint
         primary key,
     rdi_version int null,
     rdi_state_type varchar(128) null,
@@ -4081,7 +4081,7 @@ create table staging_octane.recording_district
 
 create table staging_octane.county_recording_district
 (
-    crdi_pid bigint 
+    crdi_pid bigint
         primary key,
     crdi_version int null,
     crdi_county_pid bigint null,
@@ -4093,7 +4093,7 @@ create index idx_recording_district_1
 
 create table staging_octane.region_ernst_page_rec
 (
-    rerc_pid bigint 
+    rerc_pid bigint
         primary key,
     rerc_version int null,
     rerc_ernst_page_rec_type varchar(128) null,
@@ -4120,7 +4120,7 @@ create table staging_octane.stripe_payment_status_type
 
 create table staging_octane.stripe_payment
 (
-    stpm_pid bigint 
+    stpm_pid bigint
         primary key,
     stpm_version int null,
     stpm_account_pid bigint null,
@@ -4161,7 +4161,7 @@ create table staging_octane.taxpayer_identifier_type
 
 create table staging_octane.contractor
 (
-    ctr_pid bigint 
+    ctr_pid bigint
         primary key,
     ctr_version int null,
     ctr_account_pid bigint null,
@@ -4186,7 +4186,7 @@ create table staging_octane.contractor
 
 create table staging_octane.contractor_license
 (
-    ctrl_pid bigint 
+    ctrl_pid bigint
         primary key,
     ctrl_version int null,
     ctrl_contractor_pid bigint null,
@@ -4213,7 +4213,7 @@ create table staging_octane.time_zone_type
 
 create table staging_octane.admin_user
 (
-    au_pid bigint 
+    au_pid bigint
         primary key,
     au_version int null,
     au_create_date date null,
@@ -4239,7 +4239,7 @@ create table staging_octane.admin_user
 
 create table staging_octane.borrower_user
 (
-    bu_pid bigint 
+    bu_pid bigint
         primary key,
     bu_version int null,
     bu_account_pid bigint null,
@@ -4275,7 +4275,7 @@ create table staging_octane.timeout_time_zone_type
 
 create table staging_octane.title_company
 (
-    tc_pid bigint 
+    tc_pid bigint
         primary key,
     tc_version int null,
     tc_account_pid bigint null,
@@ -4287,7 +4287,7 @@ create table staging_octane.title_company
 
 create table staging_octane.title_company_office
 (
-    tco_pid bigint 
+    tco_pid bigint
         primary key,
     tco_version int null,
     tco_title_company_pid bigint null,
@@ -4305,7 +4305,7 @@ create table staging_octane.title_company_office
 
 create table staging_octane.preferred_settlement
 (
-    prs_pid bigint 
+    prs_pid bigint
         primary key,
     prs_version int null,
     prs_account_pid bigint null,
@@ -4341,7 +4341,7 @@ create table staging_octane.trade_audit_type
 
 create table staging_octane.trade_fee_type
 (
-    tft_pid bigint 
+    tft_pid bigint
         primary key,
     tft_version int null,
     tft_account_pid bigint null,
@@ -4364,7 +4364,7 @@ create table staging_octane.trade_status_type
 
 create table staging_octane.trustee
 (
-    tru_pid bigint 
+    tru_pid bigint
         primary key,
     tru_version int null,
     tru_account_pid bigint null,
@@ -4551,7 +4551,7 @@ create table staging_octane.wf_outcome_type
 
 create table staging_octane.wf_phase
 (
-    wph_pid bigint 
+    wph_pid bigint
         primary key,
     wph_version int null,
     wph_account_pid bigint null,
@@ -4575,7 +4575,7 @@ create table staging_octane.wf_process_type
 
 create table staging_octane.wf_process
 (
-    wpr_pid bigint 
+    wpr_pid bigint
         primary key,
     wpr_version int null,
     wpr_account_pid bigint null,
@@ -4622,7 +4622,7 @@ create table staging_octane.wf_step_type
 
 create table staging_octane.wf_wait_until_time_slice
 (
-    wts_pid bigint 
+    wts_pid bigint
         primary key,
     wts_version int null,
     wts_time_slice timestamp null,
@@ -4656,7 +4656,7 @@ create table staging_octane.yes_no_unknown_type
 
 create table staging_octane.application
 (
-    apl_pid bigint 
+    apl_pid bigint
         primary key,
     apl_version int null,
     apl_application_name varchar(128) null,
@@ -4682,7 +4682,7 @@ create table staging_octane.application
 
 create table staging_octane.asset
 (
-    as_pid bigint 
+    as_pid bigint
         primary key,
     as_version int null,
     as_aggregate_description varchar(256) null,
@@ -4729,7 +4729,7 @@ create table staging_octane.asset
 
 create table staging_octane.asset_large_deposit
 (
-    ald_pid bigint 
+    ald_pid bigint
         primary key,
     ald_version int null,
     ald_asset_pid bigint null,
@@ -4739,7 +4739,7 @@ create table staging_octane.asset_large_deposit
 
 create table staging_octane.creditor
 (
-    crd_pid bigint 
+    crd_pid bigint
         primary key,
     crd_version int null,
     crd_account_pid bigint null,
@@ -4766,7 +4766,7 @@ create table staging_octane.creditor
 
 create table staging_octane.creditor_lookup_name
 (
-    cln_pid bigint 
+    cln_pid bigint
         primary key,
     cln_version int null,
     cln_account_pid bigint null,
@@ -4776,7 +4776,7 @@ create table staging_octane.creditor_lookup_name
 
 create table staging_octane.investor
 (
-    i_pid bigint 
+    i_pid bigint
         primary key,
     i_version int null,
     i_account_pid bigint null,
@@ -4866,7 +4866,7 @@ create table staging_octane.investor
 
 create table staging_octane.company
 (
-    cm_pid bigint 
+    cm_pid bigint
         primary key,
     cm_version int null,
     cm_account_pid bigint null,
@@ -4906,7 +4906,7 @@ create table staging_octane.company
 
 create table staging_octane.branch
 (
-    br_pid bigint 
+    br_pid bigint
         primary key,
     br_version int null,
     br_company_pid bigint null,
@@ -4936,7 +4936,7 @@ create table staging_octane.branch
 
 create table staging_octane.branch_license
 (
-    brml_pid bigint 
+    brml_pid bigint
         primary key,
     brml_version int null,
     brml_branch_pid bigint null,
@@ -4953,7 +4953,7 @@ create index idx_account_1
 
 create table staging_octane.company_license
 (
-    cml_pid bigint 
+    cml_pid bigint
         primary key,
     cml_version int null,
     cml_company_pid bigint null,
@@ -4970,7 +4970,7 @@ create table staging_octane.company_license
 
 create table staging_octane.deal
 (
-    d_pid bigint 
+    d_pid bigint
         primary key,
     d_version int null,
     d_account_pid bigint null,
@@ -5029,7 +5029,7 @@ create table staging_octane.deal
 
 create table staging_octane.appraisal
 (
-    apr_pid bigint 
+    apr_pid bigint
         primary key,
     apr_version int null,
     apr_appraised_value_amount bigint null,
@@ -5134,7 +5134,7 @@ create table staging_octane.appraisal
 
 create table staging_octane.appraisal_form
 (
-    aprfm_pid bigint 
+    aprfm_pid bigint
         primary key,
     aprfm_version int null,
     aprfm_appraisal_pid bigint null,
@@ -5144,7 +5144,7 @@ create table staging_octane.appraisal_form
 
 create table staging_octane.appraisal_id_ticker
 (
-    aprtk_pid bigint 
+    aprtk_pid bigint
         primary key,
     aprtk_version int null,
     aprtk_deal_pid bigint null,
@@ -5168,7 +5168,7 @@ create index idx_deal_6
 
 create table staging_octane.deal_appraisal
 (
-    dappr_pid bigint 
+    dappr_pid bigint
         primary key,
     dappr_version int null,
     dappr_deal_pid bigint null,
@@ -5190,7 +5190,7 @@ create table staging_octane.deal_appraisal
 
 create table staging_octane.deal_contact
 (
-    dc_pid bigint 
+    dc_pid bigint
         primary key,
     dc_version int null,
     dc_address_city varchar(128) null,
@@ -5216,7 +5216,7 @@ create table staging_octane.deal_contact
 
 create table staging_octane.deal_disaster_declaration
 (
-    ddd_pid bigint 
+    ddd_pid bigint
         primary key,
     ddd_version int null,
     ddd_deal_pid bigint null,
@@ -5225,7 +5225,7 @@ create table staging_octane.deal_disaster_declaration
 
 create table staging_octane.deal_du
 (
-    ddu_pid bigint 
+    ddu_pid bigint
         primary key,
     ddu_version int null,
     ddu_deal_pid bigint null,
@@ -5233,58 +5233,9 @@ create table staging_octane.deal_du
     ddu_du_institution_id varchar(16) null
 );
 
-create table staging_octane.deal_event
-(
-    de_pid bigint 
-        primary key,
-    de_version int null,
-    de_create_datetime timestamp null,
-    de_deal_event_type varchar(128) null,
-    de_deal_pid bigint null,
-    de_deal_task_pid bigint null,
-    de_deal_note_pid bigint null,
-    de_deal_message_log_pid bigint null,
-    de_proposal_doc_pid bigint null,
-    de_proposal_doc_file_pid bigint null,
-    de_wf_deal_step_pid bigint null,
-    de_proposal_pid bigint null,
-    de_detail varchar(16000) null,
-    de_source_unparsed_name varchar(128) null,
-    de_coarse_event_type varchar(128) null,
-    de_borrower_text varchar(1024) null,
-    de_create_nanoseconds int null
-);
-
-create index idx_deal_event_1
-    on staging_octane.deal_event (de_create_datetime);
-
-create index idx_deal_event_2
-    on staging_octane.deal_event (de_deal_pid, de_coarse_event_type, de_create_datetime);
-
-create index idx_deal_event_3
-    on staging_octane.deal_event (de_deal_task_pid);
-
-create index idx_deal_event_4
-    on staging_octane.deal_event (de_deal_note_pid);
-
-create index idx_deal_event_5
-    on staging_octane.deal_event (de_deal_message_log_pid);
-
-create index idx_deal_event_6
-    on staging_octane.deal_event (de_proposal_doc_pid);
-
-create index idx_deal_event_7
-    on staging_octane.deal_event (de_proposal_doc_file_pid);
-
-create index idx_deal_event_8
-    on staging_octane.deal_event (de_wf_deal_step_pid);
-
-create index idx_deal_event_9
-    on staging_octane.deal_event (de_proposal_pid);
-
 create table staging_octane.deal_housing_counselors_request
 (
-    dhcr_pid bigint 
+    dhcr_pid bigint
         primary key,
     dhcr_version int null,
     dhcr_deal_pid bigint null,
@@ -5299,7 +5250,7 @@ create table staging_octane.deal_housing_counselors_request
 
 create table staging_octane.deal_housing_counselor_candidate
 (
-    dhcc_pid bigint 
+    dhcc_pid bigint
         primary key,
     dhcc_version int null,
     dhcc_deal_pid bigint null,
@@ -5337,7 +5288,7 @@ create table staging_octane.deal_housing_counselor_candidate
 
 create table staging_octane.deal_invoice
 (
-    di_pid bigint 
+    di_pid bigint
         primary key,
     di_version int null,
     di_deal_pid bigint null,
@@ -5352,7 +5303,7 @@ create table staging_octane.deal_invoice
 
 create table staging_octane.deal_invoice_item
 (
-    dii_pid bigint 
+    dii_pid bigint
         primary key,
     dii_version int null,
     dii_deal_invoice_pid bigint null,
@@ -5364,7 +5315,7 @@ create table staging_octane.deal_invoice_item
 
 create table staging_octane.deal_lender_user_event
 (
-    dlue_pid bigint 
+    dlue_pid bigint
         primary key,
     dlue_version int null,
     dlue_deal_pid bigint null,
@@ -5374,15 +5325,31 @@ create table staging_octane.deal_lender_user_event
     dlue_unparsed_text varchar(1024) null
 );
 
-create index idx_deal_lender_user_event_1
-    on staging_octane.deal_lender_user_event (dlue_subject_lender_user_pid);
-
-create index idx_deal_lender_user_event_2
-    on staging_octane.deal_lender_user_event (dlue_role_pid);
+create table staging_octane.deal_event
+(
+    de_pid bigint
+        primary key,
+    de_version int null,
+    de_create_datetime timestamp null,
+    de_deal_event_type varchar(128) null,
+    de_deal_pid bigint null,
+    de_deal_task_pid bigint null,
+    de_deal_note_pid bigint null,
+    de_deal_message_log_pid bigint null,
+    de_proposal_doc_pid bigint null,
+    de_proposal_doc_file_pid bigint null,
+    de_wf_deal_step_pid bigint null,
+    de_proposal_pid bigint null,
+    de_detail varchar(16000) null,
+    de_source_unparsed_name varchar(128) null,
+    de_coarse_event_type varchar(128) null,
+    de_borrower_text varchar(1024) null,
+    de_create_nanoseconds int null
+);
 
 create table staging_octane.deal_lp
 (
-    dlp_pid bigint 
+    dlp_pid bigint
         primary key,
     dlp_version int null,
     dlp_deal_pid bigint null,
@@ -5392,7 +5359,7 @@ create table staging_octane.deal_lp
 
 create table staging_octane.deal_performer_team
 (
-    dptm_pid bigint 
+    dptm_pid bigint
         primary key,
     dptm_version int null,
     dptm_deal_pid bigint null,
@@ -5401,7 +5368,7 @@ create table staging_octane.deal_performer_team
 
 create table staging_octane.deal_real_estate_agent
 (
-    drea_pid bigint 
+    drea_pid bigint
         primary key,
     drea_version int null,
     drea_deal_pid bigint null,
@@ -5429,7 +5396,7 @@ create table staging_octane.deal_real_estate_agent
 
 create table staging_octane.deal_settlement
 (
-    dsmt_pid bigint 
+    dsmt_pid bigint
         primary key,
     dsmt_version int null,
     dsmt_account_pid bigint null,
@@ -5471,7 +5438,7 @@ create index idx_deal_settlement_1
 
 create table staging_octane.deal_signer
 (
-    dsi_pid bigint 
+    dsi_pid bigint
         primary key,
     dsi_version int null,
     dsi_deal_pid bigint null,
@@ -5488,7 +5455,7 @@ create index idx_deal_signer_1
 
 create table staging_octane.deal_stage
 (
-    dst_pid bigint 
+    dst_pid bigint
         primary key,
     dst_version int null,
     dst_deal_pid bigint null,
@@ -5503,7 +5470,7 @@ create table staging_octane.deal_stage
 
 create table staging_octane.deal_summary
 (
-    ds_pid bigint 
+    ds_pid bigint
         primary key,
     ds_version int null,
     ds_deal_pid bigint null,
@@ -5535,7 +5502,7 @@ create table staging_octane.deal_summary
 
 create table staging_octane.investor_lock_extension_setting
 (
-    iles_pid bigint 
+    iles_pid bigint
         primary key,
     iles_version int null,
     iles_investor_pid bigint null,
@@ -5548,7 +5515,7 @@ create table staging_octane.investor_lock_extension_setting
 
 create table staging_octane.lead
 (
-    ld_pid bigint 
+    ld_pid bigint
     primary key,
     ld_version int null,
     ld_deal_pid bigint null,
@@ -5600,7 +5567,7 @@ create table staging_octane.lead
 
 create table staging_octane.lender_user
 (
-    lu_pid bigint 
+    lu_pid bigint
         primary key,
     lu_version int null,
     lu_branch_pid bigint null,
@@ -5664,7 +5631,7 @@ create table staging_octane.lender_user
 
 create table staging_octane.backfill_status
 (
-    bfs_pid bigint 
+    bfs_pid bigint
         primary key,
     bfs_version int null,
     bfs_account_pid bigint null,
@@ -5681,7 +5648,7 @@ create table staging_octane.backfill_status
 
 create table staging_octane.backfill_loan_status
 (
-    bfls_pid bigint 
+    bfls_pid bigint
         primary key,
     bfls_version int null,
     bfls_backfill_status_pid bigint null,
@@ -5696,7 +5663,7 @@ create table staging_octane.backfill_loan_status
 
 create table staging_octane.bid_pool_note
 (
-    bpn_pid bigint 
+    bpn_pid bigint
         primary key,
     bpn_version int null,
     bpn_bid_pool_pid bigint null,
@@ -5708,7 +5675,7 @@ create table staging_octane.bid_pool_note
 
 create table staging_octane.bid_pool_note_comment
 (
-    bpnc_pid bigint 
+    bpnc_pid bigint
         primary key,
     bpnc_version int null,
     bpnc_bid_pool_note_pid bigint null,
@@ -5720,7 +5687,7 @@ create table staging_octane.bid_pool_note_comment
 
 create table staging_octane.bid_pool_note_monitor
 (
-    bpnm_pid bigint 
+    bpnm_pid bigint
         primary key,
     bpnm_version int null,
     bpnm_bid_pool_note_pid bigint null,
@@ -5729,7 +5696,7 @@ create table staging_octane.bid_pool_note_monitor
 
 create table staging_octane.branch_account_executive
 (
-    brae_pid bigint 
+    brae_pid bigint
         primary key,
     brae_version int null,
     brae_branch_pid bigint null,
@@ -5739,7 +5706,7 @@ create table staging_octane.branch_account_executive
 
 create table staging_octane.deal_invoice_payment_method
 (
-    dipm_pid bigint 
+    dipm_pid bigint
         primary key,
     dipm_version int null,
     dipm_deal_invoice_pid bigint null,
@@ -5760,7 +5727,7 @@ create table staging_octane.deal_invoice_payment_method
 
 create table staging_octane.deal_key_roles
 (
-    dkrs_pid bigint 
+    dkrs_pid bigint
         primary key,
     dkrs_version int null,
     dkrs_deal_pid bigint null,
@@ -5804,7 +5771,7 @@ create table staging_octane.deal_key_roles
 
 create table staging_octane.deal_lender_user
 (
-    dlu_pid bigint 
+    dlu_pid bigint
         primary key,
     dlu_version int null,
     dlu_deal_pid bigint null,
@@ -5821,7 +5788,7 @@ create index idx_deal_lender_user_1
 
 create table staging_octane.deal_performer_team_user
 (
-    dptu_pid bigint 
+    dptu_pid bigint
         primary key,
     dptu_version int null,
     dptu_deal_pid bigint null,
@@ -5831,7 +5798,7 @@ create table staging_octane.deal_performer_team_user
 
 create table staging_octane.dw_export_request
 (
-    dwer_pid bigint 
+    dwer_pid bigint
         primary key,
     dwer_version int null,
     dwer_account_pid bigint null,
@@ -5848,7 +5815,7 @@ create table staging_octane.dw_export_request
 
 create table staging_octane.lender_settings
 (
-    lss_pid bigint 
+    lss_pid bigint
         primary key,
     lss_version int null,
     lss_account_pid bigint null,
@@ -5898,7 +5865,7 @@ create table staging_octane.lender_settings
 
 create table staging_octane.lender_user_allowed_ip
 (
-    luip_pid bigint 
+    luip_pid bigint
         primary key,
     luip_version int null,
     luip_lender_user_pid bigint null,
@@ -5921,7 +5888,7 @@ create index idx_lender_user_allowed_ip_3
 
 create table staging_octane.lender_user_deal_visit
 (
-    ludv_pid bigint 
+    ludv_pid bigint
         primary key,
     ludv_version int null,
     ludv_deal_pid bigint null,
@@ -5931,7 +5898,7 @@ create table staging_octane.lender_user_deal_visit
 
 create table staging_octane.lender_user_lead_source
 (
-    lulds_pid bigint 
+    lulds_pid bigint
         primary key,
     lulds_version int null,
     lulds_lender_user_pid bigint null,
@@ -5940,7 +5907,7 @@ create table staging_octane.lender_user_lead_source
 
 create table staging_octane.lender_user_license
 (
-    luml_pid bigint 
+    luml_pid bigint
         primary key,
     luml_version int null,
     luml_lender_user_pid bigint null,
@@ -5954,7 +5921,7 @@ create table staging_octane.lender_user_license
 
 create table staging_octane.lender_user_notice
 (
-    lun_pid bigint 
+    lun_pid bigint
         primary key,
     lun_version int null,
     lun_lender_user_pid bigint null,
@@ -5967,7 +5934,7 @@ create table staging_octane.lender_user_notice
 
 create table staging_octane.lender_user_role
 (
-    lur_pid bigint 
+    lur_pid bigint
         primary key,
     lur_version int null,
     lur_lender_user_pid bigint null,
@@ -5986,7 +5953,7 @@ create table staging_octane.lender_user_role
 
 create table staging_octane.exclusive_assignment
 (
-    ea_pid bigint 
+    ea_pid bigint
         primary key,
     ea_version int null,
     ea_lender_user_role_pid bigint null,
@@ -5997,7 +5964,7 @@ create table staging_octane.exclusive_assignment
 
 create table staging_octane.lender_user_role_addendum
 (
-    lura_pid bigint 
+    lura_pid bigint
         primary key,
     lura_version int null,
     lura_lender_user_pid bigint null,
@@ -6007,7 +5974,7 @@ create table staging_octane.lender_user_role_addendum
 
 create table staging_octane.lender_user_sign_on
 (
-    luso_pid bigint 
+    luso_pid bigint
         primary key,
     luso_version int null,
     luso_lender_user_pid bigint null,
@@ -6016,7 +5983,7 @@ create table staging_octane.lender_user_sign_on
 
 create table staging_octane.lender_user_unavailable
 (
-    luu_pid bigint 
+    luu_pid bigint
         primary key,
     luu_version int null,
     luu_lender_user_pid bigint null,
@@ -6026,7 +5993,7 @@ create table staging_octane.lender_user_unavailable
 
 create table staging_octane.mercury_network_status_request
 (
-    mnsr_pid bigint 
+    mnsr_pid bigint
         primary key,
     mnsr_version int null,
     mnsr_deal_pid bigint null,
@@ -6037,7 +6004,7 @@ create table staging_octane.mercury_network_status_request
 
 create table staging_octane.org_division_leader
 (
-    orgdl_pid bigint 
+    orgdl_pid bigint
         primary key,
     orgdl_version int null,
     orgdl_lender_user_pid bigint null,
@@ -6049,7 +6016,7 @@ create table staging_octane.org_division_leader
 
 create table staging_octane.org_group_leader
 (
-    orggl_pid bigint 
+    orggl_pid bigint
         primary key,
     orggl_version int null,
     orggl_lender_user_pid bigint null,
@@ -6061,7 +6028,7 @@ create table staging_octane.org_group_leader
 
 create table staging_octane.org_lender_user_terms
 (
-    orglut_pid bigint 
+    orglut_pid bigint
         primary key,
     orglut_version int null,
     orglut_org_team_pid bigint null,
@@ -6072,7 +6039,7 @@ create table staging_octane.org_lender_user_terms
 
 create table staging_octane.org_region_leader
 (
-    orgrl_pid bigint 
+    orgrl_pid bigint
         primary key,
     orgrl_version int null,
     orgrl_lender_user_pid bigint null,
@@ -6084,7 +6051,7 @@ create table staging_octane.org_region_leader
 
 create table staging_octane.org_team_leader
 (
-    orgtl_pid bigint 
+    orgtl_pid bigint
         primary key,
     orgtl_version int null,
     orgtl_lender_user_pid bigint null,
@@ -6096,7 +6063,7 @@ create table staging_octane.org_team_leader
 
 create table staging_octane.org_unit_leader
 (
-    orgul_pid bigint 
+    orgul_pid bigint
         primary key,
     orgul_version int null,
     orgul_lender_user_pid bigint null,
@@ -6108,7 +6075,7 @@ create table staging_octane.org_unit_leader
 
 create table staging_octane.performer_assignment
 (
-    pa_pid bigint 
+    pa_pid bigint
         primary key,
     pa_version int null,
     pa_role_pid bigint null,
@@ -6118,7 +6085,7 @@ create table staging_octane.performer_assignment
 
 create table staging_octane.product
 (
-    p_pid bigint 
+    p_pid bigint
         primary key,
     p_version int null,
     p_account_pid bigint null,
@@ -6137,7 +6104,7 @@ create table staging_octane.product
 
 create table staging_octane.offering_product
 (
-    ofp_pid bigint 
+    ofp_pid bigint
         primary key,
     ofp_version int null,
     ofp_offering_pid bigint null,
@@ -6149,7 +6116,7 @@ create table staging_octane.offering_product
 
 create table staging_octane.product_add_on
 (
-    pao_pid bigint 
+    pao_pid bigint
         primary key,
     pao_version int null,
     pao_product_pid bigint null,
@@ -6158,7 +6125,7 @@ create table staging_octane.product_add_on
 
 create table staging_octane.product_add_on_rule
 (
-    par_pid bigint 
+    par_pid bigint
         primary key,
     par_version int null,
     par_product_add_on_pid bigint null,
@@ -6307,7 +6274,7 @@ create table staging_octane.product_add_on_rule
 
 create table staging_octane.product_branch
 (
-    pbr_pid bigint 
+    pbr_pid bigint
         primary key,
     pbr_version int null,
     pbr_product_pid bigint null,
@@ -6319,7 +6286,7 @@ create table staging_octane.product_branch
 
 create table staging_octane.product_deal_check_exclusion
 (
-    pdce_pid bigint 
+    pdce_pid bigint
         primary key,
     pdce_version int null,
     pdce_product_pid bigint null,
@@ -6328,7 +6295,7 @@ create table staging_octane.product_deal_check_exclusion
 
 create table staging_octane.product_eligibility
 (
-    pe_pid bigint 
+    pe_pid bigint
         primary key,
     pe_version int null,
     pe_product_pid bigint null,
@@ -6337,7 +6304,7 @@ create table staging_octane.product_eligibility
 
 create table staging_octane.product_eligibility_rule
 (
-    per_pid bigint 
+    per_pid bigint
         primary key,
     per_version int null,
     per_product_eligibility_pid bigint null,
@@ -6480,7 +6447,7 @@ create table staging_octane.product_eligibility_rule
 
 create table staging_octane.product_lock_term
 (
-    plt_pid bigint 
+    plt_pid bigint
         primary key,
     plt_version int null,
     plt_product_pid bigint null,
@@ -6492,7 +6459,7 @@ create table staging_octane.product_lock_term
 
 create table staging_octane.product_maximum_investor_price
 (
-    pmip_pid bigint 
+    pmip_pid bigint
         primary key,
     pmip_version int null,
     pmip_product_pid bigint null,
@@ -6505,7 +6472,7 @@ create table staging_octane.product_maximum_investor_price
 
 create table staging_octane.product_maximum_rebate
 (
-    pmr_pid bigint 
+    pmr_pid bigint
         primary key,
     pmr_version int null,
     pmr_product_pid bigint null,
@@ -6515,7 +6482,7 @@ create table staging_octane.product_maximum_rebate
 
 create table staging_octane.product_minimum_investor_price
 (
-    pminip_pid bigint 
+    pminip_pid bigint
         primary key,
     pminip_version int null,
     pminip_product_pid bigint null,
@@ -6528,7 +6495,7 @@ create table staging_octane.product_minimum_investor_price
 
 create table staging_octane.product_originator
 (
-    po_pid bigint 
+    po_pid bigint
         primary key,
     po_version int null,
     po_product_pid bigint null,
@@ -6540,7 +6507,7 @@ create table staging_octane.product_originator
 
 create table staging_octane.product_terms
 (
-    pt_pid bigint 
+    pt_pid bigint
         primary key,
     pt_version int null,
     pt_amortization_term_months int null,
@@ -6662,7 +6629,7 @@ create table staging_octane.product_terms
 
 create table staging_octane.product_buydown
 (
-    pbd_pid bigint 
+    pbd_pid bigint
         primary key,
     pbd_version int null,
     pbd_product_terms_pid bigint null,
@@ -6671,7 +6638,7 @@ create table staging_octane.product_buydown
 
 create table staging_octane.product_interest_only
 (
-    pio_pid bigint 
+    pio_pid bigint
         primary key,
     pio_version int null,
     pio_product_terms_pid bigint null,
@@ -6680,7 +6647,7 @@ create table staging_octane.product_interest_only
 
 create table staging_octane.product_prepay_penalty
 (
-    ppp_pid bigint 
+    ppp_pid bigint
         primary key,
     ppp_version int null,
     ppp_product_terms_pid bigint null,
@@ -6689,7 +6656,7 @@ create table staging_octane.product_prepay_penalty
 
 create table staging_octane.rate_sheet
 (
-    rs_pid bigint 
+    rs_pid bigint
         primary key,
     rs_version int null,
     rs_product_pid bigint null,
@@ -6698,7 +6665,7 @@ create table staging_octane.rate_sheet
 
 create table staging_octane.rate_sheet_rate
 (
-    rsr_pid bigint 
+    rsr_pid bigint
         primary key,
     rsr_version int null,
     rsr_rate_sheet_pid bigint null,
@@ -6709,7 +6676,7 @@ create table staging_octane.rate_sheet_rate
 
 create table staging_octane.rate_sheet_price
 (
-    rsp_pid bigint 
+    rsp_pid bigint
         primary key,
     rsp_version int null,
     rsp_rate_sheet_rate_pid bigint null,
@@ -6720,7 +6687,7 @@ create table staging_octane.rate_sheet_price
 
 create table staging_octane.repository_file
 (
-    rf_pid bigint 
+    rf_pid bigint
         primary key,
     rf_version int null,
     rf_account_pid bigint null,
@@ -6741,7 +6708,7 @@ create table staging_octane.repository_file
 
 create table staging_octane.bid_pool_file
 (
-    bpf_pid bigint 
+    bpf_pid bigint
         primary key,
     bpf_version int null,
     bpf_bid_pool_pid bigint null,
@@ -6750,7 +6717,7 @@ create table staging_octane.bid_pool_file
 
 create table staging_octane.compass_analytics_report_request
 (
-    carr_pid bigint 
+    carr_pid bigint
         primary key,
     carr_version int null,
     carr_account_pid bigint null,
@@ -6773,7 +6740,7 @@ create table staging_octane.compass_analytics_report_request
 
 create table staging_octane.consumer_privacy_request
 (
-    cpr_pid bigint 
+    cpr_pid bigint
         primary key,
     cpr_version int null,
     cpr_request_id int null,
@@ -6797,7 +6764,7 @@ create table staging_octane.consumer_privacy_request
 
 create table staging_octane.custom_form
 (
-    cf_pid bigint 
+    cf_pid bigint
         primary key,
     cf_version int null,
     cf_account_pid bigint null,
@@ -6807,7 +6774,7 @@ create table staging_octane.custom_form
 
 create table staging_octane.custom_form_merge_field
 (
-    cfmf_pid bigint 
+    cfmf_pid bigint
         primary key,
     cfmf_version int null,
     cfmf_custom_form_pid bigint null,
@@ -6816,7 +6783,7 @@ create table staging_octane.custom_form_merge_field
 
 create table staging_octane.deal_file
 (
-    df_pid bigint 
+    df_pid bigint
         primary key,
     df_version int null,
     df_deal_pid bigint null,
@@ -6827,7 +6794,7 @@ create table staging_octane.deal_file
 
 create table staging_octane.appraisal_file
 (
-    aprf_pid bigint 
+    aprf_pid bigint
         primary key,
     aprf_version int null,
     aprf_appraisal_pid bigint null,
@@ -6837,7 +6804,7 @@ create table staging_octane.appraisal_file
 
 create table staging_octane.deal_dropbox_file
 (
-    ddf_pid bigint 
+    ddf_pid bigint
         primary key,
     ddf_version int null,
     ddf_deal_file_pid bigint null
@@ -6845,7 +6812,7 @@ create table staging_octane.deal_dropbox_file
 
 create table staging_octane.deal_file_signature
 (
-    dfs_pid bigint 
+    dfs_pid bigint
         primary key,
     dfs_version int null,
     dfs_deal_file_pid bigint null,
@@ -6861,7 +6828,7 @@ create table staging_octane.deal_file_signature
 
 create table staging_octane.deal_fraud_risk
 (
-    dfr_pid bigint 
+    dfr_pid bigint
         primary key,
     dfr_version int null,
     dfr_deal_pid bigint null,
@@ -6876,7 +6843,7 @@ create table staging_octane.deal_fraud_risk
 
 create table staging_octane.deal_invoice_file
 (
-    dif_pid bigint 
+    dif_pid bigint
         primary key,
     dif_version int null,
     dif_deal_invoice_file_type varchar(128) null,
@@ -6887,7 +6854,7 @@ create table staging_octane.deal_invoice_file
 
 create table staging_octane.deal_message_log
 (
-    dmlog_pid bigint 
+    dmlog_pid bigint
         primary key,
     dmlog_version int null,
     dmlog_deal_pid bigint null,
@@ -6908,7 +6875,7 @@ create table staging_octane.deal_message_log
 
 create table staging_octane.deal_system_file
 (
-    dsf_pid bigint 
+    dsf_pid bigint
         primary key,
     dsf_version int null,
     dsf_deal_pid bigint null,
@@ -6917,7 +6884,7 @@ create table staging_octane.deal_system_file
 
 create table staging_octane.appraisal_order_request
 (
-    aprq_pid bigint 
+    aprq_pid bigint
         primary key,
     aprq_version int null,
     aprq_deal_pid bigint null,
@@ -6946,7 +6913,7 @@ create table staging_octane.appraisal_order_request
 
 create table staging_octane.appraisal_order_request_file
 (
-    aorf_pid bigint 
+    aorf_pid bigint
         primary key,
     aorf_version int null,
     aorf_appraisal_order_request_pid bigint null,
@@ -6958,7 +6925,7 @@ create table staging_octane.appraisal_order_request_file
 
 create table staging_octane.deal_file_thumbnail
 (
-    dft_pid bigint 
+    dft_pid bigint
         primary key,
     dft_version int null,
     dft_deal_file_pid bigint null,
@@ -6968,7 +6935,7 @@ create table staging_octane.deal_file_thumbnail
 
 create table staging_octane.du_request
 (
-    dur_pid bigint 
+    dur_pid bigint
         primary key,
     dur_version int null,
     dur_proposal_pid bigint null,
@@ -7012,7 +6979,7 @@ create table staging_octane.du_request
 
 create table staging_octane.du_key_finding
 (
-    dukf_pid bigint 
+    dukf_pid bigint
         primary key,
     dukf_version int null,
     dukf_du_request_pid bigint null,
@@ -7022,7 +6989,7 @@ create table staging_octane.du_key_finding
 
 create table staging_octane.du_refi_plus_finding
 (
-    durpf_pid bigint 
+    durpf_pid bigint
         primary key,
     durpf_version int null,
     durpf_du_request_pid bigint null,
@@ -7032,7 +6999,7 @@ create table staging_octane.du_refi_plus_finding
 
 create table staging_octane.du_request_credit
 (
-    durc_pid bigint 
+    durc_pid bigint
         primary key,
     durc_version int null,
     durc_du_request_pid bigint null,
@@ -7049,7 +7016,7 @@ create table staging_octane.du_request_credit
 
 create table staging_octane.du_special_feature_code
 (
-    dusfc_pid bigint 
+    dusfc_pid bigint
         primary key,
     dusfc_version int null,
     dusfc_du_request_pid bigint null,
@@ -7059,7 +7026,7 @@ create table staging_octane.du_special_feature_code
 
 create table staging_octane.flood_cert
 (
-    fc_pid bigint 
+    fc_pid bigint
         primary key,
     fc_version int null,
     fc_deal_pid bigint null,
@@ -7106,7 +7073,7 @@ create table staging_octane.flood_cert
 
 create table staging_octane.hmda_report_request
 (
-    hrr_pid bigint 
+    hrr_pid bigint
         primary key,
     hrr_version int null,
     hrr_account_pid bigint null,
@@ -7126,7 +7093,7 @@ create table staging_octane.hmda_report_request
 
 create table staging_octane.lender_user_photo
 (
-    lup_pid bigint 
+    lup_pid bigint
         primary key,
     lup_version int null,
     lup_lender_user_pid bigint null,
@@ -7135,7 +7102,7 @@ create table staging_octane.lender_user_photo
 
 create table staging_octane.lp_request
 (
-    lpr_pid bigint 
+    lpr_pid bigint
         primary key,
     lpr_version int null,
     lpr_proposal_pid bigint null,
@@ -7193,7 +7160,7 @@ create table staging_octane.lp_request
 
 create table staging_octane.credit_request
 (
-    crdr_pid bigint 
+    crdr_pid bigint
         primary key,
     crdr_version int null,
     crdr_deal_pid bigint null,
@@ -7263,7 +7230,7 @@ create table staging_octane.credit_request
 
 create table staging_octane.borrower
 (
-    b_pid bigint 
+    b_pid bigint
         primary key,
     b_version int null,
     b_alimony_child_support varchar(128) null,
@@ -7448,7 +7415,7 @@ create index idx_borrower_5
 
 create table staging_octane.borrower_alias
 (
-    ba_pid bigint 
+    ba_pid bigint
         primary key,
     ba_version int null,
     ba_account_number varchar(32) null,
@@ -7464,7 +7431,7 @@ create table staging_octane.borrower_alias
 
 create table staging_octane.borrower_asset
 (
-    bas_pid bigint 
+    bas_pid bigint
         primary key,
     bas_version int null,
     bas_borrower_pid bigint null,
@@ -7473,7 +7440,7 @@ create table staging_octane.borrower_asset
 
 create table staging_octane.borrower_associated_address
 (
-    baa_pid bigint 
+    baa_pid bigint
         primary key,
     baa_version int null,
     baa_borrower_pid bigint null,
@@ -7507,7 +7474,7 @@ create table staging_octane.borrower_associated_address
 
 create table staging_octane.borrower_dependent
 (
-    bd_pid bigint 
+    bd_pid bigint
         primary key,
     bd_version int null,
     bd_borrower_pid bigint null,
@@ -7523,7 +7490,7 @@ create table staging_octane.borrower_dependent
 
 create table staging_octane.borrower_income
 (
-    bi_pid bigint 
+    bi_pid bigint
         primary key,
     bi_version int null,
     bi_borrower_pid bigint null,
@@ -7549,7 +7516,7 @@ create table staging_octane.borrower_income
 
 create table staging_octane.borrower_job_gap
 (
-    bjg_pid bigint 
+    bjg_pid bigint
         primary key,
     bjg_version int null,
     bjg_borrower_pid bigint null,
@@ -7560,7 +7527,7 @@ create table staging_octane.borrower_job_gap
 
 create table staging_octane.borrower_user_deal
 (
-    bud_pid bigint 
+    bud_pid bigint
         primary key,
     bud_version int null,
     bud_borrower_user_pid bigint null,
@@ -7576,7 +7543,7 @@ create table staging_octane.borrower_user_deal
 
 create table staging_octane.borrower_user_change_email
 (
-    buce_pid bigint 
+    buce_pid bigint
         primary key,
     buce_version int null,
     buce_borrower_user_pid bigint null,
@@ -7597,7 +7564,7 @@ create index idx_borrower_user_deal_1
 
 create table staging_octane.business_income
 (
-    bui_pid bigint 
+    bui_pid bigint
         primary key,
     bui_version int null,
     bui_borrower_income_pid bigint null,
@@ -7803,7 +7770,7 @@ create table staging_octane.business_income
 
 create table staging_octane.consumer_privacy_affected_borrower
 (
-    cpab_pid bigint 
+    cpab_pid bigint
         primary key,
     cpab_version int null,
     cpab_consumer_privacy_request_pid bigint null,
@@ -7813,7 +7780,7 @@ create table staging_octane.consumer_privacy_affected_borrower
 
 create table staging_octane.job_income
 (
-    ji_pid bigint 
+    ji_pid bigint
         primary key,
     ji_version int null,
     ji_borrower_income_pid bigint null,
@@ -7971,7 +7938,7 @@ create table staging_octane.job_income
 
 create table staging_octane.lp_finding
 (
-    lpf_pid bigint 
+    lpf_pid bigint
         primary key,
     lpf_version int null,
     lpf_lp_request_pid bigint null,
@@ -7982,7 +7949,7 @@ create table staging_octane.lp_finding
 
 create table staging_octane.lp_request_credit
 (
-    lprc_pid bigint 
+    lprc_pid bigint
         primary key,
     lprc_version int null,
     lprc_lp_request_pid bigint null,
@@ -7998,7 +7965,7 @@ create table staging_octane.lp_request_credit
 
 create table staging_octane.mers_daily_report
 (
-    medr_pid bigint 
+    medr_pid bigint
         primary key,
     medr_version int null,
     medr_account_pid bigint null,
@@ -8013,7 +7980,7 @@ create table staging_octane.mers_daily_report
 
 create table staging_octane.military_service
 (
-    ms_pid bigint 
+    ms_pid bigint
         primary key,
     ms_version int null,
     ms_borrower_pid bigint null,
@@ -8028,7 +7995,7 @@ create table staging_octane.military_service
 
 create table staging_octane.other_income
 (
-    oi_pid bigint 
+    oi_pid bigint
         primary key,
     oi_version int null,
     oi_other_income_type varchar(128) null,
@@ -8094,7 +8061,7 @@ create table staging_octane.other_income
 
 create table staging_octane.proposal
 (
-    prp_pid bigint 
+    prp_pid bigint
         primary key,
     prp_version int null,
     prp_decision_lp_request_pid bigint null,
@@ -8322,7 +8289,7 @@ create table staging_octane.proposal
 
 create table staging_octane.aus_request_number_ticker
 (
-    arnt_pid bigint 
+    arnt_pid bigint
         primary key,
     arnt_version int null,
     arnt_proposal_pid bigint null,
@@ -8331,7 +8298,7 @@ create table staging_octane.aus_request_number_ticker
 
 create table staging_octane.construction_draw
 (
-    cd_pid bigint 
+    cd_pid bigint
         primary key,
     cd_version int null,
     cd_proposal_pid bigint null,
@@ -8353,7 +8320,7 @@ create table staging_octane.construction_draw
 
 create table staging_octane.construction_draw_number_ticker
 (
-    cdnt_pid bigint 
+    cdnt_pid bigint
         primary key,
     cdnt_version int null,
     cdnt_proposal_pid bigint null,
@@ -8362,7 +8329,7 @@ create table staging_octane.construction_draw_number_ticker
 
 create table staging_octane.credit_inquiry
 (
-    ci_pid bigint 
+    ci_pid bigint
         primary key,
     ci_version int null,
     ci_proposal_pid bigint null,
@@ -8390,7 +8357,7 @@ create table staging_octane.credit_inquiry
 
 create table staging_octane.borrower_credit_inquiry
 (
-    bci_pid bigint 
+    bci_pid bigint
         primary key,
     bci_version int null,
     bci_credit_inquiry_pid bigint null,
@@ -8399,7 +8366,7 @@ create table staging_octane.borrower_credit_inquiry
 
 create table staging_octane.deal_snapshot
 (
-    desn_pid bigint 
+    desn_pid bigint
         primary key,
     desn_version int null,
     desn_snapshot_proposal_pid bigint null,
@@ -8446,7 +8413,7 @@ create table staging_octane.deal_snapshot
 
 create table staging_octane.docusign_package
 (
-    dcsp_pid bigint 
+    dcsp_pid bigint
         primary key,
     dcsp_version int null,
     dcsp_proposal_pid bigint null,
@@ -8460,7 +8427,7 @@ create index idx_docusign_package_1
 
 create table staging_octane.master_property_insurance
 (
-    mpi_pid bigint 
+    mpi_pid bigint
         primary key,
     mpi_version int null,
     mpi_proposal_pid bigint null,
@@ -8497,7 +8464,7 @@ create table staging_octane.master_property_insurance
 
 create table staging_octane.mi_integration_vendor_request
 (
-    mivr_pid bigint 
+    mivr_pid bigint
         primary key,
     mivr_version int null,
     mivr_proposal_pid bigint null,
@@ -8526,7 +8493,7 @@ create table staging_octane.mi_integration_vendor_request
 
 create table staging_octane.loan
 (
-    l_pid bigint 
+    l_pid bigint
         primary key,
     l_version int null,
     l_proposal_pid bigint null,
@@ -8641,7 +8608,7 @@ create table staging_octane.loan
 
 create table staging_octane.circumstance_change
 (
-    cc_pid bigint 
+    cc_pid bigint
         primary key,
     cc_version int null,
     cc_loan_pid bigint null,
@@ -8660,7 +8627,7 @@ create index idx_circumstance_change_1
 
 create table staging_octane.ernst_request
 (
-    enst_pid bigint 
+    enst_pid bigint
         primary key,
     enst_version int null,
     enst_loan_pid bigint null,
@@ -8718,7 +8685,7 @@ create table staging_octane.ernst_request
 
 create table staging_octane.ernst_request_question
 (
-    enstq_pid bigint 
+    enstq_pid bigint
         primary key,
     enstq_version int null,
     enstq_ernst_request_pid bigint null,
@@ -8730,7 +8697,7 @@ create table staging_octane.ernst_request_question
 
 create table staging_octane.loan_beneficiary
 (
-    lb_pid bigint 
+    lb_pid bigint
         primary key,
     lb_version int null,
     lb_loan_pid bigint null,
@@ -8765,7 +8732,7 @@ create table staging_octane.loan_beneficiary
 
 create table staging_octane.loan_closing_doc
 (
-    lcd_pid bigint 
+    lcd_pid bigint
         primary key,
     lcd_version int null,
     lcd_loan_pid bigint null,
@@ -8780,7 +8747,7 @@ create table staging_octane.loan_closing_doc
 
 create table staging_octane.loan_eligible_investor
 (
-    lei_pid bigint 
+    lei_pid bigint
         primary key,
     lei_version int null,
     lei_loan_pid bigint null,
@@ -8789,7 +8756,7 @@ create table staging_octane.loan_eligible_investor
 
 create table staging_octane.loan_funding
 (
-    lf_pid bigint 
+    lf_pid bigint
         primary key,
     lf_version int null,
     lf_loan_pid bigint null,
@@ -8823,7 +8790,7 @@ create table staging_octane.loan_funding
 
 create table staging_octane.loan_hedge
 (
-    lh_pid bigint 
+    lh_pid bigint
         primary key,
     lh_version int null,
     lh_loan_pid bigint null,
@@ -9121,7 +9088,7 @@ create table staging_octane.loan_hedge
 
 create table staging_octane.loan_mi_rate_adjustment
 (
-    lmra_pid bigint 
+    lmra_pid bigint
         primary key,
     lmra_version int null,
     lmra_loan_pid bigint null,
@@ -9131,7 +9098,7 @@ create table staging_octane.loan_mi_rate_adjustment
 
 create table staging_octane.loan_mi_surcharge
 (
-    lms_pid bigint 
+    lms_pid bigint
         primary key,
     lms_version int null,
     lms_loan_pid bigint null,
@@ -9142,7 +9109,7 @@ create table staging_octane.loan_mi_surcharge
 
 create table staging_octane.loan_price_add_on
 (
-    lpa_pid bigint 
+    lpa_pid bigint
         primary key,
     lpa_version int null,
     lpa_loan_pid bigint null,
@@ -9156,7 +9123,7 @@ create table staging_octane.loan_price_add_on
 
 create table staging_octane.loan_recording
 (
-    lr_pid bigint 
+    lr_pid bigint
         primary key,
     lr_version int null,
     lr_loan_pid bigint null,
@@ -9178,7 +9145,7 @@ create table staging_octane.loan_recording
 
 create table staging_octane.loan_servicer
 (
-    lsv_pid bigint 
+    lsv_pid bigint
         primary key,
     lsv_version int null,
     lsv_loan_pid bigint null,
@@ -9205,7 +9172,7 @@ create index idx_loan_servicer_1
 
 create table staging_octane.lock_series
 (
-    lsr_pid bigint 
+    lsr_pid bigint
         primary key,
     lsr_loan_pid bigint null,
     lsr_version int null,
@@ -9215,7 +9182,7 @@ create table staging_octane.lock_series
 
 create table staging_octane.lender_lock_major
 (
-    llmj_pid bigint 
+    llmj_pid bigint
         primary key,
     llmj_version int null,
     llmj_major_version int null,
@@ -9256,7 +9223,7 @@ create table staging_octane.lender_lock_major
 
 create table staging_octane.bid_pool_lender_lock
 (
-    bpll_pid bigint 
+    bpll_pid bigint
         primary key,
     bpll_version int null,
     bpll_bid_pool_pid bigint null,
@@ -9265,7 +9232,7 @@ create table staging_octane.bid_pool_lender_lock
 
 create table staging_octane.lender_concession_request
 (
-    lcr_pid bigint 
+    lcr_pid bigint
         primary key,
     lcr_version int null,
     lcr_loan_pid bigint null,
@@ -9288,7 +9255,7 @@ create table staging_octane.lender_concession_request
 
 create table staging_octane.lender_lock_extension
 (
-    lle_pid bigint 
+    lle_pid bigint
         primary key,
     lle_version int null,
     lle_lender_lock_major_pid bigint null,
@@ -9315,7 +9282,7 @@ create index idx_lender_lock_major_1
 
 create table staging_octane.lender_lock_minor
 (
-    llmn_pid bigint 
+    llmn_pid bigint
         primary key,
     llmn_version int null,
     llmn_lender_lock_major_pid bigint null,
@@ -9366,7 +9333,7 @@ create table staging_octane.lender_lock_minor
 
 create table staging_octane.lender_lock_add_on
 (
-    lla_pid bigint 
+    lla_pid bigint
         primary key,
     lla_version int null,
     lla_lender_lock_minor_pid bigint null,
@@ -9384,7 +9351,7 @@ create table staging_octane.lender_lock_add_on
 
 create table staging_octane.net_tangible_benefit
 (
-    ntb_pid bigint 
+    ntb_pid bigint
         primary key,
     ntb_version int null,
     ntb_net_tangible_benefit_type varchar(128) null,
@@ -9393,7 +9360,7 @@ create table staging_octane.net_tangible_benefit
 
 create table staging_octane.obligation
 (
-    ob_pid bigint 
+    ob_pid bigint
         primary key,
     ob_version int null,
     ob_proposal_pid bigint null,
@@ -9457,7 +9424,7 @@ create table staging_octane.obligation
 
 create table staging_octane.loan_charge
 (
-    lc_pid bigint 
+    lc_pid bigint
         primary key,
     lc_version int null,
     lc_proposal_pid bigint null,
@@ -9522,7 +9489,7 @@ create table staging_octane.loan_charge
 
 create table staging_octane.place
 (
-    pl_pid bigint 
+    pl_pid bigint
         primary key,
     pl_version int null,
     pl_proposal_pid bigint null,
@@ -9739,7 +9706,7 @@ create table staging_octane.place
 
 create table staging_octane.borrower_reo
 (
-    breo_pid bigint 
+    breo_pid bigint
         primary key,
     breo_version int null,
     breo_borrower_pid bigint null,
@@ -9749,7 +9716,7 @@ create table staging_octane.borrower_reo
 
 create table staging_octane.borrower_residence
 (
-    bres_pid bigint 
+    bres_pid bigint
         primary key,
     bres_version int null,
     bres_borrower_pid bigint null,
@@ -9763,7 +9730,7 @@ create table staging_octane.borrower_residence
 
 create table staging_octane.borrower_tax_filing
 (
-    btf_pid bigint 
+    btf_pid bigint
         primary key,
     btf_version int null,
     btf_borrower_pid bigint null,
@@ -9779,7 +9746,7 @@ create table staging_octane.borrower_tax_filing
 
 create table staging_octane.borrower_va
 (
-    bva_pid bigint 
+    bva_pid bigint
         primary key,
     bva_version int null,
     bva_borrower_pid bigint null,
@@ -9852,7 +9819,7 @@ create index idx_place_1
 
 create table staging_octane.profit_margin_detail
 (
-    pmd_pid bigint 
+    pmd_pid bigint
         primary key,
     pmd_version int null,
     pmd_lender_lock_minor_pid bigint null,
@@ -9871,7 +9838,7 @@ create index idx_proposal_1
 
 create table staging_octane.proposal_contractor
 (
-    pctr_pid bigint 
+    pctr_pid bigint
         primary key,
     pctr_version int null,
     pctr_proposal_pid bigint null,
@@ -9880,7 +9847,7 @@ create table staging_octane.proposal_contractor
 
 create table staging_octane.construction_cost
 (
-    coc_pid bigint 
+    coc_pid bigint
         primary key,
     coc_version int null,
     coc_proposal_pid bigint null,
@@ -9898,7 +9865,7 @@ create table staging_octane.construction_cost
 
 create table staging_octane.construction_draw_item
 (
-    cdi_pid bigint 
+    cdi_pid bigint
         primary key,
     cdi_version int null,
     cdi_proposal_pid bigint null,
@@ -9911,7 +9878,7 @@ create table staging_octane.construction_draw_item
 
 create table staging_octane.proposal_doc_set
 (
-    prpds_pid bigint 
+    prpds_pid bigint
         primary key,
     prpds_version int null,
     prpds_proposal_pid bigint null,
@@ -9945,7 +9912,7 @@ create table staging_octane.proposal_doc_set
 
 create table staging_octane.proposal_doc_set_id_ticker
 (
-    pdstk_pid bigint 
+    pdstk_pid bigint
         primary key,
     pdstk_version int null,
     pdstk_proposal_pid bigint null,
@@ -9955,7 +9922,7 @@ create table staging_octane.proposal_doc_set_id_ticker
 
 create table staging_octane.proposal_doc_set_signer
 (
-    prpdss_pid bigint 
+    prpdss_pid bigint
         primary key,
     prpdss_version int null,
     prpdss_proposal_doc_set_pid bigint null,
@@ -9967,7 +9934,7 @@ create table staging_octane.proposal_doc_set_signer
 
 create table staging_octane.proposal_doc_set_snapshot
 (
-    prpdssn_pid bigint 
+    prpdssn_pid bigint
         primary key,
     prpdssn_version int null,
     prpdssn_proposal_doc_set_pid bigint null,
@@ -9976,7 +9943,7 @@ create table staging_octane.proposal_doc_set_snapshot
 
 create table staging_octane.proposal_engagement
 (
-    prpe_pid bigint 
+    prpe_pid bigint
         primary key,
     prpe_version int null,
     prpe_proposal_pid bigint null,
@@ -9985,7 +9952,7 @@ create table staging_octane.proposal_engagement
 
 create table staging_octane.proposal_grant_program
 (
-    pgp_pid bigint 
+    pgp_pid bigint
         primary key,
     pgp_version int null,
     pgp_proposal_pid bigint null,
@@ -9995,7 +9962,7 @@ create table staging_octane.proposal_grant_program
 
 create table staging_octane.proposal_review
 (
-    prpre_pid bigint 
+    prpre_pid bigint
         primary key,
     prpre_version int null,
     prpre_proposal_pid bigint null,
@@ -10011,7 +9978,7 @@ create table staging_octane.proposal_review
 
 create table staging_octane.proposal_review_ticker
 (
-    prpret_pid bigint 
+    prpret_pid bigint
         primary key,
     prpret_version int null,
     prpret_proposal_pid bigint null,
@@ -10020,7 +9987,7 @@ create table staging_octane.proposal_review_ticker
 
 create table staging_octane.proposal_summary
 (
-    ps_pid bigint 
+    ps_pid bigint
         primary key,
     ps_version int null,
     ps_proposal_pid bigint null,
@@ -10198,7 +10165,7 @@ create index idx_proposal_summary_8
 
 create table staging_octane.pte_request
 (
-    pter_pid bigint 
+    pter_pid bigint
         primary key,
     pter_version int null,
     pter_proposal_pid bigint null,
@@ -10224,7 +10191,7 @@ create table staging_octane.pte_request
 
 create table staging_octane.public_record
 (
-    pr_pid bigint 
+    pr_pid bigint
         primary key,
     pr_version int null,
     pr_proposal_pid bigint null,
@@ -10258,7 +10225,7 @@ create table staging_octane.public_record
 
 create table staging_octane.borrower_public_record
 (
-    bpr_pid bigint 
+    bpr_pid bigint
         primary key,
     bpr_version int null,
     bpr_borrower_pid bigint null,
@@ -10267,7 +10234,7 @@ create table staging_octane.borrower_public_record
 
 create table staging_octane.rental_income
 (
-    ri_pid bigint 
+    ri_pid bigint
         primary key,
     ri_version int null,
     ri_borrower_income_pid bigint null,
@@ -10388,7 +10355,7 @@ create table staging_octane.rental_income
 
 create table staging_octane.sap_quote_request
 (
-    sqr_pid bigint 
+    sqr_pid bigint
         primary key,
     sqr_version int null,
     sqr_deal_pid bigint null,
@@ -10402,7 +10369,7 @@ create table staging_octane.sap_quote_request
 
 create table staging_octane.secondary_settings
 (
-    sset_pid bigint 
+    sset_pid bigint
         primary key,
     sset_version int null,
     sset_account_pid bigint null,
@@ -10437,7 +10404,7 @@ create table staging_octane.secondary_settings
 
 create table staging_octane.servicer_loan_id_import_request
 (
-    slir_pid bigint 
+    slir_pid bigint
         primary key,
     slir_version int null,
     slir_account_pid bigint null,
@@ -10450,7 +10417,7 @@ create table staging_octane.servicer_loan_id_import_request
 
 create table staging_octane.servicer_loan_id_assignment
 (
-    slia_pid bigint 
+    slia_pid bigint
         primary key,
     slia_version int null,
     slia_account_pid bigint null,
@@ -10463,7 +10430,7 @@ create table staging_octane.servicer_loan_id_assignment
 
 create table staging_octane.smart_doc
 (
-    sd_pid bigint 
+    sd_pid bigint
         primary key,
     sd_version int null,
     sd_account_pid bigint null,
@@ -10507,7 +10474,7 @@ create table staging_octane.smart_doc
 
 create table staging_octane.smart_doc_criteria
 (
-    sdc_pid bigint 
+    sdc_pid bigint
         primary key,
     sdc_version int null,
     sdc_smart_doc_pid bigint null,
@@ -10517,7 +10484,7 @@ create table staging_octane.smart_doc_criteria
 
 create table staging_octane.smart_doc_note
 (
-    sdn_pid bigint 
+    sdn_pid bigint
         primary key,
     sdn_version int null,
     sdn_smart_doc_pid bigint null,
@@ -10529,7 +10496,7 @@ create table staging_octane.smart_doc_note
 
 create table staging_octane.smart_doc_note_comment
 (
-    sdnc_pid bigint 
+    sdnc_pid bigint
         primary key,
     sdnc_version int null,
     sdnc_smart_doc_note_pid bigint null,
@@ -10541,7 +10508,7 @@ create table staging_octane.smart_doc_note_comment
 
 create table staging_octane.smart_doc_note_monitor
 (
-    sdnm_pid bigint 
+    sdnm_pid bigint
         primary key,
     sdnm_version int null,
     sdnm_smart_doc_note_pid bigint null,
@@ -10550,7 +10517,7 @@ create table staging_octane.smart_doc_note_monitor
 
 create table staging_octane.smart_doc_role
 (
-    sdr_pid bigint 
+    sdr_pid bigint
         primary key,
     sdr_version int null,
     sdr_smart_doc_pid bigint null,
@@ -10560,7 +10527,7 @@ create table staging_octane.smart_doc_role
 
 create table staging_octane.smart_message
 (
-    smsg_pid bigint 
+    smsg_pid bigint
         primary key,
     smsg_version int null,
     smsg_account_pid bigint null,
@@ -10580,7 +10547,7 @@ create table staging_octane.smart_message
 
 create table staging_octane.smart_message_recipient
 (
-    smr_pid bigint 
+    smr_pid bigint
         primary key,
     smr_version int null,
     smr_smart_message_pid bigint null,
@@ -10591,7 +10558,7 @@ create table staging_octane.smart_message_recipient
 
 create table staging_octane.smart_req
 (
-    sr_pid bigint 
+    sr_pid bigint
         primary key,
     sr_version int null,
     sr_smart_doc_pid bigint null,
@@ -10605,7 +10572,7 @@ create table staging_octane.smart_req
 
 create table staging_octane.smart_separator
 (
-    ssp_pid bigint 
+    ssp_pid bigint
         primary key,
     ssp_version int null,
     ssp_account_pid bigint null,
@@ -10616,7 +10583,7 @@ create table staging_octane.smart_separator
 
 create table staging_octane.smart_set_doc
 (
-    sstd_pid bigint 
+    sstd_pid bigint
         primary key,
     sstd_version int null,
     sstd_smart_doc_set_pid bigint null,
@@ -10626,7 +10593,7 @@ create table staging_octane.smart_set_doc
 
 create table staging_octane.smart_stack_doc
 (
-    ssd_pid bigint 
+    ssd_pid bigint
         primary key,
     ssd_version int null,
     ssd_smart_stack_pid bigint null,
@@ -10640,7 +10607,7 @@ create table staging_octane.smart_stack_doc
 
 create table staging_octane.stack_export_request
 (
-    ser_pid bigint 
+    ser_pid bigint
         primary key,
     ser_version int null,
     ser_account_pid bigint null,
@@ -10661,7 +10628,7 @@ create table staging_octane.stack_export_request
 
 create table staging_octane.stack_export_file
 (
-    sef_pid bigint 
+    sef_pid bigint
         primary key,
     sef_version int null,
     sef_stack_export_request_pid bigint null,
@@ -10671,7 +10638,7 @@ create table staging_octane.stack_export_file
 
 create table staging_octane.tax_transcript_request
 (
-    ttr_pid bigint 
+    ttr_pid bigint
         primary key,
     ttr_version int null,
     ttr_deal_pid bigint null,
@@ -10761,7 +10728,7 @@ create table staging_octane.tax_transcript_request
 
 create table staging_octane.third_party_community_second_program
 (
-    tpcsp_pid bigint 
+    tpcsp_pid bigint
         primary key,
     tpcsp_version int null,
     tpcsp_account_pid bigint null,
@@ -10782,7 +10749,7 @@ create table staging_octane.third_party_community_second_program
 
 create table staging_octane.liability
 (
-    lia_pid bigint 
+    lia_pid bigint
         primary key,
     lia_version int null,
     lia_proposal_pid bigint null,
@@ -10885,7 +10852,7 @@ create table staging_octane.liability
 
 create table staging_octane.borrower_liability
 (
-    bl_pid bigint 
+    bl_pid bigint
         primary key,
     bl_version int null,
     bl_borrower_pid bigint null,
@@ -10894,7 +10861,7 @@ create table staging_octane.borrower_liability
 
 create table staging_octane.deal_tag
 (
-    dtg_pid bigint 
+    dtg_pid bigint
         primary key,
     dtg_version int null,
     dtg_deal_tag_definition_pid bigint null,
@@ -10916,7 +10883,7 @@ create table staging_octane.deal_tag
 
 create table staging_octane.product_third_party_community_second_program
 (
-    ptpp_pid bigint 
+    ptpp_pid bigint
         primary key,
     ptpp_version int null,
     ptpp_product_terms_pid bigint null,
@@ -10925,7 +10892,7 @@ create table staging_octane.product_third_party_community_second_program
 
 create table staging_octane.proposal_doc
 (
-    prpd_pid bigint 
+    prpd_pid bigint
         primary key,
     prpd_version int null,
     prpd_doc_name varchar(767) null,
@@ -10980,7 +10947,7 @@ create table staging_octane.proposal_doc
 
 create table staging_octane.proposal_doc_borrower_access
 (
-    pdba_pid bigint 
+    pdba_pid bigint
         primary key,
     pdba_version int null,
     pdba_borrower_pid bigint null,
@@ -10989,7 +10956,7 @@ create table staging_octane.proposal_doc_borrower_access
 
 create table staging_octane.proposal_doc_file
 (
-    prpdf_pid bigint 
+    prpdf_pid bigint
         primary key,
     prpdf_version int null,
     prpdf_proposal_doc_pid bigint null,
@@ -11001,7 +10968,7 @@ create table staging_octane.proposal_doc_file
 
 create table staging_octane.proposal_req
 (
-    prpr_pid bigint 
+    prpr_pid bigint
         primary key,
     prpr_version int null,
     prpr_proposal_doc_pid bigint null,
@@ -11051,7 +11018,7 @@ create table staging_octane.proposal_req
 
 create table staging_octane.sap_deal_step
 (
-    sds_pid bigint 
+    sds_pid bigint
         primary key,
     sds_version int null,
     sds_borrower_user_pid bigint null,
@@ -11077,7 +11044,7 @@ create table staging_octane.sap_deal_step
 
 create table staging_octane.deal_sap
 (
-    dsap_pid bigint 
+    dsap_pid bigint
         primary key,
     dsap_version int null,
     dsap_deal_pid bigint null,
@@ -11090,7 +11057,7 @@ create table staging_octane.deal_sap
 
 create table staging_octane.trade
 (
-    t_pid bigint 
+    t_pid bigint
         primary key,
     t_version int null,
     t_account_pid bigint null,
@@ -11128,7 +11095,7 @@ create table staging_octane.trade
 
 create table staging_octane.investor_lock
 (
-    il_pid bigint 
+    il_pid bigint
         primary key,
     il_version int null,
     il_lender_lock_major_pid bigint null,
@@ -11172,7 +11139,7 @@ create table staging_octane.investor_lock
 
 create table staging_octane.investor_lock_add_on
 (
-    ila_pid bigint 
+    ila_pid bigint
         primary key,
     ila_version int null,
     ila_investor_lock_pid bigint null,
@@ -11187,7 +11154,7 @@ create table staging_octane.investor_lock_add_on
 
 create table staging_octane.investor_lock_extension
 (
-    ile_pid bigint 
+    ile_pid bigint
         primary key,
     ile_version int null,
     ile_investor_lock_pid bigint null,
@@ -11212,7 +11179,7 @@ create index idx_trade_1
 
 create table staging_octane.trade_audit
 (
-    ta_pid bigint 
+    ta_pid bigint
         primary key,
     ta_version int null,
     ta_trade_pid bigint null,
@@ -11223,7 +11190,7 @@ create table staging_octane.trade_audit
 
 create table staging_octane.trade_fee
 (
-    tfe_pid bigint 
+    tfe_pid bigint
         primary key,
     tfe_version int null,
     tfe_trade_pid bigint null,
@@ -11234,7 +11201,7 @@ create table staging_octane.trade_fee
 
 create table staging_octane.trade_file
 (
-    tf_pid bigint 
+    tf_pid bigint
         primary key,
     tf_version int null,
     tf_trade_pid bigint null,
@@ -11243,7 +11210,7 @@ create table staging_octane.trade_file
 
 create table staging_octane.trade_lock_filter
 (
-    tlf_pid bigint 
+    tlf_pid bigint
         primary key,
     tlf_version int null,
     tlf_lender_user_pid bigint null,
@@ -11253,7 +11220,7 @@ create table staging_octane.trade_lock_filter
 
 create table staging_octane.trade_note
 (
-    tn_pid bigint 
+    tn_pid bigint
         primary key,
     tn_version int null,
     tn_trade_pid bigint null,
@@ -11265,7 +11232,7 @@ create table staging_octane.trade_note
 
 create table staging_octane.trade_note_comment
 (
-    tnc_pid bigint 
+    tnc_pid bigint
         primary key,
     tnc_version int null,
     tnc_trade_note_pid bigint null,
@@ -11277,7 +11244,7 @@ create table staging_octane.trade_note_comment
 
 create table staging_octane.trade_note_monitor
 (
-    tnm_pid bigint 
+    tnm_pid bigint
         primary key,
     tnm_version int null,
     tnm_trade_note_pid bigint null,
@@ -11286,7 +11253,7 @@ create table staging_octane.trade_note_monitor
 
 create table staging_octane.trade_product
 (
-    tp_pid bigint 
+    tp_pid bigint
         primary key,
     tp_version int null,
     tp_product_pid bigint null,
@@ -11295,7 +11262,7 @@ create table staging_octane.trade_product
 
 create table staging_octane.unpaid_balance_adjustment
 (
-    upba_pid bigint 
+    upba_pid bigint
         primary key,
     upba_version int null,
     upba_investor_pid bigint null,
@@ -11306,7 +11273,7 @@ create table staging_octane.unpaid_balance_adjustment
 
 create table staging_octane.vendor_document_repository_file
 (
-    vdrf_pid bigint 
+    vdrf_pid bigint
         primary key,
     vdrf_version int null,
     vdrf_account_pid bigint null,
@@ -11322,7 +11289,7 @@ create table staging_octane.vendor_document_repository_file
 
 create table staging_octane.deal_data_vendor_document_import
 (
-    ddvdi_pid bigint 
+    ddvdi_pid bigint
         primary key,
     ddvdi_version int null,
     ddvdi_deal_pid bigint null,
@@ -11337,7 +11304,7 @@ create table staging_octane.deal_data_vendor_document_import
 
 create table staging_octane.vendor_document_event
 (
-    vde_pid bigint 
+    vde_pid bigint
         primary key,
     vde_version int null,
     vde_account_pid bigint null,
@@ -11351,7 +11318,7 @@ create table staging_octane.vendor_document_event
 
 create table staging_octane.wf_deal_process
 (
-    wdpr_pid bigint 
+    wdpr_pid bigint
         primary key,
     wdpr_version int null,
     wdpr_deal_pid bigint null,
@@ -11364,7 +11331,7 @@ create table staging_octane.wf_deal_process
 
 create table staging_octane.wf_step
 (
-    ws_pid bigint 
+    ws_pid bigint
         primary key,
     ws_version int null,
     ws_wf_process_pid bigint null,
@@ -11400,7 +11367,7 @@ create table staging_octane.wf_step
 
 create table staging_octane.criteria_pid_operand
 (
-    crpo_pid bigint 
+    crpo_pid bigint
         primary key,
     crpo_version int null,
     crpo_criteria_pid bigint null,
@@ -11431,7 +11398,7 @@ create table staging_octane.criteria_pid_operand
 
 create table staging_octane.smart_task
 (
-    st_pid bigint 
+    st_pid bigint
         primary key,
     st_version int null,
     st_wf_step_pid bigint null,
@@ -11444,7 +11411,7 @@ create table staging_octane.smart_task
 
 create table staging_octane.smart_task_tag_modifier
 (
-    sttm_pid bigint 
+    sttm_pid bigint
         primary key,
     sttm_version int null,
     sttm_deal_tag_definition_pid bigint null,
@@ -11485,7 +11452,7 @@ create table staging_octane.view_wf_deal_step_started
 
 create table staging_octane.wf_deal_step
 (
-    wds_pid bigint 
+    wds_pid bigint
         primary key,
     wds_version int null,
     wds_wf_step_pid bigint null,
@@ -11515,7 +11482,7 @@ create table staging_octane.wf_deal_step
 
 create table staging_octane.deal_note
 (
-    dn_pid bigint 
+    dn_pid bigint
         primary key,
     dn_version int null,
     dn_deal_pid bigint null,
@@ -11532,7 +11499,7 @@ create table staging_octane.deal_note
 
 create table staging_octane.deal_note_comment
 (
-    dnc_pid bigint 
+    dnc_pid bigint
         primary key,
     dnc_version int null,
     dnc_deal_note_pid bigint null,
@@ -11544,7 +11511,7 @@ create table staging_octane.deal_note_comment
 
 create table staging_octane.deal_note_monitor
 (
-    dnm_pid bigint 
+    dnm_pid bigint
         primary key,
     dnm_version int null,
     dnm_deal_note_pid bigint null,
@@ -11553,7 +11520,7 @@ create table staging_octane.deal_note_monitor
 
 create table staging_octane.deal_note_role_tag
 (
-    dnrt_pid bigint 
+    dnrt_pid bigint
         primary key,
     dnrt_version int null,
     dnrt_deal_note_pid bigint null,
@@ -11562,7 +11529,7 @@ create table staging_octane.deal_note_role_tag
 
 create table staging_octane.deal_task
 (
-    dt_pid bigint 
+    dt_pid bigint
         primary key,
     dt_version int null,
     dt_wf_deal_step_pid bigint null,
@@ -11576,7 +11543,7 @@ create table staging_octane.deal_task
 
 create table staging_octane.wf_deal_fork_process
 (
-    wdfp_pid bigint 
+    wdfp_pid bigint
         primary key,
     wdfp_version int null,
     wdfp_wf_deal_step_pid bigint null,
@@ -11585,7 +11552,7 @@ create table staging_octane.wf_deal_fork_process
 
 create table staging_octane.wf_deal_function_queue
 (
-    wdfq_pid bigint 
+    wdfq_pid bigint
         primary key,
     wdfq_version int null,
     wdfq_wf_deal_step_pid bigint null,
@@ -11596,7 +11563,7 @@ create table staging_octane.wf_deal_function_queue
 
 create table staging_octane.wf_deal_outcome
 (
-    wdo_pid bigint 
+    wdo_pid bigint
         primary key,
     wdo_version int null,
     wdo_wf_deal_step_pid bigint null,
@@ -11610,7 +11577,7 @@ create table staging_octane.wf_deal_outcome
 
 create table staging_octane.wf_deal_step_timeout
 (
-    wdst_pid bigint 
+    wdst_pid bigint
         primary key,
     wdst_version int null,
     wdst_wf_deal_step_pid bigint null,
@@ -11622,7 +11589,7 @@ create index idx_wf_deal_step_timeout_1
 
 create table staging_octane.wf_fork_process
 (
-    wfp_pid bigint 
+    wfp_pid bigint
         primary key,
     wfp_version int null,
     wfp_wf_step_pid bigint null,
@@ -11631,7 +11598,7 @@ create table staging_octane.wf_fork_process
 
 create table staging_octane.wf_outcome
 (
-    wo_pid bigint 
+    wo_pid bigint
         primary key,
     wo_version int null,
     wo_wf_step_pid bigint null,
@@ -11647,7 +11614,7 @@ create table staging_octane.wf_outcome
 
 create table staging_octane.wf_step_deal_check
 (
-    wsdc_pid bigint 
+    wsdc_pid bigint
         primary key,
     wsdc_version int null,
     wsdc_wf_step_pid bigint null,
@@ -11657,7 +11624,7 @@ create table staging_octane.wf_step_deal_check
 
 create table staging_octane.wf_step_deal_check_definition
 (
-    wsdd_pid bigint 
+    wsdd_pid bigint
         primary key,
     wsdd_version int null,
     wsdd_wf_step_pid bigint null,
@@ -11667,7 +11634,7 @@ create table staging_octane.wf_step_deal_check_definition
 
 create table staging_octane.wf_step_deal_check_dependency
 (
-    wsdp_pid bigint 
+    wsdp_pid bigint
         primary key,
     wsdp_version int null,
     wsdp_wf_step_pid bigint null,
@@ -11676,7 +11643,7 @@ create table staging_octane.wf_step_deal_check_dependency
 
 create table staging_octane.wf_step_deal_tag_modifier
 (
-    wsdt_pid bigint 
+    wsdt_pid bigint
         primary key,
     wsdt_version int null,
     wsdt_deal_tag_definition_pid bigint null,
@@ -11686,7 +11653,7 @@ create table staging_octane.wf_step_deal_tag_modifier
 
 create table staging_octane.zip_code_info
 (
-    zci_pid bigint 
+    zci_pid bigint
         primary key,
     zci_version int null,
     zci_zip_code varchar(5) null,
@@ -11696,1662 +11663,12 @@ create table staging_octane.zip_code_info
 
 create table staging_octane.county_zip_code
 (
-    czc_pid bigint 
+    czc_pid bigint
         primary key,
     czc_version int null,
     czc_county_pid bigint null,
     czc_zip_code_info_pid bigint null
 );
-
--- Creating indexes for columns that are associated with foreign keys in lura
-create index idx_fkt_account_1 on staging_octane.account (a_account_status_type);
-create index idx_fk_account_contact_1 on staging_octane.account_contact (ac_account_pid);
-create index idx_fkt_account_contact_2 on staging_octane.account_contact (ac_address_country);
-create index idx_fk_account_event_1 on staging_octane.account_event (ae_account_pid);
-create index idx_fkt_account_event_2 on staging_octane.account_event (ae_account_event_type);
-create index idx_fk_account_grant_program_1 on staging_octane.account_grant_program (agp_account_pid);
-create index idx_fkt_account_grant_program_2 on staging_octane.account_grant_program (agp_program_funds_type);
-create index idx_fkt_account_grant_program_3 on staging_octane.account_grant_program (agp_wire_action_type);
-create index idx_fkt_admin_user_1 on staging_octane.admin_user (au_admin_user_status_type);
-create index idx_fkt_admin_user_2 on staging_octane.admin_user (au_time_zone);
-create index idx_fkt_admin_user_event_1 on staging_octane.admin_user_event (aue_admin_user_event_type);
-create index idx_fkt_apor_1 on staging_octane.apor (ap_loan_amortization_type);
-create index idx_fk_application_1 on staging_octane.application (apl_proposal_pid);
-create index idx_fkt_application_2 on staging_octane.application (apl_address_country);
-create index idx_fkt_application_3 on staging_octane.application (apl_fha_borrower_certification_more_than_four_dwellings);
-create index idx_fkt_application_4 on staging_octane.application (apl_fha_borrower_certification_own_other_property);
-create index idx_fkt_application_5 on staging_octane.application (apl_fha_borrower_certification_property_to_be_sold);
-create index idx_fkt_application_6 on staging_octane.application (apl_fha_borrower_certification_rental);
-create index idx_fkt_application_7 on staging_octane.application (apl_fha_va_bor_cert_sales_price_exceeds_type);
-create index idx_fkt_application_8 on staging_octane.application (apl_va_borrower_certification_occupancy_type);
-create index idx_fk_appraisal_1 on staging_octane.appraisal (apr_deal_pid);
-create index idx_fk_appraisal_2 on staging_octane.appraisal (apr_hve_confidence_level_type);
-create index idx_fkt_appraisal_3 on staging_octane.appraisal (apr_appraisal_condition_type);
-create index idx_fkt_appraisal_4 on staging_octane.appraisal (apr_appraisal_order_status_type);
-create index idx_fkt_appraisal_5 on staging_octane.appraisal (apr_appraisal_purpose_type);
-create index idx_fkt_appraisal_6 on staging_octane.appraisal (apr_appraisal_source_type);
-create index idx_fkt_appraisal_7 on staging_octane.appraisal (apr_appraisal_underwriter_type);
-create index idx_fkt_appraisal_8 on staging_octane.appraisal (apr_appraiser_address_country);
-create index idx_fkt_appraisal_9 on staging_octane.appraisal (apr_mortgage_type);
-create index idx_fkt_appraisal_10 on staging_octane.appraisal (apr_neighborhood_location_type);
-create index idx_fkt_appraisal_11 on staging_octane.appraisal (apr_order_appraisal);
-create index idx_fkt_appraisal_12 on staging_octane.appraisal (apr_payment_type);
-create index idx_fkt_appraisal_13 on staging_octane.appraisal (apr_property_address_country);
-create index idx_fkt_appraisal_14 on staging_octane.appraisal (apr_property_category_type);
-create index idx_fkt_appraisal_15 on staging_octane.appraisal (apr_road_type);
-create index idx_fkt_appraisal_16 on staging_octane.appraisal (apr_sanitation_type);
-create index idx_fkt_appraisal_17 on staging_octane.appraisal (apr_water_type);
-create index idx_fk_appraisal_file_1 on staging_octane.appraisal_file (aprf_appraisal_pid);
-create index idx_fk_appraisal_file_2 on staging_octane.appraisal_file (aprf_deal_file_pid);
-create index idx_fkt_appraisal_file_3 on staging_octane.appraisal_file (aprf_appraisal_file_type);
-create index idx_fk_appraisal_form_1 on staging_octane.appraisal_form (aprfm_appraisal_pid);
-create index idx_fkt_appraisal_form_2 on staging_octane.appraisal_form (aprfm_appraisal_form_type);
-create index idx_fkt_appraisal_form_3 on staging_octane.appraisal_form (aprfm_appraisal_source_type);
-create index idx_fk_appraisal_id_ticker_1 on staging_octane.appraisal_id_ticker (aprtk_deal_pid);
-create index idx_fk_appraisal_order_request_1 on staging_octane.appraisal_order_request (aprq_deal_pid);
-create index idx_fk_appraisal_order_request_2 on staging_octane.appraisal_order_request (aprq_appraisal_pid);
-create index idx_fk_appraisal_order_request_3 on staging_octane.appraisal_order_request (aprq_mercury_network_status_request_pid);
-create index idx_fk_appraisal_order_request_4 on staging_octane.appraisal_order_request (aprq_response_xml_deal_system_file_pid);
-create index idx_fk_appraisal_order_request_5 on staging_octane.appraisal_order_request (aprq_mismo_xml_deal_system_file_pid);
-create index idx_fk_appraisal_order_request_6 on staging_octane.appraisal_order_request (aprq_requester_lender_user_pid);
-create index idx_fkt_appraisal_order_request_7 on staging_octane.appraisal_order_request (aprq_appraisal_management_company_type);
-create index idx_fkt_appraisal_order_request_8 on staging_octane.appraisal_order_request (aprq_appraisal_order_coarse_status_type);
-create index idx_fkt_appraisal_order_request_9 on staging_octane.appraisal_order_request (aprq_appraisal_order_request_type);
-create index idx_fkt_appraisal_order_request_10 on staging_octane.appraisal_order_request (aprq_requester_agent_type);
-create index idx_fk_appraisal_order_request_file_1 on staging_octane.appraisal_order_request_file (aorf_appraisal_order_request_pid);
-create index idx_fk_appraisal_order_request_file_2 on staging_octane.appraisal_order_request_file (aorf_deal_file_pid);
-create index idx_fkt_appraisal_order_request_file_3 on staging_octane.appraisal_order_request_file (aorf_appraisal_order_request_file_type);
-create index idx_fk_area_median_income_row_1 on staging_octane.area_median_income_row (amir_area_median_income_table_pid);
-create index idx_fk_area_median_income_row_2 on staging_octane.area_median_income_row (amir_state_type);
-create index idx_fk_area_median_income_row_3 on staging_octane.area_median_income_row (amir_county_pid);
-create index idx_fk_area_median_income_table_1 on staging_octane.area_median_income_table (amit_account_pid);
-create index idx_fkt_arm_index_rate_1 on staging_octane.arm_index_rate (air_arm_index_type);
-create index idx_fk_asset_1 on staging_octane.asset (as_application_pid);
-create index idx_fk_asset_2 on staging_octane.asset (as_earnest_money_deposit_source_pid);
-create index idx_fk_asset_3 on staging_octane.asset (as_gift_funds_depository_asset_pid);
-create index idx_fkt_asset_4 on staging_octane.asset (as_asset_type);
-create index idx_fkt_asset_5 on staging_octane.asset (as_donor_country);
-create index idx_fkt_asset_6 on staging_octane.asset (as_gift_funds_account_holder_type);
-create index idx_fkt_asset_7 on staging_octane.asset (as_gift_funds_type);
-create index idx_fkt_asset_8 on staging_octane.asset (as_holder_country);
-create index idx_fkt_asset_9 on staging_octane.asset (as_source_verification_required);
-create index idx_fk_asset_large_deposit_1 on staging_octane.asset_large_deposit (ald_asset_pid);
-create index idx_fk_aus_request_number_ticker_1 on staging_octane.aus_request_number_ticker (arnt_proposal_pid);
-create index idx_fk_backfill_loan_status_1 on staging_octane.backfill_loan_status (bfls_backfill_status_pid);
-create index idx_fkt_backfill_loan_status_2 on staging_octane.backfill_loan_status (bfls_backfill_status_type);
-create index idx_fk_backfill_status_1 on staging_octane.backfill_status (bfs_account_pid);
-create index idx_fk_backfill_status_2 on staging_octane.backfill_status (bfs_lender_user_pid);
-create index idx_fkt_backfill_status_3 on staging_octane.backfill_status (bfs_backfill_status_type);
-create index idx_fk_bid_pool_1 on staging_octane.bid_pool (bp_account_pid);
-create index idx_fkt_bid_pool_2 on staging_octane.bid_pool (bp_bid_pool_status_type);
-create index idx_fk_bid_pool_file_1 on staging_octane.bid_pool_file (bpf_bid_pool_pid);
-create index idx_fk_bid_pool_file_2 on staging_octane.bid_pool_file (bpf_repository_file_pid);
-create index idx_fk_bid_pool_lender_lock_1 on staging_octane.bid_pool_lender_lock (bpll_bid_pool_pid);
-create index idx_fk_bid_pool_lender_lock_2 on staging_octane.bid_pool_lender_lock (bpll_lender_lock_major_pid);
-create index idx_fk_bid_pool_note_1 on staging_octane.bid_pool_note (bpn_bid_pool_pid);
-create index idx_fk_bid_pool_note_2 on staging_octane.bid_pool_note (bpn_author_lender_user_pid);
-create index idx_fk_bid_pool_note_comment_1 on staging_octane.bid_pool_note_comment (bpnc_bid_pool_note_pid);
-create index idx_fk_bid_pool_note_comment_2 on staging_octane.bid_pool_note_comment (bpnc_author_lender_user_pid);
-create index idx_fk_bid_pool_note_monitor_1 on staging_octane.bid_pool_note_monitor (bpnm_bid_pool_note_pid);
-create index idx_fk_bid_pool_note_monitor_2 on staging_octane.bid_pool_note_monitor (bpnm_lender_user_pid);
-create index idx_fk_borrower_1 on staging_octane.borrower (b_application_pid);
-create index idx_fk_borrower_2 on staging_octane.borrower (b_mailing_place_pid);
-create index idx_fk_borrower_3 on staging_octane.borrower (b_spouse_borrower_pid);
-create index idx_fk_borrower_4 on staging_octane.borrower (b_credit_request_pid);
-create index idx_fkt_borrower_5 on staging_octane.borrower (b_alimony_child_support);
-create index idx_fkt_borrower_6 on staging_octane.borrower (b_applicant_role_type);
-create index idx_fkt_borrower_7 on staging_octane.borrower (b_application_taken_method_type);
-create index idx_fkt_borrower_8 on staging_octane.borrower (b_bankruptcy);
-create index idx_fkt_borrower_9 on staging_octane.borrower (b_borrowed_down_payment);
-create index idx_fkt_borrower_10 on staging_octane.borrower (b_borrower_tiny_id_type);
-create index idx_fkt_borrower_11 on staging_octane.borrower (b_citizenship_residency_type);
-create index idx_fkt_borrower_12 on staging_octane.borrower (b_credit_report_authorization_method);
-create index idx_fkt_borrower_13 on staging_octane.borrower (b_disabled);
-create index idx_fkt_borrower_14 on staging_octane.borrower (b_ethnicity_collected_visual_or_surname);
-create index idx_fkt_borrower_15 on staging_octane.borrower (b_ethnicity_refused);
-create index idx_fkt_borrower_16 on staging_octane.borrower (b_has_dependents);
-create index idx_fkt_borrower_17 on staging_octane.borrower (b_homeowner_past_three_years);
-create index idx_fkt_borrower_18 on staging_octane.borrower (b_homeownership_education_agency_type);
-create index idx_fkt_borrower_19 on staging_octane.borrower (b_homeownership_education_type);
-create index idx_fkt_borrower_20 on staging_octane.borrower (b_housing_counseling_agency_type);
-create index idx_fkt_borrower_21 on staging_octane.borrower (b_housing_counseling_type);
-create index idx_fkt_borrower_22 on staging_octane.borrower (b_intend_to_occupy);
-create index idx_fkt_borrower_23 on staging_octane.borrower (b_legal_entity_type);
-create index idx_fkt_borrower_24 on staging_octane.borrower (b_lender_employee);
-create index idx_fkt_borrower_25 on staging_octane.borrower (b_marital_status_type);
-create index idx_fkt_borrower_26 on staging_octane.borrower (b_note_endorser);
-create index idx_fkt_borrower_27 on staging_octane.borrower (b_obligated_loan_foreclosure);
-create index idx_fkt_borrower_28 on staging_octane.borrower (b_on_gsa_list);
-create index idx_fkt_borrower_29 on staging_octane.borrower (b_on_ldp_list);
-create index idx_fkt_borrower_30 on staging_octane.borrower (b_outstanding_judgements);
-create index idx_fkt_borrower_31 on staging_octane.borrower (b_party_to_lawsuit);
-create index idx_fkt_borrower_32 on staging_octane.borrower (b_power_of_attorney);
-create index idx_fkt_borrower_33 on staging_octane.borrower (b_power_of_attorney_country);
-create index idx_fkt_borrower_34 on staging_octane.borrower (b_presently_delinquent);
-create index idx_fkt_borrower_35 on staging_octane.borrower (b_prior_property_title_type);
-create index idx_fkt_borrower_36 on staging_octane.borrower (b_prior_property_usage_type);
-create index idx_fkt_borrower_37 on staging_octane.borrower (b_property_foreclosure);
-create index idx_fkt_borrower_38 on staging_octane.borrower (b_race_collected_visual_or_surname);
-create index idx_fkt_borrower_39 on staging_octane.borrower (b_race_refused);
-create index idx_fkt_borrower_40 on staging_octane.borrower (b_relationship_to_primary_borrower_type);
-create index idx_fkt_borrower_41 on staging_octane.borrower (b_relationship_to_seller_type);
-create index idx_fkt_borrower_42 on staging_octane.borrower (b_sex_collected_visual_or_surname);
-create index idx_fkt_borrower_43 on staging_octane.borrower (b_sex_refused);
-create index idx_fkt_borrower_44 on staging_octane.borrower (b_spousal_homestead);
-create index idx_fkt_borrower_45 on staging_octane.borrower (b_titleholder);
-create index idx_fk_borrower_alias_1 on staging_octane.borrower_alias (ba_borrower_pid);
-create index idx_fk_borrower_alias_2 on staging_octane.borrower_alias (ba_credit_request_pid);
-create index idx_fk_borrower_asset_1 on staging_octane.borrower_asset (bas_borrower_pid);
-create index idx_fk_borrower_asset_2 on staging_octane.borrower_asset (bas_asset_pid);
-create index idx_fk_borrower_associated_address_1 on staging_octane.borrower_associated_address (baa_borrower_pid);
-create index idx_fk_borrower_associated_address_2 on staging_octane.borrower_associated_address (baa_credit_request_pid);
-create index idx_fkt_borrower_associated_address_3 on staging_octane.borrower_associated_address (baa_borrower_associated_address_explanation_type);
-create index idx_fkt_borrower_associated_address_4 on staging_octane.borrower_associated_address (baa_borrower_associated_address_source_type);
-create index idx_fkt_borrower_associated_address_5 on staging_octane.borrower_associated_address (baa_borrower_resided_at_address_after_date);
-create index idx_fkt_borrower_associated_address_6 on staging_octane.borrower_associated_address (baa_current);
-create index idx_fkt_borrower_associated_address_7 on staging_octane.borrower_associated_address (baa_current_mailing_address);
-create index idx_fkt_borrower_associated_address_8 on staging_octane.borrower_associated_address (baa_current_residence);
-create index idx_fkt_borrower_associated_address_9 on staging_octane.borrower_associated_address (baa_known_to_borrower);
-create index idx_fkt_borrower_associated_address_10 on staging_octane.borrower_associated_address (baa_owned_by_borrower);
-create index idx_fkt_borrower_associated_address_11 on staging_octane.borrower_associated_address (baa_resided_at_address);
-create index idx_fkt_borrower_associated_address_12 on staging_octane.borrower_associated_address (baa_typo_of_loan_app_address);
-create index idx_fkt_borrower_associated_address_13 on staging_octane.borrower_associated_address (baa_used_as_mailing_address);
-create index idx_fk_borrower_credit_inquiry_1 on staging_octane.borrower_credit_inquiry (bci_credit_inquiry_pid);
-create index idx_fk_borrower_credit_inquiry_2 on staging_octane.borrower_credit_inquiry (bci_borrower_pid);
-create index idx_fk_borrower_dependent_1 on staging_octane.borrower_dependent (bd_borrower_pid);
-create index idx_fk_borrower_income_1 on staging_octane.borrower_income (bi_borrower_pid);
-create index idx_fkt_borrower_income_2 on staging_octane.borrower_income (bi_borrower_income_category_type);
-create index idx_fkt_borrower_income_3 on staging_octane.borrower_income (bi_business_ownership_type);
-create index idx_fkt_borrower_income_4 on staging_octane.borrower_income (bi_job_gap_reason_type);
-create index idx_fkt_borrower_income_5 on staging_octane.borrower_income (bi_source_address_country);
-create index idx_fk_borrower_job_gap_1 on staging_octane.borrower_job_gap (bjg_borrower_pid);
-create index idx_fk_borrower_liability_1 on staging_octane.borrower_liability (bl_borrower_pid);
-create index idx_fk_borrower_liability_2 on staging_octane.borrower_liability (bl_liability_pid);
-create index idx_fk_borrower_public_record_1 on staging_octane.borrower_public_record (bpr_borrower_pid);
-create index idx_fk_borrower_public_record_2 on staging_octane.borrower_public_record (bpr_public_record_pid);
-create index idx_fk_borrower_reo_1 on staging_octane.borrower_reo (breo_borrower_pid);
-create index idx_fk_borrower_reo_2 on staging_octane.borrower_reo (breo_place_pid);
-create index idx_fk_borrower_residence_1 on staging_octane.borrower_residence (bres_borrower_pid);
-create index idx_fk_borrower_residence_2 on staging_octane.borrower_residence (bres_place_pid);
-create index idx_fkt_borrower_residence_3 on staging_octane.borrower_residence (bres_borrower_residency_basis_type);
-create index idx_fk_borrower_tax_filing_1 on staging_octane.borrower_tax_filing (btf_borrower_pid);
-create index idx_fk_borrower_tax_filing_2 on staging_octane.borrower_tax_filing (btf_place_pid);
-create index idx_fkt_borrower_tax_filing_3 on staging_octane.borrower_tax_filing (btf_tax_filing_status_type);
-create index idx_fk_borrower_user_1 on staging_octane.borrower_user (bu_account_pid);
-create index idx_fkt_borrower_user_2 on staging_octane.borrower_user (bu_borrower_user_account_status_type);
-create index idx_fkt_borrower_user_3 on staging_octane.borrower_user (bu_challenge_question_type);
-create index idx_fkt_borrower_user_4 on staging_octane.borrower_user (bu_time_zone);
-create index idx_fk_borrower_user_change_email_1 on staging_octane.borrower_user_change_email (buce_borrower_user_pid);
-create index idx_fk_borrower_user_change_email_2 on staging_octane.borrower_user_change_email (buce_borrower_user_deal_pid);
-create index idx_fk_borrower_user_deal_1 on staging_octane.borrower_user_deal (bud_borrower_user_pid);
-create index idx_fk_borrower_user_deal_2 on staging_octane.borrower_user_deal (bud_deal_pid);
-create index idx_fk_borrower_user_deal_3 on staging_octane.borrower_user_deal (bud_borrower_pid);
-create index idx_fkt_borrower_user_deal_4 on staging_octane.borrower_user_deal (bud_borrower_user_deal_access_type);
-create index idx_fk_borrower_va_1 on staging_octane.borrower_va (bva_borrower_pid);
-create index idx_fk_borrower_va_2 on staging_octane.borrower_va (bva_previous_use_place_pid);
-create index idx_fkt_borrower_va_3 on staging_octane.borrower_va (bva_active_duty_following_separation);
-create index idx_fkt_borrower_va_4 on staging_octane.borrower_va (bva_benefit_related_indebtedness);
-create index idx_fkt_borrower_va_5 on staging_octane.borrower_va (bva_deceased_spouse_military_branch_type);
-create index idx_fkt_borrower_va_6 on staging_octane.borrower_va (bva_disability_benefits_prior_to_discharge);
-create index idx_fkt_borrower_va_7 on staging_octane.borrower_va (bva_disability_payments);
-create index idx_fkt_borrower_va_8 on staging_octane.borrower_va (bva_previously_applied_for_eligibility);
-create index idx_fkt_borrower_va_9 on staging_octane.borrower_va (bva_previously_applied_for_eligibility_center_type);
-create index idx_fkt_borrower_va_10 on staging_octane.borrower_va (bva_previously_received_certificate_of_eligibility);
-create index idx_fkt_borrower_va_11 on staging_octane.borrower_va (bva_previously_secured_center_type);
-create index idx_fkt_borrower_va_12 on staging_octane.borrower_va (bva_separated_from_service_due_to_disability);
-create index idx_fkt_borrower_va_13 on staging_octane.borrower_va (bva_surviving_spouse_receiving_dic_payments);
-create index idx_fkt_borrower_va_14 on staging_octane.borrower_va (bva_va_entitlement_code_type);
-create index idx_fkt_borrower_va_15 on staging_octane.borrower_va (bva_va_entitlement_restoration_type);
-create index idx_fkt_borrower_va_16 on staging_octane.borrower_va (bva_va_relative_relationship_type);
-create index idx_fkt_borrower_va_17 on staging_octane.borrower_va (bva_veteran_status_type);
-create index idx_fk_branch_1 on staging_octane.branch (br_company_pid);
-create index idx_fkt_branch_2 on staging_octane.branch (br_address_country);
-create index idx_fkt_branch_3 on staging_octane.branch (br_branch_status_type);
-create index idx_fkt_branch_4 on staging_octane.branch (br_uuts_loan_originator_type);
-create index idx_fk_branch_account_executive_1 on staging_octane.branch_account_executive (brae_branch_pid);
-create index idx_fk_branch_account_executive_2 on staging_octane.branch_account_executive (brae_lender_user_pid);
-create index idx_fk_branch_license_1 on staging_octane.branch_license (brml_branch_pid);
-create index idx_fkt_branch_license_2 on staging_octane.branch_license (brml_license_type);
-create index idx_fkt_branch_license_3 on staging_octane.branch_license (brml_state_type);
-create index idx_fk_business_income_1 on staging_octane.business_income (bui_borrower_income_pid);
-create index idx_fkt_business_income_2 on staging_octane.business_income (bui_business_disposition_type);
-create index idx_fkt_business_income_3 on staging_octane.business_income (bui_business_income_type);
-create index idx_fkt_business_income_4 on staging_octane.business_income (bui_calc_method_type);
-create index idx_fk_channel_1 on staging_octane.channel (ch_account_pid);
-create index idx_fkt_channel_2 on staging_octane.channel (ch_channel_type);
-create index idx_fkt_charge_type_1 on staging_octane.charge_type (ct_respa_section_type);
-create index idx_fk_circumstance_change_1 on staging_octane.circumstance_change (cc_loan_pid);
-create index idx_fkt_circumstance_change_2 on staging_octane.circumstance_change (cc_circumstance_change_type);
-create index idx_fk_company_1 on staging_octane.company (cm_account_pid);
-create index idx_fk_company_2 on staging_octane.company (cm_correspondent_investor_pid);
-create index idx_fkt_company_3 on staging_octane.company (cm_broker_participating_with_less_than_four_lenders);
-create index idx_fkt_company_4 on staging_octane.company (cm_company_address_country);
-create index idx_fkt_company_5 on staging_octane.company (cm_company_legal_entity_organization_state_type);
-create index idx_fkt_company_6 on staging_octane.company (cm_origination_source_type);
-create index idx_fkt_company_7 on staging_octane.company (cm_total_expert_account_type);
-create index idx_fk_company_admin_event_1 on staging_octane.company_admin_event (cae_account_pid);
-create index idx_fkt_company_admin_event_2 on staging_octane.company_admin_event (cae_company_admin_event_entity_type);
-create index idx_fk_company_license_1 on staging_octane.company_license (cml_company_pid);
-create index idx_fkt_company_license_2 on staging_octane.company_license (cml_company_state_license_type);
-create index idx_fkt_company_license_3 on staging_octane.company_license (cml_license_type);
-create index idx_fkt_company_license_4 on staging_octane.company_license (cml_state_type);
-create index idx_fk_compass_analytics_report_request_1 on staging_octane.compass_analytics_report_request (carr_account_pid);
-create index idx_fk_compass_analytics_report_request_2 on staging_octane.compass_analytics_report_request (carr_export_csv_repository_file_pid);
-create index idx_fkt_compass_analytics_report_request_3 on staging_octane.compass_analytics_report_request (carr_request_status_type);
-create index idx_fk_construction_cost_1 on staging_octane.construction_cost (coc_proposal_pid);
-create index idx_fk_construction_cost_2 on staging_octane.construction_cost (coc_contractor_pid);
-create index idx_fk_construction_cost_3 on staging_octane.construction_cost (coc_proposal_contractor_pid);
-create index idx_fkt_construction_cost_4 on staging_octane.construction_cost (coc_construction_cost_category_type);
-create index idx_fkt_construction_cost_5 on staging_octane.construction_cost (coc_construction_cost_funding_type);
-create index idx_fkt_construction_cost_6 on staging_octane.construction_cost (coc_construction_cost_payee_type);
-create index idx_fkt_construction_cost_7 on staging_octane.construction_cost (coc_construction_cost_status_type);
-create index idx_fk_construction_draw_1 on staging_octane.construction_draw (cd_proposal_pid);
-create index idx_fkt_construction_draw_2 on staging_octane.construction_draw (cd_construction_draw_status_type);
-create index idx_fkt_construction_draw_3 on staging_octane.construction_draw (cd_construction_draw_type);
-create index idx_fk_construction_draw_item_1 on staging_octane.construction_draw_item (cdi_proposal_pid);
-create index idx_fk_construction_draw_item_2 on staging_octane.construction_draw_item (cdi_construction_cost_pid);
-create index idx_fk_construction_draw_item_3 on staging_octane.construction_draw_item (cdi_construction_draw_pid);
-create index idx_fk_construction_draw_number_ticker_1 on staging_octane.construction_draw_number_ticker (cdnt_proposal_pid);
-create index idx_fk_consumer_privacy_affected_borrower_1 on staging_octane.consumer_privacy_affected_borrower (cpab_consumer_privacy_request_pid);
-create index idx_fk_consumer_privacy_affected_borrower_2 on staging_octane.consumer_privacy_affected_borrower (cpab_deal_pid);
-create index idx_fk_consumer_privacy_affected_borrower_3 on staging_octane.consumer_privacy_affected_borrower (cpab_borrower_pid);
-create index idx_fk_consumer_privacy_request_1 on staging_octane.consumer_privacy_request (cpr_receiver_lender_user_pid);
-create index idx_fk_consumer_privacy_request_2 on staging_octane.consumer_privacy_request (cpr_account_pid);
-create index idx_fk_consumer_privacy_request_3 on staging_octane.consumer_privacy_request (cpr_know_repository_file_pid);
-create index idx_fk_consumer_privacy_request_4 on staging_octane.consumer_privacy_request (cpr_delete_repository_file_pid);
-create index idx_fkt_consumer_privacy_request_5 on staging_octane.consumer_privacy_request (cpr_request_todo);
-create index idx_fkt_consumer_privacy_request_6 on staging_octane.consumer_privacy_request (cpr_request_type);
-create index idx_fkt_consumer_privacy_request_7 on staging_octane.consumer_privacy_request (cpr_searched_subject_property_state_type);
-create index idx_fk_contractor_1 on staging_octane.contractor (ctr_account_pid);
-create index idx_fkt_contractor_2 on staging_octane.contractor (ctr_taxpayer_identifier_type);
-create index idx_fk_contractor_license_1 on staging_octane.contractor_license (ctrl_contractor_pid);
-create index idx_fkt_contractor_license_2 on staging_octane.contractor_license (ctrl_state_type);
-create index idx_fk_cost_center_1 on staging_octane.cost_center (cosc_account_pid);
-create index idx_fkt_county_1 on staging_octane.county (c_recording_district_type);
-create index idx_fkt_county_2 on staging_octane.county (c_state_type);
-create index idx_fk_county_city_1 on staging_octane.county_city (cci_county_pid);
-create index idx_fk_county_recording_district_1 on staging_octane.county_recording_district (crdi_county_pid);
-create index idx_fk_county_recording_district_2 on staging_octane.county_recording_district (crdi_recording_district_pid);
-create index idx_fk_county_sub_jurisdiction_1 on staging_octane.county_sub_jurisdiction (csju_county_pid);
-create index idx_fk_county_zip_code_1 on staging_octane.county_zip_code (czc_county_pid);
-create index idx_fk_county_zip_code_2 on staging_octane.county_zip_code (czc_zip_code_info_pid);
-create index idx_fk_credit_inquiry_1 on staging_octane.credit_inquiry (ci_proposal_pid);
-create index idx_fk_credit_inquiry_2 on staging_octane.credit_inquiry (ci_credit_request_pid);
-create index idx_fkt_credit_inquiry_3 on staging_octane.credit_inquiry (ci_address_country);
-create index idx_fkt_credit_inquiry_4 on staging_octane.credit_inquiry (ci_credit_business_type);
-create index idx_fkt_credit_inquiry_5 on staging_octane.credit_inquiry (ci_credit_inquiry_result_type);
-create index idx_fkt_credit_inquiry_6 on staging_octane.credit_inquiry (ci_credit_loan_type);
-create index idx_fkt_credit_inquiry_7 on staging_octane.credit_inquiry (ci_explanation_type);
-create index idx_fk_credit_limit_1 on staging_octane.credit_limit (cl_interim_funder_pid);
-create index idx_fkt_credit_limit_2 on staging_octane.credit_limit (cl_credit_limit_type);
-create index idx_fk_credit_request_1 on staging_octane.credit_request (crdr_deal_pid);
-create index idx_fk_credit_request_2 on staging_octane.credit_request (crdr_credit_report_file_pid);
-create index idx_fk_credit_request_3 on staging_octane.credit_request (crdr_credit_score_disclosure_file_pid);
-create index idx_fk_credit_request_4 on staging_octane.credit_request (crdr_requester_lender_user_pid);
-create index idx_fk_credit_request_5 on staging_octane.credit_request (crdr_lp_request_pid);
-create index idx_fk_credit_request_6 on staging_octane.credit_request (crdr_du_request_pid);
-create index idx_fk_credit_request_7 on staging_octane.credit_request (crdr_xml_response_file_pid);
-create index idx_fkt_credit_request_8 on staging_octane.credit_request (crdr_borrower1_equifax_credit_score_model_type);
-create index idx_fkt_credit_request_9 on staging_octane.credit_request (crdr_borrower1_experian_credit_score_model_type);
-create index idx_fkt_credit_request_10 on staging_octane.credit_request (crdr_borrower1_residence_country);
-create index idx_fkt_credit_request_11 on staging_octane.credit_request (crdr_borrower1_trans_union_credit_score_model_type);
-create index idx_fkt_credit_request_12 on staging_octane.credit_request (crdr_borrower2_equifax_credit_score_model_type);
-create index idx_fkt_credit_request_13 on staging_octane.credit_request (crdr_borrower2_experian_credit_score_model_type);
-create index idx_fkt_credit_request_14 on staging_octane.credit_request (crdr_borrower2_residence_country);
-create index idx_fkt_credit_request_15 on staging_octane.credit_request (crdr_borrower2_trans_union_credit_score_model_type);
-create index idx_fkt_credit_request_16 on staging_octane.credit_request (crdr_credit_bureau_type);
-create index idx_fkt_credit_request_17 on staging_octane.credit_request (crdr_credit_report_request_action_type);
-create index idx_fkt_credit_request_18 on staging_octane.credit_request (crdr_credit_report_type);
-create index idx_fkt_credit_request_19 on staging_octane.credit_request (crdr_credit_request_status_type);
-create index idx_fkt_credit_request_20 on staging_octane.credit_request (crdr_credit_request_type);
-create index idx_fkt_credit_request_21 on staging_octane.credit_request (crdr_credit_request_via_type);
-create index idx_fkt_credit_request_22 on staging_octane.credit_request (crdr_mismo_version_type);
-create index idx_fkt_credit_request_23 on staging_octane.credit_request (crdr_requester_agent_type);
-create index idx_fk_creditor_1 on staging_octane.creditor (crd_account_pid);
-create index idx_fkt_creditor_2 on staging_octane.creditor (crd_address_country);
-create index idx_fkt_creditor_3 on staging_octane.creditor (crd_key_creditor_type);
-create index idx_fkt_creditor_4 on staging_octane.creditor (crd_payoff_auto_teller);
-create index idx_fkt_creditor_5 on staging_octane.creditor (crd_payoff_request_delivery_type);
-create index idx_fk_creditor_lookup_name_1 on staging_octane.creditor_lookup_name (cln_account_pid);
-create index idx_fk_creditor_lookup_name_2 on staging_octane.creditor_lookup_name (cln_creditor_pid);
-create index idx_fk_criteria_1 on staging_octane.criteria (cr_account_pid);
-create index idx_fk_criteria_pid_operand_1 on staging_octane.criteria_pid_operand (crpo_criteria_pid);
-create index idx_fk_criteria_pid_operand_2 on staging_octane.criteria_pid_operand (crpo_lead_source_pid);
-create index idx_fk_criteria_pid_operand_3 on staging_octane.criteria_pid_operand (crpo_company_pid);
-create index idx_fk_criteria_pid_operand_4 on staging_octane.criteria_pid_operand (crpo_creditor_pid);
-create index idx_fk_criteria_pid_operand_5 on staging_octane.criteria_pid_operand (crpo_interim_funder_pid);
-create index idx_fk_criteria_pid_operand_6 on staging_octane.criteria_pid_operand (crpo_settlement_agent_pid);
-create index idx_fk_criteria_pid_operand_7 on staging_octane.criteria_pid_operand (crpo_performer_team_pid);
-create index idx_fk_criteria_pid_operand_8 on staging_octane.criteria_pid_operand (crpo_third_party_community_second_program_pid);
-create index idx_fk_criteria_pid_operand_9 on staging_octane.criteria_pid_operand (crpo_channel_pid);
-create index idx_fk_criteria_pid_operand_10 on staging_octane.criteria_pid_operand (crpo_account_grant_program_pid);
-create index idx_fk_criteria_pid_operand_11 on staging_octane.criteria_pid_operand (crpo_offering_pid);
-create index idx_fk_criteria_pid_operand_12 on staging_octane.criteria_pid_operand (crpo_lender_user_pid);
-create index idx_fk_criteria_pid_operand_13 on staging_octane.criteria_pid_operand (crpo_mortgage_credit_certificate_issuer_pid);
-create index idx_fk_criteria_pid_operand_14 on staging_octane.criteria_pid_operand (crpo_criteria_snippet_pid);
-create index idx_fk_criteria_pid_operand_15 on staging_octane.criteria_pid_operand (crpo_smart_doc_pid);
-create index idx_fk_criteria_pid_operand_16 on staging_octane.criteria_pid_operand (crpo_deal_tag_definition_pid);
-create index idx_fk_criteria_pid_operand_17 on staging_octane.criteria_pid_operand (crpo_role_pid);
-create index idx_fk_criteria_pid_operand_18 on staging_octane.criteria_pid_operand (crpo_branch_pid);
-create index idx_fk_criteria_pid_operand_19 on staging_octane.criteria_pid_operand (crpo_wf_step_pid);
-create index idx_fk_criteria_pid_operand_20 on staging_octane.criteria_pid_operand (crpo_wf_phase_pid);
-create index idx_fk_criteria_pid_operand_21 on staging_octane.criteria_pid_operand (crpo_county_pid);
-create index idx_fk_criteria_pid_operand_22 on staging_octane.criteria_pid_operand (crpo_investor_pid);
-create index idx_fk_criteria_pid_operand_23 on staging_octane.criteria_pid_operand (crpo_product_pid);
-create index idx_fkt_criteria_pid_operand_24 on staging_octane.criteria_pid_operand (crpo_criteria_pid_operand_type);
-create index idx_fk_criteria_snippet_1 on staging_octane.criteria_snippet (crs_account_pid);
-create index idx_fk_criteria_snippet_2 on staging_octane.criteria_snippet (crs_criteria_pid);
-create index idx_fkt_criteria_snippet_3 on staging_octane.criteria_snippet (crs_deal_child_type);
-create index idx_fkt_custodian_1 on staging_octane.custodian (cu_address_country);
-create index idx_fk_custom_form_1 on staging_octane.custom_form (cf_account_pid);
-create index idx_fk_custom_form_2 on staging_octane.custom_form (cf_repository_file_pid);
-create index idx_fk_custom_form_merge_field_1 on staging_octane.custom_form_merge_field (cfmf_custom_form_pid);
-create index idx_fkt_custom_form_merge_field_2 on staging_octane.custom_form_merge_field (cfmf_field_type);
-create index idx_fk_deal_1 on staging_octane.deal (d_account_pid);
-create index idx_fk_deal_2 on staging_octane.deal (d_performer_team_pid);
-create index idx_fk_deal_3 on staging_octane.deal (d_active_proposal_pid);
-create index idx_fk_deal_4 on staging_octane.deal (d_branch_pid);
-create index idx_fk_deal_5 on staging_octane.deal (d_lead_source_pid);
-create index idx_fk_deal_6 on staging_octane.deal (d_company_pid);
-create index idx_fkt_deal_7 on staging_octane.deal (d_application_type);
-create index idx_fkt_deal_8 on staging_octane.deal (d_credit_bureau_type);
-create index idx_fkt_deal_9 on staging_octane.deal (d_deal_create_type);
-create index idx_fkt_deal_10 on staging_octane.deal (d_deal_orphan_status_type);
-create index idx_fkt_deal_11 on staging_octane.deal (d_deal_status_type);
-create index idx_fkt_deal_12 on staging_octane.deal (d_enable_electronic_transaction);
-create index idx_fkt_deal_13 on staging_octane.deal (d_hmda_action_type);
-create index idx_fkt_deal_14 on staging_octane.deal (d_hmda_denial_reason_type_1);
-create index idx_fkt_deal_15 on staging_octane.deal (d_hmda_denial_reason_type_2);
-create index idx_fkt_deal_16 on staging_octane.deal (d_hmda_denial_reason_type_3);
-create index idx_fkt_deal_17 on staging_octane.deal (d_hmda_denial_reason_type_4);
-create index idx_fkt_deal_18 on staging_octane.deal (d_realty_agent_scenario_type);
-create index idx_fk_deal_appraisal_1 on staging_octane.deal_appraisal (dappr_deal_pid);
-create index idx_fkt_deal_appraisal_2 on staging_octane.deal_appraisal (dappr_appraisal_entry_contact_type);
-create index idx_fkt_deal_appraisal_3 on staging_octane.deal_appraisal (dappr_appraisal_hold_reason_type);
-create index idx_fkt_deal_appraisal_4 on staging_octane.deal_appraisal (dappr_appraisal_hold_type);
-create index idx_fkt_deal_appraisal_5 on staging_octane.deal_appraisal (dappr_borrower_requires_appraisal);
-create index idx_fk_deal_change_updater_time_1 on staging_octane.deal_change_updater_time (dcut_account_pid);
-create index idx_fk_deal_contact_1 on staging_octane.deal_contact (dc_deal_pid);
-create index idx_fkt_deal_contact_2 on staging_octane.deal_contact (dc_address_country);
-create index idx_fkt_deal_contact_3 on staging_octane.deal_contact (dc_role_type);
-create index idx_fk_deal_data_vendor_document_import_1 on staging_octane.deal_data_vendor_document_import (ddvdi_deal_pid);
-create index idx_fk_deal_data_vendor_document_import_2 on staging_octane.deal_data_vendor_document_import (ddvdi_vendor_document_repository_file_pid);
-create index idx_fk_deal_data_vendor_document_import_3 on staging_octane.deal_data_vendor_document_import (ddvdi_deal_system_file_pid);
-create index idx_fkt_deal_data_vendor_document_import_4 on staging_octane.deal_data_vendor_document_import (ddvdi_document_import_status_type);
-create index idx_fkt_deal_data_vendor_document_import_5 on staging_octane.deal_data_vendor_document_import (ddvdi_vendor_import_document_type);
-create index idx_fk_deal_disaster_declaration_1 on staging_octane.deal_disaster_declaration (ddd_deal_pid);
-create index idx_fk_deal_disaster_declaration_2 on staging_octane.deal_disaster_declaration (ddd_disaster_declaration_pid);
-create index idx_fk_deal_dropbox_file_1 on staging_octane.deal_dropbox_file (ddf_deal_file_pid);
-create index idx_fk_deal_du_1 on staging_octane.deal_du (ddu_deal_pid);
-create index idx_fk_deal_event_1 on staging_octane.deal_event (de_deal_pid);
-create index idx_fkt_deal_event_2 on staging_octane.deal_event (de_coarse_event_type);
-create index idx_fkt_deal_event_3 on staging_octane.deal_event (de_deal_event_type);
-create index idx_fk_deal_file_1 on staging_octane.deal_file (df_deal_pid);
-create index idx_fk_deal_file_2 on staging_octane.deal_file (df_repository_file_pid);
-create index idx_fk_deal_file_signature_1 on staging_octane.deal_file_signature (dfs_deal_file_pid);
-create index idx_fk_deal_file_signature_2 on staging_octane.deal_file_signature (dfs_deal_signer_pid);
-create index idx_fkt_deal_file_signature_3 on staging_octane.deal_file_signature (dfs_charge_type);
-create index idx_fkt_deal_file_signature_4 on staging_octane.deal_file_signature (dfs_signature_part_type);
-create index idx_fk_deal_file_thumbnail_1 on staging_octane.deal_file_thumbnail (dft_deal_file_pid);
-create index idx_fk_deal_file_thumbnail_2 on staging_octane.deal_file_thumbnail (dft_deal_system_file_pid);
-create index idx_fk_deal_fraud_risk_1 on staging_octane.deal_fraud_risk (dfr_deal_pid);
-create index idx_fk_deal_fraud_risk_2 on staging_octane.deal_fraud_risk (dfr_loan_safe_risk_manager_html_deal_file_pid);
-create index idx_fk_deal_fraud_risk_3 on staging_octane.deal_fraud_risk (dfr_loan_safe_risk_manager_pdf_deal_file_pid);
-create index idx_fkt_deal_fraud_risk_4 on staging_octane.deal_fraud_risk (dfr_loan_safe_product_type);
-create index idx_fk_deal_housing_counselor_candidate_1 on staging_octane.deal_housing_counselor_candidate (dhcc_deal_pid);
-create index idx_fk_deal_housing_counselor_candidate_2 on staging_octane.deal_housing_counselor_candidate (dhcc_deal_housing_counselors_request_pid);
-create index idx_fkt_deal_housing_counselor_candidate_3 on staging_octane.deal_housing_counselor_candidate (dhcc_mailing_address_country);
-create index idx_fkt_deal_housing_counselor_candidate_4 on staging_octane.deal_housing_counselor_candidate (dhcc_office_address_country);
-create index idx_fk_deal_housing_counselors_request_1 on staging_octane.deal_housing_counselors_request (dhcr_deal_pid);
-create index idx_fkt_deal_housing_counselors_request_2 on staging_octane.deal_housing_counselors_request (dhcr_centroid_address_country);
-create index idx_fk_deal_invoice_1 on staging_octane.deal_invoice (di_deal_pid);
-create index idx_fkt_deal_invoice_2 on staging_octane.deal_invoice (di_invoice_status_type);
-create index idx_fk_deal_invoice_file_1 on staging_octane.deal_invoice_file (dif_deal_file_pid);
-create index idx_fk_deal_invoice_file_2 on staging_octane.deal_invoice_file (dif_deal_invoice_pid);
-create index idx_fkt_deal_invoice_file_3 on staging_octane.deal_invoice_file (dif_deal_invoice_file_type);
-create index idx_fk_deal_invoice_item_1 on staging_octane.deal_invoice_item (dii_deal_invoice_pid);
-create index idx_fkt_deal_invoice_item_2 on staging_octane.deal_invoice_item (dii_charge_type);
-create index idx_fk_deal_invoice_payment_method_1 on staging_octane.deal_invoice_payment_method (dipm_deal_invoice_pid);
-create index idx_fk_deal_invoice_payment_method_2 on staging_octane.deal_invoice_payment_method (dipm_stripe_payment_pid);
-create index idx_fk_deal_invoice_payment_method_3 on staging_octane.deal_invoice_payment_method (dipm_stripe_payment_refund_pid);
-create index idx_fk_deal_invoice_payment_method_4 on staging_octane.deal_invoice_payment_method (dipm_requester_lender_user_pid);
-create index idx_fkt_deal_invoice_payment_method_5 on staging_octane.deal_invoice_payment_method (dipm_configured_payer_type);
-create index idx_fkt_deal_invoice_payment_method_6 on staging_octane.deal_invoice_payment_method (dipm_payer_type);
-create index idx_fkt_deal_invoice_payment_method_7 on staging_octane.deal_invoice_payment_method (dipm_payment_fulfill_type);
-create index idx_fkt_deal_invoice_payment_method_8 on staging_octane.deal_invoice_payment_method (dipm_payment_processing_company_type);
-create index idx_fkt_deal_invoice_payment_method_9 on staging_octane.deal_invoice_payment_method (dipm_payment_submission_type);
-create index idx_fkt_deal_invoice_payment_method_10 on staging_octane.deal_invoice_payment_method (dipm_requester_agent_type);
-create index idx_fk_deal_key_roles_1 on staging_octane.deal_key_roles (dkrs_deal_pid);
-create index idx_fk_deal_key_roles_2 on staging_octane.deal_key_roles (dkrs_final_documents_to_investor_lender_user_pid);
-create index idx_fk_deal_key_roles_3 on staging_octane.deal_key_roles (dkrs_government_insurance_lender_user_pid);
-create index idx_fk_deal_key_roles_4 on staging_octane.deal_key_roles (dkrs_funder_lender_user_pid);
-create index idx_fk_deal_key_roles_5 on staging_octane.deal_key_roles (dkrs_processor_lender_user_pid);
-create index idx_fk_deal_key_roles_6 on staging_octane.deal_key_roles (dkrs_underwriter_lender_user_pid);
-create index idx_fk_deal_key_roles_7 on staging_octane.deal_key_roles (dkrs_project_underwriter_lender_user_pid);
-create index idx_fk_deal_key_roles_8 on staging_octane.deal_key_roles (dkrs_closing_doc_specialist_lender_user_pid);
-create index idx_fk_deal_key_roles_9 on staging_octane.deal_key_roles (dkrs_wholesale_client_advocate_lender_user_pid);
-create index idx_fk_deal_key_roles_10 on staging_octane.deal_key_roles (dkrs_originator_lender_user_pid);
-create index idx_fk_deal_key_roles_11 on staging_octane.deal_key_roles (dkrs_supplemental_originator_lender_user_pid);
-create index idx_fk_deal_key_roles_12 on staging_octane.deal_key_roles (dkrs_account_executive_lender_user_pid);
-create index idx_fk_deal_key_roles_13 on staging_octane.deal_key_roles (dkrs_investor_conditions_lender_user_pid);
-create index idx_fk_deal_key_roles_14 on staging_octane.deal_key_roles (dkrs_investor_stack_to_investor_lender_user_pid);
-create index idx_fk_deal_key_roles_15 on staging_octane.deal_key_roles (dkrs_collateral_to_custodian_lender_user_pid);
-create index idx_fk_deal_key_roles_16 on staging_octane.deal_key_roles (dkrs_collateral_to_investor_lender_user_pid);
-create index idx_fk_deal_key_roles_17 on staging_octane.deal_key_roles (dkrs_transaction_assistant_lender_user_pid);
-create index idx_fk_deal_lender_user_1 on staging_octane.deal_lender_user (dlu_deal_pid);
-create index idx_fk_deal_lender_user_2 on staging_octane.deal_lender_user (dlu_lender_user_pid);
-create index idx_fk_deal_lender_user_3 on staging_octane.deal_lender_user (dlu_role_pid);
-create index idx_fkt_deal_lender_user_4 on staging_octane.deal_lender_user (dlu_legacy_role_assignment_type);
-create index idx_fkt_deal_lender_user_5 on staging_octane.deal_lender_user (dlu_loan_access_type);
-create index idx_fk_deal_lender_user_event_1 on staging_octane.deal_lender_user_event (dlue_deal_pid);
-create index idx_fk_deal_lp_1 on staging_octane.deal_lp (dlp_deal_pid);
-create index idx_fk_deal_message_log_1 on staging_octane.deal_message_log (dmlog_deal_pid);
-create index idx_fk_deal_message_log_2 on staging_octane.deal_message_log (dmlog_cover_letter_deal_file_pid);
-create index idx_fk_deal_message_log_3 on staging_octane.deal_message_log (dmlog_attachment_deal_file_pid);
-create index idx_fkt_deal_message_log_4 on staging_octane.deal_message_log (dmlog_delivery_type);
-create index idx_fk_deal_note_1 on staging_octane.deal_note (dn_deal_pid);
-create index idx_fk_deal_note_2 on staging_octane.deal_note (dn_author_lender_user_pid);
-create index idx_fk_deal_note_3 on staging_octane.deal_note (dn_wf_deal_step_pid);
-create index idx_fk_deal_note_4 on staging_octane.deal_note (dn_proposal_doc_pid);
-create index idx_fk_deal_note_5 on staging_octane.deal_note (dn_proposal_review_pid);
-create index idx_fkt_deal_note_6 on staging_octane.deal_note (dn_scope_type);
-create index idx_fk_deal_note_comment_1 on staging_octane.deal_note_comment (dnc_deal_note_pid);
-create index idx_fk_deal_note_comment_2 on staging_octane.deal_note_comment (dnc_author_lender_user_pid);
-create index idx_fk_deal_note_monitor_1 on staging_octane.deal_note_monitor (dnm_deal_note_pid);
-create index idx_fk_deal_note_monitor_2 on staging_octane.deal_note_monitor (dnm_lender_user_pid);
-create index idx_fk_deal_note_role_tag_1 on staging_octane.deal_note_role_tag (dnrt_deal_note_pid);
-create index idx_fk_deal_note_role_tag_2 on staging_octane.deal_note_role_tag (dnrt_role_pid);
-create index idx_fk_deal_performer_team_1 on staging_octane.deal_performer_team (dptm_deal_pid);
-create index idx_fk_deal_performer_team_2 on staging_octane.deal_performer_team (dptm_performer_team_pid);
-create index idx_fk_deal_performer_team_user_1 on staging_octane.deal_performer_team_user (dptu_deal_pid);
-create index idx_fk_deal_performer_team_user_2 on staging_octane.deal_performer_team_user (dptu_performer_team_pid);
-create index idx_fk_deal_performer_team_user_3 on staging_octane.deal_performer_team_user (dptu_user_pid);
-create index idx_fk_deal_real_estate_agent_1 on staging_octane.deal_real_estate_agent (drea_deal_pid);
-create index idx_fkt_deal_real_estate_agent_2 on staging_octane.deal_real_estate_agent (drea_agency_type);
-create index idx_fkt_deal_real_estate_agent_3 on staging_octane.deal_real_estate_agent (drea_country);
-create index idx_fk_deal_sap_1 on staging_octane.deal_sap (dsap_deal_pid);
-create index idx_fk_deal_sap_2 on staging_octane.deal_sap (dsap_last_sap_deal_step_pid);
-create index idx_fkt_deal_sap_3 on staging_octane.deal_sap (dsap_last_sap_step_type);
-create index idx_fk_deal_settlement_1 on staging_octane.deal_settlement (dsmt_account_pid);
-create index idx_fk_deal_settlement_2 on staging_octane.deal_settlement (dsmt_deal_pid);
-create index idx_fk_deal_settlement_3 on staging_octane.deal_settlement (dsmt_settlement_agent_pid);
-create index idx_fk_deal_settlement_4 on staging_octane.deal_settlement (dsmt_settlement_agent_office_pid);
-create index idx_fk_deal_settlement_5 on staging_octane.deal_settlement (dsmt_settlement_agent_wire_pid);
-create index idx_fk_deal_settlement_6 on staging_octane.deal_settlement (dsmt_title_company_pid);
-create index idx_fk_deal_settlement_7 on staging_octane.deal_settlement (dsmt_title_company_office_pid);
-create index idx_fkt_deal_settlement_8 on staging_octane.deal_settlement (dsmt_borrower_elected_preferred_settlement);
-create index idx_fk_deal_signer_1 on staging_octane.deal_signer (dsi_deal_pid);
-create index idx_fk_deal_snapshot_1 on staging_octane.deal_snapshot (desn_snapshot_proposal_pid);
-create index idx_fkt_deal_snapshot_2 on staging_octane.deal_snapshot (desn_decision_appraisal_condition_type);
-create index idx_fkt_deal_snapshot_3 on staging_octane.deal_snapshot (desn_lender_lock_status_type_main);
-create index idx_fkt_deal_snapshot_4 on staging_octane.deal_snapshot (desn_lender_lock_status_type_piggyback);
-create index idx_fk_deal_stage_1 on staging_octane.deal_stage (dst_deal_pid);
-create index idx_fkt_deal_stage_2 on staging_octane.deal_stage (dst_deal_stage_type);
-create index idx_fk_deal_summary_1 on staging_octane.deal_summary (ds_deal_pid);
-create index idx_fkt_deal_summary_2 on staging_octane.deal_summary (ds_deal_stage_type);
-create index idx_fkt_deal_summary_3 on staging_octane.deal_summary (ds_decision_appraisal_condition_type);
-create index idx_fkt_deal_summary_4 on staging_octane.deal_summary (ds_funding_status_type_main);
-create index idx_fkt_deal_summary_5 on staging_octane.deal_summary (ds_funding_status_type_piggyback);
-create index idx_fkt_deal_summary_6 on staging_octane.deal_summary (ds_lender_lock_status_type_main);
-create index idx_fkt_deal_summary_7 on staging_octane.deal_summary (ds_lender_lock_status_type_piggyback);
-create index idx_fk_deal_system_file_1 on staging_octane.deal_system_file (dsf_deal_pid);
-create index idx_fk_deal_system_file_2 on staging_octane.deal_system_file (dsf_repository_file_pid);
-create index idx_fk_deal_tag_1 on staging_octane.deal_tag (dtg_deal_tag_definition_pid);
-create index idx_fk_deal_tag_2 on staging_octane.deal_tag (dtg_business_income_pid);
-create index idx_fk_deal_tag_3 on staging_octane.deal_tag (dtg_rental_income_pid);
-create index idx_fk_deal_tag_4 on staging_octane.deal_tag (dtg_place_pid);
-create index idx_fk_deal_tag_5 on staging_octane.deal_tag (dtg_borrower_residence_pid);
-create index idx_fk_deal_tag_6 on staging_octane.deal_tag (dtg_credit_inquiry_pid);
-create index idx_fk_deal_tag_7 on staging_octane.deal_tag (dtg_appraisal_pid);
-create index idx_fk_deal_tag_8 on staging_octane.deal_tag (dtg_deal_pid);
-create index idx_fk_deal_tag_9 on staging_octane.deal_tag (dtg_asset_pid);
-create index idx_fk_deal_tag_10 on staging_octane.deal_tag (dtg_liability_pid);
-create index idx_fk_deal_tag_11 on staging_octane.deal_tag (dtg_application_pid);
-create index idx_fk_deal_tag_12 on staging_octane.deal_tag (dtg_borrower_pid);
-create index idx_fk_deal_tag_13 on staging_octane.deal_tag (dtg_borrower_income_pid);
-create index idx_fk_deal_tag_14 on staging_octane.deal_tag (dtg_job_income_pid);
-create index idx_fk_deal_tag_15 on staging_octane.deal_tag (dtg_other_income_pid);
-create index idx_fk_deal_tag_definition_1 on staging_octane.deal_tag_definition (dtd_account_pid);
-create index idx_fkt_deal_tag_definition_2 on staging_octane.deal_tag_definition (dtd_deal_tag_access_type);
-create index idx_fkt_deal_tag_definition_3 on staging_octane.deal_tag_definition (dtd_deal_tag_level_type);
-create index idx_fk_deal_task_1 on staging_octane.deal_task (dt_wf_deal_step_pid);
-create index idx_fkt_deal_task_2 on staging_octane.deal_task (dt_deal_task_status_type);
-create index idx_fk_disaster_declaration_1 on staging_octane.disaster_declaration (dd_account_pid);
-create index idx_fk_disaster_declaration_2 on staging_octane.disaster_declaration (dd_county_pid);
-create index idx_fkt_disaster_declaration_3 on staging_octane.disaster_declaration (dd_state_type);
-create index idx_fk_docusign_package_1 on staging_octane.docusign_package (dcsp_proposal_pid);
-create index idx_fkt_docusign_package_2 on staging_octane.docusign_package (dcsp_esign_package_status_type);
-create index idx_fk_du_key_finding_1 on staging_octane.du_key_finding (dukf_du_request_pid);
-create index idx_fkt_du_key_finding_2 on staging_octane.du_key_finding (dukf_du_key_finding_type);
-create index idx_fkt_du_key_finding_3 on staging_octane.du_key_finding (dukf_key_finding_result);
-create index idx_fk_du_refi_plus_finding_1 on staging_octane.du_refi_plus_finding (durpf_du_request_pid);
-create index idx_fk_du_request_1 on staging_octane.du_request (dur_proposal_pid);
-create index idx_fk_du_request_2 on staging_octane.du_request (dur_uw_findings_html_deal_file_pid);
-create index idx_fk_du_request_3 on staging_octane.du_request (dur_uw_analysis_html_deal_file_pid);
-create index idx_fk_du_request_4 on staging_octane.du_request (dur_uw_findings_pdf_deal_file_pid);
-create index idx_fk_du_request_5 on staging_octane.du_request (dur_requester_lender_user_pid);
-create index idx_fk_du_request_6 on staging_octane.du_request (dur_response_deal_system_file_pid);
-create index idx_fk_du_request_7 on staging_octane.du_request (dur_proposal_snapshot_pid);
-create index idx_fkt_du_request_8 on staging_octane.du_request (dur_credit_bureau_type);
-create index idx_fkt_du_request_9 on staging_octane.du_request (dur_du_recommendation_type);
-create index idx_fkt_du_request_10 on staging_octane.du_request (dur_du_request_status_type);
-create index idx_fkt_du_request_11 on staging_octane.du_request (dur_gse_version_type);
-create index idx_fkt_du_request_12 on staging_octane.du_request (dur_mismo_version_type);
-create index idx_fkt_du_request_13 on staging_octane.du_request (dur_requester_agent_type);
-create index idx_fk_du_request_credit_1 on staging_octane.du_request_credit (durc_du_request_pid);
-create index idx_fkt_du_request_credit_2 on staging_octane.du_request_credit (durc_aus_credit_service_type);
-create index idx_fkt_du_request_credit_3 on staging_octane.du_request_credit (durc_borrower_1_borrower_tiny_id_type);
-create index idx_fkt_du_request_credit_4 on staging_octane.du_request_credit (durc_borrower_2_borrower_tiny_id_type);
-create index idx_fkt_du_request_credit_5 on staging_octane.du_request_credit (durc_credit_bureau_type);
-create index idx_fk_du_special_feature_code_1 on staging_octane.du_special_feature_code (dusfc_du_request_pid);
-create index idx_fk_dw_export_request_1 on staging_octane.dw_export_request (dwer_account_pid);
-create index idx_fk_dw_export_request_2 on staging_octane.dw_export_request (dwer_requester_lender_user_pid);
-create index idx_fkt_dw_export_request_3 on staging_octane.dw_export_request (dwer_request_status_type);
-create index idx_fk_ernst_request_1 on staging_octane.ernst_request (enst_loan_pid);
-create index idx_fk_ernst_request_2 on staging_octane.ernst_request (enst_response_deal_system_file_pid);
-create index idx_fkt_ernst_request_3 on staging_octane.ernst_request (enst_deed_request_type);
-create index idx_fkt_ernst_request_4 on staging_octane.ernst_request (enst_ernst_request_status_type);
-create index idx_fkt_ernst_request_5 on staging_octane.ernst_request (enst_loan_position_type);
-create index idx_fkt_ernst_request_6 on staging_octane.ernst_request (enst_security_instrument_request_type);
-create index idx_fk_ernst_request_question_1 on staging_octane.ernst_request_question (enstq_ernst_request_pid);
-create index idx_fk_exclusive_assignment_1 on staging_octane.exclusive_assignment (ea_lender_user_role_pid);
-create index idx_fk_exclusive_assignment_2 on staging_octane.exclusive_assignment (ea_criteria_pid);
-create index idx_fk_flood_cert_1 on staging_octane.flood_cert (fc_deal_pid);
-create index idx_fk_flood_cert_2 on staging_octane.flood_cert (fc_flood_cert_deal_file_pid);
-create index idx_fk_flood_cert_3 on staging_octane.flood_cert (fc_clg_flood_cert_requester_lender_user_pid);
-create index idx_fkt_flood_cert_4 on staging_octane.flood_cert (fc_clg_flood_cert_requester_agent_type);
-create index idx_fkt_flood_cert_5 on staging_octane.flood_cert (fc_clg_flood_cert_status_type);
-create index idx_fkt_flood_cert_6 on staging_octane.flood_cert (fc_fema_flood_zone_designation_type);
-create index idx_fkt_flood_cert_7 on staging_octane.flood_cert (fc_flood_cert_vendor_type);
-create index idx_fkt_flood_cert_8 on staging_octane.flood_cert (fc_flood_certificate_type);
-create index idx_fkt_flood_cert_9 on staging_octane.flood_cert (fc_flood_partial);
-create index idx_fkt_flood_cert_10 on staging_octane.flood_cert (fc_nfip_community_participation_status_type);
-create index idx_fkt_flood_cert_11 on staging_octane.flood_cert (fc_nfip_map_exists);
-create index idx_fkt_flood_cert_12 on staging_octane.flood_cert (fc_property_address_country);
-create index idx_fkt_flood_cert_13 on staging_octane.flood_cert (fc_protected_area);
-create index idx_fkt_flood_cert_14 on staging_octane.flood_cert (fc_special_flood_hazard_area);
-create index idx_fk_formula_report_column_1 on staging_octane.formula_report_column (frc_report_row_pid);
-create index idx_fkt_formula_report_column_2 on staging_octane.formula_report_column (frc_field_type_1);
-create index idx_fkt_formula_report_column_3 on staging_octane.formula_report_column (frc_field_type_2);
-create index idx_fkt_formula_report_column_4 on staging_octane.formula_report_column (frc_field_type_3);
-create index idx_fkt_formula_report_column_5 on staging_octane.formula_report_column (frc_field_type_4);
-create index idx_fkt_formula_report_column_6 on staging_octane.formula_report_column (frc_field_type_5);
-create index idx_fkt_formula_report_column_7 on staging_octane.formula_report_column (frc_field_type_6);
-create index idx_fk_google_sheet_export_1 on staging_octane.google_sheet_export (gse_account_pid);
-create index idx_fkt_google_sheet_export_2 on staging_octane.google_sheet_export (gse_export_type);
-create index idx_fkt_google_sheet_export_3 on staging_octane.google_sheet_export (gse_format_type);
-create index idx_fk_hmda_report_request_1 on staging_octane.hmda_report_request (hrr_account_pid);
-create index idx_fk_hmda_report_request_2 on staging_octane.hmda_report_request (hrr_repository_file_pid);
-create index idx_fkt_hmda_report_request_3 on staging_octane.hmda_report_request (hrr_request_status_type);
-create index idx_fk_interim_funder_1 on staging_octane.interim_funder (if_account_pid);
-create index idx_fk_interim_funder_2 on staging_octane.interim_funder (if_custodian_pid);
-create index idx_fkt_interim_funder_3 on staging_octane.interim_funder (if_company_address_country);
-create index idx_fkt_interim_funder_4 on staging_octane.interim_funder (if_interim_funder_mers_registration_type);
-create index idx_fk_investor_1 on staging_octane.investor (i_account_pid);
-create index idx_fk_investor_2 on staging_octane.investor (i_investor_group_pid);
-create index idx_fk_investor_3 on staging_octane.investor (i_investor_county_pid);
-create index idx_fk_investor_4 on staging_octane.investor (i_beneficiary_county_pid);
-create index idx_fk_investor_5 on staging_octane.investor (i_loss_payee_county_pid);
-create index idx_fk_investor_6 on staging_octane.investor (i_when_recorded_mail_to_county_pid);
-create index idx_fk_investor_7 on staging_octane.investor (i_servicer_county_pid);
-create index idx_fk_investor_8 on staging_octane.investor (i_custodian_pid);
-create index idx_fk_investor_9 on staging_octane.investor (i_criteria_pid);
-create index idx_fkt_investor_10 on staging_octane.investor (i_beneficiary_country);
-create index idx_fkt_investor_11 on staging_octane.investor (i_file_delivery_address_country);
-create index idx_fkt_investor_12 on staging_octane.investor (i_fnm_investor_remittance_type);
-create index idx_fkt_investor_13 on staging_octane.investor (i_fnm_mbs_loan_default_loss_party_type);
-create index idx_fkt_investor_14 on staging_octane.investor (i_fnm_mbs_reo_marketing_party_type);
-create index idx_fkt_investor_15 on staging_octane.investor (i_investor_country);
-create index idx_fkt_investor_16 on staging_octane.investor (i_investor_hmda_purchaser_of_loan_type);
-create index idx_fkt_investor_17 on staging_octane.investor (i_loan_file_delivery_method_type);
-create index idx_fkt_investor_18 on staging_octane.investor (i_loss_payee_country);
-create index idx_fkt_investor_19 on staging_octane.investor (i_mers_org_member);
-create index idx_fkt_investor_20 on staging_octane.investor (i_nmls_id_applicable);
-create index idx_fkt_investor_21 on staging_octane.investor (i_servicer_address_country);
-create index idx_fkt_investor_22 on staging_octane.investor (i_sub_servicer_address_country);
-create index idx_fkt_investor_23 on staging_octane.investor (i_when_recorded_mail_to_country);
-create index idx_fk_investor_group_1 on staging_octane.investor_group (ig_account_pid);
-create index idx_fk_investor_lock_1 on staging_octane.investor_lock (il_cancel_lender_user_pid);
-create index idx_fk_investor_lock_2 on staging_octane.investor_lock (il_confirm_lender_user_pid);
-create index idx_fk_investor_lock_3 on staging_octane.investor_lock (il_requester_lender_user_pid);
-create index idx_fk_investor_lock_4 on staging_octane.investor_lock (il_lender_lock_major_pid);
-create index idx_fk_investor_lock_5 on staging_octane.investor_lock (il_product_terms_pid);
-create index idx_fk_investor_lock_6 on staging_octane.investor_lock (il_trade_pid);
-create index idx_fkt_investor_lock_7 on staging_octane.investor_lock (il_buydown_schedule_type);
-create index idx_fkt_investor_lock_8 on staging_octane.investor_lock (il_interest_only_type);
-create index idx_fkt_investor_lock_9 on staging_octane.investor_lock (il_investor_lock_status_type);
-create index idx_fkt_investor_lock_10 on staging_octane.investor_lock (il_lock_commitment_type);
-create index idx_fkt_investor_lock_11 on staging_octane.investor_lock (il_mortgage_type);
-create index idx_fkt_investor_lock_12 on staging_octane.investor_lock (il_prepay_penalty_schedule_type);
-create index idx_fk_investor_lock_add_on_1 on staging_octane.investor_lock_add_on (ila_investor_lock_pid);
-create index idx_fk_investor_lock_add_on_2 on staging_octane.investor_lock_add_on (ila_creator_lender_user_pid);
-create index idx_fk_investor_lock_extension_1 on staging_octane.investor_lock_extension (ile_investor_lock_pid);
-create index idx_fk_investor_lock_extension_2 on staging_octane.investor_lock_extension (ile_creator_lender_user_pid);
-create index idx_fk_investor_lock_extension_3 on staging_octane.investor_lock_extension (ile_requester_lender_user_pid);
-create index idx_fk_investor_lock_extension_4 on staging_octane.investor_lock_extension (ile_confirm_lender_user_pid);
-create index idx_fk_investor_lock_extension_5 on staging_octane.investor_lock_extension (ile_reject_lender_user_pid);
-create index idx_fkt_investor_lock_extension_6 on staging_octane.investor_lock_extension (ile_lock_extension_status_type);
-create index idx_fk_investor_lock_extension_setting_1 on staging_octane.investor_lock_extension_setting (iles_investor_pid);
-create index idx_fk_job_income_1 on staging_octane.job_income (ji_borrower_income_pid);
-create index idx_fkt_job_income_2 on staging_octane.job_income (ji_address_voe_verify_method_type);
-create index idx_fkt_job_income_3 on staging_octane.job_income (ji_adjustment_income_calc_method_type);
-create index idx_fkt_job_income_4 on staging_octane.job_income (ji_base_income_calc_method_type);
-create index idx_fkt_job_income_5 on staging_octane.job_income (ji_bonus_income_calc_method_type);
-create index idx_fkt_job_income_6 on staging_octane.job_income (ji_commissions_income_calc_method_type);
-create index idx_fkt_job_income_7 on staging_octane.job_income (ji_overtime_income_calc_method_type);
-create index idx_fkt_job_income_8 on staging_octane.job_income (ji_phone_voe_verify_method_type);
-create index idx_fkt_job_income_9 on staging_octane.job_income (ji_tip_income_calc_method_type);
-create index idx_fkt_job_income_10 on staging_octane.job_income (ji_voe_third_party_verifier_type);
-create index idx_fkt_job_income_11 on staging_octane.job_income (ji_voe_verbal_verify_method_type);
-create index idx_fk_key_package_1 on staging_octane.key_package (kp_account_pid);
-create index idx_fk_key_package_2 on staging_octane.key_package (kp_smart_doc_set_pid);
-create index idx_fkt_key_package_3 on staging_octane.key_package (kp_key_package_type);
-create index idx_fk_key_role_1 on staging_octane.key_role (kr_role_pid);
-create index idx_fk_key_role_2 on staging_octane.key_role (kr_account_pid);
-create index idx_fkt_key_role_3 on staging_octane.key_role (kr_key_role_type);
-create index idx_fk_lead_1 on staging_octane.lead (ld_deal_pid);
-create index idx_fk_lead_campaign_1 on staging_octane.lead_campaign (ldc_account_pid);
-create index idx_fk_lead_campaign_2 on staging_octane.lead_campaign (ldc_lead_source_pid);
-create index idx_fk_lead_source_1 on staging_octane.lead_source (lds_account_pid);
-create index idx_fk_lead_source_2 on staging_octane.lead_source (lds_channel_pid);
-create index idx_fk_lead_source_3 on staging_octane.lead_source (lds_mortech_account_pid);
-create index idx_fk_lead_supplemental_margin_row_1 on staging_octane.lead_supplemental_margin_row (lsmr_lead_supplemental_margin_table_pid);
-create index idx_fk_lead_supplemental_margin_table_1 on staging_octane.lead_supplemental_margin_table (lsmt_lead_source_pid);
-create index idx_fk_lender_concession_request_1 on staging_octane.lender_concession_request (lcr_loan_pid);
-create index idx_fk_lender_concession_request_2 on staging_octane.lender_concession_request (lcr_lender_lock_major_pid);
-create index idx_fk_lender_concession_request_3 on staging_octane.lender_concession_request (lcr_requester_lender_user_pid);
-create index idx_fk_lender_concession_request_4 on staging_octane.lender_concession_request (lcr_approver_lender_user_pid);
-create index idx_fkt_lender_concession_request_5 on staging_octane.lender_concession_request (lcr_approved_reason);
-create index idx_fkt_lender_concession_request_6 on staging_octane.lender_concession_request (lcr_lender_concession_request_status_type);
-create index idx_fkt_lender_concession_request_7 on staging_octane.lender_concession_request (lcr_requested_reason);
-create index idx_fk_lender_lock_add_on_1 on staging_octane.lender_lock_add_on (lla_lender_lock_minor_pid);
-create index idx_fk_lender_lock_add_on_2 on staging_octane.lender_lock_add_on (lla_creator_lender_user_pid);
-create index idx_fkt_lender_lock_add_on_3 on staging_octane.lender_lock_add_on (lla_lock_add_on_type);
-create index idx_fk_lender_lock_extension_1 on staging_octane.lender_lock_extension (lle_lender_lock_major_pid);
-create index idx_fk_lender_lock_extension_2 on staging_octane.lender_lock_extension (lle_creator_lender_user_pid);
-create index idx_fk_lender_lock_extension_3 on staging_octane.lender_lock_extension (lle_requester_lender_user_pid);
-create index idx_fk_lender_lock_extension_4 on staging_octane.lender_lock_extension (lle_confirm_lender_user_pid);
-create index idx_fk_lender_lock_extension_5 on staging_octane.lender_lock_extension (lle_reject_lender_user_pid);
-create index idx_fkt_lender_lock_extension_6 on staging_octane.lender_lock_extension (lle_lock_extension_status_type);
-create index idx_fk_lender_lock_id_ticker_1 on staging_octane.lender_lock_id_ticker (lltk_account_pid);
-create index idx_fk_lender_lock_major_1 on staging_octane.lender_lock_major (llmj_void_request_lender_user_pid);
-create index idx_fk_lender_lock_major_2 on staging_octane.lender_lock_major (llmj_void_lender_user_pid);
-create index idx_fk_lender_lock_major_3 on staging_octane.lender_lock_major (llmj_cancel_lender_user_pid);
-create index idx_fk_lender_lock_major_4 on staging_octane.lender_lock_major (llmj_confirm_lender_user_pid);
-create index idx_fk_lender_lock_major_5 on staging_octane.lender_lock_major (llmj_requester_lender_user_pid);
-create index idx_fk_lender_lock_major_6 on staging_octane.lender_lock_major (llmj_loan_pid);
-create index idx_fk_lender_lock_major_7 on staging_octane.lender_lock_major (llmj_account_pid);
-create index idx_fk_lender_lock_major_8 on staging_octane.lender_lock_major (llmj_lock_series_pid);
-create index idx_fkt_lender_lock_major_9 on staging_octane.lender_lock_major (llmj_lien_priority_type);
-create index idx_fkt_lender_lock_major_10 on staging_octane.lender_lock_major (llmj_pricing_commitment_type);
-create index idx_fkt_lender_lock_major_11 on staging_octane.lender_lock_major (llmj_requester_agent_type);
-create index idx_fk_lender_lock_minor_1 on staging_octane.lender_lock_minor (llmn_lender_lock_major_pid);
-create index idx_fk_lender_lock_minor_2 on staging_octane.lender_lock_minor (llmn_creator_lender_user_pid);
-create index idx_fk_lender_lock_minor_3 on staging_octane.lender_lock_minor (llmn_product_terms_pid);
-create index idx_fk_lender_lock_minor_4 on staging_octane.lender_lock_minor (llmn_offering_pid);
-create index idx_fk_lender_lock_minor_5 on staging_octane.lender_lock_minor (llmn_proposal_snapshot_pid);
-create index idx_fkt_lender_lock_minor_6 on staging_octane.lender_lock_minor (llmn_aus_type);
-create index idx_fkt_lender_lock_minor_7 on staging_octane.lender_lock_minor (llmn_buydown_schedule_type);
-create index idx_fkt_lender_lock_minor_8 on staging_octane.lender_lock_minor (llmn_creator_agent_type);
-create index idx_fkt_lender_lock_minor_9 on staging_octane.lender_lock_minor (llmn_interest_only_type);
-create index idx_fkt_lender_lock_minor_10 on staging_octane.lender_lock_minor (llmn_lender_lock_status_type);
-create index idx_fkt_lender_lock_minor_11 on staging_octane.lender_lock_minor (llmn_lock_commitment_type);
-create index idx_fkt_lender_lock_minor_12 on staging_octane.lender_lock_minor (llmn_mortgage_type);
-create index idx_fkt_lender_lock_minor_13 on staging_octane.lender_lock_minor (llmn_prepay_penalty_schedule_type);
-create index idx_fk_lender_settings_1 on staging_octane.lender_settings (lss_account_pid);
-create index idx_fk_lender_settings_2 on staging_octane.lender_settings (lss_fha_home_office_branch_pid);
-create index idx_fk_lender_settings_3 on staging_octane.lender_settings (lss_hmda_contact_pid);
-create index idx_fk_lender_settings_4 on staging_octane.lender_settings (lss_default_standalone_lock_term_setting_pid);
-create index idx_fk_lender_settings_5 on staging_octane.lender_settings (lss_default_combo_lock_term_setting_pid);
-create index idx_fkt_lender_settings_6 on staging_octane.lender_settings (lss_borrower_quote_filter_pivot_type);
-create index idx_fkt_lender_settings_7 on staging_octane.lender_settings (lss_company_time_zone_type);
-create index idx_fkt_lender_settings_8 on staging_octane.lender_settings (lss_default_credit_bureau_type);
-create index idx_fkt_lender_settings_9 on staging_octane.lender_settings (lss_fha_sponsor_address_country);
-create index idx_fkt_lender_settings_10 on staging_octane.lender_settings (lss_hmda_agency_id_type);
-create index idx_fkt_lender_settings_11 on staging_octane.lender_settings (lss_lp_submission_type);
-create index idx_fkt_lender_settings_12 on staging_octane.lender_settings (lss_preferred_aus_type);
-create index idx_fk_lender_trade_id_ticker_1 on staging_octane.lender_trade_id_ticker (lttk_account_pid);
-create index idx_fk_lender_user_1 on staging_octane.lender_user (lu_account_pid);
-create index idx_fk_lender_user_2 on staging_octane.lender_user (lu_branch_pid);
-create index idx_fk_lender_user_3 on staging_octane.lender_user (lu_performer_team_pid);
-create index idx_fk_lender_user_4 on staging_octane.lender_user (lu_default_lead_source_pid);
-create index idx_fk_lender_user_5 on staging_octane.lender_user (lu_mercury_client_group_pid);
-create index idx_fkt_lender_user_6 on staging_octane.lender_user (lu_challenge_question_type);
-create index idx_fkt_lender_user_7 on staging_octane.lender_user (lu_country);
-create index idx_fkt_lender_user_8 on staging_octane.lender_user (lu_default_credit_bureau_type);
-create index idx_fkt_lender_user_9 on staging_octane.lender_user (lu_lender_user_status_type);
-create index idx_fkt_lender_user_10 on staging_octane.lender_user (lu_lender_user_type);
-create index idx_fkt_lender_user_11 on staging_octane.lender_user (lu_time_zone);
-create index idx_fk_lender_user_allowed_ip_1 on staging_octane.lender_user_allowed_ip (luip_lender_user_pid);
-create index idx_fkt_lender_user_allowed_ip_2 on staging_octane.lender_user_allowed_ip (luip_status);
-create index idx_fk_lender_user_deal_visit_1 on staging_octane.lender_user_deal_visit (ludv_lender_user_pid);
-create index idx_fk_lender_user_deal_visit_2 on staging_octane.lender_user_deal_visit (ludv_deal_pid);
-create index idx_fk_lender_user_lead_source_1 on staging_octane.lender_user_lead_source (lulds_lender_user_pid);
-create index idx_fk_lender_user_lead_source_2 on staging_octane.lender_user_lead_source (lulds_lead_source_pid);
-create index idx_fk_lender_user_license_1 on staging_octane.lender_user_license (luml_lender_user_pid);
-create index idx_fkt_lender_user_license_2 on staging_octane.lender_user_license (luml_license_type);
-create index idx_fkt_lender_user_license_3 on staging_octane.lender_user_license (luml_state_type);
-create index idx_fk_lender_user_notice_1 on staging_octane.lender_user_notice (lun_lender_user_pid);
-create index idx_fk_lender_user_notice_2 on staging_octane.lender_user_notice (lun_deal_pid);
-create index idx_fkt_lender_user_notice_3 on staging_octane.lender_user_notice (lun_lender_user_notice_type);
-create index idx_fk_lender_user_photo_1 on staging_octane.lender_user_photo (lup_lender_user_pid);
-create index idx_fk_lender_user_photo_2 on staging_octane.lender_user_photo (lup_repository_file_pid);
-create index idx_fk_lender_user_role_1 on staging_octane.lender_user_role (lur_lender_user_pid);
-create index idx_fk_lender_user_role_2 on staging_octane.lender_user_role (lur_role_pid);
-create index idx_fk_lender_user_role_3 on staging_octane.lender_user_role (lur_criteria_pid);
-create index idx_fkt_lender_user_role_4 on staging_octane.lender_user_role (lur_queue_type);
-create index idx_fk_lender_user_role_addendum_1 on staging_octane.lender_user_role_addendum (lura_lender_user_pid);
-create index idx_fk_lender_user_role_addendum_2 on staging_octane.lender_user_role_addendum (lura_lender_user_role_pid);
-create index idx_fk_lender_user_role_addendum_3 on staging_octane.lender_user_role_addendum (lura_role_pid);
-create index idx_fk_lender_user_sign_on_1 on staging_octane.lender_user_sign_on (luso_lender_user_pid);
-create index idx_fk_lender_user_unavailable_1 on staging_octane.lender_user_unavailable (luu_lender_user_pid);
-create index idx_fk_liability_1 on staging_octane.liability (lia_proposal_pid);
-create index idx_fk_liability_2 on staging_octane.liability (lia_place_pid);
-create index idx_fk_liability_3 on staging_octane.liability (lia_credit_request_pid);
-create index idx_fk_liability_4 on staging_octane.liability (lia_creditor_pid);
-create index idx_fk_liability_5 on staging_octane.liability (lia_third_party_community_second_program_pid);
-create index idx_fkt_liability_6 on staging_octane.liability (lia_bankruptcy_exception_type);
-create index idx_fkt_liability_7 on staging_octane.liability (lia_consumer_dispute);
-create index idx_fkt_liability_8 on staging_octane.liability (lia_country);
-create index idx_fkt_liability_9 on staging_octane.liability (lia_derogatory_data);
-create index idx_fkt_liability_10 on staging_octane.liability (lia_energy_related_type);
-create index idx_fkt_liability_11 on staging_octane.liability (lia_heloc_advance_last_12_months_over_thousand);
-create index idx_fkt_liability_12 on staging_octane.liability (lia_include_within_cema);
-create index idx_fkt_liability_13 on staging_octane.liability (lia_interest_only);
-create index idx_fkt_liability_14 on staging_octane.liability (lia_liability_account_status_type);
-create index idx_fkt_liability_15 on staging_octane.liability (lia_liability_current_rating_type);
-create index idx_fkt_liability_16 on staging_octane.liability (lia_liability_disposition_type);
-create index idx_fkt_liability_17 on staging_octane.liability (lia_liability_financing_type);
-create index idx_fkt_liability_18 on staging_octane.liability (lia_liability_foreclosure_exception_type);
-create index idx_fkt_liability_19 on staging_octane.liability (lia_liability_mi_type);
-create index idx_fkt_liability_20 on staging_octane.liability (lia_liability_type);
-create index idx_fkt_liability_21 on staging_octane.liability (lia_lien_priority_type);
-create index idx_fkt_liability_22 on staging_octane.liability (lia_loan_amortization_type);
-create index idx_fkt_liability_23 on staging_octane.liability (lia_net_escrow);
-create index idx_fkt_liability_24 on staging_octane.liability (lia_report_account_ownership_type);
-create index idx_fkt_liability_25 on staging_octane.liability (lia_report_liability_type);
-create index idx_fkt_liability_26 on staging_octane.liability (lia_senior_lien_restriction_type);
-create index idx_fkt_liability_27 on staging_octane.liability (lia_texas_equity);
-create index idx_fkt_liability_28 on staging_octane.liability (lia_texas_equity_conversion);
-create index idx_fkt_liability_29 on staging_octane.liability (lia_used_to_acquire_property);
-create index idx_fk_license_req_1 on staging_octane.license_req (mlr_account_pid);
-create index idx_fkt_license_req_2 on staging_octane.license_req (mlr_license_type);
-create index idx_fkt_license_req_3 on staging_octane.license_req (mlr_state_type);
-create index idx_fk_loan_1 on staging_octane.loan (l_proposal_pid);
-create index idx_fk_loan_2 on staging_octane.loan (l_product_terms_pid);
-create index idx_fk_loan_3 on staging_octane.loan (l_offering_pid);
-create index idx_fk_loan_4 on staging_octane.loan (l_mi_integration_vendor_request_pid);
-create index idx_fkt_loan_5 on staging_octane.loan (l_aus_type);
-create index idx_fkt_loan_6 on staging_octane.loan (l_buydown_contributor_type);
-create index idx_fkt_loan_7 on staging_octane.loan (l_buydown_schedule_type);
-create index idx_fkt_loan_8 on staging_octane.loan (l_fha_program_code_type);
-create index idx_fkt_loan_9 on staging_octane.loan (l_hmda_hoepa_status_type);
-create index idx_fkt_loan_10 on staging_octane.loan (l_hmda_purchaser_of_loan_2018_type);
-create index idx_fkt_loan_11 on staging_octane.loan (l_hmda_purchaser_of_loan_2017_type);
-create index idx_fkt_loan_12 on staging_octane.loan (l_interest_only_type);
-create index idx_fkt_loan_13 on staging_octane.loan (l_lien_priority_type);
-create index idx_fkt_loan_14 on staging_octane.loan (l_lock_commitment_type);
-create index idx_fkt_loan_15 on staging_octane.loan (l_lqa_purchase_eligibility_type);
-create index idx_fkt_loan_16 on staging_octane.loan (l_mi_company_name_type);
-create index idx_fkt_loan_17 on staging_octane.loan (l_mi_initial_calculated_rate_type);
-create index idx_fkt_loan_18 on staging_octane.loan (l_mi_initial_calculation_type);
-create index idx_fkt_loan_19 on staging_octane.loan (l_mi_input_type);
-create index idx_fkt_loan_20 on staging_octane.loan (l_mi_payer_type);
-create index idx_fkt_loan_21 on staging_octane.loan (l_mi_payment_type);
-create index idx_fkt_loan_22 on staging_octane.loan (l_mi_premium_refundable_type);
-create index idx_fkt_loan_23 on staging_octane.loan (l_mi_renewal_calculated_rate_type);
-create index idx_fkt_loan_24 on staging_octane.loan (l_mi_renewal_calculation_type);
-create index idx_fkt_loan_25 on staging_octane.loan (l_mortgage_type);
-create index idx_fkt_loan_26 on staging_octane.loan (l_prepay_penalty_schedule_type);
-create index idx_fkt_loan_27 on staging_octane.loan (l_qualified_mortgage_status_type);
-create index idx_fkt_loan_28 on staging_octane.loan (l_qualifying_rate_type);
-create index idx_fkt_loan_29 on staging_octane.loan (l_texas_equity);
-create index idx_fkt_loan_30 on staging_octane.loan (l_texas_equity_auto);
-create index idx_fk_loan_beneficiary_1 on staging_octane.loan_beneficiary (lb_loan_pid);
-create index idx_fk_loan_beneficiary_2 on staging_octane.loan_beneficiary (lb_investor_pid);
-create index idx_fk_loan_beneficiary_3 on staging_octane.loan_beneficiary (lb_mers_transfer_batch_pid);
-create index idx_fk_loan_beneficiary_4 on staging_octane.loan_beneficiary (lb_mbs_final_purchaser_investor_pid);
-create index idx_fkt_loan_beneficiary_5 on staging_octane.loan_beneficiary (lb_collateral_courier_type);
-create index idx_fkt_loan_beneficiary_6 on staging_octane.loan_beneficiary (lb_delivery_aus_type);
-create index idx_fkt_loan_beneficiary_7 on staging_octane.loan_beneficiary (lb_early_funding);
-create index idx_fkt_loan_beneficiary_8 on staging_octane.loan_beneficiary (lb_loan_benef_transfer_status_type);
-create index idx_fkt_loan_beneficiary_9 on staging_octane.loan_beneficiary (lb_loan_file_courier_type);
-create index idx_fkt_loan_beneficiary_10 on staging_octane.loan_beneficiary (lb_loan_file_delivery_method_type);
-create index idx_fkt_loan_beneficiary_11 on staging_octane.loan_beneficiary (lb_mers_transfer_status_type);
-create index idx_fk_loan_charge_1 on staging_octane.loan_charge (lc_proposal_pid);
-create index idx_fk_loan_charge_2 on staging_octane.loan_charge (lc_obligation_pid);
-create index idx_fkt_loan_charge_3 on staging_octane.loan_charge (lc_charge_input_type);
-create index idx_fkt_loan_charge_4 on staging_octane.loan_charge (lc_charge_payee_type);
-create index idx_fkt_loan_charge_5 on staging_octane.loan_charge (lc_charge_payer_type);
-create index idx_fkt_loan_charge_6 on staging_octane.loan_charge (lc_charge_source_type);
-create index idx_fkt_loan_charge_7 on staging_octane.loan_charge (lc_charge_type);
-create index idx_fkt_loan_charge_8 on staging_octane.loan_charge (lc_charge_wire_action_type);
-create index idx_fkt_loan_charge_9 on staging_octane.loan_charge (lc_configured_charge_payee_type);
-create index idx_fkt_loan_charge_10 on staging_octane.loan_charge (lc_configured_charge_payer_type);
-create index idx_fkt_loan_charge_11 on staging_octane.loan_charge (lc_loan_position_type);
-create index idx_fkt_loan_charge_12 on staging_octane.loan_charge (lc_manual_circumstance_change_type_1);
-create index idx_fkt_loan_charge_13 on staging_octane.loan_charge (lc_manual_circumstance_change_type_2);
-create index idx_fkt_loan_charge_14 on staging_octane.loan_charge (lc_obligation_charge_input_type);
-create index idx_fk_loan_closing_doc_1 on staging_octane.loan_closing_doc (lcd_loan_pid);
-create index idx_fk_loan_closing_doc_2 on staging_octane.loan_closing_doc (lcd_unsigned_closing_doc_deal_file_pid);
-create index idx_fkt_loan_closing_doc_3 on staging_octane.loan_closing_doc (lcd_dsi_closing_document_status_type);
-create index idx_fk_loan_eligible_investor_1 on staging_octane.loan_eligible_investor (lei_loan_pid);
-create index idx_fk_loan_eligible_investor_2 on staging_octane.loan_eligible_investor (lei_investor_pid);
-create index idx_fk_loan_funding_1 on staging_octane.loan_funding (lf_loan_pid);
-create index idx_fk_loan_funding_2 on staging_octane.loan_funding (lf_interim_funder_pid);
-create index idx_fk_loan_funding_3 on staging_octane.loan_funding (lf_proposal_snapshot_pid);
-create index idx_fkt_loan_funding_4 on staging_octane.loan_funding (lf_collateral_courier_type);
-create index idx_fkt_loan_funding_5 on staging_octane.loan_funding (lf_funding_status_type);
-create index idx_fk_loan_hedge_1 on staging_octane.loan_hedge (lh_loan_pid);
-create index idx_fk_loan_limit_row_1 on staging_octane.loan_limit_row (llr_loan_limit_table_pid);
-create index idx_fk_loan_limit_row_2 on staging_octane.loan_limit_row (llr_loan_limit_type);
-create index idx_fk_loan_limit_row_3 on staging_octane.loan_limit_row (llr_state_type);
-create index idx_fk_loan_limit_row_4 on staging_octane.loan_limit_row (llr_county_pid);
-create index idx_fk_loan_limit_table_1 on staging_octane.loan_limit_table (llt_account_pid);
-create index idx_fk_loan_limit_table_2 on staging_octane.loan_limit_table (llt_loan_limit_table_type);
-create index idx_fk_loan_mi_rate_adjustment_1 on staging_octane.loan_mi_rate_adjustment (lmra_loan_pid);
-create index idx_fk_loan_mi_surcharge_1 on staging_octane.loan_mi_surcharge (lms_loan_pid);
-create index idx_fk_loan_price_add_on_1 on staging_octane.loan_price_add_on (lpa_loan_pid);
-create index idx_fkt_loan_price_add_on_2 on staging_octane.loan_price_add_on (lpa_lock_add_on_type);
-create index idx_fk_loan_recording_1 on staging_octane.loan_recording (lr_loan_pid);
-create index idx_fkt_loan_recording_2 on staging_octane.loan_recording (lr_mers_registration_status_type);
-create index idx_fk_loan_servicer_1 on staging_octane.loan_servicer (lsv_loan_pid);
-create index idx_fk_loan_servicer_2 on staging_octane.loan_servicer (lsv_investor_pid);
-create index idx_fk_loan_servicer_3 on staging_octane.loan_servicer (lsv_mers_transfer_batch_pid);
-create index idx_fkt_loan_servicer_4 on staging_octane.loan_servicer (lsv_mers_transfer_status_type);
-create index idx_fk_lock_series_1 on staging_octane.lock_series (lsr_loan_pid);
-create index idx_fk_lock_term_setting_1 on staging_octane.lock_term_setting (lts_account_pid);
-create index idx_fkt_lock_term_setting_2 on staging_octane.lock_term_setting (lts_lock_commitment_type);
-create index idx_fk_los_loan_id_ticker_1 on staging_octane.los_loan_id_ticker (ltk_account_pid);
-create index idx_fk_lp_finding_1 on staging_octane.lp_finding (lpf_lp_request_pid);
-create index idx_fkt_lp_finding_2 on staging_octane.lp_finding (lpf_finding_yes_no_unknown_type);
-create index idx_fkt_lp_finding_3 on staging_octane.lp_finding (lpf_lp_finding_message_type);
-create index idx_fk_lp_request_1 on staging_octane.lp_request (lpr_proposal_pid);
-create index idx_fk_lp_request_2 on staging_octane.lp_request (lpr_requester_lender_user_pid);
-create index idx_fk_lp_request_3 on staging_octane.lp_request (lpr_full_feedback_pdf_deal_file_pid);
-create index idx_fk_lp_request_4 on staging_octane.lp_request (lpr_hve_pdf_deal_file_pid);
-create index idx_fk_lp_request_5 on staging_octane.lp_request (lpr_xml_response_deal_system_file_pid);
-create index idx_fk_lp_request_6 on staging_octane.lp_request (lpr_proposal_snapshot_pid);
-create index idx_fkt_lp_request_7 on staging_octane.lp_request (lpr_fre_doc_level_description_type);
-create index idx_fkt_lp_request_8 on staging_octane.lp_request (lpr_fre_purchase_eligibility_type);
-create index idx_fkt_lp_request_9 on staging_octane.lp_request (lpr_gse_version_type);
-create index idx_fkt_lp_request_10 on staging_octane.lp_request (lpr_lp_case_state_type);
-create index idx_fkt_lp_request_11 on staging_octane.lp_request (lpr_lp_credit_risk_classification_type);
-create index idx_fkt_lp_request_12 on staging_octane.lp_request (lpr_lp_dtd_version_type);
-create index idx_fkt_lp_request_13 on staging_octane.lp_request (lpr_lp_evaluation_status_type);
-create index idx_fkt_lp_request_14 on staging_octane.lp_request (lpr_lp_interface_version_type);
-create index idx_fkt_lp_request_15 on staging_octane.lp_request (lpr_lp_request_status_type);
-create index idx_fkt_lp_request_16 on staging_octane.lp_request (lpr_mismo_version_type);
-create index idx_fkt_lp_request_17 on staging_octane.lp_request (lpr_requester_agent_type);
-create index idx_fk_lp_request_credit_1 on staging_octane.lp_request_credit (lprc_lp_request_pid);
-create index idx_fkt_lp_request_credit_2 on staging_octane.lp_request_credit (lprc_aus_credit_service_type);
-create index idx_fkt_lp_request_credit_3 on staging_octane.lp_request_credit (lprc_borrower_1_borrower_tiny_id_type);
-create index idx_fkt_lp_request_credit_4 on staging_octane.lp_request_credit (lprc_borrower_2_borrower_tiny_id_type);
-create index idx_fkt_lp_request_credit_5 on staging_octane.lp_request_credit (lprc_credit_bureau_type);
-create index idx_fk_master_property_insurance_1 on staging_octane.master_property_insurance (mpi_proposal_pid);
-create index idx_fkt_master_property_insurance_2 on staging_octane.master_property_insurance (mpi_address_country);
-create index idx_fkt_master_property_insurance_3 on staging_octane.master_property_insurance (mpi_agreed_amount_endorsement);
-create index idx_fkt_master_property_insurance_4 on staging_octane.master_property_insurance (mpi_coinsurance);
-create index idx_fkt_master_property_insurance_5 on staging_octane.master_property_insurance (mpi_master_property_insurance_type);
-create index idx_fk_mcr_loan_1 on staging_octane.mcr_loan (mcrl_mcr_snapshot_pid);
-create index idx_fkt_mcr_loan_2 on staging_octane.mcr_loan (mcrl_channel_type);
-create index idx_fkt_mcr_loan_3 on staging_octane.mcr_loan (mcrl_doc_level_type);
-create index idx_fkt_mcr_loan_4 on staging_octane.mcr_loan (mcrl_fund_source_type);
-create index idx_fkt_mcr_loan_5 on staging_octane.mcr_loan (mcrl_funding_status_type);
-create index idx_fkt_mcr_loan_6 on staging_octane.mcr_loan (mcrl_hmda_action_type);
-create index idx_fkt_mcr_loan_7 on staging_octane.mcr_loan (mcrl_hmda_hoepa_status_type);
-create index idx_fkt_mcr_loan_8 on staging_octane.mcr_loan (mcrl_interest_only_type);
-create index idx_fkt_mcr_loan_9 on staging_octane.mcr_loan (mcrl_investor_hmda_purchaser_of_loan_type);
-create index idx_fkt_mcr_loan_10 on staging_octane.mcr_loan (mcrl_lien_priority_type);
-create index idx_fkt_mcr_loan_11 on staging_octane.mcr_loan (mcrl_loan_amortization_type);
-create index idx_fkt_mcr_loan_12 on staging_octane.mcr_loan (mcrl_loan_purpose_type);
-create index idx_fkt_mcr_loan_13 on staging_octane.mcr_loan (mcrl_mcr_loan_status_type);
-create index idx_fkt_mcr_loan_14 on staging_octane.mcr_loan (mcrl_mortgage_type);
-create index idx_fkt_mcr_loan_15 on staging_octane.mcr_loan (mcrl_prepay_penalty_schedule_type);
-create index idx_fkt_mcr_loan_16 on staging_octane.mcr_loan (mcrl_product_special_program_type);
-create index idx_fkt_mcr_loan_17 on staging_octane.mcr_loan (mcrl_property_category_type);
-create index idx_fkt_mcr_loan_18 on staging_octane.mcr_loan (mcrl_property_usage_type);
-create index idx_fkt_mcr_loan_19 on staging_octane.mcr_loan (mcrl_proposal_structure_type);
-create index idx_fkt_mcr_loan_20 on staging_octane.mcr_loan (mcrl_qualified_mortgage_status_type);
-create index idx_fk_mcr_snapshot_1 on staging_octane.mcr_snapshot (mcrs_account_pid);
-create index idx_fkt_mcr_snapshot_2 on staging_octane.mcr_snapshot (mcrs_quarter_type);
-create index idx_fk_mercury_client_group_1 on staging_octane.mercury_client_group (mcg_account_pid);
-create index idx_fk_mercury_network_status_request_1 on staging_octane.mercury_network_status_request (mnsr_deal_pid);
-create index idx_fkt_mercury_network_status_request_2 on staging_octane.mercury_network_status_request (mnsr_mercury_network_status_type);
-create index idx_fk_mers_daily_report_1 on staging_octane.mers_daily_report (medr_account_pid);
-create index idx_fk_mers_daily_report_2 on staging_octane.mers_daily_report (medr_consolidated_report_text_repository_file_pid);
-create index idx_fkt_mers_daily_report_3 on staging_octane.mers_daily_report (medr_import_status_type);
-create index idx_fk_mi_integration_vendor_request_1 on staging_octane.mi_integration_vendor_request (mivr_proposal_pid);
-create index idx_fk_mi_integration_vendor_request_2 on staging_octane.mi_integration_vendor_request (mivr_response_xml_pid);
-create index idx_fk_mi_integration_vendor_request_3 on staging_octane.mi_integration_vendor_request (mivr_request_xml_pid);
-create index idx_fk_mi_integration_vendor_request_4 on staging_octane.mi_integration_vendor_request (mivr_response_pdf_file_pid);
-create index idx_fkt_mi_integration_vendor_request_5 on staging_octane.mi_integration_vendor_request (mivr_mi_company_name_type);
-create index idx_fkt_mi_integration_vendor_request_6 on staging_octane.mi_integration_vendor_request (mivr_mi_payer_type);
-create index idx_fkt_mi_integration_vendor_request_7 on staging_octane.mi_integration_vendor_request (mivr_mi_payment_type);
-create index idx_fkt_mi_integration_vendor_request_8 on staging_octane.mi_integration_vendor_request (mivr_request_status_type);
-create index idx_fkt_mi_integration_vendor_request_9 on staging_octane.mi_integration_vendor_request (mivr_request_type);
-create index idx_fk_military_service_1 on staging_octane.military_service (ms_borrower_pid);
-create index idx_fkt_military_service_2 on staging_octane.military_service (ms_military_branch_type);
-create index idx_fkt_military_service_3 on staging_octane.military_service (ms_military_service_type);
-create index idx_fkt_military_service_4 on staging_octane.military_service (ms_military_status_type);
-create index idx_fk_mortech_account_1 on staging_octane.mortech_account (ma_account_pid);
-create index idx_fk_mortgage_credit_certificate_issuer_1 on staging_octane.mortgage_credit_certificate_issuer (mcci_account_pid);
-create index idx_fk_net_tangible_benefit_1 on staging_octane.net_tangible_benefit (ntb_proposal_pid);
-create index idx_fkt_net_tangible_benefit_2 on staging_octane.net_tangible_benefit (ntb_net_tangible_benefit_type);
-create index idx_fk_obligation_1 on staging_octane.obligation (ob_proposal_pid);
-create index idx_fkt_obligation_2 on staging_octane.obligation (ob_amount_input_type);
-create index idx_fkt_obligation_3 on staging_octane.obligation (ob_escrow_waiver);
-create index idx_fkt_obligation_4 on staging_octane.obligation (ob_obligation_type);
-create index idx_fkt_obligation_5 on staging_octane.obligation (ob_vendor_country);
-create index idx_fk_offering_1 on staging_octane.offering (of_account_pid);
-create index idx_fk_offering_2 on staging_octane.offering (of_offering_group_pid);
-create index idx_fk_offering_group_1 on staging_octane.offering_group (ofg_account_pid);
-create index idx_fk_offering_product_1 on staging_octane.offering_product (ofp_offering_pid);
-create index idx_fk_offering_product_2 on staging_octane.offering_product (ofp_product_pid);
-create index idx_fk_org_division_1 on staging_octane.org_division (orgd_account_pid);
-create index idx_fk_org_division_leader_1 on staging_octane.org_division_leader (orgdl_lender_user_pid);
-create index idx_fk_org_division_leader_2 on staging_octane.org_division_leader (orgdl_org_division_pid);
-create index idx_fkt_org_division_leader_3 on staging_octane.org_division_leader (orgdl_org_leader_position_type);
-create index idx_fk_org_division_terms_1 on staging_octane.org_division_terms (orgdt_org_division_pid);
-create index idx_fk_org_division_terms_2 on staging_octane.org_division_terms (orgdt_level_cost_center_pid);
-create index idx_fk_org_division_terms_3 on staging_octane.org_division_terms (orgdt_beneficiary_cost_center_pid);
-create index idx_fk_org_division_terms_4 on staging_octane.org_division_terms (orgdt_guarantor_cost_center_pid);
-create index idx_fk_org_group_1 on staging_octane.org_group (orgg_account_pid);
-create index idx_fk_org_group_leader_1 on staging_octane.org_group_leader (orggl_lender_user_pid);
-create index idx_fk_org_group_leader_2 on staging_octane.org_group_leader (orggl_org_group_pid);
-create index idx_fkt_org_group_leader_3 on staging_octane.org_group_leader (orggl_org_leader_position_type);
-create index idx_fk_org_group_terms_1 on staging_octane.org_group_terms (orggt_org_division_pid);
-create index idx_fk_org_group_terms_2 on staging_octane.org_group_terms (orggt_org_group_pid);
-create index idx_fk_org_group_terms_3 on staging_octane.org_group_terms (orggt_level_cost_center_pid);
-create index idx_fk_org_group_terms_4 on staging_octane.org_group_terms (orggt_beneficiary_cost_center_pid);
-create index idx_fk_org_group_terms_5 on staging_octane.org_group_terms (orggt_guarantor_cost_center_pid);
-create index idx_fk_org_lender_user_terms_1 on staging_octane.org_lender_user_terms (orglut_org_team_pid);
-create index idx_fk_org_lender_user_terms_2 on staging_octane.org_lender_user_terms (orglut_lender_user_pid);
-create index idx_fk_org_region_1 on staging_octane.org_region (orgr_account_pid);
-create index idx_fk_org_region_leader_1 on staging_octane.org_region_leader (orgrl_lender_user_pid);
-create index idx_fk_org_region_leader_2 on staging_octane.org_region_leader (orgrl_org_region_pid);
-create index idx_fkt_org_region_leader_3 on staging_octane.org_region_leader (orgrl_org_leader_position_type);
-create index idx_fk_org_region_terms_1 on staging_octane.org_region_terms (orgrt_org_group_pid);
-create index idx_fk_org_region_terms_2 on staging_octane.org_region_terms (orgrt_org_region_pid);
-create index idx_fk_org_region_terms_3 on staging_octane.org_region_terms (orgrt_level_cost_center_pid);
-create index idx_fk_org_region_terms_4 on staging_octane.org_region_terms (orgrt_beneficiary_cost_center_pid);
-create index idx_fk_org_region_terms_5 on staging_octane.org_region_terms (orgrt_guarantor_cost_center_pid);
-create index idx_fk_org_team_1 on staging_octane.org_team (orgt_account_pid);
-create index idx_fk_org_team_leader_1 on staging_octane.org_team_leader (orgtl_lender_user_pid);
-create index idx_fk_org_team_leader_2 on staging_octane.org_team_leader (orgtl_org_team_pid);
-create index idx_fkt_org_team_leader_3 on staging_octane.org_team_leader (orgtl_org_leader_position_type);
-create index idx_fk_org_team_terms_1 on staging_octane.org_team_terms (orgtt_org_unit_pid);
-create index idx_fk_org_team_terms_2 on staging_octane.org_team_terms (orgtt_org_team_pid);
-create index idx_fk_org_team_terms_3 on staging_octane.org_team_terms (orgtt_level_cost_center_pid);
-create index idx_fk_org_team_terms_4 on staging_octane.org_team_terms (orgtt_beneficiary_cost_center_pid);
-create index idx_fk_org_team_terms_5 on staging_octane.org_team_terms (orgtt_guarantor_cost_center_pid);
-create index idx_fk_org_unit_1 on staging_octane.org_unit (orgu_account_pid);
-create index idx_fk_org_unit_leader_1 on staging_octane.org_unit_leader (orgul_lender_user_pid);
-create index idx_fk_org_unit_leader_2 on staging_octane.org_unit_leader (orgul_org_unit_pid);
-create index idx_fkt_org_unit_leader_3 on staging_octane.org_unit_leader (orgul_org_leader_position_type);
-create index idx_fk_org_unit_terms_1 on staging_octane.org_unit_terms (orgut_org_region_pid);
-create index idx_fk_org_unit_terms_2 on staging_octane.org_unit_terms (orgut_org_unit_pid);
-create index idx_fk_org_unit_terms_3 on staging_octane.org_unit_terms (orgut_level_cost_center_pid);
-create index idx_fk_org_unit_terms_4 on staging_octane.org_unit_terms (orgut_beneficiary_cost_center_pid);
-create index idx_fk_org_unit_terms_5 on staging_octane.org_unit_terms (orgut_guarantor_cost_center_pid);
-create index idx_fk_other_income_1 on staging_octane.other_income (oi_borrower_income_pid);
-create index idx_fk_other_income_2 on staging_octane.other_income (oi_mortgage_credit_certificate_issuer_pid);
-create index idx_fkt_other_income_3 on staging_octane.other_income (oi_calc_method_type);
-create index idx_fkt_other_income_4 on staging_octane.other_income (oi_other_income_type);
-create index idx_fk_performer_assignment_1 on staging_octane.performer_assignment (pa_role_pid);
-create index idx_fk_performer_assignment_2 on staging_octane.performer_assignment (pa_lender_user_pid);
-create index idx_fk_performer_team_1 on staging_octane.performer_team (ptm_account_pid);
-create index idx_fk_place_1 on staging_octane.place (pl_proposal_pid);
-create index idx_fk_place_2 on staging_octane.place (pl_county_pid);
-create index idx_fkt_place_3 on staging_octane.place (pl_building_status_type);
-create index idx_fkt_place_4 on staging_octane.place (pl_calculated_lead_inspection_required);
-create index idx_fkt_place_5 on staging_octane.place (pl_construction_conversion);
-create index idx_fkt_place_6 on staging_octane.place (pl_coop_existing_company_laws_state);
-create index idx_fkt_place_7 on staging_octane.place (pl_country);
-create index idx_fkt_place_8 on staging_octane.place (pl_hud_reo);
-create index idx_fkt_place_9 on staging_octane.place (pl_landlord_country);
-create index idx_fkt_place_10 on staging_octane.place (pl_lava_zone_type);
-create index idx_fkt_place_11 on staging_octane.place (pl_lead_inspection_required);
-create index idx_fkt_place_12 on staging_octane.place (pl_legal_description_type);
-create index idx_fkt_place_13 on staging_octane.place (pl_listed_for_sale_in_last_6_months);
-create index idx_fkt_place_14 on staging_octane.place (pl_management_country);
-create index idx_fkt_place_15 on staging_octane.place (pl_mh_certificate_of_title_issued);
-create index idx_fkt_place_16 on staging_octane.place (pl_mh_certificate_of_title_type);
-create index idx_fkt_place_17 on staging_octane.place (pl_mh_leasehold__property_interest_type);
-create index idx_fkt_place_18 on staging_octane.place (pl_mh_loan_purpose_type);
-create index idx_fkt_place_20 on staging_octane.place (pl_native_american_lands_type);
-create index idx_fkt_place_21 on staging_octane.place (pl_neighborhood_location_type);
-create index idx_fkt_place_22 on staging_octane.place (pl_power_purchase_agreement);
-create index idx_fkt_place_23 on staging_octane.place (pl_project_classification_type);
-create index idx_fkt_place_24 on staging_octane.place (pl_project_design_type);
-create index idx_fkt_place_25 on staging_octane.place (pl_property_category_type);
-create index idx_fkt_place_26 on staging_octane.place (pl_property_in_borrower_trust);
-create index idx_fkt_place_27 on staging_octane.place (pl_property_insurance_amount_input_type);
-create index idx_fkt_place_28 on staging_octane.place (pl_property_rights_type);
-create index idx_fkt_place_29 on staging_octane.place (pl_property_tax_amount_input_type);
-create index idx_fkt_place_30 on staging_octane.place (pl_property_usage_type);
-create index idx_fkt_place_31 on staging_octane.place (pl_refinance_improvements_type);
-create index idx_fkt_place_32 on staging_octane.place (pl_reo_disposition_status_type);
-create index idx_fkt_place_33 on staging_octane.place (pl_road_type);
-create index idx_fkt_place_34 on staging_octane.place (pl_sanitation_type);
-create index idx_fkt_place_35 on staging_octane.place (pl_solar_panels_type);
-create index idx_fkt_place_36 on staging_octane.place (pl_survey_required);
-create index idx_fkt_place_37 on staging_octane.place (pl_title_manner_held_type);
-create index idx_fkt_place_38 on staging_octane.place (pl_unique_dwelling_type);
-create index idx_fkt_place_39 on staging_octane.place (pl_va_guaranteed_reo);
-create index idx_fkt_place_40 on staging_octane.place (pl_water_type);
-create index idx_fk_preferred_settlement_1 on staging_octane.preferred_settlement (prs_account_pid);
-create index idx_fk_preferred_settlement_2 on staging_octane.preferred_settlement (prs_title_company_pid);
-create index idx_fk_preferred_settlement_3 on staging_octane.preferred_settlement (prs_title_company_office_pid);
-create index idx_fk_preferred_settlement_4 on staging_octane.preferred_settlement (prs_settlement_agent_pid);
-create index idx_fk_preferred_settlement_5 on staging_octane.preferred_settlement (prs_settlement_agent_office_pid);
-create index idx_fk_preferred_settlement_6 on staging_octane.preferred_settlement (prs_settlement_agent_wire_pid);
-create index idx_fk_price_processing_time_1 on staging_octane.price_processing_time (ppt_account_pid);
-create index idx_fk_product_1 on staging_octane.product (p_account_pid);
-create index idx_fk_product_2 on staging_octane.product (p_investor_pid);
-create index idx_fk_product_3 on staging_octane.product (p_parent_product_pid);
-create index idx_fkt_product_4 on staging_octane.product (p_fund_source_type);
-create index idx_fkt_product_5 on staging_octane.product (p_product_side_type);
-create index idx_fk_product_add_on_1 on staging_octane.product_add_on (pao_product_pid);
-create index idx_fk_product_add_on_rule_1 on staging_octane.product_add_on_rule (par_product_add_on_pid);
-create index idx_fkt_product_add_on_rule_2 on staging_octane.product_add_on_rule (par_amortization_input_type);
-create index idx_fkt_product_add_on_rule_3 on staging_octane.product_add_on_rule (par_arms_length_input_type);
-create index idx_fkt_product_add_on_rule_4 on staging_octane.product_add_on_rule (par_doc_level_input_type);
-create index idx_fkt_product_add_on_rule_5 on staging_octane.product_add_on_rule (par_escrow_waiver_input_type);
-create index idx_fkt_product_add_on_rule_6 on staging_octane.product_add_on_rule (par_first_time_homebuyer_input_type);
-create index idx_fkt_product_add_on_rule_7 on staging_octane.product_add_on_rule (par_hazardous_lava_zone_input_type);
-create index idx_fkt_product_add_on_rule_8 on staging_octane.product_add_on_rule (par_loan_purpose_input_type);
-create index idx_fkt_product_add_on_rule_9 on staging_octane.product_add_on_rule (par_non_resident_alien_input_type);
-create index idx_fkt_product_add_on_rule_10 on staging_octane.product_add_on_rule (par_property_acres_input_type);
-create index idx_fkt_product_add_on_rule_11 on staging_octane.product_add_on_rule (par_property_category_input_type);
-create index idx_fkt_product_add_on_rule_12 on staging_octane.product_add_on_rule (par_property_rights_input_type);
-create index idx_fkt_product_add_on_rule_13 on staging_octane.product_add_on_rule (par_property_usage_input_type);
-create index idx_fkt_product_add_on_rule_14 on staging_octane.product_add_on_rule (par_self_employed_input_type);
-create index idx_fkt_product_add_on_rule_15 on staging_octane.product_add_on_rule (par_state_input_type);
-create index idx_fkt_product_add_on_rule_16 on staging_octane.product_add_on_rule (par_subordinate_financing_input_type);
-create index idx_fk_product_branch_1 on staging_octane.product_branch (pbr_product_pid);
-create index idx_fk_product_branch_2 on staging_octane.product_branch (pbr_branch_pid);
-create index idx_fk_product_buydown_1 on staging_octane.product_buydown (pbd_product_terms_pid);
-create index idx_fkt_product_buydown_2 on staging_octane.product_buydown (pbd_buydown_schedule_type);
-create index idx_fk_product_deal_check_exclusion_1 on staging_octane.product_deal_check_exclusion (pdce_product_pid);
-create index idx_fkt_product_deal_check_exclusion_2 on staging_octane.product_deal_check_exclusion (pdce_deal_check_type);
-create index idx_fk_product_eligibility_1 on staging_octane.product_eligibility (pe_product_pid);
-create index idx_fk_product_eligibility_rule_1 on staging_octane.product_eligibility_rule (per_product_eligibility_pid);
-create index idx_fkt_product_eligibility_rule_2 on staging_octane.product_eligibility_rule (per_amortization_input_type);
-create index idx_fkt_product_eligibility_rule_3 on staging_octane.product_eligibility_rule (per_arms_length_input_type);
-create index idx_fkt_product_eligibility_rule_4 on staging_octane.product_eligibility_rule (per_doc_level_input_type);
-create index idx_fkt_product_eligibility_rule_5 on staging_octane.product_eligibility_rule (per_escrow_waiver_input_type);
-create index idx_fkt_product_eligibility_rule_6 on staging_octane.product_eligibility_rule (per_first_time_homebuyer_input_type);
-create index idx_fkt_product_eligibility_rule_7 on staging_octane.product_eligibility_rule (per_hazardous_lava_zone_input_type);
-create index idx_fkt_product_eligibility_rule_8 on staging_octane.product_eligibility_rule (per_loan_purpose_input_type);
-create index idx_fkt_product_eligibility_rule_9 on staging_octane.product_eligibility_rule (per_non_resident_alien_input_type);
-create index idx_fkt_product_eligibility_rule_10 on staging_octane.product_eligibility_rule (per_property_acres_input_type);
-create index idx_fkt_product_eligibility_rule_11 on staging_octane.product_eligibility_rule (per_property_category_input_type);
-create index idx_fkt_product_eligibility_rule_12 on staging_octane.product_eligibility_rule (per_property_rights_input_type);
-create index idx_fkt_product_eligibility_rule_13 on staging_octane.product_eligibility_rule (per_property_usage_input_type);
-create index idx_fkt_product_eligibility_rule_14 on staging_octane.product_eligibility_rule (per_self_employed_input_type);
-create index idx_fkt_product_eligibility_rule_15 on staging_octane.product_eligibility_rule (per_state_input_type);
-create index idx_fkt_product_eligibility_rule_16 on staging_octane.product_eligibility_rule (per_underwrite_accepted_input_type);
-create index idx_fk_product_interest_only_1 on staging_octane.product_interest_only (pio_product_terms_pid);
-create index idx_fkt_product_interest_only_2 on staging_octane.product_interest_only (pio_interest_only_type);
-create index idx_fk_product_lock_term_1 on staging_octane.product_lock_term (plt_product_pid);
-create index idx_fk_product_lock_term_2 on staging_octane.product_lock_term (plt_lock_term_setting_pid);
-create index idx_fk_product_maximum_investor_price_1 on staging_octane.product_maximum_investor_price (pmip_product_pid);
-create index idx_fk_product_maximum_rebate_1 on staging_octane.product_maximum_rebate (pmr_product_pid);
-create index idx_fk_product_minimum_investor_price_1 on staging_octane.product_minimum_investor_price (pminip_product_pid);
-create index idx_fk_product_originator_1 on staging_octane.product_originator (po_product_pid);
-create index idx_fk_product_originator_2 on staging_octane.product_originator (po_lender_user_pid);
-create index idx_fk_product_prepay_penalty_1 on staging_octane.product_prepay_penalty (ppp_product_terms_pid);
-create index idx_fkt_product_prepay_penalty_2 on staging_octane.product_prepay_penalty (ppp_prepay_penalty_schedule_type);
-create index idx_fk_product_terms_1 on staging_octane.product_terms (pt_product_pid);
-create index idx_fkt_product_terms_2 on staging_octane.product_terms (pt_arm_index_type);
-create index idx_fkt_product_terms_3 on staging_octane.product_terms (pt_arm_payment_adjustment_calculation_type);
-create index idx_fkt_product_terms_4 on staging_octane.product_terms (pt_buydown_base_date_type);
-create index idx_fkt_product_terms_5 on staging_octane.product_terms (pt_buydown_subsidy_calculation_type);
-create index idx_fkt_product_terms_6 on staging_octane.product_terms (pt_community_lending_type);
-create index idx_fkt_product_terms_7 on staging_octane.product_terms (pt_days_per_year_type);
-create index idx_fkt_product_terms_8 on staging_octane.product_terms (pt_decision_credit_score_calc_type);
-create index idx_fkt_product_terms_9 on staging_octane.product_terms (pt_fha_rehab_program_type);
-create index idx_fkt_product_terms_10 on staging_octane.product_terms (pt_fha_special_program_type);
-create index idx_fkt_product_terms_11 on staging_octane.product_terms (pt_fnm_arm_plan_type);
-create index idx_fkt_product_terms_12 on staging_octane.product_terms (pt_fnm_community_lending_product_type);
-create index idx_fkt_product_terms_13 on staging_octane.product_terms (pt_fre_community_program_type);
-create index idx_fkt_product_terms_14 on staging_octane.product_terms (pt_heloc_cancel_fee_applicable_type);
-create index idx_fkt_product_terms_15 on staging_octane.product_terms (pt_high_balance);
-create index idx_fkt_product_terms_16 on staging_octane.product_terms (pt_ipc_calc_type);
-create index idx_fkt_product_terms_17 on staging_octane.product_terms (pt_ipc_comparison_operator_type1);
-create index idx_fkt_product_terms_18 on staging_octane.product_terms (pt_ipc_comparison_operator_type2);
-create index idx_fkt_product_terms_19 on staging_octane.product_terms (pt_ipc_comparison_operator_type3);
-create index idx_fkt_product_terms_20 on staging_octane.product_terms (pt_ipc_comparison_operator_type4);
-create index idx_fkt_product_terms_21 on staging_octane.product_terms (pt_ipc_property_usage_type1);
-create index idx_fkt_product_terms_22 on staging_octane.product_terms (pt_ipc_property_usage_type2);
-create index idx_fkt_product_terms_23 on staging_octane.product_terms (pt_ipc_property_usage_type3);
-create index idx_fkt_product_terms_24 on staging_octane.product_terms (pt_ipc_property_usage_type4);
-create index idx_fkt_product_terms_25 on staging_octane.product_terms (pt_lien_priority_type);
-create index idx_fkt_product_terms_26 on staging_octane.product_terms (pt_loan_amortization_type);
-create index idx_fkt_product_terms_27 on staging_octane.product_terms (pt_mortgage_type);
-create index idx_fkt_product_terms_28 on staging_octane.product_terms (pt_negative_amortization_type);
-create index idx_fkt_product_terms_29 on staging_octane.product_terms (pt_partial_payment_policy_type);
-create index idx_fkt_product_terms_30 on staging_octane.product_terms (pt_payment_frequency_type);
-create index idx_fkt_product_terms_31 on staging_octane.product_terms (pt_payment_structure_type);
-create index idx_fkt_product_terms_32 on staging_octane.product_terms (pt_prepaid_interest_rate_type);
-create index idx_fkt_product_terms_33 on staging_octane.product_terms (pt_prepay_penalty_type);
-create index idx_fkt_product_terms_34 on staging_octane.product_terms (pt_product_appraisal_requirement_type);
-create index idx_fkt_product_terms_35 on staging_octane.product_terms (pt_product_special_program_type);
-create index idx_fkt_product_terms_36 on staging_octane.product_terms (pt_qualifying_monthly_payment_type);
-create index idx_fkt_product_terms_37 on staging_octane.product_terms (pt_qualifying_rate_type);
-create index idx_fkt_product_terms_38 on staging_octane.product_terms (pt_section_of_act_coarse_type);
-create index idx_fkt_product_terms_39 on staging_octane.product_terms (pt_servicing_transfer_type);
-create index idx_fkt_product_terms_40 on staging_octane.product_terms (pt_texas_veterans_land_board);
-create index idx_fkt_product_terms_41 on staging_octane.product_terms (pt_third_party_community_second_program_eligibility_type);
-create index idx_fk_product_third_party_community_second_program_1 on staging_octane.product_third_party_community_second_program (ptpp_product_terms_pid);
-create index idx_fk_product_third_party_community_second_program_2 on staging_octane.product_third_party_community_second_program (ptpp_third_party_community_second_program_pid);
-create index idx_fk_profit_margin_detail_1 on staging_octane.profit_margin_detail (pmd_lender_lock_minor_pid);
-create index idx_fkt_profit_margin_detail_2 on staging_octane.profit_margin_detail (pmd_profit_margin_type);
-create index idx_fk_proposal_1 on staging_octane.proposal (prp_deal_pid);
-create index idx_fk_proposal_2 on staging_octane.proposal (prp_decision_lp_request_pid);
-create index idx_fk_proposal_3 on staging_octane.proposal (prp_decision_du_request_pid);
-create index idx_fk_proposal_4 on staging_octane.proposal (prp_decision_credit_score_borrower_pid);
-create index idx_fk_proposal_5 on staging_octane.proposal (prp_trustee_pid);
-create index idx_fk_proposal_6 on staging_octane.proposal (prp_decision_veteran_borrower_pid);
-create index idx_fkt_proposal_7 on staging_octane.proposal (prp_any_vesting_changes);
-create index idx_fkt_proposal_8 on staging_octane.proposal (prp_arms_length);
-create index idx_fkt_proposal_9 on staging_octane.proposal (prp_cema);
-create index idx_fkt_proposal_10 on staging_octane.proposal (prp_construction_lot_ownership_status_type);
-create index idx_fkt_proposal_11 on staging_octane.proposal (prp_disaster_declaration_check_date_type);
-create index idx_fkt_proposal_12 on staging_octane.proposal (prp_doc_level_type);
-create index idx_fkt_proposal_13 on staging_octane.proposal (prp_early_first_payment);
-create index idx_fkt_proposal_14 on staging_octane.proposal (prp_earthquake_insurance_applicable);
-create index idx_fkt_proposal_15 on staging_octane.proposal (prp_effective_property_value_explanation_type);
-create index idx_fkt_proposal_16 on staging_octane.proposal (prp_effective_property_value_type);
-create index idx_fkt_proposal_17 on staging_octane.proposal (prp_effective_signing_location_state);
-create index idx_fkt_proposal_18 on staging_octane.proposal (prp_fha_eligible_maximum_financing);
-create index idx_fkt_proposal_19 on staging_octane.proposal (prp_fha_non_arms_length_ltv_exception_type);
-create index idx_fkt_proposal_20 on staging_octane.proposal (prp_flood_insurance_applicable);
-create index idx_fkt_proposal_21 on staging_octane.proposal (prp_fre_ctp_closing_feature_type);
-create index idx_fkt_proposal_22 on staging_octane.proposal (prp_fre_ctp_closing_type);
-create index idx_fkt_proposal_24 on staging_octane.proposal (prp_hazard_insurance_applicable);
-create index idx_fkt_proposal_25 on staging_octane.proposal (prp_hud_fha_de_approval_type);
-create index idx_fkt_proposal_26 on staging_octane.proposal (prp_intent_to_proceed_type);
-create index idx_fkt_proposal_27 on staging_octane.proposal (prp_loan_purpose_type);
-create index idx_fkt_proposal_28 on staging_octane.proposal (prp_mortgagee_builder_seller_relationship);
-create index idx_fkt_proposal_29 on staging_octane.proposal (prp_property_acquired_through_ancillary_relief);
-create index idx_fkt_proposal_30 on staging_octane.proposal (prp_property_acquired_through_inheritance);
-create index idx_fkt_proposal_31 on staging_octane.proposal (prp_property_repairs_holdback_calc_type);
-create index idx_fkt_proposal_32 on staging_octane.proposal (prp_property_repairs_holdback_payer_type);
-create index idx_fkt_proposal_33 on staging_octane.proposal (prp_property_repairs_required_type);
-create index idx_fkt_proposal_34 on staging_octane.proposal (prp_property_usage_type);
-create index idx_fkt_proposal_35 on staging_octane.proposal (prp_proposal_type);
-create index idx_fkt_proposal_36 on staging_octane.proposal (prp_rescission_notification_type);
-create index idx_fkt_proposal_37 on staging_octane.proposal (prp_security_instrument_type);
-create index idx_fkt_proposal_38 on staging_octane.proposal (prp_separate_transaction_for_land_acquisition);
-create index idx_fkt_proposal_39 on staging_octane.proposal (prp_structure_type);
-create index idx_fkt_proposal_40 on staging_octane.proposal (prp_taxes_escrowed);
-create index idx_fkt_proposal_41 on staging_octane.proposal (prp_trustee_address_country);
-create index idx_fkt_proposal_42 on staging_octane.proposal (prp_underwrite_disposition_type);
-create index idx_fkt_proposal_43 on staging_octane.proposal (prp_underwrite_method_type);
-create index idx_fkt_proposal_44 on staging_octane.proposal (prp_underwrite_risk_assessment_type);
-create index idx_fkt_proposal_45 on staging_octane.proposal (prp_usda_gsa_sam_exclusion);
-create index idx_fkt_proposal_46 on staging_octane.proposal (prp_usda_rd_single_family_housing_type);
-create index idx_fkt_proposal_47 on staging_octane.proposal (prp_va_meets_credit_standards);
-create index idx_fkt_proposal_48 on staging_octane.proposal (prp_va_monthly_utilities_included);
-create index idx_fkt_proposal_49 on staging_octane.proposal (prp_va_notice_of_value_source_type);
-create index idx_fkt_proposal_50 on staging_octane.proposal (prp_va_past_credit_record_type);
-create index idx_fkt_proposal_51 on staging_octane.proposal (prp_vesting_change_titleholder_added);
-create index idx_fkt_proposal_52 on staging_octane.proposal (prp_vesting_change_titleholder_name_change);
-create index idx_fkt_proposal_53 on staging_octane.proposal (prp_vesting_change_titleholder_removed);
-create index idx_fkt_proposal_54 on staging_octane.proposal (prp_windstorm_insurance_applicable);
-create index idx_fk_proposal_contractor_1 on staging_octane.proposal_contractor (pctr_proposal_pid);
-create index idx_fk_proposal_contractor_2 on staging_octane.proposal_contractor (pctr_contractor_pid);
-create index idx_fk_proposal_doc_1 on staging_octane.proposal_doc (prpd_deal_pid);
-create index idx_fk_proposal_doc_2 on staging_octane.proposal_doc (prpd_rental_income_pid);
-create index idx_fk_proposal_doc_3 on staging_octane.proposal_doc (prpd_asset_pid);
-create index idx_fk_proposal_doc_4 on staging_octane.proposal_doc (prpd_asset_large_deposit_pid);
-create index idx_fk_proposal_doc_5 on staging_octane.proposal_doc (prpd_liability_pid);
-create index idx_fk_proposal_doc_6 on staging_octane.proposal_doc (prpd_reo_place_pid);
-create index idx_fk_proposal_doc_7 on staging_octane.proposal_doc (prpd_property_place_pid);
-create index idx_fk_proposal_doc_8 on staging_octane.proposal_doc (prpd_residence_place_pid);
-create index idx_fk_proposal_doc_9 on staging_octane.proposal_doc (prpd_borrower_residence_pid);
-create index idx_fk_proposal_doc_10 on staging_octane.proposal_doc (prpd_application_pid);
-create index idx_fk_proposal_doc_11 on staging_octane.proposal_doc (prpd_credit_inquiry_pid);
-create index idx_fk_proposal_doc_12 on staging_octane.proposal_doc (prpd_proposal_pid);
-create index idx_fk_proposal_doc_13 on staging_octane.proposal_doc (prpd_appraisal_pid);
-create index idx_fk_proposal_doc_14 on staging_octane.proposal_doc (prpd_proposal_doc_set_pid);
-create index idx_fk_proposal_doc_15 on staging_octane.proposal_doc (prpd_smart_doc_pid);
-create index idx_fk_proposal_doc_16 on staging_octane.proposal_doc (prpd_appraisal_form_pid);
-create index idx_fk_proposal_doc_17 on staging_octane.proposal_doc (prpd_tax_transcript_request_pid);
-create index idx_fk_proposal_doc_18 on staging_octane.proposal_doc (prpd_borrower_associated_address_pid);
-create index idx_fk_proposal_doc_19 on staging_octane.proposal_doc (prpd_construction_cost_pid);
-create index idx_fk_proposal_doc_20 on staging_octane.proposal_doc (prpd_construction_draw_pid);
-create index idx_fk_proposal_doc_21 on staging_octane.proposal_doc (prpd_proposal_contractor_pid);
-create index idx_fk_proposal_doc_22 on staging_octane.proposal_doc (prpd_loan_pid);
-create index idx_fk_proposal_doc_23 on staging_octane.proposal_doc (prpd_borrower_pid);
-create index idx_fk_proposal_doc_24 on staging_octane.proposal_doc (prpd_borrower_income_pid);
-create index idx_fk_proposal_doc_25 on staging_octane.proposal_doc (prpd_job_income_pid);
-create index idx_fk_proposal_doc_26 on staging_octane.proposal_doc (prpd_borrower_job_gap_pid);
-create index idx_fk_proposal_doc_27 on staging_octane.proposal_doc (prpd_other_income_pid);
-create index idx_fk_proposal_doc_28 on staging_octane.proposal_doc (prpd_business_income_pid);
-create index idx_fkt_proposal_doc_29 on staging_octane.proposal_doc (prpd_deal_child_type);
-create index idx_fkt_proposal_doc_30 on staging_octane.proposal_doc (prpd_doc_approval_type);
-create index idx_fkt_proposal_doc_31 on staging_octane.proposal_doc (prpd_doc_fulfill_status_type);
-create index idx_fk_proposal_doc_borrower_access_1 on staging_octane.proposal_doc_borrower_access (pdba_borrower_pid);
-create index idx_fk_proposal_doc_borrower_access_2 on staging_octane.proposal_doc_borrower_access (pdba_proposal_doc_pid);
-create index idx_fk_proposal_doc_file_1 on staging_octane.proposal_doc_file (prpdf_proposal_doc_pid);
-create index idx_fk_proposal_doc_file_2 on staging_octane.proposal_doc_file (prpdf_deal_file_pid);
-create index idx_fkt_proposal_doc_file_3 on staging_octane.proposal_doc_file (prpdf_included_file);
-create index idx_fkt_proposal_doc_file_4 on staging_octane.proposal_doc_file (prpdf_proposal_doc_file_type);
-create index idx_fk_proposal_doc_set_1 on staging_octane.proposal_doc_set (prpds_proposal_pid);
-create index idx_fk_proposal_doc_set_2 on staging_octane.proposal_doc_set (prpds_smart_doc_set_pid);
-create index idx_fk_proposal_doc_set_3 on staging_octane.proposal_doc_set (prpds_esign_evidence_deal_file_pid);
-create index idx_fk_proposal_doc_set_4 on staging_octane.proposal_doc_set (prpds_docusign_package_pid);
-create index idx_fk_proposal_doc_set_5 on staging_octane.proposal_doc_set (prpds_requester_lender_user_pid);
-create index idx_fk_proposal_doc_set_6 on staging_octane.proposal_doc_set (prpds_creator_lender_user_pid);
-create index idx_fk_proposal_doc_set_7 on staging_octane.proposal_doc_set (prpds_canceler_lender_user_pid);
-create index idx_fkt_proposal_doc_set_8 on staging_octane.proposal_doc_set (prpds_canceled_reason_type);
-create index idx_fkt_proposal_doc_set_9 on staging_octane.proposal_doc_set (prpds_canceler_agent_type);
-create index idx_fkt_proposal_doc_set_10 on staging_octane.proposal_doc_set (prpds_creator_agent_type);
-create index idx_fkt_proposal_doc_set_11 on staging_octane.proposal_doc_set (prpds_delivery_method_type);
-create index idx_fkt_proposal_doc_set_12 on staging_octane.proposal_doc_set (prpds_doc_package_status_type);
-create index idx_fkt_proposal_doc_set_13 on staging_octane.proposal_doc_set (prpds_esign_vendor_type);
-create index idx_fkt_proposal_doc_set_14 on staging_octane.proposal_doc_set (prpds_requester_agent_type);
-create index idx_fk_proposal_doc_set_id_ticker_1 on staging_octane.proposal_doc_set_id_ticker (pdstk_proposal_pid);
-create index idx_fk_proposal_doc_set_id_ticker_2 on staging_octane.proposal_doc_set_id_ticker (pdstk_smart_doc_set_pid);
-create index idx_fk_proposal_doc_set_signer_1 on staging_octane.proposal_doc_set_signer (prpdss_proposal_doc_set_pid);
-create index idx_fk_proposal_doc_set_signer_2 on staging_octane.proposal_doc_set_signer (prpdss_deal_signer_pid);
-create index idx_fk_proposal_doc_set_snapshot_1 on staging_octane.proposal_doc_set_snapshot (prpdssn_proposal_doc_set_pid);
-create index idx_fk_proposal_doc_set_snapshot_2 on staging_octane.proposal_doc_set_snapshot (prpdssn_snapshot_proposal_pid);
-create index idx_fk_proposal_engagement_1 on staging_octane.proposal_engagement (prpe_proposal_pid);
-create index idx_fk_proposal_grant_program_1 on staging_octane.proposal_grant_program (pgp_proposal_pid);
-create index idx_fk_proposal_grant_program_2 on staging_octane.proposal_grant_program (pgp_account_grant_program_pid);
-create index idx_fk_proposal_req_1 on staging_octane.proposal_req (prpr_proposal_doc_pid);
-create index idx_fk_proposal_req_2 on staging_octane.proposal_req (prpr_business_income_pid);
-create index idx_fk_proposal_req_3 on staging_octane.proposal_req (prpr_rental_income_pid);
-create index idx_fk_proposal_req_4 on staging_octane.proposal_req (prpr_asset_pid);
-create index idx_fk_proposal_req_5 on staging_octane.proposal_req (prpr_asset_large_deposit_pid);
-create index idx_fk_proposal_req_6 on staging_octane.proposal_req (prpr_liability_pid);
-create index idx_fk_proposal_req_7 on staging_octane.proposal_req (prpr_reo_place_pid);
-create index idx_fk_proposal_req_8 on staging_octane.proposal_req (prpr_property_place_pid);
-create index idx_fk_proposal_req_9 on staging_octane.proposal_req (prpr_residence_place_pid);
-create index idx_fk_proposal_req_10 on staging_octane.proposal_req (prpr_borrower_residence_pid);
-create index idx_fk_proposal_req_11 on staging_octane.proposal_req (prpr_application_pid);
-create index idx_fk_proposal_req_12 on staging_octane.proposal_req (prpr_deal_pid);
-create index idx_fk_proposal_req_13 on staging_octane.proposal_req (prpr_credit_inquiry_pid);
-create index idx_fk_proposal_req_14 on staging_octane.proposal_req (prpr_appraisal_pid);
-create index idx_fk_proposal_req_15 on staging_octane.proposal_req (prpr_appraisal_form_pid);
-create index idx_fk_proposal_req_16 on staging_octane.proposal_req (prpr_tax_transcript_request_pid);
-create index idx_fk_proposal_req_17 on staging_octane.proposal_req (prpr_borrower_associated_address_pid);
-create index idx_fk_proposal_req_18 on staging_octane.proposal_req (prpr_construction_cost_pid);
-create index idx_fk_proposal_req_19 on staging_octane.proposal_req (prpr_construction_draw_pid);
-create index idx_fk_proposal_req_20 on staging_octane.proposal_req (prpr_proposal_contractor_pid);
-create index idx_fk_proposal_req_21 on staging_octane.proposal_req (prpr_proposal_pid);
-create index idx_fk_proposal_req_22 on staging_octane.proposal_req (prpr_loan_pid);
-create index idx_fk_proposal_req_23 on staging_octane.proposal_req (prpr_borrower_pid);
-create index idx_fk_proposal_req_24 on staging_octane.proposal_req (prpr_borrower_income_pid);
-create index idx_fk_proposal_req_25 on staging_octane.proposal_req (prpr_job_income_pid);
-create index idx_fk_proposal_req_26 on staging_octane.proposal_req (prpr_borrower_job_gap_pid);
-create index idx_fk_proposal_req_27 on staging_octane.proposal_req (prpr_other_income_pid);
-create index idx_fkt_proposal_req_28 on staging_octane.proposal_req (prpr_deal_child_type);
-create index idx_fkt_proposal_req_29 on staging_octane.proposal_req (prpr_req_decision_status_type);
-create index idx_fkt_proposal_req_30 on staging_octane.proposal_req (prpr_req_fulfill_status_type);
-create index idx_fk_proposal_review_1 on staging_octane.proposal_review (prpre_proposal_pid);
-create index idx_fk_proposal_review_2 on staging_octane.proposal_review (prpre_request_by_lender_user_pid);
-create index idx_fk_proposal_review_3 on staging_octane.proposal_review (prpre_decision_by_lender_user_pid);
-create index idx_fkt_proposal_review_4 on staging_octane.proposal_review (prpre_proposal_review_status_type);
-create index idx_fk_proposal_review_ticker_1 on staging_octane.proposal_review_ticker (prpret_proposal_pid);
-create index idx_fk_proposal_summary_1 on staging_octane.proposal_summary (ps_proposal_pid);
-create index idx_fk_proposal_summary_2 on staging_octane.proposal_summary (ps_subject_property_subordinate_2nd_creditor_pid);
-create index idx_fk_proposal_summary_3 on staging_octane.proposal_summary (ps_subject_property_subordinate_3rd_creditor_pid);
-create index idx_fk_proposal_summary_4 on staging_octane.proposal_summary (ps_investor_pid_main);
-create index idx_fk_proposal_summary_5 on staging_octane.proposal_summary (ps_investor_pid_piggyback);
-create index idx_fk_proposal_summary_6 on staging_octane.proposal_summary (ps_mortgage_credit_certificate_issuer_pid);
-create index idx_fk_proposal_summary_7 on staging_octane.proposal_summary (ps_product_pid_main);
-create index idx_fk_proposal_summary_8 on staging_octane.proposal_summary (ps_product_pid_piggyback);
-create index idx_fkt_proposal_summary_9 on staging_octane.proposal_summary (ps_b1_citizenship_residency_type);
-create index idx_fkt_proposal_summary_10 on staging_octane.proposal_summary (ps_b1_gender_type);
-create index idx_fkt_proposal_summary_11 on staging_octane.proposal_summary (ps_b1_hmda_ethnicity_2017_type);
-create index idx_fkt_proposal_summary_12 on staging_octane.proposal_summary (ps_b1_hmda_race_2017_type);
-create index idx_fkt_proposal_summary_13 on staging_octane.proposal_summary (ps_b2_citizenship_residency_type);
-create index idx_fkt_proposal_summary_14 on staging_octane.proposal_summary (ps_b2_gender_type);
-create index idx_fkt_proposal_summary_15 on staging_octane.proposal_summary (ps_b2_hmda_ethnicity_2017_type);
-create index idx_fkt_proposal_summary_16 on staging_octane.proposal_summary (ps_b2_hmda_race_2017_type);
-create index idx_fkt_proposal_summary_17 on staging_octane.proposal_summary (ps_c1_citizenship_residency_type);
-create index idx_fkt_proposal_summary_18 on staging_octane.proposal_summary (ps_c1_gender_type);
-create index idx_fkt_proposal_summary_19 on staging_octane.proposal_summary (ps_c1_hmda_ethnicity_2017_type);
-create index idx_fkt_proposal_summary_20 on staging_octane.proposal_summary (ps_c1_hmda_race_2017_type);
-create index idx_fkt_proposal_summary_21 on staging_octane.proposal_summary (ps_fha_section_of_act_coarse_type_main);
-create index idx_fkt_proposal_summary_22 on staging_octane.proposal_summary (ps_fha_section_of_act_coarse_type_piggyback);
-create index idx_fkt_proposal_summary_23 on staging_octane.proposal_summary (ps_fha_special_program_type_main);
-create index idx_fkt_proposal_summary_24 on staging_octane.proposal_summary (ps_fha_special_program_type_piggyback);
-create index idx_fkt_proposal_summary_25 on staging_octane.proposal_summary (ps_fund_source_type_main);
-create index idx_fkt_proposal_summary_26 on staging_octane.proposal_summary (ps_fund_source_type_piggyback);
-create index idx_fkt_proposal_summary_27 on staging_octane.proposal_summary (ps_mortgage_type_main);
-create index idx_fkt_proposal_summary_28 on staging_octane.proposal_summary (ps_mortgage_type_piggyback);
-create index idx_fkt_proposal_summary_29 on staging_octane.proposal_summary (ps_product_fnm_community_lending_product_type_main);
-create index idx_fkt_proposal_summary_30 on staging_octane.proposal_summary (ps_product_fnm_community_lending_product_type_piggyback);
-create index idx_fkt_proposal_summary_31 on staging_octane.proposal_summary (ps_product_fre_community_program_type_main);
-create index idx_fkt_proposal_summary_32 on staging_octane.proposal_summary (ps_product_fre_community_program_type_piggyback);
-create index idx_fkt_proposal_summary_33 on staging_octane.proposal_summary (ps_product_special_program_type_main);
-create index idx_fkt_proposal_summary_34 on staging_octane.proposal_summary (ps_product_special_program_type_piggyback);
-create index idx_fkt_proposal_summary_35 on staging_octane.proposal_summary (ps_property_category_type);
-create index idx_fkt_proposal_summary_36 on staging_octane.proposal_summary (ps_proposal_structure_type);
-create index idx_fkt_proposal_summary_37 on staging_octane.proposal_summary (ps_subject_property_country);
-create index idx_fk_pte_request_1 on staging_octane.pte_request (pter_proposal_pid);
-create index idx_fk_pte_request_2 on staging_octane.pte_request (pter_response_xml_pid);
-create index idx_fk_pte_request_3 on staging_octane.pte_request (pter_response_pdf_file_pid);
-create index idx_fkt_pte_request_4 on staging_octane.pte_request (pter_building_status_type);
-create index idx_fkt_pte_request_5 on staging_octane.pte_request (pter_loan_purpose_type);
-create index idx_fkt_pte_request_6 on staging_octane.pte_request (pter_property_usage_type);
-create index idx_fkt_pte_request_7 on staging_octane.pte_request (pter_pte_request_status_type);
-create index idx_fkt_pte_request_8 on staging_octane.pte_request (pter_pte_response_status_type);
-create index idx_fk_public_record_1 on staging_octane.public_record (pr_proposal_pid);
-create index idx_fk_public_record_2 on staging_octane.public_record (pr_credit_request_pid);
-create index idx_fkt_public_record_3 on staging_octane.public_record (pr_bankruptcy_exception_type);
-create index idx_fkt_public_record_4 on staging_octane.public_record (pr_public_record_disposition_type);
-create index idx_fkt_public_record_5 on staging_octane.public_record (pr_public_record_type);
-create index idx_fkt_public_record_6 on staging_octane.public_record (pr_report_public_record_disposition_type);
-create index idx_fk_rate_sheet_1 on staging_octane.rate_sheet (rs_product_pid);
-create index idx_fk_rate_sheet_price_1 on staging_octane.rate_sheet_price (rsp_rate_sheet_rate_pid);
-create index idx_fkt_rate_sheet_price_2 on staging_octane.rate_sheet_price (rsp_lock_commitment_type);
-create index idx_fk_rate_sheet_rate_1 on staging_octane.rate_sheet_rate (rsr_rate_sheet_pid);
-create index idx_fkt_recording_city_1 on staging_octane.recording_city (rc_state_type);
-create index idx_fkt_recording_district_1 on staging_octane.recording_district (rdi_state_type);
-create index idx_fk_region_ernst_page_rec_1 on staging_octane.region_ernst_page_rec (rerc_county_pid);
-create index idx_fk_region_ernst_page_rec_2 on staging_octane.region_ernst_page_rec (rerc_county_city_pid);
-create index idx_fk_region_ernst_page_rec_3 on staging_octane.region_ernst_page_rec (rerc_recording_district_pid);
-create index idx_fkt_region_ernst_page_rec_4 on staging_octane.region_ernst_page_rec (rerc_ernst_page_rec_type);
-create index idx_fkt_region_ernst_page_rec_5 on staging_octane.region_ernst_page_rec (rerc_state_type);
-create index idx_fk_relock_fee_setting_1 on staging_octane.relock_fee_setting (rfs_account_pid);
-create index idx_fk_rental_income_1 on staging_octane.rental_income (ri_borrower_income_pid);
-create index idx_fk_rental_income_2 on staging_octane.rental_income (ri_place_pid);
-create index idx_fkt_rental_income_3 on staging_octane.rental_income (ri_rental_income_calc_method);
-create index idx_fk_report_1 on staging_octane.report (rp_account_pid);
-create index idx_fk_report_2 on staging_octane.report (rp_criteria_pid);
-create index idx_fkt_report_3 on staging_octane.report (rp_report_type);
-create index idx_fk_report_column_1 on staging_octane.report_column (rpc_report_row_pid);
-create index idx_fkt_report_column_2 on staging_octane.report_column (rpc_report_column_type);
-create index idx_fk_report_row_1 on staging_octane.report_row (rprw_account_pid);
-create index idx_fkt_report_row_2 on staging_octane.report_row (rprw_report_type);
-create index idx_fk_repository_file_1 on staging_octane.repository_file (rf_account_pid);
-create index idx_fk_repository_file_2 on staging_octane.repository_file (rf_uploader_lender_user_pid);
-create index idx_fk_repository_file_3 on staging_octane.repository_file (rf_uploader_borrower_user_pid);
-create index idx_fkt_repository_file_4 on staging_octane.repository_file (rf_repository_type);
-create index idx_fkt_repository_file_5 on staging_octane.repository_file (rf_uploader_agent_type);
-create index idx_fk_role_1 on staging_octane.role (r_account_pid);
-create index idx_fkt_role_2 on staging_octane.role (r_loan_access_type);
-create index idx_fk_role_charge_permissions_1 on staging_octane.role_charge_permissions (rcp_role_pid);
-create index idx_fkt_role_charge_permissions_2 on staging_octane.role_charge_permissions (rcp_charge_type);
-create index idx_fk_role_config_export_permission_1 on staging_octane.role_config_export_permission (rcep_role_pid);
-create index idx_fkt_role_config_export_permission_2 on staging_octane.role_config_export_permission (rcep_config_export_permission_type);
-create index idx_fk_role_deal_context_1 on staging_octane.role_deal_context (rdc_role_pid);
-create index idx_fkt_role_deal_context_2 on staging_octane.role_deal_context (rdc_deal_context_permission_type);
-create index idx_fk_role_export_permission_1 on staging_octane.role_export_permission (rep_role_pid);
-create index idx_fkt_role_export_permission_2 on staging_octane.role_export_permission (rep_export_permission_type);
-create index idx_fk_role_lender_toolbox_1 on staging_octane.role_lender_toolbox (rlet_role_pid);
-create index idx_fkt_role_lender_toolbox_2 on staging_octane.role_lender_toolbox (rlet_lender_toolbox_permission_type);
-create index idx_fk_role_loans_toolbox_1 on staging_octane.role_loans_toolbox (rlot_role_pid);
-create index idx_fkt_role_loans_toolbox_2 on staging_octane.role_loans_toolbox (rlot_loans_toolbox_permission_type);
-create index idx_fk_role_performer_assign_1 on staging_octane.role_performer_assign (rpa_role_pid);
-create index idx_fk_role_performer_assign_2 on staging_octane.role_performer_assign (rpa_assignee_role_pid);
-create index idx_fk_role_report_1 on staging_octane.role_report (rrp_report_pid);
-create index idx_fk_role_report_2 on staging_octane.role_report (rrp_role_pid);
-create index idx_fk_sap_deal_step_1 on staging_octane.sap_deal_step (sds_borrower_user_pid);
-create index idx_fk_sap_deal_step_2 on staging_octane.sap_deal_step (sds_asset_pid);
-create index idx_fk_sap_deal_step_3 on staging_octane.sap_deal_step (sds_liability_pid);
-create index idx_fk_sap_deal_step_4 on staging_octane.sap_deal_step (sds_deal_contact_pid);
-create index idx_fk_sap_deal_step_5 on staging_octane.sap_deal_step (sds_deal_real_estate_agent_pid);
-create index idx_fk_sap_deal_step_6 on staging_octane.sap_deal_step (sds_previous_pid);
-create index idx_fk_sap_deal_step_7 on staging_octane.sap_deal_step (sds_deal_pid);
-create index idx_fk_sap_deal_step_8 on staging_octane.sap_deal_step (sds_borrower_pid);
-create index idx_fk_sap_deal_step_9 on staging_octane.sap_deal_step (sds_reo_pid);
-create index idx_fk_sap_deal_step_10 on staging_octane.sap_deal_step (sds_application_pid);
-create index idx_fk_sap_deal_step_11 on staging_octane.sap_deal_step (sds_job_income_pid);
-create index idx_fk_sap_deal_step_12 on staging_octane.sap_deal_step (sds_other_income_pid);
-create index idx_fk_sap_deal_step_13 on staging_octane.sap_deal_step (sds_borrower_residence_pid);
-create index idx_fkt_sap_deal_step_14 on staging_octane.sap_deal_step (sds_sap_step_type);
-create index idx_fkt_sap_deal_step_15 on staging_octane.sap_deal_step (sds_yes_no_answer);
-create index idx_fk_sap_quote_request_1 on staging_octane.sap_quote_request (sqr_deal_pid);
-create index idx_fk_secondary_admin_event_1 on staging_octane.secondary_admin_event (sae_account_pid);
-create index idx_fk_secondary_admin_event_2 on staging_octane.secondary_admin_event (sae_secondary_admin_event_entity_type);
-create index idx_fk_secondary_settings_1 on staging_octane.secondary_settings (sset_account_pid);
-create index idx_fk_secondary_settings_2 on staging_octane.secondary_settings (sset_default_lead_source_pid);
-create index idx_fk_secondary_settings_3 on staging_octane.secondary_settings (sset_default_mortech_account_pid);
-create index idx_fk_secondary_settings_4 on staging_octane.secondary_settings (sset_default_beneficiary_investor_pid);
-create index idx_fk_secondary_settings_5 on staging_octane.secondary_settings (sset_default_servicer_investor_pid);
-create index idx_fk_servicer_loan_id_assignment_1 on staging_octane.servicer_loan_id_assignment (slia_account_pid);
-create index idx_fk_servicer_loan_id_assignment_2 on staging_octane.servicer_loan_id_assignment (slia_servicer_loan_id_import_request_pid);
-create index idx_fk_servicer_loan_id_assignment_3 on staging_octane.servicer_loan_id_assignment (slia_loan_servicer_pid);
-create index idx_fkt_servicer_loan_id_assignment_4 on staging_octane.servicer_loan_id_assignment (slia_servicer_loan_id_assign_type);
-create index idx_fk_servicer_loan_id_import_request_1 on staging_octane.servicer_loan_id_import_request (slir_account_pid);
-create index idx_fk_servicer_loan_id_import_request_2 on staging_octane.servicer_loan_id_import_request (slir_import_lender_user_pid);
-create index idx_fkt_servicer_loan_id_import_request_3 on staging_octane.servicer_loan_id_import_request (slir_servicer_loan_id_import_request_status_type);
-create index idx_fk_settlement_agent_1 on staging_octane.settlement_agent (sa_account_pid);
-create index idx_fk_settlement_agent_office_1 on staging_octane.settlement_agent_office (sao_settlement_agent_pid);
-create index idx_fkt_settlement_agent_office_2 on staging_octane.settlement_agent_office (sao_address_country);
-create index idx_fk_settlement_agent_wire_1 on staging_octane.settlement_agent_wire (saw_settlement_agent_pid);
-create index idx_fkt_settlement_agent_wire_2 on staging_octane.settlement_agent_wire (saw_address_country);
-create index idx_fkt_settlement_agent_wire_3 on staging_octane.settlement_agent_wire (saw_beneficiary_for_further_credit_type);
-create index idx_fkt_settlement_agent_wire_4 on staging_octane.settlement_agent_wire (saw_for_further_credit_type);
-create index idx_fk_site_allowed_ip_1 on staging_octane.site_allowed_ip (saip_account_pid);
-create index idx_fk_smart_charge_1 on staging_octane.smart_charge (sc_account_pid);
-create index idx_fk_smart_charge_2 on staging_octane.smart_charge (sc_apr_criteria_pid);
-create index idx_fkt_smart_charge_3 on staging_octane.smart_charge (sc_charge_type);
-create index idx_fkt_smart_charge_4 on staging_octane.smart_charge (sc_loan_position_type);
-create index idx_fkt_smart_charge_5 on staging_octane.smart_charge (sc_smart_charge_apr_type);
-create index idx_fk_smart_charge_case_1 on staging_octane.smart_charge_case (scc_smart_charge_group_case_pid);
-create index idx_fk_smart_charge_case_2 on staging_octane.smart_charge_case (scc_criteria_pid);
-create index idx_fkt_smart_charge_case_3 on staging_octane.smart_charge_case (scc_charge_input_type);
-create index idx_fkt_smart_charge_case_4 on staging_octane.smart_charge_case (scc_charge_payee_type);
-create index idx_fkt_smart_charge_case_5 on staging_octane.smart_charge_case (scc_charge_payer_type);
-create index idx_fk_smart_charge_group_1 on staging_octane.smart_charge_group (scg_smart_charge_pid);
-create index idx_fk_smart_charge_group_case_1 on staging_octane.smart_charge_group_case (scgc_smart_charge_group_pid);
-create index idx_fk_smart_doc_1 on staging_octane.smart_doc (sd_account_pid);
-create index idx_fk_smart_doc_2 on staging_octane.smart_doc (sd_custom_form_pid);
-create index idx_fkt_smart_doc_3 on staging_octane.smart_doc (sd_deal_child_type);
-create index idx_fkt_smart_doc_4 on staging_octane.smart_doc (sd_doc_action_type);
-create index idx_fkt_smart_doc_5 on staging_octane.smart_doc (sd_doc_approval_type);
-create index idx_fkt_smart_doc_6 on staging_octane.smart_doc (sd_doc_borrower_access_mode_type);
-create index idx_fkt_smart_doc_7 on staging_octane.smart_doc (sd_doc_category_type);
-create index idx_fkt_smart_doc_8 on staging_octane.smart_doc (sd_doc_external_provider_type);
-create index idx_fkt_smart_doc_9 on staging_octane.smart_doc (sd_doc_file_source_type);
-create index idx_fkt_smart_doc_10 on staging_octane.smart_doc (sd_doc_fulfill_status_type_default);
-create index idx_fkt_smart_doc_11 on staging_octane.smart_doc (sd_doc_key_date_type);
-create index idx_fkt_smart_doc_12 on staging_octane.smart_doc (sd_doc_set_type);
-create index idx_fkt_smart_doc_13 on staging_octane.smart_doc (sd_doc_validity_type);
-create index idx_fkt_smart_doc_14 on staging_octane.smart_doc (sd_expiration_rule_type);
-create index idx_fkt_smart_doc_15 on staging_octane.smart_doc (sd_key_doc_include_file);
-create index idx_fkt_smart_doc_16 on staging_octane.smart_doc (sd_key_doc_type);
-create index idx_fkt_smart_doc_17 on staging_octane.smart_doc (sd_prior_to_type);
-create index idx_fk_smart_doc_criteria_1 on staging_octane.smart_doc_criteria (sdc_smart_doc_pid);
-create index idx_fk_smart_doc_criteria_2 on staging_octane.smart_doc_criteria (sdc_criteria_pid);
-create index idx_fkt_smart_doc_criteria_3 on staging_octane.smart_doc_criteria (sdc_deal_child_type);
-create index idx_fk_smart_doc_note_1 on staging_octane.smart_doc_note (sdn_smart_doc_pid);
-create index idx_fk_smart_doc_note_2 on staging_octane.smart_doc_note (sdn_author_lender_user_pid);
-create index idx_fk_smart_doc_note_comment_1 on staging_octane.smart_doc_note_comment (sdnc_smart_doc_note_pid);
-create index idx_fk_smart_doc_note_comment_2 on staging_octane.smart_doc_note_comment (sdnc_author_lender_user_pid);
-create index idx_fk_smart_doc_note_monitor_1 on staging_octane.smart_doc_note_monitor (sdnm_smart_doc_note_pid);
-create index idx_fk_smart_doc_note_monitor_2 on staging_octane.smart_doc_note_monitor (sdnm_lender_user_pid);
-create index idx_fk_smart_doc_role_1 on staging_octane.smart_doc_role (sdr_smart_doc_pid);
-create index idx_fk_smart_doc_role_2 on staging_octane.smart_doc_role (sdr_role_pid);
-create index idx_fkt_smart_doc_role_3 on staging_octane.smart_doc_role (sdr_doc_permission_type);
-create index idx_fk_smart_doc_set_1 on staging_octane.smart_doc_set (sdst_account_pid);
-create index idx_fkt_smart_doc_set_2 on staging_octane.smart_doc_set (sdst_doc_set_type);
-create index idx_fkt_smart_doc_set_3 on staging_octane.smart_doc_set (sdst_smart_stack_doc_set_include_option_type);
-create index idx_fk_smart_message_1 on staging_octane.smart_message (smsg_account_pid);
-create index idx_fk_smart_message_2 on staging_octane.smart_message (smsg_reply_to_role_pid);
-create index idx_fk_smart_message_3 on staging_octane.smart_message (smsg_smart_doc_pid);
-create index idx_fk_smart_message_4 on staging_octane.smart_message (smsg_smart_stack_pid);
-create index idx_fkt_smart_message_5 on staging_octane.smart_message (smsg_delivery_type);
-create index idx_fkt_smart_message_6 on staging_octane.smart_message (smsg_email_closing_type);
-create index idx_fkt_smart_message_7 on staging_octane.smart_message (smsg_message_source_type);
-create index idx_fk_smart_message_recipient_1 on staging_octane.smart_message_recipient (smr_smart_message_pid);
-create index idx_fk_smart_message_recipient_2 on staging_octane.smart_message_recipient (smr_role_pid);
-create index idx_fkt_smart_message_recipient_3 on staging_octane.smart_message_recipient (smr_email_recipient_type);
-create index idx_fkt_smart_message_recipient_4 on staging_octane.smart_message_recipient (smr_recipient_type);
-create index idx_fk_smart_mi_1 on staging_octane.smart_mi (sm_account_pid);
-create index idx_fkt_smart_mi_2 on staging_octane.smart_mi (sm_mi_company_name_type);
-create index idx_fk_smart_mi_eligibility_case_1 on staging_octane.smart_mi_eligibility_case (smec_smart_mi_pid);
-create index idx_fk_smart_mi_eligibility_case_2 on staging_octane.smart_mi_eligibility_case (smec_criteria_pid);
-create index idx_fk_smart_mi_rate_adjustment_case_1 on staging_octane.smart_mi_rate_adjustment_case (smrac_smart_mi_rate_card_pid);
-create index idx_fk_smart_mi_rate_adjustment_case_2 on staging_octane.smart_mi_rate_adjustment_case (smrac_criteria_pid);
-create index idx_fk_smart_mi_rate_card_1 on staging_octane.smart_mi_rate_card (smrca_smart_mi_pid);
-create index idx_fkt_smart_mi_rate_card_2 on staging_octane.smart_mi_rate_card (smrca_mi_payer_type);
-create index idx_fkt_smart_mi_rate_card_3 on staging_octane.smart_mi_rate_card (smrca_mi_payment_type);
-create index idx_fk_smart_mi_rate_case_1 on staging_octane.smart_mi_rate_case (smrc_smart_mi_rate_card_pid);
-create index idx_fk_smart_mi_rate_case_2 on staging_octane.smart_mi_rate_case (smrc_criteria_pid);
-create index idx_fk_smart_mi_surcharge_1 on staging_octane.smart_mi_surcharge (sms_account_pid);
-create index idx_fk_smart_mi_surcharge_case_1 on staging_octane.smart_mi_surcharge_case (smsc_smart_mi_surcharge_pid);
-create index idx_fk_smart_mi_surcharge_case_2 on staging_octane.smart_mi_surcharge_case (smsc_criteria_pid);
-create index idx_fk_smart_req_1 on staging_octane.smart_req (sr_smart_doc_pid);
-create index idx_fk_smart_req_2 on staging_octane.smart_req (sr_criteria_pid);
-create index idx_fkt_smart_req_3 on staging_octane.smart_req (sr_deal_child_relationship_type);
-create index idx_fkt_smart_req_4 on staging_octane.smart_req (sr_deal_child_type);
-create index idx_fk_smart_separator_1 on staging_octane.smart_separator (ssp_account_pid);
-create index idx_fk_smart_separator_2 on staging_octane.smart_separator (ssp_custom_form_pid);
-create index idx_fk_smart_separator_3 on staging_octane.smart_separator (ssp_criteria_pid);
-create index idx_fk_smart_set_doc_1 on staging_octane.smart_set_doc (sstd_smart_doc_set_pid);
-create index idx_fk_smart_set_doc_2 on staging_octane.smart_set_doc (sstd_smart_doc_pid);
-create index idx_fk_smart_stack_1 on staging_octane.smart_stack (ss_account_pid);
-create index idx_fk_smart_stack_doc_1 on staging_octane.smart_stack_doc (ssd_smart_stack_pid);
-create index idx_fk_smart_stack_doc_2 on staging_octane.smart_stack_doc (ssd_smart_doc_pid);
-create index idx_fk_smart_stack_doc_3 on staging_octane.smart_stack_doc (ssd_smart_doc_set_pid);
-create index idx_fk_smart_stack_doc_4 on staging_octane.smart_stack_doc (ssd_smart_separator_pid);
-create index idx_fkt_smart_stack_doc_5 on staging_octane.smart_stack_doc (ssd_smart_stack_doc_set_include_type);
-create index idx_fkt_smart_stack_doc_6 on staging_octane.smart_stack_doc (ssd_stack_doc_type);
-create index idx_fk_smart_task_1 on staging_octane.smart_task (st_wf_step_pid);
-create index idx_fk_smart_task_2 on staging_octane.smart_task (st_criteria_pid);
-create index idx_fk_smart_task_tag_modifier_1 on staging_octane.smart_task_tag_modifier (sttm_deal_tag_definition_pid);
-create index idx_fk_smart_task_tag_modifier_2 on staging_octane.smart_task_tag_modifier (sttm_smart_task_pid);
-create index idx_fk_stack_export_file_1 on staging_octane.stack_export_file (sef_stack_export_request_pid);
-create index idx_fk_stack_export_file_2 on staging_octane.stack_export_file (sef_repository_file_pid);
-create index idx_fkt_stack_export_file_3 on staging_octane.stack_export_file (sef_stack_export_file_type);
-create index idx_fk_stack_export_request_1 on staging_octane.stack_export_request (ser_account_pid);
-create index idx_fk_stack_export_request_2 on staging_octane.stack_export_request (ser_requester_lender_user_pid);
-create index idx_fk_stack_export_request_3 on staging_octane.stack_export_request (ser_smart_stack_pid);
-create index idx_fkt_stack_export_request_4 on staging_octane.stack_export_request (ser_file_name_format_type);
-create index idx_fkt_stack_export_request_5 on staging_octane.stack_export_request (ser_loan_export_type);
-create index idx_fkt_stack_export_request_6 on staging_octane.stack_export_request (ser_loan_name_format_type);
-create index idx_fkt_stack_export_request_7 on staging_octane.stack_export_request (ser_request_status_type);
-create index idx_fk_stripe_payment_1 on staging_octane.stripe_payment (stpm_account_pid);
-create index idx_fkt_stripe_payment_2 on staging_octane.stripe_payment (stpm_payment_request_type);
-create index idx_fkt_stripe_payment_3 on staging_octane.stripe_payment (stpm_stripe_payment_status_type);
-create index idx_fk_tax_transcript_request_1 on staging_octane.tax_transcript_request (ttr_deal_pid);
-create index idx_fk_tax_transcript_request_2 on staging_octane.tax_transcript_request (ttr_requester_lender_user_pid);
-create index idx_fk_tax_transcript_request_3 on staging_octane.tax_transcript_request (ttr_signed_4506t_deal_file_pid);
-create index idx_fk_tax_transcript_request_4 on staging_octane.tax_transcript_request (ttr_borrower1_pid);
-create index idx_fk_tax_transcript_request_5 on staging_octane.tax_transcript_request (ttr_borrower2_pid);
-create index idx_fkt_tax_transcript_request_6 on staging_octane.tax_transcript_request (ttr_borrower1_current_country);
-create index idx_fkt_tax_transcript_request_7 on staging_octane.tax_transcript_request (ttr_borrower1_prior_country);
-create index idx_fkt_tax_transcript_request_8 on staging_octane.tax_transcript_request (ttr_borrower2_current_country);
-create index idx_fkt_tax_transcript_request_9 on staging_octane.tax_transcript_request (ttr_borrower2_prior_country);
-create index idx_fkt_tax_transcript_request_10 on staging_octane.tax_transcript_request (ttr_business_ownership_type);
-create index idx_fkt_tax_transcript_request_11 on staging_octane.tax_transcript_request (ttr_company_country);
-create index idx_fkt_tax_transcript_request_12 on staging_octane.tax_transcript_request (ttr_credit_request_type);
-create index idx_fkt_tax_transcript_request_13 on staging_octane.tax_transcript_request (ttr_mismo_version_type);
-create index idx_fkt_tax_transcript_request_14 on staging_octane.tax_transcript_request (ttr_requester_agent_type);
-create index idx_fkt_tax_transcript_request_15 on staging_octane.tax_transcript_request (ttr_tax_transcript_request_status_type);
-create index idx_fk_third_party_community_second_program_1 on staging_octane.third_party_community_second_program (tpcsp_account_pid);
-create index idx_fk_third_party_community_second_program_2 on staging_octane.third_party_community_second_program (tpcsp_investor_pid);
-create index idx_fkt_third_party_community_second_program_3 on staging_octane.third_party_community_second_program (tpcsp_fnm_community_lending_product_type);
-create index idx_fkt_third_party_community_second_program_4 on staging_octane.third_party_community_second_program (tpcsp_fnm_community_seconds_repayment_structure_type);
-create index idx_fkt_third_party_community_second_program_5 on staging_octane.third_party_community_second_program (tpcsp_fre_community_program_type);
-create index idx_fkt_third_party_community_second_program_6 on staging_octane.third_party_community_second_program (tpcsp_wire_action_type);
-create index idx_fk_title_company_1 on staging_octane.title_company (tc_account_pid);
-create index idx_fk_title_company_office_1 on staging_octane.title_company_office (tco_title_company_pid);
-create index idx_fkt_title_company_office_2 on staging_octane.title_company_office (tco_address_country);
-create index idx_fk_trade_1 on staging_octane.trade (t_account_pid);
-create index idx_fk_trade_2 on staging_octane.trade (t_investor_pid);
-create index idx_fk_trade_3 on staging_octane.trade (t_create_lender_user_pid);
-create index idx_fkt_trade_4 on staging_octane.trade (t_trade_pricing_type);
-create index idx_fkt_trade_5 on staging_octane.trade (t_trade_status_type);
-create index idx_fk_trade_audit_1 on staging_octane.trade_audit (ta_trade_pid);
-create index idx_fk_trade_audit_2 on staging_octane.trade_audit (ta_lender_lock_major_pid);
-create index idx_fkt_trade_audit_3 on staging_octane.trade_audit (ta_trade_audit_type);
-create index idx_fk_trade_fee_1 on staging_octane.trade_fee (tfe_trade_pid);
-create index idx_fk_trade_fee_2 on staging_octane.trade_fee (tfe_trade_fee_type_pid);
-create index idx_fk_trade_fee_type_1 on staging_octane.trade_fee_type (tft_account_pid);
-create index idx_fk_trade_file_1 on staging_octane.trade_file (tf_trade_pid);
-create index idx_fk_trade_file_2 on staging_octane.trade_file (tf_repository_file_pid);
-create index idx_fk_trade_lock_filter_1 on staging_octane.trade_lock_filter (tlf_lender_user_pid);
-create index idx_fk_trade_lock_filter_2 on staging_octane.trade_lock_filter (tlf_criteria_pid);
-create index idx_fk_trade_note_1 on staging_octane.trade_note (tn_trade_pid);
-create index idx_fk_trade_note_2 on staging_octane.trade_note (tn_author_lender_user_pid);
-create index idx_fk_trade_note_comment_1 on staging_octane.trade_note_comment (tnc_trade_note_pid);
-create index idx_fk_trade_note_comment_2 on staging_octane.trade_note_comment (tnc_author_lender_user_pid);
-create index idx_fk_trade_note_monitor_1 on staging_octane.trade_note_monitor (tnm_trade_note_pid);
-create index idx_fk_trade_note_monitor_2 on staging_octane.trade_note_monitor (tnm_lender_user_pid);
-create index idx_fk_trade_product_1 on staging_octane.trade_product (tp_product_pid);
-create index idx_fk_trade_product_2 on staging_octane.trade_product (tp_trade_pid);
-create index idx_fk_trustee_1 on staging_octane.trustee (tru_account_pid);
-create index idx_fkt_trustee_2 on staging_octane.trustee (tru_address_country);
-create index idx_fk_unpaid_balance_adjustment_1 on staging_octane.unpaid_balance_adjustment (upba_investor_pid);
-create index idx_fk_vendor_document_event_1 on staging_octane.vendor_document_event (vde_account_pid);
-create index idx_fk_vendor_document_event_2 on staging_octane.vendor_document_event (vde_vendor_document_repository_file_pid);
-create index idx_fkt_vendor_document_event_3 on staging_octane.vendor_document_event (vde_vendor_document_event_type);
-create index idx_fk_vendor_document_repository_file_1 on staging_octane.vendor_document_repository_file (vdrf_account_pid);
-create index idx_fk_vendor_document_repository_file_2 on staging_octane.vendor_document_repository_file (vdrf_deal_pid);
-create index idx_fkt_vendor_document_repository_file_3 on staging_octane.vendor_document_repository_file (vdrf_document_import_status_type);
-create index idx_fkt_vendor_document_repository_file_4 on staging_octane.vendor_document_repository_file (vdrf_document_import_vendor_type);
-create index idx_fkt_vendor_document_repository_file_5 on staging_octane.vendor_document_repository_file (vdrf_vendor_import_document_type);
-create index idx_fk_view_wf_deal_step_started_1 on staging_octane.view_wf_deal_step_started (wds_wf_step_pid);
-create index idx_fk_view_wf_deal_step_started_2 on staging_octane.view_wf_deal_step_started (wds_wf_deal_process_pid);
-create index idx_fk_view_wf_deal_step_started_3 on staging_octane.view_wf_deal_step_started (wds_performer_user_pid);
-create index idx_fk_view_wf_deal_step_started_4 on staging_octane.view_wf_deal_step_started (wds_deal_stage_pid);
-create index idx_fk_view_wf_deal_step_started_5 on staging_octane.view_wf_deal_step_started (wds_completing_user_pid);
-create index idx_fkt_view_wf_deal_step_started_6 on staging_octane.view_wf_deal_step_started (wds_wf_deal_step_status_type);
-create index idx_fkt_view_wf_deal_step_started_7 on staging_octane.view_wf_deal_step_started (wds_wf_step_function_type);
-create index idx_fkt_view_wf_deal_step_started_8 on staging_octane.view_wf_deal_step_started (wds_wf_step_type);
-create index idx_fk_wf_deal_fork_process_1 on staging_octane.wf_deal_fork_process (wdfp_wf_deal_step_pid);
-create index idx_fk_wf_deal_fork_process_2 on staging_octane.wf_deal_fork_process (wdfp_wf_deal_process_pid);
-create index idx_fk_wf_deal_function_queue_1 on staging_octane.wf_deal_function_queue (wdfq_wf_deal_step_pid);
-create index idx_fk_wf_deal_outcome_1 on staging_octane.wf_deal_outcome (wdo_wf_deal_step_pid);
-create index idx_fk_wf_deal_outcome_2 on staging_octane.wf_deal_outcome (wdo_transition_wf_deal_step_pid);
-create index idx_fkt_wf_deal_outcome_3 on staging_octane.wf_deal_outcome (wdo_wf_outcome_type);
-create index idx_fk_wf_deal_process_1 on staging_octane.wf_deal_process (wdpr_deal_pid);
-create index idx_fk_wf_deal_process_2 on staging_octane.wf_deal_process (wdpr_wf_process_pid);
-create index idx_fkt_wf_deal_process_3 on staging_octane.wf_deal_process (wdpr_wf_deal_process_status_type);
-create index idx_fk_wf_deal_step_1 on staging_octane.wf_deal_step (wds_wf_step_pid);
-create index idx_fk_wf_deal_step_2 on staging_octane.wf_deal_step (wds_wf_deal_process_pid);
-create index idx_fk_wf_deal_step_3 on staging_octane.wf_deal_step (wds_performer_user_pid);
-create index idx_fk_wf_deal_step_4 on staging_octane.wf_deal_step (wds_deal_stage_pid);
-create index idx_fk_wf_deal_step_5 on staging_octane.wf_deal_step (wds_completing_user_pid);
-create index idx_fkt_wf_deal_step_6 on staging_octane.wf_deal_step (wds_wf_deal_step_status_type);
-create index idx_fkt_wf_deal_step_7 on staging_octane.wf_deal_step (wds_wf_step_function_type);
-create index idx_fkt_wf_deal_step_8 on staging_octane.wf_deal_step (wds_wf_step_type);
-create index idx_fk_wf_deal_step_timeout_1 on staging_octane.wf_deal_step_timeout (wdst_wf_deal_step_pid);
-create index idx_fk_wf_fork_process_1 on staging_octane.wf_fork_process (wfp_wf_step_pid);
-create index idx_fk_wf_fork_process_2 on staging_octane.wf_fork_process (wfp_wf_process_pid);
-create index idx_fk_wf_outcome_1 on staging_octane.wf_outcome (wo_wf_step_pid);
-create index idx_fk_wf_outcome_2 on staging_octane.wf_outcome (wo_criteria_pid);
-create index idx_fkt_wf_outcome_3 on staging_octane.wf_outcome (wo_wf_outcome_type);
-create index idx_fk_wf_phase_1 on staging_octane.wf_phase (wph_account_pid);
-create index idx_fk_wf_process_1 on staging_octane.wf_process (wpr_account_pid);
-create index idx_fkt_wf_process_2 on staging_octane.wf_process (wpr_wf_process_status_type);
-create index idx_fkt_wf_process_3 on staging_octane.wf_process (wpr_wf_process_type);
-create index idx_fk_wf_step_1 on staging_octane.wf_step (ws_wf_process_pid);
-create index idx_fk_wf_step_2 on staging_octane.wf_step (ws_wf_phase_pid);
-create index idx_fk_wf_step_3 on staging_octane.wf_step (ws_role_pid);
-create index idx_fk_wf_step_4 on staging_octane.wf_step (ws_smart_message_pid);
-create index idx_fk_wf_step_5 on staging_octane.wf_step (ws_from_role_pid);
-create index idx_fk_wf_step_6 on staging_octane.wf_step (ws_smart_doc_set_pid);
-create index idx_fkt_wf_step_7 on staging_octane.wf_step (ws_deal_stage_type);
-create index idx_fkt_wf_step_8 on staging_octane.wf_step (ws_lien_priority_type);
-create index idx_fkt_wf_step_9 on staging_octane.wf_step (ws_polling_interval_type);
-create index idx_fkt_wf_step_10 on staging_octane.wf_step (ws_timeout_time_zone_type);
-create index idx_fkt_wf_step_11 on staging_octane.wf_step (ws_wf_step_function_type);
-create index idx_fkt_wf_step_12 on staging_octane.wf_step (ws_wf_step_performer_assign_type);
-create index idx_fkt_wf_step_13 on staging_octane.wf_step (ws_wf_step_reassign_type);
-create index idx_fkt_wf_step_14 on staging_octane.wf_step (ws_wf_step_timeout_type);
-create index idx_fkt_wf_step_15 on staging_octane.wf_step (ws_wf_step_type);
-create index idx_fk_wf_step_deal_check_1 on staging_octane.wf_step_deal_check (wsdc_wf_step_pid);
-create index idx_fkt_wf_step_deal_check_2 on staging_octane.wf_step_deal_check (wsdc_deal_check_severity_type);
-create index idx_fkt_wf_step_deal_check_3 on staging_octane.wf_step_deal_check (wsdc_deal_check_type);
-create index idx_fk_wf_step_deal_check_definition_1 on staging_octane.wf_step_deal_check_definition (wsdd_wf_step_pid);
-create index idx_fkt_wf_step_deal_check_definition_2 on staging_octane.wf_step_deal_check_definition (wsdd_deal_check_severity_type);
-create index idx_fkt_wf_step_deal_check_definition_3 on staging_octane.wf_step_deal_check_definition (wsdd_deal_check_type);
-create index idx_fk_wf_step_deal_check_dependency_1 on staging_octane.wf_step_deal_check_dependency (wsdp_wf_step_pid);
-create index idx_fk_wf_step_deal_check_dependency_2 on staging_octane.wf_step_deal_check_dependency (wsdp_dependency_wf_step_pid);
-create index idx_fk_wf_step_deal_tag_modifier_1 on staging_octane.wf_step_deal_tag_modifier (wsdt_deal_tag_definition_pid);
-create index idx_fk_wf_step_deal_tag_modifier_2 on staging_octane.wf_step_deal_tag_modifier (wsdt_wf_step_pid);
 
 
 --
