@@ -39,6 +39,7 @@ function execute_test() {
     # store unit test name and (if applicable) test case that exited with non-zero code
     failed_unit_tests="${failed_unit_tests}$(realpath --relative-to $path_to_script $(pwd)) Pentaho exit code: $unit_test_exit_code"$'\n'
     echo $results
+    echo "exit code is ${?}"
     echo "test.sh FAILED!!!"
   fi
   echo $results # | grep -o "$grep_statement"
