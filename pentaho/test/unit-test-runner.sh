@@ -41,7 +41,7 @@ function execute_test() {
     echo $results
     echo "test.sh FAILED!!!"
   fi
-  echo $results | grep -o "$grep_statement"
+  echo $results # | grep -o "$grep_statement"
   set -e
   echo " "
 }
@@ -166,38 +166,41 @@ database_username="encompass_sp6"
 sp6_job_path="encompass/import/SP6/full_encompass_etl"
 echo Now testing ${process_name}
 cd ${process_name}
-execute_test ${process_name} ${database_username} ${sp6_job_path} "file" "Encompass.csv"
+# execute_test ${process_name} ${database_username} ${sp6_job_path} "file" "Encompass.csv"
 cd -
 
 # MDI Tests ##############################################################################
 database_username="mditest"
 # MDI Checks
-execute_mdi_test "SP-0.1" ${database_username} "file" "input.csv" # test performer_csv_to_table.ktr
-execute_mdi_test "SP-0.2" ${database_username} "file" "input.xlsx" # test performer_excel_to_table.ktr
+#execute_mdi_test "SP-0.1" ${database_username} "file" "input.csv"  # test performer_csv_to_table.ktr
+#execute_mdi_test "SP-0.2" ${database_username} "file" "input.xlsx" # test performer_excel_to_table.ktr
 
 # MDI Test Cases #########################################################################
 database_username="mditest"
 # MDI Checks for SP-0.3 and SP-0.4
-execute_mdi_test_cases "SP-0.3" ${database_username} "none" "" "ingress" "ingress"
-execute_mdi_test_cases "SP-0.4" ${database_username} "none" "" "ingress" "ingress"
+# execute_mdi_test_cases "SP-0.3" ${database_username} "none" "" "ingress" "ingress"
+execute_mdi_test_cases "SP8.1" ${database_username} "file" "test_case_source_file.ext" "ingress" "ingress"
+# execute_mdi_test_cases "SP-0.4" ${database_username} "none" "" "ingress" "ingress"
 
 # DMI Tests ##############################################################################
 database_username="dmi"
 # DMI NMLS Call Report - State	# DMI NMLS Call Report - State (curl "https://api.mockaroo.com/api/faa92490?count=1000&key=8ff5d150" > "dmi-V35-state.csv")
-execute_mdi_test "SP8.1" ${database_username} "file" "dmi-V35-state.csv"
-execute_mdi_test "SP8.2" ${database_username} "none" ""
+#execute_mdi_test "SP8.1" ${database_username} "file" "dmi-V35-state.csv"
+#execute_mdi_test "SP8.2" ${database_username} "none" ""
+#
+## DMI NMLS Call Report - National	# DMI NMLS Call Report - National (curl "https://api.mockaroo.com/api/9011edb0?count=1000&key=8ff5d150" > "dmi-V35-national.csv")
+#execute_mdi_test "SP9.1" ${database_username} "file" "dmi-V35-national.csv"
+#execute_mdi_test "SP9.2" ${database_username} "none" ""
+#
+## DMI NMLS Call Report - s540a	# DMI NMLS Call Report - s540a (curl "https://api.mockaroo.com/api/3d9794e0?count=1000&key=8ff5d150" > "dmi-V35-s540a.csv")
+#execute_mdi_test "SP10.1" ${database_username} "file" "dmi-V35-s540a.csv"
+#execute_mdi_test "SP10.2" ${database_username} "none" ""
 
-# DMI NMLS Call Report - National	# DMI NMLS Call Report - National (curl "https://api.mockaroo.com/api/9011edb0?count=1000&key=8ff5d150" > "dmi-V35-national.csv")
-execute_mdi_test "SP9.1" ${database_username} "file" "dmi-V35-national.csv"
-execute_mdi_test "SP9.2" ${database_username} "none" ""
-
-# DMI NMLS Call Report - s540a	# DMI NMLS Call Report - s540a (curl "https://api.mockaroo.com/api/3d9794e0?count=1000&key=8ff5d150" > "dmi-V35-s540a.csv")
-execute_mdi_test "SP10.1" ${database_username} "file" "dmi-V35-s540a.csv"
-execute_mdi_test "SP10.2" ${database_username} "none" ""
-
-# Print overall unit test statuses and test case diff statuses
-if [[ -z $failed_unit_tests ]]; then
-  echo "Unit tests SUCCESSFUL."
+# Print test case diff status(es)
+diff_results=$(find . -name 'test_diff_output.diff') # using find, store any diff files in diff_results variable
+if [[ -z "$diff_results" ]]; then # check diff_results variable to determine whether there were any diffs
+  echo
+  echo "No test case diffs were detected; all test cases have passed"
   exit 0
 else
   echo "One or more unit tests encountered a Pentaho failure, or generated an output that differs from its expected result."
