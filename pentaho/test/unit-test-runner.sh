@@ -22,7 +22,7 @@ set -e
 # ' E=[1-9]'  - looks for steps that contain >0 errors.
 
 # set default grep statement
-grep_statement=" testing.*\| Start=.*\| Finished with errors.*\| E=[1-9].*"
+grep_statement=" testing\| Start=\| Finished with errors\| E=[1-9]"
 
 # variable to store failed unit test runs
 failed_unit_tests=""
@@ -43,7 +43,7 @@ function execute_test() {
     echo $results
     echo "test.sh FAILED!!!"
   fi
-  echo $results # | grep -o "$grep_statement"
+  echo "$results" | grep "$grep_statement"
   set -e
   echo " "
 }
@@ -186,15 +186,15 @@ database_username="mditest"
 # DMI Tests ##############################################################################
 database_username="dmi"
 # DMI NMLS Call Report - State	# DMI NMLS Call Report - State (curl "https://api.mockaroo.com/api/faa92490?count=1000&key=8ff5d150" > "dmi-V35-state.csv")
-          # execute_mdi_test_cases "SP8.1" ${database_username} "file" "test_case_source_file.ext" "ingress" "ingress"
-          # execute_mdi_test_cases "SP8.2" ${database_username} "none" "" "ingress" "staging"
+execute_mdi_test_cases "SP8.1" ${database_username} "file" "test_case_source_file.ext" "ingress" "ingress"
+execute_mdi_test_cases "SP8.2" ${database_username} "none" "" "ingress" "staging"
 
 # DMI NMLS Call Report - National	# DMI NMLS Call Report - National (curl "https://api.mockaroo.com/api/9011edb0?count=1000&key=8ff5d150" > "dmi-V35-national.csv")
-          # execute_mdi_test_cases "SP9.1" ${database_username} "file" "test_case_source_file.ext" "ingress" "ingress"
-          # execute_mdi_test_cases "SP9.2" ${database_username} "none" "" "ingress" "staging"
+execute_mdi_test_cases "SP9.1" ${database_username} "file" "test_case_source_file.ext" "ingress" "ingress"
+execute_mdi_test_cases "SP9.2" ${database_username} "none" "" "ingress" "staging"
 
 # DMI NMLS Call Report - s540a	# DMI NMLS Call Report - s540a (curl "https://api.mockaroo.com/api/3d9794e0?count=1000&key=8ff5d150" > "dmi-V35-s540a.csv")
-          # execute_mdi_test_cases "SP10.1" ${database_username} "file" "test_case_source_file.ext" "ingress" "ingress"
+execute_mdi_test_cases "SP10.1" ${database_username} "file" "test_case_source_file.ext" "ingress" "ingress"
 execute_mdi_test_cases "SP10.2" ${database_username} "none" "" "ingress" "staging"
 
 # Print test case diff status(es)
