@@ -1,0 +1,1 @@
+\COPY dmi.nmls_call_report_s540a (data_source_dwid, input_filename, state,item_id,servicer_id,servicer_name,pool_no,upb,loan_count,avg_loan_size,report_quarter) TO '/input/actual_output.csv' WITH (FORMAT CSV,HEADER);
