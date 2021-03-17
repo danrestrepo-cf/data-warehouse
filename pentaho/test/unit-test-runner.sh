@@ -43,7 +43,7 @@ function execute_test() {
     echo $results
     echo "test.sh FAILED!!!"
   fi
-  echo "$results" | grep "$grep_statement"
+  echo "$results" | grep "$grep_statement" # need to quote $results so work splitting doesn't occur
   set -e
   echo " "
 }
