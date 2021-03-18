@@ -174,7 +174,7 @@ ${relative_docker_dir}/docker-up.sh
 # MDI Tests ##############################################################################
 database_username="mditest"
 # MDI Checks
-# execute_mdi_test "SP-0.1" ${database_username} "file" "input.csv"  # test performer_csv_to_table.ktr
+      execute_mdi_test_cases "SP-0.1" ${database_username} "file" "input.csv" "ingress" "ingress"  # test performer_csv_to_table.ktr
 # execute_mdi_test "SP-0.2" ${database_username} "file" "input.xlsx" # test performer_excel_to_table.ktr
 
 # MDI Test Cases #########################################################################
