@@ -192,27 +192,27 @@ execute_mdi_test "SP9.2" ${database_username} "none" ""
 execute_mdi_test "SP10.1" ${database_username} "file" "dmi-V35-s540a.csv"
 execute_mdi_test "SP10.2" ${database_username} "none" ""
 
-diff_results=$(find . -name 'test_diff_output.diff') # using find, store any diff files in diff_results variable
+mdi_diff_results=$(find . -name 'test_diff_output.diff') # using find, store any diff files in diff_results variable
 
 # Print overall unit test statuses and test case diff statuses
-if [[ -z "$failed_unit_tests" ]] && [[ -z "$diff_results" ]]; then
+if [[ -z "$failed_unit_tests" ]] && [[ -z "$mdi_diff_results" ]]; then
   echo "All unit tests have executed successfully."
   exit 0
-elif [[ -n "$failed_unit_tests" ]] && [[ -z "$diff_results" ]]; then
+elif [[ -n "$failed_unit_tests" ]] && [[ -z "$mdi_diff_results" ]]; then
   echo "One or more unit tests failed."
   echo "$failed_unit_tests"
   echo "UNIT TESTS FAILED."
   exit 1
-elif [[ -z "$failed_unit_tests" ]] && [[ -n "$diff_results" ]]; then
+elif [[ -z "$failed_unit_tests" ]] && [[ -n "$mdi_diff_results" ]]; then
   echo "One or more test cases produced an unexpected output. Refer to the following diff file(s) for more information:"
-  echo "$diff_results"
+  echo "$mdi_diff_results"
   echo "UNIT TESTS FAILED."
   exit 1
-elif [[ -n "$failed_unit_tests" ]] && [[ -n "$diff_results" ]]; then
+elif [[ -n "$failed_unit_tests" ]] && [[ -n "$mdi_diff_results" ]]; then
   echo "One or more unit tests failed."
   echo "$failed_unit_tests"
   echo "One or more test cases produced an unexpected output. Refer to the following diff file(s) for more information:"
-  echo "$diff_results"
+  echo "$mdi_diff_results"
   echo "UNIT TESTS FAILED."
   exit 1
 fi
