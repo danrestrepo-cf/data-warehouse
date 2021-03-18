@@ -24,16 +24,23 @@ set -e
 # set default grep statement
 grep_statement=" testing.*\| Start=.*\| Finished with errors.*\| E=[1-9].*"
 
+# variable to store failed unit test runs
+failed_unit_tests=""
+
 function execute_test() {
   # set current working directory to the folder with test.sh in it
   echo "Command for manual execution:  $(pwd)/../../docker/pentaho/test.sh test \"$1\" \"$2\" \"$3\" \"$4\" \"$5\"
    | grep \"$grep_statement\""
   set +e
   results=$(${absolute_test_dir}/test.sh test "$1" "$2" "$3" "$4" "$5")
-  if [ $? != 0 ]; then
+  # store test.sh exit code for evaluation
+  unit_test_exit_code=$?
+  if [[ $unit_test_exit_code != 0 ]]; then
+    # store unit test name and (if applicable) test case that exited with non-zero code
+    failed_unit_tests="$failed_unit_tests \
+    $(realpath --relative-to ~/Projects/data-warehouse/pentaho/test $(pwd)) exit code: $unit_test_exit_code"$'\n'
     echo $results
     echo "test.sh FAILED!!!"
-    exit 1
   fi
   echo $results | grep -o "$grep_statement"
   set -e
@@ -185,15 +192,27 @@ execute_mdi_test "SP9.2" ${database_username} "none" ""
 execute_mdi_test "SP10.1" ${database_username} "file" "dmi-V35-s540a.csv"
 execute_mdi_test "SP10.2" ${database_username} "none" ""
 
-# Print test case diff status(es)
 diff_results=$(find . -name 'test_diff_output.diff') # using find, store any diff files in diff_results variable
-if [[ -z "$diff_results" ]]; then # check diff_results variable to determine whether there were any diffs
-  echo
-  echo "No test case diffs were detected; all test cases have passed"
+
+# Print overall unit test statuses and test case diff statuses
+if [[ -z "$failed_unit_tests" ]] && [[ -z "$diff_results" ]]; then
+  echo "All unit tests have executed successfully."
   exit 0
-else
-  echo
-  echo "One or more test cases failed; refer to the following diff file(s) for more information:"
+elif [[ -n "$failed_unit_tests" ]] && [[ -z "$diff_results" ]]; then
+  echo "One or more unit tests failed."
+  echo "$failed_unit_tests"
+  echo "UNIT TESTS FAILED."
+  exit 1
+elif [[ -z "$failed_unit_tests" ]] && [[ -n "$diff_results" ]]; then
+  echo "One or more test cases produced an unexpected output. Refer to the following diff file(s) for more information:"
   echo "$diff_results"
+  echo "UNIT TESTS FAILED."
+  exit 1
+elif [[ -n "$failed_unit_tests" ]] && [[ -n "$diff_results" ]]; then
+  echo "One or more unit tests failed."
+  echo "$failed_unit_tests"
+  echo "One or more test cases produced an unexpected output. Refer to the following diff file(s) for more information:"
+  echo "$diff_results"
+  echo "UNIT TESTS FAILED."
   exit 1
 fi
