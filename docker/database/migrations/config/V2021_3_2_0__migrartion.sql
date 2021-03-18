@@ -51,14 +51,15 @@ DO $$
              ,      (sp_table_output_step_dwid, 'data_source_dwid', 'data_source_dwid_value', 7, FALSE)
              ,      (sp_table_output_step_dwid, 'etl_batch_id', 'etl_batch_id', 8, FALSE);
 
-END $$;
+    END
+$$;
 
 
 -- add SP-0.6 config
 DO $$
-        DECLARE sp_process_dwid BIGINT;
-        DECLARE sp_table_input_step_dwid BIGINT;
-        DECLARE sp_insert_update_step_dwid BIGINT;
+    DECLARE sp_process_dwid BIGINT;
+    DECLARE sp_table_input_step_dwid BIGINT;
+    DECLARE sp_insert_update_step_dwid BIGINT;
 
     BEGIN
         sp_process_dwid = (SELECT nextval('mdi."process_dwid_seq"'));
@@ -106,4 +107,56 @@ DO $$
              ,      (sp_insert_update_step_dwid, 'tool_inventory_end_date', 'tool_inventory_end_date', 'Y', FALSE)
              ,      (sp_insert_update_step_dwid, 'data_source_dwid', 'data_source_dwid_value', 'Y', FALSE)
              ,      (sp_insert_update_step_dwid, 'etl_batch_id', 'etl_batch_id', 'Y', FALSE);
-END $$;
+    END
+$$;
+
+
+-- modify SP-0.1 config to use purpose built test tables
+DO $$
+    DECLARE sp_process_dwid BIGINT;
+    DECLARE sp_csv_file_input_step_dwid BIGINT;
+    DECLARE sp_table_output_step_dwid BIGINT;
+
+    BEGIN
+        sp_process_dwid = (SELECT dwid FROM mdi.process WHERE name ='SP-0.1');
+        sp_csv_file_input_step_dwid = (SELECT dwid FROM mdi.csv_file_input_step WHERE process_dwid = sp_process_dwid);
+        sp_table_output_step_dwid = (SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp_process_dwid);
+
+        -- modify SP-0.1 source file configs
+        DELETE FROM mdi.csv_file_input_field WHERE csv_file_input_step_dwid = sp_csv_file_input_step_dwid;
+
+        -- modify SP-0.1 target table configs
+        DELETE FROM mdi.csv_file_input_field WHERE csv_file_input_step_dwid = sp_csv_file_input_step_dwid;
+
+    END
+$$;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
