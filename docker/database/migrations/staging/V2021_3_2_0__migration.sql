@@ -8,16 +8,16 @@ drop view octane_data_mart.nmls_call_report_s540a;
 drop view octane_data_mart.nmls_call_report_state;
 
 -- modify nmls_call_report_national
-alter table staging_compliance.nmls_call_report_national alter column total_unpaid_balance type numeric(17,2) using total_unpaid_balance::numeric(17,2);
-alter table staging_compliance.nmls_call_report_national alter column average_unpaid_balance type numeric(17,2) using average_unpaid_balance::numeric(17,2);
+alter table staging_compliance.nmls_call_report_national alter column total_unpaid_balance type numeric(21,3) using total_unpaid_balance::numeric(21,3);
+alter table staging_compliance.nmls_call_report_national alter column average_unpaid_balance type numeric(21,3) using average_unpaid_balance::numeric(21,3);
 
 -- modify nmls_call_report_s540a
-alter table staging_compliance.nmls_call_report_s540a alter column total_unpaid_balance type numeric(17,2) using total_unpaid_balance::numeric(17,2);
-alter table staging_compliance.nmls_call_report_s540a alter column average_unpaid_balance type numeric(17,2) using average_unpaid_balance::numeric(17,2);
+alter table staging_compliance.nmls_call_report_s540a alter column total_unpaid_balance type numeric(21,3) using total_unpaid_balance::numeric(21,3);
+alter table staging_compliance.nmls_call_report_s540a alter column average_unpaid_balance type numeric(21,3) using average_unpaid_balance::numeric(21,3);
 
 -- modify nmls_call_report_state
-alter table staging_compliance.nmls_call_report_state alter column total_unpaid_balance type numeric(17,2) using total_unpaid_balance::numeric(17,2);
-alter table staging_compliance.nmls_call_report_state alter column average_loan_size type numeric(17,2) using average_loan_size::numeric(17,2);
+alter table staging_compliance.nmls_call_report_state alter column total_unpaid_balance type numeric(21,3) using total_unpaid_balance::numeric(21,3);
+alter table staging_compliance.nmls_call_report_state alter column average_loan_size type numeric(21,3) using average_loan_size::numeric(21,3);
 
 -- recreate views that needed the columns we modified
 CREATE VIEW octane_data_mart.nmls_call_report_national AS
