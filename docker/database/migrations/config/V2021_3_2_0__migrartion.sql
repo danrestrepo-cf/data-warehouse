@@ -171,6 +171,8 @@ DO $$
              , (sp_microsoft_excel_input_step_dwid, 'tool_inventory_start_date', 'Date', 'yyyy-mm-dd', NULL, -1, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 5)
              , (sp_microsoft_excel_input_step_dwid, 'tool_inventory_end_date', 'Date', 'yyyy-mm-dd', NULL, -1, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 6);
 
+        UPDATE mdi.microsoft_excel_input_step SET sheet_name = 'input' WHERE dwid = sp_microsoft_excel_input_step_dwid;
+
         -- modify SP-0.2 target table configs
         DELETE FROM mdi.table_output_field WHERE table_output_step_dwid = sp_table_output_step_dwid;
         INSERT INTO mdi.table_output_field (table_output_step_dwid, database_field_name, database_stream_name, field_order, is_sensitive)
