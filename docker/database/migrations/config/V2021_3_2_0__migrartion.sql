@@ -148,8 +148,7 @@ DO $$
              , (sp_table_output_step_dwid, 'etl_batch_id', 'etl_batch_id', 7, FALSE);
 
 
-        -- drop source table that is no longer needed. TODO: MOVE TO INGRESS MIGRATION FILE
-        -- DROP TABLE test.sp_0_1_mdi_csv_file_to_table;
+
 
 -- source
 --         tool_pid
