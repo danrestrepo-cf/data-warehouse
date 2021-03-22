@@ -111,52 +111,53 @@ DO $$
 $$;
 
 
--- modify SP-0.1 config to use purpose built test tables
-DO $$
-    DECLARE sp_process_dwid BIGINT;
-    DECLARE sp_csv_file_input_step_dwid BIGINT;
-    DECLARE sp_table_output_step_dwid BIGINT;
 
-    BEGIN
-        sp_process_dwid = (SELECT dwid FROM mdi.process WHERE name ='SP-0.1');
-        sp_csv_file_input_step_dwid = (SELECT dwid FROM mdi.csv_file_input_step WHERE process_dwid = sp_process_dwid);
-        sp_table_output_step_dwid = (SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp_process_dwid);
-
-        -- modify SP-0.1 source file configs
-        DELETE FROM mdi.csv_file_input_field WHERE csv_file_input_step_dwid = sp_csv_file_input_step_dwid;
-
-        -- modify SP-0.1 target table configs
-        DELETE FROM mdi.csv_file_input_field WHERE csv_file_input_step_dwid = sp_csv_file_input_step_dwid;
-
-    END
-$$;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- -- modify SP-0.1 config to use purpose built test tables
+-- DO $$
+--     DECLARE sp_process_dwid BIGINT;
+--     DECLARE sp_csv_file_input_step_dwid BIGINT;
+--     DECLARE sp_table_output_step_dwid BIGINT;
+--
+--     BEGIN
+--         sp_process_dwid = (SELECT dwid FROM mdi.process WHERE name ='SP-0.1');
+--         sp_csv_file_input_step_dwid = (SELECT dwid FROM mdi.csv_file_input_step WHERE process_dwid = sp_process_dwid);
+--         sp_table_output_step_dwid = (SELECT dwid FROM mdi.table_output_step WHERE process_dwid = sp_process_dwid);
+--
+--         -- modify SP-0.1 source file configs
+--         DELETE FROM mdi.csv_file_input_field WHERE csv_file_input_step_dwid = sp_csv_file_input_step_dwid;
+--         INSERT INTO mdi.csv_file_input_field (csv_file_input_step_dwid, field_name, field_type, field_format, field_length, field_precision, field_currency, field_decimal, field_group, field_trim_type, field_order)
+--             VALUES
+--               (sp_csv_file_input_step_dwid, 'tool_pid', 'Integer', NULL, NULL, -1, -1, DEFAULT, DEFAULT, DEFAULT, 1)
+--             , (sp_csv_file_input_step_dwid, 'tool_code', 'String', NULL, NULL, -1, -1, DEFAULT, DEFAULT, DEFAULT, 2)
+--             , (sp_csv_file_input_step_dwid, 'tool_type', 'String', NULL, NULL, -1, -1, DEFAULT, DEFAULT, DEFAULT, 3)
+--             , (sp_csv_file_input_step_dwid, 'tool_price', 'Integer', NULL, NULL, -1, -1, DEFAULT, DEFAULT, DEFAULT, 4)
+--             , (sp_csv_file_input_step_dwid, 'tool_inventory_start_date', 'Date', 'yyyy-mm-dd', NULL, -1, -1, DEFAULT, DEFAULT, DEFAULT, 5)
+--             , (sp_csv_file_input_step_dwid, 'tool_inventory_end_date', 'Date', 'yyyy-mm-dd', NULL, -1, -1, DEFAULT, DEFAULT, DEFAULT, 6);
+--
+--         -- modify SP-0.1 target table configs
+--         DELETE FROM mdi.table_output_field WHERE table_output_step_dwid = sp_table_output_step_dwid;
+--         INSERT INTO mdi.table_output_field (table_output_step_dwid, database_field_name, database_stream_name, field_order, is_sensitive)
+--         VALUES
+--              (sp_table_output_step_dwid, 'tool_pid', 'tool_pid', 1, FALSE)
+--              , (sp_table_output_step_dwid, 'tool_code', 'tool_code', 2, FALSE)
+--              , (sp_table_output_step_dwid, 'tool_type', 'tool_type', 3, FALSE)
+--              , (sp_table_output_step_dwid, 'tool_price', 'tool_price', 4, FALSE)
+--              , (sp_table_output_step_dwid, 'tool_inventory_start_date', 'tool_inventory_start_date', 5, FALSE)
+--              , (sp_table_output_step_dwid, 'tool_inventory_end_date', 'tool_inventory_end_date', 6, FALSE)
+--              , (sp_table_output_step_dwid, 'data_source_dwid', 'data_source_dwid', 7, FALSE)
+--              , (sp_table_output_step_dwid, 'etl_batch_id', 'etl_batch_id', 7, FALSE);
+--
+--
+--         -- drop source table that is no longer needed
+--         DROP TABLE test.sp_0_1_mdi_csv_file_to_table;
+--
+-- -- source
+-- --         tool_pid
+-- --             , tool_code
+-- --             , tool_type
+-- --             , tool_price
+-- --             , tool_inventory_start_date
+-- --             , tool_inventory_end_date
+--
+--     END
+-- $$;
