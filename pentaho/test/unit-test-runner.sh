@@ -174,8 +174,8 @@ ${relative_docker_dir}/docker-up.sh
 # execute_mdi_test "SP-0.2" ${database_username} "file" "input.xlsx" # test performer_excel_to_table.ktr
 # MDI Test Cases #########################################################################
  database_username="mditest"
-      execute_mdi_test_cases "SP-0.1" ${database_username} "file" "input.csv" "ingress" "ingress"  # test performer_csv_to_table.ktr
-#      execute_mdi_test_cases "SP-0.2" ${database_username} "file" "input.xlsx" "ingress" "ingress"  # test performer_excel_to_table.ktr
+#      execute_mdi_test_cases "SP-0.1" ${database_username} "file" "input.csv" "ingress" "ingress"  # test performer_csv_to_table.ktr
+      execute_mdi_test_cases "SP-0.2" ${database_username} "file" "input.xlsx" "ingress" "ingress"  # test performer_excel_to_table.ktr
 #      execute_mdi_test_cases "SP-0.3" ${database_username} "none" "" "ingress" "ingress"
 #      execute_mdi_test_cases "SP-0.4" ${database_username} "none" "" "ingress" "ingress"
 #      execute_mdi_test_cases "SP-0.5" ${database_username} "none" "" "ingress" "ingress"
