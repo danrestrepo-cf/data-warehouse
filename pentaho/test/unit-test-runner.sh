@@ -181,7 +181,7 @@ database_username="mditest"
  database_username="mditest"
 #      execute_mdi_test_cases "SP-0.3" ${database_username} "none" "" "ingress" "ingress"
 #      execute_mdi_test_cases "SP-0.4" ${database_username} "none" "" "ingress" "ingress"
-      execute_mdi_test_cases "SP-0.5" ${database_username} "none" "" "ingress" "ingress"
+#      execute_mdi_test_cases "SP-0.5" ${database_username} "none" "" "ingress" "ingress"
 
 # DMI Tests ##############################################################################
 database_username="dmi"
