@@ -12,7 +12,7 @@ create table staging_octane.account_event_type
 
 create table staging_octane.account_id_sequence
 (
-    ais_id bigint
+    ais_id bigint 
         primary key
 );
 
@@ -25,7 +25,7 @@ create table staging_octane.account_status_type
 
 create table staging_octane.account
 (
-    a_pid bigint
+    a_pid bigint 
         primary key,
     a_version int null,
     a_account_id bigint null,
@@ -77,7 +77,7 @@ create table staging_octane.account
 
 create table staging_octane.account_event
 (
-    ae_pid bigint
+    ae_pid bigint 
         primary key,
     ae_version int null,
     ae_account_pid bigint null,
@@ -104,7 +104,7 @@ create table staging_octane.admin_user_event_type
 
 create table staging_octane.admin_user_event
 (
-    aue_pid bigint
+    aue_pid bigint 
         primary key,
     aue_version int null,
     aue_create_datetime timestamp null,
@@ -138,7 +138,7 @@ create table staging_octane.agent_type
 
 create table staging_octane.announcement
 (
-    ann_pid bigint
+    ann_pid bigint 
         primary key,
     ann_version int null,
     ann_lender_text varchar(1024) null,
@@ -275,7 +275,7 @@ create table staging_octane.appraisal_underwriter_type
 
 create table staging_octane.area_median_income_table
 (
-    amit_pid bigint
+    amit_pid bigint 
         primary key,
     amit_version int null,
     amit_account_pid bigint null,
@@ -293,7 +293,7 @@ create table staging_octane.arm_index_type
 
 create table staging_octane.arm_index_rate
 (
-    air_pid bigint
+    air_pid bigint 
         primary key,
     air_version int null,
     air_arm_index_type varchar(128) null,
@@ -358,7 +358,7 @@ create table staging_octane.bid_pool_status_type
 
 create table staging_octane.bid_pool
 (
-    bp_pid bigint
+    bp_pid bigint 
         primary key,
     bp_version int null,
     bp_account_pid bigint null,
@@ -509,7 +509,7 @@ create table staging_octane.channel_type
 
 create table staging_octane.channel
 (
-    ch_pid bigint
+    ch_pid bigint 
         primary key,
     ch_version int null,
     ch_account_pid bigint null,
@@ -604,7 +604,7 @@ create table staging_octane.company_admin_event_entity_type
 
 create table staging_octane.company_admin_event
 (
-    cae_pid bigint
+    cae_pid bigint 
         primary key,
     cae_version int null,
     cae_account_pid bigint null,
@@ -692,7 +692,7 @@ create table staging_octane.consumer_privacy_request_type
 
 create table staging_octane.cost_center
 (
-    cosc_pid bigint
+    cosc_pid bigint 
         primary key,
     cosc_version int null,
     cosc_account_pid bigint null,
@@ -711,7 +711,7 @@ create table staging_octane.country_type
 
 create table staging_octane.account_contact
 (
-    ac_pid bigint
+    ac_pid bigint 
         primary key,
     ac_version int null,
     ac_account_pid bigint null,
@@ -843,7 +843,7 @@ create table staging_octane.credit_score_model_type
 
 create table staging_octane.criteria
 (
-    cr_pid bigint
+    cr_pid bigint 
         primary key,
     cr_version int null,
     cr_account_pid bigint null,
@@ -870,7 +870,7 @@ create table staging_octane.criteria_pid_operand_type
 
 create table staging_octane.custodian
 (
-    cu_pid bigint
+    cu_pid bigint 
         primary key,
     cu_version int null,
     cu_account_pid bigint null,
@@ -905,7 +905,7 @@ create table staging_octane.deal_cancel_reason_type
 
 create table staging_octane.deal_change_updater_time
 (
-    dcut_pid bigint
+    dcut_pid bigint 
         primary key,
     dcut_version int null,
     dcut_account_pid bigint null,
@@ -977,7 +977,7 @@ create table staging_octane.deal_child_type
 
 create table staging_octane.criteria_snippet
 (
-    crs_pid bigint
+    crs_pid bigint 
         primary key,
     crs_version int null,
     crs_account_pid bigint null,
@@ -1025,7 +1025,7 @@ create table staging_octane.deal_event_type
 
 create table staging_octane.deal_id_sequence
 (
-    dis_id bigint
+    dis_id bigint 
         primary key
 );
 
@@ -1087,7 +1087,7 @@ create table staging_octane.deal_tag_level_type
 
 create table staging_octane.deal_tag_definition
 (
-    dtd_pid bigint
+    dtd_pid bigint 
         primary key,
     dtd_version int null,
     dtd_account_pid bigint null,
@@ -1550,7 +1550,7 @@ create table staging_octane.gift_funds_type
 
 create table staging_octane.account_grant_program
 (
-    agp_pid bigint
+    agp_pid bigint 
         primary key,
     agp_version int null,
     agp_account_pid bigint null,
@@ -1644,7 +1644,7 @@ create table staging_octane.hmda_race_2017_type
 
 create table staging_octane.hoepa_thresholds
 (
-    ht_pid bigint
+    ht_pid bigint 
         primary key,
     ht_version int null,
     ht_effective_date date null,
@@ -1721,7 +1721,7 @@ create table staging_octane.interim_funder_mers_registration_type
 
 create table staging_octane.interim_funder
 (
-    if_pid bigint
+    if_pid bigint 
         primary key,
     if_version int null,
     if_account_pid bigint null,
@@ -1757,7 +1757,7 @@ create table staging_octane.interim_funder
 
 create table staging_octane.credit_limit
 (
-    cl_pid bigint
+    cl_pid bigint 
         primary key,
     cl_version int null,
     cl_interim_funder_pid bigint null,
@@ -1770,7 +1770,7 @@ create table staging_octane.credit_limit
 
 create table staging_octane.investor_group
 (
-    ig_pid bigint
+    ig_pid bigint 
         primary key,
     ig_version int null,
     ig_account_pid bigint null,
@@ -1913,7 +1913,7 @@ create table staging_octane.lender_concession_request_type
 
 create table staging_octane.lender_lock_id_ticker
 (
-    lltk_pid bigint
+    lltk_pid bigint 
         primary key,
     lltk_version int null,
     lltk_account_pid bigint null,
@@ -1936,7 +1936,7 @@ create table staging_octane.lender_toolbox_permission_type
 
 create table staging_octane.lender_trade_id_ticker
 (
-    lttk_pid bigint
+    lttk_pid bigint 
         primary key,
     lttk_version int null,
     lttk_account_pid bigint null,
@@ -1952,7 +1952,7 @@ create table staging_octane.lender_user_allowed_ip_status_type
 
 create table staging_octane.lender_user_interest
 (
-    lui_pid bigint
+    lui_pid bigint 
         primary key,
     lui_version int null,
     lui_lender_user_pid bigint null,
@@ -1968,7 +1968,7 @@ create table staging_octane.lender_user_interest_type
 
 create table staging_octane.lender_user_language
 (
-    lul_pid bigint
+    lul_pid bigint 
         primary key,
     lul_version int null,
     lul_lender_user_pid bigint null,
@@ -2110,7 +2110,7 @@ create table staging_octane.loan_amortization_type
 
 create table staging_octane.apor
 (
-    ap_pid bigint
+    ap_pid bigint 
         primary key,
     ap_version int null,
     ap_as_of_date date null,
@@ -2145,7 +2145,7 @@ create table staging_octane.loan_limit_table_type
 
 create table staging_octane.loan_limit_table
 (
-    llt_pid bigint
+    llt_pid bigint 
         primary key,
     llt_version int null,
     llt_account_pid bigint null,
@@ -2213,7 +2213,7 @@ create table staging_octane.lock_extension_status_type
 
 create table staging_octane.lock_term_setting
 (
-    lts_pid bigint
+    lts_pid bigint 
         primary key,
     lts_version int null,
     lts_account_pid bigint null,
@@ -2224,7 +2224,7 @@ create table staging_octane.lock_term_setting
 
 create table staging_octane.los_loan_id_ticker
 (
-    ltk_pid bigint
+    ltk_pid bigint 
         primary key,
     ltk_version int null,
     ltk_account_pid bigint null,
@@ -2352,7 +2352,7 @@ create table staging_octane.mcr_loan_status_type
 
 create table staging_octane.mercury_client_group
 (
-    mcg_pid bigint
+    mcg_pid bigint 
         primary key,
     mcg_version int null,
     mcg_account_pid bigint null,
@@ -2384,7 +2384,7 @@ create table staging_octane.mers_registration_status_type
 
 create table staging_octane.mers_transfer_batch
 (
-    metb_pid bigint
+    metb_pid bigint 
         primary key,
     metb_version int null,
     metb_account_pid bigint null,
@@ -2507,7 +2507,7 @@ create table staging_octane.mismo_version_type
 
 create table staging_octane.mortech_account
 (
-    ma_pid bigint
+    ma_pid bigint 
         primary key,
     ma_version int null,
     ma_account_pid bigint null,
@@ -2517,7 +2517,7 @@ create table staging_octane.mortech_account
 
 create table staging_octane.lead_source
 (
-    lds_pid bigint
+    lds_pid bigint 
         primary key,
     lds_version int null,
     lds_account_pid bigint null,
@@ -2534,7 +2534,7 @@ create table staging_octane.lead_source
 
 create table staging_octane.lead_campaign
 (
-    ldc_pid bigint
+    ldc_pid bigint 
         primary key,
     ldc_version int null,
     ldc_account_pid bigint null,
@@ -2546,7 +2546,7 @@ create table staging_octane.lead_campaign
 
 create table staging_octane.lead_supplemental_margin_table
 (
-    lsmt_pid bigint
+    lsmt_pid bigint 
         primary key,
     lsmt_version int null,
     lsmt_lead_source_pid bigint null,
@@ -2555,7 +2555,7 @@ create table staging_octane.lead_supplemental_margin_table
 
 create table staging_octane.lead_supplemental_margin_row
 (
-    lsmr_pid bigint
+    lsmr_pid bigint 
         primary key,
     lsmr_version int null,
     lsmr_lead_supplemental_margin_table_pid bigint null,
@@ -2566,7 +2566,7 @@ create table staging_octane.lead_supplemental_margin_row
 
 create table staging_octane.mortgage_credit_certificate_issuer
 (
-    mcci_pid bigint
+    mcci_pid bigint 
         primary key,
     mcci_version int null,
     mcci_account_pid bigint null,
@@ -2652,7 +2652,7 @@ create table staging_octane.obligation_type
 
 create table staging_octane.offering_group
 (
-    ofg_pid bigint
+    ofg_pid bigint 
         primary key,
     ofg_version int null,
     ofg_account_pid bigint null,
@@ -2661,7 +2661,7 @@ create table staging_octane.offering_group
 
 create table staging_octane.offering
 (
-    of_pid bigint
+    of_pid bigint 
         primary key,
     of_version int null,
     of_account_pid bigint null,
@@ -2676,7 +2676,7 @@ create table staging_octane.offering
 
 create table staging_octane.org_division
 (
-    orgd_pid bigint
+    orgd_pid bigint 
         primary key,
     orgd_version int null,
     orgd_account_pid bigint null,
@@ -2686,7 +2686,7 @@ create table staging_octane.org_division
 
 create table staging_octane.org_division_terms
 (
-    orgdt_pid bigint
+    orgdt_pid bigint 
         primary key,
     orgdt_version int null,
     orgdt_org_division_pid bigint null,
@@ -2700,7 +2700,7 @@ create table staging_octane.org_division_terms
 
 create table staging_octane.org_group
 (
-    orgg_pid bigint
+    orgg_pid bigint 
         primary key,
     orgg_version int null,
     orgg_account_pid bigint null,
@@ -2710,7 +2710,7 @@ create table staging_octane.org_group
 
 create table staging_octane.org_group_terms
 (
-    orggt_pid bigint
+    orggt_pid bigint 
         primary key,
     orggt_version int null,
     orggt_org_division_pid bigint null,
@@ -2732,7 +2732,7 @@ create table staging_octane.org_leader_position_type
 
 create table staging_octane.org_region
 (
-    orgr_pid bigint
+    orgr_pid bigint 
         primary key,
     orgr_version int null,
     orgr_account_pid bigint null,
@@ -2742,7 +2742,7 @@ create table staging_octane.org_region
 
 create table staging_octane.org_region_terms
 (
-    orgrt_pid bigint
+    orgrt_pid bigint 
         primary key,
     orgrt_version int null,
     orgrt_org_group_pid bigint null,
@@ -2757,7 +2757,7 @@ create table staging_octane.org_region_terms
 
 create table staging_octane.org_team
 (
-    orgt_pid bigint
+    orgt_pid bigint 
         primary key,
     orgt_version int null,
     orgt_account_pid bigint null,
@@ -2769,7 +2769,7 @@ create table staging_octane.org_team
 
 create table staging_octane.org_unit
 (
-    orgu_pid bigint
+    orgu_pid bigint 
         primary key,
     orgu_version int null,
     orgu_account_pid bigint null,
@@ -2779,7 +2779,7 @@ create table staging_octane.org_unit
 
 create table staging_octane.org_team_terms
 (
-    orgtt_pid bigint
+    orgtt_pid bigint 
         primary key,
     orgtt_version int null,
     orgtt_org_unit_pid bigint null,
@@ -2794,7 +2794,7 @@ create table staging_octane.org_team_terms
 
 create table staging_octane.org_unit_terms
 (
-    orgut_pid bigint
+    orgut_pid bigint 
         primary key,
     orgut_version int null,
     orgut_org_region_pid bigint null,
@@ -2886,7 +2886,7 @@ create table staging_octane.payoff_request_delivery_type
 
 create table staging_octane.performer_team
 (
-    ptm_pid bigint
+    ptm_pid bigint 
         primary key,
     ptm_version int null,
     ptm_account_pid bigint null,
@@ -2923,7 +2923,7 @@ create table staging_octane.prepay_penalty_type
 
 create table staging_octane.price_processing_time
 (
-    ppt_pid bigint
+    ppt_pid bigint 
         primary key,
     ppt_version int null,
     ppt_account_pid bigint null,
@@ -3143,7 +3143,7 @@ create table staging_octane.qualified_mortgage_status_type
 
 create table staging_octane.qualified_mortgage_thresholds
 (
-    qmt_pid bigint
+    qmt_pid bigint 
         primary key,
     qmt_version int null,
     qmt_effective_date date null,
@@ -3181,7 +3181,7 @@ create table staging_octane.quarter_type
 
 create table staging_octane.mcr_snapshot
 (
-    mcrs_pid bigint
+    mcrs_pid bigint 
         primary key,
     mcrs_version int null,
     mcrs_account_pid bigint null,
@@ -3191,7 +3191,7 @@ create table staging_octane.mcr_snapshot
 
 create table staging_octane.mcr_loan
 (
-    mcrl_pid bigint
+    mcrl_pid bigint 
         primary key,
     mcrl_version int null,
     mcrl_loan_pid bigint null,
@@ -3269,7 +3269,7 @@ create table staging_octane.refinance_improvements_type
 
 create table staging_octane.relock_fee_setting
 (
-    rfs_pid bigint
+    rfs_pid bigint 
         primary key,
     rfs_version int null,
     rfs_account_pid bigint null,
@@ -3300,7 +3300,7 @@ create table staging_octane.report_type
 
 create table staging_octane.report
 (
-    rp_pid bigint
+    rp_pid bigint 
         primary key,
     rp_version int null,
     rp_account_pid bigint null,
@@ -3319,7 +3319,7 @@ create table staging_octane.report
 
 create table staging_octane.report_row
 (
-    rprw_pid bigint
+    rprw_pid bigint 
         primary key,
     rprw_version int null,
     rprw_account_pid bigint null,
@@ -3331,7 +3331,7 @@ create table staging_octane.report_row
 
 create table staging_octane.formula_report_column
 (
-    frc_pid bigint
+    frc_pid bigint 
         primary key,
     frc_version int null,
     frc_report_row_pid bigint null,
@@ -3348,7 +3348,7 @@ create table staging_octane.formula_report_column
 
 create table staging_octane.report_column
 (
-    rpc_pid bigint
+    rpc_pid bigint 
         primary key,
     rpc_version int null,
     rpc_report_row_pid bigint null,
@@ -3401,7 +3401,7 @@ create table staging_octane.road_type
 
 create table staging_octane.role
 (
-    r_pid bigint
+    r_pid bigint 
         primary key,
     r_version int null,
     r_account_pid bigint null,
@@ -3414,7 +3414,7 @@ create table staging_octane.role
 
 create table staging_octane.key_role
 (
-    kr_pid bigint
+    kr_pid bigint 
         primary key,
     kr_version int null,
     kr_role_pid bigint null,
@@ -3424,7 +3424,7 @@ create table staging_octane.key_role
 
 create table staging_octane.role_charge_permissions
 (
-    rcp_pid bigint
+    rcp_pid bigint 
         primary key,
     rcp_version int null,
     rcp_role_pid bigint null,
@@ -3441,7 +3441,7 @@ create table staging_octane.role_charge_permissions
 
 create table staging_octane.role_config_export_permission
 (
-    rcep_pid bigint
+    rcep_pid bigint 
         primary key,
     rcep_version int null,
     rcep_role_pid bigint null,
@@ -3450,7 +3450,7 @@ create table staging_octane.role_config_export_permission
 
 create table staging_octane.role_deal_context
 (
-    rdc_pid bigint
+    rdc_pid bigint 
         primary key,
     rdc_version int null,
     rdc_role_pid bigint null,
@@ -3459,7 +3459,7 @@ create table staging_octane.role_deal_context
 
 create table staging_octane.role_export_permission
 (
-    rep_pid bigint
+    rep_pid bigint 
         primary key,
     rep_version int null,
     rep_role_pid bigint null,
@@ -3468,7 +3468,7 @@ create table staging_octane.role_export_permission
 
 create table staging_octane.role_lender_toolbox
 (
-    rlet_pid bigint
+    rlet_pid bigint 
         primary key,
     rlet_version int null,
     rlet_role_pid bigint null,
@@ -3477,7 +3477,7 @@ create table staging_octane.role_lender_toolbox
 
 create table staging_octane.role_loans_toolbox
 (
-    rlot_pid bigint
+    rlot_pid bigint 
         primary key,
     rlot_version int null,
     rlot_role_pid bigint null,
@@ -3486,7 +3486,7 @@ create table staging_octane.role_loans_toolbox
 
 create table staging_octane.role_performer_assign
 (
-    rpa_pid bigint
+    rpa_pid bigint 
         primary key,
     rpa_version int null,
     rpa_role_pid bigint null,
@@ -3495,7 +3495,7 @@ create table staging_octane.role_performer_assign
 
 create table staging_octane.role_report
 (
-    rrp_pid bigint
+    rrp_pid bigint 
         primary key,
     rrp_version int null,
     rrp_report_pid bigint null,
@@ -3525,7 +3525,7 @@ create table staging_octane.secondary_admin_event_entity_type
 
 create table staging_octane.secondary_admin_event
 (
-    sae_pid bigint
+    sae_pid bigint 
         primary key,
     sae_version int null,
     sae_account_pid bigint null,
@@ -3585,7 +3585,7 @@ create table staging_octane.servicing_transfer_type
 
 create table staging_octane.settlement_agent
 (
-    sa_pid bigint
+    sa_pid bigint 
         primary key,
     sa_version int null,
     sa_account_pid bigint null,
@@ -3598,7 +3598,7 @@ create table staging_octane.settlement_agent
 
 create table staging_octane.settlement_agent_office
 (
-    sao_pid bigint
+    sao_pid bigint 
         primary key,
     sao_version int null,
     sao_settlement_agent_pid bigint null,
@@ -3618,7 +3618,7 @@ create table staging_octane.settlement_agent_office
 
 create table staging_octane.settlement_agent_wire
 (
-    saw_pid bigint
+    saw_pid bigint 
         primary key,
     saw_version int null,
     saw_settlement_agent_pid bigint null,
@@ -3662,7 +3662,7 @@ create table staging_octane.sheet_format_type
 
 create table staging_octane.google_sheet_export
 (
-    gse_pid bigint
+    gse_pid bigint 
         primary key,
     gse_version int null,
     gse_name varchar(128) null,
@@ -3685,7 +3685,7 @@ create table staging_octane.signature_part_type
 
 create table staging_octane.site_allowed_ip
 (
-    saip_pid bigint
+    saip_pid bigint 
         primary key,
     saip_version int null,
     saip_account_pid bigint null,
@@ -3705,7 +3705,7 @@ create table staging_octane.smart_charge_apr_type
 
 create table staging_octane.smart_charge
 (
-    sc_pid bigint
+    sc_pid bigint 
         primary key,
     sc_version int null,
     sc_account_pid bigint null,
@@ -3718,7 +3718,7 @@ create table staging_octane.smart_charge
 
 create table staging_octane.smart_charge_group
 (
-    scg_pid bigint
+    scg_pid bigint 
         primary key,
     scg_version int null,
     scg_smart_charge_pid bigint null,
@@ -3727,7 +3727,7 @@ create table staging_octane.smart_charge_group
 
 create table staging_octane.smart_charge_group_case
 (
-    scgc_pid bigint
+    scgc_pid bigint 
         primary key,
     scgc_version int null,
     scgc_smart_charge_group_pid bigint null,
@@ -3737,7 +3737,7 @@ create table staging_octane.smart_charge_group_case
 
 create table staging_octane.smart_charge_case
 (
-    scc_pid bigint
+    scc_pid bigint 
         primary key,
     scc_version int null,
     scc_smart_charge_group_case_pid bigint null,
@@ -3790,7 +3790,7 @@ create table staging_octane.smart_message_source_type
 
 create table staging_octane.smart_mi
 (
-    sm_pid bigint
+    sm_pid bigint 
         primary key,
     sm_version int null,
     sm_account_pid bigint null,
@@ -3799,7 +3799,7 @@ create table staging_octane.smart_mi
 
 create table staging_octane.smart_mi_eligibility_case
 (
-    smec_pid bigint
+    smec_pid bigint 
         primary key,
     smec_version int null,
     smec_smart_mi_pid bigint null,
@@ -3810,7 +3810,7 @@ create table staging_octane.smart_mi_eligibility_case
 
 create table staging_octane.smart_mi_rate_card
 (
-    smrca_pid bigint
+    smrca_pid bigint 
         primary key,
     smrca_version int null,
     smrca_from_date date null,
@@ -3823,7 +3823,7 @@ create table staging_octane.smart_mi_rate_card
 
 create table staging_octane.smart_mi_rate_adjustment_case
 (
-    smrac_pid bigint
+    smrac_pid bigint 
         primary key,
     smrac_version int null,
     smrac_smart_mi_rate_card_pid bigint null,
@@ -3834,7 +3834,7 @@ create table staging_octane.smart_mi_rate_adjustment_case
 
 create table staging_octane.smart_mi_rate_case
 (
-    smrc_pid bigint
+    smrc_pid bigint 
         primary key,
     smrc_version int null,
     smrc_smart_mi_rate_card_pid bigint null,
@@ -3854,7 +3854,7 @@ create table staging_octane.smart_mi_rate_case
 
 create table staging_octane.smart_mi_surcharge
 (
-    sms_pid bigint
+    sms_pid bigint 
         primary key,
     sms_version int null,
     sms_account_pid bigint null,
@@ -3863,7 +3863,7 @@ create table staging_octane.smart_mi_surcharge
 
 create table staging_octane.smart_mi_surcharge_case
 (
-    smsc_pid bigint
+    smsc_pid bigint 
         primary key,
     smsc_version int null,
     smsc_smart_mi_surcharge_pid bigint null,
@@ -3875,7 +3875,7 @@ create table staging_octane.smart_mi_surcharge_case
 
 create table staging_octane.smart_stack
 (
-    ss_pid bigint
+    ss_pid bigint 
         primary key,
     ss_version int null,
     ss_account_pid bigint null,
@@ -3891,7 +3891,7 @@ create table staging_octane.smart_stack_doc_set_include_option_type
 
 create table staging_octane.smart_doc_set
 (
-    sdst_pid bigint
+    sdst_pid bigint 
         primary key,
     sdst_version int null,
     sdst_account_pid bigint null,
@@ -3903,7 +3903,7 @@ create table staging_octane.smart_doc_set
 
 create table staging_octane.key_package
 (
-    kp_pid bigint
+    kp_pid bigint 
         primary key,
     kp_version int null,
     kp_account_pid bigint null,
@@ -3976,7 +3976,7 @@ create table staging_octane.state_type
 
 create table staging_octane.county
 (
-    c_pid bigint
+    c_pid bigint 
         primary key,
     c_version int null,
     c_name varchar(128) null,
@@ -3990,7 +3990,7 @@ create table staging_octane.county
 
 create table staging_octane.area_median_income_row
 (
-    amir_pid bigint
+    amir_pid bigint 
         primary key,
     amir_version int null,
     amir_area_median_income_table_pid bigint null,
@@ -4005,7 +4005,7 @@ create index idx_county_1
 
 create table staging_octane.county_city
 (
-    cci_pid bigint
+    cci_pid bigint 
         primary key,
     cci_version int null,
     cci_county_pid bigint null,
@@ -4014,7 +4014,7 @@ create table staging_octane.county_city
 
 create table staging_octane.county_sub_jurisdiction
 (
-    csju_pid bigint
+    csju_pid bigint 
         primary key,
     csju_version int null,
     csju_county_pid bigint null,
@@ -4023,7 +4023,7 @@ create table staging_octane.county_sub_jurisdiction
 
 create table staging_octane.disaster_declaration
 (
-    dd_pid bigint
+    dd_pid bigint 
         primary key,
     dd_version int null,
     dd_account_pid bigint null,
@@ -4036,7 +4036,7 @@ create table staging_octane.disaster_declaration
 
 create table staging_octane.license_req
 (
-    mlr_pid bigint
+    mlr_pid bigint 
         primary key,
     mlr_version int null,
     mlr_account_pid bigint null,
@@ -4046,7 +4046,7 @@ create table staging_octane.license_req
 
 create table staging_octane.loan_limit_row
 (
-    llr_pid bigint
+    llr_pid bigint 
         primary key,
     llr_version int null,
     llr_loan_limit_table_pid bigint null,
@@ -4061,7 +4061,7 @@ create table staging_octane.loan_limit_row
 
 create table staging_octane.recording_city
 (
-    rc_pid bigint
+    rc_pid bigint 
         primary key,
     rc_version int null,
     rc_city_name varchar(128) null,
@@ -4071,7 +4071,7 @@ create table staging_octane.recording_city
 
 create table staging_octane.recording_district
 (
-    rdi_pid bigint
+    rdi_pid bigint 
         primary key,
     rdi_version int null,
     rdi_state_type varchar(128) null,
@@ -4081,7 +4081,7 @@ create table staging_octane.recording_district
 
 create table staging_octane.county_recording_district
 (
-    crdi_pid bigint
+    crdi_pid bigint 
         primary key,
     crdi_version int null,
     crdi_county_pid bigint null,
@@ -4093,7 +4093,7 @@ create index idx_recording_district_1
 
 create table staging_octane.region_ernst_page_rec
 (
-    rerc_pid bigint
+    rerc_pid bigint 
         primary key,
     rerc_version int null,
     rerc_ernst_page_rec_type varchar(128) null,
@@ -4120,7 +4120,7 @@ create table staging_octane.stripe_payment_status_type
 
 create table staging_octane.stripe_payment
 (
-    stpm_pid bigint
+    stpm_pid bigint 
         primary key,
     stpm_version int null,
     stpm_account_pid bigint null,
@@ -4161,7 +4161,7 @@ create table staging_octane.taxpayer_identifier_type
 
 create table staging_octane.contractor
 (
-    ctr_pid bigint
+    ctr_pid bigint 
         primary key,
     ctr_version int null,
     ctr_account_pid bigint null,
@@ -4186,7 +4186,7 @@ create table staging_octane.contractor
 
 create table staging_octane.contractor_license
 (
-    ctrl_pid bigint
+    ctrl_pid bigint 
         primary key,
     ctrl_version int null,
     ctrl_contractor_pid bigint null,
@@ -4213,7 +4213,7 @@ create table staging_octane.time_zone_type
 
 create table staging_octane.admin_user
 (
-    au_pid bigint
+    au_pid bigint 
         primary key,
     au_version int null,
     au_create_date date null,
@@ -4239,7 +4239,7 @@ create table staging_octane.admin_user
 
 create table staging_octane.borrower_user
 (
-    bu_pid bigint
+    bu_pid bigint 
         primary key,
     bu_version int null,
     bu_account_pid bigint null,
@@ -4275,7 +4275,7 @@ create table staging_octane.timeout_time_zone_type
 
 create table staging_octane.title_company
 (
-    tc_pid bigint
+    tc_pid bigint 
         primary key,
     tc_version int null,
     tc_account_pid bigint null,
@@ -4287,7 +4287,7 @@ create table staging_octane.title_company
 
 create table staging_octane.title_company_office
 (
-    tco_pid bigint
+    tco_pid bigint 
         primary key,
     tco_version int null,
     tco_title_company_pid bigint null,
@@ -4305,7 +4305,7 @@ create table staging_octane.title_company_office
 
 create table staging_octane.preferred_settlement
 (
-    prs_pid bigint
+    prs_pid bigint 
         primary key,
     prs_version int null,
     prs_account_pid bigint null,
@@ -4341,7 +4341,7 @@ create table staging_octane.trade_audit_type
 
 create table staging_octane.trade_fee_type
 (
-    tft_pid bigint
+    tft_pid bigint 
         primary key,
     tft_version int null,
     tft_account_pid bigint null,
@@ -4364,7 +4364,7 @@ create table staging_octane.trade_status_type
 
 create table staging_octane.trustee
 (
-    tru_pid bigint
+    tru_pid bigint 
         primary key,
     tru_version int null,
     tru_account_pid bigint null,
@@ -4551,7 +4551,7 @@ create table staging_octane.wf_outcome_type
 
 create table staging_octane.wf_phase
 (
-    wph_pid bigint
+    wph_pid bigint 
         primary key,
     wph_version int null,
     wph_account_pid bigint null,
@@ -4575,7 +4575,7 @@ create table staging_octane.wf_process_type
 
 create table staging_octane.wf_process
 (
-    wpr_pid bigint
+    wpr_pid bigint 
         primary key,
     wpr_version int null,
     wpr_account_pid bigint null,
@@ -4622,7 +4622,7 @@ create table staging_octane.wf_step_type
 
 create table staging_octane.wf_wait_until_time_slice
 (
-    wts_pid bigint
+    wts_pid bigint 
         primary key,
     wts_version int null,
     wts_time_slice timestamp null,
@@ -4656,7 +4656,7 @@ create table staging_octane.yes_no_unknown_type
 
 create table staging_octane.application
 (
-    apl_pid bigint
+    apl_pid bigint 
         primary key,
     apl_version int null,
     apl_application_name varchar(128) null,
@@ -4682,7 +4682,7 @@ create table staging_octane.application
 
 create table staging_octane.asset
 (
-    as_pid bigint
+    as_pid bigint 
         primary key,
     as_version int null,
     as_aggregate_description varchar(256) null,
@@ -4729,7 +4729,7 @@ create table staging_octane.asset
 
 create table staging_octane.asset_large_deposit
 (
-    ald_pid bigint
+    ald_pid bigint 
         primary key,
     ald_version int null,
     ald_asset_pid bigint null,
@@ -4739,7 +4739,7 @@ create table staging_octane.asset_large_deposit
 
 create table staging_octane.creditor
 (
-    crd_pid bigint
+    crd_pid bigint 
         primary key,
     crd_version int null,
     crd_account_pid bigint null,
@@ -4766,7 +4766,7 @@ create table staging_octane.creditor
 
 create table staging_octane.creditor_lookup_name
 (
-    cln_pid bigint
+    cln_pid bigint 
         primary key,
     cln_version int null,
     cln_account_pid bigint null,
@@ -4776,7 +4776,7 @@ create table staging_octane.creditor_lookup_name
 
 create table staging_octane.investor
 (
-    i_pid bigint
+    i_pid bigint 
         primary key,
     i_version int null,
     i_account_pid bigint null,
@@ -4866,7 +4866,7 @@ create table staging_octane.investor
 
 create table staging_octane.company
 (
-    cm_pid bigint
+    cm_pid bigint 
         primary key,
     cm_version int null,
     cm_account_pid bigint null,
@@ -4906,7 +4906,7 @@ create table staging_octane.company
 
 create table staging_octane.branch
 (
-    br_pid bigint
+    br_pid bigint 
         primary key,
     br_version int null,
     br_company_pid bigint null,
@@ -4936,7 +4936,7 @@ create table staging_octane.branch
 
 create table staging_octane.branch_license
 (
-    brml_pid bigint
+    brml_pid bigint 
         primary key,
     brml_version int null,
     brml_branch_pid bigint null,
@@ -4953,7 +4953,7 @@ create index idx_account_1
 
 create table staging_octane.company_license
 (
-    cml_pid bigint
+    cml_pid bigint 
         primary key,
     cml_version int null,
     cml_company_pid bigint null,
@@ -4970,7 +4970,7 @@ create table staging_octane.company_license
 
 create table staging_octane.deal
 (
-    d_pid bigint
+    d_pid bigint 
         primary key,
     d_version int null,
     d_account_pid bigint null,
@@ -5029,7 +5029,7 @@ create table staging_octane.deal
 
 create table staging_octane.appraisal
 (
-    apr_pid bigint
+    apr_pid bigint 
         primary key,
     apr_version int null,
     apr_appraised_value_amount bigint null,
@@ -5134,7 +5134,7 @@ create table staging_octane.appraisal
 
 create table staging_octane.appraisal_form
 (
-    aprfm_pid bigint
+    aprfm_pid bigint 
         primary key,
     aprfm_version int null,
     aprfm_appraisal_pid bigint null,
@@ -5144,7 +5144,7 @@ create table staging_octane.appraisal_form
 
 create table staging_octane.appraisal_id_ticker
 (
-    aprtk_pid bigint
+    aprtk_pid bigint 
         primary key,
     aprtk_version int null,
     aprtk_deal_pid bigint null,
@@ -5168,7 +5168,7 @@ create index idx_deal_6
 
 create table staging_octane.deal_appraisal
 (
-    dappr_pid bigint
+    dappr_pid bigint 
         primary key,
     dappr_version int null,
     dappr_deal_pid bigint null,
@@ -5190,7 +5190,7 @@ create table staging_octane.deal_appraisal
 
 create table staging_octane.deal_contact
 (
-    dc_pid bigint
+    dc_pid bigint 
         primary key,
     dc_version int null,
     dc_address_city varchar(128) null,
@@ -5216,7 +5216,7 @@ create table staging_octane.deal_contact
 
 create table staging_octane.deal_disaster_declaration
 (
-    ddd_pid bigint
+    ddd_pid bigint 
         primary key,
     ddd_version int null,
     ddd_deal_pid bigint null,
@@ -5225,7 +5225,7 @@ create table staging_octane.deal_disaster_declaration
 
 create table staging_octane.deal_du
 (
-    ddu_pid bigint
+    ddu_pid bigint 
         primary key,
     ddu_version int null,
     ddu_deal_pid bigint null,
@@ -5235,7 +5235,7 @@ create table staging_octane.deal_du
 
 create table staging_octane.deal_event
 (
-    de_pid bigint
+    de_pid bigint 
         primary key,
     de_version int null,
     de_create_datetime timestamp null,
@@ -5284,7 +5284,7 @@ create index idx_deal_event_9
 
 create table staging_octane.deal_housing_counselors_request
 (
-    dhcr_pid bigint
+    dhcr_pid bigint 
         primary key,
     dhcr_version int null,
     dhcr_deal_pid bigint null,
@@ -5299,7 +5299,7 @@ create table staging_octane.deal_housing_counselors_request
 
 create table staging_octane.deal_housing_counselor_candidate
 (
-    dhcc_pid bigint
+    dhcc_pid bigint 
         primary key,
     dhcc_version int null,
     dhcc_deal_pid bigint null,
@@ -5337,7 +5337,7 @@ create table staging_octane.deal_housing_counselor_candidate
 
 create table staging_octane.deal_invoice
 (
-    di_pid bigint
+    di_pid bigint 
         primary key,
     di_version int null,
     di_deal_pid bigint null,
@@ -5352,7 +5352,7 @@ create table staging_octane.deal_invoice
 
 create table staging_octane.deal_invoice_item
 (
-    dii_pid bigint
+    dii_pid bigint 
         primary key,
     dii_version int null,
     dii_deal_invoice_pid bigint null,
@@ -5364,7 +5364,7 @@ create table staging_octane.deal_invoice_item
 
 create table staging_octane.deal_lender_user_event
 (
-    dlue_pid bigint
+    dlue_pid bigint 
         primary key,
     dlue_version int null,
     dlue_deal_pid bigint null,
@@ -5382,7 +5382,7 @@ create index idx_deal_lender_user_event_2
 
 create table staging_octane.deal_lp
 (
-    dlp_pid bigint
+    dlp_pid bigint 
         primary key,
     dlp_version int null,
     dlp_deal_pid bigint null,
@@ -5392,7 +5392,7 @@ create table staging_octane.deal_lp
 
 create table staging_octane.deal_performer_team
 (
-    dptm_pid bigint
+    dptm_pid bigint 
         primary key,
     dptm_version int null,
     dptm_deal_pid bigint null,
@@ -5401,7 +5401,7 @@ create table staging_octane.deal_performer_team
 
 create table staging_octane.deal_real_estate_agent
 (
-    drea_pid bigint
+    drea_pid bigint 
         primary key,
     drea_version int null,
     drea_deal_pid bigint null,
@@ -5429,7 +5429,7 @@ create table staging_octane.deal_real_estate_agent
 
 create table staging_octane.deal_settlement
 (
-    dsmt_pid bigint
+    dsmt_pid bigint 
         primary key,
     dsmt_version int null,
     dsmt_account_pid bigint null,
@@ -5471,7 +5471,7 @@ create index idx_deal_settlement_1
 
 create table staging_octane.deal_signer
 (
-    dsi_pid bigint
+    dsi_pid bigint 
         primary key,
     dsi_version int null,
     dsi_deal_pid bigint null,
@@ -5488,7 +5488,7 @@ create index idx_deal_signer_1
 
 create table staging_octane.deal_stage
 (
-    dst_pid bigint
+    dst_pid bigint 
         primary key,
     dst_version int null,
     dst_deal_pid bigint null,
@@ -5503,7 +5503,7 @@ create table staging_octane.deal_stage
 
 create table staging_octane.deal_summary
 (
-    ds_pid bigint
+    ds_pid bigint 
         primary key,
     ds_version int null,
     ds_deal_pid bigint null,
@@ -5535,7 +5535,7 @@ create table staging_octane.deal_summary
 
 create table staging_octane.investor_lock_extension_setting
 (
-    iles_pid bigint
+    iles_pid bigint 
         primary key,
     iles_version int null,
     iles_investor_pid bigint null,
@@ -5548,8 +5548,8 @@ create table staging_octane.investor_lock_extension_setting
 
 create table staging_octane.lead
 (
-    ld_pid bigint
-        primary key,
+    ld_pid bigint 
+    primary key,
     ld_version int null,
     ld_deal_pid bigint null,
     ld_lead_datetime varchar(32) null,
@@ -5596,11 +5596,11 @@ create table staging_octane.lead
     ld_borrower_current_job_position varchar(32) null,
     ld_borrower_years_on_job varchar(16) null,
     ld_borrower_gross_monthly_income varchar(32) null
-);
+    );
 
 create table staging_octane.lender_user
 (
-    lu_pid bigint
+    lu_pid bigint 
         primary key,
     lu_version int null,
     lu_branch_pid bigint null,
@@ -5664,7 +5664,7 @@ create table staging_octane.lender_user
 
 create table staging_octane.backfill_status
 (
-    bfs_pid bigint
+    bfs_pid bigint 
         primary key,
     bfs_version int null,
     bfs_account_pid bigint null,
@@ -5681,7 +5681,7 @@ create table staging_octane.backfill_status
 
 create table staging_octane.backfill_loan_status
 (
-    bfls_pid bigint
+    bfls_pid bigint 
         primary key,
     bfls_version int null,
     bfls_backfill_status_pid bigint null,
@@ -5696,7 +5696,7 @@ create table staging_octane.backfill_loan_status
 
 create table staging_octane.bid_pool_note
 (
-    bpn_pid bigint
+    bpn_pid bigint 
         primary key,
     bpn_version int null,
     bpn_bid_pool_pid bigint null,
@@ -5708,7 +5708,7 @@ create table staging_octane.bid_pool_note
 
 create table staging_octane.bid_pool_note_comment
 (
-    bpnc_pid bigint
+    bpnc_pid bigint 
         primary key,
     bpnc_version int null,
     bpnc_bid_pool_note_pid bigint null,
@@ -5720,7 +5720,7 @@ create table staging_octane.bid_pool_note_comment
 
 create table staging_octane.bid_pool_note_monitor
 (
-    bpnm_pid bigint
+    bpnm_pid bigint 
         primary key,
     bpnm_version int null,
     bpnm_bid_pool_note_pid bigint null,
@@ -5729,7 +5729,7 @@ create table staging_octane.bid_pool_note_monitor
 
 create table staging_octane.branch_account_executive
 (
-    brae_pid bigint
+    brae_pid bigint 
         primary key,
     brae_version int null,
     brae_branch_pid bigint null,
@@ -5739,7 +5739,7 @@ create table staging_octane.branch_account_executive
 
 create table staging_octane.deal_invoice_payment_method
 (
-    dipm_pid bigint
+    dipm_pid bigint 
         primary key,
     dipm_version int null,
     dipm_deal_invoice_pid bigint null,
@@ -5760,7 +5760,7 @@ create table staging_octane.deal_invoice_payment_method
 
 create table staging_octane.deal_key_roles
 (
-    dkrs_pid bigint
+    dkrs_pid bigint 
         primary key,
     dkrs_version int null,
     dkrs_deal_pid bigint null,
@@ -5804,7 +5804,7 @@ create table staging_octane.deal_key_roles
 
 create table staging_octane.deal_lender_user
 (
-    dlu_pid bigint
+    dlu_pid bigint 
         primary key,
     dlu_version int null,
     dlu_deal_pid bigint null,
@@ -5821,7 +5821,7 @@ create index idx_deal_lender_user_1
 
 create table staging_octane.deal_performer_team_user
 (
-    dptu_pid bigint
+    dptu_pid bigint 
         primary key,
     dptu_version int null,
     dptu_deal_pid bigint null,
@@ -5831,7 +5831,7 @@ create table staging_octane.deal_performer_team_user
 
 create table staging_octane.dw_export_request
 (
-    dwer_pid bigint
+    dwer_pid bigint 
         primary key,
     dwer_version int null,
     dwer_account_pid bigint null,
@@ -5848,7 +5848,7 @@ create table staging_octane.dw_export_request
 
 create table staging_octane.lender_settings
 (
-    lss_pid bigint
+    lss_pid bigint 
         primary key,
     lss_version int null,
     lss_account_pid bigint null,
@@ -5898,7 +5898,7 @@ create table staging_octane.lender_settings
 
 create table staging_octane.lender_user_allowed_ip
 (
-    luip_pid bigint
+    luip_pid bigint 
         primary key,
     luip_version int null,
     luip_lender_user_pid bigint null,
@@ -5921,7 +5921,7 @@ create index idx_lender_user_allowed_ip_3
 
 create table staging_octane.lender_user_deal_visit
 (
-    ludv_pid bigint
+    ludv_pid bigint 
         primary key,
     ludv_version int null,
     ludv_deal_pid bigint null,
@@ -5931,7 +5931,7 @@ create table staging_octane.lender_user_deal_visit
 
 create table staging_octane.lender_user_lead_source
 (
-    lulds_pid bigint
+    lulds_pid bigint 
         primary key,
     lulds_version int null,
     lulds_lender_user_pid bigint null,
@@ -5940,7 +5940,7 @@ create table staging_octane.lender_user_lead_source
 
 create table staging_octane.lender_user_license
 (
-    luml_pid bigint
+    luml_pid bigint 
         primary key,
     luml_version int null,
     luml_lender_user_pid bigint null,
@@ -5954,7 +5954,7 @@ create table staging_octane.lender_user_license
 
 create table staging_octane.lender_user_notice
 (
-    lun_pid bigint
+    lun_pid bigint 
         primary key,
     lun_version int null,
     lun_lender_user_pid bigint null,
@@ -5967,7 +5967,7 @@ create table staging_octane.lender_user_notice
 
 create table staging_octane.lender_user_role
 (
-    lur_pid bigint
+    lur_pid bigint 
         primary key,
     lur_version int null,
     lur_lender_user_pid bigint null,
@@ -5986,7 +5986,7 @@ create table staging_octane.lender_user_role
 
 create table staging_octane.exclusive_assignment
 (
-    ea_pid bigint
+    ea_pid bigint 
         primary key,
     ea_version int null,
     ea_lender_user_role_pid bigint null,
@@ -5997,7 +5997,7 @@ create table staging_octane.exclusive_assignment
 
 create table staging_octane.lender_user_role_addendum
 (
-    lura_pid bigint
+    lura_pid bigint 
         primary key,
     lura_version int null,
     lura_lender_user_pid bigint null,
@@ -6007,7 +6007,7 @@ create table staging_octane.lender_user_role_addendum
 
 create table staging_octane.lender_user_sign_on
 (
-    luso_pid bigint
+    luso_pid bigint 
         primary key,
     luso_version int null,
     luso_lender_user_pid bigint null,
@@ -6016,7 +6016,7 @@ create table staging_octane.lender_user_sign_on
 
 create table staging_octane.lender_user_unavailable
 (
-    luu_pid bigint
+    luu_pid bigint 
         primary key,
     luu_version int null,
     luu_lender_user_pid bigint null,
@@ -6026,7 +6026,7 @@ create table staging_octane.lender_user_unavailable
 
 create table staging_octane.mercury_network_status_request
 (
-    mnsr_pid bigint
+    mnsr_pid bigint 
         primary key,
     mnsr_version int null,
     mnsr_deal_pid bigint null,
@@ -6037,7 +6037,7 @@ create table staging_octane.mercury_network_status_request
 
 create table staging_octane.org_division_leader
 (
-    orgdl_pid bigint
+    orgdl_pid bigint 
         primary key,
     orgdl_version int null,
     orgdl_lender_user_pid bigint null,
@@ -6049,7 +6049,7 @@ create table staging_octane.org_division_leader
 
 create table staging_octane.org_group_leader
 (
-    orggl_pid bigint
+    orggl_pid bigint 
         primary key,
     orggl_version int null,
     orggl_lender_user_pid bigint null,
@@ -6061,7 +6061,7 @@ create table staging_octane.org_group_leader
 
 create table staging_octane.org_lender_user_terms
 (
-    orglut_pid bigint
+    orglut_pid bigint 
         primary key,
     orglut_version int null,
     orglut_org_team_pid bigint null,
@@ -6072,7 +6072,7 @@ create table staging_octane.org_lender_user_terms
 
 create table staging_octane.org_region_leader
 (
-    orgrl_pid bigint
+    orgrl_pid bigint 
         primary key,
     orgrl_version int null,
     orgrl_lender_user_pid bigint null,
@@ -6084,7 +6084,7 @@ create table staging_octane.org_region_leader
 
 create table staging_octane.org_team_leader
 (
-    orgtl_pid bigint
+    orgtl_pid bigint 
         primary key,
     orgtl_version int null,
     orgtl_lender_user_pid bigint null,
@@ -6096,7 +6096,7 @@ create table staging_octane.org_team_leader
 
 create table staging_octane.org_unit_leader
 (
-    orgul_pid bigint
+    orgul_pid bigint 
         primary key,
     orgul_version int null,
     orgul_lender_user_pid bigint null,
@@ -6108,7 +6108,7 @@ create table staging_octane.org_unit_leader
 
 create table staging_octane.performer_assignment
 (
-    pa_pid bigint
+    pa_pid bigint 
         primary key,
     pa_version int null,
     pa_role_pid bigint null,
@@ -6118,7 +6118,7 @@ create table staging_octane.performer_assignment
 
 create table staging_octane.product
 (
-    p_pid bigint
+    p_pid bigint 
         primary key,
     p_version int null,
     p_account_pid bigint null,
@@ -6137,7 +6137,7 @@ create table staging_octane.product
 
 create table staging_octane.offering_product
 (
-    ofp_pid bigint
+    ofp_pid bigint 
         primary key,
     ofp_version int null,
     ofp_offering_pid bigint null,
@@ -6149,7 +6149,7 @@ create table staging_octane.offering_product
 
 create table staging_octane.product_add_on
 (
-    pao_pid bigint
+    pao_pid bigint 
         primary key,
     pao_version int null,
     pao_product_pid bigint null,
@@ -6158,7 +6158,7 @@ create table staging_octane.product_add_on
 
 create table staging_octane.product_add_on_rule
 (
-    par_pid bigint
+    par_pid bigint 
         primary key,
     par_version int null,
     par_product_add_on_pid bigint null,
@@ -6307,7 +6307,7 @@ create table staging_octane.product_add_on_rule
 
 create table staging_octane.product_branch
 (
-    pbr_pid bigint
+    pbr_pid bigint 
         primary key,
     pbr_version int null,
     pbr_product_pid bigint null,
@@ -6319,7 +6319,7 @@ create table staging_octane.product_branch
 
 create table staging_octane.product_deal_check_exclusion
 (
-    pdce_pid bigint
+    pdce_pid bigint 
         primary key,
     pdce_version int null,
     pdce_product_pid bigint null,
@@ -6328,7 +6328,7 @@ create table staging_octane.product_deal_check_exclusion
 
 create table staging_octane.product_eligibility
 (
-    pe_pid bigint
+    pe_pid bigint 
         primary key,
     pe_version int null,
     pe_product_pid bigint null,
@@ -6337,7 +6337,7 @@ create table staging_octane.product_eligibility
 
 create table staging_octane.product_eligibility_rule
 (
-    per_pid bigint
+    per_pid bigint 
         primary key,
     per_version int null,
     per_product_eligibility_pid bigint null,
@@ -6480,7 +6480,7 @@ create table staging_octane.product_eligibility_rule
 
 create table staging_octane.product_lock_term
 (
-    plt_pid bigint
+    plt_pid bigint 
         primary key,
     plt_version int null,
     plt_product_pid bigint null,
@@ -6492,7 +6492,7 @@ create table staging_octane.product_lock_term
 
 create table staging_octane.product_maximum_investor_price
 (
-    pmip_pid bigint
+    pmip_pid bigint 
         primary key,
     pmip_version int null,
     pmip_product_pid bigint null,
@@ -6505,7 +6505,7 @@ create table staging_octane.product_maximum_investor_price
 
 create table staging_octane.product_maximum_rebate
 (
-    pmr_pid bigint
+    pmr_pid bigint 
         primary key,
     pmr_version int null,
     pmr_product_pid bigint null,
@@ -6515,7 +6515,7 @@ create table staging_octane.product_maximum_rebate
 
 create table staging_octane.product_minimum_investor_price
 (
-    pminip_pid bigint
+    pminip_pid bigint 
         primary key,
     pminip_version int null,
     pminip_product_pid bigint null,
@@ -6528,7 +6528,7 @@ create table staging_octane.product_minimum_investor_price
 
 create table staging_octane.product_originator
 (
-    po_pid bigint
+    po_pid bigint 
         primary key,
     po_version int null,
     po_product_pid bigint null,
@@ -6540,7 +6540,7 @@ create table staging_octane.product_originator
 
 create table staging_octane.product_terms
 (
-    pt_pid bigint
+    pt_pid bigint 
         primary key,
     pt_version int null,
     pt_amortization_term_months int null,
@@ -6662,7 +6662,7 @@ create table staging_octane.product_terms
 
 create table staging_octane.product_buydown
 (
-    pbd_pid bigint
+    pbd_pid bigint 
         primary key,
     pbd_version int null,
     pbd_product_terms_pid bigint null,
@@ -6671,7 +6671,7 @@ create table staging_octane.product_buydown
 
 create table staging_octane.product_interest_only
 (
-    pio_pid bigint
+    pio_pid bigint 
         primary key,
     pio_version int null,
     pio_product_terms_pid bigint null,
@@ -6680,7 +6680,7 @@ create table staging_octane.product_interest_only
 
 create table staging_octane.product_prepay_penalty
 (
-    ppp_pid bigint
+    ppp_pid bigint 
         primary key,
     ppp_version int null,
     ppp_product_terms_pid bigint null,
@@ -6689,7 +6689,7 @@ create table staging_octane.product_prepay_penalty
 
 create table staging_octane.rate_sheet
 (
-    rs_pid bigint
+    rs_pid bigint 
         primary key,
     rs_version int null,
     rs_product_pid bigint null,
@@ -6698,7 +6698,7 @@ create table staging_octane.rate_sheet
 
 create table staging_octane.rate_sheet_rate
 (
-    rsr_pid bigint
+    rsr_pid bigint 
         primary key,
     rsr_version int null,
     rsr_rate_sheet_pid bigint null,
@@ -6709,7 +6709,7 @@ create table staging_octane.rate_sheet_rate
 
 create table staging_octane.rate_sheet_price
 (
-    rsp_pid bigint
+    rsp_pid bigint 
         primary key,
     rsp_version int null,
     rsp_rate_sheet_rate_pid bigint null,
@@ -6720,7 +6720,7 @@ create table staging_octane.rate_sheet_price
 
 create table staging_octane.repository_file
 (
-    rf_pid bigint
+    rf_pid bigint 
         primary key,
     rf_version int null,
     rf_account_pid bigint null,
@@ -6741,7 +6741,7 @@ create table staging_octane.repository_file
 
 create table staging_octane.bid_pool_file
 (
-    bpf_pid bigint
+    bpf_pid bigint 
         primary key,
     bpf_version int null,
     bpf_bid_pool_pid bigint null,
@@ -6750,7 +6750,7 @@ create table staging_octane.bid_pool_file
 
 create table staging_octane.compass_analytics_report_request
 (
-    carr_pid bigint
+    carr_pid bigint 
         primary key,
     carr_version int null,
     carr_account_pid bigint null,
@@ -6773,7 +6773,7 @@ create table staging_octane.compass_analytics_report_request
 
 create table staging_octane.consumer_privacy_request
 (
-    cpr_pid bigint
+    cpr_pid bigint 
         primary key,
     cpr_version int null,
     cpr_request_id int null,
@@ -6797,7 +6797,7 @@ create table staging_octane.consumer_privacy_request
 
 create table staging_octane.custom_form
 (
-    cf_pid bigint
+    cf_pid bigint 
         primary key,
     cf_version int null,
     cf_account_pid bigint null,
@@ -6807,7 +6807,7 @@ create table staging_octane.custom_form
 
 create table staging_octane.custom_form_merge_field
 (
-    cfmf_pid bigint
+    cfmf_pid bigint 
         primary key,
     cfmf_version int null,
     cfmf_custom_form_pid bigint null,
@@ -6816,7 +6816,7 @@ create table staging_octane.custom_form_merge_field
 
 create table staging_octane.deal_file
 (
-    df_pid bigint
+    df_pid bigint 
         primary key,
     df_version int null,
     df_deal_pid bigint null,
@@ -6827,7 +6827,7 @@ create table staging_octane.deal_file
 
 create table staging_octane.appraisal_file
 (
-    aprf_pid bigint
+    aprf_pid bigint 
         primary key,
     aprf_version int null,
     aprf_appraisal_pid bigint null,
@@ -6837,7 +6837,7 @@ create table staging_octane.appraisal_file
 
 create table staging_octane.deal_dropbox_file
 (
-    ddf_pid bigint
+    ddf_pid bigint 
         primary key,
     ddf_version int null,
     ddf_deal_file_pid bigint null
@@ -6845,7 +6845,7 @@ create table staging_octane.deal_dropbox_file
 
 create table staging_octane.deal_file_signature
 (
-    dfs_pid bigint
+    dfs_pid bigint 
         primary key,
     dfs_version int null,
     dfs_deal_file_pid bigint null,
@@ -6861,7 +6861,7 @@ create table staging_octane.deal_file_signature
 
 create table staging_octane.deal_fraud_risk
 (
-    dfr_pid bigint
+    dfr_pid bigint 
         primary key,
     dfr_version int null,
     dfr_deal_pid bigint null,
@@ -6876,7 +6876,7 @@ create table staging_octane.deal_fraud_risk
 
 create table staging_octane.deal_invoice_file
 (
-    dif_pid bigint
+    dif_pid bigint 
         primary key,
     dif_version int null,
     dif_deal_invoice_file_type varchar(128) null,
@@ -6887,7 +6887,7 @@ create table staging_octane.deal_invoice_file
 
 create table staging_octane.deal_message_log
 (
-    dmlog_pid bigint
+    dmlog_pid bigint 
         primary key,
     dmlog_version int null,
     dmlog_deal_pid bigint null,
@@ -6908,7 +6908,7 @@ create table staging_octane.deal_message_log
 
 create table staging_octane.deal_system_file
 (
-    dsf_pid bigint
+    dsf_pid bigint 
         primary key,
     dsf_version int null,
     dsf_deal_pid bigint null,
@@ -6917,7 +6917,7 @@ create table staging_octane.deal_system_file
 
 create table staging_octane.appraisal_order_request
 (
-    aprq_pid bigint
+    aprq_pid bigint 
         primary key,
     aprq_version int null,
     aprq_deal_pid bigint null,
@@ -6946,7 +6946,7 @@ create table staging_octane.appraisal_order_request
 
 create table staging_octane.appraisal_order_request_file
 (
-    aorf_pid bigint
+    aorf_pid bigint 
         primary key,
     aorf_version int null,
     aorf_appraisal_order_request_pid bigint null,
@@ -6958,7 +6958,7 @@ create table staging_octane.appraisal_order_request_file
 
 create table staging_octane.deal_file_thumbnail
 (
-    dft_pid bigint
+    dft_pid bigint 
         primary key,
     dft_version int null,
     dft_deal_file_pid bigint null,
@@ -6968,7 +6968,7 @@ create table staging_octane.deal_file_thumbnail
 
 create table staging_octane.du_request
 (
-    dur_pid bigint
+    dur_pid bigint 
         primary key,
     dur_version int null,
     dur_proposal_pid bigint null,
@@ -7012,7 +7012,7 @@ create table staging_octane.du_request
 
 create table staging_octane.du_key_finding
 (
-    dukf_pid bigint
+    dukf_pid bigint 
         primary key,
     dukf_version int null,
     dukf_du_request_pid bigint null,
@@ -7022,7 +7022,7 @@ create table staging_octane.du_key_finding
 
 create table staging_octane.du_refi_plus_finding
 (
-    durpf_pid bigint
+    durpf_pid bigint 
         primary key,
     durpf_version int null,
     durpf_du_request_pid bigint null,
@@ -7032,7 +7032,7 @@ create table staging_octane.du_refi_plus_finding
 
 create table staging_octane.du_request_credit
 (
-    durc_pid bigint
+    durc_pid bigint 
         primary key,
     durc_version int null,
     durc_du_request_pid bigint null,
@@ -7049,7 +7049,7 @@ create table staging_octane.du_request_credit
 
 create table staging_octane.du_special_feature_code
 (
-    dusfc_pid bigint
+    dusfc_pid bigint 
         primary key,
     dusfc_version int null,
     dusfc_du_request_pid bigint null,
@@ -7059,7 +7059,7 @@ create table staging_octane.du_special_feature_code
 
 create table staging_octane.flood_cert
 (
-    fc_pid bigint
+    fc_pid bigint 
         primary key,
     fc_version int null,
     fc_deal_pid bigint null,
@@ -7106,7 +7106,7 @@ create table staging_octane.flood_cert
 
 create table staging_octane.hmda_report_request
 (
-    hrr_pid bigint
+    hrr_pid bigint 
         primary key,
     hrr_version int null,
     hrr_account_pid bigint null,
@@ -7126,7 +7126,7 @@ create table staging_octane.hmda_report_request
 
 create table staging_octane.lender_user_photo
 (
-    lup_pid bigint
+    lup_pid bigint 
         primary key,
     lup_version int null,
     lup_lender_user_pid bigint null,
@@ -7135,7 +7135,7 @@ create table staging_octane.lender_user_photo
 
 create table staging_octane.lp_request
 (
-    lpr_pid bigint
+    lpr_pid bigint 
         primary key,
     lpr_version int null,
     lpr_proposal_pid bigint null,
@@ -7193,7 +7193,7 @@ create table staging_octane.lp_request
 
 create table staging_octane.credit_request
 (
-    crdr_pid bigint
+    crdr_pid bigint 
         primary key,
     crdr_version int null,
     crdr_deal_pid bigint null,
@@ -7263,7 +7263,7 @@ create table staging_octane.credit_request
 
 create table staging_octane.borrower
 (
-    b_pid bigint
+    b_pid bigint 
         primary key,
     b_version int null,
     b_alimony_child_support varchar(128) null,
@@ -7448,7 +7448,7 @@ create index idx_borrower_5
 
 create table staging_octane.borrower_alias
 (
-    ba_pid bigint
+    ba_pid bigint 
         primary key,
     ba_version int null,
     ba_account_number varchar(32) null,
@@ -7464,7 +7464,7 @@ create table staging_octane.borrower_alias
 
 create table staging_octane.borrower_asset
 (
-    bas_pid bigint
+    bas_pid bigint 
         primary key,
     bas_version int null,
     bas_borrower_pid bigint null,
@@ -7473,7 +7473,7 @@ create table staging_octane.borrower_asset
 
 create table staging_octane.borrower_associated_address
 (
-    baa_pid bigint
+    baa_pid bigint 
         primary key,
     baa_version int null,
     baa_borrower_pid bigint null,
@@ -7507,7 +7507,7 @@ create table staging_octane.borrower_associated_address
 
 create table staging_octane.borrower_dependent
 (
-    bd_pid bigint
+    bd_pid bigint 
         primary key,
     bd_version int null,
     bd_borrower_pid bigint null,
@@ -7523,7 +7523,7 @@ create table staging_octane.borrower_dependent
 
 create table staging_octane.borrower_income
 (
-    bi_pid bigint
+    bi_pid bigint 
         primary key,
     bi_version int null,
     bi_borrower_pid bigint null,
@@ -7549,7 +7549,7 @@ create table staging_octane.borrower_income
 
 create table staging_octane.borrower_job_gap
 (
-    bjg_pid bigint
+    bjg_pid bigint 
         primary key,
     bjg_version int null,
     bjg_borrower_pid bigint null,
@@ -7560,7 +7560,7 @@ create table staging_octane.borrower_job_gap
 
 create table staging_octane.borrower_user_deal
 (
-    bud_pid bigint
+    bud_pid bigint 
         primary key,
     bud_version int null,
     bud_borrower_user_pid bigint null,
@@ -7576,7 +7576,7 @@ create table staging_octane.borrower_user_deal
 
 create table staging_octane.borrower_user_change_email
 (
-    buce_pid bigint
+    buce_pid bigint 
         primary key,
     buce_version int null,
     buce_borrower_user_pid bigint null,
@@ -7597,7 +7597,7 @@ create index idx_borrower_user_deal_1
 
 create table staging_octane.business_income
 (
-    bui_pid bigint
+    bui_pid bigint 
         primary key,
     bui_version int null,
     bui_borrower_income_pid bigint null,
@@ -7803,7 +7803,7 @@ create table staging_octane.business_income
 
 create table staging_octane.consumer_privacy_affected_borrower
 (
-    cpab_pid bigint
+    cpab_pid bigint 
         primary key,
     cpab_version int null,
     cpab_consumer_privacy_request_pid bigint null,
@@ -7813,7 +7813,7 @@ create table staging_octane.consumer_privacy_affected_borrower
 
 create table staging_octane.job_income
 (
-    ji_pid bigint
+    ji_pid bigint 
         primary key,
     ji_version int null,
     ji_borrower_income_pid bigint null,
@@ -7971,7 +7971,7 @@ create table staging_octane.job_income
 
 create table staging_octane.lp_finding
 (
-    lpf_pid bigint
+    lpf_pid bigint 
         primary key,
     lpf_version int null,
     lpf_lp_request_pid bigint null,
@@ -7982,7 +7982,7 @@ create table staging_octane.lp_finding
 
 create table staging_octane.lp_request_credit
 (
-    lprc_pid bigint
+    lprc_pid bigint 
         primary key,
     lprc_version int null,
     lprc_lp_request_pid bigint null,
@@ -7998,7 +7998,7 @@ create table staging_octane.lp_request_credit
 
 create table staging_octane.mers_daily_report
 (
-    medr_pid bigint
+    medr_pid bigint 
         primary key,
     medr_version int null,
     medr_account_pid bigint null,
@@ -8013,7 +8013,7 @@ create table staging_octane.mers_daily_report
 
 create table staging_octane.military_service
 (
-    ms_pid bigint
+    ms_pid bigint 
         primary key,
     ms_version int null,
     ms_borrower_pid bigint null,
@@ -8028,7 +8028,7 @@ create table staging_octane.military_service
 
 create table staging_octane.other_income
 (
-    oi_pid bigint
+    oi_pid bigint 
         primary key,
     oi_version int null,
     oi_other_income_type varchar(128) null,
@@ -8094,7 +8094,7 @@ create table staging_octane.other_income
 
 create table staging_octane.proposal
 (
-    prp_pid bigint
+    prp_pid bigint 
         primary key,
     prp_version int null,
     prp_decision_lp_request_pid bigint null,
@@ -8322,7 +8322,7 @@ create table staging_octane.proposal
 
 create table staging_octane.aus_request_number_ticker
 (
-    arnt_pid bigint
+    arnt_pid bigint 
         primary key,
     arnt_version int null,
     arnt_proposal_pid bigint null,
@@ -8331,7 +8331,7 @@ create table staging_octane.aus_request_number_ticker
 
 create table staging_octane.construction_draw
 (
-    cd_pid bigint
+    cd_pid bigint 
         primary key,
     cd_version int null,
     cd_proposal_pid bigint null,
@@ -8353,7 +8353,7 @@ create table staging_octane.construction_draw
 
 create table staging_octane.construction_draw_number_ticker
 (
-    cdnt_pid bigint
+    cdnt_pid bigint 
         primary key,
     cdnt_version int null,
     cdnt_proposal_pid bigint null,
@@ -8362,7 +8362,7 @@ create table staging_octane.construction_draw_number_ticker
 
 create table staging_octane.credit_inquiry
 (
-    ci_pid bigint
+    ci_pid bigint 
         primary key,
     ci_version int null,
     ci_proposal_pid bigint null,
@@ -8390,7 +8390,7 @@ create table staging_octane.credit_inquiry
 
 create table staging_octane.borrower_credit_inquiry
 (
-    bci_pid bigint
+    bci_pid bigint 
         primary key,
     bci_version int null,
     bci_credit_inquiry_pid bigint null,
@@ -8399,7 +8399,7 @@ create table staging_octane.borrower_credit_inquiry
 
 create table staging_octane.deal_snapshot
 (
-    desn_pid bigint
+    desn_pid bigint 
         primary key,
     desn_version int null,
     desn_snapshot_proposal_pid bigint null,
@@ -8446,7 +8446,7 @@ create table staging_octane.deal_snapshot
 
 create table staging_octane.docusign_package
 (
-    dcsp_pid bigint
+    dcsp_pid bigint 
         primary key,
     dcsp_version int null,
     dcsp_proposal_pid bigint null,
@@ -8460,7 +8460,7 @@ create index idx_docusign_package_1
 
 create table staging_octane.master_property_insurance
 (
-    mpi_pid bigint
+    mpi_pid bigint 
         primary key,
     mpi_version int null,
     mpi_proposal_pid bigint null,
@@ -8497,7 +8497,7 @@ create table staging_octane.master_property_insurance
 
 create table staging_octane.mi_integration_vendor_request
 (
-    mivr_pid bigint
+    mivr_pid bigint 
         primary key,
     mivr_version int null,
     mivr_proposal_pid bigint null,
@@ -8526,7 +8526,7 @@ create table staging_octane.mi_integration_vendor_request
 
 create table staging_octane.loan
 (
-    l_pid bigint
+    l_pid bigint 
         primary key,
     l_version int null,
     l_proposal_pid bigint null,
@@ -8641,7 +8641,7 @@ create table staging_octane.loan
 
 create table staging_octane.circumstance_change
 (
-    cc_pid bigint
+    cc_pid bigint 
         primary key,
     cc_version int null,
     cc_loan_pid bigint null,
@@ -8660,7 +8660,7 @@ create index idx_circumstance_change_1
 
 create table staging_octane.ernst_request
 (
-    enst_pid bigint
+    enst_pid bigint 
         primary key,
     enst_version int null,
     enst_loan_pid bigint null,
@@ -8718,7 +8718,7 @@ create table staging_octane.ernst_request
 
 create table staging_octane.ernst_request_question
 (
-    enstq_pid bigint
+    enstq_pid bigint 
         primary key,
     enstq_version int null,
     enstq_ernst_request_pid bigint null,
@@ -8730,7 +8730,7 @@ create table staging_octane.ernst_request_question
 
 create table staging_octane.loan_beneficiary
 (
-    lb_pid bigint
+    lb_pid bigint 
         primary key,
     lb_version int null,
     lb_loan_pid bigint null,
@@ -8765,7 +8765,7 @@ create table staging_octane.loan_beneficiary
 
 create table staging_octane.loan_closing_doc
 (
-    lcd_pid bigint
+    lcd_pid bigint 
         primary key,
     lcd_version int null,
     lcd_loan_pid bigint null,
@@ -8780,7 +8780,7 @@ create table staging_octane.loan_closing_doc
 
 create table staging_octane.loan_eligible_investor
 (
-    lei_pid bigint
+    lei_pid bigint 
         primary key,
     lei_version int null,
     lei_loan_pid bigint null,
@@ -8789,7 +8789,7 @@ create table staging_octane.loan_eligible_investor
 
 create table staging_octane.loan_funding
 (
-    lf_pid bigint
+    lf_pid bigint 
         primary key,
     lf_version int null,
     lf_loan_pid bigint null,
@@ -8823,7 +8823,7 @@ create table staging_octane.loan_funding
 
 create table staging_octane.loan_hedge
 (
-    lh_pid bigint
+    lh_pid bigint 
         primary key,
     lh_version int null,
     lh_loan_pid bigint null,
@@ -9121,7 +9121,7 @@ create table staging_octane.loan_hedge
 
 create table staging_octane.loan_mi_rate_adjustment
 (
-    lmra_pid bigint
+    lmra_pid bigint 
         primary key,
     lmra_version int null,
     lmra_loan_pid bigint null,
@@ -9131,7 +9131,7 @@ create table staging_octane.loan_mi_rate_adjustment
 
 create table staging_octane.loan_mi_surcharge
 (
-    lms_pid bigint
+    lms_pid bigint 
         primary key,
     lms_version int null,
     lms_loan_pid bigint null,
@@ -9142,7 +9142,7 @@ create table staging_octane.loan_mi_surcharge
 
 create table staging_octane.loan_price_add_on
 (
-    lpa_pid bigint
+    lpa_pid bigint 
         primary key,
     lpa_version int null,
     lpa_loan_pid bigint null,
@@ -9156,7 +9156,7 @@ create table staging_octane.loan_price_add_on
 
 create table staging_octane.loan_recording
 (
-    lr_pid bigint
+    lr_pid bigint 
         primary key,
     lr_version int null,
     lr_loan_pid bigint null,
@@ -9178,7 +9178,7 @@ create table staging_octane.loan_recording
 
 create table staging_octane.loan_servicer
 (
-    lsv_pid bigint
+    lsv_pid bigint 
         primary key,
     lsv_version int null,
     lsv_loan_pid bigint null,
@@ -9205,7 +9205,7 @@ create index idx_loan_servicer_1
 
 create table staging_octane.lock_series
 (
-    lsr_pid bigint
+    lsr_pid bigint 
         primary key,
     lsr_loan_pid bigint null,
     lsr_version int null,
@@ -9215,7 +9215,7 @@ create table staging_octane.lock_series
 
 create table staging_octane.lender_lock_major
 (
-    llmj_pid bigint
+    llmj_pid bigint 
         primary key,
     llmj_version int null,
     llmj_major_version int null,
@@ -9256,7 +9256,7 @@ create table staging_octane.lender_lock_major
 
 create table staging_octane.bid_pool_lender_lock
 (
-    bpll_pid bigint
+    bpll_pid bigint 
         primary key,
     bpll_version int null,
     bpll_bid_pool_pid bigint null,
@@ -9265,7 +9265,7 @@ create table staging_octane.bid_pool_lender_lock
 
 create table staging_octane.lender_concession_request
 (
-    lcr_pid bigint
+    lcr_pid bigint 
         primary key,
     lcr_version int null,
     lcr_loan_pid bigint null,
@@ -9288,7 +9288,7 @@ create table staging_octane.lender_concession_request
 
 create table staging_octane.lender_lock_extension
 (
-    lle_pid bigint
+    lle_pid bigint 
         primary key,
     lle_version int null,
     lle_lender_lock_major_pid bigint null,
@@ -9315,7 +9315,7 @@ create index idx_lender_lock_major_1
 
 create table staging_octane.lender_lock_minor
 (
-    llmn_pid bigint
+    llmn_pid bigint 
         primary key,
     llmn_version int null,
     llmn_lender_lock_major_pid bigint null,
@@ -9366,7 +9366,7 @@ create table staging_octane.lender_lock_minor
 
 create table staging_octane.lender_lock_add_on
 (
-    lla_pid bigint
+    lla_pid bigint 
         primary key,
     lla_version int null,
     lla_lender_lock_minor_pid bigint null,
@@ -9384,7 +9384,7 @@ create table staging_octane.lender_lock_add_on
 
 create table staging_octane.net_tangible_benefit
 (
-    ntb_pid bigint
+    ntb_pid bigint 
         primary key,
     ntb_version int null,
     ntb_net_tangible_benefit_type varchar(128) null,
@@ -9393,7 +9393,7 @@ create table staging_octane.net_tangible_benefit
 
 create table staging_octane.obligation
 (
-    ob_pid bigint
+    ob_pid bigint 
         primary key,
     ob_version int null,
     ob_proposal_pid bigint null,
@@ -9457,7 +9457,7 @@ create table staging_octane.obligation
 
 create table staging_octane.loan_charge
 (
-    lc_pid bigint
+    lc_pid bigint 
         primary key,
     lc_version int null,
     lc_proposal_pid bigint null,
@@ -9522,7 +9522,7 @@ create table staging_octane.loan_charge
 
 create table staging_octane.place
 (
-    pl_pid bigint
+    pl_pid bigint 
         primary key,
     pl_version int null,
     pl_proposal_pid bigint null,
@@ -9739,7 +9739,7 @@ create table staging_octane.place
 
 create table staging_octane.borrower_reo
 (
-    breo_pid bigint
+    breo_pid bigint 
         primary key,
     breo_version int null,
     breo_borrower_pid bigint null,
@@ -9749,7 +9749,7 @@ create table staging_octane.borrower_reo
 
 create table staging_octane.borrower_residence
 (
-    bres_pid bigint
+    bres_pid bigint 
         primary key,
     bres_version int null,
     bres_borrower_pid bigint null,
@@ -9763,7 +9763,7 @@ create table staging_octane.borrower_residence
 
 create table staging_octane.borrower_tax_filing
 (
-    btf_pid bigint
+    btf_pid bigint 
         primary key,
     btf_version int null,
     btf_borrower_pid bigint null,
@@ -9779,7 +9779,7 @@ create table staging_octane.borrower_tax_filing
 
 create table staging_octane.borrower_va
 (
-    bva_pid bigint
+    bva_pid bigint 
         primary key,
     bva_version int null,
     bva_borrower_pid bigint null,
@@ -9852,7 +9852,7 @@ create index idx_place_1
 
 create table staging_octane.profit_margin_detail
 (
-    pmd_pid bigint
+    pmd_pid bigint 
         primary key,
     pmd_version int null,
     pmd_lender_lock_minor_pid bigint null,
@@ -9871,7 +9871,7 @@ create index idx_proposal_1
 
 create table staging_octane.proposal_contractor
 (
-    pctr_pid bigint
+    pctr_pid bigint 
         primary key,
     pctr_version int null,
     pctr_proposal_pid bigint null,
@@ -9880,7 +9880,7 @@ create table staging_octane.proposal_contractor
 
 create table staging_octane.construction_cost
 (
-    coc_pid bigint
+    coc_pid bigint 
         primary key,
     coc_version int null,
     coc_proposal_pid bigint null,
@@ -9898,7 +9898,7 @@ create table staging_octane.construction_cost
 
 create table staging_octane.construction_draw_item
 (
-    cdi_pid bigint
+    cdi_pid bigint 
         primary key,
     cdi_version int null,
     cdi_proposal_pid bigint null,
@@ -9911,7 +9911,7 @@ create table staging_octane.construction_draw_item
 
 create table staging_octane.proposal_doc_set
 (
-    prpds_pid bigint
+    prpds_pid bigint 
         primary key,
     prpds_version int null,
     prpds_proposal_pid bigint null,
@@ -9945,7 +9945,7 @@ create table staging_octane.proposal_doc_set
 
 create table staging_octane.proposal_doc_set_id_ticker
 (
-    pdstk_pid bigint
+    pdstk_pid bigint 
         primary key,
     pdstk_version int null,
     pdstk_proposal_pid bigint null,
@@ -9955,7 +9955,7 @@ create table staging_octane.proposal_doc_set_id_ticker
 
 create table staging_octane.proposal_doc_set_signer
 (
-    prpdss_pid bigint
+    prpdss_pid bigint 
         primary key,
     prpdss_version int null,
     prpdss_proposal_doc_set_pid bigint null,
@@ -9967,7 +9967,7 @@ create table staging_octane.proposal_doc_set_signer
 
 create table staging_octane.proposal_doc_set_snapshot
 (
-    prpdssn_pid bigint
+    prpdssn_pid bigint 
         primary key,
     prpdssn_version int null,
     prpdssn_proposal_doc_set_pid bigint null,
@@ -9976,7 +9976,7 @@ create table staging_octane.proposal_doc_set_snapshot
 
 create table staging_octane.proposal_engagement
 (
-    prpe_pid bigint
+    prpe_pid bigint 
         primary key,
     prpe_version int null,
     prpe_proposal_pid bigint null,
@@ -9985,7 +9985,7 @@ create table staging_octane.proposal_engagement
 
 create table staging_octane.proposal_grant_program
 (
-    pgp_pid bigint
+    pgp_pid bigint 
         primary key,
     pgp_version int null,
     pgp_proposal_pid bigint null,
@@ -9995,7 +9995,7 @@ create table staging_octane.proposal_grant_program
 
 create table staging_octane.proposal_review
 (
-    prpre_pid bigint
+    prpre_pid bigint 
         primary key,
     prpre_version int null,
     prpre_proposal_pid bigint null,
@@ -10011,7 +10011,7 @@ create table staging_octane.proposal_review
 
 create table staging_octane.proposal_review_ticker
 (
-    prpret_pid bigint
+    prpret_pid bigint 
         primary key,
     prpret_version int null,
     prpret_proposal_pid bigint null,
@@ -10020,7 +10020,7 @@ create table staging_octane.proposal_review_ticker
 
 create table staging_octane.proposal_summary
 (
-    ps_pid bigint
+    ps_pid bigint 
         primary key,
     ps_version int null,
     ps_proposal_pid bigint null,
@@ -10198,7 +10198,7 @@ create index idx_proposal_summary_8
 
 create table staging_octane.pte_request
 (
-    pter_pid bigint
+    pter_pid bigint 
         primary key,
     pter_version int null,
     pter_proposal_pid bigint null,
@@ -10224,7 +10224,7 @@ create table staging_octane.pte_request
 
 create table staging_octane.public_record
 (
-    pr_pid bigint
+    pr_pid bigint 
         primary key,
     pr_version int null,
     pr_proposal_pid bigint null,
@@ -10258,7 +10258,7 @@ create table staging_octane.public_record
 
 create table staging_octane.borrower_public_record
 (
-    bpr_pid bigint
+    bpr_pid bigint 
         primary key,
     bpr_version int null,
     bpr_borrower_pid bigint null,
@@ -10267,7 +10267,7 @@ create table staging_octane.borrower_public_record
 
 create table staging_octane.rental_income
 (
-    ri_pid bigint
+    ri_pid bigint 
         primary key,
     ri_version int null,
     ri_borrower_income_pid bigint null,
@@ -10388,7 +10388,7 @@ create table staging_octane.rental_income
 
 create table staging_octane.sap_quote_request
 (
-    sqr_pid bigint
+    sqr_pid bigint 
         primary key,
     sqr_version int null,
     sqr_deal_pid bigint null,
@@ -10402,7 +10402,7 @@ create table staging_octane.sap_quote_request
 
 create table staging_octane.secondary_settings
 (
-    sset_pid bigint
+    sset_pid bigint 
         primary key,
     sset_version int null,
     sset_account_pid bigint null,
@@ -10437,7 +10437,7 @@ create table staging_octane.secondary_settings
 
 create table staging_octane.servicer_loan_id_import_request
 (
-    slir_pid bigint
+    slir_pid bigint 
         primary key,
     slir_version int null,
     slir_account_pid bigint null,
@@ -10450,7 +10450,7 @@ create table staging_octane.servicer_loan_id_import_request
 
 create table staging_octane.servicer_loan_id_assignment
 (
-    slia_pid bigint
+    slia_pid bigint 
         primary key,
     slia_version int null,
     slia_account_pid bigint null,
@@ -10463,7 +10463,7 @@ create table staging_octane.servicer_loan_id_assignment
 
 create table staging_octane.smart_doc
 (
-    sd_pid bigint
+    sd_pid bigint 
         primary key,
     sd_version int null,
     sd_account_pid bigint null,
@@ -10507,7 +10507,7 @@ create table staging_octane.smart_doc
 
 create table staging_octane.smart_doc_criteria
 (
-    sdc_pid bigint
+    sdc_pid bigint 
         primary key,
     sdc_version int null,
     sdc_smart_doc_pid bigint null,
@@ -10517,7 +10517,7 @@ create table staging_octane.smart_doc_criteria
 
 create table staging_octane.smart_doc_note
 (
-    sdn_pid bigint
+    sdn_pid bigint 
         primary key,
     sdn_version int null,
     sdn_smart_doc_pid bigint null,
@@ -10529,7 +10529,7 @@ create table staging_octane.smart_doc_note
 
 create table staging_octane.smart_doc_note_comment
 (
-    sdnc_pid bigint
+    sdnc_pid bigint 
         primary key,
     sdnc_version int null,
     sdnc_smart_doc_note_pid bigint null,
@@ -10541,7 +10541,7 @@ create table staging_octane.smart_doc_note_comment
 
 create table staging_octane.smart_doc_note_monitor
 (
-    sdnm_pid bigint
+    sdnm_pid bigint 
         primary key,
     sdnm_version int null,
     sdnm_smart_doc_note_pid bigint null,
@@ -10550,7 +10550,7 @@ create table staging_octane.smart_doc_note_monitor
 
 create table staging_octane.smart_doc_role
 (
-    sdr_pid bigint
+    sdr_pid bigint 
         primary key,
     sdr_version int null,
     sdr_smart_doc_pid bigint null,
@@ -10560,7 +10560,7 @@ create table staging_octane.smart_doc_role
 
 create table staging_octane.smart_message
 (
-    smsg_pid bigint
+    smsg_pid bigint 
         primary key,
     smsg_version int null,
     smsg_account_pid bigint null,
@@ -10580,7 +10580,7 @@ create table staging_octane.smart_message
 
 create table staging_octane.smart_message_recipient
 (
-    smr_pid bigint
+    smr_pid bigint 
         primary key,
     smr_version int null,
     smr_smart_message_pid bigint null,
@@ -10591,7 +10591,7 @@ create table staging_octane.smart_message_recipient
 
 create table staging_octane.smart_req
 (
-    sr_pid bigint
+    sr_pid bigint 
         primary key,
     sr_version int null,
     sr_smart_doc_pid bigint null,
@@ -10605,7 +10605,7 @@ create table staging_octane.smart_req
 
 create table staging_octane.smart_separator
 (
-    ssp_pid bigint
+    ssp_pid bigint 
         primary key,
     ssp_version int null,
     ssp_account_pid bigint null,
@@ -10616,7 +10616,7 @@ create table staging_octane.smart_separator
 
 create table staging_octane.smart_set_doc
 (
-    sstd_pid bigint
+    sstd_pid bigint 
         primary key,
     sstd_version int null,
     sstd_smart_doc_set_pid bigint null,
@@ -10626,7 +10626,7 @@ create table staging_octane.smart_set_doc
 
 create table staging_octane.smart_stack_doc
 (
-    ssd_pid bigint
+    ssd_pid bigint 
         primary key,
     ssd_version int null,
     ssd_smart_stack_pid bigint null,
@@ -10640,7 +10640,7 @@ create table staging_octane.smart_stack_doc
 
 create table staging_octane.stack_export_request
 (
-    ser_pid bigint
+    ser_pid bigint 
         primary key,
     ser_version int null,
     ser_account_pid bigint null,
@@ -10661,7 +10661,7 @@ create table staging_octane.stack_export_request
 
 create table staging_octane.stack_export_file
 (
-    sef_pid bigint
+    sef_pid bigint 
         primary key,
     sef_version int null,
     sef_stack_export_request_pid bigint null,
@@ -10671,7 +10671,7 @@ create table staging_octane.stack_export_file
 
 create table staging_octane.tax_transcript_request
 (
-    ttr_pid bigint
+    ttr_pid bigint 
         primary key,
     ttr_version int null,
     ttr_deal_pid bigint null,
@@ -10761,7 +10761,7 @@ create table staging_octane.tax_transcript_request
 
 create table staging_octane.third_party_community_second_program
 (
-    tpcsp_pid bigint
+    tpcsp_pid bigint 
         primary key,
     tpcsp_version int null,
     tpcsp_account_pid bigint null,
@@ -10782,7 +10782,7 @@ create table staging_octane.third_party_community_second_program
 
 create table staging_octane.liability
 (
-    lia_pid bigint
+    lia_pid bigint 
         primary key,
     lia_version int null,
     lia_proposal_pid bigint null,
@@ -10885,7 +10885,7 @@ create table staging_octane.liability
 
 create table staging_octane.borrower_liability
 (
-    bl_pid bigint
+    bl_pid bigint 
         primary key,
     bl_version int null,
     bl_borrower_pid bigint null,
@@ -10894,7 +10894,7 @@ create table staging_octane.borrower_liability
 
 create table staging_octane.deal_tag
 (
-    dtg_pid bigint
+    dtg_pid bigint 
         primary key,
     dtg_version int null,
     dtg_deal_tag_definition_pid bigint null,
@@ -10916,7 +10916,7 @@ create table staging_octane.deal_tag
 
 create table staging_octane.product_third_party_community_second_program
 (
-    ptpp_pid bigint
+    ptpp_pid bigint 
         primary key,
     ptpp_version int null,
     ptpp_product_terms_pid bigint null,
@@ -10925,7 +10925,7 @@ create table staging_octane.product_third_party_community_second_program
 
 create table staging_octane.proposal_doc
 (
-    prpd_pid bigint
+    prpd_pid bigint 
         primary key,
     prpd_version int null,
     prpd_doc_name varchar(767) null,
@@ -10980,7 +10980,7 @@ create table staging_octane.proposal_doc
 
 create table staging_octane.proposal_doc_borrower_access
 (
-    pdba_pid bigint
+    pdba_pid bigint 
         primary key,
     pdba_version int null,
     pdba_borrower_pid bigint null,
@@ -10989,7 +10989,7 @@ create table staging_octane.proposal_doc_borrower_access
 
 create table staging_octane.proposal_doc_file
 (
-    prpdf_pid bigint
+    prpdf_pid bigint 
         primary key,
     prpdf_version int null,
     prpdf_proposal_doc_pid bigint null,
@@ -11001,7 +11001,7 @@ create table staging_octane.proposal_doc_file
 
 create table staging_octane.proposal_req
 (
-    prpr_pid bigint
+    prpr_pid bigint 
         primary key,
     prpr_version int null,
     prpr_proposal_doc_pid bigint null,
@@ -11051,7 +11051,7 @@ create table staging_octane.proposal_req
 
 create table staging_octane.sap_deal_step
 (
-    sds_pid bigint
+    sds_pid bigint 
         primary key,
     sds_version int null,
     sds_borrower_user_pid bigint null,
@@ -11077,7 +11077,7 @@ create table staging_octane.sap_deal_step
 
 create table staging_octane.deal_sap
 (
-    dsap_pid bigint
+    dsap_pid bigint 
         primary key,
     dsap_version int null,
     dsap_deal_pid bigint null,
@@ -11090,7 +11090,7 @@ create table staging_octane.deal_sap
 
 create table staging_octane.trade
 (
-    t_pid bigint
+    t_pid bigint 
         primary key,
     t_version int null,
     t_account_pid bigint null,
@@ -11128,7 +11128,7 @@ create table staging_octane.trade
 
 create table staging_octane.investor_lock
 (
-    il_pid bigint
+    il_pid bigint 
         primary key,
     il_version int null,
     il_lender_lock_major_pid bigint null,
@@ -11172,7 +11172,7 @@ create table staging_octane.investor_lock
 
 create table staging_octane.investor_lock_add_on
 (
-    ila_pid bigint
+    ila_pid bigint 
         primary key,
     ila_version int null,
     ila_investor_lock_pid bigint null,
@@ -11187,7 +11187,7 @@ create table staging_octane.investor_lock_add_on
 
 create table staging_octane.investor_lock_extension
 (
-    ile_pid bigint
+    ile_pid bigint 
         primary key,
     ile_version int null,
     ile_investor_lock_pid bigint null,
@@ -11212,7 +11212,7 @@ create index idx_trade_1
 
 create table staging_octane.trade_audit
 (
-    ta_pid bigint
+    ta_pid bigint 
         primary key,
     ta_version int null,
     ta_trade_pid bigint null,
@@ -11223,7 +11223,7 @@ create table staging_octane.trade_audit
 
 create table staging_octane.trade_fee
 (
-    tfe_pid bigint
+    tfe_pid bigint 
         primary key,
     tfe_version int null,
     tfe_trade_pid bigint null,
@@ -11234,7 +11234,7 @@ create table staging_octane.trade_fee
 
 create table staging_octane.trade_file
 (
-    tf_pid bigint
+    tf_pid bigint 
         primary key,
     tf_version int null,
     tf_trade_pid bigint null,
@@ -11243,7 +11243,7 @@ create table staging_octane.trade_file
 
 create table staging_octane.trade_lock_filter
 (
-    tlf_pid bigint
+    tlf_pid bigint 
         primary key,
     tlf_version int null,
     tlf_lender_user_pid bigint null,
@@ -11253,7 +11253,7 @@ create table staging_octane.trade_lock_filter
 
 create table staging_octane.trade_note
 (
-    tn_pid bigint
+    tn_pid bigint 
         primary key,
     tn_version int null,
     tn_trade_pid bigint null,
@@ -11265,7 +11265,7 @@ create table staging_octane.trade_note
 
 create table staging_octane.trade_note_comment
 (
-    tnc_pid bigint
+    tnc_pid bigint 
         primary key,
     tnc_version int null,
     tnc_trade_note_pid bigint null,
@@ -11277,7 +11277,7 @@ create table staging_octane.trade_note_comment
 
 create table staging_octane.trade_note_monitor
 (
-    tnm_pid bigint
+    tnm_pid bigint 
         primary key,
     tnm_version int null,
     tnm_trade_note_pid bigint null,
@@ -11286,7 +11286,7 @@ create table staging_octane.trade_note_monitor
 
 create table staging_octane.trade_product
 (
-    tp_pid bigint
+    tp_pid bigint 
         primary key,
     tp_version int null,
     tp_product_pid bigint null,
@@ -11295,7 +11295,7 @@ create table staging_octane.trade_product
 
 create table staging_octane.unpaid_balance_adjustment
 (
-    upba_pid bigint
+    upba_pid bigint 
         primary key,
     upba_version int null,
     upba_investor_pid bigint null,
@@ -11306,7 +11306,7 @@ create table staging_octane.unpaid_balance_adjustment
 
 create table staging_octane.vendor_document_repository_file
 (
-    vdrf_pid bigint
+    vdrf_pid bigint 
         primary key,
     vdrf_version int null,
     vdrf_account_pid bigint null,
@@ -11322,7 +11322,7 @@ create table staging_octane.vendor_document_repository_file
 
 create table staging_octane.deal_data_vendor_document_import
 (
-    ddvdi_pid bigint
+    ddvdi_pid bigint 
         primary key,
     ddvdi_version int null,
     ddvdi_deal_pid bigint null,
@@ -11337,7 +11337,7 @@ create table staging_octane.deal_data_vendor_document_import
 
 create table staging_octane.vendor_document_event
 (
-    vde_pid bigint
+    vde_pid bigint 
         primary key,
     vde_version int null,
     vde_account_pid bigint null,
@@ -11351,7 +11351,7 @@ create table staging_octane.vendor_document_event
 
 create table staging_octane.wf_deal_process
 (
-    wdpr_pid bigint
+    wdpr_pid bigint 
         primary key,
     wdpr_version int null,
     wdpr_deal_pid bigint null,
@@ -11364,7 +11364,7 @@ create table staging_octane.wf_deal_process
 
 create table staging_octane.wf_step
 (
-    ws_pid bigint
+    ws_pid bigint 
         primary key,
     ws_version int null,
     ws_wf_process_pid bigint null,
@@ -11400,7 +11400,7 @@ create table staging_octane.wf_step
 
 create table staging_octane.criteria_pid_operand
 (
-    crpo_pid bigint
+    crpo_pid bigint 
         primary key,
     crpo_version int null,
     crpo_criteria_pid bigint null,
@@ -11431,7 +11431,7 @@ create table staging_octane.criteria_pid_operand
 
 create table staging_octane.smart_task
 (
-    st_pid bigint
+    st_pid bigint 
         primary key,
     st_version int null,
     st_wf_step_pid bigint null,
@@ -11444,7 +11444,7 @@ create table staging_octane.smart_task
 
 create table staging_octane.smart_task_tag_modifier
 (
-    sttm_pid bigint
+    sttm_pid bigint 
         primary key,
     sttm_version int null,
     sttm_deal_tag_definition_pid bigint null,
@@ -11485,7 +11485,7 @@ create table staging_octane.view_wf_deal_step_started
 
 create table staging_octane.wf_deal_step
 (
-    wds_pid bigint
+    wds_pid bigint 
         primary key,
     wds_version int null,
     wds_wf_step_pid bigint null,
@@ -11515,7 +11515,7 @@ create table staging_octane.wf_deal_step
 
 create table staging_octane.deal_note
 (
-    dn_pid bigint
+    dn_pid bigint 
         primary key,
     dn_version int null,
     dn_deal_pid bigint null,
@@ -11532,7 +11532,7 @@ create table staging_octane.deal_note
 
 create table staging_octane.deal_note_comment
 (
-    dnc_pid bigint
+    dnc_pid bigint 
         primary key,
     dnc_version int null,
     dnc_deal_note_pid bigint null,
@@ -11544,7 +11544,7 @@ create table staging_octane.deal_note_comment
 
 create table staging_octane.deal_note_monitor
 (
-    dnm_pid bigint
+    dnm_pid bigint 
         primary key,
     dnm_version int null,
     dnm_deal_note_pid bigint null,
@@ -11553,7 +11553,7 @@ create table staging_octane.deal_note_monitor
 
 create table staging_octane.deal_note_role_tag
 (
-    dnrt_pid bigint
+    dnrt_pid bigint 
         primary key,
     dnrt_version int null,
     dnrt_deal_note_pid bigint null,
@@ -11562,7 +11562,7 @@ create table staging_octane.deal_note_role_tag
 
 create table staging_octane.deal_task
 (
-    dt_pid bigint
+    dt_pid bigint 
         primary key,
     dt_version int null,
     dt_wf_deal_step_pid bigint null,
@@ -11576,7 +11576,7 @@ create table staging_octane.deal_task
 
 create table staging_octane.wf_deal_fork_process
 (
-    wdfp_pid bigint
+    wdfp_pid bigint 
         primary key,
     wdfp_version int null,
     wdfp_wf_deal_step_pid bigint null,
@@ -11585,7 +11585,7 @@ create table staging_octane.wf_deal_fork_process
 
 create table staging_octane.wf_deal_function_queue
 (
-    wdfq_pid bigint
+    wdfq_pid bigint 
         primary key,
     wdfq_version int null,
     wdfq_wf_deal_step_pid bigint null,
@@ -11596,7 +11596,7 @@ create table staging_octane.wf_deal_function_queue
 
 create table staging_octane.wf_deal_outcome
 (
-    wdo_pid bigint
+    wdo_pid bigint 
         primary key,
     wdo_version int null,
     wdo_wf_deal_step_pid bigint null,
@@ -11610,7 +11610,7 @@ create table staging_octane.wf_deal_outcome
 
 create table staging_octane.wf_deal_step_timeout
 (
-    wdst_pid bigint
+    wdst_pid bigint 
         primary key,
     wdst_version int null,
     wdst_wf_deal_step_pid bigint null,
@@ -11622,7 +11622,7 @@ create index idx_wf_deal_step_timeout_1
 
 create table staging_octane.wf_fork_process
 (
-    wfp_pid bigint
+    wfp_pid bigint 
         primary key,
     wfp_version int null,
     wfp_wf_step_pid bigint null,
@@ -11631,7 +11631,7 @@ create table staging_octane.wf_fork_process
 
 create table staging_octane.wf_outcome
 (
-    wo_pid bigint
+    wo_pid bigint 
         primary key,
     wo_version int null,
     wo_wf_step_pid bigint null,
@@ -11647,7 +11647,7 @@ create table staging_octane.wf_outcome
 
 create table staging_octane.wf_step_deal_check
 (
-    wsdc_pid bigint
+    wsdc_pid bigint 
         primary key,
     wsdc_version int null,
     wsdc_wf_step_pid bigint null,
@@ -11657,7 +11657,7 @@ create table staging_octane.wf_step_deal_check
 
 create table staging_octane.wf_step_deal_check_definition
 (
-    wsdd_pid bigint
+    wsdd_pid bigint 
         primary key,
     wsdd_version int null,
     wsdd_wf_step_pid bigint null,
@@ -11667,7 +11667,7 @@ create table staging_octane.wf_step_deal_check_definition
 
 create table staging_octane.wf_step_deal_check_dependency
 (
-    wsdp_pid bigint
+    wsdp_pid bigint 
         primary key,
     wsdp_version int null,
     wsdp_wf_step_pid bigint null,
@@ -11676,7 +11676,7 @@ create table staging_octane.wf_step_deal_check_dependency
 
 create table staging_octane.wf_step_deal_tag_modifier
 (
-    wsdt_pid bigint
+    wsdt_pid bigint 
         primary key,
     wsdt_version int null,
     wsdt_deal_tag_definition_pid bigint null,
@@ -11686,7 +11686,7 @@ create table staging_octane.wf_step_deal_tag_modifier
 
 create table staging_octane.zip_code_info
 (
-    zci_pid bigint
+    zci_pid bigint 
         primary key,
     zci_version int null,
     zci_zip_code varchar(5) null,
@@ -11696,7 +11696,7 @@ create table staging_octane.zip_code_info
 
 create table staging_octane.county_zip_code
 (
-    czc_pid bigint
+    czc_pid bigint 
         primary key,
     czc_version int null,
     czc_county_pid bigint null,
