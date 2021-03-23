@@ -28,7 +28,7 @@ DO $$
                     , tool_price
                     , tool_inventory_start_date
                     , tool_inventory_end_date
-                    , data_source_dwid as data_source_value
+                    , data_source_dwid as data_source_dwid_value
                 FROM test.unit_test_tools_source;'
                , 0
                , 'Ingress DB Connection');
@@ -82,7 +82,7 @@ DO $$
                    , tool_price
                    , tool_inventory_start_date
                    , tool_inventory_end_date
-                   , data_source_dwid as data_source_value
+                   , data_source_dwid as data_source_dwid_value
                FROM test.unit_test_tools_source;'
                , 0
                , 'Ingress DB Connection');
