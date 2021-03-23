@@ -29,7 +29,7 @@ failed_unit_tests=""
 
 function execute_test() {
   # set current working directory to the folder with test.sh in it
-  echo "Command for manual execution:  $(pwd)/../../docker/pentaho/test.sh test \"$1\" \"$2\" \"$3\" \"$4\" \"$5\"
+  echo "Command for manual execution:  ${absolute_test_dir}/test.sh test \"$1\" \"$2\" \"$3\" \"$4\" \"$5\"
    | grep \"$grep_statement\""
   set +e
   results=$(${absolute_test_dir}/test.sh test "$1" "$2" "$3" "$4" "$5")
@@ -37,8 +37,7 @@ function execute_test() {
   unit_test_exit_code=$?
   if [[ $unit_test_exit_code != 0 ]]; then
     # store unit test name and (if applicable) test case that exited with non-zero code
-    failed_unit_tests="$failed_unit_tests \
-    $(realpath --relative-to ~/Projects/data-warehouse/pentaho/test $(pwd)) exit code: $unit_test_exit_code"$'\n'
+    failed_unit_tests="$failed_unit_tests$(realpath --relative-to $path_to_script $(pwd)) Pentaho exit code: $unit_test_exit_code"$'\n'
     echo $results
     echo "test.sh FAILED!!!"
   fi
@@ -138,7 +137,7 @@ function execute_mdi_test_cases() {
   echo "Proceeding with ${process_name} test cases"
   for dir in ${process_name}/*; do
     echo "Now resetting Docker..."
-    docker_reset              # reset docker
+    docker_reset # reset docker
     cd ${dir}
     echo "Now testing ${dir}" # indicate which test case is being run
     # run test setup SQL against the source database
@@ -169,7 +168,7 @@ cd -
 # MDI Tests ##############################################################################
 database_username="mditest"
 # MDI Checks
-execute_mdi_test "SP-0.1" ${database_username} "file" "input.csv"  # test performer_csv_to_table.ktr
+execute_mdi_test "SP-0.1" ${database_username} "file" "input.csv" # test performer_csv_to_table.ktr
 execute_mdi_test "SP-0.2" ${database_username} "file" "input.xlsx" # test performer_excel_to_table.ktr
 
 # MDI Test Cases #########################################################################
@@ -192,27 +191,23 @@ execute_mdi_test "SP9.2" ${database_username} "none" ""
 execute_mdi_test "SP10.1" ${database_username} "file" "dmi-V35-s540a.csv"
 execute_mdi_test "SP10.2" ${database_username} "none" ""
 
-mdi_diff_results=$(find . -name 'test_diff_output.diff') # using find, store any diff files in diff_results variable
+# If any test cases generated diffs, add their relative paths to failed_unit_tests
+# We can use realpath --relative-to to store the failed test case path in the same form as failed unit test paths
+# realpath --relative-to requires two arguments, so we have to check if any diff files exist prior to invoking realpath
+if [[ -n $(find . -name 'test_diff_output.diff') ]]; then
+  failed_unit_tests="$failed_unit_tests$(realpath --relative-to $path_to_script $(find . -name 'test_diff_output.diff'))"
+fi
 
 # Print overall unit test statuses and test case diff statuses
-if [[ -z "$failed_unit_tests" ]] && [[ -z "$mdi_diff_results" ]]; then
-  echo "All unit tests have executed successfully."
+if [[ -z $failed_unit_tests ]]; then
+  echo "Unit tests SUCCESSFUL."
   exit 0
-elif [[ -n "$failed_unit_tests" ]] && [[ -z "$mdi_diff_results" ]]; then
-  echo "One or more unit tests failed."
-  echo "$failed_unit_tests"
-  echo "UNIT TESTS FAILED."
-  exit 1
-elif [[ -z "$failed_unit_tests" ]] && [[ -n "$mdi_diff_results" ]]; then
-  echo "One or more test cases produced an unexpected output. Refer to the following diff file(s) for more information:"
-  echo "$mdi_diff_results"
-  echo "UNIT TESTS FAILED."
-  exit 1
-elif [[ -n "$failed_unit_tests" ]] && [[ -n "$mdi_diff_results" ]]; then
-  echo "One or more unit tests failed."
-  echo "$failed_unit_tests"
-  echo "One or more test cases produced an unexpected output. Refer to the following diff file(s) for more information:"
-  echo "$mdi_diff_results"
-  echo "UNIT TESTS FAILED."
+else
+  echo "One or more unit tests encountered a Pentaho failure, or generated an output that differs from its expected\
+ result."
+  echo "Refer to the list below for more information:"
+  echo "$failed_unit_tests" | sort
+  echo
+  echo "Unit tests FAILED."
   exit 1
 fi
