@@ -13451,4 +13451,3 @@ CREATE VIEW octane_data_mart.nmls_call_report_state AS
         , report_quarter
     FROM
         staging_compliance.nmls_call_report_state;
-        
