@@ -29,7 +29,7 @@ failed_unit_tests=""
 
 function execute_test() {
   # set current working directory to the folder with test.sh in it
-  echo "Command for manual execution: $(pwd)/../../docker/pentaho/test.sh test \"$1\" \"$2\" \"$3\" \"$4\" \"$5\"
+  echo "Command for manual execution:  $(pwd)/../../docker/pentaho/test.sh test \"$1\" \"$2\" \"$3\" \"$4\" \"$5\"
    | grep \"$grep_statement\""
   set +e
   results=$(${absolute_test_dir}/test.sh test "$1" "$2" "$3" "$4" "$5")
