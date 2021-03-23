@@ -164,35 +164,36 @@ function execute_mdi_test_cases() {
 ${relative_docker_dir}/docker-up.sh
 
 # Non MDI Tests ##########################################################################
-#process_name="SP6"
-#database_username="encompass_sp6"
-#sp6_job_path="encompass/import/SP6/full_encompass_etl"
-#echo Now testing ${process_name}
-#cd ${process_name}
-#execute_test ${process_name} ${database_username} ${sp6_job_path} "file" "Encompass.csv"
-#cd -
+process_name="SP6"
+database_username="encompass_sp6"
+sp6_job_path="encompass/import/SP6/full_encompass_etl"
+echo Now testing ${process_name}
+cd ${process_name}
+execute_test ${process_name} ${database_username} ${sp6_job_path} "file" "Encompass.csv"
+cd -
 
 # MDI Test Cases #########################################################################
- database_username="mditest"
-      execute_mdi_test_cases "SP-0.1" ${database_username} "file" "input.csv" "ingress" "ingress"
-      execute_mdi_test_cases "SP-0.2" ${database_username} "file" "input.xlsx" "ingress" "ingress"
-      execute_mdi_test_cases "SP-0.3" ${database_username} "none" "" "ingress" "ingress"
-      execute_mdi_test_cases "SP-0.4" ${database_username} "none" "" "ingress" "ingress"
-      execute_mdi_test_cases "SP-0.5" ${database_username} "none" "" "ingress" "ingress"
+database_username="mditest"
+execute_mdi_test_cases "SP-0.1" ${database_username} "file" "input.csv" "ingress" "ingress"
+execute_mdi_test_cases "SP-0.2" ${database_username} "file" "input.xlsx" "ingress" "ingress"
+execute_mdi_test_cases "SP-0.3" ${database_username} "none" "" "ingress" "ingress"
+execute_mdi_test_cases "SP-0.4" ${database_username} "none" "" "ingress" "ingress"
+execute_mdi_test_cases "SP-0.5" ${database_username} "none" "" "ingress" "ingress"
+execute_mdi_test_cases "SP-0.6" ${database_username} "none" "" "ingress" "ingress"
 
 # DMI Tests ##############################################################################
 database_username="dmi"
 # DMI NMLS Call Report - State	# DMI NMLS Call Report - State (curl "https://api.mockaroo.com/api/faa92490?count=1&key=8ff5d150" > "dmi-V35-state.csv")
-      execute_mdi_test_cases "SP8.1" ${database_username} "file" "test_case_source_file.ext" "ingress" "ingress"
-      execute_mdi_test_cases "SP8.2" ${database_username} "none" "" "ingress" "staging"
+execute_mdi_test_cases "SP8.1" ${database_username} "file" "test_case_source_file.ext" "ingress" "ingress"
+execute_mdi_test_cases "SP8.2" ${database_username} "none" "" "ingress" "staging"
 
 # DMI NMLS Call Report - National	# DMI NMLS Call Report - National (curl "https://api.mockaroo.com/api/9011edb0?count=1&key=8ff5d150" > "dmi-V35-national.csv")
-      execute_mdi_test_cases "SP9.1" ${database_username} "file" "test_case_source_file.ext" "ingress" "ingress"
-      execute_mdi_test_cases "SP9.2" ${database_username} "none" "" "ingress" "staging"
+execute_mdi_test_cases "SP9.1" ${database_username} "file" "test_case_source_file.ext" "ingress" "ingress"
+execute_mdi_test_cases "SP9.2" ${database_username} "none" "" "ingress" "staging"
 
 # DMI NMLS Call Report - s540a	# DMI NMLS Call Report - s540a (curl "https://api.mockaroo.com/api/3d9794e0?count=1&key=8ff5d150" > "dmi-V35-s540a.csv")
-      execute_mdi_test_cases "SP10.1" ${database_username} "file" "test_case_source_file.ext" "ingress" "ingress"
-      execute_mdi_test_cases "SP10.2" ${database_username} "none" "" "ingress" "staging"
+execute_mdi_test_cases "SP10.1" ${database_username} "file" "test_case_source_file.ext" "ingress" "ingress"
+execute_mdi_test_cases "SP10.2" ${database_username} "none" "" "ingress" "staging"
 
 # Print test case diff status(es)
 diff_results=$(find . -name 'test_diff_output.diff') # using find, store any diff files in diff_results variable
