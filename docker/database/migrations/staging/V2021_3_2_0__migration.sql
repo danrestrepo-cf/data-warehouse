@@ -363,3 +363,21 @@ ALTER TABLE staging_octane.smart_doc
     ADD COLUMN sd_action_entity_government_insurance bit,
     ADD COLUMN sd_action_entity_underwriting_manager bit;
 
+--
+-- Octane 2021.3.2.1
+--
+
+ALTER TABLE staging_octane.investor
+    ADD COLUMN i_ein varchar(10);
+
+ALTER TABLE staging_octane.third_party_community_second_program
+    DROP COLUMN tpcsp_ein;
+
+--
+-- Octane 2021.3.3.0
+--
+
+ALTER TABLE staging_octane.proposal
+    ADD COLUMN prp_financed_property_improvements_category_type varchar(128);
+
+CREATE INDEX fkt_prp_financed_property_improvements_category_type ON staging_octane.proposal (prp_financed_property_improvements_category_type);
