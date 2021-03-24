@@ -37,7 +37,7 @@ function execute_test() {
   unit_test_exit_code=$?
   if [[ $unit_test_exit_code != 0 ]]; then
     # store unit test name and (if applicable) test case that exited with non-zero code
-    failed_unit_tests="$failed_unit_tests$(realpath --relative-to $path_to_script $(pwd)) Pentaho exit code: $unit_test_exit_code"$'\n'
+    failed_unit_tests="${failed_unit_tests}$(realpath --relative-to $path_to_script $(pwd)) Pentaho exit code: $unit_test_exit_code"$'\n'
     echo $results
     echo "test.sh FAILED!!!"
   fi
@@ -120,6 +120,7 @@ function output_file_diff() {
   test_case_diff_results=$(diff --strip-trailing-cr ${1} ${2} || true)
   if [[ $test_case_diff_results =~ .+ ]]; then
     echo $test_case_diff_results > $3
+    failed_unit_tests="${failed_unit_tests}$(realpath --relative-to $path_to_script $(pwd)) generated an unexpected result."$'\n'
   fi
 }
 
@@ -191,23 +192,15 @@ execute_mdi_test "SP9.2" ${database_username} "none" ""
 execute_mdi_test "SP10.1" ${database_username} "file" "dmi-V35-s540a.csv"
 execute_mdi_test "SP10.2" ${database_username} "none" ""
 
-# If any test cases generated diffs, add their relative paths to failed_unit_tests
-# We can use realpath --relative-to to store the failed test case path in the same form as failed unit test paths
-# realpath --relative-to requires two arguments, so we have to check if any diff files exist prior to invoking realpath
-if [[ -n $(find . -name 'test_diff_output.diff') ]]; then
-  failed_unit_tests="$failed_unit_tests$(realpath --relative-to $path_to_script $(find . -name 'test_diff_output.diff'))"
-fi
-
 # Print overall unit test statuses and test case diff statuses
 if [[ -z $failed_unit_tests ]]; then
   echo "Unit tests SUCCESSFUL."
   exit 0
 else
-  echo "One or more unit tests encountered a Pentaho failure, or generated an output that differs from its expected\
- result."
+  echo "One or more unit tests encountered a Pentaho failure, or generated an output that differs from its expected result."
   echo "Refer to the list below for more information:"
-  echo "$failed_unit_tests" | sort
+  echo "$failed_unit_tests"
   echo
-  echo "Unit tests FAILED."
+  echo "Unit test FAILURE."
   exit 1
 fi
