@@ -117,9 +117,12 @@ function process_previous_diffs() {
 
 # function to output a diff between expected output and actual output for MDI test cases
 function output_file_diff() {
-  test_case_diff_results=$(diff --strip-trailing-cr ${1} ${2} || true)
+  expected_output="$1"
+  actual_output="$2"
+  diff_output="$3"
+  test_case_diff_results=$(diff --strip-trailing-cr "$expected_output" "$actual_output" || true)
   if [[ $test_case_diff_results =~ .+ ]]; then
-    echo $test_case_diff_results > $3
+    echo $test_case_diff_results > "$diff_output"
     failed_unit_tests="${failed_unit_tests}$(realpath --relative-to $path_to_script $(pwd)) generated an unexpected result."$'\n'
   fi
 }
