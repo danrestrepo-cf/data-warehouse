@@ -24,16 +24,22 @@ set -e
 # set default grep statement
 grep_statement=" testing.*\| Start=.*\| Finished with errors.*\| E=[1-9].*"
 
+# variable to store failed unit test runs
+failed_unit_tests=""
+
 function execute_test() {
   # set current working directory to the folder with test.sh in it
-  echo "Command for manual execution:  $(pwd)/../../docker/pentaho/test.sh test \"$1\" \"$2\" \"$3\" \"$4\" \"$5\"
+  echo "Command for manual execution:  ${absolute_test_dir}/test.sh test \"$1\" \"$2\" \"$3\" \"$4\" \"$5\"
    | grep \"$grep_statement\""
   set +e
   results=$(${absolute_test_dir}/test.sh test "$1" "$2" "$3" "$4" "$5")
-  if [ $? != 0 ]; then
+  # store test.sh exit code for evaluation
+  unit_test_exit_code=$?
+  if [[ $unit_test_exit_code != 0 ]]; then
+    # store unit test name and (if applicable) test case that exited with non-zero code
+    failed_unit_tests="${failed_unit_tests}$(realpath --relative-to $path_to_script $(pwd)) Pentaho exit code: $unit_test_exit_code"$'\n'
     echo $results
     echo "test.sh FAILED!!!"
-    exit 1
   fi
   echo $results | grep -o "$grep_statement"
   set -e
@@ -111,9 +117,13 @@ function process_previous_diffs() {
 
 # function to output a diff between expected output and actual output for MDI test cases
 function output_file_diff() {
-  test_case_diff_results=$(diff --strip-trailing-cr ${1} ${2} || true)
+  expected_output="$1"
+  actual_output="$2"
+  diff_output="$3"
+  test_case_diff_results=$(diff --strip-trailing-cr "$expected_output" "$actual_output" || true)
   if [[ $test_case_diff_results =~ .+ ]]; then
-    echo $test_case_diff_results > $3
+    echo $test_case_diff_results > "$diff_output"
+    failed_unit_tests="${failed_unit_tests}$(realpath --relative-to $path_to_script $(pwd)) generated an unexpected result."$'\n'
   fi
 }
 
@@ -131,7 +141,7 @@ function execute_mdi_test_cases() {
   echo "Proceeding with ${process_name} test cases"
   for dir in ${process_name}/*; do
     echo "Now resetting Docker..."
-    docker_reset              # reset docker
+    docker_reset # reset docker
     cd ${dir}
     echo "Now testing ${dir}" # indicate which test case is being run
     # run test setup SQL against the source database
@@ -162,7 +172,7 @@ cd -
 # MDI Tests ##############################################################################
 database_username="mditest"
 # MDI Checks
-execute_mdi_test "SP-0.1" ${database_username} "file" "input.csv"  # test performer_csv_to_table.ktr
+execute_mdi_test "SP-0.1" ${database_username} "file" "input.csv" # test performer_csv_to_table.ktr
 execute_mdi_test "SP-0.2" ${database_username} "file" "input.xlsx" # test performer_excel_to_table.ktr
 
 # MDI Test Cases #########################################################################
@@ -185,15 +195,15 @@ execute_mdi_test "SP9.2" ${database_username} "none" ""
 execute_mdi_test "SP10.1" ${database_username} "file" "dmi-V35-s540a.csv"
 execute_mdi_test "SP10.2" ${database_username} "none" ""
 
-# Print test case diff status(es)
-diff_results=$(find . -name 'test_diff_output.diff') # using find, store any diff files in diff_results variable
-if [[ -z "$diff_results" ]]; then # check diff_results variable to determine whether there were any diffs
-  echo
-  echo "No test case diffs were detected; all test cases have passed"
+# Print overall unit test statuses and test case diff statuses
+if [[ -z $failed_unit_tests ]]; then
+  echo "Unit tests SUCCESSFUL."
   exit 0
 else
+  echo "One or more unit tests encountered a Pentaho failure, or generated an output that differs from its expected result."
+  echo "Refer to the list below for more information:"
+  echo "$failed_unit_tests"
   echo
-  echo "One or more test cases failed; refer to the following diff file(s) for more information:"
-  echo "$diff_results"
+  echo "Unit test FAILURE."
   exit 1
 fi
