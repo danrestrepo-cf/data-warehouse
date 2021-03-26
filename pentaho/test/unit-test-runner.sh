@@ -30,7 +30,7 @@ failed_unit_tests=""
 # function to execute a pentaho transformation/job via test.sh
 function execute_test() {
   # set current working directory to the folder with test.sh in it
-  echo "Command for manual execution:  $(pwd)/../../docker/pentaho/test.sh test \"$1\" \"$2\" \"$3\" \"$4\" \"$5\"
+  echo "Command for manual execution: ${absolute_test_dir}/test.sh test \"$1\" \"$2\" \"$3\" \"$4\" \"$5\"
    | grep \"$grep_statement\""
   set +e
   results=$(${absolute_test_dir}/test.sh test "$1" "$2" "$3" "$4" "$5")
@@ -39,10 +39,8 @@ function execute_test() {
   if [[ $unit_test_exit_code != 0 ]]; then
     # store unit test name and (if applicable) test case that exited with non-zero code
     failed_unit_tests="${failed_unit_tests}$(realpath --relative-to $path_to_script $(pwd)) Pentaho exit code: $unit_test_exit_code"$'\n'
-    echo $results
+    echo "$results"
     echo "exit code is ${?}"
-    echo $results
-    echo "test.sh FAILED!!!"
   fi
   echo "$results" | grep -o "$grep_statement" # need to quote $results so work splitting doesn't occur
   set -e
