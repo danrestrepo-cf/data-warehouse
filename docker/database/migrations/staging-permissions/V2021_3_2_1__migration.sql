@@ -2,4 +2,7 @@
 -- (https://app.asana.com/0/0/1200118824180563)
 
 GRANT USAGE ON SCHEMA octane_dms_control TO dms_octane_writer;
-GRANT SELECT, INSERT, UPDATE, DELETE, TRUNCATE ON ALL TABLES IN SCHEMA octane_dms_control TO dms_octane_writer;
+ALTER DEFAULT PRIVILEGES IN SCHEMA octane_dms_control GRANT ALL PRIVILEGES ON TABLES TO dms_octane_writer;
+
+GRANT USAGE ON SCHEMA octane_dms_control TO readonly;
+ALTER DEFAULT PRIVILEGES IN SCHEMA octane_dms_control GRANT SELECT ON TABLES TO readonly;
