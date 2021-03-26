@@ -73,7 +73,6 @@ CREATE INDEX fkt_prpd_doc_req_fulfill_status_type ON staging_octane.proposal_doc
 CREATE INDEX fkt_prpd_doc_req_decision_status_type ON staging_octane.proposal_doc (prpd_doc_req_decision_status_type);
 
 ALTER TABLE staging_octane.deal
-    DROP CONSTRAINT IF EXISTS fkt_d_gse_version_type,
     DROP COLUMN d_gse_version_type;
 
 ALTER TABLE staging_octane.proposal
@@ -244,7 +243,6 @@ ALTER TABLE staging_octane.deal
     ADD COLUMN d_enable_electronic_transaction_boolean bit;
 
 ALTER TABLE staging_octane.deal
-    DROP CONSTRAINT IF EXISTS fkt_d_enable_electronic_transaction,
     DROP COLUMN d_enable_electronic_transaction,
     ALTER COLUMN d_enable_electronic_transaction_boolean SET DATA TYPE bit;
 
