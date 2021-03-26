@@ -22,11 +22,12 @@ set -e
 # ' E=[1-9]'  - looks for steps that contain >0 errors.
 
 # set default grep statement
-grep_statement=" testing\| Start=\| Finished with errors\| E=[1-9]"
+grep_statement="$(date +%Y).* testing.*\|$(date +%Y).* Start=.*\|$(date +%Y).* Finished with errors.*\|$(date +%Y).* E=[1-9].*"
 
 # variable to store failed unit test runs
 failed_unit_tests=""
 
+# function to execute a pentaho transformation/job via test.sh
 function execute_test() {
   # set current working directory to the folder with test.sh in it
   echo "Command for manual execution:  $(pwd)/../../docker/pentaho/test.sh test \"$1\" \"$2\" \"$3\" \"$4\" \"$5\"
@@ -43,11 +44,12 @@ function execute_test() {
     echo $results
     echo "test.sh FAILED!!!"
   fi
-  echo "$results" | grep "$grep_statement" # need to quote $results so work splitting doesn't occur
+  echo "$results" | grep -o "$grep_statement" # need to quote $results so work splitting doesn't occur
   set -e
   echo " "
 }
 
+# function to print usage details to the user/output device
 function print_usage() {
   # set script name
   script_filename=${0##*/}
@@ -61,6 +63,7 @@ function print_usage() {
 
 }
 
+# function to use command line supplied regex with grep or use default value
 function generate_grep_phrase() {
   if [[ "$1" != "" ]]; then # if one parameter use that in the grep statement
     grep_statement=$1
@@ -89,18 +92,6 @@ fi
 function docker_reset() {
   ${relative_docker_dir}/docker-down.sh
   ${relative_docker_dir}/docker-up.sh
-}
-
-function execute_mdi_test() {
-  mdi_controller_path="mdi/controller"
-  process_name="$1"
-  mdi_database_username="$2"
-  input_type=$3
-  filename="$4"
-  echo "Now testing ${process_name}"
-  cd ${process_name}
-  execute_test "$process_name" "$mdi_database_username" "$mdi_controller_path" "$input_type" "$filename"
-  cd -
 }
 
 # function to detect, print, and remove previous diff files
@@ -168,7 +159,7 @@ database_username="encompass_sp6"
 sp6_job_path="encompass/import/SP6/full_encompass_etl"
 echo Now testing ${process_name}
 cd ${process_name}
-execute_test ${process_name} ${database_username} ${sp6_job_path} "file" "Encompass.csv"
+#execute_test ${process_name} ${database_username} ${sp6_job_path} "file" "Encompass.csv"
 cd -
 
 # MDI Test Cases #########################################################################
@@ -183,16 +174,16 @@ execute_mdi_test_cases "SP-0.6" ${database_username} "none" "" "ingress" "ingres
 # DMI Tests ##############################################################################
 database_username="dmi"
 # DMI NMLS Call Report - State	# DMI NMLS Call Report - State (curl "https://api.mockaroo.com/api/faa92490?count=1&key=8ff5d150" > "dmi-V35-state.csv")
-execute_mdi_test_cases "SP8.1" ${database_username} "file" "test_case_source_file.ext" "ingress" "ingress"
-execute_mdi_test_cases "SP8.2" ${database_username} "none" "" "ingress" "staging"
+#execute_mdi_test_cases "SP8.1" ${database_username} "file" "test_case_source_file.ext" "ingress" "ingress"
+#execute_mdi_test_cases "SP8.2" ${database_username} "none" "" "ingress" "staging"
 
 # DMI NMLS Call Report - National	# DMI NMLS Call Report - National (curl "https://api.mockaroo.com/api/9011edb0?count=1&key=8ff5d150" > "dmi-V35-national.csv")
-execute_mdi_test_cases "SP9.1" ${database_username} "file" "test_case_source_file.ext" "ingress" "ingress"
-execute_mdi_test_cases "SP9.2" ${database_username} "none" "" "ingress" "staging"
+#execute_mdi_test_cases "SP9.1" ${database_username} "file" "test_case_source_file.ext" "ingress" "ingress"
+#execute_mdi_test_cases "SP9.2" ${database_username} "none" "" "ingress" "staging"
 
 # DMI NMLS Call Report - s540a	# DMI NMLS Call Report - s540a (curl "https://api.mockaroo.com/api/3d9794e0?count=1&key=8ff5d150" > "dmi-V35-s540a.csv")
-execute_mdi_test_cases "SP10.1" ${database_username} "file" "test_case_source_file.ext" "ingress" "ingress"
-execute_mdi_test_cases "SP10.2" ${database_username} "none" "" "ingress" "staging"
+#execute_mdi_test_cases "SP10.1" ${database_username} "file" "test_case_source_file.ext" "ingress" "ingress"
+#execute_mdi_test_cases "SP10.2" ${database_username} "none" "" "ingress" "staging"
 
 # Print test case diff status(es)
 diff_results=$(find . -name 'test_diff_output.diff') # using find, store any diff files in diff_results variable
