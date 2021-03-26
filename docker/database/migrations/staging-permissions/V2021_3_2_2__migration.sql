@@ -1,0 +1,1 @@
+GRANT CREATE ON SCHEMA octane_dms_control TO dms_octane_writer;
