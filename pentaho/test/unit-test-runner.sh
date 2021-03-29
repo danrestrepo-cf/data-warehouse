@@ -22,7 +22,7 @@ set -e
 # ' E=[1-9]'  - looks for steps that contain >0 errors.
 
 # set default grep statement
-grep_statement="$(date +%Y).* testing.*\|$(date +%Y).* Start=.*\|$(date +%Y).* Finished with errors.*\|$(date +%Y).* E=[1-9].*"
+grep_statement=" testing.*\| Start=.*\| Finished with errors.*\| E=[1-9].*"
 
 # variable to store failed unit test runs
 failed_unit_tests=""
