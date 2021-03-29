@@ -8,3 +8,6 @@ CREATE SCHEMA IF NOT EXISTS staging_octane;
 -- Expose DMI NMLS Call Report data to Octane via a view: (https://app.asana.com/0/0/1199574510798743)
 --
 CREATE SCHEMA IF NOT EXISTS octane_data_mart;
+
+-- BI - add an octane_dms_control schema: (https://app.asana.com/0/0/1200118824180563)
+CREATE SCHEMA IF NOT EXISTS octane_dms_control;
