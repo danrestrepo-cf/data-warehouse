@@ -183,7 +183,7 @@ execute_mdi_test_cases "SP9.2" ${database_username} "none" "" "ingress" "staging
 execute_mdi_test_cases "SP10.1" ${database_username} "file" "test_case_source_file.ext" "ingress" "ingress"
 execute_mdi_test_cases "SP10.2" ${database_username} "none" "" "ingress" "staging"
 
-# Print test case diff status(es)
+# Print overall unit test statuses and test case diff statuses
 if [[ -z $failed_unit_tests ]]; then
   echo "Unit tests SUCCESSFUL."
   exit 0
