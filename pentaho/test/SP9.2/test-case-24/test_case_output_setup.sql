@@ -1,0 +1,1 @@
+\COPY staging_compliance.nmls_call_report_national (data_source_dwid,mcr_field_id,mcr_description,total_unpaid_balance,loan_count,average_unpaid_balance,report_quarter) TO '/input/actual_output.csv' WITH (FORMAT CSV,HEADER);

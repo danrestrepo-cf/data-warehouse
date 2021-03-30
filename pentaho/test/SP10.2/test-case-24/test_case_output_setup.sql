@@ -1,0 +1,1 @@
+\COPY staging_compliance.nmls_call_report_s540a (data_source_dwid,state_type,item_id,servicer_nmls_id,servicer_name,pool_number,total_unpaid_balance,loan_count,average_unpaid_balance,report_quarter) TO '/input/actual_output.csv' WITH (FORMAT CSV,HEADER);
