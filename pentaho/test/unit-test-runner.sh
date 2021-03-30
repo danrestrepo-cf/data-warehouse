@@ -184,10 +184,8 @@ execute_mdi_test_cases "SP10.1" ${database_username} "file" "test_case_source_fi
 execute_mdi_test_cases "SP10.2" ${database_username} "none" "" "ingress" "staging"
 
 # Print test case diff status(es)
-diff_results=$(find . -name 'test_diff_output.diff') # using find, store any diff files in diff_results variable
-if [[ -z "$diff_results" ]]; then # check diff_results variable to determine whether there were any diffs
-  echo
-  echo "No test case diffs were detected; all test cases have passed"
+if [[ -z $failed_unit_tests ]]; then
+  echo "Unit tests SUCCESSFUL."
   exit 0
 else
   echo "One or more unit tests encountered a Pentaho failure, or generated an output that differs from its expected result."
