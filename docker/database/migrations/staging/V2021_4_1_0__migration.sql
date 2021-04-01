@@ -24,6 +24,7 @@ FROM staging_compliance.nmls_call_report_state;
 
 --
 -- EDW | Add zero record to date dimension table, update weekday_chronological field
+-- EDW | Add zero record to date dimension table, update weekday_chronological and day_of_week_name fields
 --
 
 -- Alter date dimension table to remove NOT NULL constraints from all non-dwid fields with NOT NULL constraints
