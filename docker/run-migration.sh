@@ -37,7 +37,7 @@ DEPLOY_USER="deployer"
 AUTH_TOKEN=$(aws rds generate-db-auth-token --hostname ${RDS_ENDPOINT} --port 5432 --region ${AWS_REGION} --username ${DEPLOY_USER} --output text)
 
 for database in ingress staging config; do
-  docker run -it \
+  docker run -i \
     -v ${absolute_path}/database/migrations/${database}:/flyway/sql \
     --rm flyway/flyway:6 \
     -url=jdbc:postgresql://${RDS_ENDPOINT}:5432/${database}?requiressl=true \
@@ -53,7 +53,7 @@ ADMIN_USER="admin"
 AUTH_TOKEN=$(aws rds generate-db-auth-token --hostname ${RDS_ENDPOINT} --port 5432 --region ${AWS_REGION} --username ${ADMIN_USER} --output text)
 
 for database in ingress staging config; do
-  docker run -it \
+  docker run -i \
     -v ${absolute_path}/database/migrations/${database}-permissions:/flyway/sql \
     --rm flyway/flyway:6 \
     -url=jdbc:postgresql://${RDS_ENDPOINT}:5432/${database}?requiressl=true \
