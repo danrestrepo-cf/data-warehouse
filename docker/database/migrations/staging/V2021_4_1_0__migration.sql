@@ -62,3 +62,24 @@ INSERT INTO star_common.date_dim (dwid, value, date_format_iso_8601, date_format
 VALUES (0 ,NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
+-- Remove trailing whitespace from values in day_of_week_name field
+UPDATE star_common.date_dim
+    SET day_of_week_name = TRIM(TRAILING FROM day_of_week_name);
+
+-- Populate weekday_chronological column for rows that correspond to Saturdays or Sundays
+-- Saturdays:
+UPDATE star_common.date_dim
+    SET weekday_chronological = (
+        SELECT monday.weekday_chronological
+        FROM star_common.date_dim monday
+        WHERE monday.value = date_dim.value + INTERVAL '2 DAY'
+        )
+    WHERE date_dim.day_of_week_name = 'Saturday';
+-- Sundays:
+UPDATE star_common.date_dim
+SET weekday_chronological = (
+    SELECT monday.weekday_chronological
+    FROM star_common.date_dim monday
+    WHERE monday.value = date_dim.value + INTERVAL '1 DAY'
+)
+WHERE date_dim.day_of_week_name = 'Sunday';
