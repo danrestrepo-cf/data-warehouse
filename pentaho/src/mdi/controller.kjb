@@ -8,7 +8,7 @@
   <created_user>-</created_user>
   <created_date>2020/10/10 07:31:50.634</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2021/02/19 13:42:32.673</modified_date>
+  <modified_date>2021/04/01 14:45:35.527</modified_date>
   <parameters>
     <parameter>
       <name>database_hostname</name>
@@ -530,14 +530,14 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>[controller] Execute CSV to Table Performer</name>
+      <name>[controller] Execute CSV File to Table Performer</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
       <specification_method>rep_name</specification_method>
       <trans_object_id/>
       <filename/>
-      <transname>performer_csv_to_table</transname>
+      <transname>performer_csv_file_to_table</transname>
       <directory>/mdi</directory>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -1110,7 +1110,7 @@
     </hop>
     <hop>
       <from>[controller] Process CSV?</from>
-      <to>[controller] Execute CSV to Table Performer</to>
+      <to>[controller] Execute CSV File to Table Performer</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1163,7 +1163,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>[controller] Execute CSV to Table Performer</from>
+      <from>[controller] Execute CSV File to Table Performer</from>
       <to>[controller] Abort job if CSV Performer error</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
