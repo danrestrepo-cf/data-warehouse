@@ -55,7 +55,7 @@ function run_docker() {
     export MSYS_NO_PATHCONV=1
   fi
 
-  docker_command="docker run -it  \
+  docker_command="docker run -i \
     --network ${project_name}_default \
     -v ${pentaho_source_directory}:/jobs/ \
     -v ${pentaho_input_directory}:/input/ \

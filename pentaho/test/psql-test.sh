@@ -13,7 +13,7 @@ database=$1
 testpath=$2
 
 project_name=edw
-docker run -it \
+docker run -i \
   --network ${project_name}_default \
   -e PGPASSWORD=testonly \
   -v $(pwd)/$testpath:/input \
