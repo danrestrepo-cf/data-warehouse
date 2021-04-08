@@ -18420,3 +18420,136 @@ DROP INDEX staging_octane.fk_deal_key_roles_33;
 DROP INDEX staging_octane.fk_deal_key_roles_34;
 DROP INDEX staging_octane.fkt_prp_financed_property_improvements_category_type;
 DROP INDEX staging_octane.idx_fkt_account_1;
+
+--
+-- EDW | Populate star_loan tables with zero record
+-- (https://app.asana.com/0/0/1200167072015469)
+--
+
+INSERT INTO star_loan.application_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime,
+                                       data_source_integration_columns, data_source_integration_id,
+                                       data_source_modified_datetime, application_pid)
+VALUES (0, 0, NOW(), NOW(), 'application_pid', 0, NOW(), 0);
+
+INSERT INTO star_loan.borrower_demographics_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime,
+                                                 data_source_integration_columns, data_source_integration_id,
+                                                 data_source_modified_datetime)
+
+VALUES (0, 0, NOW(), NOW(), 'ethnicity_collected_visual_or_surname_code~' ||
+                            'ethnicity_refused_code~ethnicity_other_hispanic_or_latino_description_flag~' ||
+                            'other_race_national_origin_description_flag~race_other_american_indian_or_alaska_native_description_flag~' ||
+                            'race_other_asian_description_flag~race_other_pacific_islander_description_flag~' ||
+                            'ethnicity_cuban_flag~ethnicity_hispanic_or_latino_flag~ethnicity_mexican_flag~' ||
+                            'ethnicity_not_hispanic_or_latino_flag~ethnicity_not_obtainable_flag~' ||
+                            'ethnicity_other_hispanic_or_latino_flag~ethnicity_puerto_rican_flag~' ||
+                            'race_american_indian_or_alaska_native_flag~race_asian_flag~race_asian_indian_flag~' ||
+                            'race_black_or_african_american_flag~race_chinese_flag~race_filipino_flag~' ||
+                            'race_guamanian_or_chamorro_flag~race_information_not_provided_flag~race_japanese_flag~' ||
+                            'race_korean_flag~race_national_origin_refusal_flag~race_native_hawaiian_flag~' ||
+                            'race_native_hawaiian_or_other_pacific_islander_flag~race_not_applicable_flag~' ||
+                            'race_not_obtainable_flag~race_other_asian_flag~race_other_pacific_islander_flag~' ||
+                            'race_samoan_flag~race_vietnamese_flag~race_white_flag~sex_female_flag~' ||
+                            'sex_male_flag~sex_not_obtainable_flag~marital_status_code~' ||
+                            'race_collected_visual_or_surname_code~race_refused_code~schooling_years~' ||
+                            'sex_collected_visual_or_surname_code~sex_refused_code', '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~', NOW());
+
+INSERT INTO star_loan.borrower_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime,
+                                    data_source_integration_columns, data_source_integration_id,
+                                    data_source_modified_datetime, borrower_pid)
+VALUES (0, 0, NOW(), NOW(), 'borrower_pid', 0, NOW(), 0);
+
+INSERT INTO star_loan.borrower_lending_profile_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime,
+                                                    data_source_integration_columns, data_source_integration_id,
+                                                    data_source_modified_datetime)
+VALUES (0, 0, NOW(), NOW(), 'alimony_child_support_code~bankruptcy_code~' ||
+                            'borrowed_down_payment_code~citizenship_residency_code~disabled_code~' ||
+                            'domestic_relationship_state_code~alimony_child_support_explanation_flag~' ||
+                            'bankruptcy_explanation_flag~borrowed_down_payment_explanation_flag~' ||
+                            'dependents_code~note_endorser_explanation_flag~obligated_loan_foreclosure_explanation_flag~' ||
+                            'outstanding_judgments_explanation_flag~party_to_lawsuit_explanation_flag~' ||
+                            'presently_delinquent_explanation_flag~property_foreclosure_explanation_flag~' ||
+                            'homeowner_past_three_years_code~homeownership_education_agency_code |' ||
+                            'homeownership_education_code~homeownership_education_complete_date~' ||
+                            'intend_to_occupy_code~first_time_homebuyer_flag~first_time_homebuyer_auto_compute_flag~' ||
+                            'hud_employee_flag~lender_employee_status_confirmed_flag~lender_employee_code~' ||
+                            'note_endorser_code~obligated_loan_foreclosure_code~' ||
+                            'on_gsa_list_code~on_ldp_list_code~outstanding_judgements_code~party_to_lawsuit_code~' ||
+                            'presently_delinquent_code~property_foreclosure_code~spousal_homestead_code~' ||
+                            'titleholder_code', '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~', NOW());
+
+INSERT INTO star_loan.hmda_purchaser_of_loan_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime,
+                                                  data_source_integration_columns, data_source_integration_id,
+                                                  data_source_modified_datetime)
+VALUES (0, 0, NOW(), NOW(), 'code~value~year', '~~', NOW());
+
+INSERT INTO star_loan.interim_funder_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime,
+                                          data_source_integration_columns, data_source_integration_id,
+                                          data_source_modified_datetime, interim_funder_pid)
+VALUES (0, 0, NOW(), NOW(), 'interim_funder_pid', 0, NOW(), 0);
+
+INSERT INTO star_loan.investor_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime,
+                                    data_source_integration_columns, data_source_integration_id,
+                                    data_source_modified_datetime, investor_pid)
+VALUES (0, 0, NOW(), NOW(), 'investor_pid', 0, NOW(), 0);
+
+INSERT INTO star_loan.lender_user_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime,
+                                       data_source_integration_columns, data_source_integration_id,
+                                       data_source_modified_datetime, lender_user_pid)
+VALUES (0, 0, NOW(), NOW(), 'lender_user_pid', 0, NOW(), 0);
+
+INSERT INTO star_loan.loan_beneficiary_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime,
+                                            data_source_integration_columns, data_source_integration_id,
+                                            data_source_modified_datetime, loan_beneficiary_pid)
+VALUES (0, 0, NOW(), NOW(), 'loan_beneficiary_pid', 0, NOW(), 0);
+
+INSERT INTO star_loan.loan_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime,
+                                data_source_integration_columns, data_source_integration_id,
+                                data_source_modified_datetime, loan_pid)
+VALUES (0, 0, NOW(), NOW(), 'loan_pid', 0, NOW(), 0);
+
+INSERT INTO star_loan.loan_funding_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime,
+                                        data_source_integration_columns, data_source_integration_id,
+                                        data_source_modified_datetime, loan_funding_pid)
+VALUES (0, 0, NOW(), NOW(), 'loan_funding_pid', 0, NOW(), 0);
+
+INSERT INTO star_loan.loan_junk_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime,
+                                     data_source_integration_columns, data_source_integration_id,
+                                     data_source_modified_datetime)
+VALUES (0, 0, NOW(), NOW(), 'buydown_contributor_code~fha_program_code~hmda_hoepa_status_code~durp_eligibility_opt_out_flag~' ||
+                            'fha_principal_write_down_flag~hpml_flag~lender_concession_candidate_flag~' ||
+                            'mi_required_flag~piggyback_flag~qm_eligible_flag~qualified_mortgage_flag~' ||
+                            'secondary_clear_to_commit_flag~student_loan_cash_out_refinance_flag~' ||
+                            'lien_priority_code~lqa_purchase_eligibility_code~qualified_mortgage_status_code~' ||
+                            'qualifying_rate_code~texas_equity_auto_code~texas_equity_code', '~~~~~~~~~~~~~~~~~~', NOW());
+
+INSERT INTO star_loan.mortgage_insurance_dim (loan_dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime,
+                                              data_source_integration_columns, data_source_integration_id,
+                                              data_source_modified_datetime, loan_pid)
+VALUES (0, 0, NOW(), NOW(), 'loan_pid', 0, NOW(), 0);
+
+INSERT INTO star_loan.product_choice_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime,
+                                          data_source_integration_columns, data_source_integration_id,
+                                          data_source_modified_datetime)
+VALUES (0, 0, NOW(), NOW(), 'aus_code~buydown_schedule_code~interest_only_code~mortgage_type_code~' ||
+                            'prepay_penatly_schedule_code', '~~~~', NOW());
+
+INSERT INTO star_loan.product_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime,
+                                   data_source_integration_columns, data_source_integration_id,
+                                   data_source_modified_datetime, product_pid)
+VALUES (0, 0, NOW(), NOW(), 'product_pid', 0, NOW(), 0);
+
+INSERT INTO star_loan.product_terms_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime,
+                                         data_source_integration_columns, data_source_integration_id,
+                                         data_source_modified_datetime, product_terms_pid)
+VALUES (0, 0, NOW(), NOW(), 'product_terms_pid', 0, NOW(), 0);
+
+INSERT INTO star_loan.transaction_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime,
+                                       data_source_integration_columns, data_source_integration_id,
+                                       data_source_modified_datetime, deal_pid)
+VALUES (0, 0, NOW(), NOW(), 'deal_pid', 0, NOW(), 0);
+
+INSERT INTO star_loan.transaction_junk_dim (dwid, data_source_dwid, edw_created_datetime, edw_modified_datetime,
+                                            data_source_integration_columns, data_source_integration_id,
+                                            data_source_modified_datetime)
+VALUES (0, 0, NOW(), NOW(), 'piggyback_flag~mi_required_flag~is_test_loan_flag~' ||
+                            'structure_code~loan_purpose_code', '~~~~', NOW());
