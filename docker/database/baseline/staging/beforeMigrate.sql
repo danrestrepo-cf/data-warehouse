@@ -17,3 +17,9 @@ CREATE SCHEMA IF NOT EXISTS octane_dms_control;
 -- (https://app.asana.com/0/0/1199659841029429)
 --
 CREATE SCHEMA IF NOT EXISTS star_loan;
+
+
+--
+--  BI - EDW | schema history_octane - Create initial DDL (https://app.asana.com/0/0/1200124472993448)
+--
+CREATE SCHEMA IF NOT EXISTS history_octane
