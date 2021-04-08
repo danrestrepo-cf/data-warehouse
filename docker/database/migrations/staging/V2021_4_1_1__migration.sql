@@ -949,7 +949,7 @@ CREATE TABLE star_loan.transaction_dim (dwid BIGSERIAL NOT NULL CONSTRAINT pk_tr
     , data_source_integration_columns TEXT
     , data_source_integration_id TEXT NOT NULL
     , data_source_modified_datetime TIMESTAMPTZ
-    , deal_pid BIGINT
+    , deal_pid BIGINT NOT NULL
     , active_proposal_pid BIGINT);
 
 CREATE INDEX idx_loan_fact__loan_pid ON star_loan.loan_fact (loan_pid);
