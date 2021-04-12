@@ -24,6 +24,6 @@ create_profile() {
   fi
 }
 
-create_profile qa-data-warehouse-readonly 185672194546
-create_profile prod-data-warehouse-readonly 766879632060
+create_profile qa-data-warehouse-readonly 185672194546 data-warehouse-readonly
+create_profile prod-data-warehouse-readonly 766879632060 data-warehouse-readonly
 create_profile octane-database-readonly 188213074036
