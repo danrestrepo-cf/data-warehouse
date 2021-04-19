@@ -4,10 +4,10 @@
 --
 
 GRANT SELECT ON history_octane.construction_permit
-    , history_octane.construction_permit_by_requested_type
+    , history_octane.construction_permit_requested_by_type
     , history_octane.construction_permit_type
     , staging_octane.construction_permit
-    , staging_octane.construction_permit_by_requested_type
+    , staging_octane.construction_permit_requested_by_type
     , staging_octane.construction_permit_type
     , staging_octane.borrower_declarations
     , staging_octane.doc_provider_group_type
@@ -19,7 +19,7 @@ GRANT SELECT ON history_octane.construction_permit
     , staging_octane.trust_classification_type TO readonly;
 
 GRANT SELECT, INSERT, UPDATE, DELETE, TRUNCATE ON staging_octane.construction_permit
-    , staging_octane.construction_permit_by_requested_type
+    , staging_octane.construction_permit_requested_by_type
     , staging_octane.construction_permit_type TO dms_octane_writer;
 
 ALTER DEFAULT PRIVILEGES FOR ROLE deployer IN SCHEMA staging_octane GRANT SELECT ON TABLES TO readonly;
