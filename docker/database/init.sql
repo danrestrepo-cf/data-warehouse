@@ -9,5 +9,3 @@ CREATE DATABASE staging;
 CREATE ROLE deployer;
 CREATE USER admin PASSWORD 'testonly';
 GRANT deployer TO admin;
-
-GRANT ALL PRIVILEGES ON DATABASE ingress, config, staging to deployer;
