@@ -474,7 +474,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.089</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/04/20 09:50:21.298</modified_date>
+    <modified_date>2021/04/20 09:55:50.469</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -669,26 +669,6 @@ DATABASE_FIELD_NAME. </note>
   </connection>
   <order>
     <hop>
-      <from>[performer_table_to_table_insert] Load Table Input step settings</from>
-      <to>[performer_table_to_table_insert] ETL metadata injection</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[performer_table_to_table_insert] Load Table Output step settings</from>
-      <to>[performer_table_to_table_insert] ETL metadata injection</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[performer_table_to_table_insert] Load Table Output field settings</from>
-      <to>[performer_table_to_table_insert] ETL metadata injection</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[performer_table_to_table_insert] Load Table Output non-sensitive fields</from>
-      <to>[performer_table_to_table_insert] ETL metadata injection</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>JSON input</from>
       <to>JSON input 2</to>
       <enabled>Y</enabled>
@@ -701,6 +681,31 @@ DATABASE_FIELD_NAME. </note>
     <hop>
       <from>Table input</from>
       <to>Set variables</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert] Load Table Input step settings</from>
+      <to>Block this step until steps finish</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Block this step until steps finish</from>
+      <to>[performer_table_to_table_insert] ETL metadata injection</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert] Load Table Output step settings</from>
+      <to>Block this step until steps finish</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert] Load Table Output field settings</from>
+      <to>Block this step until steps finish</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert] Load Table Output non-sensitive fields</from>
+      <to>Block this step until steps finish</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -940,7 +945,7 @@ DATABASE_FIELD_NAME. </note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1072</xloc>
+      <xloc>1136</xloc>
       <yloc>784</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1187,8 +1192,8 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1072</xloc>
-      <yloc>432</yloc>
+      <xloc>960</xloc>
+      <yloc>480</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1239,8 +1244,8 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1072</xloc>
-      <yloc>528</yloc>
+      <xloc>960</xloc>
+      <yloc>576</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1267,8 +1272,8 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1072</xloc>
-      <yloc>624</yloc>
+      <xloc>960</xloc>
+      <yloc>672</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1301,8 +1306,35 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>960</xloc>
-      <yloc>544</yloc>
+      <xloc>848</xloc>
+      <yloc>560</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Block this step until steps finish</name>
+    <type>BlockUntilStepsFinish</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <steps>
+      </steps>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>848</xloc>
+      <yloc>784</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
