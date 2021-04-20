@@ -1,6 +1,6 @@
 <transformation>
   <info>
-    <name>performer_incremental_table_to_table_insert_update</name>
+    <name>performer_table_to_table_insert_update_json</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -474,7 +474,7 @@
     <created_user>-</created_user>
     <created_date>2021/02/17 17:15:35.157</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/04/20 09:55:52.256</modified_date>
+    <modified_date>2021/04/20 16:43:24.359</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -675,7 +675,205 @@
       <to>Block this step until steps finish</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>Get variables</from>
+      <to>JSON input</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
+  <step>
+    <name>Block this step until steps finish</name>
+    <type>BlockUntilStepsFinish</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <steps>
+      </steps>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>768</xloc>
+      <yloc>480</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>JSON input</name>
+    <type>JsonInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <include>N</include>
+    <include_field/>
+    <rownum>N</rownum>
+    <addresultfile>N</addresultfile>
+    <readurl>N</readurl>
+    <removeSourceField>N</removeSourceField>
+    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
+    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
+    <ignoreMissingPath>Y</ignoreMissingPath>
+    <defaultPathLeafToNull>Y</defaultPathLeafToNull>
+    <rownum_field/>
+    <file>
+    </file>
+    <fields>
+    </fields>
+    <limit>0</limit>
+    <IsInFields>N</IsInFields>
+    <IsAFile>N</IsAFile>
+    <valueField/>
+    <shortFileFieldName/>
+    <pathFieldName/>
+    <hiddenFieldName/>
+    <lastModificationTimeFieldName/>
+    <uriNameFieldName/>
+    <rootUriNameFieldName/>
+    <extensionFieldName/>
+    <sizeFieldName/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>816</xloc>
+      <yloc>160</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>JSON input 2</name>
+    <type>JsonInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <include>N</include>
+    <include_field/>
+    <rownum>N</rownum>
+    <addresultfile>N</addresultfile>
+    <readurl>N</readurl>
+    <removeSourceField>N</removeSourceField>
+    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
+    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
+    <ignoreMissingPath>Y</ignoreMissingPath>
+    <defaultPathLeafToNull>Y</defaultPathLeafToNull>
+    <rownum_field/>
+    <file>
+    </file>
+    <fields>
+    </fields>
+    <limit>0</limit>
+    <IsInFields>N</IsInFields>
+    <IsAFile>N</IsAFile>
+    <valueField/>
+    <shortFileFieldName/>
+    <pathFieldName/>
+    <hiddenFieldName/>
+    <lastModificationTimeFieldName/>
+    <uriNameFieldName/>
+    <rootUriNameFieldName/>
+    <extensionFieldName/>
+    <sizeFieldName/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>816</xloc>
+      <yloc>256</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Set variables</name>
+    <type>SetVariable</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      </fields>
+    <use_formatting>Y</use_formatting>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>816</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Table input</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection/>
+    <sql>SELECT &lt;values> FROM &lt;table name> WHERE &lt;conditions></sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>688</xloc>
+      <yloc>256</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
   <step>
     <name>[performer_table_to_table_insert_update] ETL metadata injection</name>
     <type>MetaInject</type>
@@ -708,6 +906,20 @@
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
+        <target_attribute_key>UPDATE_STREAM</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Load Insert / update field settings</source_step>
+        <source_field>update_stream</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>etl_batch_id</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
         <target_attribute_key>DO_NOT</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_table_to_table_insert_update] Load Insert / update step settings</source_step>
@@ -726,69 +938,6 @@
         <target_detail>Y</target_detail>
         <source_step>[performer_table_to_table_insert_update] Load Insert / update key settings</source_step>
         <source_field>key_stream2</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>COMMIT_SIZE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update step settings</source_step>
-        <source_field>commit_size</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>KEY_LOOKUP</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update key settings</source_step>
-        <source_field>key_lookup</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update]  Specify logging fields (non-sensitive)</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update non-sensitive fields</source_step>
-        <source_field>update_stream</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
-        <target_attribute_key>CACHED_ROW_META</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
-        <source_field>cached_row_meta</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update step settings</source_step>
-        <source_field>connectionname</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
-        <target_attribute_key>SQL</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
-        <source_field>sql</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
-        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
-        <source_field>connectionname</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>UPDATE_STREAM</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update field settings</source_step>
-        <source_field>update_stream</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>etl_batch_id</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
@@ -827,6 +976,13 @@
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
+        <target_attribute_key>COMMIT_SIZE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Load Insert / update step settings</source_step>
+        <source_field>commit_size</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
         <target_attribute_key>UPDATE_LOOKUP</target_attribute_key>
         <target_detail>Y</target_detail>
         <source_step>[performer_table_to_table_insert_update] Load Insert / update field settings</source_step>
@@ -854,6 +1010,13 @@
         <source_field>table_name</source_field>
       </mapping>
       <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
+        <target_attribute_key>KEY_LOOKUP</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Load Insert / update key settings</source_step>
+        <source_field>key_lookup</source_field>
+      </mapping>
+      <mapping>
         <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
         <target_attribute_key>EXECUTE_FOR_EACH_ROW</target_attribute_key>
         <target_detail>N</target_detail>
@@ -866,6 +1029,41 @@
         <target_detail>N</target_detail>
         <source_step>[performer_table_to_table_insert_update] Table input</source_step>
         <source_field>limit_size</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update]  Specify logging fields (non-sensitive)</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Load Insert / update non-sensitive fields</source_step>
+        <source_field>update_stream</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
+        <target_attribute_key>CACHED_ROW_META</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
+        <source_field>cached_row_meta</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
+        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Load Insert / update step settings</source_step>
+        <source_field>connectionname</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
+        <target_attribute_key>SQL</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
+        <source_field>sql</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
+        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
+        <source_field>connectionname</source_field>
       </mapping>
     </mappings>
     <attributes/>
@@ -1107,8 +1305,8 @@ WHERE
     </GUI>
   </step>
   <step>
-    <name>JSON input</name>
-    <type>JsonInput</type>
+    <name>Get variables</name>
+    <type>GetVariable</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1117,33 +1315,8 @@ WHERE
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <include>N</include>
-    <include_field/>
-    <rownum>N</rownum>
-    <addresultfile>N</addresultfile>
-    <readurl>N</readurl>
-    <removeSourceField>N</removeSourceField>
-    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
-    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
-    <ignoreMissingPath>Y</ignoreMissingPath>
-    <defaultPathLeafToNull>Y</defaultPathLeafToNull>
-    <rownum_field/>
-    <file>
-    </file>
     <fields>
     </fields>
-    <limit>0</limit>
-    <IsInFields>N</IsInFields>
-    <IsAFile>N</IsAFile>
-    <valueField/>
-    <shortFileFieldName/>
-    <pathFieldName/>
-    <hiddenFieldName/>
-    <lastModificationTimeFieldName/>
-    <uriNameFieldName/>
-    <rootUriNameFieldName/>
-    <extensionFieldName/>
-    <sizeFieldName/>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1154,147 +1327,7 @@ WHERE
     </remotesteps>
     <GUI>
       <xloc>816</xloc>
-      <yloc>160</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>JSON input 2</name>
-    <type>JsonInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <include>N</include>
-    <include_field/>
-    <rownum>N</rownum>
-    <addresultfile>N</addresultfile>
-    <readurl>N</readurl>
-    <removeSourceField>N</removeSourceField>
-    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
-    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
-    <ignoreMissingPath>Y</ignoreMissingPath>
-    <defaultPathLeafToNull>Y</defaultPathLeafToNull>
-    <rownum_field/>
-    <file>
-    </file>
-    <fields>
-    </fields>
-    <limit>0</limit>
-    <IsInFields>N</IsInFields>
-    <IsAFile>N</IsAFile>
-    <valueField/>
-    <shortFileFieldName/>
-    <pathFieldName/>
-    <hiddenFieldName/>
-    <lastModificationTimeFieldName/>
-    <uriNameFieldName/>
-    <rootUriNameFieldName/>
-    <extensionFieldName/>
-    <sizeFieldName/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>816</xloc>
-      <yloc>256</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Set variables</name>
-    <type>SetVariable</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      </fields>
-    <use_formatting>Y</use_formatting>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>816</xloc>
-      <yloc>352</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Table input</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection/>
-    <sql>SELECT &lt;values> FROM &lt;table name> WHERE &lt;conditions></sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>688</xloc>
-      <yloc>256</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Block this step until steps finish</name>
-    <type>BlockUntilStepsFinish</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <steps>
-      </steps>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>768</xloc>
-      <yloc>480</yloc>
+      <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
