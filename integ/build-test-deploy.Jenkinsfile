@@ -11,14 +11,6 @@ pipeline {
         timeout(time: 3, unit: "HOURS")
     }
     stages {
-        stage("Test via Jenkins agent") {
-            steps {
-                build job: 'bi-dev-edw-unit-tests',
-                        parameters: [string(name: 'git_branch', value: "${params.git_branch}")],
-                        propagate: true,
-                        wait: true
-            }
-        }
         stage("Prepare aws cli") {
             environment {
                 AWS_PROFILE = "${params.environment}"
