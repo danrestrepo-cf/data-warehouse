@@ -1,6 +1,6 @@
 <transformation>
   <info>
-    <name>template_incremental_table_to_table_insert</name>
+    <name>template_table_to_table_insert_json</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -34,9 +34,19 @@
         <description/>
       </parameter>
       <parameter>
+        <name>environment</name>
+        <default_value/>
+        <description/>
+      </parameter>
+      <parameter>
         <name>etl_batch_id</name>
         <default_value/>
         <description/>
+      </parameter>
+      <parameter>
+        <name>input_data</name>
+        <default_value/>
+        <description>The JSON string passed from a step function.</description>
       </parameter>
     </parameters>
     <log>
@@ -459,7 +469,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/04/19 15:50:26.698</modified_date>
+    <modified_date>2021/04/23 15:51:25.332</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -550,7 +560,7 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Specify logging fields, log them, and abort transformation as error                                                                                                                               
+      <note>Specify logging fields, log them, and abort transformation as error
 
 
 
@@ -558,8 +568,8 @@
 
 
 </note>
-      <xloc>816</xloc>
-      <yloc>976</yloc>
+      <xloc>304</xloc>
+      <yloc>1296</yloc>
       <width>1024</width>
       <heigth>179</heigth>
       <fontname>Segoe UI</fontname>
@@ -719,73 +729,291 @@
   </connection>
   <order>
     <hop>
-      <from>[template_table_to_table_insert] add a blank field for etl_batch_id to valid stream</from>
-      <to>[template_table_to_table_insert] Set etl_batch_id field value to parameter etl_batch_id</to>
+      <from>[template_table_to_table_insert_json] add a blank field for etl_batch_id to valid stream</from>
+      <to>[template_table_to_table_insert_json] Set etl_batch_id field value to parameter etl_batch_id</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert] Table output</from>
-      <to>[template_table_to_table_insert]  Specify logging fields (non-sensitive)</to>
+      <from>[template_table_to_table_insert_json] Table output</from>
+      <to>[template_table_to_table_insert_json]  Specify logging fields (non-sensitive)</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert]  Specify logging fields (non-sensitive)</from>
-      <to>[template_table_to_table_insert]  Abort Table Output</to>
+      <from>[template_table_to_table_insert_json]  Specify logging fields (non-sensitive)</from>
+      <to>[template_table_to_table_insert_json]  Abort Table Output</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert] add a blank field for data_source_dwid to valid stream</from>
-      <to>[template_table_to_table_insert] Set data_source_dwid field value to parameter data_source_dwid</to>
+      <from>[template_table_to_table_insert_json] add a blank field for data_source_dwid to valid stream</from>
+      <to>[template_table_to_table_insert_json] Set data_source_dwid field value to parameter data_source_dwid</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert] Set etl_batch_id field value to parameter etl_batch_id</from>
-      <to>[template_table_to_table_insert] add a blank field for data_source_dwid to valid stream</to>
+      <from>[template_table_to_table_insert_json] Set etl_batch_id field value to parameter etl_batch_id</from>
+      <to>[template_table_to_table_insert_json] add a blank field for data_source_dwid to valid stream</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert] Set data_source_dwid field value to parameter data_source_dwid</from>
-      <to>[template_table_to_table_insert] Table output</to>
+      <from>[template_table_to_table_insert_json] Set data_source_dwid field value to parameter data_source_dwid</from>
+      <to>[template_table_to_table_insert_json] Table output</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert] Table input</from>
-      <to>[template_table_to_table_insert] add a blank field for etl_batch_id to valid stream</to>
+      <from>[template_table_to_table_insert_json] Table input</from>
+      <to>[template_table_to_table_insert_json] add a blank field for etl_batch_id to valid stream</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert] Table input</from>
-      <to>Select values</to>
+      <from>[template_table_to_table_insert_json] Table input</from>
+      <to>[template_table_to_table_insert_json] Select key field rows</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Select values</from>
-      <to>Memory group by</to>
+      <from>[template_table_to_table_insert_json] Block S3 step until insert flow finishes</from>
+      <to>[template_table_to_table_insert_json] S3 file output</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Memory group by</from>
-      <to>Add constants</to>
+      <from>[template_table_to_table_insert_json] Select key field rows</from>
+      <to>[template_table_to_table_insert] Count and concatenate key field rows</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Add constants</from>
-      <to>JSON output</to>
+      <from>[template_table_to_table_insert] Count and concatenate key field rows</from>
+      <to>[template_table_to_table_insert_json] Filter rows</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>JSON output</from>
-      <to>Block this step until steps finish</to>
+      <from>[template_table_to_table_insert_json] Filter rows</from>
+      <to>[template_table_to_table_insert_json] Full load - set key_field_values to NULL</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Block this step until steps finish</from>
-      <to>S3 file output</to>
+      <from>[template_table_to_table_insert_json] Filter rows</from>
+      <to>[template_table_to_table_insert_json] Partial load - add blank fields for MDI constants</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_json] Partial load - add blank fields for MDI constants</from>
+      <to>[template_table_to_table_insert_json] Partial load - Set MDI constants</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_json] Full load - set key_field_values to NULL</from>
+      <to>[template_table_to_table_insert_json] Full load - add blank field for MDI constant</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_json] Full load - add blank field for MDI constant</from>
+      <to>[template_table_to_table_insert_json] Full load - Set MDI constants</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_json] Full load - Set MDI constants</from>
+      <to>[template_table_to_table_insert_json] Full load - add hardcoded constant</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_json] Partial load - Set MDI constants</from>
+      <to>[template_table_to_table_insert_json] Partial load - add hardcoded constants</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_json] Build output JSON</from>
+      <to>[template_table_to_table_insert_json] Block S3 step until insert flow finishes</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_json] Partial load - add hardcoded constants</from>
+      <to>[template_table_to_table_insert_json] Build output JSON</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_json] Full load - add hardcoded constant</from>
+      <to>[template_table_to_table_insert_json] Build output JSON</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>[template_table_to_table_insert]  Abort Table Output</name>
+    <name>[template_table_to_table_insert_json] Partial load - add blank fields for MDI constants</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>token_id</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>key_field_name</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1072</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_json] Filter rows</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to>[template_table_to_table_insert_json] Full load - set key_field_values to NULL</send_true_to>
+    <send_false_to>[template_table_to_table_insert_json] Partial load - add blank fields for MDI constants</send_false_to>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>row_count</leftvalue>
+        <function>&gt;</function>
+        <rightvalue/>
+        <value>
+          <name>constant</name>
+          <type>Integer</type>
+          <text>1000</text>
+          <length>-1</length>
+          <precision>0</precision>
+          <isnull>N</isnull>
+          <mask>####0;-####0</mask>
+        </value>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1360</xloc>
+      <yloc>400</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_json] Full load - set key_field_values to NULL</name>
+    <type>SetValueConstant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <usevar>N</usevar>
+    <fields>
+      <field>
+        <name>key_field_values</name>
+        <value/>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1664</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert] Count and concatenate key field rows</name>
+    <type>GroupBy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <all_rows>N</all_rows>
+    <ignore_aggregate>N</ignore_aggregate>
+    <field_ignore/>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>grp</prefix>
+    <add_linenr>N</add_linenr>
+    <linenr_fieldname/>
+    <give_back_row>Y</give_back_row>
+    <group>
+      </group>
+    <fields>
+      <field>
+        <aggregate>row_count</aggregate>
+        <subject/>
+        <type>COUNT_ANY</type>
+        <valuefield/>
+      </field>
+      <field>
+        <aggregate>key_field_values</aggregate>
+        <subject>key_field_value_rows</subject>
+        <type>CONCAT_STRING</type>
+        <valuefield>,</valuefield>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1360</xloc>
+      <yloc>288</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_json]  Abort Table Output</name>
     <type>Abort</type>
     <description/>
     <distribute>Y</distribute>
@@ -808,13 +1036,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1584</xloc>
-      <yloc>1088</yloc>
+      <xloc>1024</xloc>
+      <yloc>1376</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert]  Specify logging fields (non-sensitive)</name>
+    <name>[template_table_to_table_insert_json]  Specify logging fields (non-sensitive)</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
@@ -836,13 +1064,127 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1040</xloc>
-      <yloc>1088</yloc>
+      <xloc>656</xloc>
+      <yloc>1376</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert] Set data_source_dwid field value to parameter data_source_dwid</name>
+    <name>[template_table_to_table_insert_json] Block S3 step until insert flow finishes</name>
+    <type>BlockUntilStepsFinish</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <steps>
+      </steps>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1376</xloc>
+      <yloc>960</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_json] S3 file output</name>
+    <type>S3FileOutputPlugin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <separator>;</separator>
+    <enclosure>"</enclosure>
+    <enclosure_forced>N</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <header>Y</header>
+    <footer>N</footer>
+    <format>DOS</format>
+    <compression>None</compression>
+    <encoding/>
+    <endedLine/>
+    <fileNameInField>N</fileNameInField>
+    <fileNameField/>
+    <create_parent_folder>Y</create_parent_folder>
+    <file>
+      <name>s3n://s3n</name>
+      <servlet_output>N</servlet_output>
+      <do_not_open_new_file_init>N</do_not_open_new_file_init>
+      <extention>txt</extention>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <add_to_result_filenames>Y</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery>0</splitevery>
+    </file>
+    <fields>
+    </fields>
+    <access_key>Encrypted </access_key>
+    <secret_key>Encrypted </secret_key>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1376</xloc>
+      <yloc>1056</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_json] Select key field rows</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1360</xloc>
+      <yloc>176</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_json] Set data_source_dwid field value to parameter data_source_dwid</name>
     <type>SetValueConstant</type>
     <description/>
     <distribute>N</distribute>
@@ -876,7 +1218,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert] Set etl_batch_id field value to parameter etl_batch_id</name>
+    <name>[template_table_to_table_insert_json] Set etl_batch_id field value to parameter etl_batch_id</name>
     <type>SetValueConstant</type>
     <description/>
     <distribute>N</distribute>
@@ -910,7 +1252,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert] Table input</name>
+    <name>[template_table_to_table_insert_json] Table input</name>
     <type>TableInput</type>
     <description/>
     <distribute>N</distribute>
@@ -944,7 +1286,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert] Table output</name>
+    <name>[template_table_to_table_insert_json] Table output</name>
     <type>TableOutput</type>
     <description/>
     <distribute>N</distribute>
@@ -988,7 +1330,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert] add a blank field for data_source_dwid to valid stream</name>
+    <name>[template_table_to_table_insert_json] add a blank field for data_source_dwid to valid stream</name>
     <type>Constant</type>
     <description/>
     <distribute>N</distribute>
@@ -1027,7 +1369,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert] add a blank field for etl_batch_id to valid stream</name>
+    <name>[template_table_to_table_insert_json] add a blank field for etl_batch_id to valid stream</name>
     <type>Constant</type>
     <description/>
     <distribute>N</distribute>
@@ -1066,8 +1408,8 @@
     </GUI>
   </step>
   <step>
-    <name>Select values</name>
-    <type>SelectValues</type>
+    <name>[template_table_to_table_insert_json] Partial load - add hardcoded constants</name>
+    <type>Constant</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1077,7 +1419,18 @@
       <schema_name/>
     </partitioning>
     <fields>
-      <select_unspecified>N</select_unspecified>
+      <field>
+        <name>full_load_flag</name>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>FALSE</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -1088,14 +1441,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1216</xloc>
-      <yloc>176</yloc>
+      <xloc>1072</xloc>
+      <yloc>752</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Memory group by</name>
-    <type>MemoryGroupBy</type>
+    <name>[template_table_to_table_insert_json] Full load - add hardcoded constant</name>
+    <type>Constant</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1104,9 +1457,58 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <give_back_row>N</give_back_row>
-    <group>
-      </group>
+    <fields>
+      <field>
+        <name>key_field_name</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>full_load_flag</name>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>TRUE</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1664</xloc>
+      <yloc>752</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_json] Partial load - Set MDI constants</name>
+    <type>SetValueConstant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <usevar>N</usevar>
     <fields>
       </fields>
     <attributes/>
@@ -1118,13 +1520,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1216</xloc>
-      <yloc>288</yloc>
+      <xloc>1072</xloc>
+      <yloc>592</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Add constants</name>
+    <name>[template_table_to_table_insert_json] Full load - add blank field for MDI constant</name>
     <type>Constant</type>
     <description/>
     <distribute>Y</distribute>
@@ -1135,6 +1537,18 @@
       <schema_name/>
     </partitioning>
     <fields>
+      <field>
+        <name>token_id</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -1145,14 +1559,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1216</xloc>
-      <yloc>400</yloc>
+      <xloc>1664</xloc>
+      <yloc>544</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>JSON output</name>
-    <type>JsonOutput</type>
+    <name>[template_table_to_table_insert_json] Full load - Set MDI constants</name>
+    <type>SetValueConstant</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1161,27 +1575,9 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <outputValue>outputValue</outputValue>
-    <jsonBloc>data</jsonBloc>
-    <nrRowsInBloc>1</nrRowsInBloc>
-    <operation_type>writetofile</operation_type>
-    <compatibility_mode>N</compatibility_mode>
-    <encoding>UTF-8</encoding>
-    <addtoresult>N</addtoresult>
-    <file>
-      <name/>
-      <extention>js</extention>
-      <append>N</append>
-      <split>N</split>
-      <haspartno>N</haspartno>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <create_parent_folder>N</create_parent_folder>
-      <DoNotOpenNewFileInit>N</DoNotOpenNewFileInit>
-      <servlet_output>N</servlet_output>
-    </file>
+    <usevar>N</usevar>
     <fields>
-    </fields>
+      </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1191,14 +1587,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1216</xloc>
-      <yloc>512</yloc>
+      <xloc>1664</xloc>
+      <yloc>640</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Block this step until steps finish</name>
-    <type>BlockUntilStepsFinish</type>
+    <name>[template_table_to_table_insert_json] Build output JSON</name>
+    <type>ScriptValueMod</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1207,67 +1603,35 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <steps>
-      </steps>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1216</xloc>
-      <yloc>624</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>S3 file output</name>
-    <type>S3FileOutputPlugin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <separator>;</separator>
-    <enclosure>"</enclosure>
-    <enclosure_forced>N</enclosure_forced>
-    <enclosure_fix_disabled>N</enclosure_fix_disabled>
-    <header>Y</header>
-    <footer>N</footer>
-    <format>DOS</format>
-    <compression>None</compression>
-    <encoding/>
-    <endedLine/>
-    <fileNameInField>N</fileNameInField>
-    <fileNameField/>
-    <create_parent_folder>Y</create_parent_folder>
-    <file>
-      <name>s3n://s3n</name>
-      <servlet_output>N</servlet_output>
-      <do_not_open_new_file_init>N</do_not_open_new_file_init>
-      <extention>txt</extention>
-      <append>N</append>
-      <split>N</split>
-      <haspartno>N</haspartno>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <SpecifyFormat>N</SpecifyFormat>
-      <date_time_format/>
-      <add_to_result_filenames>Y</add_to_result_filenames>
-      <pad>N</pad>
-      <fast_dump>N</fast_dump>
-      <splitevery/>
-    </file>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>// Declare an empty JavaScript object
+var json = {};
+json.token_id = token_id
+
+json.mdi_input_json = {};
+json.mdi_input_json.full_load_flag = full_load_flag;
+json.mdi_input_json.key_field_name = key_field_name;
+json.mdi_input_json.key_field_values = key_field_values
+
+
+var mdi_output_json = JSON.stringify(json);</jsScript_script>
+      </jsScript>
+    </jsScripts>
     <fields>
+      <field>
+        <name>mdi_output_json</name>
+        <rename>mdi_output_json</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
     </fields>
-    <access_key>Encrypted </access_key>
-    <secret_key>Encrypted </secret_key>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1277,15 +1641,15 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1216</xloc>
-      <yloc>736</yloc>
+      <xloc>1376</xloc>
+      <yloc>864</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step_error_handling>
     <error>
-      <source_step>[template_table_to_table_insert] Set etl_batch_id field value to parameter etl_batch_id</source_step>
-      <target_step>[template_table_to_table_insert]  Abort Table Output</target_step>
+      <source_step>[template_table_to_table_insert_json] Set etl_batch_id field value to parameter etl_batch_id</source_step>
+      <target_step>[template_table_to_table_insert_json]  Abort Table Output</target_step>
       <is_enabled>N</is_enabled>
       <nr_valuename/>
       <descriptions_valuename/>
@@ -1296,8 +1660,8 @@
       <min_pct_rows/>
     </error>
     <error>
-      <source_step>[template_table_to_table_insert] Table output</source_step>
-      <target_step>[template_table_to_table_insert]  Specify logging fields (non-sensitive)</target_step>
+      <source_step>[template_table_to_table_insert_json] Table output</source_step>
+      <target_step>[template_table_to_table_insert_json]  Specify logging fields (non-sensitive)</target_step>
       <is_enabled>Y</is_enabled>
       <nr_valuename/>
       <descriptions_valuename/>

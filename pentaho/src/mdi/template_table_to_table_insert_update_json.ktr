@@ -1,6 +1,6 @@
 <transformation>
   <info>
-    <name>template_incremental_table_to_table_insert_update</name>
+    <name>template_table_to_table_insert_update_json</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -34,9 +34,19 @@
         <description/>
       </parameter>
       <parameter>
+        <name>environment</name>
+        <default_value/>
+        <description/>
+      </parameter>
+      <parameter>
         <name>etl_batch_id</name>
         <default_value/>
         <description/>
+      </parameter>
+      <parameter>
+        <name>input_data</name>
+        <default_value/>
+        <description>The JSON string passed from a step function.</description>
       </parameter>
     </parameters>
     <log>
@@ -459,7 +469,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/04/19 15:51:24.033</modified_date>
+    <modified_date>2021/04/23 15:34:26.864</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -558,8 +568,8 @@
 
 
 </note>
-      <xloc>816</xloc>
-      <yloc>976</yloc>
+      <xloc>336</xloc>
+      <yloc>1248</yloc>
       <width>1024</width>
       <heigth>179</heigth>
       <fontname>Segoe UI</fontname>
@@ -719,73 +729,43 @@
   </connection>
   <order>
     <hop>
-      <from>[template_table_to_table_insert_update] add a blank field for etl_batch_id to valid stream</from>
-      <to>[template_table_to_table_insert_update] Set etl_batch_id field value to parameter etl_batch_id</to>
+      <from>[template_table_to_table_insert_update_json] add a blank field for etl_batch_id to valid stream</from>
+      <to>[template_table_to_table_insert_update_json] Set etl_batch_id field value to parameter etl_batch_id</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_update]  Specify logging fields (non-sensitive)</from>
-      <to>[template_table_to_table_insert_update]  Abort Table Output</to>
+      <from>[template_table_to_table_insert_update_json]  Specify logging fields (non-sensitive)</from>
+      <to>[template_table_to_table_insert_update_json]  Abort Table Output</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_update] add a blank field for data_source_dwid to valid stream</from>
-      <to>[template_table_to_table_insert_update] Set data_source_dwid field value to parameter data_source_dwid</to>
+      <from>[template_table_to_table_insert_update_json] add a blank field for data_source_dwid to valid stream</from>
+      <to>[template_table_to_table_insert_update_json] Set data_source_dwid field value to parameter data_source_dwid</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_update] Set etl_batch_id field value to parameter etl_batch_id</from>
-      <to>[template_table_to_table_insert_update] add a blank field for data_source_dwid to valid stream</to>
+      <from>[template_table_to_table_insert_update_json] Set etl_batch_id field value to parameter etl_batch_id</from>
+      <to>[template_table_to_table_insert_update_json] add a blank field for data_source_dwid to valid stream</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_update] Table input</from>
-      <to>[template_table_to_table_insert_update] add a blank field for etl_batch_id to valid stream</to>
+      <from>[template_table_to_table_insert_update_json] Table input</from>
+      <to>[template_table_to_table_insert_update_json] add a blank field for etl_batch_id to valid stream</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_update] Set data_source_dwid field value to parameter data_source_dwid</from>
-      <to>[template_table_to_table_insert_update] Insert / update</to>
+      <from>[template_table_to_table_insert_update_json] Set data_source_dwid field value to parameter data_source_dwid</from>
+      <to>[template_table_to_table_insert_update_json] Insert / update</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_update] Insert / update</from>
-      <to>[template_table_to_table_insert_update]  Specify logging fields (non-sensitive)</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Select values</from>
-      <to>Memory group by</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Memory group by</from>
-      <to>Add constants</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Add constants</from>
-      <to>JSON output</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>JSON output</from>
-      <to>Block this step until steps finish</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Block this step until steps finish</from>
-      <to>S3 file output</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[template_table_to_table_insert_update] Table input</from>
-      <to>Select values</to>
+      <from>[template_table_to_table_insert_update_json] Insert / update</from>
+      <to>[template_table_to_table_insert_update_json]  Specify logging fields (non-sensitive)</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>[template_table_to_table_insert_update]  Abort Table Output</name>
+    <name>[template_table_to_table_insert_update_json]  Abort Table Output</name>
     <type>Abort</type>
     <description/>
     <distribute>Y</distribute>
@@ -808,13 +788,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1584</xloc>
-      <yloc>1088</yloc>
+      <xloc>1104</xloc>
+      <yloc>1360</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update]  Specify logging fields (non-sensitive)</name>
+    <name>[template_table_to_table_insert_update_json]  Specify logging fields (non-sensitive)</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
@@ -836,13 +816,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1040</xloc>
-      <yloc>1088</yloc>
+      <xloc>640</xloc>
+      <yloc>1360</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update] Insert / update</name>
+    <name>[template_table_to_table_insert_update_json] Insert / update</name>
     <type>InsertUpdate</type>
     <description/>
     <distribute>Y</distribute>
@@ -874,7 +854,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update] Set data_source_dwid field value to parameter data_source_dwid</name>
+    <name>[template_table_to_table_insert_update_json] Set data_source_dwid field value to parameter data_source_dwid</name>
     <type>SetValueConstant</type>
     <description/>
     <distribute>N</distribute>
@@ -908,7 +888,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update] Set etl_batch_id field value to parameter etl_batch_id</name>
+    <name>[template_table_to_table_insert_update_json] Set etl_batch_id field value to parameter etl_batch_id</name>
     <type>SetValueConstant</type>
     <description/>
     <distribute>N</distribute>
@@ -942,7 +922,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update] Table input</name>
+    <name>[template_table_to_table_insert_update_json] Table input</name>
     <type>TableInput</type>
     <description/>
     <distribute>N</distribute>
@@ -976,7 +956,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update] add a blank field for data_source_dwid to valid stream</name>
+    <name>[template_table_to_table_insert_update_json] add a blank field for data_source_dwid to valid stream</name>
     <type>Constant</type>
     <description/>
     <distribute>N</distribute>
@@ -1015,7 +995,7 @@
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update] add a blank field for etl_batch_id to valid stream</name>
+    <name>[template_table_to_table_insert_update_json] add a blank field for etl_batch_id to valid stream</name>
     <type>Constant</type>
     <description/>
     <distribute>N</distribute>
@@ -1053,227 +1033,10 @@
       <draw>Y</draw>
     </GUI>
   </step>
-  <step>
-    <name>Select values</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1216</xloc>
-      <yloc>176</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Memory group by</name>
-    <type>MemoryGroupBy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <give_back_row>N</give_back_row>
-    <group>
-      </group>
-    <fields>
-      </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1216</xloc>
-      <yloc>288</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Add constants</name>
-    <type>Constant</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1216</xloc>
-      <yloc>400</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>JSON output</name>
-    <type>JsonOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <outputValue>outputValue</outputValue>
-    <jsonBloc>data</jsonBloc>
-    <nrRowsInBloc>1</nrRowsInBloc>
-    <operation_type>writetofile</operation_type>
-    <compatibility_mode>N</compatibility_mode>
-    <encoding>UTF-8</encoding>
-    <addtoresult>N</addtoresult>
-    <file>
-      <name/>
-      <extention>js</extention>
-      <append>N</append>
-      <split>N</split>
-      <haspartno>N</haspartno>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <create_parent_folder>N</create_parent_folder>
-      <DoNotOpenNewFileInit>N</DoNotOpenNewFileInit>
-      <servlet_output>N</servlet_output>
-    </file>
-    <fields>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1216</xloc>
-      <yloc>512</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Block this step until steps finish</name>
-    <type>BlockUntilStepsFinish</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <steps>
-      </steps>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1216</xloc>
-      <yloc>624</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>S3 file output</name>
-    <type>S3FileOutputPlugin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <separator>;</separator>
-    <enclosure>"</enclosure>
-    <enclosure_forced>N</enclosure_forced>
-    <enclosure_fix_disabled>N</enclosure_fix_disabled>
-    <header>Y</header>
-    <footer>N</footer>
-    <format>DOS</format>
-    <compression>None</compression>
-    <encoding/>
-    <endedLine/>
-    <fileNameInField>N</fileNameInField>
-    <fileNameField/>
-    <create_parent_folder>Y</create_parent_folder>
-    <file>
-      <name>s3n://s3n</name>
-      <servlet_output>N</servlet_output>
-      <do_not_open_new_file_init>N</do_not_open_new_file_init>
-      <extention>txt</extention>
-      <append>N</append>
-      <split>N</split>
-      <haspartno>N</haspartno>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <SpecifyFormat>N</SpecifyFormat>
-      <date_time_format/>
-      <add_to_result_filenames>Y</add_to_result_filenames>
-      <pad>N</pad>
-      <fast_dump>N</fast_dump>
-      <splitevery/>
-    </file>
-    <fields>
-    </fields>
-    <access_key>Encrypted </access_key>
-    <secret_key>Encrypted </secret_key>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1216</xloc>
-      <yloc>736</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
   <step_error_handling>
     <error>
-      <source_step>[template_table_to_table_insert_update] Insert / update</source_step>
-      <target_step>[template_table_to_table_insert_update]  Specify logging fields (non-sensitive)</target_step>
+      <source_step>[template_table_to_table_insert_update_json] Insert / update</source_step>
+      <target_step>[template_table_to_table_insert_update_json]  Specify logging fields (non-sensitive)</target_step>
       <is_enabled>Y</is_enabled>
       <nr_valuename/>
       <descriptions_valuename/>
@@ -1284,8 +1047,8 @@
       <min_pct_rows/>
     </error>
     <error>
-      <source_step>[template_table_to_table_insert_update] Set etl_batch_id field value to parameter etl_batch_id</source_step>
-      <target_step>[template_table_to_table_insert_update]  Abort Table Output</target_step>
+      <source_step>[template_table_to_table_insert_update_json] Set etl_batch_id field value to parameter etl_batch_id</source_step>
+      <target_step>[template_table_to_table_insert_update_json]  Abort Table Output</target_step>
       <is_enabled>N</is_enabled>
       <nr_valuename/>
       <descriptions_valuename/>

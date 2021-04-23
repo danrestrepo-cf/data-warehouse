@@ -15,17 +15,17 @@
       </parameter>
       <parameter>
         <name>database_hostname</name>
-        <default_value/>
+        <default_value>localhost</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>database_password</name>
-        <default_value/>
+        <default_value>testonly</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>database_port</name>
-        <default_value/>
+        <default_value>5432</default_value>
         <description/>
       </parameter>
       <parameter>
@@ -35,6 +35,11 @@
       </parameter>
       <parameter>
         <name>database_username</name>
+        <default_value>postgres</default_value>
+        <description/>
+      </parameter>
+      <parameter>
+        <name>environment</name>
         <default_value/>
         <description/>
       </parameter>
@@ -44,8 +49,13 @@
         <description/>
       </parameter>
       <parameter>
-        <name>process_dwid</name>
+        <name>input_data</name>
         <default_value/>
+        <description>The JSON string passed from a step function.</description>
+      </parameter>
+      <parameter>
+        <name>process_dwid</name>
+        <default_value>8</default_value>
         <description/>
       </parameter>
       <parameter>
@@ -474,7 +484,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.089</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/04/20 16:43:29.850</modified_date>
+    <modified_date>2021/04/23 15:29:41.142</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -488,8 +498,8 @@ backwards but they are *not*. The table_output_field.database_field_name
 column maps to DATABASE_STREAM_NAME in the MDI step. The
 table_output_field.database_stream_name gets mapped to
 DATABASE_FIELD_NAME. </note>
-      <xloc>1280</xloc>
-      <yloc>656</yloc>
+      <xloc>1136</xloc>
+      <yloc>848</yloc>
       <width>400</width>
       <heigth>138</heigth>
       <fontname>Segoe UI</fontname>
@@ -669,53 +679,96 @@ DATABASE_FIELD_NAME. </note>
   </connection>
   <order>
     <hop>
-      <from>JSON input</from>
-      <to>JSON input 2</to>
+      <from>[performer_table_to_table_insert_json] Read JSON token_id</from>
+      <to>[performer_table_to_table_insert_json] Read JSON MDI input values</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>JSON input 2</from>
-      <to>Set variables</to>
+      <from>[performer_table_to_table_insert_json] Read JSON MDI input values</from>
+      <to>[performer_table_to_table_insert_json] Set variables</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Table input</from>
-      <to>Set variables</to>
+      <from>[performer_table_to_table_insert_json] Load Table Input step settings</from>
+      <to>[performer_table_to_table_insert_json] Block this step until JSON path finish</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_table_to_table_insert] Load Table Input step settings</from>
-      <to>Block this step until steps finish</to>
+      <from>[performer_table_to_table_insert_json] Block this step until JSON path finish</from>
+      <to>[performer_table_to_table_insert_json] ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Block this step until steps finish</from>
-      <to>[performer_table_to_table_insert] ETL metadata injection</to>
+      <from>[performer_table_to_table_insert_json] Load Table Output step settings</from>
+      <to>[performer_table_to_table_insert_json] Block this step until JSON path finish</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_table_to_table_insert] Load Table Output step settings</from>
-      <to>Block this step until steps finish</to>
+      <from>[performer_table_to_table_insert_json] Load Table Output field settings</from>
+      <to>[performer_table_to_table_insert_json] Block this step until JSON path finish</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_table_to_table_insert] Load Table Output field settings</from>
-      <to>Block this step until steps finish</to>
+      <from>[performer_table_to_table_insert_json] Load Table Output non-sensitive fields</from>
+      <to>[performer_table_to_table_insert_json] Block this step until JSON path finish</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_table_to_table_insert] Load Table Output non-sensitive fields</from>
-      <to>Block this step until steps finish</to>
+      <from>[performer_table_to_table_insert_json] Get JSON input</from>
+      <to>[performer_table_to_table_insert_json] Read JSON token_id</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Get variables</from>
-      <to>JSON input</to>
+      <from>[performer_table_to_table_insert_json]  Get key_field_name</from>
+      <to>[performer_table_to_table_insert_json] Block this step until JSON path finish</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert_json] Read JSON MDI input values</from>
+      <to>[performer_table_to_table_insert_json] Block this step until JSON path finish</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Block this step until steps finish</name>
+    <name>[performer_table_to_table_insert_json]  Get key_field_name</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>Config DB Connection</connection>
+    <sql>SELECT json_output_field.field_name AS fieldname
+	, 'key_field_value_rows' AS rename_to
+FROM mdi.process
+	LEFT JOIN mdi.json_output_field
+WHERE process.dwid = ${process_dwid}</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>880</xloc>
+      <yloc>208</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[performer_table_to_table_insert_json] Block this step until JSON path finish</name>
     <type>BlockUntilStepsFinish</type>
     <description/>
     <distribute>Y</distribute>
@@ -736,179 +789,13 @@ DATABASE_FIELD_NAME. </note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>848</xloc>
+      <xloc>880</xloc>
       <yloc>784</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>JSON input</name>
-    <type>JsonInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <include>N</include>
-    <include_field/>
-    <rownum>N</rownum>
-    <addresultfile>N</addresultfile>
-    <readurl>N</readurl>
-    <removeSourceField>N</removeSourceField>
-    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
-    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
-    <ignoreMissingPath>Y</ignoreMissingPath>
-    <defaultPathLeafToNull>Y</defaultPathLeafToNull>
-    <rownum_field/>
-    <file>
-    </file>
-    <fields>
-    </fields>
-    <limit>0</limit>
-    <IsInFields>N</IsInFields>
-    <IsAFile>N</IsAFile>
-    <valueField/>
-    <shortFileFieldName/>
-    <pathFieldName/>
-    <hiddenFieldName/>
-    <lastModificationTimeFieldName/>
-    <uriNameFieldName/>
-    <rootUriNameFieldName/>
-    <extensionFieldName/>
-    <sizeFieldName/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>960</xloc>
-      <yloc>480</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>JSON input 2</name>
-    <type>JsonInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <include>N</include>
-    <include_field/>
-    <rownum>N</rownum>
-    <addresultfile>N</addresultfile>
-    <readurl>N</readurl>
-    <removeSourceField>N</removeSourceField>
-    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
-    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
-    <ignoreMissingPath>Y</ignoreMissingPath>
-    <defaultPathLeafToNull>Y</defaultPathLeafToNull>
-    <rownum_field/>
-    <file>
-    </file>
-    <fields>
-    </fields>
-    <limit>0</limit>
-    <IsInFields>N</IsInFields>
-    <IsAFile>N</IsAFile>
-    <valueField/>
-    <shortFileFieldName/>
-    <pathFieldName/>
-    <hiddenFieldName/>
-    <lastModificationTimeFieldName/>
-    <uriNameFieldName/>
-    <rootUriNameFieldName/>
-    <extensionFieldName/>
-    <sizeFieldName/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>960</xloc>
-      <yloc>576</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Set variables</name>
-    <type>SetVariable</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      </fields>
-    <use_formatting>Y</use_formatting>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>960</xloc>
-      <yloc>672</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Table input</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection/>
-    <sql>SELECT &lt;values> FROM &lt;table name> WHERE &lt;conditions></sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>848</xloc>
-      <yloc>560</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[performer_table_to_table_insert] ETL metadata injection</name>
+    <name>[performer_table_to_table_insert_json] ETL metadata injection</name>
     <type>MetaInject</type>
     <description/>
     <distribute>Y</distribute>
@@ -920,7 +807,7 @@ DATABASE_FIELD_NAME. </note>
     </partitioning>
     <specification_method>rep_name</specification_method>
     <trans_object_id/>
-    <trans_name>template_table_to_table_insert</trans_name>
+    <trans_name>template_table_to_table_insert_json</trans_name>
     <filename/>
     <directory_path>${Internal.Entry.Current.Directory}</directory_path>
     <source_step/>
@@ -1143,13 +1030,52 @@ DATABASE_FIELD_NAME. </note>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1136</xloc>
+      <xloc>1296</xloc>
       <yloc>784</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[performer_table_to_table_insert] Load Table Input step settings</name>
+    <name>[performer_table_to_table_insert_json] Get JSON input</name>
+    <type>GetVariable</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>input_data</name>
+        <variable>${input_data}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1232</xloc>
+      <yloc>208</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[performer_table_to_table_insert_json] Load Table Input step settings</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1197,7 +1123,7 @@ WHERE
     </GUI>
   </step>
   <step>
-    <name>[performer_table_to_table_insert] Load Table Output field settings</name>
+    <name>[performer_table_to_table_insert_json] Load Table Output field settings</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1243,7 +1169,7 @@ ORDER BY
     </GUI>
   </step>
   <step>
-    <name>[performer_table_to_table_insert] Load Table Output non-sensitive fields</name>
+    <name>[performer_table_to_table_insert_json] Load Table Output non-sensitive fields</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1289,7 +1215,7 @@ ORDER BY
     </GUI>
   </step>
   <step>
-    <name>[performer_table_to_table_insert] Load Table Output step settings</name>
+    <name>[performer_table_to_table_insert_json] Load Table Output step settings</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1344,18 +1270,87 @@ WHERE
     </GUI>
   </step>
   <step>
-    <name>Get variables</name>
-    <type>GetVariable</type>
+    <name>[performer_table_to_table_insert_json] Read JSON MDI input values</name>
+    <type>JsonInput</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
       <schema_name/>
     </partitioning>
+    <include>N</include>
+    <include_field/>
+    <rownum>N</rownum>
+    <addresultfile>N</addresultfile>
+    <readurl>N</readurl>
+    <removeSourceField>N</removeSourceField>
+    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
+    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
+    <ignoreMissingPath>Y</ignoreMissingPath>
+    <defaultPathLeafToNull>Y</defaultPathLeafToNull>
+    <rownum_field/>
+    <file>
+      <name/>
+      <filemask/>
+      <exclude_filemask/>
+      <file_required>N</file_required>
+      <include_subfolders>N</include_subfolders>
+    </file>
     <fields>
+      <field>
+        <name>full_load_flag</name>
+        <path>$..full_load_flag</path>
+        <type>None</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>key_field_name</name>
+        <path>$..key_field_name</path>
+        <type>None</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>key_field_values</name>
+        <path>$..key_field_values</path>
+        <type>None</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
     </fields>
+    <limit>0</limit>
+    <IsInFields>Y</IsInFields>
+    <IsAFile>N</IsAFile>
+    <valueField>mdi_input_json</valueField>
+    <shortFileFieldName/>
+    <pathFieldName/>
+    <hiddenFieldName/>
+    <lastModificationTimeFieldName/>
+    <uriNameFieldName/>
+    <rootUriNameFieldName/>
+    <extensionFieldName/>
+    <sizeFieldName/>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1365,8 +1360,131 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>960</xloc>
-      <yloc>384</yloc>
+      <xloc>1232</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[performer_table_to_table_insert_json] Read JSON token_id</name>
+    <type>JsonInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <include>N</include>
+    <include_field/>
+    <rownum>N</rownum>
+    <addresultfile>N</addresultfile>
+    <readurl>N</readurl>
+    <removeSourceField>N</removeSourceField>
+    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
+    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
+    <ignoreMissingPath>Y</ignoreMissingPath>
+    <defaultPathLeafToNull>Y</defaultPathLeafToNull>
+    <rownum_field/>
+    <file>
+      <name/>
+      <filemask/>
+      <exclude_filemask/>
+      <file_required>N</file_required>
+      <include_subfolders>N</include_subfolders>
+    </file>
+    <fields>
+      <field>
+        <name>token_id</name>
+        <path>$..token_id</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>mdi_input_json</name>
+        <path>$..mdi_input_json</path>
+        <type>None</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+    </fields>
+    <limit>0</limit>
+    <IsInFields>Y</IsInFields>
+    <IsAFile>N</IsAFile>
+    <valueField>input_data</valueField>
+    <shortFileFieldName/>
+    <pathFieldName/>
+    <hiddenFieldName/>
+    <lastModificationTimeFieldName/>
+    <uriNameFieldName/>
+    <rootUriNameFieldName/>
+    <extensionFieldName/>
+    <sizeFieldName/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1232</xloc>
+      <yloc>320</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[performer_table_to_table_insert_json] Set variables</name>
+    <type>SetVariable</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <field_name>token_id</field_name>
+        <variable_name>token_id</variable_name>
+        <variable_type>JVM</variable_type>
+        <default_value/>
+      </field>
+      <field>
+        <field_name>key_field_values</field_name>
+        <variable_name>key_field_values</variable_name>
+        <variable_type>JVM</variable_type>
+        <default_value/>
+      </field>
+    </fields>
+    <use_formatting>Y</use_formatting>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1632</xloc>
+      <yloc>448</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
