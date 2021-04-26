@@ -484,11 +484,40 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.089</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/04/23 17:47:07.936</modified_date>
+    <modified_date>2021/04/26 08:10:02.672</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
+    <notepad>
+      <note>Table input					
+
+
+
+
+
+
+
+</note>
+      <xloc>32</xloc>
+      <yloc>32</yloc>
+      <width>442</width>
+      <heigth>199</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
     <notepad>
       <note>NOTE:
 The table output step uses the labels "DATABASE_FIELD_NAME"
@@ -498,8 +527,8 @@ backwards but they are *not*. The table_output_field.database_field_name
 column maps to DATABASE_STREAM_NAME in the MDI step. The
 table_output_field.database_stream_name gets mapped to
 DATABASE_FIELD_NAME. </note>
-      <xloc>1136</xloc>
-      <yloc>848</yloc>
+      <xloc>1168</xloc>
+      <yloc>496</yloc>
       <width>400</width>
       <heigth>138</heigth>
       <fontname>Segoe UI</fontname>
@@ -518,12 +547,7 @@ DATABASE_FIELD_NAME. </note>
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Table input
-
-
-
-
-
+      <note>Table output					
 
 
 
@@ -533,9 +557,9 @@ DATABASE_FIELD_NAME. </note>
 
 </note>
       <xloc>32</xloc>
-      <yloc>160</yloc>
-      <width>622</width>
-      <heigth>400</heigth>
+      <yloc>272</yloc>
+      <width>442</width>
+      <heigth>199</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -552,14 +576,7 @@ DATABASE_FIELD_NAME. </note>
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Table output
-
-
-
-
-
-
-
+      <note>Get List of Fields to Log in Case of Error (Non-sensitive fields)                       
 
 
 
@@ -567,9 +584,9 @@ DATABASE_FIELD_NAME. </note>
 
 </note>
       <xloc>32</xloc>
-      <yloc>608</yloc>
-      <width>622</width>
-      <heigth>400</heigth>
+      <yloc>512</yloc>
+      <width>566</width>
+      <heigth>158</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -586,7 +603,36 @@ DATABASE_FIELD_NAME. </note>
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Get List of Fields to Log in Case of Error (Non-sensitive fields)                                                  
+      <note>Target table key field name			
+
+
+
+
+</note>
+      <xloc>576</xloc>
+      <yloc>16</yloc>
+      <width>370</width>
+      <heigth>136</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>JSON input										
+
+
+
 
 
 
@@ -598,10 +644,10 @@ DATABASE_FIELD_NAME. </note>
 
 
 </note>
-      <xloc>32</xloc>
-      <yloc>1072</yloc>
-      <width>674</width>
-      <heigth>263</heigth>
+      <xloc>1072</xloc>
+      <yloc>16</yloc>
+      <width>802</width>
+      <heigth>325</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -609,9 +655,9 @@ DATABASE_FIELD_NAME. </note>
       <fontcolorred>0</fontcolorred>
       <fontcolorgreen>0</fontcolorgreen>
       <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>192</backgroundcolorred>
-      <backgroundcolorgreen>192</backgroundcolorgreen>
-      <backgroundcolorblue>192</backgroundcolorblue>
+      <backgroundcolorred>128</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>255</backgroundcolorblue>
       <bordercolorred>100</bordercolorred>
       <bordercolorgreen>100</bordercolorgreen>
       <bordercolorblue>100</bordercolorblue>
@@ -690,27 +736,22 @@ DATABASE_FIELD_NAME. </note>
     </hop>
     <hop>
       <from>[performer_table_to_table_insert_json] Load Table Input step settings</from>
-      <to>[performer_table_to_table_insert_json] Block this step until JSON path finish</to>
+      <to>[performer_table_to_table_insert_json] Block this step until JSON flow completes</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_table_to_table_insert_json] Block this step until JSON path finish</from>
+      <from>[performer_table_to_table_insert_json] Block this step until JSON flow completes</from>
       <to>[performer_table_to_table_insert_json] ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>[performer_table_to_table_insert_json] Load Table Output step settings</from>
-      <to>[performer_table_to_table_insert_json] Block this step until JSON path finish</to>
+      <to>[performer_table_to_table_insert_json] Block this step until JSON flow completes</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>[performer_table_to_table_insert_json] Load Table Output field settings</from>
-      <to>[performer_table_to_table_insert_json] Block this step until JSON path finish</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[performer_table_to_table_insert_json] Load Table Output non-sensitive fields</from>
-      <to>[performer_table_to_table_insert_json] Block this step until JSON path finish</to>
+      <to>[performer_table_to_table_insert_json] Block this step until JSON flow completes</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -720,12 +761,17 @@ DATABASE_FIELD_NAME. </note>
     </hop>
     <hop>
       <from>[performer_table_to_table_insert_json]  Get key_field_name</from>
-      <to>[performer_table_to_table_insert_json] Block this step until JSON path finish</to>
+      <to>[performer_table_to_table_insert_json] Block this step until JSON flow completes</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>[performer_table_to_table_insert_json] Read JSON MDI input values</from>
-      <to>[performer_table_to_table_insert_json] Block this step until JSON path finish</to>
+      <to>[performer_table_to_table_insert_json] Block this step until JSON flow completes</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert_json] Load Table Output non-sensitive fields</from>
+      <to>[performer_table_to_table_insert_json] Block this step until JSON flow completes</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -809,13 +855,13 @@ WHERE process.dwid = ${process_dwid}</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>880</xloc>
-      <yloc>208</yloc>
+      <xloc>736</xloc>
+      <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[performer_table_to_table_insert_json] Block this step until JSON path finish</name>
+    <name>[performer_table_to_table_insert_json] Block this step until JSON flow completes</name>
     <type>BlockUntilStepsFinish</type>
     <description/>
     <distribute>Y</distribute>
@@ -826,7 +872,23 @@ WHERE process.dwid = ${process_dwid}</sql>
       <schema_name/>
     </partitioning>
     <steps>
-      </steps>
+      <step>
+        <name>[performer_table_to_table_insert_json] Get JSON input</name>
+        <CopyNr>0</CopyNr>
+      </step>
+      <step>
+        <name>[performer_table_to_table_insert_json] Read JSON token_id</name>
+        <CopyNr>0</CopyNr>
+      </step>
+      <step>
+        <name>[performer_table_to_table_insert_json] Read JSON MDI input values</name>
+        <CopyNr>0</CopyNr>
+      </step>
+      <step>
+        <name>[performer_table_to_table_insert_json] Set key_field_values variable</name>
+        <CopyNr>0</CopyNr>
+      </step>
+    </steps>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -836,8 +898,8 @@ WHERE process.dwid = ${process_dwid}</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>880</xloc>
-      <yloc>784</yloc>
+      <xloc>832</xloc>
+      <yloc>432</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -872,13 +934,6 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>etl_batch_id</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
-        <target_attribute_key>IGNORE_INSERT_ERRORS</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
-        <source_field>ignore_insert_errors</source_field>
-      </mapping>
-      <mapping>
         <target_step_name>[template_table_to_table_insert] Table input</target_step_name>
         <target_attribute_key>REPLACE_VARIABLES</target_attribute_key>
         <target_detail>N</target_detail>
@@ -886,11 +941,25 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>replace_variables</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
-        <target_attribute_key>AUTO_GENERATED_KEY_FIELD</target_attribute_key>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>COMMIT_SIZE</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
-        <source_field>auto_generated_key_field</source_field>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>commit_size</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>TABLE_NAME_DEFINED_IN_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>table_name_defined_in_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
+        <target_attribute_key>EXECUTE_FOR_EACH_ROW</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>execute_for_each_row</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
@@ -898,6 +967,20 @@ WHERE process.dwid = ${process_dwid}</sql>
         <target_detail>N</target_detail>
         <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
         <source_field>partitioning_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>PARTITION_DATA_PER</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>partition_data_per</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Full load - Set token_id</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>${token_id}</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert] Table input</target_step_name>
@@ -914,11 +997,25 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>database_stream_name</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_table_to_table_insert] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_step_name>[template_table_to_table_insert_json] Select key field rows</target_step_name>
+        <target_attribute_key>FIELD_RENAME</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>${etl_batch_id}</source_field>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>rename_to</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>connectionname</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>DATABASE_FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>database_stream_name</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert] Table input</target_step_name>
@@ -926,6 +1023,34 @@ WHERE process.dwid = ${process_dwid}</sql>
         <target_detail>N</target_detail>
         <source_step>[performer_table_to_table_insert] Load Table Input step settings</source_step>
         <source_field>execute_for_each_row</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Select key field rows</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>fieldname</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] set token_id</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>token_id</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>SPECIFY_DATABASE_FIELDS</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>specify_database_fields</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
+        <target_attribute_key>REPLACE_VARIABLES</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>replace_variables</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
@@ -942,18 +1067,39 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>truncate_table</source_field>
       </mapping>
       <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>RETURN_AUTO_GENERATED_KEY</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>return_auto_generated_key_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
+        <target_attribute_key>LAZY_CONVERSION</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>enable_lazy_conversion</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Partial load - Set token_id</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>${token_id}</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Partial load - Set key_field_name</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>key_field_name</source_field>
+      </mapping>
+      <mapping>
         <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
         <target_attribute_key>TABLE_NAME_FIELD</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
         <source_field>table_name_field</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert] Table input</target_step_name>
-        <target_attribute_key>LIMIT</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert] Load Table Input step settings</source_step>
-        <source_field>limit_size</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
@@ -964,10 +1110,220 @@ WHERE process.dwid = ${process_dwid}</sql>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>DATABASE_STREAM_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output field settings</source_step>
+        <source_field>database_field_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
+        <target_attribute_key>SQL</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>sql</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
+        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>connectionname</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>TARGET_TABLE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
+        <source_field>target_table</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>PARTITION_OVER_TABLES</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
+        <source_field>partition_over_tables</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>etl_batch_id</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>data_source_dwid</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json]  Specify logging fields (non-sensitive)</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>non_sensitive_database_stream_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] set environment</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>environment</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table input</target_step_name>
+        <target_attribute_key>SQL</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Input step settings</source_step>
+        <source_field>sql</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table input</target_step_name>
+        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Input step settings</source_step>
+        <source_field>connectionname</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>AUTO_GENERATED_KEY_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>auto_generated_key_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>IGNORE_INSERT_ERRORS</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>ignore_insert_errors</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>TARGET_SCHEMA</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
+        <source_field>target_schema</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>IGNORE_INSERT_ERRORS</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
+        <source_field>ignore_insert_errors</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>TARGET_SCHEMA</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>target_schema</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
+        <target_attribute_key>AUTO_GENERATED_KEY_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
+        <source_field>auto_generated_key_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Full load - Set token_id</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>token_id</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
+        <target_attribute_key>LIMIT</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>limit_size</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>TARGET_TABLE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>target_table</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>PARTITION_OVER_TABLES</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>partition_over_tables</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>${etl_batch_id}</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>DATABASE_STREAM_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>database_field_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Partial load - Set key_field_name</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>key_field_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Partial load - Set token_id</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>token_id</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] set token_id</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>token_id</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table input</target_step_name>
+        <target_attribute_key>LIMIT</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert] Load Table Input step settings</source_step>
+        <source_field>limit_size</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>TABLE_NAME_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>table_name_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
         <target_attribute_key>RETURN_AUTO_GENERATED_KEY</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
         <source_field>return_auto_generated_key_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>TRUNCATE_TABLE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>truncate_table</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>USE_BATCH_UPDATE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>use_batch_update</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
@@ -984,11 +1340,11 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>specify_database_fields</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
-        <target_attribute_key>DATABASE_STREAM_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert] Load Table Output field settings</source_step>
-        <source_field>database_field_name</source_field>
+        <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
+        <target_attribute_key>CACHED_ROW_META</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>cached_row_meta</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
@@ -1006,24 +1362,24 @@ WHERE process.dwid = ${process_dwid}</sql>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
-        <target_attribute_key>TARGET_TABLE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
-        <source_field>target_table</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
-        <target_attribute_key>PARTITION_OVER_TABLES</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
-        <source_field>partition_over_tables</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
         <target_attribute_key>PARTITION_DATA_PER</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
         <source_field>partition_data_per</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>PARTITIONING_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Block this step until JSON flow completes</source_step>
+        <source_field>partitioning_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] set environment</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>${environment}</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert] Table input</target_step_name>
@@ -1031,20 +1387,6 @@ WHERE process.dwid = ${process_dwid}</sql>
         <target_detail>N</target_detail>
         <source_step>[performer_table_to_table_insert] Load Table Input step settings</source_step>
         <source_field>cached_row_meta</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert] Table input</target_step_name>
-        <target_attribute_key>SQL</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert] Load Table Input step settings</source_step>
-        <source_field>sql</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert] Table input</target_step_name>
-        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert] Load Table Input step settings</source_step>
-        <source_field>connectionname</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
@@ -1061,11 +1403,18 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>commit_size</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_table_to_table_insert] Table output</target_step_name>
-        <target_attribute_key>TARGET_SCHEMA</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert] Load Table Output step settings</source_step>
-        <source_field>target_schema</source_field>
+        <target_step_name>[template_table_to_table_insert_json] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>${etl_batch_id}</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>${data_source_dwid}</source_field>
       </mapping>
     </mappings>
     <attributes/>
@@ -1077,8 +1426,8 @@ WHERE process.dwid = ${process_dwid}</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1296</xloc>
-      <yloc>784</yloc>
+      <xloc>1328</xloc>
+      <yloc>432</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1106,18 +1455,6 @@ WHERE process.dwid = ${process_dwid}</sql>
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
-      <field>
-        <name>environment</name>
-        <variable>${environment}</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -1128,8 +1465,8 @@ WHERE process.dwid = ${process_dwid}</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1232</xloc>
-      <yloc>208</yloc>
+      <xloc>1248</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1176,8 +1513,8 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>304</xloc>
-      <yloc>240</yloc>
+      <xloc>240</xloc>
+      <yloc>96</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1222,8 +1559,8 @@ ORDER BY
       </output>
     </remotesteps>
     <GUI>
-      <xloc>288</xloc>
-      <yloc>848</yloc>
+      <xloc>240</xloc>
+      <yloc>400</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1240,8 +1577,8 @@ ORDER BY
     </partitioning>
     <connection>Config DB Connection</connection>
     <sql>SELECT
-     table_output_field.database_field_name
-     , table_output_field.database_stream_name
+     table_output_field.database_field_name AS non_sensitive_database_field_name
+     , table_output_field.database_stream_name AS non_sensitive_database_stream_name 
  FROM
      mdi.table_output_step
          LEFT JOIN mdi.table_output_field ON table_output_step.dwid = table_output_field.table_output_step_dwid
@@ -1258,7 +1595,54 @@ ORDER BY
     <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
     <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta/>
+    <row-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>non_sensitive_database_field_name</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_table_to_table_insert_json] Load Table Output non-sensitive fields</origin>
+        <comments>non_sensitive_database_field_name</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>non_sensitive_database_stream_name</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_table_to_table_insert_json] Load Table Output non-sensitive fields</origin>
+        <comments>non_sensitive_database_stream_name</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+    </row-meta>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1268,8 +1652,8 @@ ORDER BY
       </output>
     </remotesteps>
     <GUI>
-      <xloc>288</xloc>
-      <yloc>1184</yloc>
+      <xloc>272</xloc>
+      <yloc>592</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1323,8 +1707,8 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>288</xloc>
-      <yloc>704</yloc>
+      <xloc>240</xloc>
+      <yloc>304</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1419,8 +1803,8 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1232</xloc>
-      <yloc>448</yloc>
+      <xloc>1248</xloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1502,8 +1886,8 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1232</xloc>
-      <yloc>320</yloc>
+      <xloc>1248</xloc>
+      <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1548,8 +1932,8 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1632</xloc>
-      <yloc>448</yloc>
+      <xloc>1680</xloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
