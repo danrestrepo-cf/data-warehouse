@@ -459,7 +459,7 @@
     <created_user>-</created_user>
     <created_date>2020/10/10 13:25:09.606</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/04/20 17:29:32.735</modified_date>
+    <modified_date>2021/04/26 12:34:03.535</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -580,7 +580,7 @@ FROM mdi.process
          LEFT JOIN mdi.table_input_step ON process.dwid = table_input_step.process_dwid
          LEFT JOIN mdi.table_output_step ON process.dwid = table_output_step.process_dwid
          LEFT JOIN mdi.insert_update_step ON process.dwid = insert_update_step.process_dwid
-         LEFT JOIN mdi.json_output_field ON process.dwid = json_output_field.process_dwid;
+         LEFT JOIN mdi.json_output_field ON process.dwid = json_output_field.process_dwid
 WHERE
         process.name = '${process_name}'
 ;
