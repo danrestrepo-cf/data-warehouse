@@ -1,11 +1,86 @@
 '''
 
 TODO:
-    output the insert statements into a script
+    output the insert statements into a script that combines all the inserts
+
 '''
+
 
 import psycopg2
 
+DEBUG = False
+
+
+PROCESS_INSERT_HEADER = '''
+    INSERT INTO mdi.process (
+        dwid, name, description
+        ) 
+    VALUES'''
+TABLE_INPUT_STEP_INSERT_HEADER = '''
+    INSERT INTO mdi.table_input_step (
+        dwid, process_dwid, data_source_dwid, sql, limit_size, connectionname
+        ) 
+    VALUES'''
+TABLE_OUTPUT_STEP_INSERT_HEADER = '''
+    INSERT INTO mdi.table_output_step (
+        dwid, process_dwid, target_schema, target_table, commit_size, partitioning_field, 
+        table_name_field, auto_generated_key_field, partition_data_per, table_name_defined_in_field, 
+        return_auto_generated_key_field, truncate_table, connectionname, partition_over_tables, 
+        specify_database_fields, ignore_insert_errors, use_batch_update 
+        ) 
+    VALUES'''
+TABLE_OUTPUT_FIELD_STEP_INSERT_HEADER = '''
+    INSERT INTO mdi.table_output_field (
+        dwid, table_output_step_dwid, database_field_name, database_stream_name, field_order, 
+        is_sensitive 
+        ) 
+    VALUES'''
+JSON_OUTPUT_FIELD_INSERT_HEADER = '''
+    INSERT INTO mdi.json_output_field (
+        dwid, process_dwid, field_name
+        ) 
+    VALUES'''
+
+
+class Insert_Script:
+    process_insert = []
+    table_input_step_insert = []
+    table_output_step_insert = []
+    table_output_field_step_insert = []
+    json_output_field_insert = []
+    final_script = ""
+
+    def __init__(self):
+        None
+
+    def add_process_insert(self, new_process_row):
+        self.process_insert.append(new_process_row)
+
+    def add_table_input_step_insert(self, new_table_input_step_row):
+        self.table_input_step_insert.append(new_table_input_step_row)
+
+    def add_table_output_step_insert(self, new_table_output_step_row):
+        self.table_output_step_insert.append(new_table_output_step_row)
+
+    def add_table_output_field_step_insert(self, new_table_output_field_step_row):
+        self.table_output_field_step_insert.append(new_table_output_field_step_row)
+
+    def add_json_output_field_insert(self, new_json_output_field_row):
+        self.json_output_field_insert.append(new_json_output_field_row)
+
+    def create_script(self):
+        temp1 = ",".join(self.process_insert)
+        temp2 = ",".join(self.table_input_step_insert)
+        temp3 = ",".join(self.table_output_step_insert)
+        temp4 = ",".join(self.table_output_field_step_insert)
+        temp5 = ",".join(self.json_output_field_insert)
+        final_script = (PROCESS_INSERT_HEADER + temp1 + ';'
+                           + TABLE_INPUT_STEP_INSERT_HEADER + temp2 + ';'
+                           + TABLE_OUTPUT_STEP_INSERT_HEADER + temp3 + ';'
+                           + TABLE_OUTPUT_FIELD_STEP_INSERT_HEADER + temp4 + ';'
+                           + JSON_OUTPUT_FIELD_INSERT_HEADER + temp5 + ';'
+                           )
+        return final_script
 
 class ETL_config:
     process_name = ""
@@ -39,7 +114,8 @@ class ETL_config:
                   , table_output_step_table
                   , table_output_step_fields
                   , json_output_step_field
-                  , staging_connection):
+                  , staging_connection
+                  , output_script):
         self.process_name = process_name
         self.process_description = process_description
         self.table_input_step_connection = table_input_step_connection
@@ -50,51 +126,44 @@ class ETL_config:
         self.table_output_step_fields = table_output_step_fields
         self.json_output_step_field = json_output_step_field
         self.staging_connection = staging_connection
+        self.output_script = output_script
 
     def create_config_insert_statements(self):
         self.process_dwid = self.staging_connection.execute_query(f'''SELECT nextval('mdi."process_dwid_seq"')''', 'config')[0][0]
         process_insert = f'''
-            INSERT INTO mdi.process (dwid, name, description)
-            VALUES ({self.process_dwid}, '{self.process_name}', '{self.process_description}')
-            ;'''
+            ({self.process_dwid}, '{self.process_name}', '{self.process_description}') '''
+        self.output_script.add_process_insert(process_insert)
         self.table_input_step_dwid = self.staging_connection.execute_query(f'''SELECT nextval('mdi."table_input_step_dwid_seq"')''', 'config')[0][0]
         table_input_step_insert = f'''
-            INSERT INTO mdi.table_input_step (dwid, process_dwid, data_source_dwid, sql, limit_size, connectionname)
-            VALUES ({self.table_input_step_dwid}, {self.process_dwid}, 0, '{self.table_input_step_sql}', 0, '{self.table_input_step_connection}')
-            ;'''
+            ({self.table_input_step_dwid}, {self.process_dwid}, 0, '{self.table_input_step_sql}', 0, '{self.table_input_step_connection}')'''
+        self.output_script.add_table_input_step_insert(table_input_step_insert)
         self.table_output_step_dwid = self.staging_connection.execute_query(f'''SELECT nextval('mdi."table_output_step_dwid_seq"')''', 'config')[0][0]
         table_output_step_insert = f'''
-            INSERT INTO mdi.table_output_step (dwid, process_dwid, target_schema, target_table, commit_size, partitioning_field
-                                          , table_name_field, auto_generated_key_field, partition_data_per
-                                          , table_name_defined_in_field, return_auto_generated_key_field, truncate_table
-                                          , connectionname, partition_over_tables, specify_database_fields
-                                          , ignore_insert_errors, use_batch_update )
-            VALUES ( {self.table_output_step_dwid}, {self.process_dwid}, '{self.table_output_step_schema}', '{self.table_output_step_table}', 1000
+            ({self.table_output_step_dwid}, {self.process_dwid}, '{self.table_output_step_schema}', '{self.table_output_step_table}', 1000
                 , NULL, NULL, NULL, NULL, 'N', NULL, 'Y'
                 , '{self.table_output_step_connection}', 'N'
-                , 'Y', 'N', 'N' )
-            ;'''
-        table_output_field_step_insert = []
+                , 'Y', 'N', 'N' ) '''
+        self.output_script.add_table_output_step_insert(table_output_step_insert)
+        table_output_field_step_inserts = []
         for i, field in enumerate(self.table_output_step_fields):
             table_output_field_dwid = self.staging_connection.execute_query(f'''SELECT nextval('mdi."table_output_field_dwid_seq"')''', 'config')[0][0]
-            table_output_field_step_insert.append( f'''
-                    INSERT INTO mdi.table_output_field (dwid, table_output_step_dwid, database_field_name, database_stream_name
-                       , field_order, is_sensitive )
-                    VALUES ({table_output_field_dwid},  {self.table_output_step_dwid}, '{field}', '{field}', {i}, False)
-                ;''')
+            table_output_field_step_insert =  f'''({table_output_field_dwid},  {self.table_output_step_dwid}, '{field}', '{field}', {i}, False)'''
+            table_output_field_step_inserts.append(table_output_field_step_insert)
+            self.output_script.add_table_output_field_step_insert(table_output_field_step_insert)
         self.json_output_field_dwid = self.staging_connection.execute_query(f'''SELECT nextval('mdi."json_output_field_dwid_seq"')''', 'config')[0][0]
         json_output_field_insert = f'''
-            INSERT INTO mdi.json_output_field (dwid, process_dwid, field_name)
-            VALUES ({self.json_output_field_dwid}, {self.process_dwid}, '{self.json_output_step_field}')
+            ({self.json_output_field_dwid}, {self.process_dwid}, '{self.json_output_step_field}')'''
+        self.output_script.add_json_output_field_insert(json_output_field_insert)
+        if DEBUG:
+            print (PROCESS_INSERT_HEADER + process_insert+';'
+                +TABLE_INPUT_STEP_INSERT_HEADER+table_input_step_insert+';'
+                +TABLE_OUTPUT_STEP_INSERT_HEADER+table_output_step_insert+';'
+                +TABLE_OUTPUT_FIELD_STEP_INSERT_HEADER+",".join(table_output_field_step_inserts)+';'
+                +JSON_OUTPUT_FIELD_INSERT_HEADER+json_output_field_insert+';')
 
-            ;'''
-        print (process_insert+table_input_step_insert+table_output_step_insert+"".join(table_output_field_step_insert)+json_output_field_insert)
 
 class Staging_to_History_ETL(ETL_config):
-    # main_pid = "a_pid"
-
-
-    def __init__(self, staging_table_metadata, process_name, staging_connection):
+    def __init__(self, staging_table_metadata, process_name, staging_connection, output_script):
         self.staging_table_metadata = staging_table_metadata
         self.staging_table_name = self.staging_table_metadata[0]
         self.process_name = process_name
@@ -103,6 +172,7 @@ class Staging_to_History_ETL(ETL_config):
         self.process_description = f'ETL to copy {self.staging_table_name} data from staging_octane to history_octane'
         self.table_input_step_connection = 'Staging DB Connection'
         self.table_output_step_fields = staging_connection.get_all_table_fields("staging_octane", self.staging_table_name)
+        self.output_script = output_script
         # self.table_input_step_sql = f'''
         #     SELECT {','.join(self.table_output_step_fields)}, FALSE as data_source_deleted_flag, now() AS data_source_last_updated_datetime
         #     FROM staging_octane.{self.staging_table_name} where {self.main_pid} in (%pids) or %full_load_flag = true'''
@@ -151,7 +221,8 @@ class Staging_to_History_ETL(ETL_config):
                          , self.table_output_step_table
                          , self.table_output_step_fields
                          , self.json_output_step_field
-                         , self.staging_connection)
+                         , self.staging_connection
+                         , self.output_script)
 
 
 class Db_connection:
@@ -201,6 +272,7 @@ class Db_connection:
         WHERE pg_namespace.nspname = 'staging_octane'
           and t.relkind = 'r'
           and i.relname like '%_pkey'
+            and t.relname like 'a%'
          -- 371
         union all
         select tables.table_name as name, 'code' as key_field, null as version_field
@@ -209,6 +281,7 @@ class Db_connection:
         join information_schema.columns col2 on tables.table_name = col2.table_name and tables.table_schema = col2.table_schema and col2.column_name = 'value'
         where tables.table_name like '%type'
             and tables.table_schema = 'staging_octane'
+            and tables.table_name like 'a%'
         --425 (2 of these have 3 columns each)
         ;
         ''', 'staging')
@@ -229,14 +302,16 @@ class Db_connection:
 
 
 def main():
+
     edw_staging = Db_connection(db_name="staging")
+    output_script = Insert_Script()
     staging_tables = edw_staging.get_all_staging_tables('staging_octane')
     etl_config_list = []
     for i, staging_table_metadata in enumerate(staging_tables, start=100000):
-        etl_config = Staging_to_History_ETL(staging_table_metadata, f'SP-{i}', edw_staging)
+        etl_config = Staging_to_History_ETL(staging_table_metadata, f'SP-{i}', edw_staging, output_script)
         etl_config.create_config_insert_statements()
     etl_config_list.append(etl_config)
-
+    print(output_script.create_script())
 
 if __name__ == "__main__":
     main()
