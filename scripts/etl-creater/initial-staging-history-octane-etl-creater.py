@@ -1,7 +1,6 @@
 '''
 
 TODO:
-    output the insert statements into a script that combines all the inserts
 
 '''
 
@@ -40,7 +39,16 @@ JSON_OUTPUT_FIELD_INSERT_HEADER = '''
         dwid, process_dwid, field_name
         ) 
     VALUES'''
-
+STATE_MACHINE_DEFINITION_INSERT_HEADER = '''
+    INSERT INTO mdi.state_machine_definition (
+        dwid, process_dwid, name, comment
+        )
+    VALUES'''
+STATE_MACHINE_STEP_INSERT_HEADER = '''
+    INSERT INTO mdi.state_machine_step (
+        dwid, process_dwid, next_process_dwid
+        )
+    VALUES'''
 
 class Insert_Script:
     process_insert = []
@@ -48,6 +56,8 @@ class Insert_Script:
     table_output_step_insert = []
     table_output_field_step_insert = []
     json_output_field_insert = []
+    state_machine_definition_insert = []
+    state_machine_step_insert = []
     final_script = ""
 
     def __init__(self):
@@ -68,17 +78,27 @@ class Insert_Script:
     def add_json_output_field_insert(self, new_json_output_field_row):
         self.json_output_field_insert.append(new_json_output_field_row)
 
+    def add_state_machine_definition_insert(self, new_state_machine_definition_row):
+        self.state_machine_definition_insert.append(new_state_machine_definition_row)
+
+    def add_state_machine_step_insert(self, new_state_machine_step_row):
+        self.state_machine_step_insert.append(new_state_machine_step_row)
+
     def create_script(self):
         temp1 = ",".join(self.process_insert)
         temp2 = ",".join(self.table_input_step_insert)
         temp3 = ",".join(self.table_output_step_insert)
         temp4 = ",".join(self.table_output_field_step_insert)
         temp5 = ",".join(self.json_output_field_insert)
+        temp6 = ",".join(self.state_machine_definition_insert)
+        temp7 = ",".join(self.state_machine_step_insert)
         final_script = (PROCESS_INSERT_HEADER + temp1 + ';'
-                           + TABLE_INPUT_STEP_INSERT_HEADER + temp2 + ';'
-                           + TABLE_OUTPUT_STEP_INSERT_HEADER + temp3 + ';'
-                           + TABLE_OUTPUT_FIELD_STEP_INSERT_HEADER + temp4 + ';'
-                           + JSON_OUTPUT_FIELD_INSERT_HEADER + temp5 + ';'
+                        + TABLE_INPUT_STEP_INSERT_HEADER + temp2 + ';'
+                        + TABLE_OUTPUT_STEP_INSERT_HEADER + temp3 + ';'
+                        + TABLE_OUTPUT_FIELD_STEP_INSERT_HEADER + temp4 + ';'
+                        + JSON_OUTPUT_FIELD_INSERT_HEADER + temp5 + ';'
+                        + STATE_MACHINE_DEFINITION_INSERT_HEADER + temp6 + ';'
+                        + STATE_MACHINE_STEP_INSERT_HEADER + temp7 + ';'
                            )
         return final_script
 
@@ -93,6 +113,8 @@ class ETL_config:
     table_output_step_fields = []
     json_output_step_field = ""
     staging_connection = ""
+    state_machine_name = ""
+    state_machine_comment = ""
 
     process_dwid = ""
     table_input_step_dwid = ""
@@ -115,7 +137,9 @@ class ETL_config:
                   , table_output_step_fields
                   , json_output_step_field
                   , staging_connection
-                  , output_script):
+                  , output_script
+                  , state_machine_name
+                  , state_machine_comment):
         self.process_name = process_name
         self.process_description = process_description
         self.table_input_step_connection = table_input_step_connection
@@ -127,16 +151,20 @@ class ETL_config:
         self.json_output_step_field = json_output_step_field
         self.staging_connection = staging_connection
         self.output_script = output_script
+        self.state_machine_name = state_machine_name
+        self.state_machine_comment = state_machine_comment
 
     def create_config_insert_statements(self):
         self.process_dwid = self.staging_connection.execute_query(f'''SELECT nextval('mdi."process_dwid_seq"')''', 'config')[0][0]
         process_insert = f'''
             ({self.process_dwid}, '{self.process_name}', '{self.process_description}') '''
         self.output_script.add_process_insert(process_insert)
+
         self.table_input_step_dwid = self.staging_connection.execute_query(f'''SELECT nextval('mdi."table_input_step_dwid_seq"')''', 'config')[0][0]
         table_input_step_insert = f'''
             ({self.table_input_step_dwid}, {self.process_dwid}, 0, '{self.table_input_step_sql}', 0, '{self.table_input_step_connection}')'''
         self.output_script.add_table_input_step_insert(table_input_step_insert)
+
         self.table_output_step_dwid = self.staging_connection.execute_query(f'''SELECT nextval('mdi."table_output_step_dwid_seq"')''', 'config')[0][0]
         table_output_step_insert = f'''
             ({self.table_output_step_dwid}, {self.process_dwid}, '{self.table_output_step_schema}', '{self.table_output_step_table}', 1000
@@ -144,22 +172,38 @@ class ETL_config:
                 , '{self.table_output_step_connection}', 'N'
                 , 'Y', 'N', 'N' ) '''
         self.output_script.add_table_output_step_insert(table_output_step_insert)
+
         table_output_field_step_inserts = []
         for i, field in enumerate(self.table_output_step_fields):
             table_output_field_dwid = self.staging_connection.execute_query(f'''SELECT nextval('mdi."table_output_field_dwid_seq"')''', 'config')[0][0]
             table_output_field_step_insert =  f'''({table_output_field_dwid},  {self.table_output_step_dwid}, '{field}', '{field}', {i}, False)'''
             table_output_field_step_inserts.append(table_output_field_step_insert)
             self.output_script.add_table_output_field_step_insert(table_output_field_step_insert)
+
         self.json_output_field_dwid = self.staging_connection.execute_query(f'''SELECT nextval('mdi."json_output_field_dwid_seq"')''', 'config')[0][0]
         json_output_field_insert = f'''
             ({self.json_output_field_dwid}, {self.process_dwid}, '{self.json_output_step_field}')'''
         self.output_script.add_json_output_field_insert(json_output_field_insert)
+
+        self.state_machine_definition_dwid = self.staging_connection.execute_query(f'''SELECT nextval('mdi."state_machine_definition_dwid_seq"')''', 'config')[0][0]
+        state_machine_definition_insert = f'''
+            ({self.state_machine_definition_dwid}, {self.process_dwid}, '{self.state_machine_name}, '{self.state_machine_comment}')'''
+        self.output_script.add_state_machine_definition_insert(state_machine_definition_insert)
+
+        self.state_machine_step_dwid = self.staging_connection.execute_query(f'''SELECT nextval('mdi."state_machine_step_dwid_seq"')''', 'config')[0][0]
+        state_machine_step_insert = f'''
+            ({self.state_machine_step_dwid}, {self.process_dwid}, NULL)'''
+        self.output_script.add_state_machine_step_insert(state_machine_step_insert)
+
         if DEBUG:
             print (PROCESS_INSERT_HEADER + process_insert+';'
                 +TABLE_INPUT_STEP_INSERT_HEADER+table_input_step_insert+';'
                 +TABLE_OUTPUT_STEP_INSERT_HEADER+table_output_step_insert+';'
                 +TABLE_OUTPUT_FIELD_STEP_INSERT_HEADER+",".join(table_output_field_step_inserts)+';'
-                +JSON_OUTPUT_FIELD_INSERT_HEADER+json_output_field_insert+';')
+                +JSON_OUTPUT_FIELD_INSERT_HEADER+json_output_field_insert+';'
+                +STATE_MACHINE_DEFINITION_INSERT_HEADER+state_machine_definition_insert+';'
+                +STATE_MACHINE_STEP_INSERT_HEADER+state_machine_step_insert+';'
+                   )
 
 
 class Staging_to_History_ETL(ETL_config):
@@ -212,6 +256,8 @@ class Staging_to_History_ETL(ETL_config):
         self.table_output_step_table = self.staging_table_name
         self.staging_connection = staging_connection
         self.json_output_step_field = self.main_pid
+        self.state_machine_name = f'Octane {self.staging_table_name}'
+        self.state_machine_comment = self.process_description
         super().__init__(self.process_name
                          , self.process_description
                          , self.table_input_step_connection
@@ -222,7 +268,9 @@ class Staging_to_History_ETL(ETL_config):
                          , self.table_output_step_fields
                          , self.json_output_step_field
                          , self.staging_connection
-                         , self.output_script)
+                         , self.output_script
+                         , self.state_machine_name
+                         , self.state_machine_comment)
 
 
 class Db_connection:
