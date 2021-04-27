@@ -155,17 +155,17 @@ class ETL_config:
         self.state_machine_comment = state_machine_comment
 
     def create_config_insert_statements(self):
-        self.process_dwid = self.staging_connection.execute_query(f'''SELECT nextval('mdi."process_dwid_seq"')''', 'config')[0][0]
+        self.process_dwid = self.staging_connection.execute_select_query(f'''SELECT nextval('mdi."process_dwid_seq"')''', 'config')[0][0]
         process_insert = f'''
             ({self.process_dwid}, '{self.process_name}', '{self.process_description}') '''
         self.output_script.add_process_insert(process_insert)
 
-        self.table_input_step_dwid = self.staging_connection.execute_query(f'''SELECT nextval('mdi."table_input_step_dwid_seq"')''', 'config')[0][0]
+        self.table_input_step_dwid = self.staging_connection.execute_select_query(f'''SELECT nextval('mdi."table_input_step_dwid_seq"')''', 'config')[0][0]
         table_input_step_insert = f'''
             ({self.table_input_step_dwid}, {self.process_dwid}, 0, '{self.table_input_step_sql}', 0, '{self.table_input_step_connection}')'''
         self.output_script.add_table_input_step_insert(table_input_step_insert)
 
-        self.table_output_step_dwid = self.staging_connection.execute_query(f'''SELECT nextval('mdi."table_output_step_dwid_seq"')''', 'config')[0][0]
+        self.table_output_step_dwid = self.staging_connection.execute_select_query(f'''SELECT nextval('mdi."table_output_step_dwid_seq"')''', 'config')[0][0]
         table_output_step_insert = f'''
             ({self.table_output_step_dwid}, {self.process_dwid}, '{self.table_output_step_schema}', '{self.table_output_step_table}', 1000
                 , NULL, NULL, NULL, NULL, 'N', NULL, 'Y'
@@ -174,23 +174,24 @@ class ETL_config:
         self.output_script.add_table_output_step_insert(table_output_step_insert)
 
         table_output_field_step_inserts = []
+        self.table_output_step_fields.append('data_source_last_updated_datetime').append('data_source_deleted_flag')
         for i, field in enumerate(self.table_output_step_fields):
-            table_output_field_dwid = self.staging_connection.execute_query(f'''SELECT nextval('mdi."table_output_field_dwid_seq"')''', 'config')[0][0]
+            table_output_field_dwid = self.staging_connection.execute_select_query(f'''SELECT nextval('mdi."table_output_field_dwid_seq"')''', 'config')[0][0]
             table_output_field_step_insert =  f'''({table_output_field_dwid},  {self.table_output_step_dwid}, '{field}', '{field}', {i}, False)'''
             table_output_field_step_inserts.append(table_output_field_step_insert)
             self.output_script.add_table_output_field_step_insert(table_output_field_step_insert)
 
-        self.json_output_field_dwid = self.staging_connection.execute_query(f'''SELECT nextval('mdi."json_output_field_dwid_seq"')''', 'config')[0][0]
+        self.json_output_field_dwid = self.staging_connection.execute_select_query(f'''SELECT nextval('mdi."json_output_field_dwid_seq"')''', 'config')[0][0]
         json_output_field_insert = f'''
             ({self.json_output_field_dwid}, {self.process_dwid}, '{self.json_output_step_field}')'''
         self.output_script.add_json_output_field_insert(json_output_field_insert)
 
-        self.state_machine_definition_dwid = self.staging_connection.execute_query(f'''SELECT nextval('mdi."state_machine_definition_dwid_seq"')''', 'config')[0][0]
+        self.state_machine_definition_dwid = self.staging_connection.execute_select_query(f'''SELECT nextval('mdi."state_machine_definition_dwid_seq"')''', 'config')[0][0]
         state_machine_definition_insert = f'''
-            ({self.state_machine_definition_dwid}, {self.process_dwid}, '{self.state_machine_name}, '{self.state_machine_comment}')'''
+            ({self.state_machine_definition_dwid}, {self.process_dwid}, '{self.state_machine_name}', '{self.state_machine_comment}')'''
         self.output_script.add_state_machine_definition_insert(state_machine_definition_insert)
 
-        self.state_machine_step_dwid = self.staging_connection.execute_query(f'''SELECT nextval('mdi."state_machine_step_dwid_seq"')''', 'config')[0][0]
+        self.state_machine_step_dwid = self.staging_connection.execute_select_query(f'''SELECT nextval('mdi."state_machine_step_dwid_seq"')''', 'config')[0][0]
         state_machine_step_insert = f'''
             ({self.state_machine_step_dwid}, {self.process_dwid}, NULL)'''
         self.output_script.add_state_machine_step_insert(state_machine_step_insert)
@@ -292,24 +293,35 @@ class Db_connection:
         self.database_hostname = db_hostname
         self.database_port = db_port
 
-    def execute_query(self, query: str, database=database_name):
+    def execute_select_query(self, query: str, database=database_name):
         conn = psycopg2.connect(database=database,
                                 user=self.database_username,
                                 password=self.database_password,
                                 host=self.database_hostname,
                                 port=self.database_port)
-
         cur = conn.cursor()
         cur.execute(query)
         rows = cur.fetchall()
         conn.close()
-
         return rows
+
+    def execute_insert_query(self, query: str, database=database_name):
+        conn = psycopg2.connect(database=database,
+                                user=self.database_username,
+                                password=self.database_password,
+                                host=self.database_hostname,
+                                port=self.database_port)
+        cur = conn.cursor()
+        cur.execute(query)
+        conn.commit()
+        row_count = cur.rowcount        
+        conn.close()
+        return row_count
 
 
     def get_all_staging_tables(self, schema):
         table_names = []
-        rows = self.execute_query(f'''
+        rows = self.execute_select_query(f'''
         SELECT t.relname AS name, a.attname as key_field, version.attname as version_field
         FROM pg_class t
          join pg_index ix on t.oid = ix.indrelid
@@ -320,7 +332,6 @@ class Db_connection:
         WHERE pg_namespace.nspname = 'staging_octane'
           and t.relkind = 'r'
           and i.relname like '%_pkey'
-            and t.relname like 'a%'
          -- 371
         union all
         select tables.table_name as name, 'code' as key_field, null as version_field
@@ -329,7 +340,6 @@ class Db_connection:
         join information_schema.columns col2 on tables.table_name = col2.table_name and tables.table_schema = col2.table_schema and col2.column_name = 'value'
         where tables.table_name like '%type'
             and tables.table_schema = 'staging_octane'
-            and tables.table_name like 'a%'
         --425 (2 of these have 3 columns each)
         ;
         ''', 'staging')
@@ -337,7 +347,7 @@ class Db_connection:
 
     def get_all_table_fields(self, schema, table):
         columns = []
-        rows = self.execute_query(f'''
+        rows = self.execute_select_query(f'''
             SELECT columns.column_name
             FROM information_schema.columns
             WHERE columns.table_schema = '{schema}'
@@ -359,7 +369,9 @@ def main():
         etl_config = Staging_to_History_ETL(staging_table_metadata, f'SP-{i}', edw_staging, output_script)
         etl_config.create_config_insert_statements()
     etl_config_list.append(etl_config)
-    print(output_script.create_script())
+    # print (output_script.create_script())
+    edw_staging.execute_insert_query(output_script.create_script(), 'config')
+    
 
 if __name__ == "__main__":
     main()
