@@ -13,24 +13,20 @@ UNION ALL
 SELECT CONCAT(
                'with staging_def as (INSERT INTO mdi.edw_table_definition (database_name, schema_name, table_name, primary_source_edw_table_definition_dwid) ',
                'VALUES (''staging'', ''staging_octane'', ''', TABLES.TABLE_NAME,
-               ''', 0) RETURNING dwid as staging_dwid) ',
+               ''', NULL) RETURNING dwid as staging_dwid) ',
                ', table_def as (INSERT INTO mdi.edw_table_definition (database_name, schema_name, table_name, primary_source_edw_table_definition_dwid) ',
                'SELECT ''staging'', ''history_octane'', ''', TABLES.TABLE_NAME,
                ''', staging_def.staging_dwid from staging_def RETURNING primary_source_edw_table_definition_dwid AS staging_dwid, dwid AS history_dwid)',
-               ', staging_join as (INSERT INTO mdi.edw_join_definition (primary_edw_table_definition_dwid, target_edw_table_definition_dwid, join_type, join_condition) ',
-               'SELECT table_def.history_dwid, table_def.staging_dwid, ''left'', ''staging_octane.', TABLES.TABLE_NAME,
-               '.',max(KEY_FIELDS.key_field),' = history_octane.', TABLES.TABLE_NAME,
-               '.',max(KEY_FIELDS.key_field),' '' FROM table_def RETURNING dwid as join_dwid, target_edw_table_definition_dwid AS staging_dwid, primary_edw_table_definition_dwid AS history_dwid)',
                string_agg(', staging_' || COLUMNS.column_name ||
                           ' as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, source_edw_join_definition_dwid) ' ||
-                          'SELECT staging_join.staging_dwid, ''' || COLUMNS.column_name ||
-                          ''', ' || case when COLUMNS.column_name = KEY_FIELDS.key_field then 'True' else 'False' end ||', 0, NULL FROM staging_join)',
+                          'SELECT table_def.staging_dwid, ''' || COLUMNS.column_name ||
+                          ''', ' || case when COLUMNS.column_name = KEY_FIELDS.key_field then 'True' else 'False' end ||', NULL, NULL FROM table_def)',
                           ''),
                string_agg(', history_' || COLUMNS.column_name ||
                           ' as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, source_edw_join_definition_dwid) ' ||
-                          'SELECT staging_join.history_dwid, ''' || COLUMNS.column_name ||
+                          'SELECT table_def.history_dwid, ''' || COLUMNS.column_name ||
                           ''', ' || case when COLUMNS.column_name = KEY_FIELDS.key_field then 'True' else 'False' end ||
-                          ', 0, staging_join.join_dwid FROM staging_join)',
+                          ', NULL, NULL FROM table_def)',
                           ''),
                'select 1;')
 FROM INFORMATION_SCHEMA.TABLES
@@ -47,7 +43,7 @@ FROM INFORMATION_SCHEMA.TABLES
                WHERE pg_namespace.nspname = 'staging_octane'
                  and t.relkind = 'r'
                  and (i.relname like '%_pkey'
-                   OR i.relname like 'pk_'
+                   OR i.relname like 'pk_%'
                    )
                  -- 371
                union all

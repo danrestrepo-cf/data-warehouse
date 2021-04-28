@@ -7,11 +7,12 @@
 -- staging_octane to history_octane.
 ----------------------------------------
 
-update mdi.edw_field_definition
-SET source_edw_field_definition_dwid  = staging_field_table.dwid
-FROM mdi.edw_join_definition
-         join (select dwid, field_name, edw_table_definition_dwid from mdi.edw_field_definition) as staging_field_table
-              on edw_join_definition.target_edw_table_definition_dwid = staging_field_table.edw_table_definition_dwid
-where edw_field_definition.source_edw_join_definition_dwid = edw_join_definition.dwid
-  and staging_field_table.field_name = edw_field_definition.field_name
+update mdi.edw_field_definition --history_field
+SET source_edw_field_definition_dwid  = staging_field.dwid
+FROM mdi.edw_table_definition as history_table
+JOIN mdi.edw_table_definition as staging_table on history_table.table_name = staging_table.table_name and staging_table.schema_name = 'staging_octane'
+JOIN mdi.edw_field_definition as staging_field ON staging_field.edw_table_definition_dwid = staging_table.dwid
+where staging_field.field_name = edw_field_definition.field_name
+ AND edw_field_definition.edw_table_definition_dwid = history_table.dwid
+ and history_table.schema_name = 'history_octane'
 ;
