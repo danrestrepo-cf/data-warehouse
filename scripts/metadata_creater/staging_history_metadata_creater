@@ -5,11 +5,6 @@
 -- The one part missing from this is the source_edw_field_definition_dwid in thehistory_octane field definitions. These
 -- will need to be populated separately.
 ----------------------------------------
-
-SELECT 'INSERT INTO mdi.edw_table_definition (dwid, database_name, schema_name, table_name, primary_source_edw_table_definition_dwid) VALUES (0, ''staging'', ''staging_octane'', ''dummy_table'', 0);' AS insert_statement
-UNION ALL
-SELECT 'INSERT INTO mdi.edw_field_definition (dwid, edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, source_edw_join_definition_dwid) VALUES (0, 0, ''dummy_field'', True, 0, NULL);'
-UNION ALL
 SELECT CONCAT(
                'with staging_def as (INSERT INTO mdi.edw_table_definition (database_name, schema_name, table_name, primary_source_edw_table_definition_dwid) ',
                'VALUES (''staging'', ''staging_octane'', ''', TABLES.TABLE_NAME,
