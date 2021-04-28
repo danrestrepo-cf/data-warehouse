@@ -89,7 +89,6 @@ class ETL_config:
                   , table_output_step_fields
                   , json_output_step_field
                   , staging_connection
-                  , output_script
                   , state_machine_name
                   , state_machine_comment):
         self.process_name = process_name
@@ -102,14 +101,13 @@ class ETL_config:
         self.table_output_step_fields = table_output_step_fields
         self.json_output_step_field = json_output_step_field
         self.staging_connection = staging_connection
-        self.output_script = output_script
         self.state_machine_name = state_machine_name
         self.state_machine_comment = state_machine_comment
 
     def create_config_insert_statements(self):
         config_insert = ""
-        #self.process_dwid = self.staging_connection.execute_select_query(f'''SELECT nextval('mdi."process_dwid_seq"')''', 'config')[0][0]
         config_insert += f'''
+            -- The following statement adds a configuration for '{self.table_output_step_table}'
             with temp_process as (INSERT INTO mdi.process (name, description) 
                 VALUES ('{self.process_name}', '{self.process_description}')
                 RETURNING dwid 
@@ -156,12 +154,14 @@ class ETL_config:
         config_insert += f'''
             INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)
                 SELECT temp_process.dwid, NULL
-                from temp_process;'''
+                from temp_process;
+
+            '''
         return config_insert
 
 
 class Staging_to_History_ETL(ETL_config):
-    def __init__(self, staging_table_metadata, process_name, staging_connection, output_script):
+    def __init__(self, staging_table_metadata, process_name, staging_connection):
         self.staging_table_metadata = staging_table_metadata
         self.staging_table_name = self.staging_table_metadata[0]
         self.process_name = process_name
@@ -170,10 +170,6 @@ class Staging_to_History_ETL(ETL_config):
         self.process_description = f'ETL to copy {self.staging_table_name} data from staging_octane to history_octane'
         self.table_input_step_connection = 'Staging DB Connection'
         self.table_output_step_fields = staging_connection.get_all_table_fields("staging_octane", self.staging_table_name)
-        self.output_script = output_script
-        # self.table_input_step_sql = f'''
-        #     SELECT {','.join(self.table_output_step_fields)}, FALSE as data_source_deleted_flag, now() AS data_source_last_updated_datetime
-        #     FROM staging_octane.{self.staging_table_name} where {self.main_pid} in (%pids) or %full_load_flag = true'''
         if self.version_pid is None:
             join_condition = ""
             for i, field in enumerate(self.table_output_step_fields):
@@ -222,12 +218,11 @@ class Staging_to_History_ETL(ETL_config):
                          , self.table_output_step_fields
                          , self.json_output_step_field
                          , self.staging_connection
-                         , self.output_script
                          , self.state_machine_name
                          , self.state_machine_comment)
 
 
-class Db_connection:
+class EDW:
     database_name = ""
     database_username = ""
     database_password = ""
@@ -258,22 +253,8 @@ class Db_connection:
         conn.close()
         return rows
 
-    # def execute_insert_query(self, query: str, database=database_name):
-    #     conn = psycopg2.connect(database=database,
-    #                             user=self.database_username,
-    #                             password=self.database_password,
-    #                             host=self.database_hostname,
-    #                             port=self.database_port)
-    #     cur = conn.cursor()
-    #     cur.execute(query)
-    #     conn.commit()
-    #     row_count = cur.rowcount
-    #     conn.close()
-    #     return row_count
-
 
     def get_all_staging_tables(self, schema):
-        table_names = []
         rows = self.execute_select_query(f'''
         SELECT t.relname AS name, a.attname as key_field, version.attname as version_field
         FROM pg_class t
@@ -314,16 +295,13 @@ class Db_connection:
 
 def main():
 
-    edw_staging = Db_connection(db_name="staging")
-    output_script = Insert_Script()
-    staging_tables = edw_staging.get_all_staging_tables('staging_octane')
-    etl_config_list = []
+    edw = EDW(db_name="staging")
+    staging_tables = edw.get_all_staging_tables('staging_octane')
     full_config_insert_script = ""
     for i, staging_table_metadata in enumerate(staging_tables, start=100001):
-        etl_config = Staging_to_History_ETL(staging_table_metadata, f'SP-{i}', edw_staging, output_script)
+        etl_config = Staging_to_History_ETL(staging_table_metadata, f'SP-{i}', edw)
         config_insert = etl_config.create_config_insert_statements()
         full_config_insert_script+=config_insert # ********* This is the main output of this script *********
-    etl_config_list.append(etl_config)
     f = open("config_insert_"+date.today().strftime("%Y%m%d")+".sql", "w")
     f.write(full_config_insert_script)
     f.close()
