@@ -177,7 +177,7 @@ class Staging_to_History_ETL(ETL_config):
                     join_condition +=' AND '
                 join_condition +='staging_table.'+field+' = history_table.'+field
             self.table_input_step_sql = f'''
-            SELECT staging_table.{', staging_table.'.join(self.table_output_step_fields)}, FALSE as data_source_deleted_flag, now() AS data_source_last_updated_datetime
+            SELECT staging_table.{', staging_table.'.join(self.table_output_step_fields)}, FALSE as data_source_deleted_flag, now() AS data_source_updated_datetime
             FROM staging_octane.{self.staging_table_name} staging_table
             LEFT JOIN history_octane.{self.staging_table_name} history_table on {join_condition}
             WHERE history_table.{self.main_pid} is NULL
@@ -191,12 +191,12 @@ class Staging_to_History_ETL(ETL_config):
                 if(field==self.version_pid):
                     list_of_fields += '+1'
             self.table_input_step_sql = f'''
-            SELECT staging_table.{', staging_table.'.join(self.table_output_step_fields)}, FALSE as data_source_deleted_flag, now() AS data_source_last_updated_datetime
+            SELECT staging_table.{', staging_table.'.join(self.table_output_step_fields)}, FALSE as data_source_deleted_flag, now() AS data_source_updated_datetime
             FROM staging_octane.{self.staging_table_name} staging_table
             LEFT JOIN history_octane.{self.staging_table_name} history_table on staging_table.{self.main_pid} = history_table.{self.main_pid} and staging_table.{self.version_pid} = history_table.{self.version_pid}
             WHERE history_table.{self.main_pid} is NULL
             UNION ALL
-            SELECT {list_of_fields}, TRUE as data_source_deleted_flag, now() AS data_source_last_updated_datetime
+            SELECT {list_of_fields}, TRUE as data_source_deleted_flag, now() AS data_source_updated_datetime
             FROM history_octane.{self.staging_table_name} history_table
             LEFT JOIN staging_octane.{self.staging_table_name} staging_table on staging_table.{self.main_pid} = history_table.{self.main_pid}
             WHERE staging_table.{self.main_pid} is NULL
