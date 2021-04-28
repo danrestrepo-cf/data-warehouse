@@ -1,5 +1,6 @@
 
 import psycopg2
+from datetime import date
 
 class Insert_Script:
     process_insert = []
@@ -317,11 +318,15 @@ def main():
     output_script = Insert_Script()
     staging_tables = edw_staging.get_all_staging_tables('staging_octane')
     etl_config_list = []
-    for i, staging_table_metadata in enumerate(staging_tables, start=100000):
+    full_config_insert_script = ""
+    for i, staging_table_metadata in enumerate(staging_tables, start=100001):
         etl_config = Staging_to_History_ETL(staging_table_metadata, f'SP-{i}', edw_staging, output_script)
         config_insert = etl_config.create_config_insert_statements()
-        print (config_insert) # ********* This is the main output of this script *********
+        full_config_insert_script+=config_insert # ********* This is the main output of this script *********
     etl_config_list.append(etl_config)
+    f = open("config_insert_"+date.today().strftime("%Y%m%d")+".sql", "w")
+    f.write(full_config_insert_script)
+    f.close()
 
 if __name__ == "__main__":
     main()
