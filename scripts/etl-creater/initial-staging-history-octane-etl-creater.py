@@ -265,7 +265,7 @@ class EDW:
          join pg_attribute version on version.attrelid = t.oid AND version.attname = left(a.attname, length(a.attname)-3)||'version'
         WHERE pg_namespace.nspname = 'staging_octane'
           and t.relkind = 'r'
-          and i.relname like '%_pkey'
+          and (i.relname like '%_pkey' OR i.relname like 'pk_%')
          -- 371
         union all
         select tables.table_name as name, 'code' as key_field, null as version_field
