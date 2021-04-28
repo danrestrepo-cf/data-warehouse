@@ -126,7 +126,7 @@ class ETL_config:
                 FROM temp_process
                 RETURNING dwid
             )'''
-        self.table_output_step_fields.append('data_source_last_updated_datetime')
+        self.table_output_step_fields.append('data_source_updated_datetime')
         self.table_output_step_fields.append('data_source_deleted_flag')
         config_insert +=  f'''
             , temp_table_output_field as (INSERT INTO mdi.table_output_field (
