@@ -1,54 +1,5 @@
-'''
-
-TODO:
-
-'''
-
 
 import psycopg2
-
-DEBUG = False
-
-
-PROCESS_INSERT_HEADER = '''
-    INSERT INTO mdi.process (
-        dwid, name, description
-        ) 
-    VALUES'''
-TABLE_INPUT_STEP_INSERT_HEADER = '''
-    INSERT INTO mdi.table_input_step (
-        dwid, process_dwid, data_source_dwid, sql, limit_size, connectionname
-        ) 
-    VALUES'''
-TABLE_OUTPUT_STEP_INSERT_HEADER = '''
-    INSERT INTO mdi.table_output_step (
-        dwid, process_dwid, target_schema, target_table, commit_size, partitioning_field, 
-        table_name_field, auto_generated_key_field, partition_data_per, table_name_defined_in_field, 
-        return_auto_generated_key_field, truncate_table, connectionname, partition_over_tables, 
-        specify_database_fields, ignore_insert_errors, use_batch_update 
-        ) 
-    VALUES'''
-TABLE_OUTPUT_FIELD_STEP_INSERT_HEADER = '''
-    INSERT INTO mdi.table_output_field (
-        dwid, table_output_step_dwid, database_field_name, database_stream_name, field_order, 
-        is_sensitive 
-        ) 
-    VALUES'''
-JSON_OUTPUT_FIELD_INSERT_HEADER = '''
-    INSERT INTO mdi.json_output_field (
-        dwid, process_dwid, field_name
-        ) 
-    VALUES'''
-STATE_MACHINE_DEFINITION_INSERT_HEADER = '''
-    INSERT INTO mdi.state_machine_definition (
-        dwid, process_dwid, name, comment
-        )
-    VALUES'''
-STATE_MACHINE_STEP_INSERT_HEADER = '''
-    INSERT INTO mdi.state_machine_step (
-        dwid, process_dwid, next_process_dwid
-        )
-    VALUES'''
 
 class Insert_Script:
     process_insert = []
@@ -155,56 +106,57 @@ class ETL_config:
         self.state_machine_comment = state_machine_comment
 
     def create_config_insert_statements(self):
-        self.process_dwid = self.staging_connection.execute_select_query(f'''SELECT nextval('mdi."process_dwid_seq"')''', 'config')[0][0]
-        process_insert = f'''
-            ({self.process_dwid}, '{self.process_name}', '{self.process_description}') '''
-        self.output_script.add_process_insert(process_insert)
-
-        self.table_input_step_dwid = self.staging_connection.execute_select_query(f'''SELECT nextval('mdi."table_input_step_dwid_seq"')''', 'config')[0][0]
-        table_input_step_insert = f'''
-            ({self.table_input_step_dwid}, {self.process_dwid}, 0, '{self.table_input_step_sql}', 0, '{self.table_input_step_connection}')'''
-        self.output_script.add_table_input_step_insert(table_input_step_insert)
-
-        self.table_output_step_dwid = self.staging_connection.execute_select_query(f'''SELECT nextval('mdi."table_output_step_dwid_seq"')''', 'config')[0][0]
-        table_output_step_insert = f'''
-            ({self.table_output_step_dwid}, {self.process_dwid}, '{self.table_output_step_schema}', '{self.table_output_step_table}', 1000
-                , NULL, NULL, NULL, NULL, 'N', NULL, 'Y'
-                , '{self.table_output_step_connection}', 'N'
-                , 'Y', 'N', 'N' ) '''
-        self.output_script.add_table_output_step_insert(table_output_step_insert)
-
-        table_output_field_step_inserts = []
-        self.table_output_step_fields.append('data_source_last_updated_datetime').append('data_source_deleted_flag')
+        config_insert = ""
+        #self.process_dwid = self.staging_connection.execute_select_query(f'''SELECT nextval('mdi."process_dwid_seq"')''', 'config')[0][0]
+        config_insert += f'''
+            with temp_process as (INSERT INTO mdi.process (name, description) 
+                VALUES ('{self.process_name}', '{self.process_description}')
+                RETURNING dwid 
+            )'''
+        config_insert += f'''
+            , temp_table_input_step as (INSERT INTO mdi.table_input_step (process_dwid, data_source_dwid, sql, limit_size, connectionname) 
+                select temp_process.dwid, 0, '{self.table_input_step_sql}', 0, '{self.table_input_step_connection}'
+                from temp_process
+                RETURNING dwid 
+            )'''
+        config_insert += f'''
+            , temp_table_output_step as (INSERT INTO mdi.table_output_step (process_dwid, target_schema, target_table, commit_size, partitioning_field, table_name_field, auto_generated_key_field, partition_data_per, 
+                table_name_defined_in_field, return_auto_generated_key_field, truncate_table, connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors, use_batch_update) 
+                SELECT temp_process.dwid, '{self.table_output_step_schema}', '{self.table_output_step_table}', 1000, NULL, NULL, NULL, NULL
+                , 'N', NULL, 'Y', '{self.table_output_step_connection}', 'N', 'Y', 'N', 'N'
+                FROM temp_process
+                RETURNING dwid
+            )'''
+        self.table_output_step_fields.append('data_source_last_updated_datetime')
+        self.table_output_step_fields.append('data_source_deleted_flag')
+        config_insert +=  f'''
+            , temp_table_output_field as (INSERT INTO mdi.table_output_field (
+                table_output_step_dwid, database_field_name, database_stream_name, field_order, 
+                is_sensitive 
+                ) '''
+        config_insert_field = []
         for i, field in enumerate(self.table_output_step_fields):
-            table_output_field_dwid = self.staging_connection.execute_select_query(f'''SELECT nextval('mdi."table_output_field_dwid_seq"')''', 'config')[0][0]
-            table_output_field_step_insert =  f'''({table_output_field_dwid},  {self.table_output_step_dwid}, '{field}', '{field}', {i}, False)'''
-            table_output_field_step_inserts.append(table_output_field_step_insert)
-            self.output_script.add_table_output_field_step_insert(table_output_field_step_insert)
+                config_insert_field.append( f'''     
+                    SELECT temp_table_output_step.dwid, '{field}', '{field}', {i}, False
+                    from temp_table_output_step
+                ''')
+        config_insert += ' UNION ALL '.join(config_insert_field)
+        config_insert += ')'
+        config_insert += f'''
+            , temp_json_output as (INSERT INTO mdi.json_output_field (process_dwid, field_name) 
+                select temp_process.dwid, '{self.json_output_step_field}'
+                from temp_process)'''
 
-        self.json_output_field_dwid = self.staging_connection.execute_select_query(f'''SELECT nextval('mdi."json_output_field_dwid_seq"')''', 'config')[0][0]
-        json_output_field_insert = f'''
-            ({self.json_output_field_dwid}, {self.process_dwid}, '{self.json_output_step_field}')'''
-        self.output_script.add_json_output_field_insert(json_output_field_insert)
+        config_insert += f'''
+            , temp_state_machine_definition as (INSERT INTO mdi.state_machine_definition (process_dwid, name, comment)
+                SELECT temp_process.dwid, '{self.state_machine_name}', '{self.state_machine_comment}'
+                from temp_process)'''
 
-        self.state_machine_definition_dwid = self.staging_connection.execute_select_query(f'''SELECT nextval('mdi."state_machine_definition_dwid_seq"')''', 'config')[0][0]
-        state_machine_definition_insert = f'''
-            ({self.state_machine_definition_dwid}, {self.process_dwid}, '{self.state_machine_name}', '{self.state_machine_comment}')'''
-        self.output_script.add_state_machine_definition_insert(state_machine_definition_insert)
-
-        self.state_machine_step_dwid = self.staging_connection.execute_select_query(f'''SELECT nextval('mdi."state_machine_step_dwid_seq"')''', 'config')[0][0]
-        state_machine_step_insert = f'''
-            ({self.state_machine_step_dwid}, {self.process_dwid}, NULL)'''
-        self.output_script.add_state_machine_step_insert(state_machine_step_insert)
-
-        if DEBUG:
-            print (PROCESS_INSERT_HEADER + process_insert+';'
-                +TABLE_INPUT_STEP_INSERT_HEADER+table_input_step_insert+';'
-                +TABLE_OUTPUT_STEP_INSERT_HEADER+table_output_step_insert+';'
-                +TABLE_OUTPUT_FIELD_STEP_INSERT_HEADER+",".join(table_output_field_step_inserts)+';'
-                +JSON_OUTPUT_FIELD_INSERT_HEADER+json_output_field_insert+';'
-                +STATE_MACHINE_DEFINITION_INSERT_HEADER+state_machine_definition_insert+';'
-                +STATE_MACHINE_STEP_INSERT_HEADER+state_machine_step_insert+';'
-                   )
+        config_insert += f'''
+            INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)
+                SELECT temp_process.dwid, NULL
+                from temp_process;'''
+        return config_insert
 
 
 class Staging_to_History_ETL(ETL_config):
@@ -305,18 +257,18 @@ class Db_connection:
         conn.close()
         return rows
 
-    def execute_insert_query(self, query: str, database=database_name):
-        conn = psycopg2.connect(database=database,
-                                user=self.database_username,
-                                password=self.database_password,
-                                host=self.database_hostname,
-                                port=self.database_port)
-        cur = conn.cursor()
-        cur.execute(query)
-        conn.commit()
-        row_count = cur.rowcount        
-        conn.close()
-        return row_count
+    # def execute_insert_query(self, query: str, database=database_name):
+    #     conn = psycopg2.connect(database=database,
+    #                             user=self.database_username,
+    #                             password=self.database_password,
+    #                             host=self.database_hostname,
+    #                             port=self.database_port)
+    #     cur = conn.cursor()
+    #     cur.execute(query)
+    #     conn.commit()
+    #     row_count = cur.rowcount
+    #     conn.close()
+    #     return row_count
 
 
     def get_all_staging_tables(self, schema):
@@ -367,11 +319,9 @@ def main():
     etl_config_list = []
     for i, staging_table_metadata in enumerate(staging_tables, start=100000):
         etl_config = Staging_to_History_ETL(staging_table_metadata, f'SP-{i}', edw_staging, output_script)
-        etl_config.create_config_insert_statements()
+        config_insert = etl_config.create_config_insert_statements()
+        print (config_insert) # ********* This is the main output of this script *********
     etl_config_list.append(etl_config)
-    # print (output_script.create_script())
-    edw_staging.execute_insert_query(output_script.create_script(), 'config')
-    
 
 if __name__ == "__main__":
     main()
