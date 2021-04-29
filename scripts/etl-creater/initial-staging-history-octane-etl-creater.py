@@ -200,6 +200,7 @@ class Staging_to_History_ETL(ETL_config):
             FROM history_octane.{self.staging_table_name} history_table
             LEFT JOIN staging_octane.{self.staging_table_name} staging_table on staging_table.{self.main_pid} = history_table.{self.main_pid}
             WHERE staging_table.{self.main_pid} is NULL
+                AND not exists (select 1 from history_octane inner where inner.{self.main_pid} = history_table.{self.main_pid} and inner.data_source_deleted_flag = True)
             '''
         self.table_output_step_connection = 'Staging DB Connection'
         self.table_output_step_schema = "history_octane"
