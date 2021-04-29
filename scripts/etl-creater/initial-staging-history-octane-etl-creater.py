@@ -191,6 +191,7 @@ class Staging_to_History_ETL(ETL_config):
                 if(field==self.version_pid):
                     list_of_fields += '+1'
             self.table_input_step_sql = f'''
+            --finding records to insert into hitory_octane.{self.staging_table_name}
             SELECT staging_table.{', staging_table.'.join(self.table_output_step_fields)}, FALSE as data_source_deleted_flag, now() AS data_source_updated_datetime
             FROM staging_octane.{self.staging_table_name} staging_table
             LEFT JOIN history_octane.{self.staging_table_name} history_table on staging_table.{self.main_pid} = history_table.{self.main_pid} and staging_table.{self.version_pid} = history_table.{self.version_pid}
@@ -200,7 +201,7 @@ class Staging_to_History_ETL(ETL_config):
             FROM history_octane.{self.staging_table_name} history_table
             LEFT JOIN staging_octane.{self.staging_table_name} staging_table on staging_table.{self.main_pid} = history_table.{self.main_pid}
             WHERE staging_table.{self.main_pid} is NULL
-                AND not exists (select 1 from history_octane inner where inner.{self.main_pid} = history_table.{self.main_pid} and inner.data_source_deleted_flag = True)
+                AND not exists (select 1 from history_octane.{self.staging_table_name} deleted_records where deleted_records.{self.main_pid} = history_table.{self.main_pid} and deleted_records.data_source_deleted_flag = True)
             '''
         self.table_output_step_connection = 'Staging DB Connection'
         self.table_output_step_schema = "history_octane"
