@@ -42,6 +42,16 @@ if [[ -n "${PROCESS_NAME}" ]]; then
   params="${params} -param:process_name=${PROCESS_NAME}"
 fi
 
+echo "[INPUT] ENVIRONMENT=${ENVIRONMENT}"
+if [[ -n "${ENVIRONMENT}" ]]; then
+  params="${params} -param:environment=${ENVIRONMENT}"
+fi
+
+echo "[INPUT] INPUT_DATA=${INPUT_DATA}"
+if [[ -n "${INPUT_DATA}" ]]; then
+  params="${params} -param:input_data=${INPUT_DATA}"
+fi
+
 echo "[INPUT] metadata endpoint=${ECS_CONTAINER_METADATA_URI_V4}"
 if [[ -n "${ECS_CONTAINER_METADATA_URI_V4}" ]]; then
   # https://docs.aws.amazon.com/AmazonECS/latest/userguide/task-metadata-endpoint-v4-fargate.html
