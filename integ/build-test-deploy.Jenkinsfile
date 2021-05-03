@@ -8,7 +8,6 @@ pipeline {
     }
     options {
         ansiColor("xterm")
-        timeout(time: 3, unit: "HOURS")
     }
     stages {
         stage("Prepare aws cli") {
