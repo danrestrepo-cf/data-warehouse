@@ -87,7 +87,7 @@ check_for_input_data_or_file() {
   echo "[INPUT] INPUT_TYPE=${INPUT_TYPE}" # expected values: none, file, data
   case "${INPUT_TYPE}" in
     none) # no need to download a file
-      echo "Input file is NOT required. Skipping download step."
+      echo "Input file is NOT required. Skipping input check step."
       ;;
 
     data) # JSON string is required!
