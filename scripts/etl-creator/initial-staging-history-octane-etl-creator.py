@@ -1,6 +1,7 @@
 
 import psycopg2
 from datetime import date
+import sys, getopt
 
 class ETL_config:
     process_name = ""
@@ -106,6 +107,11 @@ class ETL_config:
 
             '''
         return config_insert
+
+
+class DimensionETLCreator(ETL_config):
+    def __init__(self):
+        pass
 
 
 class Staging_to_History_ETL(ETL_config):
@@ -254,11 +260,29 @@ class EDW:
         return columns
 
 
-def main():
-    generate_mdi_configs_based_on_information_schema()
+def main(argv):
+    try:
+        opts, args = getopt.getopt(argv, "ht:i",["help","table","information_schema"])
+    except getops.GetopsError:
+        display_usage()
+        exit(-1)
+    for opt, arg in opts:
+        if opt in ("-h", "-help", "--help"):
+            display_usage()
+            exit(0)
+        elif opt in ("-i", "-information_schema", "--information_schema"):
+            generate_mdi_configs_based_on_information_schema()
+        elif opt in ("-t", "-table_definition", "--table_definition"):
+            generate_mdi_configs_based_on_table_definition(arg)
 
-def generate_mdi_configs_based_on_table_definition():
-    pass
+def display_usage():
+    print('''initial-staging-history-octane-etl-creator.py script usage:
+    -h      print usage information
+    -i      create configs based on staging db information schema
+    -t <schema name>   create configs based on edw_table_definition''')
+
+def generate_mdi_configs_based_on_table_definition(schema_name_to_process: str) -> None:
+    print(f"Will create configs for this schema: {schema_name_to_process}")
 
 def generate_mdi_configs_based_on_information_schema():
     edw = EDW(db_name="staging")
@@ -273,4 +297,4 @@ def generate_mdi_configs_based_on_information_schema():
     f.close()
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])
