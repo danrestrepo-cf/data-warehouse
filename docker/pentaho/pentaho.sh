@@ -64,23 +64,23 @@ echo "[INPUT] etl_batch_id=${etl_batch_id}"
 params="${params} -param:etl_batch_id=${etl_batch_id}"
 
 download_if_required() {
-      if [[ -n "${INPUT_FILE}" ]]; then # if the environment variable is not zero length...
-        echo "[INPUT] INPUT_FILE=${INPUT_FILE}"
-        params="${params} -param:input_file=${INPUT_FILE}"
+  if [[ -n "${INPUT_FILE}" ]]; then # if the environment variable is not zero length...
+    echo "[INPUT] INPUT_FILE=${INPUT_FILE}"
+    params="${params} -param:input_file=${INPUT_FILE}"
 
-      elif [[ -n "${S3_KEY}" ]]; then # if the environment variable is not zero length...
-        echo "[INPUT] INPUT_FILE environment variable is blank. Setting the value to the filename parsed from environment variable S3_KEY"
-        parsed_filename=$(echo $S3_KEY | sed 's~^.*\/~~')
-        echo "[INPUT] INPUT_FILE=${parsed_filename}"
-        params="${params} -param:input_file=${parsed_filename}"
-        export INPUT_FILE="${parsed_filename}"
+  elif [[ -n "${S3_KEY}" ]]; then # if the environment variable is not zero length...
+    echo "[INPUT] INPUT_FILE environment variable is blank. Setting the value to the filename parsed from environment variable S3_KEY"
+    parsed_filename=$(echo $S3_KEY | sed 's~^.*\/~~')
+    echo "[INPUT] INPUT_FILE=${parsed_filename}"
+    params="${params} -param:input_file=${parsed_filename}"
+    export INPUT_FILE="${parsed_filename}"
 
-      else
-        echo "Both environment variables INPUT_FILE and S3_KEY seem to be zero length. Cannot determine input filename."
-        exit 1
-      fi
-
-      download
+  else
+    echo "Both environment variables INPUT_FILE and S3_KEY seem to be zero length. Cannot determine input filename."
+    exit 1
+  fi
+  
+  download
 }
 
 check_for_input_data_or_file() {
