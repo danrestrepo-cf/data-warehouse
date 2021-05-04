@@ -255,6 +255,17 @@ class EDW:
         conn.close()
         return rows
 
+    def execute_parameterized_select_query(self, query: str, database=database_name, *parameters):
+        conn = psycopg2.connect(database=database,
+                                user=self.database_username,
+                                password=self.database_password,
+                                host=self.database_hostname,
+                                port=self.database_port)
+        cur = conn.cursor()
+        cur.execute(query, parameters)
+        rows = cur.fetchall()
+        conn.close()
+        return rows
 
     def get_all_staging_tables(self, schema):
         rows = self.execute_select_query(f'''
@@ -296,7 +307,10 @@ class EDW:
 
 
 def main():
+    generate_mdi_configs_based_on_information_schema()
 
+
+def generate_mdi_configs_based_on_information_schema():
     edw = EDW(db_name="staging")
     staging_tables = edw.get_all_staging_tables('staging_octane')
     full_config_insert_script = ""
