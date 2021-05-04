@@ -2,58 +2,6 @@
 import psycopg2
 from datetime import date
 
-class Insert_Script:
-    process_insert = []
-    table_input_step_insert = []
-    table_output_step_insert = []
-    table_output_field_step_insert = []
-    json_output_field_insert = []
-    state_machine_definition_insert = []
-    state_machine_step_insert = []
-    final_script = ""
-
-    def __init__(self):
-        None
-
-    def add_process_insert(self, new_process_row):
-        self.process_insert.append(new_process_row)
-
-    def add_table_input_step_insert(self, new_table_input_step_row):
-        self.table_input_step_insert.append(new_table_input_step_row)
-
-    def add_table_output_step_insert(self, new_table_output_step_row):
-        self.table_output_step_insert.append(new_table_output_step_row)
-
-    def add_table_output_field_step_insert(self, new_table_output_field_step_row):
-        self.table_output_field_step_insert.append(new_table_output_field_step_row)
-
-    def add_json_output_field_insert(self, new_json_output_field_row):
-        self.json_output_field_insert.append(new_json_output_field_row)
-
-    def add_state_machine_definition_insert(self, new_state_machine_definition_row):
-        self.state_machine_definition_insert.append(new_state_machine_definition_row)
-
-    def add_state_machine_step_insert(self, new_state_machine_step_row):
-        self.state_machine_step_insert.append(new_state_machine_step_row)
-
-    def create_script(self):
-        temp1 = ",".join(self.process_insert)
-        temp2 = ",".join(self.table_input_step_insert)
-        temp3 = ",".join(self.table_output_step_insert)
-        temp4 = ",".join(self.table_output_field_step_insert)
-        temp5 = ",".join(self.json_output_field_insert)
-        temp6 = ",".join(self.state_machine_definition_insert)
-        temp7 = ",".join(self.state_machine_step_insert)
-        final_script = (PROCESS_INSERT_HEADER + temp1 + ';'
-                        + TABLE_INPUT_STEP_INSERT_HEADER + temp2 + ';'
-                        + TABLE_OUTPUT_STEP_INSERT_HEADER + temp3 + ';'
-                        + TABLE_OUTPUT_FIELD_STEP_INSERT_HEADER + temp4 + ';'
-                        + JSON_OUTPUT_FIELD_INSERT_HEADER + temp5 + ';'
-                        + STATE_MACHINE_DEFINITION_INSERT_HEADER + temp6 + ';'
-                        + STATE_MACHINE_STEP_INSERT_HEADER + temp7 + ';'
-                           )
-        return final_script
-
 class ETL_config:
     process_name = ""
     process_description = ""
@@ -309,6 +257,8 @@ class EDW:
 def main():
     generate_mdi_configs_based_on_information_schema()
 
+def generate_mdi_configs_based_on_table_definition():
+    pass
 
 def generate_mdi_configs_based_on_information_schema():
     edw = EDW(db_name="staging")
