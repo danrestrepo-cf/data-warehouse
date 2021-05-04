@@ -83,11 +83,11 @@ download_if_required() {
   download
 }
 
-check_for_input_data_or_file() {
+check_for_input() {
   echo "[INPUT] INPUT_TYPE=${INPUT_TYPE}" # expected values: none, file, data
   case "${INPUT_TYPE}" in
     none) # no need to download a file
-      echo "Input file is NOT required. Skipping input check step."
+      echo "No input is required. Skipping input check step."
       ;;
 
     data) # Input data is required!
@@ -160,12 +160,12 @@ help)
   ;;
 t)
   shift 1
-  check_for_input_data_or_file
+  check_for_input
   run_pan "$@"
   ;;
 j)
   shift 1
-  check_for_input_data_or_file
+  check_for_input
   run_kitchen "$@"
   ;;
 *)
