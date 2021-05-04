@@ -47,11 +47,6 @@ if [[ -n "${ENVIRONMENT}" ]]; then
   params="${params} -param:environment=${ENVIRONMENT}"
 fi
 
-echo "[INPUT] INPUT_DATA=${INPUT_DATA}"
-if [[ -n "${INPUT_DATA}" ]]; then
-  params="${params} -param:input_data=${INPUT_DATA}"
-fi
-
 echo "[INPUT] metadata endpoint=${ECS_CONTAINER_METADATA_URI_V4}"
 if [[ -n "${ECS_CONTAINER_METADATA_URI_V4}" ]]; then
   # https://docs.aws.amazon.com/AmazonECS/latest/userguide/task-metadata-endpoint-v4-fargate.html
@@ -69,15 +64,6 @@ echo "[INPUT] etl_batch_id=${etl_batch_id}"
 params="${params} -param:etl_batch_id=${etl_batch_id}"
 
 download_if_required() {
-  echo "[INPUT] INPUT_TYPE=${INPUT_TYPE}" # expected values: none, file
-  case "${INPUT_TYPE}" in
-    none) # no need to download a file
-      echo "Input file is NOT required. Skipping download step."
-      ;;
-
-    file) # a file is required!
-      echo "Input file is required."
-
       if [[ -n "${INPUT_FILE}" ]]; then # if the environment variable is not zero length...
         echo "[INPUT] INPUT_FILE=${INPUT_FILE}"
         params="${params} -param:input_file=${INPUT_FILE}"
@@ -95,6 +81,27 @@ download_if_required() {
       fi
 
       download
+}
+
+check_for_input_data_or_file() {
+  echo "[INPUT] INPUT_TYPE=${INPUT_TYPE}" # expected values: none, file, data
+  case "${INPUT_TYPE}" in
+    none) # no need to download a file
+      echo "Input file is NOT required. Skipping download step."
+      ;;
+
+    data) # JSON string is required!
+      echo "[INPUT] INPUT_DATA=${INPUT_DATA}"
+      if [[ -n "${INPUT_DATA}" ]]; then
+        params="${params} -param:input_data=${INPUT_DATA}"
+      else
+        echo "Environment variable INPUT_DATA is zero length. Cannot parse INPUT_DATA."
+        exit 1
+      fi
+      ;;
+
+    file) # a file is required!
+      download_if_required
       ;;
 
     *)
@@ -153,12 +160,12 @@ help)
   ;;
 t)
   shift 1
-  download_if_required
+  check_for_input_data_or_file
   run_pan "$@"
   ;;
 j)
   shift 1
-  download_if_required
+  check_for_input_data_or_file
   run_kitchen "$@"
   ;;
 *)
