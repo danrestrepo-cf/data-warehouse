@@ -90,7 +90,7 @@ check_for_input_data_or_file() {
       echo "Input file is NOT required. Skipping input check step."
       ;;
 
-    data) # JSON string is required!
+    data) # Input data is required!
       echo "[INPUT] INPUT_DATA=${INPUT_DATA}"
       if [[ -n "${INPUT_DATA}" ]]; then
         params="${params} -param:input_data=${INPUT_DATA}"
