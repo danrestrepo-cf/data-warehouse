@@ -34,9 +34,10 @@ AWS_REGION=us-east-1
 
 # Deploy user runs the structure changes
 DEPLOY_USER="deployer"
-AUTH_TOKEN=$(aws rds generate-db-auth-token --hostname ${RDS_ENDPOINT} --port 5432 --region ${AWS_REGION} --username ${DEPLOY_USER} --output text)
 
 for database in ingress staging config; do
+  # generate a new token for each database in case one has timed out
+  AUTH_TOKEN=$(aws rds generate-db-auth-token --hostname ${RDS_ENDPOINT} --port 5432 --region ${AWS_REGION} --username ${DEPLOY_USER} --output text)
   docker run -i \
     -v ${absolute_path}/database/migrations/${database}:/flyway/sql \
     --rm flyway/flyway:6 \
@@ -50,9 +51,10 @@ done
 
 # This runs as the admin user to prevent permission escalation in the main migrations
 ADMIN_USER="admin"
-AUTH_TOKEN=$(aws rds generate-db-auth-token --hostname ${RDS_ENDPOINT} --port 5432 --region ${AWS_REGION} --username ${ADMIN_USER} --output text)
 
 for database in ingress staging config; do
+  # generate a new token for each database in case one has timed out
+  AUTH_TOKEN=$(aws rds generate-db-auth-token --hostname ${RDS_ENDPOINT} --port 5432 --region ${AWS_REGION} --username ${ADMIN_USER} --output text)
   docker run -i \
     -v ${absolute_path}/database/migrations/${database}-permissions:/flyway/sql \
     --rm flyway/flyway:6 \
