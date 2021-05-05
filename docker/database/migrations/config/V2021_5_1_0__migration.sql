@@ -1096,3 +1096,16 @@ FROM
 		CROSS JOIN dwids d
 WHERE
 	efd.dwid = d.mi_field_dwid;
+
+--
+-- EDW | Modify staging_octane to history_octane join conditions to use aliased table names
+-- (https://app.asana.com/0/0/1200274682108259/)
+--
+
+
+update mdi.edw_join_definition
+set join_condition = REPLACE (REPLACE (join_condition, ' = '||target_table.table_name || '.', ' = t'||edw_join_definition.dwid||'.'), primary_table.table_name || '.', 'primary_table.')
+from mdi.edw_table_definition as primary_table
+   , mdi.edw_table_definition as target_table
+where edw_join_definition.primary_edw_table_definition_dwid = primary_table.dwid
+  and edw_join_definition.target_edw_table_definition_dwid = target_table.dwid
