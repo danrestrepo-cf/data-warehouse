@@ -63,7 +63,15 @@ echo "[INPUT] etl_batch_id=${etl_batch_id}"
 
 params="${params} -param:etl_batch_id=${etl_batch_id}"
 
-download_if_required() {
+verify_input_file_exists() {
+  full_input_file="${INPUT_PATH}/${INPUT_FILE}"
+  if [[ ! -f $full_input_file ]]; then
+    echo "Expecting file ${full_input_file} to exist, but it does not."
+    exit 1
+  fi
+}
+
+download_file() {
   if [[ -n "${INPUT_FILE}" ]]; then # if the environment variable is not zero length...
     echo "[INPUT] INPUT_FILE=${INPUT_FILE}"
     params="${params} -param:input_file=${INPUT_FILE}"
@@ -79,8 +87,15 @@ download_if_required() {
     echo "Both environment variables INPUT_FILE and S3_KEY seem to be zero length. Cannot determine input filename."
     exit 1
   fi
-  
-  download
+
+  if [[ -n "${S3_BUCKET}" && -n "${S3_KEY}" ]]; then
+    echo "Fetching input file from S3"
+    /aws-s3-download.sh
+  else
+    echo "Not downloading from S3."
+  fi
+
+  verify_input_file_exists
 }
 
 check_for_input() {
@@ -95,39 +110,20 @@ check_for_input() {
       if [[ -n "${INPUT_DATA}" ]]; then
         params="${params} -param:input_data=${INPUT_DATA}"
       else
-        echo "Environment variable INPUT_DATA is zero length. Cannot parse INPUT_DATA."
+        echo "Cannot parse INPUT_DATA. When INPUT_TYPE is data, INPUT_DATA cannot be zero length"
         exit 1
       fi
       ;;
 
     file) # a file is required!
-      download_if_required
+      download_file
       ;;
 
     *)
-      echo "ERROR: Expected to find an environment variable named INPUT_TYPE with a value of 'none' or 'file' but another value was detected."
+      echo "ERROR: Expected to find an environment variable named INPUT_TYPE with a value of 'none', 'data' or 'file' but another value was detected."
       exit 1
       ;;
   esac
-}
-
-verify_input_file_exists() {
-  full_input_file="${INPUT_PATH}/${INPUT_FILE}"
-  if [[ ! -f $full_input_file ]]; then
-    echo "Expecting file ${full_input_file} to exist, but it does not."
-    exit 1
-  fi
-}
-
-download() {
-  if [[ -n "${S3_BUCKET}" && -n "${S3_KEY}" ]]; then
-    echo "Fetching input file from S3"
-    /aws-s3-download.sh
-  else
-    echo "Not downloading from S3."
-  fi
-
-  verify_input_file_exists
 }
 
 run_pan() {
