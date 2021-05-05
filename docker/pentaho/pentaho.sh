@@ -47,11 +47,6 @@ if [[ -n "${ENVIRONMENT}" ]]; then
   params="${params} -param:environment=${ENVIRONMENT}"
 fi
 
-echo "[INPUT] INPUT_DATA=${INPUT_DATA}"
-if [[ -n "${INPUT_DATA}" ]]; then
-  params="${params} -param:input_data=${INPUT_DATA}"
-fi
-
 echo "[INPUT] metadata endpoint=${ECS_CONTAINER_METADATA_URI_V4}"
 if [[ -n "${ECS_CONTAINER_METADATA_URI_V4}" ]]; then
   # https://docs.aws.amazon.com/AmazonECS/latest/userguide/task-metadata-endpoint-v4-fargate.html
@@ -68,42 +63,6 @@ echo "[INPUT] etl_batch_id=${etl_batch_id}"
 
 params="${params} -param:etl_batch_id=${etl_batch_id}"
 
-download_if_required() {
-  echo "[INPUT] INPUT_TYPE=${INPUT_TYPE}" # expected values: none, file
-  case "${INPUT_TYPE}" in
-    none) # no need to download a file
-      echo "Input file is NOT required. Skipping download step."
-      ;;
-
-    file) # a file is required!
-      echo "Input file is required."
-
-      if [[ -n "${INPUT_FILE}" ]]; then # if the environment variable is not zero length...
-        echo "[INPUT] INPUT_FILE=${INPUT_FILE}"
-        params="${params} -param:input_file=${INPUT_FILE}"
-
-      elif [[ -n "${S3_KEY}" ]]; then # if the environment variable is not zero length...
-        echo "[INPUT] INPUT_FILE environment variable is blank. Setting the value to the filename parsed from environment variable S3_KEY"
-        parsed_filename=$(echo $S3_KEY | sed 's~^.*\/~~')
-        echo "[INPUT] INPUT_FILE=${parsed_filename}"
-        params="${params} -param:input_file=${parsed_filename}"
-        export INPUT_FILE="${parsed_filename}"
-
-      else
-        echo "Both environment variables INPUT_FILE and S3_KEY seem to be zero length. Cannot determine input filename."
-        exit 1
-      fi
-
-      download
-      ;;
-
-    *)
-      echo "ERROR: Expected to find an environment variable named INPUT_TYPE with a value of 'none' or 'file' but another value was detected."
-      exit 1
-      ;;
-  esac
-}
-
 verify_input_file_exists() {
   full_input_file="${INPUT_PATH}/${INPUT_FILE}"
   if [[ ! -f $full_input_file ]]; then
@@ -112,7 +71,23 @@ verify_input_file_exists() {
   fi
 }
 
-download() {
+download_file() {
+  if [[ -n "${INPUT_FILE}" ]]; then # if the environment variable is not zero length...
+    echo "[INPUT] INPUT_FILE=${INPUT_FILE}"
+    params="${params} -param:input_file=${INPUT_FILE}"
+
+  elif [[ -n "${S3_KEY}" ]]; then # if the environment variable is not zero length...
+    echo "[INPUT] INPUT_FILE environment variable is blank. Setting the value to the filename parsed from environment variable S3_KEY"
+    parsed_filename=$(echo $S3_KEY | sed 's~^.*\/~~')
+    echo "[INPUT] INPUT_FILE=${parsed_filename}"
+    params="${params} -param:input_file=${parsed_filename}"
+    export INPUT_FILE="${parsed_filename}"
+
+  else
+    echo "Both environment variables INPUT_FILE and S3_KEY seem to be zero length. Cannot determine input filename."
+    exit 1
+  fi
+
   if [[ -n "${S3_BUCKET}" && -n "${S3_KEY}" ]]; then
     echo "Fetching input file from S3"
     /aws-s3-download.sh
@@ -121,6 +96,34 @@ download() {
   fi
 
   verify_input_file_exists
+}
+
+check_for_input() {
+  echo "[INPUT] INPUT_TYPE=${INPUT_TYPE}" # expected values: none, file, data
+  case "${INPUT_TYPE}" in
+    none) # no need to download a file
+      echo "No input is required. Skipping input check step."
+      ;;
+
+    data) # Input data is required!
+      echo "[INPUT] INPUT_DATA=${INPUT_DATA}"
+      if [[ -n "${INPUT_DATA}" ]]; then
+        params="${params} -param:input_data=${INPUT_DATA}"
+      else
+        echo "Cannot parse INPUT_DATA. When INPUT_TYPE is data, INPUT_DATA cannot be zero length"
+        exit 1
+      fi
+      ;;
+
+    file) # a file is required!
+      download_file
+      ;;
+
+    *)
+      echo "ERROR: Expected to find an environment variable named INPUT_TYPE with a value of 'none', 'data' or 'file' but another value was detected."
+      exit 1
+      ;;
+  esac
 }
 
 run_pan() {
@@ -153,12 +156,12 @@ help)
   ;;
 t)
   shift 1
-  download_if_required
+  check_for_input
   run_pan "$@"
   ;;
 j)
   shift 1
-  download_if_required
+  check_for_input
   run_kitchen "$@"
   ;;
 *)
