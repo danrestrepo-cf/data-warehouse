@@ -209,17 +209,51 @@ class EDW:
         conn.close()
         return rows
 
-    def execute_parameterized_select_query(self, query: str, database=database_name, *parameters):
-        conn = psycopg2.connect(database=database,
+    def execute_parameterized_query(self, query: str, *parameters):
+        conn = psycopg2.connect(database=self.database_name,
                                 user=self.database_username,
                                 password=self.database_password,
                                 host=self.database_hostname,
                                 port=self.database_port)
         cur = conn.cursor()
         cur.execute(query, parameters)
+        conn.commit()
         rows = cur.fetchall()
         conn.close()
         return rows
+
+    def get_table_list_from_edw_table_definition(self, schema_name) -> list:
+        query = '''SELECT
+                        dwid
+                        , database_name
+                        , schema_name
+                        , table_name
+                        , primary_source_edw_table_definition_dwid
+                    FROM
+                        mdi.edw_table_definition
+                    WHERE
+                        schema_name = %s
+                    ORDER BY
+                        schema_name ASC;'''
+        return self.execute_parameterized_query(query, schema_name)
+
+    def get_field_list_from_edw_field_definition(self, edw_table_definition_dwid: int) -> list:
+        query = '''SELECT
+                        edw_table_definition.database_name
+                        , edw_table_definition.schema_name
+                        , edw_table_definition.table_name
+                        , edw_field_definition.field_name
+                        , edw_field_definition.key_field_flag
+                    FROM
+                        mdi.edw_table_definition
+                        JOIN mdi.edw_field_definition on edw_table_definition.dwid = edw_field_definition.edw_table_definition_dwid
+                    WHERE
+                        edw_table_definition.dwid = %s
+                    ORDER BY
+                        edw_field_definition.key_field_flag DESC
+                        , edw_field_definition.field_name ASC
+                    ;'''
+        return self.execute_parameterized_query(query, edw_table_definition_dwid)
 
     def get_all_staging_tables(self, schema):
         rows = self.execute_select_query(f'''
@@ -261,28 +295,44 @@ class EDW:
 
 
 def main(argv):
+    script_name = argv[0]
+    argv = argv[1:]
+
     try:
         opts, args = getopt.getopt(argv, "ht:i",["help","table","information_schema"])
     except getops.GetopsError:
-        display_usage()
+        display_usage(script_name)
         exit(-1)
     for opt, arg in opts:
-        if opt in ("-h", "-help", "--help"):
-            display_usage()
+        if opt in ("-h", "--h", "-help", "--help"):
+            display_usage(script_name)
             exit(0)
-        elif opt in ("-i", "-information_schema", "--information_schema"):
+        elif opt in ("-i", "--i", "-information_schema", "--information_schema"):
             generate_mdi_configs_based_on_information_schema()
-        elif opt in ("-t", "-table_definition", "--table_definition"):
+        elif opt in ("-t", "--t", "-table_definition", "--table_definition"):
             generate_mdi_configs_based_on_table_definition(arg)
 
-def display_usage():
-    print('''initial-staging-history-octane-etl-creator.py script usage:
+def display_usage(script_name: str) -> None:
+    print(f'''{script_name} script usage:
     -h      print usage information
-    -i      create configs based on staging db information schema
-    -t <schema name>   create configs based on edw_table_definition''')
+    -i      create configs based on staging db information_schema
+    -t <schema name>   create configs based on mdi.edw_table_definition''')
 
 def generate_mdi_configs_based_on_table_definition(schema_name_to_process: str) -> None:
     print(f"Will create configs for this schema: {schema_name_to_process}")
+
+    edw = EDW(db_name="config")
+    table_list = edw.get_table_list_from_edw_table_definition(schema_name_to_process)
+
+    for table in table_list:
+        edw_table_definition_dwid = table[0]
+        database_name = table[1]
+        schema_name = table[2]
+        table_name = table[3]
+        primary_source_edw_table_definition_dwid = table[4]
+
+        fields = edw.get_field_list_from_edw_field_definition(primary_source_edw_table_definition_dwid)
+        pass
 
 def generate_mdi_configs_based_on_information_schema():
     edw = EDW(db_name="staging")
@@ -297,4 +347,4 @@ def generate_mdi_configs_based_on_information_schema():
     f.close()
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main(sys.argv)
