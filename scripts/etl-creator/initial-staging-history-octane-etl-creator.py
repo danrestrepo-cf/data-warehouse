@@ -300,65 +300,7 @@ class DimensionETLCreator():
         self.state_machine_name = f""
         self.state_machine_comment = self.process_description
 
-
-    def create_sql_comment(self, comment: str, original_string:str = "") -> str:
-        return f"{original_string}  \n-- {comment}"
-
-    def create_process(self, name: str, description: str) -> (int, str):
-        config_insert=""
-        config_insert += f'''
-                
-                with temp_process as (INSERT INTO mdi.process (name, description) 
-                    VALUES ('{self.process_name}', '{self.process_description}')
-                    RETURNING dwid 
-                )'''
-
-        return config_insert
-
-    def create_table_input_step(self, sql: str, enable_lazy_conversion: str, cached_row_meta: str,
-                                connectionname: str, data_source_dwid: int,
-                                limit_size: int = 1000, replace_variables: str = "N", execute_for_each_row: str = "N") -> str:
-        config_insert=""
-        config_insert += f'''
-                , temp_table_input_step as (INSERT INTO mdi.table_input_step (process_dwid, data_source_dwid, sql, limit_size, connectionname) 
-                    select temp_process.dwid, 0, '{self.table_input_step_sql}', 0, '{self.table_input_step_connection}'
-                    from temp_process
-                    RETURNING dwid 
-                )'''
-
-        return table_input_step_template
-
-
-
-    # insert_update_step_template = {"process_dwid":None,
-    #                                     "connectionname":None,
-    #                                     "schema_name":None,
-    #                                     "table_name":None,
-    #                                     "commit_size":self.default_commit_size,
-    #                                     "do_not":None}
-    #
-    # insert_update_field_template = {"insert_update_step_dwid":None,
-    #                                      "update_lookup":None,
-    #                                      "update_stream":None,
-    #                                      "update_flag":None,
-    #                                      "is_sensitive":None}
-    #
-    # insert_update_key_template = {"insert_update_step_dwid":None,
-    #                                    "key_lookup":None,
-    #                                    "key_stream1":None,
-    #                                    "key_stream2":None,
-    #                                    "key_condition":None}
-    #
-    # json_output_field = {"process_dwid":None,
-    #                           "field_name":None}
-    #
-    # # state_machine_step_template = {"process_dwid":None,
-    #                                         "next_process_dwid":None}
-
-
-
-
-    def create_config_insert_statements(self):
+    def generate_sql(self):
         config_insert = ""
         config_insert += f'''
                 -- The following statement adds a configuration for '{self.table_output_step_table}'
@@ -409,15 +351,9 @@ class DimensionETLCreator():
                 INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)
                     SELECT temp_process.dwid, NULL
                     from temp_process;
-    
                 '''
-        return config_insert
 
-    def generate_sql(self):
-        sql = self.create_sql_comment(f"-- The following statement adds a configuration for '{self.process_name}'\n")
-        sql += self.create_process(self.process_name, self.process_description)
-        # sql += self.create_table_input_step()
-        x=1
+        return config_insert
 
 
 
