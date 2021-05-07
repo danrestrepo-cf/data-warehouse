@@ -1,4 +1,5 @@
 import psycopg2
+import psycopg2.extras
 from datetime import date
 import sys, getopt
 
@@ -46,7 +47,7 @@ class EDW:
                                 password=self.database_password,
                                 host=self.database_hostname,
                                 port=self.database_port)
-        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
         cur.execute(query, parameters)
         conn.commit()
         rows = cur.fetchall()
@@ -109,17 +110,17 @@ class EDW:
                         , table_input_edw_table_definition.schema_name as table_input_schema_name
                         , table_input_edw_table_definition.table_name as table_input_table_name
                         , table_input_edw_field_definition.field_name as table_input_field_name
-                        , table_output_edw_field_definition.field_source_calculation as table_output_field_source_calculation
-                    
                         , table_input_edw_field_definition.field_source_calculation as table_input_field_source_calculation
-                        , CASE WHEN table_output_edw_field_definition.source_edw_join_tree_definition_dwid IS NULL THEN 0 ELSE 1 END as has_table_output_edw_join_tree_definition
                         , table_input_join_definition.join_type
                         , table_input_join_definition.join_condition
-                        , edw_table_definition.database_name as table_output_database_name
-                        , edw_table_definition.schema_name as table_output_schema_name
-                        , edw_table_definition.table_name as table_output_table_name
-                        , table_output_edw_field_definition.field_name as table_output_field_name
-                        , table_output_edw_field_definition.key_field_flag as table_output_key_field_flag
+                                            
+                        , table_output_edw_field_definition.field_source_calculation as insert_update_field_source_calculation
+                        , CASE WHEN table_output_edw_field_definition.source_edw_join_tree_definition_dwid IS NULL THEN 0 ELSE 1 END as has_insert_update_edw_join_tree_definition
+                        , edw_table_definition.database_name as insert_update_database_name
+                        , edw_table_definition.schema_name as insert_update_schema_name
+                        , edw_table_definition.table_name as insert_update_table_name
+                        , table_output_edw_field_definition.field_name as insert_update_field_name
+                        , table_output_edw_field_definition.key_field_flag as insert_update_key_field_flag
                     FROM
                         mdi.edw_table_definition
                             JOIN mdi.edw_field_definition table_output_edw_field_definition ON edw_table_definition.dwid = table_output_edw_field_definition.edw_table_definition_dwid
@@ -379,8 +380,8 @@ class DimensionETLCreator():
 
         self.insert_update_step_connection = insert_update_step_connection
         self.insert_update_table_name = insert_update_table_name
-        self.insert_update_schema_name = field_metadata[0][11]
-        self.insert_update_table_name = field_metadata[0][12]
+        self.insert_update_schema_name = field_metadata[0]["insert_update_schema_name"]
+        self.insert_update_table_name = field_metadata[0]["insert_update_table_name"]
         self.insert_update_commit_size = insert_update_commit_size
 
         # table: process
@@ -424,21 +425,36 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
     from temp_process
     RETURNING dwid 
 )'''
- ##################################################### LOOP OVER FIELDS
-        config_insert += f'''
-, temp_insert_update_key as (INSERT INTO mdi.insert_update_key (insert_update_step_dwid, key_lookup, key_stream1, key_stream2, key_condition)   -- mdi.insert_update_key
-    select temp_insert_update_step.dwid, '{self.insert_update_step_connection}', '{self.insert_update_schema_name}', '{self.insert_update_table_name}', 'asdf'
-    from temp_process
-    RETURNING dwid 
-)'''
 
-        config_insert += f'''
-, temp_insert_update_field as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
-    select temp_insert_update_step.dwid, '{self.insert_update_step_connection}', '{self.insert_update_schema_name}', '{self.insert_update_table_name}', 'asdf'
-    from temp_process
-    RETURNING dwid 
-)'''
-#####################################################
+
+
+        for field_definition in self.field_metadata:
+            # loop over only the key fields
+            if field_definition["insert_update_key_field_flag"] != 1:
+                continue
+
+            config_insert += f'''
+    , temp_insert_update_key as (INSERT INTO mdi.insert_update_key (insert_update_step_dwid, key_lookup, key_stream1, key_condition)   -- mdi.insert_update_key
+        select temp_insert_update_step.dwid, '{field_definition["insert_update_field_name"]}', '{field_definition["table_input_field_name"]}', '='
+        from temp_process
+        RETURNING dwid 
+    )'''
+
+        for field_definition in self.field_metadata:
+            if field_definition["insert_update_key_field_flag"] == 1:
+                update_flag = "N"
+            elif field_definition["insert_update_key_field_flag"] == 0:
+                update_flag = "Y"
+            else:
+                # error if an unexpected value comes through
+                raise(ValueError("Expected values 1 or 0 in field_definition[\"insert_update_key_field_flag\"]. Unknown and unexpected value detected."))
+
+            config_insert += f'''
+    , temp_insert_update_field as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
+        select temp_insert_update_step.dwid, '{field_definition["insert_update_field_name"]}', '{field_definition["insert_update_field_name"]}', '{update_flag}', 'false'
+        from temp_process
+        RETURNING dwid 
+    )'''
 
 
 ##################################################### LOOP OVER DISTINCT primary_source_edw_table_dwid values
@@ -457,10 +473,10 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
 
 
 ##################################################### LOOP OVER key fields
-        config_insert += f'''
-, temp_json_output as (INSERT INTO mdi.json_output_field (process_dwid, field_name)   -- mdi.json_output_field
-    select temp_process.dwid, '{self.json_output_step_field}'
-    from temp_process)'''
+#         config_insert += f'''
+# , temp_json_output as (INSERT INTO mdi.json_output_field (process_dwid, field_name)   -- mdi.json_output_field
+#     select temp_process.dwid, '{self.process_name}'
+#     from temp_process)'''
 #####################################################
 
         config_insert += '''
@@ -502,11 +518,11 @@ def generate_mdi_configs_based_on_table_definition(schema_name_to_process: str) 
     etl_config = None
 
     for index, table in enumerate(table_list, start=200000):
-        edw_table_definition_dwid = table[0]
-        database_name = table[1]
-        schema_name = table[2]
-        table_name = table[3]
-        primary_source_edw_table_definition_dwid = table[4]
+        edw_table_definition_dwid = table["dwid"]
+        database_name = table["database_name"]
+        schema_name = table["schema_name"]
+        table_name = table["table_name"]
+        primary_source_edw_table_definition_dwid = table["primary_source_edw_table_definition_dwid"]
 
         process_name = f"SP-{index}"
 
