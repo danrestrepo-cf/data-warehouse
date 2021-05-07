@@ -278,85 +278,6 @@ class ETL_config:
         return config_insert
 
 
-class DimensionETLCreator():
-    def __init__(self, table_metadata: list, process_name: str, edw_connection: EDW):
-        if len(table_metadata) == 0:
-            raise(ValueError("table_metadata should contain at least one item in the list"))
-
-        # table: table_input_step/field and insert_update step/field/key
-        self.table_metadata = table_metadata
-        self.table_input_step_connection = "Staging DB Connection"
-        self.insert_update_step_connection = "Staging DB Connection"
-        self.insert_update_table_name = ""
-        self.table_input_step_data_source_dwid = 1   # star_common.data_source=1 (Octane)
-        self.default_commit_size = 1000
-
-        # table: process
-        self.process_name = process_name
-        self.process_description = f"Dimension ETL to populate {self.insert_update_table_name} from history_octane.{self.process_name}"
-
-        # table: json_output_field
-        self.json_output_step_field = "self.main_pid"
-        self.state_machine_name = f""
-        self.state_machine_comment = self.process_description
-
-    def generate_sql(self):
-        config_insert = ""
-        config_insert += f'''
-                -- The following statement adds a configuration for '{self.table_output_step_table}'
-                with temp_process as (INSERT INTO mdi.process (name, description) 
-                    VALUES ('{self.process_name}', '{self.process_description}')
-                    RETURNING dwid 
-                )'''
-        config_insert += f'''
-                , temp_table_input_step as (INSERT INTO mdi.table_input_step (process_dwid, data_source_dwid, sql, limit_size, connectionname) 
-                    select temp_process.dwid, 0, '{self.table_input_step_sql}', 0, '{self.table_input_step_connection}'
-                    from temp_process
-                    RETURNING dwid 
-                )'''
-        config_insert += f'''
-                , temp_table_output_step as (INSERT INTO mdi.table_output_step (process_dwid, target_schema, target_table, commit_size, partitioning_field, table_name_field, auto_generated_key_field, partition_data_per, 
-                    table_name_defined_in_field, return_auto_generated_key_field, truncate_table, connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors, use_batch_update) 
-                    SELECT temp_process.dwid, '{self.table_output_step_schema}', '{self.table_output_step_table}', 1000, NULL, NULL, NULL, NULL
-                    , 'N', NULL, 'N', '{self.table_output_step_connection}', 'N', 'Y', 'N', 'N'
-                    FROM temp_process
-                    RETURNING dwid
-                )'''
-        self.table_output_step_fields.append('data_source_updated_datetime')
-        self.table_output_step_fields.append('data_source_deleted_flag')
-        config_insert +=  f'''
-                , temp_table_output_field as (INSERT INTO mdi.table_output_field (
-                    table_output_step_dwid, database_field_name, database_stream_name, field_order, 
-                    is_sensitive 
-                    ) '''
-        config_insert_field = []
-        for i, field in enumerate(self.table_output_step_fields):
-            config_insert_field.append( f'''     
-                        SELECT temp_table_output_step.dwid, '{field}', '{field}', {i}, False
-                        from temp_table_output_step
-                    ''')
-        config_insert += ' UNION ALL '.join(config_insert_field)
-        config_insert += ')'
-        config_insert += f'''
-                , temp_json_output as (INSERT INTO mdi.json_output_field (process_dwid, field_name) 
-                    select temp_process.dwid, '{self.json_output_step_field}'
-                    from temp_process)'''
-
-        config_insert += f'''
-                , temp_state_machine_definition as (INSERT INTO mdi.state_machine_definition (process_dwid, name, comment)
-                    SELECT temp_process.dwid, '{self.state_machine_name}', '{self.state_machine_comment}'
-                    from temp_process)'''
-
-        config_insert += f'''
-                INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)
-                    SELECT temp_process.dwid, NULL
-                    from temp_process;
-                '''
-
-        return config_insert
-
-
-
 class Staging_to_History_ETL(ETL_config):
     def __init__(self, staging_table_metadata, process_name, staging_connection):
         self.staging_table_metadata = staging_table_metadata
@@ -421,6 +342,75 @@ class Staging_to_History_ETL(ETL_config):
                          , self.state_machine_comment)
 
 
+class DimensionETLCreator():
+    def __init__(self, field_metadata: list, process_name: str, edw_connection: EDW, insert_update_table_name: str,
+                 sql: str, table_input_step_connection: str = "Staging DB Connection",
+                 insert_update_step_connection: str = "Staging DB Connection",
+                 table_input_step_data_source_dwid: int = 0, commit_size: int = 1000):
+        if len(field_metadata) == 0:
+            raise(ValueError("table_metadata should contain at least one item in the list"))
+
+        # table: table_input_step/field and insert_update step/field/key
+        self.field_metadata = field_metadata
+        self.table_input_step_connection = table_input_step_connection
+        self.insert_update_step_connection = insert_update_step_connection
+        self.insert_update_table_name = insert_update_table_name
+        self.table_input_step_data_source_dwid = table_input_step_data_source_dwid   # star_common.data_source=1 (Octane)
+        self.commit_size = commit_size
+        self.sql = sql
+        self.insert_update_schema_name = field_metadata[0][11]
+        self.insert_update_table_name = field_metadata[0][12]
+
+
+# table: process
+        self.process_name = process_name
+        self.process_description = f"Dimension ETL to populate {self.insert_update_table_name} from history_octane"
+
+        # table: json_output_field
+        # self.json_output_step_field = "self.main_pid"
+        # self.state_machine_name = f""
+        # self.state_machine_comment = self.process_description
+
+    def generate_table_input_to_insert_update_sql(self):
+        config_insert = ""
+        config_insert += f'''
+-- The following statement add a configuration for {self.insert_update_table_name} ({self.process_name})
+
+with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.process
+    VALUES ('{self.process_name}', '{self.process_description}')
+    RETURNING dwid 
+)'''
+
+        config_insert += f'''
+, temp_table_input_step as (INSERT INTO mdi.table_input_step (process_dwid, data_source_dwid, sql, limit_size, connectionname)   -- mdi.table_input_step
+    select temp_process.dwid, {self.table_input_step_data_source_dwid}, '{self.sql}', 0, '{self.table_input_step_connection}'
+    from temp_process
+    RETURNING dwid 
+)'''
+
+        config_insert += f'''
+, temp_insert_update_step as (INSERT INTO mdi.insert_update_step (process_dwid, connectionname, schema_name, table_name, commit_size, do_not)   -- mdi.table_input_step
+    select temp_process.dwid, '{self.insert_update_step_connection}', '{self.insert_update_schema_name}', '{self.insert_update_table_name}', {self.commit_size}, 'N'
+    from temp_process
+    RETURNING dwid 
+)'''
+
+        # config_insert += f'''
+        #         , temp_json_output as (INSERT INTO mdi.json_output_field (process_dwid, field_name)   -- mdi.json_output_field
+        #             select temp_process.dwid, '{self.json_output_step_field}'
+        #             from temp_process)'''
+
+        # config_insert += f'''
+        #         INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)  -- mdi.state_machine_step
+        #             SELECT temp_process.dwid, NULL
+        #             from temp_process;
+        #         '''
+        config_insert += '''
+        
+        ''' # add some line breaks to the sql so the output is more readable when there are many in a row generated
+        return config_insert
+
+
 def main(argv):
     script_name = argv[0]
     argv = argv[1:]
@@ -446,10 +436,12 @@ def display_usage(script_name: str) -> None:
     -t <schema name>   create configs based on mdi.edw_table_definition''')
 
 def generate_mdi_configs_based_on_table_definition(schema_name_to_process: str) -> None:
-    print(f"Will create configs for this schema: {schema_name_to_process}")
+    print(f"-- Will create configs for this schema: {schema_name_to_process}")
 
     edw = EDW(db_name="config")
     table_list = edw.get_table_list_from_edw_table_definition(schema_name_to_process)
+
+    etl_config = None
 
     for index, table in enumerate(table_list, start=200000):
         edw_table_definition_dwid = table[0]
@@ -461,9 +453,13 @@ def generate_mdi_configs_based_on_table_definition(schema_name_to_process: str) 
         process_name = f"SP-{index}"
 
         fields = edw.get_field_list_from_edw_field_definition(edw_table_definition_dwid)
-        etl_config = DimensionETLCreator(fields, process_name, EDW(db_name="staging"))
-        x = etl_config.generate_sql()
-        print("")
+        etl_config = DimensionETLCreator(field_metadata=fields,
+                                         process_name=process_name,
+                                         edw_connection=EDW(db_name="staging"),
+                                         insert_update_table_name = table_name,
+                                         sql = "select 1;")
+        sql_configuration = etl_config.generate_table_input_to_insert_update_sql()
+        print(sql_configuration)
 
 def generate_mdi_configs_based_on_information_schema():
     edw = EDW(db_name="staging")
