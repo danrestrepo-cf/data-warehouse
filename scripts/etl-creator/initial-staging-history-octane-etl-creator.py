@@ -34,6 +34,13 @@ class EDW:
         return rows
 
     def execute_parameterized_query(self, query: str, *parameters):
+        '''
+        This function connects to the database, executes a query using sanitization, commits any changes, and returns the resultant rows
+        :param query: the SQL query to execute. sanitize any variables using '%s'
+        :param parameters: a tuple of parameters with one value in the tuple per '%s' in the query
+        :return: returns a list of tuples with the data from the rows returned by the query
+        '''
+
         conn = psycopg2.connect(database=self.database_name,
                                 user=self.database_username,
                                 password=self.database_password,
@@ -344,25 +351,39 @@ class Staging_to_History_ETL(ETL_config):
 
 class DimensionETLCreator():
     def __init__(self, field_metadata: list, process_name: str, edw_connection: EDW, insert_update_table_name: str,
-                 sql: str, table_input_step_connection: str = "Staging DB Connection",
+                 table_input_sql: str, table_input_step_connection: str = "Staging DB Connection",
                  insert_update_step_connection: str = "Staging DB Connection",
-                 table_input_step_data_source_dwid: int = 0, commit_size: int = 1000):
+                 table_input_step_data_source_dwid: int = 0, insert_update_commit_size: int = 1000):
+        '''
+        Used to create ETL configurations for dimensions
+
+        :param field_metadata:
+        :param process_name:
+        :param edw_connection:
+        :param insert_update_table_name:
+        :param table_input_sql:
+        :param table_input_step_connection:
+        :param insert_update_step_connection:
+        :param table_input_step_data_source_dwid:
+        :param insert_update_commit_size:
+        '''
         if len(field_metadata) == 0:
             raise(ValueError("table_metadata should contain at least one item in the list"))
 
         # table: table_input_step/field and insert_update step/field/key
         self.field_metadata = field_metadata
+
         self.table_input_step_connection = table_input_step_connection
+        self.table_input_step_data_source_dwid = table_input_step_data_source_dwid   # star_common.data_source=1 (Octane)
+        self.table_input_sql = table_input_sql
+
         self.insert_update_step_connection = insert_update_step_connection
         self.insert_update_table_name = insert_update_table_name
-        self.table_input_step_data_source_dwid = table_input_step_data_source_dwid   # star_common.data_source=1 (Octane)
-        self.commit_size = commit_size
-        self.sql = sql
         self.insert_update_schema_name = field_metadata[0][11]
         self.insert_update_table_name = field_metadata[0][12]
+        self.insert_update_commit_size = insert_update_commit_size
 
-
-# table: process
+        # table: process
         self.process_name = process_name
         self.process_description = f"Dimension ETL to populate {self.insert_update_table_name} from history_octane"
 
@@ -371,7 +392,16 @@ class DimensionETLCreator():
         # self.state_machine_name = f""
         # self.state_machine_comment = self.process_description
 
-    def generate_table_input_to_insert_update_sql(self):
+    def create_table_input_sql(self):
+        pass
+
+    def create_table_input_to_insert_update_sql(self) -> str:
+        '''
+        Creates SQL that can be executed against the config database in EDW to add SP configurations.
+
+        :return: a string that contains SQL insert statements
+        '''
+
         config_insert = ""
         config_insert += f'''
 -- The following statement add a configuration for {self.insert_update_table_name} ({self.process_name})
@@ -383,28 +413,56 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
 
         config_insert += f'''
 , temp_table_input_step as (INSERT INTO mdi.table_input_step (process_dwid, data_source_dwid, sql, limit_size, connectionname)   -- mdi.table_input_step
-    select temp_process.dwid, {self.table_input_step_data_source_dwid}, '{self.sql}', 0, '{self.table_input_step_connection}'
+    select temp_process.dwid, {self.table_input_step_data_source_dwid}, '{self.table_input_sql}', 0, '{self.table_input_step_connection}'
     from temp_process
     RETURNING dwid 
 )'''
 
         config_insert += f'''
-, temp_insert_update_step as (INSERT INTO mdi.insert_update_step (process_dwid, connectionname, schema_name, table_name, commit_size, do_not)   -- mdi.table_input_step
-    select temp_process.dwid, '{self.insert_update_step_connection}', '{self.insert_update_schema_name}', '{self.insert_update_table_name}', {self.commit_size}, 'N'
+, temp_insert_update_step as (INSERT INTO mdi.insert_update_step (process_dwid, connectionname, schema_name, table_name, commit_size, do_not)   -- mdi.insert_update_step
+    select temp_process.dwid, '{self.insert_update_step_connection}', '{self.insert_update_schema_name}', '{self.insert_update_table_name}', {self.insert_update_commit_size}, 'N'
+    from temp_process
+    RETURNING dwid 
+)'''
+ ##################################################### LOOP OVER FIELDS
+        config_insert += f'''
+, temp_insert_update_key as (INSERT INTO mdi.insert_update_key (insert_update_step_dwid, key_lookup, key_stream1, key_stream2, key_condition)   -- mdi.insert_update_key
+    select temp_insert_update_step.dwid, '{self.insert_update_step_connection}', '{self.insert_update_schema_name}', '{self.insert_update_table_name}', 'asdf'
     from temp_process
     RETURNING dwid 
 )'''
 
+        config_insert += f'''
+, temp_insert_update_field as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
+    select temp_insert_update_step.dwid, '{self.insert_update_step_connection}', '{self.insert_update_schema_name}', '{self.insert_update_table_name}', 'asdf'
+    from temp_process
+    RETURNING dwid 
+)'''
+#####################################################
+
+
+##################################################### LOOP OVER DISTINCT primary_source_edw_table_dwid values
         # config_insert += f'''
-        #         , temp_json_output as (INSERT INTO mdi.json_output_field (process_dwid, field_name)   -- mdi.json_output_field
-        #             select temp_process.dwid, '{self.json_output_step_field}'
-        #             from temp_process)'''
+        #         UPDATE mdi.state_machine_step set next_process_dwid = temp_process.dwid where process_dwid=x
+        #         '''
+
 
         # config_insert += f'''
         #         INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)  -- mdi.state_machine_step
         #             SELECT temp_process.dwid, NULL
         #             from temp_process;
         #         '''
+
+#####################################################
+
+
+##################################################### LOOP OVER key fields
+        config_insert += f'''
+, temp_json_output as (INSERT INTO mdi.json_output_field (process_dwid, field_name)   -- mdi.json_output_field
+    select temp_process.dwid, '{self.json_output_step_field}'
+    from temp_process)'''
+#####################################################
+
         config_insert += '''
         
         ''' # add some line breaks to the sql so the output is more readable when there are many in a row generated
@@ -457,8 +515,8 @@ def generate_mdi_configs_based_on_table_definition(schema_name_to_process: str) 
                                          process_name=process_name,
                                          edw_connection=EDW(db_name="staging"),
                                          insert_update_table_name = table_name,
-                                         sql = "select 1;")
-        sql_configuration = etl_config.generate_table_input_to_insert_update_sql()
+                                         table_input_sql = "select 1;")
+        sql_configuration = etl_config.create_table_input_to_insert_update_sql()
         print(sql_configuration)
 
 def generate_mdi_configs_based_on_information_schema():
