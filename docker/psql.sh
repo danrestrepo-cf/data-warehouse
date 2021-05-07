@@ -29,4 +29,4 @@ esac
 echo "Logging into PostgreSQL with username: ${db_username} and database: ${database}"
 docker run -it \
   --network ${project_name}_default \
-  --rm postgres:11 psql -U ${db_username} "postgresql://${project_name}_database_1:5432/${database}"
+  --rm postgres:12 psql -U ${db_username} "postgresql://${project_name}_database_1:5432/${database}"
