@@ -601,3 +601,93 @@ def generate_mdi_configs_based_on_information_schema():
 
 if __name__ == "__main__":
     main(sys.argv)
+
+
+
+
+
+
+# -- mocked up sample queries that the script should build
+# select
+# primary_table.b_ethnicity_collected_visual_or_surname as ethnicity_collected_visual_or_surname_code,
+# primary_table.b_ethnicity_cuban as ethnicity_cuban_flag,
+# primary_table.b_ethnicity_hispanic_or_latino as ethnicity_hispanic_or_latino_flag,
+# primary_table.b_ethnicity_mexican as ethnicity_mexican_flag,
+# primary_table.b_ethnicity_not_hispanic_or_latino as ethnicity_not_hispanic_or_latino_flag,
+# primary_table.b_ethnicity_not_obtainable as ethnicity_not_obtainable_flag,
+# primary_table.b_ethnicity_other_hispanic_or_latino_description as ethnicity_other_hispanic_or_latino_description_flag,
+# primary_table.b_ethnicity_other_hispanic_or_latino as ethnicity_other_hispanic_or_latino_flag,
+# primary_table.b_ethnicity_puerto_rican as ethnicity_puerto_rican_flag,
+# primary_table.b_ethnicity_refused as ethnicity_refused_code,
+# primary_table.b_marital_status_type as marital_status_code,
+# primary_table.b_other_race_national_origin_description as other_race_national_origin_description_flag,
+# primary_table.b_race_american_indian_or_alaska_native as race_american_indian_or_alaska_native_flag,
+# primary_table.b_race_asian as race_asian_flag,
+# primary_table.b_race_asian_indian as race_asian_indian_flag,
+# primary_table.b_race_black_or_african_american as race_black_or_african_american_flag,
+# primary_table.b_race_chinese as race_chinese_flag,
+# primary_table.b_race_collected_visual_or_surname as race_collected_visual_or_surname_code,
+# primary_table.b_race_filipino as race_filipino_flag,
+# primary_table.b_race_guamanian_or_chamorro as race_guamanian_or_chamorro_flag,
+# primary_table.b_race_information_not_provided as race_information_not_provided_flag,
+# primary_table.b_race_japanese as race_japanese_flag,
+# primary_table.b_race_korean as race_korean_flag,
+# primary_table.b_race_national_origin_refusal as race_national_origin_refusal_flag,
+# primary_table.b_race_native_hawaiian as race_native_hawaiian_flag,
+# primary_table.b_race_native_hawaiian_or_other_pacific_islander as race_native_hawaiian_or_other_pacific_islander_flag,
+# primary_table.b_race_not_applicable as race_not_applicable_flag,
+# primary_table.b_race_not_obtainable as race_not_obtainable_flag,
+# primary_table.b_race_other_american_indian_or_alaska_native_description as race_other_american_indian_or_alaska_native_description_flag,
+# primary_table.b_race_other_asian_description as race_other_asian_description_flag,
+# primary_table.b_race_other_asian as race_other_asian_flag,
+# primary_table.b_race_other_pacific_islander_description as race_other_pacific_islander_description_flag,
+# primary_table.b_race_other_pacific_islander as race_other_pacific_islander_flag,
+# primary_table.b_race_refused as race_refused_code,
+# primary_table.b_race_samoan as race_samoan_flag,
+# primary_table.b_race_vietnamese as race_vietnamese_flag,
+# primary_table.b_race_white as race_white_flag,
+# primary_table.b_schooling_years as schooling_years,
+# primary_table.b_sex_collected_visual_or_surname as sex_collected_visual_or_surname_code,
+# primary_table.b_sex_female as sex_female_flag,
+# primary_table.b_sex_male as sex_male_flag,
+# primary_table.b_sex_not_obtainable as sex_not_obtainable_flag,
+# primary_table.b_sex_refused as sex_refused_code,
+# t134.value as marital_status,
+# t123.value as ethnicity_collected_visual_or_surname,
+# t124.value as ethnicity_refused,
+# t147.value as race_collected_visual_or_surname,
+# t148.value as race_refused,
+# t151.value as sex_collected_visual_or_surname,
+# t152.value as sex_refused,
+#
+# 1 as data_source_dwid,
+# 'b_ethnicity_collected_visual_or_surname~b_ethnicity_cuban~b_ethnicity_hispanic_or_latino~' as data_source_integration_columns,
+# CONCAT(primary_table.b_ethnicity_collected_visual_or_surname, '~', primary_table.b_ethnicity_cuban, '~', primary_table.b_ethnicity_hispanic_or_latino, '~') as data_source_integration_id,
+# NOW() as edw_created_datetime,
+# NOW() as edw_modified_datetime,
+# NOW() as data_source_modified_datetime -- primary_table.data_source_updated_datetime as data_source_modified_datetime
+#
+#
+# from staging_octane.borrower primary_table
+# inner	join		staging_octane.marital_status_type t134 ON		primary_table.b_marital_status_type = t134.code
+# inner	join		staging_octane.yes_no_unknown_type t123 ON		primary_table.b_ethnicity_collected_visual_or_surname = t123.code
+# inner	join		staging_octane.yes_no_unknown_type t124 ON		primary_table.b_ethnicity_refused = t124.code
+# inner	join		staging_octane.yes_no_unknown_type t147 ON		primary_table.b_race_collected_visual_or_surname = t147.code
+# inner	join		staging_octane.yes_no_unknown_type t148 ON		primary_table.b_race_refused = t148.code
+# inner	join		staging_octane.yes_no_unknown_type t151 ON		primary_table.b_sex_collected_visual_or_surname = t151.code
+# inner	join		staging_octane.yes_no_unknown_type t152 ON		primary_table.b_sex_refused = t152.code
+# ;
+#
+#
+#
+# select
+# application.apl_pid as application_pid
+# , 1 as data_source_dwid
+# , 'apl_pid~data_source_dwid~' as data_source_integration_columns
+# , CONCAT( application.apl_pid, '~1~' ) as data_source_integration_id
+# -- , application.data_source_updated_datetime as data_source_modified_datetime
+# , NOW( ) as edw_created_datetime
+# , NOW( ) as edw_modified_datetime
+# , application.apl_proposal_pid as proposal_pid
+# from
+# staging_octane.application;
