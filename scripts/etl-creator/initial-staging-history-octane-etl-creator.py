@@ -1,6 +1,7 @@
 import psycopg2
 import psycopg2.extras
 from datetime import date
+from datetime import datetime
 import sys, getopt
 
 class EDW:
@@ -396,13 +397,11 @@ class DimensionETLCreator():
         # self.state_machine_name = f""
         # self.state_machine_comment = self.process_description
 
-    def create_table_input_sql(self):
-
-        pass
-
     def get_process_dwid_from_table_name(self, search_text: str) -> int:
         '''
         Used to get the process_dwid based on a table name. If 0 or more than 1 row is found ValueErrors are thrown.
+
+        ** THIS CODE IS FRAGILE ** -- highly coupled with the format of the test in mdi.process.description
 
         :param search_text: the name of the table (or other text) that
         :return: returns the process_dwid of a row in mdi.process that has *table_name* in its description
@@ -410,22 +409,25 @@ class DimensionETLCreator():
 
         edw = EDW()
         search_text = f"%% {search_text} %%" # %% escapes the % character for the psycopg2 module. we need to build the
-                                           # string manually because the module automatically adds single quotes around strings.
-                                           # may be able to fix this with module psycopg2.sql's sql builder functions.
-        query = '''SELECT dwid as process_dwid FROM mdi.process WHERE description LIKE %s AND name like \'SP-10%%\''''
+                                             # string manually because the module automatically adds single quotes around strings.
+                                             # may be able to fix this with module psycopg2.sql's sql builder functions.
+
+        query = '''SELECT dwid AS process_dwid FROM mdi.process WHERE description LIKE %s AND name LIKE \'SP-10%%\''''
 
         rows = edw.execute_parameterized_query(query, search_text)
 
-        number_of_rows_returned = len(rows) # only calculate this once
+        number_of_rows_returned = len(rows)
 
         if number_of_rows_returned > 1:
             raise(ValueError("Expected 1 row to be returned when querying mdi.process but multiple rows returned."))
         elif number_of_rows_returned == 0:
             raise(ValueError("Expected 1 row to be returned when querying mdi.process but zero rows returned."))
+        elif number_of_rows_returned == 1:
+            process_dwid = rows[0]["process_dwid"] # we know there is only one row in the list and we want the process_dwid value from that dict
+            return process_dwid
+        else:
+            raise(Exception("Unexpected program state encountered while looking up the process_dwid values from the table name.")) # should never hit this code but throw an error for future me if we do enter a problem state
 
-        process_dwid = rows[0]["process_dwid"] # we know there is only one row in the list and we want the process_dwid value from that dict
-
-        return process_dwid
 
     def create_table_input_to_insert_update_sql(self) -> str:
         '''
@@ -436,7 +438,7 @@ class DimensionETLCreator():
 
         config_insert = ""
         config_insert += f'''
--- The following statement adds an ETL configuration for {self.insert_update_table_name} ({self.process_name})
+-- The following statement adds an ETL configuration to populate {self.insert_update_schema_name}.{self.insert_update_table_name} ({self.process_name})
 
 with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.process
     VALUES ('{self.process_name}', '{self.process_description}')
@@ -446,14 +448,14 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
         config_insert += f'''
 , temp_table_input_step as (INSERT INTO mdi.table_input_step (process_dwid, data_source_dwid, sql, limit_size, connectionname)   -- mdi.table_input_step
     select temp_process.dwid, {self.table_input_step_data_source_dwid}, '{self.table_input_sql}', 0, '{self.table_input_step_connection}'
-    from temp_process
+    FROM temp_process
     RETURNING dwid)
 '''
 
         config_insert += f'''
 , temp_insert_update_step as (INSERT INTO mdi.insert_update_step (process_dwid, connectionname, schema_name, table_name, commit_size, do_not)   -- mdi.insert_update_step
     select temp_process.dwid, '{self.insert_update_step_connection}', '{self.insert_update_schema_name}', '{self.insert_update_table_name}', {self.insert_update_commit_size}, 'N'
-    from temp_process
+    FROM temp_process
     RETURNING dwid)
 '''
 
@@ -471,7 +473,7 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             config_insert += f'''
 , temp_insert_update_key as (INSERT INTO mdi.insert_update_key (insert_update_step_dwid, key_lookup, key_stream1, key_condition)   -- mdi.insert_update_key
     select temp_insert_update_step.dwid, '{field_definition["insert_update_field_name"]}', '{field_definition["table_input_field_name"]}', '='
-    from temp_process
+    FROM temp_insert_update_step
     RETURNING dwid)
 '''
 
@@ -487,10 +489,10 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             config_insert += f'''
 , temp_json_output as (INSERT INTO mdi.json_output_field (process_dwid, field_name)   -- mdi.json_output_field
     select temp_process.dwid, '{field_definition["table_input_field_name"]}'
-    from temp_process)
+    FROM temp_process)
 '''
 
-        for field_definition in self.field_metadata:
+        for index, field_definition in enumerate(self.field_metadata):
             #ignore fields that do not have source definitions (edw standard fields)
             if field_definition["has_table_input_source_definition"] == 0:
                 continue
@@ -504,9 +506,9 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
                 raise(ValueError("Expected values 1 or 0 in field_definition[\"insert_update_key_field_flag\"]. Unknown and unexpected value detected."))
 
             config_insert += f'''
-, temp_insert_update_field as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
+, temp_insert_update_field_{field_definition["insert_update_field_name"]}_{index} as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
     select temp_insert_update_step.dwid, '{field_definition["insert_update_field_name"]}', '{field_definition["insert_update_field_name"]}', '{update_flag}', 'false'
-    from temp_process
+    FROM temp_insert_update_step
     RETURNING dwid) 
 '''
         seen_table_name_values = []
@@ -523,14 +525,14 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             seen_table_name_values.append(field_definition["table_input_table_name"])
 
             config_insert += f'''
-, temp_state_machine_step_update_{process_dwid} as (UPDATE mdi.state_machine_step set next_process_dwid = temp_process.dwid where process_dwid={process_dwid} AND next_process_dwid is NULL)   -- mdi.state_machine_step
+, temp_state_machine_step_update_{process_dwid} as (UPDATE mdi.state_machine_step set next_process_dwid = temp_process.dwid FROM temp_process WHERE process_dwid={process_dwid} AND next_process_dwid IS NULL)   -- mdi.state_machine_step
 , temp_state_machine_step_insert_{process_dwid} as (INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)  -- mdi.state_machine_step
     SELECT temp_process.dwid, NULL
     FROM temp_process)
     
 '''
 
-        config_insert += '''select 1;
+        config_insert += f'''SELECT 'Done adding MDI configuration for {self.insert_update_schema_name}.{self.insert_update_table_name} ({self.process_name})' as etl_creator_status; -- needed for the cte to return at least one row, appears in flyway/jenkins/aws logs
         
 ''' # add some line breaks to the sql so the output is more readable when there are many in a row generated
         return config_insert
@@ -562,6 +564,7 @@ def display_usage(script_name: str) -> None:
 
 def generate_mdi_configs_based_on_table_definition(schema_name_to_process: str) -> None:
     print(f"-- Will create configs for this schema: {schema_name_to_process}")
+    print(f"-- Generated at {datetime.now()}")
 
     edw = EDW(db_name="config")
     table_list = edw.get_table_list_from_edw_table_definition(schema_name_to_process)
