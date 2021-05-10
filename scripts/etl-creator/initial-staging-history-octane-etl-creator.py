@@ -107,38 +107,43 @@ class EDW:
         '''
 
         query = '''SELECT
-                        CASE WHEN table_input_edw_field_definition.source_edw_field_definition_dwid IS NULL THEN 0 ELSE 1 END as has_table_input_source_definition
-                        , table_input_edw_table_definition.database_name as table_input_database_name
-                        , table_input_edw_table_definition.schema_name as table_input_schema_name
-                        , table_input_edw_table_definition.table_name as table_input_table_name
-                        , table_input_edw_field_definition.field_name as table_input_field_name
-                        , table_input_edw_field_definition.field_source_calculation as table_input_field_source_calculation
-                        , table_input_join_definition.join_type
-                        , table_input_join_definition.join_condition
-                        
-                        , edw_table_definition.primary_source_edw_table_definition_dwid
-                        
-                        , table_output_edw_field_definition.field_source_calculation as insert_update_field_source_calculation
-                        , CASE WHEN table_output_edw_field_definition.source_edw_join_tree_definition_dwid IS NULL THEN 0 ELSE 1 END as has_insert_update_edw_join_tree_definition
-                        , edw_table_definition.database_name as insert_update_database_name
-                        , edw_table_definition.schema_name as insert_update_schema_name
-                        , edw_table_definition.table_name as insert_update_table_name
-                        , table_output_edw_field_definition.field_name as insert_update_field_name
-                        , table_output_edw_field_definition.key_field_flag as insert_update_key_field_flag
-                    FROM
-                        mdi.edw_table_definition
-                            JOIN mdi.edw_field_definition table_output_edw_field_definition ON edw_table_definition.dwid = table_output_edw_field_definition.edw_table_definition_dwid
-                            LEFT JOIN mdi.edw_field_definition table_input_edw_field_definition ON table_output_edw_field_definition.source_edw_field_definition_dwid = table_input_edw_field_definition.dwid
-                            LEFT JOIN mdi.edw_table_definition table_input_edw_table_definition ON table_input_edw_field_definition.edw_table_definition_dwid = table_input_edw_table_definition.dwid
-                            LEFT JOIN mdi.edw_join_tree_definition table_input_join_tree_definition ON table_output_edw_field_definition.source_edw_join_tree_definition_dwid = table_input_join_tree_definition.dwid
-                            LEFT JOIN mdi.edw_join_definition table_input_join_definition ON table_input_join_tree_definition.root_join_dwid = table_input_join_definition.dwid
-                    WHERE
-                        edw_table_definition.dwid = %s
-                        AND table_output_edw_field_definition.field_name not in ('dwid', 'data_source_dwid','data_source_integration_columns','data_source_integration_id','data_source_modified_datetime','edw_created_datetime', 'edw_modified_datetime', 'etl_batch_id') -- exclude these in the join if the table input field name is null?
-                    ORDER BY
-                        table_output_edw_field_definition.key_field_flag DESC
-                        , table_output_edw_field_definition.field_name ASC
-                        , has_table_input_source_definition;'''
+    CASE WHEN table_input_edw_field_definition.source_edw_field_definition_dwid IS NULL THEN 0 ELSE 1 END as has_table_input_source_definition
+    , table_input_edw_table_definition.database_name as table_input_database_name
+    , table_input_edw_table_definition.schema_name as table_input_schema_name
+    , table_input_edw_table_definition.table_name as table_input_table_name
+    , table_input_edw_field_definition.field_name as table_input_field_name
+    , table_input_edw_field_definition.field_source_calculation as table_input_field_source_calculation
+    , table_input_join_definition.join_type
+    , table_input_join_definition.join_condition
+    , join_table_definition.dwid as join_alias
+    , table_input_edw_field_definition.dwid as table_input_edw_field_definition_dwid
+    , table_input_edw_table_definition.dwid as table_input_edw_table_definition_dwid
+
+    , edw_table_definition.primary_source_edw_table_definition_dwid
+
+    , table_output_edw_field_definition.field_source_calculation as insert_update_field_source_calculation
+    , CASE WHEN table_output_edw_field_definition.source_edw_join_tree_definition_dwid IS NULL THEN 0 ELSE 1 END as has_insert_update_edw_join_tree_definition
+    , edw_table_definition.database_name as insert_update_database_name
+    , edw_table_definition.schema_name as insert_update_schema_name
+    , edw_table_definition.table_name as insert_update_table_name
+    , table_output_edw_field_definition.field_name as insert_update_field_name
+    , table_output_edw_field_definition.key_field_flag as insert_update_key_field_flag
+FROM
+    mdi.edw_table_definition
+        JOIN mdi.edw_field_definition table_output_edw_field_definition ON edw_table_definition.dwid = table_output_edw_field_definition.edw_table_definition_dwid
+        LEFT JOIN mdi.edw_field_definition table_input_edw_field_definition ON table_output_edw_field_definition.source_edw_field_definition_dwid = table_input_edw_field_definition.dwid
+        LEFT JOIN mdi.edw_table_definition table_input_edw_table_definition ON table_input_edw_field_definition.edw_table_definition_dwid = table_input_edw_table_definition.dwid
+        LEFT JOIN mdi.edw_join_tree_definition table_input_join_tree_definition ON table_output_edw_field_definition.source_edw_join_tree_definition_dwid = table_input_join_tree_definition.dwid
+        LEFT JOIN mdi.edw_join_definition table_input_join_definition ON table_input_join_tree_definition.root_join_dwid = table_input_join_definition.dwid
+        LEFT JOIN mdi.edw_table_definition join_table_definition ON table_input_join_definition.target_edw_table_definition_dwid = join_table_definition.dwid
+
+WHERE
+            edw_table_definition.dwid = %s
+    AND table_output_edw_field_definition.field_name not in ('dwid', 'data_source_dwid','data_source_integration_columns','data_source_integration_id','data_source_modified_datetime','edw_created_datetime', 'edw_modified_datetime', 'etl_batch_id') -- exclude these in the join if the table input field name is null?
+ORDER BY
+    table_output_edw_field_definition.key_field_flag DESC
+    , table_output_edw_field_definition.field_name ASC
+    , has_table_input_source_definition;'''
 
         return self.execute_parameterized_query(query, edw_table_definition_dwid)
 
@@ -356,7 +361,7 @@ class Staging_to_History_ETL(ETL_config):
 
 class DimensionETLCreator():
     def __init__(self, field_metadata: list, process_name: str, edw_connection: EDW, insert_update_table_name: str,
-                 table_input_sql: str, table_input_step_connection: str = "Staging DB Connection",
+                 table_input_step_connection: str = "Staging DB Connection",
                  insert_update_step_connection: str = "Staging DB Connection",
                  table_input_step_data_source_dwid: int = 0, insert_update_commit_size: int = 1000):
         '''
@@ -380,7 +385,6 @@ class DimensionETLCreator():
 
         self.table_input_step_connection = table_input_step_connection
         self.table_input_step_data_source_dwid = table_input_step_data_source_dwid   # star_common.data_source=1 (Octane)
-        self.table_input_sql = table_input_sql
 
         self.insert_update_step_connection = insert_update_step_connection
         self.insert_update_table_name = insert_update_table_name
@@ -392,10 +396,52 @@ class DimensionETLCreator():
         self.process_name = process_name
         self.process_description = f"Dimension ETL to populate {self.insert_update_table_name} from history_octane"
 
-        # table: json_output_field
-        # self.json_output_step_field = "self.main_pid"
-        # self.state_machine_name = f""
-        # self.state_machine_comment = self.process_description
+
+    def create_table_input_sql(self) -> str:
+        output_select_clause = '''SELECT 
+'''
+        output_join_sql = ""
+        output_from_clause = f'''FROM 
+    {self.field_metadata[0]["table_input_schema_name"]}.{self.field_metadata[0]["table_input_table_name"]} as primary_table
+'''
+        default_table_name = "primary_table"
+        number_of_rows_returned = len(self.field_metadata)
+
+        for index, field_definition in enumerate(self.field_metadata, start=1):
+            # if this is the last field definition then don't put a comma at the end of the sql being added
+            if index != number_of_rows_returned:
+                line_suffix = ''',
+'''
+            else:
+                line_suffix = '''
+'''
+
+            if field_definition["table_input_edw_table_definition_dwid"] == field_definition["primary_source_edw_table_definition_dwid"]:
+                table_name = f"primary_table"
+            else:
+                table_name = f'''t{field_definition["table_input_edw_table_definition_dwid"]}'''
+
+            output_select_clause += f'''    {table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
+
+            if field_definition["join_type"] is not None:
+                output_join_sql += f'''    {field_definition["join_type"]} JOIN {field_definition["table_input_table_name"]} t{field_definition["join_alias"]} ON {field_definition["join_condition"]}
+'''
+                x=1
+
+        edw_standard_fields = ""
+        # 1 as data_source_dwid,
+        # 'b_ethnicity_collected_visual_or_surname~b_ethnicity_cuban~b_ethnicity_hispanic_or_latino~' as data_source_integration_columns,
+        # CONCAT(primary_table.b_ethnicity_collected_visual_or_surname, '~', primary_table.b_ethnicity_cuban, '~', primary_table.b_ethnicity_hispanic_or_latino, '~') as data_source_integration_id,
+        # NOW() as edw_created_datetime,
+        # NOW() as edw_modified_datetime,
+        # NOW() as data_source_modified_datetime -- primary_table.data_source_updated_datetime as data_source_modified_datetime
+        #
+
+        statement_terminator = ";"
+
+        output_sql_statement = f"{output_select_clause} {edw_standard_fields} {output_from_clause} {output_join_sql} {statement_terminator}"
+
+        return output_sql_statement
 
     def get_process_dwid_from_table_name(self, search_text: str) -> int:
         '''
@@ -428,7 +474,6 @@ class DimensionETLCreator():
         else:
             raise(Exception("Unexpected program state encountered while looking up the process_dwid values from the table name.")) # should never hit this code but throw an error for future me if we do enter a problem state
 
-
     def create_table_input_to_insert_update_sql(self) -> str:
         '''
         Creates SQL that can be executed against the config database in EDW to add SP configurations.
@@ -444,10 +489,11 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
     VALUES ('{self.process_name}', '{self.process_description}')
     RETURNING dwid)
 '''
+        table_input_sql = self.create_table_input_sql()
 
         config_insert += f'''
 , temp_table_input_step as (INSERT INTO mdi.table_input_step (process_dwid, data_source_dwid, sql, limit_size, connectionname)   -- mdi.table_input_step
-    select temp_process.dwid, {self.table_input_step_data_source_dwid}, '{self.table_input_sql}', 0, '{self.table_input_step_connection}'
+    select temp_process.dwid, {self.table_input_step_data_source_dwid}, '{table_input_sql}', 0, '{self.table_input_step_connection}'
     FROM temp_process
     RETURNING dwid)
 '''
@@ -585,7 +631,6 @@ def generate_mdi_configs_based_on_table_definition(schema_name_to_process: str) 
                                          process_name=process_name,
                                          edw_connection=EDW(db_name="staging"),
                                          insert_update_table_name = table_name,
-                                         table_input_sql = "select 1;",
                                          table_input_step_data_source_dwid=1)
         sql_configuration = etl_config.create_table_input_to_insert_update_sql()
         print(sql_configuration)
@@ -610,76 +655,7 @@ if __name__ == "__main__":
 
 
 
-# -- mocked up sample queries that the script should build
-# select
-# primary_table.b_ethnicity_collected_visual_or_surname as ethnicity_collected_visual_or_surname_code,
-# primary_table.b_ethnicity_cuban as ethnicity_cuban_flag,
-# primary_table.b_ethnicity_hispanic_or_latino as ethnicity_hispanic_or_latino_flag,
-# primary_table.b_ethnicity_mexican as ethnicity_mexican_flag,
-# primary_table.b_ethnicity_not_hispanic_or_latino as ethnicity_not_hispanic_or_latino_flag,
-# primary_table.b_ethnicity_not_obtainable as ethnicity_not_obtainable_flag,
-# primary_table.b_ethnicity_other_hispanic_or_latino_description as ethnicity_other_hispanic_or_latino_description_flag,
-# primary_table.b_ethnicity_other_hispanic_or_latino as ethnicity_other_hispanic_or_latino_flag,
-# primary_table.b_ethnicity_puerto_rican as ethnicity_puerto_rican_flag,
-# primary_table.b_ethnicity_refused as ethnicity_refused_code,
-# primary_table.b_marital_status_type as marital_status_code,
-# primary_table.b_other_race_national_origin_description as other_race_national_origin_description_flag,
-# primary_table.b_race_american_indian_or_alaska_native as race_american_indian_or_alaska_native_flag,
-# primary_table.b_race_asian as race_asian_flag,
-# primary_table.b_race_asian_indian as race_asian_indian_flag,
-# primary_table.b_race_black_or_african_american as race_black_or_african_american_flag,
-# primary_table.b_race_chinese as race_chinese_flag,
-# primary_table.b_race_collected_visual_or_surname as race_collected_visual_or_surname_code,
-# primary_table.b_race_filipino as race_filipino_flag,
-# primary_table.b_race_guamanian_or_chamorro as race_guamanian_or_chamorro_flag,
-# primary_table.b_race_information_not_provided as race_information_not_provided_flag,
-# primary_table.b_race_japanese as race_japanese_flag,
-# primary_table.b_race_korean as race_korean_flag,
-# primary_table.b_race_national_origin_refusal as race_national_origin_refusal_flag,
-# primary_table.b_race_native_hawaiian as race_native_hawaiian_flag,
-# primary_table.b_race_native_hawaiian_or_other_pacific_islander as race_native_hawaiian_or_other_pacific_islander_flag,
-# primary_table.b_race_not_applicable as race_not_applicable_flag,
-# primary_table.b_race_not_obtainable as race_not_obtainable_flag,
-# primary_table.b_race_other_american_indian_or_alaska_native_description as race_other_american_indian_or_alaska_native_description_flag,
-# primary_table.b_race_other_asian_description as race_other_asian_description_flag,
-# primary_table.b_race_other_asian as race_other_asian_flag,
-# primary_table.b_race_other_pacific_islander_description as race_other_pacific_islander_description_flag,
-# primary_table.b_race_other_pacific_islander as race_other_pacific_islander_flag,
-# primary_table.b_race_refused as race_refused_code,
-# primary_table.b_race_samoan as race_samoan_flag,
-# primary_table.b_race_vietnamese as race_vietnamese_flag,
-# primary_table.b_race_white as race_white_flag,
-# primary_table.b_schooling_years as schooling_years,
-# primary_table.b_sex_collected_visual_or_surname as sex_collected_visual_or_surname_code,
-# primary_table.b_sex_female as sex_female_flag,
-# primary_table.b_sex_male as sex_male_flag,
-# primary_table.b_sex_not_obtainable as sex_not_obtainable_flag,
-# primary_table.b_sex_refused as sex_refused_code,
-# t134.value as marital_status,
-# t123.value as ethnicity_collected_visual_or_surname,
-# t124.value as ethnicity_refused,
-# t147.value as race_collected_visual_or_surname,
-# t148.value as race_refused,
-# t151.value as sex_collected_visual_or_surname,
-# t152.value as sex_refused,
-#
-# 1 as data_source_dwid,
-# 'b_ethnicity_collected_visual_or_surname~b_ethnicity_cuban~b_ethnicity_hispanic_or_latino~' as data_source_integration_columns,
-# CONCAT(primary_table.b_ethnicity_collected_visual_or_surname, '~', primary_table.b_ethnicity_cuban, '~', primary_table.b_ethnicity_hispanic_or_latino, '~') as data_source_integration_id,
-# NOW() as edw_created_datetime,
-# NOW() as edw_modified_datetime,
-# NOW() as data_source_modified_datetime -- primary_table.data_source_updated_datetime as data_source_modified_datetime
-#
-#
-# from staging_octane.borrower primary_table
-# inner	join		staging_octane.marital_status_type t134 ON		primary_table.b_marital_status_type = t134.code
-# inner	join		staging_octane.yes_no_unknown_type t123 ON		primary_table.b_ethnicity_collected_visual_or_surname = t123.code
-# inner	join		staging_octane.yes_no_unknown_type t124 ON		primary_table.b_ethnicity_refused = t124.code
-# inner	join		staging_octane.yes_no_unknown_type t147 ON		primary_table.b_race_collected_visual_or_surname = t147.code
-# inner	join		staging_octane.yes_no_unknown_type t148 ON		primary_table.b_race_refused = t148.code
-# inner	join		staging_octane.yes_no_unknown_type t151 ON		primary_table.b_sex_collected_visual_or_surname = t151.code
-# inner	join		staging_octane.yes_no_unknown_type t152 ON		primary_table.b_sex_refused = t152.code
-# ;
+
 #
 #
 #
