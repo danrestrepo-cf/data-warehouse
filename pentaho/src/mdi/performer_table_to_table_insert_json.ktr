@@ -484,7 +484,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.089</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/04/26 19:56:22.579</modified_date>
+    <modified_date>2021/05/11 09:06:47.041</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -527,8 +527,8 @@ backwards but they are *not*. The table_output_field.database_field_name
 column maps to DATABASE_STREAM_NAME in the MDI step. The
 table_output_field.database_stream_name gets mapped to
 DATABASE_FIELD_NAME. </note>
-      <xloc>704</xloc>
-      <yloc>384</yloc>
+      <xloc>544</xloc>
+      <yloc>368</yloc>
       <width>400</width>
       <heigth>138</heigth>
       <fontname>Segoe UI</fontname>
@@ -584,7 +584,7 @@ DATABASE_FIELD_NAME. </note>
 
 </note>
       <xloc>32</xloc>
-      <yloc>512</yloc>
+      <yloc>544</yloc>
       <width>566</width>
       <heigth>158</heigth>
       <fontname>Segoe UI</fontname>
@@ -643,11 +643,27 @@ DATABASE_FIELD_NAME. </note>
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </note>
-      <xloc>1072</xloc>
+      <xloc>1040</xloc>
       <yloc>16</yloc>
       <width>874</width>
-      <heigth>325</heigth>
+      <heigth>661</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -730,11 +746,6 @@ DATABASE_FIELD_NAME. </note>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_table_to_table_insert_json] Read JSON MDI input values</from>
-      <to>[performer_table_to_table_insert_json] Set key_field_values variable</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>[performer_table_to_table_insert_json] Get JSON input</from>
       <to>[performer_table_to_table_insert_json] Read JSON token_id</to>
       <enabled>Y</enabled>
@@ -767,6 +778,31 @@ DATABASE_FIELD_NAME. </note>
     <hop>
       <from>[performer_table_to_table_insert_json] Read JSON MDI input values</from>
       <to>[performer_table_to_table_insert_json] ETL metadata injection</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert_json] Read JSON MDI input values</from>
+      <to>[performer_table_to_table_insert_json] Evaluate full_load_flag</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert_json] Evaluate full_load_flag</from>
+      <to> [performer_table_to_table_insert_json] Add full load table input condition</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert_json] Evaluate full_load_flag</from>
+      <to>[performer_table_to_table_insert_json] Add partial load table input condition</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from> [performer_table_to_table_insert_json] Add full load table input condition</from>
+      <to>[performer_table_to_table_insert_json] Set full load table input condition</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert_json] Add partial load table input condition</from>
+      <to>[performer_table_to_table_insert_json] Set partial load table input condition</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -856,6 +892,275 @@ WHERE process.dwid = ${process_dwid}</sql>
     </GUI>
   </step>
   <step>
+    <name>[performer_table_to_table_insert_json] ETL metadata injection</name>
+    <type>MetaInject</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <specification_method>rep_name</specification_method>
+    <trans_object_id/>
+    <trans_name>template_table_to_table_insert_json</trans_name>
+    <filename/>
+    <directory_path>${Internal.Entry.Current.Directory}</directory_path>
+    <source_step/>
+    <source_output_fields>    </source_output_fields>
+    <target_file/>
+    <no_execution>N</no_execution>
+    <stream_source_step/>
+    <stream_target_step/>
+    <mappings>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>TARGET_SCHEMA</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
+        <source_field>target_schema</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>COMMIT_SIZE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
+        <source_field>commit_size</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>TABLE_NAME_DEFINED_IN_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
+        <source_field>table_name_defined_in_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
+        <target_attribute_key>EXECUTE_FOR_EACH_ROW</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Input step settings</source_step>
+        <source_field>execute_for_each_row</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
+        <target_attribute_key>LIMIT</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Input step settings</source_step>
+        <source_field>limit_size</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>PARTITION_DATA_PER</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
+        <source_field>partition_data_per</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>TARGET_TABLE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
+        <source_field>target_table</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>PARTITION_OVER_TABLES</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
+        <source_field>partition_over_tables</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Select key field rows</target_step_name>
+        <target_attribute_key>FIELD_RENAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_json]  Get key_field_name</source_step>
+        <source_field>rename_to</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>DATABASE_FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Output field settings</source_step>
+        <source_field>database_stream_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
+        <source_field>connectionname</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>DATABASE_STREAM_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Output field settings</source_step>
+        <source_field>database_field_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Select key field rows</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_json]  Get key_field_name</source_step>
+        <source_field>fieldname</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>SPECIFY_DATABASE_FIELDS</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
+        <source_field>specify_database_fields</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
+        <target_attribute_key>REPLACE_VARIABLES</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Input step settings</source_step>
+        <source_field>replace_variables</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Partial load - Set key_field_name</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>key_field_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>RETURN_AUTO_GENERATED_KEY</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
+        <source_field>return_auto_generated_key_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
+        <target_attribute_key>LAZY_CONVERSION</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Input step settings</source_step>
+        <source_field>enable_lazy_conversion</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Partial load - Set key_field_name</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_json]  Get key_field_name</source_step>
+        <source_field>fieldname</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>TABLE_NAME_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
+        <source_field>table_name_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>TRUNCATE_TABLE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
+        <source_field>truncate_table</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>USE_BATCH_UPDATE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
+        <source_field>use_batch_update</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
+        <target_attribute_key>CACHED_ROW_META</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Input step settings</source_step>
+        <source_field>cached_row_meta</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
+        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Input step settings</source_step>
+        <source_field>connectionname</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
+        <target_attribute_key>SQL</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Input step settings</source_step>
+        <source_field>sql</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>etl_batch_id</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>data_source_dwid</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json]  Specify logging fields (non-sensitive)</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Output non-sensitive fields</source_step>
+        <source_field>database_stream_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>PARTITIONING_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
+        <source_field>partitioning_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>AUTO_GENERATED_KEY_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
+        <source_field>auto_generated_key_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>${etl_batch_id}</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>${data_source_dwid}</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
+        <target_attribute_key>IGNORE_INSERT_ERRORS</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
+        <source_field>ignore_insert_errors</source_field>
+      </mapping>
+    </mappings>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>720</xloc>
+      <yloc>304</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>[performer_table_to_table_insert_json] Get JSON input</name>
     <type>GetVariable</type>
     <description/>
@@ -889,7 +1194,7 @@ WHERE process.dwid = ${process_dwid}</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1248</xloc>
+      <xloc>1472</xloc>
       <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
@@ -979,7 +1284,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>execute_for_each_row</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_table_to_table_insert_json] Load Table Input step settings</origin>
         <comments>execute_for_each_row</comments>
         <conversion_Mask/>
@@ -1002,7 +1307,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>replace_variables</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_table_to_table_insert_json] Load Table Input step settings</origin>
         <comments>replace_variables</comments>
         <conversion_Mask/>
@@ -1025,7 +1330,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>enable_lazy_conversion</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_table_to_table_insert_json] Load Table Input step settings</origin>
         <comments>enable_lazy_conversion</comments>
         <conversion_Mask/>
@@ -1048,7 +1353,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>cached_row_meta</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_table_to_table_insert_json] Load Table Input step settings</origin>
         <comments>cached_row_meta</comments>
         <conversion_Mask/>
@@ -1071,7 +1376,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>input_connectionname</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_table_to_table_insert_json] Load Table Input step settings</origin>
         <comments>input_connectionname</comments>
         <conversion_Mask/>
@@ -1473,7 +1778,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>truncate_table</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_table_to_table_insert_json] Load Table Output step settings</origin>
         <comments>truncate_table</comments>
         <conversion_Mask/>
@@ -1519,7 +1824,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>partition_over_tables</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_table_to_table_insert_json] Load Table Output step settings</origin>
         <comments>partition_over_tables</comments>
         <conversion_Mask/>
@@ -1542,7 +1847,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>specify_database_fields</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_table_to_table_insert_json] Load Table Output step settings</origin>
         <comments>specify_database_fields</comments>
         <conversion_Mask/>
@@ -1565,7 +1870,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>ignore_insert_errors</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_table_to_table_insert_json] Load Table Output step settings</origin>
         <comments>ignore_insert_errors</comments>
         <conversion_Mask/>
@@ -1588,7 +1893,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>use_batch_update</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_table_to_table_insert_json] Load Table Output step settings</origin>
         <comments>use_batch_update</comments>
         <conversion_Mask/>
@@ -1611,7 +1916,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>table_name_defined_in_field</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_table_to_table_insert_json] Load Table Output step settings</origin>
         <comments>table_name_defined_in_field</comments>
         <conversion_Mask/>
@@ -1735,8 +2040,8 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1248</xloc>
-      <yloc>272</yloc>
+      <xloc>1472</xloc>
+      <yloc>256</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1818,13 +2123,57 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1248</xloc>
+      <xloc>1472</xloc>
       <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[performer_table_to_table_insert_json] Set key_field_values variable</name>
+    <name>[performer_table_to_table_insert_json] Evaluate full_load_flag</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to> [performer_table_to_table_insert_json] Add full load table input condition</send_true_to>
+    <send_false_to>[performer_table_to_table_insert_json] Add partial load table input condition</send_false_to>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>full_load_flag</leftvalue>
+        <function>=</function>
+        <rightvalue/>
+        <value>
+          <name>constant</name>
+          <type>String</type>
+          <text>true</text>
+          <length>-1</length>
+          <precision>-1</precision>
+          <isnull>N</isnull>
+          <mask/>
+        </value>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1472</xloc>
+      <yloc>384</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[performer_table_to_table_insert_json] Set full load table input condition</name>
     <type>SetVariable</type>
     <description/>
     <distribute>Y</distribute>
@@ -1836,13 +2185,13 @@ WHERE
     </partitioning>
     <fields>
       <field>
-        <field_name>key_field_values</field_name>
-        <variable_name>key_field_values</variable_name>
+        <field_name>table_input_condition</field_name>
+        <variable_name>table_input_condition</variable_name>
         <variable_type>JVM</variable_type>
         <default_value/>
       </field>
     </fields>
-    <use_formatting>Y</use_formatting>
+    <use_formatting>N</use_formatting>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1852,14 +2201,14 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1712</xloc>
-      <yloc>272</yloc>
+      <xloc>1696</xloc>
+      <yloc>608</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[performer_table_to_table_insert_json] ETL metadata injection</name>
-    <type>MetaInject</type>
+    <name>[performer_table_to_table_insert_json] Set partial load table input condition</name>
+    <type>SetVariable</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1868,250 +2217,15 @@ WHERE
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <specification_method>rep_name</specification_method>
-    <trans_object_id/>
-    <trans_name>template_table_to_table_insert_json</trans_name>
-    <filename/>
-    <directory_path>${Internal.Entry.Current.Directory}</directory_path>
-    <source_step/>
-    <source_output_fields>    </source_output_fields>
-    <target_file/>
-    <no_execution>N</no_execution>
-    <stream_source_step/>
-    <stream_target_step/>
-    <mappings>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
-        <target_attribute_key>TARGET_SCHEMA</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
-        <source_field>target_schema</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
-        <target_attribute_key>COMMIT_SIZE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
-        <source_field>commit_size</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
-        <target_attribute_key>TABLE_NAME_DEFINED_IN_FIELD</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
-        <source_field>table_name_defined_in_field</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
-        <target_attribute_key>EXECUTE_FOR_EACH_ROW</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Input step settings</source_step>
-        <source_field>execute_for_each_row</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
-        <target_attribute_key>LIMIT</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Input step settings</source_step>
-        <source_field>limit_size</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
-        <target_attribute_key>PARTITION_DATA_PER</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
-        <source_field>partition_data_per</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
-        <target_attribute_key>TARGET_TABLE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
-        <source_field>target_table</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
-        <target_attribute_key>PARTITION_OVER_TABLES</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
-        <source_field>partition_over_tables</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Select key field rows</target_step_name>
-        <target_attribute_key>FIELD_RENAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_json]  Get key_field_name</source_step>
-        <source_field>rename_to</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
-        <target_attribute_key>DATABASE_FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Output field settings</source_step>
-        <source_field>database_stream_name</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
-        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
-        <source_field>connectionname</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
-        <target_attribute_key>DATABASE_STREAM_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Output field settings</source_step>
-        <source_field>database_field_name</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Select key field rows</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_json]  Get key_field_name</source_step>
-        <source_field>fieldname</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
-        <target_attribute_key>SPECIFY_DATABASE_FIELDS</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
-        <source_field>specify_database_fields</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
-        <target_attribute_key>REPLACE_VARIABLES</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Input step settings</source_step>
-        <source_field>replace_variables</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Partial load - Set key_field_name</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>key_field_name</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
-        <target_attribute_key>RETURN_AUTO_GENERATED_KEY</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
-        <source_field>return_auto_generated_key_field</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
-        <target_attribute_key>LAZY_CONVERSION</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Input step settings</source_step>
-        <source_field>enable_lazy_conversion</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Partial load - Set key_field_name</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_json]  Get key_field_name</source_step>
-        <source_field>fieldname</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
-        <target_attribute_key>TABLE_NAME_FIELD</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
-        <source_field>table_name_field</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
-        <target_attribute_key>TRUNCATE_TABLE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
-        <source_field>truncate_table</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
-        <target_attribute_key>USE_BATCH_UPDATE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
-        <source_field>use_batch_update</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
-        <target_attribute_key>CACHED_ROW_META</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Input step settings</source_step>
-        <source_field>cached_row_meta</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
-        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Input step settings</source_step>
-        <source_field>connectionname</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
-        <target_attribute_key>SQL</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Input step settings</source_step>
-        <source_field>sql</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>etl_batch_id</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>data_source_dwid</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json]  Specify logging fields (non-sensitive)</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Output non-sensitive fields</source_step>
-        <source_field>database_stream_name</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
-        <target_attribute_key>PARTITIONING_FIELD</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
-        <source_field>partitioning_field</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
-        <target_attribute_key>AUTO_GENERATED_KEY_FIELD</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
-        <source_field>auto_generated_key_field</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>${etl_batch_id}</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>${data_source_dwid}</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
-        <target_attribute_key>IGNORE_INSERT_ERRORS</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Load Table Output step settings</source_step>
-        <source_field>ignore_insert_errors</source_field>
-      </mapping>
-    </mappings>
+    <fields>
+      <field>
+        <field_name>table_input_condition</field_name>
+        <variable_name>table_input_condition</variable_name>
+        <variable_type>JVM</variable_type>
+        <default_value/>
+      </field>
+    </fields>
+    <use_formatting>N</use_formatting>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -2121,8 +2235,86 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>720</xloc>
-      <yloc>304</yloc>
+      <xloc>1232</xloc>
+      <yloc>608</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name> [performer_table_to_table_insert_json] Add full load table input condition</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>table_input_condition</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>1 = 1</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1696</xloc>
+      <yloc>480</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[performer_table_to_table_insert_json] Add partial load table input condition</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>table_input_condition</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>${key_field_name} IN (${key_field_values})</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1232</xloc>
+      <yloc>480</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
