@@ -5,6 +5,18 @@ from datetime import datetime
 import sys, getopt
 
 class EDW:
+    #######################
+    # Common errors:
+    #######################
+    # Exception Message:
+    # File "C:\Users\ramon.ecung\Projects\data-warehouse\scripts\etl-creator\env\lib\site-packages\psycopg2\extras.py", line 251, in execute
+    #     return super(RealDictCursor, self).execute(query, vars)
+    # IndexError: tuple index out of range
+    # --------------------
+    # Resolution:
+    # This error likely means there is a single '%' in the query being executed which needs to be escaped by using '%%' instead
+    #######################
+
     database_name = ""
     database_username = ""
     database_password = ""
@@ -38,6 +50,7 @@ class EDW:
     def execute_parameterized_query(self, query: str, *parameters):
         '''
         This function connects to the database, executes a query using sanitization, commits any changes, and returns the resultant rows
+
         :param query: the SQL query to execute. sanitize any variables using '%s'
         :param parameters: a tuple of parameters with one value in the tuple per '%s' in the query
         :return: returns a list of tuples with the data from the rows returned by the query
@@ -107,43 +120,54 @@ class EDW:
         '''
 
         query = '''SELECT
-    CASE WHEN table_input_edw_field_definition.source_edw_field_definition_dwid IS NULL THEN 0 ELSE 1 END as has_table_input_source_definition
-    , table_input_edw_table_definition.database_name as table_input_database_name
-    , table_input_edw_table_definition.schema_name as table_input_schema_name
-    , table_input_edw_table_definition.table_name as table_input_table_name
-    , table_input_edw_field_definition.field_name as table_input_field_name
-    , table_input_edw_field_definition.field_source_calculation as table_input_field_source_calculation
-    , table_input_join_definition.join_type
-    , table_input_join_definition.join_condition
-    , join_table_definition.dwid as join_alias
-    , table_input_edw_field_definition.dwid as table_input_edw_field_definition_dwid
-    , table_input_edw_table_definition.dwid as table_input_edw_table_definition_dwid
+    CASE WHEN source_field.source_edw_field_definition_dwid IS NULL THEN 0 ELSE 1 END as has_table_input_source_definition
+    , source_table.database_name as table_input_database_name
+    , source_table.schema_name as table_input_schema_name
+    , source_table.table_name as table_input_table_name
+    , source_field.field_name as table_input_field_name
+    , source_field.field_source_calculation as table_input_field_source_calculation
+    
+    , initial_join_definition.join_type
+    , initial_join_definition.join_condition
+    , initial_join_definition.dwid as join_alias
+    , child_join_tree_definition.join_type as child_join_type
+    , child_join_tree_definition.join_condition as child_join_condition
+    , child_join_tree_definition.dwid as child_join_alias
+    , (select primary_table_field.field_name from mdi.edw_field_definition primary_table_field
+       where primary_table_field.key_field_flag = true
+           and primary_table_field.edw_table_definition_dwid = source_table.dwid and primary_table_field.field_name like '%%pid' limit 1) as source_table_key_field_name -- used for source tables group by to get latest version
+    , source_field.dwid as table_input_edw_field_definition_dwid
+    , source_table.dwid as table_input_edw_table_definition_dwid
 
-    , edw_table_definition.primary_source_edw_table_definition_dwid
-
-    , table_output_edw_field_definition.field_source_calculation as insert_update_field_source_calculation
-    , CASE WHEN table_output_edw_field_definition.source_edw_join_tree_definition_dwid IS NULL THEN 0 ELSE 1 END as has_insert_update_edw_join_tree_definition
-    , edw_table_definition.database_name as insert_update_database_name
-    , edw_table_definition.schema_name as insert_update_schema_name
-    , edw_table_definition.table_name as insert_update_table_name
-    , table_output_edw_field_definition.field_name as insert_update_field_name
-    , table_output_edw_field_definition.key_field_flag as insert_update_key_field_flag
+    , target_table.primary_source_edw_table_definition_dwid
+    , primary_source_table.table_name as primary_source_table_name
+    , primary_source_table.schema_name as primary_source_schema_name
+    , target_field.field_source_calculation as insert_update_field_source_calculation
+    , CASE WHEN target_field.source_edw_join_tree_definition_dwid IS NULL THEN 0 ELSE 1 END as has_insert_update_edw_join_tree_definition
+    , target_table.database_name as insert_update_database_name
+    , target_table.schema_name as insert_update_schema_name
+    , target_table.table_name as insert_update_table_name
+    , target_field.field_name as insert_update_field_name
+    , target_field.key_field_flag as insert_update_key_field_flag
+    , target_field.reporting_key_flag as json_output_key_field
 FROM
-    mdi.edw_table_definition
-        JOIN mdi.edw_field_definition table_output_edw_field_definition ON edw_table_definition.dwid = table_output_edw_field_definition.edw_table_definition_dwid
-        LEFT JOIN mdi.edw_field_definition table_input_edw_field_definition ON table_output_edw_field_definition.source_edw_field_definition_dwid = table_input_edw_field_definition.dwid
-        LEFT JOIN mdi.edw_table_definition table_input_edw_table_definition ON table_input_edw_field_definition.edw_table_definition_dwid = table_input_edw_table_definition.dwid
-        LEFT JOIN mdi.edw_join_tree_definition table_input_join_tree_definition ON table_output_edw_field_definition.source_edw_join_tree_definition_dwid = table_input_join_tree_definition.dwid
-        LEFT JOIN mdi.edw_join_definition table_input_join_definition ON table_input_join_tree_definition.root_join_dwid = table_input_join_definition.dwid
-        LEFT JOIN mdi.edw_table_definition join_table_definition ON table_input_join_definition.target_edw_table_definition_dwid = join_table_definition.dwid
+    mdi.edw_table_definition target_table
+        JOIN mdi.edw_field_definition target_field ON target_table.dwid = target_field.edw_table_definition_dwid
+        JOIN mdi.edw_table_definition primary_source_table ON target_table.primary_source_edw_table_definition_dwid = primary_source_table.dwid
+        LEFT JOIN mdi.edw_field_definition source_field ON target_field.source_edw_field_definition_dwid = source_field.dwid
+        LEFT JOIN mdi.edw_table_definition source_table ON source_field.edw_table_definition_dwid = source_table.dwid
+        LEFT JOIN mdi.edw_join_tree_definition initial_join_tree ON target_field.source_edw_join_tree_definition_dwid = initial_join_tree.dwid
+        LEFT JOIN mdi.edw_join_definition initial_join_definition ON initial_join_tree.root_join_dwid = initial_join_definition.dwid
+        LEFT JOIN mdi.edw_join_tree_definition child_join_tree ON target_field.source_edw_join_tree_definition_dwid = child_join_tree.child_join_tree_dwid
+        LEFT JOIN mdi.edw_join_definition child_join_tree_definition ON child_join_tree.root_join_dwid = child_join_tree.dwid
 
 WHERE
-            edw_table_definition.dwid = %s
-    AND table_output_edw_field_definition.field_name not in ('dwid', 'data_source_dwid','data_source_integration_columns','data_source_integration_id','data_source_modified_datetime','edw_created_datetime', 'edw_modified_datetime', 'etl_batch_id') -- exclude these in the join if the table input field name is null?
+    target_table.dwid = %s
+    AND target_field.field_name not in ('data_source_dwid','data_source_integration_columns','data_source_integration_id','data_source_modified_datetime','edw_created_datetime', 'edw_modified_datetime', 'etl_batch_id') -- exclude these in the join if the table input field name is null?
 ORDER BY
-    table_output_edw_field_definition.key_field_flag DESC
-    , table_output_edw_field_definition.field_name ASC
-    , has_table_input_source_definition;'''
+    target_field.key_field_flag DESC
+    , target_field.field_name ASC
+    , has_table_input_source_definition DESC;'''
 
         return self.execute_parameterized_query(query, edw_table_definition_dwid)
 
@@ -214,18 +238,18 @@ class ETL_config:
     table_output_field_steps = ""
 
     def __init__ (self
-                  , process_name
-                  , process_description
-                  , table_input_step_connection
-                  , table_input_step_sql
-                  , table_output_step_connection
-                  , table_output_step_schema
-                  , table_output_step_table
-                  , table_output_step_fields
-                  , json_output_step_field
-                  , staging_connection
-                  , state_machine_name
-                  , state_machine_comment):
+                  , process_name: str
+                  , process_description: str
+                  , table_input_step_connection: str
+                  , table_input_step_sql: str
+                  , table_output_step_connection: str
+                  , table_output_step_schema: str
+                  , table_output_step_table: str
+                  , table_output_step_fields: list
+                  , json_output_step_field: str
+                  , staging_connection: str
+                  , state_machine_name: str
+                  , state_machine_comment: str):
         self.process_name = process_name
         self.process_description = process_description
         self.table_input_step_connection = table_input_step_connection
@@ -402,13 +426,17 @@ class DimensionETLCreator():
 '''
         output_join_sql = ""
         output_from_clause = f'''FROM 
-    {self.field_metadata[0]["table_input_schema_name"]}.{self.field_metadata[0]["table_input_table_name"]} as primary_table
+    {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} as primary_table
 '''
         default_table_name = "primary_table"
         number_of_rows_returned = len(self.field_metadata)
 
         for index, field_definition in enumerate(self.field_metadata, start=1):
-            # if this is the last field definition then don't put a comma at the end of the sql being added
+            if field_definition["child_join_condition"] != None:
+                print(f'field_definition["child_join_condition"] has the value of {field_definition["child_join_condition"]} but is expected to be None. Script must be modified to handle child join conditions!')
+                raise(ValueError("field_definition['child_join_condition'] is always expected to be None but a value was found. Script cannot handle child join conditions without modification."))
+
+            # if this is not the last field definition then put a comma at the end of the sql being added
             if index != number_of_rows_returned:
                 line_suffix = ''',
 '''
@@ -419,14 +447,13 @@ class DimensionETLCreator():
             if field_definition["table_input_edw_table_definition_dwid"] == field_definition["primary_source_edw_table_definition_dwid"]:
                 table_name = f"primary_table"
             else:
-                table_name = f'''t{field_definition["table_input_edw_table_definition_dwid"]}'''
+                table_name = f'''t{field_definition["join_alias"]}'''
 
             output_select_clause += f'''    {table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
 
             if field_definition["join_type"] is not None:
-                output_join_sql += f'''    {field_definition["join_type"]} JOIN {field_definition["table_input_table_name"]} t{field_definition["join_alias"]} ON {field_definition["join_condition"]}
+                output_join_sql += f'''    {field_definition["join_type"].upper()} JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} t{field_definition["join_alias"]} ON {field_definition["join_condition"]}
 '''
-                x=1
 
         edw_standard_fields = ""
         # 1 as data_source_dwid,
@@ -439,7 +466,7 @@ class DimensionETLCreator():
 
         statement_terminator = ";"
 
-        output_sql_statement = f"{output_select_clause} {edw_standard_fields} {output_from_clause} {output_join_sql} {statement_terminator}"
+        output_sql_statement = f"{output_select_clause} {edw_standard_fields} {output_from_clause} {output_join_sql}{statement_terminator}"
 
         return output_sql_statement
 
@@ -447,7 +474,8 @@ class DimensionETLCreator():
         '''
         Used to get the process_dwid based on a table name. If 0 or more than 1 row is found ValueErrors are thrown.
 
-        ** THIS CODE IS FRAGILE ** -- highly coupled with the format of the test in mdi.process.description
+        ** THIS CODE IS FRAGILE ** -- highly coupled with the format of the test in mdi.process.description. We're
+        looking into a change here https://app.asana.com/0/0/1200287150179725/
 
         :param search_text: the name of the table (or other text) that
         :return: returns the process_dwid of a row in mdi.process that has *table_name* in its description
@@ -498,6 +526,14 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
     RETURNING dwid)
 '''
 
+        for index, field_definition in enumerate(self.field_metadata):
+            if field_definition["json_output_key_field"] == True:
+                config_insert += f'''
+, temp_json_output_field_{index} as (INSERT INTO mdi.json_output_field (process_dwid, field_name)   -- mdi.json_output_field
+    select temp_process.dwid, '{field_definition["insert_update_field_name"]}'
+    FROM temp_process)
+'''
+
         config_insert += f'''
 , temp_insert_update_step as (INSERT INTO mdi.insert_update_step (process_dwid, connectionname, schema_name, table_name, commit_size, do_not)   -- mdi.insert_update_step
     select temp_process.dwid, '{self.insert_update_step_connection}', '{self.insert_update_schema_name}', '{self.insert_update_table_name}', {self.insert_update_commit_size}, 'N'
@@ -505,9 +541,7 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
     RETURNING dwid)
 '''
 
-
-
-        for field_definition in self.field_metadata:
+        for index, field_definition in enumerate(self.field_metadata):
             #ignore fields that do not have source definitions (edw standard fields)
             if field_definition["has_table_input_source_definition"] == 0:
                 continue
@@ -517,25 +551,10 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
                 continue
 
             config_insert += f'''
-, temp_insert_update_key as (INSERT INTO mdi.insert_update_key (insert_update_step_dwid, key_lookup, key_stream1, key_condition)   -- mdi.insert_update_key
+, temp_insert_update_key_{index} as (INSERT INTO mdi.insert_update_key (insert_update_step_dwid, key_lookup, key_stream1, key_condition)   -- mdi.insert_update_key
     select temp_insert_update_step.dwid, '{field_definition["insert_update_field_name"]}', '{field_definition["table_input_field_name"]}', '='
     FROM temp_insert_update_step
     RETURNING dwid)
-'''
-
-        for field_definition in self.field_metadata:
-            #ignore fields that do not have source definitions (edw standard fields)
-            if field_definition["has_table_input_source_definition"] == 0:
-                continue
-
-            # loop over only the key fields
-            if field_definition["insert_update_key_field_flag"] != 1:
-                continue
-
-            config_insert += f'''
-, temp_json_output as (INSERT INTO mdi.json_output_field (process_dwid, field_name)   -- mdi.json_output_field
-    select temp_process.dwid, '{field_definition["table_input_field_name"]}'
-    FROM temp_process)
 '''
 
         for index, field_definition in enumerate(self.field_metadata):
@@ -549,30 +568,31 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
                 update_flag = "Y"
             else:
                 # error if an unexpected value comes through
-                raise(ValueError("Expected values 1 or 0 in field_definition[\"insert_update_key_field_flag\"]. Unknown and unexpected value detected."))
+                raise(ValueError('Expected values 1 or 0 in field_definition["insert_update_key_field_flag"]. Unknown and unexpected value detected.'))
 
             config_insert += f'''
-, temp_insert_update_field_{field_definition["insert_update_field_name"]}_{index} as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
+, tmp_insert_update_field_{index} as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
     select temp_insert_update_step.dwid, '{field_definition["insert_update_field_name"]}', '{field_definition["insert_update_field_name"]}', '{update_flag}', 'false'
     FROM temp_insert_update_step
     RETURNING dwid) 
 '''
+
         seen_table_name_values = []
-        for field_definition in self.field_metadata:
+        for index, field_definition in enumerate(self.field_metadata):
             #ignore fields that do not have source definitions (edw standard fields)
             if field_definition["has_table_input_source_definition"] == 0:
                 continue
 
             # if we've already seen this table name then move to the next row
-            process_dwid = self.get_process_dwid_from_table_name(field_definition["table_input_table_name"])
+            state_machine_step_process_dwid = self.get_process_dwid_from_table_name(field_definition["table_input_table_name"])
             if field_definition["table_input_table_name"] in seen_table_name_values:
                 continue
 
             seen_table_name_values.append(field_definition["table_input_table_name"])
 
             config_insert += f'''
-, temp_state_machine_step_update_{process_dwid} as (UPDATE mdi.state_machine_step set next_process_dwid = temp_process.dwid FROM temp_process WHERE process_dwid={process_dwid} AND next_process_dwid IS NULL)   -- mdi.state_machine_step
-, temp_state_machine_step_insert_{process_dwid} as (INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)  -- mdi.state_machine_step
+, temp_state_machine_step_update_{index} as (UPDATE mdi.state_machine_step set next_process_dwid = temp_process.dwid FROM temp_process WHERE process_dwid={state_machine_step_process_dwid} AND next_process_dwid IS NULL)   -- mdi.state_machine_step
+, temp_state_machine_step_install_{index} as (INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)  -- mdi.state_machine_step
     SELECT temp_process.dwid, NULL
     FROM temp_process)
     
