@@ -432,8 +432,7 @@ class DimensionETLCreator():
     SELECT 
 '''
         if self.field_metadata[0]["source_table_version_field_name"] is not None:
-            output_select_clause += f'''
-        row_number() OVER (PARTITION BY primary_table.{self.field_metadata[0]["source_table_key_field_name"]} ORDER BY {self.field_metadata[0]["source_table_version_field_name"]} DESC) as row_number,
+            output_select_clause += f'''        row_number() OVER (PARTITION BY primary_table.{self.field_metadata[0]["source_table_key_field_name"]} ORDER BY {self.field_metadata[0]["source_table_version_field_name"]} DESC) as row_number,
 '''
         else:
             partition_fields = ""
@@ -453,7 +452,7 @@ class DimensionETLCreator():
 
         output_join_sql = ""
         output_from_clause = f'''FROM 
-    {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} as primary_table
+        {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} as primary_table
 '''
         default_table_name = "primary_table"
 
@@ -471,17 +470,21 @@ class DimensionETLCreator():
                 line_suffix = '''
 '''
 
-            if field_definition["table_input_edw_table_definition_dwid"] == field_definition["primary_source_edw_table_definition_dwid"]:
-                table_name = f"primary_table"
+            if field_definition["insert_update_field_source_calculation"] == None:
+
+                if field_definition["table_input_edw_table_definition_dwid"] == field_definition["primary_source_edw_table_definition_dwid"]:
+                    table_name = f"primary_table"
+                else:
+                    table_name = f'''t{field_definition["join_alias"]}'''
+                    if field_definition["join_alias"] == None: print(field_definition)
+
+                output_select_clause += f'''        {table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
             else:
-                table_name = f'''t{field_definition["join_alias"]}'''
-                if field_definition["join_alias"] == None: print(field_definition)
+                output_select_clause += f'''        {field_definition["primary_source_schema_name"]}.{field_definition["primary_source_table_name"]}.{field_definition["insert_update_field_source_calculation"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
 
-            output_select_clause += f'''    {table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
+                if field_definition["join_type"] is not None:
+                    output_join_clause += f'''        {field_definition["join_type"].upper()} JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} t{field_definition["join_alias"]} ON {field_definition["join_condition"]}{line_suffix}'''
 
-            if field_definition["join_type"] is not None:
-                output_join_sql += f'''    {field_definition["join_type"].upper()} JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} t{field_definition["join_alias"]} ON {field_definition["join_condition"]}
-'''
 
         edw_standard_fields = ""
         # 1 as data_source_dwid,
