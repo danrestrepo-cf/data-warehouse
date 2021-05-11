@@ -133,11 +133,14 @@ class EDW:
     , child_join_tree_definition.join_type as child_join_type
     , child_join_tree_definition.join_condition as child_join_condition
     , child_join_tree_definition.dwid as child_join_alias
-    , (select primary_table_field.field_name from mdi.edw_field_definition primary_table_field
-       where primary_table_field.key_field_flag = true
-           and primary_table_field.edw_table_definition_dwid = source_table.dwid and primary_table_field.field_name like '%%pid' limit 1) as source_table_key_field_name -- used for source tables group by to get latest version
     , source_field.dwid as table_input_edw_field_definition_dwid
     , source_table.dwid as table_input_edw_table_definition_dwid
+
+    , (select primary_table_field.field_name from mdi.edw_field_definition primary_table_field
+       where primary_table_field.key_field_flag = true
+           and primary_table_field.edw_table_definition_dwid = target_table.primary_source_edw_table_definition_dwid and primary_table_field.field_name like '%%_pid' limit 1) as source_table_key_field_name
+    , (select primary_table_field.field_name from mdi.edw_field_definition primary_table_field
+       where primary_table_field.edw_table_definition_dwid = target_table.primary_source_edw_table_definition_dwid and primary_table_field.field_name like '%%_version' limit 1) as source_table_version_field_name
 
     , target_table.primary_source_edw_table_definition_dwid
     , primary_source_table.table_name as primary_source_table_name
@@ -422,14 +425,38 @@ class DimensionETLCreator():
 
 
     def create_table_input_sql(self) -> str:
-        output_select_clause = '''SELECT 
+        number_of_rows_returned = len(self.field_metadata)
+
+        output_select_clause = f'''SELECT * FROM
+(        
+    SELECT 
 '''
+        if self.field_metadata[0]["source_table_version_field_name"] is not None:
+            output_select_clause += f'''
+        row_number() OVER (PARTITION BY primary_table.{self.field_metadata[0]["source_table_key_field_name"]} ORDER BY {self.field_metadata[0]["source_table_version_field_name"]} DESC) as row_number,
+'''
+        else:
+            partition_fields = ""
+            for index, field_definition in enumerate(self.field_metadata):
+                # if this is not the last field definition then put a comma at the end of the sql being added
+                if index != number_of_rows_returned:
+                    line_suffix = ''',
+    '''
+                else:
+                    line_suffix = '''
+    '''
+                partition_fields += f'{field_definition["table_input_key_field_flag"]}{line_suffix}'
+
+            output_select_clause += f'''
+        row_number() OVER (PARTITION BY {partition_fields}) as row_number,
+'''
+
         output_join_sql = ""
         output_from_clause = f'''FROM 
     {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} as primary_table
 '''
         default_table_name = "primary_table"
-        number_of_rows_returned = len(self.field_metadata)
+
 
         for index, field_definition in enumerate(self.field_metadata, start=1):
             if field_definition["child_join_condition"] != None:
@@ -448,6 +475,7 @@ class DimensionETLCreator():
                 table_name = f"primary_table"
             else:
                 table_name = f'''t{field_definition["join_alias"]}'''
+                if field_definition["join_alias"] == None: print(field_definition)
 
             output_select_clause += f'''    {table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
 
@@ -464,7 +492,9 @@ class DimensionETLCreator():
         # NOW() as data_source_modified_datetime -- primary_table.data_source_updated_datetime as data_source_modified_datetime
         #
 
-        statement_terminator = ";"
+        statement_terminator = ''') as query
+where query.row_number = 1
+;'''
 
         output_sql_statement = f"{output_select_clause} {edw_standard_fields} {output_from_clause} {output_join_sql}{statement_terminator}"
 
