@@ -469,7 +469,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/05/03 10:29:00.797</modified_date>
+    <modified_date>2021/05/11 22:24:51.816</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -839,17 +839,12 @@
     </hop>
     <hop>
       <from>[template_table_to_table_insert_update_json] Select key field rows</from>
-      <to>[template_table_to_table_insert_update] Count and concatenate key field rows</to>
+      <to>[template_table_to_table_insert_update_json] Count and concatenate key field rows</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>[template_table_to_table_insert_update_json] Table input</from>
       <to>[template_table_to_table_insert_update_json] Select key field rows</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[template_table_to_table_insert_update_json] Get key_field_values</from>
-      <to>[template_table_to_table_insert_update_json] Table input</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -878,7 +873,7 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_update] Count and concatenate key field rows</from>
+      <from>[template_table_to_table_insert_update_json] Count and concatenate key field rows</from>
       <to>[template_table_to_table_insert_update_json] Filter rows</to>
       <enabled>Y</enabled>
     </hop>
@@ -889,7 +884,7 @@
     </hop>
   </order>
   <step>
-    <name>[template_table_to_table_insert_update] Count and concatenate key field rows</name>
+    <name>[template_table_to_table_insert_update_json] Count and concatenate key field rows</name>
     <type>GroupBy</type>
     <description/>
     <distribute>Y</distribute>
@@ -1006,10 +1001,6 @@
       <schema_name/>
     </partitioning>
     <steps>
-      <step>
-        <name>[template_table_to_table_insert_update_json] Get key_field_values</name>
-        <CopyNr>0</CopyNr>
-      </step>
       <step>
         <name>[template_table_to_table_insert_update_json] Table input</name>
         <CopyNr>0</CopyNr>
@@ -1226,45 +1217,6 @@ var mdi_output_json = JSON.stringify(json);</jsScript_script>
     <GUI>
       <xloc>1792</xloc>
       <yloc>416</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_insert_update_json] Get key_field_values</name>
-    <type>GetVariable</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>key_field_values</name>
-        <variable>key_field_values</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>16</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
