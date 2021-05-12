@@ -4,5 +4,3 @@
 --
 
 CREATE USER etl_loan PASSWORD 'testonly';
-GRANT pentaho_logging TO etl_loan;
-GRANT pentaho_mdi to etl_loan;
