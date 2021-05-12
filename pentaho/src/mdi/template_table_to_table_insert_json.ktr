@@ -469,7 +469,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/05/03 10:26:46.123</modified_date>
+    <modified_date>2021/05/12 12:27:13.271</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -851,11 +851,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_json] Get key_field_values</from>
-      <to>[template_table_to_table_insert_json] Table input</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>[template_table_to_table_insert_json] Partial load - add blank field for key_field_name</from>
       <to>[template_table_to_table_insert_json] Partial load - Set key_field_name</to>
       <enabled>Y</enabled>
@@ -876,11 +871,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_json] Block S3 step until insert flow finishes</from>
-      <to>[template_table_to_table_insert_json] S3 file output</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>[template_table_to_table_insert] Count and concatenate key field rows</from>
       <to>[template_table_to_table_insert_json] Filter rows</to>
       <enabled>Y</enabled>
@@ -888,6 +878,11 @@
     <hop>
       <from>[template_table_to_table_insert_json] Build output JSON</from>
       <to>[template_table_to_table_insert_json] Block S3 step until insert flow finishes</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_json] Block S3 step until insert flow finishes</from>
+      <to>[template_table_to_table_insert_json] S3 file output</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -1009,10 +1004,6 @@
       <schema_name/>
     </partitioning>
     <steps>
-      <step>
-        <name>[template_table_to_table_insert_json] Get key_field_values</name>
-        <CopyNr>0</CopyNr>
-      </step>
       <step>
         <name>[template_table_to_table_insert_json] Table input</name>
         <CopyNr>0</CopyNr>
@@ -1233,45 +1224,6 @@ var mdi_output_json = JSON.stringify(json);</jsScript_script>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_json] Get key_field_values</name>
-    <type>GetVariable</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>key_field_values</name>
-        <variable>key_field_values</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>16</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>[template_table_to_table_insert_json] Partial load - Set key_field_name</name>
     <type>SetValueConstant</type>
     <description/>
@@ -1374,77 +1326,6 @@ var mdi_output_json = JSON.stringify(json);</jsScript_script>
     <GUI>
       <xloc>1168</xloc>
       <yloc>640</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_insert_json] S3 file output</name>
-    <type>S3FileOutputPlugin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <separator/>
-    <enclosure/>
-    <enclosure_forced>N</enclosure_forced>
-    <enclosure_fix_disabled>N</enclosure_fix_disabled>
-    <header>N</header>
-    <footer>N</footer>
-    <format>UNIX</format>
-    <compression>None</compression>
-    <encoding/>
-    <endedLine/>
-    <fileNameInField>N</fileNameInField>
-    <fileNameField/>
-    <create_parent_folder>Y</create_parent_folder>
-    <file>
-      <name>s3://${environment}/step-function-response/pending/success/${token_id}</name>
-      <servlet_output>N</servlet_output>
-      <do_not_open_new_file_init>Y</do_not_open_new_file_init>
-      <extention>json</extention>
-      <append>N</append>
-      <split>N</split>
-      <haspartno>N</haspartno>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <SpecifyFormat>N</SpecifyFormat>
-      <date_time_format/>
-      <add_to_result_filenames>N</add_to_result_filenames>
-      <pad>N</pad>
-      <fast_dump>N</fast_dump>
-      <splitevery>0</splitevery>
-    </file>
-    <fields>
-      <field>
-        <name>mdi_output_json</name>
-        <type>None</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-    </fields>
-    <access_key>Encrypted </access_key>
-    <secret_key>Encrypted </secret_key>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1472</xloc>
-      <yloc>960</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1697,6 +1578,77 @@ var mdi_output_json = JSON.stringify(json);</jsScript_script>
     <GUI>
       <xloc>480</xloc>
       <yloc>384</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_json] S3 file output</name>
+    <type>S3FileOutputPlugin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <separator/>
+    <enclosure/>
+    <enclosure_forced>N</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <header>N</header>
+    <footer>N</footer>
+    <format>UNIX</format>
+    <compression>None</compression>
+    <encoding/>
+    <endedLine/>
+    <fileNameInField>N</fileNameInField>
+    <fileNameField/>
+    <create_parent_folder>Y</create_parent_folder>
+    <file>
+      <name>s3://${environment}/step-function-response/pending/success/${token_id}</name>
+      <servlet_output>N</servlet_output>
+      <do_not_open_new_file_init>Y</do_not_open_new_file_init>
+      <extention>json</extention>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <add_to_result_filenames>N</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery>0</splitevery>
+    </file>
+    <fields>
+      <field>
+        <name>mdi_output_json</name>
+        <type>None</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+    <access_key>Encrypted </access_key>
+    <secret_key>Encrypted </secret_key>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1472</xloc>
+      <yloc>944</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
