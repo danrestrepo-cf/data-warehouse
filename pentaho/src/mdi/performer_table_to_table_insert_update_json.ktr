@@ -484,7 +484,7 @@
     <created_user>-</created_user>
     <created_date>2021/02/17 17:15:35.157</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/04/26 19:59:14.899</modified_date>
+    <modified_date>2021/05/12 13:08:13.408</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -499,8 +499,8 @@
 
 
 </note>
-      <xloc>16</xloc>
-      <yloc>80</yloc>
+      <xloc>64</xloc>
+      <yloc>912</yloc>
       <width>442</width>
       <heigth>199</heigth>
       <fontname>Segoe UI</fontname>
@@ -533,8 +533,8 @@
 
 
 </note>
-      <xloc>16</xloc>
-      <yloc>304</yloc>
+      <xloc>64</xloc>
+      <yloc>1136</yloc>
       <width>442</width>
       <heigth>304</heigth>
       <fontname>Segoe UI</fontname>
@@ -560,8 +560,8 @@
 
 
 </note>
-      <xloc>15</xloc>
-      <yloc>657</yloc>
+      <xloc>64</xloc>
+      <yloc>1488</yloc>
       <width>473</width>
       <heigth>158</heigth>
       <fontname>Segoe UI</fontname>
@@ -586,8 +586,8 @@
 
 
 </note>
-      <xloc>528</xloc>
-      <yloc>16</yloc>
+      <xloc>1056</xloc>
+      <yloc>912</yloc>
       <width>370</width>
       <heigth>136</heigth>
       <fontname>Segoe UI</fontname>
@@ -606,7 +606,30 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>JSON input												
+      <note>JSON input													
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -623,10 +646,10 @@
 
 
 </note>
-      <xloc>960</xloc>
+      <xloc>64</xloc>
       <yloc>16</yloc>
-      <width>946</width>
-      <heigth>367</heigth>
+      <width>1018</width>
+      <heigth>850</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -637,6 +660,35 @@
       <backgroundcolorred>128</backgroundcolorred>
       <backgroundcolorgreen>255</backgroundcolorgreen>
       <backgroundcolorblue>255</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Combine Table input and JSON input streams		
+
+
+
+
+
+
+
+</note>
+      <xloc>560</xloc>
+      <yloc>912</yloc>
+      <width>442</width>
+      <heigth>199</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
       <bordercolorred>100</bordercolorred>
       <bordercolorgreen>100</bordercolorgreen>
       <bordercolorblue>100</bordercolorblue>
@@ -709,22 +761,12 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_table_to_table_insert_update_json] Read JSON MDI input values</from>
-      <to>[performer_table_to_table_insert_update_json] Set key_field_values variable</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>[performer_table_to_table_insert_update_json] Read JSON token_id</from>
       <to>[performer_table_to_table_insert_update_json] Read JSON MDI input values</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>[performer_table_to_table_insert_update_json]  Get key_field_name</from>
-      <to>[performer_table_to_table_insert_update_json] ETL metadata injection</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[performer_table_to_table_insert_update_json] Table input</from>
       <to>[performer_table_to_table_insert_update_json] ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
@@ -750,10 +792,254 @@
     </hop>
     <hop>
       <from>[performer_table_to_table_insert_update_json] Read JSON MDI input values</from>
+      <to>[performer_table_to_table_insert_update_json] Evaluate full_load_flag</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert_update_json] Evaluate full_load_flag</from>
+      <to> [performer_table_to_table_insert_update_json] Add partial load condition</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert_update_json] Evaluate full_load_flag</from>
+      <to> [performer_table_to_table_insert_update_json] Add (full) partial load condition</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from> [performer_table_to_table_insert_update_json] Select partial load condition</from>
+      <to> [performer_table_to_table_insert_update_json] Add constant for process_dwid</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from> [performer_table_to_table_insert_update_json] Add constant for process_dwid</from>
+      <to> [performer_table_to_table_insert_update_json] Set process_dwid</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from> [performer_table_to_table_insert_update_json] Add partial load condition</from>
+      <to> [performer_table_to_table_insert_update_json] Select partial load condition</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from> [performer_table_to_table_insert_update_json] Add (full) partial load condition</from>
+      <to> [performer_table_to_table_insert_update_json] Select partial load condition</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from> [performer_table_to_table_insert_update_json] Set process_dwid</from>
+      <to>[performer_table_to_table_insert_update_json] Stream lookup</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert_update_json] Table input</from>
+      <to>[performer_table_to_table_insert_update_json] Stream lookup</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert_update_json] Stream lookup</from>
+      <to>[performer_table_to_table_insert_update_json] Replace Table input step SQL placeholder</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert_update_json] Replace Table input step SQL placeholder</from>
       <to>[performer_table_to_table_insert_update_json] ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
   </order>
+  <step>
+    <name> [performer_table_to_table_insert_update_json] Add (full) partial load condition</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>partial_load_condition</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>1 = 1</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>816</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name> [performer_table_to_table_insert_update_json] Add constant for process_dwid</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>process_dwid</name>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>528</xloc>
+      <yloc>672</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name> [performer_table_to_table_insert_update_json] Add partial load condition</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>//Script to construct table_input_condition when full_load_flag is false
+
+var key_field_name = key_field_name;
+var key_field_values = key_field_values;
+var sql = " IN (";
+var right_paren = ")";
+
+var partial_load_condition = key_field_name.concat(sql, key_field_values, right_paren);</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>partial_load_condition</name>
+        <rename>partial_load_condition</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>272</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name> [performer_table_to_table_insert_update_json] Select partial load condition</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>partial_load_condition</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>528</xloc>
+      <yloc>544</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name> [performer_table_to_table_insert_update_json] Set process_dwid</name>
+    <type>SetValueConstant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <usevar>Y</usevar>
+    <fields>
+      <field>
+        <name>process_dwid</name>
+        <value>${process_dwid}</value>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>528</xloc>
+      <yloc>784</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
   <step>
     <name>[performer_table_to_table_insert_update_json]  Get key_field_name</name>
     <type>TableInput</type>
@@ -766,10 +1052,13 @@
       <schema_name/>
     </partitioning>
     <connection>Config DB Connection</connection>
-    <sql>SELECT json_output_field.field_name AS fieldname
-	, 'key_field_value_rows' AS rename_to
+    <sql>SELECT
+    json_output_field.field_name AS fieldname
+     , insert_update_step.table_name || '.' || json_output_field.field_name AS qualified_fieldname
+     , 'key_field_value_rows' AS rename_to
 FROM mdi.process
-	LEFT JOIN mdi.json_output_field ON process.dwid = json_output_field.process_dwid
+         JOIN mdi.insert_update_step ON process.dwid = insert_update_step.process_dwid
+         LEFT JOIN mdi.json_output_field ON process.dwid = json_output_field.process_dwid
 WHERE process.dwid = ${process_dwid}</sql>
     <limit>0</limit>
     <lookup/>
@@ -784,8 +1073,31 @@ WHERE process.dwid = ${process_dwid}</sql>
         <name>fieldname</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>[performer_table_to_table_insert_json]  Get key_field_name</origin>
+        <origin>[performer_table_to_table_insert_update_json]  Get key_field_name</origin>
         <comments>fieldname</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>qualified_fieldname</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_table_to_table_insert_update_json]  Get key_field_name</origin>
+        <comments>qualified_fieldname</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -807,7 +1119,7 @@ WHERE process.dwid = ${process_dwid}</sql>
         <name>rename_to</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>[performer_table_to_table_insert_json]  Get key_field_name</origin>
+        <origin>[performer_table_to_table_insert_update_json]  Get key_field_name</origin>
         <comments>rename_to</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -834,8 +1146,8 @@ WHERE process.dwid = ${process_dwid}</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>704</xloc>
-      <yloc>64</yloc>
+      <xloc>1232</xloc>
+      <yloc>960</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -901,22 +1213,8 @@ WHERE process.dwid = ${process_dwid}</sql>
         <target_step_name>[template_table_to_table_insert_update_json] Table input</target_step_name>
         <target_attribute_key>CACHED_ROW_META</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update_json] Table input</source_step>
+        <source_step>[performer_table_to_table_insert_update_json] Replace Table input step SQL placeholder</source_step>
         <source_field>cached_row_meta</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update_json] Table input</target_step_name>
-        <target_attribute_key>SQL</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update_json] Table input</source_step>
-        <source_field>sql</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update_json] Table input</target_step_name>
-        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update_json] Table input</source_step>
-        <source_field>connectionname</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
@@ -924,6 +1222,20 @@ WHERE process.dwid = ${process_dwid}</sql>
         <target_detail>Y</target_detail>
         <source_step/>
         <source_field>etl_batch_id</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update_json] Table input</target_step_name>
+        <target_attribute_key>SQL</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_update_json] Replace Table input step SQL placeholder</source_step>
+        <source_field>sql_for_injection</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update_json] Table input</target_step_name>
+        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_update_json] Replace Table input step SQL placeholder</source_step>
+        <source_field>connectionname</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Insert / update</target_step_name>
@@ -947,13 +1259,6 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>key_lookup</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_table_to_table_insert_update_json] Table input</target_step_name>
-        <target_attribute_key>LAZY_CONVERSION</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update_json] Table input</source_step>
-        <source_field>enable_lazy_conversion</source_field>
-      </mapping>
-      <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Select key field rows</target_step_name>
         <target_attribute_key>FIELD_RENAME</target_attribute_key>
         <target_detail>Y</target_detail>
@@ -961,11 +1266,18 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>rename_to</source_field>
       </mapping>
       <mapping>
+        <target_step_name>[template_table_to_table_insert_update_json] Table input</target_step_name>
+        <target_attribute_key>LAZY_CONVERSION</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_table_to_table_insert_update_json] Replace Table input step SQL placeholder</source_step>
+        <source_field>enable_lazy_conversion</source_field>
+      </mapping>
+      <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Partial load - Set key_field_name</target_step_name>
         <target_attribute_key>REPLACE_VALUE</target_attribute_key>
         <target_detail>Y</target_detail>
         <source_step>[performer_table_to_table_insert_update_json]  Get key_field_name</source_step>
-        <source_field>fieldname</source_field>
+        <source_field>qualified_fieldname</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
@@ -1013,7 +1325,7 @@ WHERE process.dwid = ${process_dwid}</sql>
         <target_step_name>[template_table_to_table_insert_update_json] Table input</target_step_name>
         <target_attribute_key>REPLACE_VARIABLES</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update_json] Table input</source_step>
+        <source_step>[performer_table_to_table_insert_update_json] Replace Table input step SQL placeholder</source_step>
         <source_field>replace_variables</source_field>
       </mapping>
       <mapping>
@@ -1027,7 +1339,7 @@ WHERE process.dwid = ${process_dwid}</sql>
         <target_step_name>[template_table_to_table_insert_update_json] Table input</target_step_name>
         <target_attribute_key>LIMIT</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update_json] Table input</source_step>
+        <source_step>[performer_table_to_table_insert_update_json] Replace Table input step SQL placeholder</source_step>
         <source_field>limit_size</source_field>
       </mapping>
       <mapping>
@@ -1055,7 +1367,7 @@ WHERE process.dwid = ${process_dwid}</sql>
         <target_step_name>[template_table_to_table_insert_update_json] Table input</target_step_name>
         <target_attribute_key>EXECUTE_FOR_EACH_ROW</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update_json] Table input</source_step>
+        <source_step>[performer_table_to_table_insert_update_json] Replace Table input step SQL placeholder</source_step>
         <source_field>execute_for_each_row</source_field>
       </mapping>
     </mappings>
@@ -1068,7 +1380,51 @@ WHERE process.dwid = ${process_dwid}</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>704</xloc>
+      <xloc>768</xloc>
+      <yloc>1312</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[performer_table_to_table_insert_update_json] Evaluate full_load_flag</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to> [performer_table_to_table_insert_update_json] Add (full) partial load condition</send_true_to>
+    <send_false_to> [performer_table_to_table_insert_update_json] Add partial load condition</send_false_to>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>full_load_flag</leftvalue>
+        <function>=</function>
+        <rightvalue/>
+        <value>
+          <name>constant</name>
+          <type>String</type>
+          <text>true</text>
+          <length>-1</length>
+          <precision>-1</precision>
+          <isnull>N</isnull>
+          <mask/>
+        </value>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>528</xloc>
       <yloc>352</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1107,7 +1463,7 @@ WHERE process.dwid = ${process_dwid}</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1168</xloc>
+      <xloc>528</xloc>
       <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1150,8 +1506,8 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>224</xloc>
-      <yloc>528</yloc>
+      <xloc>272</xloc>
+      <yloc>1376</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1195,8 +1551,8 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>224</xloc>
-      <yloc>448</yloc>
+      <xloc>272</xloc>
+      <yloc>1264</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1285,8 +1641,8 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>240</xloc>
-      <yloc>720</yloc>
+      <xloc>288</xloc>
+      <yloc>1552</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1330,8 +1686,8 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>224</xloc>
-      <yloc>352</yloc>
+      <xloc>272</xloc>
+      <yloc>1152</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1426,8 +1782,8 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1168</xloc>
-      <yloc>272</yloc>
+      <xloc>528</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1509,14 +1865,14 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1168</xloc>
-      <yloc>144</yloc>
+      <xloc>528</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[performer_table_to_table_insert_update_json] Set key_field_values variable</name>
-    <type>SetVariable</type>
+    <name>[performer_table_to_table_insert_update_json] Replace Table input step SQL placeholder</name>
+    <type>ScriptValueMod</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1525,15 +1881,30 @@ WHERE
       <method>none</method>
       <schema_name/>
     </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>//Script to replace Table input step SQL placeholder with partial load condition
+
+var sql = sql;
+var partial_load_condition = partial_load_condition;
+
+var sql_for_injection = sql.replace("&lt;&lt;partial_load_condition>>", partial_load_condition);</jsScript_script>
+      </jsScript>
+    </jsScripts>
     <fields>
       <field>
-        <field_name>key_field_values</field_name>
-        <variable_name>key_field_values</variable_name>
-        <variable_type>JVM</variable_type>
-        <default_value/>
+        <name>sql_for_injection</name>
+        <rename>sql_for_injection</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
       </field>
     </fields>
-    <use_formatting>Y</use_formatting>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1543,8 +1914,50 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1616</xloc>
-      <yloc>272</yloc>
+      <xloc>768</xloc>
+      <yloc>1040</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[performer_table_to_table_insert_update_json] Stream lookup</name>
+    <type>StreamLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <from> [performer_table_to_table_insert_update_json] Set process_dwid</from>
+    <input_sorted>N</input_sorted>
+    <preserve_memory>Y</preserve_memory>
+    <sorted_list>N</sorted_list>
+    <integer_pair>N</integer_pair>
+    <lookup>
+      <key>
+        <name>process_dwid</name>
+        <field>process_dwid</field>
+      </key>
+      <value>
+        <name>partial_load_condition</name>
+        <rename>partial_load_condition</rename>
+        <default/>
+        <type>None</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>768</xloc>
+      <yloc>960</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1561,7 +1974,8 @@ WHERE
     </partitioning>
     <connection>Config DB Connection</connection>
     <sql>SELECT
-    table_input_step.sql
+    process.dwid AS process_dwid
+	, table_input_step.sql
     , table_input_step.limit_size
     , table_input_step.execute_for_each_row
     , table_input_step.replace_variables
@@ -1581,7 +1995,192 @@ WHERE
     <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
     <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta/>
+    <row-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>process_dwid</name>
+        <length>15</length>
+        <precision>0</precision>
+        <origin>[performer_table_to_table_insert_update_json] Table input</origin>
+        <comments>process_dwid</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>sql</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_table_to_table_insert_update_json] Table input</origin>
+        <comments>sql</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>limit_size</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>[performer_table_to_table_insert_update_json] Table input</origin>
+        <comments>limit_size</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>execute_for_each_row</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_table_to_table_insert_update_json] Table input</origin>
+        <comments>execute_for_each_row</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>replace_variables</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_table_to_table_insert_update_json] Table input</origin>
+        <comments>replace_variables</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>enable_lazy_conversion</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_table_to_table_insert_update_json] Table input</origin>
+        <comments>enable_lazy_conversion</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>cached_row_meta</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_table_to_table_insert_update_json] Table input</origin>
+        <comments>cached_row_meta</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>connectionname</name>
+        <length>-1</length>
+        <precision>0</precision>
+        <origin>[performer_table_to_table_insert_update_json] Table input</origin>
+        <comments>connectionname</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+    </row-meta>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1591,8 +2190,8 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>240</xloc>
-      <yloc>160</yloc>
+      <xloc>272</xloc>
+      <yloc>960</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
