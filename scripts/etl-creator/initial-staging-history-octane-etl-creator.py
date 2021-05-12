@@ -476,15 +476,15 @@ class DimensionETLCreator():
                     table_name = f"primary_table"
                 else:
                     table_name = f'''t{field_definition["join_alias"]}'''
-                    if field_definition["join_alias"] == None: print(field_definition)
 
-                output_select_clause += f'''        {table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
+                if field_definition["table_input_edw_table_definition_dwid"] is not None:
+                    output_select_clause += f'''        {table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
+
             else:
                 output_select_clause += f'''        {field_definition["primary_source_schema_name"]}.{field_definition["primary_source_table_name"]}.{field_definition["insert_update_field_source_calculation"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
 
-                if field_definition["join_type"] is not None:
-                    output_join_clause += f'''        {field_definition["join_type"].upper()} JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} t{field_definition["join_alias"]} ON {field_definition["join_condition"]}{line_suffix}'''
-
+            if field_definition["join_type"] is not None:
+                output_join_sql += f'''        {field_definition["join_type"].upper()} JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} t{field_definition["join_alias"]} ON {field_definition["join_condition"]}{line_suffix}'''
 
         edw_standard_fields = ""
         # 1 as data_source_dwid,
