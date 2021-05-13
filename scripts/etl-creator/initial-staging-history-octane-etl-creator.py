@@ -126,11 +126,14 @@ class EDW:
     , coalesce(source_table.table_name, target_source_table.table_name) as table_input_table_name
     , coalesce(source_table.dwid, target_source_table.dwid) as table_input_edw_table_definition_dwid
     , source_field.key_field_flag as table_input_key_field_flag
+    , COALESCE((SELECT edw_field_definition.field_name FROM mdi.edw_field_definition where edw_field_definition.key_field_flag=TRUE and edw_field_definition.edw_table_definition_dwid = source_table.dwid limit 1),
+               (SELECT edw_field_definition.field_name FROM mdi.edw_field_definition where edw_field_definition.key_field_flag=TRUE and edw_field_definition.edw_table_definition_dwid = target_source_table.dwid limit 1))  as primary_source_key_field_name
     , (select primary_table_field.field_name from mdi.edw_field_definition primary_table_field
        where primary_table_field.key_field_flag = true
            and primary_table_field.edw_table_definition_dwid = target_table.primary_source_edw_table_definition_dwid and primary_table_field.field_name like '%%_pid' limit 1) as source_table_key_field_name
     , (select primary_table_field.field_name from mdi.edw_field_definition primary_table_field
        where primary_table_field.edw_table_definition_dwid = target_table.primary_source_edw_table_definition_dwid and primary_table_field.field_name like '%%_version' limit 1) as source_table_version_field_name
+    , (SELECT edw_field_definition.field_name FROM mdi.edw_field_definition where edw_field_definition.key_field_flag=TRUE and edw_field_definition.edw_table_definition_dwid = source_table.dwid limit 1) as primary_source_key_field_name
     , source_field.field_name as table_input_field_name
     , source_field.field_source_calculation as table_input_field_source_calculation
     , source_field.dwid as table_input_edw_field_definition_dwid
@@ -459,7 +462,7 @@ class DimensionETLCreator():
                 partition_fields += f'{field_definition["table_input_key_field_flag"]}{line_suffix}'
 
         output_from_clause = f'''FROM 
-{indent*2}(SELECT * from {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} historical 
+{indent*2}(SELECT current.* from {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} historical 
 {indent*3}LEFT JOIN {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} current
 {indent*4}ON historical.{self.field_metadata[0]["source_table_key_field_name"]} = current.{self.field_metadata[0]["source_table_key_field_name"]}
 {indent*4}AND historical.data_source_updated_datetime < current.data_source_updated_datetime
@@ -498,8 +501,11 @@ class DimensionETLCreator():
             if field_definition["join_type"] is not None:
                 # only add the join if we haven't created an alias for this yet
                 if field_definition["join_alias"] not in processed_join_dwids:
-                    output_join_sql += f'''{indent*2}{field_definition["join_type"].upper()} JOIN (SELECT current.* FROM {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} historical LEFT JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} current
-{indent*3}ON historical.code = current.code AND historical.data_source_updated_datetime < current.data_source_updated_datetime) t{field_definition["join_alias"]} ON primary_table.<key_field_name> = t{field_definition["join_alias"]}.<key_field_name> 
+                    output_join_sql += f'''{indent*2}{field_definition["join_type"].upper()} JOIN 
+{indent*4}(SELECT current.* FROM {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} historical LEFT JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} current
+{indent*4}ON historical.code = current.code 
+{indent*4}AND historical.data_source_updated_datetime < current.data_source_updated_datetime) t{field_definition["join_alias"]} 
+{indent*3}ON primary_table.{field_definition["primary_source_key_field_name"]} = t{field_definition["join_alias"]}.{field_definition["primary_source_key_field_name"]} 
 '''
 
 
