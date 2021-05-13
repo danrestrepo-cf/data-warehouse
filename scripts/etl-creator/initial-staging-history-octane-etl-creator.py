@@ -122,31 +122,33 @@ class EDW:
         query = '''SELECT
     CASE WHEN source_field.source_edw_field_definition_dwid IS NULL THEN 0 ELSE 1 END as has_table_input_source_definition
     , source_table.database_name as table_input_database_name
-    , source_table.schema_name as table_input_schema_name
-    , source_table.table_name as table_input_table_name
-    , source_field.field_name as table_input_field_name
-    , source_field.field_source_calculation as table_input_field_source_calculation
-    
-    , initial_join_definition.join_type
-    , initial_join_definition.join_condition
-    , initial_join_definition.dwid as join_alias
-    , child_join_tree_definition.join_type as child_join_type
-    , child_join_tree_definition.join_condition as child_join_condition
-    , child_join_tree_definition.dwid as child_join_alias
-    , source_field.dwid as table_input_edw_field_definition_dwid
-    , source_table.dwid as table_input_edw_table_definition_dwid
-
+    , coalesce(source_table.schema_name, target_source_table.schema_name) as table_input_schema_name
+    , coalesce(source_table.table_name, target_source_table.table_name) as table_input_table_name
+    , coalesce(source_table.dwid, target_source_table.dwid) as table_input_edw_table_definition_dwid
+    , source_field.key_field_flag as table_input_key_field_flag
     , (select primary_table_field.field_name from mdi.edw_field_definition primary_table_field
        where primary_table_field.key_field_flag = true
            and primary_table_field.edw_table_definition_dwid = target_table.primary_source_edw_table_definition_dwid and primary_table_field.field_name like '%%_pid' limit 1) as source_table_key_field_name
     , (select primary_table_field.field_name from mdi.edw_field_definition primary_table_field
        where primary_table_field.edw_table_definition_dwid = target_table.primary_source_edw_table_definition_dwid and primary_table_field.field_name like '%%_version' limit 1) as source_table_version_field_name
+    , source_field.field_name as table_input_field_name
+    , source_field.field_source_calculation as table_input_field_source_calculation
+    , source_field.dwid as table_input_edw_field_definition_dwid
 
-    , target_table.primary_source_edw_table_definition_dwid
+    , initial_join_definition.join_type
+    , initial_join_definition.join_condition
+    , initial_join_definition.dwid as join_alias
+    , child_join_definition.join_type as child_join_type
+    , child_join_definition.join_condition as child_join_condition
+    , child_join_definition.dwid as child_join_alias
+
     , primary_source_table.table_name as primary_source_table_name
     , primary_source_table.schema_name as primary_source_schema_name
     , target_field.field_source_calculation as insert_update_field_source_calculation
+
     , CASE WHEN target_field.source_edw_join_tree_definition_dwid IS NULL THEN 0 ELSE 1 END as has_insert_update_edw_join_tree_definition
+
+    , target_table.primary_source_edw_table_definition_dwid
     , target_table.database_name as insert_update_database_name
     , target_table.schema_name as insert_update_schema_name
     , target_table.table_name as insert_update_table_name
@@ -156,14 +158,26 @@ class EDW:
 FROM
     mdi.edw_table_definition target_table
         JOIN mdi.edw_field_definition target_field ON target_table.dwid = target_field.edw_table_definition_dwid
+
+
+
         JOIN mdi.edw_table_definition primary_source_table ON target_table.primary_source_edw_table_definition_dwid = primary_source_table.dwid
+
+
+
         LEFT JOIN mdi.edw_field_definition source_field ON target_field.source_edw_field_definition_dwid = source_field.dwid
         LEFT JOIN mdi.edw_table_definition source_table ON source_field.edw_table_definition_dwid = source_table.dwid
+
         LEFT JOIN mdi.edw_join_tree_definition initial_join_tree ON target_field.source_edw_join_tree_definition_dwid = initial_join_tree.dwid
         LEFT JOIN mdi.edw_join_definition initial_join_definition ON initial_join_tree.root_join_dwid = initial_join_definition.dwid
-        LEFT JOIN mdi.edw_join_tree_definition child_join_tree ON target_field.source_edw_join_tree_definition_dwid = child_join_tree.child_join_tree_dwid
-        LEFT JOIN mdi.edw_join_definition child_join_tree_definition ON child_join_tree.root_join_dwid = child_join_tree.dwid
 
+        LEFT JOIN mdi.edw_table_definition target_source_table ON initial_join_definition.target_edw_table_definition_dwid = target_source_table.dwid
+--         LEFT JOIN mdi.edw_table_definition calculated_field_source_table ON initial_join_definition.target_edw_table_definition_dwid = source_table.dwid
+--         LEFT JOIN mdi.edw_field_definition calculated_field_source_field ON target_field.source_edw_field_definition_dwid = source_field.dwid
+
+
+        LEFT JOIN mdi.edw_join_tree_definition child_join_tree ON target_field.source_edw_join_tree_definition_dwid = child_join_tree.child_join_tree_dwid
+        LEFT JOIN mdi.edw_join_definition child_join_definition ON child_join_tree.root_join_dwid = child_join_definition.dwid
 WHERE
     target_table.dwid = %s
     AND target_field.field_name not in ('data_source_dwid','data_source_integration_columns','data_source_integration_id','data_source_modified_datetime','edw_created_datetime', 'edw_modified_datetime', 'etl_batch_id') -- exclude these in the join if the table input field name is null?
@@ -451,6 +465,8 @@ class DimensionETLCreator():
 '''
 
         output_join_sql = ""
+        processed_join_dwids = []
+
         output_from_clause = f'''FROM 
         {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} as primary_table
 '''
@@ -481,10 +497,18 @@ class DimensionETLCreator():
                     output_select_clause += f'''        {table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
 
             else:
-                output_select_clause += f'''        {field_definition["primary_source_schema_name"]}.{field_definition["primary_source_table_name"]}.{field_definition["insert_update_field_source_calculation"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
+                output_select_clause += f'''        {field_definition["insert_update_field_source_calculation"]}{line_suffix}'''
 
             if field_definition["join_type"] is not None:
-                output_join_sql += f'''        {field_definition["join_type"].upper()} JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} t{field_definition["join_alias"]} ON {field_definition["join_condition"]}{line_suffix}'''
+                # only add the join if we haven't created an alias for this yet
+                if field_definition["join_alias"] not in processed_join_dwids:
+                    output_join_sql += f'''        {field_definition["join_type"].upper()} JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} t{field_definition["join_alias"]} ON {field_definition["join_condition"]}
+'''
+                    processed_join_dwids.append(field_definition["join_alias"])
+                else:
+                    output_join_sql += f'''        -- ignoring this because the table alias t{field_definition["join_alias"]} has already been added: {field_definition["join_type"].upper()} JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} t{field_definition["join_alias"]} ON {field_definition["join_condition"]}  
+'''
+
 
         edw_standard_fields = ""
         # 1 as data_source_dwid,
