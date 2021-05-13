@@ -440,43 +440,44 @@ class DimensionETLCreator():
 
     def create_table_input_sql(self) -> str:
         number_of_rows_returned = len(self.field_metadata)
-
-        output_select_clause = f'''SELECT * FROM
-(        
-    SELECT 
+        indent = "    "
+        output_select_clause = f'''SELECT 
 '''
         if self.field_metadata[0]["source_table_version_field_name"] is not None:
-            output_select_clause += f'''        row_number() OVER (PARTITION BY primary_table.{self.field_metadata[0]["source_table_key_field_name"]} ORDER BY {self.field_metadata[0]["source_table_version_field_name"]} DESC) as row_number,
+            output_select_clause += f'''{indent*2}row_number() OVER (PARTITION BY primary_table.{self.field_metadata[0]["source_table_key_field_name"]} ORDER BY {self.field_metadata[0]["source_table_version_field_name"]} DESC) as row_number,
 '''
         else:
             partition_fields = ""
             for index, field_definition in enumerate(self.field_metadata):
                 # if this is not the last field definition then put a comma at the end of the sql being added
                 if index != number_of_rows_returned:
-                    line_suffix = ''',
-    '''
+                    line_suffix = f''',
+{indent}'''
                 else:
-                    line_suffix = '''
-    '''
+                    line_suffix = f'''
+{indent}'''
                 partition_fields += f'{field_definition["table_input_key_field_flag"]}{line_suffix}'
 
             output_select_clause += f'''
-        row_number() OVER (PARTITION BY {partition_fields}) as row_number,
+{indent*2}row_number() OVER (PARTITION BY {partition_fields}) as row_number,
 '''
 
-        output_join_sql = ""
-        processed_join_dwids = []
 
         output_from_clause = f'''FROM 
-        {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} as primary_table
+{indent*2}(SELECT * from {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} historical 
+{indent*3}LEFT JOIN {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} current
+{indent*4}ON historical.{self.field_metadata[0]["source_table_key_field_name"]} = current.{self.field_metadata[0]["source_table_key_field_name"]}
+{indent*4}AND historical.data_source_updated_datetime < current.data_source_updated_datetime
+{indent*2}) AS primary_table
 '''
         default_table_name = "primary_table"
-
+        output_join_sql = ""
+        processed_join_dwids = []
 
         for index, field_definition in enumerate(self.field_metadata, start=1):
             if field_definition["child_join_condition"] != None:
                 print(f'field_definition["child_join_condition"] has the value of {field_definition["child_join_condition"]} but is expected to be None. Script must be modified to handle child join conditions!')
-                raise(ValueError("field_definition['child_join_condition'] is always expected to be None but a value was found. Script cannot handle child join conditions without modification."))
+                raise(ValueError("field_definition['child_join_condition'] is always expected to be None but a value was found. Script cannot handle child join conditions."))
 
             # if this is not the last field definition then put a comma at the end of the sql being added
             if index != number_of_rows_returned:
@@ -494,19 +495,25 @@ class DimensionETLCreator():
                     table_name = f'''t{field_definition["join_alias"]}'''
 
                 if field_definition["table_input_edw_table_definition_dwid"] is not None:
-                    output_select_clause += f'''        {table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
+                    output_select_clause += f'''{indent*2}{table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
 
             else:
-                output_select_clause += f'''        {field_definition["insert_update_field_source_calculation"]}{line_suffix}'''
+                output_select_clause += f'''{indent*2}{field_definition["insert_update_field_source_calculation"]}{line_suffix}'''
 
             if field_definition["join_type"] is not None:
                 # only add the join if we haven't created an alias for this yet
                 if field_definition["join_alias"] not in processed_join_dwids:
-                    output_join_sql += f'''        {field_definition["join_type"].upper()} JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} t{field_definition["join_alias"]} ON {field_definition["join_condition"]}
-'''
+                    output_join_sql += f'''{indent*2}{field_definition["join_type"].upper()} JOIN (select * from  {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} historical left join {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} current
+{indent*3}ON historical.code = current.code and historical.data_source_updated_datetime < current.data_source_updated_datetime
+''' # need to add a field to the query so i can get the key field name from the source table so i know what field to use here ^
+
+                    
+                    # INNER JOIN (select * from history_octane.buydown_contributor_type historical left join history_octane.buydown_contributor_type current
+                    # on historical.code = current.code and historical.data_source_updated_datetime < current.data_source_updated_datetime
+                    # ) t460 ON primary_table.l_buydown_contributor_type = t460.code
                     processed_join_dwids.append(field_definition["join_alias"])
                 else:
-                    output_join_sql += f'''        -- ignoring this because the table alias t{field_definition["join_alias"]} has already been added: {field_definition["join_type"].upper()} JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} t{field_definition["join_alias"]} ON {field_definition["join_condition"]}  
+                    output_join_sql += f'''{indent*2}-- ignoring this because the table alias t{field_definition["join_alias"]} has already been added: {field_definition["join_type"].upper()} JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} t{field_definition["join_alias"]} ON {field_definition["join_condition"]}  
 '''
 
 
@@ -518,12 +525,13 @@ class DimensionETLCreator():
         # NOW() as edw_modified_datetime,
         # NOW() as data_source_modified_datetime -- primary_table.data_source_updated_datetime as data_source_modified_datetime
         #
-
-        statement_terminator = ''') as query
-where query.row_number = 1
+        order_by_statement = f'''ORDER BY
+{indent}primary_table.data_source_modified_datetime ASC
+'''
+        statement_terminator = '''
 ;'''
 
-        output_sql_statement = f"{output_select_clause} {edw_standard_fields} {output_from_clause} {output_join_sql}{statement_terminator}"
+        output_sql_statement = f"{output_select_clause} {edw_standard_fields} {output_from_clause} {output_join_sql} {order_by_statement} {statement_terminator}"
 
         return output_sql_statement
 
