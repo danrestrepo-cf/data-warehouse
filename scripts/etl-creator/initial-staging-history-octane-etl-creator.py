@@ -458,11 +458,6 @@ class DimensionETLCreator():
 {indent}'''
                 partition_fields += f'{field_definition["table_input_key_field_flag"]}{line_suffix}'
 
-            output_select_clause += f'''
-{indent*2}row_number() OVER (PARTITION BY {partition_fields}) as row_number,
-'''
-
-
         output_from_clause = f'''FROM 
 {indent*2}(SELECT * from {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} historical 
 {indent*3}LEFT JOIN {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} current
@@ -503,11 +498,11 @@ class DimensionETLCreator():
             if field_definition["join_type"] is not None:
                 # only add the join if we haven't created an alias for this yet
                 if field_definition["join_alias"] not in processed_join_dwids:
-                    output_join_sql += f'''{indent*2}{field_definition["join_type"].upper()} JOIN (select * from  {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} historical left join {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} current
-{indent*3}ON historical.code = current.code and historical.data_source_updated_datetime < current.data_source_updated_datetime
-''' # need to add a field to the query so i can get the key field name from the source table so i know what field to use here ^
+                    output_join_sql += f'''{indent*2}{field_definition["join_type"].upper()} JOIN (SELECT current.* FROM {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} historical LEFT JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} current
+{indent*3}ON historical.code = current.code AND historical.data_source_updated_datetime < current.data_source_updated_datetime) t{field_definition["join_alias"]} ON primary_table.<key_field_name> = t{field_definition["join_alias"]}.<key_field_name> 
+'''
 
-                    
+
                     # INNER JOIN (select * from history_octane.buydown_contributor_type historical left join history_octane.buydown_contributor_type current
                     # on historical.code = current.code and historical.data_source_updated_datetime < current.data_source_updated_datetime
                     # ) t460 ON primary_table.l_buydown_contributor_type = t460.code
