@@ -42,7 +42,7 @@ if [[ -n "${PROCESS_NAME}" ]]; then
   params="${params} -param:process_name=${PROCESS_NAME}"
 fi
 
-echo "[INPUT] ENVIRONMENT=${AWS_ENVIRONMENT}"
+echo "[INPUT] AWS_ENVIRONMENT=${AWS_ENVIRONMENT}"
 if [[ -n "${AWS_ENVIRONMENT}" ]]; then
   params="${params} -param:environment=${AWS_ENVIRONMENT}"
 fi
@@ -137,7 +137,7 @@ run_kitchen() {
   echo ./kitchen.sh -rep=PentahoFileRepository -level=Detailed -job=$@
   # we want "params" to split / expand, so ignore the shellcheck
   # shellcheck disable=SC2086
-  kitchen.sh -rep=PentahoFileRepository -level=Detailed ${params} -job=$@
+  kitchen.sh -rep=PentahoFileRepository -level=Rowlevel ${params} -job=$@
 }
 
 print_usage() {
