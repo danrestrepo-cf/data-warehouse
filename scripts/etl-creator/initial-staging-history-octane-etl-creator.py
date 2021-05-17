@@ -568,14 +568,23 @@ class DimensionETLCreator():
         return output_sql_statement
 
     def create_edw_standard_fields_sql(self) -> str:
-        output_edw_standard_fields = f'''{self.indent*2}0 as data_source_dwid,
-{self.indent*2}\'data_source_integration_columns\' as data_source_integration_columns,
-{self.indent*2}\'data_source_integration_id\' as data_source_integration_id,
+        output_edw_standard_fields = f'''{self.indent*2}{self.create_data_source_dwid_select_sql()},
+{self.indent*2}{self.create_data_source_integration_columns_select_sql()},
+{self.indent*2}{self.create_data_source_integration_id_select_sql()},
 {self.indent*2}now() as edw_created_datetime,
 {self.indent*2}now() as edw_modified_datetime,
 {self.indent*2}primary_table.data_source_updated_datetime as data_source_updated_datetime,
 '''
         return output_edw_standard_fields
+
+    def create_data_source_dwid_select_sql(self) -> str:
+        return "0 as data_source_dwid"
+
+    def create_data_source_integration_columns_select_sql(self) -> str:
+        return "'data_source_integration_columns' as data_source_integration_columns"
+
+    def create_data_source_integration_id_select_sql(self) -> str:
+        return "'data_source_integration_id' as data_source_integration_id"
 
     def create_join_sql(self, field_definition: dict) -> str:
         child_join_needed = self.has_child_join(field_definition)
