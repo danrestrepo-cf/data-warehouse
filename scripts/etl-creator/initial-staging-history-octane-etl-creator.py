@@ -524,15 +524,14 @@ class DimensionETLCreator():
 '''
 
         # create select clause with list of fields
-        output_select_clause = f'''SELECT 
-'''
+        output_select_clause = ""
         for index, field_definition in enumerate(self.field_metadata, start=1):
             # if this is not the last field definition then put a comma at the end of the sql being added
-            if index == number_of_rows_returned:
-                line_suffix = '''
+            if index != number_of_rows_returned:
+                line_suffix = f''',
 '''
             else:
-                line_suffix = ''',
+                line_suffix = f'''
 '''
 
             if field_definition["insert_update_field_source_calculation"] == None:
@@ -552,32 +551,31 @@ class DimensionETLCreator():
             else:
                 output_select_clause += f'''{self.indent*2}{field_definition["insert_update_field_source_calculation"]}{line_suffix}'''
 
+        output_edw_standard_fields = self.create_edw_standard_fields_sql()
 
+        output_select_clause = f'''SELECT
+{self.indent}{output_edw_standard_fields}
+{self.indent}{output_select_clause}
+'''
 
-
-
-
-
-
-
-
-        edw_standard_fields = ""
-        # 1 as data_source_dwid,
-        # 'b_ethnicity_collected_visual_or_surname~b_ethnicity_cuban~b_ethnicity_hispanic_or_latino~' as data_source_integration_columns,
-        # CONCAT(primary_table.b_ethnicity_collected_visual_or_surname, '~', primary_table.b_ethnicity_cuban, '~', primary_table.b_ethnicity_hispanic_or_latino, '~') as data_source_integration_id,
-        # NOW() as edw_created_datetime,
-        # NOW() as edw_modified_datetime,
-        # NOW() as data_source_modified_datetime -- primary_table.data_source_updated_datetime as data_source_modified_datetime
-        #
         order_by_statement = f'''ORDER BY
 {self.indent}primary_table.data_source_updated_datetime ASC
 '''
-        statement_terminator = '''
-;'''
+        statement_terminator = ";"
 
-        output_sql_statement = f"{output_select_clause} {edw_standard_fields} {output_from_clause} {output_join_sql} {order_by_statement} {statement_terminator}"
+        output_sql_statement = f"{output_select_clause} {output_from_clause} {output_join_sql} {order_by_statement} {statement_terminator}"
 
         return output_sql_statement
+
+    def create_edw_standard_fields_sql(self) -> str:
+        output_edw_standard_fields = f'''{self.indent*2}0 as data_source_dwid,
+{self.indent*2}\'data_source_integration_columns\' as data_source_integration_columns,
+{self.indent*2}\'data_source_integration_id\' as data_source_integration_id,
+{self.indent*2}now() as edw_created_datetime,
+{self.indent*2}now() as edw_modified_datetime,
+{self.indent*2}primary_table.data_source_updated_datetime as data_source_updated_datetime,
+'''
+        return output_edw_standard_fields
 
     def create_join_sql(self, field_definition: dict) -> str:
         child_join_needed = self.has_child_join(field_definition)
