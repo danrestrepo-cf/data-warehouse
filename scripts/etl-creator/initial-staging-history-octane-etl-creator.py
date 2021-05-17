@@ -69,6 +69,43 @@ class EDW:
         conn.close()
         return rows
 
+    def get_child_join_data(self, root_join_dwid: int) -> list:
+        query = '''SELECT
+    parent_join_tree_definition.dwid as parent_join_tree_definition_dwid,
+    parent_join_tree_definition.root_join_dwid as parent_join_tree_definition_root_join_dwid,
+    parent_join_tree_definition.child_join_tree_dwid as parent_join_tree_definition_child_join_tree_dwid,
+
+    child_join_tree_definition.dwid as child_join_tree_definition_dwid,
+    child_join_tree_definition.root_join_dwid as child_join_tree_definition_root_join_dwid,
+    child_join_tree_definition.child_join_tree_dwid as child_join_tree_definition_child_join_tree_dwid,
+
+    child_join_definition.primary_edw_table_definition_dwid as primary_edw_table_definition_dwid,
+    child_join_definition.target_edw_table_definition_dwid as target_edw_table_definition_dwid,
+    child_join_definition.join_type as join_type,
+    child_join_definition.join_condition as join_condition,
+
+    primary_child_table_definition.schema_name as parent_schema_name,
+    primary_child_table_definition.table_name as parent_table_name,
+    primary_child_field_definition.field_name as parent_field_name,
+
+    target_child_table_definition.schema_name as target_schema_name,
+    target_child_table_definition.table_name as target_table_name,
+    target_child_field_definition.field_name as target_field_name
+FROM
+    mdi.edw_join_tree_definition parent_join_tree_definition
+    JOIN mdi.edw_join_tree_definition child_join_tree_definition ON parent_join_tree_definition.child_join_tree_dwid = child_join_tree_definition.dwid
+    JOIN mdi.edw_join_definition child_join_definition ON child_join_tree_definition.root_join_dwid = child_join_definition.dwid
+
+    JOIN mdi.edw_table_definition target_child_table_definition ON target_child_table_definition.dwid = child_join_definition.target_edw_table_definition_dwid
+    JOIN mdi.edw_field_definition target_child_field_definition ON target_child_table_definition.dwid = target_child_field_definition.edw_table_definition_dwid AND target_child_field_definition.key_field_flag = TRUE
+
+    JOIN mdi.edw_table_definition primary_child_table_definition ON primary_child_table_definition.dwid = child_join_definition.primary_edw_table_definition_dwid
+    JOIN mdi.edw_field_definition primary_child_field_definition ON primary_child_table_definition.dwid = primary_child_field_definition.edw_table_definition_dwid AND primary_child_field_definition.key_field_flag = TRUE
+WHERE
+        parent_join_tree_definition.root_join_dwid = %s
+'''
+        return self.execute_parameterized_query(query, (root_join_dwid))
+
     def get_table_list_from_edw_table_definition(self, schema_name) -> list:
         query = '''SELECT
                         edw_table_definition.dwid
@@ -178,9 +215,9 @@ FROM
 --         LEFT JOIN mdi.edw_table_definition calculated_field_source_table ON initial_join_definition.target_edw_table_definition_dwid = source_table.dwid
 --         LEFT JOIN mdi.edw_field_definition calculated_field_source_field ON target_field.source_edw_field_definition_dwid = source_field.dwid
 
-
-        LEFT JOIN mdi.edw_join_tree_definition child_join_tree ON target_field.source_edw_join_tree_definition_dwid = child_join_tree.child_join_tree_dwid
+        LEFT JOIN mdi.edw_join_tree_definition child_join_tree ON initial_join_tree.child_join_tree_dwid = child_join_tree.dwid
         LEFT JOIN mdi.edw_join_definition child_join_definition ON child_join_tree.root_join_dwid = child_join_definition.dwid
+        
 WHERE
     target_table.dwid = %s
     AND target_field.field_name not in ('data_source_dwid','data_source_integration_columns','data_source_integration_id','data_source_modified_datetime','edw_created_datetime', 'edw_modified_datetime', 'etl_batch_id') -- exclude these in the join if the table input field name is null?
@@ -426,7 +463,7 @@ class DimensionETLCreator():
 
         # table: table_input_step/field and insert_update step/field/key
         self.field_metadata = field_metadata
-
+        self.edw_connection = edw_connection
         self.table_input_step_connection = table_input_step_connection
         self.table_input_step_data_source_dwid = table_input_step_data_source_dwid   # star_common.data_source=1 (Octane)
 
@@ -440,49 +477,62 @@ class DimensionETLCreator():
         self.process_name = process_name
         self.process_description = f"Dimension ETL to populate {self.insert_update_table_name} from history_octane"
 
+        self.indent = "    "
 
     def create_table_input_sql(self) -> str:
         number_of_rows_returned = len(self.field_metadata)
-        indent = "    "
-        output_select_clause = f'''SELECT 
-'''
-        if self.field_metadata[0]["source_table_version_field_name"] is not None:
-            output_select_clause += f'''{indent*2}row_number() OVER (PARTITION BY primary_table.{self.field_metadata[0]["source_table_key_field_name"]} ORDER BY {self.field_metadata[0]["source_table_version_field_name"]} DESC) as row_number,
-'''
-        else:
-            partition_fields = ""
-            for index, field_definition in enumerate(self.field_metadata):
-                # if this is not the last field definition then put a comma at the end of the sql being added
-                if index != number_of_rows_returned:
-                    line_suffix = f''',
-{indent}'''
-                else:
-                    line_suffix = f'''
-{indent}'''
-                partition_fields += f'{field_definition["table_input_key_field_flag"]}{line_suffix}'
 
-        output_from_clause = f'''FROM 
-{indent*2}(SELECT current.* from {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} historical 
-{indent*3}LEFT JOIN {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} current
-{indent*4}ON historical.{self.field_metadata[0]["source_table_key_field_name"]} = current.{self.field_metadata[0]["source_table_key_field_name"]}
-{indent*4}AND historical.data_source_updated_datetime < current.data_source_updated_datetime
-{indent*2}) AS primary_table
-'''
+        # this is used to alias the primary table and child join sub queries
         default_table_name = "primary_table"
+
+        # create the FROM clause and main/primary table
+        output_from_clause = f'''FROM 
+     (select * from
+         (select row_number() over (partition by {self.field_metadata[0]["source_table_key_field_name"]} order by data_source_updated_datetime DESC) as row_number,*
+          from
+              {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]}
+         ) as t
+      where t.row_number = 1) AS {default_table_name}
+'''
+
+        # create join sql
         output_join_sql = ""
         processed_join_dwids = []
+        # add joins
+        for field_definition in self.field_metadata:
+            if field_definition["join_type"] is None:
+                continue # there is no join to process so skip to the next field_definition
 
+
+
+            # # if there is a join defined then process it
+            # if field_definition["join_type"] is not None:
+            #     self.create_join_sql(field_definition)
+            #     # is there a child join?
+            #     # true: add child join
+            #     # is child join?
+            #     # true: call add child join
+            #     # false: add child join
+            #     # false: add join
+            #     pass
+
+            if field_definition["join_alias"] not in processed_join_dwids:
+                output_join_sql += self.create_join_sql(field_definition)
+                processed_join_dwids.append(field_definition["join_alias"])
+            else:
+                output_join_sql += f'''{self.indent*2}-- ignoring this because the table alias t{field_definition["join_alias"]} has already been added: {field_definition["join_type"].upper()} JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} t{field_definition["join_alias"]} ON {field_definition["join_condition"]}  
+'''
+
+        # create select clause with list of fields
+        output_select_clause = f'''SELECT 
+'''
         for index, field_definition in enumerate(self.field_metadata, start=1):
-            if field_definition["child_join_condition"] != None:
-                print(f'field_definition["child_join_condition"] has the value of {field_definition["child_join_condition"]} but is expected to be None. Script must be modified to handle child join conditions!')
-                raise(ValueError("field_definition['child_join_condition'] is always expected to be None but a value was found. Script cannot handle child join conditions."))
-
             # if this is not the last field definition then put a comma at the end of the sql being added
-            if index != number_of_rows_returned:
-                line_suffix = ''',
+            if index == number_of_rows_returned:
+                line_suffix = '''
 '''
             else:
-                line_suffix = '''
+                line_suffix = ''',
 '''
 
             if field_definition["insert_update_field_source_calculation"] == None:
@@ -493,29 +543,17 @@ class DimensionETLCreator():
                     table_name = f'''t{field_definition["join_alias"]}'''
 
                 if field_definition["table_input_edw_table_definition_dwid"] is not None:
-                    output_select_clause += f'''{indent*2}{table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
-
-            else:
-                output_select_clause += f'''{indent*2}{field_definition["insert_update_field_source_calculation"]}{line_suffix}'''
-
-            if field_definition["join_type"] is not None:
-                # only add the join if we haven't created an alias for this yet
-                if field_definition["join_alias"] not in processed_join_dwids:
-                    output_join_sql += f'''{indent*2}{field_definition["join_type"].upper()} JOIN 
-{indent*4}(SELECT current.* FROM {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} historical LEFT JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} current
-{indent*4}ON historical.code = current.code 
-{indent*4}AND historical.data_source_updated_datetime < current.data_source_updated_datetime) t{field_definition["join_alias"]} 
-{indent*3}ON primary_table.{field_definition["primary_source_key_field_name"]} = t{field_definition["join_alias"]}.{field_definition["primary_source_key_field_name"]} 
-'''
-
-
-                    # INNER JOIN (select * from history_octane.buydown_contributor_type historical left join history_octane.buydown_contributor_type current
-                    # on historical.code = current.code and historical.data_source_updated_datetime < current.data_source_updated_datetime
-                    # ) t460 ON primary_table.l_buydown_contributor_type = t460.code
-                    processed_join_dwids.append(field_definition["join_alias"])
+                    output_select_clause += f'''{self.indent*2}{table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
                 else:
-                    output_join_sql += f'''{indent*2}-- ignoring this because the table alias t{field_definition["join_alias"]} has already been added: {field_definition["join_type"].upper()} JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} t{field_definition["join_alias"]} ON {field_definition["join_condition"]}  
-'''
+                    output_select_clause += f'''{self.indent*2}insert_update_field_source_calculation is none but not expected to be!{line_suffix}'''
+            else:
+                output_select_clause += f'''{self.indent*2}{table_name}.{field_definition["insert_update_field_source_calculation"]}{line_suffix}'''
+
+
+
+
+
+
 
 
         edw_standard_fields = ""
@@ -527,7 +565,7 @@ class DimensionETLCreator():
         # NOW() as data_source_modified_datetime -- primary_table.data_source_updated_datetime as data_source_modified_datetime
         #
         order_by_statement = f'''ORDER BY
-{indent}primary_table.data_source_modified_datetime ASC
+{self.indent}primary_table.data_source_updated_datetime ASC
 '''
         statement_terminator = '''
 ;'''
@@ -535,6 +573,75 @@ class DimensionETLCreator():
         output_sql_statement = f"{output_select_clause} {edw_standard_fields} {output_from_clause} {output_join_sql} {order_by_statement} {statement_terminator}"
 
         return output_sql_statement
+
+    def create_join_sql(self, field_definition: dict) -> str:
+        child_join_needed = self.has_child_join(field_definition)
+        child_join_sql = ""
+
+        if child_join_needed == True:
+            child_join_sql = self.create_child_join_sql(field_definition["join_alias"])
+
+#         output_join_sql += f'''-- HAS CHILD JOIN!
+# {self.indent*2}{field_definition["join_type"].upper()} JOIN
+# {self.indent*4}(SELECT current.* FROM {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} current LEFT JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} historical
+# {self.indent*4}ON historical.code = current.code
+# {self.indent*4}AND historical.data_source_updated_datetime < current.data_source_updated_datetime) t{field_definition["join_alias"]}
+# {self.indent*3}ON {field_definition["join_condition"]}
+# '''
+
+        output_join_sql = f'''  -- join start
+        {field_definition["join_type"].upper()} JOIN
+            (
+                select
+                    *
+                from
+                    (
+                        SELECT
+                            row_number() OVER (PARTITION BY {field_definition["primary_source_key_field_name"]} ORDER BY data_source_updated_datetime DESC) AS row_num
+                            , *
+                        FROM
+                            {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]}
+                    ) AS primary_table
+                    [[REPLACE_WITH_CHILD_JOIN_SQL_OR_BLANK_STRING]]
+                WHERE
+                    row_num=1
+
+            ) AS t{field_definition["join_alias"]} ON {field_definition["join_condition"]}
+    -- join end
+
+'''.replace("[[REPLACE_WITH_CHILD_JOIN_SQL_OR_BLANK_STRING]]", child_join_sql)
+
+
+
+        return output_join_sql
+
+    def create_child_join_sql(self, edw_join_definition_dwid: dict) -> str:
+        # get the join details from the DB
+        child_join_details = EDW().get_child_join_data(edw_join_definition_dwid)
+        child_join_query_template = f'''
+-- child join start
+INNER JOIN
+(
+    SELECT * FROM
+        (SELECT row_number() OVER (PARTITION BY {child_join_details[0]["target_field_name"]} ORDER BY data_source_updated_datetime DESC) AS row_number, * FROM {child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]}) AS t
+    WHERE
+        t.row_number = 1
+) AS t{child_join_details[0]["child_join_tree_definition_root_join_dwid"]} ON {child_join_details[0]["join_condition"]}
+-- child join end
+'''
+        return child_join_query_template
+
+    def has_child_join(self, field_definition: dict) -> bool:
+        edw = EDW()
+        child_join_data = edw.get_child_join_data(field_definition["join_alias"])
+
+        if len(child_join_data) == 0:
+            return False
+        elif len(child_join_data) == 1:
+            return True
+        else:
+            raise ValueError("Expected child_join_data to have 0 or 1 rows but more than 1 row was found. Script is not written to handle this scenario.")
+
 
     def get_process_dwid_from_table_name(self, search_text: str) -> int:
         '''
@@ -701,8 +808,6 @@ def generate_mdi_configs_based_on_table_definition(schema_name_to_process: str) 
     edw = EDW(db_name="config")
     table_list = edw.get_table_list_from_edw_table_definition(schema_name_to_process)
 
-    etl_config = None
-
     for index, table in enumerate(table_list, start=200000):
         edw_table_definition_dwid = table["dwid"]
         database_name = table["database_name"]
@@ -715,7 +820,7 @@ def generate_mdi_configs_based_on_table_definition(schema_name_to_process: str) 
         fields = edw.get_field_list_from_edw_field_definition(edw_table_definition_dwid)
         etl_config = DimensionETLCreator(field_metadata=fields,
                                          process_name=process_name,
-                                         edw_connection=EDW(db_name="staging"),
+                                         edw_connection=EDW(db_name=database_name),
                                          insert_update_table_name = table_name,
                                          table_input_step_data_source_dwid=1)
         sql_configuration = etl_config.create_table_input_to_insert_update_sql()
