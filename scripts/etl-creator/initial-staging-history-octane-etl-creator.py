@@ -170,7 +170,7 @@ WHERE
            and primary_table_field.edw_table_definition_dwid = target_table.primary_source_edw_table_definition_dwid and primary_table_field.field_name like '%%_pid' limit 1) as source_table_key_field_name
     , (select primary_table_field.field_name from mdi.edw_field_definition primary_table_field
        where primary_table_field.edw_table_definition_dwid = target_table.primary_source_edw_table_definition_dwid and primary_table_field.field_name like '%%_version' limit 1) as source_table_version_field_name
-    , (SELECT edw_field_definition.field_name FROM mdi.edw_field_definition where edw_field_definition.key_field_flag=TRUE and edw_field_definition.edw_table_definition_dwid = source_table.dwid limit 1) as primary_source_key_field_name
+    , (SELECT edw_field_definition.field_name FROM mdi.edw_field_definition where edw_field_definition.key_field_flag=TRUE and edw_field_definition.edw_table_definition_dwid = coalesce(source_table.dwid, target_source_table.dwid) limit 1) as primary_source_key_field_name
     , source_field.field_name as table_input_field_name
     , source_field.field_source_calculation as table_input_field_source_calculation
     , source_field.dwid as table_input_edw_field_definition_dwid
@@ -220,7 +220,7 @@ FROM
         
 WHERE
     target_table.dwid = %s
-    AND target_field.field_name not in ('data_source_dwid','data_source_integration_columns','data_source_integration_id','data_source_modified_datetime','edw_created_datetime', 'edw_modified_datetime', 'etl_batch_id') -- exclude these in the join if the table input field name is null?
+    AND target_field.field_name not in ('dwid','data_source_dwid','data_source_integration_columns','data_source_integration_id','data_source_modified_datetime','edw_created_datetime', 'edw_modified_datetime', 'etl_batch_id') -- exclude these in the join if the table input field name is null?
 ORDER BY
     target_field.key_field_flag DESC
     , target_field.field_name ASC
@@ -542,12 +542,17 @@ class DimensionETLCreator():
                 else:
                     table_name = f'''t{field_definition["join_alias"]}'''
 
-                if field_definition["table_input_edw_table_definition_dwid"] is not None:
+                # this is not a calculated field so if there is a source definition add the column to the select clause
+                # otherwise it is an edw standard field that shouldn't be added (yet)
+                if field_definition["has_table_input_source_definition"] == 1:
                     output_select_clause += f'''{self.indent*2}{table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
                 else:
-                    output_select_clause += f'''{self.indent*2}insert_update_field_source_calculation is none but not expected to be!{line_suffix}'''
+                    output_select_clause += f'''-- skipping this row because has_table_input_source_definition != 0:         {self.indent*2}{table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
+
             else:
-                output_select_clause += f'''{self.indent*2}{table_name}.{field_definition["insert_update_field_source_calculation"]}{line_suffix}'''
+                output_select_clause += f'''{self.indent*2}{field_definition["insert_update_field_source_calculation"]}{line_suffix}'''
+
+
 
 
 
