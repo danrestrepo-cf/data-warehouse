@@ -137,7 +137,7 @@ run_kitchen() {
   echo ./kitchen.sh -rep=PentahoFileRepository -level=Detailed -job=$@
   # we want "params" to split / expand, so ignore the shellcheck
   # shellcheck disable=SC2086
-  kitchen.sh -rep=PentahoFileRepository -level=Rowlevel ${params} -job=$@
+  kitchen.sh -rep=PentahoFileRepository -level=Detailed ${params} -job=$@
 }
 
 print_usage() {
