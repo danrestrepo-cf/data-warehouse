@@ -570,8 +570,8 @@ class DimensionETLCreator():
         return f"{data_source_dwid_value} as data_source_dwid"
 
     def create_data_source_integration_columns_select_sql(self) -> str:
-        output_select_clause = "CONCAT("
-        value_delimiter = ",''~'',"
+        output_select_clause = ""
+        value_delimiter = " || ''~'' || "
         for field_definition in self.field_metadata:
             if field_definition["insert_update_key_field_flag"] == True: # only process key fields
                 if field_definition["insert_update_field_source_calculation"] is None: # process non calculated fields
@@ -589,15 +589,14 @@ class DimensionETLCreator():
 
         # remove the trailing value_delimiter string before appending the closing parenthesis for the CONCAT() function
         output_select_clause = output_select_clause[:len(output_select_clause)-len(value_delimiter)]
-        output_select_clause += ")"
-
-
 
         return f"{output_select_clause} as data_source_integration_columns"
 
     def create_data_source_integration_id_select_sql(self) -> str:
-        output_select_clause = "CONCAT("
-        value_delimiter = ",''~'',"
+        output_select_clause = ""
+        value_delimiter = " || ''~'' || "   # we need to use || instead of the CONCAT() function because there is a 100 parameter limit for functions in our install of postgresql
+                                            # see "max_function_args (integer)" section of https://www.postgresql.org/docs/9.1/runtime-config-preset.html
+
         for field_definition in self.field_metadata:
             if field_definition["insert_update_key_field_flag"] == True: # only process key fields
                 if field_definition["insert_update_field_source_calculation"] is None: # process non calculated fields
@@ -611,11 +610,14 @@ class DimensionETLCreator():
                     if field_definition["has_table_input_source_definition"] == 1: # don't process edw standard fields
                         output_select_clause += f'''{table_name}.{field_definition["table_input_field_name"]}{value_delimiter}'''
                 else: # process calculated fields
-                    output_select_clause += f'''{field_definition["insert_update_field_source_calculation"].replace("'", "''")}{value_delimiter}'''
+                    if "case" in field_definition["insert_update_field_source_calculation"].lower(): # detect if we need to cast the field calculation to text or not
+                        output_select_clause += f'''{field_definition["insert_update_field_source_calculation"].replace("'", "''")}{value_delimiter}'''
+                    else:
+                        output_select_clause += f'''CAST({field_definition["insert_update_field_source_calculation"].replace("'", "''")} as text){value_delimiter}'''
 
         # remove the trailing value_delimiter string before appending the closing parenthesis for the CONCAT() function
         output_select_clause = output_select_clause[:len(output_select_clause)-len(value_delimiter)]
-        output_select_clause += ") as data_source_integration_id"
+        output_select_clause += " as data_source_integration_id"
         return output_select_clause
 
     def create_join_sql(self, field_definition: dict) -> str:
