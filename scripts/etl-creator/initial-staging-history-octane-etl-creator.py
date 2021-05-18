@@ -503,19 +503,6 @@ class DimensionETLCreator():
             if field_definition["join_type"] is None:
                 continue # there is no join to process so skip to the next field_definition
 
-
-
-            # # if there is a join defined then process it
-            # if field_definition["join_type"] is not None:
-            #     self.create_join_sql(field_definition)
-            #     # is there a child join?
-            #     # true: add child join
-            #     # is child join?
-            #     # true: call add child join
-            #     # false: add child join
-            #     # false: add join
-            #     pass
-
             if field_definition["join_alias"] not in processed_join_dwids:
                 output_join_sql += self.create_join_sql(field_definition)
                 processed_join_dwids.append(field_definition["join_alias"])
@@ -534,7 +521,7 @@ class DimensionETLCreator():
                 line_suffix = f'''
 '''
 
-            if field_definition["insert_update_field_source_calculation"] == None:
+            if field_definition["insert_update_field_source_calculation"] is None:
 
                 if field_definition["table_input_edw_table_definition_dwid"] == field_definition["primary_source_edw_table_definition_dwid"]:
                     table_name = f"primary_table"
@@ -583,7 +570,7 @@ class DimensionETLCreator():
         value_delimiter = ",'~',"
         for field_definition in self.field_metadata:
             if field_definition["insert_update_key_field_flag"] == True: # only process key fields
-                if field_definition["insert_update_field_source_calculation"] == None: # process non calculated fields
+                if field_definition["insert_update_field_source_calculation"] is None: # process non calculated fields
 
                     # determine if the field is pulled from the primary table or not
                     if field_definition["table_input_edw_table_definition_dwid"] == field_definition["primary_source_edw_table_definition_dwid"]: # field is in the primary table
@@ -609,7 +596,7 @@ class DimensionETLCreator():
         value_delimiter = ",'~',"
         for field_definition in self.field_metadata:
             if field_definition["insert_update_key_field_flag"] == True: # only process key fields
-                if field_definition["insert_update_field_source_calculation"] == None: # process non calculated fields
+                if field_definition["insert_update_field_source_calculation"] is None: # process non calculated fields
 
                     # determine if the field is pulled from the primary table or not
                     if field_definition["table_input_edw_table_definition_dwid"] == field_definition["primary_source_edw_table_definition_dwid"]: # field is in the primary table
