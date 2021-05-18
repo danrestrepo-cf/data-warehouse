@@ -480,6 +480,10 @@ class DimensionETLCreator():
         self.indent = "    "
 
     def create_table_input_sql(self) -> str:
+        from json import dumps
+        print(len(self.field_metadata))
+        print(len(self.field_metadata)+6)
+        print(dumps(self.field_metadata,indent=4))
         number_of_rows_returned = len(self.field_metadata)
 
         # this is used to alias the primary table and child join sub queries
@@ -541,7 +545,7 @@ class DimensionETLCreator():
         output_edw_standard_fields = self.create_edw_standard_fields_sql()
 
         output_select_clause = f'''SELECT
-{self.indent}{output_edw_standard_fields}{self.indent}{output_select_clause}'''
+{self.indent}{output_edw_standard_fields}{output_select_clause}'''
 
         order_by_statement = f'''ORDER BY
 {self.indent}primary_table.data_source_updated_datetime ASC
@@ -553,12 +557,12 @@ class DimensionETLCreator():
         return output_sql_statement
 
     def create_edw_standard_fields_sql(self) -> str:
-        output_edw_standard_fields = f'''{self.indent*2}{self.create_data_source_dwid_select_sql(data_source_dwid_value = 0)},
+        output_edw_standard_fields = f'''{self.indent}{self.create_data_source_dwid_select_sql(data_source_dwid_value = 0)},
 {self.indent*2}{self.create_data_source_integration_columns_select_sql()},
 {self.indent*2}{self.create_data_source_integration_id_select_sql()},
 {self.indent*2}now() as edw_created_datetime,
 {self.indent*2}now() as edw_modified_datetime,
-{self.indent*2}primary_table.data_source_updated_datetime as data_source_updated_datetime,
+{self.indent*2}primary_table.data_source_updated_datetime as data_source_modified_datetime,
 '''
         return output_edw_standard_fields
 
@@ -731,7 +735,7 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
     RETURNING dwid)
 '''
 
-        for index, field_definition in enumerate(self.field_metadata):
+        for index, field_definition in enumerate(self.field_metadata, start=1):
             if field_definition["json_output_key_field"] == True:
                 config_insert += f'''
 , temp_json_output_field_{index} as (INSERT INTO mdi.json_output_field (process_dwid, field_name)   -- mdi.json_output_field
@@ -746,7 +750,7 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
     RETURNING dwid)
 '''
 
-        for index, field_definition in enumerate(self.field_metadata):
+        for index, field_definition in enumerate(self.field_metadata, start=1):
             #ignore fields that do not have source definitions (edw standard fields)
             if field_definition["has_table_input_source_definition"] == 0:
                 continue
@@ -757,33 +761,63 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
 
             config_insert += f'''
 , temp_insert_update_key_{index} as (INSERT INTO mdi.insert_update_key (insert_update_step_dwid, key_lookup, key_stream1, key_condition)   -- mdi.insert_update_key
-    select temp_insert_update_step.dwid, '{field_definition["insert_update_field_name"]}', '{field_definition["table_input_field_name"]}', '='
+    select temp_insert_update_step.dwid, '{field_definition["insert_update_field_name"]}', '{field_definition["insert_update_field_name"]}', '='
     FROM temp_insert_update_step
     RETURNING dwid)
 '''
 
-        for index, field_definition in enumerate(self.field_metadata):
+
+        config_insert += f'''
+, temp_insert_update_field_1 as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
+    select temp_insert_update_step.dwid, 'data_source_dwid', 'data_source_dwid', 'Y', 'false'
+    FROM temp_insert_update_step
+    RETURNING dwid) 
+'''
+        config_insert += f'''
+, temp_insert_update_field_2 as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
+    select temp_insert_update_step.dwid, 'data_source_integration_columns', 'data_source_integration_columns', 'Y', 'false'
+    FROM temp_insert_update_step
+    RETURNING dwid) 
+'''
+        config_insert += f'''
+, temp_insert_update_field_3 as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
+    select temp_insert_update_step.dwid, 'data_source_integration_id', 'data_source_integration_id', 'Y', 'false'
+    FROM temp_insert_update_step
+    RETURNING dwid) 
+'''
+        config_insert += f'''
+, temp_insert_update_field_4 as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
+    select temp_insert_update_step.dwid, 'edw_created_datetime', 'edw_created_datetime', 'Y', 'false'
+    FROM temp_insert_update_step
+    RETURNING dwid) 
+'''
+        config_insert += f'''
+, temp_insert_update_field_5 as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
+    select temp_insert_update_step.dwid, 'edw_modified_datetime', 'edw_modified_datetime', 'Y', 'false'
+    FROM temp_insert_update_step
+    RETURNING dwid) 
+'''
+        config_insert += f'''
+, temp_insert_update_field_6 as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
+    select temp_insert_update_step.dwid, 'data_source_modified_datetime', 'data_source_modified_datetime', 'Y', 'false'
+    FROM temp_insert_update_step
+    RETURNING dwid) 
+'''
+
+        for index, field_definition in enumerate(self.field_metadata, start=7):
             #ignore fields that do not have source definitions (edw standard fields)
             if field_definition["has_table_input_source_definition"] == 0:
                 continue
 
-            if field_definition["insert_update_key_field_flag"] == 1:
-                update_flag = "N"
-            elif field_definition["insert_update_key_field_flag"] == 0:
-                update_flag = "Y"
-            else:
-                # error if an unexpected value comes through
-                raise(ValueError('Expected values 1 or 0 in field_definition["insert_update_key_field_flag"]. Unknown and unexpected value detected.'))
-
             config_insert += f'''
-, tmp_insert_update_field_{index} as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
-    select temp_insert_update_step.dwid, '{field_definition["insert_update_field_name"]}', '{field_definition["insert_update_field_name"]}', '{update_flag}', 'false'
+, temp_insert_update_field_{index} as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
+    select temp_insert_update_step.dwid, '{field_definition["insert_update_field_name"]}', '{field_definition["insert_update_field_name"]}', 'Y', 'false'
     FROM temp_insert_update_step
     RETURNING dwid) 
 '''
 
         seen_table_name_values = []
-        for index, field_definition in enumerate(self.field_metadata):
+        for index, field_definition in enumerate(self.field_metadata, start=1):
             #ignore fields that do not have source definitions (edw standard fields)
             if field_definition["has_table_input_source_definition"] == 0:
                 continue
@@ -797,13 +831,14 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
 
             config_insert += f'''
 , temp_state_machine_step_update_{index} as (UPDATE mdi.state_machine_step set next_process_dwid = temp_process.dwid FROM temp_process WHERE process_dwid={state_machine_step_process_dwid} AND next_process_dwid IS NULL)   -- mdi.state_machine_step
-, temp_state_machine_step_install_{index} as (INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)  -- mdi.state_machine_step
+
+, temp_state_machine_step_insert_{index} as (INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)  -- mdi.state_machine_step
     SELECT temp_process.dwid, NULL
     FROM temp_process)
-    
 '''
 
-        config_insert += f'''SELECT 'Done adding MDI configuration for {self.insert_update_schema_name}.{self.insert_update_table_name} ({self.process_name})' as etl_creator_status; -- needed for the cte to return at least one row, appears in flyway/jenkins/aws logs
+        config_insert += f'''
+SELECT 'Done adding MDI configuration for {self.insert_update_schema_name}.{self.insert_update_table_name} ({self.process_name})' as etl_creator_status; -- needed for the cte to return at least one row, appears in flyway/jenkins/aws logs
         
 ''' # add some line breaks to the sql so the output is more readable when there are many in a row generated
         return config_insert
@@ -815,7 +850,7 @@ def main(argv):
 
     try:
         opts, args = getopt.getopt(argv, "ht:i",["help","table","information_schema"])
-    except getops.GetopsError:
+    except getopt.GetopsError:
         display_usage(script_name)
         exit(-1)
     for opt, arg in opts:
