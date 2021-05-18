@@ -118,7 +118,7 @@ WHERE
                     WHERE
                         schema_name = %s
                     ORDER BY
-                        schema_name ASC;'''
+                        table_name ASC;'''
         return self.execute_parameterized_query(query, (schema_name))
 
     def get_target_field_list_from_edw_field_definition(self, edw_table_definition_dwid: int) -> list:
@@ -480,10 +480,10 @@ class DimensionETLCreator():
         self.indent = "    "
 
     def create_table_input_sql(self) -> str:
-        from json import dumps
-        print(len(self.field_metadata))
-        print(len(self.field_metadata)+6)
-        print(dumps(self.field_metadata,indent=4))
+        # from json import dumps
+        # print(len(self.field_metadata))
+        # print(len(self.field_metadata)+6)
+        # print(dumps(self.field_metadata,indent=4))
         number_of_rows_returned = len(self.field_metadata)
 
         # this is used to alias the primary table and child join sub queries
@@ -540,7 +540,7 @@ class DimensionETLCreator():
                     output_select_clause += f'''-- skipping this row because has_table_input_source_definition != 0:         {self.indent*2}{table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
 
             else:
-                output_select_clause += f'''{self.indent*2}{field_definition["insert_update_field_source_calculation"]}{line_suffix}'''
+                output_select_clause += f'''{self.indent*2}{field_definition["insert_update_field_source_calculation"].replace("'", "''")}{line_suffix}'''
 
         output_edw_standard_fields = self.create_edw_standard_fields_sql()
 
@@ -571,7 +571,7 @@ class DimensionETLCreator():
 
     def create_data_source_integration_columns_select_sql(self) -> str:
         output_select_clause = "CONCAT("
-        value_delimiter = ",'~',"
+        value_delimiter = ",''~'',"
         for field_definition in self.field_metadata:
             if field_definition["insert_update_key_field_flag"] == True: # only process key fields
                 if field_definition["insert_update_field_source_calculation"] is None: # process non calculated fields
@@ -583,9 +583,9 @@ class DimensionETLCreator():
                         table_name = f'''t{field_definition["join_alias"]}'''
 
                     if field_definition["has_table_input_source_definition"] == 1: # don't process edw standard fields
-                        output_select_clause += f'''\'{table_name}.{field_definition["table_input_field_name"]}\'{value_delimiter}'''
+                        output_select_clause += f'''\'\'{table_name}.{field_definition["table_input_field_name"]}\'\'{value_delimiter}'''
                 else: # process calculated fields
-                    output_select_clause += f'''\'{field_definition["insert_update_field_source_calculation"].replace("'", "''")}\'{value_delimiter}'''
+                    output_select_clause += f'''\'\'{field_definition["insert_update_field_source_calculation"].replace("'", "''")}\'\'{value_delimiter}'''
 
         # remove the trailing value_delimiter string before appending the closing parenthesis for the CONCAT() function
         output_select_clause = output_select_clause[:len(output_select_clause)-len(value_delimiter)]
@@ -597,7 +597,7 @@ class DimensionETLCreator():
 
     def create_data_source_integration_id_select_sql(self) -> str:
         output_select_clause = "CONCAT("
-        value_delimiter = ",'~',"
+        value_delimiter = ",''~'',"
         for field_definition in self.field_metadata:
             if field_definition["insert_update_key_field_flag"] == True: # only process key fields
                 if field_definition["insert_update_field_source_calculation"] is None: # process non calculated fields
@@ -611,7 +611,7 @@ class DimensionETLCreator():
                     if field_definition["has_table_input_source_definition"] == 1: # don't process edw standard fields
                         output_select_clause += f'''{table_name}.{field_definition["table_input_field_name"]}{value_delimiter}'''
                 else: # process calculated fields
-                    output_select_clause += f'''{field_definition["insert_update_field_source_calculation"]}{value_delimiter}'''
+                    output_select_clause += f'''{field_definition["insert_update_field_source_calculation"].replace("'", "''")}{value_delimiter}'''
 
         # remove the trailing value_delimiter string before appending the closing parenthesis for the CONCAT() function
         output_select_clause = output_select_clause[:len(output_select_clause)-len(value_delimiter)]
