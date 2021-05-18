@@ -222,9 +222,7 @@ WHERE
     target_table.dwid = %s
     AND target_field.field_name not in ('dwid','data_source_dwid','data_source_integration_columns','data_source_integration_id','data_source_modified_datetime','edw_created_datetime', 'edw_modified_datetime', 'etl_batch_id') -- exclude these in the join if the table input field name is null?
 ORDER BY
-    target_field.key_field_flag DESC
-    , target_field.field_name ASC
-    , has_table_input_source_definition DESC;'''
+    table_input_edw_field_definition_dwid ASC;'''
 
         return self.execute_parameterized_query(query, edw_table_definition_dwid)
 
@@ -581,35 +579,53 @@ class DimensionETLCreator():
         return f"{data_source_dwid_value} as data_source_dwid"
 
     def create_data_source_integration_columns_select_sql(self) -> str:
-        query = f'''
-        select 
-            edw_field_definition.field_name 
-        from 
-            mdi.edw_field_definition 
-        where 
-            edw_field_definition.edw_table_definition_dwid = %s 
-            AND key_field_flag = TRUE 
-        ORDER BY 
-            edw_field_definition.dwid ASC
-        '''
+        output_select_clause = "CONCAT("
+        value_delimiter = ",'~',"
+        for field_definition in self.field_metadata:
+            if field_definition["insert_update_key_field_flag"] == True: # only process key fields
+                if field_definition["insert_update_field_source_calculation"] == None: # process non calculated fields
 
-        edw = EDW()
-        key_fields = edw.execute_parameterized_query(query, (self.edw_table_definition_dwid))
-        key_fields_length = len(key_fields)
-        data_source_integration_columns_value = ""
+                    # determine if the field is pulled from the primary table or not
+                    if field_definition["table_input_edw_table_definition_dwid"] == field_definition["primary_source_edw_table_definition_dwid"]: # field is in the primary table
+                        table_name = f"primary_table"
+                    else: # field is not in the primary table so needs to be pulled from the aliased table from the join clause
+                        table_name = f'''t{field_definition["join_alias"]}'''
 
-        for index, key_field in enumerate(key_fields, start = 1):
-            if index == key_fields_length:
-                field_suffix = ""
-            else:
-                field_suffix = "~"
+                    if field_definition["has_table_input_source_definition"] == 1: # don't process edw standard fields
+                        output_select_clause += f'''\'{table_name}.{field_definition["table_input_field_name"]}\'{value_delimiter}'''
+                else: # process calculated fields
+                    output_select_clause += f'''\'{field_definition["insert_update_field_source_calculation"].replace("'", "''")}\'{value_delimiter}'''
 
-            data_source_integration_columns_value += f'''{key_field["field_name"]}{field_suffix}'''
+        # remove the trailing value_delimiter string before appending the closing parenthesis for the CONCAT() function
+        output_select_clause = output_select_clause[:len(output_select_clause)-len(value_delimiter)]
+        output_select_clause += ")"
 
-        return f"'{data_source_integration_columns_value}' as data_source_integration_columns"
+
+
+        return f"{output_select_clause} as data_source_integration_columns"
 
     def create_data_source_integration_id_select_sql(self) -> str:
-        return "'data_source_integration_id' as data_source_integration_id"
+        output_select_clause = "CONCAT("
+        value_delimiter = ",'~',"
+        for field_definition in self.field_metadata:
+            if field_definition["insert_update_key_field_flag"] == True: # only process key fields
+                if field_definition["insert_update_field_source_calculation"] == None: # process non calculated fields
+
+                    # determine if the field is pulled from the primary table or not
+                    if field_definition["table_input_edw_table_definition_dwid"] == field_definition["primary_source_edw_table_definition_dwid"]: # field is in the primary table
+                        table_name = f"primary_table"
+                    else: # field is not in the primary table so needs to be pulled from the aliased table from the join clause
+                        table_name = f'''t{field_definition["join_alias"]}'''
+
+                    if field_definition["has_table_input_source_definition"] == 1: # don't process edw standard fields
+                        output_select_clause += f'''{table_name}.{field_definition["table_input_field_name"]}{value_delimiter}'''
+                else: # process calculated fields
+                    output_select_clause += f'''{field_definition["insert_update_field_source_calculation"]}{value_delimiter}'''
+
+        # remove the trailing value_delimiter string before appending the closing parenthesis for the CONCAT() function
+        output_select_clause = output_select_clause[:len(output_select_clause)-len(value_delimiter)]
+        output_select_clause += ") as data_source_integration_id"
+        return output_select_clause
 
     def create_join_sql(self, field_definition: dict) -> str:
         child_join_needed = self.has_child_join(field_definition)
