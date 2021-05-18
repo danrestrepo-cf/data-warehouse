@@ -442,7 +442,7 @@ class Staging_to_History_ETL(ETL_config):
 
 class DimensionETLCreator():
     def __init__(self, field_metadata: list, process_name: str, edw_connection: EDW, insert_update_table_name: str,
-                 table_input_step_connection: str = "Staging DB Connection",
+                 edw_table_definition_dwid: int, table_input_step_connection: str = "Staging DB Connection",
                  insert_update_step_connection: str = "Staging DB Connection",
                  table_input_step_data_source_dwid: int = 0, insert_update_commit_size: int = 1000):
         '''
@@ -460,6 +460,8 @@ class DimensionETLCreator():
         '''
         if len(field_metadata) == 0:
             raise(ValueError("table_metadata should contain at least one item in the list"))
+
+        self.edw_table_definition_dwid = edw_table_definition_dwid
 
         # table: table_input_step/field and insert_update step/field/key
         self.field_metadata = field_metadata
@@ -554,9 +556,7 @@ class DimensionETLCreator():
         output_edw_standard_fields = self.create_edw_standard_fields_sql()
 
         output_select_clause = f'''SELECT
-{self.indent}{output_edw_standard_fields}
-{self.indent}{output_select_clause}
-'''
+{self.indent}{output_edw_standard_fields}{self.indent}{output_select_clause}'''
 
         order_by_statement = f'''ORDER BY
 {self.indent}primary_table.data_source_updated_datetime ASC
@@ -568,7 +568,7 @@ class DimensionETLCreator():
         return output_sql_statement
 
     def create_edw_standard_fields_sql(self) -> str:
-        output_edw_standard_fields = f'''{self.indent*2}{self.create_data_source_dwid_select_sql()},
+        output_edw_standard_fields = f'''{self.indent*2}{self.create_data_source_dwid_select_sql(data_source_dwid_value = 0)},
 {self.indent*2}{self.create_data_source_integration_columns_select_sql()},
 {self.indent*2}{self.create_data_source_integration_id_select_sql()},
 {self.indent*2}now() as edw_created_datetime,
@@ -577,11 +577,36 @@ class DimensionETLCreator():
 '''
         return output_edw_standard_fields
 
-    def create_data_source_dwid_select_sql(self) -> str:
-        return "0 as data_source_dwid"
+    def create_data_source_dwid_select_sql(self, data_source_dwid_value: int) -> str:
+        return f"{data_source_dwid_value} as data_source_dwid"
 
     def create_data_source_integration_columns_select_sql(self) -> str:
-        return "'data_source_integration_columns' as data_source_integration_columns"
+        query = f'''
+        select 
+            edw_field_definition.field_name 
+        from 
+            mdi.edw_field_definition 
+        where 
+            edw_field_definition.edw_table_definition_dwid = %s 
+            AND key_field_flag = TRUE 
+        ORDER BY 
+            edw_field_definition.dwid ASC
+        '''
+
+        edw = EDW()
+        key_fields = edw.execute_parameterized_query(query, (self.edw_table_definition_dwid))
+        key_fields_length = len(key_fields)
+        data_source_integration_columns_value = ""
+
+        for index, key_field in enumerate(key_fields, start = 1):
+            if index == key_fields_length:
+                field_suffix = ""
+            else:
+                field_suffix = "~"
+
+            data_source_integration_columns_value += f'''{key_field["field_name"]}{field_suffix}'''
+
+        return f"'{data_source_integration_columns_value}' as data_source_integration_columns"
 
     def create_data_source_integration_id_select_sql(self) -> str:
         return "'data_source_integration_id' as data_source_integration_id"
@@ -592,14 +617,6 @@ class DimensionETLCreator():
 
         if child_join_needed == True:
             child_join_sql = self.create_child_join_sql(field_definition["join_alias"])
-
-#         output_join_sql += f'''-- HAS CHILD JOIN!
-# {self.indent*2}{field_definition["join_type"].upper()} JOIN
-# {self.indent*4}(SELECT current.* FROM {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} current LEFT JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} historical
-# {self.indent*4}ON historical.code = current.code
-# {self.indent*4}AND historical.data_source_updated_datetime < current.data_source_updated_datetime) t{field_definition["join_alias"]}
-# {self.indent*3}ON {field_definition["join_condition"]}
-# '''
 
         output_join_sql = f'''  -- join start
         {field_definition["join_type"].upper()} JOIN
@@ -834,7 +851,8 @@ def generate_mdi_configs_based_on_table_definition(schema_name_to_process: str) 
                                          process_name=process_name,
                                          edw_connection=EDW(db_name=database_name),
                                          insert_update_table_name = table_name,
-                                         table_input_step_data_source_dwid=1)
+                                         table_input_step_data_source_dwid=1,
+                                         edw_table_definition_dwid=edw_table_definition_dwid)
         sql_configuration = etl_config.create_table_input_to_insert_update_sql()
         print(sql_configuration)
 
