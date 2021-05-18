@@ -484,7 +484,7 @@
     <created_user>-</created_user>
     <created_date>2021/02/17 17:15:35.157</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/05/12 13:08:13.408</modified_date>
+    <modified_date>2021/05/18 10:04:41.944</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -806,7 +806,7 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from> [performer_table_to_table_insert_update_json] Select partial load condition</from>
+      <from> [performer_table_to_table_insert_update_json] Select partial load condition and token_id</from>
       <to> [performer_table_to_table_insert_update_json] Add constant for process_dwid</to>
       <enabled>Y</enabled>
     </hop>
@@ -817,12 +817,12 @@
     </hop>
     <hop>
       <from> [performer_table_to_table_insert_update_json] Add partial load condition</from>
-      <to> [performer_table_to_table_insert_update_json] Select partial load condition</to>
+      <to> [performer_table_to_table_insert_update_json] Select partial load condition and token_id</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from> [performer_table_to_table_insert_update_json] Add (full) partial load condition</from>
-      <to> [performer_table_to_table_insert_update_json] Select partial load condition</to>
+      <to> [performer_table_to_table_insert_update_json] Select partial load condition and token_id</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -976,7 +976,7 @@ var partial_load_condition = key_field_name.concat(sql, key_field_values, right_
     </GUI>
   </step>
   <step>
-    <name> [performer_table_to_table_insert_update_json] Select partial load condition</name>
+    <name> [performer_table_to_table_insert_update_json] Select partial load condition and token_id</name>
     <type>SelectValues</type>
     <description/>
     <distribute>N</distribute>
@@ -989,6 +989,9 @@ var partial_load_condition = key_field_name.concat(sql, key_field_values, right_
     <fields>
       <field>
         <name>partial_load_condition</name>
+      </field>
+      <field>
+        <name>token_id</name>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -1175,6 +1178,13 @@ WHERE process.dwid = ${process_dwid}</sql>
     <stream_target_step/>
     <mappings>
       <mapping>
+        <target_step_name>[template_table_to_table_insert_update_json] Set token_id</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>token_id</source_field>
+      </mapping>
+      <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Insert / update</target_step_name>
         <target_attribute_key>COMMIT_SIZE</target_attribute_key>
         <target_detail>N</target_detail>
@@ -1201,6 +1211,13 @@ WHERE process.dwid = ${process_dwid}</sql>
         <target_detail>Y</target_detail>
         <source_step>[performer_table_to_table_insert_update_json] Load Insert / update key settings</source_step>
         <source_field>key_condition</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update_json] Set token_id</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_update_json] Replace Table input step SQL placeholder</source_step>
+        <source_field>token_id</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Insert / update</target_step_name>
@@ -1238,6 +1255,13 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>connectionname</source_field>
       </mapping>
       <mapping>
+        <target_step_name>[template_table_to_table_insert_update_json] Set etl_batch_id</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>${etl_batch_id}</source_field>
+      </mapping>
+      <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Insert / update</target_step_name>
         <target_attribute_key>CONNECTIONNAME</target_attribute_key>
         <target_detail>N</target_detail>
@@ -1250,6 +1274,13 @@ WHERE process.dwid = ${process_dwid}</sql>
         <target_detail>Y</target_detail>
         <source_step/>
         <source_field>${etl_batch_id}</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update_json] Set etl_batch_id</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>etl_batch_id</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Insert / update</target_step_name>
@@ -1287,6 +1318,13 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>${data_source_dwid}</source_field>
       </mapping>
       <mapping>
+        <target_step_name>[template_table_to_table_insert_update_json] Set environment</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>${environment}</source_field>
+      </mapping>
+      <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Insert / update</target_step_name>
         <target_attribute_key>UPDATE_LOOKUP</target_attribute_key>
         <target_detail>Y</target_detail>
@@ -1306,6 +1344,13 @@ WHERE process.dwid = ${process_dwid}</sql>
         <target_detail>Y</target_detail>
         <source_step/>
         <source_field>data_source_dwid</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_update_json] Set environment</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>environment</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Partial load - Set key_field_name</target_step_name>
@@ -1946,6 +1991,12 @@ var sql_for_injection = sql.replace("&lt;&lt;partial_load_condition>>", partial_
         <default/>
         <type>None</type>
       </value>
+      <value>
+        <name>token_id</name>
+        <rename>token_id</rename>
+        <default/>
+        <type>None</type>
+      </value>
     </lookup>
     <attributes/>
     <cluster_schema/>
@@ -2070,7 +2121,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>execute_for_each_row</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_table_to_table_insert_update_json] Table input</origin>
         <comments>execute_for_each_row</comments>
         <conversion_Mask/>
@@ -2093,7 +2144,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>replace_variables</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_table_to_table_insert_update_json] Table input</origin>
         <comments>replace_variables</comments>
         <conversion_Mask/>
@@ -2116,7 +2167,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>enable_lazy_conversion</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_table_to_table_insert_update_json] Table input</origin>
         <comments>enable_lazy_conversion</comments>
         <conversion_Mask/>
@@ -2139,7 +2190,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>cached_row_meta</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_table_to_table_insert_update_json] Table input</origin>
         <comments>cached_row_meta</comments>
         <conversion_Mask/>
@@ -2162,7 +2213,7 @@ WHERE
         <storagetype>normal</storagetype>
         <name>connectionname</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>[performer_table_to_table_insert_update_json] Table input</origin>
         <comments>connectionname</comments>
         <conversion_Mask/>
