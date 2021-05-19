@@ -491,12 +491,16 @@ class DimensionETLCreator():
 
         # create the FROM clause and main/primary table
         output_from_clause = f'''FROM 
-     (select * from
-         (select row_number() over (partition by {self.field_metadata[0]["source_table_key_field_name"]} order by data_source_updated_datetime DESC) as row_number,*
-          from
-              {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]}
-         ) as t
-      where t.row_number = 1) AS {default_table_name}
+{self.indent}(      
+{self.indent*2}SELECT
+{self.indent*3}current_record.*
+{self.indent*2}FROM
+{self.indent*3}{self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} current_record
+{self.indent*4}LEFT JOIN {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} AS history_records ON current_record.{self.field_metadata[0]["source_table_key_field_name"]} = history_records.{self.field_metadata[0]["source_table_key_field_name"]}
+{self.indent*5}AND current_record.data_source_updated_datetime < history_records.data_source_updated_datetime
+{self.indent*2}WHERE
+{self.indent*3}history_records.l_pid IS NULL
+{self.indent*2}) AS {default_table_name}
 '''
 
         # create join sql
@@ -608,53 +612,61 @@ class DimensionETLCreator():
         output_select_clause += " as data_source_integration_id"
         return output_select_clause
 
-    def create_join_sql(self, field_definition: dict) -> str:
+    def create_join_sql(self, field_definition: dict) -> str:  # this can likely be made recursive
         child_join_needed = self.has_child_join(field_definition)
         child_join_sql = ""
 
         if child_join_needed == True:
             child_join_sql = self.create_child_join_sql(field_definition["join_alias"])
 
-        output_join_sql = f'''  -- join start
-        {field_definition["join_type"].upper()} JOIN
-            (
-                select
-                    *
-                from
-                    (
-                        SELECT
-                            row_number() OVER (PARTITION BY {field_definition["primary_source_key_field_name"]} ORDER BY data_source_updated_datetime DESC) AS row_num
-                            , *
-                        FROM
-                            {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]}
-                    ) AS primary_table
-                    [[REPLACE_WITH_CHILD_JOIN_SQL_OR_BLANK_STRING]]
-                WHERE
-                    row_num=1
-
-            ) AS t{field_definition["join_alias"]} ON {field_definition["join_condition"]}
-    -- join end
-
+        output_join_sql = f'''
+{self.indent}-- join start
+{self.indent}{field_definition["join_type"].upper()} JOIN
+{self.indent}(
+{self.indent*2}(      
+{self.indent*3}SELECT
+{self.indent*4}current_record.*
+{self.indent*3}FROM
+{self.indent*4}{field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} current_record
+{self.indent*5}LEFT JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} AS history_records ON current_record.{field_definition["primary_source_key_field_name"]} = history_records.{field_definition["primary_source_key_field_name"]}
+{self.indent*6}AND current_record.data_source_updated_datetime < history_records.data_source_updated_datetime
+{self.indent*3}WHERE
+{self.indent*4}history_records.{field_definition["primary_source_key_field_name"]} IS NULL
+{self.indent*2}) as primary_table
+[[REPLACE_WITH_CHILD_JOIN_SQL_OR_BLANK_STRING]]
+{self.indent}) AS t{field_definition["join_alias"]} ON {field_definition["join_condition"]}
+{self.indent}-- join end
 '''.replace("[[REPLACE_WITH_CHILD_JOIN_SQL_OR_BLANK_STRING]]", child_join_sql)
-
-
 
         return output_join_sql
 
     def create_child_join_sql(self, edw_join_definition_dwid: dict) -> str:
         # get the join details from the DB
         child_join_details = EDW().get_child_join_data(edw_join_definition_dwid)
-        child_join_query_template = f'''
--- child join start
-INNER JOIN
-(
-    SELECT * FROM
-        (SELECT row_number() OVER (PARTITION BY {child_join_details[0]["target_field_name"]} ORDER BY data_source_updated_datetime DESC) AS row_number, * FROM {child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]}) AS t
-    WHERE
-        t.row_number = 1
-) AS t{child_join_details[0]["child_join_tree_definition_root_join_dwid"]} ON {child_join_details[0]["join_condition"]}
--- child join end
-'''
+        if len(child_join_details) == 0:
+            child_join_query_template = ""
+        else:
+            child_join_query_template = f'''
+{self.indent*3}-- child join start    
+{self.indent*3}{child_join_details[0]["join_type"].upper()} JOIN
+{self.indent*3}(      
+{self.indent*4}SELECT
+{self.indent*5}current_record.*
+{self.indent*4}FROM
+{self.indent*5}{child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]} current_record
+{self.indent*6}LEFT JOIN {child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]} AS history_records ON current_record.{child_join_details[0]["target_field_name"]} = history_records.{child_join_details[0]["target_field_name"]}
+{self.indent*7}AND current_record.data_source_updated_datetime < history_records.data_source_updated_datetime
+{self.indent*4}WHERE
+{self.indent*5}history_records.{child_join_details[0]["target_field_name"]} IS NULL
+{self.indent*3}) AS t{child_join_details[0]["child_join_tree_definition_root_join_dwid"]} ON {child_join_details[0]["join_condition"]}
+{self.indent*3}-- child join end    
+    
+    
+    
+    
+    
+    
+    '''
         return child_join_query_template
 
     def has_child_join(self, field_definition: dict) -> bool:
