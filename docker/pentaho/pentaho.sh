@@ -42,9 +42,9 @@ if [[ -n "${PROCESS_NAME}" ]]; then
   params="${params} -param:process_name=${PROCESS_NAME}"
 fi
 
-echo "[INPUT] ENVIRONMENT=${ENVIRONMENT}"
-if [[ -n "${ENVIRONMENT}" ]]; then
-  params="${params} -param:environment=${ENVIRONMENT}"
+echo "[INPUT] AWS_ENVIRONMENT=${AWS_ENVIRONMENT}"
+if [[ -n "${AWS_ENVIRONMENT}" ]]; then
+  params="${params} -param:environment=${AWS_ENVIRONMENT}"
 fi
 
 echo "[INPUT] metadata endpoint=${ECS_CONTAINER_METADATA_URI_V4}"
