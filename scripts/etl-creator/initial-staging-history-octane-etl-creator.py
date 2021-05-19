@@ -275,16 +275,16 @@ class ETL_creator():
         '''
         Used to create ETL configurations for dimensions
 
-        :param field_metadata:
-        :param process_name:
-        :param edw_connection:
-        :param insert_update_table_name:
-        :param table_input_sql:
-        :param table_input_step_connection:
-        :param insert_update_step_connection:
-        :param table_input_step_data_source_dwid:
-        :param insert_update_commit_size:
+        :param field_metadata: A list of fields needed to create an ETL. Pass in results from EDW.get_table_list_from_edw_table_definition()
+        :param process_name: The name used to populate config.mdi.process.name
+        :param edw_connection: An instance of an EDW object that can be used for queries
+        :param insert_update_table_name: The name of the table that data will be insert/updated into
+        :param table_input_step_connection: The name of the connection the Table Input step in Pentaho will use to select data
+        :param insert_update_step_connection: The name of the connection the Insert/Update step in Pentaho will use insert or update data into
+        :param table_input_step_data_source_dwid: The data_source_dwid value to use in the SP's configuration
+        :param insert_update_commit_size: The number of rows to process before committing a change
         '''
+
         if len(field_metadata) == 0:
             raise(ValueError("table_metadata should contain at least one item in the list"))
 
@@ -309,10 +309,7 @@ class ETL_creator():
         self.indent = "    "
 
     def create_table_input_sql(self) -> str:
-        # from json import dumps
-        # print(len(self.field_metadata))
-        # print(len(self.field_metadata)+6)
-        # print(dumps(self.field_metadata,indent=4))
+
         number_of_rows_returned = len(self.field_metadata)
 
         # this is used to alias the primary table and child join sub queries
@@ -390,6 +387,11 @@ class ETL_creator():
         return output_sql_statement
 
     def create_edw_standard_fields_sql(self) -> str:
+        '''
+        Returns a string that adds EDW's standard fields. Used to add the standard fields to the Table Input step's SQL
+
+        :return: string that can be appended to the beginning of a SELECT statement (includes trailing comma)
+        '''
         output_edw_standard_fields = f'''{self.indent}{self.create_data_source_integration_columns_select_sql()},
 {self.indent*2}{self.create_data_source_integration_id_select_sql()},
 {self.indent*2}now() as edw_created_datetime,
@@ -399,9 +401,20 @@ class ETL_creator():
         return output_edw_standard_fields
 
     def create_data_source_dwid_select_sql(self, data_source_dwid_value: int) -> str:
+        '''
+        Creates a string that can be added to a SELECT clause that contains the column data_source_dwid (no trailing comma included)
+
+        :param data_source_dwid_value:
+        :return: string that can be appended to a SELECT statement (no trailing comma)
+        '''
         return f"{data_source_dwid_value} as data_source_dwid"
 
     def create_data_source_integration_columns_select_sql(self) -> str:
+        '''
+        Uses self.field_metadata list to create a string used to define the data_source_integration_columns field on the Table Input step SQL
+
+        :return: a string that can be used in a select statement (no trailing commma)
+        '''
         output_select_clause = ""
         value_delimiter = " || ''~'' || "
         for field_definition in self.field_metadata:
@@ -416,6 +429,11 @@ class ETL_creator():
         return f"{output_select_clause} as data_source_integration_columns"
 
     def create_data_source_integration_id_select_sql(self) -> str:
+        '''
+        used to create the data_source_integration_id field used in a select statement. contains the values of the key fields ordered by their edw_field_definition.dwid value
+
+        :return: a string that can be appended to a select clause (no trailing comma)
+        '''
         output_select_clause = ""
         value_delimiter = " || ''~'' || "   # we need to use || instead of the CONCAT() function because there is a 100 parameter limit for functions in our install of postgresql
                                             # see "max_function_args (integer)" section of https://www.postgresql.org/docs/9.1/runtime-config-preset.html
@@ -441,7 +459,14 @@ class ETL_creator():
         output_select_clause += " as data_source_integration_id"
         return output_select_clause
 
-    def create_join_sql(self, field_definition: dict) -> str:  # this can likely be made recursive
+    def create_join_sql(self, field_definition: dict) -> str:  # this can likely be made recursive and get rid of self.create_child_join_sql()
+        '''
+        Used to create a join statement that can also contain a child join
+
+        :param field_definition: One row from the list self.field_metadata
+        :return: returns a string that can be added to a SQL statement
+        '''
+
         child_join_needed = self.has_child_join(field_definition)
         child_join_sql = ""
 
@@ -473,7 +498,7 @@ class ETL_creator():
         # get the join details from the DB
         child_join_details = EDW().get_child_join_data(edw_join_definition_dwid)
         if len(child_join_details) == 0:
-            child_join_query_template = ""
+            return ""  # there are no child joins to process, return an empty string
         else:
             child_join_query_template = f'''
 {self.indent*3}-- child join start    
@@ -493,6 +518,12 @@ class ETL_creator():
         return child_join_query_template
 
     def has_child_join(self, field_definition: dict) -> bool:
+        '''
+        Detects if a single row from self.field_metadata's list requires a child join
+
+        :param field_definition: One row from the list self.field_metadata
+        :return:
+        '''
         edw = EDW()
         child_join_data = edw.get_child_join_data(field_definition["join_alias"])
 
@@ -504,7 +535,6 @@ class ETL_creator():
             print(f'Unexpected error occurred. Expected child_join_data to have 0 or 1 rows but {len(child_join_data)} rows were found for edw_join_definition.dwid={field_definition["join_alias"]}.')
             print(field_definition)
             raise ValueError("Expected child_join_data to have 0 or 1 rows but more than 1 row was found. Script is not written to handle this scenario.")
-
 
     def get_process_dwid_from_table_name(self, search_text: str) -> int:
         '''
@@ -692,12 +722,14 @@ def display_usage(script_name: str) -> None:
     -h      print usage information
     -t <schema name>   create configs based on mdi.edw_table_definition''')
 
-def generate_mdi_configs_based_on_table_definition(schema_name_to_process: str) -> None:
+def generate_mdi_configs_based_on_table_definition(schema_name_to_process: str, ) -> None:
     print(f"-- Will create configs for this schema: {schema_name_to_process}")
     print(f"-- Generated at {datetime.now()}")
 
     edw = EDW(db_name="config")
     table_list = edw.get_table_list_from_edw_table_definition(schema_name_to_process)
+
+    output = ""
 
     for index, table in enumerate(table_list, start=200000):
         edw_table_definition_dwid = table["dwid"]
@@ -716,7 +748,22 @@ def generate_mdi_configs_based_on_table_definition(schema_name_to_process: str) 
                                          table_input_step_data_source_dwid=1,
                                          edw_table_definition_dwid=edw_table_definition_dwid)
         sql_configuration = etl_config.create_table_input_to_insert_update_sql()
-        print(sql_configuration)
+
+        output = f'''{output}
+
+{sql_configuration}'''
+
+        print(sql_configuration) # output data to screen
+
+    save_output(output)
+
+def save_output(output_data: str, file_name: str = "", file_path: str = "./", file_extension: str = "sql") -> None:
+    if file_name == "":  # if no filename defined then use the current date
+        file_name = date.today().strftime("%Y%m%d")
+
+    f = open(f"{file_path}{file_name}.{file_extension}", "w")
+    f.write(output_data)
+    f.close()
 
 if __name__ == "__main__":
     main(sys.argv)
