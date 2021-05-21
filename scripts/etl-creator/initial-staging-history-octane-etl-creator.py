@@ -2,7 +2,9 @@ import psycopg2
 import psycopg2.extras
 from datetime import date
 from datetime import datetime
-import sys, getopt
+import sys
+import getopt
+
 
 class EDW:
     #######################
@@ -48,20 +50,20 @@ class EDW:
         return rows
 
     def execute_parameterized_query(self, query: str, *parameters):
-        '''
+        """
         This function connects to the database, executes a query using sanitization, commits any changes, and returns the resultant rows
 
         :param query: the SQL query to execute. sanitize any variables using '%s'
         :param parameters: a tuple of parameters with one value in the tuple per '%s' in the query
         :return: returns a list of tuples with the data from the rows returned by the query
-        '''
+        """
 
         conn = psycopg2.connect(database=self.database_name,
                                 user=self.database_username,
                                 password=self.database_password,
                                 host=self.database_hostname,
                                 port=self.database_port)
-        cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         cur.execute(query, parameters)
         # print(cur.query)
         conn.commit()
@@ -122,12 +124,12 @@ WHERE
         return self.execute_parameterized_query(query, (schema_name))
 
     def get_target_field_list_from_edw_field_definition(self, edw_table_definition_dwid: int) -> list:
-        '''
+        """
         This returns data from the edw_table_definition and edw_field_definition tables.
 
         :param edw_table_definition_dwid: int, the primary key of the table definition row
         :return: a list of tuples in the format [(database_name, schema_name, table_name, field_name, key_field_flag)]
-        '''
+        """
 
         query = '''SELECT
                         edw_table_definition.database_name
@@ -147,14 +149,14 @@ WHERE
         return self.execute_parameterized_query(query, edw_table_definition_dwid)
 
     def get_field_list_from_edw_field_definition(self, edw_table_definition_dwid: int) -> list:
-        '''
-        This returns all data needed to create a table-to-table/table-to-table-json MDI process. * Only supports root_join_dwids currently! *
+        """
+        This returns all data needed to create a table-to-table/table-to-table-json MDI process.
 
         :param edw_table_definition_dwid: int, the primary key of the table definition row
         :return: a list of tuples in the format [(table_input_database_name, table_input_schema_name, table_input_table_name, table_input_field_name, table_output_field_source_calculation
         table_input_field_source_calculation, has_table_output_edw_join_tree_definition, join_type, join_condition, table_output_database_name, table_output_schema_name, table_output_table_name,
         table_output_field_name, table_output_field_name, table_output_key_field_flag
-        '''
+        """
 
         query = '''SELECT
     CASE WHEN source_field.source_edw_field_definition_dwid IS NULL THEN 0 ELSE 1 END as has_table_input_source_definition
@@ -198,26 +200,14 @@ WHERE
 FROM
     mdi.edw_table_definition target_table
         JOIN mdi.edw_field_definition target_field ON target_table.dwid = target_field.edw_table_definition_dwid
-
-
-
         JOIN mdi.edw_table_definition primary_source_table ON target_table.primary_source_edw_table_definition_dwid = primary_source_table.dwid
-
-
-
         LEFT JOIN mdi.edw_field_definition source_field ON target_field.source_edw_field_definition_dwid = source_field.dwid
         LEFT JOIN mdi.edw_table_definition source_table ON source_field.edw_table_definition_dwid = source_table.dwid
-
         LEFT JOIN mdi.edw_join_tree_definition initial_join_tree ON target_field.source_edw_join_tree_definition_dwid = initial_join_tree.dwid
         LEFT JOIN mdi.edw_join_definition initial_join_definition ON initial_join_tree.root_join_dwid = initial_join_definition.dwid
-
         LEFT JOIN mdi.edw_table_definition target_source_table ON initial_join_definition.target_edw_table_definition_dwid = target_source_table.dwid
---         LEFT JOIN mdi.edw_table_definition calculated_field_source_table ON initial_join_definition.target_edw_table_definition_dwid = source_table.dwid
---         LEFT JOIN mdi.edw_field_definition calculated_field_source_field ON target_field.source_edw_field_definition_dwid = source_field.dwid
-
         LEFT JOIN mdi.edw_join_tree_definition child_join_tree ON initial_join_tree.child_join_tree_dwid = child_join_tree.dwid
         LEFT JOIN mdi.edw_join_definition child_join_definition ON child_join_tree.root_join_dwid = child_join_definition.dwid
-        
 WHERE
     target_table.dwid = %s
     AND target_field.field_name not in ('dwid','data_source_dwid','data_source_integration_columns','data_source_integration_id','data_source_modified_datetime','edw_created_datetime', 'edw_modified_datetime', 'etl_batch_id') -- exclude these in the join if the table input field name is null?
@@ -261,18 +251,18 @@ ORDER BY
             FROM information_schema.columns
             WHERE columns.table_schema = '{schema}'
                 AND columns.table_name = '{table}'
-            ;
-		''', 'staging')
+            ;''', 'staging')
         for row in rows:
             columns.append(row[0])
         return columns
+
 
 class ETL_creator():
     def __init__(self, field_metadata: list, process_name: str, edw_connection: EDW, insert_update_table_name: str,
                  edw_table_definition_dwid: int, table_input_step_connection: str = "Staging DB Connection",
                  insert_update_step_connection: str = "Staging DB Connection",
                  table_input_step_data_source_dwid: int = 0, insert_update_commit_size: int = 1000):
-        '''
+        """
         Used to create ETL configurations for dimensions
 
         :param field_metadata: A list of fields needed to create an ETL. Pass in results from EDW.get_table_list_from_edw_table_definition()
@@ -283,7 +273,7 @@ class ETL_creator():
         :param insert_update_step_connection: The name of the connection the Insert/Update step in Pentaho will use insert or update data into
         :param table_input_step_data_source_dwid: The data_source_dwid value to use in the SP's configuration
         :param insert_update_commit_size: The number of rows to process before committing a change
-        '''
+        """
 
         if len(field_metadata) == 0:
             raise(ValueError("table_metadata should contain at least one item in the list"))
@@ -316,17 +306,13 @@ class ETL_creator():
         default_table_name = "primary_table"
 
         # create the FROM clause and main/primary table
-        output_from_clause = f'''FROM 
-{self.indent}(      
-{self.indent*2}SELECT
-{self.indent*3}current_record.*
-{self.indent*2}FROM
-{self.indent*3}{self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} current_record
-{self.indent*4}LEFT JOIN {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} AS history_records ON current_record.{self.field_metadata[0]["source_table_key_field_name"]} = history_records.{self.field_metadata[0]["source_table_key_field_name"]}
-{self.indent*5}AND current_record.data_source_updated_datetime < history_records.data_source_updated_datetime
-{self.indent*2}WHERE
-{self.indent*3}history_records.l_pid IS NULL
-{self.indent*2}) AS {default_table_name}
+        output_from_clause = f'''FROM (      
+{self.indent}SELECT current_record.*
+{self.indent}FROM {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} current_record
+{self.indent*2}LEFT JOIN {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} AS history_records ON current_record.{self.field_metadata[0]["source_table_key_field_name"]} = history_records.{self.field_metadata[0]["source_table_key_field_name"]}
+{self.indent*3}AND current_record.data_source_updated_datetime < history_records.data_source_updated_datetime
+{self.indent}WHERE history_records.{self.field_metadata[0]["source_table_key_field_name"]} IS NULL
+{self.indent}) AS {default_table_name}
 '''
 
         # create join sql
@@ -335,7 +321,7 @@ class ETL_creator():
         # add joins
         for field_definition in self.field_metadata:
             if field_definition["join_type"] is None:
-                continue # there is no join to process so skip to the next field_definition
+                continue  # there is no join to process so skip to the next field_definition
 
             if field_definition["join_alias"] not in processed_join_dwids:
                 output_join_sql += self.create_join_sql(field_definition)
@@ -377,21 +363,23 @@ class ETL_creator():
         output_select_clause = f'''SELECT
 {self.indent}{output_edw_standard_fields}{output_select_clause}'''
 
-        order_by_statement = f'''ORDER BY
+        output_where_clause = f'''WHERE 1=1'''
+
+        output_order_by_statement = f'''ORDER BY
 {self.indent}primary_table.data_source_updated_datetime ASC
 '''
         statement_terminator = ";"
 
-        output_sql_statement = f"{output_select_clause} {output_from_clause} {output_join_sql} {order_by_statement} {statement_terminator}"
+        output_sql_statement = f"{output_select_clause} {output_from_clause} {output_join_sql} {output_where_clause} {output_order_by_statement} {statement_terminator}"
 
         return output_sql_statement
 
     def create_edw_standard_fields_sql(self) -> str:
-        '''
+        """
         Returns a string that adds EDW's standard fields. Used to add the standard fields to the Table Input step's SQL
 
         :return: string that can be appended to the beginning of a SELECT statement (includes trailing comma)
-        '''
+        """
         output_edw_standard_fields = f'''{self.indent}{self.create_data_source_integration_columns_select_sql()},
 {self.indent*2}{self.create_data_source_integration_id_select_sql()},
 {self.indent*2}now() as edw_created_datetime,
@@ -401,57 +389,55 @@ class ETL_creator():
         return output_edw_standard_fields
 
     def create_data_source_dwid_select_sql(self, data_source_dwid_value: int) -> str:
-        '''
+        """
         Creates a string that can be added to a SELECT clause that contains the column data_source_dwid (no trailing comma included)
 
         :param data_source_dwid_value:
         :return: string that can be appended to a SELECT statement (no trailing comma)
-        '''
+        """
         return f"{data_source_dwid_value} as data_source_dwid"
 
     def create_data_source_integration_columns_select_sql(self) -> str:
-        '''
+        """
         Uses self.field_metadata list to create a string used to define the data_source_integration_columns field on the Table Input step SQL
 
         :return: a string that can be used in a select statement (no trailing commma)
-        '''
+        """
         output_select_clause = ""
         value_delimiter = " || ''~'' || "
         for field_definition in self.field_metadata:
-            if field_definition["insert_update_key_field_flag"] == True:  # only process key fields
-                if field_definition["has_table_input_source_definition"] == 1:  # don't process edw standard fields
-                    output_select_clause += f'''\'\'{field_definition["insert_update_field_name"]}\'\'{value_delimiter}'''
+            if field_definition["insert_update_key_field_flag"] is True:  # only process key fields
+                output_select_clause += f'''\'\'{field_definition["insert_update_field_name"]}\'\'{value_delimiter}'''
 
-
-        # remove the trailing value_delimiter string before appending the closing parenthesis for the CONCAT() function
+        # remove the trailing value_delimiter string
         output_select_clause = output_select_clause[:len(output_select_clause)-len(value_delimiter)]
 
         return f"{output_select_clause} as data_source_integration_columns"
 
     def create_data_source_integration_id_select_sql(self) -> str:
-        '''
+        """
         used to create the data_source_integration_id field used in a select statement. contains the values of the key fields ordered by their edw_field_definition.dwid value
 
         :return: a string that can be appended to a select clause (no trailing comma)
-        '''
+        """
         output_select_clause = ""
         value_delimiter = " || ''~'' || "   # we need to use || instead of the CONCAT() function because there is a 100 parameter limit for functions in our install of postgresql
                                             # see "max_function_args (integer)" section of https://www.postgresql.org/docs/9.1/runtime-config-preset.html
 
         for field_definition in self.field_metadata:
-            if field_definition["insert_update_key_field_flag"] == False:  # only process key fields
+            if field_definition["insert_update_key_field_flag"] is False:  # only process key fields
                 continue
             else:
                 # determine if the field is pulled from the primary table or not
-                if field_definition["table_input_edw_table_definition_dwid"] == field_definition["primary_source_edw_table_definition_dwid"]: # field is in the primary table
+                if field_definition["table_input_edw_table_definition_dwid"] == field_definition["primary_source_edw_table_definition_dwid"]:  # field is in the primary table
                     table_name = f"primary_table"
-                else: # field is not in the primary table so needs to be pulled from the aliased table from the join clause
+                else:  # field is not in the primary table so needs to be pulled from the aliased table from the join clause
                     table_name = f'''t{field_definition["join_alias"]}'''
 
                 if field_definition["insert_update_field_source_calculation"] is None:  # process non calculated fields
-                    if field_definition["has_table_input_source_definition"] == 1:  # don't process edw standard fields
-                        output_select_clause += f'''CAST({table_name}.{field_definition["table_input_field_name"]} as text) {value_delimiter}'''
+                    output_select_clause += f'''CAST({table_name}.{field_definition["table_input_field_name"]} as text) {value_delimiter}'''
                 else:  # process calculated fields
+                    # we're casting all of the calculated fields so they can be concatenated with || in postgresql
                     output_select_clause += f'''CAST({field_definition["insert_update_field_source_calculation"].replace("'", "''")} as text){value_delimiter}'''
 
         # remove the trailing value_delimiter string before appending the closing parenthesis for the CONCAT() function
@@ -460,41 +446,36 @@ class ETL_creator():
         return output_select_clause
 
     def create_join_sql(self, field_definition: dict) -> str:  # this can likely be made recursive and get rid of self.create_child_join_sql()
-        '''
+        """
         Used to create a join statement that can also contain a child join
 
         :param field_definition: One row from the list self.field_metadata
         :return: returns a string that can be added to a SQL statement
-        '''
+        """
 
         child_join_needed = self.has_child_join(field_definition)
         child_join_sql = ""
 
-        if child_join_needed == True:
+        if child_join_needed is True:
             child_join_sql = self.create_child_join_sql(field_definition["join_alias"])
 
         output_join_sql = f'''
 {self.indent}-- join start
-{self.indent}{field_definition["join_type"].upper()} JOIN
-{self.indent}(
-{self.indent*2}(      
-{self.indent*3}SELECT
-{self.indent*4}current_record.*
-{self.indent*3}FROM
-{self.indent*4}{field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} current_record
-{self.indent*5}LEFT JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} AS history_records ON current_record.{field_definition["primary_source_key_field_name"]} = history_records.{field_definition["primary_source_key_field_name"]}
-{self.indent*6}AND current_record.data_source_updated_datetime < history_records.data_source_updated_datetime
-{self.indent*3}WHERE
-{self.indent*4}history_records.{field_definition["primary_source_key_field_name"]} IS NULL
+{self.indent}{field_definition["join_type"].upper()} JOIN (
+{self.indent*2}SELECT * FROM (      
+{self.indent*3}SELECT current_record.*
+{self.indent*3}FROM {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} current_record
+{self.indent*4}LEFT JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} AS history_records ON current_record.{field_definition["primary_source_key_field_name"]} = history_records.{field_definition["primary_source_key_field_name"]}
+{self.indent*4}AND current_record.data_source_updated_datetime < history_records.data_source_updated_datetime
+{self.indent*3}WHERE history_records.{field_definition["primary_source_key_field_name"]} IS NULL
 {self.indent*2}) as primary_table
 [[REPLACE_WITH_CHILD_JOIN_SQL_OR_BLANK_STRING]]
 {self.indent}) AS t{field_definition["join_alias"]} ON {field_definition["join_condition"]}
 {self.indent}-- join end
 '''.replace("[[REPLACE_WITH_CHILD_JOIN_SQL_OR_BLANK_STRING]]", child_join_sql)
-
         return output_join_sql
 
-    def create_child_join_sql(self, edw_join_definition_dwid: dict) -> str:
+    def create_child_join_sql(self, edw_join_definition_dwid: int) -> str:
         # get the join details from the DB
         child_join_details = EDW().get_child_join_data(edw_join_definition_dwid)
         if len(child_join_details) == 0:
@@ -518,12 +499,12 @@ class ETL_creator():
         return child_join_query_template
 
     def has_child_join(self, field_definition: dict) -> bool:
-        '''
+        """
         Detects if a single row from self.field_metadata's list requires a child join
 
         :param field_definition: One row from the list self.field_metadata
         :return:
-        '''
+        """
         edw = EDW()
         child_join_data = edw.get_child_join_data(field_definition["join_alias"])
 
@@ -537,7 +518,7 @@ class ETL_creator():
             raise ValueError("Expected child_join_data to have 0 or 1 rows but more than 1 row was found. Script is not written to handle this scenario.")
 
     def get_process_dwid_from_table_name(self, search_text: str) -> int:
-        '''
+        """
         Used to get the process_dwid based on a table name. If 0 or more than 1 row is found ValueErrors are thrown.
 
         ** THIS CODE IS FRAGILE ** -- highly coupled with the format of the test in mdi.process.description. We're
@@ -545,12 +526,12 @@ class ETL_creator():
 
         :param search_text: the name of the table (or other text) that
         :return: returns the process_dwid of a row in mdi.process that has *table_name* in its description
-        '''
+        """
 
         edw = EDW()
-        search_text = f"%% {search_text} %%" # %% escapes the % character for the psycopg2 module. we need to build the
-                                             # string manually because the module automatically adds single quotes around strings.
-                                             # may be able to fix this with module psycopg2.sql's sql builder functions.
+        search_text = f"%% {search_text} %%"  # %% escapes the % character for the psycopg2 module. we need to build the
+                                                # string manually because the module automatically adds single quotes around strings.
+                                                # may be able to fix this with module psycopg2.sql's sql builder functions.
 
         query = '''SELECT dwid AS process_dwid FROM mdi.process WHERE description LIKE %s AND name LIKE \'SP-10%%\''''
 
@@ -563,17 +544,17 @@ class ETL_creator():
         elif number_of_rows_returned == 0:
             raise(ValueError("Expected 1 row to be returned when querying mdi.process but zero rows returned."))
         elif number_of_rows_returned == 1:
-            process_dwid = rows[0]["process_dwid"] # we know there is only one row in the list and we want the process_dwid value from that dict
+            process_dwid = rows[0]["process_dwid"]  # we know there is only one row in the list and we want the process_dwid value from that dict
             return process_dwid
         else:
-            raise(Exception("Unexpected program state encountered while looking up the process_dwid values from the table name.")) # should never hit this code but throw an error for future me if we do enter a problem state
+            raise(Exception("Unexpected program state encountered while looking up the process_dwid values from the table name."))  # should never hit this code but throw an error for future me if we do enter a problem state
 
     def create_table_input_to_insert_update_sql(self) -> str:
-        '''
+        """
         Creates SQL that can be executed against the config database in EDW to add SP configurations.
 
         :return: a string that contains SQL insert statements
-        '''
+        """
 
         config_insert = ""
         config_insert += f'''
@@ -593,7 +574,7 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
 '''
 
         for index, field_definition in enumerate(self.field_metadata, start=1):
-            if field_definition["json_output_key_field"] == True:
+            if field_definition["json_output_key_field"] is True:
                 config_insert += f'''
 , temp_json_output_field_{index} as (INSERT INTO mdi.json_output_field (process_dwid, field_name)   -- mdi.json_output_field
     select temp_process.dwid, '{field_definition["insert_update_field_name"]}'
@@ -608,10 +589,6 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
 '''
 
         for index, field_definition in enumerate(self.field_metadata, start=1):
-            #ignore fields that do not have source definitions (edw standard fields)
-            if field_definition["has_table_input_source_definition"] == 0:
-                continue
-
             # loop over only the key fields
             if field_definition["insert_update_key_field_flag"] != 1:
                 continue
@@ -623,25 +600,27 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
     RETURNING dwid)
 '''
 
-
         config_insert += f'''
 , temp_insert_update_field_1 as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
     select temp_insert_update_step.dwid, 'data_source_dwid', 'data_source_dwid', 'Y', 'false'
     FROM temp_insert_update_step
     RETURNING dwid) 
 '''
+
         config_insert += f'''
 , temp_insert_update_field_2 as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
     select temp_insert_update_step.dwid, 'data_source_integration_columns', 'data_source_integration_columns', 'Y', 'false'
     FROM temp_insert_update_step
     RETURNING dwid) 
 '''
+
         config_insert += f'''
 , temp_insert_update_field_3 as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
     select temp_insert_update_step.dwid, 'data_source_integration_id', 'data_source_integration_id', 'Y', 'false'
     FROM temp_insert_update_step
     RETURNING dwid) 
 '''
+
         config_insert += f'''
 , temp_insert_update_field_4 as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
     select temp_insert_update_step.dwid, 'edw_created_datetime', 'edw_created_datetime', 'N', 'false'
@@ -662,7 +641,7 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
 '''
 
         for index, field_definition in enumerate(self.field_metadata, start=7):
-            #ignore fields that do not have source definitions (edw standard fields)
+            # ignore fields that do not have source definitions (edw standard fields)
             if field_definition["has_table_input_source_definition"] == 0:
                 continue
 
@@ -673,9 +652,15 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
     RETURNING dwid) 
 '''
 
+        config_insert += '''
+, temp_state_machine_step_insert as (INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)  -- mdi.state_machine_step
+    SELECT temp_process.dwid, NULL
+    FROM temp_process)
+'''
+
         seen_table_name_values = []
         for index, field_definition in enumerate(self.field_metadata, start=1):
-            #ignore fields that do not have source definitions (edw standard fields)
+            # ignore fields that do not have source definitions (edw standard fields)
             if field_definition["has_table_input_source_definition"] == 0:
                 continue
 
@@ -688,16 +673,12 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
 
             config_insert += f'''
 , temp_state_machine_step_update_{index} as (UPDATE mdi.state_machine_step set next_process_dwid = temp_process.dwid FROM temp_process WHERE process_dwid={state_machine_step_process_dwid} AND next_process_dwid IS NULL)   -- mdi.state_machine_step
-
-, temp_state_machine_step_insert_{index} as (INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)  -- mdi.state_machine_step
-    SELECT temp_process.dwid, NULL
-    FROM temp_process)
 '''
 
         config_insert += f'''
 SELECT 'Done adding MDI configuration for {self.insert_update_schema_name}.{self.insert_update_table_name} ({self.process_name})' as etl_creator_status; -- needed for the cte to return at least one row, appears in flyway/jenkins/aws logs
         
-''' # add some line breaks to the sql so the output is more readable when there are many in a row generated
+'''  # add some line breaks to the sql so the output is more readable when there are many in a row generated
         return config_insert
 
 
@@ -706,7 +687,7 @@ def main(argv):
     argv = argv[1:]
 
     try:
-        opts, args = getopt.getopt(argv, "ht:",["help","information_schema"])
+        opts, args = getopt.getopt(argv, "ht:", ["help", "information_schema"])
     except getopt.GetopsError:
         display_usage(script_name)
         exit(-1)
@@ -717,10 +698,12 @@ def main(argv):
         elif opt in ("-t", "--t", "-table_definition", "--table_definition"):
             generate_mdi_configs_based_on_table_definition(arg)
 
+
 def display_usage(script_name: str) -> None:
     print(f'''{script_name} script usage:
     -h      print usage information
     -t <schema name>   create configs based on mdi.edw_table_definition''')
+
 
 def generate_mdi_configs_based_on_table_definition(schema_name_to_process: str, ) -> None:
     print(f"-- Will create configs for this schema: {schema_name_to_process}")
@@ -734,28 +717,27 @@ def generate_mdi_configs_based_on_table_definition(schema_name_to_process: str, 
     for index, table in enumerate(table_list, start=200000):
         edw_table_definition_dwid = table["dwid"]
         database_name = table["database_name"]
-        schema_name = table["schema_name"]
         table_name = table["table_name"]
-        primary_source_edw_table_definition_dwid = table["primary_source_edw_table_definition_dwid"]
 
         process_name = f"SP-{index}"
 
         fields = edw.get_field_list_from_edw_field_definition(edw_table_definition_dwid)
         etl_config = ETL_creator(field_metadata=fields,
-                                         process_name=process_name,
-                                         edw_connection=EDW(db_name=database_name),
-                                         insert_update_table_name = table_name,
-                                         table_input_step_data_source_dwid=1,
-                                         edw_table_definition_dwid=edw_table_definition_dwid)
+                                 process_name=process_name,
+                                 edw_connection=EDW(db_name=database_name),
+                                 insert_update_table_name=table_name,
+                                 table_input_step_data_source_dwid=1,
+                                 edw_table_definition_dwid=edw_table_definition_dwid)
         sql_configuration = etl_config.create_table_input_to_insert_update_sql()
 
         output = f'''{output}
 
 {sql_configuration}'''
 
-        print(sql_configuration) # output data to screen
+        print(sql_configuration)  # output data to screen
 
     save_output(output)
+
 
 def save_output(output_data: str, file_name: str = "", file_path: str = "./", file_extension: str = "sql") -> None:
     if file_name == "":  # if no filename defined then use the current date
@@ -765,26 +747,6 @@ def save_output(output_data: str, file_name: str = "", file_path: str = "./", fi
     f.write(output_data)
     f.close()
 
+
 if __name__ == "__main__":
     main(sys.argv)
-
-
-
-
-
-
-
-#
-#
-#
-# select
-# application.apl_pid as application_pid
-# , 1 as data_source_dwid
-# , 'apl_pid~data_source_dwid~' as data_source_integration_columns
-# , CONCAT( application.apl_pid, '~1~' ) as data_source_integration_id
-# -- , application.data_source_updated_datetime as data_source_modified_datetime
-# , NOW( ) as edw_created_datetime
-# , NOW( ) as edw_modified_datetime
-# , application.apl_proposal_pid as proposal_pid
-# from
-# staging_octane.application;
