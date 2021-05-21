@@ -160,6 +160,7 @@ WHERE
 
         query = '''SELECT
     CASE WHEN source_field.source_edw_field_definition_dwid IS NULL THEN 0 ELSE 1 END as has_table_input_source_definition
+    , CASE WHEN target_field.field_name in ('dwid','data_source_dwid','data_source_integration_columns','data_source_integration_id','data_source_modified_datetime','edw_created_datetime', 'edw_modified_datetime', 'etl_batch_id') THEN 1 ELSE 0 END as is_edw_standard_field
     , source_table.database_name as table_input_database_name
     , coalesce(source_table.schema_name, target_source_table.schema_name) as table_input_schema_name
     , coalesce(source_table.table_name, target_source_table.table_name) as table_input_table_name
@@ -197,6 +198,7 @@ WHERE
     , target_field.field_name as insert_update_field_name
     , target_field.key_field_flag as insert_update_key_field_flag
     , target_field.reporting_key_flag as json_output_key_field
+
 FROM
     mdi.edw_table_definition target_table
         JOIN mdi.edw_field_definition target_field ON target_table.dwid = target_field.edw_table_definition_dwid
@@ -210,7 +212,7 @@ FROM
         LEFT JOIN mdi.edw_join_definition child_join_definition ON child_join_tree.root_join_dwid = child_join_definition.dwid
 WHERE
     target_table.dwid = %s
-    AND target_field.field_name not in ('dwid','data_source_dwid','data_source_integration_columns','data_source_integration_id','data_source_modified_datetime','edw_created_datetime', 'edw_modified_datetime', 'etl_batch_id') -- exclude these in the join if the table input field name is null?
+    -- AND target_field.field_name not in ('dwid','data_source_dwid','data_source_integration_columns','data_source_integration_id','data_source_modified_datetime','edw_created_datetime', 'edw_modified_datetime', 'etl_batch_id') -- exclude these in the join if the table input field name is null?
 ORDER BY
     table_input_edw_field_definition_dwid ASC;'''
 
@@ -332,14 +334,11 @@ class ETL_creator():
 
         # create select clause with list of fields
         output_select_clause = ""
+
+        line_suffix = f''',
+'''
+
         for index, field_definition in enumerate(self.field_metadata, start=1):
-            # if this is not the last field definition then put a comma at the end of the sql being added
-            if index != number_of_rows_returned:
-                line_suffix = f''',
-'''
-            else:
-                line_suffix = f'''
-'''
 
             if field_definition["insert_update_field_source_calculation"] is None:
 
@@ -353,17 +352,25 @@ class ETL_creator():
                 if field_definition["has_table_input_source_definition"] == 1:
                     output_select_clause += f'''{self.indent*2}{table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
                 else:
-                    output_select_clause += f'''-- skipping this row because has_table_input_source_definition != 0:         {self.indent*2}{table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
+                    if field_definition["is_edw_standard_field"] is False:
+                        output_select_clause += f'''-- skipping this row because has_table_input_source_definition != 0:         {self.indent*2}{table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
 
             else:
                 output_select_clause += f'''{self.indent*2}{field_definition["insert_update_field_source_calculation"].replace("'", "''")}{line_suffix}'''
 
         output_edw_standard_fields = self.create_edw_standard_fields_sql()
 
+        # remove the trailing comma
+        output_select_clause = f'''{output_select_clause[:len(output_select_clause) - 2]}
+'''
+
         output_select_clause = f'''SELECT
 {self.indent}{output_edw_standard_fields}{output_select_clause}'''
 
-        output_where_clause = f'''WHERE 1=1'''
+        output_where_clause = f'''WHERE (${{full_load_flag}} = TRUE
+{self.indent}OR (${{full_load_flag}} = FALSE AND borrower.b_pid IN (${{key_field_values}})))
+{self.indent})
+'''
 
         output_order_by_statement = f'''ORDER BY
 {self.indent}primary_table.data_source_updated_datetime ASC
@@ -401,7 +408,7 @@ class ETL_creator():
         """
         Uses self.field_metadata list to create a string used to define the data_source_integration_columns field on the Table Input step SQL
 
-        :return: a string that can be used in a select statement (no trailing commma)
+        :return: a string that can be used in a select statement (no trailing comma)
         """
         output_select_clause = ""
         value_delimiter = " || ''~'' || "
@@ -434,7 +441,9 @@ class ETL_creator():
                 else:  # field is not in the primary table so needs to be pulled from the aliased table from the join clause
                     table_name = f'''t{field_definition["join_alias"]}'''
 
-                if field_definition["insert_update_field_source_calculation"] is None:  # process non calculated fields
+                if field_definition["is_edw_standard_field"] == 1:  # process standard fields
+                    output_select_clause += f'''CAST({self.table_input_step_data_source_dwid} as text) {value_delimiter}'''
+                elif field_definition["insert_update_field_source_calculation"] is None:  # process non calculated fields
                     output_select_clause += f'''CAST({table_name}.{field_definition["table_input_field_name"]} as text) {value_delimiter}'''
                 else:  # process calculated fields
                     # we're casting all of the calculated fields so they can be concatenated with || in postgresql
@@ -714,7 +723,8 @@ def generate_mdi_configs_based_on_table_definition(schema_name_to_process: str, 
 
     output = ""
 
-    for index, table in enumerate(table_list, start=200000):
+    # start at 200003 to leave a few numbers for https://app.asana.com/0/0/1200167382809187/
+    for index, table in enumerate(table_list, start=200003):
         edw_table_definition_dwid = table["dwid"]
         database_name = table["database_name"]
         table_name = table["table_name"]
