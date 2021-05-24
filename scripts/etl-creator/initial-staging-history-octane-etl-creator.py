@@ -367,9 +367,7 @@ class ETL_creator():
         output_select_clause = f'''SELECT
 {self.indent}{output_edw_standard_fields}{output_select_clause}'''
 
-        output_where_clause = f'''WHERE (${{full_load_flag}} = TRUE
-{self.indent}OR (${{full_load_flag}} = FALSE AND borrower.b_pid IN (${{key_field_values}})))
-{self.indent})
+        output_where_clause = f'''WHERE include_record = TRUE
 '''
 
         output_order_by_statement = f'''ORDER BY
@@ -443,7 +441,7 @@ class ETL_creator():
 
                 if field_definition["is_edw_standard_field"] == 1:  # process standard fields
                     output_select_clause += f'''CAST({self.table_input_step_data_source_dwid} as text) {value_delimiter}'''
-                elif field_definition["insert_update_field_source_calculation"] is None:  # process non calculated fields
+                elif field_definition["insert_update_field_source_calculation"] is None:  # process non-calculated fields
                     output_select_clause += f'''CAST({table_name}.{field_definition["table_input_field_name"]} as text) {value_delimiter}'''
                 else:  # process calculated fields
                     # we're casting all of the calculated fields so they can be concatenated with || in postgresql
@@ -472,10 +470,10 @@ class ETL_creator():
 {self.indent}-- join start
 {self.indent}{field_definition["join_type"].upper()} JOIN (
 {self.indent*2}SELECT * FROM (      
-{self.indent*3}SELECT current_record.*
-{self.indent*3}FROM {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} current_record
-{self.indent*4}LEFT JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} AS history_records ON current_record.{field_definition["primary_source_key_field_name"]} = history_records.{field_definition["primary_source_key_field_name"]}
-{self.indent*4}AND current_record.data_source_updated_datetime < history_records.data_source_updated_datetime
+{self.indent*3}SELECT CASE WHEN '<<table_source>>' <> 'borrower' THEN false WHEN '<<partial_load_condition>>' = '1=1' THEN true ELSE <<partial_load_condition>> END as include_record, {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]}.*
+{self.indent*3}FROM {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]}
+{self.indent*4}LEFT JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} AS history_records ON {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]}.{field_definition["primary_source_key_field_name"]} = history_records.{field_definition["primary_source_key_field_name"]}
+{self.indent*5}AND {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]}.data_source_updated_datetime < history_records.data_source_updated_datetime
 {self.indent*3}WHERE history_records.{field_definition["primary_source_key_field_name"]} IS NULL
 {self.indent*2}) as primary_table
 [[REPLACE_WITH_CHILD_JOIN_SQL_OR_BLANK_STRING]]
@@ -495,11 +493,11 @@ class ETL_creator():
 {self.indent*3}{child_join_details[0]["join_type"].upper()} JOIN
 {self.indent*3}(      
 {self.indent*4}SELECT
-{self.indent*5}current_record.*
+{self.indent*5}CASE WHEN '<<table_source>>' <> 'borrower' THEN false WHEN '<<partial_load_condition>>' = '1=1' THEN true ELSE <<partial_load_condition>> END as include_record, {child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]}.*
 {self.indent*4}FROM
-{self.indent*5}{child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]} current_record
-{self.indent*6}LEFT JOIN {child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]} AS history_records ON current_record.{child_join_details[0]["target_field_name"]} = history_records.{child_join_details[0]["target_field_name"]}
-{self.indent*7}AND current_record.data_source_updated_datetime < history_records.data_source_updated_datetime
+{self.indent*5}{child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]}
+{self.indent*6}LEFT JOIN {child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]} AS history_records ON {child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]}.{child_join_details[0]["target_field_name"]} = history_records.{child_join_details[0]["target_field_name"]}
+{self.indent*7}AND {child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]}.data_source_updated_datetime < history_records.data_source_updated_datetime
 {self.indent*4}WHERE
 {self.indent*5}history_records.{child_join_details[0]["target_field_name"]} IS NULL
 {self.indent*3}) AS t{child_join_details[0]["child_join_tree_definition_root_join_dwid"]} ON {child_join_details[0]["join_condition"]}
