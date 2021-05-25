@@ -310,11 +310,7 @@ class ETL_creator():
         # create the FROM clause and main/primary table
         output_from_clause = f'''FROM (      
 {self.indent}SELECT
-{self.indent*2}CASE
-{self.indent*3}WHEN '<<partial_load_condition>>' = '1=1' THEN TRUE
-{self.indent*3}WHEN '<<table_source>>' <> 'application' THEN FALSE
-{self.indent*3}WHEN <<partial_load_condition>> THEN TRUE
-{self.indent*2}END as include_record,
+{self.create_include_record_select_sql(2)},
 {self.indent*2}current_record.*
 {self.indent}FROM {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} current_record
 {self.indent*2}LEFT JOIN {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} AS history_records ON current_record.{self.field_metadata[0]["source_table_key_field_name"]} = history_records.{self.field_metadata[0]["source_table_key_field_name"]}
@@ -479,11 +475,7 @@ class ETL_creator():
 {self.indent}{field_definition["join_type"].upper()} JOIN (
 {self.indent*2}SELECT * FROM (
 {self.indent*3}SELECT 
-{self.indent*3}CASE
-{self.indent*4}WHEN '<<partial_load_condition>>' = '1=1' THEN TRUE
-{self.indent*4}WHEN '<<table_source>>' <> 'application' THEN FALSE
-{self.indent*4}WHEN <<partial_load_condition>> THEN TRUE
-{self.indent*3}END as include_record,
+{self.create_include_record_select_sql(3)},
 {self.indent*3}current_record.*
 {self.indent*3}FROM {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} current_record
 {self.indent*4}LEFT JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} AS history_records ON current_record.{field_definition["primary_source_key_field_name"]} = history_records.{field_definition["primary_source_key_field_name"]}
@@ -496,6 +488,14 @@ class ETL_creator():
 '''.replace("[[REPLACE_WITH_CHILD_JOIN_SQL_OR_BLANK_STRING]]", child_join_sql)
         return output_join_sql
 
+    def create_include_record_select_sql(self, starting_indent_level: int = 1):
+        output = f'''{self.indent*starting_indent_level}CASE
+{self.indent*(starting_indent_level + 1)}WHEN '<<partial_load_condition>>' = '1=1' THEN TRUE
+{self.indent*(starting_indent_level + 1)}WHEN '<<table_source>>' <> 'application' THEN FALSE
+{self.indent*(starting_indent_level + 1)}WHEN <<partial_load_condition>> THEN TRUE
+{self.indent*starting_indent_level}END as include_record'''
+        return output
+
     def create_child_join_sql(self, edw_join_definition_dwid: int) -> str:
         # get the join details from the DB
         child_join_details = EDW().get_child_join_data(edw_join_definition_dwid)
@@ -507,11 +507,7 @@ class ETL_creator():
 {self.indent*3}{child_join_details[0]["join_type"].upper()} JOIN
 {self.indent*3}(      
 {self.indent*4}SELECT
-{self.indent*5}CASE
-{self.indent*6}WHEN '<<partial_load_condition>>' = '1=1' THEN TRUE
-{self.indent*6}WHEN '<<table_source>>' <> 'application' THEN FALSE
-{self.indent*6}WHEN <<partial_load_condition>> THEN TRUE
-{self.indent*5}END as include_record,
+{self.create_include_record_select_sql(5)},
 {self.indent*5}current_record.*
 {self.indent*4}FROM
 {self.indent*5}{child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]} current_record
