@@ -310,7 +310,7 @@ class ETL_creator():
         # create the FROM clause and main/primary table
         output_from_clause = f'''FROM (      
 {self.indent}SELECT
-{self.create_include_record_select_sql(2)},
+{self.create_include_record_select_sql(self.field_metadata[0]["primary_source_table_name"], 2)},
 {self.indent*2}current_record.*
 {self.indent}FROM {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} current_record
 {self.indent*2}LEFT JOIN {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} AS history_records ON current_record.{self.field_metadata[0]["source_table_key_field_name"]} = history_records.{self.field_metadata[0]["source_table_key_field_name"]}
@@ -337,7 +337,7 @@ class ETL_creator():
                 output_join_sql += f'''{self.indent*2}-- ignoring this because the table alias t{field_definition["join_alias"]} has already been added: {field_definition["join_type"].upper()} JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} t{field_definition["join_alias"]} ON {field_definition["join_condition"]}  
 '''
 
-        output_where_clause += ''') = TRUE
+        output_where_clause += ''') IS TRUE
 '''
 
         # create select clause with list of fields
@@ -476,7 +476,7 @@ class ETL_creator():
 {self.indent}{field_definition["join_type"].upper()} JOIN (
 {self.indent*2}SELECT * FROM (
 {self.indent*3}SELECT 
-{self.create_include_record_select_sql(3)},
+{self.create_include_record_select_sql(field_definition["table_input_table_name"], 3)},
 {self.indent*3}current_record.*
 {self.indent*3}FROM {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} current_record
 {self.indent*4}LEFT JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} AS history_records ON current_record.{field_definition["primary_source_key_field_name"]} = history_records.{field_definition["primary_source_key_field_name"]}
@@ -489,12 +489,18 @@ class ETL_creator():
 '''.replace("[[REPLACE_WITH_CHILD_JOIN_SQL_OR_BLANK_STRING]]", child_join_sql)
         return output_join_sql
 
-    def create_include_record_select_sql(self, starting_indent_level: int = 1):
+    def create_include_record_select_sql(self,  table_source: str, starting_indent_level: int = 1, add_newline_suffix: bool = False):
+        if add_newline_suffix is False:
+            suffix = ""
+        else:
+            suffix = '''
+'''
+
         output = f'''{self.indent*starting_indent_level}CASE
-{self.indent*(starting_indent_level + 1)}WHEN '<<partial_load_condition>>' = '1=1' THEN TRUE
-{self.indent*(starting_indent_level + 1)}WHEN '<<table_source>>' <> 'application' THEN FALSE
+{self.indent*(starting_indent_level + 1)}WHEN ''<<partial_load_condition>>'' = ''1=1'' THEN TRUE
+{self.indent*(starting_indent_level + 1)}WHEN ''<<table_source>>'' <> ''{table_source}'' THEN FALSE
 {self.indent*(starting_indent_level + 1)}WHEN <<partial_load_condition>> THEN TRUE
-{self.indent*starting_indent_level}END as include_record'''
+{self.indent*starting_indent_level}END as include_record{suffix}'''
         return output
 
     def create_child_join_sql(self, edw_join_definition_dwid: int) -> str:
@@ -508,7 +514,7 @@ class ETL_creator():
 {self.indent*3}{child_join_details[0]["join_type"].upper()} JOIN
 {self.indent*3}(      
 {self.indent*4}SELECT
-{self.create_include_record_select_sql(5)},
+{self.create_include_record_select_sql(child_join_details[0]["target_table_name"], 5)},
 {self.indent*5}current_record.*
 {self.indent*4}FROM
 {self.indent*5}{child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]} current_record
@@ -625,21 +631,21 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
 
         config_insert += f'''
 , temp_insert_update_field_1 as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
-    select temp_insert_update_step.dwid, 'data_source_dwid', 'data_source_dwid', 'Y', 'false'
+    select temp_insert_update_step.dwid, 'data_source_dwid', 'data_source_dwid', 'N', 'false'
     FROM temp_insert_update_step
     RETURNING dwid) 
 '''
 
         config_insert += f'''
 , temp_insert_update_field_2 as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
-    select temp_insert_update_step.dwid, 'data_source_integration_columns', 'data_source_integration_columns', 'Y', 'false'
+    select temp_insert_update_step.dwid, 'data_source_integration_columns', 'data_source_integration_columns', 'N', 'false'
     FROM temp_insert_update_step
     RETURNING dwid) 
 '''
 
         config_insert += f'''
 , temp_insert_update_field_3 as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
-    select temp_insert_update_step.dwid, 'data_source_integration_id', 'data_source_integration_id', 'Y', 'false'
+    select temp_insert_update_step.dwid, 'data_source_integration_id', 'data_source_integration_id', 'N', 'false'
     FROM temp_insert_update_step
     RETURNING dwid) 
 '''
@@ -668,9 +674,14 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             if field_definition["has_table_input_source_definition"] == 0:
                 continue
 
+            if field_definition["insert_update_key_field_flag"] == 1:
+                update_flag = "N"
+            else:
+                update_flag = "Y"
+
             config_insert += f'''
 , temp_insert_update_field_{index} as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
-    select temp_insert_update_step.dwid, '{field_definition["insert_update_field_name"]}', '{field_definition["insert_update_field_name"]}', 'Y', 'false'
+    select temp_insert_update_step.dwid, '{field_definition["insert_update_field_name"]}', '{field_definition["insert_update_field_name"]}', '{update_flag}', 'false'
     FROM temp_insert_update_step
     RETURNING dwid) 
 '''
