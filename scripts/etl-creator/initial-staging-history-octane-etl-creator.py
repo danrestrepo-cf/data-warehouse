@@ -337,7 +337,8 @@ class ETL_creator():
                 output_join_sql += f'''{self.indent*2}-- ignoring this because the table alias t{field_definition["join_alias"]} has already been added: {field_definition["join_type"].upper()} JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} t{field_definition["join_alias"]} ON {field_definition["join_condition"]}  
 '''
 
-        output_where_clause += ") = TRUE"
+        output_where_clause += ''') = TRUE
+'''
 
         # create select clause with list of fields
         output_select_clause = ""
