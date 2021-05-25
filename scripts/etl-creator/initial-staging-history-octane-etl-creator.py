@@ -258,6 +258,17 @@ ORDER BY
             columns.append(row[0])
         return columns
 
+    def get_state_machine_step_from_process_dwid(self, process_dwid: int) -> list:
+        query = '''SELECT
+    state_machine_step.process_dwid
+     , state_machine_step.next_process_dwid
+FROM
+    mdi.state_machine_step
+WHERE
+    process_dwid = %s
+;'''
+        return self.execute_parameterized_query(query, (process_dwid))
+
 
 class ETL_creator():
     def __init__(self, field_metadata: list, process_name: str, edw_connection: EDW, insert_update_table_name: str,
@@ -489,7 +500,7 @@ class ETL_creator():
 '''.replace("[[REPLACE_WITH_CHILD_JOIN_SQL_OR_BLANK_STRING]]", child_join_sql)
         return output_join_sql
 
-    def create_include_record_select_sql(self,  table_source: str, starting_indent_level: int = 1, add_newline_suffix: bool = False):
+    def create_include_record_select_sql(self,  partial_load_source_table: str, starting_indent_level: int = 1, add_newline_suffix: bool = False):
         if add_newline_suffix is False:
             suffix = ""
         else:
@@ -498,7 +509,7 @@ class ETL_creator():
 
         output = f'''{self.indent*starting_indent_level}CASE
 {self.indent*(starting_indent_level + 1)}WHEN ''<<partial_load_condition>>'' = ''1=1'' THEN TRUE
-{self.indent*(starting_indent_level + 1)}WHEN ''<<table_source>>'' <> ''{table_source}'' THEN FALSE
+{self.indent*(starting_indent_level + 1)}WHEN ''<<partial_load_source_table>>'' <> ''{partial_load_source_table}'' THEN FALSE
 {self.indent*(starting_indent_level + 1)}WHEN <<partial_load_condition>> THEN TRUE
 {self.indent*starting_indent_level}END as include_record{suffix}'''
         return output
@@ -558,11 +569,14 @@ class ETL_creator():
         """
 
         edw = EDW()
-        search_text = f"%% {search_text} %%"  # %% escapes the % character for the psycopg2 module. we need to build the
-        # string manually because the module automatically adds single quotes around strings.
-        # may be able to fix this with module psycopg2.sql's sql builder functions.
 
-        query = '''SELECT dwid AS process_dwid FROM mdi.process WHERE description LIKE %s AND name LIKE \'SP-10%%\''''
+        query = """SELECT
+    *
+FROM
+    mdi.table_output_step
+WHERE
+    table_output_step.target_schema = 'history_octane'
+    AND table_output_step.target_table = %s;"""
 
         rows = edw.execute_parameterized_query(query, search_text)
 
@@ -705,9 +719,23 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
 
             seen_table_name_values.append(field_definition["table_input_table_name"])
 
-            config_insert += f'''
+            state_machine_step_record = EDW().get_state_machine_step_from_process_dwid(state_machine_step_process_dwid)
+            if len(state_machine_step_record) == 0:
+                config_insert += f'''
+, temp_state_machine_step_insert as (INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)  -- mdi.state_machine_step
+    SELECT temp_process.dwid, NULL
+    FROM temp_process)
+'''
+            else:
+                config_insert += f'''
 , temp_state_machine_step_update_{index} as (UPDATE mdi.state_machine_step set next_process_dwid = temp_process.dwid FROM temp_process WHERE process_dwid={state_machine_step_process_dwid} AND next_process_dwid IS NULL)   -- mdi.state_machine_step
 '''
+
+            # check to see if process dwid has a next process dwid or null
+            if True == True:
+                pass  # null: update current state_machine_step record
+            else:
+                pass  # has a next_process_dwid: create a new state_machine_step record with the same process_dwid and the new process dwid as next_process_dwid
 
         config_insert += f'''
 SELECT 'Done adding MDI configuration for {self.insert_update_schema_name}.{self.insert_update_table_name} ({self.process_name})' as etl_creator_status; -- needed for the cte to return at least one row, appears in flyway/jenkins/aws logs
@@ -763,6 +791,7 @@ def generate_mdi_configs_based_on_table_definition(schema_name_to_process: str, 
                                  insert_update_table_name=table_name,
                                  table_input_step_data_source_dwid=1,
                                  edw_table_definition_dwid=edw_table_definition_dwid)
+
         sql_configuration = etl_config.create_table_input_to_insert_update_sql()
 
         output = f'''{output}
