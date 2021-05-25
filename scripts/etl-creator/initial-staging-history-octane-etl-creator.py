@@ -309,13 +309,21 @@ class ETL_creator():
 
         # create the FROM clause and main/primary table
         output_from_clause = f'''FROM (      
-{self.indent}SELECT current_record.*
+{self.indent}SELECT
+{self.indent*2}CASE
+{self.indent*3}WHEN '<<partial_load_condition>>' = '1=1' THEN TRUE
+{self.indent*3}WHEN '<<table_source>>' <> 'application' THEN FALSE
+{self.indent*3}WHEN <<partial_load_condition>> THEN TRUE
+{self.indent*2}END as include_record,
+{self.indent*2}current_record.*
 {self.indent}FROM {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} current_record
 {self.indent*2}LEFT JOIN {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} AS history_records ON current_record.{self.field_metadata[0]["source_table_key_field_name"]} = history_records.{self.field_metadata[0]["source_table_key_field_name"]}
 {self.indent*3}AND current_record.data_source_updated_datetime < history_records.data_source_updated_datetime
 {self.indent}WHERE history_records.{self.field_metadata[0]["source_table_key_field_name"]} IS NULL
 {self.indent}) AS {default_table_name}
 '''
+        output_where_clause = f'''WHERE
+{self.indent}GREATEST(primary_table.include_record'''
 
         # create join sql
         output_join_sql = ""
@@ -327,10 +335,13 @@ class ETL_creator():
 
             if field_definition["join_alias"] not in processed_join_dwids:
                 output_join_sql += self.create_join_sql(field_definition)
+                output_where_clause += f', t{field_definition["join_alias"]}.include_record'
                 processed_join_dwids.append(field_definition["join_alias"])
             else:
                 output_join_sql += f'''{self.indent*2}-- ignoring this because the table alias t{field_definition["join_alias"]} has already been added: {field_definition["join_type"].upper()} JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} t{field_definition["join_alias"]} ON {field_definition["join_condition"]}  
 '''
+
+        output_where_clause += ") = TRUE"
 
         # create select clause with list of fields
         output_select_clause = ""
@@ -366,9 +377,6 @@ class ETL_creator():
 
         output_select_clause = f'''SELECT
 {self.indent}{output_edw_standard_fields}{output_select_clause}'''
-
-        output_where_clause = f'''WHERE include_record = TRUE
-'''
 
         output_order_by_statement = f'''ORDER BY
 {self.indent}primary_table.data_source_updated_datetime ASC
@@ -427,7 +435,7 @@ class ETL_creator():
         """
         output_select_clause = ""
         value_delimiter = " || ''~'' || "   # we need to use || instead of the CONCAT() function because there is a 100 parameter limit for functions in our install of postgresql
-                                            # see "max_function_args (integer)" section of https://www.postgresql.org/docs/9.1/runtime-config-preset.html
+        # see "max_function_args (integer)" section of https://www.postgresql.org/docs/9.1/runtime-config-preset.html
 
         for field_definition in self.field_metadata:
             if field_definition["insert_update_key_field_flag"] is False:  # only process key fields
@@ -441,7 +449,7 @@ class ETL_creator():
 
                 if field_definition["is_edw_standard_field"] == 1:  # process standard fields
                     output_select_clause += f'''CAST({self.table_input_step_data_source_dwid} as text) {value_delimiter}'''
-                elif field_definition["insert_update_field_source_calculation"] is None:  # process non-calculated fields
+                elif field_definition["insert_update_field_source_calculation"] is None:  # process non calculated fields
                     output_select_clause += f'''CAST({table_name}.{field_definition["table_input_field_name"]} as text) {value_delimiter}'''
                 else:  # process calculated fields
                     # we're casting all of the calculated fields so they can be concatenated with || in postgresql
@@ -469,11 +477,17 @@ class ETL_creator():
         output_join_sql = f'''
 {self.indent}-- join start
 {self.indent}{field_definition["join_type"].upper()} JOIN (
-{self.indent*2}SELECT * FROM (      
-{self.indent*3}SELECT CASE WHEN '<<table_source>>' <> 'borrower' THEN false WHEN '<<partial_load_condition>>' = '1=1' THEN true ELSE <<partial_load_condition>> END as include_record, {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]}.*
-{self.indent*3}FROM {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]}
-{self.indent*4}LEFT JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} AS history_records ON {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]}.{field_definition["primary_source_key_field_name"]} = history_records.{field_definition["primary_source_key_field_name"]}
-{self.indent*5}AND {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]}.data_source_updated_datetime < history_records.data_source_updated_datetime
+{self.indent*2}SELECT * FROM (
+{self.indent*3}SELECT 
+{self.indent*3}CASE
+{self.indent*4}WHEN '<<partial_load_condition>>' = '1=1' THEN TRUE
+{self.indent*4}WHEN '<<table_source>>' <> 'application' THEN FALSE
+{self.indent*4}WHEN <<partial_load_condition>> THEN TRUE
+{self.indent*3}END as include_record,
+{self.indent*3}current_record.*
+{self.indent*3}FROM {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} current_record
+{self.indent*4}LEFT JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} AS history_records ON current_record.{field_definition["primary_source_key_field_name"]} = history_records.{field_definition["primary_source_key_field_name"]}
+{self.indent*4}AND current_record.data_source_updated_datetime < history_records.data_source_updated_datetime
 {self.indent*3}WHERE history_records.{field_definition["primary_source_key_field_name"]} IS NULL
 {self.indent*2}) as primary_table
 [[REPLACE_WITH_CHILD_JOIN_SQL_OR_BLANK_STRING]]
@@ -493,11 +507,16 @@ class ETL_creator():
 {self.indent*3}{child_join_details[0]["join_type"].upper()} JOIN
 {self.indent*3}(      
 {self.indent*4}SELECT
-{self.indent*5}CASE WHEN '<<table_source>>' <> 'borrower' THEN false WHEN '<<partial_load_condition>>' = '1=1' THEN true ELSE <<partial_load_condition>> END as include_record, {child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]}.*
+{self.indent*5}CASE
+{self.indent*6}WHEN '<<partial_load_condition>>' = '1=1' THEN TRUE
+{self.indent*6}WHEN '<<table_source>>' <> 'application' THEN FALSE
+{self.indent*6}WHEN <<partial_load_condition>> THEN TRUE
+{self.indent*5}END as include_record,
+{self.indent*5}current_record.*
 {self.indent*4}FROM
-{self.indent*5}{child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]}
-{self.indent*6}LEFT JOIN {child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]} AS history_records ON {child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]}.{child_join_details[0]["target_field_name"]} = history_records.{child_join_details[0]["target_field_name"]}
-{self.indent*7}AND {child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]}.data_source_updated_datetime < history_records.data_source_updated_datetime
+{self.indent*5}{child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]} current_record
+{self.indent*6}LEFT JOIN {child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]} AS history_records ON current_record.{child_join_details[0]["target_field_name"]} = history_records.{child_join_details[0]["target_field_name"]}
+{self.indent*7}AND current_record.data_source_updated_datetime < history_records.data_source_updated_datetime
 {self.indent*4}WHERE
 {self.indent*5}history_records.{child_join_details[0]["target_field_name"]} IS NULL
 {self.indent*3}) AS t{child_join_details[0]["child_join_tree_definition_root_join_dwid"]} ON {child_join_details[0]["join_condition"]}
@@ -537,8 +556,8 @@ class ETL_creator():
 
         edw = EDW()
         search_text = f"%% {search_text} %%"  # %% escapes the % character for the psycopg2 module. we need to build the
-                                                # string manually because the module automatically adds single quotes around strings.
-                                                # may be able to fix this with module psycopg2.sql's sql builder functions.
+        # string manually because the module automatically adds single quotes around strings.
+        # may be able to fix this with module psycopg2.sql's sql builder functions.
 
         query = '''SELECT dwid AS process_dwid FROM mdi.process WHERE description LIKE %s AND name LIKE \'SP-10%%\''''
 
