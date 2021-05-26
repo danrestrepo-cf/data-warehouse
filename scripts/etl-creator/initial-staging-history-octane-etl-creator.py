@@ -289,7 +289,7 @@ class ETL_creator():
         """
 
         if len(field_metadata) == 0:
-            raise(ValueError("table_metadata should contain at least one item in the list"))
+            raise(ValueError("field_metadata should contain at least one item in the list"))
 
         self.edw_table_definition_dwid = edw_table_definition_dwid
 
@@ -720,22 +720,21 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             seen_table_name_values.append(field_definition["table_input_table_name"])
 
             state_machine_step_record = EDW().get_state_machine_step_from_process_dwid(state_machine_step_process_dwid)
-            if len(state_machine_step_record) == 0:
+
+            if len(state_machine_step_record) > 1:  # if multiple rows returned we need to insert a new one
                 config_insert += f'''
 , temp_state_machine_step_insert as (INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)  -- mdi.state_machine_step
-    SELECT temp_process.dwid, NULL
+    SELECT {state_machine_step_process_dwid}, temp_process.dwid
     FROM temp_process)
 '''
-            else:
+            elif len(state_machine_step_record) == 1:  # if 1 row returned then we need to update it
                 config_insert += f'''
 , temp_state_machine_step_update_{index} as (UPDATE mdi.state_machine_step set next_process_dwid = temp_process.dwid FROM temp_process WHERE process_dwid={state_machine_step_process_dwid} AND next_process_dwid IS NULL)   -- mdi.state_machine_step
 '''
-
-            # check to see if process dwid has a next process dwid or null
-            if True == True:
-                pass  # null: update current state_machine_step record
-            else:
-                pass  # has a next_process_dwid: create a new state_machine_step record with the same process_dwid and the new process dwid as next_process_dwid
+            elif len(state_machine_step_record) < 1:  # if 0 rows returned then raise ValueError, why doesn't the process_dwid that populates the tables needed for this ETL have a state machine step configured to populate it???
+                print(f"While attempting to determine if a new record should be inserted to state_machine_step or update an existing row an unexpected error occured. The variable state_machine_step_record should contain a list of rows returned from the db with 1 or more rows to process correctly but only {len(state_machine_step_record)} row(s) were found.")
+                print(f"State_machine_step_record's contents: {state_machine_step_record}")
+                raise ValueError("state_machine_step_record should contain 1 or more items in the list. Unable to process this scenario due to business rules.")
 
         config_insert += f'''
 SELECT 'Done adding MDI configuration for {self.insert_update_schema_name}.{self.insert_update_table_name} ({self.process_name})' as etl_creator_status; -- needed for the cte to return at least one row, appears in flyway/jenkins/aws logs
