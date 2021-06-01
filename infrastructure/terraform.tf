@@ -6,7 +6,7 @@ locals {
 }
 terraform {
   backend "s3" {
-    bucket  = "dev-cardinal-bi-managed-infrastructure"
+    bucket  = "dev-cardinal-bi-managed-infrastructure-s3"
     key     = "data-warehouse/pipelines/terraform.tf"
     region  = "us-east-1"
     // we are not using locking, as jenkins will control that

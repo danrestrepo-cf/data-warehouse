@@ -4,7 +4,7 @@ locals {
   bi-prefix    = "${terraform.workspace}-bi-managed"
 
   // the VPC is "dev" for BI QA
-  vpc-prefix = split(data.aws_vpc.this.tags["Name"], "-")[0]
+  vpc-prefix = split("-", data.aws_vpc.this.tags["Name"])[0]
 
   task-to-container = {
     "mdi_2_container" = "${terraform.workspace}-mdi-2"
@@ -38,14 +38,21 @@ data aws_vpc this {
   id = data.aws_security_group.this.vpc_id
 }
 
-data aws_subnet_id az1 {
-  vpc_id = data.aws_security_group.this.vpc_id
-  name   = "${local.vpc-prefix}-bi-private-${local.aws-region}a"
+data aws_subnet az1 {
+//  vpc_id = data.aws_security_group.this.vpc_id
+  filter {
+    name   = "tag:Name"
+    values = ["${local.vpc-prefix}-bi-private-${local.aws-region}a"]
+  }
+
 }
 
-data aws_subnet_id az2 {
-  vpc_id = data.aws_security_group.this.vpc_id
-  name   = "${local.vpc-prefix}-bi-private-${local.aws-region}b"
+data aws_subnet az2 {
+//  vpc_id = data.aws_security_group.this.vpc_id
+  filter {
+    name   = "tag:Name"
+    values = ["${local.vpc-prefix}-bi-private-${local.aws-region}a"]
+  }
 }
 
 // Known ECS tasks
