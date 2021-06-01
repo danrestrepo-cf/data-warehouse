@@ -507,11 +507,7 @@ class ETL_creator():
             suffix = '''
 '''
 
-        output = f'''{self.indent*starting_indent_level}CASE
-{self.indent*(starting_indent_level + 1)}WHEN ''<<partial_load_condition>>'' = ''1=1'' THEN TRUE
-{self.indent*(starting_indent_level + 1)}WHEN ''<<partial_load_source_table>>'' <> ''{partial_load_source_table}'' THEN FALSE
-{self.indent*(starting_indent_level + 1)}WHEN <<partial_load_condition>> THEN TRUE
-{self.indent*starting_indent_level}END as include_record{suffix}'''
+        output = f'''{self.indent*starting_indent_level}<<{partial_load_source_table}_partial_load_condition>> as include_record{suffix}'''
         return output
 
     def create_child_join_sql(self, edw_join_definition_dwid: int) -> str:
@@ -729,7 +725,7 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
 '''
             elif len(state_machine_step_record) == 1:  # if 1 row returned then we need to update it
                 config_insert += f'''
-, temp_state_machine_step_update_{index} as (UPDATE mdi.state_machine_step set next_process_dwid = temp_process.dwid FROM temp_process WHERE process_dwid={state_machine_step_process_dwid} AND next_process_dwid IS NULL)   -- mdi.state_machine_step
+, temp_state_machine_step_update_{index} as (UPDATE mdi.state_machine_step set next_process_dwid = temp_process.dwid FROM temp_process WHERE process_dwid=(select process_dwid from mdi.table_output_step where table_output_step.target_schema='{field_definition["table_input_schema_name"]}' and table_output_step.target_table = '{field_definition["table_input_table_name"]}') AND next_process_dwid IS NULL)   -- mdi.state_machine_step
 '''
             elif len(state_machine_step_record) < 1:  # if 0 rows returned then raise ValueError, why doesn't the process_dwid that populates the tables needed for this ETL have a state machine step configured to populate it???
                 print(f"While attempting to determine if a new record should be inserted to state_machine_step or update an existing row an unexpected error occured. The variable state_machine_step_record should contain a list of rows returned from the db with 1 or more rows to process correctly but only {len(state_machine_step_record)} row(s) were found.")
