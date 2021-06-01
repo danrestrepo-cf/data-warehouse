@@ -478,26 +478,27 @@ class ETL_creator():
 
         child_join_needed = self.has_child_join(field_definition)
         child_join_sql = ""
+        include_record_join_sql = f'''{self.create_include_record_select_sql(field_definition["table_input_table_name"])},'''
 
         if child_join_needed is True:
             child_join_sql = self.create_child_join_sql(field_definition["join_alias"])
+            include_record_join_sql = ""
 
         output_join_sql = f'''
 {self.indent}-- join start
 {self.indent}{field_definition["join_type"].upper()} JOIN (
 {self.indent*2}SELECT * FROM (
-{self.indent*3}SELECT 
-{self.create_include_record_select_sql(field_definition["table_input_table_name"], 3)},
+{self.indent*3}SELECT {include_record_join_sql}
 {self.indent*3}current_record.*
 {self.indent*3}FROM {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} current_record
 {self.indent*4}LEFT JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} AS history_records ON current_record.{field_definition["primary_source_key_field_name"]} = history_records.{field_definition["primary_source_key_field_name"]}
 {self.indent*4}AND current_record.data_source_updated_datetime < history_records.data_source_updated_datetime
 {self.indent*3}WHERE history_records.{field_definition["primary_source_key_field_name"]} IS NULL
 {self.indent*2}) as primary_table
-[[REPLACE_WITH_CHILD_JOIN_SQL_OR_BLANK_STRING]]
+{self.indent*2}{child_join_sql}
 {self.indent}) AS t{field_definition["join_alias"]} ON {field_definition["join_condition"]}
 {self.indent}-- join end
-'''.replace("[[REPLACE_WITH_CHILD_JOIN_SQL_OR_BLANK_STRING]]", child_join_sql)
+'''
         return output_join_sql
 
     def create_include_record_select_sql(self,  partial_load_source_table: str, starting_indent_level: int = 1, add_newline_suffix: bool = False):
