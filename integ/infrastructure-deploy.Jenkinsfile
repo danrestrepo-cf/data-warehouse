@@ -38,6 +38,10 @@ pipeline {
             }
             steps {
                 dir("infrastructure") {
+                    // TODO: remove these lines:w
+
+                    sh "ls -al ~"
+                    sh "ls -al ~/.ssh"
                     sh "terraform init"
                     // try to create the workspace, but it may already exist so ignore the failure
                     sh "terraform workspace new ${params.environment} || true"
@@ -85,7 +89,7 @@ def zoom(status) {
         zoomSend(
             authToken: env.ZOOM_TOKEN_STATUS,
             webhookUrl: env.ZOOM_WEBHOOK_STATUS,
-            message: "${env.JOB_NAME} #${currentBuild.number} for ${params.app_env} - ${status}\n" +
+            message: "${env.JOB_NAME} #${currentBuild.number} for ${params.environment} - ${status}\n" +
                 "Submitted by ${env.BUILD_USER} for ${params.git_branch}"
         )
     }
@@ -96,7 +100,7 @@ def zoomAlarm(status) {
         zoomSend(
             authToken: env.ZOOM_TOKEN_ALARM,
             webhookUrl: env.ZOOM_WEBHOOK_ALARM,
-            message: "${env.JOB_NAME} #${currentBuild.number} for ${params.app_env} - ${status}\n" +
+            message: "${env.JOB_NAME} #${currentBuild.number} for ${params.environment} - ${status}\n" +
                 "Submitted by ${env.BUILD_USER} for ${params.git_branch}"
         )
     }
