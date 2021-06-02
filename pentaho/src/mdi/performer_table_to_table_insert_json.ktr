@@ -2592,13 +2592,14 @@ WHERE
         <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
         <jsScript_script>//Script to replace Table input step SQL placeholder with partial load condition
+const load_condition_regex = /&lt;&lt;.+_partial_load_condition>>/gi
 
-var sql = sql;
-var key_field_name = key_field_name;
-var partial_load_source_table = key_field_name.split(".", 1);
-var partial_load_condition = partial_load_condition;
-
-var sql_for_injection = sql.replace("&lt;&lt;partial_load_source_table>>", partial_load_source_table).replace("&lt;&lt;partial_load_condition>>", partial_load_condition);</jsScript_script>
+if (key_field_name == null) {
+  var sql_for_injection = sql.replace(load_condition_regex, "TRUE");
+} else {
+  var sql_for_injection = sql.replace("&lt;&lt;" + key_field_name.split(".", 1) + "_partial_load_condition>>", partial_load_condition)
+                             .replace(load_condition_regex, "FALSE");
+}</jsScript_script>
       </jsScript>
     </jsScripts>
     <fields>
