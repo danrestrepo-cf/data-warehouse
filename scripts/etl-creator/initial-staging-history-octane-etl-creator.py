@@ -375,7 +375,7 @@ class ETL_creator():
                         output_select_clause += f'''-- skipping this row because has_table_input_source_definition != 0:         {self.indent*2}{table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
 
             else:
-                output_select_clause += f'''{self.indent*2}{field_definition["insert_update_field_source_calculation"].replace("'", "''")}{line_suffix}'''
+                output_select_clause += f'''{self.indent*2}{field_definition["insert_update_field_source_calculation"].replace("'", "''")} as {field_definition["insert_update_field_name"]}{line_suffix}'''
 
         output_edw_standard_fields = self.create_edw_standard_fields_sql()
 
@@ -511,27 +511,27 @@ class ETL_creator():
         output = f'''{self.indent*starting_indent_level}<<{partial_load_source_table}_partial_load_condition>> as include_record{suffix}'''
         return output
 
-    def create_child_join_sql(self, edw_join_definition_dwid: int) -> str:
+    def create_child_join_sql(self, edw_join_definition_dwid: int, starting_indent_level: int = 4) -> str:
         # get the join details from the DB
         child_join_details = EDW().get_child_join_data(edw_join_definition_dwid)
         if len(child_join_details) == 0:
             return ""  # there are no child joins to process, return an empty string
         else:
             child_join_query_template = f'''
-{self.indent*3}-- child join start    
-{self.indent*3}{child_join_details[0]["join_type"].upper()} JOIN
-{self.indent*3}(      
-{self.indent*4}SELECT
+{self.indent*starting_indent_level}-- child join start    
+{self.indent*starting_indent_level}{child_join_details[0]["join_type"].upper()} JOIN
+{self.indent*starting_indent_level}(      
+{self.indent*(starting_indent_level + 1)}SELECT
 {self.create_include_record_select_sql(child_join_details[0]["target_table_name"], 5)},
-{self.indent*5}current_record.*
-{self.indent*4}FROM
-{self.indent*5}{child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]} current_record
-{self.indent*6}LEFT JOIN {child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]} AS history_records ON current_record.{child_join_details[0]["target_field_name"]} = history_records.{child_join_details[0]["target_field_name"]}
-{self.indent*7}AND current_record.data_source_updated_datetime < history_records.data_source_updated_datetime
-{self.indent*4}WHERE
-{self.indent*5}history_records.{child_join_details[0]["target_field_name"]} IS NULL
-{self.indent*3}) AS t{child_join_details[0]["child_join_tree_definition_root_join_dwid"]} ON {child_join_details[0]["join_condition"]}
-{self.indent*3}-- child join end    
+{self.indent*(starting_indent_level + 2)}current_record.*
+{self.indent*(starting_indent_level + 1)}FROM
+{self.indent*(starting_indent_level + 2)}{child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]} current_record
+{self.indent*(starting_indent_level + 3)}LEFT JOIN {child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]} AS history_records ON current_record.{child_join_details[0]["target_field_name"]} = history_records.{child_join_details[0]["target_field_name"]}
+{self.indent*(starting_indent_level + 4)}AND current_record.data_source_updated_datetime < history_records.data_source_updated_datetime
+{self.indent*(starting_indent_level + 1)}WHERE
+{self.indent*(starting_indent_level + 2)}history_records.{child_join_details[0]["target_field_name"]} IS NULL
+{self.indent*starting_indent_level}) AS t{child_join_details[0]["child_join_tree_definition_root_join_dwid"]} ON {child_join_details[0]["join_condition"]}
+{self.indent*starting_indent_level}-- child join end    
 '''
         return child_join_query_template
 
