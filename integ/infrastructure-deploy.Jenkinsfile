@@ -1,7 +1,7 @@
 #! groovy
 
 pipeline {
-    agent { label "data-warehouse-infrastructure" }
+    agent { label "bi-infrastructure-deploy" }
     parameters {
         string(name: "git_branch", defaultValue: "", description: "Enter the name of the branch to build. E.g. master")
         choice(name: "environment", description: "Choose which environment to run on.",
