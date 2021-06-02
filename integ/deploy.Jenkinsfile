@@ -22,8 +22,8 @@ pipeline {
         // just for notifications
         ZOOM_TOKEN_STATUS = credentials('zoom-token-bi-jenkins')
         ZOOM_WEBHOOK_STATUS = credentials('zoom-webhook-bi-jenkins')
-        ZOOM_TOKEN_ALARM = credentials('zoom-token-bi-alarms')
-        ZOOM_WEBHOOK_ALARM = credentials('zoom-webhook-bi-alarms')
+        ZOOM_TOKEN_ALARM = credentials('zoom-token-bi-alerts')
+        ZOOM_WEBHOOK_ALARM = credentials('zoom-webhook-bi-alerts')
     }
     stages {
         stage('Notify') {
