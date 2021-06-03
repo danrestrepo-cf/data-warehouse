@@ -612,12 +612,9 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
     FROM temp_process
     RETURNING dwid)
 '''
-
-        for index, field_definition in enumerate(self.field_metadata, start=1):
-            if field_definition["json_output_key_field"] is True:
-                config_insert += f'''
-, temp_json_output_field_{index} as (INSERT INTO mdi.json_output_field (process_dwid, field_name)   -- mdi.json_output_field
-    select temp_process.dwid, '{field_definition["insert_update_field_name"]}'
+        config_insert += f'''
+, temp_json_output_field as (INSERT INTO mdi.json_output_field (process_dwid, field_name)   -- mdi.json_output_field
+    select temp_process.dwid, 'data_source_integration_id'
     FROM temp_process)
 '''
 
@@ -628,71 +625,72 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
     RETURNING dwid)
 '''
 
-        for index, field_definition in enumerate(self.field_metadata, start=1):
-            # loop over only the key fields
-            if field_definition["insert_update_key_field_flag"] != 1:
-                continue
-
-            config_insert += f'''
-, temp_insert_update_key_{index} as (INSERT INTO mdi.insert_update_key (insert_update_step_dwid, key_lookup, key_stream1, key_condition)   -- mdi.insert_update_key
-    select temp_insert_update_step.dwid, '{field_definition["insert_update_field_name"]}', '{field_definition["insert_update_field_name"]}', '='
+        config_insert += f'''
+, temp_insert_update_key as (INSERT INTO mdi.insert_update_key (insert_update_step_dwid, key_lookup, key_stream1, key_condition)   -- mdi.insert_update_key
+    select temp_insert_update_step.dwid, 'data_source_integration_id', 'data_source_integration_id', '= ~NULL'
     FROM temp_insert_update_step
     RETURNING dwid)
 '''
 
         config_insert += f'''
 , temp_insert_update_field_1 as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
-    select temp_insert_update_step.dwid, 'data_source_dwid', 'data_source_dwid', 'N', 'false'
+    select temp_insert_update_step.dwid, 'data_source_dwid', 'data_source_dwid', 'Y', 'FALSE'
     FROM temp_insert_update_step
     RETURNING dwid) 
 '''
 
         config_insert += f'''
 , temp_insert_update_field_2 as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
-    select temp_insert_update_step.dwid, 'data_source_integration_columns', 'data_source_integration_columns', 'N', 'false'
+    select temp_insert_update_step.dwid, 'data_source_integration_columns', 'data_source_integration_columns', 'Y', 'FALSE'
     FROM temp_insert_update_step
     RETURNING dwid) 
 '''
 
         config_insert += f'''
 , temp_insert_update_field_3 as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
-    select temp_insert_update_step.dwid, 'data_source_integration_id', 'data_source_integration_id', 'N', 'false'
+    select temp_insert_update_step.dwid, 'data_source_integration_id', 'data_source_integration_id', 'Y', 'FALSE'
     FROM temp_insert_update_step
     RETURNING dwid) 
 '''
 
         config_insert += f'''
 , temp_insert_update_field_4 as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
-    select temp_insert_update_step.dwid, 'edw_created_datetime', 'edw_created_datetime', 'N', 'false'
+    select temp_insert_update_step.dwid, 'edw_created_datetime', 'edw_created_datetime', 'N', 'FALSE'
     FROM temp_insert_update_step
     RETURNING dwid) 
 '''
         config_insert += f'''
 , temp_insert_update_field_5 as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
-    select temp_insert_update_step.dwid, 'edw_modified_datetime', 'edw_modified_datetime', 'Y', 'false'
+    select temp_insert_update_step.dwid, 'edw_modified_datetime', 'edw_modified_datetime', 'Y', 'FALSE'
     FROM temp_insert_update_step
     RETURNING dwid) 
 '''
         config_insert += f'''
 , temp_insert_update_field_6 as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
-    select temp_insert_update_step.dwid, 'data_source_modified_datetime', 'data_source_modified_datetime', 'Y', 'false'
+    select temp_insert_update_step.dwid, 'data_source_modified_datetime', 'data_source_modified_datetime', 'N', 'FALSE'
+    FROM temp_insert_update_step
+    RETURNING dwid) 
+'''
+        config_insert += f'''
+, temp_insert_update_field_7 as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
+    select temp_insert_update_step.dwid, 'etl_batch_id', 'etl_batch_id', 'Y', 'FALSE'
     FROM temp_insert_update_step
     RETURNING dwid) 
 '''
 
-        for index, field_definition in enumerate(self.field_metadata, start=7):
+        for index, field_definition in enumerate(self.field_metadata, start=8):
             # ignore fields that do not have source definitions (edw standard fields)
             if field_definition["has_table_input_source_definition"] == 0:
                 continue
 
-            if field_definition["insert_update_key_field_flag"] == 1:
-                update_flag = "N"
-            else:
-                update_flag = "Y"
+            #if field_definition["insert_update_key_field_flag"] == 1:
+            #    update_flag = "N"
+            #else:
+            update_flag = "Y"
 
             config_insert += f'''
 , temp_insert_update_field_{index} as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
-    select temp_insert_update_step.dwid, '{field_definition["insert_update_field_name"]}', '{field_definition["insert_update_field_name"]}', '{update_flag}', 'false'
+    select temp_insert_update_step.dwid, '{field_definition["insert_update_field_name"]}', '{field_definition["insert_update_field_name"]}', '{update_flag}', 'FALSE'
     FROM temp_insert_update_step
     RETURNING dwid) 
 '''
