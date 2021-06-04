@@ -18,7 +18,7 @@ pipeline {
         }
         stage("Build Docker images") {
             steps {
-                sh "./integ/s3-artifact-download.sh './docker/pentaho/install' 'pdi-ce-9.0.0.0-423.zip' 'data-warehouse/pdi-ce-9.0.0.0-423.zip'"
+                sh "./integ/scripts/s3-artifact-download.sh './docker/pentaho/install' 'pdi-ce-9.0.0.0-423.zip' 'data-warehouse/pdi-ce-9.0.0.0-423.zip'"
                 dir("./docker") {
                     sh "./docker-rebuild.sh"
                 }

@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# TODO: this must be executed via aws-vault
 
 path_to_script=$(dirname "$0")
 absolute_path="$(pwd)/${path_to_script}"
