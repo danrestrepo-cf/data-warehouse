@@ -70,7 +70,7 @@ pipeline {
         stage("Deploy Infrastructure") {
             // this will enable all managed event triggers
             steps {
-                build job: 'bi-ops-edw-infrastructure-deploy',
+                build job: 'bi-ops-data-warehouse-infrastructure-deploy',
                     propagate: true,
                     wait: true,
                     parameters: [
