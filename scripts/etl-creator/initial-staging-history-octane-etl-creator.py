@@ -341,7 +341,11 @@ class ETL_creator():
                 continue  # there is no join to process so skip to the next field_definition
 
             if field_definition["join_alias"] not in processed_join_dwids:
-                output_join_sql += self.create_join_sql(field_definition)
+                # determine if we need a null outer join or inner join
+                if field_definition["table_input_database_name"] == "staging" and field_definition["table_input_schema_name"] == "star_loan":
+                    output_join_sql += self.create_inner_join_sql(field_definition)
+                else:
+                    output_join_sql += self.create_null_outer_join_sql(field_definition)
                 output_where_clause += f', t{field_definition["join_alias"]}.include_record'
                 processed_join_dwids.append(field_definition["join_alias"])
             else:
@@ -475,7 +479,19 @@ class ETL_creator():
         output_select_clause += " as data_source_integration_id"
         return output_select_clause
 
-    def create_join_sql(self, field_definition: dict) -> str:  # this can likely be made recursive and get rid of self.create_child_join_sql()
+    def create_inner_join_sql(self, field_definition: dict) -> str:
+        output_join_sql = f'''
+{self.indent}-- inner join start
+{self.indent}{field_definition["join_type"].upper()} JOIN (
+{self.indent*2}SELECT
+{self.indent*3}{field_definition["table_input_table_name"]}.*
+{self.indent*2}FROM {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]}
+{self.indent}) AS t{field_definition["join_alias"]} ON {field_definition["join_condition"]}
+{self.indent}-- inner join end
+'''
+        return output_join_sql
+
+    def create_null_outer_join_sql(self, field_definition: dict) -> str:  # this can likely be made recursive and get rid of self.create_child_join_sql()
         """
         Used to create a join statement that can also contain a child join
 
@@ -492,7 +508,7 @@ class ETL_creator():
             include_record_join_sql = ""
 
         output_join_sql = f'''
-{self.indent}-- join start
+{self.indent}-- null outter join start
 {self.indent}{field_definition["join_type"].upper()} JOIN (
 {self.indent*2}SELECT * FROM (
 {self.indent*3}SELECT {include_record_join_sql}
@@ -504,7 +520,7 @@ class ETL_creator():
 {self.indent*2}) as primary_table
 {self.indent*2}{child_join_sql}
 {self.indent}) AS t{field_definition["join_alias"]} ON {field_definition["join_condition"]}
-{self.indent}-- join end
+{self.indent}-- null outter join end
 '''
         return output_join_sql
 
@@ -619,11 +635,10 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
     FROM temp_process
     RETURNING dwid)
 '''
-        for field_definition in self.field_metadata:
-            if field_definition["json_output_key_field"] is True:
-                config_insert += f'''
+
+        config_insert += f'''
 , temp_json_output_field as (INSERT INTO mdi.json_output_field (process_dwid, field_name)   -- mdi.json_output_field
-    select temp_process.dwid, {field_definition["insert_update_field_name"]}
+    select temp_process.dwid, 'data_source_integration_id'
     FROM temp_process)
 '''
 
