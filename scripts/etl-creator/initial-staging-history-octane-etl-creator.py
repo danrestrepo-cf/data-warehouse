@@ -359,20 +359,27 @@ class ETL_creator():
 
         for index, field_definition in enumerate(self.field_metadata, start=1):
 
-            if field_definition["insert_update_field_source_calculation"] is None:
+            if field_definition["table_input_edw_table_definition_dwid"] == field_definition["primary_source_edw_table_definition_dwid"]:
+                table_name = f"primary_table"
+            else:
+                table_name = f'''t{field_definition["join_alias"]}'''
 
-                if field_definition["table_input_edw_table_definition_dwid"] == field_definition["primary_source_edw_table_definition_dwid"]:
-                    table_name = f"primary_table"
-                else:
-                    table_name = f'''t{field_definition["join_alias"]}'''
+            if field_definition["insert_update_field_source_calculation"] is None:
 
                 # this is not a calculated field so if there is a source definition add the column to the select clause
                 # otherwise it is an edw standard field that shouldn't be added (yet)
                 if field_definition["has_table_input_source_definition"] == 1:
                     output_select_clause += f'''{self.indent*2}{table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
                 else:
-                    if field_definition["is_edw_standard_field"] is False:
+                    if field_definition["table_input_schema_name"] == "star_loan" and field_definition["table_input_database_name"] == "staging":
+                        output_select_clause += f'''{self.indent*2}{table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
+                    elif field_definition["is_edw_standard_field"] is False:
                         output_select_clause += f'''-- skipping this row because has_table_input_source_definition != 0:         {self.indent*2}{table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
+                    elif field_definition["table_input_schema_name"] == None:  # standard fields have null table input fields
+                        continue
+                    else:
+                        print(f'''field_definition['table_input_schema_name'] has the value of {field_definition['table_input_schema_name']}''')
+                        raise ValueError("expected field_definition['table_input_schema_name'] to be history_octane or star_loan. Unexpected value found.")
 
             else:
                 output_select_clause += f'''{self.indent*2}{field_definition["insert_update_field_source_calculation"].replace("'", "''")} as {field_definition["insert_update_field_name"]}{line_suffix}'''
@@ -612,9 +619,11 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
     FROM temp_process
     RETURNING dwid)
 '''
-        config_insert += f'''
+        for field_definition in self.field_metadata:
+            if field_definition["json_output_key_field"] is True:
+                config_insert += f'''
 , temp_json_output_field as (INSERT INTO mdi.json_output_field (process_dwid, field_name)   -- mdi.json_output_field
-    select temp_process.dwid, 'data_source_integration_id'
+    select temp_process.dwid, {field_definition["insert_update_field_name"]}
     FROM temp_process)
 '''
 
