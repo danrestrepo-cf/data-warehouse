@@ -469,7 +469,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/06/07 16:13:41.837</modified_date>
+    <modified_date>2021/06/08 15:02:47.732</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -666,11 +666,14 @@
 
 
 
+
+
+
 </note>
-      <xloc>960</xloc>
-      <yloc>160</yloc>
+      <xloc>944</xloc>
+      <yloc>80</yloc>
       <width>1090</width>
-      <heigth>1060</heigth>
+      <heigth>1123</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -835,12 +838,7 @@
     </hop>
     <hop>
       <from>[template_table_to_table_insert_update_json] Filter rows</from>
-      <to>[template_table_to_table_insert_update_json] Full load - set key_field_values to NULL</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[template_table_to_table_insert_update_json] Select key field rows</from>
-      <to>[template_table_to_table_insert_update_json] Count and concatenate key field rows</to>
+      <to>[template_table_to_table_insert_update_json] Full load - set key_field_name and key_field_values to NULL</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -849,22 +847,12 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_update_json] Partial load - add blank field for key_field_name</from>
-      <to>[template_table_to_table_insert_update_json] Partial load - Set key_field_name</to>
+      <from>[template_table_to_table_insert_update_json] Add blank field for key_field_name</from>
+      <to>[template_table_to_table_insert_update_json] Set key_field_name</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_update_json] Partial load - Set key_field_name</from>
-      <to>[template_table_to_table_insert_update_json] Partial load - add hardcoded constant</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[template_table_to_table_insert_update_json] Filter rows</from>
-      <to>[template_table_to_table_insert_update_json] Partial load - add blank field for key_field_name</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[template_table_to_table_insert_update_json] Full load - set key_field_values to NULL</from>
+      <from>[template_table_to_table_insert_update_json] Full load - set key_field_name and key_field_values to NULL</from>
       <to>[template_table_to_table_insert_update_json] Full load - add hardcoded constants</to>
       <enabled>Y</enabled>
     </hop>
@@ -911,6 +899,26 @@
     <hop>
       <from>[template_table_to_table_insert_update_json] Block S3 step until insert flow finishes</from>
       <to>[template_table_to_table_insert_update_json] S3 file output</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update_json] Select key field rows</from>
+      <to>[template_table_to_table_insert_update_json] Add blank field for key_field_name</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update_json] Set key_field_name</from>
+      <to>[template_table_to_table_insert_update_json] Conditionally add quotes to key_field_value_rows</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update_json] Conditionally add quotes to key_field_value_rows</from>
+      <to>[template_table_to_table_insert_update_json] Count and concatenate key field rows</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update_json] Filter rows</from>
+      <to>[template_table_to_table_insert_update_json] Partial load - add hardcoded constant</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -1103,11 +1111,6 @@
         <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
         <jsScript_script>
-// Conditionally process key_field_values if it contains non-numeric, non-comma characters
-if ((key_field_values !== null) &amp;&amp; (/[^,\d]/.test(key_field_values) === true)) {
-	key_field_values = "'" + key_field_values.split(",").join("','") + "'"
-};
-
 // Build output JSON
 var outer_json = {};
 var inner_json = {};
@@ -1182,7 +1185,10 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     <linenr_fieldname/>
     <give_back_row>Y</give_back_row>
     <group>
-      </group>
+      <field>
+        <name>key_field_name</name>
+      </field>
+    </group>
     <fields>
       <field>
         <aggregate>row_count</aggregate>
@@ -1192,7 +1198,7 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
       </field>
       <field>
         <aggregate>key_field_values</aggregate>
-        <subject>key_field_value_rows</subject>
+        <subject>processed_key_field_value_rows</subject>
         <type>CONCAT_STRING</type>
         <valuefield>,</valuefield>
       </field>
@@ -1207,7 +1213,7 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>272</yloc>
+      <yloc>416</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1222,8 +1228,8 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <send_true_to>[template_table_to_table_insert_update_json] Full load - set key_field_values to NULL</send_true_to>
-    <send_false_to>[template_table_to_table_insert_update_json] Partial load - add blank field for key_field_name</send_false_to>
+    <send_true_to>[template_table_to_table_insert_update_json] Full load - set key_field_name and key_field_values to NULL</send_true_to>
+    <send_false_to>[template_table_to_table_insert_update_json] Partial load - add hardcoded constant</send_false_to>
     <compare>
       <condition>
         <negated>N</negated>
@@ -1251,7 +1257,7 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>368</yloc>
+      <yloc>496</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1267,18 +1273,6 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
       <schema_name/>
     </partitioning>
     <fields>
-      <field>
-        <name>key_field_name</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
       <field>
         <name>full_load_flag</name>
         <type>Boolean</type>
@@ -1301,13 +1295,13 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1792</xloc>
-      <yloc>608</yloc>
+      <xloc>1776</xloc>
+      <yloc>640</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update_json] Full load - set key_field_values to NULL</name>
+    <name>[template_table_to_table_insert_update_json] Full load - set key_field_name and key_field_values to NULL</name>
     <type>SetValueConstant</type>
     <description/>
     <distribute>Y</distribute>
@@ -1319,6 +1313,12 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     </partitioning>
     <usevar>N</usevar>
     <fields>
+      <field>
+        <name>key_field_name</name>
+        <value/>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
       <field>
         <name>key_field_values</name>
         <value/>
@@ -1335,8 +1335,8 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1792</xloc>
-      <yloc>416</yloc>
+      <xloc>1776</xloc>
+      <yloc>528</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1373,7 +1373,7 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update_json] Partial load - Set key_field_name</name>
+    <name>[template_table_to_table_insert_update_json] Set key_field_name</name>
     <type>SetValueConstant</type>
     <description/>
     <distribute>Y</distribute>
@@ -1401,13 +1401,13 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1200</xloc>
-      <yloc>512</yloc>
+      <xloc>1488</xloc>
+      <yloc>256</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update_json] Partial load - add blank field for key_field_name</name>
+    <name>[template_table_to_table_insert_update_json] Add blank field for key_field_name</name>
     <type>Constant</type>
     <description/>
     <distribute>Y</distribute>
@@ -1440,8 +1440,8 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1200</xloc>
-      <yloc>416</yloc>
+      <xloc>1488</xloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1479,8 +1479,8 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1200</xloc>
-      <yloc>608</yloc>
+      <xloc>1216</xloc>
+      <yloc>576</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1551,7 +1551,7 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>1168</yloc>
+      <yloc>1152</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1579,7 +1579,7 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>176</yloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1783,7 +1783,7 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     </remotesteps>
     <GUI>
       <xloc>480</xloc>
-      <yloc>176</yloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1862,6 +1862,64 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     <GUI>
       <xloc>480</xloc>
       <yloc>384</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_update_json] Conditionally add quotes to key_field_value_rows</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>
+// Conditionally process key_field_value_rows if key_field_name value does not contain one of the following: pid, dwid
+if (/pid|dwid/.test(key_field_name) === false) {
+	processed_key_field_value_rows = ("'" + key_field_value_rows + "'")
+} else {
+	processed_key_field_value_rows = key_field_value_rows
+};</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>key_field_name</name>
+        <rename>key_field_name</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>processed_key_field_value_rows</name>
+        <rename>processed_key_field_value_rows</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1488</xloc>
+      <yloc>336</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

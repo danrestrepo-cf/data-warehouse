@@ -1310,7 +1310,7 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>enable_lazy_conversion</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_table_to_table_insert_update_json] Partial load - Set key_field_name</target_step_name>
+        <target_step_name>[template_table_to_table_insert_update_json] Set key_field_name</target_step_name>
         <target_attribute_key>REPLACE_VALUE</target_attribute_key>
         <target_detail>Y</target_detail>
         <source_step>[performer_table_to_table_insert_update_json]  Get key_field_name</source_step>
@@ -1359,7 +1359,7 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>environment</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_table_to_table_insert_update_json] Partial load - Set key_field_name</target_step_name>
+        <target_step_name>[template_table_to_table_insert_update_json] Set key_field_name</target_step_name>
         <target_attribute_key>FIELD_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
         <source_step/>
