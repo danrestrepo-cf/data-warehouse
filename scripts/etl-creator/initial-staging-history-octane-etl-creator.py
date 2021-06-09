@@ -510,7 +510,7 @@ class ETL_creator():
             include_record_join_sql = ""
 
         output_join_sql = f'''
-{self.indent}-- null outter join start
+{self.indent}-- null outer join start
 {self.indent}{field_definition["join_type"].upper()} JOIN (
 {self.indent*2}SELECT * FROM (
 {self.indent*3}SELECT {include_record_join_sql}
