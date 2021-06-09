@@ -469,7 +469,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/06/09 09:29:05.607</modified_date>
+    <modified_date>2021/06/09 16:01:49.800</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -776,11 +776,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_delete_json] Table input</from>
-      <to>[template_table_to_table_delete_json] Delete</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>[template_table_to_table_delete_json] Delete</from>
       <to>[template_table_to_table_delete_json]  Specify logging fields (non-sensitive)</to>
       <enabled>Y</enabled>
@@ -848,6 +843,16 @@
     <hop>
       <from>[template_table_to_table_delete_json] Filter rows</from>
       <to>[template_table_to_table_delete_json] Partial load - add hardcoded constant</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_delete_json] Table input</from>
+      <to>[template_table_to_table_delete_json] Block delete step until key_field_name is evaluated</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_delete_json] Block delete step until key_field_name is evaluated</from>
+      <to>[template_table_to_table_delete_json] Delete</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -1137,12 +1142,12 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
         <jsScript_script>
 // Conditionally process key_field_value_rows if key_field_name value is one of the following: data_source_integration_id, code. 
 // If it is not either of those values and is not dwid, or does not end in _dwid or _pid, then throw an error.
-if (/_pid$|^dwid$|_dwid$/.test(key_field_name) === true) {
+if (/_pid$|^dwid$|_dwid$/.test(key_field_name.split(".")[1]) === true) {
 	processed_key_field_value_rows = key_field_value_rows
-} else if (/^(data_source_integration_id|code)$/.test(key_field_name) === true) {
+} else if (/^(data_source_integration_id|code)$/.test(key_field_name.split(".")[1]) === true) {
 	processed_key_field_value_rows = ("'" + key_field_value_rows + "'")
 } else {
-	throw 'Unexpected key_field_name value: ' + key_field_name
+	throw 'Unexpected key_field_name value: ' + key_field_name.split(".")[1]
 };</jsScript_script>
       </jsScript>
     </jsScripts>
@@ -1689,6 +1694,37 @@ if (/_pid$|^dwid$|_dwid$/.test(key_field_name) === true) {
     <GUI>
       <xloc>304</xloc>
       <yloc>96</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_delete_json] Block delete step until key_field_name is evaluated</name>
+    <type>BlockUntilStepsFinish</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <steps>
+      <step>
+        <name>[template_table_to_table_delete_json] Conditionally add quotes to key_field_value_rows</name>
+        <CopyNr>0</CopyNr>
+      </step>
+    </steps>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>304</xloc>
+      <yloc>384</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
