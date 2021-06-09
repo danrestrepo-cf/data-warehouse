@@ -522,7 +522,7 @@ class ETL_creator():
 {self.indent*2}) as primary_table
 {self.indent*2}{child_join_sql}
 {self.indent}) AS t{field_definition["join_alias"]} ON {field_definition["join_condition"]}
-{self.indent}-- null outter join end
+{self.indent}-- null outer join end
 '''
         return output_join_sql
 
