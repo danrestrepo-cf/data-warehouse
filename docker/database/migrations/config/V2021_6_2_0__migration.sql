@@ -45,3 +45,30 @@ WHERE edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
   AND edw_table_definition.schema_name = 'star_loan'
   AND edw_table_definition.table_name = 'mortgage_insurance_dim'
   AND edw_field_definition.field_name = 'loan_dwid';
+
+--
+-- EDW | edw_join_definition - Fix join condition for mortgage_insurance_dim
+-- https://app.asana.com/0/0/1200441523296553
+--
+
+-- select all join definitions between history_octane.loan and star_loan.loan_dim
+WITH loan_to_loan_dim_joins AS (
+    SELECT edw_join_definition.dwid
+         , edw_join_definition.join_condition
+    FROM mdi.edw_join_definition
+    JOIN mdi.edw_table_definition primary_table
+         ON edw_join_definition.primary_edw_table_definition_dwid = primary_table.dwid
+    JOIN mdi.edw_table_definition target_table
+         ON edw_join_definition.target_edw_table_definition_dwid = target_table.dwid
+    WHERE primary_table.schema_name = 'history_octane'
+      AND primary_table.table_name = 'loan'
+      AND target_table.schema_name = 'star_loan'
+      AND target_table.table_name = 'loan_dim'
+)
+-- update the join condition for the join whose existing condition is "primary_table.loan_pid = t{dwid}.loan_pid AND t{dwid}.data_source_id = 1"
+UPDATE mdi.edw_join_definition
+SET join_condition = 'primary_table.l_pid = t' || loan_to_loan_dim_joins.dwid || '.loan_pid ' ||
+                     'AND t' || loan_to_loan_dim_joins.dwid || '.data_source_dwid = 1'
+FROM loan_to_loan_dim_joins
+WHERE edw_join_definition.join_condition = 'primary_table.loan_pid = t' || loan_to_loan_dim_joins.dwid || '.loan_pid ' ||
+                                              'AND t' || loan_to_loan_dim_joins.dwid || '.data_source_id = 1';
