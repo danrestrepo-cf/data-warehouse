@@ -487,7 +487,7 @@ class ETL_creator():
 {self.indent*3}TRUE as include_record,
 {self.indent*3}{field_definition["table_input_table_name"]}.*
 {self.indent*2}FROM {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]}
-{self.indent}-- ) AS t{field_definition["join_alias"]} ON {field_definition["join_condition"]}
+{self.indent}) AS t{field_definition["join_alias"]} ON {field_definition["join_condition"]}
 {self.indent}-- inner join end
 '''
         return output_join_sql
