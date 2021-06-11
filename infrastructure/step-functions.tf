@@ -2,13 +2,13 @@ resource aws_sfn_state_machine this {
   for_each = fileset("${path.module}/pipelines", "*.json")
 
   // ex: qa-bi-managed-sp-1000090
-  name     = join(local.bi-prefix, [split(".", each.key)[0]])
+  name     = "${local.bi-prefix}-${split(".", each.key)[0]}"
   role_arn = data.aws_iam_role.step-function.arn
 
   definition = templatefile("pipelines/${each.key}", merge(local.task-to-arn, local.task-to-container, {
     ecsClusterARN   = data.aws_ecs_cluster.this.arn
     securityGroupId = data.aws_security_group.this.id
-    subnetIDs       = "[${data.aws_subnet.az1.id}, ${data.aws_subnet.az2.id}]"
+    subnetIDs       = "[\"${data.aws_subnet.az1.id}\", \"${data.aws_subnet.az2.id}\"]"
   }))
 
   // tags from provider
