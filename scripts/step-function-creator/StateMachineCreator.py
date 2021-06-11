@@ -101,14 +101,14 @@ class StateMachineCreator:
             process_name = list(state.keys())[0]
 
             try:
-                del(self.state_list[index][process_name]["Parameters"]["End"])
+                del(self.state_list[index][process_name]["End"])
             except:
                 # the dict may or may not have a key named 'End' so do nothing if the key wasn't found
                 pass
 
             # this is the last item in the list so set end to true
             if (index + 1) == len(self.state_list):
-                self.state_list[index][process_name]["Parameters"]["End"] = True
+                self.state_list[index][process_name]["End"] = True
 
     def create_state_task(self, state_name: str,
                           launch_type: str = "FARGATE",
@@ -135,9 +135,9 @@ class StateMachineCreator:
             state_name: {
                 "Type": "Task",
                 "Resource": resource_arn,
+                "End":True,
                 "Parameters": {
                     "LaunchType": launch_type,
-                    "End":True,
                     "Cluster": cluster_arn,
                     "TaskDefinition": task_definition_arn,
                     "NetworkConfiguration": {
