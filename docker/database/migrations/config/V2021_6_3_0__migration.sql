@@ -459,3 +459,76 @@ WHERE edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
 DELETE
 FROM mdi.table_output_field
 WHERE table_output_field.database_field_name = 'prp_fha_203k_consultant_id';
+
+--
+-- EDW | mdi.edw_field_definition - add table prefixes to all source_field_calculations to match corresponding edw_join_definition aliases
+-- https://app.asana.com/0/0/1200453484886092
+--
+
+--update calculations for all calculated fields with no source joins
+WITH new_calculations (table_name, field_name, calculation) AS (
+    VALUES ('borrower_demographics_dim', 'ethnicity_other_hispanic_or_latino_description_flag', 'primary_table.b_ethnicity_other_hispanic_or_latino_description <> ''''')
+         , ('borrower_demographics_dim', 'other_race_national_origin_description_flag', 'primary_table.b_other_race_national_origin_description <> ''''')
+         , ('borrower_demographics_dim', 'race_other_american_indian_or_alaska_native_description_flag', 'primary_table.b_race_other_american_indian_or_alaska_native_description <> ''''')
+         , ('borrower_demographics_dim', 'race_other_asian_description_flag', 'primary_table.b_race_other_asian_description <> ''''')
+         , ('borrower_demographics_dim', 'race_other_pacific_islander_description_flag', 'primary_table.b_race_other_pacific_islander_description <> ''''')
+         , ('borrower_lending_profile_dim', 'alimony_child_support_explanation_flag', 'primary_table.b_alimony_child_support_explanation <> ''''')
+         , ('borrower_lending_profile_dim', 'bankruptcy_explanation_flag', 'primary_table.b_bankruptcy_explanation <> ''''')
+         , ('borrower_lending_profile_dim', 'borrowed_down_payment_explanation_flag', 'primary_table.b_borrowed_down_payment_explanation <> ''''')
+         , ('borrower_lending_profile_dim', 'note_endorser_explanation_flag', 'primary_table.b_note_endorser_explanation <> ''''')
+         , ('borrower_lending_profile_dim', 'obligated_loan_foreclosure_explanation_flag', 'primary_table.b_obligated_loan_foreclosure_explanation <> ''''')
+         , ('borrower_lending_profile_dim', 'outstanding_judgments_explanation_flag', 'primary_table.b_outstanding_judgments_explanation <> ''''')
+         , ('borrower_lending_profile_dim', 'party_to_lawsuit_explanation_flag', 'primary_table.b_party_to_lawsuit_explanation <> ''''')
+         , ('borrower_lending_profile_dim', 'presently_delinquent_explanation_flag', 'primary_table.b_presently_delinquent_explanation <> ''''')
+         , ('borrower_lending_profile_dim', 'property_foreclosure_explanation_flag', 'primary_table.b_property_foreclosure_explanation <> ''''')
+         , ('transaction_junk_dim', 'piggyback_flag', 'primary_table.prp_structure_type = ''COMBO''')
+)
+UPDATE mdi.edw_field_definition
+SET field_source_calculation = new_calculations.calculation
+FROM new_calculations
+   , mdi.edw_table_definition
+WHERE edw_table_definition.dwid = edw_field_definition.edw_table_definition_dwid
+  AND edw_table_definition.schema_name = 'star_loan'
+  AND edw_table_definition.table_name = new_calculations.table_name
+  AND edw_field_definition.field_name = new_calculations.field_name;
+
+-- generate single-row, single-column table containing the source join dwid for loan_dim.los_loan_number
+-- and loan_junk_dim.piggyback_flag (they use the same source join)
+WITH join_dwid AS (
+    SELECT edw_join_tree_definition.root_join_dwid AS dwid
+    FROM mdi.edw_field_definition
+    JOIN mdi.edw_table_definition
+         ON edw_table_definition.dwid = edw_field_definition.edw_table_definition_dwid
+    JOIN mdi.edw_join_tree_definition
+         ON edw_field_definition.source_edw_join_tree_definition_dwid = edw_join_tree_definition.dwid
+    WHERE edw_table_definition.schema_name = 'star_loan'
+      AND edw_table_definition.table_name = 'loan_dim'
+      AND edw_field_definition.field_name = 'los_loan_number'
+)
+--update calculations for loan_dim.los_loan_number and loan_junk_dim.piggyback_flag
+   , los_loan_number_calculation AS (
+    UPDATE mdi.edw_field_definition
+        SET field_source_calculation = 'CASE WHEN primary_table.l_lien_priority_type = ''FIRST'' OR t' ||
+                                       join_dwid.dwid ||
+                                       '.prp_structure_type = ''STANDALONE_2ND'' THEN t' ||
+                                       join_dwid.dwid ||
+                                       '.d_los_loan_id_main ELSE t' ||
+                                       join_dwid.dwid ||
+                                       '.d_los_loan_id_piggyback END'
+        FROM mdi.edw_table_definition
+            , join_dwid --this is a single-row table, so no join condition is needed
+        WHERE edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
+            AND edw_table_definition.schema_name = 'star_loan'
+            AND edw_table_definition.table_name = 'loan_dim'
+            AND edw_field_definition.field_name = 'los_loan_number'
+)
+UPDATE mdi.edw_field_definition
+SET field_source_calculation = 'CASE WHEN primary_table.l_lien_priority_type = ''FIRST'' OR t' ||
+                               join_dwid.dwid ||
+                               '.prp_structure_type = ''STANDALONE_2ND'' THEN FALSE ELSE TRUE END'
+FROM mdi.edw_table_definition
+   , join_dwid --this is a single-row table, so no join condition is needed
+WHERE edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
+  AND edw_table_definition.schema_name = 'star_loan'
+  AND edw_table_definition.table_name = 'loan_junk_dim'
+  AND edw_field_definition.field_name = 'piggyback_flag';
