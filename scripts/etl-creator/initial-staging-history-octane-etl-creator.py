@@ -117,7 +117,7 @@ WHERE
                     FROM
                         mdi.edw_table_definition
                     WHERE
-                        schema_name = %s and table_name = 'mortgage_insurance_dim'
+                        schema_name = %s
                     ORDER BY
                         table_name ASC;'''
         return self.execute_parameterized_query(query, (schema_name))
