@@ -484,7 +484,7 @@
     <created_user>-</created_user>
     <created_date>2021/02/17 17:15:35.157</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/06/15 09:55:18.103</modified_date>
+    <modified_date>2021/06/15 10:12:22.774</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -1879,12 +1879,12 @@ WHERE
         <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
         <jsScript_script>//Script to replace Table input step SQL placeholders with partial load condition
-const input_load_condition_regex = new RegExp("&lt;&lt;" + key_field_name.split(".", 1) + "_partial_load_condition>>", "gi")
 const generic_load_condition_regex = /&lt;&lt;.+_partial_load_condition>>/gi
 
 if (key_field_name == null) {
   var sql_for_injection = sql.replace(generic_load_condition_regex, "TRUE");
 } else {
+  const input_load_condition_regex = new RegExp("&lt;&lt;" + key_field_name.split(".", 1) + "_partial_load_condition>>", "gi");
   var sql_for_injection = sql.replace(input_load_condition_regex, partial_load_condition)
                              .replace(generic_load_condition_regex, "FALSE");
 }</jsScript_script>
