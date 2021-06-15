@@ -55,7 +55,7 @@ class EDW:
 
         :param query: the SQL query to execute. sanitize any variables using '%s'
         :param parameters: a tuple of parameters with one value in the tuple per '%s' in the query
-        :return: returns a list of tuples with the data from the rows returned by the query
+        :return: returns a list of RealDict objects with the data from the rows returned by the query
         """
 
         conn = psycopg2.connect(database=self.database_name,
@@ -65,7 +65,6 @@ class EDW:
                                 port=self.database_port)
         cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         cur.execute(query, parameters)
-        # print(cur.query)
         conn.commit()
         rows = cur.fetchall()
         conn.close()
@@ -118,7 +117,7 @@ WHERE
                     FROM
                         mdi.edw_table_definition
                     WHERE
-                        schema_name = %s
+                        schema_name = %s and table_name = 'mortgage_insurance_dim'
                     ORDER BY
                         table_name ASC;'''
         return self.execute_parameterized_query(query, (schema_name))
@@ -128,7 +127,7 @@ WHERE
         This returns data from the edw_table_definition and edw_field_definition tables.
 
         :param edw_table_definition_dwid: int, the primary key of the table definition row
-        :return: a list of tuples in the format [(database_name, schema_name, table_name, field_name, key_field_flag)]
+        :return: a list of RealDict objects in the format [(database_name, schema_name, table_name, field_name, key_field_flag)]
         """
 
         query = '''SELECT
@@ -153,7 +152,7 @@ WHERE
         This returns all data needed to create a table-to-table/table-to-table-json MDI process.
 
         :param edw_table_definition_dwid: int, the primary key of the table definition row
-        :return: a list of tuples in the format [(table_input_database_name, table_input_schema_name, table_input_table_name, table_input_field_name, table_output_field_source_calculation
+        :return: a list of RealDict objects
         table_input_field_source_calculation, has_table_output_edw_join_tree_definition, join_type, join_condition, table_output_database_name, table_output_schema_name, table_output_table_name,
         table_output_field_name, table_output_field_name, table_output_key_field_flag
         """
@@ -173,24 +172,20 @@ WHERE
            and primary_table_field.edw_table_definition_dwid = target_table.primary_source_edw_table_definition_dwid and primary_table_field.field_name like '%%_pid' limit 1) as source_table_key_field_name
     , (select primary_table_field.field_name from mdi.edw_field_definition primary_table_field
        where primary_table_field.edw_table_definition_dwid = target_table.primary_source_edw_table_definition_dwid and primary_table_field.field_name like '%%_version' limit 1) as source_table_version_field_name
-    , (SELECT edw_field_definition.field_name FROM mdi.edw_field_definition where edw_field_definition.key_field_flag=TRUE and edw_field_definition.edw_table_definition_dwid = coalesce(source_table.dwid, target_source_table.dwid) limit 1) as primary_source_key_field_name
+    , (SELECT edw_field_definition.field_name FROM mdi.edw_field_definition where edw_field_definition.key_field_flag=TRUE and edw_field_definition.edw_table_definition_dwid = coalesce(source_table.dwid, target_source_table.dwid) limit 1) as source_table_key_field_name
     , source_field.field_name as table_input_field_name
     , source_field.field_source_calculation as table_input_field_source_calculation
     , source_field.dwid as table_input_edw_field_definition_dwid
-
     , initial_join_definition.join_type
     , initial_join_definition.join_condition
     , initial_join_definition.dwid as join_alias
     , child_join_definition.join_type as child_join_type
     , child_join_definition.join_condition as child_join_condition
     , child_join_definition.dwid as child_join_alias
-
     , primary_source_table.table_name as primary_source_table_name
     , primary_source_table.schema_name as primary_source_schema_name
     , target_field.field_source_calculation as insert_update_field_source_calculation
-
     , CASE WHEN target_field.source_edw_join_tree_definition_dwid IS NULL THEN 0 ELSE 1 END as has_insert_update_edw_join_tree_definition
-
     , target_table.primary_source_edw_table_definition_dwid
     , target_table.database_name as insert_update_database_name
     , target_table.schema_name as insert_update_schema_name
@@ -212,14 +207,13 @@ FROM
         LEFT JOIN mdi.edw_join_definition child_join_definition ON child_join_tree.root_join_dwid = child_join_definition.dwid
 WHERE
     target_table.dwid = %s
-    -- AND target_field.field_name not in ('dwid','data_source_dwid','data_source_integration_columns','data_source_integration_id','data_source_modified_datetime','edw_created_datetime', 'edw_modified_datetime', 'etl_batch_id') -- exclude these in the join if the table input field name is null?
 ORDER BY
     table_input_edw_field_definition_dwid ASC;'''
 
         return self.execute_parameterized_query(query, edw_table_definition_dwid)
 
     def get_all_staging_tables(self, schema):
-        # returns a list of 3-tuples
+        # returns a list of RealDict objects
         #   if table has a primary key - [(name of table, key field name, version field name)]
         #   if table is a 'type' table - [(name of table, code field name, null)]
         rows = self.execute_select_query(f'''
@@ -342,10 +336,10 @@ class ETL_creator():
 
             if field_definition["join_alias"] not in processed_join_dwids:
                 # determine if we need a null outer join or inner join
-                if field_definition["table_input_database_name"] == "staging" and field_definition["table_input_schema_name"] == "star_loan":
-                    output_join_sql += self.create_inner_join_sql(field_definition)
+                if field_definition["table_input_database_name"] == "staging" and field_definition["table_input_schema_name"] == "history_octane":
+                    output_join_sql += self.create_history_octane_join_sql(field_definition)
                 else:
-                    output_join_sql += self.create_null_outer_join_sql(field_definition)
+                    output_join_sql += self.create_non_history_octane_join_sql(field_definition)
                 output_where_clause += f', t{field_definition["join_alias"]}.include_record'
                 processed_join_dwids.append(field_definition["join_alias"])
             else:
@@ -479,20 +473,18 @@ class ETL_creator():
         output_select_clause += " as data_source_integration_id"
         return output_select_clause
 
-    def create_inner_join_sql(self, field_definition: dict) -> str:
+    def create_non_history_octane_join_sql(self, field_definition: dict) -> str:
         output_join_sql = f'''
-{self.indent}-- inner join start
 {self.indent}{field_definition["join_type"].upper()} JOIN (
 {self.indent*2}SELECT
-{self.indent*3}TRUE as include_record,
+{self.indent*3}{self.create_include_record_select_sql(field_definition["table_input_table_name"])}>> as include_record,
 {self.indent*3}{field_definition["table_input_table_name"]}.*
 {self.indent*2}FROM {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]}
 {self.indent}) AS t{field_definition["join_alias"]} ON {field_definition["join_condition"]}
-{self.indent}-- inner join end
 '''
         return output_join_sql
 
-    def create_null_outer_join_sql(self, field_definition: dict) -> str:  # this can likely be made recursive and get rid of self.create_child_join_sql()
+    def create_history_octane_join_sql(self, field_definition: dict) -> str:  # this can likely be made recursive and get rid of self.create_child_join_sql()
         """
         Used to create a join statement that can also contain a child join
 
@@ -509,7 +501,6 @@ class ETL_creator():
             include_record_join_sql = ""
 
         output_join_sql = f'''
-{self.indent}-- null outer join start
 {self.indent}{field_definition["join_type"].upper()} JOIN (
 {self.indent*2}SELECT * FROM (
 {self.indent*3}SELECT {include_record_join_sql}
@@ -521,7 +512,6 @@ class ETL_creator():
 {self.indent*2}) as primary_table
 {self.indent*2}{child_join_sql}
 {self.indent}) AS t{field_definition["join_alias"]} ON {field_definition["join_condition"]}
-{self.indent}-- null outer join end
 '''
         return output_join_sql
 
@@ -729,7 +719,7 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
         seen_table_name_values = []
         for index, field_definition in enumerate(self.field_metadata, start=1):
             # ignore fields that do not have source definitions (edw standard fields)
-            if field_definition["has_table_input_source_definition"] == 0:
+            if field_definition["has_table_input_source_definition"] == 0 or (field_definition["has_table_input_source_definition"] == 0 and field_definition["insert_update_schema_name"] == 'star_loan'):
                 continue
 
             # if we've already seen this table name then move to the next row
@@ -739,25 +729,35 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
 
             seen_table_name_values.append(field_definition["table_input_table_name"])
 
-            state_machine_step_record = EDW().get_state_machine_step_from_process_dwid(state_machine_step_process_dwid)
-
-            if len(state_machine_step_record) > 1:  # if multiple rows returned we need to insert a new one
+            if field_definition["insert_update_schema_name"] == 'star_loan':
                 config_insert += f'''
-, temp_state_machine_step_insert as (INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)  -- mdi.state_machine_step
-    SELECT {state_machine_step_process_dwid}, temp_process.dwid
+, temp_state_machine_step_insert_{index} as (INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)  -- mdi.state_machine_step
+    SELECT (SELECT
+    process_dwid
+FROM
+    mdi.table_output_step
+WHERE
+    table_output_step.target_schema = '{field_definition["insert_update_schema_name"]}'
+    AND table_output_step.target_table = '{field_definition["insert_update_table_name"]}') as process_dwid, temp_process.dwid as next_process_dwid
     FROM temp_process)
 '''
-            elif len(state_machine_step_record) == 1:  # if 1 row returned then we need to update it
+            else:
                 config_insert += f'''
-, temp_state_machine_step_update_{index} as (UPDATE mdi.state_machine_step set next_process_dwid = temp_process.dwid FROM temp_process WHERE process_dwid=(select process_dwid from mdi.table_output_step where table_output_step.target_schema='{field_definition["table_input_schema_name"]}' and table_output_step.target_table = '{field_definition["table_input_table_name"]}') AND next_process_dwid IS NULL)   -- mdi.state_machine_step
+, temp_state_machine_step_insert_{index} as (INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)  -- mdi.state_machine_step
+    SELECT (SELECT
+    process_dwid
+FROM
+    mdi.table_output_step
+WHERE
+    table_output_step.target_schema = '{field_definition["table_input_schema_name"]}'
+    AND table_output_step.target_table = '{field_definition["table_input_table_name"]}') as process_dwid, temp_process.dwid as next_process_dwid
+    FROM temp_process)
 '''
-            elif len(state_machine_step_record) < 1:  # if 0 rows returned then raise ValueError, why doesn't the process_dwid that populates the tables needed for this ETL have a state machine step configured to populate it???
-                print(f"While attempting to determine if a new record should be inserted to state_machine_step or update an existing row an unexpected error occured. The variable state_machine_step_record should contain a list of rows returned from the db with 1 or more rows to process correctly but only {len(state_machine_step_record)} row(s) were found.")
-                print(f"State_machine_step_record's contents: {state_machine_step_record}")
-                raise ValueError("state_machine_step_record should contain 1 or more items in the list. Unable to process this scenario due to business rules.")
+
+
 
         config_insert += f'''
-SELECT 'Done adding MDI configuration for {self.insert_update_schema_name}.{self.insert_update_table_name} ({self.process_name})' as etl_creator_status; -- needed for the cte to return at least one row, appears in flyway/jenkins/aws logs
+SELECT 'Done adding MDI configuration for {self.insert_update_schema_name}.{self.insert_update_table_name} ({self.process_name})' as etl_creator_status;
         
 '''  # add some line breaks to the sql so the output is more readable when there are many in a row generated
         return config_insert
