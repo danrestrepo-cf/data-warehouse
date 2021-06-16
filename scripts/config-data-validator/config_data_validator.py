@@ -7,8 +7,19 @@ https://app.asana.com/0/0/1200343485858665
 import psycopg2
 import psycopg2.extras
 import pandas
+from typing import List
 
-# def main():
+def main():
+    raw_edw_config_data = read_raw_config_data_from_edw()
+
+def read_raw_config_data_from_edw() -> List[dict]:
+    with EDW() as cursor:
+        return cursor.select_as_list_of_dicts("""
+        SELECT dwid
+            , name
+            , description
+        FROM mdi.config
+        """)
 
 class EDW:
     """
