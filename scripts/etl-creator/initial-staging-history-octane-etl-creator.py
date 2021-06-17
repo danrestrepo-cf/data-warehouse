@@ -172,7 +172,6 @@ WHERE
            and primary_table_field.edw_table_definition_dwid = target_table.primary_source_edw_table_definition_dwid and primary_table_field.field_name like '%%_pid' limit 1) as source_table_key_field_name
     , (select primary_table_field.field_name from mdi.edw_field_definition primary_table_field
        where primary_table_field.edw_table_definition_dwid = target_table.primary_source_edw_table_definition_dwid and primary_table_field.field_name like '%%_version' limit 1) as source_table_version_field_name
-    , (SELECT edw_field_definition.field_name FROM mdi.edw_field_definition where edw_field_definition.key_field_flag=TRUE and edw_field_definition.edw_table_definition_dwid = coalesce(source_table.dwid, target_source_table.dwid) limit 1) as source_table_key_field_name
     , source_field.field_name as table_input_field_name
     , source_field.field_source_calculation as table_input_field_source_calculation
     , source_field.dwid as table_input_edw_field_definition_dwid
@@ -484,7 +483,7 @@ class ETL_creator():
 '''
         return output_join_sql
 
-    def create_history_octane_join_sql(self, field_definition: dict) -> str:  # this can likely be made recursive and get rid of self.create_child_join_sql()
+    def create_history_octane_join_sql(self, field_definition: dict) -> str:
         """
         Used to create a join statement that can also contain a child join
 
@@ -517,7 +516,7 @@ class ETL_creator():
 
     def create_include_record_select_sql(self,  partial_load_source_table: str, starting_indent_level: int = 1, add_newline_suffix: bool = False):
         if add_newline_suffix is False:
-            suffix = ""
+            suffix = ''
         else:
             suffix = '''
 '''
@@ -614,7 +613,7 @@ WHERE
         config_insert += f'''
 -- The following statement adds an ETL configuration to populate {self.insert_update_schema_name}.{self.insert_update_table_name} ({self.process_name})
 
-with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.process
+WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.process
     VALUES ('{self.process_name}', '{self.process_description}')
     RETURNING dwid)
 '''
@@ -719,38 +718,40 @@ with temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
         seen_table_name_values = []
         for index, field_definition in enumerate(self.field_metadata, start=1):
             # ignore fields that do not have source definitions (edw standard fields)
-            if field_definition["has_table_input_source_definition"] == 0 or (field_definition["has_table_input_source_definition"] == 0 and field_definition["insert_update_schema_name"] == 'star_loan'):
+            if field_definition["is_edw_standard_field"] != 0:
                 continue
 
-            # if we've already seen this table name then move to the next row
-            state_machine_step_process_dwid = self.get_process_dwid_from_table_name(field_definition["table_input_table_name"])
-            if field_definition["table_input_table_name"] in seen_table_name_values:
-                continue
-
-            seen_table_name_values.append(field_definition["table_input_table_name"])
-
-            if field_definition["insert_update_schema_name"] == 'star_loan':
-                config_insert += f'''
-, temp_state_machine_step_insert_{index} as (INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)  -- mdi.state_machine_step
-    SELECT (SELECT
-    process_dwid
-FROM
-    mdi.table_output_step
-WHERE
-    table_output_step.target_schema = '{field_definition["insert_update_schema_name"]}'
-    AND table_output_step.target_table = '{field_definition["insert_update_table_name"]}') as process_dwid, temp_process.dwid as next_process_dwid
-    FROM temp_process)
-'''
+            if field_definition["table_input_schema_name"] == None or field_definition["table_input_table_name"] == None:
+                table_name = field_definition["primary_source_table_name"]
+                schema_name = field_definition["primary_source_schema_name"]
             else:
-                config_insert += f'''
+                table_name = field_definition["table_input_table_name"]
+                schema_name = field_definition["table_input_schema_name"]
+
+            # if we've already added this table as a state_machine_step then no need to add it again
+            if table_name in seen_table_name_values:
+                continue
+
+            seen_table_name_values.append(table_name)
+
+            config_insert += f'''
 , temp_state_machine_step_insert_{index} as (INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)  -- mdi.state_machine_step
     SELECT (SELECT
-    process_dwid
-FROM
-    mdi.table_output_step
-WHERE
-    table_output_step.target_schema = '{field_definition["table_input_schema_name"]}'
-    AND table_output_step.target_table = '{field_definition["table_input_table_name"]}') as process_dwid, temp_process.dwid as next_process_dwid
+                process_dwid
+            FROM
+                mdi.table_output_step
+            WHERE
+                table_output_step.target_schema = '{schema_name}'
+                AND table_output_step.target_table = '{table_name}'
+            UNION
+            SELECT
+                process_dwid
+            FROM
+                mdi.insert_update_step
+            WHERE
+                    insert_update_step.schema_name = '{schema_name}'
+                AND insert_update_step.table_name = '{table_name}') as process_dwid   
+            , temp_process.dwid as next_process_dwid
     FROM temp_process)
 '''
 
@@ -759,7 +760,7 @@ WHERE
         config_insert += f'''
 SELECT 'Done adding MDI configuration for {self.insert_update_schema_name}.{self.insert_update_table_name} ({self.process_name})' as etl_creator_status;
         
-'''  # add some line breaks to the sql so the output is more readable when there are many in a row generated
+'''
         return config_insert
 
 
