@@ -172,19 +172,24 @@ WHERE
            and primary_table_field.edw_table_definition_dwid = target_table.primary_source_edw_table_definition_dwid and primary_table_field.field_name like '%%_pid' limit 1) as source_table_key_field_name
     , (select primary_table_field.field_name from mdi.edw_field_definition primary_table_field
        where primary_table_field.edw_table_definition_dwid = target_table.primary_source_edw_table_definition_dwid and primary_table_field.field_name like '%%_version' limit 1) as source_table_version_field_name
+    , (SELECT edw_field_definition.field_name FROM mdi.edw_field_definition where edw_field_definition.key_field_flag=TRUE and edw_field_definition.edw_table_definition_dwid = coalesce(source_table.dwid, target_source_table.dwid) limit 1) as primary_source_key_field_name
     , source_field.field_name as table_input_field_name
     , source_field.field_source_calculation as table_input_field_source_calculation
     , source_field.dwid as table_input_edw_field_definition_dwid
+
     , initial_join_definition.join_type
     , initial_join_definition.join_condition
     , initial_join_definition.dwid as join_alias
     , child_join_definition.join_type as child_join_type
     , child_join_definition.join_condition as child_join_condition
     , child_join_definition.dwid as child_join_alias
+
     , primary_source_table.table_name as primary_source_table_name
     , primary_source_table.schema_name as primary_source_schema_name
     , target_field.field_source_calculation as insert_update_field_source_calculation
+
     , CASE WHEN target_field.source_edw_join_tree_definition_dwid IS NULL THEN 0 ELSE 1 END as has_insert_update_edw_join_tree_definition
+
     , target_table.primary_source_edw_table_definition_dwid
     , target_table.database_name as insert_update_database_name
     , target_table.schema_name as insert_update_schema_name
@@ -206,6 +211,7 @@ FROM
         LEFT JOIN mdi.edw_join_definition child_join_definition ON child_join_tree.root_join_dwid = child_join_definition.dwid
 WHERE
     target_table.dwid = %s
+    -- AND target_field.field_name not in ('dwid','data_source_dwid','data_source_integration_columns','data_source_integration_id','data_source_modified_datetime','edw_created_datetime', 'edw_modified_datetime', 'etl_batch_id') -- exclude these in the join if the table input field name is null?
 ORDER BY
     table_input_edw_field_definition_dwid ASC;'''
 
@@ -335,10 +341,10 @@ class ETL_creator():
 
             if field_definition["join_alias"] not in processed_join_dwids:
                 # determine if we need a null outer join or inner join
-                if field_definition["table_input_database_name"] == "staging" and field_definition["table_input_schema_name"] == "history_octane":
-                    output_join_sql += self.create_history_octane_join_sql(field_definition)
-                else:
+                if field_definition["table_input_database_name"] == "staging" and field_definition["table_input_schema_name"] == "star_loan":
                     output_join_sql += self.create_non_history_octane_join_sql(field_definition)
+                else:
+                    output_join_sql += self.create_history_octane_join_sql(field_definition)
                 output_where_clause += f', t{field_definition["join_alias"]}.include_record'
                 processed_join_dwids.append(field_definition["join_alias"])
             else:
@@ -476,7 +482,7 @@ class ETL_creator():
         output_join_sql = f'''
 {self.indent}{field_definition["join_type"].upper()} JOIN (
 {self.indent*2}SELECT
-{self.indent*3}{self.create_include_record_select_sql(field_definition["table_input_table_name"])}>> as include_record,
+{self.indent*3}{self.create_include_record_select_sql(field_definition["table_input_table_name"])},
 {self.indent*3}{field_definition["table_input_table_name"]}.*
 {self.indent*2}FROM {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]}
 {self.indent}) AS t{field_definition["join_alias"]} ON {field_definition["join_condition"]}
@@ -755,11 +761,9 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
     FROM temp_process)
 '''
 
-
-
         config_insert += f'''
 SELECT 'Done adding MDI configuration for {self.insert_update_schema_name}.{self.insert_update_table_name} ({self.process_name})' as etl_creator_status;
-        
+
 '''
         return config_insert
 
