@@ -2,6 +2,7 @@
 -- Main | EDW | Octane Schema changes for 2021.6.3.1 (6/18/2021) (https://app.asana.com/0/0/1200488131634566 )
 --
 
+-- staging_octane changes
 CREATE TABLE staging_octane.loan_charge_payer_item_source_type (
                                                                    code varchar(128),
                                                                    value varchar(1024),
@@ -97,6 +98,8 @@ ALTER TABLE staging_octane.construction_cost
     ADD COLUMN coc_draw_discrepancy_text varchar(1024),
     ADD COLUMN coc_impeding_draw_discrepancy boolean;
 
+
+-- history_octane changes
 ALTER TABLE history_octane.construction_cost
     ADD COLUMN coc_charge_type varchar(128),
     ADD COLUMN coc_draw_discrepancy_text varchar(1024),
