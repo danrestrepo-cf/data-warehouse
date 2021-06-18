@@ -67,3 +67,18 @@ UPDATE star_loan.borrower_lending_profile_dim
         - avoid hardcoded dwid usage
     */
     WHERE data_source_integration_columns LIKE '%|%';
+
+--
+-- EDW | Build MDI-2 insert/update config for star_loan.loan_fact
+-- https://app.asana.com/0/0/1200254151885104
+
+ALTER TABLE star_loan.loan_fact
+    RENAME COLUMN loan_funding_dwid TO active_loan_funding_dwid;
+ALTER TABLE star_loan.loan_fact
+    RENAME COLUMN loan_beneficiary_dwid TO current_loan_beneficiary_dwid;
+ALTER TABLE star_loan.loan_fact
+    RENAME COLUMN product_choices_dwid TO product_choice_dwid;
+ALTER TABLE star_loan.loan_fact
+    RENAME COLUMN investor_dwid TO product_investor_dwid;
+ALTER TABLE star_loan.loan_fact
+    RENAME COLUMN application_dwid TO primary_application_dwid;
