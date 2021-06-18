@@ -2,6 +2,12 @@
 -- Main | EDW | Octane Schema changes for 2021.6.3.1 (6/18/2021) (https://app.asana.com/0/0/1200488131634566 )
 --
 
+-- Reset temp tables used in previous DML migration
+DROP TABLE IF EXISTS temp_new_table_field_data;
+DROP TABLE IF EXISTS temp_new_table_mdi_data;
+DROP TABLE IF EXISTS temp_new_column_field_data;
+DROP TABLE IF EXISTS temp_new_column_mdi_data;
+
 -- INSERT EDW_TABLE_DEFINITION ROWS FOR NEW TABLES: loan_charge_payer_item_source_type, loan_charge_payer_item, wf_prereq_set, wf_prereq
 -- Insert edw_table_definition rows for loan_charge_payer_item_source_type
 WITH staging_table AS (
@@ -253,7 +259,7 @@ INSERT INTO mdi.table_input_step (  process_dwid,
                                     cached_row_meta,
                                     connectionname)
 SELECT temp_new_table_mdi_data.process_dwid
-    , 1
+    , 0
     , temp_new_table_mdi_data.input_sql
     , 0
     , 'N'
@@ -755,3 +761,10 @@ FROM temp_new_column_field_data
     LEFT JOIN mdi.edw_field_definition source_field_definition
         ON source_table_definition.dwid = source_field_definition.edw_table_definition_dwid
             AND temp_new_column_field_data.field_name = source_field_definition.field_name;
+
+-- Reset temp tables used in this DML migration
+DROP TABLE IF EXISTS temp_new_table_field_data;
+DROP TABLE IF EXISTS temp_new_table_mdi_data;
+DROP TABLE IF EXISTS temp_new_column_field_data;
+DROP TABLE IF EXISTS temp_new_column_mdi_data;
+
