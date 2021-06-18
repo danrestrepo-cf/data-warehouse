@@ -1233,3 +1233,135 @@ WHERE GREATEST(deal.include_record, proposal.include_record, primary_application
                                                   'application_dim', 'transaction_dim');
 
     END $$;
+
+--
+-- EDW | Build MDI-2 delete configuration for star_loan.loan_fact
+-- https://app.asana.com/0/0/1200416935542091
+--
+
+-- process record insert
+WITH process_insert AS (
+    INSERT INTO mdi.process (name, description)
+        VALUES ('SP-300002', 'ETL to remove records that are no longer valid from loan_fact')
+        RETURNING dwid
+)
+-- json_output_field record insert
+   , json_output_field_insert AS (
+    INSERT INTO mdi.json_output_field (process_dwid, field_name)
+        SELECT process_insert.dwid, 'loan_dwid'
+        FROM process_insert
+)
+-- table_input_step insert
+   , table_input_step_insert AS (
+    INSERT INTO mdi.table_input_step (process_dwid
+        , data_source_dwid
+        , sql
+        , limit_size
+        , connectionname)
+        SELECT process_insert.dwid
+             , 0
+             ,   '/*
+                    First half of UNION ALL query returns the following:
+                        -  Records marked as deleted in the following history_octane tables:
+                            - deal
+                            - proposal
+                            - loan
+                        - history_octane.deal records where d_test_loan IS TRUE
+                    */
+                    SELECT loan_fact.loan_dwid
+                    FROM (
+                        SELECT deal.*
+                            , <<deal_partial_load_condition>> AS include_record
+                        FROM history_octane.deal
+                            LEFT JOIN history_octane.deal AS history_records on deal.d_pid = history_records.d_pid
+                                AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
+                        WHERE history_records.d_pid IS NULL
+                        ) AS deal
+                            JOIN (
+                                SELECT proposal.*
+                                    , <<proposal_partial_load_condition>> AS include_record
+                                FROM history_octane.proposal
+                                    LEFT JOIN history_octane.proposal AS history_records ON proposal.prp_pid = history_records.prp_pid
+                                        AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
+                                WHERE history_records.prp_pid IS NULL
+                            ) AS proposal ON deal.d_active_proposal_pid = proposal.prp_pid
+                        JOIN (
+                            SELECT loan.*
+                                , <<loan_partial_load_condition>> AS include_record
+                            FROM history_octane.loan
+                                LEFT JOIN history_octane.loan history_records ON loan.l_pid = history_records.l_pid
+                                    AND loan.data_source_updated_datetime < history_records.data_source_updated_datetime
+                            WHERE history_records.l_pid IS NULL
+                            ) AS loan ON proposal.prp_pid = loan.l_proposal_pid
+                        JOIN star_loan.loan_fact ON loan.l_pid = loan_fact.loan_pid
+                            AND loan_fact.data_source_dwid = 1
+                    WHERE NOT (deal.d_test_loan IS FALSE
+                            AND deal.data_source_deleted_flag IS FALSE
+                            AND proposal.data_source_deleted_flag IS FALSE
+                            AND loan.data_source_deleted_flag IS FALSE
+                        )
+                        AND GREATEST(deal.include_record, proposal.include_record, loan.include_record) IS TRUE
+                    UNION ALL
+                    -- Second half of UNION ALL query returns proposal records that are not a deal''s active proposal
+                    SELECT loan_fact.loan_dwid
+                    FROM (
+                        SELECT deal.*
+                            , <<deal_partial_load_condition>> AS include_record
+                        FROM history_octane.deal
+                            LEFT JOIN history_octane.deal AS history_records on deal.d_pid = history_records.d_pid
+                                AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
+                        WHERE deal.data_source_deleted_flag IS FALSE
+                            AND history_records.d_pid IS NULL
+                        ) AS deal
+                            JOIN (
+                                SELECT proposal.*
+                                    , <<proposal_partial_load_condition>> AS include_record
+                                FROM history_octane.proposal
+                                    LEFT JOIN history_octane.proposal AS history_records ON proposal.prp_pid = history_records.prp_pid
+                                        AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
+                                WHERE proposal.data_source_deleted_flag IS FALSE
+                                    AND history_records.prp_pid IS NULL
+                            ) AS proposal ON deal.d_pid = proposal.prp_deal_pid
+                                AND deal.d_active_proposal_pid <> proposal.prp_pid
+                        JOIN (
+                            SELECT loan.*
+                                , <<loan_partial_load_condition>> AS include_record
+                            FROM history_octane.loan
+                                LEFT JOIN history_octane.loan history_records ON loan.l_pid = history_records.l_pid
+                                    AND loan.data_source_updated_datetime < history_records.data_source_updated_datetime
+                            WHERE loan.data_source_deleted_flag IS FALSE
+                                AND history_records.l_pid IS NULL
+                            ) AS loan ON proposal.prp_pid = loan.l_proposal_pid
+                        JOIN star_loan.loan_fact ON loan.l_pid = loan_fact.loan_pid
+                            AND loan_fact.data_source_dwid = 1
+                    WHERE GREATEST(deal.include_record, proposal.include_record, loan.include_record) IS TRUE;'
+             , 0
+             , 'Staging DB Connection'
+        FROM process_insert
+)
+
+-- delete_step insert
+   , delete_step_insert AS (
+    INSERT INTO mdi.delete_step (process_dwid, connectionname, schema_name, table_name, commit_size)
+        SELECT process_insert.dwid, 'Staging DB Connection', 'star_loan',
+               'loan_fact', 1000
+        FROM process_insert
+        RETURNING dwid
+)
+-- delete_key insert
+   , delete_key_insert AS (
+    INSERT INTO mdi.delete_key (delete_step_dwid, table_name_field, stream_fieldname_1, stream_fieldname_2,
+                                comparator, is_sensitive)
+        SELECT delete_step_insert.dwid, 'loan_dwid', 'loan_dwid', '',
+               '=', FALSE
+        FROM delete_step_insert
+)
+
+-- state_machine_step inserts
+INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)
+SELECT process.dwid AS process_dwid
+     , (SELECT process_insert.dwid FROM process_insert) AS next_process_dwid
+FROM mdi.process
+         JOIN mdi.table_output_step ON process.dwid = table_output_step.process_dwid
+WHERE table_output_step.target_schema = 'history_octane'
+  AND table_output_step.target_table IN ('deal', 'proposal', 'loan');
