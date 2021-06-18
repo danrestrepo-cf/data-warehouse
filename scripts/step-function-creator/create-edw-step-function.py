@@ -1,70 +1,79 @@
-from EDW import EDW
-import StateMachineCreator
 import os
+import json
+
+from EDW import EDW
+from StateMachinesCreator import StateMachinesCreator
 
 
 def main():
+    # load metadata
     edw = EDW()
-
-    # detect if there are any misconfigured state_machine_step records
-    if not edw.has_only_valid_state_machine_configs():
-        print(f"Invalid state machine configuration detected. Now exiting.")
-        exit(2)
-
-    # remove any files from a previous run
-    # this assumes that the working directory is a subfolder of the scripts folder
-    output_file_path = "../../infrastructure/pipelines/"
-    empty_directory(output_file_path)
-
-    # get list of step_machine_definitions
-    state_machine_definitions = edw.get_all_state_machine_definitions()
-
-    # create a dict that will hold each of the state machine
-    state_machines = {}
-
-    # create dictionary to hold state_machine objects
-    for state_machine_definition in state_machine_definitions:
-        # parse data from tuple
-        state_machine_starting_process_dwid = state_machine_definition[0]
-        state_machine_name = state_machine_definition[1]
-        state_machine_comment = state_machine_definition[2]
-
-        state_machines[state_machine_starting_process_dwid] = StateMachineCreator.StateMachineCreator(state_machine_comment, state_machine_name)
-
-        # get list of all steps for the current state_machine_definition based on the starting process_dwid
-        states_to_create = edw.get_all_step_children_by_process_id(state_machine_starting_process_dwid)
-
-        for state_to_create in states_to_create:
-            # parse data from tuple
-            # state_process_dwid = state_to_create[0]
-            state_process_name = state_to_create[1]
-            state_machines[state_machine_starting_process_dwid].add_state_to_state_machine_sequential(state_process_name)
-
-        output_data(state_machines[state_machine_starting_process_dwid], state_machine_name, output_file_path)
-
-
-def empty_directory(directory: str):
-    for file in os.scandir(directory):
-        try:
-            os.remove(file.path)
-        except Exception as e:
-            print(f"Could not remove file '{file.path}'! Exiting...")
-            raise e
-
-
-def output_data(state_machine: StateMachineCreator, file_name: str, file_path: str = "../../infrastructure/pipelines/", file_extension: str = "json"):
-    filename_with_extension = f"{file_name}.{file_extension}"
+    state_machine_metadata = edw.get_state_machine_metadata()
+    step_tree_metadata = edw.get_step_tree_metadata()
+    state_machine_file_extension = 'json'
 
     try:
-        f = open(f"{file_path}{filename_with_extension}", "w")
-        f.write(str(state_machine))
+        # generate and format state machine configuration strings
+        state_machine_creator = StateMachinesCreator(state_machine_metadata, step_tree_metadata)
+        state_machine_configs = state_machine_creator.build_state_machines()
+        formatted_config_strings = format_data_for_outputting(state_machine_configs)
+
+        # the following file path should be changed if this script is ever moved to a new location in the repo
+        infrastructure_dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', 'infrastructure')
+        pipelines_dir_path = os.path.join(infrastructure_dir_path, 'pipelines')
+        delete_prior_state_machine_configurations(pipelines_dir_path, state_machine_file_extension)
+
+        # output config files
+        for name, config in formatted_config_strings.items():
+            config_file_path = os.path.join(pipelines_dir_path, f'{name}.{state_machine_file_extension}')
+            write_to_file(config, config_file_path)
+        # output schedules.tf file
+        schedules_file_contents = state_machine_creator.create_schedule_config_string(
+            indent_space_count=2,
+            file_extension=state_machine_file_extension
+        )
+        schedules_filepath = os.path.join(infrastructure_dir_path, 'schedules.tf')
+        write_to_file(schedules_file_contents, schedules_filepath)
+    except StateMachinesCreator.InvalidMetadataError:
+        print("Invalid state machine configuration detected. Now exiting.")
+        exit(2)
+    except RuntimeError as e:
+        print(e)
+        exit(2)
+
+
+def delete_prior_state_machine_configurations(directory: str, state_machine_file_extension: str):
+    non_state_machine_files = list(filter(lambda x: not x.endswith(f'.{state_machine_file_extension}'), os.listdir(directory)))
+    if non_state_machine_files:
+        raise RuntimeError(f'Output directory contains unexpected non-{state_machine_file_extension} files, and may be invalid. Now exiting.')
+    deleted_files_count = 0
+    for file in os.listdir(directory):
+        filepath = os.path.join(directory, file)
+        try:
+            os.remove(filepath)
+            deleted_files_count += 1
+        except Exception as e:
+            print(f"Could not remove file '{filepath}'! Now exiting.")
+            raise e
+    print(f'Deleted {deleted_files_count} {state_machine_file_extension} files from {directory}.')
+
+
+def format_data_for_outputting(state_machine_configs: dict) -> dict:
+    return {name: json.dumps(config, indent=4).replace('"${subnetIDs}"', '${subnetIDs}') + '\n\n'
+            for name, config in state_machine_configs.items()}
+
+
+def write_to_file(file_contents: str, file_path: str):
+    try:
+        f = open(file_path, "w")
+        f.write(file_contents)
         f.close()
     except Exception as e:
-        print(f"Could not open or save file {file_path}{filename_with_extension}!")
-        print(f"The file's contents would have been: {str(state_machine)}")
+        print(f"Could not open or save file {file_path}!")
+        print(f"The file's contents would have been: {str(file_contents)}")
         raise e
+    print(f"Saved '{file_path}'")
 
-    print(f"Saved '{file_path}{filename_with_extension}'")
 
 if __name__ == "__main__":
     main()
