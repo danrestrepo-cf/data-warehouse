@@ -342,6 +342,10 @@ UPDATE mdi.edw_field_definition
     SET field_name = 'coc_effective_construction_cost_calculation_percent'
     WHERE field_name = 'coc_calculation_percentage';
 
+UPDATE mdi.table_output_field
+SET database_field_name='coc_effective_construction_cost_calculation_percent', database_stream_name='coc_effective_construction_cost_calculation_percent'
+WHERE database_field_name='coc_calculation_percentage' AND database_stream_name='coc_calculation_percentage';
+
 -- modify edw_*_definition data for changed fields
 
 -- nullify source_edw_field_definition_dwid pointing to deleted field
@@ -354,8 +358,11 @@ WHERE edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
 
 -- remove fields from staging_octane.loan_cost from edw_field_definition
 DELETE FROM mdi.edw_field_definition
-WHERE edw_field_definition.field_name in ('lc_charge_payer_type','lc_paid_by','lc_poc','lc_charge_wire_action_auto_compute','lc_charge_wire_action_type')
-    AND edw_field_definition.source_edw_field_definition_dwid IS NULL;
+USING mdi.edw_table_definition
+WHERE
+    edw_field_definition.field_name in ('lc_charge_payer_type','lc_paid_by','lc_poc','lc_charge_wire_action_auto_compute','lc_charge_wire_action_type')
+    AND edw_table_definition.schema_name = 'staging_octane'
+    AND edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid;
 
 -- delete join definitions relying on the deleted field from edw_join_definition
 DELETE
@@ -395,8 +402,11 @@ WHERE edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
 
 -- remove fields from staging_octane.loan_cost from edw_field_definition
 DELETE FROM mdi.edw_field_definition
-WHERE edw_field_definition.field_name = 'aprq_appraisal_fee_amount'
-    AND edw_field_definition.source_edw_field_definition_dwid IS NULL;
+    USING mdi.edw_table_definition
+WHERE
+        edw_field_definition.field_name = 'aprq_appraisal_fee_amount'
+    AND edw_table_definition.schema_name = 'staging_octane'
+    AND edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid;
 
 -- delete join definitions relying on the deleted field from edw_join_definition
 DELETE
@@ -422,7 +432,7 @@ UPDATE mdi.edw_field_definition
 SET source_edw_field_definition_dwid = NULL
 FROM mdi.edw_table_definition
 WHERE edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
-    AND edw_field_definition.field_name in (  'pl_refinance_improvements_type'
+    AND edw_field_definition.field_name in ('pl_refinance_improvements_type'
     ,'pl_refinance_proposed_improvements_description'
     ,'pl_refinance_total_improvement_costs_amount'
     ,'pl_construction_improvement_costs_amount'
@@ -438,20 +448,21 @@ WHERE edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
 
 -- remove fields from staging_octane.place from edw_field_definition
 DELETE FROM mdi.edw_field_definition
-WHERE edw_field_definition.field_name in (  'pl_refinance_improvements_type'
-                                            ,'pl_refinance_proposed_improvements_description'
-                                            ,'pl_refinance_total_improvement_costs_amount'
-                                            ,'pl_construction_improvement_costs_amount'
-                                            ,'pl_energy_improvement_replacement_major_system'
-                                            ,'pl_energy_improvement_insulation_sealant'
-                                            ,'pl_energy_improvement_installation_solar'
-                                            ,'pl_energy_improvement_addition_new_feature'
-                                            ,'pl_energy_improvement_other'
-                                            ,'pl_energy_related_repairs_or_improvements_amount'
-                                            ,'pl_refinance_general_improvements_amount')
-    AND edw_field_definition.source_edw_field_definition_dwid IS NULL;
-
-
+USING mdi.edw_table_definition
+WHERE
+        edw_field_definition.field_name in ('pl_refinance_improvements_type'
+        ,'pl_refinance_proposed_improvements_description'
+        ,'pl_refinance_total_improvement_costs_amount'
+        ,'pl_construction_improvement_costs_amount'
+        ,'pl_energy_improvement_replacement_major_system'
+        ,'pl_energy_improvement_insulation_sealant'
+        ,'pl_energy_improvement_installation_solar'
+        ,'pl_energy_improvement_addition_new_feature'
+        ,'pl_energy_improvement_other'
+        ,'pl_energy_related_repairs_or_improvements_amount'
+        ,'pl_refinance_general_improvements_amount')
+    AND edw_table_definition.schema_name = 'staging_octane'
+    AND edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid;
 
 -- delete join definitions relying on the deleted field from edw_join_definition
 DELETE
@@ -487,82 +498,81 @@ WHERE table_output_field.database_field_name in (  'pl_refinance_improvements_ty
 
 -- add new column staging_octane.proposal.prp_financed_property_improvements and history_octane.proposal.prp_financed_property_improvements
 WITH temp_staging_field as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='proposal' and schema_name='staging_octane'), 'prp_financed_property_improvements', FALSE, NULL,                    NULL, NULL, 'boolean', NULL, NULL, NULL, NULL) RETURNING dwid),
+        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='proposal' and schema_name='staging_octane'), 'prp_financed_property_improvements', FALSE, NULL,                    NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING dwid),
     temp_history_field as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='proposal' and schema_name='history_octane'), 'prp_financed_property_improvements', FALSE, (SELECT temp_staging_field.dwid from temp_staging_field), NULL, NULL, 'boolean', NULL, NULL, NULL, NULL))
+        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='proposal' and schema_name='history_octane'), 'prp_financed_property_improvements', FALSE, (SELECT temp_staging_field.dwid from temp_staging_field), NULL, NULL, NULL, NULL, NULL, NULL, NULL))
 SELECT 'Added prp_financed_property_improvements to staging_octane.proposal and history_octane.proposal';
 
 -- add new column staging_octane.proposal.prp_estimated_hard_construction_cost_amount and history_octane.proposal.prp_estimated_hard_construction_cost_amount
 WITH temp_staging_field as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-    VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='proposal' and schema_name='staging_octane'), 'prp_estimated_hard_construction_cost_amount', FALSE, NULL,                        NULL, NULL, 'bigint', NULL, NULL, NULL, NULL) RETURNING dwid),
+    VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='proposal' and schema_name='staging_octane'), 'prp_estimated_hard_construction_cost_amount', FALSE, NULL,                        NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING dwid),
     temp_history_field as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='proposal' and schema_name='history_octane'), 'prp_estimated_hard_construction_cost_amount', FALSE, (SELECT temp_staging_field.dwid from temp_staging_field), NULL, NULL, 'bigint', NULL, NULL, NULL, NULL))
+        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='proposal' and schema_name='history_octane'), 'prp_estimated_hard_construction_cost_amount', FALSE, (SELECT temp_staging_field.dwid from temp_staging_field), NULL, NULL, NULL, NULL, NULL, NULL, NULL))
 SELECT 'Added prp_estimated_hard_construction_cost_amount to staging_octane.proposal and history_octane.proposal';
 
 -- add new column staging_octane.proposal.prp_financed_property_improvements and history_octane.proposal.prp_financed_property_improvements
 WITH temp_staging_field as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-    VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='proposal' and schema_name='staging_octane'), 'prp_financed_property_improvements', FALSE, NULL,                    NULL, NULL, 'boolean', NULL, NULL, NULL, NULL) RETURNING dwid),
+    VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='proposal' and schema_name='staging_octane'), 'prp_financed_property_improvements', FALSE, NULL,                    NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING dwid),
     temp_history_field as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='proposal' and schema_name='history_octane'), 'prp_financed_property_improvements', FALSE, (SELECT temp_staging_field.dwid from temp_staging_field), NULL, NULL, 'boolean', NULL, NULL, NULL, NULL))
+        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='proposal' and schema_name='history_octane'), 'prp_financed_property_improvements', FALSE, (SELECT temp_staging_field.dwid from temp_staging_field), NULL, NULL, NULL, NULL, NULL, NULL, NULL))
 SELECT 'Added prp_financed_property_improvements to staging_octane.proposal and history_octane.proposal';
 
 WITH temp_staging_field as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-    VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='proposal' and schema_name='staging_octane'), 'prp_estimated_hard_construction_cost_amount', FALSE, NULL,                        NULL, NULL, 'bigint', NULL, NULL, NULL, NULL) RETURNING dwid),
+    VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='proposal' and schema_name='staging_octane'), 'prp_estimated_hard_construction_cost_amount', FALSE, NULL,                        NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING dwid),
     temp_history_field as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='proposal' and schema_name='history_octane'), 'prp_estimated_hard_construction_cost_amount', FALSE, (SELECT temp_staging_field.dwid from temp_staging_field), NULL, NULL, 'bigint', NULL, NULL, NULL, NULL))
+        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='proposal' and schema_name='history_octane'), 'prp_estimated_hard_construction_cost_amount', FALSE, (SELECT temp_staging_field.dwid from temp_staging_field), NULL, NULL, NULL, NULL, NULL, NULL, NULL))
 SELECT 'Added prp_estimated_hard_construction_cost_amount to staging_octane.proposal and history_octane.proposal';
 
 -- add new columns to staging_octane.construction_cost and history_octane.construction_cost
 WITH temp_staging_field_01 as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='staging_octane'), 'coc_calculated_construction_cost_percent', FALSE, NULL,                                     NULL, NULL, 'numeric(11,9)', NULL, NULL, NULL, NULL) RETURNING dwid),
+        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='staging_octane'), 'coc_calculated_construction_cost_percent', FALSE, NULL,                                     NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING dwid),
     temp_history_field_01 as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='history_octane'), 'coc_calculated_construction_cost_percent', FALSE, (SELECT dwid from temp_staging_field_01), NULL, NULL, 'numeric(11,9)', NULL, NULL, NULL, NULL)),
+        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='history_octane'), 'coc_calculated_construction_cost_percent', FALSE, (SELECT dwid from temp_staging_field_01), NULL, NULL, NULL, NULL, NULL, NULL, NULL)),
 
     temp_staging_field_02 as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='staging_octane'), 'coc_overridden_construction_cost_percent', FALSE, NULL,                                     NULL, NULL, 'numeric(11,9)', NULL, NULL, NULL, NULL) RETURNING dwid),
+        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='staging_octane'), 'coc_overridden_construction_cost_percent', FALSE, NULL,                                     NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING dwid),
     temp_history_field_02 as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='history_octane'), 'coc_overridden_construction_cost_percent', FALSE, (SELECT dwid from temp_staging_field_02), NULL, NULL, 'numeric(11,9)', NULL, NULL, NULL, NULL)),
+        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='history_octane'), 'coc_overridden_construction_cost_percent', FALSE, (SELECT dwid from temp_staging_field_02), NULL, NULL, NULL, NULL, NULL, NULL, NULL)),
 
     temp_staging_field_03 as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='staging_octane'), 'coc_construction_cost_calculation_percent_override_reason', FALSE, NULL,                                     NULL, NULL, 'varchar(1024)', NULL, NULL, NULL, NULL) RETURNING dwid),
+        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='staging_octane'), 'coc_construction_cost_calculation_percent_override_reason', FALSE, NULL,                                     NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING dwid),
     temp_history_field_03 as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='history_octane'), 'coc_construction_cost_calculation_percent_override_reason', FALSE, (SELECT dwid from temp_staging_field_03), NULL, NULL, 'varchar(1024)', NULL, NULL, NULL, NULL)),
+        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='history_octane'), 'coc_construction_cost_calculation_percent_override_reason', FALSE, (SELECT dwid from temp_staging_field_03), NULL, NULL, NULL, NULL, NULL, NULL, NULL)),
 
     temp_staging_field_04 as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='staging_octane'), 'coc_calculated_construction_cost_months', FALSE, NULL,                                          NULL, NULL, 'integer', NULL, NULL, NULL, NULL) RETURNING dwid),
+        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='staging_octane'), 'coc_calculated_construction_cost_months', FALSE, NULL,                                          NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING dwid),
     temp_history_field_04 as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='history_octane'), 'coc_calculated_construction_cost_months', FALSE, (SELECT dwid from temp_staging_field_04), NULL, NULL, 'integer', NULL, NULL, NULL, NULL)),
+        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='history_octane'), 'coc_calculated_construction_cost_months', FALSE, (SELECT dwid from temp_staging_field_04), NULL, NULL, NULL, NULL, NULL, NULL, NULL)),
 
     temp_staging_field_05 as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='staging_octane'), 'coc_overridden_construction_cost_months', FALSE, NULL,                                     NULL, NULL, 'integer', NULL, NULL, NULL, NULL) RETURNING dwid),
+        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='staging_octane'), 'coc_overridden_construction_cost_months', FALSE, NULL,                                     NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING dwid),
     temp_history_field_05 as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='history_octane'), 'coc_overridden_construction_cost_months', FALSE, (SELECT dwid from temp_staging_field_05), NULL, NULL, 'integer', NULL, NULL, NULL, NULL)),
+        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='history_octane'), 'coc_overridden_construction_cost_months', FALSE, (SELECT dwid from temp_staging_field_05), NULL, NULL, NULL, NULL, NULL, NULL, NULL)),
 
     temp_staging_field_06 as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='staging_octane'), 'coc_effective_construction_cost_months', FALSE, NULL,                                     NULL, NULL, 'integer', NULL, NULL, NULL, NULL) RETURNING dwid),
+        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='staging_octane'), 'coc_effective_construction_cost_months', FALSE, NULL,                                     NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING dwid),
     temp_history_field_06 as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='history_octane'), 'coc_effective_construction_cost_months', FALSE, (SELECT dwid from temp_staging_field_06), NULL, NULL, 'integer', NULL, NULL, NULL, NULL)),
+        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='history_octane'), 'coc_effective_construction_cost_months', FALSE, (SELECT dwid from temp_staging_field_06), NULL, NULL, NULL, NULL, NULL, NULL, NULL)),
 
     temp_staging_field_07 as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='staging_octane'), 'coc_construction_cost_months_override_reason', FALSE, NULL,                                     NULL, NULL, 'varchar(1024)', NULL, NULL, NULL, NULL) RETURNING dwid),
+        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='staging_octane'), 'coc_construction_cost_months_override_reason', FALSE, NULL,                                     NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING dwid),
     temp_history_field_07 as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='history_octane'), 'coc_construction_cost_months_override_reason', FALSE, (SELECT dwid from temp_staging_field_07), NULL, NULL, 'varchar(1024)', NULL, NULL, NULL, NULL)),
+        VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='history_octane'), 'coc_construction_cost_months_override_reason', FALSE, (SELECT dwid from temp_staging_field_07), NULL, NULL, NULL, NULL, NULL, NULL, NULL)),
 
     temp_staging_field_08 as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-    VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='staging_octane'), 'coc_charge_type', FALSE, NULL,                                     NULL, NULL, 'varchar(128)', NULL, NULL, NULL, NULL) RETURNING dwid),
+    VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='staging_octane'), 'coc_charge_type', FALSE, NULL,                                     NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING dwid),
     temp_history_field_08 as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-    VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='history_octane'), 'coc_charge_type', FALSE, (SELECT dwid from temp_staging_field_08), NULL, NULL, 'varchar(128)', NULL, NULL, NULL, NULL)),
+    VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='history_octane'), 'coc_charge_type', FALSE, (SELECT dwid from temp_staging_field_08), NULL, NULL, NULL, NULL, NULL, NULL, NULL)),
 
     temp_staging_field_09 as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-    VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='staging_octane'), 'coc_draw_discrepancy_text', FALSE, NULL,                                     NULL, NULL, 'varchar(1024)', NULL, NULL, NULL, NULL) RETURNING dwid),
+    VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='staging_octane'), 'coc_draw_discrepancy_text', FALSE, NULL,                                     NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING dwid),
     temp_history_field_09 as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-    VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='history_octane'), 'coc_draw_discrepancy_text', FALSE, (SELECT dwid from temp_staging_field_09), NULL, NULL, 'varchar(1024)', NULL, NULL, NULL, NULL)),
+    VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='history_octane'), 'coc_draw_discrepancy_text', FALSE, (SELECT dwid from temp_staging_field_09), NULL, NULL, NULL, NULL, NULL, NULL, NULL)),
 
     temp_staging_field_10 as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-    VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='staging_octane'), 'coc_impeding_draw_discrepancy', FALSE, NULL,                                          NULL, NULL, 'boolean', NULL, NULL, NULL, NULL) RETURNING dwid),
+    VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='staging_octane'), 'coc_impeding_draw_discrepancy', FALSE, NULL,                                          NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING dwid),
     temp_history_field_10 as (INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-    VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='history_octane'), 'coc_impeding_draw_discrepancy', FALSE, (SELECT dwid from temp_staging_field_10), NULL, NULL, 'boolean', NULL, NULL, NULL, NULL))
-
+    VALUES  ((SELECT dwid FROM mdi.edw_table_definition WHERE table_name='construction_cost' and schema_name='history_octane'), 'coc_impeding_draw_discrepancy', FALSE, (SELECT dwid from temp_staging_field_10), NULL, NULL, NULL, NULL, NULL, NULL, NULL))
     SELECT 'Added coc_calculated_construction_cost_percent, coc_overridden_construction_cost_percent, coc_construction_cost_calculation_percent_override_reason, coc_calculated_construction_cost_months, coc_overridden_construction_cost_months, coc_effective_construction_cost_months, coc_construction_cost_months_override_reason, coc_charge_type, coc_draw_discrepancy_text, and coc_impeding_draw_discrepancy to staging_octane.construction_cost and history_octane.construction_cost';
 
 
@@ -689,13 +699,13 @@ WHERE process_dwid = (SELECT dwid FROM mdi.process WHERE name='SP-100317');
 UPDATE mdi.table_input_step
 SET sql='
 --finding records to insert into history_octane.construction_cost
-SELECT staging_table.coc_impeding_draw_discrepancy, staging_table.coc_draw_discrepancy_text, staging_table.coc_charge_type, staging_table.coc_pid, staging_table.coc_version, staging_table.coc_proposal_pid, staging_table.coc_construction_cost_category_type, staging_table.coc_construction_cost_funding_type, staging_table.coc_construction_cost_status_type, staging_table.coc_construction_cost_payee_type, staging_table.coc_create_datetime, staging_table.coc_construction_cost_amount, staging_table.coc_construction_cost_notes, staging_table.coc_contractor_pid, staging_table.coc_proposal_contractor_pid, staging_table.coc_payee, staging_table.coc_permit_pid, staging_table.coc_category_type_label, staging_table.coc_calculation_percentage, staging_table.coc_construction_cost_calculation_type, FALSE AS data_source_deleted_flag, NOW( ) AS data_source_updated_datetime
+SELECT staging_table.coc_effective_construction_cost_calculation_percent, staging_table.coc_impeding_draw_discrepancy, staging_table.coc_draw_discrepancy_text, staging_table.coc_charge_type, staging_table.coc_pid, staging_table.coc_version, staging_table.coc_proposal_pid, staging_table.coc_construction_cost_category_type, staging_table.coc_construction_cost_funding_type, staging_table.coc_construction_cost_status_type, staging_table.coc_construction_cost_payee_type, staging_table.coc_create_datetime, staging_table.coc_construction_cost_amount, staging_table.coc_construction_cost_notes, staging_table.coc_contractor_pid, staging_table.coc_proposal_contractor_pid, staging_table.coc_payee, staging_table.coc_permit_pid, staging_table.coc_category_type_label, staging_table.coc_construction_cost_calculation_type, FALSE AS data_source_deleted_flag, NOW( ) AS data_source_updated_datetime
 FROM staging_octane.construction_cost staging_table
 LEFT JOIN history_octane.construction_cost history_table
           ON staging_table.coc_pid = history_table.coc_pid AND staging_table.coc_version = history_table.coc_version
 WHERE history_table.coc_pid IS NULL
 UNION ALL
-SELECT history_table.coc_impeding_draw_discrepancy, history_table.coc_draw_discrepancy_text, history_table.coc_charge_type, history_table.coc_pid, history_table.coc_version + 1, history_table.coc_proposal_pid, history_table.coc_construction_cost_category_type, history_table.coc_construction_cost_funding_type, history_table.coc_construction_cost_status_type, history_table.coc_construction_cost_payee_type, history_table.coc_create_datetime, history_table.coc_construction_cost_amount, history_table.coc_construction_cost_notes, history_table.coc_contractor_pid, history_table.coc_proposal_contractor_pid, history_table.coc_payee, history_table.coc_permit_pid, history_table.coc_category_type_label, history_table.coc_calculation_percentage, history_table.coc_construction_cost_calculation_type, TRUE AS data_source_deleted_flag, NOW( ) AS data_source_updated_datetime
+SELECT history_table.coc_effective_construction_cost_calculation_percent, history_table.coc_impeding_draw_discrepancy, history_table.coc_draw_discrepancy_text, history_table.coc_charge_type, history_table.coc_pid, history_table.coc_version + 1, history_table.coc_proposal_pid, history_table.coc_construction_cost_category_type, history_table.coc_construction_cost_funding_type, history_table.coc_construction_cost_status_type, history_table.coc_construction_cost_payee_type, history_table.coc_create_datetime, history_table.coc_construction_cost_amount, history_table.coc_construction_cost_notes, history_table.coc_contractor_pid, history_table.coc_proposal_contractor_pid, history_table.coc_payee, history_table.coc_permit_pid, history_table.coc_category_type_label, history_table.coc_construction_cost_calculation_type, TRUE AS data_source_deleted_flag, NOW( ) AS data_source_updated_datetime
 FROM history_octane.construction_cost history_table
 LEFT JOIN staging_octane.construction_cost staging_table
           ON staging_table.coc_pid = history_table.coc_pid
@@ -704,63 +714,6 @@ WHERE staging_table.coc_pid IS NULL
                   FROM history_octane.construction_cost deleted_records
                   WHERE deleted_records.coc_pid = history_table.coc_pid AND deleted_records.data_source_deleted_flag = TRUE);'
 WHERE process_dwid = (SELECT dwid FROM mdi.process WHERE name='SP-100161');
-
--- Load fields common to both history_octane and staging_octane into temp table before inserting staging_octane field data
-CREATE TEMPORARY TABLE temp_new_column_field_data (
-                                                      table_name TEXT,
-                                                      field_name TEXT,
-                                                      key_field_flag BOOLEAN,
-                                                      field_order INTEGER);
-
-INSERT INTO temp_new_column_field_data (table_name, field_name, key_field_flag, field_order)
-VALUES ('loan_charge_payer_item_source_type', 'code', FALSE, 1),
-       ('loan_charge_payer_item_source_type', 'value', FALSE, 2),
-
-       ('loan_charge_payer_item', 'lcpi_pid', FALSE, 1),
-       ('loan_charge_payer_item', 'lcpi_version', FALSE, 2),
-       ('loan_charge_payer_item', 'lcpi_item_amount', FALSE, 3),
-       ('loan_charge_payer_item', 'lcpi_loan_charge_payer_item_source_type', FALSE, 4),
-       ('loan_charge_payer_item', 'lcpi_loan_charge_pid', FALSE, 5),
-       ('loan_charge_payer_item', 'lcpi_charge_payer_type', FALSE, 6),
-       ('loan_charge_payer_item', 'lcpi_paid_by', FALSE, 7),
-       ('loan_charge_payer_item', 'lcpi_poc', FALSE, 8),
-       ('loan_charge_payer_item', 'lcpi_charge_wire_action_auto_compute', FALSE, 9),
-       ('loan_charge_payer_item', 'lcpi_charge_wire_action_type', FALSE, 10),
-
-       ('wf_prereq_set', 'wps_pid', FALSE, 1),
-       ('wf_prereq_set', 'wps_version', FALSE, 2),
-       ('wf_prereq_set', 'wps_account_pid', FALSE, 3),
-       ('wf_prereq_set', 'wps_wf_prereq_set_name', FALSE, 4),
-
-       ('wf_prereq', 'wp_pid', FALSE, 1),
-       ('wf_prereq', 'wp_version', FALSE, 2),
-       ('wf_prereq', 'wp_wf_prereq_set_pid', FALSE, 3),
-       ('wf_prereq', 'wp_wf_step_pid', FALSE, 4);
-
--- Insert edw_field_definition data for new staging_octane columns
-INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag)
-SELECT edw_table_definition.dwid, temp_new_column_field_data.field_name, temp_new_column_field_data.key_field_flag
-FROM temp_new_column_field_data
-    JOIN mdi.edw_table_definition
-        ON temp_new_column_field_data.table_name = edw_table_definition.table_name
-            AND edw_table_definition.schema_name = 'staging_octane';
-
--- Insert edw_field_definition data for new history_octane columns
-INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid)
-SELECT edw_table_definition.dwid
-    , temp_new_column_field_data.field_name
-    , temp_new_column_field_data.key_field_flag
-    , source_field_definition.dwid
-FROM temp_new_column_field_data
-    JOIN mdi.edw_table_definition
-        ON temp_new_column_field_data.table_name = edw_table_definition.table_name
-            AND edw_table_definition.schema_name = 'history_octane'
-    JOIN mdi.edw_table_definition source_table_definition
-        ON edw_table_definition.table_name = source_table_definition.table_name
-            AND source_table_definition.schema_name = 'staging_octane'
-    LEFT JOIN mdi.edw_field_definition source_field_definition
-        ON source_table_definition.dwid = source_field_definition.edw_table_definition_dwid
-            AND temp_new_column_field_data.field_name = source_field_definition.field_name;
 
 -- Reset temp tables used in this DML migration
 DROP TABLE IF EXISTS temp_new_table_field_data;
