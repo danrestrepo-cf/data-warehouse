@@ -192,58 +192,6 @@ ORDER BY
 
         return self.execute_parameterized_query(query, edw_table_definition_dwid)
 
-    def get_all_staging_tables(self, schema):
-        # returns a list of RealDict objects
-        #   if table has a primary key - [(name of table, key field name, version field name)]
-        #   if table is a 'type' table - [(name of table, code field name, null)]
-        rows = self.execute_select_query(f'''
-        SELECT t.relname AS name, a.attname as key_field, version.attname as version_field
-        FROM pg_class t
-         join pg_index ix on t.oid = ix.indrelid
-         join pg_class i on i.oid = ix.indexrelid
-         join pg_attribute a on a.attrelid = t.oid and a.attnum = ANY(ix.indkey)
-         join pg_namespace on t.relnamespace = pg_namespace.oid
-         join pg_attribute version on version.attrelid = t.oid AND version.attname = left(a.attname, length(a.attname)-3)||'version'
-        WHERE pg_namespace.nspname = 'staging_octane'
-          and t.relkind = 'r'
-          and (i.relname like '%_pkey' OR i.relname like 'pk_%')
-         -- 371
-        union all
-        select tables.table_name as name, 'code' as key_field, null as version_field
-        from information_schema.tables
-        join information_schema.columns col1 on tables.table_name = col1.table_name and tables.table_schema = col1.table_schema and col1.column_name = 'code'
-        join information_schema.columns col2 on tables.table_name = col2.table_name and tables.table_schema = col2.table_schema and col2.column_name = 'value'
-        where tables.table_name like '%type'
-            and tables.table_schema = 'staging_octane'
-        --425 (2 of these have 3 columns each)
-        ;
-        ''', 'staging')
-        return rows
-
-    def get_all_table_fields(self, schema, table):
-        columns = []
-        rows = self.execute_select_query(f'''
-            SELECT columns.column_name
-            FROM information_schema.columns
-            WHERE columns.table_schema = '{schema}'
-                AND columns.table_name = '{table}'
-            ;''', 'staging')
-        for row in rows:
-            columns.append(row[0])
-        return columns
-
-    def get_state_machine_step_from_process_dwid(self, process_dwid: int) -> list:
-        query = '''SELECT
-    state_machine_step.process_dwid
-     , state_machine_step.next_process_dwid
-FROM
-    mdi.state_machine_step
-WHERE
-    process_dwid = %s
-;'''
-        return self.execute_parameterized_query(query, (process_dwid))
-
-
 class ETL_creator():
     def __init__(self, field_metadata: list, process_name: str, edw_connection: EDW, insert_update_table_name: str,
                  edw_table_definition_dwid: int, table_input_step_connection: str = "Staging DB Connection",
@@ -390,15 +338,6 @@ class ETL_creator():
 {self.indent*2}primary_table.data_source_updated_datetime as data_source_modified_datetime,
 '''
         return output_edw_standard_fields
-
-    def create_data_source_dwid_select_sql(self, data_source_dwid_value: int) -> str:
-        """
-        Creates a string that can be added to a SELECT clause that contains the column data_source_dwid (no trailing comma included)
-
-        :param data_source_dwid_value:
-        :return: string that can be appended to a SELECT statement (no trailing comma)
-        """
-        return f"{data_source_dwid_value} as data_source_dwid"
 
     def create_data_source_integration_columns_select_sql(self) -> str:
         """
