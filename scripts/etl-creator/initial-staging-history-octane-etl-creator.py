@@ -122,31 +122,6 @@ WHERE
                         table_name ASC;'''
         return self.execute_parameterized_query(query, (schema_name))
 
-    def get_target_field_list_from_edw_field_definition(self, edw_table_definition_dwid: int) -> list:
-        """
-        This returns data from the edw_table_definition and edw_field_definition tables.
-
-        :param edw_table_definition_dwid: int, the primary key of the table definition row
-        :return: a list of RealDict objects in the format [(database_name, schema_name, table_name, field_name, key_field_flag)]
-        """
-
-        query = '''SELECT
-                        edw_table_definition.database_name
-                        , edw_table_definition.schema_name
-                        , edw_table_definition.table_name
-                        , edw_field_definition.field_name
-                        , edw_field_definition.key_field_flag
-                    FROM
-                        mdi.edw_table_definition
-                        JOIN mdi.edw_field_definition on edw_table_definition.dwid = edw_field_definition.edw_table_definition_dwid
-                    WHERE
-                        edw_table_definition.dwid = %s
-                    ORDER BY
-                        edw_field_definition.key_field_flag DESC
-                        , edw_field_definition.field_name ASC
-                    ;'''
-        return self.execute_parameterized_query(query, edw_table_definition_dwid)
-
     def get_field_list_from_edw_field_definition(self, edw_table_definition_dwid: int) -> list:
         """
         This returns all data needed to create a table-to-table/table-to-table-json MDI process.
@@ -311,9 +286,6 @@ class ETL_creator():
         self.indent = "    "
 
     def create_table_input_sql(self) -> str:
-
-        number_of_rows_returned = len(self.field_metadata)
-
         # this is used to alias the primary table and child join sub queries
         default_table_name = "primary_table"
 
@@ -357,10 +329,10 @@ class ETL_creator():
         # create select clause with list of fields
         output_select_clause = ""
 
-        line_suffix = f''',
+        line_suffix = ''',
 '''
 
-        for index, field_definition in enumerate(self.field_metadata, start=1):
+        for field_definition in self.field_metadata:
 
             if field_definition["table_input_edw_table_definition_dwid"] == field_definition["primary_source_edw_table_definition_dwid"]:
                 table_name = f"primary_table"
