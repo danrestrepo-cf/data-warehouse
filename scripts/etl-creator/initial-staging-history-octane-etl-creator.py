@@ -133,7 +133,7 @@ WHERE
         """
 
         query = '''SELECT
-    CASE WHEN source_field.source_edw_field_definition_dwid IS NULL THEN 0 ELSE 1 END as has_table_input_source_definition
+    CASE WHEN target_field.source_edw_field_definition_dwid IS NULL THEN 0 ELSE 1 END as has_table_input_source_definition
     , CASE WHEN target_field.field_name in ('dwid','data_source_dwid','data_source_integration_columns','data_source_integration_id','data_source_modified_datetime','edw_created_datetime', 'edw_modified_datetime', 'etl_batch_id') THEN 1 ELSE 0 END as is_edw_standard_field
     , source_table.database_name as table_input_database_name
     , coalesce(source_table.schema_name, target_source_table.schema_name) as table_input_schema_name
@@ -294,10 +294,8 @@ class ETL_creator():
                 if field_definition["has_table_input_source_definition"] == 1:
                     output_select_clause += f'''{self.indent*2}{table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
                 else:
-                    if field_definition["table_input_schema_name"] == "star_loan" and field_definition["table_input_database_name"] == "staging":
-                        output_select_clause += f'''{self.indent*2}{table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
-                    elif field_definition["is_edw_standard_field"] is False:
-                        output_select_clause += f'''-- skipping this row because has_table_input_source_definition != 0:         {self.indent*2}{table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
+                    if field_definition["is_edw_standard_field"] is False:
+                        output_select_clause += f'''-- skipping this row because has_table_input_source_definition != 0 and is_edw_standard_field is False:         {self.indent*2}{table_name}.{field_definition["table_input_field_name"]} as {field_definition["insert_update_field_name"]}{line_suffix}'''
                     elif field_definition["table_input_schema_name"] == None:  # standard fields have null table input fields
                         continue
                     else:
@@ -625,7 +623,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                 table_output_step.target_schema = '{schema_name}'
                 AND table_output_step.target_table = '{table_name}'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM

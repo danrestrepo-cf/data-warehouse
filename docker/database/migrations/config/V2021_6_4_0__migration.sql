@@ -1474,7 +1474,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'application'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -1939,7 +1939,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'borrower'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -1958,7 +1958,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'marital_status_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -1977,7 +1977,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'yes_no_unknown_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -2887,7 +2887,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'applicant_role_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -2906,7 +2906,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'application_taken_method_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -2925,7 +2925,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'borrower'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -2944,7 +2944,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'borrower_relationship_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -2963,7 +2963,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'borrower_tiny_id_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -2982,7 +2982,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'country_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -3001,7 +3001,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'credit_authorization_method_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -3020,7 +3020,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'housing_counseling_agency_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -3039,7 +3039,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'housing_counseling_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -3058,7 +3058,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'legal_entity_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -3077,7 +3077,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'prior_property_title_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -3096,7 +3096,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'property_usage_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -3115,7 +3115,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'yes_no_unknown_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -3788,7 +3788,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'borrower'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -3807,7 +3807,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'citizenship_residency_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -3826,7 +3826,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'homeownership_education_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -3845,7 +3845,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'housing_counseling_agency_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -3864,7 +3864,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'state_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -3883,7 +3883,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'yes_no_unknown_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -4039,7 +4039,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'hmda_purchaser_of_loan_2017_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -4058,7 +4058,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'hmda_purchaser_of_loan_2018_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -4368,7 +4368,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'country_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -4387,7 +4387,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'interim_funder'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -4406,7 +4406,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'interim_funder_mers_registration_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -5214,7 +5214,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'country_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -5233,7 +5233,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'fnm_investor_remittance_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -5252,7 +5252,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'fnm_mbs_loan_default_loss_party_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -5271,7 +5271,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'fnm_mbs_reo_marketing_party_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -5290,7 +5290,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'gift_funds_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -5309,7 +5309,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'investor'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -5328,7 +5328,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'investor_hmda_purchaser_of_loan_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -5347,7 +5347,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'loan_file_delivery_method_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -5849,7 +5849,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'country_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -5868,7 +5868,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'credit_bureau_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -5887,7 +5887,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'lender_user'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -5906,7 +5906,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'lender_user_status_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -5925,7 +5925,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'lender_user_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -5944,7 +5944,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'time_zone_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -6266,7 +6266,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'courier_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -6285,7 +6285,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'delivery_aus_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -6304,7 +6304,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'loan_beneficiary'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -6323,7 +6323,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'loan_benef_transfer_status_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -6342,7 +6342,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'loan_file_delivery_method_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -6361,7 +6361,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'mers_transfer_status_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -6380,7 +6380,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'yes_no_unknown_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -6646,7 +6646,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'loan'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -6665,7 +6665,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'proposal'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -6921,7 +6921,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'courier_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -6940,7 +6940,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'funding_status_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -6959,7 +6959,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'loan_funding'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -7364,7 +7364,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'buydown_contributor_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -7383,7 +7383,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'fha_program_code_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -7402,7 +7402,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'hmda_hoepa_status_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -7421,7 +7421,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'lien_priority_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -7440,7 +7440,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'loan'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -7459,7 +7459,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'lqa_purchase_eligibility_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -7478,7 +7478,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'proposal'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -7497,7 +7497,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'qualified_mortgage_status_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -7516,7 +7516,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'qualifying_rate_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -7535,7 +7535,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'yes_no_na_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -7554,7 +7554,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'yes_no_unknown_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -8010,6 +8010,11 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
     FROM temp_insert_update_step
     RETURNING dwid)
 
+    , temp_insert_update_field_49 as (INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)   -- mdi.insert_update_field
+    select temp_insert_update_step.dwid, 'loan_dwid', 'loan_dwid', 'Y', 'FALSE'
+    FROM temp_insert_update_step
+    RETURNING dwid)
+
     , temp_state_machine_step_insert as (INSERT INTO mdi.state_machine_step (process_dwid, next_process_dwid)  -- mdi.state_machine_step
     SELECT temp_process.dwid, NULL
     FROM temp_process)
@@ -8022,7 +8027,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'loan'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -8041,7 +8046,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'mi_calculated_rate_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -8060,7 +8065,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'mi_company_name_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -8079,7 +8084,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'mi_initial_calculation_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -8098,7 +8103,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'mi_input_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -8117,7 +8122,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'mi_payer_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -8136,7 +8141,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'mi_payment_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -8155,7 +8160,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'mi_premium_refundable_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -8174,7 +8179,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'mi_renewal_calculation_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -8193,7 +8198,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'star_loan'
                 AND table_output_step.target_table = 'loan_dim'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -8419,7 +8424,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'aus_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -8438,7 +8443,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'buydown_schedule_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -8457,7 +8462,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'interest_only_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -8476,7 +8481,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'loan'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -8495,7 +8500,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'mortgage_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -8514,7 +8519,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'prepay_penalty_schedule_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -8722,7 +8727,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'fund_source_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -8741,7 +8746,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'product'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -8760,7 +8765,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'product_side_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10271,7 +10276,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'arm_index_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10290,7 +10295,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'buydown_base_date_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10309,7 +10314,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'buydown_subsidy_calculation_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10328,7 +10333,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'community_lending_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10347,7 +10352,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'days_per_year_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10366,7 +10371,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'decision_credit_score_calc_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10385,7 +10390,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'fha_rehab_program_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10404,7 +10409,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'fha_special_program_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10423,7 +10428,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'fnm_arm_plan_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10442,7 +10447,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'fnm_community_lending_product_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10461,7 +10466,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'fre_community_program_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10480,7 +10485,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'heloc_cancel_fee_applicable_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10499,7 +10504,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'ipc_calc_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10518,7 +10523,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'ipc_comparison_operator_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10537,7 +10542,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'ipc_property_usage_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10556,7 +10561,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'lien_priority_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10575,7 +10580,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'loan_amortization_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10594,7 +10599,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'mortgage_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10613,7 +10618,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'negative_amortization_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10632,7 +10637,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'partial_payment_policy_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10651,7 +10656,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'payment_adjustment_calculation_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10670,7 +10675,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'payment_frequency_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10689,7 +10694,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'payment_structure_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10708,7 +10713,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'prepaid_interest_rate_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10727,7 +10732,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'prepay_penalty_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10746,7 +10751,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'product_appraisal_requirement_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10765,7 +10770,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'product_special_program_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10784,7 +10789,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'product_terms'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10803,7 +10808,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'qualifying_monthly_payment_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10822,7 +10827,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'qualifying_rate_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10841,7 +10846,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'section_of_act_coarse_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10860,7 +10865,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'servicing_transfer_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10879,7 +10884,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'third_party_community_second_program_eligibility_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -10898,7 +10903,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'yes_no_unknown_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -11028,7 +11033,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'deal'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -11047,7 +11052,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'proposal'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -11226,7 +11231,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'deal'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -11245,7 +11250,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'loan_purpose_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -11264,7 +11269,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'proposal'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
@@ -11283,7 +11288,7 @@ WITH temp_process as (INSERT INTO mdi.process (name, description)    -- mdi.proc
             WHERE
                     table_output_step.target_schema = 'history_octane'
                 AND table_output_step.target_table = 'proposal_structure_type'
-            UNION
+            UNION ALL
             SELECT
                 process_dwid
             FROM
