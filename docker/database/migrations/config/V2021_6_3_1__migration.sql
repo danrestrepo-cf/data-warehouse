@@ -715,9 +715,27 @@ WHERE staging_table.coc_pid IS NULL
                   WHERE deleted_records.coc_pid = history_table.coc_pid AND deleted_records.data_source_deleted_flag = TRUE);'
 WHERE process_dwid = (SELECT dwid FROM mdi.process WHERE name='SP-100161');
 
+-- insert mdi.table_output_field records for newly created columns
+INSERT INTO mdi.table_output_field (table_output_step_dwid, database_field_name, database_stream_name, field_order, is_sensitive)
+    VALUES
+    ((SELECT dwid FROM mdi.table_output_step WHERE target_table = 'wf_step' AND target_schema = 'history_octane'), 'ws_wf_prereq_set_pid', 'ws_wf_prereq_set_pid', 33, FALSE),
+    ((SELECT dwid FROM mdi.table_output_step WHERE target_table = 'appraisal' AND target_schema = 'history_octane'), 'apr_appraisal_invoice_amount', 'apr_appraisal_invoice_amount', 102, FALSE),
+    ((SELECT dwid FROM mdi.table_output_step WHERE target_table = 'mcr_loan' AND target_schema = 'history_octane'), 'mcrl_servicing_transfer_type', 'mcrl_servicing_transfer_type', 47, FALSE),
+    ((SELECT dwid FROM mdi.table_output_step WHERE target_table = 'proposal' AND target_schema = 'history_octane'), 'prp_financed_property_improvements', 'prp_financed_property_improvements', 233, FALSE),
+    ((SELECT dwid FROM mdi.table_output_step WHERE target_table = 'proposal' AND target_schema = 'history_octane'), 'prp_estimated_hard_construction_cost_amount', 'prp_estimated_hard_construction_cost_amount', 234, FALSE),
+    ((SELECT dwid FROM mdi.table_output_step WHERE target_table = 'construction_cost' AND target_schema = 'history_octane'), 'coc_calculated_construction_cost_percent', 'coc_calculated_construction_cost_percent', 19, FALSE),
+    ((SELECT dwid FROM mdi.table_output_step WHERE target_table = 'construction_cost' AND target_schema = 'history_octane'), 'coc_overridden_construction_cost_percent', 'coc_overridden_construction_cost_percent', 20, FALSE),
+    ((SELECT dwid FROM mdi.table_output_step WHERE target_table = 'construction_cost' AND target_schema = 'history_octane'), 'coc_construction_cost_calculation_percent_override_reason', 'coc_construction_cost_calculation_percent_override_reason', 21, FALSE),
+    ((SELECT dwid FROM mdi.table_output_step WHERE target_table = 'construction_cost' AND target_schema = 'history_octane'), 'coc_calculated_construction_cost_months', 'coc_calculated_construction_cost_months', 22, FALSE),
+    ((SELECT dwid FROM mdi.table_output_step WHERE target_table = 'construction_cost' AND target_schema = 'history_octane'), 'coc_overridden_construction_cost_months', 'coc_overridden_construction_cost_months', 23, FALSE),
+    ((SELECT dwid FROM mdi.table_output_step WHERE target_table = 'construction_cost' AND target_schema = 'history_octane'), 'coc_effective_construction_cost_months', 'coc_effective_construction_cost_months', 24, FALSE),
+    ((SELECT dwid FROM mdi.table_output_step WHERE target_table = 'construction_cost' AND target_schema = 'history_octane'), 'coc_construction_cost_months_override_reason', 'coc_construction_cost_months_override_reason', 25, FALSE),
+    ((SELECT dwid FROM mdi.table_output_step WHERE target_table = 'construction_cost' AND target_schema = 'history_octane'), 'coc_charge_type', 'coc_charge_type', 26, FALSE),
+    ((SELECT dwid FROM mdi.table_output_step WHERE target_table = 'construction_cost' AND target_schema = 'history_octane'), 'coc_draw_discrepancy_text', 'coc_draw_discrepancy_text', 27, FALSE),
+    ((SELECT dwid FROM mdi.table_output_step WHERE target_table = 'construction_cost' AND target_schema = 'history_octane'), 'coc_impeding_draw_discrepancy', 'coc_impeding_draw_discrepancy', 28, FALSE);
+
 -- Reset temp tables used in this DML migration
 DROP TABLE IF EXISTS temp_new_table_field_data;
 DROP TABLE IF EXISTS temp_new_table_mdi_data;
 DROP TABLE IF EXISTS temp_new_column_field_data;
 DROP TABLE IF EXISTS temp_new_column_mdi_data;
-
