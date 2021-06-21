@@ -545,41 +545,6 @@ class ETL_creator():
             print(field_definition)
             raise ValueError("Expected child_join_data to have 0 or 1 rows but more than 1 row was found. Script is not written to handle this scenario.")
 
-    def get_process_dwid_from_table_name(self, search_text: str) -> int:
-        """
-        Used to get the process_dwid based on a table name. If 0 or more than 1 row is found ValueErrors are thrown.
-
-        ** THIS CODE IS FRAGILE ** -- highly coupled with the format of the test in mdi.process.description. We're
-        looking into a change here https://app.asana.com/0/0/1200287150179725/
-
-        :param search_text: the name of the table (or other text) that
-        :return: returns the process_dwid of a row in mdi.process that has *table_name* in its description
-        """
-
-        edw = EDW()
-
-        query = """SELECT
-    *
-FROM
-    mdi.table_output_step
-WHERE
-    table_output_step.target_schema = 'history_octane'
-    AND table_output_step.target_table = %s;"""
-
-        rows = edw.execute_parameterized_query(query, search_text)
-
-        number_of_rows_returned = len(rows)
-
-        if number_of_rows_returned > 1:
-            raise(ValueError("Expected 1 row to be returned when querying mdi.process but multiple rows returned."))
-        elif number_of_rows_returned == 0:
-            raise(ValueError("Expected 1 row to be returned when querying mdi.process but zero rows returned."))
-        elif number_of_rows_returned == 1:
-            process_dwid = rows[0]["process_dwid"]  # we know there is only one row in the list and we want the process_dwid value from that dict
-            return process_dwid
-        else:
-            raise(Exception("Unexpected program state encountered while looking up the process_dwid values from the table name."))  # should never hit this code but throw an error for future me if we do enter a problem state
-
     def create_table_input_to_insert_update_sql(self) -> str:
         """
         Creates SQL that can be executed against the config database in EDW to add SP configurations.
