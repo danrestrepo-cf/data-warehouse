@@ -13,8 +13,23 @@ from typing import List
 failure_list = []
 
 def main():
+    print("Proceeding with process table validations...")
     process_check()
-    print(failure_list)
+    print("Proceeding with CSV table validations...")
+    csv_file_input_step_check()
+    csv_file_input_field_check()
+    print("Proceeding with Microsoft Excel table validations...")
+    microsoft_excel_input_step_check()
+    print("Proceeding with Table input table validations")
+    table_input_step_check()
+    output_message()
+
+def output_message():
+    if not failure_list:
+        print("Config data validator completed successfully.")
+    else:
+        failure_list.insert(0, "One or more validations failed:")
+        print("\n".join(failure_list))
 
 def process_check():
     with EDW() as cursor:
@@ -25,7 +40,7 @@ def process_check():
         GROUP BY process.name
         HAVING COUNT(*) > 1
         """).shape[0]) > 0:
-            failure_list.append('Non-unique value(s) found in process.name field.')
+            failure_list.append('process: Non-unique value(s) in name field.')
 
         if (cursor.select_into_dataframe("""
         SELECT process.dwid
@@ -37,7 +52,7 @@ def process_check():
             AND microsoft_excel_input_step.dwid IS NULL
             AND csv_file_input_step.dwid IS NULL
         """).shape[0]) > 0:
-            failure_list.append('Process record(s) found without any MDI input relations.')
+            failure_list.append('process: record(s) without any MDI input relations.')
 
         if (cursor.select_into_dataframe("""
         SELECT process.dwid
@@ -49,7 +64,7 @@ def process_check():
             AND insert_update_step.dwid IS NULL
             AND delete_step.dwid IS NULL
         """).shape[0]) > 0:
-            failure_list.append('Process record(s) found without any MDI output relations.')
+            failure_list.append('process: record(s) without any MDI output relations.')
 
 def csv_file_input_step_check():
     with EDW() as cursor:
@@ -60,7 +75,7 @@ def csv_file_input_step_check():
                 csv_file_input_field.csv_file_input_step_dwid
         WHERE csv_file_input_field.dwid IS NULL        
         """).shape[0]) > 0:
-            failure_list.append('CSV file input step record(s) found without any CSV file input field relations.')
+            failure_list.append('csv_file_input_step: record(s) without any CSV file input field relations.')
 
 def csv_file_input_field_check():
     with EDW() as cursor:
@@ -73,9 +88,50 @@ def csv_file_input_field_check():
             , csv_file_input_field.field_name
         HAVING COUNT(*) > 1
         """).shape[0]) > 0:
-            failure_list.append('CSV file input field ')
+            failure_list.append('csv_file_input_field: Duplicate field names mapped to a single CSV file input step.')
 
+def microsoft_excel_input_step_check():
+    with EDW() as cursor:
+        if (cursor.select_into_dataframe("""
+        SELECT microsoft_excel_input_step.dwid
+        FROM mdi.microsoft_excel_input_step
+            LEFT JOIN mdi.microsoft_excel_input_field ON microsoft_excel_input_step.dwid = 
+                microsoft_excel_input_field.microsoft_excel_input_step_dwid
+        WHERE microsoft_excel_input_field.dwid IS NULL
+        """).shape[0]) > 0:
+            failure_list.append('microsoft_excel_file_input_step: record(s) without any Microsoft Excel file '
+                                'input field relations.')
 
+def microsoft_excel_input_field_check():
+    with EDW() as cursor:
+        if (cursor.select_into_dataframe("""
+        SELECT microsoft_excel_file_input_field.dwid
+            , microsoft_excel_file_input_field.field_name
+            , COUNT(*)
+        FROM mdi.microsoft_excel_file_input_field
+        GROUP BY microsoft_excel_file_input_field.dwid
+            , microsoft_excel_file_input_field.field_name
+        HAVING COUNT(*) > 1
+        """).shape[0]) > 0:
+            failure_list.append(('microsoft_excel_input_field: Duplicate field names mapped to a single Microsoft '
+                                 'Excel file input step.'))
+
+def table_input_step_check():
+    with EDW() as cursor:
+        if (cursor.select_into_dataframe("""
+        SELECT table_input_step.dwid
+        FROM mdi.table_input_step
+        WHERE NOT (table_input_step.limit_size = 0
+            AND execute_for_each_row = 'N'
+            AND enable_lazy_conversion = 'N'
+            AND cached_row_meta = 'N'
+        )
+        """).shape[0]) == 0:
+            failure_list.append("Illegal values detected in table_input_step field(s).")
+
+        if (cursor.select_into_dataframe("""
+        
+        """))
 
 
 # def read_config_table_names_into_list():
