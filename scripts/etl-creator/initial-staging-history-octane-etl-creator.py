@@ -241,10 +241,10 @@ class ETL_creator():
         output_from_clause = f'''FROM (      
 {self.indent}SELECT
 {self.create_include_record_select_sql(self.field_metadata[0]["primary_source_table_name"], 2)},
-{self.indent*2}current_record.*
-{self.indent}FROM {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} current_record
-{self.indent*2}LEFT JOIN {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} AS history_records ON current_record.{self.field_metadata[0]["source_table_key_field_name"]} = history_records.{self.field_metadata[0]["source_table_key_field_name"]}
-{self.indent*3}AND current_record.data_source_updated_datetime < history_records.data_source_updated_datetime
+{self.indent*2}{self.field_metadata[0]["primary_source_table_name"]}.*
+{self.indent}FROM {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]}
+{self.indent*2}LEFT JOIN {self.field_metadata[0]["primary_source_schema_name"]}.{self.field_metadata[0]["primary_source_table_name"]} AS history_records ON {self.field_metadata[0]["primary_source_table_name"]}.{self.field_metadata[0]["source_table_key_field_name"]} = history_records.{self.field_metadata[0]["source_table_key_field_name"]}
+{self.indent*3}AND {self.field_metadata[0]["primary_source_table_name"]}.data_source_updated_datetime < history_records.data_source_updated_datetime
 {self.indent}WHERE history_records.{self.field_metadata[0]["source_table_key_field_name"]} IS NULL
 {self.indent}) AS {default_table_name}
 '''
@@ -418,10 +418,10 @@ class ETL_creator():
 {self.indent}{field_definition["join_type"].upper()} JOIN (
 {self.indent*2}SELECT * FROM (
 {self.indent*3}SELECT {include_record_join_sql}
-{self.indent*3}current_record.*
-{self.indent*3}FROM {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} current_record
-{self.indent*4}LEFT JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} AS history_records ON current_record.{field_definition["primary_source_key_field_name"]} = history_records.{field_definition["primary_source_key_field_name"]}
-{self.indent*4}AND current_record.data_source_updated_datetime < history_records.data_source_updated_datetime
+{self.indent*3}{field_definition["table_input_table_name"]}.*
+{self.indent*3}FROM {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]}
+{self.indent*4}LEFT JOIN {field_definition["table_input_schema_name"]}.{field_definition["table_input_table_name"]} AS history_records ON {field_definition["table_input_table_name"]}.{field_definition["primary_source_key_field_name"]} = history_records.{field_definition["primary_source_key_field_name"]}
+{self.indent*4}AND {field_definition["table_input_table_name"]}.data_source_updated_datetime < history_records.data_source_updated_datetime
 {self.indent*3}WHERE history_records.{field_definition["primary_source_key_field_name"]} IS NULL
 {self.indent*2}) as primary_table
 {self.indent*2}{child_join_sql}
@@ -451,11 +451,11 @@ class ETL_creator():
 {self.indent*starting_indent_level}(      
 {self.indent*(starting_indent_level + 1)}SELECT
 {self.create_include_record_select_sql(child_join_details[0]["target_table_name"], 5)},
-{self.indent*(starting_indent_level + 2)}current_record.*
+{self.indent*(starting_indent_level + 2)}{child_join_details[0]["target_table_name"]}.*
 {self.indent*(starting_indent_level + 1)}FROM
-{self.indent*(starting_indent_level + 2)}{child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]} current_record
-{self.indent*(starting_indent_level + 3)}LEFT JOIN {child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]} AS history_records ON current_record.{child_join_details[0]["target_field_name"]} = history_records.{child_join_details[0]["target_field_name"]}
-{self.indent*(starting_indent_level + 4)}AND current_record.data_source_updated_datetime < history_records.data_source_updated_datetime
+{self.indent*(starting_indent_level + 2)}{child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]}
+{self.indent*(starting_indent_level + 3)}LEFT JOIN {child_join_details[0]["target_schema_name"]}.{child_join_details[0]["target_table_name"]} AS history_records ON {child_join_details[0]["target_table_name"]}.{child_join_details[0]["target_field_name"]} = history_records.{child_join_details[0]["target_field_name"]}
+{self.indent*(starting_indent_level + 4)}AND {child_join_details[0]["target_table_name"]}.data_source_updated_datetime < history_records.data_source_updated_datetime
 {self.indent*(starting_indent_level + 1)}WHERE
 {self.indent*(starting_indent_level + 2)}history_records.{child_join_details[0]["target_field_name"]} IS NULL
 {self.indent*starting_indent_level}) AS t{child_join_details[0]["child_join_tree_definition_root_join_dwid"]} ON {child_join_details[0]["join_condition"]}
