@@ -11300,3 +11300,366 @@ FROM mdi.process
          JOIN mdi.table_output_step ON process.dwid = table_output_step.process_dwid
 WHERE table_output_step.target_schema = 'history_octane'
   AND table_output_step.target_table IN ('deal', 'proposal', 'loan');
+
+--
+-- EDW | Reporting row access - add deal_lender_user to the star schema joined to loan_fact
+-- (https://app.asana.com/0/0/1200195191806954)
+--
+
+--
+-- Insert table and field metadata into edw_table_definition and edw_field_definition config tables
+--
+
+-- insert table definition row for loan_lender_user_access
+WITH new_columns (field_name, key_field_flag, data_type, reporting_hidden, reporting_key_flag) AS (
+    VALUES ('dwid', FALSE, 'BIGSERIAL', 'yes', TRUE)
+         , ('data_source_dwid', TRUE, 'BIGINT', 'yes', FALSE)
+         , ('edw_created_datetime', FALSE, 'TIMESTAMPTZ', 'yes', FALSE)
+         , ('edw_modified_datetime', FALSE, 'TIMESTAMPTZ', 'yes', FALSE)
+         , ('etl_batch_id', FALSE, 'TEXT', 'yes', FALSE)
+         , ('data_source_integration_columns', FALSE, 'TEXT', 'yes', FALSE)
+         , ('data_source_integration_id', FALSE, 'TEXT', 'yes', FALSE)
+         , ('data_source_modified_datetime', FALSE, 'TIMESTAMPTZ', 'yes', FALSE)
+         , ('lender_user_pid', TRUE, 'BIGINT', 'yes', FALSE)
+         , ('loan_dwid', TRUE, 'BIGINT', 'yes', FALSE)
+)
+   , access_table_definition AS (
+    INSERT INTO mdi.edw_table_definition (database_name,
+                                          schema_name,
+                                          table_name,
+                                          primary_source_edw_table_definition_dwid)
+        SELECT 'staging'
+             , 'star_loan'
+             , 'loan_lender_user_access'
+             , edw_table_definition.dwid
+        FROM mdi.edw_table_definition
+        WHERE edw_table_definition.schema_name = 'history_octane'
+          AND edw_table_definition.table_name = 'deal_lender_user'
+        RETURNING dwid
+)
+-- insert field definition row for loan_lender_user_access.dwid
+INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid,
+                                      field_name,
+                                      key_field_flag,
+                                      data_type,
+                                      reporting_hidden,
+                                      reporting_key_flag)
+    SELECT access_table_definition.dwid
+         , new_columns.field_name
+         , new_columns.key_field_flag
+         , new_columns.data_type
+         , new_columns.reporting_hidden::mdi.looker_yes_no
+         , new_columns.reporting_key_flag
+    FROM new_columns, access_table_definition;
+
+
+--
+-- Insert configuration data for MDI INSERT process
+--
+
+-- insert process for loan_lender_user_access INSERT ETL
+WITH access_process AS (
+    INSERT INTO mdi.process (name, description)
+        VALUES ('SP-200001', 'ETL to insert into loan_lender_user_access')
+        RETURNING dwid
+)
+   -- insert table_input_step for loan_lender_user_access INSERT ETL
+   , access_table_input_step AS (
+    INSERT INTO mdi.table_input_step (process_dwid,
+                                      data_source_dwid,
+                                      sql,
+                                      limit_size,
+                                      connectionname)
+        SELECT access_process.dwid
+             , 1
+             , 'SELECT NOW( ) AS edw_created_datetime
+     , NOW( ) AS edw_modified_datetime
+     , ''dlu_lender_user_pid~d_pid~prp_pid~l_pid~data_source_dwid'' AS data_source_integration_columns
+     , deal_lender_user.dlu_lender_user_pid || ''~'' ||
+       deal.d_pid || ''~'' ||
+       proposal.prp_pid || ''~'' ||
+       loan.l_pid || ''~'' ||
+       ''1'' AS data_source_integration_id
+     , deal_lender_user.data_source_updated_datetime AS data_source_modified_datetime
+     , deal_lender_user.dlu_lender_user_pid AS lender_user_pid
+     , loan_fact.loan_dwid
+FROM (
+    SELECT <<loan_fact_partial_load_condition>> AS include_record
+         , loan_fact.*
+    FROM star_loan.loan_fact
+) AS loan_fact
+-- join to loan
+JOIN (
+    SELECT <<loan_partial_load_condition>> AS include_record
+         , loan.*
+    FROM history_octane.loan
+    LEFT JOIN history_octane.loan history_records
+              ON loan.l_pid = history_records.l_pid
+                  AND loan.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.l_pid IS NULL
+      AND loan.data_source_deleted_flag = FALSE
+) AS loan
+     ON loan.l_pid = loan_fact.loan_pid
+         AND loan_fact.data_source_dwid = 1
+-- join to proposal
+JOIN (
+    SELECT <<proposal_partial_load_condition>> AS include_record
+         , proposal.*
+    FROM history_octane.proposal
+    LEFT JOIN history_octane.proposal history_records
+              ON proposal.prp_pid = history_records.prp_pid
+                  AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.prp_pid IS NULL
+      AND proposal.data_source_deleted_flag = FALSE
+      AND proposal.prp_proposal_type = ''ACTIVE''
+) AS proposal
+     ON proposal.prp_pid = loan.l_proposal_pid
+-- join to deal
+JOIN (
+    SELECT <<deal_partial_load_condition>> AS include_record
+         , deal.*
+    FROM history_octane.deal
+    LEFT JOIN history_octane.deal history_records
+              ON deal.d_pid = history_records.d_pid
+                  AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.d_pid IS NULL
+      AND deal.data_source_deleted_flag = FALSE
+) AS deal
+     ON deal.d_pid = proposal.prp_deal_pid
+-- join to deal_lender_user
+JOIN (
+    -- selecting *distinct* pairs of deal/lender_user from a table at a lower granularity than loan_lender_user_access
+    -- using a GROUP BY instead of DISTINCT because we need the maximum data_source_updated_datetime as well as the deal/lender_user pair
+    -- using BOOL_OR because MAX doesn''t work for boolean arguments
+    SELECT BOOL_OR( <<deal_lender_user_partial_load_condition>> ) AS include_record
+         , deal_lender_user.dlu_deal_pid
+         , deal_lender_user.dlu_lender_user_pid
+         , MAX( deal_lender_user.data_source_updated_datetime ) AS data_source_updated_datetime
+    FROM history_octane.deal_lender_user
+    LEFT JOIN history_octane.deal_lender_user history_records
+              ON deal_lender_user.dlu_pid = history_records.dlu_pid
+                  AND deal_lender_user.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.dlu_pid IS NULL
+      AND deal_lender_user.data_source_deleted_flag = FALSE
+    GROUP BY deal_lender_user.dlu_deal_pid, deal_lender_user.dlu_lender_user_pid
+) AS deal_lender_user
+     ON deal_lender_user.dlu_deal_pid = deal.d_pid
+-- join to loan_lender_user_access to ensure no duplicate lender_user - loan pairings are inserted
+LEFT JOIN star_loan.loan_lender_user_access
+          ON loan_lender_user_access.lender_user_pid = deal_lender_user.dlu_lender_user_pid
+              AND loan_lender_user_access.loan_dwid = loan_fact.loan_dwid
+              AND loan_lender_user_access.data_source_dwid = 1
+WHERE loan_lender_user_access.dwid IS NULL
+  AND GREATEST( loan_fact.include_record, loan.include_record, proposal.include_record, deal.include_record,
+                deal_lender_user.include_record ) = TRUE;'
+             , 0
+             , 'Staging DB Connection'
+        FROM access_process
+        RETURNING dwid
+)
+   -- insert table_output_step for loan_lender_user_access INSERT ETL
+   , access_table_output_step AS (
+    INSERT INTO mdi.table_output_step (process_dwid,
+                                       target_schema,
+                                       target_table,
+                                       commit_size,
+                                       partitioning_field,
+                                       partition_data_per,
+                                       table_name_defined_in_field,
+                                       truncate_table,
+                                       connectionname,
+                                       partition_over_tables,
+                                       specify_database_fields,
+                                       ignore_insert_errors,
+                                       use_batch_update)
+        SELECT access_process.dwid
+             , 'star_loan'
+             , 'loan_lender_user_access'
+             , 1000
+             , NULL
+             , NULL
+             , 'N'
+             , 'N'
+             , 'Staging DB Connection'
+             , 'N'
+             , 'Y'
+             , 'N'
+             , 'N'
+        FROM access_process
+        RETURNING dwid
+)
+   -- insert table_output_field for loan_lender_user_access INSERT ETL
+   , access_table_output_field AS (
+    INSERT INTO mdi.table_output_field (table_output_step_dwid,
+                                        database_field_name,
+                                        database_stream_name,
+                                        field_order,
+                                        is_sensitive)
+        SELECT (SELECT dwid FROM access_table_output_step)
+             , fields.field_name
+             , fields.stream_name
+             , fields.field_order
+             , FALSE
+        FROM (VALUES ('data_source_dwid', 'data_source_dwid', 1)
+                   , ('edw_created_datetime', 'edw_created_datetime', 2)
+                   , ('edw_modified_datetime', 'edw_modified_datetime', 3)
+                   , ('etl_batch_id', 'etl_batch_id', 4)
+                   , ('data_source_integration_columns', 'data_source_integration_columns', 5)
+                   , ('data_source_integration_id', 'data_source_integration_id', 6)
+                   , ('data_source_modified_datetime', 'data_source_modified_datetime', 7)
+                   , ('lender_user_pid', 'lender_user_pid', 8)
+                   , ('loan_dwid', 'loan_dwid', 9)) AS fields (field_name, stream_name, field_order)
+)
+   -- insert json_output_field for loan_lender_user_access INSERT ETL
+   , access_json_output_field AS (
+    INSERT INTO mdi.json_output_field (process_dwid, field_name)
+        SELECT access_process.dwid, 'loan_dwid'
+        FROM access_process
+)
+   -- insert state_machine_step triggering loan_lender_user_access INSERT ETL after loan_fact ETL
+   , after_loan_fact_state_machine_step AS (
+    INSERT
+        INTO mdi.state_machine_step (process_dwid, next_process_dwid)
+            SELECT process.dwid, (SELECT dwid FROM access_process)
+            FROM mdi.process
+            WHERE name = 'SP-300001'
+)
+-- insert state_machine_step triggering loan_lender_user_access INSERT ETL after history_octane.deal_lender_user ETL
+INSERT
+INTO mdi.state_machine_step (process_dwid, next_process_dwid)
+SELECT process.dwid, (SELECT dwid FROM access_process)
+FROM mdi.process
+WHERE name = 'SP-100092';
+
+--
+-- Insert configuration data for MDI DELETE process
+--
+
+-- insert process for loan_lender_user_access DELETE ETL
+WITH access_process AS (
+    INSERT INTO mdi.process (name, description)
+        VALUES ('SP-200002', 'ETL to delete from loan_lender_user_access')
+        RETURNING dwid
+)
+   -- insert table_input_step for loan_lender_user_access DELETE ETL
+   , access_table_input_step AS (
+    INSERT INTO mdi.table_input_step (process_dwid,
+                                      data_source_dwid,
+                                      sql,
+                                      limit_size,
+                                      connectionname)
+        SELECT access_process.dwid
+             , 1
+             , 'WITH most_recent_deal_lender_user_rows AS (
+    SELECT deal_lender_user.*
+    FROM history_octane.deal_lender_user
+    LEFT JOIN history_octane.deal_lender_user history_records
+              ON deal_lender_user.dlu_pid = history_records.dlu_pid
+                  AND deal_lender_user.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.dlu_pid IS NULL
+)
+SELECT loan_lender_user_access.dwid
+     , deal_lender_user.dlu_lender_user_pid AS lender_user_pid
+     , loan_fact.loan_dwid
+FROM star_loan.loan_fact
+-- join to loan
+JOIN (
+    SELECT loan.*
+    FROM history_octane.loan
+    LEFT JOIN history_octane.loan history_records
+              ON loan.l_pid = history_records.l_pid
+                  AND loan.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.l_pid IS NULL
+) AS loan
+     ON loan.l_pid = loan_fact.loan_pid
+         AND loan_fact.data_source_dwid = 1
+-- join to proposal
+JOIN (
+    SELECT proposal.*
+    FROM history_octane.proposal
+    LEFT JOIN history_octane.proposal history_records
+              ON proposal.prp_pid = history_records.prp_pid
+                  AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.prp_version IS NULL
+      AND proposal.prp_proposal_type = ''ACTIVE''
+) AS proposal
+     ON proposal.prp_pid = loan.l_proposal_pid
+-- join to deal
+JOIN (
+    SELECT deal.*
+    FROM history_octane.deal
+    LEFT JOIN history_octane.deal history_records
+              ON deal.d_pid = history_records.d_pid
+                  AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.d_pid IS NULL
+) AS deal
+     ON deal.d_pid = proposal.prp_deal_pid
+-- join to deal_lender_user
+JOIN (
+    -- selecting *distinct* pairings of deal/lender_user since deal_lender_user is at a lower granularity than loan_lender_user_access
+    SELECT DISTINCT deal_lender_user.dlu_deal_pid
+                  , deal_lender_user.dlu_lender_user_pid
+    FROM most_recent_deal_lender_user_rows deal_lender_user
+        -- unlike most other star_loan ETL queries, this query will only ever be triggered by one table (deal_lender_user)
+    WHERE <<deal_lender_user_partial_load_condition>>
+) AS deal_lender_user
+     ON deal_lender_user.dlu_deal_pid = deal.d_pid
+-- join again to deal_lender_user to filter to user-loan relationships that have been *completely* severed
+LEFT JOIN most_recent_deal_lender_user_rows non_deletable_deal_lender_user
+          ON deal_lender_user.dlu_deal_pid = non_deletable_deal_lender_user.dlu_deal_pid
+              AND deal_lender_user.dlu_lender_user_pid = non_deletable_deal_lender_user.dlu_lender_user_pid
+              AND non_deletable_deal_lender_user.data_source_deleted_flag = FALSE
+-- join to loan_lender_user_access to only try to delete rows that have already been added to the target table
+JOIN star_loan.loan_lender_user_access
+     ON loan_lender_user_access.loan_dwid = loan_fact.loan_dwid
+         AND loan_lender_user_access.lender_user_pid = deal_lender_user.dlu_lender_user_pid
+         AND loan_lender_user_access.data_source_dwid = 1
+WHERE non_deletable_deal_lender_user.data_source_deleted_flag IS NULL;'
+             , 0
+             , 'Staging DB Connection'
+        FROM access_process
+        RETURNING dwid
+)
+   -- insert delete_step for loan_lender_user_access DELETE ETL
+   , access_delete_step AS (
+    INSERT INTO mdi.delete_step (process_dwid,
+                                 connectionname,
+                                 schema_name,
+                                 table_name,
+                                 commit_size)
+        SELECT access_process.dwid
+             , 'Staging DB Connection'
+             , 'star_loan'
+             , 'loan_lender_user_access'
+             , 1000
+        FROM access_process
+        RETURNING dwid
+)
+   -- insert delete_key for loan_lender_user_access DELETE ETL
+   , access_delete_key AS (
+    INSERT INTO mdi.delete_key (delete_step_dwid,
+                                table_name_field,
+                                stream_fieldname_1,
+                                stream_fieldname_2,
+                                comparator,
+                                is_sensitive)
+        SELECT dwid
+             , 'dwid'
+             , 'dwid'
+             , ''
+             , '='
+             , FALSE
+        FROM access_delete_step
+)
+   -- insert json_output_field for loan_lender_user_access DELETE ETL
+   , access_json_output_field AS (
+    INSERT INTO mdi.json_output_field (process_dwid, field_name)
+        SELECT access_process.dwid, 'dwid'
+        FROM access_process
+)
+   -- insert state_machine_step triggering loan_lender_user_access DELETE ETL after history_octane.deal_lender_user ETL
+INSERT
+INTO mdi.state_machine_step (process_dwid, next_process_dwid)
+SELECT process.dwid, (SELECT dwid FROM access_process)
+FROM mdi.process
+WHERE name = 'SP-100092';
