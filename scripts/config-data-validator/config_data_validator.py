@@ -15,13 +15,15 @@ failure_list = []
 def main():
     print("Proceeding with process table validations...")
     process_check()
-    print("Proceeding with CSV table validations...")
+    print("Proceeding with csv table validations...")
     csv_file_input_step_check()
     csv_file_input_field_check()
     print("Proceeding with Microsoft Excel table validations...")
     microsoft_excel_input_step_check()
-    print("Proceeding with Table input table validations")
+    print("Proceeding with table input table validations...")
     table_input_step_check()
+    print("Proceeding with table output table validations...")
+    table_output_step_check()
     output_message()
 
 def output_message():
@@ -34,104 +36,159 @@ def output_message():
 def process_check():
     with EDW() as cursor:
         if (cursor.select_into_dataframe("""
-        SELECT process.name
-            , COUNT(*)
-        FROM mdi.process
-        GROUP BY process.name
-        HAVING COUNT(*) > 1
+            SELECT process.name
+                , COUNT(*)
+            FROM mdi.process
+            GROUP BY process.name
+            HAVING COUNT(*) > 1
         """).shape[0]) > 0:
             failure_list.append('process: Non-unique value(s) in name field.')
 
         if (cursor.select_into_dataframe("""
-        SELECT process.dwid
-        FROM mdi.process
-            LEFT JOIN mdi.table_input_step ON process.dwid = table_input_step.process_dwid
-            LEFT JOIN mdi.microsoft_excel_input_step ON process.dwid = microsoft_excel_input_step.process_dwid
-            LEFT JOIN mdi.csv_file_input_step ON process.dwid = csv_file_input_step.process_dwid
-        WHERE table_input_step.dwid IS NULL
-            AND microsoft_excel_input_step.dwid IS NULL
-            AND csv_file_input_step.dwid IS NULL
+            SELECT process.dwid
+            FROM mdi.process
+                LEFT JOIN mdi.table_input_step ON process.dwid = table_input_step.process_dwid
+                LEFT JOIN mdi.microsoft_excel_input_step ON process.dwid = microsoft_excel_input_step.process_dwid
+                LEFT JOIN mdi.csv_file_input_step ON process.dwid = csv_file_input_step.process_dwid
+            WHERE table_input_step.dwid IS NULL
+                AND microsoft_excel_input_step.dwid IS NULL
+                AND csv_file_input_step.dwid IS NULL
         """).shape[0]) > 0:
             failure_list.append('process: record(s) without any MDI input relations.')
 
         if (cursor.select_into_dataframe("""
-        SELECT process.dwid
-        FROM mdi.process
-            LEFT JOIN mdi.table_output_step ON process.dwid = table_output_step.process_dwid
-            LEFT JOIN mdi.insert_update_step ON process.dwid = insert_update_step.process_dwid
-            LEFT JOIN mdi.delete_step ON process.dwid = delete_step.process_dwid
-        WHERE table_output_step.dwid IS NULL
-            AND insert_update_step.dwid IS NULL
-            AND delete_step.dwid IS NULL
+            SELECT process.dwid
+            FROM mdi.process
+                LEFT JOIN mdi.table_output_step ON process.dwid = table_output_step.process_dwid
+                LEFT JOIN mdi.insert_update_step ON process.dwid = insert_update_step.process_dwid
+                LEFT JOIN mdi.delete_step ON process.dwid = delete_step.process_dwid
+            WHERE table_output_step.dwid IS NULL
+                AND insert_update_step.dwid IS NULL
+                AND delete_step.dwid IS NULL
         """).shape[0]) > 0:
             failure_list.append('process: record(s) without any MDI output relations.')
 
 def csv_file_input_step_check():
     with EDW() as cursor:
         if (cursor.select_into_dataframe("""
-        SELECT csv_file_input_step.dwid
-        FROM mdi.csv_file_input_step
-            LEFT JOIN mdi.csv_file_input_field ON csv_file_input_step.dwid = 
-                csv_file_input_field.csv_file_input_step_dwid
-        WHERE csv_file_input_field.dwid IS NULL        
+            SELECT csv_file_input_step.dwid
+            FROM mdi.csv_file_input_step
+                LEFT JOIN mdi.csv_file_input_field ON csv_file_input_step.dwid = 
+                    csv_file_input_field.csv_file_input_step_dwid
+            WHERE csv_file_input_field.dwid IS NULL        
         """).shape[0]) > 0:
             failure_list.append('csv_file_input_step: record(s) without any CSV file input field relations.')
 
 def csv_file_input_field_check():
     with EDW() as cursor:
         if (cursor.select_into_dataframe("""
-        SELECT csv_file_input_field.dwid
-            , csv_file_input_field.field_name
-            , COUNT(*)
-        FROM mdi.csv_file_input_field
-        GROUP BY csv_file_input_field.dwid
-            , csv_file_input_field.field_name
-        HAVING COUNT(*) > 1
+            SELECT csv_file_input_field.csv_file_input_step_dwid
+                , csv_file_input_field.field_name
+                , COUNT(*)
+            FROM mdi.csv_file_input_field
+            GROUP BY csv_file_input_field.csv_file_input_step_dwid
+                , csv_file_input_field.field_name
+            HAVING COUNT(*) > 1
         """).shape[0]) > 0:
             failure_list.append('csv_file_input_field: Duplicate field names mapped to a single CSV file input step.')
 
 def microsoft_excel_input_step_check():
     with EDW() as cursor:
         if (cursor.select_into_dataframe("""
-        SELECT microsoft_excel_input_step.dwid
-        FROM mdi.microsoft_excel_input_step
-            LEFT JOIN mdi.microsoft_excel_input_field ON microsoft_excel_input_step.dwid = 
-                microsoft_excel_input_field.microsoft_excel_input_step_dwid
-        WHERE microsoft_excel_input_field.dwid IS NULL
+            SELECT microsoft_excel_input_step.dwid
+            FROM mdi.microsoft_excel_input_step
+                LEFT JOIN mdi.microsoft_excel_input_field ON microsoft_excel_input_step.dwid = 
+                    microsoft_excel_input_field.microsoft_excel_input_step_dwid
+            WHERE microsoft_excel_input_field.dwid IS NULL
         """).shape[0]) > 0:
-            failure_list.append('microsoft_excel_file_input_step: record(s) without any Microsoft Excel file '
-                                'input field relations.')
+            failure_list.append('microsoft_excel_file_input_step: record(s) without any Microsoft Excel input field '
+                                'relations.')
 
 def microsoft_excel_input_field_check():
     with EDW() as cursor:
         if (cursor.select_into_dataframe("""
-        SELECT microsoft_excel_file_input_field.dwid
-            , microsoft_excel_file_input_field.field_name
-            , COUNT(*)
-        FROM mdi.microsoft_excel_file_input_field
-        GROUP BY microsoft_excel_file_input_field.dwid
-            , microsoft_excel_file_input_field.field_name
-        HAVING COUNT(*) > 1
+            SELECT microsoft_excel_input_field.microsoft_excel_input_step_dwid
+                 , microsoft_excel_input_field.field_name
+                 , COUNT(*)
+            FROM mdi.microsoft_excel_input_field
+            GROUP BY microsoft_excel_input_field.microsoft_excel_input_step_dwid
+                   , microsoft_excel_input_field.field_name
+            HAVING COUNT(*) > 1;
         """).shape[0]) > 0:
             failure_list.append(('microsoft_excel_input_field: Duplicate field names mapped to a single Microsoft '
-                                 'Excel file input step.'))
+                                 'Excel input step.'))
 
 def table_input_step_check():
     with EDW() as cursor:
         if (cursor.select_into_dataframe("""
-        SELECT table_input_step.dwid
-        FROM mdi.table_input_step
-        WHERE NOT (table_input_step.limit_size = 0
-            AND execute_for_each_row = 'N'
-            AND enable_lazy_conversion = 'N'
-            AND cached_row_meta = 'N'
-        )
-        """).shape[0]) == 0:
-            failure_list.append("Illegal values detected in table_input_step field(s).")
+            SELECT table_input_step.dwid
+            FROM mdi.table_input_step
+            WHERE NOT (table_input_step.limit_size = 0
+                AND execute_for_each_row = 'N'
+                AND enable_lazy_conversion = 'N'
+                AND cached_row_meta = 'N')
+        """).shape[0]) > 0:
+            failure_list.append("table_input_step: Non-standard values in standard-value fields.")
 
         if (cursor.select_into_dataframe("""
-        
-        """))
+            SELECT table_input_step.sql
+                , COUNT(*)
+            FROM mdi.table_input_step
+            GROUP BY sql
+            HAVING COUNT(*) > 1
+        """).shape[0]) > 0:
+            failure_list.append("table_input_step: Duplicate values in sql field detected.")
+
+def table_output_step_check():
+    with EDW() as cursor:
+        if (cursor.select_into_dataframe("""
+            SELECT table_output_step.dwid
+            FROM mdi.table_output_step
+            WHERE NOT (table_output_step.partitioning_field IS NULL
+                AND table_output_step.table_name_field IS NULL
+                AND table_output_step.auto_generated_key_field IS NULL
+                AND table_output_step.partition_data_per IS NULL
+                AND table_output_step.table_name_defined_in_field = 'N'
+                AND table_output_step.return_auto_generated_key_field IS NULL
+                AND table_output_step.partition_over_tables = 'N'
+                AND table_output_step.specify_database_fields = 'Y'
+                AND table_output_step.ignore_insert_errors = 'N'
+                AND table_output_step.use_batch_update = 'N')
+        """).shape[0]) > 0:
+            failure_list.append("table_output_step: Non-standard values in standard-value fields.")
+
+        if (cursor.select_into_dataframe("""
+            SELECT table_output_step.dwid
+            FROM mdi.table_output_step
+                LEFT JOIN mdi.edw_table_definition ON table_output_step.target_schema = edw_table_definition.schema_name
+                    AND table_output_step.target_table = edw_table_definition.table_name
+            WHERE edw_table_definition.dwid IS NULL
+        """).shape[0]) > 0:
+            failure_list.append("table_output_step: Records with a target_table field value that does not exist in "
+                                "the mdi.edw_table_definition table.")
+
+def table_output_field_check():
+    with EDW() as cursor:
+        if (cursor.select_into_dataframe("""
+            SELECT table_output_field.table_output_step_dwid
+                 , table_output_field.database_field_name
+                 , COUNT(*)
+            FROM mdi.table_output_field
+            GROUP BY table_output_field.table_output_step_dwid
+                   , table_output_field.database_field_name
+            HAVING COUNT(*) > 1
+            UNION ALL
+            SELECT table_output_field.table_output_step_dwid
+                 , table_output_field.database_stream_name
+                 , COUNT(*)
+            FROM mdi.table_output_field
+            GROUP BY table_output_field.table_output_step_dwid
+                   , table_output_field.database_stream_name
+            HAVING COUNT(*) > 1      
+        """).shape[0]) > 0:
+            failure_list.append("table_output_field: Duplicate field names mapped to a single Table input step.")
+
+
 
 
 # def read_config_table_names_into_list():
