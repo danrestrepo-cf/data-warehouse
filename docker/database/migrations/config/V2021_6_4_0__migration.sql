@@ -11663,3 +11663,141 @@ INTO mdi.state_machine_step (process_dwid, next_process_dwid)
 SELECT process.dwid, (SELECT dwid FROM access_process)
 FROM mdi.process
 WHERE name = 'SP-100092';
+
+--
+-- EDW | Duplicate and missing records in edw_field_definition and table_output_field tables
+-- https://app.asana.com/0/0/1200498375659012
+--
+
+--remove duplicates from edw_field_definition
+WITH field_definitions AS (
+    SELECT edw_field_definition.dwid
+         , edw_field_definition.field_name
+         , edw_table_definition.table_name
+         , edw_table_definition.schema_name
+    FROM mdi.edw_field_definition
+    JOIN mdi.edw_table_definition
+         ON edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
+    WHERE (
+            edw_table_definition.table_name = 'proposal'
+            AND edw_field_definition.field_name IN ('prp_financed_property_improvements', 'prp_estimated_hard_construction_cost_amount')
+        )
+       OR (
+            edw_table_definition.table_name = 'wf_prereq'
+            AND edw_field_definition.field_name = 'data_source_deleted_flag'
+        )
+)
+   , duplicate_field_definition_dwids AS (
+    SELECT duplicate_field.dwid
+    FROM field_definitions original_field
+    JOIN field_definitions duplicate_field
+         ON original_field.field_name = duplicate_field.field_name
+             AND original_field.table_name = duplicate_field.table_name
+             AND original_field.schema_name = duplicate_field.schema_name
+             AND original_field.dwid < duplicate_field.dwid
+)
+DELETE
+FROM mdi.edw_field_definition
+    USING duplicate_field_definition_dwids
+WHERE edw_field_definition.dwid = duplicate_field_definition_dwids.dwid;
+
+--remove duplicate "data_source_deleted_flag" field from table_output_field
+DELETE
+FROM mdi.table_output_field
+    USING mdi.table_output_step
+WHERE table_output_field.table_output_step_dwid = table_output_step.dwid
+  AND table_output_step.target_table = 'wf_prereq'
+  AND database_field_name = 'data_source_deleted_flag'
+  AND table_output_field.field_order = 6;
+
+--add missing "data_source_updated_datetime" field to wf_prereq metadata
+INSERT
+INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag)
+SELECT edw_table_definition.dwid, 'data_source_updated_datetime', FALSE
+FROM mdi.edw_table_definition
+WHERE edw_table_definition.schema_name = 'history_octane'
+  AND edw_table_definition.table_name = 'wf_prereq';
+
+INSERT
+INTO mdi.table_output_field (table_output_step_dwid, database_field_name, database_stream_name, field_order, is_sensitive)
+SELECT table_output_step.dwid, 'data_source_updated_datetime', 'data_source_updated_datetime', 6, FALSE
+FROM mdi.table_output_step
+WHERE table_output_step.target_table = 'wf_prereq'
+  AND table_output_step.target_schema = 'history_octane';
+
+--update invalid table_input_step sql
+UPDATE mdi.table_input_step
+SET sql = '--finding records to insert into history_octane.loan_charge_payer_item
+SELECT staging_table.lcpi_pid
+     , staging_table.lcpi_version
+     , staging_table.lcpi_item_amount
+     , staging_table.lcpi_loan_charge_payer_item_source_type
+     , staging_table.lcpi_loan_charge_pid
+     , staging_table.lcpi_charge_payer_type
+     , staging_table.lcpi_paid_by
+     , staging_table.lcpi_poc
+     , staging_table.lcpi_charge_wire_action_auto_compute
+     , staging_table.lcpi_charge_wire_action_type
+     , FALSE AS data_source_deleted_flag
+     , NOW() AS data_source_updated_datetime
+FROM staging_octane.loan_charge_payer_item staging_table
+LEFT JOIN history_octane.loan_charge_payer_item history_table
+          ON staging_table.lcpi_pid = history_table.lcpi_pid AND staging_table.lcpi_version = history_table.lcpi_version
+WHERE history_table.lcpi_pid IS NULL
+UNION ALL
+SELECT history_table.lcpi_pid
+     , history_table.lcpi_version + 1
+     , history_table.lcpi_item_amount
+     , history_table.lcpi_loan_charge_payer_item_source_type
+     , history_table.lcpi_loan_charge_pid
+     , history_table.lcpi_charge_payer_type
+     , history_table.lcpi_paid_by
+     , history_table.lcpi_poc
+     , history_table.lcpi_charge_wire_action_auto_compute
+     , history_table.lcpi_charge_wire_action_type
+     , TRUE AS data_source_deleted_flag
+     , NOW() AS data_source_updated_datetime
+FROM history_octane.loan_charge_payer_item history_table
+LEFT JOIN staging_octane.loan_charge_payer_item staging_table
+          ON staging_table.lcpi_pid = history_table.lcpi_pid
+WHERE staging_table.lcpi_pid IS NULL
+  AND NOT EXISTS( SELECT 1
+                  FROM history_octane.loan_charge_payer_item deleted_records
+                  WHERE deleted_records.lcpi_pid = history_table.lcpi_pid
+                    AND deleted_records.data_source_deleted_flag = TRUE );'
+FROM mdi.table_output_step
+WHERE table_output_step.process_dwid = table_input_step.process_dwid
+  AND table_output_step.target_table = 'loan_charge_payer_item'
+  AND table_output_step.target_schema = 'history_octane';
+
+UPDATE mdi.table_input_step
+SET sql = '--finding records to insert into history_octane.wf_prereq_set
+SELECT staging_table.wps_pid
+     , staging_table.wps_version
+     , staging_table.wps_account_pid
+     , staging_table.wps_wf_prereq_set_name
+     , FALSE AS data_source_deleted_flag
+     , NOW() AS data_source_updated_datetime
+FROM staging_octane.wf_prereq_set staging_table
+LEFT JOIN history_octane.wf_prereq_set history_table
+          ON staging_table.wps_pid = history_table.wps_pid AND staging_table.wps_version = history_table.wps_version
+WHERE history_table.wps_pid IS NULL
+UNION ALL
+SELECT history_table.wps_pid
+     , history_table.wps_version + 1
+     , history_table.wps_account_pid
+     , history_table.wps_wf_prereq_set_name
+     , TRUE AS data_source_deleted_flag
+     , NOW() AS data_source_updated_datetime
+FROM history_octane.wf_prereq_set history_table
+LEFT JOIN staging_octane.wf_prereq_set staging_table
+          ON staging_table.wps_pid = history_table.wps_pid
+WHERE staging_table.wps_pid IS NULL
+  AND NOT EXISTS (SELECT 1
+                  FROM history_octane.wf_prereq_set deleted_records
+                  WHERE deleted_records.wps_pid = history_table.wps_pid
+                    AND deleted_records.data_source_deleted_flag = TRUE );'
+FROM mdi.table_output_step
+WHERE table_output_step.process_dwid = table_input_step.process_dwid
+  AND table_output_step.target_table = 'wf_prereq_set'
+  AND table_output_step.target_schema = 'history_octane';
