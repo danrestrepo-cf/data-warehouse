@@ -1,0 +1,3 @@
+--
+-- EDW | Fix staging.star_common permission issue from release 2021.6.4.3 (https://app.asana.com/0/0/1200519541777156/)
+--
