@@ -4,6 +4,7 @@
 set -e
 
 # set the script to print all commands to the screen
+# intentionally commented but can be toggled on if needed
 # set -x
 
 name_prefix="bi-managed"
@@ -42,7 +43,4 @@ while [ "${next_token}" != "" ]; do
   done <<<"${state_machines}"
 done
 
-# https://awscli.amazonaws.com/v2/documentation/api/latest/reference/events/disable-rule.html
-# "Allow a short period of time for changes to take effect."
 echo "All state machine executions have been stopped ."
-#sleep 30
