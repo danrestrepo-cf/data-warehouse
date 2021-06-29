@@ -77,7 +77,7 @@ def csv_file_input_step_check():
                     csv_file_input_field.csv_file_input_step_dwid
             WHERE csv_file_input_field.dwid IS NULL        
         """).shape[0]) > 0:
-            failure_list.append('csv_file_input_step: record(s) without any CSV file input field relations.')
+            failure_list.append('csv_file_input_step: record(s) without any csv_file_input_field relations.')
 
 def csv_file_input_field_check():
     with EDW() as cursor:
@@ -90,7 +90,8 @@ def csv_file_input_field_check():
                 , csv_file_input_field.field_name
             HAVING COUNT(*) > 1
         """).shape[0]) > 0:
-            failure_list.append('csv_file_input_field: Duplicate field names mapped to a single CSV file input step.')
+            failure_list.append('csv_file_input_field: Duplicate field names mapped to a single csv_file_input_step '
+                                'record.')
 
 def microsoft_excel_input_step_check():
     with EDW() as cursor:
@@ -101,7 +102,7 @@ def microsoft_excel_input_step_check():
                     microsoft_excel_input_field.microsoft_excel_input_step_dwid
             WHERE microsoft_excel_input_field.dwid IS NULL
         """).shape[0]) > 0:
-            failure_list.append('microsoft_excel_file_input_step: record(s) without any Microsoft Excel input field '
+            failure_list.append('microsoft_excel_input_step: record(s) without any microsoft_excel_input_field '
                                 'relations.')
 
 def microsoft_excel_input_field_check():
@@ -115,8 +116,8 @@ def microsoft_excel_input_field_check():
                    , microsoft_excel_input_field.field_name
             HAVING COUNT(*) > 1;
         """).shape[0]) > 0:
-            failure_list.append(('microsoft_excel_input_field: Duplicate field names mapped to a single Microsoft '
-                                 'Excel input step.'))
+            failure_list.append(('microsoft_excel_input_field: Duplicate field names mapped to a single '
+                                 'microsoft_excel_input_step record.'))
 
 def table_input_step_check():
     with EDW() as cursor:
@@ -144,6 +145,23 @@ def table_output_step_check():
         if (cursor.select_into_dataframe("""
             SELECT table_output_step.dwid
             FROM mdi.table_output_step
+                LEFT JOIN mdi.edw_table_definition ON table_output_step.target_schema = edw_table_definition.schema_name
+                    AND table_output_step.target_table = edw_table_definition.table_name
+            WHERE edw_table_definition.dwid IS NULL
+        """).shape[0]) > 0:
+            failure_list.append("table_output_step: Records with a target_table field value that does not exist in "
+                                "edw_table_definition.")
+        if(cursor.select_into_dataframe("""
+            SELECT table_output_step.dwid
+            FROM mdi.table_output_step
+                LEFT JOIN mdi.table_output_field ON table_output_step.dwid = table_output_field.table_output_step_dwid
+            WHERE table_output_field.dwid IS NULL
+        """).shape[0]) > 0:
+            failure_list.append("table_output_step: Record(s) without any table_output_field relations.")
+
+        if (cursor.select_into_dataframe("""
+            SELECT table_output_step.dwid
+            FROM mdi.table_output_step
             WHERE NOT (table_output_step.partitioning_field IS NULL
                 AND table_output_step.table_name_field IS NULL
                 AND table_output_step.auto_generated_key_field IS NULL
@@ -157,59 +175,88 @@ def table_output_step_check():
         """).shape[0]) > 0:
             failure_list.append("table_output_step: Non-standard values in standard-value fields.")
 
-        if (cursor.select_into_dataframe("""
-            SELECT table_output_step.dwid
-            FROM mdi.table_output_step
-                LEFT JOIN mdi.edw_table_definition ON table_output_step.target_schema = edw_table_definition.schema_name
-                    AND table_output_step.target_table = edw_table_definition.table_name
-            WHERE edw_table_definition.dwid IS NULL
-        """).shape[0]) > 0:
-            failure_list.append("table_output_step: Records with a target_table field value that does not exist in "
-                                "the mdi.edw_table_definition table.")
-
 def table_output_field_check():
     with EDW() as cursor:
         if (cursor.select_into_dataframe("""
-            SELECT table_output_field.table_output_step_dwid
-                 , table_output_field.database_field_name
-                 , COUNT(*)
+            SELECT edw_table_definition.schema_name
+                , edw_table_definition.table_name
+                , table_output_step.target_table
+                , edw_field_definition.field_name
+                , table_output_field.database_field_name
             FROM mdi.table_output_field
-            GROUP BY table_output_field.table_output_step_dwid
-                   , table_output_field.database_field_name
-            HAVING COUNT(*) > 1
-            UNION ALL
-            SELECT table_output_field.table_output_step_dwid
-                 , table_output_field.database_stream_name
-                 , COUNT(*)
-            FROM mdi.table_output_field
-            GROUP BY table_output_field.table_output_step_dwid
-                   , table_output_field.database_stream_name
-            HAVING COUNT(*) > 1      
+                JOIN mdi.table_output_step ON table_output_field.table_output_step_dwid = table_output_step.dwid
+                LEFT JOIN mdi.edw_table_definition ON table_output_step.target_schema = edw_table_definition.schema_name
+                    AND table_output_step.target_table = edw_table_definition.table_name
+                LEFT JOIN mdi.edw_field_definition ON edw_table_definition.dwid = edw_field_definition.edw_table_definition_dwid
+                    AND table_output_field.database_field_name = edw_field_definition.field_name
+            WHERE NOT (edw_field_definition.dwid IS NOT NULL
+                AND edw_table_definition.dwid IS NOT NULL)
         """).shape[0]) > 0:
-            failure_list.append("table_output_field: Duplicate field names mapped to a single Table input step.")
+            failure_list.append("table_output_field: Records missing required relations in edw_field_definition "
+                                "and/or edw_table_definition.")
+
+        if (cursor.select_into_dataframe("""
+                SELECT table_output_field.table_output_step_dwid
+                     , table_output_field.database_field_name
+                     , COUNT(*)
+                FROM mdi.table_output_field
+                GROUP BY table_output_field.table_output_step_dwid
+                       , table_output_field.database_field_name
+                HAVING COUNT(*) > 1
+                UNION ALL
+                SELECT table_output_field.table_output_step_dwid
+                     , table_output_field.database_stream_name
+                     , COUNT(*)
+                FROM mdi.table_output_field
+                GROUP BY table_output_field.table_output_step_dwid
+                       , table_output_field.database_stream_name
+                HAVING COUNT(*) > 1      
+            """).shape[0]) > 0:
+            failure_list.append("table_output_field: Duplicate field names mapped to a single table output step.")
+
+        if (cursor.select_into_dataframe("""
+            SELECT table_output_field.table_output_step_dwid
+                , table_output_field.field_order
+                , COUNT(*)
+            FROM mdi.table_output_field
+            GROUP BY table_output_field.table_output_step_dwid
+                , table_output_field.field_order
+            HAVING COUNT(*) > 1
+        """).shape[0]) > 0:
+            failure_list.append("table_output_field: Duplicate field order values mapped to a single table output "
+                                "step.")
+
+def insert_update_step_check():
+    with EDW() as cursor:
+        if (cursor.select_into_dataframe("""
+            SELECT insert_update_step.dwid
+                , insert_update_step.schema_name
+                , insert_update_step.table_name
+            FROM mdi.insert_update_step
+                LEFT JOIN mdi.edw_table_definition ON insert_update_step.schema_name = edw_table_definition.schema_name
+                    AND insert_update_step.table_name = edw_table_definition.table_name
+            WHERE edw_table_definition.dwid IS NULL
+        """).shape[0]) > 0:
+            failure_list.append("insert_update_step: Records with a target_table field value that does not exist in "
+                                "the mdi.edw_table_definition table.")
+
+        if (cursor.select_into_dataframe("""
+            SELECT insert_update_step.dwid
+            FROM mdi.insert_update_step
+                LEFT JOIN mdi.insert_update_key ON insert_update_step.dwid = insert_update_key.insert_update_step_dwid
+            WHERE insert_update_key.dwid IS NULL
+        """).shape[0]) > 0:
+            failure_list.append(("insert update_step: Record(s) without any insert_update_key relations."))
+
+        if (cursor.select_into_dataframe("""
+            SELECT insert_update_step.dwid
+            FROM mdi.insert_update_step
+                LEFT JOIN mdi.insert_update_field ON insert_update_step.dwid = insert_update_field.insert_update_step_dwid
+            WHERE insert_update_field.dwid IS NULL
+        """).shape[0]) > 0:
+            failure_list.append(("insert update_step: Record(s) without any insert_update_field relations."))
 
 
-
-
-# def read_config_table_names_into_list():
-#     with EDW() as cursor:
-#         config_table_names = cursor.select_column_as_list('table_name', """
-#         SELECT table_name
-#         FROM information_schema.tables
-#         WHERE table_schema = 'mdi'
-#         """)
-#     return config_table_names
-#
-# def read_table_data_into_dataframes(config_table_names):
-#     with EDW() as cursor:
-#         df_dict = {}
-#         placeholder_sql = "SELECT * FROM mdi.{};"
-#         # table_name = "process"
-#         for table_name in config_table_names:
-#             df_dict[table_name] = cursor.execute_paramterized_query(placeholder_sql,table_name)
-#             # cursor.execute_paramterized_query(placeholder_sql, table_name)
-#         process_df = df_dict["process"]
-#         print(process_df["dwid"].is_unique)
 
 class EDW:
     """
@@ -231,7 +278,6 @@ class EDW:
         self.conn.commit()
         self.conn.close()
 
-
 class EDWCursor:
     """
     A simple wrapper around psycopg2's cursor with method(s) added to facilitate
@@ -241,11 +287,6 @@ class EDWCursor:
     def __init__(self, cursor):
         self.cursor = cursor
 
-    # def execute_paramterized_query (self, input_sql: str, table_parameter: str):
-    #     query = sql.SQL(input_sql).format(sql.Identifier(table_parameter))
-    #     self.cursor.execute(query)
-    #     return pandas.DataFrame(self.cursor.fetchall())
-
     def select_as_list_of_dicts(self, sql: str) -> List[dict]:
         self.cursor.execute(sql)
         return self.cursor.fetchall()
@@ -253,11 +294,6 @@ class EDWCursor:
     def select_into_dataframe(self, sql: str):
         self.cursor.execute(sql)
         return pandas.DataFrame(self.cursor.fetchall())
-
-    # def select_column_as_list(self, column_name: str, sql: str):
-    #     self.cursor.execute(sql)
-    #     tuples = self.cursor.fetchall()
-    #     return pandas.DataFrame(tuples)[column_name].values.tolist()
 
 if __name__ == '__main__':
     main()
