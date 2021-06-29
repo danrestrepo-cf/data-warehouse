@@ -2,7 +2,7 @@
 -- EDW | Fix staging.star_common permission issue from release 2021.6.4.3 (https://app.asana.com/0/0/1200519541777156/)
 --
 
-GRANT USAGE ON star_common TO etl_loan;
+GRANT USAGE ON SCHEMA star_common TO etl_loan;
 
 GRANT SELECT ON ALL TABLES IN SCHEMA star_common TO etl_loan;
 
