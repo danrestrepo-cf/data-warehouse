@@ -36,7 +36,21 @@
                     ]
                 }
             },
-            "Next": "parallel"
+            "Next": "choice_8"
+        },
+        "choice_8": {
+            "Type": "Choice",
+            "Choices": [
+                {
+                    "Variable": "$.load_type",
+                    "StringEquals": "NONE",
+                    "Next": "success_8"
+                }
+            ],
+            "Default": "parallel"
+        },
+        "success_8": {
+            "Type": "Succeed"
         },
         "parallel": {
             "Type": "Parallel",

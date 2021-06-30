@@ -36,7 +36,21 @@
                     ]
                 }
             },
-            "Next": "SP-300001"
+            "Next": "choice"
+        },
+        "choice": {
+            "Type": "Choice",
+            "Choices": [
+                {
+                    "Variable": "$.load_type",
+                    "StringEquals": "NONE",
+                    "Next": "success"
+                }
+            ],
+            "Default": "SP-300001"
+        },
+        "success": {
+            "Type": "Succeed"
         },
         "SP-300001": {
             "Type": "Task",
@@ -72,7 +86,21 @@
                     ]
                 }
             },
-            "Next": "SP-200001"
+            "Next": "choice_1"
+        },
+        "choice_1": {
+            "Type": "Choice",
+            "Choices": [
+                {
+                    "Variable": "$.load_type",
+                    "StringEquals": "NONE",
+                    "Next": "success_1"
+                }
+            ],
+            "Default": "SP-200001"
+        },
+        "success_1": {
+            "Type": "Succeed"
         },
         "SP-200001": {
             "Type": "Task",

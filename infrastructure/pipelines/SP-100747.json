@@ -36,7 +36,21 @@
                     ]
                 }
             },
-            "Next": "parallel_10"
+            "Next": "choice_293"
+        },
+        "choice_293": {
+            "Type": "Choice",
+            "Choices": [
+                {
+                    "Variable": "$.load_type",
+                    "StringEquals": "NONE",
+                    "Next": "success_293"
+                }
+            ],
+            "Default": "parallel_10"
+        },
+        "success_293": {
+            "Type": "Succeed"
         },
         "parallel_10": {
             "Type": "Parallel",
@@ -80,7 +94,21 @@
                                     ]
                                 }
                             },
-                            "Next": "SP-300001_103"
+                            "Next": "choice_294"
+                        },
+                        "choice_294": {
+                            "Type": "Choice",
+                            "Choices": [
+                                {
+                                    "Variable": "$.load_type",
+                                    "StringEquals": "NONE",
+                                    "Next": "success_294"
+                                }
+                            ],
+                            "Default": "SP-300001_103"
+                        },
+                        "success_294": {
+                            "Type": "Succeed"
                         },
                         "SP-300001_103": {
                             "Type": "Task",
@@ -116,7 +144,21 @@
                                     ]
                                 }
                             },
-                            "Next": "SP-200001_104"
+                            "Next": "choice_295"
+                        },
+                        "choice_295": {
+                            "Type": "Choice",
+                            "Choices": [
+                                {
+                                    "Variable": "$.load_type",
+                                    "StringEquals": "NONE",
+                                    "Next": "success_295"
+                                }
+                            ],
+                            "Default": "SP-200001_104"
+                        },
+                        "success_295": {
+                            "Type": "Succeed"
                         },
                         "SP-200001_104": {
                             "Type": "Task",
@@ -194,7 +236,21 @@
                                     ]
                                 }
                             },
-                            "Next": "SP-300001_104"
+                            "Next": "choice_296"
+                        },
+                        "choice_296": {
+                            "Type": "Choice",
+                            "Choices": [
+                                {
+                                    "Variable": "$.load_type",
+                                    "StringEquals": "NONE",
+                                    "Next": "success_296"
+                                }
+                            ],
+                            "Default": "SP-300001_104"
+                        },
+                        "success_296": {
+                            "Type": "Succeed"
                         },
                         "SP-300001_104": {
                             "Type": "Task",
@@ -230,7 +286,21 @@
                                     ]
                                 }
                             },
-                            "Next": "SP-200001_105"
+                            "Next": "choice_297"
+                        },
+                        "choice_297": {
+                            "Type": "Choice",
+                            "Choices": [
+                                {
+                                    "Variable": "$.load_type",
+                                    "StringEquals": "NONE",
+                                    "Next": "success_297"
+                                }
+                            ],
+                            "Default": "SP-200001_105"
+                        },
+                        "success_297": {
+                            "Type": "Succeed"
                         },
                         "SP-200001_105": {
                             "Type": "Task",
