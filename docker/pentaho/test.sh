@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-path_to_script=$(dirname "$0")
+path_to_script=$(realpath $(dirname "$0"))
 
 # stop script execution if any command fails
 set -e
@@ -10,7 +10,7 @@ script_filename=${0##*/}
 project_name=edw
 
 # set default directories docker will use to mount in the docker container
-pentaho_source_directory="$(pwd)/${path_to_script}/../../pentaho/src"
+pentaho_source_directory="$path_to_script/../../pentaho/src"
 pentaho_input_directory="$(pwd)/inputs/"
 
 entrypoint_parameter="j "
