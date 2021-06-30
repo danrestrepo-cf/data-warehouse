@@ -83,9 +83,11 @@ class TestSequentialOutputAndVaryingConfigAttributes(unittest.TestCase):
         self.assertEqual('SP-1', self.result['StartAt'])
 
     def test_configures_next_and_end_attributes_correctly(self):
-        self.assertEqual('SP-2', self.result['States']['SP-1']['Next'])
+        self.assertEqual('choice', self.result['States']['SP-1']['Next'])
+        self.assertEqual('SP-2', self.result['States']['choice']['Default'])
         self.assertTrue('End' not in self.result['States']['SP-1'])
-        self.assertEqual('SP-3', self.result['States']['SP-2']['Next'])
+        self.assertEqual('choice_1', self.result['States']['SP-2']['Next'])
+        self.assertEqual('SP-3', self.result['States']['choice_1']['Default'])
         self.assertTrue('End' not in self.result['States']['SP-2'])
         self.assertTrue(self.result['States']['SP-3']['End'])
         self.assertTrue('Next' not in self.result['States']['SP-3'])
@@ -116,7 +118,8 @@ class TestParallelOutputStructure(unittest.TestCase):
         self.assertEqual('SP-1', self.result['StartAt'])
 
     def test_sets_first_state_next_pointer_to_hashed_parallel_state_name(self):
-        self.assertEqual('parallel', self.result['States']['SP-1']['Next'])
+        self.assertEqual('choice', self.result['States']['SP-1']['Next'])
+        self.assertEqual('parallel', self.result['States']['choice']['Default'])
 
     def test_creates_parallel_state_in_top_level_states_list(self):
         self.assertEqual('Parallel', self.result['States']['parallel']['Type'])
@@ -180,6 +183,7 @@ class TestGeneratesUniqueStateNamesWhenStatesAppearMultipleTimes(unittest.TestCa
 class TestEntireOutput(unittest.TestCase):
 
     def test_entire_output_dict(self):
+        self.maxDiff = None
         step_metadata = [
             {'process_name': 'SP-1', 'child_process_name': 'SP-2'},
             {'process_name': 'SP-2', 'child_process_name': 'SP-3'},
@@ -228,7 +232,21 @@ class TestEntireOutput(unittest.TestCase):
                             ]
                         }
                     },
-                    'Next': 'SP-2'
+                    'Next': 'choice'
+                },
+                'choice': {
+                    'Type': 'Choice',
+                    'Choices': [
+                        {
+                            'Variable': '$.load_type',
+                            'StringEquals': 'NONE',
+                            'Next': 'success'
+                        }
+                    ],
+                    'Default': 'SP-2'
+                },
+                'success': {
+                    'Type': 'Succeed'
                 },
                 'SP-2': {
                     'Type': 'Task',
@@ -264,7 +282,21 @@ class TestEntireOutput(unittest.TestCase):
                             ]
                         }
                     },
-                    'Next': 'parallel'
+                    'Next': 'choice_1'
+                },
+                'choice_1': {
+                    'Type': 'Choice',
+                    'Choices': [
+                        {
+                            'Variable': '$.load_type',
+                            'StringEquals': 'NONE',
+                            'Next': 'success_1'
+                        }
+                    ],
+                    'Default': 'parallel'
+                },
+                'success_1': {
+                    'Type': 'Succeed'
                 },
                 'parallel': {
                     'Type': 'Parallel',

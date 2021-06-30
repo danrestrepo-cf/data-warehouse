@@ -116,10 +116,34 @@ class SingleStateMachineCreator:
         return self.create_step_tree(root_process)
 
     def create_step_tree(self, root_process: str) -> dict:
-        """Initiate the recursive step tree creator function with the state machine's top-level root process"""
+        """Initiate the recursive step tree creator function with the state machine's top-level root process
+
+        Note: this method can be triggered by either:
+         - creating the top-level structure of an entire state machine, in which
+           case "root_process" is the root of the entire machine
+         - creating parallel execution branches, in which case "root_process" is
+           just one of many child processes being executed in parallel
+
+        :param root_process: the root process of this state machine config
+        :return: the full state machine configuration tree starting from the given
+                 root process
+        """
         state_name = self.get_unique_state_name(root_process)
-        root_config = self.create_step_tree_root(root_process)
+        comment = self.determine_state_machine_header_comment(root_process, state_name)
+        root_config = {
+            "Comment": comment,
+            "StartAt": state_name,
+            "States": {}
+        }
         return self.recursively_create_step_tree(root_config, root_process, state_name)
+
+    def determine_state_machine_header_comment(self, process: str, state_name: str) -> str:
+        """Create a state machine header comment based on whether the root process is a true root or just a sub-root in a parallel step"""
+        if process in self.state_machine_metadata:  # process is a top-level root
+            root_metadata = self.state_machine_metadata[process]
+            return root_metadata['name'] + ' - ' + root_metadata['comment']
+        else:  # process is a child process being executed in parallel
+            return f'Parallel - {state_name}'
 
     def recursively_create_step_tree(self, cur_root_config: dict, process_name: str, state_name: str) -> dict:
         """
@@ -139,19 +163,19 @@ class SingleStateMachineCreator:
         self.increment_counter(process_name)
         # process has no children
         if process_name not in self.step_tree_metadata:
-            cur_root_config['States'][state_name] = self.create_state_config(process_name, None)
+            cur_root_config['States'][state_name] = self.create_task_config(process_name, None)
             return cur_root_config
         # process has one sequential child
         elif len(self.step_tree_metadata[process_name]) == 1:
             next_process = self.step_tree_metadata[process_name][0]
             next_state_name = self.get_unique_state_name(next_process)
-            cur_root_config['States'][state_name] = self.create_state_config(process_name, next_state_name)
+            self.add_non_terminal_state_config(state_name, process_name, next_state_name, cur_root_config['States'])
             return self.recursively_create_step_tree(cur_root_config, next_process, next_state_name)
         # process has multiple children which should run in parallel
         else:
             next_state_name = self.get_unique_state_name('parallel')
             self.increment_counter('parallel')
-            cur_root_config['States'][state_name] = self.create_state_config(process_name, next_state_name)
+            self.add_non_terminal_state_config(state_name, process_name, next_state_name, cur_root_config['States'])
             cur_root_config['States'][next_state_name] = {
                 'Type': 'Parallel',
                 'End': True,
@@ -159,35 +183,20 @@ class SingleStateMachineCreator:
             }
             return cur_root_config
 
-    def create_step_tree_root(self, root_process: str) -> dict:
-        """
-        Generate a the outer scaffold for a state machine configuration.
-
-        Note: this method can be triggered by either:
-         - creating the top-level structure of an entire state machine, in which
-           case "root_process" is the root of the entire machine
-         - creating parallel execution branches, in which case "root_process" is
-           just one of many child processes being executed in parallel
-
-        :param root_process: the root process of this state machine config
-        :return: a dict representing the outer structure of a state machine configuration
-        """
-        root_process_state_name = self.get_unique_state_name(root_process)
-        if root_process in self.state_machine_metadata:  # process is a top-level root
-            root_metadata = self.state_machine_metadata[root_process]
-            comment = root_metadata['name'] + ' - ' + root_metadata['comment']
-        else:  # process is a child process being executed in parallel
-            comment = f'Parallel - {root_process_state_name}'
-        return {
-            "Comment": comment,
-            "StartAt": root_process_state_name,
-            "States": {}
-        }
+    def add_non_terminal_state_config(self, state_name: str, process_name: str, next_state_name: Optional[str], states_dict: dict):
+        """Add a non-terminal state configuration, including subsequent Choice and Success states, to the given state config dict"""
+        choice_state_name = self.get_unique_state_name('choice')
+        success_state_name = self.get_unique_state_name('success')
+        states_dict[state_name] = self.create_task_config(process_name, choice_state_name)
+        states_dict[choice_state_name] = self.create_choice_config(success_state_name, next_state_name)
+        states_dict[success_state_name] = self.create_success_config()
+        self.increment_counter('choice')
+        self.increment_counter('success')
 
     @staticmethod
-    def create_state_config(process_name: str, next_state_name: Optional[str]) -> dict:
-        """Create a full state configuration dict for a specific process"""
-        config = {
+    def create_task_config(process_name: str, next_state_name: Optional[str]) -> dict:
+        """Create an AWS Task state configuration that triggers an MDI-2 Pentaho process"""
+        state_config = {
             'Type': 'Task',
             'Resource': 'arn:aws:states:::ecs:runTask',
             'Parameters': {
@@ -223,12 +232,34 @@ class SingleStateMachineCreator:
             },
         }
         if next_state_name is None:
-            config['End'] = True
-            config['Resource'] += '.sync'
+            state_config['End'] = True
+            state_config['Resource'] += '.sync'
         else:
-            config['Next'] = next_state_name
-            config['Resource'] += '.waitForTaskToken'
-        return config
+            state_config['Next'] = next_state_name
+            state_config['Resource'] += '.waitForTaskToken'
+        return state_config
+
+    @staticmethod
+    def create_choice_config(success_state_name: str, next_state_name: str) -> dict:
+        """Create an AWS Choice state configuration that branches to a Success state if the previous step outputted a load_type of NONE"""
+        return {
+            'Type': 'Choice',
+            'Choices': [
+                {
+                    'Variable': '$.load_type',
+                    'StringEquals': 'NONE',
+                    'Next': success_state_name
+                }
+            ],
+            'Default': next_state_name
+        }
+
+    @staticmethod
+    def create_success_config() -> dict:
+        """Create an AWS Succeed state configuration"""
+        return {
+            'Type': 'Succeed'
+        }
 
     def get_unique_state_name(self, process: str) -> str:
         """Get the guaranteed-unique state name for the given process"""

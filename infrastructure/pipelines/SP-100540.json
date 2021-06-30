@@ -36,7 +36,21 @@
                     ]
                 }
             },
-            "Next": "SP-200018_10"
+            "Next": "choice_159"
+        },
+        "choice_159": {
+            "Type": "Choice",
+            "Choices": [
+                {
+                    "Variable": "$.load_type",
+                    "StringEquals": "NONE",
+                    "Next": "success_159"
+                }
+            ],
+            "Default": "SP-200018_10"
+        },
+        "success_159": {
+            "Type": "Succeed"
         },
         "SP-200018_10": {
             "Type": "Task",
@@ -72,7 +86,21 @@
                     ]
                 }
             },
-            "Next": "SP-300001_58"
+            "Next": "choice_160"
+        },
+        "choice_160": {
+            "Type": "Choice",
+            "Choices": [
+                {
+                    "Variable": "$.load_type",
+                    "StringEquals": "NONE",
+                    "Next": "success_160"
+                }
+            ],
+            "Default": "SP-300001_58"
+        },
+        "success_160": {
+            "Type": "Succeed"
         },
         "SP-300001_58": {
             "Type": "Task",
@@ -108,7 +136,21 @@
                     ]
                 }
             },
-            "Next": "SP-200001_59"
+            "Next": "choice_161"
+        },
+        "choice_161": {
+            "Type": "Choice",
+            "Choices": [
+                {
+                    "Variable": "$.load_type",
+                    "StringEquals": "NONE",
+                    "Next": "success_161"
+                }
+            ],
+            "Default": "SP-200001_59"
+        },
+        "success_161": {
+            "Type": "Succeed"
         },
         "SP-200001_59": {
             "Type": "Task",
