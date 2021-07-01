@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-path_to_script=$(dirname "$0")
+path_to_script=$(realpath $(dirname "$0"))
 
 # stop script execution if any command fails
 set -e
@@ -10,7 +10,7 @@ script_filename=${0##*/}
 project_name=edw
 
 # set default directories docker will use to mount in the docker container
-pentaho_source_directory="${path_to_script}/../../pentaho/src"
+pentaho_source_directory="$path_to_script/../../pentaho/src"
 pentaho_input_directory="$(pwd)/inputs/"
 
 entrypoint_parameter="j "
@@ -55,7 +55,7 @@ function run_docker() {
     export MSYS_NO_PATHCONV=1
   fi
 
-  docker_command="docker run -i \
+  docker_command="docker run -i ${tty_parameter} \
     --network ${project_name}_default \
     -v ${pentaho_source_directory}:/jobs/ \
     -v ${pentaho_input_directory}:/input/ \
@@ -138,6 +138,7 @@ bash)
   entrypoint_parameter=""
   input_type="none"
   username="dummy_value"
+  tty_parameter="--tty"
   run_docker
   exit 0
   ;;
