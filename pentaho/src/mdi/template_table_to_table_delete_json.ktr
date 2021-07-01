@@ -469,7 +469,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/06/10 10:35:00.017</modified_date>
+    <modified_date>2021/06/30 07:54:20.193</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -618,11 +618,37 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </note>
-      <xloc>912</xloc>
+      <xloc>944</xloc>
       <yloc>48</yloc>
       <width>1090</width>
-      <heigth>1270</heigth>
+      <heigth>1816</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -756,23 +782,8 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_delete_json] Filter rows</from>
-      <to>[template_table_to_table_delete_json] Full load - set key_field_name and key_field_values to NULL</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>[template_table_to_table_delete_json] Add blank field for key_field_name</from>
       <to>[template_table_to_table_delete_json] Set key_field_name</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[template_table_to_table_delete_json] Full load - set key_field_name and key_field_values to NULL</from>
-      <to>[template_table_to_table_delete_json] Full load - add hardcoded constants</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[template_table_to_table_delete_json] Count and concatenate key field rows</from>
-      <to>[template_table_to_table_delete_json] Filter rows</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -783,11 +794,6 @@
     <hop>
       <from>[template_table_to_table_delete_json] Add blank fields for environment, etl_batch_id, and token_id</from>
       <to>[template_table_to_table_delete_json] Set environment</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[template_table_to_table_delete_json] Block S3 step until insert flow finishes</from>
-      <to>[template_table_to_table_delete_json] S3 file output</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -816,11 +822,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_delete_json] Full load - add hardcoded constants</from>
-      <to>[template_table_to_table_delete_json] Add blank fields for environment, etl_batch_id, and token_id</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>[template_table_to_table_delete_json] Table input</from>
       <to>[template_table_to_table_delete_json] Select key field rows</to>
       <enabled>Y</enabled>
@@ -841,11 +842,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_delete_json] Filter rows</from>
-      <to>[template_table_to_table_delete_json] Partial load - add hardcoded constant</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>[template_table_to_table_delete_json] Table input</from>
       <to>[template_table_to_table_delete_json] Block delete step until key_field_name is evaluated</to>
       <enabled>Y</enabled>
@@ -853,6 +849,76 @@
     <hop>
       <from>[template_table_to_table_delete_json] Block delete step until key_field_name is evaluated</from>
       <to>[template_table_to_table_delete_json] Delete</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_delete_json] Row count is greater than 1000</from>
+      <to>[template_table_to_table_delete_json] Full check - add hardcoded constant</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_delete_json] Full check - add hardcoded constant</from>
+      <to>[template_table_to_table_delete_json] Set key_field_name and key_field_values to NULL</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_delete_json] Set key_field_name and key_field_values to NULL</from>
+      <to>[template_table_to_table_delete_json] Add blank fields for environment, etl_batch_id, and token_id</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_delete_json] load_type is FULL_LOAD</from>
+      <to>[template_table_to_table_delete_json] Row count is greater than 1000</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_delete_json] load_type is FULL_LOAD</from>
+      <to>[template_table_to_table_delete_json] Full load - add hardcoded constant</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_delete_json] Full load - add hardcoded constant</from>
+      <to>[template_table_to_table_delete_json] Set key_field_name and key_field_values to NULL</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_delete_json] Add blank field for input_load_type</from>
+      <to>[template_table_to_table_delete_json] Set input_load_type</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_delete_json] Count and concatenate key field rows</from>
+      <to>[template_table_to_table_delete_json] Add blank field for input_load_type</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_delete_json] Set input_load_type</from>
+      <to>[template_table_to_table_delete_json] load_type is FULL_LOAD</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_delete_json] Row count is greater than 1000</from>
+      <to>[template_table_to_table_delete_json] Row count is 0</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_delete_json] Row count is 0</from>
+      <to>[template_table_to_table_delete_json] Partial load - add hardcoded constant</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_delete_json] Row count is 0</from>
+      <to>[template_table_to_table_delete_json] None - add hardcoded constant</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_delete_json] None - add hardcoded constant</from>
+      <to>[template_table_to_table_delete_json] Set key_field_name and key_field_values to NULL</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_delete_json] Block S3 step until insert flow finishes</from>
+      <to>[template_table_to_table_delete_json] S3 file output</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -910,6 +976,45 @@
     <GUI>
       <xloc>304</xloc>
       <yloc>736</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_delete_json] Add blank field for input_load_type</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>input_load_type</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1488</xloc>
+      <yloc>528</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1011,7 +1116,7 @@
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>768</yloc>
+      <yloc>1088</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1046,7 +1151,7 @@
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>1168</yloc>
+      <yloc>1648</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1102,7 +1207,7 @@
 // Build output JSON
 var outer_json = {};
 var inner_json = {};
-inner_json.full_load_flag = full_load_flag;
+inner_json.load_type = load_type;
 inner_json.key_field_name = key_field_name;
 inner_json.key_field_values = key_field_values;
 outer_json.token_id = token_id;
@@ -1149,7 +1254,7 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>1088</yloc>
+      <yloc>1552</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1300,7 +1405,163 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_delete_json] Filter rows</name>
+    <name>[template_table_to_table_delete_json] Full check - add hardcoded constant</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>load_type</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>FULL_CHECK</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1488</xloc>
+      <yloc>800</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_delete_json] Full load - add hardcoded constant</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>load_type</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>FULL_LOAD</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1488</xloc>
+      <yloc>720</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_delete_json] None - add hardcoded constant</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>load_type</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>NONE</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1488</xloc>
+      <yloc>880</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_delete_json] Partial load - add hardcoded constant</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>load_type</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>KEY_LOOKUP</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1488</xloc>
+      <yloc>960</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_delete_json] Row count is 0</name>
     <type>FilterRows</type>
     <description/>
     <distribute>Y</distribute>
@@ -1310,8 +1571,52 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <send_true_to>[template_table_to_table_delete_json] Full load - set key_field_name and key_field_values to NULL</send_true_to>
+    <send_true_to>[template_table_to_table_delete_json] None - add hardcoded constant</send_true_to>
     <send_false_to>[template_table_to_table_delete_json] Partial load - add hardcoded constant</send_false_to>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>row_count</leftvalue>
+        <function>=</function>
+        <rightvalue/>
+        <value>
+          <name>constant</name>
+          <type>Integer</type>
+          <text>0</text>
+          <length>-1</length>
+          <precision>0</precision>
+          <isnull>N</isnull>
+          <mask>####0;-####0</mask>
+        </value>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1104</xloc>
+      <yloc>880</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_delete_json] Row count is greater than 1000</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to>[template_table_to_table_delete_json] Full check - add hardcoded constant</send_true_to>
+    <send_false_to>[template_table_to_table_delete_json] Row count is 0</send_false_to>
     <compare>
       <condition>
         <negated>N</negated>
@@ -1338,14 +1643,14 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1488</xloc>
-      <yloc>512</yloc>
+      <xloc>1104</xloc>
+      <yloc>800</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_delete_json] Full load - add hardcoded constants</name>
-    <type>Constant</type>
+    <name>[template_table_to_table_delete_json] Select key field rows</name>
+    <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1355,16 +1660,39 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
       <schema_name/>
     </partitioning>
     <fields>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1488</xloc>
+      <yloc>96</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_delete_json] Set environment</name>
+    <type>SetValueConstant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <usevar>Y</usevar>
+    <fields>
       <field>
-        <name>full_load_flag</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>TRUE</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
+        <name>environment</name>
+        <value/>
+        <mask/>
         <set_empty_string>N</set_empty_string>
       </field>
     </fields>
@@ -1377,13 +1705,115 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1680</xloc>
-      <yloc>688</yloc>
+      <xloc>1488</xloc>
+      <yloc>1200</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_delete_json] Full load - set key_field_name and key_field_values to NULL</name>
+    <name>[template_table_to_table_delete_json] Set etl_batch_id</name>
+    <type>SetValueConstant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <usevar>Y</usevar>
+    <fields>
+      <field>
+        <name>etl_batch_id</name>
+        <value/>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1488</xloc>
+      <yloc>1328</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_delete_json] Set input_load_type</name>
+    <type>SetValueConstant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <usevar>N</usevar>
+    <fields>
+      <field>
+        <name>input_load_type</name>
+        <value/>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1488</xloc>
+      <yloc>624</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_delete_json] Set key_field_name</name>
+    <type>SetValueConstant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <usevar>N</usevar>
+    <fields>
+      <field>
+        <name>key_field_name</name>
+        <value/>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1488</xloc>
+      <yloc>256</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_delete_json] Set key_field_name and key_field_values to NULL</name>
     <type>SetValueConstant</type>
     <description/>
     <distribute>Y</distribute>
@@ -1417,14 +1847,14 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1680</xloc>
-      <yloc>608</yloc>
+      <xloc>1920</xloc>
+      <yloc>880</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_delete_json] Partial load - add hardcoded constant</name>
-    <type>Constant</type>
+    <name>[template_table_to_table_delete_json] Set token_id</name>
+    <type>SetValueConstant</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1433,17 +1863,12 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
       <method>none</method>
       <schema_name/>
     </partitioning>
+    <usevar>Y</usevar>
     <fields>
       <field>
-        <name>full_load_flag</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>FALSE</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
+        <name>token_id</name>
+        <value/>
+        <mask/>
         <set_empty_string>N</set_empty_string>
       </field>
     </fields>
@@ -1456,8 +1881,86 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1248</xloc>
-      <yloc>640</yloc>
+      <xloc>1488</xloc>
+      <yloc>1456</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_delete_json] Table input</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>Dummy DB Connection</connection>
+    <sql/>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>304</xloc>
+      <yloc>96</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_delete_json] load_type is FULL_LOAD</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to>[template_table_to_table_delete_json] Full load - add hardcoded constant</send_true_to>
+    <send_false_to>[template_table_to_table_delete_json] Row count is greater than 1000</send_false_to>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>input_load_type</leftvalue>
+        <function>=</function>
+        <rightvalue/>
+        <value>
+          <name>constant</name>
+          <type>String</type>
+          <text>FULL_LOAD</text>
+          <length>-1</length>
+          <precision>-1</precision>
+          <isnull>N</isnull>
+          <mask/>
+        </value>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1104</xloc>
+      <yloc>720</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1528,205 +2031,7 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>1264</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_delete_json] Select key field rows</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1488</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_delete_json] Set environment</name>
-    <type>SetValueConstant</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <usevar>Y</usevar>
-    <fields>
-      <field>
-        <name>environment</name>
-        <value/>
-        <mask/>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1488</xloc>
-      <yloc>848</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_delete_json] Set etl_batch_id</name>
-    <type>SetValueConstant</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <usevar>Y</usevar>
-    <fields>
-      <field>
-        <name>etl_batch_id</name>
-        <value/>
-        <mask/>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1488</xloc>
-      <yloc>928</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_delete_json] Set key_field_name</name>
-    <type>SetValueConstant</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <usevar>N</usevar>
-    <fields>
-      <field>
-        <name>key_field_name</name>
-        <value/>
-        <mask/>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1488</xloc>
-      <yloc>256</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_delete_json] Set token_id</name>
-    <type>SetValueConstant</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <usevar>Y</usevar>
-    <fields>
-      <field>
-        <name>token_id</name>
-        <value/>
-        <mask/>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1488</xloc>
-      <yloc>1008</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_delete_json] Table input</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>Dummy DB Connection</connection>
-    <sql/>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>304</xloc>
-      <yloc>96</yloc>
+      <yloc>1760</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

@@ -100,6 +100,7 @@ download_file() {
 
 check_for_input() {
   echo "[INPUT] INPUT_TYPE=${INPUT_TYPE}" # expected values: none, file, data
+  input_data_parameter=""
   case "${INPUT_TYPE}" in
     none) # no need to download a file
       echo "No input is required. Skipping input check step."
@@ -108,7 +109,9 @@ check_for_input() {
     data) # Input data is required!
       echo "[INPUT] INPUT_DATA=${INPUT_DATA}"
       if [[ -n "${INPUT_DATA}" ]]; then
-        params="${params} -param:input_data=${INPUT_DATA}"
+        # We are not storing ${INPUT_DATA} in ${param} because it can contain spaces which will cause an issue when
+        # passing the entire ${param} to kitchen.sh
+        input_data_parameter="-param:input_data=${INPUT_DATA}"
       else
         echo "Cannot parse INPUT_DATA. When INPUT_TYPE is data, INPUT_DATA cannot be zero length"
         exit 1
@@ -137,7 +140,7 @@ run_kitchen() {
   echo ./kitchen.sh -rep=PentahoFileRepository -level=Detailed -job=$@
   # we want "params" to split / expand, so ignore the shellcheck
   # shellcheck disable=SC2086
-  kitchen.sh -rep=PentahoFileRepository -level=Detailed ${params} -job=$@
+  kitchen.sh -rep=PentahoFileRepository -level=Detailed ${params} "${input_data_parameter}" -job=$@
 }
 
 print_usage() {

@@ -27,7 +27,7 @@ module schedule-trigger {
   schedule           = each.value
   trigger-role-arn   = data.aws_iam_role.event-trigger.arn
   trigger-input-json = jsonencode({
-    full_load_flag   = true
+    load_type = "FULL_CHECK"
     key_field_name   = null
     key_field_values = null
   })

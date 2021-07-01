@@ -469,7 +469,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/06/10 10:35:02.439</modified_date>
+    <modified_date>2021/06/30 07:55:03.386</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -560,18 +560,17 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Specify logging fields, log them, and abort transformation as error                                                                                                                               
-
+      <note>Specify logging fields, log them, and abort transformation as error                                                         
 
 
 
 
 
 </note>
-      <xloc>336</xloc>
-      <yloc>1264</yloc>
-      <width>1024</width>
-      <heigth>179</heigth>
+      <xloc>128</xloc>
+      <yloc>1296</yloc>
+      <width>744</width>
+      <heigth>158</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -669,11 +668,43 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </note>
       <xloc>944</xloc>
       <yloc>80</yloc>
       <width>1090</width>
-      <heigth>1123</heigth>
+      <heigth>1795</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -832,11 +863,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_update_json] Filter rows</from>
-      <to>[template_table_to_table_insert_update_json] Full load - set key_field_name and key_field_values to NULL</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>[template_table_to_table_insert_update_json] Table input</from>
       <to>[template_table_to_table_insert_update_json] Select key field rows</to>
       <enabled>Y</enabled>
@@ -847,17 +873,7 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_update_json] Full load - set key_field_name and key_field_values to NULL</from>
-      <to>[template_table_to_table_insert_update_json] Full load - add hardcoded constants</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[template_table_to_table_insert_update_json] Count and concatenate key field rows</from>
-      <to>[template_table_to_table_insert_update_json] Filter rows</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[template_table_to_table_insert_json] Add blank fields for environment, etl_batch_id, and token_id</from>
+      <from>[template_table_to_table_insert_update_json] Add blank fields for environment, etl_batch_id, and token_id</from>
       <to>[template_table_to_table_insert_update_json] Set environment</to>
       <enabled>Y</enabled>
     </hop>
@@ -883,17 +899,7 @@
     </hop>
     <hop>
       <from>[template_table_to_table_insert_update_json] Partial load - add hardcoded constant</from>
-      <to>[template_table_to_table_insert_json] Add blank fields for environment, etl_batch_id, and token_id</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[template_table_to_table_insert_update_json] Full load - add hardcoded constants</from>
-      <to>[template_table_to_table_insert_json] Add blank fields for environment, etl_batch_id, and token_id</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[template_table_to_table_insert_update_json] Block S3 step until insert flow finishes</from>
-      <to>[template_table_to_table_insert_update_json] S3 file output</to>
+      <to>[template_table_to_table_insert_update_json] Add blank fields for environment, etl_batch_id, and token_id</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -912,23 +918,294 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_update_json] Filter rows</from>
+      <from>[template_table_to_table_insert_update_json] Set data_source_dwid field value to parameter data_source_dwid</from>
+      <to>[template_table_to_table_insert_update_json] Block insert / update step until key_field_name is evaluated</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update_json] Block insert / update step until key_field_name is evaluated</from>
+      <to>[template_table_to_table_insert_update_json] Insert / update</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update_json] Row count is greater than 1000</from>
+      <to>[template_table_to_table_insert_update_json] Full check - add hardcoded constant</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update_json] Set key_field_name and key_field_values to NULL</from>
+      <to>[template_table_to_table_insert_update_json] Add blank fields for environment, etl_batch_id, and token_id</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update_json] load_type is FULL_LOAD</from>
+      <to>[template_table_to_table_insert_update_json] Row count is greater than 1000</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update_json] load_type is FULL_LOAD</from>
+      <to>[template_table_to_table_insert_update_json] Full load - add hardcoded constant</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update_json] Full load - add hardcoded constant</from>
+      <to>[template_table_to_table_insert_update_json] Set key_field_name and key_field_values to NULL</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update_json] Add blank field for input_load_type</from>
+      <to>[template_table_to_table_insert_update_json] Set input_load_type</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update_json] Count and concatenate key field rows</from>
+      <to>[template_table_to_table_insert_update_json] Add blank field for input_load_type</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update_json] Set input_load_type</from>
+      <to>[template_table_to_table_insert_update_json] load_type is FULL_LOAD</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update_json] Row count is greater than 1000</from>
+      <to>[template_table_to_table_insert_update_json] Row count is 0</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update_json] Row count is 0</from>
       <to>[template_table_to_table_insert_update_json] Partial load - add hardcoded constant</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_update_json] Set data_source_dwid field value to parameter data_source_dwid</from>
-      <to>[template_table_to_table_insert_update_json] Block delete step until key_field_name is evaluated</to>
+      <from>[template_table_to_table_insert_update_json] Row count is 0</from>
+      <to>[template_table_to_table_insert_update_json] None - add hardcoded constant</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_update_json] Block delete step until key_field_name is evaluated</from>
-      <to>[template_table_to_table_insert_update_json] Insert / update</to>
+      <from>[template_table_to_table_insert_update_json] None - add hardcoded constant</from>
+      <to>[template_table_to_table_insert_update_json] Set key_field_name and key_field_values to NULL</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update_json] Full check - add hardcoded constant</from>
+      <to>[template_table_to_table_insert_update_json] Set key_field_name and key_field_values to NULL</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_insert_update_json] Block S3 step until insert flow finishes</from>
+      <to>[template_table_to_table_insert_update_json] S3 file output</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>[template_table_to_table_insert_json] Add blank fields for environment, etl_batch_id, and token_id</name>
+    <name>[template_table_to_table_insert_update_json] S3 file output</name>
+    <type>S3FileOutputPlugin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <separator/>
+    <enclosure/>
+    <enclosure_forced>N</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <header>N</header>
+    <footer>N</footer>
+    <format>UNIX</format>
+    <compression>None</compression>
+    <encoding/>
+    <endedLine/>
+    <fileNameInField>Y</fileNameInField>
+    <fileNameField>s3_output_filepath</fileNameField>
+    <create_parent_folder>Y</create_parent_folder>
+    <file>
+      <name>s3n://s3n</name>
+      <servlet_output>N</servlet_output>
+      <do_not_open_new_file_init>Y</do_not_open_new_file_init>
+      <extention/>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <add_to_result_filenames>N</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery>0</splitevery>
+    </file>
+    <fields>
+      <field>
+        <name>mdi_output_json</name>
+        <type>None</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+    <access_key>Encrypted </access_key>
+    <secret_key>Encrypted </secret_key>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1488</xloc>
+      <yloc>1760</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_update_json]  Abort Table Output</name>
+    <type>Abort</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <row_threshold>0</row_threshold>
+    <message>could not save data to table</message>
+    <always_log_rows>Y</always_log_rows>
+    <abort_option>ABORT_WITH_ERROR</abort_option>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>784</xloc>
+      <yloc>1360</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_update_json]  Specify logging fields (non-sensitive)</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>384</xloc>
+      <yloc>1360</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_update_json] Add blank field for input_load_type</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>input_load_type</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1488</xloc>
+      <yloc>496</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_update_json] Add blank field for key_field_name</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>key_field_name</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1488</xloc>
+      <yloc>192</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_update_json] Add blank fields for environment, etl_batch_id, and token_id</name>
     <type>Constant</type>
     <description/>
     <distribute>Y</distribute>
@@ -986,103 +1263,7 @@
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>672</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_insert_update_json]  Abort Table Output</name>
-    <type>Abort</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <row_threshold>0</row_threshold>
-    <message>could not save data to table</message>
-    <always_log_rows>Y</always_log_rows>
-    <abort_option>ABORT_WITH_ERROR</abort_option>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1104</xloc>
-      <yloc>1360</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_insert_update_json]  Specify logging fields (non-sensitive)</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>640</xloc>
-      <yloc>1360</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_insert_update_json] Add blank field for key_field_name</name>
-    <type>Constant</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>key_field_name</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1488</xloc>
-      <yloc>192</yloc>
+      <yloc>1056</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1133,12 +1314,12 @@
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>1072</yloc>
+      <yloc>1632</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update_json] Block delete step until key_field_name is evaluated</name>
+    <name>[template_table_to_table_insert_update_json] Block insert / update step until key_field_name is evaluated</name>
     <type>BlockUntilStepsFinish</type>
     <description/>
     <distribute>Y</distribute>
@@ -1189,7 +1370,7 @@
 // Build output JSON
 var outer_json = {};
 var inner_json = {};
-inner_json.full_load_flag = full_load_flag;
+inner_json.load_type = load_type;
 inner_json.key_field_name = key_field_name;
 inner_json.key_field_values = key_field_values;
 outer_json.token_id = token_id;
@@ -1236,7 +1417,7 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>992</yloc>
+      <yloc>1520</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1356,54 +1537,10 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update_json] Filter rows</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <send_true_to>[template_table_to_table_insert_update_json] Full load - set key_field_name and key_field_values to NULL</send_true_to>
-    <send_false_to>[template_table_to_table_insert_update_json] Partial load - add hardcoded constant</send_false_to>
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue>row_count</leftvalue>
-        <function>&gt;</function>
-        <rightvalue/>
-        <value>
-          <name>constant</name>
-          <type>Integer</type>
-          <text>1000</text>
-          <length>-1</length>
-          <precision>0</precision>
-          <isnull>N</isnull>
-          <mask>####0;-####0</mask>
-        </value>
-      </condition>
-    </compare>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1488</xloc>
-      <yloc>496</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_insert_update_json] Full load - add hardcoded constants</name>
+    <name>[template_table_to_table_insert_update_json] Full check - add hardcoded constant</name>
     <type>Constant</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
@@ -1412,13 +1549,13 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </partitioning>
     <fields>
       <field>
-        <name>full_load_flag</name>
-        <type>Boolean</type>
+        <name>load_type</name>
+        <type>String</type>
         <format/>
         <currency/>
         <decimal/>
         <group/>
-        <nullif>TRUE</nullif>
+        <nullif>FULL_CHECK</nullif>
         <length>-1</length>
         <precision>-1</precision>
         <set_empty_string>N</set_empty_string>
@@ -1433,14 +1570,14 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1776</xloc>
-      <yloc>640</yloc>
+      <xloc>1488</xloc>
+      <yloc>784</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update_json] Full load - set key_field_name and key_field_values to NULL</name>
-    <type>SetValueConstant</type>
+    <name>[template_table_to_table_insert_update_json] Full load - add hardcoded constant</name>
+    <type>Constant</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1449,18 +1586,17 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <usevar>N</usevar>
     <fields>
       <field>
-        <name>key_field_name</name>
-        <value/>
-        <mask/>
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>key_field_values</name>
-        <value/>
-        <mask/>
+        <name>load_type</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>FULL_LOAD</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
         <set_empty_string>N</set_empty_string>
       </field>
     </fields>
@@ -1473,8 +1609,8 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1776</xloc>
-      <yloc>528</yloc>
+      <xloc>1488</xloc>
+      <yloc>704</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1511,7 +1647,7 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update_json] Partial load - add hardcoded constant</name>
+    <name>[template_table_to_table_insert_update_json] None - add hardcoded constant</name>
     <type>Constant</type>
     <description/>
     <distribute>Y</distribute>
@@ -1523,13 +1659,13 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </partitioning>
     <fields>
       <field>
-        <name>full_load_flag</name>
-        <type>Boolean</type>
+        <name>load_type</name>
+        <type>String</type>
         <format/>
         <currency/>
         <decimal/>
         <group/>
-        <nullif>FALSE</nullif>
+        <nullif>NONE</nullif>
         <length>-1</length>
         <precision>-1</precision>
         <set_empty_string>N</set_empty_string>
@@ -1544,14 +1680,14 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1216</xloc>
-      <yloc>576</yloc>
+      <xloc>1488</xloc>
+      <yloc>864</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_update_json] S3 file output</name>
-    <type>S3FileOutputPlugin</type>
+    <name>[template_table_to_table_insert_update_json] Partial load - add hardcoded constant</name>
+    <type>Constant</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1560,52 +1696,20 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <separator/>
-    <enclosure/>
-    <enclosure_forced>N</enclosure_forced>
-    <enclosure_fix_disabled>N</enclosure_fix_disabled>
-    <header>N</header>
-    <footer>N</footer>
-    <format>UNIX</format>
-    <compression>None</compression>
-    <encoding/>
-    <endedLine/>
-    <fileNameInField>Y</fileNameInField>
-    <fileNameField>s3_output_filepath</fileNameField>
-    <create_parent_folder>Y</create_parent_folder>
-    <file>
-      <name>s3n://s3n</name>
-      <servlet_output>N</servlet_output>
-      <do_not_open_new_file_init>Y</do_not_open_new_file_init>
-      <extention/>
-      <append>N</append>
-      <split>N</split>
-      <haspartno>N</haspartno>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <SpecifyFormat>N</SpecifyFormat>
-      <date_time_format/>
-      <add_to_result_filenames>N</add_to_result_filenames>
-      <pad>N</pad>
-      <fast_dump>N</fast_dump>
-      <splitevery>0</splitevery>
-    </file>
     <fields>
       <field>
-        <name>mdi_output_json</name>
-        <type>None</type>
+        <name>load_type</name>
+        <type>String</type>
         <format/>
         <currency/>
         <decimal/>
         <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
+        <nullif>KEY_LOOKUP</nullif>
         <length>-1</length>
         <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
       </field>
     </fields>
-    <access_key>Encrypted </access_key>
-    <secret_key>Encrypted </secret_key>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1616,7 +1720,95 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>1152</yloc>
+      <yloc>960</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_update_json] Row count is 0</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to>[template_table_to_table_insert_update_json] None - add hardcoded constant</send_true_to>
+    <send_false_to>[template_table_to_table_insert_update_json] Partial load - add hardcoded constant</send_false_to>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>row_count</leftvalue>
+        <function>=</function>
+        <rightvalue/>
+        <value>
+          <name>constant</name>
+          <type>Integer</type>
+          <text>0</text>
+          <length>-1</length>
+          <precision>0</precision>
+          <isnull>N</isnull>
+          <mask>####0;-####0</mask>
+        </value>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1072</xloc>
+      <yloc>864</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_update_json] Row count is greater than 1000</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to>[template_table_to_table_insert_update_json] Full check - add hardcoded constant</send_true_to>
+    <send_false_to>[template_table_to_table_insert_update_json] Row count is 0</send_false_to>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>row_count</leftvalue>
+        <function>&gt;</function>
+        <rightvalue/>
+        <value>
+          <name>constant</name>
+          <type>Integer</type>
+          <text>1000</text>
+          <length>-1</length>
+          <precision>0</precision>
+          <isnull>N</isnull>
+          <mask>####0;-####0</mask>
+        </value>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1072</xloc>
+      <yloc>784</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1712,7 +1904,7 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>752</yloc>
+      <yloc>1184</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1746,7 +1938,7 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>832</yloc>
+      <yloc>1296</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1785,6 +1977,40 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </GUI>
   </step>
   <step>
+    <name>[template_table_to_table_insert_update_json] Set input_load_type</name>
+    <type>SetValueConstant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <usevar>N</usevar>
+    <fields>
+      <field>
+        <name>input_load_type</name>
+        <value/>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1488</xloc>
+      <yloc>592</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>[template_table_to_table_insert_update_json] Set key_field_name</name>
     <type>SetValueConstant</type>
     <description/>
@@ -1819,6 +2045,46 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </GUI>
   </step>
   <step>
+    <name>[template_table_to_table_insert_update_json] Set key_field_name and key_field_values to NULL</name>
+    <type>SetValueConstant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <usevar>N</usevar>
+    <fields>
+      <field>
+        <name>key_field_name</name>
+        <value/>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>key_field_values</name>
+        <value/>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1808</xloc>
+      <yloc>912</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>[template_table_to_table_insert_update_json] Set token_id</name>
     <type>SetValueConstant</type>
     <description/>
@@ -1848,7 +2114,7 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>912</yloc>
+      <yloc>1424</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1961,6 +2227,50 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     <GUI>
       <xloc>480</xloc>
       <yloc>384</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_update_json] load_type is FULL_LOAD</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to>[template_table_to_table_insert_update_json] Full load - add hardcoded constant</send_true_to>
+    <send_false_to>[template_table_to_table_insert_update_json] Row count is greater than 1000</send_false_to>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>input_load_type</leftvalue>
+        <function>=</function>
+        <rightvalue/>
+        <value>
+          <name>constant</name>
+          <type>String</type>
+          <text>FULL_LOAD</text>
+          <length>-1</length>
+          <precision>-1</precision>
+          <isnull>N</isnull>
+          <mask/>
+        </value>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1072</xloc>
+      <yloc>704</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

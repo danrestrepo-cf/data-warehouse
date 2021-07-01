@@ -484,7 +484,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.089</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/06/15 11:41:51.556</modified_date>
+    <modified_date>2021/06/28 14:56:37.146</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -807,28 +807,13 @@ DATABASE_FIELD_NAME. </note>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_table_to_table_insert_json] Read JSON MDI input values</from>
-      <to>[performer_table_to_table_insert_json] Evaluate full_load_flag</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[performer_table_to_table_insert_json] Evaluate full_load_flag</from>
-      <to> [performer_table_to_table_insert_json] Add (full) partial load condition</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[performer_table_to_table_insert_json] Evaluate full_load_flag</from>
-      <to> [performer_table_to_table_insert_json] Add partial load condition</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from> [performer_table_to_table_insert_json] Add partial load condition</from>
-      <to> [performer_table_to_table_insert_json] Select key field name, partial load condition, and token id</to>
+      <to> [performer_table_to_table_insert_json] Select key field name, partial load condition, token id, and load_type</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from> [performer_table_to_table_insert_json] Add (full) partial load condition</from>
-      <to> [performer_table_to_table_insert_json] Select key field name, partial load condition, and token id</to>
+      <to> [performer_table_to_table_insert_json] Select key field name, partial load condition, token id, and load_type</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -837,7 +822,7 @@ DATABASE_FIELD_NAME. </note>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from> [performer_table_to_table_insert_json] Select key field name, partial load condition, and token id</from>
+      <from> [performer_table_to_table_insert_json] Select key field name, partial load condition, token id, and load_type</from>
       <to> [performer_table_to_table_insert_json] Add constant for process_dwid</to>
       <enabled>Y</enabled>
     </hop>
@@ -859,6 +844,26 @@ DATABASE_FIELD_NAME. </note>
     <hop>
       <from>[performer_table_to_table_insert_json] Replace Table input step SQL placeholder</from>
       <to>[performer_table_to_table_insert_json] ETL metadata injection</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert_json] Read JSON MDI input values</from>
+      <to>[performer_table_to_table_insert_json] Evaluate load_type</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert_json] Evaluate load_type</from>
+      <to> [performer_table_to_table_insert_json] Add partial load condition</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert_json] Evaluate load_type</from>
+      <to> [performer_table_to_table_insert_json] Add (full) partial load condition</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert_json] Evaluate load_type</from>
+      <to>Abort</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -992,7 +997,7 @@ var partial_load_condition = key_field_name.concat(sql, key_field_values, right_
     </GUI>
   </step>
   <step>
-    <name> [performer_table_to_table_insert_json] Select key field name, partial load condition, and token id</name>
+    <name> [performer_table_to_table_insert_json] Select key field name, partial load condition, token id, and load_type</name>
     <type>SelectValues</type>
     <description/>
     <distribute>N</distribute>
@@ -1011,6 +1016,9 @@ var partial_load_condition = key_field_name.concat(sql, key_field_values, right_
       </field>
       <field>
         <name>token_id</name>
+      </field>
+      <field>
+        <name>load_type</name>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -1212,6 +1220,12 @@ WHERE process.dwid = ${process_dwid}</sql>
         <default/>
         <type>None</type>
       </value>
+      <value>
+        <name>load_type</name>
+        <rename>load_type</rename>
+        <default/>
+        <type>None</type>
+      </value>
     </lookup>
     <attributes/>
     <cluster_schema/>
@@ -1398,6 +1412,13 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>key_field_name</source_field>
       </mapping>
       <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Set input_load_type</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Replace Table input step SQL placeholder</source_step>
+        <source_field>load_type</source_field>
+      </mapping>
+      <mapping>
         <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
         <target_attribute_key>TABLE_NAME_FIELD</target_attribute_key>
         <target_detail>N</target_detail>
@@ -1535,50 +1556,6 @@ WHERE process.dwid = ${process_dwid}</sql>
     <GUI>
       <xloc>784</xloc>
       <yloc>1168</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[performer_table_to_table_insert_json] Evaluate full_load_flag</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <send_true_to> [performer_table_to_table_insert_json] Add (full) partial load condition</send_true_to>
-    <send_false_to> [performer_table_to_table_insert_json] Add partial load condition</send_false_to>
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue>full_load_flag</leftvalue>
-        <function>=</function>
-        <rightvalue/>
-        <value>
-          <name>constant</name>
-          <type>String</type>
-          <text>true</text>
-          <length>-1</length>
-          <precision>-1</precision>
-          <isnull>N</isnull>
-          <mask/>
-        </value>
-      </condition>
-    </compare>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>336</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2426,8 +2403,8 @@ WHERE
     </file>
     <fields>
       <field>
-        <name>full_load_flag</name>
-        <path>$..full_load_flag</path>
+        <name>load_type</name>
+        <path>$..load_type</path>
         <type>None</type>
         <format/>
         <currency/>
@@ -2628,6 +2605,81 @@ if (key_field_name == null) {
     <GUI>
       <xloc>784</xloc>
       <yloc>992</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[performer_table_to_table_insert_json] Evaluate load_type</name>
+    <type>SwitchCase</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fieldname>load_type</fieldname>
+    <use_contains>N</use_contains>
+    <case_value_type>String</case_value_type>
+    <case_value_format/>
+    <case_value_decimal/>
+    <case_value_group/>
+    <default_target_step>Abort</default_target_step>
+    <cases>
+      <case>
+        <value>KEY_LOOKUP</value>
+        <target_step> [performer_table_to_table_insert_json] Add partial load condition</target_step>
+      </case>
+      <case>
+        <value>FULL_CHECK</value>
+        <target_step> [performer_table_to_table_insert_json] Add (full) partial load condition</target_step>
+      </case>
+      <case>
+        <value>FULL_LOAD</value>
+        <target_step> [performer_table_to_table_insert_json] Add (full) partial load condition</target_step>
+      </case>
+    </cases>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>320</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Abort</name>
+    <type>Abort</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <row_threshold>0</row_threshold>
+    <message>Invalid load_type in input JSON</message>
+    <always_log_rows>Y</always_log_rows>
+    <abort_option>ABORT_WITH_ERROR</abort_option>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>416</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
