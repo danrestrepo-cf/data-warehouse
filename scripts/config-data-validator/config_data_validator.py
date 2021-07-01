@@ -41,6 +41,29 @@ def output_message():
         failure_list.insert(0, "One or more validations FAILED:")
         print("\n".join(failure_list))
 
+def edw_table_definition_check():
+    with EDW() as cursor:
+        if (cursor.select_into_dataframe("""
+            SELECT *
+            FROM mdi.edw_table_definition
+            WHERE edw_table_definition.database_name = 'staging'
+                AND edw_table_definition.schema_name = 'staging_octane'
+                AND edw_table_definition.primary_source_edw_table_definition_dwid IS NOT NULL
+        """).shape[0]) > 0:
+            failure_list.append("edw_table_definition: Non-null values in primary_source_edw_table_definition_dwid "
+                                "field for staging_octane tables.")
+
+        if (cursor.select_into_dataframe("""
+            SELECT history_tables.dwid
+            FROM mdi.edw_table_definition history_tables
+                JOIN mdi.edw_table_definition history_source_tables
+                    ON history_tables.primary_source_edw_table_definition_dwid = history_source_tables.dwid
+                    AND history_source_tables.schema_name <> 'staging_octane'
+            WHERE history_tables.database_name = 'staging'
+                AND history_tables.schema_name = 'history_octane'
+        """).shape[0]) > 0:
+            failure_list.append("edw_table_definition: ")
+
 def process_check():
     with EDW() as cursor:
         if (cursor.select_into_dataframe("""
@@ -146,7 +169,7 @@ def table_input_step_check():
             GROUP BY sql
             HAVING COUNT(*) > 1
         """).shape[0]) > 0:
-            failure_list.append("table_input_step: Duplicate values in sql field detected.")
+            failure_list.append("table_input_step: Duplicate values detected in sql field.")
 
 def table_output_step_check():
     with EDW() as cursor:
@@ -343,6 +366,16 @@ def json_output_field_check():
             GROUP BY json_output_field.process_dwid
             HAVING COUNT(*) > 1
         """).shape[0]) > 0:
+            failure_list.append("json_output_field: Duplicate values detected in process_dwid field.")
+
+        if (cursor.select_into_dataframe("""
+            SELECT json_output_field.dwid
+            FROM mdi.json_output_field
+            WHERE NOT (json_output_field.field_name LIKE '%_pid'
+                OR json_output_field.field_name LIKE '%_dwid'
+                OR json_output_field.field_name IN ('dwid', 'data_source_integration_id', 'code'))
+        """).shape[0]) > 0:
+            failure_list.append("json_output_field: ")
 
 class EDW:
     """
