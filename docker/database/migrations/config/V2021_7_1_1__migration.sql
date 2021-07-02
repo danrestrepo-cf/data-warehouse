@@ -2412,7 +2412,651 @@ UPDATE mdi.table_input_step
 -- Update to table_input_sql for product_terms_dim
 -- This includes updates data_source_integration_id concatenation
 UPDATE mdi.table_input_step
-    SET sql = ''
+    SET sql = 'SELECT
+            ''product_terms_pid'' || ''~'' || ''data_source_dwid'' as data_source_integration_columns,
+            COALESCE(CAST(primary_table.pt_pid as text), ''<NULL>'')  || ''~'' || COALESCE(CAST(1 as text), ''<NULL>'')  as data_source_integration_id,
+            now() as edw_created_datetime,
+            now() as edw_modified_datetime,
+            primary_table.data_source_updated_datetime as data_source_modified_datetime,
+            t715.value as arm_index,
+            t717.value as buydown_base_date,
+            t718.value as buydown_subsidy_calculation,
+            t719.value as community_lending,
+            t720.value as days_per_year,
+            t721.value as decision_credit_score_calc,
+            t722.value as fha_rehab_program,
+            t723.value as fha_special_program,
+            t724.value as fnm_arm_plan,
+            t725.value as fnm_community_lending_product,
+            t726.value as fre_community_program,
+            t727.value as heloc_cancel_fee_applicable,
+            t729.value as ipc_calc,
+            t732.value as ipc_comparison_operator3,
+            t730.value as ipc_comparison_operator1,
+            t731.value as ipc_comparison_operator2,
+            t733.value as ipc_comparison_operator4,
+            t736.value as ipc_property_usage3,
+            t734.value as ipc_property_usage1,
+            t735.value as ipc_property_usage2,
+            t737.value as ipc_property_usage4,
+            t738.value as lien_priority,
+            t739.value as loan_amortization,
+            t740.value as mortgage_type,
+            t741.value as negative_amortization,
+            t742.value as partial_payment_policy,
+            t716.value as arm_payment_adjustment_calculation,
+            t743.value as payment_frequency,
+            t744.value as payment_structure,
+            t745.value as prepaid_interest_rate,
+            t746.value as prepay_penalty,
+            t747.value as product_appraisal_requirement,
+            t748.value as product_special_program,
+            primary_table.pt_ipc_comparison_operator_type3 as ipc_comparison_operator_code3,
+            primary_table.pt_ipc_cltv_ratio_percent3 as ipc_cltv_ratio_percent3,
+            primary_table.pt_ipc_limit_percent4 as ipc_limit_percent4,
+            primary_table.pt_ipc_property_usage_type4 as ipc_property_usage_code4,
+            primary_table.pt_ipc_comparison_operator_type4 as ipc_comparison_operator_code4,
+            primary_table.pt_ipc_cltv_ratio_percent4 as ipc_cltv_ratio_percent4,
+            primary_table.pt_buydown_base_date_type as buydown_base_date_code,
+            primary_table.pt_buydown_subsidy_calculation_type as buydown_subsidy_calculation_code,
+            primary_table.pt_prepaid_interest_rate_type as prepaid_interest_rate_code,
+            primary_table.pt_fnm_arm_plan_type as fnm_arm_plan_code,
+            primary_table.pt_dsi_plan_code as dsi_plan_code,
+            primary_table.pt_credit_qualifying as credit_qualifying_flag,
+            primary_table.pt_product_special_program_type as product_special_program_code,
+            primary_table.pt_section_of_act_coarse_type as section_of_act_coarse_code,
+            primary_table.pt_fha_rehab_program_type as fha_rehab_program_code,
+            primary_table.pt_fha_special_program_type as fha_special_program_code,
+            primary_table.pt_third_party_grant_eligible as third_party_grant_eligible_flag,
+            primary_table.pt_servicing_transfer_type as servicing_transfer_code,
+            primary_table.pt_no_mi_product as no_mi_product_flag,
+            primary_table.pt_mortgage_credit_certificate_eligible as mortgage_credit_certificate_eligible_flag,
+            primary_table.pt_fre_community_program_type as fre_community_program_code,
+            primary_table.pt_fnm_community_lending_product_type as fnm_community_lending_product_code,
+            primary_table.pt_zero_note_rate as zero_note_rate_flag,
+            primary_table.pt_third_party_community_second_program_eligibility_type as third_party_community_second_program_eligibility_code,
+            primary_table.pt_texas_veterans_land_board as texas_veterans_land_board_code,
+            primary_table.pt_security_instrument_page_count as security_instrument_page_count,
+            primary_table.pt_deed_page_count as deed_page_count,
+            primary_table.pt_partial_payment_policy_type as partial_payment_policy_code,
+            primary_table.pt_payment_structure_type as payment_structure_code,
+            primary_table.pt_deferred_payment_months as deferred_payment_months,
+            primary_table.pt_always_current_market_price as always_current_market_price_flag,
+            primary_table.pt_rate_protect as rate_protect_flag,
+            primary_table.pt_non_conforming as non_conforming_flag,
+            primary_table.pt_allow_loan_amount_cents as allow_loan_amount_cents_flag,
+            primary_table.pt_product_appraisal_requirement_type as product_appraisal_requirement_code,
+            primary_table.pt_family_advantage as family_advantage_flag,
+            primary_table.pt_community_lending_type as community_lending_code,
+            primary_table.pt_high_balance as high_balance_code,
+            primary_table.pt_decision_credit_score_calc_type as decision_credit_score_calc_code,
+            primary_table.pt_new_york as new_york_flag,
+            primary_table.pt_manual_risk_assessment_accepted as manual_risk_assessment_accepted_flag,
+            primary_table.pt_external_fha_underwrite_accepted as external_fha_underwrite_accepted_flag,
+            primary_table.pt_external_va_underwrite_accepted as external_va_underwrite_accepted_flag,
+            primary_table.pt_external_usda_underwrite_accepted as external_usda_underwrite_accepted_flag,
+            primary_table.pt_external_investor_underwrite_accepted as external_investor_underwrite_accepted_flag,
+            primary_table.pt_heloc_cancel_fee_applicable_type as heloc_cancel_fee_applicable_code,
+            primary_table.pt_heloc_cancel_fee_period_months as heloc_cancel_fee_period_months,
+            primary_table.pt_heloc_cancel_fee_amount as heloc_cancel_fee_amount,
+            primary_table.pt_heloc_draw_period_months as heloc_draw_period_months,
+            primary_table.pt_heloc_repayment_period_duration_months as heloc_repayment_period_duration_months,
+            primary_table.pt_heloc_maximum_initial_draw as heloc_maximum_initial_draw_flag,
+            primary_table.pt_heloc_maximum_initial_draw_amount as heloc_maximum_initial_draw_amount,
+            primary_table.pt_heloc_minimum_draw as heloc_minimum_draw_flag,
+            primary_table.pt_heloc_minimum_draw_amount as heloc_minimum_draw_amount,
+            primary_table.pt_gpm_adjustment_years as gpm_adjustment_years,
+            primary_table.pt_gpm_adjustment_percent as gpm_adjustment_percent,
+            primary_table.pt_qualifying_monthly_payment_type as qualifying_monthly_payment_code,
+            primary_table.pt_qualifying_rate_type as qualifying_rate_code,
+            primary_table.pt_qualifying_rate_input_percent as qualifying_rate_input_percent,
+            primary_table.pt_ipc_calc_type as ipc_calc_code,
+            primary_table.pt_ipc_limit_percent1 as ipc_limit_percent1,
+            primary_table.pt_ipc_property_usage_type1 as ipc_property_usage_code1,
+            primary_table.pt_ipc_comparison_operator_type1 as ipc_comparison_operator_code1,
+            primary_table.pt_ipc_cltv_ratio_percent1 as ipc_cltv_ratio_percent1,
+            primary_table.pt_ipc_limit_percent2 as ipc_limit_percent2,
+            primary_table.pt_ipc_property_usage_type2 as ipc_property_usage_code2,
+            primary_table.pt_ipc_comparison_operator_type2 as ipc_comparison_operator_code2,
+            primary_table.pt_ipc_cltv_ratio_percent2 as ipc_cltv_ratio_percent2,
+            primary_table.pt_ipc_limit_percent3 as ipc_limit_percent3,
+            primary_table.pt_ipc_property_usage_type3 as ipc_property_usage_code3,
+            primary_table.pt_pid as product_terms_pid,
+            primary_table.pt_amortization_term_months as amortization_term_months,
+            primary_table.pt_arm_index_type as arm_index_code,
+            primary_table.pt_arm_payment_adjustment_calculation_type as arm_payment_adjustment_calculation_code,
+            primary_table.pt_assumable as assumable_flag,
+            primary_table.pt_product_category as product_category,
+            primary_table.pt_conditions_to_assumability as conditions_to_assumability_flag,
+            primary_table.pt_demand_feature as demand_feature_flag,
+            primary_table.pt_due_in_term_months as due_in_term_months,
+            primary_table.pt_escrow_cushion_months as escrow_cushion_months,
+            primary_table.pt_from_date as from_date,
+            primary_table.pt_initial_payment_adjustment_term_months as initial_payment_adjustment_term_months,
+            primary_table.pt_initial_rate_adjustment_cap_percent as initial_rate_adjustment_cap_percent,
+            primary_table.pt_initial_rate_adjustment_term_months as initial_rate_adjustment_term_months,
+            primary_table.pt_lien_priority_type as lien_priority_code,
+            primary_table.pt_loan_amortization_type as loan_amortization_code,
+            primary_table.pt_minimum_payment_rate_percent as minimum_payment_rate_percent,
+            primary_table.pt_minimum_rate_term_months as minimum_rate_term_months,
+            primary_table.pt_mortgage_type as mortgage_type_code,
+            primary_table.pt_negative_amortization_type as negative_amortization_code,
+            primary_table.pt_negative_amortization_limit_percent as negative_amortization_limit_percent,
+            primary_table.pt_negative_amortization_recast_period_months as negative_amortization_recast_period_months,
+            primary_table.pt_payment_adjustment_lifetime_cap_percent as payment_adjustment_lifetime_cap_percent,
+            primary_table.pt_payment_adjustment_periodic_cap as payment_adjustment_periodic_cap,
+            primary_table.pt_payment_frequency_type as payment_frequency_code,
+            primary_table.pt_prepayment_finance_charge_refund as prepayment_charge_refund_flag,
+            primary_table.pt_product_pid as product_pid,
+            primary_table.pt_rate_adjustment_lifetime_cap_percent as rate_adjustment_lifetime_cap_percent,
+            primary_table.pt_subsequent_payment_adjustment_term_months as subsequent_payment_adjustment_term_months,
+            primary_table.pt_subsequent_rate_adjustment_cap_percent as subsequent_rate_adjustment_cap_percent,
+            primary_table.pt_subsequent_rate_adjustment_term_months as subsequent_rate_adjustment_term_months,
+            primary_table.pt_prepay_penalty_type as prepay_penalty_code,
+            primary_table.pt_lender_hazard_insurance_available as lender_hazard_insurance_available_flag,
+            primary_table.pt_lender_hazard_insurance_premium_amount as lender_hazard_insurance_premium_amount,
+            primary_table.pt_lender_hazard_insurance_term_months as lender_hazard_insurance_term_months,
+            primary_table.pt_loan_requires_hazard_insurance as loan_requires_hazard_insurance_flag,
+            primary_table.pt_arm_convertible as arm_convertible_flag,
+            primary_table.pt_arm_convertible_from_month as arm_convertible_from_month,
+            primary_table.pt_arm_convertible_through_month as arm_convertible_through_month,
+            primary_table.pt_arm_floor_rate_percent as arm_floor_rate_percent,
+            primary_table.pt_arm_lookback_period_days as arm_lookback_period_days,
+            primary_table.pt_escrow_waiver_allowed as escrow_waiver_allowed_flag,
+            primary_table.pt_days_per_year_type as days_per_year_code,
+            primary_table.pt_lp_risk_assessment_accepted as lp_risk_assessment_accepted_flag,
+            primary_table.pt_du_risk_assessment_accepted as du_risk_assessment_accepted_flag,
+            primary_table.pt_internal_underwrite_accepted as internal_underwrite_accepted_flag,
+            t749.value as qualifying_monthly_payment,
+            t750.value as qualifying_rate,
+            t751.value as section_of_act_coarse,
+            t752.value as servicing_transfer,
+            t754.value as third_party_community_second_program_eligibility,
+            t753.value as texas_veterans_land_board,
+            t753.value as high_balance
+FROM (
+         SELECT
+             <<product_terms_partial_load_condition>> as include_record,
+             product_terms.*
+         FROM history_octane.product_terms
+                  LEFT JOIN history_octane.product_terms AS history_records ON product_terms.pt_pid = history_records.pt_pid
+             AND product_terms.data_source_updated_datetime < history_records.data_source_updated_datetime
+         WHERE history_records.pt_pid IS NULL
+     ) AS primary_table
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<arm_index_type_partial_load_condition>> as include_record,
+                                 arm_index_type.*
+                      FROM history_octane.arm_index_type
+                               LEFT JOIN history_octane.arm_index_type AS history_records ON arm_index_type.code = history_records.code
+                          AND arm_index_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t715 ON primary_table.pt_arm_index_type = t715.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<buydown_base_date_type_partial_load_condition>> as include_record,
+                                 buydown_base_date_type.*
+                      FROM history_octane.buydown_base_date_type
+                               LEFT JOIN history_octane.buydown_base_date_type AS history_records ON buydown_base_date_type.code = history_records.code
+                          AND buydown_base_date_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t717 ON primary_table.pt_buydown_base_date_type = t717.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<buydown_subsidy_calculation_type_partial_load_condition>> as include_record,
+                                 buydown_subsidy_calculation_type.*
+                      FROM history_octane.buydown_subsidy_calculation_type
+                               LEFT JOIN history_octane.buydown_subsidy_calculation_type AS history_records ON buydown_subsidy_calculation_type.code = history_records.code
+                          AND buydown_subsidy_calculation_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t718 ON primary_table.pt_buydown_subsidy_calculation_type = t718.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<community_lending_type_partial_load_condition>> as include_record,
+                                 community_lending_type.*
+                      FROM history_octane.community_lending_type
+                               LEFT JOIN history_octane.community_lending_type AS history_records ON community_lending_type.code = history_records.code
+                          AND community_lending_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t719 ON primary_table.pt_community_lending_type = t719.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<days_per_year_type_partial_load_condition>> as include_record,
+                                 days_per_year_type.*
+                      FROM history_octane.days_per_year_type
+                               LEFT JOIN history_octane.days_per_year_type AS history_records ON days_per_year_type.code = history_records.code
+                          AND days_per_year_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t720 ON primary_table.pt_days_per_year_type = t720.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<decision_credit_score_calc_type_partial_load_condition>> as include_record,
+                                 decision_credit_score_calc_type.*
+                      FROM history_octane.decision_credit_score_calc_type
+                               LEFT JOIN history_octane.decision_credit_score_calc_type AS history_records ON decision_credit_score_calc_type.code = history_records.code
+                          AND decision_credit_score_calc_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t721 ON primary_table.pt_decision_credit_score_calc_type = t721.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<fha_rehab_program_type_partial_load_condition>> as include_record,
+                                 fha_rehab_program_type.*
+                      FROM history_octane.fha_rehab_program_type
+                               LEFT JOIN history_octane.fha_rehab_program_type AS history_records ON fha_rehab_program_type.code = history_records.code
+                          AND fha_rehab_program_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t722 ON primary_table.pt_fha_rehab_program_type = t722.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<fha_special_program_type_partial_load_condition>> as include_record,
+                                 fha_special_program_type.*
+                      FROM history_octane.fha_special_program_type
+                               LEFT JOIN history_octane.fha_special_program_type AS history_records ON fha_special_program_type.code = history_records.code
+                          AND fha_special_program_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t723 ON primary_table.pt_fha_special_program_type = t723.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<fnm_arm_plan_type_partial_load_condition>> as include_record,
+                                 fnm_arm_plan_type.*
+                      FROM history_octane.fnm_arm_plan_type
+                               LEFT JOIN history_octane.fnm_arm_plan_type AS history_records ON fnm_arm_plan_type.code = history_records.code
+                          AND fnm_arm_plan_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t724 ON primary_table.pt_fnm_arm_plan_type = t724.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<fnm_community_lending_product_type_partial_load_condition>> as include_record,
+                                 fnm_community_lending_product_type.*
+                      FROM history_octane.fnm_community_lending_product_type
+                               LEFT JOIN history_octane.fnm_community_lending_product_type AS history_records ON fnm_community_lending_product_type.code = history_records.code
+                          AND fnm_community_lending_product_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t725 ON primary_table.pt_fnm_community_lending_product_type = t725.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<fre_community_program_type_partial_load_condition>> as include_record,
+                                 fre_community_program_type.*
+                      FROM history_octane.fre_community_program_type
+                               LEFT JOIN history_octane.fre_community_program_type AS history_records ON fre_community_program_type.code = history_records.code
+                          AND fre_community_program_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t726 ON primary_table.pt_fre_community_program_type = t726.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<heloc_cancel_fee_applicable_type_partial_load_condition>> as include_record,
+                                 heloc_cancel_fee_applicable_type.*
+                      FROM history_octane.heloc_cancel_fee_applicable_type
+                               LEFT JOIN history_octane.heloc_cancel_fee_applicable_type AS history_records ON heloc_cancel_fee_applicable_type.code = history_records.code
+                          AND heloc_cancel_fee_applicable_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t727 ON primary_table.pt_heloc_cancel_fee_applicable_type = t727.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<ipc_calc_type_partial_load_condition>> as include_record,
+                                 ipc_calc_type.*
+                      FROM history_octane.ipc_calc_type
+                               LEFT JOIN history_octane.ipc_calc_type AS history_records ON ipc_calc_type.code = history_records.code
+                          AND ipc_calc_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t729 ON primary_table.pt_ipc_calc_type = t729.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<ipc_comparison_operator_type_partial_load_condition>> as include_record,
+                                 ipc_comparison_operator_type.*
+                      FROM history_octane.ipc_comparison_operator_type
+                               LEFT JOIN history_octane.ipc_comparison_operator_type AS history_records ON ipc_comparison_operator_type.code = history_records.code
+                          AND ipc_comparison_operator_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t732 ON primary_table.pt_ipc_comparison_operator_type3 = t732.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<ipc_comparison_operator_type_partial_load_condition>> as include_record,
+                                 ipc_comparison_operator_type.*
+                      FROM history_octane.ipc_comparison_operator_type
+                               LEFT JOIN history_octane.ipc_comparison_operator_type AS history_records ON ipc_comparison_operator_type.code = history_records.code
+                          AND ipc_comparison_operator_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t730 ON primary_table.pt_ipc_comparison_operator_type1 = t730.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<ipc_comparison_operator_type_partial_load_condition>> as include_record,
+                                 ipc_comparison_operator_type.*
+                      FROM history_octane.ipc_comparison_operator_type
+                               LEFT JOIN history_octane.ipc_comparison_operator_type AS history_records ON ipc_comparison_operator_type.code = history_records.code
+                          AND ipc_comparison_operator_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t731 ON primary_table.pt_ipc_comparison_operator_type2 = t731.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<ipc_comparison_operator_type_partial_load_condition>> as include_record,
+                                 ipc_comparison_operator_type.*
+                      FROM history_octane.ipc_comparison_operator_type
+                               LEFT JOIN history_octane.ipc_comparison_operator_type AS history_records ON ipc_comparison_operator_type.code = history_records.code
+                          AND ipc_comparison_operator_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t733 ON primary_table.pt_ipc_comparison_operator_type4 = t733.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<ipc_property_usage_type_partial_load_condition>> as include_record,
+                                 ipc_property_usage_type.*
+                      FROM history_octane.ipc_property_usage_type
+                               LEFT JOIN history_octane.ipc_property_usage_type AS history_records ON ipc_property_usage_type.code = history_records.code
+                          AND ipc_property_usage_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t736 ON primary_table.pt_ipc_property_usage_type3 = t736.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<ipc_property_usage_type_partial_load_condition>> as include_record,
+                                 ipc_property_usage_type.*
+                      FROM history_octane.ipc_property_usage_type
+                               LEFT JOIN history_octane.ipc_property_usage_type AS history_records ON ipc_property_usage_type.code = history_records.code
+                          AND ipc_property_usage_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t734 ON primary_table.pt_ipc_property_usage_type1 = t734.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<ipc_property_usage_type_partial_load_condition>> as include_record,
+                                 ipc_property_usage_type.*
+                      FROM history_octane.ipc_property_usage_type
+                               LEFT JOIN history_octane.ipc_property_usage_type AS history_records ON ipc_property_usage_type.code = history_records.code
+                          AND ipc_property_usage_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t735 ON primary_table.pt_ipc_property_usage_type2 = t735.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<ipc_property_usage_type_partial_load_condition>> as include_record,
+                                 ipc_property_usage_type.*
+                      FROM history_octane.ipc_property_usage_type
+                               LEFT JOIN history_octane.ipc_property_usage_type AS history_records ON ipc_property_usage_type.code = history_records.code
+                          AND ipc_property_usage_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t737 ON primary_table.pt_ipc_property_usage_type4 = t737.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<lien_priority_type_partial_load_condition>> as include_record,
+                                 lien_priority_type.*
+                      FROM history_octane.lien_priority_type
+                               LEFT JOIN history_octane.lien_priority_type AS history_records ON lien_priority_type.code = history_records.code
+                          AND lien_priority_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t738 ON primary_table.pt_lien_priority_type = t738.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<loan_amortization_type_partial_load_condition>> as include_record,
+                                 loan_amortization_type.*
+                      FROM history_octane.loan_amortization_type
+                               LEFT JOIN history_octane.loan_amortization_type AS history_records ON loan_amortization_type.code = history_records.code
+                          AND loan_amortization_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t739 ON primary_table.pt_loan_amortization_type = t739.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<mortgage_type_partial_load_condition>> as include_record,
+                                 mortgage_type.*
+                      FROM history_octane.mortgage_type
+                               LEFT JOIN history_octane.mortgage_type AS history_records ON mortgage_type.code = history_records.code
+                          AND mortgage_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t740 ON primary_table.pt_mortgage_type = t740.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<negative_amortization_type_partial_load_condition>> as include_record,
+                                 negative_amortization_type.*
+                      FROM history_octane.negative_amortization_type
+                               LEFT JOIN history_octane.negative_amortization_type AS history_records ON negative_amortization_type.code = history_records.code
+                          AND negative_amortization_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t741 ON primary_table.pt_negative_amortization_type = t741.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<partial_payment_policy_type_partial_load_condition>> as include_record,
+                                 partial_payment_policy_type.*
+                      FROM history_octane.partial_payment_policy_type
+                               LEFT JOIN history_octane.partial_payment_policy_type AS history_records ON partial_payment_policy_type.code = history_records.code
+                          AND partial_payment_policy_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t742 ON primary_table.pt_partial_payment_policy_type = t742.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<payment_adjustment_calculation_type_partial_load_condition>> as include_record,
+                                 payment_adjustment_calculation_type.*
+                      FROM history_octane.payment_adjustment_calculation_type
+                               LEFT JOIN history_octane.payment_adjustment_calculation_type AS history_records ON payment_adjustment_calculation_type.code = history_records.code
+                          AND payment_adjustment_calculation_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t716 ON primary_table.pt_arm_payment_adjustment_calculation_type = t716.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<payment_frequency_type_partial_load_condition>> as include_record,
+                                 payment_frequency_type.*
+                      FROM history_octane.payment_frequency_type
+                               LEFT JOIN history_octane.payment_frequency_type AS history_records ON payment_frequency_type.code = history_records.code
+                          AND payment_frequency_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t743 ON primary_table.pt_payment_frequency_type = t743.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<payment_structure_type_partial_load_condition>> as include_record,
+                                 payment_structure_type.*
+                      FROM history_octane.payment_structure_type
+                               LEFT JOIN history_octane.payment_structure_type AS history_records ON payment_structure_type.code = history_records.code
+                          AND payment_structure_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t744 ON primary_table.pt_payment_structure_type = t744.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<prepaid_interest_rate_type_partial_load_condition>> as include_record,
+                                 prepaid_interest_rate_type.*
+                      FROM history_octane.prepaid_interest_rate_type
+                               LEFT JOIN history_octane.prepaid_interest_rate_type AS history_records ON prepaid_interest_rate_type.code = history_records.code
+                          AND prepaid_interest_rate_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t745 ON primary_table.pt_prepaid_interest_rate_type = t745.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<prepay_penalty_type_partial_load_condition>> as include_record,
+                                 prepay_penalty_type.*
+                      FROM history_octane.prepay_penalty_type
+                               LEFT JOIN history_octane.prepay_penalty_type AS history_records ON prepay_penalty_type.code = history_records.code
+                          AND prepay_penalty_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t746 ON primary_table.pt_prepay_penalty_type = t746.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<product_appraisal_requirement_type_partial_load_condition>> as include_record,
+                                 product_appraisal_requirement_type.*
+                      FROM history_octane.product_appraisal_requirement_type
+                               LEFT JOIN history_octane.product_appraisal_requirement_type AS history_records ON product_appraisal_requirement_type.code = history_records.code
+                          AND product_appraisal_requirement_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t747 ON primary_table.pt_product_appraisal_requirement_type = t747.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<product_special_program_type_partial_load_condition>> as include_record,
+                                 product_special_program_type.*
+                      FROM history_octane.product_special_program_type
+                               LEFT JOIN history_octane.product_special_program_type AS history_records ON product_special_program_type.code = history_records.code
+                          AND product_special_program_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t748 ON primary_table.pt_product_special_program_type = t748.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<qualifying_monthly_payment_type_partial_load_condition>> as include_record,
+                                 qualifying_monthly_payment_type.*
+                      FROM history_octane.qualifying_monthly_payment_type
+                               LEFT JOIN history_octane.qualifying_monthly_payment_type AS history_records ON qualifying_monthly_payment_type.code = history_records.code
+                          AND qualifying_monthly_payment_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t749 ON primary_table.pt_qualifying_monthly_payment_type = t749.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<qualifying_rate_type_partial_load_condition>> as include_record,
+                                 qualifying_rate_type.*
+                      FROM history_octane.qualifying_rate_type
+                               LEFT JOIN history_octane.qualifying_rate_type AS history_records ON qualifying_rate_type.code = history_records.code
+                          AND qualifying_rate_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t750 ON primary_table.pt_qualifying_rate_type = t750.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<section_of_act_coarse_type_partial_load_condition>> as include_record,
+                                 section_of_act_coarse_type.*
+                      FROM history_octane.section_of_act_coarse_type
+                               LEFT JOIN history_octane.section_of_act_coarse_type AS history_records ON section_of_act_coarse_type.code = history_records.code
+                          AND section_of_act_coarse_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t751 ON primary_table.pt_section_of_act_coarse_type = t751.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<servicing_transfer_type_partial_load_condition>> as include_record,
+                                 servicing_transfer_type.*
+                      FROM history_octane.servicing_transfer_type
+                               LEFT JOIN history_octane.servicing_transfer_type AS history_records ON servicing_transfer_type.code = history_records.code
+                          AND servicing_transfer_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t752 ON primary_table.pt_servicing_transfer_type = t752.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<third_party_community_second_program_eligibility_type_partial_load_condition>> as include_record,
+                                 third_party_community_second_program_eligibility_type.*
+                      FROM history_octane.third_party_community_second_program_eligibility_type
+                               LEFT JOIN history_octane.third_party_community_second_program_eligibility_type AS history_records ON third_party_community_second_program_eligibility_type.code = history_records.code
+                          AND third_party_community_second_program_eligibility_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t754 ON primary_table.pt_third_party_community_second_program_eligibility_type = t754.code
+
+         INNER JOIN (
+    SELECT * FROM (
+                      SELECT     <<yes_no_unknown_type_partial_load_condition>> as include_record,
+                                 yes_no_unknown_type.*
+                      FROM history_octane.yes_no_unknown_type
+                               LEFT JOIN history_octane.yes_no_unknown_type AS history_records ON yes_no_unknown_type.code = history_records.code
+                          AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.code IS NULL
+                  ) as primary_table
+
+) AS t753 ON primary_table.pt_texas_veterans_land_board = t753.code
+     -- ignoring this because the table alias t753 has already been added: INNER JOIN history_octane.yes_no_unknown_type t753 ON primary_table.pt_texas_veterans_land_board = t753.code
+WHERE
+    GREATEST(primary_table.include_record, t715.include_record, t717.include_record, t718.include_record, t719.include_record, t720.include_record, t721.include_record, t722.include_record, t723.include_record, t724.include_record, t725.include_record, t726.include_record, t727.include_record, t729.include_record, t732.include_record, t730.include_record, t731.include_record, t733.include_record, t736.include_record, t734.include_record, t735.include_record, t737.include_record, t738.include_record, t739.include_record, t740.include_record, t741.include_record, t742.include_record, t716.include_record, t743.include_record, t744.include_record, t745.include_record, t746.include_record, t747.include_record, t748.include_record, t749.include_record, t750.include_record, t751.include_record, t752.include_record, t754.include_record, t753.include_record) IS TRUE
+ORDER BY
+    primary_table.data_source_updated_datetime ASC
+;'
     WHERE process_dwid = (
         SELECT process.dwid
         FROM mdi.process
@@ -2420,3 +3064,122 @@ UPDATE mdi.table_input_step
             AND table_output_step.target_schema = 'star_loan'
             AND table_output_step.target_table = 'product_terms_dim'
     );
+
+-- Update to table_input_sql for transaction_dim
+-- This includes updates data_source_integration_id concatenation
+UPDATE mdi.table_input_step
+    SET sql = 'SELECT
+        ''deal_pid'' || ''~'' || ''active_proposal_pid'' || ''~'' || ''data_source_dwid'' as data_source_integration_columns,
+        COALESCE(CAST(t1441.d_pid as text), ''<NULL>'')  || ''~'' || COALESCE(CAST(primary_table.prp_pid as text), ''<NULL>'')  || ''~'' || COALESCE(CAST(1 as text), ''<NULL>'')  as data_source_integration_id,
+        now() as edw_created_datetime,
+        now() as edw_modified_datetime,
+        primary_table.data_source_updated_datetime as data_source_modified_datetime,
+        t1441.d_pid as deal_pid,
+        primary_table.prp_pid as active_proposal_pid
+ FROM (
+    SELECT
+        <<proposal_partial_load_condition>> as include_record,
+        proposal.*
+    FROM history_octane.proposal
+        LEFT JOIN history_octane.proposal AS history_records ON proposal.prp_pid = history_records.prp_pid
+            AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.prp_pid IS NULL
+    ) AS primary_table
+
+    INNER JOIN (
+        SELECT * FROM (
+            SELECT     <<deal_partial_load_condition>> as include_record,
+            deal.*
+            FROM history_octane.deal
+                LEFT JOIN history_octane.deal AS history_records ON deal.d_pid = history_records.d_pid
+                AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
+            WHERE history_records.d_pid IS NULL
+        ) as primary_table
+
+    ) AS t1441 ON primary_table.prp_deal_pid = t1441.d_pid
+ WHERE
+    GREATEST(primary_table.include_record, t1441.include_record) IS TRUE
+ ORDER BY
+    primary_table.data_source_updated_datetime ASC
+ ;'
+WHERE process_dwid = (
+    SELECT process.dwid
+    FROM mdi.process
+             JOIN mdi.table_output_step ON process.dwid = table_output_step.process_dwid
+        AND table_output_step.target_schema = 'star_loan'
+        AND table_output_step.target_table = 'transaction_dim'
+);
+
+-- Update to table_input_sql for transaction_junk_dim
+-- This includes updates data_source_integration_id concatenation
+UPDATE mdi.table_input_step
+    SET sql = 'SELECT
+        ''is_test_loan_flag'' || ''~'' || ''structure_code'' || ''~'' || ''mi_required_flag'' || ''~'' || ''structure'' || ''~'' || ''data_source_dwid'' || ''~'' || ''piggyback_flag'' as data_source_integration_columns,
+        COALESCE(CAST(t1441.d_test_loan as text), ''<NULL>'')  || ''~'' || COALESCE(CAST(primary_table.prp_structure_type as text), ''<NULL>'')  || ''~'' || COALESCE(CAST(primary_table.prp_mi_required as text), ''<NULL>'')  || ''~'' || COALESCE(CAST(t661.value as text), ''<NULL>'')  || ''~'' || COALESCE(CAST(1 as text), ''<NULL>'')  || ''~'' || COALESCE(CAST(primary_table.prp_structure_type = ''COMBO'' as text), ''<NULL>'') as data_source_integration_id,
+        now() as edw_created_datetime,
+        now() as edw_modified_datetime,
+        primary_table.data_source_updated_datetime as data_source_modified_datetime,
+        t1441.d_test_loan as is_test_loan_flag,
+        t649.value as loan_purpose,
+        primary_table.prp_structure_type as structure_code,
+        primary_table.prp_mi_required as mi_required_flag,
+        primary_table.prp_loan_purpose_type as loan_purpose_code,
+        t661.value as structure,
+        primary_table.prp_structure_type = ''COMBO'' as piggyback_flag
+ FROM (
+    SELECT
+        <<proposal_partial_load_condition>> as include_record,
+        proposal.*
+    FROM history_octane.proposal
+        LEFT JOIN history_octane.proposal AS history_records ON proposal.prp_pid = history_records.prp_pid
+            AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.prp_pid IS NULL
+    ) AS primary_table
+
+    INNER JOIN (
+        SELECT * FROM (
+            SELECT     <<deal_partial_load_condition>> as include_record,
+            deal.*
+            FROM history_octane.deal
+                LEFT JOIN history_octane.deal AS history_records ON deal.d_pid = history_records.d_pid
+                AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
+            WHERE history_records.d_pid IS NULL
+        ) as primary_table
+
+    ) AS t1441 ON primary_table.prp_deal_pid = t1441.d_pid
+
+    INNER JOIN (
+        SELECT * FROM (
+            SELECT     <<loan_purpose_type_partial_load_condition>> as include_record,
+            loan_purpose_type.*
+            FROM history_octane.loan_purpose_type
+                LEFT JOIN history_octane.loan_purpose_type AS history_records ON loan_purpose_type.code = history_records.code
+                AND loan_purpose_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            WHERE history_records.code IS NULL
+        ) as primary_table
+
+    ) AS t649 ON primary_table.prp_loan_purpose_type = t649.code
+
+    INNER JOIN (
+        SELECT * FROM (
+            SELECT     <<proposal_structure_type_partial_load_condition>> as include_record,
+            proposal_structure_type.*
+            FROM history_octane.proposal_structure_type
+                LEFT JOIN history_octane.proposal_structure_type AS history_records ON proposal_structure_type.code = history_records.code
+                AND proposal_structure_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            WHERE history_records.code IS NULL
+        ) as primary_table
+
+    ) AS t661 ON primary_table.prp_structure_type = t661.code
+ WHERE
+    GREATEST(primary_table.include_record, t1441.include_record, t649.include_record, t661.include_record) IS TRUE
+ ORDER BY
+    primary_table.data_source_updated_datetime ASC
+ ;'
+WHERE process_dwid = (
+    SELECT process.dwid
+    FROM mdi.process
+             JOIN mdi.table_output_step ON process.dwid = table_output_step.process_dwid
+        AND table_output_step.target_schema = 'star_loan'
+        AND table_output_step.target_table = 'transaction_junk_dim'
+);
