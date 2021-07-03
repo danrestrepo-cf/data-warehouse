@@ -2571,16 +2571,16 @@ WHERE
         <jsScript_script>// Script to replace Table input step SQL placeholder(s) with partial load condition
 const generic_load_condition_regex = /&lt;&lt;.+_partial_load_condition>>/gi
 
-if (key_field_name == null) {
-// If key_field_name is null, a full load is being performed and all partial load condition placeholders will be replaced via regular expression with TRUE.
-  var sql_for_injection = sql.replace(generic_load_condition_regex, "TRUE");
-} else {
-// If key_field_name is not null, a partial load is being performed and all partial load condition placeholders will be replaced via regular expression in two steps:
-// 1. Partial load condition placeholders that correspond to the key_field_name's source table will be replaced with the partial load condition that is constructed using the input JSON.
-// 2. The remaining partial load condition placeholders will be replaced with FALSE.
+if (load_type == "KEY_LOOKUP") {
+  // If load_type is KEY_LOOKUP, a partial load is being performed and all partial load condition placeholders will be replaced via regular expression in two steps:
+  // 1. Partial load condition placeholders that correspond to the key_field_name's source table will be replaced with the partial load condition that is constructed using the input JSON.
+  // 2. The remaining partial load condition placeholders will be replaced with FALSE.
   const input_load_condition_regex = new RegExp("&lt;&lt;" + key_field_name.split(".", 1) + "_partial_load_condition>>", "gi");
   var sql_for_injection = sql.replace(input_load_condition_regex, partial_load_condition)
                              .replace(generic_load_condition_regex, "FALSE");
+} else {
+  // If load_type is FULL_LOAD or FULL_CHECK, a full load is being performed and all partial load condition placeholders will be replaced via regular expression with TRUE.
+  var sql_for_injection = sql.replace(generic_load_condition_regex, "TRUE");
 }</jsScript_script>
       </jsScript>
     </jsScripts>
