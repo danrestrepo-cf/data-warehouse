@@ -484,7 +484,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.089</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/06/28 14:56:37.146</modified_date>
+    <modified_date>2021/07/07 15:00:40.560</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -527,8 +527,8 @@ backwards but they are *not*. The table_output_field.database_field_name
 column maps to DATABASE_STREAM_NAME in the MDI step. The
 table_output_field.database_stream_name gets mapped to
 DATABASE_FIELD_NAME. </note>
-      <xloc>992</xloc>
-      <yloc>1120</yloc>
+      <xloc>1104</xloc>
+      <yloc>1136</yloc>
       <width>400</width>
       <heigth>138</heigth>
       <fontname>Segoe UI</fontname>
@@ -608,11 +608,15 @@ DATABASE_FIELD_NAME. </note>
 
 
 
+
+
+
+
 </note>
       <xloc>1104</xloc>
       <yloc>864</yloc>
       <width>370</width>
-      <heigth>136</heigth>
+      <heigth>220</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -787,11 +791,6 @@ DATABASE_FIELD_NAME. </note>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_table_to_table_insert_json]  Get key_field_name</from>
-      <to>[performer_table_to_table_insert_json] ETL metadata injection</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>[performer_table_to_table_insert_json] Load Table Output step settings</from>
       <to>[performer_table_to_table_insert_json] ETL metadata injection</to>
       <enabled>Y</enabled>
@@ -864,6 +863,16 @@ DATABASE_FIELD_NAME. </note>
     <hop>
       <from>[performer_table_to_table_insert_json] Evaluate load_type</from>
       <to>Abort</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert_json]  Get key_field_name</from>
+      <to>[performer_table_to_table_insert_json] Set add_quotes_to_key_values</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[performer_table_to_table_insert_json] Set add_quotes_to_key_values</from>
+      <to>[performer_table_to_table_insert_json] ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -1071,6 +1080,35 @@ var partial_load_condition = key_field_name.concat(sql, key_field_values, right_
     </GUI>
   </step>
   <step>
+    <name>Abort</name>
+    <type>Abort</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <row_threshold>0</row_threshold>
+    <message>Invalid load_type in input JSON</message>
+    <always_log_rows>Y</always_log_rows>
+    <abort_option>ABORT_WITH_ERROR</abort_option>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>416</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>[performer_table_to_table_insert_json]  Get key_field_name</name>
     <type>TableInput</type>
     <description/>
@@ -1272,6 +1310,13 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>target_schema</source_field>
       </mapping>
       <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Set add_quotes_to_key_values</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Set add_quotes_to_key_values</source_step>
+        <source_field>add_quotes_to_key_values</source_field>
+      </mapping>
+      <mapping>
         <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
         <target_attribute_key>COMMIT_SIZE</target_attribute_key>
         <target_detail>N</target_detail>
@@ -1321,10 +1366,17 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>partition_over_tables</source_field>
       </mapping>
       <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Set add_quotes_to_key_values</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>add_quotes_to_key_values</source_field>
+      </mapping>
+      <mapping>
         <target_step_name>[template_table_to_table_insert_json] Select key field rows</target_step_name>
         <target_attribute_key>FIELD_RENAME</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_json]  Get key_field_name</source_step>
+        <source_step>[performer_table_to_table_insert_json] Set add_quotes_to_key_values</source_step>
         <source_field>rename_to</source_field>
       </mapping>
       <mapping>
@@ -1345,7 +1397,7 @@ WHERE process.dwid = ${process_dwid}</sql>
         <target_step_name>[template_table_to_table_insert_json] Set key_field_name</target_step_name>
         <target_attribute_key>REPLACE_VALUE</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_json]  Get key_field_name</source_step>
+        <source_step>[performer_table_to_table_insert_json] Set add_quotes_to_key_values</source_step>
         <source_field>qualified_fieldname</source_field>
       </mapping>
       <mapping>
@@ -1366,7 +1418,7 @@ WHERE process.dwid = ${process_dwid}</sql>
         <target_step_name>[template_table_to_table_insert_json] Select key field rows</target_step_name>
         <target_attribute_key>FIELD_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_json]  Get key_field_name</source_step>
+        <source_step>[performer_table_to_table_insert_json] Set add_quotes_to_key_values</source_step>
         <source_field>fieldname</source_field>
       </mapping>
       <mapping>
@@ -1382,6 +1434,13 @@ WHERE process.dwid = ${process_dwid}</sql>
         <target_detail>N</target_detail>
         <source_step>[performer_table_to_table_insert_json] Replace Table input step SQL placeholder</source_step>
         <source_field>replace_variables</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_table_to_table_insert_json] Set input_load_type</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_table_to_table_insert_json] Replace Table input step SQL placeholder</source_step>
+        <source_field>load_type</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
@@ -1410,13 +1469,6 @@ WHERE process.dwid = ${process_dwid}</sql>
         <target_detail>Y</target_detail>
         <source_step/>
         <source_field>key_field_name</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_json] Set input_load_type</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_json] Replace Table input step SQL placeholder</source_step>
-        <source_field>load_type</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert_json] Table output</target_step_name>
@@ -1556,6 +1608,52 @@ WHERE process.dwid = ${process_dwid}</sql>
     <GUI>
       <xloc>784</xloc>
       <yloc>1168</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[performer_table_to_table_insert_json] Evaluate load_type</name>
+    <type>SwitchCase</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fieldname>load_type</fieldname>
+    <use_contains>N</use_contains>
+    <case_value_type>String</case_value_type>
+    <case_value_format/>
+    <case_value_decimal/>
+    <case_value_group/>
+    <default_target_step>Abort</default_target_step>
+    <cases>
+      <case>
+        <value>KEY_LOOKUP</value>
+        <target_step> [performer_table_to_table_insert_json] Add partial load condition</target_step>
+      </case>
+      <case>
+        <value>FULL_CHECK</value>
+        <target_step> [performer_table_to_table_insert_json] Add (full) partial load condition</target_step>
+      </case>
+      <case>
+        <value>FULL_LOAD</value>
+        <target_step> [performer_table_to_table_insert_json] Add (full) partial load condition</target_step>
+      </case>
+    </cases>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>320</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2609,8 +2707,8 @@ if (load_type == "KEY_LOOKUP") {
     </GUI>
   </step>
   <step>
-    <name>[performer_table_to_table_insert_json] Evaluate load_type</name>
-    <type>SwitchCase</type>
+    <name>[performer_table_to_table_insert_json] Set add_quotes_to_key_values</name>
+    <type>ScriptValueMod</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -2619,27 +2717,33 @@ if (load_type == "KEY_LOOKUP") {
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <fieldname>load_type</fieldname>
-    <use_contains>N</use_contains>
-    <case_value_type>String</case_value_type>
-    <case_value_format/>
-    <case_value_decimal/>
-    <case_value_group/>
-    <default_target_step>Abort</default_target_step>
-    <cases>
-      <case>
-        <value>KEY_LOOKUP</value>
-        <target_step> [performer_table_to_table_insert_json] Add partial load condition</target_step>
-      </case>
-      <case>
-        <value>FULL_CHECK</value>
-        <target_step> [performer_table_to_table_insert_json] Add (full) partial load condition</target_step>
-      </case>
-      <case>
-        <value>FULL_LOAD</value>
-        <target_step> [performer_table_to_table_insert_json] Add (full) partial load condition</target_step>
-      </case>
-    </cases>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>// Tell the template to add quotes to key_field_value_rows if key_field_name value is one of the following: data_source_integration_id, code. 
+// If it is not either of those values and is not dwid, or does not end in _dwid or _pid, then throw an error.
+if (/_pid$|^dwid$|_dwid$/.test(fieldname) === true) {
+	var add_quotes_to_key_values = false;
+} else if (/^(data_source_integration_id|code)$/.test(fieldname) === true) {
+	var add_quotes_to_key_values = true;
+} else {
+	throw 'Unexpected key_field_name value: ' + fieldname;
+}</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>add_quotes_to_key_values</name>
+        <rename>add_quotes_to_key_values</rename>
+        <type>Boolean</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -2649,37 +2753,8 @@ if (load_type == "KEY_LOOKUP") {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>480</xloc>
-      <yloc>320</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Abort</name>
-    <type>Abort</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <row_threshold>0</row_threshold>
-    <message>Invalid load_type in input JSON</message>
-    <always_log_rows>Y</always_log_rows>
-    <abort_option>ABORT_WITH_ERROR</abort_option>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>416</yloc>
+      <xloc>1280</xloc>
+      <yloc>1024</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
