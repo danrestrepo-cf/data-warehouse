@@ -469,7 +469,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/06/30 07:54:20.193</modified_date>
+    <modified_date>2021/07/07 16:54:36.443</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -832,23 +832,8 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_delete_json] Set key_field_name</from>
-      <to>[template_table_to_table_delete_json] Conditionally add quotes to key_field_value_rows</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>[template_table_to_table_delete_json] Select key field rows</from>
       <to>[template_table_to_table_delete_json] Add blank field for key_field_name</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[template_table_to_table_delete_json] Table input</from>
-      <to>[template_table_to_table_delete_json] Block delete step until key_field_name is evaluated</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[template_table_to_table_delete_json] Block delete step until key_field_name is evaluated</from>
-      <to>[template_table_to_table_delete_json] Delete</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -919,6 +904,26 @@
     <hop>
       <from>[template_table_to_table_delete_json] Block S3 step until insert flow finishes</from>
       <to>[template_table_to_table_delete_json] S3 file output</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_delete_json] Add blank field for add_quotes_to_key_values</from>
+      <to>[template_table_to_table_delete_json] Set add_quotes_to_key_values</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_delete_json] Set key_field_name</from>
+      <to>[template_table_to_table_delete_json] Add blank field for add_quotes_to_key_values</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_delete_json] Set add_quotes_to_key_values</from>
+      <to>[template_table_to_table_delete_json] Conditionally add quotes to key_field_value_rows</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_table_to_table_delete_json] Table input</from>
+      <to>[template_table_to_table_delete_json] Delete</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -1014,7 +1019,7 @@
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>528</yloc>
+      <yloc>688</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1116,7 +1121,7 @@
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>1088</yloc>
+      <yloc>1216</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1152,37 +1157,6 @@
     <GUI>
       <xloc>1488</xloc>
       <yloc>1648</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_delete_json] Block delete step until key_field_name is evaluated</name>
-    <type>BlockUntilStepsFinish</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <steps>
-      <step>
-        <name>[template_table_to_table_delete_json] Conditionally add quotes to key_field_value_rows</name>
-        <CopyNr>0</CopyNr>
-      </step>
-    </steps>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>304</xloc>
-      <yloc>384</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1275,17 +1249,11 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
       <jsScript>
         <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>
-// Conditionally process key_field_value_rows if key_field_name value is one of the following: data_source_integration_id, code. 
-// If it is not either of those values and is not dwid, or does not end in _dwid or _pid, then throw an error.
-var unqualified_key_field_name = key_field_name.split(".")[1];
-
-if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
-	processed_key_field_value_rows = key_field_value_rows;
-} else if (/^(data_source_integration_id|code)$/.test(unqualified_key_field_name) === true) {
+        <jsScript_script>// Surround key values with single quotes if they are non-numeric
+if (add_quotes_to_key_values == true) {
 	processed_key_field_value_rows = ("'" + key_field_value_rows + "'");
 } else {
-	throw 'Unexpected key_field_name value: ' + unqualified_key_field_name;
+	processed_key_field_value_rows = key_field_value_rows;
 }</jsScript_script>
       </jsScript>
     </jsScripts>
@@ -1317,7 +1285,7 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>336</yloc>
+      <yloc>528</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1369,7 +1337,7 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>432</yloc>
+      <yloc>608</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1439,7 +1407,7 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>800</yloc>
+      <yloc>944</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1478,7 +1446,7 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>720</yloc>
+      <yloc>864</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1517,7 +1485,7 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>880</yloc>
+      <yloc>1024</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1556,7 +1524,7 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>960</yloc>
+      <yloc>1136</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1600,7 +1568,7 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </remotesteps>
     <GUI>
       <xloc>1104</xloc>
-      <yloc>880</yloc>
+      <yloc>1024</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1644,7 +1612,78 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </remotesteps>
     <GUI>
       <xloc>1104</xloc>
-      <yloc>800</yloc>
+      <yloc>944</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_delete_json] S3 file output</name>
+    <type>S3FileOutputPlugin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <separator/>
+    <enclosure/>
+    <enclosure_forced>N</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <header>N</header>
+    <footer>N</footer>
+    <format>UNIX</format>
+    <compression>None</compression>
+    <encoding/>
+    <endedLine/>
+    <fileNameInField>Y</fileNameInField>
+    <fileNameField>s3_output_filepath</fileNameField>
+    <create_parent_folder>Y</create_parent_folder>
+    <file>
+      <name>s3n://s3n</name>
+      <servlet_output>N</servlet_output>
+      <do_not_open_new_file_init>Y</do_not_open_new_file_init>
+      <extention/>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <add_to_result_filenames>N</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery>0</splitevery>
+    </file>
+    <fields>
+      <field>
+        <name>mdi_output_json</name>
+        <type>None</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+    <access_key>Encrypted </access_key>
+    <secret_key>Encrypted </secret_key>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1488</xloc>
+      <yloc>1760</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1706,7 +1745,7 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>1200</yloc>
+      <yloc>1296</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1740,7 +1779,7 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>1328</yloc>
+      <yloc>1376</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1774,7 +1813,7 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>624</yloc>
+      <yloc>768</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1847,8 +1886,8 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1920</xloc>
-      <yloc>880</yloc>
+      <xloc>1936</xloc>
+      <yloc>1024</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1960,13 +1999,13 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </remotesteps>
     <GUI>
       <xloc>1104</xloc>
-      <yloc>720</yloc>
+      <yloc>864</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_delete_json] S3 file output</name>
-    <type>S3FileOutputPlugin</type>
+    <name>[template_table_to_table_delete_json] Add blank field for add_quotes_to_key_values</name>
+    <type>Constant</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1975,52 +2014,20 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <separator/>
-    <enclosure/>
-    <enclosure_forced>N</enclosure_forced>
-    <enclosure_fix_disabled>N</enclosure_fix_disabled>
-    <header>N</header>
-    <footer>N</footer>
-    <format>UNIX</format>
-    <compression>None</compression>
-    <encoding/>
-    <endedLine/>
-    <fileNameInField>Y</fileNameInField>
-    <fileNameField>s3_output_filepath</fileNameField>
-    <create_parent_folder>Y</create_parent_folder>
-    <file>
-      <name>s3n://s3n</name>
-      <servlet_output>N</servlet_output>
-      <do_not_open_new_file_init>Y</do_not_open_new_file_init>
-      <extention/>
-      <append>N</append>
-      <split>N</split>
-      <haspartno>N</haspartno>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <SpecifyFormat>N</SpecifyFormat>
-      <date_time_format/>
-      <add_to_result_filenames>N</add_to_result_filenames>
-      <pad>N</pad>
-      <fast_dump>N</fast_dump>
-      <splitevery>0</splitevery>
-    </file>
     <fields>
       <field>
-        <name>mdi_output_json</name>
-        <type>None</type>
+        <name>add_quotes_to_key_values</name>
+        <type>Boolean</type>
         <format/>
         <currency/>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
         <length>-1</length>
         <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
       </field>
     </fields>
-    <access_key>Encrypted </access_key>
-    <secret_key>Encrypted </secret_key>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -2031,7 +2038,41 @@ if (/_pid$|^dwid$|_dwid$/.test(unqualified_key_field_name) === true) {
     </remotesteps>
     <GUI>
       <xloc>1488</xloc>
-      <yloc>1760</yloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_delete_json] Set add_quotes_to_key_values</name>
+    <type>SetValueConstant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <usevar>N</usevar>
+    <fields>
+      <field>
+        <name>add_quotes_to_key_values</name>
+        <value/>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1488</xloc>
+      <yloc>432</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
