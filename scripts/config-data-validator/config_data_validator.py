@@ -62,7 +62,17 @@ def edw_table_definition_check():
             WHERE history_tables.database_name = 'staging'
                 AND history_tables.schema_name = 'history_octane'
         """).shape[0]) > 0:
-            failure_list.append("edw_table_definition: ")
+            failure_list.append("edw_table_definition: history_octane record(s) mapped to an unexpected source schema.")
+
+def edw_field_definition_check():
+    with EDW() as cursor:
+        if (cursor.select_into_dataframe("""
+            SELECT *
+            FROM mdi.edw_field_definition
+            WHERE edw_field_definition.field_source_calculation IS NOT NULL
+                AND edw_field_definition.field_source_calculation ~ 'AS .*$'
+        """).shape[0]) > 0:
+            failure_list.append("edw_field_definition: Alias detected in field_source_calculation.")
 
 def process_check():
     with EDW() as cursor:
@@ -85,7 +95,7 @@ def process_check():
                 AND microsoft_excel_input_step.dwid IS NULL
                 AND csv_file_input_step.dwid IS NULL
         """).shape[0]) > 0:
-            failure_list.append('process: Record(s) missing required MDI input relations.')
+            failure_list.append('process: Record(s) missing required MDI input relation.')
 
         if (cursor.select_into_dataframe("""
             SELECT process.dwid
@@ -97,7 +107,7 @@ def process_check():
                 AND insert_update_step.dwid IS NULL
                 AND delete_step.dwid IS NULL
         """).shape[0]) > 0:
-            failure_list.append('process: Record(s) missing required MDI output relations.')
+            failure_list.append('process: Record(s) missing required MDI output relation.')
 
 def csv_file_input_step_check():
     with EDW() as cursor:
@@ -108,7 +118,7 @@ def csv_file_input_step_check():
                     csv_file_input_field.csv_file_input_step_dwid
             WHERE csv_file_input_field.dwid IS NULL        
         """).shape[0]) > 0:
-            failure_list.append('csv_file_input_step: Record(s) missing required csv_file_input_field relations.')
+            failure_list.append('csv_file_input_step: Record(s) missing required csv_file_input_field relation.')
 
 def csv_file_input_field_check():
     with EDW() as cursor:
@@ -134,7 +144,7 @@ def microsoft_excel_input_step_check():
             WHERE microsoft_excel_input_field.dwid IS NULL
         """).shape[0]) > 0:
             failure_list.append('microsoft_excel_input_step: Record(s) missing required microsoft_excel_input_field '
-                                'relations.')
+                                'relation.')
 
 def microsoft_excel_input_field_check():
     with EDW() as cursor:
@@ -180,7 +190,7 @@ def table_output_step_check():
                     AND table_output_step.target_table = edw_table_definition.table_name
             WHERE edw_table_definition.dwid IS NULL
         """).shape[0]) > 0:
-            failure_list.append("table_output_step: Records with a target_table field value that does not exist in "
+            failure_list.append("table_output_step: Record(s) with a target_table field value that does not exist in "
                                 "edw_table_definition.")
         if(cursor.select_into_dataframe("""
             SELECT table_output_step.dwid
@@ -188,7 +198,7 @@ def table_output_step_check():
                 LEFT JOIN mdi.table_output_field ON table_output_step.dwid = table_output_field.table_output_step_dwid
             WHERE table_output_field.dwid IS NULL
         """).shape[0]) > 0:
-            failure_list.append("table_output_step: Record(s) missing required table_output_field relations.")
+            failure_list.append("table_output_step: Record(s) missing required table_output_field relation.")
 
         if (cursor.select_into_dataframe("""
             SELECT table_output_step.dwid
@@ -223,7 +233,7 @@ def table_output_field_check():
             WHERE NOT (edw_field_definition.dwid IS NOT NULL
                 AND edw_table_definition.dwid IS NOT NULL)
         """).shape[0]) > 0:
-            failure_list.append("table_output_field: Records missing required relations in edw_field_definition "
+            failure_list.append("table_output_field: Record(s) missing required relation in edw_field_definition "
                                 "and/or edw_table_definition.")
 
         if (cursor.select_into_dataframe("""
@@ -269,7 +279,7 @@ def insert_update_step_check():
                     AND insert_update_step.table_name = edw_table_definition.table_name
             WHERE edw_table_definition.dwid IS NULL
         """).shape[0]) > 0:
-            failure_list.append("insert_update_step: Records with a table_name field value that does not exist in "
+            failure_list.append("insert_update_step: Record(s) with a table_name field value that does not exist in "
                                 "the mdi.edw_table_definition table.")
 
         if (cursor.select_into_dataframe("""
@@ -278,7 +288,7 @@ def insert_update_step_check():
                 LEFT JOIN mdi.insert_update_key ON insert_update_step.dwid = insert_update_key.insert_update_step_dwid
             WHERE insert_update_key.dwid IS NULL
         """).shape[0]) > 0:
-            failure_list.append("insert update_step: Record(s) missing required insert_update_key relations.")
+            failure_list.append("insert update_step: Record(s) missing required insert_update_key relation.")
 
         if (cursor.select_into_dataframe("""
             SELECT insert_update_step.dwid
@@ -286,7 +296,7 @@ def insert_update_step_check():
                 LEFT JOIN mdi.insert_update_field ON insert_update_step.dwid = insert_update_field.insert_update_step_dwid
             WHERE insert_update_field.dwid IS NULL
         """).shape[0]) > 0:
-            failure_list.append("insert update_step: Record(s) missing required insert_update_field relations.")
+            failure_list.append("insert update_step: Record(s) missing required insert_update_field relation.")
 
         if (cursor.select_into_dataframe("""
             SELECT insert_update_step.dwid
@@ -322,7 +332,7 @@ def insert_update_field_check():
             WHERE NOT (edw_field_definition.dwid IS NOT NULL
                 AND edw_table_definition.dwid IS NOT NULL)
         """).shape[0]) > 0:
-            failure_list.append("insert_update_field: Record(s) missing required relations in edw_field_definition "
+            failure_list.append("insert_update_field: Record(s) missing required relation in edw_field_definition "
                         "and/or edw_table_definition.")
 
         if (cursor.select_into_dataframe("""
@@ -345,7 +355,7 @@ def delete_step_check():
                 LEFT JOIN mdi.delete_key ON delete_step.dwid = delete_key.delete_step_dwid
             WHERE delete_key.dwid IS NULL
         """).shape[0]) > 0:
-            failure_list.append("delete_step: Record(s) missing required delete_key relations.")
+            failure_list.append("delete_step: Record(s) missing required delete_key relation.")
 
 def delete_key_check():
     with EDW() as cursor:
