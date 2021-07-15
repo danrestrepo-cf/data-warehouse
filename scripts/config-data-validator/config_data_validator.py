@@ -13,6 +13,9 @@ from typing import List
 failure_list = []
 
 def main():
+    print("Proceeding with edw metadata table validations...")
+    edw_table_definition_check()
+    edw_field_definition_check()
     print("Proceeding with process table validations...")
     process_check()
     print("Proceeding with csv table validations...")
@@ -37,9 +40,11 @@ def main():
 def output_message():
     if not failure_list:
         print("Config data validator completed successfully.")
+        exit(0)
     else:
         failure_list.insert(0, "One or more validations FAILED:")
         print("\n".join(failure_list))
+        exit(1)
 
 def edw_table_definition_check():
     with EDW() as cursor:
@@ -67,12 +72,22 @@ def edw_table_definition_check():
 def edw_field_definition_check():
     with EDW() as cursor:
         if (cursor.select_into_dataframe("""
-            SELECT *
+            SELECT dwid
             FROM mdi.edw_field_definition
             WHERE edw_field_definition.field_source_calculation IS NOT NULL
                 AND edw_field_definition.field_source_calculation ~ 'AS .*$'
         """).shape[0]) > 0:
             failure_list.append("edw_field_definition: Alias detected in field_source_calculation.")
+
+        if (cursor.select_into_dataframe("""
+            SELECT dwid
+            FROM mdi.edw_field_definition
+            WHERE edw_field_definition.field_source_calculation IS NOT NULL
+                AND edw_field_definition.field_source_calculation NOT LIKE '%primary_table%'
+                AND edw_field_definition.field_source_calculation !~ 't[0-9]'
+        """).shape[0]) > 0:
+            failure_list.append("edw_field_definition: field_source_calculation detected without appropriate table "
+                                "qualifiers.")
 
 def process_check():
     with EDW() as cursor:
