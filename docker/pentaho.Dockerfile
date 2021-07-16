@@ -18,10 +18,12 @@ COPY --from=0 /data-integration /data-integration
 RUN yum install -y unzip jq
 
 # install the aws cli and a script to download from S3 into the inputs folder
-RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" \
-    && unzip awscli-bundle.zip \
-    && ./awscli-bundle/install -b ~/bin/aws \
-    && rm awscli-bundle.zip
+RUN yum install -y python3-pip && pip3 install pip --upgrade && \
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip awscliv2.zip && \
+    ./aws/install && \
+    aws --version
+
 COPY aws-s3-download.sh /
 
 # Run a test job to verify the install works
