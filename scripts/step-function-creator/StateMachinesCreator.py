@@ -240,6 +240,30 @@ class SingleStateMachineCreator:
         return state_config
 
     @staticmethod
+    def create_message_config(process_name: str) -> dict:
+        """Create an AWS Task state configuration that sends a message to an AWS SQS queue"""
+        message_config = {
+            'Comment': f'Send message to FullCheckQueue for {process_name}',
+            'Type': 'Task',
+            'Resources': 'arn:aws:states:::sqs:sendMessage',
+            'Parameters': {
+                'QueueUrl': '[QueueUrl]',
+                'MessageAttributes': {
+                    'MessageGroupId': {
+                        'DataType': 'String',
+                        'StringValue': '[name of target table for subsequent SP]'
+                    },
+                    'ProcessId': {
+                        'DataType': 'String',
+                        'StringValue': process_name
+                    }
+                },
+
+            }
+        }
+        return message_config
+
+    @staticmethod
     def create_choice_config(success_state_name: str, next_state_name: str) -> dict:
         """Create an AWS Choice state configuration that branches to a Success state if the previous step outputted a load_type of NONE"""
         return {
