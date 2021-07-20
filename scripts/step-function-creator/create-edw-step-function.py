@@ -10,6 +10,7 @@ def main():
     edw = EDW()
     state_machine_metadata = edw.get_state_machine_metadata()
     step_tree_metadata = edw.get_step_tree_metadata()
+    raw_target_table_metadata = edw.get_target_table_metadata()
     state_machine_file_extension = 'json'
 
     try:

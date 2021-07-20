@@ -59,3 +59,21 @@ class EDW:
                  ON state_machine_definition.process_dwid = process.dwid
             ORDER BY process.name;
         ''')
+
+    def get_target_table_metadata(self) -> List[dict]:
+        return self.execute_query('''
+        SELECT process.name AS process_dwid
+            , table_output_step.target_table
+        FROM mdi.process
+            JOIN mdi.table_output_step ON process.dwid = table_output_step.process_dwid
+        UNION ALL
+        SELECT process.name AS process_dwid
+            , insert_update_step.table_name AS target_table
+        FROM mdi.process
+            JOIN mdi.insert_update_step ON process.dwid = insert_update_step.process_dwid
+        UNION ALL
+        SELECT process.name AS process_dwid
+            , delete_step.table_name AS target_table
+        FROM mdi.process
+            JOIN mdi.delete_step ON process.dwid = delete_step.process_dwid
+        ''')

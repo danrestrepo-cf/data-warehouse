@@ -265,22 +265,30 @@ class SingleStateMachineCreator:
         """Create an AWS Task state configuration that sends a message to an AWS SQS queue"""
         message_config = {
             'Comment': f'Send message to FullCheckQueue for {process_name}',
-            'Type': 'Task',
-            'Resources': 'arn:aws:states:::sqs:sendMessage',
-            'Parameters': {
-                'QueueUrl': '[QueueUrl]',
-                'MessageAttributes': {
-                    'MessageGroupId': {
-                        'DataType': 'String',
-                        'StringValue': '[name of target table for subsequent SP]'
+            'StartAt': process_name,
+            'States': {
+                process_name: {
+                    'Type': 'Task',
+                    'Resources': 'arn:aws:states:::sqs:sendMessage',
+                    'Parameters': {
+                        'QueueUrl': '[QueueUrl]',
+                        'MessageAttributes': {
+                            'MessageGroupId': {
+                                'DataType': 'String',
+                                'StringValue': '[name of target table for subsequent SP]'
+                            },
+                            'ProcessId': {
+                                'DataType': 'String',
+                                'StringValue': process_name
+                            }
+                        },
+                        'MessageBody': {
+                            'PreviousStepOutput': "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
+                        }
                     },
-                    'ProcessId': {
-                        'DataType': 'String',
-                        'StringValue': process_name
-                    }
-                },
-            },
-            'End': 'True'
+                    'End': 'True'
+                }
+            }
         }
         return message_config
 
