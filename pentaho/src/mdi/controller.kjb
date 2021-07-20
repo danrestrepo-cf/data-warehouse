@@ -8,7 +8,7 @@
   <created_user>-</created_user>
   <created_date>2020/10/10 07:31:50.634</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2021/07/19 16:28:48.754</modified_date>
+  <modified_date>2021/05/14 13:56:33.793</modified_date>
   <parameters>
     <parameter>
       <name>database_hostname</name>
@@ -418,49 +418,420 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>224</xloc>
+      <xloc>176</xloc>
       <yloc>64</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>preprocess</name>
+      <name>[controller] Load MDI Configuration</name>
       <description/>
-      <type>JOB</type>
+      <type>TRANS</type>
       <attributes/>
       <specification_method>rep_name</specification_method>
-      <job_object_id/>
+      <trans_object_id/>
       <filename/>
-      <jobname/>
-      <directory/>
+      <transname>load_mdi_configuration</transname>
+      <directory>/mdi</directory>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
       <exec_per_row>N</exec_per_row>
+      <clear_rows>Y</clear_rows>
+      <clear_files>Y</clear_files>
       <set_logfile>N</set_logfile>
       <logfile/>
       <logext/>
       <add_date>N</add_date>
       <add_time>N</add_time>
-      <loglevel>Nothing</loglevel>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
       <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
       <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <expand_remote_job>N</expand_remote_job>
+      <follow_abort_remote>Y</follow_abort_remote>
       <create_parent_folder>N</create_parent_folder>
-      <pass_export>N</pass_export>
+      <logging_remote_work>N</logging_remote_work>
       <run_configuration>Pentaho local</run_configuration>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>process_name</name>
+          <stream_name/>
+          <value>${process_name}</value>
+        </parameter>
+        <parameter>
+          <name>database_hostname</name>
+          <stream_name/>
+          <value>${database_hostname}</value>
+        </parameter>
+        <parameter>
+          <name>database_port</name>
+          <stream_name/>
+          <value>${database_port}</value>
+        </parameter>
+        <parameter>
+          <name>database_username</name>
+          <stream_name/>
+          <value>${database_username}</value>
+        </parameter>
+        <parameter>
+          <name>database_password</name>
+          <stream_name/>
+          <value>${database_password}</value>
+        </parameter>
+        <parameter>
+          <name>database_schema</name>
+          <stream_name/>
+          <value>${database_schema}</value>
+        </parameter>
       </parameters>
-      <set_append_logfile>N</set_append_logfile>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>224</xloc>
-      <yloc>224</yloc>
+      <xloc>176</xloc>
+      <yloc>336</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Abort job</name>
+      <name>[controller] Process CSV?</name>
+      <description/>
+      <type>SIMPLE_EVAL</type>
+      <attributes/>
+      <valuetype>variable</valuetype>
+      <fieldname/>
+      <variablename>input_template</variablename>
+      <fieldtype>string</fieldtype>
+      <mask/>
+      <comparevalue>CSV</comparevalue>
+      <minvalue/>
+      <maxvalue/>
+      <successcondition>equal</successcondition>
+      <successnumbercondition>equal</successnumbercondition>
+      <successbooleancondition>false</successbooleancondition>
+      <successwhenvarset>N</successwhenvarset>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>176</xloc>
+      <yloc>480</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Process Excel?</name>
+      <description/>
+      <type>SIMPLE_EVAL</type>
+      <attributes/>
+      <valuetype>variable</valuetype>
+      <fieldname/>
+      <variablename>input_template</variablename>
+      <fieldtype>string</fieldtype>
+      <mask/>
+      <comparevalue>EXCEL</comparevalue>
+      <minvalue/>
+      <maxvalue/>
+      <successcondition>equal</successcondition>
+      <successnumbercondition>equal</successnumbercondition>
+      <successbooleancondition>false</successbooleancondition>
+      <successwhenvarset>N</successwhenvarset>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>528</xloc>
+      <yloc>480</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Execute CSV File to Table Performer</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>rep_name</specification_method>
+      <trans_object_id/>
+      <filename/>
+      <transname>performer_csv_file_to_table</transname>
+      <directory>/mdi</directory>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>Y</clear_rows>
+      <clear_files>Y</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>Y</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>process_name</name>
+          <stream_name/>
+          <value>${process_name}</value>
+        </parameter>
+        <parameter>
+          <name>database_hostname</name>
+          <stream_name/>
+          <value>${database_hostname}</value>
+        </parameter>
+        <parameter>
+          <name>database_password</name>
+          <stream_name/>
+          <value>${database_password}</value>
+        </parameter>
+        <parameter>
+          <name>database_port</name>
+          <stream_name/>
+          <value>${database_port}</value>
+        </parameter>
+        <parameter>
+          <name>database_schema</name>
+          <stream_name/>
+          <value>${database_schema}</value>
+        </parameter>
+        <parameter>
+          <name>database_username</name>
+          <stream_name/>
+          <value>${database_username}</value>
+        </parameter>
+        <parameter>
+          <name>etl_batch_id</name>
+          <stream_name/>
+          <value>${etl_batch_id}</value>
+        </parameter>
+        <parameter>
+          <name>process_dwid</name>
+          <stream_name/>
+          <value>${process_dwid}</value>
+        </parameter>
+        <parameter>
+          <name>input_path</name>
+          <stream_name/>
+          <value>${input_path}</value>
+        </parameter>
+        <parameter>
+          <name>input_file</name>
+          <stream_name/>
+          <value>${input_file}</value>
+        </parameter>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>176</xloc>
+      <yloc>624</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Execute Excel to Table Performer</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>rep_name</specification_method>
+      <trans_object_id/>
+      <filename/>
+      <transname>performer_excel_to_table</transname>
+      <directory>/mdi</directory>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>Y</clear_rows>
+      <clear_files>Y</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>Y</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>process_name</name>
+          <stream_name/>
+          <value>${process_name}</value>
+        </parameter>
+        <parameter>
+          <name>database_hostname</name>
+          <stream_name/>
+          <value>${database_hostname}</value>
+        </parameter>
+        <parameter>
+          <name>database_password</name>
+          <stream_name/>
+          <value>${database_password}</value>
+        </parameter>
+        <parameter>
+          <name>database_port</name>
+          <stream_name/>
+          <value>${database_port}</value>
+        </parameter>
+        <parameter>
+          <name>database_schema</name>
+          <stream_name/>
+          <value>${database_schema}</value>
+        </parameter>
+        <parameter>
+          <name>database_username</name>
+          <stream_name/>
+          <value>${database_username}</value>
+        </parameter>
+        <parameter>
+          <name>etl_batch_id</name>
+          <stream_name/>
+          <value>${etl_batch_id}</value>
+        </parameter>
+        <parameter>
+          <name>process_dwid</name>
+          <stream_name/>
+          <value>${process_dwid}</value>
+        </parameter>
+        <parameter>
+          <name>input_file</name>
+          <stream_name/>
+          <value>${input_file}</value>
+        </parameter>
+        <parameter>
+          <name>input_path</name>
+          <stream_name/>
+          <value>${input_path}</value>
+        </parameter>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>528</xloc>
+      <yloc>624</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] No data to process; Abort job</name>
+      <description/>
+      <type>ABORT</type>
+      <attributes/>
+      <message>MDI configuration input_template not recognized.</message>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>2544</xloc>
+      <yloc>480</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Verify all parameters contain values or abort</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>rep_name</specification_method>
+      <trans_object_id/>
+      <filename/>
+      <transname>verify_all_parameters_contain_values_or_abort</transname>
+      <directory>/mdi</directory>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>Y</clear_rows>
+      <clear_files>Y</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>Y</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>database_hostname</name>
+          <stream_name/>
+          <value>${database_hostname}</value>
+        </parameter>
+        <parameter>
+          <name>database_port</name>
+          <stream_name/>
+          <value>${database_port}</value>
+        </parameter>
+        <parameter>
+          <name>database_username</name>
+          <stream_name/>
+          <value>${database_username}</value>
+        </parameter>
+        <parameter>
+          <name>database_password</name>
+          <stream_name/>
+          <value>${database_password}</value>
+        </parameter>
+        <parameter>
+          <name>database_schema</name>
+          <stream_name/>
+          <value>${database_schema}</value>
+        </parameter>
+        <parameter>
+          <name>etl_batch_id</name>
+          <stream_name/>
+          <value>${etl_batch_id}</value>
+        </parameter>
+        <parameter>
+          <name>process_name</name>
+          <stream_name/>
+          <value>${process_name}</value>
+        </parameter>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>176</xloc>
+      <yloc>192</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Abort job if parameters are invalid</name>
+      <description/>
+      <type>ABORT</type>
+      <attributes/>
+      <message>Could not verify that all parameters passed in contained valid values!</message>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>592</xloc>
+      <yloc>192</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Abort job if unable to load configuration</name>
+      <description/>
+      <type>ABORT</type>
+      <attributes/>
+      <message>An error occured while loading the MDI configuration!</message>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>592</xloc>
+      <yloc>336</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Abort job if CSV Performer error</name>
       <description/>
       <type>ABORT</type>
       <attributes/>
@@ -468,36 +839,663 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>416</xloc>
-      <yloc>224</yloc>
+      <xloc>384</xloc>
+      <yloc>768</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Success</name>
+      <name>[controller] Abort job if Excel Performer error</name>
       <description/>
-      <type>SUCCESS</type>
+      <type>ABORT</type>
       <attributes/>
+      <message/>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>224</xloc>
-      <yloc>384</yloc>
+      <xloc>704</xloc>
+      <yloc>768</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Process Table Insert?</name>
+      <description/>
+      <type>SIMPLE_EVAL</type>
+      <attributes/>
+      <valuetype>variable</valuetype>
+      <fieldname/>
+      <variablename>input_template</variablename>
+      <fieldtype>string</fieldtype>
+      <mask/>
+      <comparevalue>TABLE_INPUT_FOR_INSERT</comparevalue>
+      <minvalue/>
+      <maxvalue/>
+      <successcondition>equal</successcondition>
+      <successnumbercondition>equal</successnumbercondition>
+      <successbooleancondition>false</successbooleancondition>
+      <successwhenvarset>N</successwhenvarset>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>864</xloc>
+      <yloc>480</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Execute Table to Table Insert Performer</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>rep_name</specification_method>
+      <trans_object_id/>
+      <filename/>
+      <transname>performer_table_to_table_insert</transname>
+      <directory>/mdi</directory>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>Y</clear_rows>
+      <clear_files>Y</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>Y</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>process_name</name>
+          <stream_name/>
+          <value>${process_name}</value>
+        </parameter>
+        <parameter>
+          <name>database_hostname</name>
+          <stream_name/>
+          <value>${database_hostname}</value>
+        </parameter>
+        <parameter>
+          <name>database_password</name>
+          <stream_name/>
+          <value>${database_password}</value>
+        </parameter>
+        <parameter>
+          <name>database_port</name>
+          <stream_name/>
+          <value>${database_port}</value>
+        </parameter>
+        <parameter>
+          <name>database_schema</name>
+          <stream_name/>
+          <value>${database_schema}</value>
+        </parameter>
+        <parameter>
+          <name>database_username</name>
+          <stream_name/>
+          <value>${database_username}</value>
+        </parameter>
+        <parameter>
+          <name>etl_batch_id</name>
+          <stream_name/>
+          <value>${etl_batch_id}</value>
+        </parameter>
+        <parameter>
+          <name>process_dwid</name>
+          <stream_name/>
+          <value>${process_dwid}</value>
+        </parameter>
+        <parameter>
+          <name>data_source_dwid</name>
+          <stream_name/>
+          <value>${data_source_dwid}</value>
+        </parameter>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>864</xloc>
+      <yloc>624</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Abort job if Table Insert Performer error</name>
+      <description/>
+      <type>ABORT</type>
+      <attributes/>
+      <message/>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1056</xloc>
+      <yloc>768</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Process table Insert / Update?</name>
+      <description/>
+      <type>SIMPLE_EVAL</type>
+      <attributes/>
+      <valuetype>variable</valuetype>
+      <fieldname>input_template</fieldname>
+      <variablename>input_template</variablename>
+      <fieldtype>string</fieldtype>
+      <mask/>
+      <comparevalue>TABLE_INPUT_FOR_INSERT_UPDATE</comparevalue>
+      <minvalue/>
+      <maxvalue/>
+      <successcondition>equal</successcondition>
+      <successnumbercondition>equal</successnumbercondition>
+      <successbooleancondition>false</successbooleancondition>
+      <successwhenvarset>N</successwhenvarset>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1168</xloc>
+      <yloc>480</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Execute Table to Table Insert / Update Performer</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>rep_name</specification_method>
+      <trans_object_id/>
+      <filename/>
+      <transname>performer_table_to_table_insert_update</transname>
+      <directory>/mdi</directory>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>Y</clear_rows>
+      <clear_files>Y</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>Y</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>process_name</name>
+          <stream_name/>
+          <value>${process_name}</value>
+        </parameter>
+        <parameter>
+          <name>database_hostname</name>
+          <stream_name/>
+          <value>${database_hostname}</value>
+        </parameter>
+        <parameter>
+          <name>database_password</name>
+          <stream_name/>
+          <value>${database_password}</value>
+        </parameter>
+        <parameter>
+          <name>database_port</name>
+          <stream_name/>
+          <value>${database_port}</value>
+        </parameter>
+        <parameter>
+          <name>database_schema</name>
+          <stream_name/>
+          <value>${database_schema}</value>
+        </parameter>
+        <parameter>
+          <name>database_username</name>
+          <stream_name/>
+          <value>${database_username}</value>
+        </parameter>
+        <parameter>
+          <name>etl_batch_id</name>
+          <stream_name/>
+          <value>${etl_batch_id}</value>
+        </parameter>
+        <parameter>
+          <name>process_dwid</name>
+          <stream_name/>
+          <value>${process_dwid}</value>
+        </parameter>
+        <parameter>
+          <name>data_source_dwid</name>
+          <stream_name/>
+          <value>${data_source_dwid}</value>
+        </parameter>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1168</xloc>
+      <yloc>624</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Abort job if Table Insert / Update Performer error</name>
+      <description/>
+      <type>ABORT</type>
+      <attributes/>
+      <message/>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1360</xloc>
+      <yloc>768</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Process Table Insert JSON?</name>
+      <description/>
+      <type>SIMPLE_EVAL</type>
+      <attributes/>
+      <valuetype>variable</valuetype>
+      <fieldname/>
+      <variablename>input_template</variablename>
+      <fieldtype>string</fieldtype>
+      <mask/>
+      <comparevalue>TABLE_INPUT_FOR_INSERT_JSON</comparevalue>
+      <minvalue/>
+      <maxvalue/>
+      <successcondition>equal</successcondition>
+      <successnumbercondition>equal</successnumbercondition>
+      <successbooleancondition>false</successbooleancondition>
+      <successwhenvarset>N</successwhenvarset>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1536</xloc>
+      <yloc>480</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Process Table Insert / Update JSON?</name>
+      <description/>
+      <type>SIMPLE_EVAL</type>
+      <attributes/>
+      <valuetype>variable</valuetype>
+      <fieldname/>
+      <variablename>input_template</variablename>
+      <fieldtype>string</fieldtype>
+      <mask/>
+      <comparevalue>TABLE_INPUT_FOR_INSERT_UPDATE_JSON</comparevalue>
+      <minvalue/>
+      <maxvalue/>
+      <successcondition>equal</successcondition>
+      <successnumbercondition>equal</successnumbercondition>
+      <successbooleancondition>false</successbooleancondition>
+      <successwhenvarset>N</successwhenvarset>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1904</xloc>
+      <yloc>480</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Execute Table to Table Insert / Update JSON Performer</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>rep_name</specification_method>
+      <trans_object_id/>
+      <filename/>
+      <transname>performer_table_to_table_insert_update_json</transname>
+      <directory>/mdi</directory>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>Y</clear_rows>
+      <clear_files>Y</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>Y</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>process_name</name>
+          <stream_name/>
+          <value>${process_name}</value>
+        </parameter>
+        <parameter>
+          <name>database_hostname</name>
+          <stream_name/>
+          <value>${database_hostname}</value>
+        </parameter>
+        <parameter>
+          <name>database_password</name>
+          <stream_name/>
+          <value>${database_password}</value>
+        </parameter>
+        <parameter>
+          <name>database_port</name>
+          <stream_name/>
+          <value>${database_port}</value>
+        </parameter>
+        <parameter>
+          <name>database_schema</name>
+          <stream_name/>
+          <value>${database_schema}</value>
+        </parameter>
+        <parameter>
+          <name>database_username</name>
+          <stream_name/>
+          <value>${database_username}</value>
+        </parameter>
+        <parameter>
+          <name>etl_batch_id</name>
+          <stream_name/>
+          <value>${etl_batch_id}</value>
+        </parameter>
+        <parameter>
+          <name>process_dwid</name>
+          <stream_name/>
+          <value>${process_dwid}</value>
+        </parameter>
+        <parameter>
+          <name>data_source_dwid</name>
+          <stream_name/>
+          <value>${data_source_dwid}</value>
+        </parameter>
+        <parameter>
+          <name>input_data</name>
+          <stream_name/>
+          <value>${input_data}</value>
+        </parameter>
+        <parameter>
+          <name>environment</name>
+          <stream_name/>
+          <value>${environment}</value>
+        </parameter>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1904</xloc>
+      <yloc>624</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Execute Table to Table Insert JSON Performer</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>rep_name</specification_method>
+      <trans_object_id/>
+      <filename/>
+      <transname>performer_table_to_table_insert_json</transname>
+      <directory>/mdi</directory>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>Y</clear_rows>
+      <clear_files>Y</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>Y</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>process_name</name>
+          <stream_name/>
+          <value>${process_name}</value>
+        </parameter>
+        <parameter>
+          <name>database_hostname</name>
+          <stream_name/>
+          <value>${database_hostname}</value>
+        </parameter>
+        <parameter>
+          <name>database_password</name>
+          <stream_name/>
+          <value>${database_password}</value>
+        </parameter>
+        <parameter>
+          <name>database_port</name>
+          <stream_name/>
+          <value>${database_port}</value>
+        </parameter>
+        <parameter>
+          <name>database_schema</name>
+          <stream_name/>
+          <value>${database_schema}</value>
+        </parameter>
+        <parameter>
+          <name>database_username</name>
+          <stream_name/>
+          <value>${database_username}</value>
+        </parameter>
+        <parameter>
+          <name>etl_batch_id</name>
+          <stream_name/>
+          <value>${etl_batch_id}</value>
+        </parameter>
+        <parameter>
+          <name>process_dwid</name>
+          <stream_name/>
+          <value>${process_dwid}</value>
+        </parameter>
+        <parameter>
+          <name>data_source_dwid</name>
+          <stream_name/>
+          <value>${data_source_dwid}</value>
+        </parameter>
+        <parameter>
+          <name>input_data</name>
+          <stream_name/>
+          <value>${input_data}</value>
+        </parameter>
+        <parameter>
+          <name>environment</name>
+          <stream_name/>
+          <value>${environment}</value>
+        </parameter>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1536</xloc>
+      <yloc>624</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Abort job if Table Insert JSON Performer error</name>
+      <description/>
+      <type>ABORT</type>
+      <attributes/>
+      <message/>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1696</xloc>
+      <yloc>768</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Abort job if Table Insert / Update JSON Performer error</name>
+      <description/>
+      <type>ABORT</type>
+      <attributes/>
+      <message/>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>2048</xloc>
+      <yloc>768</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Process Table Delete JSON?</name>
+      <description/>
+      <type>SIMPLE_EVAL</type>
+      <attributes/>
+      <valuetype>variable</valuetype>
+      <fieldname/>
+      <variablename>input_template</variablename>
+      <fieldtype>string</fieldtype>
+      <mask/>
+      <comparevalue>TABLE_INPUT_FOR_DELETE_JSON</comparevalue>
+      <minvalue/>
+      <maxvalue/>
+      <successcondition>equal</successcondition>
+      <successnumbercondition>equal</successnumbercondition>
+      <successbooleancondition>false</successbooleancondition>
+      <successwhenvarset>N</successwhenvarset>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>2288</xloc>
+      <yloc>480</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Execute Table to Table Delete JSON Performer</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>rep_name</specification_method>
+      <trans_object_id/>
+      <filename/>
+      <transname>performer_table_to_table_delete_json</transname>
+      <directory>/mdi</directory>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>Y</clear_rows>
+      <clear_files>Y</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>Y</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>process_name</name>
+          <stream_name/>
+          <value>${process_name}</value>
+        </parameter>
+        <parameter>
+          <name>database_hostname</name>
+          <stream_name/>
+          <value>${database_hostname}</value>
+        </parameter>
+        <parameter>
+          <name>database_password</name>
+          <stream_name/>
+          <value>${database_password}</value>
+        </parameter>
+        <parameter>
+          <name>database_port</name>
+          <stream_name/>
+          <value>${database_port}</value>
+        </parameter>
+        <parameter>
+          <name>database_schema</name>
+          <stream_name/>
+          <value>${database_schema}</value>
+        </parameter>
+        <parameter>
+          <name>database_username</name>
+          <stream_name/>
+          <value>${database_username}</value>
+        </parameter>
+        <parameter>
+          <name>etl_batch_id</name>
+          <stream_name/>
+          <value>${etl_batch_id}</value>
+        </parameter>
+        <parameter>
+          <name>process_dwid</name>
+          <stream_name/>
+          <value>${process_dwid}</value>
+        </parameter>
+        <parameter>
+          <name>data_source_dwid</name>
+          <stream_name/>
+          <value>${data_source_dwid}</value>
+        </parameter>
+        <parameter>
+          <name>input_data</name>
+          <stream_name/>
+          <value>${input_data}</value>
+        </parameter>
+        <parameter>
+          <name>environment</name>
+          <stream_name/>
+          <value>${environment}</value>
+        </parameter>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>2288</xloc>
+      <yloc>624</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] Abort job if Table Delete JSON Performer error</name>
+      <description/>
+      <type>ABORT</type>
+      <attributes/>
+      <message/>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>2432</xloc>
+      <yloc>768</yloc>
       <attributes_kjc/>
     </entry>
   </entries>
   <hops>
     <hop>
-      <from>Start</from>
-      <to>preprocess</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>preprocess</from>
-      <to>Success</to>
+      <from>[controller] Load MDI Configuration</from>
+      <to>[controller] Process CSV?</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -505,8 +1503,224 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>preprocess</from>
-      <to>Abort job</to>
+      <from>[controller] Process CSV?</from>
+      <to>[controller] Process Excel?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Process CSV?</from>
+      <to>[controller] Execute CSV File to Table Performer</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Process Excel?</from>
+      <to>[controller] Execute Excel to Table Performer</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Start</from>
+      <to>[controller] Verify all parameters contain values or abort</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Verify all parameters contain values or abort</from>
+      <to>[controller] Load MDI Configuration</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Verify all parameters contain values or abort</from>
+      <to>[controller] Abort job if parameters are invalid</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Load MDI Configuration</from>
+      <to>[controller] Abort job if unable to load configuration</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Execute CSV File to Table Performer</from>
+      <to>[controller] Abort job if CSV Performer error</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Execute Excel to Table Performer</from>
+      <to>[controller] Abort job if Excel Performer error</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Process Excel?</from>
+      <to>[controller] Process Table Insert?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Process Table Insert?</from>
+      <to>[controller] Execute Table to Table Insert Performer</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Execute Table to Table Insert Performer</from>
+      <to>[controller] Abort job if Table Insert Performer error</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Process Table Insert?</from>
+      <to>[controller] Process table Insert / Update?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Process table Insert / Update?</from>
+      <to>[controller] Execute Table to Table Insert / Update Performer</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Execute Table to Table Insert / Update Performer</from>
+      <to>[controller] Abort job if Table Insert / Update Performer error</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Process table Insert / Update?</from>
+      <to>[controller] Process Table Insert JSON?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Process Table Insert JSON?</from>
+      <to>[controller] Process Table Insert / Update JSON?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Process Table Insert / Update JSON?</from>
+      <to>[controller] Execute Table to Table Insert / Update JSON Performer</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Process Table Insert JSON?</from>
+      <to>[controller] Execute Table to Table Insert JSON Performer</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Execute Table to Table Insert JSON Performer</from>
+      <to>[controller] Abort job if Table Insert JSON Performer error</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Execute Table to Table Insert / Update JSON Performer</from>
+      <to>[controller] Abort job if Table Insert / Update JSON Performer error</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Process Table Insert / Update JSON?</from>
+      <to>[controller] Process Table Delete JSON?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Process Table Delete JSON?</from>
+      <to>[controller] No data to process; Abort job</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Process Table Delete JSON?</from>
+      <to>[controller] Execute Table to Table Delete JSON Performer</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Execute Table to Table Delete JSON Performer</from>
+      <to>[controller] Abort job if Table Delete JSON Performer error</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
