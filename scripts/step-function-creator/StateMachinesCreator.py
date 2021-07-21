@@ -114,7 +114,6 @@ class SingleStateMachineCreator:
         self.state_machine_metadata = state_machine_metadata
         self.step_tree_metadata = step_tree_metadata
         self.target_table_metadata = target_table_metadata
-        # self.counters = defaultdict(int)
 
     def build_state_machine(self, root_process: str) -> dict:
         """Build a full state machine configuration dict that can be output to a json file"""
@@ -133,7 +132,7 @@ class SingleStateMachineCreator:
         :return: the full state machine configuration tree starting from the given
                  root process
         """
-        # state_name = self.get_unique_state_name(root_process)
+
         state_name = root_process
         comment = self.determine_state_machine_header_comment(root_process, state_name)
         root_config = {
@@ -152,7 +151,7 @@ class SingleStateMachineCreator:
             next_process = self.step_tree_metadata[root_process][0]
             next_process_target_table = next((item['target_table'] for item in self.target_table_metadata if item['process_name'] == next_process), None)
             root_config_states[state_name] = self.create_task_config(root_process, next_process)
-            root_config_states['Choice'] = self.create_choice_config(f'{next_process}_message')
+            root_config_states['Load_type_choice'] = self.create_choice_config(f'{next_process}_message')
             root_config_states['Success'] = self.create_success_config()
             root_config_states[f'{next_process}_message'] = self.create_message_config(next_process,next_process_target_table)
             return root_config
