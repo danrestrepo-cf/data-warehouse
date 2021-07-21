@@ -141,29 +141,31 @@ class SingleStateMachineCreator:
             "StartAt": state_name,
             "States": {}
         }
+        root_config_states = root_config['States']
+        
         # process has no children
         if root_process not in self.step_tree_metadata:
-            root_config['States'][state_name] = self.create_task_config(root_process, None)
+            root_config_states[state_name] = self.create_task_config(root_process, None)
             return root_config
         # process has one sequential child
         elif len(self.step_tree_metadata[root_process]) == 1:
             next_process = self.step_tree_metadata[root_process][0]
             next_process_target_table = next((item['target_table'] for item in self.target_table_metadata if item['process_name'] == next_process), None)
-            root_config['States'][state_name] = self.create_task_config(root_process, next_process)
-            root_config['States']['Choice'] = self.create_choice_config(next_process)
-            root_config['States']['Success'] = self.create_success_config()
-            root_config['States'][next_process] = self.create_message_config(next_process, next_process_target_table)
+            root_config_states[state_name] = self.create_task_config(root_process, next_process)
+            root_config_states['Choice'] = self.create_choice_config(next_process)
+            root_config_states['Success'] = self.create_success_config()
+            root_config_states[next_process] = self.create_message_config(next_process, next_process_target_table)
             return root_config
         # process has multiple children which should run in parallel
         else:
             next_processes = self.step_tree_metadata[root_process]
-            root_config['States'][state_name] = self.create_task_config(root_process, next_processes)
-            root_config['States']['Choice'] = self.create_choice_config('Parallel')
-            root_config['States']['Success'] = self.create_success_config()
-            root_config['States']['Parallel'] = self.create_parallel_config()
+            root_config_states[state_name] = self.create_task_config(root_process, next_processes)
+            root_config_states['Choice'] = self.create_choice_config('Parallel')
+            root_config_states['Success'] = self.create_success_config()
+            root_config_states['Parallel'] = self.create_parallel_config()
             for value in self.step_tree_metadata[root_process]:
                 next_process_target_table = next((item['target_table'] for item in self.target_table_metadata if item['process_name'] == value), None)
-                root_config['States']['Parallel']['Branches'].append(self.create_message_config(value, next_process_target_table))
+                root_config_states['Parallel']['Branches'].append(self.create_message_config(value, next_process_target_table))
             return root_config
 
 
