@@ -15,7 +15,7 @@ def main():
 
     try:
         # generate and format state machine configuration strings
-        state_machine_creator = StateMachinesCreator(state_machine_metadata, step_tree_metadata)
+        state_machine_creator = StateMachinesCreator(state_machine_metadata, step_tree_metadata, target_table_metadata)
         state_machine_configs = state_machine_creator.build_state_machines()
         formatted_config_strings = format_data_for_outputting(state_machine_configs)
 
