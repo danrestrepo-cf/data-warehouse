@@ -152,9 +152,9 @@ class SingleStateMachineCreator:
             next_process = self.step_tree_metadata[root_process][0]
             next_process_target_table = next((item['target_table'] for item in self.target_table_metadata if item['process_name'] == next_process), None)
             root_config_states[state_name] = self.create_task_config(root_process, next_process)
-            root_config_states['Choice'] = self.create_choice_config(next_process)
+            root_config_states['Choice'] = self.create_choice_config(f'{next_process}_message')
             root_config_states['Success'] = self.create_success_config()
-            root_config_states[next_process] = self.create_message_config(next_process, next_process_target_table)
+            root_config_states[f'{next_process}_message'] = self.create_message_config(next_process,next_process_target_table)
             return root_config
         # process has multiple children which should run in parallel
         else:
@@ -163,9 +163,14 @@ class SingleStateMachineCreator:
             root_config_states['Choice'] = self.create_choice_config('Parallel')
             root_config_states['Success'] = self.create_success_config()
             root_config_states['Parallel'] = self.create_parallel_config()
-            for value in self.step_tree_metadata[root_process]:
-                next_process_target_table = next((item['target_table'] for item in self.target_table_metadata if item['process_name'] == value), None)
-                root_config_states['Parallel']['Branches'].append(self.create_message_config(value, next_process_target_table))
+            for next_process in next_processes:
+                next_process_target_table = next((item['target_table'] for item in self.target_table_metadata if
+                                                  item['process_name'] == next_process), None)
+                root_config_states['Parallel']['Branches'].append({
+                    "Comment": f'Send message to bi-managed-mdi-2-full-check-queue for {next_process}',
+                    "StartAt": f'{next_process}_message',
+                    "States": {f'{next_process}_message': self.create_message_config(next_process, next_process_target_table)}
+                })
             return root_config
 
 
@@ -228,31 +233,26 @@ class SingleStateMachineCreator:
     def create_message_config(process_name: str, next_process_target_table: str) -> dict:
         """Create an AWS Task state configuration that sends a message to an AWS SQS queue"""
         message_config = {
-            'Comment': f'Send message to bi-managed-mdi-2-full-check-queue for {process_name}',
-            'StartAt': f'{process_name}_message',
-            'States': {
-                f'{process_name}_message': {
-                    'Type': 'Task',
-                    'Resources': 'arn:aws:states:::sqs:sendMessage',
-                    'Parameters': {
-                        'QueueUrl': '[QueueUrl]',
-                        'MessageAttributes': {
-                            'MessageGroupId': {
-                                'DataType': 'String',
-                                'StringValue': next_process_target_table
-                            },
-                            'ProcessId': {
-                                'DataType': 'String',
-                                'StringValue': process_name
-                            }
-                        },
-                        'MessageBody': {
-                            'PreviousStepOutput': "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
-                        }
+    # 'Comment': f'Send message to bi-managed-mdi-2-full-check-queue for {process_name}',
+            'Type': 'Task',
+            'Resource': 'arn:aws:states:::sqs:sendMessage',
+            'Parameters': {
+                'QueueUrl': '[QueueUrl]',
+                'MessageAttributes': {
+                    'MessageGroupId': {
+                        'DataType': 'String',
+                        'StringValue': next_process_target_table
                     },
-                    'End': 'True'
+                    'ProcessId': {
+                        'DataType': 'String',
+                        'StringValue': process_name
+                    }
+                },
+                'MessageBody': {
+                    'PreviousStepOutput': "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
                 }
-            }
+            },
+            'End': True
         }
         return message_config
 
