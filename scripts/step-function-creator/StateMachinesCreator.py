@@ -168,7 +168,9 @@ class SingleStateMachineCreator:
                 root_config_states['Parallel']['Branches'].append({
                     "Comment": f'Send message to bi-managed-mdi-2-full-check-queue for {next_process}',
                     "StartAt": f'{next_process}_message',
-                    "States": {f'{next_process}_message': self.create_message_config(next_process, next_process_target_table)}
+                    "States": {
+                        f'{next_process}_message': self.create_message_config(next_process, next_process_target_table)
+                    }
                 })
             return root_config
 
