@@ -261,7 +261,7 @@ class SingleStateMachineCreator:
         """Create an empty AWS Parallel state configuration for processes that send multiple SQS messages"""
         parallel_config = {
             'Type': 'Parallel',
-            'End': 'True',
+            'End': True,
             'Branches': []
         }
         return parallel_config
