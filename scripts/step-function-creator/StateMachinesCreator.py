@@ -148,19 +148,21 @@ class SingleStateMachineCreator:
         elif len(self.step_tree_metadata[root_process]) == 1:
             next_process = self.step_tree_metadata[root_process][0]
             next_process_target_table = next((item['target_table'] for item in self.target_table_metadata if item['process_name'] == next_process), None)
-            next_state_name = self.get_unique_state_name(next_process)
             root_config['States'][state_name] = self.create_task_config(root_process, next_process)
-            root_config['States'][next_state_name] = self.create_message_config(next_state_name, next_process_target_table)
+            root_config['States']['Choice'] = self.create_choice_config(next_process)
+            root_config['States']['Success'] = self.create_success_config()
+            root_config['States'][next_process] = self.create_message_config(next_process, next_process_target_table)
             return root_config
         # process has multiple children which should run in parallel
         else:
-            parallel_state_name = self.get_unique_state_name('parallel')
-            self.increment_counter('parallel')
-            root_config['States'][state_name] = self.create_task_config(root_process, parallel_state_name)
-            root_config['States'][parallel_state_name] = self.create_parallel_config()
+            next_processes = self.step_tree_metadata[root_process]
+            root_config['States'][state_name] = self.create_task_config(root_process, next_processes)
+            root_config['States']['Choice'] = self.create_choice_config('Parallel')
+            root_config['States']['Success'] = self.create_success_config()
+            root_config['States']['Parallel'] = self.create_parallel_config()
             for value in self.step_tree_metadata[root_process]:
                 next_process_target_table = next((item['target_table'] for item in self.target_table_metadata if item['process_name'] == value), None)
-                root_config['States'][parallel_state_name]['Branches'].append(self.create_message_config(value, next_process_target_table))
+                root_config['States']['Parallel']['Branches'].append(self.create_message_config(value, next_process_target_table))
             return root_config
 
 
@@ -263,7 +265,7 @@ class SingleStateMachineCreator:
             state_config['End'] = True
             state_config['Resource'] += '.sync'
         else:
-            state_config['Next'] = next_state_name
+            state_config['Next'] = 'Choice'
             state_config['Resource'] += '.waitForTaskToken' # Is this still needed?
         return state_config
 
@@ -271,7 +273,7 @@ class SingleStateMachineCreator:
     def create_message_config(process_name: str, next_process_target_table: str) -> dict:
         """Create an AWS Task state configuration that sends a message to an AWS SQS queue"""
         message_config = {
-            'Comment': f'Send message to FullCheckQueue for {process_name}',
+            'Comment': f'Send message to bi-managed-mdi-2-full-check-queue for {process_name}',
             'StartAt': process_name,
             'States': {
                 process_name: {
@@ -310,7 +312,7 @@ class SingleStateMachineCreator:
         return parallel_config
 
     @staticmethod
-    def create_choice_config(success_state_name: str, next_state_name: str) -> dict:
+    def create_choice_config(next_state_name: str) -> dict:
         """Create an AWS Choice state configuration that branches to a Success state if the previous step outputted a load_type of NONE"""
         return {
             'Type': 'Choice',
@@ -318,7 +320,7 @@ class SingleStateMachineCreator:
                 {
                     'Variable': '$.load_type',
                     'StringEquals': 'NONE',
-                    'Next': success_state_name
+                    'Next': 'Success'
                 }
             ],
             'Default': next_state_name
