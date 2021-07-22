@@ -36,9 +36,9 @@
                     ]
                 }
             },
-            "Next": "Choice"
+            "Next": "Load_type_choice"
         },
-        "Choice": {
+        "Load_type_choice": {
             "Type": "Choice",
             "Choices": [
                 {
@@ -64,7 +64,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "[QueueUrl]",
+                                "QueueUrl": "${queueUrl}",
                                 "MessageAttributes": {
                                     "MessageGroupId": {
                                         "DataType": "String",
@@ -91,7 +91,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "[QueueUrl]",
+                                "QueueUrl": "${queueUrl}",
                                 "MessageAttributes": {
                                     "MessageGroupId": {
                                         "DataType": "String",
@@ -118,7 +118,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "[QueueUrl]",
+                                "QueueUrl": "${queueUrl}",
                                 "MessageAttributes": {
                                     "MessageGroupId": {
                                         "DataType": "String",
@@ -145,7 +145,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "[QueueUrl]",
+                                "QueueUrl": "${queueUrl}",
                                 "MessageAttributes": {
                                     "MessageGroupId": {
                                         "DataType": "String",
@@ -172,7 +172,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "[QueueUrl]",
+                                "QueueUrl": "${queueUrl}",
                                 "MessageAttributes": {
                                     "MessageGroupId": {
                                         "DataType": "String",

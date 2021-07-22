@@ -159,7 +159,7 @@ class SingleStateMachineCreator:
         else:
             next_processes = self.step_tree_metadata[root_process]
             root_config_states[state_name] = self.create_task_config(root_process, next_processes)
-            root_config_states['Choice'] = self.create_choice_config('Parallel')
+            root_config_states['Load_type_choice'] = self.create_choice_config('Parallel')
             root_config_states['Success'] = self.create_success_config()
             root_config_states['Parallel'] = self.create_parallel_config()
             for next_process in next_processes:
@@ -226,19 +226,18 @@ class SingleStateMachineCreator:
             state_config['End'] = True
             state_config['Resource'] += '.sync'
         else:
-            state_config['Next'] = 'Choice'
-            state_config['Resource'] += '.waitForTaskToken' # Is this still needed?
+            state_config['Next'] = 'Load_type_choice'
+            state_config['Resource'] += '.waitForTaskToken'
         return state_config
 
     @staticmethod
     def create_message_config(process_name: str, next_process_target_table: str) -> dict:
         """Create an AWS Task state configuration that sends a message to an AWS SQS queue"""
         message_config = {
-    # 'Comment': f'Send message to bi-managed-mdi-2-full-check-queue for {process_name}',
             'Type': 'Task',
             'Resource': 'arn:aws:states:::sqs:sendMessage',
             'Parameters': {
-                'QueueUrl': '[QueueUrl]',
+                'QueueUrl': '${queueUrl}',
                 'MessageAttributes': {
                     'MessageGroupId': {
                         'DataType': 'String',

@@ -36,7 +36,7 @@
                     ]
                 }
             },
-            "Next": "Choice"
+            "Next": "Load_type_choice"
         },
         "Load_type_choice": {
             "Type": "Choice",
@@ -56,7 +56,7 @@
             "Type": "Task",
             "Resource": "arn:aws:states:::sqs:sendMessage",
             "Parameters": {
-                "QueueUrl": "[QueueUrl]",
+                "QueueUrl": "${queueUrl}",
                 "MessageAttributes": {
                     "MessageGroupId": {
                         "DataType": "String",
