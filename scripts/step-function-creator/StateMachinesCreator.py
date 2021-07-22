@@ -237,7 +237,7 @@ class SingleStateMachineCreator:
             'Type': 'Task',
             'Resource': 'arn:aws:states:::sqs:sendMessage',
             'Parameters': {
-                'QueueUrl': '${queueUrl}',
+                'QueueUrl': '${fullCheckQueueUrl}',
                 'MessageAttributes': {
                     'MessageGroupId': {
                         'DataType': 'String',
