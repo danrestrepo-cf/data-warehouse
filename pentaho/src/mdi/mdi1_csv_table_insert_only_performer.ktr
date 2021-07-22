@@ -1,6 +1,6 @@
 <transformation>
   <info>
-    <name>performer_csv_file_to_table</name>
+    <name>mdi1_csv_table_insert_only_performer</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -10,17 +10,17 @@
     <parameters>
       <parameter>
         <name>database_hostname</name>
-        <default_value/>
+        <default_value>localhost</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>database_password</name>
-        <default_value/>
+        <default_value>testonly</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>database_port</name>
-        <default_value/>
+        <default_value>5432</default_value>
         <description/>
       </parameter>
       <parameter>
@@ -30,12 +30,12 @@
       </parameter>
       <parameter>
         <name>database_username</name>
-        <default_value/>
+        <default_value>postgres</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>etl_batch_id</name>
-        <default_value/>
+        <default_value>asdf</default_value>
         <description/>
       </parameter>
       <parameter>
@@ -50,12 +50,12 @@
       </parameter>
       <parameter>
         <name>process_dwid</name>
-        <default_value/>
+        <default_value>7</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>process_name</name>
-        <default_value/>
+        <default_value>SP-0.1</default_value>
         <description>The name that signifies what process should be run.</description>
       </parameter>
     </parameters>
@@ -479,7 +479,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.089</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/04/01 14:50:55.076</modified_date>
+    <modified_date>2021/07/20 14:35:25.484</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -712,12 +712,12 @@ DATABASE_FIELD_NAME. </note>
     </partitioning>
     <specification_method>rep_name</specification_method>
     <trans_object_id/>
-    <trans_name>template_csv_file_to_table</trans_name>
+    <trans_name>mdi1_csv_table_insert_only_template</trans_name>
     <filename/>
     <directory_path>${Internal.Entry.Current.Directory}</directory_path>
     <source_step/>
     <source_output_fields>    </source_output_fields>
-    <target_file/>
+    <target_file>test.ktr</target_file>
     <no_execution>N</no_execution>
     <stream_source_step/>
     <stream_target_step/>

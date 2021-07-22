@@ -1,139 +1,24 @@
 <job>
-  <name>controller</name>
+  <name>mdi1_table_table_insert_only_controller</name>
   <description/>
   <extended_description/>
   <job_version/>
-  <job_status>0</job_status>
   <directory>/mdi</directory>
   <created_user>-</created_user>
-  <created_date>2020/10/10 07:31:50.634</created_date>
+  <created_date>2021/07/20 12:42:35.032</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2021/07/22 09:40:02.183</modified_date>
+  <modified_date>2021/07/20 17:53:30.214</modified_date>
   <parameters>
-    <parameter>
-      <name>database_hostname</name>
-      <default_value>localhost</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>database_password</name>
-      <default_value>testonly</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>database_port</name>
-      <default_value>5432</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>database_schema</name>
-      <default_value/>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>database_username</name>
-      <default_value>postgres</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>environment</name>
-      <default_value/>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>etl_batch_id</name>
-      <default_value>1234</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>input_data</name>
-      <default_value>{"blah":{"load_type":"KEY_LOOKUP","key_field_name":"fnm_mbs_loan_default_loss_party_type.code","key_field_values":"'INVESTOR','LENDER','NA','SHARED'"}}</default_value>
-      <description>The JSON string passed from a step function.</description>
-    </parameter>
-    <parameter>
-      <name>input_file</name>
-      <default_value/>
-      <description>The name of the file that will be processed.</description>
-    </parameter>
-    <parameter>
-      <name>input_path</name>
-      <default_value/>
-      <description>The path to the input file to be processed.</description>
-    </parameter>
-    <parameter>
-      <name>process_name</name>
-      <default_value>SP-100001</default_value>
-      <description>The name that signifies what process should be run.</description>
-    </parameter>
-  </parameters>
-  <connection>
-    <name>Config DB Connection</name>
-    <server>${database_hostname}</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>config</database>
-    <port>${database_port}</port>
-    <username>${database_username}</username>
-    <password>${database_password}</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute>
-        <code>EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code>
-        <attribute>pentaho_logging_sequence</attribute>
-      </attribute>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>IS_CLUSTERED</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>PORT_NUMBER</code>
-        <attribute>${database_port}</attribute>
-      </attribute>
-      <attribute>
-        <code>PREFERRED_SCHEMA_NAME</code>
-        <attribute>ingress</attribute>
-      </attribute>
-      <attribute>
-        <code>PRESERVE_RESERVED_WORD_CASE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>QUOTE_ALL_FIELDS</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>USE_POOLING</code>
-        <attribute>N</attribute>
-      </attribute>
-    </attributes>
-  </connection>
+    </parameters>
   <slaveservers>
     </slaveservers>
   <job-log-table>
-    <connection>Config DB Connection</connection>
-    <schema>log</schema>
-    <table>job_log</table>
+    <connection/>
+    <schema/>
+    <table/>
     <size_limit_lines/>
-    <interval>5</interval>
-    <timeout_days>90</timeout_days>
+    <interval/>
+    <timeout_days/>
     <field>
       <id>ID_JOB</id>
       <enabled>Y</enabled>
@@ -221,30 +106,30 @@
     </field>
     <field>
       <id>EXECUTING_SERVER</id>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <name>EXECUTING_SERVER</name>
     </field>
     <field>
       <id>EXECUTING_USER</id>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <name>EXECUTING_USER</name>
     </field>
     <field>
       <id>START_JOB_ENTRY</id>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <name>START_JOB_ENTRY</name>
     </field>
     <field>
       <id>CLIENT</id>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <name>CLIENT</name>
     </field>
   </job-log-table>
   <jobentry-log-table>
-    <connection>Config DB Connection</connection>
-    <schema>log</schema>
-    <table>job_entry</table>
-    <timeout_days>90</timeout_days>
+    <connection/>
+    <schema/>
+    <table/>
+    <timeout_days/>
     <field>
       <id>ID_BATCH</id>
       <enabled>Y</enabled>
@@ -322,20 +207,20 @@
     </field>
     <field>
       <id>LOG_FIELD</id>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <name>LOG_FIELD</name>
     </field>
     <field>
       <id>COPY_NR</id>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <name>COPY_NR</name>
     </field>
   </jobentry-log-table>
   <channel-log-table>
-    <connection>Config DB Connection</connection>
-    <schema>log</schema>
-    <table>job_channel</table>
-    <timeout_days>90</timeout_days>
+    <connection/>
+    <schema/>
+    <table/>
+    <timeout_days/>
     <field>
       <id>ID_BATCH</id>
       <enabled>Y</enabled>
@@ -397,9 +282,73 @@
       <name>ROOT_CHANNEL_ID</name>
     </field>
   </channel-log-table>
-  <pass_batchid>Y</pass_batchid>
+  <pass_batchid>N</pass_batchid>
   <shared_objects_file/>
   <entries>
+    <entry>
+      <name>[mdi1_table_table_insert_only_controller] Transformation</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>rep_name</specification_method>
+      <trans_object_id/>
+      <filename/>
+      <transname>mdi1_table_table_insert_only_performer</transname>
+      <directory>/mdi</directory>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>176</xloc>
+      <yloc>160</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[mdi1_table_table_insert_only_controller] Abort job</name>
+      <description/>
+      <type>ABORT</type>
+      <attributes/>
+      <message/>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>272</xloc>
+      <yloc>224</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[mdi1_table_table_insert_only_controller] Success</name>
+      <description/>
+      <type>SUCCESS</type>
+      <attributes/>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>176</xloc>
+      <yloc>304</yloc>
+      <attributes_kjc/>
+    </entry>
     <entry>
       <name>Start</name>
       <description/>
@@ -418,86 +367,15 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>224</xloc>
-      <yloc>64</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>[controller] preprocess</name>
-      <description/>
-      <type>JOB</type>
-      <attributes/>
-      <specification_method>rep_name</specification_method>
-      <job_object_id/>
-      <filename/>
-      <jobname>preprocess</jobname>
-      <directory>/mdi</directory>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>Y</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Nothing</loglevel>
-      <slave_server_name/>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <expand_remote_job>N</expand_remote_job>
-      <create_parent_folder>N</create_parent_folder>
-      <pass_export>N</pass_export>
-      <run_configuration>Pentaho local</run_configuration>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-      </parameters>
-      <set_append_logfile>N</set_append_logfile>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>224</xloc>
-      <yloc>224</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>[controller] Abort job</name>
-      <description/>
-      <type>ABORT</type>
-      <attributes/>
-      <message/>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>464</xloc>
-      <yloc>224</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>[controller] Success</name>
-      <description/>
-      <type>SUCCESS</type>
-      <attributes/>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>224</xloc>
-      <yloc>384</yloc>
+      <xloc>176</xloc>
+      <yloc>32</yloc>
       <attributes_kjc/>
     </entry>
   </entries>
   <hops>
     <hop>
-      <from>Start</from>
-      <to>[controller] preprocess</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>[controller] preprocess</from>
-      <to>[controller] Success</to>
+      <from>[mdi1_table_table_insert_only_controller] Transformation</from>
+      <to>[mdi1_table_table_insert_only_controller] Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -505,13 +383,22 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>[controller] preprocess</from>
-      <to>[controller] Abort job</to>
+      <from>[mdi1_table_table_insert_only_controller] Transformation</from>
+      <to>[mdi1_table_table_insert_only_controller] Abort job</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>N</evaluation>
       <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Start</from>
+      <to>[mdi1_table_table_insert_only_controller] Transformation</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
     </hop>
   </hops>
   <notepads>

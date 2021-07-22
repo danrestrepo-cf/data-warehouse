@@ -1,6 +1,6 @@
 <transformation>
   <info>
-    <name>performer_table_to_table_insert_update</name>
+    <name>mdi1_csv_table_insert_only_template</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -9,23 +9,18 @@
     <directory>/mdi</directory>
     <parameters>
       <parameter>
-        <name>data_source_dwid</name>
-        <default_value/>
-        <description/>
-      </parameter>
-      <parameter>
         <name>database_hostname</name>
-        <default_value/>
+        <default_value>localhost</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>database_password</name>
-        <default_value/>
+        <default_value>testonly</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>database_port</name>
-        <default_value/>
+        <default_value>5432</default_value>
         <description/>
       </parameter>
       <parameter>
@@ -35,23 +30,23 @@
       </parameter>
       <parameter>
         <name>database_username</name>
-        <default_value/>
+        <default_value>postgres</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>etl_batch_id</name>
+        <default_value>asdf</default_value>
+        <description/>
+      </parameter>
+      <parameter>
+        <name>input_file</name>
         <default_value/>
         <description/>
       </parameter>
       <parameter>
-        <name>process_dwid</name>
+        <name>input_path</name>
         <default_value/>
         <description/>
-      </parameter>
-      <parameter>
-        <name>process_name</name>
-        <default_value/>
-        <description>The name that signifies what process should be run.</description>
       </parameter>
     </parameters>
     <log>
@@ -472,27 +467,26 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2021/02/17 17:15:35.157</created_date>
+    <created_date>2020/09/15 15:00:08.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/02/25 17:19:12.782</modified_date>
+    <modified_date>2021/07/20 14:34:18.703</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
     <notepad>
-      <note>Table input					
-
-
+      <note>Load data from CSV file
+                                                                                                           
 
 
 
 
 
 </note>
-      <xloc>16</xloc>
-      <yloc>64</yloc>
-      <width>442</width>
-      <heigth>199</heigth>
+      <xloc>128</xloc>
+      <yloc>80</yloc>
+      <width>652</width>
+      <heigth>232</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -509,13 +503,8 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Insert / update					
-
-
-
-
-
-
+      <note>Add ETL Batch ID to stream
+                                                                                                           
 
 
 
@@ -523,10 +512,10 @@
 
 
 </note>
-      <xloc>15</xloc>
-      <yloc>309</yloc>
-      <width>442</width>
-      <heigth>304</heigth>
+      <xloc>128</xloc>
+      <yloc>352</yloc>
+      <width>652</width>
+      <heigth>260</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -543,17 +532,77 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Get List of Fields to Log in Case of Error (Non-sensitive fields)
+      <note>Save stream to table
+                                                                                                           
 
 
 
 
 
 </note>
-      <xloc>15</xloc>
-      <yloc>657</yloc>
-      <width>473</width>
-      <heigth>158</heigth>
+      <xloc>128</xloc>
+      <yloc>976</yloc>
+      <width>652</width>
+      <heigth>232</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Specify logging fields, log them, and abort transformation as error                                                                                                                               
+
+
+
+
+
+
+
+
+</note>
+      <xloc>816</xloc>
+      <yloc>976</yloc>
+      <width>1024</width>
+      <heigth>221</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Add Data Source DWID to stream
+                                                                                                           
+
+
+
+
+
+
+</note>
+      <xloc>128</xloc>
+      <yloc>656</yloc>
+      <width>652</width>
+      <heigth>260</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -629,36 +678,107 @@
       </attribute>
     </attributes>
   </connection>
+  <connection>
+    <name>Dummy DB Connection</name>
+    <server>use when a default connection is needed</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>.</database>
+    <port>5432</port>
+    <username>.</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce10bef2cf94</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>5432</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
   <order>
     <hop>
-      <from>[performer_table_to_table_insert_update] Table input</from>
-      <to>[performer_table_to_table_insert_update] ETL metadata injection</to>
+      <from>[template_csv_file_to_table] add a blank field for etl_batch_id to valid stream</from>
+      <to>[template_csv_file_to_table] Set etl_batch_id field value to parameter etl_batch_id</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_table_to_table_insert_update] Load Insert / update step settings</from>
-      <to>[performer_table_to_table_insert_update] ETL metadata injection</to>
+      <from>[template_csv_file_to_table] CSV file input</from>
+      <to>[template_csv_file_to_table] Abort CSV file input</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_table_to_table_insert_update] Load Insert / update key settings</from>
-      <to>[performer_table_to_table_insert_update] ETL metadata injection</to>
+      <from>[template_csv_file_to_table] Table output</from>
+      <to>[template_csv_file_to_table]  Specify logging fields (non-sensitive)</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_table_to_table_insert_update] Load Insert / update field settings</from>
-      <to>[performer_table_to_table_insert_update] ETL metadata injection</to>
+      <from>[template_csv_file_to_table]  Specify logging fields (non-sensitive)</from>
+      <to>[template_csv_file_to_table]  Abort Table Output</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_table_to_table_insert_update] Load Insert / update non-sensitive fields</from>
-      <to>[performer_table_to_table_insert_update] ETL metadata injection</to>
+      <from>[template_csv_file_to_table] add a blank field for data_source_dwid to valid stream</from>
+      <to>[template_csv_file_to_table] Set data_source_dwid field value to parameter data_source_dwid</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_csv_file_to_table] Set etl_batch_id field value to parameter etl_batch_id</from>
+      <to>[template_csv_file_to_table] add a blank field for data_source_dwid to valid stream</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_csv_file_to_table] Set data_source_dwid field value to parameter data_source_dwid</from>
+      <to>[template_csv_file_to_table] Table output</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_csv_file_to_table] CSV file input</from>
+      <to>[template_csv_file_to_table] Add imported_filename parameter to stream</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[template_csv_file_to_table] Add imported_filename parameter to stream</from>
+      <to>[template_csv_file_to_table] add a blank field for etl_batch_id to valid stream</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>[performer_table_to_table_insert_update] ETL metadata injection</name>
-    <type>MetaInject</type>
+    <name>[template_csv_file_to_table]  Abort Table Output</name>
+    <type>Abort</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -667,187 +787,10 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <specification_method>rep_name</specification_method>
-    <trans_object_id/>
-    <trans_name>template_table_to_table_insert_update</trans_name>
-    <filename/>
-    <directory_path>${Internal.Entry.Current.Directory}</directory_path>
-    <source_step/>
-    <source_output_fields>    </source_output_fields>
-    <target_file/>
-    <no_execution>N</no_execution>
-    <stream_source_step/>
-    <stream_target_step/>
-    <mappings>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>SCHEMA_NAME</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update step settings</source_step>
-        <source_field>schema_name</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>DO_NOT</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update step settings</source_step>
-        <source_field>do_not</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>KEY_CONDITION</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update key settings</source_step>
-        <source_field>key_condition</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>KEY_STREAM2</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update key settings</source_step>
-        <source_field>key_stream2</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>COMMIT_SIZE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update step settings</source_step>
-        <source_field>commit_size</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>KEY_LOOKUP</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update key settings</source_step>
-        <source_field>key_lookup</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update]  Specify logging fields (non-sensitive)</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update non-sensitive fields</source_step>
-        <source_field>update_stream</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
-        <target_attribute_key>CACHED_ROW_META</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
-        <source_field>cached_row_meta</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update step settings</source_step>
-        <source_field>connectionname</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
-        <target_attribute_key>SQL</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
-        <source_field>sql</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
-        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
-        <source_field>connectionname</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>UPDATE_STREAM</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update field settings</source_step>
-        <source_field>update_stream</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>etl_batch_id</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
-        <target_attribute_key>REPLACE_VARIABLES</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
-        <source_field>replace_variables</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>KEY_STREAM</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update key settings</source_step>
-        <source_field>key_stream1</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>${data_source_dwid}</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
-        <target_attribute_key>LAZY_CONVERSION</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
-        <source_field>enable_lazy_conversion</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>data_source_dwid</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>UPDATE_LOOKUP</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update field settings</source_step>
-        <source_field>update_lookup</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>${etl_batch_id}</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>UPDATE_FLAG</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update field settings</source_step>
-        <source_field>update_flag</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Insert / update</target_step_name>
-        <target_attribute_key>TABLE_NAME</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Load Insert / update step settings</source_step>
-        <source_field>table_name</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
-        <target_attribute_key>EXECUTE_FOR_EACH_ROW</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
-        <source_field>execute_for_each_row</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update] Table input</target_step_name>
-        <target_attribute_key>LIMIT</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_table_to_table_insert_update] Table input</source_step>
-        <source_field>limit_size</source_field>
-      </mapping>
-    </mappings>
+    <row_threshold>0</row_threshold>
+    <message>could not save data to table</message>
+    <always_log_rows>Y</always_log_rows>
+    <abort_option>ABORT_WITH_ERROR</abort_option>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -857,14 +800,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>992</xloc>
-      <yloc>480</yloc>
+      <xloc>1472</xloc>
+      <yloc>1088</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[performer_table_to_table_insert_update] Load Insert / update field settings</name>
-    <type>TableInput</type>
+    <name>[template_csv_file_to_table]  Specify logging fields (non-sensitive)</name>
+    <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -873,24 +816,12 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>Config DB Connection</connection>
-    <sql>SELECT
-	insert_update_field.update_lookup
-	, insert_update_field.update_stream
-	, insert_update_field.update_flag
-FROM
-    mdi.insert_update_step
-        LEFT JOIN mdi.insert_update_field ON insert_update_step.dwid = insert_update_field.insert_update_step_dwid
-WHERE
-	insert_update_step.process_dwid = ${process_dwid}
-;</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta/>
+    <fields>
+      <field>
+        <name>etl_batch_id</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -900,14 +831,14 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>224</xloc>
-      <yloc>544</yloc>
+      <xloc>976</xloc>
+      <yloc>1088</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[performer_table_to_table_insert_update] Load Insert / update key settings</name>
-    <type>TableInput</type>
+    <name>[template_csv_file_to_table] Abort CSV file input</name>
+    <type>Abort</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -916,26 +847,10 @@ WHERE
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>Config DB Connection</connection>
-    <sql>SELECT
-	insert_update_key.key_lookup
-	, insert_update_key.key_stream1
-	, insert_update_key.key_stream2
-	, insert_update_key.key_condition
-FROM
-    mdi.insert_update_step
-        LEFT JOIN mdi.insert_update_key ON insert_update_step.dwid = insert_update_key.insert_update_step_dwid
-WHERE
-	insert_update_step.process_dwid = ${process_dwid}
-;
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta/>
+    <row_threshold>0</row_threshold>
+    <message>could not load csv file</message>
+    <always_log_rows>Y</always_log_rows>
+    <abort_option>ABORT_WITH_ERROR</abort_option>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -945,148 +860,318 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>224</xloc>
-      <yloc>448</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[performer_table_to_table_insert_update] Load Insert / update non-sensitive fields</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>Config DB Connection</connection>
-    <sql>SELECT
-    insert_update_field.update_lookup
-    , insert_update_field.update_stream
-FROM
-    mdi.insert_update_step
-        LEFT JOIN mdi.insert_update_field ON insert_update_step.dwid = insert_update_field.insert_update_step_dwid
-WHERE
-    insert_update_step.process_dwid = ${process_dwid}
-        AND insert_update_field.is_sensitive = FALSE
-;</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>224</xloc>
-      <yloc>736</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[performer_table_to_table_insert_update] Load Insert / update step settings</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>Config DB Connection</connection>
-    <sql>SELECT
-	insert_update_step.connectionname
-	, insert_update_step.schema_name
-	, insert_update_step.table_name
-	, insert_update_step.commit_size
-	, insert_update_step.do_not
-FROM
-	mdi.process
-		LEFT JOIN mdi.insert_update_step ON process.dwid = insert_update_step.process_dwid
-WHERE
-		process.dwid = ${process_dwid}
-;</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>224</xloc>
-      <yloc>352</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[performer_table_to_table_insert_update] Table input</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>Config DB Connection</connection>
-    <sql>SELECT
-    table_input_step.sql
-    , table_input_step.limit_size
-    , table_input_step.execute_for_each_row
-    , table_input_step.replace_variables
-    , table_input_step.enable_lazy_conversion
-    , table_input_step.cached_row_meta
-    , table_input_step.connectionname
-FROM
-    mdi.process
-        LEFT JOIN mdi.table_input_step ON process.dwid = table_input_step.process_dwid
-WHERE
-    process.dwid = ${process_dwid}
-;
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>224</xloc>
+      <xloc>1456</xloc>
       <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
+  <step>
+    <name>[template_csv_file_to_table] Add imported_filename parameter to stream</name>
+    <type>GetVariable</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>imported_filename</name>
+        <variable>${input_path}/${input_file}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>256</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_csv_file_to_table] CSV file input</name>
+    <type>CsvInput</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <filename>${input_path}/${input_file}</filename>
+    <filename_field/>
+    <rownum_field/>
+    <include_filename>N</include_filename>
+    <separator>,</separator>
+    <enclosure>"</enclosure>
+    <header>Y</header>
+    <buffer_size>50000</buffer_size>
+    <lazy_conversion>N</lazy_conversion>
+    <add_filename_result>N</add_filename_result>
+    <parallel>N</parallel>
+    <newline_possible>N</newline_possible>
+    <format>mixed</format>
+    <encoding>UTF-8</encoding>
+    <fields>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_csv_file_to_table] Set data_source_dwid field value to parameter data_source_dwid</name>
+    <type>SetValueConstant</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <usevar>Y</usevar>
+    <fields>
+      <field>
+        <name>data_source_dwid</name>
+        <value/>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>832</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_csv_file_to_table] Set etl_batch_id field value to parameter etl_batch_id</name>
+    <type>SetValueConstant</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <usevar>Y</usevar>
+    <fields>
+      <field>
+        <name>etl_batch_id</name>
+        <value/>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>512</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_csv_file_to_table] Table output</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>Dummy DB Connection</connection>
+    <schema/>
+    <table/>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>N</use_batch>
+    <specify_fields>N</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>1088</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_csv_file_to_table] add a blank field for data_source_dwid to valid stream</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>data_source_dwid</name>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>704</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_csv_file_to_table] add a blank field for etl_batch_id to valid stream</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>etl_batch_id</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>384</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
   <step_error_handling>
+    <error>
+      <source_step>[template_csv_file_to_table] CSV file input</source_step>
+      <target_step>[template_csv_file_to_table] Abort CSV file input</target_step>
+      <is_enabled>Y</is_enabled>
+      <nr_valuename/>
+      <descriptions_valuename/>
+      <fields_valuename/>
+      <codes_valuename/>
+      <max_errors/>
+      <max_pct_errors/>
+      <min_pct_rows/>
+    </error>
+    <error>
+      <source_step>[template_csv_file_to_table] Set etl_batch_id field value to parameter etl_batch_id</source_step>
+      <target_step>[template_csv_file_to_table]  Abort Table Output</target_step>
+      <is_enabled>N</is_enabled>
+      <nr_valuename/>
+      <descriptions_valuename/>
+      <fields_valuename/>
+      <codes_valuename/>
+      <max_errors/>
+      <max_pct_errors/>
+      <min_pct_rows/>
+    </error>
+    <error>
+      <source_step>[template_csv_file_to_table] Table output</source_step>
+      <target_step>[template_csv_file_to_table]  Specify logging fields (non-sensitive)</target_step>
+      <is_enabled>Y</is_enabled>
+      <nr_valuename/>
+      <descriptions_valuename/>
+      <fields_valuename/>
+      <codes_valuename/>
+      <max_errors/>
+      <max_pct_errors/>
+      <min_pct_rows/>
+    </error>
   </step_error_handling>
   <slave-step-copy-partition-distribution>
   </slave-step-copy-partition-distribution>

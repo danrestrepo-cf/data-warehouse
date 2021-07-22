@@ -1,6 +1,6 @@
 <transformation>
   <info>
-    <name>template_csv_file_to_table</name>
+    <name>process_input_json</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -10,53 +10,38 @@
     <parameters>
       <parameter>
         <name>database_hostname</name>
-        <default_value/>
+        <default_value>localhost</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>database_password</name>
-        <default_value/>
+        <default_value>testonly</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>database_port</name>
-        <default_value/>
-        <description/>
-      </parameter>
-      <parameter>
-        <name>database_schema</name>
-        <default_value/>
+        <default_value>5432</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>database_username</name>
-        <default_value/>
+        <default_value>postgres</default_value>
         <description/>
       </parameter>
       <parameter>
-        <name>etl_batch_id</name>
-        <default_value/>
-        <description/>
-      </parameter>
-      <parameter>
-        <name>input_file</name>
-        <default_value/>
-        <description/>
-      </parameter>
-      <parameter>
-        <name>input_path</name>
-        <default_value/>
+        <name>input_data</name>
+        <default_value>{"blah":{"load_type":"KEY_LOOKUP","key_field_name":"fnm_mbs_loan_default_loss_party_type.code","key_field_values":"'INVESTOR','LENDER','NA','SHARED'"}}</default_value>
         <description/>
       </parameter>
     </parameters>
     <log>
       <trans-log-table>
-        <connection>Config DB Connection</connection>
-        <schema>log</schema>
-        <table>transformation_transformation</table>
+        <connection/>
+        <schema/>
+        <table/>
         <size_limit_lines/>
-        <interval>5</interval>
-        <timeout_days>90</timeout_days>
+        <interval/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -150,26 +135,26 @@
         </field>
         <field>
           <id>EXECUTING_SERVER</id>
-          <enabled>Y</enabled>
+          <enabled>N</enabled>
           <name>EXECUTING_SERVER</name>
         </field>
         <field>
           <id>EXECUTING_USER</id>
-          <enabled>Y</enabled>
+          <enabled>N</enabled>
           <name>EXECUTING_USER</name>
         </field>
         <field>
           <id>CLIENT</id>
-          <enabled>Y</enabled>
+          <enabled>N</enabled>
           <name>CLIENT</name>
         </field>
       </trans-log-table>
       <perf-log-table>
-        <connection>Config DB Connection</connection>
-        <schema>log</schema>
-        <table>transformation_performance</table>
-        <interval>5</interval>
-        <timeout_days>90</timeout_days>
+        <connection/>
+        <schema/>
+        <table/>
+        <interval/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -247,10 +232,10 @@
         </field>
       </perf-log-table>
       <channel-log-table>
-        <connection>Config DB Connection</connection>
-        <schema>log</schema>
-        <table>transformation_channel</table>
-        <timeout_days>90</timeout_days>
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -313,10 +298,10 @@
         </field>
       </channel-log-table>
       <step-log-table>
-        <connection>Config DB Connection</connection>
-        <schema>log</schema>
-        <table>transformation_step</table>
-        <timeout_days>90</timeout_days>
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -384,15 +369,15 @@
         </field>
         <field>
           <id>LOG_FIELD</id>
-          <enabled>Y</enabled>
+          <enabled>N</enabled>
           <name>LOG_FIELD</name>
         </field>
       </step-log-table>
       <metrics-log-table>
-        <connection>Config DB Connection</connection>
-        <schema>log</schema>
-        <table>transformation_metrics</table>
-        <timeout_days>90</timeout_days>
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -467,100 +452,63 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2020/09/15 15:00:08.871</created_date>
+    <created_date>2021/07/20 18:02:17.666</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/04/01 14:49:18.510</modified_date>
+    <modified_date>2021/07/22 09:32:21.184</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
     <notepad>
-      <note>Load data from CSV file
-                                                                                                           
-
-
-
-
-
-</note>
-      <xloc>128</xloc>
-      <yloc>80</yloc>
-      <width>652</width>
-      <heigth>232</heigth>
-      <fontname>Segoe UI</fontname>
-      <fontsize>12</fontsize>
-      <fontbold>Y</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>192</backgroundcolorred>
-      <backgroundcolorgreen>192</backgroundcolorgreen>
-      <backgroundcolorblue>192</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
-    <notepad>
-      <note>Add ETL Batch ID to stream
-                                                                                                           
+      <note>JSON input												
 
 
 
 
 
 
-</note>
-      <xloc>128</xloc>
-      <yloc>352</yloc>
-      <width>652</width>
-      <heigth>260</heigth>
-      <fontname>Segoe UI</fontname>
-      <fontsize>12</fontsize>
-      <fontbold>Y</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>192</backgroundcolorred>
-      <backgroundcolorgreen>192</backgroundcolorgreen>
-      <backgroundcolorblue>192</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
-    <notepad>
-      <note>Save stream to table
-                                                                                                           
 
 
 
 
 
-</note>
-      <xloc>128</xloc>
-      <yloc>976</yloc>
-      <width>652</width>
-      <heigth>232</heigth>
-      <fontname>Segoe UI</fontname>
-      <fontsize>12</fontsize>
-      <fontbold>Y</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>192</backgroundcolorred>
-      <backgroundcolorgreen>192</backgroundcolorgreen>
-      <backgroundcolorblue>192</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
-    <notepad>
-      <note>Specify logging fields, log them, and abort transformation as error                                                                                                                               
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -570,10 +518,10 @@
 
 
 </note>
-      <xloc>816</xloc>
-      <yloc>976</yloc>
-      <width>1024</width>
-      <heigth>221</heigth>
+      <xloc>32</xloc>
+      <yloc>48</yloc>
+      <width>946</width>
+      <heigth>1228</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -581,203 +529,79 @@
       <fontcolorred>0</fontcolorred>
       <fontcolorgreen>0</fontcolorgreen>
       <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>192</backgroundcolorred>
-      <backgroundcolorgreen>192</backgroundcolorgreen>
-      <backgroundcolorblue>192</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
-    <notepad>
-      <note>Add Data Source DWID to stream
-                                                                                                           
-
-
-
-
-
-
-</note>
-      <xloc>128</xloc>
-      <yloc>656</yloc>
-      <width>652</width>
-      <heigth>260</heigth>
-      <fontname>Segoe UI</fontname>
-      <fontsize>12</fontsize>
-      <fontbold>Y</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>192</backgroundcolorred>
-      <backgroundcolorgreen>192</backgroundcolorgreen>
-      <backgroundcolorblue>192</backgroundcolorblue>
+      <backgroundcolorred>128</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>255</backgroundcolorblue>
       <bordercolorred>100</bordercolorred>
       <bordercolorgreen>100</bordercolorgreen>
       <bordercolorblue>100</bordercolorblue>
       <drawshadow>Y</drawshadow>
     </notepad>
   </notepads>
-  <connection>
-    <name>Config DB Connection</name>
-    <server>${database_hostname}</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>config</database>
-    <port>${database_port}</port>
-    <username>${database_username}</username>
-    <password>${database_password}</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute>
-        <code>EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code>
-        <attribute>pentaho_logging_sequence</attribute>
-      </attribute>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>IS_CLUSTERED</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>PORT_NUMBER</code>
-        <attribute>${database_port}</attribute>
-      </attribute>
-      <attribute>
-        <code>PREFERRED_SCHEMA_NAME</code>
-        <attribute>ingress</attribute>
-      </attribute>
-      <attribute>
-        <code>PRESERVE_RESERVED_WORD_CASE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>QUOTE_ALL_FIELDS</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>USE_POOLING</code>
-        <attribute>N</attribute>
-      </attribute>
-    </attributes>
-  </connection>
-  <connection>
-    <name>Dummy DB Connection</name>
-    <server>use when a default connection is needed</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>.</database>
-    <port>5432</port>
-    <username>.</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb79ce10bef2cf94</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>IS_CLUSTERED</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>PORT_NUMBER</code>
-        <attribute>5432</attribute>
-      </attribute>
-      <attribute>
-        <code>PRESERVE_RESERVED_WORD_CASE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>QUOTE_ALL_FIELDS</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>USE_POOLING</code>
-        <attribute>N</attribute>
-      </attribute>
-    </attributes>
-  </connection>
   <order>
     <hop>
-      <from>[template_csv_file_to_table] add a blank field for etl_batch_id to valid stream</from>
-      <to>[template_csv_file_to_table] Set etl_batch_id field value to parameter etl_batch_id</to>
+      <from>[process_input_json] Add (full) partial load condition</from>
+      <to>[process_input_json] Select key field name, partial load condition, token id, and load_type</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_csv_file_to_table] CSV file input</from>
-      <to>[template_csv_file_to_table] Abort CSV file input</to>
+      <from>[process_input_json] Add constant for process_dwid</from>
+      <to>[process_input_json] Set process_dwid</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_csv_file_to_table] Table output</from>
-      <to>[template_csv_file_to_table]  Specify logging fields (non-sensitive)</to>
+      <from>[process_input_json] Add partial load condition</from>
+      <to>[process_input_json] Select key field name, partial load condition, token id, and load_type</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_csv_file_to_table]  Specify logging fields (non-sensitive)</from>
-      <to>[template_csv_file_to_table]  Abort Table Output</to>
+      <from>[process_input_json] Select key field name, partial load condition, token id, and load_type</from>
+      <to>[process_input_json] Add constant for process_dwid</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_csv_file_to_table] add a blank field for data_source_dwid to valid stream</from>
-      <to>[template_csv_file_to_table] Set data_source_dwid field value to parameter data_source_dwid</to>
+      <from>[process_input_json] Evaluate load_type</from>
+      <to>[process_input_json] Add (full) partial load condition</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_csv_file_to_table] Set etl_batch_id field value to parameter etl_batch_id</from>
-      <to>[template_csv_file_to_table] add a blank field for data_source_dwid to valid stream</to>
+      <from>[process_input_json] Evaluate load_type</from>
+      <to>[process_input_json] Add partial load condition</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_csv_file_to_table] Set data_source_dwid field value to parameter data_source_dwid</from>
-      <to>[template_csv_file_to_table] Table output</to>
+      <from>[process_input_json] Evaluate load_type</from>
+      <to>[process_input_json] Abort</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_csv_file_to_table] CSV file input</from>
-      <to>[template_csv_file_to_table] Add imported_filename parameter to stream</to>
+      <from>[process_input_json] Get JSON input</from>
+      <to>[process_input_json] Read JSON token_id</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_csv_file_to_table] Add imported_filename parameter to stream</from>
-      <to>[template_csv_file_to_table] add a blank field for etl_batch_id to valid stream</to>
+      <from>[process_input_json] Read JSON MDI input values</from>
+      <to>[process_input_json] Evaluate load_type</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[process_input_json] Read JSON token_id</from>
+      <to>[process_input_json] Read JSON MDI input values</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[process_input_json] Set process_dwid</from>
+      <to>[process_input_json] Log result row(s)</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[process_input_json] Log result row(s)</from>
+      <to>Copy rows to result</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>[template_csv_file_to_table]  Abort Table Output</name>
+    <name>[process_input_json] Abort</name>
     <type>Abort</type>
     <description/>
     <distribute>Y</distribute>
@@ -788,7 +612,7 @@
       <schema_name/>
     </partitioning>
     <row_threshold>0</row_threshold>
-    <message>could not save data to table</message>
+    <message>Invalid load_type in input JSON</message>
     <always_log_rows>Y</always_log_rows>
     <abort_option>ABORT_WITH_ERROR</abort_option>
     <attributes/>
@@ -800,266 +624,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1472</xloc>
-      <yloc>1088</yloc>
+      <xloc>496</xloc>
+      <yloc>576</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_csv_file_to_table]  Specify logging fields (non-sensitive)</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>etl_batch_id</name>
-        <rename/>
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>976</xloc>
-      <yloc>1088</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_csv_file_to_table] Abort CSV file input</name>
-    <type>Abort</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <row_threshold>0</row_threshold>
-    <message>could not load csv file</message>
-    <always_log_rows>Y</always_log_rows>
-    <abort_option>ABORT_WITH_ERROR</abort_option>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1456</xloc>
-      <yloc>128</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_csv_file_to_table] Add imported_filename parameter to stream</name>
-    <type>GetVariable</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>imported_filename</name>
-        <variable>${input_path}/${input_file}</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>256</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_csv_file_to_table] CSV file input</name>
-    <type>CsvInput</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <filename>${input_path}/${input_file}</filename>
-    <filename_field/>
-    <rownum_field/>
-    <include_filename>N</include_filename>
-    <separator>,</separator>
-    <enclosure>"</enclosure>
-    <header>Y</header>
-    <buffer_size>50000</buffer_size>
-    <lazy_conversion>N</lazy_conversion>
-    <add_filename_result>N</add_filename_result>
-    <parallel>N</parallel>
-    <newline_possible>N</newline_possible>
-    <format>mixed</format>
-    <encoding>UTF-8</encoding>
-    <fields>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>128</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_csv_file_to_table] Set data_source_dwid field value to parameter data_source_dwid</name>
-    <type>SetValueConstant</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <usevar>Y</usevar>
-    <fields>
-      <field>
-        <name>data_source_dwid</name>
-        <value/>
-        <mask/>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>832</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_csv_file_to_table] Set etl_batch_id field value to parameter etl_batch_id</name>
-    <type>SetValueConstant</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <usevar>Y</usevar>
-    <fields>
-      <field>
-        <name>etl_batch_id</name>
-        <value/>
-        <mask/>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>512</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_csv_file_to_table] Table output</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>Dummy DB Connection</connection>
-    <schema/>
-    <table/>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>N</use_batch>
-    <specify_fields>N</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>1088</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_csv_file_to_table] add a blank field for data_source_dwid to valid stream</name>
+    <name>[process_input_json] Add (full) partial load condition</name>
     <type>Constant</type>
     <description/>
     <distribute>N</distribute>
@@ -1071,7 +642,46 @@
     </partitioning>
     <fields>
       <field>
-        <name>data_source_dwid</name>
+        <name>partial_load_condition</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>1 = 1</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>720</xloc>
+      <yloc>576</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[process_input_json] Add constant for process_dwid</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>process_dwid</name>
         <type>Integer</type>
         <format/>
         <currency/>
@@ -1092,14 +702,386 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>480</xloc>
-      <yloc>704</yloc>
+      <xloc>496</xloc>
+      <yloc>864</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_csv_file_to_table] add a blank field for etl_batch_id to valid stream</name>
-    <type>Constant</type>
+    <name>[process_input_json] Add partial load condition</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>//Script to construct partial_load_condition when full_load_flag is false
+
+var key_field_name = key_field_name;
+var key_field_values = key_field_values;
+var sql = " IN (";
+var right_paren = ")";
+
+var partial_load_condition = key_field_name.concat(sql, key_field_values, right_paren);</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>partial_load_condition</name>
+        <rename>partial_load_condition</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>256</xloc>
+      <yloc>576</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Copy rows to result</name>
+    <type>RowsToResult</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>496</xloc>
+      <yloc>1216</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[process_input_json] Evaluate load_type</name>
+    <type>SwitchCase</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fieldname>load_type</fieldname>
+    <use_contains>Y</use_contains>
+    <case_value_type>String</case_value_type>
+    <case_value_format/>
+    <case_value_decimal/>
+    <case_value_group/>
+    <default_target_step>[process_input_json] Abort</default_target_step>
+    <cases>
+      <case>
+        <value>KEY_LOOKUP</value>
+        <target_step>[process_input_json] Add partial load condition</target_step>
+      </case>
+      <case>
+        <value>FULL_CHECK</value>
+        <target_step>[process_input_json] Add (full) partial load condition</target_step>
+      </case>
+      <case>
+        <value>FULL_LOAD</value>
+        <target_step>[process_input_json] Add (full) partial load condition</target_step>
+      </case>
+    </cases>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>496</xloc>
+      <yloc>400</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[process_input_json] Get JSON input</name>
+    <type>GetVariable</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>input_data</name>
+        <variable>${input_data}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>496</xloc>
+      <yloc>80</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[process_input_json] Log result row(s)</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <loglevel>log_level_debug</loglevel>
+    <displayHeader>Y</displayHeader>
+    <limitRows>N</limitRows>
+    <limitRowsNumber>0</limitRowsNumber>
+    <logmessage/>
+    <fields>
+      </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>496</xloc>
+      <yloc>1104</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[process_input_json] Read JSON MDI input values</name>
+    <type>JsonInput</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <include>N</include>
+    <include_field/>
+    <rownum>N</rownum>
+    <addresultfile>N</addresultfile>
+    <readurl>N</readurl>
+    <removeSourceField>N</removeSourceField>
+    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
+    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
+    <ignoreMissingPath>Y</ignoreMissingPath>
+    <defaultPathLeafToNull>Y</defaultPathLeafToNull>
+    <rownum_field/>
+    <file>
+      <name/>
+      <filemask/>
+      <exclude_filemask/>
+      <file_required>N</file_required>
+      <include_subfolders>N</include_subfolders>
+    </file>
+    <fields>
+      <field>
+        <name>load_type</name>
+        <path>$..load_type</path>
+        <type>None</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>key_field_name</name>
+        <path>$..key_field_name</path>
+        <type>None</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>key_field_values</name>
+        <path>$..key_field_values</path>
+        <type>None</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+    </fields>
+    <limit>0</limit>
+    <IsInFields>Y</IsInFields>
+    <IsAFile>N</IsAFile>
+    <valueField>mdi_input_json</valueField>
+    <shortFileFieldName/>
+    <pathFieldName/>
+    <hiddenFieldName/>
+    <lastModificationTimeFieldName/>
+    <uriNameFieldName/>
+    <rootUriNameFieldName/>
+    <extensionFieldName/>
+    <sizeFieldName/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>496</xloc>
+      <yloc>288</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[process_input_json] Read JSON token_id</name>
+    <type>JsonInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <include>N</include>
+    <include_field/>
+    <rownum>N</rownum>
+    <addresultfile>N</addresultfile>
+    <readurl>N</readurl>
+    <removeSourceField>N</removeSourceField>
+    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
+    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
+    <ignoreMissingPath>Y</ignoreMissingPath>
+    <defaultPathLeafToNull>Y</defaultPathLeafToNull>
+    <rownum_field/>
+    <file>
+      <name/>
+      <filemask/>
+      <exclude_filemask/>
+      <file_required>N</file_required>
+      <include_subfolders>N</include_subfolders>
+    </file>
+    <fields>
+      <field>
+        <name>token_id</name>
+        <path>$..token_id</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>mdi_input_json</name>
+        <path>$..mdi_input_json</path>
+        <type>None</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+    </fields>
+    <limit>0</limit>
+    <IsInFields>Y</IsInFields>
+    <IsAFile>N</IsAFile>
+    <valueField>input_data</valueField>
+    <shortFileFieldName/>
+    <pathFieldName/>
+    <hiddenFieldName/>
+    <lastModificationTimeFieldName/>
+    <uriNameFieldName/>
+    <rootUriNameFieldName/>
+    <extensionFieldName/>
+    <sizeFieldName/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>496</xloc>
+      <yloc>176</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[process_input_json] Select key field name, partial load condition, token id, and load_type</name>
+    <type>SelectValues</type>
     <description/>
     <distribute>N</distribute>
     <custom_distribution/>
@@ -1110,15 +1092,50 @@
     </partitioning>
     <fields>
       <field>
-        <name>etl_batch_id</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <length>-1</length>
-        <precision>-1</precision>
+        <name>key_field_name</name>
+      </field>
+      <field>
+        <name>partial_load_condition</name>
+      </field>
+      <field>
+        <name>token_id</name>
+      </field>
+      <field>
+        <name>load_type</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>496</xloc>
+      <yloc>752</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[process_input_json] Set process_dwid</name>
+    <type>SetValueConstant</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <usevar>Y</usevar>
+    <fields>
+      <field>
+        <name>process_dwid</name>
+        <value>${process_dwid}</value>
+        <mask/>
         <set_empty_string>N</set_empty_string>
       </field>
     </fields>
@@ -1131,48 +1148,12 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>480</xloc>
-      <yloc>384</yloc>
+      <xloc>496</xloc>
+      <yloc>976</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step_error_handling>
-    <error>
-      <source_step>[template_csv_file_to_table] CSV file input</source_step>
-      <target_step>[template_csv_file_to_table] Abort CSV file input</target_step>
-      <is_enabled>Y</is_enabled>
-      <nr_valuename/>
-      <descriptions_valuename/>
-      <fields_valuename/>
-      <codes_valuename/>
-      <max_errors/>
-      <max_pct_errors/>
-      <min_pct_rows/>
-    </error>
-    <error>
-      <source_step>[template_csv_file_to_table] Set etl_batch_id field value to parameter etl_batch_id</source_step>
-      <target_step>[template_csv_file_to_table]  Abort Table Output</target_step>
-      <is_enabled>N</is_enabled>
-      <nr_valuename/>
-      <descriptions_valuename/>
-      <fields_valuename/>
-      <codes_valuename/>
-      <max_errors/>
-      <max_pct_errors/>
-      <min_pct_rows/>
-    </error>
-    <error>
-      <source_step>[template_csv_file_to_table] Table output</source_step>
-      <target_step>[template_csv_file_to_table]  Specify logging fields (non-sensitive)</target_step>
-      <is_enabled>Y</is_enabled>
-      <nr_valuename/>
-      <descriptions_valuename/>
-      <fields_valuename/>
-      <codes_valuename/>
-      <max_errors/>
-      <max_pct_errors/>
-      <min_pct_rows/>
-    </error>
   </step_error_handling>
   <slave-step-copy-partition-distribution>
   </slave-step-copy-partition-distribution>
