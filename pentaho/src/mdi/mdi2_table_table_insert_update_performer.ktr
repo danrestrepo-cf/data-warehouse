@@ -1,6 +1,6 @@
 <transformation>
   <info>
-    <name>performer_table_to_table_insert_update_json</name>
+    <name>mdi2_table_table_insert_update_performer</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -484,7 +484,7 @@
     <created_user>-</created_user>
     <created_date>2021/02/17 17:15:35.157</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/07/07 17:07:14.437</modified_date>
+    <modified_date>2021/07/23 09:14:13.299</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -500,7 +500,7 @@
 
 </note>
       <xloc>64</xloc>
-      <yloc>912</yloc>
+      <yloc>352</yloc>
       <width>442</width>
       <heigth>199</heigth>
       <fontname>Segoe UI</fontname>
@@ -534,7 +534,7 @@
 
 </note>
       <xloc>64</xloc>
-      <yloc>1136</yloc>
+      <yloc>576</yloc>
       <width>442</width>
       <heigth>304</heigth>
       <fontname>Segoe UI</fontname>
@@ -561,7 +561,7 @@
 
 </note>
       <xloc>64</xloc>
-      <yloc>1488</yloc>
+      <yloc>928</yloc>
       <width>473</width>
       <heigth>158</heigth>
       <fontname>Segoe UI</fontname>
@@ -591,7 +591,7 @@
 
 </note>
       <xloc>1056</xloc>
-      <yloc>912</yloc>
+      <yloc>352</yloc>
       <width>370</width>
       <heigth>220</heigth>
       <fontname>Segoe UI</fontname>
@@ -610,37 +610,7 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>JSON input													
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      <note>JSON input			                              
 
 
 
@@ -650,10 +620,10 @@
 
 
 </note>
-      <xloc>64</xloc>
-      <yloc>16</yloc>
-      <width>1018</width>
-      <heigth>850</heigth>
+      <xloc>560</xloc>
+      <yloc>48</yloc>
+      <width>419</width>
+      <heigth>221</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -680,7 +650,7 @@
 
 </note>
       <xloc>560</xloc>
-      <yloc>912</yloc>
+      <yloc>352</yloc>
       <width>442</width>
       <heigth>199</heigth>
       <fontname>Segoe UI</fontname>
@@ -760,16 +730,6 @@
   </connection>
   <order>
     <hop>
-      <from>[performer_table_to_table_insert_update_json] Get JSON input</from>
-      <to>[performer_table_to_table_insert_update_json] Read JSON token_id</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[performer_table_to_table_insert_update_json] Read JSON token_id</from>
-      <to>[performer_table_to_table_insert_update_json] Read JSON MDI input values</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>[performer_table_to_table_insert_update_json] Load Insert / update step settings</from>
       <to>[performer_table_to_table_insert_update_json] ETL metadata injection</to>
       <enabled>Y</enabled>
@@ -790,31 +750,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from> [performer_table_to_table_insert_update_json] Select key field name, partial load condition, token id, and load_type</from>
-      <to> [performer_table_to_table_insert_update_json] Add constant for process_dwid</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from> [performer_table_to_table_insert_update_json] Add constant for process_dwid</from>
-      <to> [performer_table_to_table_insert_update_json] Set process_dwid</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from> [performer_table_to_table_insert_update_json] Add partial load condition</from>
-      <to> [performer_table_to_table_insert_update_json] Select key field name, partial load condition, token id, and load_type</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from> [performer_table_to_table_insert_update_json] Add (full) partial load condition</from>
-      <to> [performer_table_to_table_insert_update_json] Select key field name, partial load condition, token id, and load_type</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from> [performer_table_to_table_insert_update_json] Set process_dwid</from>
-      <to>[performer_table_to_table_insert_update_json] Combine table input and JSON input streams</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>[performer_table_to_table_insert_update_json] Table input</from>
       <to>[performer_table_to_table_insert_update_json] Combine table input and JSON input streams</to>
       <enabled>Y</enabled>
@@ -830,26 +765,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_table_to_table_insert_update_json] Read JSON MDI input values</from>
-      <to>[performer_table_to_table_insert_update_json] Evaluate load_type</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[performer_table_to_table_insert_update_json] Evaluate load_type</from>
-      <to> [performer_table_to_table_insert_update_json] Add partial load condition</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[performer_table_to_table_insert_update_json] Evaluate load_type</from>
-      <to> [performer_table_to_table_insert_update_json] Add (full) partial load condition</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[performer_table_to_table_insert_update_json] Evaluate load_type</from>
-      <to>Abort</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>[performer_table_to_table_insert_update_json]  Get key_field_name</from>
       <to>[performer_table_to_table_insert_update_json] Set add_quotes_to_key_values</to>
       <enabled>Y</enabled>
@@ -859,49 +774,20 @@
       <to>[performer_table_to_table_insert_update_json] ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>[mdi2_table_table_insert_only_performer] Get rows from result</from>
+      <to>[mdi2_table_table_insert_only_performer] Write to log</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[mdi2_table_table_insert_only_performer] Write to log</from>
+      <to>[performer_table_to_table_insert_update_json] Combine table input and JSON input streams</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
   <step>
-    <name> [performer_table_to_table_insert_update_json] Add (full) partial load condition</name>
-    <type>Constant</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>partial_load_condition</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>1 = 1</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>784</xloc>
-      <yloc>448</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name> [performer_table_to_table_insert_update_json] Add constant for process_dwid</name>
-    <type>Constant</type>
+    <name>[mdi2_table_table_insert_only_performer] Get rows from result</name>
+    <type>RowsFromResult</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -910,20 +796,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <fields>
-      <field>
-        <name>process_dwid</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
+    <fields>      </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -933,105 +806,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>528</xloc>
-      <yloc>672</yloc>
+      <xloc>768</xloc>
+      <yloc>96</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name> [performer_table_to_table_insert_update_json] Add partial load condition</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>//Script to construct table_input_condition when full_load_flag is false
-
-var key_field_name = key_field_name;
-var key_field_values = key_field_values;
-var sql = " IN (";
-var right_paren = ")";
-
-var partial_load_condition = key_field_name.concat(sql, key_field_values, right_paren);</jsScript_script>
-      </jsScript>
-    </jsScripts>
-    <fields>
-      <field>
-        <name>partial_load_condition</name>
-        <rename>partial_load_condition</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>272</xloc>
-      <yloc>448</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name> [performer_table_to_table_insert_update_json] Select key field name, partial load condition, token id, and load_type</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>key_field_name</name>
-      </field>
-      <field>
-        <name>partial_load_condition</name>
-      </field>
-      <field>
-        <name>token_id</name>
-      </field>
-      <field>
-        <name>load_type</name>
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>528</xloc>
-      <yloc>544</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name> [performer_table_to_table_insert_update_json] Set process_dwid</name>
-    <type>SetValueConstant</type>
+    <name>[mdi2_table_table_insert_only_performer] Write to log</name>
+    <type>WriteToLog</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1040,15 +822,13 @@ var partial_load_condition = key_field_name.concat(sql, key_field_values, right_
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <usevar>Y</usevar>
+    <loglevel>log_level_debug</loglevel>
+    <displayHeader>Y</displayHeader>
+    <limitRows>N</limitRows>
+    <limitRowsNumber>0</limitRowsNumber>
+    <logmessage>Rows from result:</logmessage>
     <fields>
-      <field>
-        <name>process_dwid</name>
-        <value>${process_dwid}</value>
-        <mask/>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
+      </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1058,37 +838,8 @@ var partial_load_condition = key_field_name.concat(sql, key_field_values, right_
       </output>
     </remotesteps>
     <GUI>
-      <xloc>528</xloc>
-      <yloc>784</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Abort</name>
-    <type>Abort</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <row_threshold>0</row_threshold>
-    <message>Invalid load_type in input JSON</message>
-    <always_log_rows>Y</always_log_rows>
-    <abort_option>ABORT_WITH_ERROR</abort_option>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>528</xloc>
-      <yloc>432</yloc>
+      <xloc>768</xloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1199,7 +950,7 @@ WHERE process.dwid = ${process_dwid}</sql>
     </remotesteps>
     <GUI>
       <xloc>1232</xloc>
-      <yloc>960</yloc>
+      <yloc>400</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1214,7 +965,7 @@ WHERE process.dwid = ${process_dwid}</sql>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <from> [performer_table_to_table_insert_update_json] Set process_dwid</from>
+    <from/>
     <input_sorted>N</input_sorted>
     <preserve_memory>Y</preserve_memory>
     <sorted_list>N</sorted_list>
@@ -1259,7 +1010,7 @@ WHERE process.dwid = ${process_dwid}</sql>
     </remotesteps>
     <GUI>
       <xloc>768</xloc>
-      <yloc>960</yloc>
+      <yloc>400</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1276,7 +1027,7 @@ WHERE process.dwid = ${process_dwid}</sql>
     </partitioning>
     <specification_method>rep_name</specification_method>
     <trans_object_id/>
-    <trans_name>template_table_to_table_insert_update_json</trans_name>
+    <trans_name>mdi2_table_to_table_insert_update_template</trans_name>
     <filename/>
     <directory_path>${Internal.Entry.Current.Directory}</directory_path>
     <source_step/>
@@ -1556,92 +1307,7 @@ WHERE process.dwid = ${process_dwid}</sql>
     </remotesteps>
     <GUI>
       <xloc>768</xloc>
-      <yloc>1312</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[performer_table_to_table_insert_update_json] Evaluate load_type</name>
-    <type>SwitchCase</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fieldname>load_type</fieldname>
-    <use_contains>N</use_contains>
-    <case_value_type>String</case_value_type>
-    <case_value_format/>
-    <case_value_decimal/>
-    <case_value_group/>
-    <default_target_step>Abort</default_target_step>
-    <cases>
-      <case>
-        <value>KEY_LOOKUP</value>
-        <target_step> [performer_table_to_table_insert_update_json] Add partial load condition</target_step>
-      </case>
-      <case>
-        <value>FULL_CHECK</value>
-        <target_step> [performer_table_to_table_insert_update_json] Add (full) partial load condition</target_step>
-      </case>
-      <case>
-        <value>FULL_LOAD</value>
-        <target_step> [performer_table_to_table_insert_update_json] Add (full) partial load condition</target_step>
-      </case>
-    </cases>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>528</xloc>
-      <yloc>336</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[performer_table_to_table_insert_update_json] Get JSON input</name>
-    <type>GetVariable</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>input_data</name>
-        <variable>${input_data}</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>528</xloc>
-      <yloc>32</yloc>
+      <yloc>752</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1684,7 +1350,7 @@ WHERE
     </remotesteps>
     <GUI>
       <xloc>272</xloc>
-      <yloc>1376</yloc>
+      <yloc>816</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1729,7 +1395,7 @@ WHERE
     </remotesteps>
     <GUI>
       <xloc>272</xloc>
-      <yloc>1264</yloc>
+      <yloc>704</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1819,7 +1485,7 @@ WHERE
     </remotesteps>
     <GUI>
       <xloc>288</xloc>
-      <yloc>1552</yloc>
+      <yloc>992</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1864,186 +1530,7 @@ WHERE
     </remotesteps>
     <GUI>
       <xloc>272</xloc>
-      <yloc>1152</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[performer_table_to_table_insert_update_json] Read JSON MDI input values</name>
-    <type>JsonInput</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <include>N</include>
-    <include_field/>
-    <rownum>N</rownum>
-    <addresultfile>N</addresultfile>
-    <readurl>N</readurl>
-    <removeSourceField>N</removeSourceField>
-    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
-    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
-    <ignoreMissingPath>Y</ignoreMissingPath>
-    <defaultPathLeafToNull>Y</defaultPathLeafToNull>
-    <rownum_field/>
-    <file>
-      <name/>
-      <filemask/>
-      <exclude_filemask/>
-      <file_required>N</file_required>
-      <include_subfolders>N</include_subfolders>
-    </file>
-    <fields>
-      <field>
-        <name>load_type</name>
-        <path>$..load_type</path>
-        <type>None</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>key_field_name</name>
-        <path>$..key_field_name</path>
-        <type>None</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>key_field_values</name>
-        <path>$..key_field_values</path>
-        <type>None</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-    </fields>
-    <limit>0</limit>
-    <IsInFields>Y</IsInFields>
-    <IsAFile>N</IsAFile>
-    <valueField>mdi_input_json</valueField>
-    <shortFileFieldName/>
-    <pathFieldName/>
-    <hiddenFieldName/>
-    <lastModificationTimeFieldName/>
-    <uriNameFieldName/>
-    <rootUriNameFieldName/>
-    <extensionFieldName/>
-    <sizeFieldName/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>528</xloc>
-      <yloc>240</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[performer_table_to_table_insert_update_json] Read JSON token_id</name>
-    <type>JsonInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <include>N</include>
-    <include_field/>
-    <rownum>N</rownum>
-    <addresultfile>N</addresultfile>
-    <readurl>N</readurl>
-    <removeSourceField>N</removeSourceField>
-    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
-    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
-    <ignoreMissingPath>Y</ignoreMissingPath>
-    <defaultPathLeafToNull>Y</defaultPathLeafToNull>
-    <rownum_field/>
-    <file>
-      <name/>
-      <filemask/>
-      <exclude_filemask/>
-      <file_required>N</file_required>
-      <include_subfolders>N</include_subfolders>
-    </file>
-    <fields>
-      <field>
-        <name>token_id</name>
-        <path>$..token_id</path>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>mdi_input_json</name>
-        <path>$..mdi_input_json</path>
-        <type>None</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-    </fields>
-    <limit>0</limit>
-    <IsInFields>Y</IsInFields>
-    <IsAFile>N</IsAFile>
-    <valueField>input_data</valueField>
-    <shortFileFieldName/>
-    <pathFieldName/>
-    <hiddenFieldName/>
-    <lastModificationTimeFieldName/>
-    <uriNameFieldName/>
-    <rootUriNameFieldName/>
-    <extensionFieldName/>
-    <sizeFieldName/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>528</xloc>
-      <yloc>128</yloc>
+      <yloc>592</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2100,7 +1587,59 @@ if (load_type == "KEY_LOOKUP") {
     </remotesteps>
     <GUI>
       <xloc>768</xloc>
-      <yloc>1040</yloc>
+      <yloc>480</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[performer_table_to_table_insert_update_json] Set add_quotes_to_key_values</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>// Tell the template to add quotes to key_field_value_rows if key_field_name value is one of the following: data_source_integration_id, code. 
+// If it is not either of those values and is not dwid, or does not end in _dwid or _pid, then throw an error.
+if (/_pid$|^dwid$|_dwid$/.test(fieldname) === true) {
+	var add_quotes_to_key_values = false;
+} else if (/^(data_source_integration_id|code)$/.test(fieldname) === true) {
+	var add_quotes_to_key_values = true;
+} else {
+	throw 'Unexpected key_field_name value: ' + fieldname;
+}</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>add_quotes_to_key_values</name>
+        <rename>add_quotes_to_key_values</rename>
+        <type>Boolean</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1232</xloc>
+      <yloc>480</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2334,59 +1873,7 @@ WHERE
     </remotesteps>
     <GUI>
       <xloc>272</xloc>
-      <yloc>960</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[performer_table_to_table_insert_update_json] Set add_quotes_to_key_values</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>// Tell the template to add quotes to key_field_value_rows if key_field_name value is one of the following: data_source_integration_id, code. 
-// If it is not either of those values and is not dwid, or does not end in _dwid or _pid, then throw an error.
-if (/_pid$|^dwid$|_dwid$/.test(fieldname) === true) {
-	var add_quotes_to_key_values = false;
-} else if (/^(data_source_integration_id|code)$/.test(fieldname) === true) {
-	var add_quotes_to_key_values = true;
-} else {
-	throw 'Unexpected key_field_name value: ' + fieldname;
-}</jsScript_script>
-      </jsScript>
-    </jsScripts>
-    <fields>
-      <field>
-        <name>add_quotes_to_key_values</name>
-        <rename>add_quotes_to_key_values</rename>
-        <type>Boolean</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1232</xloc>
-      <yloc>1040</yloc>
+      <yloc>400</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

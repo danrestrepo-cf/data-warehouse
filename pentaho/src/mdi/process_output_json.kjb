@@ -1,36 +1,15 @@
 <job>
-  <name>process_input_json</name>
+  <name>process_output_json</name>
   <description/>
   <extended_description/>
   <job_version/>
-  <job_status>0</job_status>
   <directory>/mdi</directory>
   <created_user>-</created_user>
-  <created_date>2021/07/21 08:39:42.699</created_date>
+  <created_date>2021/07/23 08:02:42.683</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2021/07/22 16:09:13.121</modified_date>
+  <modified_date>2021/07/23 09:18:06.438</modified_date>
   <parameters>
-    <parameter>
-      <name>database_hostname</name>
-      <default_value>localhost</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>database_password</name>
-      <default_value>testonly</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>database_port</name>
-      <default_value>5432</default_value>
-      <description/>
-    </parameter>
-    <parameter>
-      <name>database_username</name>
-      <default_value>postgres</default_value>
-      <description/>
-    </parameter>
-  </parameters>
+    </parameters>
   <slaveservers>
     </slaveservers>
   <job-log-table>
@@ -307,7 +286,7 @@
   <shared_objects_file/>
   <entries>
     <entry>
-      <name>[process_input_json] Process JSON</name>
+      <name>[process_output_json] Process output JSON</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
@@ -346,7 +325,7 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>[process_input_json] Abort job</name>
+      <name>[process_output_json] Abort job</name>
       <description/>
       <type>ABORT</type>
       <attributes/>
@@ -359,7 +338,7 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>[process_input_json] Success</name>
+      <name>[process_output_json] Success</name>
       <description/>
       <type>SUCCESS</type>
       <attributes/>
@@ -395,31 +374,31 @@
   </entries>
   <hops>
     <hop>
-      <from>[process_input_json] Process JSON</from>
-      <to>[process_input_json] Abort job</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>[process_input_json] Process JSON</from>
-      <to>[process_input_json] Success</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
       <from>Start</from>
-      <to>[process_input_json] Process JSON</to>
+      <to>[process_output_json] Process output JSON</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>[process_output_json] Process output JSON</from>
+      <to>[process_output_json] Success</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[process_output_json] Process output JSON</from>
+      <to>[process_output_json] Abort job</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
     </hop>
   </hops>
   <notepads>
