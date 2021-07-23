@@ -36,162 +36,47 @@
                     ]
                 }
             },
-            "Next": "choice_321"
+            "Next": "Load_type_choice"
         },
-        "choice_321": {
+        "Load_type_choice": {
             "Type": "Choice",
             "Choices": [
                 {
                     "Variable": "$.load_type",
                     "StringEquals": "NONE",
-                    "Next": "success_321"
+                    "Next": "Success"
                 }
             ],
-            "Default": "parallel_12"
+            "Default": "Parallel"
         },
-        "success_321": {
+        "Success": {
             "Type": "Succeed"
         },
-        "parallel_12": {
+        "Parallel": {
             "Type": "Parallel",
             "End": true,
             "Branches": [
                 {
-                    "Comment": "Parallel - SP-200016_5",
-                    "StartAt": "SP-200016_5",
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200016",
+                    "StartAt": "SP-200016_message",
                     "States": {
-                        "SP-200016_5": {
+                        "SP-200016_message": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "LaunchType": "FARGATE",
-                                "Cluster": "${ecsClusterARN}",
-                                "TaskDefinition": "${mdi_2_arn}",
-                                "NetworkConfiguration": {
-                                    "AwsvpcConfiguration": {
-                                        "AssignPublicIp": "DISABLED",
-                                        "SecurityGroups": [
-                                            "${securityGroupId}"
-                                        ],
-                                        "Subnets": ${subnetIDs}
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageAttributes": {
+                                    "MessageGroupId": {
+                                        "DataType": "String",
+                                        "StringValue": "product_choice_dim"
+                                    },
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-200016"
                                     }
                                 },
-                                "Overrides": {
-                                    "ContainerOverrides": [
-                                        {
-                                            "Environment": [
-                                                {
-                                                    "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200016"
-                                                },
-                                                {
-                                                    "Name": "INPUT_DATA",
-                                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
-                                                }
-                                            ],
-                                            "Name": "${mdi_2_container}"
-                                        }
-                                    ]
-                                }
-                            },
-                            "Next": "choice_322"
-                        },
-                        "choice_322": {
-                            "Type": "Choice",
-                            "Choices": [
-                                {
-                                    "Variable": "$.load_type",
-                                    "StringEquals": "NONE",
-                                    "Next": "success_322"
-                                }
-                            ],
-                            "Default": "SP-300001_113"
-                        },
-                        "success_322": {
-                            "Type": "Succeed"
-                        },
-                        "SP-300001_113": {
-                            "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
-                            "Parameters": {
-                                "LaunchType": "FARGATE",
-                                "Cluster": "${ecsClusterARN}",
-                                "TaskDefinition": "${mdi_2_arn}",
-                                "NetworkConfiguration": {
-                                    "AwsvpcConfiguration": {
-                                        "AssignPublicIp": "DISABLED",
-                                        "SecurityGroups": [
-                                            "${securityGroupId}"
-                                        ],
-                                        "Subnets": ${subnetIDs}
-                                    }
-                                },
-                                "Overrides": {
-                                    "ContainerOverrides": [
-                                        {
-                                            "Environment": [
-                                                {
-                                                    "Name": "PROCESS_NAME",
-                                                    "Value": "SP-300001"
-                                                },
-                                                {
-                                                    "Name": "INPUT_DATA",
-                                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
-                                                }
-                                            ],
-                                            "Name": "${mdi_2_container}"
-                                        }
-                                    ]
-                                }
-                            },
-                            "Next": "choice_323"
-                        },
-                        "choice_323": {
-                            "Type": "Choice",
-                            "Choices": [
-                                {
-                                    "Variable": "$.load_type",
-                                    "StringEquals": "NONE",
-                                    "Next": "success_323"
-                                }
-                            ],
-                            "Default": "SP-200001_114"
-                        },
-                        "success_323": {
-                            "Type": "Succeed"
-                        },
-                        "SP-200001_114": {
-                            "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
-                            "Parameters": {
-                                "LaunchType": "FARGATE",
-                                "Cluster": "${ecsClusterARN}",
-                                "TaskDefinition": "${mdi_2_arn}",
-                                "NetworkConfiguration": {
-                                    "AwsvpcConfiguration": {
-                                        "AssignPublicIp": "DISABLED",
-                                        "SecurityGroups": [
-                                            "${securityGroupId}"
-                                        ],
-                                        "Subnets": ${subnetIDs}
-                                    }
-                                },
-                                "Overrides": {
-                                    "ContainerOverrides": [
-                                        {
-                                            "Environment": [
-                                                {
-                                                    "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001"
-                                                },
-                                                {
-                                                    "Name": "INPUT_DATA",
-                                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
-                                                }
-                                            ],
-                                            "Name": "${mdi_2_container}"
-                                        }
-                                    ]
+                                "MessageBody": {
+                                    "PreviousStepOutput": "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
                                 }
                             },
                             "End": true
@@ -199,141 +84,26 @@
                     }
                 },
                 {
-                    "Comment": "Parallel - SP-200018_29",
-                    "StartAt": "SP-200018_29",
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200018",
+                    "StartAt": "SP-200018_message",
                     "States": {
-                        "SP-200018_29": {
+                        "SP-200018_message": {
                             "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "LaunchType": "FARGATE",
-                                "Cluster": "${ecsClusterARN}",
-                                "TaskDefinition": "${mdi_2_arn}",
-                                "NetworkConfiguration": {
-                                    "AwsvpcConfiguration": {
-                                        "AssignPublicIp": "DISABLED",
-                                        "SecurityGroups": [
-                                            "${securityGroupId}"
-                                        ],
-                                        "Subnets": ${subnetIDs}
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageAttributes": {
+                                    "MessageGroupId": {
+                                        "DataType": "String",
+                                        "StringValue": "product_terms_dim"
+                                    },
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-200018"
                                     }
                                 },
-                                "Overrides": {
-                                    "ContainerOverrides": [
-                                        {
-                                            "Environment": [
-                                                {
-                                                    "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200018"
-                                                },
-                                                {
-                                                    "Name": "INPUT_DATA",
-                                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
-                                                }
-                                            ],
-                                            "Name": "${mdi_2_container}"
-                                        }
-                                    ]
-                                }
-                            },
-                            "Next": "choice_324"
-                        },
-                        "choice_324": {
-                            "Type": "Choice",
-                            "Choices": [
-                                {
-                                    "Variable": "$.load_type",
-                                    "StringEquals": "NONE",
-                                    "Next": "success_324"
-                                }
-                            ],
-                            "Default": "SP-300001_114"
-                        },
-                        "success_324": {
-                            "Type": "Succeed"
-                        },
-                        "SP-300001_114": {
-                            "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
-                            "Parameters": {
-                                "LaunchType": "FARGATE",
-                                "Cluster": "${ecsClusterARN}",
-                                "TaskDefinition": "${mdi_2_arn}",
-                                "NetworkConfiguration": {
-                                    "AwsvpcConfiguration": {
-                                        "AssignPublicIp": "DISABLED",
-                                        "SecurityGroups": [
-                                            "${securityGroupId}"
-                                        ],
-                                        "Subnets": ${subnetIDs}
-                                    }
-                                },
-                                "Overrides": {
-                                    "ContainerOverrides": [
-                                        {
-                                            "Environment": [
-                                                {
-                                                    "Name": "PROCESS_NAME",
-                                                    "Value": "SP-300001"
-                                                },
-                                                {
-                                                    "Name": "INPUT_DATA",
-                                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
-                                                }
-                                            ],
-                                            "Name": "${mdi_2_container}"
-                                        }
-                                    ]
-                                }
-                            },
-                            "Next": "choice_325"
-                        },
-                        "choice_325": {
-                            "Type": "Choice",
-                            "Choices": [
-                                {
-                                    "Variable": "$.load_type",
-                                    "StringEquals": "NONE",
-                                    "Next": "success_325"
-                                }
-                            ],
-                            "Default": "SP-200001_115"
-                        },
-                        "success_325": {
-                            "Type": "Succeed"
-                        },
-                        "SP-200001_115": {
-                            "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
-                            "Parameters": {
-                                "LaunchType": "FARGATE",
-                                "Cluster": "${ecsClusterARN}",
-                                "TaskDefinition": "${mdi_2_arn}",
-                                "NetworkConfiguration": {
-                                    "AwsvpcConfiguration": {
-                                        "AssignPublicIp": "DISABLED",
-                                        "SecurityGroups": [
-                                            "${securityGroupId}"
-                                        ],
-                                        "Subnets": ${subnetIDs}
-                                    }
-                                },
-                                "Overrides": {
-                                    "ContainerOverrides": [
-                                        {
-                                            "Environment": [
-                                                {
-                                                    "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001"
-                                                },
-                                                {
-                                                    "Name": "INPUT_DATA",
-                                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
-                                                }
-                                            ],
-                                            "Name": "${mdi_2_container}"
-                                        }
-                                    ]
+                                "MessageBody": {
+                                    "PreviousStepOutput": "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
                                 }
                             },
                             "End": true

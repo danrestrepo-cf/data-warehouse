@@ -1,0 +1,117 @@
+{
+    "Comment": "SP-200012 - Dimension ETL to populate loan_dim from history_octane",
+    "StartAt": "SP-200012",
+    "States": {
+        "SP-200012": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+            "Parameters": {
+                "LaunchType": "FARGATE",
+                "Cluster": "${ecsClusterARN}",
+                "TaskDefinition": "${mdi_2_arn}",
+                "NetworkConfiguration": {
+                    "AwsvpcConfiguration": {
+                        "AssignPublicIp": "DISABLED",
+                        "SecurityGroups": [
+                            "${securityGroupId}"
+                        ],
+                        "Subnets": ${subnetIDs}
+                    }
+                },
+                "Overrides": {
+                    "ContainerOverrides": [
+                        {
+                            "Environment": [
+                                {
+                                    "Name": "PROCESS_NAME",
+                                    "Value": "SP-200012"
+                                },
+                                {
+                                    "Name": "INPUT_DATA",
+                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
+                                }
+                            ],
+                            "Name": "${mdi_2_container}"
+                        }
+                    ]
+                }
+            },
+            "Next": "Load_type_choice"
+        },
+        "Load_type_choice": {
+            "Type": "Choice",
+            "Choices": [
+                {
+                    "Variable": "$.load_type",
+                    "StringEquals": "NONE",
+                    "Next": "Success"
+                }
+            ],
+            "Default": "Parallel"
+        },
+        "Success": {
+            "Type": "Succeed"
+        },
+        "Parallel": {
+            "Type": "Parallel",
+            "End": true,
+            "Branches": [
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200015",
+                    "StartAt": "SP-200015_message",
+                    "States": {
+                        "SP-200015_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageAttributes": {
+                                    "MessageGroupId": {
+                                        "DataType": "String",
+                                        "StringValue": "mortgage_insurance_dim"
+                                    },
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-200015"
+                                    }
+                                },
+                                "MessageBody": {
+                                    "PreviousStepOutput": "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
+                                }
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-300001",
+                    "StartAt": "SP-300001_message",
+                    "States": {
+                        "SP-300001_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageAttributes": {
+                                    "MessageGroupId": {
+                                        "DataType": "String",
+                                        "StringValue": "loan_fact"
+                                    },
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-300001"
+                                    }
+                                },
+                                "MessageBody": {
+                                    "PreviousStepOutput": "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
+                                }
+                            },
+                            "End": true
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}
+

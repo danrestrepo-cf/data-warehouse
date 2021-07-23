@@ -36,154 +36,39 @@
                     ]
                 }
             },
-            "Next": "choice_141"
+            "Next": "Load_type_choice"
         },
-        "choice_141": {
+        "Load_type_choice": {
             "Type": "Choice",
             "Choices": [
                 {
                     "Variable": "$.load_type",
                     "StringEquals": "NONE",
-                    "Next": "success_141"
+                    "Next": "Success"
                 }
             ],
-            "Default": "SP-200014_3"
+            "Default": "SP-200014_message"
         },
-        "success_141": {
+        "Success": {
             "Type": "Succeed"
         },
-        "SP-200014_3": {
+        "SP-200014_message": {
             "Type": "Task",
-            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+            "Resource": "arn:aws:states:::sqs:sendMessage",
             "Parameters": {
-                "LaunchType": "FARGATE",
-                "Cluster": "${ecsClusterARN}",
-                "TaskDefinition": "${mdi_2_arn}",
-                "NetworkConfiguration": {
-                    "AwsvpcConfiguration": {
-                        "AssignPublicIp": "DISABLED",
-                        "SecurityGroups": [
-                            "${securityGroupId}"
-                        ],
-                        "Subnets": ${subnetIDs}
+                "QueueUrl": "${fullCheckQueueUrl}",
+                "MessageAttributes": {
+                    "MessageGroupId": {
+                        "DataType": "String",
+                        "StringValue": "loan_junk_dim"
+                    },
+                    "ProcessId": {
+                        "DataType": "String",
+                        "StringValue": "SP-200014"
                     }
                 },
-                "Overrides": {
-                    "ContainerOverrides": [
-                        {
-                            "Environment": [
-                                {
-                                    "Name": "PROCESS_NAME",
-                                    "Value": "SP-200014"
-                                },
-                                {
-                                    "Name": "INPUT_DATA",
-                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
-                                }
-                            ],
-                            "Name": "${mdi_2_container}"
-                        }
-                    ]
-                }
-            },
-            "Next": "choice_142"
-        },
-        "choice_142": {
-            "Type": "Choice",
-            "Choices": [
-                {
-                    "Variable": "$.load_type",
-                    "StringEquals": "NONE",
-                    "Next": "success_142"
-                }
-            ],
-            "Default": "SP-300001_52"
-        },
-        "success_142": {
-            "Type": "Succeed"
-        },
-        "SP-300001_52": {
-            "Type": "Task",
-            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
-            "Parameters": {
-                "LaunchType": "FARGATE",
-                "Cluster": "${ecsClusterARN}",
-                "TaskDefinition": "${mdi_2_arn}",
-                "NetworkConfiguration": {
-                    "AwsvpcConfiguration": {
-                        "AssignPublicIp": "DISABLED",
-                        "SecurityGroups": [
-                            "${securityGroupId}"
-                        ],
-                        "Subnets": ${subnetIDs}
-                    }
-                },
-                "Overrides": {
-                    "ContainerOverrides": [
-                        {
-                            "Environment": [
-                                {
-                                    "Name": "PROCESS_NAME",
-                                    "Value": "SP-300001"
-                                },
-                                {
-                                    "Name": "INPUT_DATA",
-                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
-                                }
-                            ],
-                            "Name": "${mdi_2_container}"
-                        }
-                    ]
-                }
-            },
-            "Next": "choice_143"
-        },
-        "choice_143": {
-            "Type": "Choice",
-            "Choices": [
-                {
-                    "Variable": "$.load_type",
-                    "StringEquals": "NONE",
-                    "Next": "success_143"
-                }
-            ],
-            "Default": "SP-200001_53"
-        },
-        "success_143": {
-            "Type": "Succeed"
-        },
-        "SP-200001_53": {
-            "Type": "Task",
-            "Resource": "arn:aws:states:::ecs:runTask.sync",
-            "Parameters": {
-                "LaunchType": "FARGATE",
-                "Cluster": "${ecsClusterARN}",
-                "TaskDefinition": "${mdi_2_arn}",
-                "NetworkConfiguration": {
-                    "AwsvpcConfiguration": {
-                        "AssignPublicIp": "DISABLED",
-                        "SecurityGroups": [
-                            "${securityGroupId}"
-                        ],
-                        "Subnets": ${subnetIDs}
-                    }
-                },
-                "Overrides": {
-                    "ContainerOverrides": [
-                        {
-                            "Environment": [
-                                {
-                                    "Name": "PROCESS_NAME",
-                                    "Value": "SP-200001"
-                                },
-                                {
-                                    "Name": "INPUT_DATA",
-                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
-                                }
-                            ],
-                            "Name": "${mdi_2_container}"
-                        }
-                    ]
+                "MessageBody": {
+                    "PreviousStepOutput": "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
                 }
             },
             "End": true

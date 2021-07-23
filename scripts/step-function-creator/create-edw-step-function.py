@@ -10,11 +10,12 @@ def main():
     edw = EDW()
     state_machine_metadata = edw.get_state_machine_metadata()
     step_tree_metadata = edw.get_step_tree_metadata()
+    target_table_metadata = edw.get_target_table_metadata()
     state_machine_file_extension = 'json'
 
     try:
         # generate and format state machine configuration strings
-        state_machine_creator = StateMachinesCreator(state_machine_metadata, step_tree_metadata)
+        state_machine_creator = StateMachinesCreator(state_machine_metadata, step_tree_metadata, target_table_metadata)
         state_machine_configs = state_machine_creator.build_state_machines()
         formatted_config_strings = format_data_for_outputting(state_machine_configs)
 

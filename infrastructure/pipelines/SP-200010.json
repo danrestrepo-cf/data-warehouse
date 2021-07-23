@@ -1,0 +1,78 @@
+{
+    "Comment": "SP-200010 - Dimension ETL to populate lender_user_dim from history_octane",
+    "StartAt": "SP-200010",
+    "States": {
+        "SP-200010": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+            "Parameters": {
+                "LaunchType": "FARGATE",
+                "Cluster": "${ecsClusterARN}",
+                "TaskDefinition": "${mdi_2_arn}",
+                "NetworkConfiguration": {
+                    "AwsvpcConfiguration": {
+                        "AssignPublicIp": "DISABLED",
+                        "SecurityGroups": [
+                            "${securityGroupId}"
+                        ],
+                        "Subnets": ${subnetIDs}
+                    }
+                },
+                "Overrides": {
+                    "ContainerOverrides": [
+                        {
+                            "Environment": [
+                                {
+                                    "Name": "PROCESS_NAME",
+                                    "Value": "SP-200010"
+                                },
+                                {
+                                    "Name": "INPUT_DATA",
+                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
+                                }
+                            ],
+                            "Name": "${mdi_2_container}"
+                        }
+                    ]
+                }
+            },
+            "Next": "Load_type_choice"
+        },
+        "Load_type_choice": {
+            "Type": "Choice",
+            "Choices": [
+                {
+                    "Variable": "$.load_type",
+                    "StringEquals": "NONE",
+                    "Next": "Success"
+                }
+            ],
+            "Default": "SP-300001_message"
+        },
+        "Success": {
+            "Type": "Succeed"
+        },
+        "SP-300001_message": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::sqs:sendMessage",
+            "Parameters": {
+                "QueueUrl": "${fullCheckQueueUrl}",
+                "MessageAttributes": {
+                    "MessageGroupId": {
+                        "DataType": "String",
+                        "StringValue": "loan_fact"
+                    },
+                    "ProcessId": {
+                        "DataType": "String",
+                        "StringValue": "SP-300001"
+                    }
+                },
+                "MessageBody": {
+                    "PreviousStepOutput": "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
+                }
+            },
+            "End": true
+        }
+    }
+}
+
