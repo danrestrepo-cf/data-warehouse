@@ -4,6 +4,7 @@ of validation rules
 https://app.asana.com/0/0/1200343485858665
 """
 
+import sys
 import psycopg2
 import psycopg2.extras
 from psycopg2 import sql
@@ -39,12 +40,12 @@ def main():
 
 def output_message():
     if not failure_list:
-        print("Config data validator completed successfully.")
-        exit(0)
+        print("\nConfig data validator completed successfully.")
+        sys.exit(0)
     else:
-        failure_list.insert(0, "One or more validations FAILED:")
+        failure_list.insert(0, "\nOne or more validations FAILED:")
         print("\n".join(failure_list))
-        exit(1)
+        sys.exit(1)
 
 def edw_table_definition_check():
     with EDW() as cursor:
@@ -253,7 +254,8 @@ def table_output_field_check():
 
         if (cursor.select_into_dataframe("""
                 SELECT table_output_field.table_output_step_dwid
-                     , table_output_field.database_field_name
+                     , 'database_field_name' AS table_output_field_field_type
+                     , table_output_field.database_field_name AS field_name
                      , COUNT(*)
                 FROM mdi.table_output_field
                 GROUP BY table_output_field.table_output_step_dwid
@@ -261,12 +263,14 @@ def table_output_field_check():
                 HAVING COUNT(*) > 1
                 UNION ALL
                 SELECT table_output_field.table_output_step_dwid
+                     , 'database_stream_name' AS table_output_field_field_type
                      , table_output_field.database_stream_name
                      , COUNT(*)
                 FROM mdi.table_output_field
                 GROUP BY table_output_field.table_output_step_dwid
                        , table_output_field.database_stream_name
-                HAVING COUNT(*) > 1      
+                HAVING COUNT(*) > 1
+                ORDER BY field_name      
             """).shape[0]) > 0:
             failure_list.append("table_output_field: Duplicate field names mapped to a single table_output_step "
                                 "record.")

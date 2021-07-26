@@ -149,7 +149,28 @@ function execute_mdi_test_cases() {
   done
 }
 
+function execute_config_data_validator() {
+  set +e
+  echo "Now proceeding with config data validator..."
+  python scripts/config-data-validator/config-data-validator.py
+  config_data_validator_exit_code=$?
+  if [[ $config_data_validator_exit_code != 0 ]]; then
+    echo
+    echo "config-data-validator FAILED. Proceed with unit tests? [y/n]"
+    proceed=""
+    read -r -n1 -t 10 proceed
+    echo
+    if [[ $proceed == "n" ]]; then
+      echo "Exiting unit test runner..."
+      exit 1
+    fi
+  fi
+  set -e
+}
+
 ${relative_docker_dir}/docker-up.sh
+
+execute_config_data_validator
 
 # Non MDI Tests ##########################################################################
 process_name="SP6"
@@ -184,9 +205,11 @@ execute_mdi_test_cases "SP10.1" ${database_username} "file" "test_case_source_fi
 execute_mdi_test_cases "SP10.2" ${database_username} "none" "" "ingress" "staging"
 
 # Print overall unit test statuses and test case diff statuses
-if [[ -z $failed_unit_tests ]]; then
+if [[ -z $failed_unit_tests && $config_data_validator_exit_code == 0 ]]; then
   echo "Unit tests SUCCESSFUL."
   exit 0
+elif [[ -z $failed_unit_tests && $config_data_validator_exit_code == 1 ]]; then
+  echo "Unit tests SUCCESSFUL, but invalid metadata detected in config.mdi schema."
 else
   echo "One or more unit tests encountered a Pentaho failure, or generated an output that differs from its expected result."
   echo "Refer to the list below for more information:"
