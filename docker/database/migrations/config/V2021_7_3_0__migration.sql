@@ -27,3 +27,34 @@ FROM mdi.process
 UPDATE mdi.state_machine_definition
     SET name = 'SP-100833'
     WHERE name = 'Octane__mortgage_delinquency_exception_type';
+
+
+--
+-- EDW | config database - Duplicated data in mdi.table_output_field table
+-- https://app.asana.com/0/0/1200662873455331
+--
+
+DELETE FROM mdi.table_output_field deleted_records
+    USING mdi.table_output_field kept_records
+WHERE deleted_records.database_field_name = kept_records.database_field_name
+    AND deleted_records.database_field_name IN (
+        'ctr_validation_status_type'
+        , 'ctr_verified'
+        , 'pl_acquisition_cost_amount_verified'
+        , 'pl_acquisition_date_verified'
+        , 'pl_property_tax_id_verified'
+        , 'pl_seller_acquired_date_verified'
+        , 'pl_seller_original_cost_amount_verified'
+    )
+    AND deleted_records.dwid > kept_records.dwid;
+
+UPDATE mdi.table_output_field
+SET field_order = 8
+WHERE dwid IN (
+    SELECT table_output_field.dwid
+    FROM mdi.table_output_field
+        JOIN mdi.table_output_step ON table_output_field.table_output_step_dwid = table_output_step.dwid
+        JOIN mdi.process ON table_output_step.process_dwid = process.dwid
+            AND process.name IN ('SP-0.1', 'SP-0.2')
+    WHERE table_output_field.database_field_name = 'etl_batch_id'
+);
