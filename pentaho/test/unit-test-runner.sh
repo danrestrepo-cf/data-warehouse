@@ -10,6 +10,8 @@ path_to_script="$(pwd)/$(dirname "$0")"
 relative_docker_dir="$(dirname "$0")/../../docker"
 # absolute path to docker, used to trigger docker itself which isn't so picky
 absolute_test_dir="$(pwd)/../../docker/pentaho"
+# absolute path to metadata unit tests
+absolute_metadata_test_dir="$(pwd)/../../scripts/edw-metadata-unit-tests"
 
 #set the script to fail on any errors
 set -e
@@ -149,28 +151,66 @@ function execute_mdi_test_cases() {
   done
 }
 
-function execute_config_data_validator() {
-  set +e
-  echo "Now proceeding with config data validator..."
-  python scripts/config-data-validator/config-data-validator.py
-  config_data_validator_exit_code=$?
-  if [[ $config_data_validator_exit_code != 0 ]]; then
-    echo
-    echo "config-data-validator FAILED. Proceed with unit tests? [y/n]"
-    proceed=""
-    read -r -n1 -t 10 proceed
-    echo
-    if [[ $proceed == "n" ]]; then
-      echo "Exiting unit test runner..."
-      exit 1
-    fi
+function execute_edw_metadata_unit_test() {
+  test_to_run="$1"
+  echo "Now testing $test_to_run"
+  metadata_unit_test_result=$(python edw-metadata-unit-test-runner.py "$test_to_run")
+  if [[ -n $metadata_unit_test_result ]]; then
+    failed_unit_tests="${failed_unit_tests} $metadata_unit_test_result"$'\n'
   fi
-  set -e
-}
+  }
 
 ${relative_docker_dir}/docker-up.sh
 
-execute_config_data_validator
+# Run EDW metadata unit tests
+cd ${absolute_metadata_test_dir}
+echo "Now proceeding with EDW metadata unit tests..."
+execute_edw_metadata_unit_test "edw_table_definition_test_1"
+execute_edw_metadata_unit_test "edw_table_definition_test_2"
+execute_edw_metadata_unit_test "edw_field_definition_test_1"
+execute_edw_metadata_unit_test "edw_field_definition_test_2"
+execute_edw_metadata_unit_test "process_test_1"
+execute_edw_metadata_unit_test "process_test_2"
+execute_edw_metadata_unit_test "process_test_3"
+execute_edw_metadata_unit_test "csv_file_input_step_test_1"
+execute_edw_metadata_unit_test "csv_file_input_field_test_1"
+execute_edw_metadata_unit_test "microsoft_excel_input_step_test_1"
+execute_edw_metadata_unit_test "microsoft_excel_input_field_test_1"
+execute_edw_metadata_unit_test "table_input_step_test_1"
+execute_edw_metadata_unit_test "table_input_step_test_2"
+execute_edw_metadata_unit_test "table_output_step_test_1"
+execute_edw_metadata_unit_test "table_output_step_test_2"
+execute_edw_metadata_unit_test "table_output_step_test_3"
+execute_edw_metadata_unit_test "table_output_field_test_1"
+execute_edw_metadata_unit_test "table_output_field_test_2"
+execute_edw_metadata_unit_test "table_output_field_test_3"
+execute_edw_metadata_unit_test "insert_update_step_test_1"
+execute_edw_metadata_unit_test "insert_update_step_test_2"
+execute_edw_metadata_unit_test "insert_update_step_test_3"
+execute_edw_metadata_unit_test "insert_update_step_test_4"
+execute_edw_metadata_unit_test "insert_update_key_test_1"
+execute_edw_metadata_unit_test "insert_update_field_test_1"
+execute_edw_metadata_unit_test "insert_update_field_test_2"
+execute_edw_metadata_unit_test "delete_step_test_1"
+execute_edw_metadata_unit_test "delete_key_test_1"
+execute_edw_metadata_unit_test "json_output_field_test_1"
+execute_edw_metadata_unit_test "json_output_field_test_2"
+
+cd "$(pwd)/../../pentaho/test"
+
+if [[ -n $failed_unit_tests ]]; then
+  echo
+  echo "EDW metadata unit tests FAILED:"
+  echo "$failed_unit_tests"
+  echo "Proceed with Pentaho unit tests? [y/n]"
+  proceed=""
+  read -r -n1 -t 30 proceed
+  echo
+  if [[ $proceed == "n" ]]; then
+    echo "Exiting unit test runner..."
+    exit 1
+  fi
+fi
 
 # Non MDI Tests ##########################################################################
 process_name="SP6"
@@ -205,13 +245,11 @@ execute_mdi_test_cases "SP10.1" ${database_username} "file" "test_case_source_fi
 execute_mdi_test_cases "SP10.2" ${database_username} "none" "" "ingress" "staging"
 
 # Print overall unit test statuses and test case diff statuses
-if [[ -z $failed_unit_tests && $config_data_validator_exit_code == 0 ]]; then
+if [[ -z $failed_unit_tests ]]; then
   echo "Unit tests SUCCESSFUL."
   exit 0
-elif [[ -z $failed_unit_tests && $config_data_validator_exit_code == 1 ]]; then
-  echo "Unit tests SUCCESSFUL, but invalid metadata detected in config.mdi schema."
 else
-  echo "One or more unit tests encountered a Pentaho failure, or generated an output that differs from its expected result."
+  echo "One or more unit tests encountered a failure, or generated an output that differs from its expected result."
   echo "Refer to the list below for more information:"
   echo "$failed_unit_tests"
   echo
