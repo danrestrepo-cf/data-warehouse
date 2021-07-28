@@ -1,6 +1,6 @@
 <transformation>
   <info>
-    <name>mdi2_table_table_insert_only_template</name>
+    <name>generate_and_output_json</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -10,43 +10,23 @@
     <parameters>
       <parameter>
         <name>database_hostname</name>
-        <default_value/>
+        <default_value>localhost</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>database_password</name>
-        <default_value/>
+        <default_value>testonly</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>database_port</name>
-        <default_value/>
-        <description/>
-      </parameter>
-      <parameter>
-        <name>database_schema</name>
-        <default_value/>
+        <default_value>5432</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>database_username</name>
-        <default_value/>
+        <default_value>postgres</default_value>
         <description/>
-      </parameter>
-      <parameter>
-        <name>environment</name>
-        <default_value/>
-        <description/>
-      </parameter>
-      <parameter>
-        <name>etl_batch_id</name>
-        <default_value/>
-        <description/>
-      </parameter>
-      <parameter>
-        <name>input_data</name>
-        <default_value/>
-        <description>The JSON string passed from a step function.</description>
       </parameter>
     </parameters>
     <log>
@@ -467,15 +447,25 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2020/09/15 15:00:08.871</created_date>
+    <created_date>2021/07/23 08:06:04.117</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/07/28 10:07:03.104</modified_date>
+    <modified_date>2021/07/28 17:35:08.277</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
     <notepad>
-      <note>Load Data from Database Table
+      <note>Determine type of output to create					     			     	
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -483,10 +473,10 @@
 
 
 </note>
-      <xloc>128</xloc>
-      <yloc>80</yloc>
-      <width>652</width>
-      <heigth>232</heigth>
+      <xloc>416</xloc>
+      <yloc>32</yloc>
+      <width>874</width>
+      <heigth>388</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -494,16 +484,31 @@
       <fontcolorred>0</fontcolorred>
       <fontcolorgreen>0</fontcolorgreen>
       <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>192</backgroundcolorred>
-      <backgroundcolorgreen>192</backgroundcolorgreen>
-      <backgroundcolorblue>192</backgroundcolorblue>
+      <backgroundcolorred>128</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>255</backgroundcolorblue>
       <bordercolorred>100</bordercolorred>
       <bordercolorgreen>100</bordercolorgreen>
       <bordercolorblue>100</bordercolorblue>
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Add ETL Batch ID to stream
+      <note>Generate failure output                                                                                                                                      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -512,27 +517,41 @@
 
 
 </note>
-      <xloc>128</xloc>
-      <yloc>352</yloc>
-      <width>652</width>
-      <heigth>260</heigth>
+      <xloc>96</xloc>
+      <yloc>496</yloc>
+      <width>712</width>
+      <heigth>490</heigth>
       <fontname>Segoe UI</fontname>
-      <fontsize>12</fontsize>
+      <fontsize>11</fontsize>
       <fontbold>Y</fontbold>
       <fontitalic>N</fontitalic>
       <fontcolorred>0</fontcolorred>
       <fontcolorgreen>0</fontcolorgreen>
       <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>192</backgroundcolorred>
-      <backgroundcolorgreen>192</backgroundcolorgreen>
-      <backgroundcolorblue>192</backgroundcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>128</backgroundcolorgreen>
+      <backgroundcolorblue>128</backgroundcolorblue>
       <bordercolorred>100</bordercolorred>
       <bordercolorgreen>100</bordercolorgreen>
       <bordercolorblue>100</bordercolorblue>
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Save stream to table                                                                                                                                                                                               
+      <note>Generate failure output                                                                                                                                      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -542,54 +561,30 @@
 
 
 </note>
-      <xloc>128</xloc>
-      <yloc>976</yloc>
-      <width>930</width>
-      <heigth>221</heigth>
+      <xloc>880</xloc>
+      <yloc>496</yloc>
+      <width>712</width>
+      <heigth>490</heigth>
       <fontname>Segoe UI</fontname>
-      <fontsize>12</fontsize>
+      <fontsize>11</fontsize>
       <fontbold>Y</fontbold>
       <fontitalic>N</fontitalic>
       <fontcolorred>0</fontcolorred>
       <fontcolorgreen>0</fontcolorgreen>
       <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>192</backgroundcolorred>
-      <backgroundcolorgreen>192</backgroundcolorgreen>
-      <backgroundcolorblue>192</backgroundcolorblue>
+      <backgroundcolorred>128</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>128</backgroundcolorblue>
       <bordercolorred>100</bordercolorred>
       <bordercolorgreen>100</bordercolorgreen>
       <bordercolorblue>100</bordercolorblue>
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Specify logging fields, log them, and abort transformation as error                                                                                                      
+      <note>Save JSON to S3					     			     	                                   
 
 
 
-
-
-</note>
-      <xloc>128</xloc>
-      <yloc>1296</yloc>
-      <width>924</width>
-      <heigth>158</heigth>
-      <fontname>Segoe UI</fontname>
-      <fontsize>12</fontsize>
-      <fontbold>Y</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>192</backgroundcolorred>
-      <backgroundcolorgreen>192</backgroundcolorgreen>
-      <backgroundcolorblue>192</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
-    <notepad>
-      <note>Add Data Source DWID to stream
 
 
 
@@ -598,20 +593,20 @@
 
 
 </note>
-      <xloc>128</xloc>
-      <yloc>656</yloc>
-      <width>700</width>
-      <heigth>260</heigth>
+      <xloc>416</xloc>
+      <yloc>1056</yloc>
+      <width>871</width>
+      <heigth>250</heigth>
       <fontname>Segoe UI</fontname>
-      <fontsize>12</fontsize>
+      <fontsize>11</fontsize>
       <fontbold>Y</fontbold>
       <fontitalic>N</fontitalic>
       <fontcolorred>0</fontcolorred>
       <fontcolorgreen>0</fontcolorgreen>
       <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>192</backgroundcolorred>
-      <backgroundcolorgreen>192</backgroundcolorgreen>
-      <backgroundcolorblue>192</backgroundcolorblue>
+      <backgroundcolorred>128</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>255</backgroundcolorblue>
       <bordercolorred>100</bordercolorred>
       <bordercolorgreen>100</bordercolorgreen>
       <bordercolorblue>100</bordercolorblue>
@@ -677,159 +672,71 @@
       </attribute>
     </attributes>
   </connection>
-  <connection>
-    <name>Dummy DB Connection</name>
-    <server>use when a default connection is needed</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>.</database>
-    <port>5432</port>
-    <username>.</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb79ce10bef2cf94</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>IS_CLUSTERED</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>PORT_NUMBER</code>
-        <attribute>5432</attribute>
-      </attribute>
-      <attribute>
-        <code>PRESERVE_RESERVED_WORD_CASE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>QUOTE_ALL_FIELDS</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>USE_POOLING</code>
-        <attribute>N</attribute>
-      </attribute>
-    </attributes>
-  </connection>
   <order>
     <hop>
-      <from>[template_table_to_table_insert_json] add a blank field for etl_batch_id to valid stream</from>
-      <to>[template_table_to_table_insert_json] Set etl_batch_id field value to parameter etl_batch_id</to>
+      <from>[generate_and_output_json] FAILURE - Build output JSON and S3 file output path</from>
+      <to>[generate_and_output_json] Write generated rows to log</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_json] Table output</from>
-      <to>[template_table_to_table_insert_json]  Specify logging fields (non-sensitive)</to>
+      <from>[generate_and_output_json] FAILURE - Build output JSON and S3 file output path</from>
+      <to>[generate_and_output_json] S3 file output</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>[generate_and_output_json] FAILURE - Get rows from result</from>
+      <to>[generate_and_output_json] FAILURE - Write to log</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_json]  Specify logging fields (non-sensitive)</from>
-      <to>[template_table_to_table_insert_json]  Abort Table Output</to>
+      <from>[generate_and_output_json] FAILURE - Write to log</from>
+      <to>[generate_and_output_json] FAILURE - Build output JSON and S3 file output path</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_json] add a blank field for data_source_dwid to valid stream</from>
-      <to>[template_table_to_table_insert_json] Set data_source_dwid field value to parameter data_source_dwid</to>
+      <from>[generate_and_output_json] Create stream with output_json_type</from>
+      <to>[generate_and_output_json] Write output_json_type to log</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_json] Set etl_batch_id field value to parameter etl_batch_id</from>
-      <to>[template_table_to_table_insert_json] add a blank field for data_source_dwid to valid stream</to>
+      <from>[generate_and_output_json] Write output_json_type to log</from>
+      <to>[generate_and_output_json] Determine if success or failure</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_json] Table input</from>
-      <to>[template_table_to_table_insert_json] add a blank field for etl_batch_id to valid stream</to>
+      <from>[generate_and_output_json] Determine if success or failure</from>
+      <to>[generate_and_output_json] FAILURE - Get rows from result</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_json] Set data_source_dwid field value to parameter data_source_dwid</from>
-      <to>[template_table_to_table_insert_json] Table output</to>
+      <from>[generate_and_output_json] Determine if success or failure</from>
+      <to>[generate_and_output_json] SUCCESS - Get rows from result</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_json] Table output</from>
-      <to>[template_table_to_table_insert_json] Copy rows to result</to>
+      <from>[generate_and_output_json] SUCCESS - Write to log</from>
+      <to>[generate_and_output_json] SUCCESS - Build output JSON and S3 file output path</to>
       <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[generate_and_output_json] SUCCESS - Get rows from result</from>
+      <to>[generate_and_output_json] SUCCESS - Write to log</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[generate_and_output_json] SUCCESS - Build output JSON and S3 file output path</from>
+      <to>[generate_and_output_json] Write generated rows to log</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[generate_and_output_json] SUCCESS - Build output JSON and S3 file output path</from>
+      <to>[generate_and_output_json] S3 file output</to>
+      <enabled>N</enabled>
     </hop>
   </order>
   <step>
-    <name>[template_table_to_table_insert_json]  Abort Table Output</name>
-    <type>Abort</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <row_threshold>0</row_threshold>
-    <message>could not save data to table</message>
-    <always_log_rows>Y</always_log_rows>
-    <abort_option>ABORT_WITH_ERROR</abort_option>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>864</xloc>
-      <yloc>1376</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_insert_json]  Specify logging fields (non-sensitive)</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>1376</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_insert_json] Set data_source_dwid field value to parameter data_source_dwid</name>
-    <type>SetValueConstant</type>
+    <name>[generate_and_output_json] SUCCESS - Build output JSON and S3 file output path</name>
+    <type>ScriptValueMod</type>
     <description/>
     <distribute>N</distribute>
     <custom_distribution/>
@@ -838,203 +745,53 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <usevar>Y</usevar>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>
+// Build output JSON
+var outer_json = {};
+var inner_json = {};
+inner_json.load_type = "SUCCESS";
+inner_json.key_field_name = "SUCCESS";
+inner_json.key_field_values = "SUCCESS";
+
+outer_json.token_id = token_id;
+outer_json.output = inner_json
+
+var mdi_output_json = JSON.stringify(outer_json);
+
+
+// Build S3 file output path
+var bucket_prefix = "qa";//environment;
+var bucket_postfix = "-data-warehouse-ingress";
+var file_string1 = "s3://";
+var file_string2 = "/step-function-response/pending/failure/";
+var etl_batch_id = getVariable("etl_batch_id", "undefined");
+var bucket = bucket_prefix.concat(bucket_postfix);
+var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id);
+</jsScript_script>
+      </jsScript>
+    </jsScripts>
     <fields>
       <field>
-        <name>data_source_dwid</name>
-        <value/>
-        <mask/>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>832</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_insert_json] Set etl_batch_id field value to parameter etl_batch_id</name>
-    <type>SetValueConstant</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <usevar>Y</usevar>
-    <fields>
-      <field>
-        <name>etl_batch_id</name>
-        <value/>
-        <mask/>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>512</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_insert_json] Table input</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>Dummy DB Connection</connection>
-    <sql/>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>144</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_insert_json] Table output</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>Dummy DB Connection</connection>
-    <schema/>
-    <table/>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>N</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>1088</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_insert_json] add a blank field for data_source_dwid to valid stream</name>
-    <type>Constant</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>data_source_dwid</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>704</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_insert_json] add a blank field for etl_batch_id to valid stream</name>
-    <type>Constant</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>etl_batch_id</name>
+        <name>mdi_output_json</name>
+        <rename>mdi_output_json</rename>
         <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
         <length>-1</length>
         <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>s3_output_filepath</name>
+        <rename>s3_output_filepath</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
       </field>
     </fields>
     <attributes/>
@@ -1046,22 +803,41 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>480</xloc>
-      <yloc>384</yloc>
+      <xloc>1248</xloc>
+      <yloc>848</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_json] Copy rows to result</name>
-    <type>RowsToResult</type>
+    <name>[generate_and_output_json] Create stream with output_json_type</name>
+    <type>ScriptValueMod</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
       <schema_name/>
     </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var output_json_type = getVariable("output_json_type", "ERROR");</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>output_json_type</name>
+        <rename>output_json_type</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1071,36 +847,381 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>864</xloc>
-      <yloc>1088</yloc>
+      <xloc>832</xloc>
+      <yloc>80</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[generate_and_output_json] Determine if success or failure</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to>[generate_and_output_json] SUCCESS - Get rows from result</send_true_to>
+    <send_false_to>[generate_and_output_json] FAILURE - Get rows from result</send_false_to>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>output_json_type</leftvalue>
+        <function>=</function>
+        <rightvalue/>
+        <value>
+          <name>constant</name>
+          <type>String</type>
+          <text>SUCCESS</text>
+          <length>-1</length>
+          <precision>-1</precision>
+          <isnull>N</isnull>
+          <mask/>
+        </value>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>832</xloc>
+      <yloc>320</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[generate_and_output_json] FAILURE - Build output JSON and S3 file output path</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>
+// Build output JSON
+var outer_json = {};
+var inner_json = {};
+inner_json.load_type = "FAILURE";
+inner_json.key_field_name = null;
+inner_json.key_field_values = null;
+
+outer_json.token_id = token_id;
+outer_json.output = inner_json
+
+var mdi_output_json = JSON.stringify(outer_json);
+
+
+// Build S3 file output path
+var bucket_prefix = "qa";//environment;
+var bucket_postfix = "-data-warehouse-ingress";
+var file_string1 = "s3://";
+var file_string2 = "/step-function-response/pending/failure/";
+var etl_batch_id = getVariable("etl_batch_id", "undefined");
+var bucket = bucket_prefix.concat(bucket_postfix);
+var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id);
+</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>mdi_output_json</name>
+        <rename>mdi_output_json</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>s3_output_filepath</name>
+        <rename>s3_output_filepath</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>448</xloc>
+      <yloc>848</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[generate_and_output_json] FAILURE - Get rows from result</name>
+    <type>RowsFromResult</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>      </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>448</xloc>
+      <yloc>592</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[generate_and_output_json] S3 file output</name>
+    <type>S3FileOutputPlugin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <separator/>
+    <enclosure/>
+    <enclosure_forced>N</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <header>N</header>
+    <footer>N</footer>
+    <format>UNIX</format>
+    <compression>None</compression>
+    <encoding/>
+    <endedLine/>
+    <fileNameInField>Y</fileNameInField>
+    <fileNameField>s3_output_filepath</fileNameField>
+    <create_parent_folder>Y</create_parent_folder>
+    <file>
+      <name>s3n://s3n</name>
+      <servlet_output>N</servlet_output>
+      <do_not_open_new_file_init>Y</do_not_open_new_file_init>
+      <extention/>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <add_to_result_filenames>N</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery>0</splitevery>
+    </file>
+    <fields>
+      <field>
+        <name>mdi_output_json</name>
+        <type>None</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+    <access_key>Encrypted </access_key>
+    <secret_key>Encrypted </secret_key>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1040</xloc>
+      <yloc>1168</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[generate_and_output_json] Write generated rows to log</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <loglevel>log_level_debug</loglevel>
+    <displayHeader>Y</displayHeader>
+    <limitRows>N</limitRows>
+    <limitRowsNumber>0</limitRowsNumber>
+    <logmessage/>
+    <fields>
+      </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>672</xloc>
+      <yloc>1168</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[generate_and_output_json] FAILURE - Write to log</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <loglevel>log_level_debug</loglevel>
+    <displayHeader>Y</displayHeader>
+    <limitRows>N</limitRows>
+    <limitRowsNumber>0</limitRowsNumber>
+    <logmessage/>
+    <fields>
+      </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>448</xloc>
+      <yloc>720</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[generate_and_output_json] SUCCESS - Get rows from result</name>
+    <type>RowsFromResult</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>      </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1248</xloc>
+      <yloc>592</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[generate_and_output_json] Write output_json_type to log</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <loglevel>log_level_debug</loglevel>
+    <displayHeader>Y</displayHeader>
+    <limitRows>N</limitRows>
+    <limitRowsNumber>0</limitRowsNumber>
+    <logmessage/>
+    <fields>
+      </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>832</xloc>
+      <yloc>208</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[generate_and_output_json] SUCCESS - Write to log</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <loglevel>log_level_debug</loglevel>
+    <displayHeader>Y</displayHeader>
+    <limitRows>N</limitRows>
+    <limitRowsNumber>0</limitRowsNumber>
+    <logmessage/>
+    <fields>
+      </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1248</xloc>
+      <yloc>720</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step_error_handling>
-    <error>
-      <source_step>[template_table_to_table_insert_json] Set etl_batch_id field value to parameter etl_batch_id</source_step>
-      <target_step>[template_table_to_table_insert_json]  Abort Table Output</target_step>
-      <is_enabled>N</is_enabled>
-      <nr_valuename/>
-      <descriptions_valuename/>
-      <fields_valuename/>
-      <codes_valuename/>
-      <max_errors/>
-      <max_pct_errors/>
-      <min_pct_rows/>
-    </error>
-    <error>
-      <source_step>[template_table_to_table_insert_json] Table output</source_step>
-      <target_step>[template_table_to_table_insert_json]  Specify logging fields (non-sensitive)</target_step>
-      <is_enabled>Y</is_enabled>
-      <nr_valuename/>
-      <descriptions_valuename/>
-      <fields_valuename/>
-      <codes_valuename/>
-      <max_errors/>
-      <max_pct_errors/>
-      <min_pct_rows/>
-    </error>
   </step_error_handling>
   <slave-step-copy-partition-distribution>
   </slave-step-copy-partition-distribution>
