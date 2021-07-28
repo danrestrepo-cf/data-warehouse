@@ -151,20 +151,44 @@ function execute_mdi_test_cases() {
   done
 }
 
+# function to run an EDW metadata test case
 function execute_edw_metadata_unit_test() {
   test_to_run="$1"
-  echo "Now testing $test_to_run"
+  echo "Now running $test_to_run..."
   metadata_unit_test_result=$(python edw-metadata-unit-test-runner.py "$test_to_run")
   if [[ -n $metadata_unit_test_result ]]; then
     failed_unit_tests="${failed_unit_tests} $metadata_unit_test_result"$'\n'
   fi
-  }
+}
+
+# function to prompt the user whether to continue with unit test runner in the event of EDW metadata unit test failure
+# this is constructed as a function to allow the script to continue if no user input is provided in the timeout window
+function metadata_unit_test_fail_break {
+  set +e
+  echo "Proceed with remaining unit tests? [y/n]"
+  proceed=""
+  read -r -n1 -t 30 proceed
+  echo
+  if [[ $proceed == "y" ]]; then
+    echo "Proceeding with remaining unit tests..."
+  elif [[ $proceed == "n" ]]; then
+    echo "Exiting unit test runner..."
+    exit 1
+  elif [[ $proceed == "" ]]; then
+    echo "Proceeding with remaining unit tests..."
+  else
+    echo "Invalid input. Exiting unit test runner..."
+    exit 1
+  fi
+  set -e
+}
 
 ${relative_docker_dir}/docker-up.sh
 
 # Run EDW metadata unit tests
 cd ${absolute_metadata_test_dir}
-echo "Now proceeding with EDW metadata unit tests..."
+
+echo "Proceeding with EDW metadata unit tests..."
 execute_edw_metadata_unit_test "edw_table_definition_test_1"
 execute_edw_metadata_unit_test "edw_table_definition_test_2"
 execute_edw_metadata_unit_test "edw_field_definition_test_1"
@@ -196,21 +220,19 @@ execute_edw_metadata_unit_test "delete_key_test_1"
 execute_edw_metadata_unit_test "json_output_field_test_1"
 execute_edw_metadata_unit_test "json_output_field_test_2"
 
-cd "$(pwd)/../../pentaho/test"
-
+# If any EDW metadata unit tests fail, print the failures and ask the user whether to proceed with remaining unit tests
+# Otherwise, proceed with remaining unit tests
 if [[ -n $failed_unit_tests ]]; then
+  failed_unit_tests="EDW metadata unit tests FAILED:"$'\n'"${failed_unit_tests}"
   echo
-  echo "EDW metadata unit tests FAILED:"
   echo "$failed_unit_tests"
-  echo "Proceed with Pentaho unit tests? [y/n]"
-  proceed=""
-  read -r -n1 -t 30 proceed
-  echo
-  if [[ $proceed == "n" ]]; then
-    echo "Exiting unit test runner..."
-    exit 1
-  fi
+  metadata_unit_test_fail_break
+else
+  echo "EDW metadata unit tests succeeded."
+  echo "Proceeding with remaining unit tests..."
 fi
+
+cd "$(pwd)/../../pentaho/test"
 
 # Non MDI Tests ##########################################################################
 process_name="SP6"

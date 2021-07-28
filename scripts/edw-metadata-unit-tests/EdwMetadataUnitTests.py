@@ -9,10 +9,6 @@ import pandas
 from typing import List
 
 
-def test_print():
-    print("This is a test to see if this function can be invoked from another script")
-
-
 def edw_table_definition_test_1():
     with EDW() as cursor:
         if (cursor.select_into_dataframe("""
