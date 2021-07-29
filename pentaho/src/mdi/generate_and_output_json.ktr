@@ -449,7 +449,7 @@
     <created_user>-</created_user>
     <created_date>2021/07/23 08:06:04.117</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/07/29 11:25:30.009</modified_date>
+    <modified_date>2021/07/29 14:59:41.322</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -716,11 +716,6 @@
       <enabled>N</enabled>
     </hop>
     <hop>
-      <from>[generate_and_output_json] FAILURE - Get rows from result</from>
-      <to>[generate_and_output_json] FAILURE - Write to log</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>[generate_and_output_json] FAILURE - Write to log</from>
       <to>[generate_and_output_json] FAILURE - Build output JSON and S3 file output path</to>
       <enabled>Y</enabled>
@@ -731,28 +726,8 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[generate_and_output_json] Write output_json_type to log</from>
-      <to>[generate_and_output_json] Determine if success or failure</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[generate_and_output_json] Determine if success or failure</from>
-      <to>[generate_and_output_json] FAILURE - Get rows from result</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[generate_and_output_json] Determine if success or failure</from>
-      <to>[generate_and_output_json] SUCCESS - Get rows from result</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>[generate_and_output_json] SUCCESS - Write to log</from>
       <to>[generate_and_output_json] SUCCESS - Build output JSON and S3 file output path</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[generate_and_output_json] SUCCESS - Get rows from result</from>
-      <to>[generate_and_output_json] SUCCESS - Write to log</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -764,6 +739,26 @@
       <from>[generate_and_output_json] SUCCESS - Build output JSON and S3 file output path</from>
       <to>[generate_and_output_json] S3 file output</to>
       <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>[generate_and_output_json] Determine if success or failure</from>
+      <to>[generate_and_output_json] FAILURE - Write to log</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[generate_and_output_json] Determine if success or failure</from>
+      <to>[generate_and_output_json] SUCCESS - Write to log</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[generate_and_output_json] Write output_json_type to log</from>
+      <to>[generate_and_output_json] Determine if success or failure</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[generate_and_output_json] Get rows from result</from>
+      <to>[generate_and_output_json] Create stream with output_json_type</to>
+      <enabled>Y</enabled>
     </hop>
   </order>
   <step>
@@ -806,7 +801,7 @@
     </remotesteps>
     <GUI>
       <xloc>832</xloc>
-      <yloc>80</yloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -821,8 +816,8 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <send_true_to>[generate_and_output_json] SUCCESS - Get rows from result</send_true_to>
-    <send_false_to>[generate_and_output_json] FAILURE - Get rows from result</send_false_to>
+    <send_true_to>[generate_and_output_json] SUCCESS - Write to log</send_true_to>
+    <send_false_to>[generate_and_output_json] FAILURE - Write to log</send_false_to>
     <compare>
       <condition>
         <negated>N</negated>
@@ -850,7 +845,7 @@
     </remotesteps>
     <GUI>
       <xloc>832</xloc>
-      <yloc>320</yloc>
+      <yloc>352</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -929,7 +924,7 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     </GUI>
   </step>
   <step>
-    <name>[generate_and_output_json] FAILURE - Get rows from result</name>
+    <name>[generate_and_output_json] Get rows from result</name>
     <type>RowsFromResult</type>
     <description/>
     <distribute>Y</distribute>
@@ -949,8 +944,8 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1232</xloc>
-      <yloc>592</yloc>
+      <xloc>832</xloc>
+      <yloc>80</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1132,32 +1127,6 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     </GUI>
   </step>
   <step>
-    <name>[generate_and_output_json] SUCCESS - Get rows from result</name>
-    <type>RowsFromResult</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>      </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>464</xloc>
-      <yloc>592</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>[generate_and_output_json] SUCCESS - Write to log</name>
     <type>WriteToLog</type>
     <description/>
@@ -1249,7 +1218,7 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     </remotesteps>
     <GUI>
       <xloc>832</xloc>
-      <yloc>208</yloc>
+      <yloc>256</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
