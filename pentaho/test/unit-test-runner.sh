@@ -185,7 +185,7 @@ function metadata_unit_test_fail_break {
 
 ${relative_docker_dir}/docker-up.sh
 
-# Run EDW metadata unit tests
+# EDW metadata unit tests ################################################################
 cd ${absolute_metadata_test_dir}
 
 echo "Proceeding with EDW metadata unit tests..."
@@ -195,6 +195,7 @@ execute_edw_metadata_unit_test "edw_field_definition_test_1"
 execute_edw_metadata_unit_test "edw_field_definition_test_2"
 execute_edw_metadata_unit_test "edw_field_definition_test_3"
 execute_edw_metadata_unit_test "edw_join_definition_test_1"
+execute_edw_metadata_unit_test "edw_join_tree_definition_test_1"
 execute_edw_metadata_unit_test "process_test_1"
 execute_edw_metadata_unit_test "process_test_2"
 execute_edw_metadata_unit_test "process_test_3"
@@ -228,8 +229,7 @@ execute_edw_metadata_unit_test "state_machine_definition_test_2"
 # Otherwise, proceed with remaining unit tests
 if [[ -n $failed_unit_tests ]]; then
   failed_unit_tests="EDW metadata unit tests FAILED:"$'\n'"${failed_unit_tests}"
-  echo
-  echo "$failed_unit_tests"
+  echo $'\n'"$failed_unit_tests"
   metadata_unit_test_fail_break
 else
   echo "EDW metadata unit tests succeeded."
