@@ -484,7 +484,7 @@
     <created_user>-</created_user>
     <created_date>2021/02/17 17:15:35.157</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/07/23 08:12:18.806</modified_date>
+    <modified_date>2021/07/29 13:41:17.857</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -499,8 +499,8 @@
 
 
 </note>
-      <xloc>64</xloc>
-      <yloc>336</yloc>
+      <xloc>304</xloc>
+      <yloc>32</yloc>
       <width>442</width>
       <heigth>199</heigth>
       <fontname>Segoe UI</fontname>
@@ -548,16 +548,16 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Get List of Fields to Log in Case of Error (Non-sensitive fields)
+      <note>Get list of fields to log in case of error (non-sensitive fields)
 
 
 
 
 
 </note>
-      <xloc>64</xloc>
-      <yloc>800</yloc>
-      <width>473</width>
+      <xloc>560</xloc>
+      <yloc>816</yloc>
+      <width>460</width>
       <heigth>158</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
@@ -585,8 +585,8 @@
 
 
 </note>
-      <xloc>1056</xloc>
-      <yloc>336</yloc>
+      <xloc>1088</xloc>
+      <yloc>480</yloc>
       <width>370</width>
       <heigth>220</heigth>
       <fontname>Segoe UI</fontname>
@@ -615,7 +615,7 @@
 
 
 </note>
-      <xloc>560</xloc>
+      <xloc>800</xloc>
       <yloc>32</yloc>
       <width>419</width>
       <heigth>221</heigth>
@@ -635,7 +635,7 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Combine Table input and JSON input streams		
+      <note>Combine table input and JSON input streams		
 
 
 
@@ -765,18 +765,18 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[mdi2_table_table_insert_only_performer] Get rows from result</from>
-      <to>[mdi2_table_table_insert_only_performer] Write to log</to>
+      <from>[mdi2_table_table_delete_performer] Write to log</from>
+      <to>[performer_table_to_table_delete_json] Combine table input and JSON input streams</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[mdi2_table_table_insert_only_performer] Write to log</from>
-      <to>[performer_table_to_table_delete_json] Combine table input and JSON input streams</to>
+      <from>[mdi2_table_table_delete_performer] Get rows from result</from>
+      <to>[mdi2_table_table_delete_performer] Write to log</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>[mdi2_table_table_insert_only_performer] Get rows from result</name>
+    <name>[mdi2_table_table_delete_performer] Get rows from result</name>
     <type>RowsFromResult</type>
     <description/>
     <distribute>Y</distribute>
@@ -786,7 +786,38 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <fields>      </fields>
+    <fields>
+      <field>
+        <name>key_field_name</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>partial_load_condition</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>token_id</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>load_type</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>process_dwid</name>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -796,13 +827,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>768</xloc>
+      <xloc>1008</xloc>
       <yloc>80</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[mdi2_table_table_insert_only_performer] Write to log</name>
+    <name>[mdi2_table_table_delete_performer] Write to log</name>
     <type>WriteToLog</type>
     <description/>
     <distribute>Y</distribute>
@@ -828,7 +859,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>768</xloc>
+      <xloc>1008</xloc>
       <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
@@ -939,8 +970,8 @@ WHERE process.dwid = ${process_dwid}</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1232</xloc>
-      <yloc>384</yloc>
+      <xloc>1264</xloc>
+      <yloc>528</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1017,7 +1048,7 @@ WHERE process.dwid = ${process_dwid}</sql>
     </partitioning>
     <specification_method>rep_name</specification_method>
     <trans_object_id/>
-    <trans_name>template_table_to_table_delete_json</trans_name>
+    <trans_name>mdi2_table_table_delete_template</trans_name>
     <filename/>
     <directory_path>${Internal.Entry.Current.Directory}</directory_path>
     <source_step/>
@@ -1374,8 +1405,8 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>272</xloc>
-      <yloc>880</yloc>
+      <xloc>768</xloc>
+      <yloc>896</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1527,8 +1558,8 @@ if (/_pid$|^dwid$|_dwid$/.test(fieldname) === true) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1232</xloc>
-      <yloc>480</yloc>
+      <xloc>1264</xloc>
+      <yloc>624</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1761,8 +1792,8 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>272</xloc>
-      <yloc>384</yloc>
+      <xloc>528</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

@@ -1,6 +1,6 @@
 <transformation>
   <info>
-    <name>mdi2_table_table_insert_only_template</name>
+    <name>mdi2_table_table_insert_update_template</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -10,17 +10,17 @@
     <parameters>
       <parameter>
         <name>database_hostname</name>
-        <default_value>localhost</default_value>
+        <default_value/>
         <description/>
       </parameter>
       <parameter>
         <name>database_password</name>
-        <default_value>testonly</default_value>
+        <default_value/>
         <description/>
       </parameter>
       <parameter>
         <name>database_port</name>
-        <default_value>5432</default_value>
+        <default_value/>
         <description/>
       </parameter>
       <parameter>
@@ -30,17 +30,17 @@
       </parameter>
       <parameter>
         <name>database_username</name>
-        <default_value>postgres</default_value>
+        <default_value/>
         <description/>
       </parameter>
       <parameter>
         <name>environment</name>
-        <default_value>qa</default_value>
+        <default_value/>
         <description/>
       </parameter>
       <parameter>
         <name>etl_batch_id</name>
-        <default_value>asdfasdf</default_value>
+        <default_value/>
         <description/>
       </parameter>
       <parameter>
@@ -469,13 +469,13 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/07/29 13:47:58.869</modified_date>
+    <modified_date>2021/07/29 13:40:05.477</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
     <notepad>
-      <note>Load Data from Database Table
+      <note>Load data from database table                                                
 
 
 
@@ -483,10 +483,10 @@
 
 
 </note>
-      <xloc>128</xloc>
+      <xloc>224</xloc>
       <yloc>80</yloc>
-      <width>652</width>
-      <heigth>232</heigth>
+      <width>435</width>
+      <heigth>179</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -503,36 +503,7 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Add ETL Batch ID to stream
-
-
-
-
-
-
-
-</note>
-      <xloc>128</xloc>
-      <yloc>352</yloc>
-      <width>652</width>
-      <heigth>260</heigth>
-      <fontname>Segoe UI</fontname>
-      <fontsize>12</fontsize>
-      <fontbold>Y</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>192</backgroundcolorred>
-      <backgroundcolorgreen>192</backgroundcolorgreen>
-      <backgroundcolorblue>192</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
-    <notepad>
-      <note>Save stream to table                                                                                                                          
+      <note>Add ETL batch ID to stream                                                                                                       
 
 
 
@@ -543,8 +514,8 @@
 
 </note>
       <xloc>128</xloc>
-      <yloc>976</yloc>
-      <width>654</width>
+      <yloc>304</yloc>
+      <width>628</width>
       <heigth>221</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
@@ -562,16 +533,44 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Specify logging fields, log them, and abort transformation as error                                                                                                      
+      <note>Save stream to table                                                
+
 
 
 
 
 
 </note>
-      <xloc>128</xloc>
-      <yloc>1296</yloc>
-      <width>924</width>
+      <xloc>272</xloc>
+      <yloc>880</yloc>
+      <width>358</width>
+      <heigth>179</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Specify logging fields, log them, and abort transformation as error                                                                                                   
+
+
+
+
+
+</note>
+      <xloc>224</xloc>
+      <yloc>1104</yloc>
+      <width>912</width>
       <heigth>158</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
@@ -599,7 +598,7 @@
 
 </note>
       <xloc>128</xloc>
-      <yloc>656</yloc>
+      <yloc>576</yloc>
       <width>700</width>
       <heigth>260</heigth>
       <fontname>Segoe UI</fontname>
@@ -730,43 +729,43 @@
   </connection>
   <order>
     <hop>
-      <from>[template_table_to_table_insert_json] add a blank field for etl_batch_id to valid stream</from>
-      <to>[template_table_to_table_insert_json] Set etl_batch_id field value to parameter etl_batch_id</to>
+      <from>[template_table_to_table_insert_update_json] add a blank field for etl_batch_id to valid stream</from>
+      <to>[template_table_to_table_insert_update_json] Set etl_batch_id field value to parameter etl_batch_id</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_json] Table output</from>
-      <to>[template_table_to_table_insert_json]  Specify logging fields (non-sensitive)</to>
+      <from>[template_table_to_table_insert_update_json]  Specify logging fields (non-sensitive)</from>
+      <to>[template_table_to_table_insert_update_json]  Abort Table Output</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_json]  Specify logging fields (non-sensitive)</from>
-      <to>[template_table_to_table_insert_json]  Abort Table Output</to>
+      <from>[template_table_to_table_insert_update_json] add a blank field for data_source_dwid to valid stream</from>
+      <to>[template_table_to_table_insert_update_json] Set data_source_dwid field value to parameter data_source_dwid</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_json] add a blank field for data_source_dwid to valid stream</from>
-      <to>[template_table_to_table_insert_json] Set data_source_dwid field value to parameter data_source_dwid</to>
+      <from>[template_table_to_table_insert_update_json] Set etl_batch_id field value to parameter etl_batch_id</from>
+      <to>[template_table_to_table_insert_update_json] add a blank field for data_source_dwid to valid stream</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_json] Set etl_batch_id field value to parameter etl_batch_id</from>
-      <to>[template_table_to_table_insert_json] add a blank field for data_source_dwid to valid stream</to>
+      <from>[template_table_to_table_insert_update_json] Table input</from>
+      <to>[template_table_to_table_insert_update_json] add a blank field for etl_batch_id to valid stream</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_json] Table input</from>
-      <to>[template_table_to_table_insert_json] add a blank field for etl_batch_id to valid stream</to>
+      <from>[template_table_to_table_insert_update_json] Insert / update</from>
+      <to>[template_table_to_table_insert_update_json]  Specify logging fields (non-sensitive)</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_insert_json] Set data_source_dwid field value to parameter data_source_dwid</from>
-      <to>[template_table_to_table_insert_json] Table output</to>
+      <from>[template_table_to_table_insert_update_json] Set data_source_dwid field value to parameter data_source_dwid</from>
+      <to>[template_table_to_table_insert_update_json] Insert / update</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>[template_table_to_table_insert_json]  Abort Table Output</name>
+    <name>[template_table_to_table_insert_update_json]  Abort Table Output</name>
     <type>Abort</type>
     <description/>
     <distribute>Y</distribute>
@@ -789,13 +788,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>864</xloc>
-      <yloc>1376</yloc>
+      <xloc>928</xloc>
+      <yloc>1168</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_json]  Specify logging fields (non-sensitive)</name>
+    <name>[template_table_to_table_insert_update_json]  Specify logging fields (non-sensitive)</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
@@ -817,13 +816,45 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>480</xloc>
-      <yloc>1376</yloc>
+      <xloc>448</xloc>
+      <yloc>1168</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_json] Set data_source_dwid field value to parameter data_source_dwid</name>
+    <name>[template_table_to_table_insert_update_json] Insert / update</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>Dummy DB Connection</connection>
+    <commit>0</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table/>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>448</xloc>
+      <yloc>944</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[template_table_to_table_insert_update_json] Set data_source_dwid field value to parameter data_source_dwid</name>
     <type>SetValueConstant</type>
     <description/>
     <distribute>N</distribute>
@@ -851,13 +882,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>480</xloc>
-      <yloc>832</yloc>
+      <xloc>448</xloc>
+      <yloc>752</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_json] Set etl_batch_id field value to parameter etl_batch_id</name>
+    <name>[template_table_to_table_insert_update_json] Set etl_batch_id field value to parameter etl_batch_id</name>
     <type>SetValueConstant</type>
     <description/>
     <distribute>N</distribute>
@@ -885,13 +916,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>480</xloc>
-      <yloc>512</yloc>
+      <xloc>448</xloc>
+      <yloc>448</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_json] Table input</name>
+    <name>[template_table_to_table_insert_update_json] Table input</name>
     <type>TableInput</type>
     <description/>
     <distribute>N</distribute>
@@ -906,7 +937,7 @@
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
-    <variables_active>Y</variables_active>
+    <variables_active>N</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
     <cached_row_meta_active>N</cached_row_meta_active>
     <row-meta/>
@@ -919,57 +950,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>480</xloc>
+      <xloc>448</xloc>
       <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_json] Table output</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>Dummy DB Connection</connection>
-    <schema/>
-    <table/>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>N</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>1056</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_insert_json] add a blank field for data_source_dwid to valid stream</name>
+    <name>[template_table_to_table_insert_update_json] add a blank field for data_source_dwid to valid stream</name>
     <type>Constant</type>
     <description/>
     <distribute>N</distribute>
@@ -1002,13 +989,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>480</xloc>
-      <yloc>704</yloc>
+      <xloc>448</xloc>
+      <yloc>624</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_insert_json] add a blank field for etl_batch_id to valid stream</name>
+    <name>[template_table_to_table_insert_update_json] add a blank field for etl_batch_id to valid stream</name>
     <type>Constant</type>
     <description/>
     <distribute>N</distribute>
@@ -1041,16 +1028,16 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>480</xloc>
-      <yloc>384</yloc>
+      <xloc>448</xloc>
+      <yloc>352</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step_error_handling>
     <error>
-      <source_step>[template_table_to_table_insert_json] Set etl_batch_id field value to parameter etl_batch_id</source_step>
-      <target_step>[template_table_to_table_insert_json]  Abort Table Output</target_step>
-      <is_enabled>N</is_enabled>
+      <source_step>[template_table_to_table_insert_update_json] Insert / update</source_step>
+      <target_step>[template_table_to_table_insert_update_json]  Specify logging fields (non-sensitive)</target_step>
+      <is_enabled>Y</is_enabled>
       <nr_valuename/>
       <descriptions_valuename/>
       <fields_valuename/>
@@ -1060,9 +1047,9 @@
       <min_pct_rows/>
     </error>
     <error>
-      <source_step>[template_table_to_table_insert_json] Table output</source_step>
-      <target_step>[template_table_to_table_insert_json]  Specify logging fields (non-sensitive)</target_step>
-      <is_enabled>Y</is_enabled>
+      <source_step>[template_table_to_table_insert_update_json] Set etl_batch_id field value to parameter etl_batch_id</source_step>
+      <target_step>[template_table_to_table_insert_update_json]  Abort Table Output</target_step>
+      <is_enabled>N</is_enabled>
       <nr_valuename/>
       <descriptions_valuename/>
       <fields_valuename/>
