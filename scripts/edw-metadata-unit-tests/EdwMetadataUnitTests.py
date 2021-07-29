@@ -60,6 +60,82 @@ def edw_field_definition_test_2():
                    "qualifiers.")
 
 
+def edw_field_definition_test_3():
+    with EDW() as cursor:
+        if (cursor.select_into_dataframe("""
+        WITH edw_field_population_a AS (
+            SELECT edw_table_definition.database_name
+                , edw_table_definition.schema_name
+                , edw_table_definition.table_name
+                , edw_field_definition.field_name
+                , edw_field_definition.dwid AS edw_field_definition_dwid
+                , edw_field_definition.source_edw_field_definition_dwid
+                , edw_field_definition.field_source_calculation
+            FROM mdi.edw_table_definition
+                JOIN mdi.edw_field_definition ON edw_table_definition.dwid = edw_field_definition.edw_table_definition_dwid
+            WHERE (edw_table_definition.database_name = 'ingress'
+                OR (edw_table_definition.database_name = 'staging'
+                    AND (edw_table_definition.schema_name LIKE 'staging_%'
+                        OR (edw_table_definition.schema_name = 'history_octane'
+                            AND edw_field_definition.field_name IN ('data_source_updated_datetime', 'data_source_deleted_flag')
+                            )
+                        )
+                    )
+                )
+        )
+        
+        , edw_field_population_b AS (
+            SELECT edw_table_definition.database_name
+                , edw_table_definition.schema_name
+                , edw_table_definition.table_name
+                , edw_field_definition.field_name
+                , edw_field_definition.dwid AS edw_field_definition_dwid
+                , edw_field_definition.source_edw_field_definition_dwid
+                , edw_field_definition.field_source_calculation
+            FROM mdi.edw_table_definition
+                JOIN mdi.edw_field_definition ON edw_table_definition.dwid = edw_field_definition.edw_table_definition_dwid
+                LEFT JOIN edw_field_population_a ON edw_field_definition.dwid = edw_field_population_a.edw_field_definition_dwid
+            WHERE edw_field_population_a.edw_field_definition_dwid IS NULL
+        )
+        
+        SELECT edw_field_population_a.database_name
+            , edw_field_population_a.schema_name
+            , edw_field_population_a.table_name
+            , edw_field_population_a.field_name
+            , edw_field_population_a.edw_field_definition_dwid
+            , edw_field_population_a.source_edw_field_definition_dwid
+            , edw_field_population_a.field_source_calculation
+        FROM edw_field_population_a
+        WHERE source_edw_field_definition_dwid IS NOT NULL
+            AND field_source_calculation IS NOT NULL
+        UNION ALL
+        SELECT edw_field_population_b.database_name
+             , edw_field_population_b.schema_name
+             , edw_field_population_b.table_name
+             , edw_field_population_b.field_name
+             , edw_field_population_b.edw_field_definition_dwid
+             , edw_field_population_b.source_edw_field_definition_dwid
+             , edw_field_population_b.field_source_calculation
+        FROM edw_field_population_b
+        WHERE NOT (source_edw_field_definition_dwid IS NULL
+            OR field_source_calculation IS NULL)
+        """).shape[0]) > 0:
+            print("edw_field_definition test 3: Records with unexpected non-null values in "
+                  "source_edw_field_definition_dwid and/or field_source_calculation.")
+
+
+def edw_join_definition_test_1():
+    with EDW() as cursor:
+        if (cursor.select_into_dataframe("""
+        SELECT edw_join_definition.dwid
+            , edw_join_definition.join_condition
+        FROM mdi.edw_join_definition
+        WHERE (SPLIT_PART(join_condition, '.', 1) <> 'primary_table'
+            OR SPLIT_PART(SPLIT_PART(join_condition, '.', 2), ' = ', 2) !~ 't[0-9]')
+        """).shape[0]) > 0:
+            print("edw_join_definition test 1: join_condition references fields from an unexpected table.")
+
+
 def process_test_1():
     with EDW() as cursor:
         if (cursor.select_into_dataframe("""
@@ -420,7 +496,34 @@ def json_output_field_test_2():
                 OR json_output_field.field_name LIKE '%_dwid'
                 OR json_output_field.field_name IN ('dwid', 'data_source_integration_id', 'code'))
         """).shape[0]) > 0:
-            print("json_output_field test 2: ")
+            print("json_output_field test 2: Unexpected field name.")
+
+
+def state_machine_definition_test_1():
+    with EDW() as cursor:
+        if (cursor.select_into_dataframe("""
+            SELECT state_machine_definition.process_dwid
+                , state_machine_step.next_process_dwid
+                , subseq_state_machine_step.next_process_dwid
+            FROM mdi.state_machine_definition
+                JOIN mdi.state_machine_step
+                    ON state_machine_definition.process_dwid = state_machine_step.process_dwid
+                JOIN mdi.state_machine_step subseq_state_machine_step
+                    ON state_machine_step.next_process_dwid = subseq_state_machine_step.process_dwid
+            WHERE state_machine_definition.process_dwid = subseq_state_machine_step.next_process_dwid
+        """).shape[0]) > 0:
+            print("state_machine_definition test 1: Loop detected in recursive join through state_machine_step.")
+
+
+def state_machine_definition_test_2():
+    with EDW() as cursor:
+        if (cursor.select_into_dataframe("""
+        SELECT state_machine_definition.dwid
+            , state_machine_definition.name
+        FROM mdi.state_machine_definition
+        WHERE name !~ '^[a-zA-Z0-9_-]*$'
+        """).shape[0]) > 0:
+            print("state_machine_definition test 2: Invalid value(s) detected in name field.")
 
 
 class EDW:
