@@ -8,7 +8,7 @@
   <created_user>-</created_user>
   <created_date>2020/10/10 07:31:50.634</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2021/07/29 14:58:46.918</modified_date>
+  <modified_date>2021/07/30 10:29:59.070</modified_date>
   <parameters>
     <parameter>
       <name>database_hostname</name>
@@ -62,7 +62,7 @@
     </parameter>
     <parameter>
       <name>process_name</name>
-      <default_value>SP-300001</default_value>
+      <default_value>SP-200003</default_value>
       <description>The name that signifies what process should be run.</description>
     </parameter>
   </parameters>
@@ -862,12 +862,12 @@
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>Y</params_from_previous>
       <exec_per_row>N</exec_per_row>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Nothing</loglevel>
+      <set_logfile>Y</set_logfile>
+      <logfile>C:\Users\ramon.ecung\Projects\data-warehouse\pentaho\src\mdi\mdi2_table_table_delete_performer</logfile>
+      <logext>txt</logext>
+      <add_date>Y</add_date>
+      <add_time>Y</add_time>
+      <loglevel>Debug</loglevel>
       <slave_server_name/>
       <wait_until_finished>Y</wait_until_finished>
       <follow_abort_remote>N</follow_abort_remote>
@@ -1144,6 +1144,50 @@
       <nr>0</nr>
       <xloc>1200</xloc>
       <yloc>1824</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] No Operation 6</name>
+      <description/>
+      <type>SPECIAL</type>
+      <attributes/>
+      <start>N</start>
+      <dummy>Y</dummy>
+      <repeat>N</repeat>
+      <schedulerType>0</schedulerType>
+      <intervalSeconds>0</intervalSeconds>
+      <intervalMinutes>60</intervalMinutes>
+      <hour>12</hour>
+      <minutes>0</minutes>
+      <weekDay>1</weekDay>
+      <DayOfMonth>1</DayOfMonth>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1872</xloc>
+      <yloc>224</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] No Operation 7</name>
+      <description/>
+      <type>SPECIAL</type>
+      <attributes/>
+      <start>N</start>
+      <dummy>Y</dummy>
+      <repeat>N</repeat>
+      <schedulerType>0</schedulerType>
+      <intervalSeconds>0</intervalSeconds>
+      <intervalMinutes>60</intervalMinutes>
+      <hour>12</hour>
+      <minutes>0</minutes>
+      <weekDay>1</weekDay>
+      <DayOfMonth>1</DayOfMonth>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1872</xloc>
+      <yloc>1616</yloc>
       <attributes_kjc/>
     </entry>
   </entries>
@@ -1436,6 +1480,33 @@
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
+    <hop>
+      <from>[controller] preprocess</from>
+      <to>[controller] No Operation 6</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] No Operation 6</from>
+      <to>[controller] No Operation 7</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] No Operation 7</from>
+      <to>[controller] No Operation 5</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
   </hops>
   <notepads>
     <notepad>
@@ -1499,7 +1570,7 @@
 
 
 </note>
-      <xloc>400</xloc>
+      <xloc>416</xloc>
       <yloc>1056</yloc>
       <width>1088</width>
       <heigth>410</heigth>
@@ -1605,12 +1676,11 @@
 
 
 
-
 </note>
       <xloc>1056</xloc>
       <yloc>1536</yloc>
       <width>325</width>
-      <heigth>410</heigth>
+      <heigth>390</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>11</fontsize>
       <fontbold>Y</fontbold>
@@ -1628,7 +1698,7 @@
     </notepad>
     <notepad>
       <note>test with SP-100001</note>
-      <xloc>560</xloc>
+      <xloc>528</xloc>
       <yloc>1072</yloc>
       <width>113</width>
       <heigth>26</heigth>
@@ -1669,7 +1739,7 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>test with SP-300001</note>
+      <note>test with SP-300002</note>
       <xloc>1248</xloc>
       <yloc>1072</yloc>
       <width>113</width>

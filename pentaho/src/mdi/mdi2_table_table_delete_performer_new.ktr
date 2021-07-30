@@ -10,7 +10,7 @@
     <parameters>
       <parameter>
         <name>data_source_dwid</name>
-        <default_value>-1</default_value>
+        <default_value/>
         <description/>
       </parameter>
       <parameter>
@@ -55,7 +55,7 @@
       </parameter>
       <parameter>
         <name>process_dwid</name>
-        <default_value>864</default_value>
+        <default_value/>
         <description/>
       </parameter>
       <parameter>
@@ -484,7 +484,7 @@
     <created_user>-</created_user>
     <created_date>2021/02/17 17:15:35.157</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/07/30 10:29:22.156</modified_date>
+    <modified_date>2021/07/29 21:15:01.330</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -499,8 +499,8 @@
 
 
 </note>
-      <xloc>80</xloc>
-      <yloc>256</yloc>
+      <xloc>304</xloc>
+      <yloc>32</yloc>
       <width>442</width>
       <heigth>199</heigth>
       <fontname>Segoe UI</fontname>
@@ -529,7 +529,7 @@
 
 </note>
       <xloc>64</xloc>
-      <yloc>608</yloc>
+      <yloc>560</yloc>
       <width>442</width>
       <heigth>199</heigth>
       <fontname>Segoe UI</fontname>
@@ -548,16 +548,16 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Get List of Fields to Log in Case of Error (Non-sensitive fields)
+      <note>Get list of fields to log in case of error (non-sensitive fields)
 
 
 
 
 
 </note>
-      <xloc>592</xloc>
+      <xloc>560</xloc>
       <yloc>816</yloc>
-      <width>473</width>
+      <width>460</width>
       <heigth>158</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
@@ -585,8 +585,8 @@
 
 
 </note>
-      <xloc>1072</xloc>
-      <yloc>528</yloc>
+      <xloc>1088</xloc>
+      <yloc>480</yloc>
       <width>370</width>
       <heigth>220</heigth>
       <fontname>Segoe UI</fontname>
@@ -605,7 +605,37 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Combine Table input and JSON input streams		                            
+      <note>JSON input			                              
+
+
+
+
+
+
+
+
+</note>
+      <xloc>800</xloc>
+      <yloc>32</yloc>
+      <width>419</width>
+      <heigth>221</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>Y</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>128</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>255</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Combine table input and JSON input streams		
 
 
 
@@ -615,9 +645,9 @@
 
 </note>
       <xloc>560</xloc>
-      <yloc>288</yloc>
-      <width>555</width>
-      <heigth>200</heigth>
+      <yloc>336</yloc>
+      <width>442</width>
+      <heigth>199</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -735,13 +765,13 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[mdi2_table_table_delete_performer] Get rows from result</from>
-      <to>[mdi2_table_table_delete_performer] Write to log</to>
+      <from>[mdi2_table_table_delete_performer] Write to log</from>
+      <to>[performer_table_to_table_delete_json] Combine table input and JSON input streams</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[mdi2_table_table_delete_performer] Write to log</from>
-      <to>[performer_table_to_table_delete_json] Combine table input and JSON input streams</to>
+      <from>[mdi2_table_table_delete_performer] Get rows from result</from>
+      <to>[mdi2_table_table_delete_performer] Write to log</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -749,7 +779,7 @@
     <name>[mdi2_table_table_delete_performer] Get rows from result</name>
     <type>RowsFromResult</type>
     <description/>
-    <distribute>N</distribute>
+    <distribute>Y</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
@@ -797,8 +827,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>800</xloc>
-      <yloc>32</yloc>
+      <xloc>1008</xloc>
+      <yloc>80</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -817,24 +847,9 @@
     <displayHeader>Y</displayHeader>
     <limitRows>N</limitRows>
     <limitRowsNumber>0</limitRowsNumber>
-    <logmessage/>
+    <logmessage>Rows from result:</logmessage>
     <fields>
-      <field>
-        <name>key_field_name</name>
-      </field>
-      <field>
-        <name>partial_load_condition</name>
-      </field>
-      <field>
-        <name>token_id</name>
-      </field>
-      <field>
-        <name>load_type</name>
-      </field>
-      <field>
-        <name>process_dwid</name>
-      </field>
-    </fields>
+      </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -844,8 +859,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>800</xloc>
-      <yloc>160</yloc>
+      <xloc>1008</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -955,8 +970,8 @@ WHERE process.dwid = ${process_dwid}</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1248</xloc>
-      <yloc>576</yloc>
+      <xloc>1264</xloc>
+      <yloc>528</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -971,7 +986,7 @@ WHERE process.dwid = ${process_dwid}</sql>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <from>[mdi2_table_table_delete_performer] Write to log</from>
+    <from/>
     <input_sorted>N</input_sorted>
     <preserve_memory>Y</preserve_memory>
     <sorted_list>N</sorted_list>
@@ -1005,12 +1020,6 @@ WHERE process.dwid = ${process_dwid}</sql>
         <default/>
         <type>None</type>
       </value>
-      <value>
-        <name>process_dwid</name>
-        <rename>process_dwid</rename>
-        <default/>
-        <type>None</type>
-      </value>
     </lookup>
     <attributes/>
     <cluster_schema/>
@@ -1021,8 +1030,8 @@ WHERE process.dwid = ${process_dwid}</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>800</xloc>
-      <yloc>336</yloc>
+      <xloc>768</xloc>
+      <yloc>384</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1044,7 +1053,7 @@ WHERE process.dwid = ${process_dwid}</sql>
     <directory_path>${Internal.Entry.Current.Directory}</directory_path>
     <source_step/>
     <source_output_fields>    </source_output_fields>
-    <target_file/>
+    <target_file>mdi2_table_table_delete_template_after_injection.ktr</target_file>
     <no_execution>N</no_execution>
     <stream_source_step/>
     <stream_target_step/>
@@ -1262,8 +1271,8 @@ WHERE process.dwid = ${process_dwid}</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>800</xloc>
-      <yloc>672</yloc>
+      <xloc>768</xloc>
+      <yloc>624</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1308,7 +1317,7 @@ WHERE
     </remotesteps>
     <GUI>
       <xloc>272</xloc>
-      <yloc>736</yloc>
+      <yloc>688</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1396,7 +1405,7 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>800</xloc>
+      <xloc>768</xloc>
       <yloc>896</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1441,7 +1450,7 @@ WHERE
     </remotesteps>
     <GUI>
       <xloc>272</xloc>
-      <yloc>624</yloc>
+      <yloc>576</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1497,8 +1506,8 @@ if (load_type == "KEY_LOOKUP") {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>800</xloc>
-      <yloc>416</yloc>
+      <xloc>768</xloc>
+      <yloc>464</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1549,8 +1558,8 @@ if (/_pid$|^dwid$|_dwid$/.test(fieldname) === true) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1248</xloc>
-      <yloc>672</yloc>
+      <xloc>1264</xloc>
+      <yloc>624</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1783,8 +1792,8 @@ WHERE
       </output>
     </remotesteps>
     <GUI>
-      <xloc>304</xloc>
-      <yloc>336</yloc>
+      <xloc>528</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
