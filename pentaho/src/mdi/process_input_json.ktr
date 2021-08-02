@@ -10,22 +10,22 @@
     <parameters>
       <parameter>
         <name>database_hostname</name>
-        <default_value>localhost</default_value>
+        <default_value/>
         <description/>
       </parameter>
       <parameter>
         <name>database_password</name>
-        <default_value>testonly</default_value>
+        <default_value/>
         <description/>
       </parameter>
       <parameter>
         <name>database_port</name>
-        <default_value>5432</default_value>
+        <default_value/>
         <description/>
       </parameter>
       <parameter>
         <name>database_username</name>
-        <default_value>postgres</default_value>
+        <default_value/>
         <description/>
       </parameter>
       <parameter>
@@ -454,7 +454,7 @@
     <created_user>-</created_user>
     <created_date>2021/07/20 18:02:17.666</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/07/30 09:19:17.559</modified_date>
+    <modified_date>2021/08/02 14:46:21.430</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -655,12 +655,12 @@
     </hop>
     <hop>
       <from>[process_input_json] Log result row(s)</from>
-      <to>Copy rows to result</to>
+      <to>[process_input_json] Copy rows to result</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Copy rows to result</name>
+    <name>[process_input_json] Copy rows to result</name>
     <type>RowsToResult</type>
     <description/>
     <distribute>Y</distribute>

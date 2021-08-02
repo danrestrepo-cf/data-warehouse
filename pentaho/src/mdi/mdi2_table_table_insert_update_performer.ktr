@@ -484,7 +484,7 @@
     <created_user>-</created_user>
     <created_date>2021/02/17 17:15:35.157</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/07/30 11:05:37.380</modified_date>
+    <modified_date>2021/08/02 14:45:04.618</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -781,44 +781,7 @@
       <to>[mdi2_table_table_insert_update_performer] Write to log</to>
       <enabled>Y</enabled>
     </hop>
-    <hop>
-      <from>[performer_table_to_table_insert_update_json] Combine table input and JSON input streams</from>
-      <to>Write to log</to>
-      <enabled>Y</enabled>
-    </hop>
   </order>
-  <step>
-    <name>Write to log</name>
-    <type>WriteToLog</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <loglevel>log_level_debug</loglevel>
-    <displayHeader>Y</displayHeader>
-    <limitRows>N</limitRows>
-    <limitRowsNumber>0</limitRowsNumber>
-    <logmessage/>
-    <fields>
-      </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1328</xloc>
-      <yloc>400</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
   <step>
     <name>[mdi2_table_table_insert_update_performer] Get rows from result</name>
     <type>RowsFromResult</type>
