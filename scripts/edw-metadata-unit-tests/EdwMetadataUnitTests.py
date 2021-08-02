@@ -273,7 +273,9 @@ def table_output_step_test_1():
         FROM mdi.table_output_step
             LEFT JOIN mdi.edw_table_definition ON table_output_step.target_schema = edw_table_definition.schema_name
                 AND table_output_step.target_table = edw_table_definition.table_name
-        WHERE edw_table_definition.dwid IS NULL
+        WHERE table_output_step.connectionname <> 'Ingress DB Connection'
+            AND table_output_step.target_schema <> 'staging_compliance'
+            AND edw_table_definition.dwid IS NULL
     """, "table_output_step test 1: Record(s) with a target_table field value that does not exist in " \
          "edw_table_definition.")
 
@@ -329,6 +331,8 @@ def table_output_field_test_1():
             , edw_field_definition.field_name
         FROM mdi.table_output_field
             JOIN mdi.table_output_step ON table_output_field.table_output_step_dwid = table_output_step.dwid
+                AND table_output_step.connectionname <> 'Ingress DB Connection'
+                AND table_output_step.target_schema <> 'staging_compliance'
             LEFT JOIN mdi.edw_table_definition ON table_output_step.target_schema = edw_table_definition.schema_name
                 AND table_output_step.target_table = edw_table_definition.table_name
             LEFT JOIN mdi.edw_field_definition ON edw_table_definition.dwid = edw_field_definition.edw_table_definition_dwid
@@ -383,7 +387,9 @@ def insert_update_step_test_1():
         FROM mdi.insert_update_step
             LEFT JOIN mdi.edw_table_definition ON insert_update_step.schema_name = edw_table_definition.schema_name
                 AND insert_update_step.table_name = edw_table_definition.table_name
-        WHERE edw_table_definition.dwid IS NULL
+        WHERE insert_update_step.connectionname <> 'Ingress DB Connection'
+            AND insert_update_step.schema_name <> 'staging_compliance' 
+            AND edw_table_definition.dwid IS NULL
     """, "insert_update_step test 1: Record(s) with a table_name field value that does not exist in the " \
          "mdi.edw_table_definition table.")
 
@@ -436,6 +442,8 @@ def insert_update_field_test_1():
             , edw_field_definition.field_name AS edw_table_definition_field_name
         FROM mdi.insert_update_field
             JOIN mdi.insert_update_step ON insert_update_field.insert_update_step_dwid = insert_update_step.dwid
+                AND insert_update_step.connectionname <> 'Ingress DB Connection'
+                AND insert_update_step.schema_name <> 'staging_compliance' 
             LEFT JOIN mdi.edw_table_definition ON insert_update_step.schema_name = edw_table_definition.schema_name
                 AND insert_update_step.table_name = edw_table_definition.table_name
             LEFT JOIN mdi.edw_field_definition ON edw_table_definition.dwid = edw_field_definition.edw_table_definition_dwid
