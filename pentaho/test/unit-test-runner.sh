@@ -169,13 +169,11 @@ function metadata_unit_test_fail_break {
   proceed=""
   read -r -n1 -t 30 proceed
   echo
-  if [[ $proceed == "y" ]]; then
+  if [[ $proceed == "y" || $proceed == "" ]]; then
     echo "Proceeding with remaining unit tests..."
   elif [[ $proceed == "n" ]]; then
     echo "Exiting unit test runner..."
     exit 1
-  elif [[ $proceed == "" ]]; then
-    echo "Proceeding with remaining unit tests..."
   else
     echo "Invalid input. Exiting unit test runner..."
     exit 1
@@ -228,7 +226,7 @@ execute_edw_metadata_unit_test "state_machine_definition_test_2"
 # If any EDW metadata unit tests fail, print the failures and ask the user whether to proceed with remaining unit tests
 # Otherwise, proceed with remaining unit tests
 if [[ -n $failed_unit_tests ]]; then
-  failed_unit_tests="EDW metadata unit tests FAILED:"$'\n'"${failed_unit_tests}"
+  failed_unit_tests="EDW metadata unit test(s) FAILED:"$'\n'"${failed_unit_tests}"
   echo $'\n'"$failed_unit_tests"
   metadata_unit_test_fail_break
 else
