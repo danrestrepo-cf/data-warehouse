@@ -46,7 +46,7 @@ def edw_table_definition_test_2():
                           AND history_source_tables.schema_name <> 'staging_octane'
         WHERE history_tables.database_name = 'staging'
           AND history_tables.schema_name = 'history_octane'
-    """, "edw_table_definition test 2: history_octane record(s) mapped to an unexpected source schema.")
+    """, "edw_table_definition test 2: history_octane record(s) mapped to an invalid source schema.")
 
 
 def edw_field_definition_test_1():
@@ -131,7 +131,7 @@ def edw_field_definition_test_3():
         FROM edw_field_population_b
         WHERE NOT (source_edw_field_definition_dwid IS NULL
             OR field_source_calculation IS NULL)
-    """, "edw_field_definition test 3: Records with unexpected non-null values in "
+    """, "edw_field_definition test 3: Records with invalid non-null values in "
          "source_edw_field_definition_dwid and/or field_source_calculation.")
 
 
@@ -142,7 +142,7 @@ def edw_join_definition_test_1():
         FROM mdi.edw_join_definition
         WHERE (SPLIT_PART(join_condition, '.', 1) <> 'primary_table'
             OR SPLIT_PART(SPLIT_PART(join_condition, '.', 2), ' = ', 2) !~ 't[0-9]')
-    """, "edw_join_definition test 1: join_condition references fields from an unexpected table.")
+    """, "edw_join_definition test 1: join_condition references fields from an invalid table.")
 
 
 def edw_join_tree_definition_test_1():
@@ -505,7 +505,7 @@ def json_output_field_test_2():
         WHERE NOT (json_output_field.field_name LIKE '%_pid'
             OR json_output_field.field_name LIKE '%_dwid'
             OR json_output_field.field_name IN ('dwid', 'data_source_integration_id', 'code'))
-    """, "json_output_field test 2: Unexpected field name.")
+    """, "json_output_field test 2: invalid field name.")
 
 
 def state_machine_definition_test_1():
