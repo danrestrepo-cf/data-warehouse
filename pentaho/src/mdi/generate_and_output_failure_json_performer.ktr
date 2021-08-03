@@ -1,6 +1,6 @@
 <transformation>
   <info>
-    <name>generate_and_output_json</name>
+    <name>generate_and_output_failure_json_performer</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -449,7 +449,7 @@
     <created_user>-</created_user>
     <created_date>2021/07/23 08:06:04.117</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/07/30 09:03:23.897</modified_date>
+    <modified_date>2021/08/03 12:22:36.531</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -509,18 +509,11 @@
 
 
 
-
-
-
-
-
-
-
 </note>
-      <xloc>880</xloc>
-      <yloc>496</yloc>
+      <xloc>496</xloc>
+      <yloc>480</yloc>
       <width>712</width>
-      <heigth>490</heigth>
+      <heigth>350</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>11</fontsize>
       <fontbold>Y</fontbold>
@@ -530,50 +523,6 @@
       <fontcolorblue>0</fontcolorblue>
       <backgroundcolorred>255</backgroundcolorred>
       <backgroundcolorgreen>128</backgroundcolorgreen>
-      <backgroundcolorblue>128</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
-    <notepad>
-      <note>Generate success output                                                                                                                                      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</note>
-      <xloc>96</xloc>
-      <yloc>496</yloc>
-      <width>719</width>
-      <heigth>490</heigth>
-      <fontname>Segoe UI</fontname>
-      <fontsize>11</fontsize>
-      <fontbold>Y</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>128</backgroundcolorred>
-      <backgroundcolorgreen>255</backgroundcolorgreen>
       <backgroundcolorblue>128</backgroundcolorblue>
       <bordercolorred>100</bordercolorred>
       <bordercolorgreen>100</bordercolorgreen>
@@ -594,7 +543,7 @@
 
 </note>
       <xloc>896</xloc>
-      <yloc>1072</yloc>
+      <yloc>896</yloc>
       <width>463</width>
       <heigth>250</heigth>
       <fontname>Segoe UI</fontname>
@@ -625,8 +574,8 @@
 
 
 </note>
-      <xloc>416</xloc>
-      <yloc>1072</yloc>
+      <xloc>432</xloc>
+      <yloc>896</yloc>
       <width>370</width>
       <heigth>250</heigth>
       <fontname>Segoe UI</fontname>
@@ -636,9 +585,9 @@
       <fontcolorred>0</fontcolorred>
       <fontcolorgreen>0</fontcolorgreen>
       <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>128</backgroundcolorred>
-      <backgroundcolorgreen>255</backgroundcolorgreen>
-      <backgroundcolorblue>255</backgroundcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
       <bordercolorred>100</bordercolorred>
       <bordercolorgreen>100</bordercolorgreen>
       <bordercolorblue>100</bordercolorblue>
@@ -721,134 +670,16 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[generate_and_output_json] Create stream with output_json_type</from>
-      <to>[generate_and_output_json] Write output_json_type to log</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[generate_and_output_json] SUCCESS - Write to log</from>
-      <to>[generate_and_output_json] SUCCESS - Build output JSON and S3 file output path</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[generate_and_output_json] SUCCESS - Build output JSON and S3 file output path</from>
-      <to>[generate_and_output_json] Write generated rows to log</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[generate_and_output_json] SUCCESS - Build output JSON and S3 file output path</from>
-      <to>[generate_and_output_json] S3 file output</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>[generate_and_output_json] Determine if success or failure</from>
+      <from>[generate_and_output_json] Write output_json_type to log</from>
       <to>[generate_and_output_json] FAILURE - Write to log</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[generate_and_output_json] Determine if success or failure</from>
-      <to>[generate_and_output_json] SUCCESS - Write to log</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[generate_and_output_json] Write output_json_type to log</from>
-      <to>[generate_and_output_json] Determine if success or failure</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>[generate_and_output_json] Get rows from result</from>
-      <to>[generate_and_output_json] Create stream with output_json_type</to>
+      <to>[generate_and_output_json] Write output_json_type to log</to>
       <enabled>Y</enabled>
     </hop>
   </order>
-  <step>
-    <name>[generate_and_output_json] Create stream with output_json_type</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>var output_json_type = getVariable("output_json_type", "ERROR");</jsScript_script>
-      </jsScript>
-    </jsScripts>
-    <fields>
-      <field>
-        <name>output_json_type</name>
-        <rename>output_json_type</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>832</xloc>
-      <yloc>160</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[generate_and_output_json] Determine if success or failure</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <send_true_to>[generate_and_output_json] SUCCESS - Write to log</send_true_to>
-    <send_false_to>[generate_and_output_json] FAILURE - Write to log</send_false_to>
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue>output_json_type</leftvalue>
-        <function>=</function>
-        <rightvalue/>
-        <value>
-          <name>constant</name>
-          <type>String</type>
-          <text>SUCCESS</text>
-          <length>-1</length>
-          <precision>-1</precision>
-          <isnull>N</isnull>
-          <mask/>
-        </value>
-      </condition>
-    </compare>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>832</xloc>
-      <yloc>352</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
   <step>
     <name>[generate_and_output_json] FAILURE - Build output JSON and S3 file output path</name>
     <type>ScriptValueMod</type>
@@ -918,8 +749,8 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1232</xloc>
-      <yloc>848</yloc>
+      <xloc>832</xloc>
+      <yloc>688</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -950,8 +781,8 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1232</xloc>
-      <yloc>720</yloc>
+      <xloc>832</xloc>
+      <yloc>560</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -977,7 +808,7 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     </remotesteps>
     <GUI>
       <xloc>832</xloc>
-      <yloc>80</yloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1048,113 +879,7 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     </remotesteps>
     <GUI>
       <xloc>1120</xloc>
-      <yloc>1184</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[generate_and_output_json] SUCCESS - Build output JSON and S3 file output path</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>
-// Build output JSON
-var outer_json = {};
-var inner_json = {};
-inner_json.load_type = "FULL_LOAD";
-inner_json.key_field_name = null;
-inner_json.key_field_values = null;
-
-outer_json.token_id = token_id;
-outer_json.output = inner_json
-
-var mdi_output_json = JSON.stringify(outer_json);
-
-
-// Build S3 file output path
-var bucket_prefix = "qa";//environment;
-var bucket_postfix = "-data-warehouse-ingress";
-var file_string1 = "s3://";
-var file_string2 = "/step-function-response/pending/success/";
-var etl_batch_id = getVariable("etl_batch_id", "undefined");
-var bucket = bucket_prefix.concat(bucket_postfix);
-var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id);
-</jsScript_script>
-      </jsScript>
-    </jsScripts>
-    <fields>
-      <field>
-        <name>mdi_output_json</name>
-        <rename>mdi_output_json</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-      <field>
-        <name>s3_output_filepath</name>
-        <rename>s3_output_filepath</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>464</xloc>
-      <yloc>848</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[generate_and_output_json] SUCCESS - Write to log</name>
-    <type>WriteToLog</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <loglevel>log_level_debug</loglevel>
-    <displayHeader>Y</displayHeader>
-    <limitRows>N</limitRows>
-    <limitRowsNumber>0</limitRowsNumber>
-    <logmessage/>
-    <fields>
-      </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>464</xloc>
-      <yloc>720</yloc>
+      <yloc>1008</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1185,8 +910,8 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
       </output>
     </remotesteps>
     <GUI>
-      <xloc>592</xloc>
-      <yloc>1184</yloc>
+      <xloc>608</xloc>
+      <yloc>1008</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1218,7 +943,7 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     </remotesteps>
     <GUI>
       <xloc>832</xloc>
-      <yloc>256</yloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

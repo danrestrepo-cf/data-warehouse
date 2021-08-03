@@ -8,21 +8,21 @@
   <created_user>-</created_user>
   <created_date>2020/10/10 07:31:50.634</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2021/08/03 10:31:21.943</modified_date>
+  <modified_date>2021/08/03 13:42:39.674</modified_date>
   <parameters>
     <parameter>
       <name>database_hostname</name>
-      <default_value>localhost</default_value>
+      <default_value/>
       <description/>
     </parameter>
     <parameter>
       <name>database_password</name>
-      <default_value>testonly</default_value>
+      <default_value/>
       <description/>
     </parameter>
     <parameter>
       <name>database_port</name>
-      <default_value>5432</default_value>
+      <default_value/>
       <description/>
     </parameter>
     <parameter>
@@ -32,22 +32,22 @@
     </parameter>
     <parameter>
       <name>database_username</name>
-      <default_value>postgres</default_value>
+      <default_value/>
       <description/>
     </parameter>
     <parameter>
       <name>environment</name>
-      <default_value>qa</default_value>
+      <default_value/>
       <description/>
     </parameter>
     <parameter>
       <name>etl_batch_id</name>
-      <default_value>asdf</default_value>
+      <default_value/>
       <description/>
     </parameter>
     <parameter>
       <name>input_data</name>
-      <default_value>{"token_id":"TOKEN_ID_VALUE","mdi_input_json":{"load_type":"KEY_LOOKUP","key_field_name":"fnm_mbs_loan_default_loss_party_type.code","key_field_values":"'INVESTOR','LENDER','NA','SHARED'"}}</default_value>
+      <default_value/>
       <description>The JSON string passed from a step function.</description>
     </parameter>
     <parameter>
@@ -62,7 +62,7 @@
     </parameter>
     <parameter>
       <name>process_name</name>
-      <default_value>SP-200003</default_value>
+      <default_value/>
       <description>The name that signifies what process should be run.</description>
     </parameter>
   </parameters>
@@ -1066,17 +1066,17 @@
       <specification_method>rep_name</specification_method>
       <job_object_id/>
       <filename/>
-      <jobname/>
-      <directory/>
+      <jobname>generate_and_output_failure_json_controller</jobname>
+      <directory>/mdi</directory>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>Y</params_from_previous>
       <exec_per_row>N</exec_per_row>
       <set_logfile>N</set_logfile>
       <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Nothing</loglevel>
+      <logext>txt</logext>
+      <add_date>Y</add_date>
+      <add_time>Y</add_time>
+      <loglevel>Debug</loglevel>
       <slave_server_name/>
       <wait_until_finished>Y</wait_until_finished>
       <follow_abort_remote>N</follow_abort_remote>
@@ -1086,11 +1086,6 @@
       <run_configuration>Pentaho local</run_configuration>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>output_json_type</name>
-          <stream_name/>
-          <value>FAILURE</value>
-        </parameter>
       </parameters>
       <set_append_logfile>N</set_append_logfile>
       <parallel>N</parallel>
@@ -1108,17 +1103,17 @@
       <specification_method>rep_name</specification_method>
       <job_object_id/>
       <filename/>
-      <jobname>generate_and_output_json</jobname>
+      <jobname>generate_and_output_success_json_controller</jobname>
       <directory>/mdi</directory>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>Y</params_from_previous>
       <exec_per_row>N</exec_per_row>
       <set_logfile>N</set_logfile>
       <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Nothing</loglevel>
+      <logext>txt</logext>
+      <add_date>Y</add_date>
+      <add_time>Y</add_time>
+      <loglevel>Debug</loglevel>
       <slave_server_name/>
       <wait_until_finished>Y</wait_until_finished>
       <follow_abort_remote>N</follow_abort_remote>
@@ -1128,11 +1123,6 @@
       <run_configuration>Pentaho local</run_configuration>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>output_json_type</name>
-          <stream_name/>
-          <value>SUCCESS</value>
-        </parameter>
       </parameters>
       <set_append_logfile>N</set_append_logfile>
       <parallel>N</parallel>
