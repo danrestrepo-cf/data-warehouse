@@ -10,6 +10,7 @@ services:
             - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
         ports:
             - "5432:5432"
+        shm_size: 2gb
     flyway-roles:
         # this creates users/roles, etc that are normally created in terraform
         image: flyway/flyway:6
