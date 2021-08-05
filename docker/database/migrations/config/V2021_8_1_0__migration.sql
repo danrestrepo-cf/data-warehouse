@@ -311,7 +311,7 @@ WITH new_staging_tables AS (
         RETURNING dwid, database_name, schema_name, table_name, primary_source_edw_table_definition_dwid
 )
 
-, existing_tables AS (
+, existing_tables_with_missing_columns AS (
     SELECT edw_table_definition.dwid
         , edw_table_definition.database_name
         , edw_table_definition.schema_name
@@ -323,7 +323,7 @@ WITH new_staging_tables AS (
             AND edw_table_definition.table_name = 'borrower_user_deal'))
 )
 
-, all_tables AS (
+, all_tables_for_metadata_addition AS (
     SELECT new_staging_tables.dwid
         , new_staging_tables.database_name
         , new_staging_tables.schema_name
@@ -345,12 +345,12 @@ WITH new_staging_tables AS (
         , new_star_loan_table.primary_source_edw_table_definition_dwid
     FROM new_star_loan_table
     UNION ALL
-    SELECT existing_tables.dwid
-        , existing_tables.database_name
-        , existing_tables.schema_name
-        , existing_tables.table_name
-        , existing_tables.primary_source_edw_table_definition_dwid
-    FROM existing_tables
+    SELECT existing_tables_with_missing_columns.dwid
+        , existing_tables_with_missing_columns.database_name
+        , existing_tables_with_missing_columns.schema_name
+        , existing_tables_with_missing_columns.table_name
+        , existing_tables_with_missing_columns.primary_source_edw_table_definition_dwid
+    FROM existing_tables_with_missing_columns
 )
 
 , new_fields_octane_metadata (schema_name, table_name, field_name, key_field_flag, field_order) AS (
@@ -497,12 +497,12 @@ WITH new_staging_tables AS (
 
 , new_staging_field_definitions AS (
     INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag)
-        SELECT all_tables.dwid
+        SELECT all_tables_for_metadata_addition.dwid
             , new_fields_octane_metadata.field_name
             , new_fields_octane_metadata.key_field_flag
         FROM new_fields_octane_metadata
-            JOIN all_tables ON new_fields_octane_metadata.schema_name = all_tables.schema_name
-                AND new_fields_octane_metadata.table_name = all_tables.table_name
+            JOIN all_tables_for_metadata_addition ON new_fields_octane_metadata.schema_name = all_tables_for_metadata_addition.schema_name
+                AND new_fields_octane_metadata.table_name = all_tables_for_metadata_addition.table_name
         WHERE new_fields_octane_metadata.schema_name = 'staging_octane'
         RETURNING dwid, edw_table_definition_dwid, field_name
 )
@@ -510,14 +510,14 @@ WITH new_staging_tables AS (
 , new_history_field_definitions AS (
     INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag,
                                           source_edw_field_definition_dwid)
-        SELECT all_tables.dwid
+        SELECT all_tables_for_metadata_addition.dwid
             , new_fields_octane_metadata.field_name
             , new_fields_octane_metadata.key_field_flag
             , new_staging_field_definitions.dwid
         FROM new_fields_octane_metadata
-            JOIN all_tables ON new_fields_octane_metadata.schema_name = all_tables.schema_name
-                AND new_fields_octane_metadata.table_name = all_tables.table_name
-            LEFT JOIN new_staging_field_definitions ON all_tables.primary_source_edw_table_definition_dwid =
+            JOIN all_tables_for_metadata_addition ON new_fields_octane_metadata.schema_name = all_tables_for_metadata_addition.schema_name
+                AND new_fields_octane_metadata.table_name = all_tables_for_metadata_addition.table_name
+            LEFT JOIN new_staging_field_definitions ON all_tables_for_metadata_addition.primary_source_edw_table_definition_dwid =
                                                        new_staging_field_definitions.edw_table_definition_dwid
                 AND new_fields_octane_metadata.field_name = new_staging_field_definitions.field_name
         WHERE new_fields_octane_metadata.schema_name = 'history_octane'
@@ -526,7 +526,7 @@ WITH new_staging_tables AS (
 , new_loan_fact_field_definitions AS (
     INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, data_type,
                                           reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-        SELECT all_tables.dwid
+        SELECT all_tables_for_metadata_addition.dwid
             , new_fields_loan_fact_metadata.field_name
             , new_fields_loan_fact_metadata.key_field_flag
             , new_fields_loan_fact_metadata.data_type
@@ -535,9 +535,9 @@ WITH new_staging_tables AS (
             , new_fields_loan_fact_metadata.reporting_hidden::mdi.looker_yes_no
             , new_fields_loan_fact_metadata.reporting_key_flag
         FROM new_fields_loan_fact_metadata
-            JOIN all_tables ON new_fields_loan_fact_metadata.schema_name = all_tables.schema_name
-                AND new_fields_loan_fact_metadata.table_name = all_tables.table_name
-                AND all_tables.table_name = 'loan_fact'
+            JOIN all_tables_for_metadata_addition ON new_fields_loan_fact_metadata.schema_name = all_tables_for_metadata_addition.schema_name
+                AND new_fields_loan_fact_metadata.table_name = all_tables_for_metadata_addition.table_name
+                AND all_tables_for_metadata_addition.table_name = 'loan_fact'
 )
 
 , new_process_variables (name, target_table, json_output_field, sql) AS (
