@@ -537,7 +537,6 @@ WITH new_staging_tables AS (
         FROM new_fields_loan_fact_metadata
             JOIN all_tables_for_metadata_addition ON new_fields_loan_fact_metadata.schema_name = all_tables_for_metadata_addition.schema_name
                 AND new_fields_loan_fact_metadata.table_name = all_tables_for_metadata_addition.table_name
-                AND all_tables_for_metadata_addition.table_name = 'loan_fact'
 )
 
 , new_process_variables (name, target_table, json_output_field, sql) AS (
@@ -603,8 +602,7 @@ WHERE history_table.fter_message_id is NULL')
              , 'N'
              , 'N'
         FROM new_process
-        JOIN new_process_variables
-             ON new_process.name = new_process_variables.name
+            JOIN new_process_variables ON new_process.name = new_process_variables.name
         RETURNING dwid, target_schema, target_table
 )
 
@@ -620,8 +618,6 @@ WHERE history_table.fter_message_id is NULL')
             JOIN new_fields_octane_metadata ON new_table_output_step.target_schema = new_fields_octane_metadata.schema_name
                 AND new_table_output_step.target_table = new_fields_octane_metadata.table_name
                 AND new_fields_octane_metadata.schema_name = 'history_octane'
-                AND new_fields_octane_metadata.table_name IN ('account_id_sequence', 'deal_id_sequence',
-                                                              'fault_tolerant_event_registration')
 )
 
 , new_json_output_field AS (
