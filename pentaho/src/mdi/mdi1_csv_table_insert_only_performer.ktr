@@ -1,6 +1,6 @@
 <transformation>
   <info>
-    <name>performer_excel_to_table</name>
+    <name>mdi1_csv_table_insert_only_performer</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -479,7 +479,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.089</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/02/01 16:41:33.205</modified_date>
+    <modified_date>2021/08/02 14:42:13.483</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -513,7 +513,7 @@ DATABASE_FIELD_NAME. </note>
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Microsoft Excel input
+      <note>CSV file input
                                                                                                       
 
 
@@ -674,33 +674,33 @@ DATABASE_FIELD_NAME. </note>
   </connection>
   <order>
     <hop>
-      <from>[performer_excel_to_table] Load Table Output Field Settings</from>
-      <to>[performer_excel_to_table] ETL metadata injection</to>
+      <from>[performer_csv_file_to_table] Load CSV Input Step Settings</from>
+      <to>[performer_csv_file_to_table] ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_excel_to_table] Load Excel Field Settings</from>
-      <to>[performer_excel_to_table] ETL metadata injection</to>
+      <from>[performer_csv_file_to_table] Load CSV Field Settings</from>
+      <to>[performer_csv_file_to_table] ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_excel_to_table] Load Table Output Step Settings</from>
-      <to>[performer_excel_to_table] ETL metadata injection</to>
+      <from>[performer_csv_file_to_table] Load Table Output Field Settings</from>
+      <to>[performer_csv_file_to_table] ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_excel_to_table] Load Table Output Sensitive Fields</from>
-      <to>[performer_excel_to_table] ETL metadata injection</to>
+      <from>[performer_csv_file_to_table] Load Table Output Step Settings</from>
+      <to>[performer_csv_file_to_table] ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[performer_excel_to_table] Load Excel Step Settings</from>
-      <to>[performer_excel_to_table] ETL metadata injection</to>
+      <from>[performer_csv_file_to_table] Load Table Output Sensitive Fields</from>
+      <to>[performer_csv_file_to_table] ETL metadata injection</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>[performer_excel_to_table] ETL metadata injection</name>
+    <name>[performer_csv_file_to_table] ETL metadata injection</name>
     <type>MetaInject</type>
     <description/>
     <distribute>Y</distribute>
@@ -712,7 +712,7 @@ DATABASE_FIELD_NAME. </note>
     </partitioning>
     <specification_method>rep_name</specification_method>
     <trans_object_id/>
-    <trans_name>template_excel_to_table</trans_name>
+    <trans_name>mdi1_csv_table_insert_only_template</trans_name>
     <filename/>
     <directory_path>${Internal.Entry.Current.Directory}</directory_path>
     <source_step/>
@@ -723,291 +723,319 @@ DATABASE_FIELD_NAME. </note>
     <stream_target_step/>
     <mappings>
       <mapping>
-        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
-        <target_attribute_key>NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
-        <source_field>field_name</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Table output</target_step_name>
+        <target_step_name>[template_csv_file_to_table] Table output</target_step_name>
         <target_attribute_key>PARTITIONING_FIELD</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Table Output Field Settings</source_step>
+        <source_step>[performer_csv_file_to_table] Load Table Output Step Settings</source_step>
         <source_field>partitioning_field</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
-        <target_attribute_key>CURRENCY</target_attribute_key>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>FIELD_TYPE</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
-        <source_field>field_currency</source_field>
+        <source_step>[performer_csv_file_to_table] Load CSV Field Settings</source_step>
+        <source_field>field_type</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
-        <target_attribute_key>SHEET_START_COL</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Step Settings</source_step>
-        <source_field>sheet_start_col</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Table output</target_step_name>
-        <target_attribute_key>AUTO_GENERATED_KEY_FIELD</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Table Output Field Settings</source_step>
-        <source_field>auto_generated_key_field</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Table output</target_step_name>
-        <target_attribute_key>IGNORE_INSERT_ERRORS</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Table Output Field Settings</source_step>
-        <source_field>ignore_insert_errors</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
-        <target_attribute_key>EXCLUDE_FILEMASK</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Step Settings</source_step>
-        <source_field>exclude_filemask</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Table output</target_step_name>
-        <target_attribute_key>TABLE_NAME_FIELD</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Table Output Field Settings</source_step>
-        <source_field>table_name_field</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Table output</target_step_name>
-        <target_attribute_key>TRUNCATE_TABLE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Table Output Field Settings</source_step>
-        <source_field>truncate_table</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
-        <target_attribute_key>SHEET_START_ROW</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Step Settings</source_step>
-        <source_field>sheet_start_row</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
-        <target_attribute_key>FILEMASK</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Step Settings</source_step>
-        <source_field>filemask</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Table output</target_step_name>
-        <target_attribute_key>USE_BATCH_UPDATE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Table Output Field Settings</source_step>
-        <source_field>use_batch_update</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
-        <target_attribute_key>SPREADSHEET_TYPE</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Step Settings</source_step>
-        <source_field>spreadsheet_type</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
-        <target_attribute_key>TRIM_TYPE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
-        <source_field>field_trim_type</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
-        <target_attribute_key>DECIMAL</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
-        <source_field>field_decimal</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Table output</target_step_name>
-        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Table Output Field Settings</source_step>
-        <source_field>connectionname</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Table output</target_step_name>
-        <target_attribute_key>DATABASE_FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Table Output Step Settings</source_step>
-        <source_field>database_stream_name</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Table output</target_step_name>
-        <target_attribute_key>DATABASE_STREAM_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Table Output Step Settings</source_step>
-        <source_field>database_field_name</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
-        <target_attribute_key>FILE_REQUIRED</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Step Settings</source_step>
-        <source_field>file_required</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Table output</target_step_name>
-        <target_attribute_key>SPECIFY_DATABASE_FIELDS</target_attribute_key>
-        <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Table Output Field Settings</source_step>
-        <source_field>specify_database_fields</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Set field etl_batch_id to parameter etl_batch_id's value</target_step_name>
+        <target_step_name>[template_csv_file_to_table] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
         <target_attribute_key>REPLACE_VALUE</target_attribute_key>
         <target_detail>Y</target_detail>
         <source_step/>
         <source_field>${etl_batch_id}</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
-        <target_attribute_key>PRECISION</target_attribute_key>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>FIELD_CURRENCY</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
-        <source_field>field_precision</source_field>
+        <source_step>[performer_csv_file_to_table] Load CSV Field Settings</source_step>
+        <source_field>field_currency</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
-        <target_attribute_key>SHEET_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Step Settings</source_step>
-        <source_field>sheet_name</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
+        <target_step_name>[template_csv_file_to_table]  Specify logging fields (non-sensitive)</target_step_name>
         <target_attribute_key>FIELD_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>data_source_dwid</source_field>
+        <source_step>[performer_csv_file_to_table] Load Table Output Sensitive Fields</source_step>
+        <source_field>database_stream_name</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_excel_to_table] Table output</target_step_name>
-        <target_attribute_key>RETURN_AUTO_GENERATED_KEY</target_attribute_key>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>ENCODING</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Table Output Field Settings</source_step>
-        <source_field>return_auto_generated_key_field</source_field>
+        <source_step>[performer_csv_file_to_table] Load CSV Input Step Settings</source_step>
+        <source_field>file_encoding</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_excel_to_table] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>INCLUDE_FILENAME</target_attribute_key>
+        <target_detail>N</target_detail>
         <source_step/>
-        <source_field>${data_source_dwid}</source_field>
+        <source_field>N</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_excel_to_table] Set field etl_batch_id to parameter etl_batch_id's value</target_step_name>
+        <target_step_name>[template_csv_file_to_table] Table output</target_step_name>
+        <target_attribute_key>IGNORE_INSERT_ERRORS</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_csv_file_to_table] Load Table Output Step Settings</source_step>
+        <source_field>ignore_insert_errors</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>PARALLEL</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_csv_file_to_table] Load CSV Input Step Settings</source_step>
+        <source_field>process_in_parallel</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
         <target_attribute_key>FIELD_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
         <source_step/>
         <source_field>etl_batch_id</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
-        <target_attribute_key>FORMAT</target_attribute_key>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>NEWLINE_POSSIBLE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_csv_file_to_table] Load CSV Input Step Settings</source_step>
+        <source_field>newline_possible</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] Table output</target_step_name>
+        <target_attribute_key>AUTO_GENERATED_KEY_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_csv_file_to_table] Load Table Output Step Settings</source_step>
+        <source_field>auto_generated_key_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>FIELD_GROUP</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
+        <source_step>[performer_csv_file_to_table] Load CSV Field Settings</source_step>
+        <source_field>field_group</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] Table output</target_step_name>
+        <target_attribute_key>TRUNCATE_TABLE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_csv_file_to_table] Load Table Output Step Settings</source_step>
+        <source_field>truncate_table</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>data_source_dwid</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>FILENAME_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_csv_file_to_table] Load CSV Input Step Settings</source_step>
+        <source_field>filename_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>FIELD_FORMAT</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_csv_file_to_table] Load CSV Field Settings</source_step>
         <source_field>field_format</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
-        <target_attribute_key>REPEAT</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>N</source_field>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>ADD_FILENAME_RESULT</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_csv_file_to_table] Load CSV Input Step Settings</source_step>
+        <source_field>add_filename_result</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
-        <target_attribute_key>LENGTH</target_attribute_key>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>FIELD_PRECISION</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
+        <source_step>[performer_csv_file_to_table] Load CSV Field Settings</source_step>
+        <source_field>field_precision</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] Table output</target_step_name>
+        <target_attribute_key>TABLE_NAME_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_csv_file_to_table] Load Table Output Step Settings</source_step>
+        <source_field>table_name_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
+        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step/>
+        <source_field>${data_source_dwid}</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>FIELD_DECIMAL</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_csv_file_to_table] Load CSV Field Settings</source_step>
+        <source_field>field_decimal</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>ENCLOSURE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_csv_file_to_table] Load CSV Input Step Settings</source_step>
+        <source_field>enclosure</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] Table output</target_step_name>
+        <target_attribute_key>USE_BATCH_UPDATE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_csv_file_to_table] Load Table Output Step Settings</source_step>
+        <source_field>use_batch_update</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>FIELD_LENGTH</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_csv_file_to_table] Load CSV Field Settings</source_step>
         <source_field>field_length</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
-        <target_attribute_key>INCLUDE_SUBFOLDERS</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Step Settings</source_step>
-        <source_field>include_subfolders</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Table output</target_step_name>
-        <target_attribute_key>TARGET_SCHEMA</target_attribute_key>
+        <target_step_name>[template_csv_file_to_table] Table output</target_step_name>
+        <target_attribute_key>SPECIFY_DATABASE_FIELDS</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Table Output Field Settings</source_step>
-        <source_field>target_schema</source_field>
+        <source_step>[performer_csv_file_to_table] Load Table Output Step Settings</source_step>
+        <source_field>specify_database_fields</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_excel_to_table]  Specify logging fields (non-sensitive)</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_step_name>[template_csv_file_to_table] Table output</target_step_name>
+        <target_attribute_key>DATABASE_STREAM_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Table Output Sensitive Fields</source_step>
+        <source_step>[performer_csv_file_to_table] Load Table Output Field Settings</source_step>
+        <source_field>database_field_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>BUFFERSIZE</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_csv_file_to_table] Load CSV Input Step Settings</source_step>
+        <source_field>buffersize</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] Table output</target_step_name>
+        <target_attribute_key>CONNECTIONNAME</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_csv_file_to_table] Load Table Output Step Settings</source_step>
+        <source_field>connectionname</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] Table output</target_step_name>
+        <target_attribute_key>DATABASE_FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_csv_file_to_table] Load Table Output Field Settings</source_step>
         <source_field>database_stream_name</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_excel_to_table] Table output</target_step_name>
-        <target_attribute_key>COMMIT_SIZE</target_attribute_key>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>FIELD_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_csv_file_to_table] Load CSV Field Settings</source_step>
+        <source_field>field_name</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>LAZY_CONVERSION</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Table Output Field Settings</source_step>
-        <source_field>commit_size</source_field>
+        <source_step>[performer_csv_file_to_table] Load CSV Input Step Settings</source_step>
+        <source_field>lazy_conversion</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
-        <target_attribute_key>TYPE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
-        <source_field>field_type</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
         <target_attribute_key>FILENAME</target_attribute_key>
-        <target_detail>Y</target_detail>
+        <target_detail>N</target_detail>
         <source_step/>
         <source_field>${input_path}/${input_file}</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_excel_to_table] Table output</target_step_name>
+        <target_step_name>[template_csv_file_to_table] Table output</target_step_name>
+        <target_attribute_key>RETURN_AUTO_GENERATED_KEY</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_csv_file_to_table] Load Table Output Step Settings</source_step>
+        <source_field>return_auto_generated_key_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>FIELD_TRIM_TYPE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>[performer_csv_file_to_table] Load CSV Field Settings</source_step>
+        <source_field>field_trim_type</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] Table output</target_step_name>
         <target_attribute_key>TABLE_NAME_DEFINED_IN_FIELD</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Table Output Field Settings</source_step>
+        <source_step>[performer_csv_file_to_table] Load Table Output Step Settings</source_step>
         <source_field>table_name_defined_in_field</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_excel_to_table] Microsoft Excel input</target_step_name>
-        <target_attribute_key>GROUP</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_excel_to_table] Load Excel Field Settings</source_step>
-        <source_field>field_group</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_excel_to_table] Table output</target_step_name>
-        <target_attribute_key>PARTITION_DATA_PER</target_attribute_key>
+        <target_step_name>[template_csv_file_to_table] Table output</target_step_name>
+        <target_attribute_key>COMMIT_SIZE</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Table Output Field Settings</source_step>
-        <source_field>partition_data_per</source_field>
+        <source_step>[performer_csv_file_to_table] Load Table Output Step Settings</source_step>
+        <source_field>commit_size</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_excel_to_table] Table output</target_step_name>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>ROW_NUM_FIELD</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_csv_file_to_table] Load CSV Input Step Settings</source_step>
+        <source_field>row_num_field</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] Table output</target_step_name>
+        <target_attribute_key>TARGET_SCHEMA</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_csv_file_to_table] Load Table Output Step Settings</source_step>
+        <source_field>target_schema</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>FORMAT</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_csv_file_to_table] Load CSV Input Step Settings</source_step>
+        <source_field>file_format</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] Table output</target_step_name>
+        <target_attribute_key>PARTITION_OVER_TABLES</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_csv_file_to_table] Load Table Output Step Settings</source_step>
+        <source_field>partition_over_tables</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] Table output</target_step_name>
         <target_attribute_key>TARGET_TABLE</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Table Output Field Settings</source_step>
+        <source_step>[performer_csv_file_to_table] Load Table Output Step Settings</source_step>
         <source_field>target_table</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_excel_to_table] Table output</target_step_name>
-        <target_attribute_key>PARTITION_OVER_TABLES</target_attribute_key>
+        <target_step_name>[template_csv_file_to_table] Table output</target_step_name>
+        <target_attribute_key>PARTITION_DATA_PER</target_attribute_key>
         <target_detail>N</target_detail>
-        <source_step>[performer_excel_to_table] Load Table Output Field Settings</source_step>
-        <source_field>partition_over_tables</source_field>
+        <source_step>[performer_csv_file_to_table] Load Table Output Step Settings</source_step>
+        <source_field>partition_data_per</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>DELIMITER</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_csv_file_to_table] Load CSV Input Step Settings</source_step>
+        <source_field>delimiter</source_field>
+      </mapping>
+      <mapping>
+        <target_step_name>[template_csv_file_to_table] CSV file input</target_step_name>
+        <target_attribute_key>HEADER_PRESENT</target_attribute_key>
+        <target_detail>N</target_detail>
+        <source_step>[performer_csv_file_to_table] Load CSV Input Step Settings</source_step>
+        <source_field>header_present</source_field>
       </mapping>
     </mappings>
     <attributes/>
@@ -1025,7 +1053,7 @@ DATABASE_FIELD_NAME. </note>
     </GUI>
   </step>
   <step>
-    <name>[performer_excel_to_table] Load Excel Field Settings</name>
+    <name>[performer_csv_file_to_table] Load CSV Field Settings</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1037,25 +1065,24 @@ DATABASE_FIELD_NAME. </note>
     </partitioning>
     <connection>Config DB Connection</connection>
     <sql>SELECT
-    microsoft_excel_input_field.field_name
-    , microsoft_excel_input_field.field_format
-    , microsoft_excel_input_field.field_length
-    , microsoft_excel_input_field.field_precision
-    , microsoft_excel_input_field.field_currency
-    , microsoft_excel_input_field.field_decimal
-    , microsoft_excel_input_field.field_group
-    , microsoft_excel_input_field.field_trim_type
-    , microsoft_excel_input_field.field_order
-    , microsoft_excel_input_field.field_type
+    csv_file_input_field.field_name
+    , csv_file_input_field.field_format
+    , csv_file_input_field.field_length
+    , csv_file_input_field.field_precision
+    , csv_file_input_field.field_currency
+    , csv_file_input_field.field_decimal
+    , csv_file_input_field.field_group
+    , csv_file_input_field.field_trim_type
+    , csv_file_input_field.field_order
+    , csv_file_input_field.field_type
 FROM
-    mdi.microsoft_excel_input_step
-        LEFT JOIN mdi.microsoft_excel_input_field ON microsoft_excel_input_step.dwid = microsoft_excel_input_field.microsoft_excel_input_step_dwid
+    mdi.csv_file_input_step csv_step
+        LEFT JOIN mdi.csv_file_input_field ON csv_step.dwid = csv_file_input_field.csv_file_input_step_dwid
 WHERE
-        microsoft_excel_input_step.process_dwid = ${process_dwid}
+        csv_step.process_dwid = ${process_dwid}
 order by
-    microsoft_excel_input_field.field_order ASC
-;
-</sql>
+    csv_file_input_field.field_order ASC
+;</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -1069,7 +1096,7 @@ order by
         <name>field_name</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
+        <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
         <comments>field_name</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -1092,7 +1119,7 @@ order by
         <name>field_format</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
+        <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
         <comments>field_format</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -1115,7 +1142,7 @@ order by
         <name>field_length</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
+        <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
         <comments>field_length</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
@@ -1138,7 +1165,7 @@ order by
         <name>field_precision</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
+        <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
         <comments>field_precision</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
@@ -1161,7 +1188,7 @@ order by
         <name>field_currency</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
+        <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
         <comments>field_currency</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -1184,7 +1211,7 @@ order by
         <name>field_decimal</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
+        <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
         <comments>field_decimal</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -1207,7 +1234,7 @@ order by
         <name>field_group</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
+        <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
         <comments>field_group</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -1230,7 +1257,7 @@ order by
         <name>field_trim_type</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
+        <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
         <comments>field_trim_type</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -1253,7 +1280,7 @@ order by
         <name>field_order</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
+        <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
         <comments>field_order</comments>
         <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
@@ -1276,7 +1303,7 @@ order by
         <name>field_type</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Field Settings</origin>
+        <origin>[performer_csv_to_table] Load CSV Row Settings</origin>
         <comments>field_type</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -1309,7 +1336,7 @@ order by
     </GUI>
   </step>
   <step>
-    <name>[performer_excel_to_table] Load Excel Step Settings</name>
+    <name>[performer_csv_file_to_table] Load CSV Input Step Settings</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1321,18 +1348,22 @@ order by
     </partitioning>
     <connection>Config DB Connection</connection>
     <sql>SELECT
-    p.name
-    , microsoft_excel_input_step.spreadsheet_type
-    , microsoft_excel_input_step.filemask
-    , microsoft_excel_input_step.exclude_filemask
-    , microsoft_excel_input_step.file_required
-    , microsoft_excel_input_step.include_subfolders
-    , microsoft_excel_input_step.sheet_name
-    , microsoft_excel_input_step.sheet_start_row
-    , microsoft_excel_input_step.sheet_start_col
+    csv_file_input_step.buffersize
+    , csv_file_input_step.delimiter
+    , csv_file_input_step.enclosure
+    , csv_file_input_step.file_encoding
+    , csv_file_input_step.file_format
+    , csv_file_input_step.header_present
+    , csv_file_input_step.include_filename
+    , csv_file_input_step.lazy_conversion
+    , csv_file_input_step.newline_possible
+    , csv_file_input_step.process_in_parallel
+    , csv_file_input_step.add_filename_result
+    , csv_file_input_step.filename_field
+    , csv_file_input_step.row_num_field
 FROM
     mdi.process p
-        LEFT JOIN mdi.microsoft_excel_input_step ON p.dwid = microsoft_excel_input_step.process_dwid
+        LEFT JOIN mdi.csv_file_input_step ON p.dwid = csv_file_input_step.process_dwid
 WHERE
         p.dwid = ${process_dwid}
 ;</sql>
@@ -1344,174 +1375,13 @@ WHERE
     <cached_row_meta_active>N</cached_row_meta_active>
     <row-meta>
       <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>name</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Step Settings</origin>
-        <comments>name</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>spreadsheet_type</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Step Settings</origin>
-        <comments>spreadsheet_type</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>filemask</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Step Settings</origin>
-        <comments>filemask</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>exclude_filemask</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Step Settings</origin>
-        <comments>exclude_filemask</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>file_required</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Step Settings</origin>
-        <comments>file_required</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>include_subfolders</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Step Settings</origin>
-        <comments>include_subfolders</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>sheet_name</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel Step Settings</origin>
-        <comments>sheet_name</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>sheet_start_row</name>
+        <name>buffersize</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>[performer_excel_to_table] Load Excel Step Settings</origin>
-        <comments>sheet_start_row</comments>
+        <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
+        <comments>buffersize</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1528,14 +1398,267 @@ WHERE
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>Integer</type>
+        <type>String</type>
         <storagetype>normal</storagetype>
-        <name>sheet_start_col</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>[performer_excel_to_table] Load Excel Step Settings</origin>
-        <comments>sheet_start_col</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
+        <name>delimiter</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
+        <comments>delimiter</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>enclosure</name>
+        <length>1</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
+        <comments>enclosure</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>file_encoding</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
+        <comments>file_encoding</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>file_format</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
+        <comments>file_format</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>header_present</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
+        <comments>header_present</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>include_filename</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
+        <comments>include_filename</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>lazy_conversion</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
+        <comments>lazy_conversion</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>newline_possible</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
+        <comments>newline_possible</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>process_in_parallel</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
+        <comments>process_in_parallel</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>add_filename_result</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
+        <comments>add_filename_result</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>filename_field</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
+        <comments>filename_field</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>row_num_field</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input Step Settings</origin>
+        <comments>row_num_field</comments>
+        <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
@@ -1566,7 +1689,7 @@ WHERE
     </GUI>
   </step>
   <step>
-    <name>[performer_excel_to_table] Load Table Output Field Settings</name>
+    <name>[performer_csv_file_to_table] Load Table Output Field Settings</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1578,27 +1701,16 @@ WHERE
     </partitioning>
     <connection>Config DB Connection</connection>
     <sql>SELECT
-    p.name
-    , table_output_step.target_schema
-    , table_output_step.target_table
-    , table_output_step.commit_size
-    , table_output_step.partitioning_field
-    , table_output_step.table_name_field
-    , table_output_step.auto_generated_key_field
-    , table_output_step.partition_data_per
-    , table_output_step.return_auto_generated_key_field
-    , table_output_step.truncate_table
-    , table_output_step.connectionname
-    , table_output_step.partition_over_tables
-    , table_output_step.specify_database_fields
-    , table_output_step.ignore_insert_errors
-    , table_output_step.use_batch_update
-    , table_output_step.table_name_defined_in_field
+	table_output_field.database_field_name
+	, table_output_field.database_stream_name
+	, table_output_field.field_order
 FROM
-    mdi.process p
-        LEFT JOIN mdi.table_output_step ON p.dwid = table_output_step.process_dwid
+	mdi.table_output_step table_step
+		LEFT JOIN mdi.table_output_field ON table_step.dwid = table_output_field.table_output_step_dwid
 WHERE
-        p.dwid = ${process_dwid}
+		table_step.process_dwid = ${process_dwid}
+ORDER BY
+	table_output_field.field_order ASC
 ;</sql>
     <limit>0</limit>
     <lookup/>
@@ -1610,11 +1722,11 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>name</name>
+        <name>field_name_in_db</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>name</comments>
+        <origin>[performer_csv_to_table] Load Table Output Row Settings</origin>
+        <comments>field_name_in_db</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1633,543 +1745,37 @@ WHERE
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>excel_spreadsheet_type</name>
+        <name>field_name_in_stream</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load Table Output Row Settings</origin>
+        <comments>field_name_in_stream</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>BigNumber</type>
+        <storagetype>normal</storagetype>
+        <name>field_order</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>excel_spreadsheet_type</comments>
-        <conversion_Mask/>
+        <origin>[performer_csv_to_table] Load Table Output Row Settings</origin>
+        <comments>field_order</comments>
+        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>excel_filename</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>excel_filename</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>excel_filemask</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>excel_filemask</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>excel_exclude_filemask</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>excel_exclude_filemask</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>excel_file_required</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>excel_file_required</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>excel_include_subfolders</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>excel_include_subfolders</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>excel_sheet_name</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>excel_sheet_name</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>excel_sheet_start_row</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>excel_sheet_start_row</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>excel_sheet_start_col</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>excel_sheet_start_col</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_target_schema</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_target_schema</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_target_table</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_target_table</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>table_commit_size</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_commit_size</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_partitioning_field</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_partitioning_field</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_table_name_field</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_table_name_field</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_auto_generated_key_field</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_auto_generated_key_field</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_partition_data_per</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_partition_data_per</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_return_auto_generated_key_field</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_return_auto_generated_key_field</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_truncate_table</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_truncate_table</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_connectionname</name>
-        <length>2147483647</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_connectionname</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_partition_over_tables</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_partition_over_tables</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_specify_database_fields</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_specify_database_fields</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_ignore_insert_errors</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_ignore_insert_errors</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_use_batch_update</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_use_batch_update</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>America/New_York</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>table_table_name_defined_in_field</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Excel and Table Output Settings</origin>
-        <comments>table_table_name_defined_in_field</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <grouping_symbol/>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -2193,12 +1799,12 @@ WHERE
     </remotesteps>
     <GUI>
       <xloc>288</xloc>
-      <yloc>704</yloc>
+      <yloc>848</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[performer_excel_to_table] Load Table Output Sensitive Fields</name>
+    <name>[performer_csv_file_to_table] Load Table Output Sensitive Fields</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -2290,7 +1896,7 @@ ORDER BY
     </GUI>
   </step>
   <step>
-    <name>[performer_excel_to_table] Load Table Output Step Settings</name>
+    <name>[performer_csv_file_to_table] Load Table Output Step Settings</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -2302,16 +1908,26 @@ ORDER BY
     </partitioning>
     <connection>Config DB Connection</connection>
     <sql>SELECT
-    table_output_field.database_field_name
-    , table_output_field.database_stream_name
-    , table_output_field.field_order
+	table_output_step.target_schema
+	, table_output_step.target_table
+	, table_output_step.commit_size
+	, table_output_step.partitioning_field
+	, table_output_step.table_name_field
+	, table_output_step.auto_generated_key_field
+	, table_output_step.partition_data_per
+	, table_output_step.return_auto_generated_key_field
+	, table_output_step.truncate_table
+	, table_output_step.connectionname
+	, table_output_step.partition_over_tables
+	, table_output_step.specify_database_fields
+	, table_output_step.ignore_insert_errors
+	, table_output_step.use_batch_update
+	, table_output_step.table_name_defined_in_field
 FROM
-    mdi.table_output_step table_step
-        LEFT JOIN mdi.table_output_field ON table_step.dwid = table_output_field.table_output_step_dwid
+	mdi.process p
+		LEFT JOIN mdi.table_output_step ON p.dwid = table_output_step.process_dwid
 WHERE
-        table_step.process_dwid = ${process_dwid}
-ORDER BY
-    table_output_field.field_order ASC
+		p.dwid = ${process_dwid}
 ;</sql>
     <limit>0</limit>
     <lookup/>
@@ -2323,11 +1939,57 @@ ORDER BY
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>database_field_name</name>
+        <name>process_name</name>
         <length>2147483647</length>
         <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Table Output Settings</origin>
-        <comments>database_field_name</comments>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>process_name</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>csv_buffersize</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>csv_buffersize</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>csv_delimiter</name>
+        <length>1</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>csv_delimiter</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -2346,11 +2008,11 @@ ORDER BY
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>database_stream_name</name>
-        <length>2147483647</length>
+        <name>csv_enclosure</name>
+        <length>1</length>
         <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Table Output Settings</origin>
-        <comments>database_stream_name</comments>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>csv_enclosure</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -2367,16 +2029,591 @@ ORDER BY
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>BigNumber</type>
+        <type>String</type>
         <storagetype>normal</storagetype>
-        <name>field_order</name>
+        <name>csv_file_encoding</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>csv_file_encoding</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>csv_file_format</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>[performer_excel_to_table] Load Table Output Settings</origin>
-        <comments>field_order</comments>
-        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>csv_file_format</comments>
+        <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol/>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>csv_filename</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>csv_filename</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>csv_header_present</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>csv_header_present</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>csv_include_filename</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>csv_include_filename</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>csv_lazy_conversion</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>csv_lazy_conversion</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>csv_newline_possible</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>csv_newline_possible</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>csv_process_in_parallel</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>csv_process_in_parallel</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>csv_add_filename_result</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>csv_add_filename_result</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>csv_filename_field</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>csv_filename_field</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>csv_row_num_field</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>csv_row_num_field</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>table_target_schema</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>table_target_schema</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>table_target_table</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>table_target_table</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>table_commit_size</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>table_commit_size</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>table_partitioning_field</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>table_partitioning_field</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>table_table_name_field</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>table_table_name_field</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>table_auto_generated_key_field</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>table_auto_generated_key_field</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>table_partition_data_per</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>table_partition_data_per</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>table_return_auto_generated_key_field</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>table_return_auto_generated_key_field</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>table_truncate_table</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>table_truncate_table</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>table_connectionname</name>
+        <length>2147483647</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>table_connectionname</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>table_partition_over_tables</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>table_partition_over_tables</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>table_specify_database_fields</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>table_specify_database_fields</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>table_ignore_insert_errors</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>table_ignore_insert_errors</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>table_use_batch_update</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>table_use_batch_update</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/New_York</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>table_table_name_defined_in_field</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>[performer_csv_to_table] Load CSV Input and Table Output Settings</origin>
+        <comments>table_table_name_defined_in_field</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -2400,7 +2637,7 @@ ORDER BY
     </remotesteps>
     <GUI>
       <xloc>288</xloc>
-      <yloc>848</yloc>
+      <yloc>704</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
