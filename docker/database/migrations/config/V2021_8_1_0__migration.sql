@@ -557,7 +557,7 @@ SELECT staging_table.fter_message_id
 , FALSE as data_source_deleted_flag
 , now() AS data_source_updated_datetime
 FROM staging_octane.fault_tolerant_event_registration staging_table
-LEFT JOIN history_octane.fault_tolerant_event_registration history_table on staging_table.fter_message_id = history_table.fter_message_id and staging_table.ctr_version = history_table.ctr_version
+LEFT JOIN history_octane.fault_tolerant_event_registration history_table on staging_table.fter_message_id = history_table.fter_message_id
 WHERE history_table.fter_message_id is NULL
 UNION ALL
 SELECT history_table.fter_message_id
