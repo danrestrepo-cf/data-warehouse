@@ -548,12 +548,29 @@ WHERE history_table.ais_id is NULL')
 FROM staging_octane.deal_id_sequence staging_table
          LEFT JOIN history_octane.deal_id_sequence history_table on staging_table.dis_id = history_table.dis_id
 WHERE history_table.dis_id is NULL')
-    , ('SP-100838', 'fault_tolerant_event_registration', 'fter_message_id', 'SELECT staging_table.fter_message_id, staging_table.fter_queue_name, staging_table.fter_event_type,
-       staging_table.fter_create_datetime, staging_table.fter_processed_datetime, FALSE as data_source_deleted_flag,
-       now() AS data_source_updated_datetime
+    , ('SP-100838', 'fault_tolerant_event_registration', 'fter_message_id', '--finding records to insert into history_octane.fault_tolerant_event_registration
+SELECT staging_table.fter_message_id
+, staging_table.fter_queue_name
+, staging_table.fter_event_type
+, staging_table.fter_create_datetime
+, staging_table.fter_processed_datetime
+, FALSE as data_source_deleted_flag
+, now() AS data_source_updated_datetime
 FROM staging_octane.fault_tolerant_event_registration staging_table
-         LEFT JOIN history_octane.fault_tolerant_event_registration history_table on staging_table.fter_message_id = history_table.fter_message_id
-WHERE history_table.fter_message_id is NULL')
+LEFT JOIN history_octane.fault_tolerant_event_registration history_table on staging_table.fter_message_id = history_table.fter_message_id and staging_table.ctr_version = history_table.ctr_version
+WHERE history_table.fter_message_id is NULL
+UNION ALL
+SELECT history_table.fter_message_id
+, history_table.fter_queue_name
+, history_table.fter_event_type
+, history_table.fter_create_datetime
+, history_table.fter_processed_datetime
+, TRUE as data_source_deleted_flag
+, now() AS data_source_updated_datetime
+FROM history_octane.fault_tolerant_event_registration history_table
+LEFT JOIN staging_octane.fault_tolerant_event_registration staging_table on staging_table.fter_message_id = history_table.fter_message_id
+WHERE staging_table.fter_message_id is NULL
+    AND not exists (select 1 from history_octane.fault_tolerant_event_registration deleted_records where deleted_records.fter_message_id = history_table.fter_message_id and deleted_records.data_source_deleted_flag = True)')
 )
 
 , new_process AS (
