@@ -484,7 +484,7 @@
     <created_user>-</created_user>
     <created_date>2021/02/17 17:15:35.157</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/08/02 14:45:04.618</modified_date>
+    <modified_date>2021/08/09 14:01:27.016</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -1638,7 +1638,7 @@ if (load_type == "KEY_LOOKUP") {
         <jsScript_name>Script 1</jsScript_name>
         <jsScript_script>// Tell the template to add quotes to key_field_value_rows if key_field_name value is one of the following: data_source_integration_id, code. 
 // If it is not either of those values and is not dwid, or does not end in _dwid or _pid, then throw an error.
-if (/_pid$|^dwid$|_dwid$/.test(fieldname) === true) {
+if (/_pid$|^dwid$|_dwid$|^ais_id$|^dis_id$|^fter_message_id$/.test(fieldname) === true) {
 	var add_quotes_to_key_values = false;
 } else if (/^(data_source_integration_id|code)$/.test(fieldname) === true) {
 	var add_quotes_to_key_values = true;
