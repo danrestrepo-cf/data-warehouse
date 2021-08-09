@@ -321,14 +321,3 @@ CREATE TABLE star_loan.loan_lender_user_access_98 PARTITION OF star_loan.loan_le
 
 CREATE TABLE star_loan.loan_lender_user_access_99 PARTITION OF star_loan.loan_lender_user_access
     FOR VALUES WITH (MODULUS 100, REMAINDER 99);
-
---
--- EDW | Add missing tables and fields to mdi schema metadata tables, drop deprecated fields from star_loan schema
--- https://app.asana.com/0/0/1200689348642534
---
-
-ALTER TABLE star_loan.loan_beneficiary_dim
-    DROP COLUMN collateral_tracking_number;
-ALTER TABLE star_loan.loan_dim
-    DROP COLUMN collateral_tracking_number,
-    DROP COLUMN loan_file_tracking_number;
