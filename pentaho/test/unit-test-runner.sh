@@ -163,15 +163,15 @@ function execute_edw_metadata_unit_test() {
 
 # function to prompt the user whether to continue with unit test runner in the event of EDW metadata unit test failure
 # this is constructed as a function to allow the script to continue if no user input is provided in the timeout window
-function metadata_unit_test_fail_break {
+function metadata_unit_test_fail_break() {
   set +e
   echo "Proceed with remaining unit tests? [y/n]"
   proceed=""
   read -r -n1 -t 30 proceed
   echo
-  if [[ $proceed == "y" || $proceed == "" ]]; then
+  if [[ ${proceed,,} == "y" || ${proceed,,} == "" ]]; then
     echo "Proceeding with remaining unit tests..."
-  elif [[ $proceed == "n" ]]; then
+  elif [[ ${proceed,,} == "n" ]]; then
     echo "Exiting unit test runner..."
     exit 1
   else

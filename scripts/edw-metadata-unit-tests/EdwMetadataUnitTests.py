@@ -11,7 +11,7 @@ from typing import List
 
 def query_tester(query: str, failure_message: str):
     with EDW() as cursor:
-        if (cursor.select_into_dataframe(query).shape[0]) > 0:
+        if len(cursor.select_as_list_of_dicts(query)) > 0:
             print(failure_message)
 
 
@@ -56,7 +56,7 @@ def edw_field_definition_test_1():
             , edw_field_definition.field_source_calculation
         FROM mdi.edw_field_definition
         WHERE edw_field_definition.field_source_calculation IS NOT NULL
-          AND edw_field_definition.field_source_calculation ~ 'AS .*$'
+          AND edw_field_definition.field_source_calculation ~* 'AS .*$'
     """, "edw_field_definition test 1: Alias detected in field_source_calculation.")
 
 
@@ -67,13 +67,17 @@ def edw_field_definition_test_2():
             , edw_field_definition.field_source_calculation
         FROM mdi.edw_field_definition
         WHERE edw_field_definition.field_source_calculation IS NOT NULL
-            AND edw_field_definition.field_source_calculation NOT LIKE '%primary_table%'
-            AND edw_field_definition.field_source_calculation !~ 't[0-9]'
+            AND edw_field_definition.field_source_calculation NOT LIKE '%primary_table.%'
+            AND edw_field_definition.field_source_calculation !~ 't[0-9]+\.'
     """, "edw_field_definition test 2: field_source_calculation detected without appropriate table " \
          "qualifiers.")
 
 
 def edw_field_definition_test_3():
+    # edw_field_population_a should have NULLs in both source_edw_field_definition_dwid and field_source_calculation
+    # fields
+    # edw_field_population_b should have NULL in at least one of the two source_edw_field_definition_dwid and
+    # field_source_calculation fields
     query_tester("""
         WITH edw_field_population_a AS (
             SELECT edw_table_definition.database_name
@@ -137,11 +141,16 @@ def edw_field_definition_test_3():
 
 def edw_join_definition_test_1():
     query_tester("""
-        SELECT edw_join_definition.dwid
-            , edw_join_definition.join_condition
-        FROM mdi.edw_join_definition
-        WHERE (SPLIT_PART(join_condition, '.', 1) <> 'primary_table'
-            OR SPLIT_PART(SPLIT_PART(join_condition, '.', 2), ' = ', 2) !~ 't[0-9]')
+        WITH prefixes AS (
+            SELECT edw_join_definition.dwid
+                , (REGEXP_MATCHES(edw_join_definition.join_condition, '([a-zA-Z0-9_]+)\.', 'g' ))[1] AS alias
+            FROM mdi.edw_join_definition
+        )
+        SELECT prefixes.dwid
+            , prefixes.alias
+            , (prefixes.alias = 't' || prefixes.dwid OR prefixes.alias = 'primary_table') AS legal_prefix
+        FROM prefixes
+        WHERE (prefixes.alias = 't' || prefixes.dwid OR prefixes.alias = 'primary_table') IS FALSE
     """, "edw_join_definition test 1: join_condition references fields from an invalid table.")
 
 
