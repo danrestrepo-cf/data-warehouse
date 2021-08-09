@@ -179,28 +179,50 @@ def process_test_1():
 
 def process_test_2():
     query_tester("""
-        SELECT process.dwid
-        FROM mdi.process
-            LEFT JOIN mdi.table_input_step ON process.dwid = table_input_step.process_dwid
-            LEFT JOIN mdi.microsoft_excel_input_step ON process.dwid = microsoft_excel_input_step.process_dwid
-            LEFT JOIN mdi.csv_file_input_step ON process.dwid = csv_file_input_step.process_dwid
-        WHERE table_input_step.dwid IS NULL
-            AND microsoft_excel_input_step.dwid IS NULL
-            AND csv_file_input_step.dwid IS NULL
-    """, "process test 2: Record(s) missing required MDI input relation.")
+        WITH process_input AS (
+            SELECT process.dwid
+                , process.name
+                , process.description
+                , CASE WHEN table_input_step.dwid IS NULL THEN 0 ELSE 1 END AS has_table_input_dwid
+                , CASE WHEN microsoft_excel_input_step.dwid IS NULL THEN 0 ELSE 1 END AS has_excel_input_dwid
+                , CASE when csv_file_input_step.dwid IS NULL THEN 0 ELSE 1 END AS has_csv_input_dwid
+            FROM mdi.process
+                     LEFT JOIN mdi.table_input_step ON process.dwid = table_input_step.process_dwid
+                     LEFT JOIN mdi.microsoft_excel_input_step ON process.dwid = microsoft_excel_input_step.process_dwid
+                     LEFT JOIN mdi.csv_file_input_step ON process.dwid = csv_file_input_step.process_dwid
+        )
+            SELECT process_input.dwid
+                , process_input.name
+                , process_input.description
+            FROM process_input
+            WHERE process_input.has_table_input_dwid
+                + process_input.has_excel_input_dwid
+                + process_input.has_csv_input_dwid != 1
+    """, "process test 2: Record(s) mapped to zero or more than one MDI input relation.")
 
 
 def process_test_3():
     query_tester("""
-        SELECT process.dwid
-        FROM mdi.process
-            LEFT JOIN mdi.table_output_step ON process.dwid = table_output_step.process_dwid
-            LEFT JOIN mdi.insert_update_step ON process.dwid = insert_update_step.process_dwid
-            LEFT JOIN mdi.delete_step ON process.dwid = delete_step.process_dwid
-        WHERE table_output_step.dwid IS NULL
-            AND insert_update_step.dwid IS NULL
-            AND delete_step.dwid IS NULL
-    """, "process test 3: Record(s) missing required MDI output relation.")
+        WITH process_output AS (
+            SELECT process.dwid
+                , process.name
+                , process.description
+                , CASE WHEN table_output_step.dwid IS NULL THEN 0 ELSE 1 END AS has_table_output_dwid
+                , CASE WHEN insert_update_step.dwid IS NULL THEN 0 ELSE 1 END AS has_insert_update_dwid
+                , CASE when delete_step.dwid IS NULL THEN 0 ELSE 1 END AS has_delete_dwid
+            FROM mdi.process
+                     LEFT JOIN mdi.table_output_step ON process.dwid = table_output_step.process_dwid
+                     LEFT JOIN mdi.insert_update_step ON process.dwid = insert_update_step.process_dwid
+                     LEFT JOIN mdi.delete_step ON process.dwid = delete_step.process_dwid
+        )
+            SELECT process_output.dwid
+                , process_output.name
+                , process_output.description
+            FROM process_output
+            WHERE process_output.has_table_output_dwid
+                + process_output.has_insert_update_dwid
+                + process_output.has_delete_dwid != 1
+    """, "process test 3: Record(s) mapped to zero or more than one MDI output relation.")
 
 
 def csv_file_input_step_test_1():
@@ -439,6 +461,14 @@ def insert_update_key_test_1():
         FROM mdi.insert_update_key
         WHERE insert_update_key.key_condition <> 'BETWEEN'
             AND insert_update_key.key_stream2 IS NOT NULL
+        UNION ALL
+        SELECT insert_update_key.dwid
+            , insert_update_key.key_stream1
+            , insert_update_key.key_stream2
+            , insert_update_key.key_condition
+        FROM mdi.insert_update_key
+        WHERE insert_update_key.key_condition = 'BETWEEN'
+            AND insert_update_key.key_stream2 IS NULL
     """, "insert_update_key test 1: Record(s) with conflicting key_condition and key_stream2 values.")
 
 
@@ -491,9 +521,19 @@ def delete_key_test_1():
             , delete_key.stream_fieldname_2
             , delete_key.comparator
         FROM mdi.delete_key
+        WHERE stream_fieldname_2 IS NULL
+    """, "delete_key test 1: Record(s) with a NULL value in the stream_fieldname_2 field.")
+
+def delete_key_test_2():
+    query_tester("""
+        SELECT delete_key.dwid
+            , delete_key.stream_fieldname_1
+            , delete_key.stream_fieldname_2
+            , delete_key.comparator
+        FROM mdi.delete_key
         WHERE comparator = 'BETWEEN'
             AND stream_fieldname_2 = ''
-    """, "delete_key test 1: Record(s) with conflicting comparator and stream_fieldname_2 values.")
+    """, "delete_key test 2: Record(s) with conflicting comparator and stream_fieldname_2 values.")
 
 
 def json_output_field_test_1():
