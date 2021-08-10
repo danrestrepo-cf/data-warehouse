@@ -279,3 +279,490 @@ JOIN mdi.process
 JOIN new_delete_key_data
      ON TRUE --three-row constant values CTE defined above; process/delete step is the same for all three rows
 WHERE process.name = 'SP-200002';
+
+--
+-- EDW | Add missing tables and fields to mdi schema metadata tables, drop deprecated fields from star_loan schema
+-- https://app.asana.com/0/0/1200689348642534
+--
+
+WITH new_staging_tables AS (
+    INSERT INTO mdi.edw_table_definition (database_name, schema_name, table_name,
+                                          primary_source_edw_table_definition_dwid)
+        VALUES ('staging', 'staging_octane', 'account_id_sequence', NULL)
+             , ('staging', 'staging_octane', 'deal_id_sequence', NULL)
+             , ('staging', 'staging_octane', 'fault_tolerant_event_registration', NULL)
+        RETURNING dwid, database_name, schema_name, table_name, primary_source_edw_table_definition_dwid
+)
+
+   , new_history_tables AS (
+    INSERT INTO mdi.edw_table_definition (database_name, schema_name, table_name,
+                                          primary_source_edw_table_definition_dwid)
+        SELECT 'staging', 'history_octane', new_staging_tables.table_name, new_staging_tables.dwid
+        FROM new_staging_tables
+        UNION ALL
+        -- manually enter cost_center as it has been removed from Octane and consequently staging_octane
+        SELECT 'staging', 'history_octane', 'cost_center', NULL
+        RETURNING dwid, database_name, schema_name, table_name, primary_source_edw_table_definition_dwid
+)
+
+   , new_star_loan_table AS (
+    INSERT INTO mdi.edw_table_definition (database_name, schema_name, table_name, primary_source_edw_table_definition_dwid)
+        SELECT 'staging', 'star_loan', 'loan_fact', NULL
+        RETURNING dwid, database_name, schema_name, table_name, primary_source_edw_table_definition_dwid
+)
+
+   , existing_tables_with_missing_columns AS (
+    SELECT edw_table_definition.dwid
+         , edw_table_definition.database_name
+         , edw_table_definition.schema_name
+         , edw_table_definition.table_name
+         , edw_table_definition.primary_source_edw_table_definition_dwid
+    FROM mdi.edw_table_definition
+    WHERE (edw_table_definition.table_name = 'contractor'
+        OR (edw_table_definition.schema_name = 'history_octane'
+            AND edw_table_definition.table_name = 'borrower_user_deal'))
+)
+
+   , all_tables_for_metadata_addition AS (
+    SELECT new_staging_tables.dwid
+         , new_staging_tables.database_name
+         , new_staging_tables.schema_name
+         , new_staging_tables.table_name
+         , new_staging_tables.primary_source_edw_table_definition_dwid
+    FROM new_staging_tables
+    UNION ALL
+    SELECT new_history_tables.dwid
+         , new_history_tables.database_name
+         , new_history_tables.schema_name
+         , new_history_tables.table_name
+         , new_history_tables.primary_source_edw_table_definition_dwid
+    FROM new_history_tables
+    UNION ALL
+    SELECT new_star_loan_table.dwid
+         , new_star_loan_table.database_name
+         , new_star_loan_table.schema_name
+         , new_star_loan_table.table_name
+         , new_star_loan_table.primary_source_edw_table_definition_dwid
+    FROM new_star_loan_table
+    UNION ALL
+    SELECT existing_tables_with_missing_columns.dwid
+         , existing_tables_with_missing_columns.database_name
+         , existing_tables_with_missing_columns.schema_name
+         , existing_tables_with_missing_columns.table_name
+         , existing_tables_with_missing_columns.primary_source_edw_table_definition_dwid
+    FROM existing_tables_with_missing_columns
+)
+
+   , new_fields_octane_metadata (schema_name, table_name, field_name, key_field_flag, field_order) AS (
+    VALUES
+         -- staging_octane.contractor.ctr_has_employees
+    ('staging_octane', 'contractor', 'ctr_has_employees', FALSE, NULL)
+         -- staging_octane.account_id_sequence.*
+         , ('staging_octane', 'account_id_sequence', 'ais_id', TRUE, NULL)
+         -- staging_octane.deal_id_sequence.*
+         , ('staging_octane', 'deal_id_sequence', 'dis_id', TRUE, NULL)
+         -- staging_octane.fault_tolerant_event_registration.*
+         , ('staging_octane', 'fault_tolerant_event_registration', 'fter_message_id', TRUE, NULL)
+         , ('staging_octane', 'fault_tolerant_event_registration', 'fter_queue_name', FALSE, NULL)
+         , ('staging_octane', 'fault_tolerant_event_registration', 'fter_event_type', FALSE, NULL)
+         , ('staging_octane', 'fault_tolerant_event_registration', 'fter_create_datetime', FALSE, NULL)
+         , ('staging_octane', 'fault_tolerant_event_registration', 'fter_processed_datetime', FALSE, NULL)
+         -- history_octane.borrower_user_deal.bud_loan_key
+         , ('history_octane', 'borrower_user_deal', 'bud_loan_key', FALSE, NULL)
+         -- history_octane.contractor.ctr_has_employees
+         , ('history_octane', 'contractor', 'ctr_has_employees', FALSE, 24)
+         -- history_octane.account_id_sequence.*
+         , ('history_octane', 'account_id_sequence', 'ais_id', TRUE, 0)
+         , ('history_octane', 'account_id_sequence', 'data_source_updated_datetime', FALSE, 1)
+         , ('history_octane', 'account_id_sequence', 'data_source_deleted_flag', FALSE, 2)
+         -- history_octane.deal_id_sequence.*
+         , ('history_octane', 'deal_id_sequence', 'dis_id', TRUE, 0)
+         , ('history_octane', 'deal_id_sequence', 'data_source_updated_datetime', FALSE, 1)
+         , ('history_octane', 'deal_id_sequence', 'data_source_deleted_flag', FALSE, 2)
+         -- history_octane.fault_tolerant_event_registration.*
+         , ('history_octane', 'fault_tolerant_event_registration', 'fter_message_id', TRUE, 0)
+         , ('history_octane', 'fault_tolerant_event_registration', 'fter_queue_name', FALSE, 1)
+         , ('history_octane', 'fault_tolerant_event_registration', 'fter_event_type', FALSE, 2)
+         , ('history_octane', 'fault_tolerant_event_registration', 'fter_create_datetime', FALSE, 3)
+         , ('history_octane', 'fault_tolerant_event_registration', 'fter_processed_datetime', FALSE, 4)
+         , ('history_octane', 'fault_tolerant_event_registration', 'data_source_updated_datetime', FALSE, 5)
+         , ('history_octane', 'fault_tolerant_event_registration', 'data_source_deleted_flag', FALSE, 6)
+         -- history_octane.cost_center.*
+         , ('history_octane', 'cost_center', 'cosc_pid', TRUE, NULL)
+         , ('history_octane', 'cost_center', 'cosc_version', FALSE, NULL)
+         , ('history_octane', 'cost_center', 'cosc_account_pid', FALSE, NULL)
+         , ('history_octane', 'cost_center', 'cosc_amb_code', FALSE, NULL)
+         , ('history_octane', 'cost_center', 'cosc_name', FALSE, NULL)
+         , ('history_octane', 'cost_center', 'cosc_comments', FALSE, NULL)
+         , ('history_octane', 'cost_center', 'cosc_active', FALSE, NULL)
+         , ('history_octane', 'cost_center', 'data_source_updated_datetime', FALSE, NULL)
+         , ('history_octane', 'cost_center', 'data_source_deleted_flag', FALSE, NULL)
+)
+
+   , new_fields_loan_fact_metadata (schema_name, table_name, field_name, key_field_flag, data_type, reporting_label,
+                                    reporting_description, reporting_hidden, reporting_key_flag) AS (
+    VALUES ('star_loan', 'loan_fact', 'data_source_dwid', TRUE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'edw_created_datetime', FALSE, 'TIMESTAMPTZ', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'edw_modified_datetime', FALSE, 'TIMESTAMPTZ', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'etl_batch_id', FALSE, 'TEXT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'data_source_integration_columns', FALSE, 'TEXT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'data_source_integration_id', FALSE, 'TEXT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'data_source_modified_datetime', FALSE, 'TIMESTAMPTZ', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'loan_pid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'loan_dwid', TRUE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'loan_junk_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'product_choice_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'transaction_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'transaction_junk_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'current_loan_beneficiary_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'active_loan_funding_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'b1_borrower_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'b2_borrower_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'b3_borrower_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'b4_borrower_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'b5_borrower_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'c1_borrower_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'c2_borrower_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'c3_borrower_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'c4_borrower_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'c5_borrower_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'n1_borrower_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'n2_borrower_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'n3_borrower_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'n4_borrower_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'n5_borrower_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'n6_borrower_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'n7_borrower_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'n8_borrower_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'b1_borrower_demographics_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'b1_borrower_lending_profile_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'primary_application_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'collateral_to_custodian_lender_user_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes',
+            FALSE)
+         , ('star_loan', 'loan_fact', 'interim_funder_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'product_terms_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'product_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'product_investor_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'hmda_purchaser_of_loan_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'apr', FALSE, 'NUMERIC(15,9)', 'APR', NULL, 'no', FALSE)
+         , ('star_loan', 'loan_fact', 'base_loan_amount', FALSE, 'NUMERIC(21,3)', 'Base Loan Amount', NULL, 'no', FALSE)
+         , ('star_loan', 'loan_fact', 'financed_amount', FALSE, 'NUMERIC(21,3)', 'Financed Amount', NULL, 'no', FALSE)
+         , ('star_loan', 'loan_fact', 'loan_amount', FALSE, 'NUMERIC(21,3)', 'Loan Amount', NULL, 'no', FALSE)
+         , ('star_loan', 'loan_fact', 'ltv_ratio_percent', FALSE, 'NUMERIC(15,9)', 'LTV Ratio Percent', NULL, 'no',
+            FALSE)
+         , ('star_loan', 'loan_fact', 'note_rate_percent', FALSE, 'NUMERIC(15,9)', 'Note Rate Percent', NULL, 'no',
+            FALSE)
+         , ('star_loan', 'loan_fact', 'purchase_advice_amount', FALSE, 'NUMERIC(21,3)', 'Purchase Advice ' ||
+                                                                                        'Amount', NULL, 'no', FALSE)
+         , ('star_loan', 'loan_fact', 'finance_charge_amount', FALSE, 'NUMERIC(21,3)', 'Finance Charge ' ||
+                                                                                       'Amount', NULL, 'no', FALSE)
+         , ('star_loan', 'loan_fact', 'hoepa_fees_dollar_amount', FALSE, 'NUMERIC(21,3)', 'HOEPA Dollar Fees ' ||
+                                                                                          'Amount', NULL, 'no', FALSE)
+         , ('star_loan', 'loan_fact', 'interest_rate_fee_change_amount', FALSE, 'NUMERIC(21,3)', 'Interest ' ||
+                                                                                                 'Rate Fee Charge Amount', NULL, 'no', FALSE)
+         , ('star_loan', 'loan_fact', 'principal_curtailment_amount', FALSE, 'NUMERIC(21,3)', 'Principal ' ||
+                                                                                              'Curtailment Amount', NULL, 'no', FALSE)
+         , ('star_loan', 'loan_fact', 'qualifying_pi_amount', FALSE, 'NUMERIC(21,3)', 'Qualifying PI Amount',
+            NULL, 'no', FALSE)
+         , ('star_loan', 'loan_fact', 'target_cash_out_amount', FALSE, 'NUMERIC(21,3)', 'Target Cash Out ' ||
+                                                                                        'Amount', NULL, 'no', FALSE)
+         , ('star_loan', 'loan_fact', 'heloc_maximum_balance_amount', FALSE, 'NUMERIC(21,3)', 'HELOC Maximum ' ||
+                                                                                              'Balance Amount', NULL, 'no', FALSE)
+         , ('star_loan', 'loan_fact', 'agency_case_id_assigned_date_dwid', FALSE, 'BIGINT', NULL, NULL,
+            'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'apor_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'application_signed_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'approved_with_conditions_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'beneficiary_from_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'beneficiary_through_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'collateral_sent_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'disbursement_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'early_funding_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'effective_funding_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'fha_endorsement_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'estimated_funding_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'intent_to_proceed_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'funding_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'funding_requested_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'loan_file_ship_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'mers_transfer_creation_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'pending_wire_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'rejected_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'return_confirmed_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'return_request_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'scheduled_release_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'usda_guarantee_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+         , ('star_loan', 'loan_fact', 'va_guaranty_date_dwid', FALSE, 'BIGINT', NULL, NULL, 'yes', FALSE)
+)
+
+   , new_staging_field_definitions AS (
+    INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag)
+        SELECT all_tables_for_metadata_addition.dwid
+             , new_fields_octane_metadata.field_name
+             , new_fields_octane_metadata.key_field_flag
+        FROM new_fields_octane_metadata
+                 JOIN all_tables_for_metadata_addition ON new_fields_octane_metadata.schema_name = all_tables_for_metadata_addition.schema_name
+            AND new_fields_octane_metadata.table_name = all_tables_for_metadata_addition.table_name
+        WHERE new_fields_octane_metadata.schema_name = 'staging_octane'
+        RETURNING dwid, edw_table_definition_dwid, field_name
+)
+
+   , new_history_field_definitions AS (
+    INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag,
+                                          source_edw_field_definition_dwid)
+        SELECT all_tables_for_metadata_addition.dwid
+             , new_fields_octane_metadata.field_name
+             , new_fields_octane_metadata.key_field_flag
+             , new_staging_field_definitions.dwid
+        FROM new_fields_octane_metadata
+                 JOIN all_tables_for_metadata_addition ON new_fields_octane_metadata.schema_name = all_tables_for_metadata_addition.schema_name
+            AND new_fields_octane_metadata.table_name = all_tables_for_metadata_addition.table_name
+                 LEFT JOIN new_staging_field_definitions ON all_tables_for_metadata_addition.primary_source_edw_table_definition_dwid =
+                                                            new_staging_field_definitions.edw_table_definition_dwid
+            AND new_fields_octane_metadata.field_name = new_staging_field_definitions.field_name
+        WHERE new_fields_octane_metadata.schema_name = 'history_octane'
+)
+
+   , new_loan_fact_field_definitions AS (
+    INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, data_type,
+                                          reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
+        SELECT all_tables_for_metadata_addition.dwid
+             , new_fields_loan_fact_metadata.field_name
+             , new_fields_loan_fact_metadata.key_field_flag
+             , new_fields_loan_fact_metadata.data_type
+             , new_fields_loan_fact_metadata.reporting_label
+             , new_fields_loan_fact_metadata.reporting_description
+             , new_fields_loan_fact_metadata.reporting_hidden::mdi.looker_yes_no
+             , new_fields_loan_fact_metadata.reporting_key_flag
+        FROM new_fields_loan_fact_metadata
+                 JOIN all_tables_for_metadata_addition ON new_fields_loan_fact_metadata.schema_name = all_tables_for_metadata_addition.schema_name
+            AND new_fields_loan_fact_metadata.table_name = all_tables_for_metadata_addition.table_name
+)
+
+   , new_process_variables (name, target_table, json_output_field, sql) AS (
+    VALUES ('SP-100836', 'account_id_sequence', 'ais_id', 'SELECT staging_table.ais_id, FALSE as data_source_deleted_flag, now() AS data_source_updated_datetime
+FROM staging_octane.account_id_sequence staging_table
+LEFT JOIN history_octane.account_id_sequence history_table on staging_table.ais_id = history_table.ais_id
+WHERE history_table.ais_id is NULL')
+         , ('SP-100837', 'deal_id_sequence', 'dis_id', 'SELECT staging_table.dis_id, FALSE as data_source_deleted_flag, now() AS data_source_updated_datetime
+FROM staging_octane.deal_id_sequence staging_table
+         LEFT JOIN history_octane.deal_id_sequence history_table on staging_table.dis_id = history_table.dis_id
+WHERE history_table.dis_id is NULL')
+         , ('SP-100838', 'fault_tolerant_event_registration', 'fter_message_id', '--finding records to insert into history_octane.fault_tolerant_event_registration
+SELECT staging_table.fter_message_id
+, staging_table.fter_queue_name
+, staging_table.fter_event_type
+, staging_table.fter_create_datetime
+, staging_table.fter_processed_datetime
+, FALSE as data_source_deleted_flag
+, now() AS data_source_updated_datetime
+FROM staging_octane.fault_tolerant_event_registration staging_table
+LEFT JOIN history_octane.fault_tolerant_event_registration history_table on staging_table.fter_message_id = history_table.fter_message_id
+WHERE history_table.fter_message_id is NULL
+UNION ALL
+SELECT history_table.fter_message_id
+, history_table.fter_queue_name
+, history_table.fter_event_type
+, history_table.fter_create_datetime
+, history_table.fter_processed_datetime
+, TRUE as data_source_deleted_flag
+, now() AS data_source_updated_datetime
+FROM history_octane.fault_tolerant_event_registration history_table
+LEFT JOIN staging_octane.fault_tolerant_event_registration staging_table on staging_table.fter_message_id = history_table.fter_message_id
+WHERE staging_table.fter_message_id is NULL
+    AND not exists (select 1 from history_octane.fault_tolerant_event_registration deleted_records where deleted_records.fter_message_id = history_table.fter_message_id and deleted_records.data_source_deleted_flag = True)')
+)
+
+   , new_process AS (
+    INSERT INTO mdi.process (name, description)
+        SELECT new_process_variables.name
+             , 'ETL to copy ' || new_process_variables.target_table || ' data from staging_octane to history_octane'
+        FROM new_process_variables
+        RETURNING dwid, name, description
+)
+
+   , new_table_input_step AS (
+    INSERT INTO mdi.table_input_step (process_dwid, data_source_dwid, sql, limit_size, execute_for_each_row,
+                                      replace_variables, enable_lazy_conversion, cached_row_meta, connectionname)
+        SELECT new_process.dwid
+             , 0
+             , new_process_variables.sql
+             , 0
+             , 'N'
+             , 'N'
+             , 'N'
+             , 'N'
+             , 'Staging DB Connection'
+        FROM new_process
+                 JOIN new_process_variables ON new_process.name = new_process_variables.name
+)
+
+   , new_table_output_step AS (
+    INSERT INTO mdi.table_output_step (process_dwid, target_schema, target_table, commit_size, partitioning_field, table_name_field,
+                                       auto_generated_key_field, partition_data_per, table_name_defined_in_field,
+                                       return_auto_generated_key_field, truncate_table, connectionname, partition_over_tables,
+                                       specify_database_fields, ignore_insert_errors, use_batch_update)
+        SELECT new_process.dwid
+             , 'history_octane'
+             , new_process_variables.target_table
+             , 1000
+             , NULL
+             , NULL
+             , NULL
+             , NULL
+             , 'N'
+             , NULL
+             , 'N'
+             , 'Staging DB Connection'
+             , 'N'
+             , 'Y'
+             , 'N'
+             , 'N'
+        FROM new_process
+                 JOIN new_process_variables ON new_process.name = new_process_variables.name
+        RETURNING dwid, target_schema, target_table
+)
+
+   , new_table_output_fields AS (
+    INSERT INTO mdi.table_output_field (table_output_step_dwid, database_field_name, database_stream_name,
+                                        field_order, is_sensitive)
+        SELECT new_table_output_step.dwid
+             , new_fields_octane_metadata.field_name
+             , new_fields_octane_metadata.field_name
+             , new_fields_octane_metadata.field_order
+             , FALSE
+        FROM new_table_output_step
+                 JOIN new_fields_octane_metadata ON new_table_output_step.target_schema = new_fields_octane_metadata.schema_name
+            AND new_table_output_step.target_table = new_fields_octane_metadata.table_name
+            AND new_fields_octane_metadata.schema_name = 'history_octane'
+)
+
+   , new_json_output_field AS (
+    INSERT INTO mdi.json_output_field (process_dwid, field_name)
+        SELECT new_process.dwid, new_process_variables.json_output_field
+        FROM new_process
+                 JOIN new_process_variables ON new_process.name = new_process_variables.name
+)
+
+   , new_state_machine_definition AS (
+    INSERT INTO mdi.state_machine_definition (process_dwid, name, comment)
+        SELECT new_process.dwid, new_process.name, new_process.description
+        FROM new_process
+)
+
+-- CTE for separately adding the missing contractor.ctr_has_employees field to the relevant MDI configuration
+   , new_contractor_table_output_field AS (
+    INSERT INTO mdi.table_output_field (table_output_step_dwid, database_field_name, database_stream_name,
+                                        field_order, is_sensitive)
+        SELECT table_output_step.dwid
+             , new_fields_octane_metadata.field_name
+             , new_fields_octane_metadata.field_name
+             , new_fields_octane_metadata.field_order
+             , FALSE
+        FROM mdi.table_output_step
+                 JOIN new_fields_octane_metadata ON table_output_step.target_schema = new_fields_octane_metadata.schema_name
+            AND new_fields_octane_metadata.field_name = 'ctr_has_employees'
+        WHERE table_output_step.target_schema = 'history_octane'
+          AND table_output_step.target_table = 'contractor'
+)
+
+UPDATE mdi.table_input_step
+SET sql = '--finding records to insert into history_octane.contractor
+SELECT staging_table.ctr_pid
+, staging_table.ctr_version
+, staging_table.ctr_account_pid
+, staging_table.ctr_contractor_company_name
+, staging_table.ctr_max_construction_credit_amount
+, staging_table.ctr_taxpayer_identifier_type
+, staging_table.ctr_first_name
+, staging_table.ctr_last_name
+, staging_table.ctr_work_phone
+, staging_table.ctr_work_phone_extension
+, staging_table.ctr_mobile_phone
+, staging_table.ctr_fax
+, staging_table.ctr_email
+, staging_table.ctr_address_street1
+, staging_table.ctr_address_street2
+, staging_table.ctr_address_city
+, staging_table.ctr_address_state
+, staging_table.ctr_address_postal_code
+, staging_table.ctr_address_country
+, staging_table.ctr_notes
+, FALSE as data_source_deleted_flag
+, now() AS data_source_updated_datetime
+, staging_table.ctr_has_employees
+FROM staging_octane.contractor staging_table
+LEFT JOIN history_octane.contractor history_table on staging_table.ctr_pid = history_table.ctr_pid and staging_table.ctr_version = history_table.ctr_version
+WHERE history_table.ctr_pid is NULL
+UNION ALL
+SELECT history_table.ctr_pid
+, history_table.ctr_version+1
+, history_table.ctr_account_pid
+, history_table.ctr_contractor_company_name
+, history_table.ctr_max_construction_credit_amount
+, history_table.ctr_taxpayer_identifier_type
+, history_table.ctr_first_name
+, history_table.ctr_last_name
+, history_table.ctr_work_phone
+, history_table.ctr_work_phone_extension
+, history_table.ctr_mobile_phone
+, history_table.ctr_fax
+, history_table.ctr_email
+, history_table.ctr_address_street1
+, history_table.ctr_address_street2
+, history_table.ctr_address_city
+, history_table.ctr_address_state
+, history_table.ctr_address_postal_code
+, history_table.ctr_address_country
+, history_table.ctr_notes
+, TRUE as data_source_deleted_flag
+, now() AS data_source_updated_datetime
+, history_table.ctr_has_employees
+FROM history_octane.contractor history_table
+LEFT JOIN staging_octane.contractor staging_table on staging_table.ctr_pid = history_table.ctr_pid
+WHERE staging_table.ctr_pid is NULL
+    AND not exists (select 1 from history_octane.contractor deleted_records where deleted_records.ctr_pid = history_table.ctr_pid and deleted_records.data_source_deleted_flag = True)'
+WHERE process_dwid = (
+    SELECT process.dwid
+    FROM mdi.process
+             JOIN mdi.table_output_step ON process.dwid = table_output_step.process_dwid
+        AND table_output_step.target_schema = 'history_octane'
+        AND table_output_step.target_table = 'contractor'
+);
+
+/*
+Adding records to edw_field_definition for history_octane data_source_updated_datetime, data_source_deleted_flag
+
+One of the tables missing these metadata fields -- fre_ctp_closing_type -- was removed from Octane (and no longer has
+an associated ETL), so we're unable to capture it in the first query that uses MDI configuration data to return the
+tables without the metadata fields.
+*/
+
+INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag)
+SELECT edw_table_definition.dwid, table_output_field.database_field_name, FALSE
+FROM mdi.table_output_step
+         JOIN mdi.table_output_field ON table_output_step.dwid = table_output_field.table_output_step_dwid
+    AND table_output_field.database_field_name IN ('data_source_updated_datetime', 'data_source_deleted_flag')
+         JOIN mdi.edw_table_definition ON table_output_step.target_schema = edw_table_definition.schema_name
+    AND table_output_step.target_table = edw_table_definition.table_name
+         LEFT JOIN (
+    SELECT edw_table_definition.schema_name
+         , edw_table_definition.table_name
+         , edw_field_definition.field_name
+    FROM mdi.edw_table_definition
+             JOIN mdi.edw_field_definition ON edw_table_definition.dwid = edw_field_definition.edw_table_definition_dwid
+    WHERE edw_table_definition.schema_name = 'history_octane'
+) AS table_definitions_for_null_join ON table_output_step.target_schema = table_definitions_for_null_join.schema_name
+    AND table_output_step.target_table = table_definitions_for_null_join.table_name
+    AND table_output_field.database_field_name = table_definitions_for_null_join.field_name
+WHERE table_definitions_for_null_join.field_name IS NULL
+UNION ALL
+SELECT edw_table_definition.dwid, 'data_source_updated_datetime', FALSE
+FROM mdi.edw_table_definition
+WHERE edw_table_definition.schema_name = 'history_octane'
+  AND edw_table_definition.table_name = 'fre_ctp_closing_type'
+UNION ALL
+SELECT edw_table_definition.dwid, 'data_source_deleted_flag', FALSE
+FROM mdi.edw_table_definition
+WHERE edw_table_definition.schema_name = 'history_octane'
+  AND edw_table_definition.table_name = 'fre_ctp_closing_type';
