@@ -216,12 +216,13 @@ execute_edw_metadata_unit_test "insert_update_step_test_4"
 execute_edw_metadata_unit_test "insert_update_key_test_1"
 execute_edw_metadata_unit_test "insert_update_field_test_1"
 execute_edw_metadata_unit_test "insert_update_field_test_2"
+execute_edw_metadata_unit_test "insert_update_field_test_3"
 execute_edw_metadata_unit_test "delete_step_test_1"
 execute_edw_metadata_unit_test "delete_key_test_1"
 execute_edw_metadata_unit_test "json_output_field_test_1"
 execute_edw_metadata_unit_test "json_output_field_test_2"
 execute_edw_metadata_unit_test "state_machine_definition_test_1"
-execute_edw_metadata_unit_test "state_machine_definition_test_2"
+execute_edw_metadata_unit_test "state_machine_step_test_1"
 
 # If any EDW metadata unit tests fail, print the failures and ask the user whether to proceed with remaining unit tests
 # Otherwise, proceed with remaining unit tests

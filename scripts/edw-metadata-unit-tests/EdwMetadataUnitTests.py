@@ -156,15 +156,24 @@ def edw_join_definition_test_1():
 
 def edw_join_tree_definition_test_1():
     query_tester("""
-        SELECT edw_join_tree_definition.dwid
-             , edw_join_tree_definition.child_join_tree_dwid
-             , child_join_tree_definition.dwid
-             , child_join_tree_definition.child_join_tree_dwid
-        FROM mdi.edw_join_tree_definition
-                 JOIN mdi.edw_join_tree_definition child_join_tree_definition ON edw_join_tree_definition.child_join_tree_dwid =
-                                                                                 child_join_tree_definition.dwid
-        WHERE edw_join_tree_definition.dwid = child_join_tree_definition.child_join_tree_dwid
-    """, "edw_join_tree_definition test 1: Recursive loop detected.")
+        WITH RECURSIVE search_graph (edw_join_tree_root_dwid, join_sequence, cycle_detected) AS (
+            SELECT edw_join_tree_definition.dwid
+                 , ARRAY[edw_join_tree_definition.child_join_tree_dwid, edw_join_tree_definition.root_join_dwid]
+                 , edw_join_tree_definition.child_join_tree_dwid = edw_join_tree_definition.root_join_dwid
+            FROM mdi.edw_join_tree_definition
+            UNION ALL
+            SELECT edw_join_tree_definition.root_join_dwid
+                 , search_graph.join_sequence || edw_join_tree_definition.root_join_dwid
+                 , edw_join_tree_definition.root_join_dwid = ANY(search_graph.join_sequence)
+            FROM search_graph
+                     JOIN mdi.edw_join_tree_definition ON search_graph.edw_join_tree_root_dwid = edw_join_tree_definition
+                         .child_join_tree_dwid
+            WHERE search_graph.cycle_detected IS FALSE
+        )
+        SELECT search_graph.*
+        FROM search_graph
+        WHERE search_graph.cycle_detected IS TRUE
+    """, "edw_join_tree_definition test 1: Loop detected in edw root / child join sequence(s).")
 
 
 def process_test_1():
@@ -566,31 +575,40 @@ def json_output_field_test_2():
         FROM mdi.json_output_field
         WHERE NOT (json_output_field.field_name LIKE '%_pid'
             OR json_output_field.field_name LIKE '%_dwid'
-            OR json_output_field.field_name IN ('dwid', 'data_source_integration_id', 'code'))
+            OR json_output_field.field_name IN ('dwid', 'data_source_integration_id', 'code', 'ais_id', 'dis_id', 
+            'fter_message_id'))
     """, "json_output_field test 2: invalid field name.")
 
 
 def state_machine_definition_test_1():
     query_tester("""
-        SELECT state_machine_definition.process_dwid
-            , state_machine_step.next_process_dwid
-            , subseq_state_machine_step.next_process_dwid
-        FROM mdi.state_machine_definition
-            JOIN mdi.state_machine_step
-                ON state_machine_definition.process_dwid = state_machine_step.process_dwid
-            JOIN mdi.state_machine_step subseq_state_machine_step
-                ON state_machine_step.next_process_dwid = subseq_state_machine_step.process_dwid
-        WHERE state_machine_definition.process_dwid = subseq_state_machine_step.next_process_dwid
-    """, "state_machine_definition test 1: Loop detected in recursive join through state_machine_step.")
-
-
-def state_machine_definition_test_2():
-    query_tester("""
         SELECT state_machine_definition.dwid
             , state_machine_definition.name
         FROM mdi.state_machine_definition
         WHERE name !~ '^[a-zA-Z0-9_-]+$'
-    """, "state_machine_definition test 2: Invalid value(s) detected in name field.")
+    """, "state_machine_definition test 1: Invalid value(s) detected in name field.")
+
+
+def state_machine_step_test_1():
+    query_tester("""
+        WITH RECURSIVE search_graph (process_dwid, process_sequence, cycle_detected) AS (
+            SELECT state_machine_step.process_dwid
+                 , ARRAY[state_machine_step.next_process_dwid, state_machine_step.process_dwid]
+                 , state_machine_step.next_process_dwid = state_machine_step.process_dwid
+            FROM mdi.state_machine_step
+            UNION ALL
+            SELECT state_machine_step.process_dwid
+                    , search_graph.process_sequence || state_machine_step.process_dwid
+                    , state_machine_step.process_dwid = ANY(search_graph.process_sequence)
+            FROM search_graph
+                JOIN mdi.state_machine_step ON search_graph.process_dwid = state_machine_step.next_process_dwid
+            WHERE search_graph.cycle_detected IS FALSE
+        )
+        SELECT *
+        FROM search_graph
+        WHERE cycle_detected IS TRUE
+        ORDER BY process_dwid
+    """, "state_machine_definition test 1: Loop detected in state machine process sequence(s).")
 
 
 class EDW:
