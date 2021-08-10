@@ -505,6 +505,19 @@ def insert_update_field_test_2():
     """, "insert_update_field test 2: Duplicate field names mapped to a single insert_update_step record.")
 
 
+def insert_update_field_test_3():
+    query_tester("""
+        SELECT insert_update_step.dwid AS insert_update_step_dwid
+            , insert_update_key.key_lookup AS key_field_name
+            , insert_update_field.update_flag
+        FROM mdi.insert_update_step
+            JOIN mdi.insert_update_key ON insert_update_step.dwid = insert_update_key.insert_update_step_dwid
+            JOIN mdi.insert_update_field ON insert_update_step.dwid = insert_update_field.insert_update_step_dwid
+                AND insert_update_key.key_lookup = insert_update_field.update_lookup
+                AND insert_update_field.update_flag = 'Y'
+    """, "insert_update_field test 3: Designated key field(s) with invalid update_flag value.")
+
+
 def delete_step_test_1():
     query_tester("""
         SELECT delete_step.dwid
@@ -576,7 +589,7 @@ def state_machine_definition_test_2():
         SELECT state_machine_definition.dwid
             , state_machine_definition.name
         FROM mdi.state_machine_definition
-        WHERE name !~ '^[a-zA-Z0-9_-]*$'
+        WHERE name !~ '^[a-zA-Z0-9_-]+$'
     """, "state_machine_definition test 2: Invalid value(s) detected in name field.")
 
 
