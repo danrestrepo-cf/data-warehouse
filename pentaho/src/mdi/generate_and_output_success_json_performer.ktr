@@ -847,7 +847,7 @@ var mdi_output_json = JSON.stringify(outer_json);
 
 
 // Build S3 file output path
-var bucket_prefix = environment;
+var bucket_prefix = getVariable("environment", "undefined");
 var bucket_postfix = "-data-warehouse-ingress";
 var file_string1 = "s3://";
 var file_string2 = "/step-function-response/pending/success/";

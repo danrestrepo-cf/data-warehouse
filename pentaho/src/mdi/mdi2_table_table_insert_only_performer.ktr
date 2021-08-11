@@ -1254,7 +1254,7 @@ WHERE process.dwid = ${process_dwid}</sql>
         <target_attribute_key>SQL</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_table_to_table_insert_json] Replace Table input step SQL placeholder</source_step>
-        <source_field>sql</source_field>
+        <source_field>sql_for_injection</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert_json] Table input</target_step_name>
