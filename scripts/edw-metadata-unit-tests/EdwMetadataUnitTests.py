@@ -155,23 +155,24 @@ def edw_join_definition_test_1():
 
 def edw_join_tree_definition_test_1():
     query_tester("""
-        WITH RECURSIVE search_graph (edw_join_tree_root_dwid, join_sequence, cycle_detected) AS (
+        WITH RECURSIVE search_graph (edw_join_tree_dwid, next_child_dwid, join_sequence, loop_detected) AS (
             SELECT edw_join_tree_definition.dwid
-                 , ARRAY[edw_join_tree_definition.child_join_tree_dwid, edw_join_tree_definition.root_join_dwid]
-                 , edw_join_tree_definition.child_join_tree_dwid = edw_join_tree_definition.root_join_dwid
+                 , edw_join_tree_definition.child_join_tree_dwid
+                 , ARRAY[edw_join_tree_definition.dwid]
+                 , edw_join_tree_definition.child_join_tree_dwid = edw_join_tree_definition.dwid
             FROM mdi.edw_join_tree_definition
             UNION ALL
-            SELECT edw_join_tree_definition.root_join_dwid
-                 , search_graph.join_sequence || edw_join_tree_definition.root_join_dwid
-                 , edw_join_tree_definition.root_join_dwid = ANY(search_graph.join_sequence)
+            SELECT search_graph.edw_join_tree_dwid
+                 , edw_join_tree_definition.child_join_tree_dwid
+                 , search_graph.join_sequence || edw_join_tree_definition.dwid
+                 , edw_join_tree_definition.dwid = ANY(search_graph.join_sequence)
             FROM search_graph
-                     JOIN mdi.edw_join_tree_definition ON search_graph.edw_join_tree_root_dwid = edw_join_tree_definition
-                         .child_join_tree_dwid
-            WHERE search_graph.cycle_detected IS FALSE
+                JOIN mdi.edw_join_tree_definition ON search_graph.next_child_dwid = edw_join_tree_definition.dwid
+            WHERE search_graph.loop_detected IS FALSE
         )
-        SELECT search_graph.*
+        SELECT search_graph.join_sequence AS looping_join_dwid_sequence
         FROM search_graph
-        WHERE search_graph.cycle_detected IS TRUE
+        WHERE search_graph.loop_detected IS TRUE;
     """, "edw_join_tree_definition test 1: Loop detected in edw root / child join sequence(s).")
 
 
@@ -590,23 +591,25 @@ def state_machine_definition_test_1():
 
 def state_machine_step_test_1():
     query_tester("""
-        WITH RECURSIVE search_graph (process_dwid, process_sequence, cycle_detected) AS (
+        WITH RECURSIVE search_graph (process_dwid, next_process_dwid, process_sequence, loop_detected) AS (
             SELECT state_machine_step.process_dwid
-                 , ARRAY[state_machine_step.next_process_dwid, state_machine_step.process_dwid]
+                 , state_machine_step.next_process_dwid
+                 , ARRAY[state_machine_step.process_dwid]
                  , state_machine_step.next_process_dwid = state_machine_step.process_dwid
             FROM mdi.state_machine_step
             UNION ALL
             SELECT state_machine_step.process_dwid
-                    , search_graph.process_sequence || state_machine_step.process_dwid
-                    , state_machine_step.process_dwid = ANY(search_graph.process_sequence)
+                 , state_machine_step.next_process_dwid
+                 , search_graph.process_sequence || state_machine_step.process_dwid
+                 , state_machine_step.process_dwid = ANY(search_graph.process_sequence)
             FROM search_graph
-                JOIN mdi.state_machine_step ON search_graph.process_dwid = state_machine_step.next_process_dwid
-            WHERE search_graph.cycle_detected IS FALSE
+                 JOIN mdi.state_machine_step ON search_graph.next_process_dwid = state_machine_step.process_dwid
+            WHERE search_graph.loop_detected IS FALSE
         )
-        SELECT *
+        SELECT process_sequence AS looping_state_machine_process_dwid_sequence
         FROM search_graph
-        WHERE cycle_detected IS TRUE
-        ORDER BY process_dwid
+        WHERE loop_detected IS TRUE
+        ORDER BY process_sequence;
     """, "state_machine_definition test 1: Loop detected in state machine process sequence(s).")
 
 

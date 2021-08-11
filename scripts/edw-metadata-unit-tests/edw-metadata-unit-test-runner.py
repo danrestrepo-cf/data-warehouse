@@ -1,12 +1,13 @@
 import sys
 import inspect
+import re
 import EdwMetadataUnitTests
 
 
 def main():
     func_dict = {func_name: func for func_name, func in inspect.getmembers(EdwMetadataUnitTests,
                                                                            predicate=inspect.isfunction)}
-    if sys.argv[1] == "query_tester" or sys.argv[1] not in func_dict:
+    if not re.search(r"_test_[0-9]+$", sys.argv[1]) or sys.argv[1] not in func_dict:
         raise ValueError("EDW metadata unit tests: Invalid test parameter.")
     else:
         function_to_call = func_dict[sys.argv[1]]
