@@ -5,7 +5,6 @@ https://app.asana.com/0/0/1200343485858665
 """
 import psycopg2
 import psycopg2.extras
-import pandas
 from typing import List
 
 
@@ -645,7 +644,3 @@ class EDWCursor:
     def select_as_list_of_dicts(self, sql: str) -> List[dict]:
         self.cursor.execute(sql)
         return self.cursor.fetchall()
-
-    def select_into_dataframe(self, sql: str):
-        self.cursor.execute(sql)
-        return pandas.DataFrame(self.cursor.fetchall())
