@@ -22,3 +22,5 @@ be able to grant USAGE on the flyway schemas
  */
 GRANT USAGE ON SCHEMA flyway TO readonly;
 GRANT USAGE ON SCHEMA "flyway-permissions" TO readonly;
+
+CREATE SCHEMA IF NOT EXISTS warehouse_banks;
