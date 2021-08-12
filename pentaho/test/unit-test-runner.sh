@@ -155,7 +155,7 @@ function execute_mdi_test_cases() {
 function execute_edw_metadata_unit_test() {
   test_to_run="$1"
   echo "Now running $test_to_run..."
-  metadata_unit_test_result=$(python edw-metadata-unit-test-runner.py "$test_to_run")
+  metadata_unit_test_result=$(python edw_metadata_unit_test_runner.py "$test_to_run")
   if [[ -n $metadata_unit_test_result ]]; then
     failed_unit_tests="${failed_unit_tests} $metadata_unit_test_result"$'\n'
   fi
