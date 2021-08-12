@@ -14,7 +14,9 @@ def query_tester(query: str, failure_message: str):
             print(failure_message)
 
 
-def edw_table_definition_test_1():
+def test_1():
+    """edw_table definition: If database is staging and schema_name is staging_octane then
+    primary_source_edw_table_definition_dwid is null"""
     query_tester("""
         SELECT edw_table_definition.dwid
             , edw_table_definition.database_name
@@ -25,30 +27,33 @@ def edw_table_definition_test_1():
         WHERE edw_table_definition.database_name = 'staging'
           AND edw_table_definition.schema_name = 'staging_octane'
           AND edw_table_definition.primary_source_edw_table_definition_dwid IS NOT NULL
-    """, "edw_table_definition test 1: Non-null values in primary_source_edw_table_definition_dwid field " \
-         "for staging_octane tables.")
+    """, "Test 1: [edw_table_definition] Non-null values in primary_source_edw_table_definition_dwid field for "
+         "staging_octane tables.")
 
 
-def edw_table_definition_test_2():
+def test_2():
+    """edw_table_defintion: If database is staging and schema_name is history_octane then
+    primary_source_edw_table_definition_dwid references a record whose schema is staging_octane"""
     query_tester("""
-        SELECT history_tables.dwid
-            , history_tables.database_name
-            , history_tables.schema_name
-            , history_tables.table_name
-            , history_tables.primary_source_edw_table_definition_dwid
-            , history_source_tables.database_name AS source_database_name
-            , history_source_tables.schema_name AS source_schema_name
-            , history_source_tables.table_name AS source_table_name
-        FROM mdi.edw_table_definition history_tables
-                 JOIN mdi.edw_table_definition history_source_tables
-                      ON history_tables.primary_source_edw_table_definition_dwid = history_source_tables.dwid
-                          AND history_source_tables.schema_name <> 'staging_octane'
-        WHERE history_tables.database_name = 'staging'
-          AND history_tables.schema_name = 'history_octane'
-    """, "edw_table_definition test 2: history_octane record(s) mapped to an invalid source schema.")
+            SELECT history_tables.dwid
+                , history_tables.database_name
+                , history_tables.schema_name
+                , history_tables.table_name
+                , history_tables.primary_source_edw_table_definition_dwid
+                , history_source_tables.database_name AS source_database_name
+                , history_source_tables.schema_name AS source_schema_name
+                , history_source_tables.table_name AS source_table_name
+            FROM mdi.edw_table_definition history_tables
+                     JOIN mdi.edw_table_definition history_source_tables
+                          ON history_tables.primary_source_edw_table_definition_dwid = history_source_tables.dwid
+                              AND history_source_tables.schema_name <> 'staging_octane'
+            WHERE history_tables.database_name = 'staging'
+              AND history_tables.schema_name = 'history_octane'
+        """, "Test 2: [edw_table_definition] history_octane record(s) mapped to an invalid source schema.")
 
 
-def edw_field_definition_test_1():
+def test_3():
+    """edw_field_definition: field_source_calculation must not have an alias"""
     query_tester("""
         SELECT edw_field_definition.dwid 
             , edw_field_definition.field_name
@@ -56,10 +61,12 @@ def edw_field_definition_test_1():
         FROM mdi.edw_field_definition
         WHERE edw_field_definition.field_source_calculation IS NOT NULL
           AND edw_field_definition.field_source_calculation ~* 'AS .*$'
-    """, "edw_field_definition test 1: Alias detected in field_source_calculation.")
+    """, "Test 3: [edw_field_definition] Alias detected in field_source_calculation.")
 
 
-def edw_field_definition_test_2():
+def test_4():
+    """edw_field_definition: field_source_calculation includes appropriate table qualifiers,
+    e.g. primary_table, t<dwid>"""
     query_tester("""
         SELECT edw_field_definition.dwid 
             , edw_field_definition.field_name
@@ -68,15 +75,29 @@ def edw_field_definition_test_2():
         WHERE edw_field_definition.field_source_calculation IS NOT NULL
             AND edw_field_definition.field_source_calculation NOT LIKE '%primary_table.%'
             AND edw_field_definition.field_source_calculation !~ 't[0-9]+\.'
-    """, "edw_field_definition test 2: field_source_calculation detected without appropriate table " \
-         "qualifiers.")
+    """, "Test 4: [edw_field_definition] field_source_calculation detected without appropriate table qualifiers.")
 
 
-def edw_field_definition_test_3():
-    # edw_field_population_a should have NULLs in both source_edw_field_definition_dwid and field_source_calculation
-    # fields
-    # edw_field_population_b should have NULL in at least one of the two source_edw_field_definition_dwid and
-    # field_source_calculation fields
+def test_5():
+    """edw_field_definition:
+    If any of the following:
+        - database is ingress
+        - database is staging AND schema is staging_*
+        - database is staging AND schema is history_octane AND field is data_source_deleted_flag
+        - database is staging AND schema is history_octane AND field is data_source_updated_datetime
+            THEN
+                Both of the following fields must be NULL
+                    - source_edw_field_definition_dwid
+                    - field_source_calculation
+            ELSE
+                At least one of the following fields must be NULL
+                    - source_edw_field_definition_dwid
+                    - field_source_calculation
+
+    edw_field_population_a must have NULLs in both source_edw_field_definition_dwid and field_source_calculation
+    fields
+    edw_field_population_b must have NULL in at least one of the two source_edw_field_definition_dwid and
+    field_source_calculation fields"""
     query_tester("""
         WITH edw_field_population_a AS (
             SELECT edw_table_definition.database_name
@@ -134,11 +155,12 @@ def edw_field_definition_test_3():
         FROM edw_field_population_b
         WHERE NOT (source_edw_field_definition_dwid IS NULL
             OR field_source_calculation IS NULL)
-    """, "edw_field_definition test 3: Records with invalid non-null values in "
+    """, "Test 5: [edw_field_definition] Records with invalid non-null values in "
          "source_edw_field_definition_dwid and/or field_source_calculation.")
 
 
-def edw_join_definition_test_1():
+def test_6():
+    """edw_join_definition: join_condition must only reference fields in primary table and target table"""
     query_tester("""
         WITH prefixes AS (
             SELECT edw_join_definition.dwid
@@ -150,10 +172,11 @@ def edw_join_definition_test_1():
             , (prefixes.alias = 't' || prefixes.dwid OR prefixes.alias = 'primary_table') AS legal_prefix
         FROM prefixes
         WHERE (prefixes.alias = 't' || prefixes.dwid OR prefixes.alias = 'primary_table') IS FALSE
-    """, "edw_join_definition test 1: join_condition references fields from an invalid table.")
+    """, "Test 6: [edw_join_definition] Join_condition references fields from an invalid table.")
 
 
-def edw_join_tree_definition_test_1():
+def test_7():
+    """edw_join_tree_definition: dwid : child_join_tree_dwid relationship must never result in recursive loop"""
     query_tester("""
         WITH RECURSIVE search_graph (edw_join_tree_dwid, next_child_dwid, join_sequence, loop_detected) AS (
             SELECT edw_join_tree_definition.dwid
@@ -173,20 +196,25 @@ def edw_join_tree_definition_test_1():
         SELECT search_graph.join_sequence AS looping_join_dwid_sequence
         FROM search_graph
         WHERE search_graph.loop_detected IS TRUE;
-    """, "edw_join_tree_definition test 1: Loop detected in edw root / child join sequence(s).")
+    """, "Test 7: [edw_join_tree_definition] Loop detected in edw root / child join sequence(s).")
 
 
-def process_test_1():
+def test_8():
+    """process: Values in name field must be unique"""
     query_tester("""
         SELECT process.name
             , COUNT(*)
         FROM mdi.process
         GROUP BY process.name
         HAVING COUNT(*) > 1
-    """, "process test 1: Non-unique value(s) in name field.")
+    """, "Test 8: [process] Non-unique value(s) in name field.")
 
 
-def process_test_2():
+def test_9():
+    """process: All records must always be referenced by exactly one record from one the following tables:
+      - table_input_step
+      - microsoft_excel_input_step
+      - csv_file_input_step"""
     query_tester("""
         WITH process_input AS (
             SELECT process.dwid
@@ -207,10 +235,14 @@ def process_test_2():
             WHERE process_input.has_table_input_dwid
                 + process_input.has_excel_input_dwid
                 + process_input.has_csv_input_dwid != 1
-    """, "process test 2: Record(s) mapped to zero or more than one MDI input relation.")
+    """, "Test 9: [process] Record(s) mapped to zero or more than one MDI input relation.")
 
 
-def process_test_3():
+def test_10():
+    """process: All records must always be referenced by exactly one record from one the following tables:
+        - table_output_step
+        - insert_update_step
+        - delete_step"""
     query_tester("""
         WITH process_output AS (
             SELECT process.dwid
@@ -231,20 +263,22 @@ def process_test_3():
             WHERE process_output.has_table_output_dwid
                 + process_output.has_insert_update_dwid
                 + process_output.has_delete_dwid != 1
-    """, "process test 3: Record(s) mapped to zero or more than one MDI output relation.")
+    """, "Test 10: [process] Record(s) mapped to zero or more than one MDI output relation.")
 
 
-def csv_file_input_step_test_1():
+def test_11():
+    """csv_file_input_step: All records must be referenced by at least one record from csv_file_input_field"""
     query_tester("""
         SELECT csv_file_input_step.dwid
         FROM mdi.csv_file_input_step
             LEFT JOIN mdi.csv_file_input_field ON csv_file_input_step.dwid = 
                 csv_file_input_field.csv_file_input_step_dwid
         WHERE csv_file_input_field.dwid IS NULL        
-    """, "csv_file_input_step test 1: Record(s) missing required csv_file_input_field relation.")
+    """, "Test 11: [csv_file_input_step] Record(s) missing required csv_file_input_field relation.")
 
 
-def csv_file_input_field_test_1():
+def test_12():
+    """csv_file_input_field: field_name must be unique among records with the same csv_file_input_step_dwid"""
     query_tester("""
         SELECT csv_file_input_field.csv_file_input_step_dwid
             , csv_file_input_field.field_name
@@ -253,20 +287,24 @@ def csv_file_input_field_test_1():
         GROUP BY csv_file_input_field.csv_file_input_step_dwid
             , csv_file_input_field.field_name
         HAVING COUNT(*) > 1
-    """, "csv_file_input_field test 1: Duplicate field names mapped to a single csv_file_input_step record.")
+    """, "Test 12: [csv_file_input_field] Duplicate field names mapped to a single csv_file_input_step record.")
 
 
-def microsoft_excel_input_step_test_1():
+def test_13():
+    """microsoft_excel_input_step: All records must be referenced by at least one record from
+    microsoft_excel_input_field"""
     query_tester("""
         SELECT microsoft_excel_input_step.dwid
         FROM mdi.microsoft_excel_input_step
             LEFT JOIN mdi.microsoft_excel_input_field ON microsoft_excel_input_step.dwid = 
                 microsoft_excel_input_field.microsoft_excel_input_step_dwid
         WHERE microsoft_excel_input_field.dwid IS NULL
-    """, "microsoft_excel_input_step test 1: Record(s) missing required microsoft_excel_input_field relation.")
+    """, "Test 13: [microsoft_excel_input_step] Record(s) missing required microsoft_excel_input_field relation.")
 
 
-def microsoft_excel_input_field_test_1():
+def test_14():
+    """microsoft_excel_input_field: field_name must be unique among records with the same
+    microsoft_excel_input_step_dwid"""
     query_tester("""
         SELECT microsoft_excel_input_field.microsoft_excel_input_step_dwid
              , microsoft_excel_input_field.field_name
@@ -275,11 +313,16 @@ def microsoft_excel_input_field_test_1():
         GROUP BY microsoft_excel_input_field.microsoft_excel_input_step_dwid
                , microsoft_excel_input_field.field_name
         HAVING COUNT(*) > 1
-    """, "microsoft_excel_input_field test 1: Duplicate field names mapped to a single " \
+    """, "Test 14: [microsoft_excel_input_field] Duplicate field names mapped to a single " 
          "microsoft_excel_input_step record.")
 
 
-def table_input_step_test_1():
+def test_15():
+    """table_input_step: The following fields must contain the corresponding values for all records:
+        - limit_size = 0
+        - execute_for_each_row = ‘N’
+        - enable_lazy_conversion = ‘N’
+        - cached_row_meta = ‘N’"""
     query_tester("""
         SELECT table_input_step.dwid
             , table_input_step.limit_size
@@ -291,20 +334,23 @@ def table_input_step_test_1():
             AND execute_for_each_row = 'N'
             AND enable_lazy_conversion = 'N'
             AND cached_row_meta = 'N')
-    """, "table_input_step test 1: Non-standard values in standard-value fields.")
+    """, "Test 15: [table_input_step] Non-standard values in standard-value fields.")
 
 
-def table_input_step_test_2():
+def test_16():
+    """table_input_step: sql must be unique"""
     query_tester("""
         SELECT table_input_step.sql
             , COUNT(*)
         FROM mdi.table_input_step
         GROUP BY sql
         HAVING COUNT(*) > 1
-    """, "table_input_step test 2: Duplicate values detected in sql field.")
+    """, "Test 16: [table_input_step] Duplicate values detected in sql field.")
 
 
-def table_output_step_test_1():
+def test_17():
+    """table_output_step: Target_table must exist in edw_table_definition
+    UNLESS database is ingress OR schema is staging_compliance"""
     query_tester("""
         SELECT table_output_step.dwid
             , table_output_step.connectionname
@@ -316,11 +362,12 @@ def table_output_step_test_1():
         WHERE table_output_step.connectionname <> 'Ingress DB Connection'
             AND table_output_step.target_schema <> 'staging_compliance'
             AND edw_table_definition.dwid IS NULL
-    """, "table_output_step test 1: Record(s) with a target_table field value that does not exist in " \
+    """, "Test 17: [table_output_step] Record(s) with a target_table field value that does not exist in "
          "edw_table_definition.")
 
 
-def table_output_step_test_2():
+def test_18():
+    """table_output_step: All records must be referenced by at least one record in table_output_field"""
     query_tester("""
         SELECT table_output_step.dwid
             , table_output_step.connectionname
@@ -329,10 +376,21 @@ def table_output_step_test_2():
         FROM mdi.table_output_step
             LEFT JOIN mdi.table_output_field ON table_output_step.dwid = table_output_field.table_output_step_dwid
         WHERE table_output_field.dwid IS NULL
-    """, "table_output_step test 2: Record(s) missing required table_output_field relation.")
+    """, "Test 18: [table_output_step] Record(s) missing required table_output_field relation.")
 
 
-def table_output_step_test_3():
+def test_19():
+    """table_output_step: The following fields must contain the corresponding values for all records:
+        - partitioning_field IS NULL
+        - table_name_field IS NULL
+        - auto_generated_key_field IS NULL
+        - partition_data_per IS NULL
+        - table_name_defined_in_field = ‘N’
+        - return_auto_generated_key_field IS NULL
+        - partition_over_tables = ‘N’
+        - specify_database_fields = ‘Y’
+        - ignore_insert_errors = ‘N’
+        - use_batch_update = ‘N’"""
     query_tester("""
         SELECT table_output_step.dwid
             , table_output_step.connectionname
@@ -359,10 +417,13 @@ def table_output_step_test_3():
             AND table_output_step.specify_database_fields = 'Y'
             AND table_output_step.ignore_insert_errors = 'N'
             AND table_output_step.use_batch_update = 'N')
-    """, "table_output_step test 3: Non-standard values in standard-value fields.")
+    """, "Test 19: [table_output_step] Non-standard values in standard-value fields.")
 
 
-def table_output_field_test_1():
+def test_20():
+    """table_output_field: field_name must exist in edw_field_definition
+    AND edw_field_definition record must reference same table as the table_output_step.target_table
+    UNLESS database is ingress OR schema is staging_compliance"""
     query_tester("""
         SELECT edw_table_definition.schema_name
             , edw_table_definition.table_name
@@ -379,11 +440,14 @@ def table_output_field_test_1():
                 AND table_output_field.database_field_name = edw_field_definition.field_name
         WHERE NOT (edw_field_definition.dwid IS NOT NULL
             AND edw_table_definition.dwid IS NOT NULL)
-    """, "table_output_field test 1: Record(s) missing required relation in edw_field_definition and/or " \
+    """, "Test 20: [table_output_field] Record(s) missing required relation in edw_field_definition and/or "
          "edw_table_definition.")
 
 
-def table_output_field_test_2():
+def test_21():
+    """table_output_field: the following fields must be unique among records with the same table_output_step_dwid:
+        - database_stream_name
+        - database_field_name"""
     query_tester("""
         SELECT table_output_field.table_output_step_dwid
              , 'database_field_name' AS table_output_field_field_type
@@ -403,10 +467,11 @@ def table_output_field_test_2():
                , table_output_field.database_stream_name
         HAVING COUNT(*) > 1
         ORDER BY field_name      
-    """, "table_output_field test 2: Duplicate field names mapped to a single table_output_step record.")
+    """, "Test 21: [table_output_field] Duplicate field names mapped to a single table_output_step record.")
 
 
-def table_output_field_test_3():
+def test_22():
+    """table_output_field: field_order numbers must be unique within any given table_output_step_dwid"""
     query_tester("""
         SELECT table_output_field.table_output_step_dwid
             , table_output_field.field_order
@@ -415,11 +480,13 @@ def table_output_field_test_3():
         GROUP BY table_output_field.table_output_step_dwid
             , table_output_field.field_order
         HAVING COUNT(*) > 1
-    """, "table_output_field test 3: Duplicate field order values mapped to a single table_output_step " \
+    """, "Test 22: [table_output_field] Duplicate field order values mapped to a single table_output_step "
          "record.")
 
 
-def insert_update_step_test_1():
+def test_23():
+    """insert_update_step: table_name must exist in edw_table_definition
+    UNLESS database is ingress OR schema is staging_compliance"""
     query_tester("""
         SELECT insert_update_step.dwid
             , insert_update_step.schema_name
@@ -430,38 +497,43 @@ def insert_update_step_test_1():
         WHERE insert_update_step.connectionname <> 'Ingress DB Connection'
             AND insert_update_step.schema_name <> 'staging_compliance' 
             AND edw_table_definition.dwid IS NULL
-    """, "insert_update_step test 1: Record(s) with a table_name field value that does not exist in the " \
+    """, "Test 23: [insert_update_step] Record(s) with a table_name field value that does not exist in the "
          "mdi.edw_table_definition table.")
 
 
-def insert_update_step_test_2():
+def test_24():
+    """insert_update_step: All records must be referenced by at least one record in insert_update_key"""
     query_tester("""
         SELECT insert_update_step.dwid
         FROM mdi.insert_update_step
             LEFT JOIN mdi.insert_update_key ON insert_update_step.dwid = insert_update_key.insert_update_step_dwid
         WHERE insert_update_key.dwid IS NULL
-    """, "insert update_step test 2: Record(s) missing required insert_update_key relation.")
+    """, "Test 24: [insert_update_step] Record(s) missing required insert_update_key relation.")
 
 
-def insert_update_step_test_3():
+def test_25():
+    """insert_update_step: All records must be referenced by at least one record in insert_update_field"""
     query_tester("""
         SELECT insert_update_step.dwid
         FROM mdi.insert_update_step
             LEFT JOIN mdi.insert_update_field ON insert_update_step.dwid = insert_update_field.insert_update_step_dwid
         WHERE insert_update_field.dwid IS NULL
-    """, "insert update_step test 3: Record(s) missing required insert_update_field relation.")
+    """, "Test 25: [insert_update_step] Record(s) missing required insert_update_field relation.")
 
 
-def insert_update_step_test_4():
+def test_26():
+    """insert_update_field: The following fields must contain the corresponding values for all records:
+        - do_not = ‘N’"""
     query_tester("""
         SELECT insert_update_step.dwid
             , insert_update_step.do_not
         FROM mdi.insert_update_step
         WHERE insert_update_step.do_not <> 'N'
-    """, "insert_update_step test 4: Record(s) with invalid value in do_not field.")
+    """, "Test 26: [insert_update_step] Record(s) with invalid value in do_not field.")
 
 
-def insert_update_key_test_1():
+def test_27():
+    """insert_update_key: key_stream2 must be non-null if and only if key_condition = “BETWEEN”"""
     query_tester("""
         SELECT insert_update_key.dwid
             , insert_update_key.key_stream1
@@ -478,10 +550,13 @@ def insert_update_key_test_1():
         FROM mdi.insert_update_key
         WHERE insert_update_key.key_condition = 'BETWEEN'
             AND insert_update_key.key_stream2 IS NULL
-    """, "insert_update_key test 1: Record(s) with conflicting key_condition and key_stream2 values.")
+    """, "Test 27: [insert_update_key] Record(s) with conflicting key_condition and key_stream2 values.")
 
 
-def insert_update_field_test_1():
+def test_28():
+    """insert_update_field: field_name must exist in edw_field_definition
+    AND edw_field_definition record must reference same table as the insert_update_step.table_name
+    Both conditions above must be true UNLESS database is ingress OR schema is staging_compliance"""
     query_tester("""
         SELECT insert_update_step.table_name AS insert_update_step_target_table_name
             , insert_update_field.update_lookup AS insert_update_target_field_name
@@ -498,11 +573,12 @@ def insert_update_field_test_1():
                 AND insert_update_field.update_lookup = edw_field_definition.field_name
         WHERE NOT (edw_field_definition.dwid IS NOT NULL
             AND edw_table_definition.dwid IS NOT NULL)
-    """, "insert_update_field test 1: Record(s) missing required relation in edw_field_definition and/or " \
+    """, "Test 28: [insert_update_field] Record(s) missing required relation in edw_field_definition and/or "
          "edw_table_definition.")
 
 
-def insert_update_field_test_2():
+def test_29():
+    """insert_update_field: field_name must be unique among records with the same insert_update_step_dwid"""
     query_tester("""
         SELECT insert_update_field.insert_update_step_dwid
             , insert_update_field.update_lookup
@@ -511,10 +587,12 @@ def insert_update_field_test_2():
         GROUP BY insert_update_field.insert_update_step_dwid
             , insert_update_field.update_lookup
         HAVING COUNT(*) > 1
-    """, "insert_update_field test 2: Duplicate field names mapped to a single insert_update_step record.")
+    """, "Test 29: [insert_update_field] Duplicate field names mapped to a single insert_update_step record.")
 
 
-def insert_update_field_test_3():
+def test_30():
+    """insert_update_field: If a field is designated as a key field (i.e. it exists in the insert_update_key table)
+    then update_flag must be set to ‘N’"""
     query_tester("""
         SELECT insert_update_step.dwid AS insert_update_step_dwid
             , insert_update_key.key_lookup AS key_field_name
@@ -524,19 +602,21 @@ def insert_update_field_test_3():
             JOIN mdi.insert_update_field ON insert_update_step.dwid = insert_update_field.insert_update_step_dwid
                 AND insert_update_key.key_lookup = insert_update_field.update_lookup
                 AND insert_update_field.update_flag = 'Y'
-    """, "insert_update_field test 3: Designated key field(s) with invalid update_flag value.")
+    """, "Test 30: [insert_update_field] Designated key field(s) with invalid update_flag value.")
 
 
-def delete_step_test_1():
+def test_31():
+    """delete_step: All records must be referenced by at least one record in delete_key"""
     query_tester("""
         SELECT delete_step.dwid
         FROM mdi.delete_step
             LEFT JOIN mdi.delete_key ON delete_step.dwid = delete_key.delete_step_dwid
         WHERE delete_key.dwid IS NULL
-    """, "delete_step test 1: Record(s) missing required delete_key relation.")
+    """, "Test 31: [delete_step] Record(s) missing required delete_key relation.")
 
 
-def delete_key_test_1():
+def test_32():
+    """delete_key: stream_fieldname_2 must never contain a NULL value"""
     query_tester("""
         SELECT delete_key.dwid
             , delete_key.stream_fieldname_1
@@ -544,9 +624,13 @@ def delete_key_test_1():
             , delete_key.comparator
         FROM mdi.delete_key
         WHERE stream_fieldname_2 IS NULL
-    """, "delete_key test 1: Record(s) with a NULL value in the stream_fieldname_2 field.")
+    """, "Test 32: [delete_key] Record(s) with a NULL value in the stream_fieldname_2 field.")
 
-def delete_key_test_2():
+
+def test_33():
+    """delete_key: if comparator is “BETWEEN” then stream_fieldname_2 must have a non-null value that is not an empty
+    string
+    ELSE stream_fieldname_2 must contain an empty string (not NULL)"""
     query_tester("""
         SELECT delete_key.dwid
             , delete_key.stream_fieldname_1
@@ -555,20 +639,30 @@ def delete_key_test_2():
         FROM mdi.delete_key
         WHERE comparator = 'BETWEEN'
             AND stream_fieldname_2 = ''
-    """, "delete_key test 2: Record(s) with conflicting comparator and stream_fieldname_2 values.")
+    """, "Test 33: [delete_key] Record(s) with conflicting comparator and stream_fieldname_2 values.")
 
 
-def json_output_field_test_1():
+def test_34():
+    """json_output_field: process_dwid must be unique"""
     query_tester("""
         SELECT json_output_field.process_dwid
             , COUNT(*)
         FROM mdi.json_output_field
         GROUP BY json_output_field.process_dwid
         HAVING COUNT(*) > 1
-    """, "json_output_field test 1: Duplicate values detected in process_dwid field.")
+    """, "Test 34: [json_output_field] Duplicate values detected in process_dwid field.")
 
 
-def json_output_field_test_2():
+def test_35():
+    """json_output_field: field_name must be one of the following:
+        - *_pid
+        - dwid
+        - *_dwid
+        - data_source_integration_id
+        - code
+        - ais_id
+        - dis_id
+        - fter_mesage_id"""
     query_tester("""
         SELECT json_output_field.dwid
             , json_output_field.field_name
@@ -577,19 +671,22 @@ def json_output_field_test_2():
             OR json_output_field.field_name LIKE '%_dwid'
             OR json_output_field.field_name IN ('dwid', 'data_source_integration_id', 'code', 'ais_id', 'dis_id', 
             'fter_message_id'))
-    """, "json_output_field test 2: invalid field name.")
+    """, "Test 35: [json_output_field] invalid field name.")
 
 
-def state_machine_definition_test_1():
+def test_36():
+    """state_machine_definition: name must be a non-empty string consisting of only letters, numbers, dashes,
+    and underscores"""
     query_tester("""
         SELECT state_machine_definition.dwid
             , state_machine_definition.name
         FROM mdi.state_machine_definition
         WHERE name !~ '^[a-zA-Z0-9_-]+$'
-    """, "state_machine_definition test 1: Invalid value(s) detected in name field.")
+    """, "Test 36: [state_machine_definition] Invalid value(s) detected in name field.")
 
 
-def state_machine_step_test_1():
+def test_37():
+    """state_machine_step: process_dwid and next_process_dwid relationship must never result in a recursive loop"""
     query_tester("""
         WITH RECURSIVE search_graph (process_dwid, next_process_dwid, process_sequence, loop_detected) AS (
             SELECT state_machine_step.process_dwid
@@ -610,7 +707,7 @@ def state_machine_step_test_1():
         FROM search_graph
         WHERE loop_detected IS TRUE
         ORDER BY process_sequence;
-    """, "state_machine_definition test 1: Loop detected in state machine process sequence(s).")
+    """, "Test 37: [state_machine_definition] Loop detected in state machine process sequence(s).")
 
 
 class EDW:
