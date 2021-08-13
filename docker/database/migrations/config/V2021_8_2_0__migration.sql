@@ -835,7 +835,7 @@ BEGIN
 
 -- SP-12 edw table definition insert
     INSERT INTO mdi.edw_table_definition (database_name, schema_name, table_name, primary_source_edw_table_definition_dwid)
-    VALUES  ('staging', 'warehouse_banks', 'loan_inventory_prosperity', NULL)
+    VALUES  ('ingress', 'warehouse_banks', 'loan_inventory_prosperity', NULL)
     RETURNING dwid INTO sp_12_edw_table_definition_dwid;
 
 -- SP-12 process input
@@ -1091,7 +1091,7 @@ BEGIN
 
 -- SP-13 edw table definition insert
     INSERT INTO mdi.edw_table_definition (database_name, schema_name, table_name, primary_source_edw_table_definition_dwid)
-    VALUES  ('staging', 'warehouse_banks', 'loan_inventory_flagstar', NULL)
+    VALUES  ('ingress', 'warehouse_banks', 'loan_inventory_flagstar', NULL)
     RETURNING dwid INTO sp_13_edw_table_definition_dwid;
 -- SP-13 process input
     INSERT INTO mdi.process (name, description)
@@ -1184,7 +1184,7 @@ BEGIN
 
 -- SP-14 edw table definition insert
     INSERT INTO mdi.edw_table_definition (database_name, schema_name, table_name, primary_source_edw_table_definition_dwid)
-    VALUES  ('staging', 'warehouse_banks', 'loan_inventory_lifestyle_home_lending', NULL)
+    VALUES  ('ingress', 'warehouse_banks', 'loan_inventory_lifestyle_home_lending', NULL)
     RETURNING dwid INTO sp_14_edw_table_definition_dwid;
 
 -- SP-14 process input
@@ -1440,7 +1440,7 @@ BEGIN
 
 -- SP-15 edw table definition insert
     INSERT INTO mdi.edw_table_definition (database_name, schema_name, table_name, primary_source_edw_table_definition_dwid)
-    VALUES  ('staging', 'warehouse_banks', 'loan_inventory_bank_united', NULL)
+    VALUES  ('ingress', 'warehouse_banks', 'loan_inventory_bank_united', NULL)
     RETURNING dwid INTO sp_15_edw_table_definition_dwid;
 
 -- SP-15 process input
@@ -1694,7 +1694,7 @@ BEGIN
 
 -- SP-16 edw table definition insert
     INSERT INTO mdi.edw_table_definition (database_name, schema_name, table_name, primary_source_edw_table_definition_dwid)
-    VALUES  ('staging', 'warehouse_banks', 'loan_inventory_truist', NULL)
+    VALUES  ('ingress', 'warehouse_banks', 'loan_inventory_truist', NULL)
     RETURNING dwid INTO sp_16_edw_table_definition_dwid;
 
 -- SP-16 process input
@@ -1798,7 +1798,7 @@ BEGIN
 
 -- SP-17 edw table definition insert
     INSERT INTO mdi.edw_table_definition (database_name, schema_name, table_name, primary_source_edw_table_definition_dwid)
-    VALUES  ('staging', 'warehouse_banks', 'loan_inventory_texas_capital', NULL)
+    VALUES  ('ingress', 'warehouse_banks', 'loan_inventory_texas_capital', NULL)
     RETURNING dwid INTO sp_17_edw_table_definition_dwid;
 
 -- SP-17 process input
@@ -2577,7 +2577,7 @@ BEGIN
 
 -- SP-18 edw table definition insert
     INSERT INTO mdi.edw_table_definition (database_name, schema_name, table_name, primary_source_edw_table_definition_dwid)
-    VALUES  ('staging', 'warehouse_banks', 'loan_inventory_tiaa', NULL)
+    VALUES  ('ingress', 'warehouse_banks', 'loan_inventory_tiaa', NULL)
     RETURNING dwid INTO sp_18_edw_table_definition_dwid;
 
 -- SP-18 process input
@@ -3362,7 +3362,7 @@ BEGIN
 
 -- SP-19 edw table definition insert
     INSERT INTO mdi.edw_table_definition (database_name, schema_name, table_name, primary_source_edw_table_definition_dwid)
-    VALUES  ('staging', 'warehouse_banks', 'loan_inventory_bank_montreal', NULL)
+    VALUES  ('ingress', 'warehouse_banks', 'loan_inventory_bank_montreal', NULL)
     RETURNING dwid INTO sp_19_edw_table_definition_dwid;
 
 -- SP-19 process input
@@ -3683,7 +3683,7 @@ BEGIN
 
 -- SP-20 edw table definition insert
     INSERT INTO mdi.edw_table_definition (database_name, schema_name, table_name, primary_source_edw_table_definition_dwid)
-    VALUES  ('staging', 'warehouse_banks', 'loan_inventory_sterling', NULL)
+    VALUES  ('ingress', 'warehouse_banks', 'loan_inventory_sterling', NULL)
     RETURNING dwid INTO sp_20_edw_table_definition_dwid;
 
 -- SP-20 process input
