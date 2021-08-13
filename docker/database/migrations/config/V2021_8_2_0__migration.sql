@@ -273,7 +273,7 @@ WITH cte_process as (INSERT INTO mdi.process (name, description)    -- mdi.proce
            'N',
            'mixed',
            'UTF-8',
-           'N',
+           'Y',
            'N',
            NULL,
            NULL,
@@ -766,7 +766,7 @@ WITH cte_process as (INSERT INTO mdi.process (name, description)    -- mdi.proce
          , ('servicing_sold_id', 'servicing_sold_id', 219, FALSE)
          , ('etl_batch_id', 'etl_batch_id', 220, FALSE)
          , ('data_source_dwid', 'data_source_dwid', 221, FALSE)
-         , ('input_filename', 'input_filename', 222, FALSE))
+         , ('input_filename', 'imported_filename', 222, FALSE))
 
    , cte_table_output_field as (INSERT INTO mdi.table_output_field (table_output_step_dwid, database_field_name, database_stream_name, field_order, is_sensitive)
            SELECT
