@@ -15,7 +15,7 @@ def query_tester(query: str, failure_message: str):
 
 
 def test_1():
-    """edw_table definition: If database is staging and schema_name is staging_octane then
+    """edw_table_definition: If database is staging and schema_name is staging_octane then
     primary_source_edw_table_definition_dwid must be null"""
     query_tester("""
         SELECT edw_table_definition.dwid
