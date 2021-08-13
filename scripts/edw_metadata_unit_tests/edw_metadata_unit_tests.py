@@ -16,7 +16,7 @@ def query_tester(query: str, failure_message: str):
 
 def test_1():
     """edw_table definition: If database is staging and schema_name is staging_octane then
-    primary_source_edw_table_definition_dwid is null"""
+    primary_source_edw_table_definition_dwid must be null"""
     query_tester("""
         SELECT edw_table_definition.dwid
             , edw_table_definition.database_name
@@ -33,7 +33,7 @@ def test_1():
 
 def test_2():
     """edw_table_defintion: If database is staging and schema_name is history_octane then
-    primary_source_edw_table_definition_dwid references a record whose schema is staging_octane"""
+    primary_source_edw_table_definition_dwid must reference a record whose schema is staging_octane"""
     query_tester("""
             SELECT history_tables.dwid
                 , history_tables.database_name
@@ -65,7 +65,7 @@ def test_3():
 
 
 def test_4():
-    """edw_field_definition: field_source_calculation includes appropriate table qualifiers,
+    """edw_field_definition: field_source_calculation must include appropriate table qualifiers,
     e.g. primary_table, t<dwid>"""
     query_tester("""
         SELECT edw_field_definition.dwid 
