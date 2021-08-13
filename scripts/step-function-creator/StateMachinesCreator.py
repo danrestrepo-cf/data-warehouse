@@ -62,8 +62,7 @@ class StateMachinesCreator:
 
         self.state_machine_creator = SingleStateMachineCreator(self.state_machine_metadata, self.step_tree_metadata,
                                                                self.target_table_metadata)
-        # perform error checking on metadata
-        self.throw_error_if_metadata_contains_loops()
+
 
     def create_schedule_config_string(self, indent_space_count: int = 2, file_extension: str = 'json') -> str:
         """
@@ -87,24 +86,6 @@ class StateMachinesCreator:
         """Build state machine configuration dicts for every state machine in the given metadata"""
         return {self.state_machine_metadata[root]['name']: self.state_machine_creator.build_state_machine(root)
                 for root in self.state_machine_metadata.keys()}
-
-    def throw_error_if_metadata_contains_loops(self):
-        """Check all state machine metadata for loops, throwing an error if any are found"""
-        for root_process in self.state_machine_metadata.keys():
-            found_processes = set()
-            self.recursively_check_for_loops(found_processes, root_process)
-
-    def recursively_check_for_loops(self, found_processes: set, process: str):
-        """Recursively check the given process (and its descendants) for loops"""
-        if process in found_processes:
-            raise self.InvalidMetadataError()
-        found_processes.add(process)
-        if process in self.step_tree_metadata:
-            for child_process in self.step_tree_metadata[process]:
-                self.recursively_check_for_loops(found_processes.copy(), child_process)
-
-    class InvalidMetadataError(Exception):
-        """Custom error to be thrown during class initialization if the metadata is invalid"""
 
 
 class SingleStateMachineCreator:
