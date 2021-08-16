@@ -2,6 +2,9 @@
 -- EDW - DMI Passport data load (SP-7) (https://app.asana.com/0/0/1182841661698329 )
 --
 
-GRANT SELECT ON dmi.passport TO readonly;
-
 GRANT SELECT, INSERT, UPDATE, DELETE, TRUNCATE ON dmi.passport TO dmi;
+ALTER DEFAULT PRIVILEGES FOR ROLE deployer IN SCHEMA dmi GRANT SELECT, INSERT, UPDATE, DELETE, TRUNCATE ON TABLES TO dmi;
+
+-- readonly permissions
+GRANT SELECT ON ALL TABLES IN SCHEMA dmi TO readonly;
+ALTER DEFAULT PRIVILEGES FOR ROLE deployer IN SCHEMA dmi GRANT SELECT ON TABLES TO readonly;
