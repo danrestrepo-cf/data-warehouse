@@ -1445,7 +1445,7 @@ BEGIN
 
 -- SP-15 process input
     INSERT INTO mdi.process (name, description)
-    VALUES ('SP-15', 'Load Bank United bank data to the ingress.warehoues_banks.loan_inventory_bank_united table')
+    VALUES ('SP-15', 'Load Bank United bank data to the ingress.warehouse_banks.loan_inventory_bank_united table')
     RETURNING dwid INTO sp_15_process_dwid;
 
 -- SP-15 csv file input step insert
@@ -1803,7 +1803,7 @@ BEGIN
 
 -- SP-17 process input
     INSERT INTO mdi.process (name, description)
-    VALUES ('SP-17', 'Load Texas Capital bank data to the ingress.warehoues_banks.loan_inventory_texas_capital table')
+    VALUES ('SP-17', 'Load Texas Capital bank data to the ingress.warehouse_banks.loan_inventory_texas_capital table')
     RETURNING dwid INTO sp_17_process_dwid;
 
 -- SP-17 csv file input step insert
@@ -2582,7 +2582,7 @@ BEGIN
 
 -- SP-18 process input
     INSERT INTO mdi.process (name, description)
-    VALUES ('SP-18', 'Load TIAA bank data to the ingress.warehoues_banks.loan_inventory_tiaa table')
+    VALUES ('SP-18', 'Load TIAA bank data to the ingress.warehouse_banks.loan_inventory_tiaa table')
     RETURNING dwid INTO sp_18_process_dwid;
 
 -- SP-18 csv_file_input_step insert
@@ -3367,7 +3367,8 @@ BEGIN
 
 -- SP-19 process input
     INSERT INTO mdi.process (name, description)
-    VALUES ('SP-19', 'Load Bank of Montreal bank data to the ingress.warehoues_banks.loan_inventory_bank_montreal table')
+    VALUES ('SP-19', 'Load Bank of Montreal bank data to the ingress.warehouse_banks.loan_inventory_bank_montreal ' ||
+                     'table')
     RETURNING dwid INTO sp_19_process_dwid;
 
 -- SP-19 excel input step insert
@@ -3688,7 +3689,7 @@ BEGIN
 
 -- SP-20 process input
     INSERT INTO mdi.process (name, description)
-    VALUES ('SP-20', 'Load Sterling bank data to the ingress.warehoues_banks.loan_inventory_sterling table')
+    VALUES ('SP-20', 'Load Sterling bank data to the ingress.warehouse_banks.loan_inventory_sterling table')
     RETURNING dwid INTO sp_20_process_dwid;
 
 
