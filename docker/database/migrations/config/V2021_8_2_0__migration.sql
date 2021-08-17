@@ -1102,7 +1102,7 @@ BEGIN
     INSERT INTO mdi.microsoft_excel_input_step ( process_dwid, spreadsheet_type, filemask, exclude_filemask
                                                , file_required, include_subfolders, sheet_name, sheet_start_row
                                                , sheet_start_col, data_source_dwid )
-    VALUES ( sp_13_process_dwid, 'POI', '*', NULL, 'Y', 'N', 'Report_Page_1', 7, 0, 0 )
+    VALUES ( sp_13_process_dwid, 'JXL', '*', NULL, 'Y', 'N', 'Report_Page_1', 7, 0, 0 )
     RETURNING dwid INTO sp_13_microsoft_excel_input_step_dwid;
 
 -- SP-13 excel input field insert
