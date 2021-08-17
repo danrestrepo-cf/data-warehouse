@@ -1112,7 +1112,7 @@ BEGIN
             ( sp_13_microsoft_excel_input_step_dwid, 'Loan #', 'String', NULL, -1, -1, '$', '.', ',', 'none', 2  ),
             ( sp_13_microsoft_excel_input_step_dwid, 'Lender Loan #', 'String', NULL, -1, -1, '$', '.', ',', 'none', 3  ),
             ( sp_13_microsoft_excel_input_step_dwid, 'Note Amount', 'String', NULL, -1, -1, '$', '.', ',', 'none', 4  ),
-            ( sp_13_microsoft_excel_input_step_dwid, 'Note Rate', 'Number', NULL, -1, -1, '$', '.', ',', 'none', 5  ),
+            ( sp_13_microsoft_excel_input_step_dwid, 'Note Rate', 'String', NULL, -1, -1, '$', '.', ',', 'none', 5  ),
             ( sp_13_microsoft_excel_input_step_dwid, 'Borrower', 'String', NULL, -1, -1, '$', '.', ',', 'none', 6  ),
             ( sp_13_microsoft_excel_input_step_dwid, 'Draw Fee', 'Number', NULL, -1, -1, '$', '.', ',', 'none', 7  ),
             ( sp_13_microsoft_excel_input_step_dwid, 'Outstanding Interest Accrued', 'Number', NULL, -1, -1, '$', '.', ',', 'none', 8  ),
