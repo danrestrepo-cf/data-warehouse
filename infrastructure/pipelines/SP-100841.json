@@ -1,8 +1,8 @@
 {
-    "Comment": "SP-100494 - ETL to copy du_key_finding_type data from staging_octane to history_octane",
-    "StartAt": "SP-100494",
+    "Comment": "SP-100841 - ETL to copy qualified_mortgage_rule_version_type data from staging_octane to history_octane",
+    "StartAt": "SP-100841",
     "States": {
-        "SP-100494": {
+        "SP-100841": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -24,7 +24,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100494"
+                                    "Value": "SP-100841"
                                 },
                                 {
                                     "Name": "INPUT_DATA",
