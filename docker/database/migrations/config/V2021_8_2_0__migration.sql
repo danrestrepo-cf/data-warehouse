@@ -9,9 +9,9 @@ WITH cte_edw_table_definition as (INSERT INTO mdi.edw_table_definition (database
 
     , cte_new_fields (field_name, key_field_flag) AS (
     VALUES ('etl_batch_id',FALSE)
-         , ('data_source_dwid',FALSE)
+         , ('data_source_dwid',TRUE)
          , ('input_filename',FALSE)
-         , ('loan_number',FALSE)
+         , ('loan_number',TRUE)
          , ('old_loan_number',FALSE)
          , ('new_servicer_loan_number',FALSE)
          , ('user_03_position_field_3a',FALSE)
