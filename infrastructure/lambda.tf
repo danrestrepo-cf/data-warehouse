@@ -17,7 +17,7 @@ resource aws_lambda_function next-step {
   role          = data.aws_iam_role.next-step.arn
   handler       = "${local.next-step-name}.execute"
   runtime       = "python3.7"
-  timeout       = 5 * 60 # 5 minutes
+  timeout       = local.next-step-max-process-time-seconds
 
   memory_size = 128
 
@@ -28,9 +28,7 @@ resource aws_lambda_function next-step {
 
   environment {
     variables = {
-      // provide the environment and ETL prefix to allow looking up environment specific names for SPs
-      environment = terraform.workspace
-      etl_prefix  = local.bi-prefix
+      sfn_arn_prefix = "arn:aws:states:${local.aws-region}:${local.account-id[terraform.workspace]}:stateMachine:${local.bi-prefix}"
     }
   }
 

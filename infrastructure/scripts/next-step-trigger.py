@@ -1,51 +1,54 @@
 import boto3
-import json
 import logging
 import os
-from urllib.parse import unquote_plus
 
 
-# Process an uploaded file as a response to AWS Step Function, sending a status to that service
 #
-# S3 Lambda Reference:
-# https://docs.aws.amazon.com/lambda/latest/dg/with-s3.html
-# https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/stepfunctions.html#SFN.Client.send_task_success
+# Read an SQS message that indicates which job should be triggered next
+#
+# It assumes two things to accomplish this:
+#    1. The ProcessID (ex, SP-100) is pass in as an SQS Message Attribute
+#    1. The Step Function ARN prefix is available as a environment variable, 'sfn_arn_prefix'
+#    1. The Step Function to call is the concatenation of ARN Prefix and ProcessID
+#
 def execute(event, context):
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
 
-    for record in event['Records']:
-        nextStepInput = record["body"]
-        # TODO: get the ProcessId to identify the next step function
-        logger.info("Next Step Input: {}", nextStepInput)
-        # TODO: validate that it exists, instead (I presume) blowing up
-        processId = nextStepInput["messageAttributes"]["ProcessID"]
-        logger.info("ProcessID: {}", processId)
+    sfn_arn_prefix = os.environ['sfn_arn_prefix']
+    logger.info("sfn_arn_prefix is {}".format(sfn_arn_prefix))
 
-        # file names are the ETL batch ID - created per run of pentaho and logged in the database
-        # sfn = boto3.client('stepfunctions')
-        #
-        # try:
-        #     s3 = boto3.resource('s3')
-        #
-        #     state_machine_arn = ""  # TODO:
-        #     executions = sfn.list_executions(
-        #         stateMachineArn=state_machine_arn,
-        #         statusFilter='RUNNING',
-        #         maxResults=1
-        #     )
-        #     num_executions = len(executions["executions"])
-        #     if num_executions == 0:
-        #         pass
-        #     else:
-        #         logger.info("Num running executions is {}, sleeping message.", num_executions)
-        #
-        #     # read the file and parse it
-        #     # body = obj.get()['Body'].read().decode('utf-8')
-        #     # content_json = json.loads(body)
-        # except:
-        #     logger.error("Task Failure for ETL Batch ID {}".format(etl_batch_id))
-        #     raise
-        # finally:
-        #     # move to the archive
-        #     pass
+    process_id = "Not Yet Set"
+    for record in event['Records']:
+        next_step_input = record["body"]
+        logger.info("Next Step Input: {}".format(next_step_input))
+
+        process_id = record["messageAttributes"]["ProcessId"]['stringValue']
+        logger.info("ProcessId: {}".format(process_id))
+
+        try:
+            sfn = boto3.client('stepfunctions')
+
+            state_machine_arn = sfn_arn_prefix + "-" + process_id
+            executions = sfn.list_executions(
+                stateMachineArn=state_machine_arn,
+                statusFilter='RUNNING',
+                maxResults=1
+            )
+            num_executions = len(executions["executions"])
+            if num_executions == 0:
+                logger.info("Running {}".format(state_machine_arn))
+                sfn.start_execution(
+                    stateMachineArn=state_machine_arn,
+                    input=next_step_input
+                )
+            else:
+                logger.info("Num running executions is {} for step function {}, sleeping message."
+                            .format(num_executions, process_id))
+                raise Exception("At least one execution of step function {} is running".format(process_id))
+        except:
+            logger.error("Failed to trigger {}".format(process_id))
+            raise
+        finally:
+            # move to the archive
+            pass

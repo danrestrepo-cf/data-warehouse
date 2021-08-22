@@ -1,3 +1,7 @@
+locals {
+  next-step-max-process-time-seconds = 5 * 60
+}
+
 resource aws_sqs_queue full-check {
   name                  = "${local.bi-prefix}-full-check.fifo"
   fifo_queue            = true
@@ -11,7 +15,7 @@ resource aws_sqs_queue full-check {
   max_message_size = 256 * 1024 // max 256 KiB
 
   delay_seconds              = 0
-  visibility_timeout_seconds = 120
+  visibility_timeout_seconds = local.next-step-max-process-time-seconds
   message_retention_seconds  = 4 * 24 * 60 * 60 // 4 days
   receive_wait_time_seconds  = 10
 
