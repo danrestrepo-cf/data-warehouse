@@ -28,6 +28,9 @@ resource aws_lambda_function next-step {
 
   environment {
     variables = {
+      // provide the environment and ETL prefix to allow looking up environment specific names for SPs
+      environment = terraform.workspace
+      etl_prefix  = local.bi-prefix
     }
   }
 
