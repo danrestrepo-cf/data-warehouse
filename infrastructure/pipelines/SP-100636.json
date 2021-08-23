@@ -57,11 +57,9 @@
             "Resource": "arn:aws:states:::sqs:sendMessage",
             "Parameters": {
                 "QueueUrl": "${fullCheckQueueUrl}",
+                "MessageGroupId": "loan_junk_dim",
+                "MessageDeduplicationId": "$$.Task.Token",
                 "MessageAttributes": {
-                    "MessageGroupId": {
-                        "DataType": "String",
-                        "StringValue": "loan_junk_dim"
-                    },
                     "ProcessId": {
                         "DataType": "String",
                         "StringValue": "SP-200014"

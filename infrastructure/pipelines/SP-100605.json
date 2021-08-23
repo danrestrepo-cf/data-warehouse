@@ -57,11 +57,9 @@
             "Resource": "arn:aws:states:::sqs:sendMessage",
             "Parameters": {
                 "QueueUrl": "${fullCheckQueueUrl}",
+                "MessageGroupId": "product_terms_dim",
+                "MessageDeduplicationId": "$$.Task.Token",
                 "MessageAttributes": {
-                    "MessageGroupId": {
-                        "DataType": "String",
-                        "StringValue": "product_terms_dim"
-                    },
                     "ProcessId": {
                         "DataType": "String",
                         "StringValue": "SP-200018"

@@ -219,11 +219,9 @@ class SingleStateMachineCreator:
             'Resource': 'arn:aws:states:::sqs:sendMessage',
             'Parameters': {
                 'QueueUrl': '${fullCheckQueueUrl}',
+                'MessageGroupId': next_process_target_table,
+                'MessageDeduplicationId': '$$.Task.Token',
                 'MessageAttributes': {
-                    'MessageGroupId': {
-                        'DataType': 'String',
-                        'StringValue': next_process_target_table
-                    },
                     'ProcessId': {
                         'DataType': 'String',
                         'StringValue': process_name

@@ -65,11 +65,9 @@
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "borrower_demographics_dim",
+                                "MessageDeduplicationId": "$$.Task.Token",
                                 "MessageAttributes": {
-                                    "MessageGroupId": {
-                                        "DataType": "String",
-                                        "StringValue": "borrower_demographics_dim"
-                                    },
                                     "ProcessId": {
                                         "DataType": "String",
                                         "StringValue": "SP-200004"
@@ -92,11 +90,9 @@
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "borrower_dim",
+                                "MessageDeduplicationId": "$$.Task.Token",
                                 "MessageAttributes": {
-                                    "MessageGroupId": {
-                                        "DataType": "String",
-                                        "StringValue": "borrower_dim"
-                                    },
                                     "ProcessId": {
                                         "DataType": "String",
                                         "StringValue": "SP-200005"
@@ -119,11 +115,9 @@
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "borrower_lending_profile_dim",
+                                "MessageDeduplicationId": "$$.Task.Token",
                                 "MessageAttributes": {
-                                    "MessageGroupId": {
-                                        "DataType": "String",
-                                        "StringValue": "borrower_lending_profile_dim"
-                                    },
                                     "ProcessId": {
                                         "DataType": "String",
                                         "StringValue": "SP-200006"

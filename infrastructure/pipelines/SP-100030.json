@@ -57,11 +57,9 @@
             "Resource": "arn:aws:states:::sqs:sendMessage",
             "Parameters": {
                 "QueueUrl": "${fullCheckQueueUrl}",
+                "MessageGroupId": "interim_funder_dim",
+                "MessageDeduplicationId": "$$.Task.Token",
                 "MessageAttributes": {
-                    "MessageGroupId": {
-                        "DataType": "String",
-                        "StringValue": "interim_funder_dim"
-                    },
                     "ProcessId": {
                         "DataType": "String",
                         "StringValue": "SP-200008"

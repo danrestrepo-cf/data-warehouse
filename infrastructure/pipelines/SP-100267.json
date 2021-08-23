@@ -65,11 +65,9 @@
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "transaction_dim",
+                                "MessageDeduplicationId": "$$.Task.Token",
                                 "MessageAttributes": {
-                                    "MessageGroupId": {
-                                        "DataType": "String",
-                                        "StringValue": "transaction_dim"
-                                    },
                                     "ProcessId": {
                                         "DataType": "String",
                                         "StringValue": "SP-200019"
@@ -92,11 +90,9 @@
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "transaction_junk_dim",
+                                "MessageDeduplicationId": "$$.Task.Token",
                                 "MessageAttributes": {
-                                    "MessageGroupId": {
-                                        "DataType": "String",
-                                        "StringValue": "transaction_junk_dim"
-                                    },
                                     "ProcessId": {
                                         "DataType": "String",
                                         "StringValue": "SP-200020"
@@ -119,11 +115,9 @@
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "loan_fact",
+                                "MessageDeduplicationId": "$$.Task.Token",
                                 "MessageAttributes": {
-                                    "MessageGroupId": {
-                                        "DataType": "String",
-                                        "StringValue": "loan_fact"
-                                    },
                                     "ProcessId": {
                                         "DataType": "String",
                                         "StringValue": "SP-300002"
