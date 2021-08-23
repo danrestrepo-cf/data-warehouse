@@ -6,10 +6,10 @@ import os
 #
 # Read an SQS message that indicates which job should be triggered next
 #
-# It assumes two things to accomplish this:
+# It assumes the following to accomplish this:
 #    1. The ProcessID (ex, SP-100) is pass in as an SQS Message Attribute
-#    1. The Step Function ARN prefix is available as a environment variable, 'sfn_arn_prefix'
-#    1. The Step Function to call is the concatenation of ARN Prefix and ProcessID
+#    2. The Step Function ARN prefix is available as a environment variable, 'sfn_arn_prefix'
+#    3. The Step Function to call is the concatenation of ARN Prefix and ProcessID
 #
 def execute(event, context):
     logger = logging.getLogger()
@@ -23,7 +23,7 @@ def execute(event, context):
         next_step_input = record["body"]
         logger.info("Next Step Input: {}".format(next_step_input))
 
-        process_id = record["messageAttributes"]["ProcessId"]['stringValue']
+        process_id = record["messageAttributes"]["ProcessId"]["stringValue"]
         logger.info("ProcessId: {}".format(process_id))
 
         try:

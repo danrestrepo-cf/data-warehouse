@@ -2,6 +2,7 @@ locals {
   next-step-name = "next-step-trigger"
 }
 
+// this is maintained by analysis-infrastructure/data-warehouse/roles/next-step-trigger
 data aws_iam_role next-step {
   name = "${local.bi-prefix}-${local.next-step-name}"
 }
@@ -35,11 +36,11 @@ resource aws_lambda_function next-step {
   // tags at the provider level
 }
 
-resource aws_lambda_event_source_mapping event-trigger {
+resource aws_lambda_event_source_mapping mdi-2-full-check-to-next-step {
   enabled = true
 
   function_name    = aws_lambda_function.next-step.arn
-  event_source_arn = aws_sqs_queue.full-check.arn
+  event_source_arn = aws_sqs_queue.mdi-2-full-check.arn
 
   batch_size = 1
 }
