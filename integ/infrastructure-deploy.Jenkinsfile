@@ -38,14 +38,11 @@ pipeline {
             }
             steps {
                 dir("infrastructure") {
-                    // TODO: remove these lines:w
-
-                    sh "ls -al ~"
-                    sh "ls -al ~/.ssh"
                     sh "terraform init"
                     // try to create the workspace, but it may already exist so ignore the failure
                     sh "terraform workspace new ${params.environment} || true"
                     sh "terraform workspace select ${params.environment}"
+                    sh "terraform init"
                     sh "terraform plan"
                 }
             }
@@ -69,6 +66,7 @@ pipeline {
                     // try to create the workspace, but it may already exist so ignore the failure
                     sh "terraform workspace new ${params.environment} || true"
                     sh "terraform workspace select ${params.environment}"
+                    sh "terraform init"
                     sh "terraform apply -auto-approve"
                 }
             }
