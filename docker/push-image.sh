@@ -2,8 +2,6 @@
 
 path_to_script=$(dirname "$0")
 
-${path_to_script}/aws-ecr-login.sh
-
 if [ $# -lt 2 ]; then
   echo "Usage: ./push-image.sh [environment] [app]"
   exit 1
@@ -21,6 +19,8 @@ else
   echo "Invalid environment, require one of [qa, uat, prod].  Got: $environment"
   exit 1
 fi
+
+${path_to_script}/aws-ecr-login.sh ${account}
 
 local_name=edw/${app}
 remote_name=edw/${environment}-${app}

@@ -36,157 +36,102 @@
                     ]
                 }
             },
-            "Next": "choice_5"
+            "Next": "Load_type_choice"
         },
-        "choice_5": {
+        "Load_type_choice": {
             "Type": "Choice",
             "Choices": [
                 {
                     "Variable": "$.load_type",
                     "StringEquals": "NONE",
-                    "Next": "success_5"
+                    "Next": "Success"
                 }
             ],
-            "Default": "SP-200010"
+            "Default": "Parallel"
         },
-        "success_5": {
+        "Success": {
             "Type": "Succeed"
         },
-        "SP-200010": {
-            "Type": "Task",
-            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
-            "Parameters": {
-                "LaunchType": "FARGATE",
-                "Cluster": "${ecsClusterARN}",
-                "TaskDefinition": "${mdi_2_arn}",
-                "NetworkConfiguration": {
-                    "AwsvpcConfiguration": {
-                        "AssignPublicIp": "DISABLED",
-                        "SecurityGroups": [
-                            "${securityGroupId}"
-                        ],
-                        "Subnets": ${subnetIDs}
-                    }
-                },
-                "Overrides": {
-                    "ContainerOverrides": [
-                        {
-                            "Environment": [
-                                {
-                                    "Name": "PROCESS_NAME",
-                                    "Value": "SP-200010"
-                                },
-                                {
-                                    "Name": "INPUT_DATA",
-                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
-                                }
-                            ],
-                            "Name": "${mdi_2_container}"
-                        }
-                    ]
-                }
-            },
-            "Next": "choice_6"
-        },
-        "choice_6": {
-            "Type": "Choice",
-            "Choices": [
+        "Parallel": {
+            "Type": "Parallel",
+            "End": true,
+            "Branches": [
                 {
-                    "Variable": "$.load_type",
-                    "StringEquals": "NONE",
-                    "Next": "success_6"
-                }
-            ],
-            "Default": "SP-300001_2"
-        },
-        "success_6": {
-            "Type": "Succeed"
-        },
-        "SP-300001_2": {
-            "Type": "Task",
-            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
-            "Parameters": {
-                "LaunchType": "FARGATE",
-                "Cluster": "${ecsClusterARN}",
-                "TaskDefinition": "${mdi_2_arn}",
-                "NetworkConfiguration": {
-                    "AwsvpcConfiguration": {
-                        "AssignPublicIp": "DISABLED",
-                        "SecurityGroups": [
-                            "${securityGroupId}"
-                        ],
-                        "Subnets": ${subnetIDs}
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200001",
+                    "StartAt": "SP-200001_message",
+                    "States": {
+                        "SP-200001_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "loan_lender_user_access",
+                                "MessageDeduplicationId": "$$.Task.Token",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-200001"
+                                    }
+                                },
+                                "MessageBody": {
+                                    "PreviousStepOutput": "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
+                                }
+                            },
+                            "End": true
+                        }
                     }
                 },
-                "Overrides": {
-                    "ContainerOverrides": [
-                        {
-                            "Environment": [
-                                {
-                                    "Name": "PROCESS_NAME",
-                                    "Value": "SP-300001"
-                                },
-                                {
-                                    "Name": "INPUT_DATA",
-                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
-                                }
-                            ],
-                            "Name": "${mdi_2_container}"
-                        }
-                    ]
-                }
-            },
-            "Next": "choice_7"
-        },
-        "choice_7": {
-            "Type": "Choice",
-            "Choices": [
                 {
-                    "Variable": "$.load_type",
-                    "StringEquals": "NONE",
-                    "Next": "success_7"
-                }
-            ],
-            "Default": "SP-200001_2"
-        },
-        "success_7": {
-            "Type": "Succeed"
-        },
-        "SP-200001_2": {
-            "Type": "Task",
-            "Resource": "arn:aws:states:::ecs:runTask.sync",
-            "Parameters": {
-                "LaunchType": "FARGATE",
-                "Cluster": "${ecsClusterARN}",
-                "TaskDefinition": "${mdi_2_arn}",
-                "NetworkConfiguration": {
-                    "AwsvpcConfiguration": {
-                        "AssignPublicIp": "DISABLED",
-                        "SecurityGroups": [
-                            "${securityGroupId}"
-                        ],
-                        "Subnets": ${subnetIDs}
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200002",
+                    "StartAt": "SP-200002_message",
+                    "States": {
+                        "SP-200002_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "loan_lender_user_access",
+                                "MessageDeduplicationId": "$$.Task.Token",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-200002"
+                                    }
+                                },
+                                "MessageBody": {
+                                    "PreviousStepOutput": "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
+                                }
+                            },
+                            "End": true
+                        }
                     }
                 },
-                "Overrides": {
-                    "ContainerOverrides": [
-                        {
-                            "Environment": [
-                                {
-                                    "Name": "PROCESS_NAME",
-                                    "Value": "SP-200001"
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200010",
+                    "StartAt": "SP-200010_message",
+                    "States": {
+                        "SP-200010_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "lender_user_dim",
+                                "MessageDeduplicationId": "$$.Task.Token",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-200010"
+                                    }
                                 },
-                                {
-                                    "Name": "INPUT_DATA",
-                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
+                                "MessageBody": {
+                                    "PreviousStepOutput": "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
                                 }
-                            ],
-                            "Name": "${mdi_2_container}"
+                            },
+                            "End": true
                         }
-                    ]
+                    }
                 }
-            },
-            "End": true
+            ]
         }
     }
 }
