@@ -246,7 +246,7 @@ class SingleStateMachineCreator:
                         'StringValue': process_name
                     }
                 },
-                'MessageBody.$': "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
+                'MessageBody.$': "States.Format('\\{\"mdi_input_json\":{}\\}', States.JsonToString($))"
             },
             'End': True
         }
