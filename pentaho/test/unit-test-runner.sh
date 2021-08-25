@@ -10,8 +10,6 @@ path_to_script="$(pwd)/$(dirname "$0")"
 relative_docker_dir="$(dirname "$0")/../../docker"
 # absolute path to docker, used to trigger docker itself which isn't so picky
 absolute_test_dir="$(pwd)/../../docker/pentaho"
-# absolute path to metadata unit tests
-absolute_metadata_test_dir="$(pwd)/../../scripts/edw_metadata_unit_tests"
 
 #set the script to fail on any errors
 set -e
@@ -151,92 +149,7 @@ function execute_mdi_test_cases() {
   done
 }
 
-# function to run an EDW metadata test case
-function execute_edw_metadata_unit_test() {
-  test_to_run="$1"
-  echo "Now running $test_to_run..."
-  metadata_unit_test_result=$(python edw_metadata_unit_test_runner.py "$test_to_run")
-  if [[ -n $metadata_unit_test_result ]]; then
-    failed_unit_tests="${failed_unit_tests} $metadata_unit_test_result"$'\n'
-  fi
-}
-
-# function to prompt the user whether to continue with unit test runner in the event of EDW metadata unit test failure
-# this is constructed as a function to allow the script to continue if no user input is provided in the timeout window
-function metadata_unit_test_fail_break() {
-  set +e
-  echo "Proceed with remaining unit tests? [y/n]"
-  proceed=""
-  read -r -n1 -t 30 proceed
-  echo
-  if [[ ${proceed,,} == "y" || ${proceed,,} == "" ]]; then
-    echo "Proceeding with remaining unit tests..."
-  elif [[ ${proceed,,} == "n" ]]; then
-    echo "Exiting unit test runner..."
-    exit 1
-  else
-    echo "Invalid input. Exiting unit test runner..."
-    exit 1
-  fi
-  set -e
-}
-
 ${relative_docker_dir}/docker-up.sh
-
-# EDW metadata unit tests ################################################################
-cd ${absolute_metadata_test_dir}
-
-echo "Proceeding with EDW metadata unit tests..."
-execute_edw_metadata_unit_test "test_1"
-execute_edw_metadata_unit_test "test_2"
-execute_edw_metadata_unit_test "test_3"
-execute_edw_metadata_unit_test "test_4"
-execute_edw_metadata_unit_test "test_5"
-execute_edw_metadata_unit_test "test_6"
-execute_edw_metadata_unit_test "test_7"
-execute_edw_metadata_unit_test "test_8"
-execute_edw_metadata_unit_test "test_9"
-execute_edw_metadata_unit_test "test_10"
-execute_edw_metadata_unit_test "test_11"
-execute_edw_metadata_unit_test "test_12"
-execute_edw_metadata_unit_test "test_13"
-execute_edw_metadata_unit_test "test_14"
-execute_edw_metadata_unit_test "test_15"
-execute_edw_metadata_unit_test "test_16"
-execute_edw_metadata_unit_test "test_17"
-execute_edw_metadata_unit_test "test_18"
-execute_edw_metadata_unit_test "test_19"
-execute_edw_metadata_unit_test "test_20"
-execute_edw_metadata_unit_test "test_21"
-execute_edw_metadata_unit_test "test_22"
-execute_edw_metadata_unit_test "test_23"
-execute_edw_metadata_unit_test "test_24"
-execute_edw_metadata_unit_test "test_25"
-execute_edw_metadata_unit_test "test_26"
-execute_edw_metadata_unit_test "test_27"
-execute_edw_metadata_unit_test "test_28"
-execute_edw_metadata_unit_test "test_29"
-execute_edw_metadata_unit_test "test_30"
-execute_edw_metadata_unit_test "test_31"
-execute_edw_metadata_unit_test "test_32"
-execute_edw_metadata_unit_test "test_33"
-execute_edw_metadata_unit_test "test_34"
-execute_edw_metadata_unit_test "test_35"
-execute_edw_metadata_unit_test "test_36"
-execute_edw_metadata_unit_test "test_37"
-
-# If any EDW metadata unit tests fail, print the failures and ask the user whether to proceed with remaining unit tests
-# Otherwise, proceed with remaining unit tests
-if [[ -n $failed_unit_tests ]]; then
-  failed_unit_tests="EDW metadata unit test(s) FAILED:"$'\n'"${failed_unit_tests}"
-  echo $'\n'"$failed_unit_tests"
-  metadata_unit_test_fail_break
-else
-  echo "EDW metadata unit tests succeeded."
-  echo "Proceeding with remaining unit tests..."
-fi
-
-cd "$(pwd)/../../pentaho/test"
 
 # Non MDI Tests ##########################################################################
 process_name="SP6"
@@ -275,7 +188,7 @@ if [[ -z $failed_unit_tests ]]; then
   echo "Unit tests SUCCESSFUL."
   exit 0
 else
-  echo "One or more unit tests encountered a failure, or generated an output that differs from its expected result."
+  echo "One or more unit tests encountered a Pentaho failure, or generated an output that differs from its expected result."
   echo "Refer to the list below for more information:"
   echo "$failed_unit_tests"
   echo
