@@ -73,9 +73,7 @@
                                         "StringValue": "SP-200004"
                                     }
                                 },
-                                "MessageBody": {
-                                    "PreviousStepOutput": "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
-                                }
+                                "MessageBody.$": "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
                             },
                             "End": true
                         }
@@ -98,9 +96,7 @@
                                         "StringValue": "SP-200005"
                                     }
                                 },
-                                "MessageBody": {
-                                    "PreviousStepOutput": "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
-                                }
+                                "MessageBody.$": "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
                             },
                             "End": true
                         }
@@ -123,9 +119,7 @@
                                         "StringValue": "SP-200006"
                                     }
                                 },
-                                "MessageBody": {
-                                    "PreviousStepOutput": "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
-                                }
+                                "MessageBody.$": "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
                             },
                             "End": true
                         }
