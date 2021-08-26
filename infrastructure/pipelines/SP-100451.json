@@ -73,7 +73,7 @@
                                         "StringValue": "SP-200011"
                                     }
                                 },
-                                "MessageBody.$": "States.Format('\\{\"mdi_input_json\":{}\\}', States.JsonToString($))"
+                                "MessageBody.$": "States.JsonToString($)"
                             },
                             "End": true
                         }
@@ -96,7 +96,7 @@
                                         "StringValue": "SP-200013"
                                     }
                                 },
-                                "MessageBody.$": "States.Format('\\{\"mdi_input_json\":{}\\}', States.JsonToString($))"
+                                "MessageBody.$": "States.JsonToString($)"
                             },
                             "End": true
                         }
