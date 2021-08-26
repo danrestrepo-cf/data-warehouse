@@ -66,7 +66,7 @@
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "borrower_demographics_dim",
-                                "MessageDeduplicationId": "$$.Task.Token",
+                                "MessageDeduplicationId.$": "$$.Task.Token",
                                 "MessageAttributes": {
                                     "ProcessId": {
                                         "DataType": "String",
@@ -89,7 +89,7 @@
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "borrower_dim",
-                                "MessageDeduplicationId": "$$.Task.Token",
+                                "MessageDeduplicationId.$": "$$.Task.Token",
                                 "MessageAttributes": {
                                     "ProcessId": {
                                         "DataType": "String",
@@ -112,7 +112,7 @@
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "borrower_lending_profile_dim",
-                                "MessageDeduplicationId": "$$.Task.Token",
+                                "MessageDeduplicationId.$": "$$.Task.Token",
                                 "MessageAttributes": {
                                     "ProcessId": {
                                         "DataType": "String",
@@ -135,7 +135,7 @@
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "loan_beneficiary_dim",
-                                "MessageDeduplicationId": "$$.Task.Token",
+                                "MessageDeduplicationId.$": "$$.Task.Token",
                                 "MessageAttributes": {
                                     "ProcessId": {
                                         "DataType": "String",
@@ -158,7 +158,7 @@
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "loan_junk_dim",
-                                "MessageDeduplicationId": "$$.Task.Token",
+                                "MessageDeduplicationId.$": "$$.Task.Token",
                                 "MessageAttributes": {
                                     "ProcessId": {
                                         "DataType": "String",
@@ -181,7 +181,7 @@
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "product_terms_dim",
-                                "MessageDeduplicationId": "$$.Task.Token",
+                                "MessageDeduplicationId.$": "$$.Task.Token",
                                 "MessageAttributes": {
                                     "ProcessId": {
                                         "DataType": "String",
