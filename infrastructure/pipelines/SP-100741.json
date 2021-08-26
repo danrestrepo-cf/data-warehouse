@@ -58,7 +58,7 @@
             "Parameters": {
                 "QueueUrl": "${fullCheckQueueUrl}",
                 "MessageGroupId": "investor_dim",
-                "MessageDeduplicationId": "$$.Task.Token",
+                "MessageDeduplicationId.$": "$$.Task.Token",
                 "MessageAttributes": {
                     "ProcessId": {
                         "DataType": "String",

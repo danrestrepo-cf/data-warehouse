@@ -58,7 +58,7 @@
             "Parameters": {
                 "QueueUrl": "${fullCheckQueueUrl}",
                 "MessageGroupId": "loan_fact",
-                "MessageDeduplicationId": "$$.Task.Token",
+                "MessageDeduplicationId.$": "$$.Task.Token",
                 "MessageAttributes": {
                     "ProcessId": {
                         "DataType": "String",
