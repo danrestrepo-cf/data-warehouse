@@ -58,7 +58,7 @@
             "Parameters": {
                 "QueueUrl": "${fullCheckQueueUrl}",
                 "MessageGroupId": "loan_funding_dim",
-                "MessageDeduplicationId.$": "$$.Task.Token",
+                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                 "MessageAttributes": {
                     "ProcessId": {
                         "DataType": "String",
