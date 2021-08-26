@@ -65,7 +65,7 @@
                         "StringValue": "SP-200018"
                     }
                 },
-                "MessageBody.$": "States.Format('\\{\"mdi_input_json\":{}\\}', States.JsonToString($))"
+                "MessageBody.$": "States.JsonToString($)"
             },
             "End": true
         }
