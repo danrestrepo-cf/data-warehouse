@@ -58,7 +58,7 @@
             "Parameters": {
                 "QueueUrl": "${fullCheckQueueUrl}",
                 "MessageGroupId": "hmda_purchaser_of_loan_dim",
-                "MessageDeduplicationId": "$$.Task.Token",
+                "MessageDeduplicationId.$": "$$.Task.Token",
                 "MessageAttributes": {
                     "ProcessId": {
                         "DataType": "String",
