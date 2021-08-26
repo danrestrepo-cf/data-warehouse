@@ -58,7 +58,7 @@
             "Parameters": {
                 "QueueUrl": "${fullCheckQueueUrl}",
                 "MessageGroupId": "loan_lender_user_access",
-                "MessageDeduplicationId.$": "$$.Task.Token",
+                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                 "MessageAttributes": {
                     "ProcessId": {
                         "DataType": "String",

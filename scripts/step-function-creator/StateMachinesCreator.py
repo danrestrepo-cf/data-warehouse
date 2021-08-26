@@ -239,7 +239,7 @@ class SingleStateMachineCreator:
             'Parameters': {
                 'QueueUrl': '${fullCheckQueueUrl}',
                 'MessageGroupId': next_process_target_table,
-                'MessageDeduplicationId.$': '$$.Task.Token',
+                'MessageDeduplicationId.$': "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                 'MessageAttributes': {
                     'ProcessId': {
                         'DataType': 'String',
