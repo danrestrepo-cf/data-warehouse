@@ -65,19 +65,15 @@
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "loan_dim",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
-                                    "MessageGroupId": {
-                                        "DataType": "String",
-                                        "StringValue": "loan_dim"
-                                    },
                                     "ProcessId": {
                                         "DataType": "String",
                                         "StringValue": "SP-200012"
                                     }
                                 },
-                                "MessageBody": {
-                                    "PreviousStepOutput": "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
-                                }
+                                "MessageBody.$": "States.JsonToString($)"
                             },
                             "End": true
                         }
@@ -92,19 +88,15 @@
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "loan_junk_dim",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
-                                    "MessageGroupId": {
-                                        "DataType": "String",
-                                        "StringValue": "loan_junk_dim"
-                                    },
                                     "ProcessId": {
                                         "DataType": "String",
                                         "StringValue": "SP-200014"
                                     }
                                 },
-                                "MessageBody": {
-                                    "PreviousStepOutput": "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
-                                }
+                                "MessageBody.$": "States.JsonToString($)"
                             },
                             "End": true
                         }
@@ -119,19 +111,15 @@
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "mortgage_insurance_dim",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
-                                    "MessageGroupId": {
-                                        "DataType": "String",
-                                        "StringValue": "mortgage_insurance_dim"
-                                    },
                                     "ProcessId": {
                                         "DataType": "String",
                                         "StringValue": "SP-200015"
                                     }
                                 },
-                                "MessageBody": {
-                                    "PreviousStepOutput": "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
-                                }
+                                "MessageBody.$": "States.JsonToString($)"
                             },
                             "End": true
                         }
@@ -146,19 +134,15 @@
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "product_choice_dim",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
-                                    "MessageGroupId": {
-                                        "DataType": "String",
-                                        "StringValue": "product_choice_dim"
-                                    },
                                     "ProcessId": {
                                         "DataType": "String",
                                         "StringValue": "SP-200016"
                                     }
                                 },
-                                "MessageBody": {
-                                    "PreviousStepOutput": "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
-                                }
+                                "MessageBody.$": "States.JsonToString($)"
                             },
                             "End": true
                         }
@@ -173,19 +157,15 @@
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
                                 "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "loan_fact",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
-                                    "MessageGroupId": {
-                                        "DataType": "String",
-                                        "StringValue": "loan_fact"
-                                    },
                                     "ProcessId": {
                                         "DataType": "String",
                                         "StringValue": "SP-300002"
                                     }
                                 },
-                                "MessageBody": {
-                                    "PreviousStepOutput": "States.Format('\"mdi_input_json\":{}\\}', States.JsonToString($))"
-                                }
+                                "MessageBody.$": "States.JsonToString($)"
                             },
                             "End": true
                         }
