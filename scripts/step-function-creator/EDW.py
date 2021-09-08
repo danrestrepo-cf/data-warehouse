@@ -62,18 +62,41 @@ class EDW:
 
     def get_target_table_metadata(self) -> List[dict]:
         return self.execute_query('''
-        SELECT process.name AS process_name
-            , table_output_step.target_table
-        FROM mdi.process
-            JOIN mdi.table_output_step ON process.dwid = table_output_step.process_dwid
-        UNION ALL
-        SELECT process.name AS process_name
-            , insert_update_step.table_name AS target_table
-        FROM mdi.process
-            JOIN mdi.insert_update_step ON process.dwid = insert_update_step.process_dwid
-        UNION ALL
-        SELECT process.name AS process_name
-            , delete_step.table_name AS target_table
-        FROM mdi.process
-            JOIN mdi.delete_step ON process.dwid = delete_step.process_dwid
+            SELECT etl_processes.process_name
+                 , etl_processes.target_table
+                 , table_column_counts.column_count AS target_table_column_count
+            FROM (
+                SELECT process.name AS process_name
+                     , table_output_step.target_table
+                     , table_output_step.target_schema
+                FROM mdi.process
+                JOIN mdi.table_output_step
+                     ON process.dwid = table_output_step.process_dwid
+                UNION ALL
+                SELECT process.name AS process_name
+                     , insert_update_step.table_name AS target_table
+                     , insert_update_step.schema_name AS target_schema
+                FROM mdi.process
+                JOIN mdi.insert_update_step
+                     ON process.dwid = insert_update_step.process_dwid
+                UNION ALL
+                SELECT process.name AS process_name
+                     , delete_step.table_name AS target_table
+                     , delete_step.schema_name AS target_schema
+                FROM mdi.process
+                JOIN mdi.delete_step
+                     ON process.dwid = delete_step.process_dwid
+            ) AS etl_processes
+            LEFT JOIN (
+                SELECT edw_table_definition.schema_name
+                     , edw_table_definition.table_name
+                     , COUNT( edw_field_definition ) AS column_count
+                FROM mdi.edw_table_definition
+                JOIN mdi.edw_field_definition
+                     ON edw_table_definition.dwid = edw_field_definition.edw_table_definition_dwid
+                GROUP BY edw_table_definition.schema_name
+                       , edw_table_definition.table_name
+            ) AS table_column_counts
+                      ON etl_processes.target_schema = table_column_counts.schema_name
+                          AND etl_processes.target_table = table_column_counts.table_name;
         ''')
