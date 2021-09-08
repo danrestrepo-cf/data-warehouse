@@ -45,6 +45,22 @@ class StateMachinesCreator:
                         "SP-234567": ["SP-456789"],
                         ...etc
                     }
+
+        :param raw_target_table_metadata: a list of target table metadata rows of the form:
+
+                    {"process_name": "SP-123456", "target_table": "table_name", "target_table_column_count": 15}
+
+               This raw data is immediately parsed into a more useful data structure of the form:
+
+                    {
+                        "SP-123456": {
+                            "table": "table_name",
+                            "column_count": 15
+                        },
+                        "SP-234567": {...},
+                        ...etc
+                    }
+
         """
         # initialize internal metadata data structures
         self.state_machine_metadata = {
@@ -55,10 +71,18 @@ class StateMachinesCreator:
             }
             for row in raw_state_machine_metadata
         }
+
         self.step_tree_metadata = defaultdict(list)
         for row in raw_step_tree_metadata:
             self.step_tree_metadata[row['process_name']].append(row['child_process_name'])
-        self.target_table_metadata = raw_target_table_metadata
+
+        self.target_table_metadata = {
+            row['process_name']: {
+                'table': row['target_table'],
+                'column_count': row['target_table_column_count']
+            }
+            for row in raw_target_table_metadata
+        }
 
         self.state_machine_creator = SingleStateMachineCreator(self.state_machine_metadata, self.step_tree_metadata,
                                                                self.target_table_metadata)
@@ -110,7 +134,7 @@ class StateMachinesCreator:
 class SingleStateMachineCreator:
     """Generates a configuration dict for a single state machine"""
 
-    def __init__(self, state_machine_metadata: dict, step_tree_metadata: dict, target_table_metadata: List[dict]):
+    def __init__(self, state_machine_metadata: dict, step_tree_metadata: dict, target_table_metadata: dict):
         self.state_machine_metadata = state_machine_metadata
         self.step_tree_metadata = step_tree_metadata
         self.target_table_metadata = target_table_metadata
@@ -141,30 +165,29 @@ class SingleStateMachineCreator:
             "States": {}
         }
         root_config_states = root_config['States']
-        
+        ecs_memory = self.determine_ecs_memory_limit(root_process)
         # process has no children
         if root_process not in self.step_tree_metadata:
-            root_config_states[state_name] = self.create_task_config(root_process, None)
+            root_config_states[state_name] = self.create_task_config(root_process, None, ecs_memory)
             return root_config
         # process has one sequential child
         elif len(self.step_tree_metadata[root_process]) == 1:
             next_process = self.step_tree_metadata[root_process][0]
-            next_process_target_table = next((item['target_table'] for item in self.target_table_metadata if item['process_name'] == next_process), None)
-            root_config_states[state_name] = self.create_task_config(root_process, next_process)
+            next_process_target_table = self.target_table_metadata[next_process]['table']
+            root_config_states[state_name] = self.create_task_config(root_process, next_process, ecs_memory)
             root_config_states['Load_type_choice'] = self.create_choice_config(f'{next_process}_message')
             root_config_states['Success'] = self.create_success_config()
-            root_config_states[f'{next_process}_message'] = self.create_message_config(next_process,next_process_target_table)
+            root_config_states[f'{next_process}_message'] = self.create_message_config(next_process, next_process_target_table)
             return root_config
         # process has multiple children which should run in parallel
         else:
             next_processes = self.step_tree_metadata[root_process]
-            root_config_states[state_name] = self.create_task_config(root_process, next_processes)
+            root_config_states[state_name] = self.create_task_config(root_process, next_processes, ecs_memory)
             root_config_states['Load_type_choice'] = self.create_choice_config('Parallel')
             root_config_states['Success'] = self.create_success_config()
             root_config_states['Parallel'] = self.create_parallel_config()
             for next_process in next_processes:
-                next_process_target_table = next((item['target_table'] for item in self.target_table_metadata if
-                                                  item['process_name'] == next_process), None)
+                next_process_target_table = self.target_table_metadata[next_process]['table']
                 root_config_states['Parallel']['Branches'].append({
                     "Comment": f'Send message to bi-managed-mdi-2-full-check-queue for {next_process}',
                     "StartAt": f'{next_process}_message',
@@ -174,8 +197,6 @@ class SingleStateMachineCreator:
                 })
             return root_config
 
-
-
     def determine_state_machine_header_comment(self, process: str, state_name: str) -> str:
         """Create a state machine header comment based on whether the root process is a true root or just a sub-root in a parallel step"""
         if process in self.state_machine_metadata:  # process is a top-level root
@@ -184,8 +205,15 @@ class SingleStateMachineCreator:
         else:  # process is a child process being executed in parallel
             return f'Parallel - {state_name}'
 
+    def determine_ecs_memory_limit(self, process_name: str) -> int:
+        """Determine the hard memory limit setting to pass to ECS. Result is an integer number of mebibytes (MiB)"""
+        if self.target_table_metadata[process_name]['column_count'] >= 100:
+            return 4096
+        else:
+            return 2048
+
     @staticmethod
-    def create_task_config(process_name: str, next_state_name: Optional[str]) -> dict:
+    def create_task_config(process_name: str, next_state_name: Optional[str], ecs_memory: int) -> dict:
         """Create an AWS Task state configuration that triggers an MDI-2 Pentaho process"""
         state_config = {
             'Type': 'Task',
@@ -204,8 +232,10 @@ class SingleStateMachineCreator:
                     }
                 },
                 'Overrides': {
+                    'Memory': str(ecs_memory),
                     'ContainerOverrides': [
                         {
+                            'Memory': ecs_memory,
                             'Environment': [
                                 {
                                     'Name': 'PROCESS_NAME',
