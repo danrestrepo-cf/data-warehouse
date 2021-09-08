@@ -39,4 +39,4 @@ ALTER DEFAULT PRIVILEGES FOR ROLE deployer IN SCHEMA warehouse_banks GRANT SELEC
 GRANT USAGE, CREATE ON SCHEMA warehouse_banks to deployer;
 
 -- admin permissions
-GRANT USAGE ON SCHEMA warehouse_banks to admin;
+GRANT USAGE ON SCHEMA warehouse_banks to admin WITH GRANT OPTION;
