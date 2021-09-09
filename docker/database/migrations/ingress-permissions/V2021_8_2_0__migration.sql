@@ -35,8 +35,3 @@ GRANT USAGE ON SCHEMA warehouse_banks TO readonly;
 GRANT SELECT ON ALL TABLES IN SCHEMA warehouse_banks TO readonly;
 ALTER DEFAULT PRIVILEGES FOR ROLE deployer IN SCHEMA warehouse_banks GRANT SELECT ON TABLES TO readonly;
 
--- deploy permissions
-GRANT USAGE, CREATE ON SCHEMA warehouse_banks to deployer;
-
--- admin permissions
-GRANT USAGE ON SCHEMA warehouse_banks to admin WITH GRANT OPTION;

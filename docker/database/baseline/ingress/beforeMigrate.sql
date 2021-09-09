@@ -24,3 +24,9 @@ GRANT USAGE ON SCHEMA flyway TO readonly;
 GRANT USAGE ON SCHEMA "flyway-permissions" TO readonly;
 
 CREATE SCHEMA IF NOT EXISTS warehouse_banks;
+
+-- deploy permissions
+GRANT USAGE, CREATE ON SCHEMA warehouse_banks TO deployer;
+
+-- admin permissions
+GRANT USAGE ON SCHEMA warehouse_banks TO admin WITH GRANT OPTION;
