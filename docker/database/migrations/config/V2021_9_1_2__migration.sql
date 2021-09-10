@@ -1,3 +1,8 @@
+--
+-- Main | EDW - Octane schemas from prod-release to v2021.9.2.0 on uat
+-- https://app.asana.com/0/0/1200944665668886
+--
+
 -- Insert metadata for new tables: lender_concession_item, lender_concession_request_number_ticker
 WITH new_staging_table_definitions AS (
     INSERT INTO mdi.edw_table_definition (database_name, schema_name, table_name,

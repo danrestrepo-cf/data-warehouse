@@ -1,3 +1,8 @@
+--
+-- Main | EDW - Octane schemas from prod-release to v2021.9.2.0 on uat
+-- https://app.asana.com/0/0/1200944665668886
+--
+
 -- staging_octane changes
 CREATE TABLE staging_octane.lender_concession_item (
     lci_pid bigint,
