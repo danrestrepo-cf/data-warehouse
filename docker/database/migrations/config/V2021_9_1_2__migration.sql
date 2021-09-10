@@ -216,3 +216,114 @@ WITH new_staging_table_definitions AS (
 )
 
 SELECT 'Finished inserting metadata for new tables: lender_concession_item, lender_concession_request_number_ticker';
+
+-- Insert metadata for new columns: lender_concession_request.lcr_unallocated_amount, lcr_lender_concession_request_number
+WITH new_fields (table_name, field_name, field_order) AS (
+    VALUES ('lender_concession_request', 'lcr_unallocated_amount', 20)
+        , ('lender_concession_request', 'lcr_lender_concession_request_number', 21)
+)
+
+   , new_staging_field_definitions AS (
+    INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag)
+        SELECT edw_table_definition.dwid
+             , new_fields.field_name
+             , FALSE
+        FROM new_fields
+                 JOIN mdi.edw_table_definition ON edw_table_definition.schema_name = 'staging_octane'
+            AND new_fields.table_name = edw_table_definition.table_name
+        RETURNING dwid, edw_table_definition_dwid, field_name
+)
+
+   , new_history_field_definitions AS (
+    INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid)
+        SELECT edw_table_definition.dwid
+             , new_fields.field_name
+             , FALSE
+             , new_staging_field_definitions.dwid
+        FROM new_fields
+                 JOIN mdi.edw_table_definition ON edw_table_definition.schema_name = 'history_octane'
+            AND new_fields.table_name = edw_table_definition.table_name
+                 JOIN mdi.edw_table_definition AS source_table_definition ON source_table_definition.schema_name = 'staging_octane'
+            AND source_table_definition.table_name = new_fields.table_name
+                 JOIN new_staging_field_definitions ON new_staging_field_definitions.edw_table_definition_dwid = source_table_definition.dwid
+            AND new_staging_field_definitions.field_name = new_fields.field_name
+)
+
+   , new_table_output_fields AS (
+    INSERT INTO mdi.table_output_field (table_output_step_dwid, database_field_name, database_stream_name, field_order, is_sensitive)
+        SELECT table_output_step.dwid
+             , new_fields.field_name
+             , new_fields.field_name
+             , new_fields.field_order
+             , FALSE
+        FROM new_fields
+                 JOIN mdi.table_output_step ON table_output_step.target_schema = 'history_octane'
+            AND table_output_step.target_table = new_fields.table_name
+)
+
+, updated_table_input_sql (table_name, sql) AS (
+    VALUES ('lender_concession_request', '--finding records to insert into hitory_octane.lender_concession_request
+        SELECT staging_table.lcr_pid
+             , staging_table.lcr_version
+             , staging_table.lcr_loan_pid
+             , staging_table.lcr_lender_lock_major_pid
+             , staging_table.lcr_requested_amount
+             , staging_table.lcr_approved_amount
+             , staging_table.lcr_requested_reason
+             , staging_table.lcr_approved_reason
+             , staging_table.lcr_requested_datetime
+             , staging_table.lcr_decision_datetime
+             , staging_table.lcr_decision_notes
+             , staging_table.lcr_request_notes
+             , staging_table.lcr_requester_lender_user_pid
+             , staging_table.lcr_requester_unparsed_name
+             , staging_table.lcr_approver_lender_user_pid
+             , staging_table.lcr_approver_unparsed_name
+             , staging_table.lcr_lender_concession_request_status_type
+             , staging_table.lcr_corporate_amount
+             , staging_table.lcr_unallocated_amount
+             , staging_table.lcr_lender_concession_request_number
+             , FALSE as data_source_deleted_flag
+             , now() AS data_source_updated_datetime
+        FROM staging_octane.lender_concession_request staging_table
+                 LEFT JOIN history_octane.lender_concession_request history_table on staging_table.lcr_pid = history_table.lcr_pid and staging_table.lcr_version = history_table.lcr_version
+        WHERE history_table.lcr_pid is NULL
+        UNION ALL
+        SELECT history_table.lcr_pid
+             , history_table.lcr_version+1
+             , history_table.lcr_loan_pid
+             , history_table.lcr_lender_lock_major_pid
+             , history_table.lcr_requested_amount
+             , history_table.lcr_approved_amount
+             , history_table.lcr_requested_reason
+             , history_table.lcr_approved_reason
+             , history_table.lcr_requested_datetime
+             , history_table.lcr_decision_datetime
+             , history_table.lcr_decision_notes
+             , history_table.lcr_request_notes
+             , history_table.lcr_requester_lender_user_pid
+             , history_table.lcr_requester_unparsed_name
+             , history_table.lcr_approver_lender_user_pid
+             , history_table.lcr_approver_unparsed_name
+             , history_table.lcr_lender_concession_request_status_type
+             , history_table.lcr_corporate_amount
+             , history_table.lcr_unallocated_amount
+             , history_table.lcr_lender_concession_request_number
+             , TRUE as data_source_deleted_flag
+             , now() AS data_source_updated_datetime
+        FROM history_octane.lender_concession_request history_table
+                 LEFT JOIN staging_octane.lender_concession_request staging_table on staging_table.lcr_pid = history_table.lcr_pid
+        WHERE staging_table.lcr_pid is NULL
+          AND not exists (select 1 from history_octane.lender_concession_request deleted_records where deleted_records.lcr_pid = history_table.lcr_pid and deleted_records.data_source_deleted_flag = True)')
+)
+
+   , updated_table_input_step AS (
+    UPDATE mdi.table_input_step
+        SET sql = updated_table_input_sql.sql
+        FROM updated_table_input_sql
+            , mdi.table_output_step
+        WHERE table_input_step.process_dwid = table_output_step.process_dwid
+            AND table_output_step.target_schema = 'history_octane'
+            AND table_output_step.target_table = updated_table_input_sql.table_name
+)
+SELECT 'Finished inserting metadata for new columns: lcr_unallocated_amount, lcr_lender_concession_request_number';
