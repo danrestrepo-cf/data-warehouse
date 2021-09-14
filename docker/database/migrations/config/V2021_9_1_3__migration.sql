@@ -1466,8 +1466,8 @@ SET sql = 'SELECT transaction_junk_dim_new_records.data_source_integration_colum
      , transaction_junk_dim_new_records.structure
      , transaction_junk_dim_new_records.piggyback_flag
 FROM (
-    SELECT ''is_test_loan_flag'' || ''~'' || ''loan_purpose'' || ''structure_code'' || ''~'' || ''mi_required_flag'' || ''~'' || ''loan_purpose_code'' ||
-           ''structure'' || ''~'' || ''data_source_dwid'' || ''~'' || ''piggyback_flag'' AS data_source_integration_columns
+    SELECT ''is_test_loan_flag'' || ''~'' || ''loan_purpose'' || ''~'' || ''structure_code'' || ''~'' || ''mi_required_flag'' || ''~'' ||
+           ''loan_purpose_code'' || ''~'' || ''structure'' || ''~'' || ''data_source_dwid'' || ''~'' || ''piggyback_flag'' AS data_source_integration_columns
          , COALESCE( CAST( t1441.d_test_loan AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( t649.value AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( primary_table.prp_structure_type AS TEXT ), ''<NULL>'' ) || ''~'' ||
