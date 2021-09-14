@@ -3,12 +3,14 @@
 -- https://app.asana.com/0/0/1200975391827399
 --
 
-DELETE FROM mdi.insert_update_key
+DELETE
+FROM mdi.insert_update_key
 WHERE dwid = (
     SELECT insert_update_key.dwid
     FROM mdi.insert_update_step
-             JOIN mdi.insert_update_key ON insert_update_step.dwid = insert_update_key.insert_update_step_dwid
-        AND insert_update_key.key_lookup = 'data_source_dwid'
+    JOIN mdi.insert_update_key
+         ON insert_update_step.dwid = insert_update_key.insert_update_step_dwid
+             AND insert_update_key.key_lookup = 'data_source_dwid'
     WHERE insert_update_step.table_name = 'loan_fact'
 );
 
@@ -18,8 +20,9 @@ SET key_lookup = 'data_source_integration_id'
 WHERE dwid = (
     SELECT insert_update_key.dwid
     FROM mdi.insert_update_step
-             JOIN mdi.insert_update_key ON insert_update_step.dwid = insert_update_key.insert_update_step_dwid
-        AND insert_update_key.key_lookup = 'loan_pid'
+    JOIN mdi.insert_update_key
+         ON insert_update_step.dwid = insert_update_key.insert_update_step_dwid
+             AND insert_update_key.key_lookup = 'loan_pid'
     WHERE insert_update_step.table_name = 'loan_fact'
 );
 
@@ -1547,3 +1550,12 @@ WHERE transaction_junk_dim.dwid IS NULL;'
 FROM mdi.process
 WHERE table_input_step.process_dwid = process.dwid
   AND process.name = 'SP-200020';
+
+--fix metadata for transaction_junk_dim.loan_purpose and transaction_junk_dim.loan_purpose_code
+UPDATE mdi.edw_field_definition
+SET key_field_flag = TRUE
+FROM mdi.edw_table_definition
+WHERE edw_table_definition.dwid = edw_field_definition.edw_table_definition_dwid
+  AND edw_table_definition.schema_name = 'star_loan'
+  AND edw_table_definition.table_name = 'transaction_junk_dim'
+  AND edw_field_definition.field_name IN ('loan_purpose', 'loan_purpose_code');
