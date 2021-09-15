@@ -1323,7 +1323,7 @@ SET sql = 'SELECT product_choice_dim_new_records.data_source_integration_columns
      , product_choice_dim_new_records.buydown_schedule
      , product_choice_dim_new_records.interest_only
      , product_choice_dim_new_records.aus_code
-     , product_choice_dim_new_records.prepay_penalty_schedule_code
+     , product_choice_dim_new_records.prepay_penatly_schedule_code
      , product_choice_dim_new_records.buydown_schedule_code
      , product_choice_dim_new_records.interest_only_code
      , product_choice_dim_new_records.mortgage_type_code
