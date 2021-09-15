@@ -1455,7 +1455,7 @@ UPDATE mdi.table_input_step
 SET sql = 'SELECT transaction_junk_dim_new_records.data_source_integration_columns
      , transaction_junk_dim_new_records.data_source_integration_id
      , transaction_junk_dim_new_records.edw_created_datetime
-     , transaction_junk_dim_new_records.edw_created_datetime
+     , transaction_junk_dim_new_records.edw_modified_datetime
      , transaction_junk_dim_new_records.data_source_modified_datetime
      , transaction_junk_dim_new_records.is_test_loan_flag
      , transaction_junk_dim_new_records.loan_purpose
