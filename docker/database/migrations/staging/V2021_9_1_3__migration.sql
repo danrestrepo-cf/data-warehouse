@@ -59,3 +59,11 @@ CREATE INDEX idx_transaction_dim__data_source_integration_id
 
 CREATE INDEX idx_transaction_junk_dim__data_source_integration_id 
 	ON star_loan.transaction_junk_dim USING btree(data_source_integration_id);
+
+--
+-- EDW | star_loan - prevent dimension ETLs from performing unnecessary updates
+-- https://app.asana.com/0/1199645410972911/1200970669432550/f
+--
+
+ALTER TABLE star_loan.product_choice_dim
+    RENAME COLUMN prepay_penatly_schedule_code TO prepay_penalty_schedule_code;

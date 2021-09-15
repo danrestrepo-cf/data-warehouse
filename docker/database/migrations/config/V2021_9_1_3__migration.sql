@@ -1323,14 +1323,14 @@ SET sql = 'SELECT product_choice_dim_new_records.data_source_integration_columns
      , product_choice_dim_new_records.buydown_schedule
      , product_choice_dim_new_records.interest_only
      , product_choice_dim_new_records.aus_code
-     , product_choice_dim_new_records.prepay_penatly_schedule_code
+     , product_choice_dim_new_records.prepay_penalty_schedule_code
      , product_choice_dim_new_records.buydown_schedule_code
      , product_choice_dim_new_records.interest_only_code
      , product_choice_dim_new_records.mortgage_type_code
      , product_choice_dim_new_records.mortgage_type
      , product_choice_dim_new_records.prepay_penalty_schedule
 FROM (
-    SELECT ''aus'' || ''~'' || ''buydown_schedule'' || ''~'' || ''interest_only'' || ''~'' || ''aus_code'' || ''~'' || ''prepay_penatly_schedule_code'' ||
+    SELECT ''aus'' || ''~'' || ''buydown_schedule'' || ''~'' || ''interest_only'' || ''~'' || ''aus_code'' || ''~'' || ''prepay_penalty_schedule_code'' ||
            ''~'' || ''buydown_schedule_code'' || ''~'' || ''interest_only_code'' || ''~'' || ''mortgage_type_code'' || ''~'' || ''mortgage_type'' || ''~'' ||
            ''prepay_penalty_schedule'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
          , COALESCE( CAST( t459.value AS TEXT ), ''<NULL>'' ) || ''~'' ||
@@ -1351,7 +1351,7 @@ FROM (
          , t461.value AS buydown_schedule
          , t466.value AS interest_only
          , primary_table.l_aus_type AS aus_code
-         , primary_table.l_prepay_penalty_schedule_type AS prepay_penatly_schedule_code
+         , primary_table.l_prepay_penalty_schedule_type AS prepay_penalty_schedule_code
          , primary_table.l_buydown_schedule_type AS buydown_schedule_code
          , primary_table.l_interest_only_type AS interest_only_code
          , primary_table.l_mortgage_type AS mortgage_type_code
@@ -1555,3 +1555,21 @@ WHERE edw_table_definition.dwid = edw_field_definition.edw_table_definition_dwid
   AND edw_table_definition.schema_name = 'star_loan'
   AND edw_table_definition.table_name = 'transaction_junk_dim'
   AND edw_field_definition.field_name IN ('loan_purpose', 'loan_purpose_code');
+
+--fix typo in product_choice_dim column metadata
+UPDATE mdi.edw_field_definition
+SET field_name = 'prepay_penalty_schedule_code'
+FROM mdi.edw_table_definition
+WHERE edw_table_definition.dwid = edw_field_definition.edw_table_definition_dwid
+  AND edw_table_definition.schema_name = 'star_loan'
+  AND edw_table_definition.table_name = 'product_choice_dim'
+  AND edw_field_definition.field_name = 'prepay_penatly_schedule_code';
+
+UPDATE mdi.insert_update_field
+SET update_lookup = 'prepay_penalty_schedule_code'
+  , update_stream = 'prepay_penalty_schedule_code'
+FROM mdi.insert_update_step
+WHERE insert_update_step.dwid = insert_update_field.insert_update_step_dwid
+  AND insert_update_step.schema_name = 'star_loan'
+  AND insert_update_step.table_name = 'product_choice_dim'
+  AND insert_update_field.update_lookup = 'prepay_penatly_schedule_code';
