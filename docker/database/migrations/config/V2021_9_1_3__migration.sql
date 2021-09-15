@@ -30,8 +30,7 @@ WHERE dwid = (
 
 --borrower_demographics_dim
 UPDATE mdi.table_input_step
-SET sql = '--SP-200004,borrower_demographics_dim
-SELECT borrower_demographics_dim_new_records.data_source_integration_columns
+SET sql = 'SELECT borrower_demographics_dim_new_records.data_source_integration_columns
      , borrower_demographics_dim_new_records.data_source_integration_id
      , borrower_demographics_dim_new_records.edw_created_datetime
      , borrower_demographics_dim_new_records.edw_modified_datetime
