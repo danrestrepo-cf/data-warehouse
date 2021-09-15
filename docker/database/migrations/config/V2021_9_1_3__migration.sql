@@ -220,7 +220,7 @@ FROM (
          , primary_table.b_race_other_asian_description <> '''' AND
            primary_table.b_race_other_asian_description IS NOT NULL AS race_other_asian_description_flag
     FROM (
-        SELECT TRUE AS include_record
+        SELECT <<borrower_partial_load_condition>> AS include_record
              , borrower.*
         FROM history_octane.borrower
         LEFT JOIN history_octane.borrower AS history_records
@@ -232,7 +232,7 @@ FROM (
     INNER JOIN (
         SELECT *
         FROM (
-            SELECT TRUE AS include_record
+            SELECT <<marital_status_type_partial_load_condition>> AS include_record
                  , marital_status_type.*
             FROM history_octane.marital_status_type
             LEFT JOIN history_octane.marital_status_type AS history_records
@@ -246,7 +246,7 @@ FROM (
     INNER JOIN (
         SELECT *
         FROM (
-            SELECT TRUE AS include_record
+            SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                  , yes_no_unknown_type.*
             FROM history_octane.yes_no_unknown_type
             LEFT JOIN history_octane.yes_no_unknown_type AS history_records
@@ -260,7 +260,7 @@ FROM (
     INNER JOIN (
         SELECT *
         FROM (
-            SELECT TRUE AS include_record
+            SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                  , yes_no_unknown_type.*
             FROM history_octane.yes_no_unknown_type
             LEFT JOIN history_octane.yes_no_unknown_type AS history_records
@@ -274,7 +274,7 @@ FROM (
     INNER JOIN (
         SELECT *
         FROM (
-            SELECT TRUE AS include_record
+            SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                  , yes_no_unknown_type.*
             FROM history_octane.yes_no_unknown_type
             LEFT JOIN history_octane.yes_no_unknown_type AS history_records
@@ -288,7 +288,7 @@ FROM (
     INNER JOIN (
         SELECT *
         FROM (
-            SELECT TRUE AS include_record
+            SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                  , yes_no_unknown_type.*
             FROM history_octane.yes_no_unknown_type
             LEFT JOIN history_octane.yes_no_unknown_type AS history_records
@@ -302,7 +302,7 @@ FROM (
     INNER JOIN (
         SELECT *
         FROM (
-            SELECT TRUE AS include_record
+            SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                  , yes_no_unknown_type.*
             FROM history_octane.yes_no_unknown_type
             LEFT JOIN history_octane.yes_no_unknown_type AS history_records
@@ -316,7 +316,7 @@ FROM (
     INNER JOIN (
         SELECT *
         FROM (
-            SELECT TRUE AS include_record
+            SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                  , yes_no_unknown_type.*
             FROM history_octane.yes_no_unknown_type
             LEFT JOIN history_octane.yes_no_unknown_type AS history_records
