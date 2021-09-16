@@ -54,6 +54,7 @@ if [[ -n "${ECS_CONTAINER_METADATA_URI_V4}" ]]; then
 # Intentionally commented out, LEFT IN FOR TESTING.  Normally we want a random ID
 #elif [[ -f "/ecs-example.json" ]]; then
 #  etl_batch_id=$(cat /ecs-example.json | jq -r '.Containers[0].LogOptions["awslogs-stream"]' | sed 's~.*/~~')
+export ETL_BATCH_ID=${etl_batch_id}
 fi
 
 if [[ "$etl_batch_id" -eq "" ]]; then
@@ -140,7 +141,8 @@ run_kitchen() {
   echo ./kitchen.sh -rep=PentahoFileRepository -level=Detailed -job=$@
   # we want "params" to split / expand, so ignore the shellcheck
   # shellcheck disable=SC2086
-  kitchen.sh -rep=PentahoFileRepository -level=Detailed ${params} "${input_data_parameter}" -job=$@
+
+  kitchen.sh -rep=PentahoFileRepository -level=Detailed ${params} "${input_data_parameter}" -job=$@ || /aws-s3-upload-failure-json.sh "kitchen.sh exited with code = ${?}"
 }
 
 print_usage() {
