@@ -1471,8 +1471,8 @@ FROM (
            COALESCE( CAST( t649.value AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( primary_table.prp_structure_type AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( primary_table.prp_mi_required AS TEXT ), ''<NULL>'' ) || ''~'' ||
-           COALESCE( CAST( t661.value AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( primary_table.prp_loan_purpose_type AS TEXT ), ''<NULL>'' ) || ''~'' ||
+           COALESCE( CAST( t661.value AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( primary_table.prp_structure_type = ''COMBO'' AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
          , NOW( ) AS edw_created_datetime
