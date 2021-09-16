@@ -244,6 +244,10 @@ class SingleStateMachineCreator:
                                 {
                                     'Name': 'INPUT_DATA',
                                     'Value.$': "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
+                                },
+                                {
+                                    'Name': 'TOKEN_ID',
+                                    'Value.$': "$$.Task.Token"
                                 }
                             ],
                             'Name': '${mdi_2_container}'
