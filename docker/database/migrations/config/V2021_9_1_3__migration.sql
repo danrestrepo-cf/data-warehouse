@@ -470,7 +470,7 @@ FROM (
            COALESCE( CAST( primary_table.b_on_gsa_list AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( primary_table.b_homeownership_education_type AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( primary_table.b_homeownership_education_agency_type AS TEXT ), ''<NULL>'' ) || ''~'' ||
-           COALESCE( CAST( primary_table.b_homeownership_education_complete_date AS TEXT ), ''<NULL>'' ) || ''~'' ||
+           ''<NULL>'' || ''~'' || -- hardcoded null for homeownership_education_complete_date
            COALESCE( CAST( primary_table.b_disabled AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( primary_table.b_hud_employee AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( primary_table.b_domestic_relationship_state_type AS TEXT ), ''<NULL>'' ) || ''~'' ||
@@ -486,24 +486,8 @@ FROM (
            COALESCE( CAST( t143.value AS TEXT ), ''<NULL>'' ) || ''~'' || COALESCE( CAST( t146.value AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( t153.value AS TEXT ), ''<NULL>'' ) || ''~'' || COALESCE( CAST( t154.value AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) || ''~'' ||
-           COALESCE( CAST( primary_table.b_property_foreclosure_explanation <> '''' AND
-                           primary_table.b_property_foreclosure_explanation IS NOT NULL AS TEXT ), ''<NULL>'' ) || ''~'' ||
-           COALESCE( CAST( primary_table.b_presently_delinquent_explanation <> '''' AND
-                           primary_table.b_presently_delinquent_explanation IS NOT NULL AS TEXT ), ''<NULL>'' ) || ''~'' ||
-           COALESCE( CAST( primary_table.b_party_to_lawsuit_explanation <> '''' AND
-                           primary_table.b_party_to_lawsuit_explanation IS NOT NULL AS TEXT ), ''<NULL>'' ) || ''~'' ||
-           COALESCE( CAST( primary_table.b_outstanding_judgments_explanation <> '''' AND
-                           primary_table.b_outstanding_judgments_explanation IS NOT NULL AS TEXT ), ''<NULL>'' ) || ''~'' ||
-           COALESCE( CAST( primary_table.b_obligated_loan_foreclosure_explanation <> '''' AND
-                           primary_table.b_obligated_loan_foreclosure_explanation IS NOT NULL AS TEXT ), ''<NULL>'' ) || ''~'' ||
-           COALESCE( CAST( primary_table.b_note_endorser_explanation <> '''' AND
-                           primary_table.b_note_endorser_explanation IS NOT NULL AS TEXT ), ''<NULL>'' ) || ''~'' ||
-           COALESCE( CAST( primary_table.b_borrowed_down_payment_explanation <> '''' AND
-                           primary_table.b_borrowed_down_payment_explanation IS NOT NULL AS TEXT ), ''<NULL>'' ) || ''~'' ||
-           COALESCE( CAST( primary_table.b_bankruptcy_explanation <> '''' AND
-                           primary_table.b_bankruptcy_explanation IS NOT NULL AS TEXT ), ''<NULL>'' ) || ''~'' ||
-           COALESCE( CAST( primary_table.b_alimony_child_support_explanation <> '''' AND
-                           primary_table.b_alimony_child_support_explanation IS NOT NULL AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
+           ''<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>~<NULL>'' --hardcoded nulls for "explanation_flag" columns
+        AS data_source_integration_id
          , NOW( ) AS edw_created_datetime
          , NOW( ) AS edw_modified_datetime
          , MAX( primary_table.data_source_updated_datetime ) AS data_source_modified_datetime
@@ -530,7 +514,7 @@ FROM (
          , primary_table.b_on_gsa_list AS on_gsa_list_code
          , primary_table.b_homeownership_education_type AS homeownership_education_code
          , primary_table.b_homeownership_education_agency_type AS homeownership_education_agency_code
-         , primary_table.b_homeownership_education_complete_date AS homeownership_education_complete_date
+         , NULL AS homeownership_education_complete_date
          , primary_table.b_disabled AS disabled_code
          , primary_table.b_hud_employee AS hud_employee_flag
          , primary_table.b_domestic_relationship_state_type AS domestic_relationship_state_code
@@ -556,24 +540,15 @@ FROM (
          , t146.value AS property_foreclosure
          , t153.value AS spousal_homestead
          , t154.value AS titleholder
-         , primary_table.b_property_foreclosure_explanation <> '''' AND
-           primary_table.b_property_foreclosure_explanation IS NOT NULL AS property_foreclosure_explanation_flag
-         , primary_table.b_presently_delinquent_explanation <> '''' AND
-           primary_table.b_presently_delinquent_explanation IS NOT NULL AS presently_delinquent_explanation_flag
-         , primary_table.b_party_to_lawsuit_explanation <> '''' AND
-           primary_table.b_party_to_lawsuit_explanation IS NOT NULL AS party_to_lawsuit_explanation_flag
-         , primary_table.b_outstanding_judgments_explanation <> '''' AND
-           primary_table.b_outstanding_judgments_explanation IS NOT NULL AS outstanding_judgments_explanation_flag
-         , primary_table.b_obligated_loan_foreclosure_explanation <> '''' AND
-           primary_table.b_obligated_loan_foreclosure_explanation IS NOT NULL AS obligated_loan_foreclosure_explanation_flag
-         , primary_table.b_note_endorser_explanation <> '''' AND
-           primary_table.b_note_endorser_explanation IS NOT NULL AS note_endorser_explanation_flag
-         , primary_table.b_borrowed_down_payment_explanation <> '''' AND
-           primary_table.b_borrowed_down_payment_explanation IS NOT NULL AS borrowed_down_payment_explanation_flag
-         , primary_table.b_bankruptcy_explanation <> '''' AND
-           primary_table.b_bankruptcy_explanation IS NOT NULL AS bankruptcy_explanation_flag
-         , primary_table.b_alimony_child_support_explanation <> '''' AND
-           primary_table.b_alimony_child_support_explanation IS NOT NULL AS alimony_child_support_explanation_flag
+         , NULL AS property_foreclosure_explanation_flag
+         , NULL AS presently_delinquent_explanation_flag
+         , NULL AS party_to_lawsuit_explanation_flag
+         , NULL AS outstanding_judgments_explanation_flag
+         , NULL AS obligated_loan_foreclosure_explanation_flag
+         , NULL AS note_endorser_explanation_flag
+         , NULL AS borrowed_down_payment_explanation_flag
+         , NULL AS bankruptcy_explanation_flag
+         , NULL AS alimony_child_support_explanation_flag
     FROM (
         SELECT <<borrower_partial_load_condition>> AS include_record
              , borrower.*
@@ -904,28 +879,10 @@ FROM (
            , primary_table.b_presently_delinquent, primary_table.b_property_foreclosure, primary_table.b_titleholder
            , primary_table.b_first_time_home_buyer_auto_compute, primary_table.b_on_ldp_list, primary_table.b_on_gsa_list
            , primary_table.b_homeownership_education_type, primary_table.b_homeownership_education_agency_type
-           , primary_table.b_homeownership_education_complete_date, primary_table.b_disabled, primary_table.b_hud_employee
+           , primary_table.b_disabled, primary_table.b_hud_employee
            , primary_table.b_domestic_relationship_state_type, t127.value, t126.value, t122.value, t113.value, t116.value, t117.value
            , t121.value, t125.value, t128.value, t131.value, t133.value, t135.value, t136.value, t137.value, t138.value, t139.value
            , t140.value, t143.value, t146.value, t153.value, t154.value
-           , primary_table.b_property_foreclosure_explanation <> '''' AND
-             primary_table.b_property_foreclosure_explanation IS NOT NULL
-           , primary_table.b_presently_delinquent_explanation <> '''' AND
-             primary_table.b_presently_delinquent_explanation IS NOT NULL
-           , primary_table.b_party_to_lawsuit_explanation <> '''' AND
-             primary_table.b_party_to_lawsuit_explanation IS NOT NULL
-           , primary_table.b_outstanding_judgments_explanation <> '''' AND
-             primary_table.b_outstanding_judgments_explanation IS NOT NULL
-           , primary_table.b_obligated_loan_foreclosure_explanation <> '''' AND
-             primary_table.b_obligated_loan_foreclosure_explanation IS NOT NULL
-           , primary_table.b_note_endorser_explanation <> '''' AND
-             primary_table.b_note_endorser_explanation IS NOT NULL
-           , primary_table.b_borrowed_down_payment_explanation <> '''' AND
-             primary_table.b_borrowed_down_payment_explanation IS NOT NULL
-           , primary_table.b_bankruptcy_explanation <> '''' AND
-             primary_table.b_bankruptcy_explanation IS NOT NULL
-           , primary_table.b_alimony_child_support_explanation <> '''' AND
-             primary_table.b_alimony_child_support_explanation IS NOT NULL
 ) AS borrower_lending_profile_dim_new_records
 LEFT JOIN star_loan.borrower_lending_profile_dim
           ON borrower_lending_profile_dim.data_source_integration_id = borrower_lending_profile_dim_new_records.data_source_integration_id
