@@ -73,21 +73,25 @@ ALTER TABLE star_loan.product_choice_dim
 UPDATE star_loan.loan_junk_dim
 SET data_source_integration_columns = 'buydown_contributor~fha_program~hmda_hoepa_status~lien_priority~lender_concession_candidate_flag~durp_eligibility_opt_out_flag~qualified_mortgage_status_code~qualified_mortgage_flag~lqa_purchase_eligibility_code~student_loan_cash_out_refinance_flag~secondary_clear_to_commit_flag~qm_eligible_flag~hpml_flag~lien_priority_code~buydown_contributor_code~qualifying_rate_code~fha_program_code~fha_principal_write_down_flag~texas_equity_code~texas_equity_auto_code~hmda_hoepa_status_code~lqa_purchase_eligibility~mi_required_flag~qualified_mortgage_status~qualifying_rate~texas_equity_auto~texas_equity~piggyback_flag~data_source_dwid'
   , data_source_integration_id = '~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
+  , edw_modified_datetime = NOW( )
 WHERE dwid = 0;
 
 UPDATE star_loan.product_choice_dim
 SET data_source_integration_columns = 'aus~buydown_schedule~interest_only~aus_code~prepay_penalty_schedule_code~buydown_schedule_code~interest_only_code~mortgage_type_code~mortgage_type~prepay_penalty_schedule~data_source_dwid'
   , data_source_integration_id = '~~~~~~~~~~'
+  , edw_modified_datetime = NOW( )
 WHERE dwid = 0;
 
 UPDATE star_loan.hmda_purchaser_of_loan_dim
 SET data_source_integration_columns = 'value_2017~code_2017~code_2018~value_2018~data_source_dwid'
   , data_source_integration_id = '~~~~'
+  , edw_modified_datetime = NOW( )
 WHERE dwid = 0;
 
 UPDATE star_loan.transaction_dim
 SET data_source_integration_columns = 'deal_pid~active_proposal_pid~data_source_dwid'
   , data_source_integration_id = '~~'
+  , edw_modified_datetime = NOW( )
 WHERE dwid = 0;
 
 --transaction_junk_dim, borrower_demographics_dim, and borrower_lending_profile_dim are being truncated in QA and Prod as part of the 2021.9.1.3 deploy, so we must do an "upsert" here
