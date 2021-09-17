@@ -675,3 +675,238 @@ DELETE FROM mdi.edw_field_definition
                                                     'sd_days_before_key_date', 'sd_warning_days', 'sd_doc_key_date_type',
                                                     'prpd_valid_from_date', 'prpd_valid_through_date', 'prpd_key_date')
         );
+
+-- Update the table_input_step sql queries for the ETLs that maintain the smart_doc and proposal_doc tables
+-- smart_doc:
+UPDATE mdi.table_input_step
+    SET sql = '--finding records to insert into history_octane.smart_doc
+SELECT staging_table.sd_pid
+, staging_table.sd_version
+, staging_table.sd_account_pid
+, staging_table.sd_doc_set_type
+, staging_table.sd_custom_form_pid
+, staging_table.sd_doc_name
+, staging_table.sd_doc_number
+, staging_table.sd_doc_category_type
+, staging_table.sd_doc_file_source_type
+, staging_table.sd_doc_external_provider_type
+, staging_table.sd_broker_applicable_provider
+, staging_table.sd_action_entities_from_merge_field
+, staging_table.sd_action_entity_applicant
+, staging_table.sd_action_entity_non_applicant
+, staging_table.sd_action_entity_underwriter
+, staging_table.sd_action_entity_originator
+, staging_table.sd_doc_borrower_access_mode_type
+, staging_table.sd_borrower_explanation
+, staging_table.sd_deal_child_type
+, staging_table.sd_doc_fulfill_status_type_default
+, staging_table.sd_prior_to_type
+, staging_table.sd_doc_action_type
+, staging_table.sd_e_delivery
+, staging_table.sd_active
+, staging_table.sd_key_doc_type
+, staging_table.sd_key_doc_include_file
+, staging_table.sd_doc_approval_type
+, staging_table.sd_auto_approve
+, staging_table.sd_auto_include_on_request
+, staging_table.sd_poa_applicable
+, staging_table.sd_action_entity_hud_va_lender_officer
+, staging_table.sd_action_entity_collateral_underwriter
+, staging_table.sd_action_entity_wholesale_client_advocate
+, staging_table.sd_action_entity_correspondent_client_advocate
+, staging_table.sd_action_entity_government_insurance
+, staging_table.sd_action_entity_underwriting_manager
+, staging_table.sd_action_entity_effective_collateral_underwriter
+, FALSE as data_source_deleted_flag
+, now() AS data_source_updated_datetime
+FROM staging_octane.smart_doc staging_table
+         LEFT JOIN history_octane.smart_doc history_table on staging_table.sd_pid = history_table.sd_pid and staging_table.sd_version = history_table.sd_version
+WHERE history_table.sd_pid is NULL
+UNION ALL
+SELECT history_table.sd_pid
+, history_table.sd_version+1
+, history_table.sd_account_pid
+, history_table.sd_doc_set_type
+, history_table.sd_custom_form_pid
+, history_table.sd_doc_name
+, history_table.sd_doc_number
+, history_table.sd_doc_category_type
+, history_table.sd_doc_file_source_type
+, history_table.sd_doc_external_provider_type
+, history_table.sd_broker_applicable_provider
+, history_table.sd_action_entities_from_merge_field
+, history_table.sd_action_entity_applicant
+, history_table.sd_action_entity_non_applicant
+, history_table.sd_action_entity_underwriter
+, history_table.sd_action_entity_originator
+, history_table.sd_doc_borrower_access_mode_type
+, history_table.sd_borrower_explanation
+, history_table.sd_deal_child_type
+, history_table.sd_doc_fulfill_status_type_default
+, history_table.sd_prior_to_type
+, history_table.sd_doc_action_type
+, history_table.sd_e_delivery
+, history_table.sd_active
+, history_table.sd_key_doc_type
+, history_table.sd_key_doc_include_file
+, history_table.sd_doc_approval_type
+, history_table.sd_auto_approve
+, history_table.sd_auto_include_on_request
+, history_table.sd_poa_applicable
+, history_table.sd_action_entity_hud_va_lender_officer
+, history_table.sd_action_entity_collateral_underwriter
+, history_table.sd_action_entity_wholesale_client_advocate
+, history_table.sd_action_entity_correspondent_client_advocate
+, history_table.sd_action_entity_government_insurance
+, history_table.sd_action_entity_underwriting_manager
+, history_table.sd_action_entity_effective_collateral_underwriter
+, TRUE as data_source_deleted_flag
+, now() AS data_source_updated_datetime
+FROM history_octane.smart_doc history_table
+         LEFT JOIN staging_octane.smart_doc staging_table on staging_table.sd_pid = history_table.sd_pid
+WHERE staging_table.sd_pid is NULL
+  AND not exists (select 1 from history_octane.smart_doc deleted_records where deleted_records.sd_pid = history_table.sd_pid and deleted_records.data_source_deleted_flag = True)'
+    WHERE dwid = (
+        SELECT table_input_step.dwid
+        FROM mdi.process
+            JOIN mdi.table_input_step ON process.dwid = table_input_step.process_dwid
+            JOIN mdi.table_output_step ON process.dwid = table_output_step.process_dwid
+                AND table_output_step.target_table = 'smart_doc'
+        );
+
+-- proposal_doc:
+UPDATE mdi.table_input_step
+SET sql = '--finding records to insert into history_octane.proposal_doc
+SELECT staging_table.prpd_pid
+, staging_table.prpd_version
+, staging_table.prpd_doc_name
+, staging_table.prpd_doc_number
+, staging_table.prpd_borrower_access
+, staging_table.prpd_deal_child_type
+, staging_table.prpd_deal_child_name
+, staging_table.prpd_deal_pid
+, staging_table.prpd_proposal_pid
+, staging_table.prpd_loan_pid
+, staging_table.prpd_borrower_pid
+, staging_table.prpd_borrower_income_pid
+, staging_table.prpd_job_income_pid
+, staging_table.prpd_borrower_job_gap_pid
+, staging_table.prpd_other_income_pid
+, staging_table.prpd_business_income_pid
+, staging_table.prpd_rental_income_pid
+, staging_table.prpd_asset_pid
+, staging_table.prpd_asset_large_deposit_pid
+, staging_table.prpd_liability_pid
+, staging_table.prpd_reo_place_pid
+, staging_table.prpd_property_place_pid
+, staging_table.prpd_residence_place_pid
+, staging_table.prpd_borrower_residence_pid
+, staging_table.prpd_application_pid
+, staging_table.prpd_credit_inquiry_pid
+, staging_table.prpd_appraisal_pid
+, staging_table.prpd_appraisal_form_pid
+, staging_table.prpd_tax_transcript_request_pid
+, staging_table.prpd_trash
+, staging_table.prpd_smart_doc_pid
+, staging_table.prpd_proposal_doc_set_pid
+, staging_table.prpd_doc_fulfill_status_type
+, staging_table.prpd_status_unparsed_name
+, staging_table.prpd_status_datetime
+, staging_table.prpd_status_reason
+, staging_table.prpd_doc_excluded
+, staging_table.prpd_doc_excluded_reason
+, staging_table.prpd_doc_excluded_unparsed_name
+, staging_table.prpd_doc_excluded_datetime
+, staging_table.prpd_doc_approval_type
+, staging_table.prpd_borrower_edit
+, staging_table.prpd_last_status_reason
+, staging_table.prpd_borrower_associated_address_pid
+, staging_table.prpd_construction_cost_pid
+, staging_table.prpd_construction_draw_pid
+, staging_table.prpd_proposal_contractor_pid
+, staging_table.prpd_doc_provider_group_type
+, staging_table.prpd_doc_req_fulfill_status_type
+, staging_table.prpd_doc_req_decision_status_type
+, FALSE as data_source_deleted_flag
+, now() AS data_source_updated_datetime
+FROM staging_octane.proposal_doc staging_table
+         LEFT JOIN history_octane.proposal_doc history_table on staging_table.prpd_pid = history_table.prpd_pid and staging_table.prpd_version = history_table.prpd_version
+WHERE history_table.prpd_pid is NULL
+UNION ALL
+SELECT history_table.prpd_pid
+, history_table.prpd_version+1
+, history_table.prpd_doc_name
+, history_table.prpd_doc_number
+, history_table.prpd_borrower_access
+, history_table.prpd_deal_child_type
+, history_table.prpd_deal_child_name
+, history_table.prpd_deal_pid
+, history_table.prpd_proposal_pid
+, history_table.prpd_loan_pid
+, history_table.prpd_borrower_pid
+, history_table.prpd_borrower_income_pid
+, history_table.prpd_job_income_pid
+, history_table.prpd_borrower_job_gap_pid
+, history_table.prpd_other_income_pid
+, history_table.prpd_business_income_pid
+, history_table.prpd_rental_income_pid
+, history_table.prpd_asset_pid
+, history_table.prpd_asset_large_deposit_pid
+, history_table.prpd_liability_pid
+, history_table.prpd_reo_place_pid
+, history_table.prpd_property_place_pid
+, history_table.prpd_residence_place_pid
+, history_table.prpd_borrower_residence_pid
+, history_table.prpd_application_pid
+, history_table.prpd_credit_inquiry_pid
+, history_table.prpd_appraisal_pid
+, history_table.prpd_appraisal_form_pid
+, history_table.prpd_tax_transcript_request_pid
+, history_table.prpd_trash
+, history_table.prpd_smart_doc_pid
+, history_table.prpd_proposal_doc_set_pid
+, history_table.prpd_doc_fulfill_status_type
+, history_table.prpd_status_unparsed_name
+, history_table.prpd_status_datetime
+, history_table.prpd_status_reason
+, history_table.prpd_doc_excluded
+, history_table.prpd_doc_excluded_reason
+, history_table.prpd_doc_excluded_unparsed_name
+, history_table.prpd_doc_excluded_datetime
+, history_table.prpd_doc_approval_type
+, history_table.prpd_borrower_edit
+, history_table.prpd_last_status_reason
+, history_table.prpd_borrower_associated_address_pid
+, history_table.prpd_construction_cost_pid
+, history_table.prpd_construction_draw_pid
+, history_table.prpd_proposal_contractor_pid
+, history_table.prpd_doc_provider_group_type
+, history_table.prpd_doc_req_fulfill_status_type
+, history_table.prpd_doc_req_decision_status_type
+, TRUE as data_source_deleted_flag
+, now() AS data_source_updated_datetime
+FROM history_octane.proposal_doc history_table
+         LEFT JOIN staging_octane.proposal_doc staging_table on staging_table.prpd_pid = history_table.prpd_pid
+WHERE staging_table.prpd_pid is NULL
+  AND not exists (select 1 from history_octane.proposal_doc deleted_records where deleted_records.prpd_pid = history_table.prpd_pid and deleted_records.data_source_deleted_flag = True)'
+WHERE dwid = (
+    SELECT table_input_step.dwid
+    FROM mdi.process
+             JOIN mdi.table_input_step ON process.dwid = table_input_step.process_dwid
+             JOIN mdi.table_output_step ON process.dwid = table_output_step.process_dwid
+        AND table_output_step.target_table = 'proposal_doc'
+);
+
+-- Remove table_output_field records for fields removed from the smart_doc and proposal_doc tables
+DELETE FROM mdi.table_output_field
+WHERE dwid IN (
+    SELECT table_output_field.dwid
+    FROM mdi.process
+        JOIN mdi.table_output_step ON process.dwid = table_output_step.process_dwid
+            AND table_output_step.target_table IN ('smart_doc', 'proposal_doc')
+        JOIN mdi.table_output_field ON table_output_step.dwid = table_output_field.table_output_step_dwid
+            AND table_output_field.database_field_name IN ('sd_doc_validity_type', 'sd_expiration_rule_type',
+                                                           'sd_days_before_key_date', 'sd_warning_days',
+                                                           'sd_doc_key_date_type', 'prpd_valid_from_date',
+                                                           'prpd_valid_through_date', 'prpd_key_date')
+    );
