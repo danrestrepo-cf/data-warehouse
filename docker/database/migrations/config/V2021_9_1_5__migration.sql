@@ -3,13 +3,173 @@
 -- https://app.asana.com/0/0/1200992742622198
 --
 
+-- Update metadata for renamed table: proposal_doc
+-- edw_table_definition
+UPDATE mdi.edw_table_definition
+    SET table_name = 'proposal_doc_old'
+    WHERE table_name = 'proposal_doc';
+
+-- process
+UPDATE mdi.process
+    SET description = 'ETL to copy proposal_doc_old data from staging_octane to history_octane'
+    WHERE dwid = (
+        SELECT process.dwid
+        FROM mdi.process
+            JOIN mdi.table_output_step ON process.dwid = table_output_step.process_dwid
+                AND table_output_step.target_table = 'proposal_doc'
+        );
+
+-- table_input_step
+UPDATE mdi.table_input_step
+    SET sql = '--finding records to insert into history_octane.proposal_doc_old
+SELECT staging_table.prpd_pid
+     , staging_table.prpd_version
+     , staging_table.prpd_doc_name
+     , staging_table.prpd_doc_number
+     , staging_table.prpd_borrower_access
+     , staging_table.prpd_deal_child_type
+     , staging_table.prpd_deal_child_name
+     , staging_table.prpd_deal_pid
+     , staging_table.prpd_proposal_pid
+     , staging_table.prpd_loan_pid
+     , staging_table.prpd_borrower_pid
+     , staging_table.prpd_borrower_income_pid
+     , staging_table.prpd_job_income_pid
+     , staging_table.prpd_borrower_job_gap_pid
+     , staging_table.prpd_other_income_pid
+     , staging_table.prpd_business_income_pid
+     , staging_table.prpd_rental_income_pid
+     , staging_table.prpd_asset_pid
+     , staging_table.prpd_asset_large_deposit_pid
+     , staging_table.prpd_liability_pid
+     , staging_table.prpd_reo_place_pid
+     , staging_table.prpd_property_place_pid
+     , staging_table.prpd_residence_place_pid
+     , staging_table.prpd_borrower_residence_pid
+     , staging_table.prpd_application_pid
+     , staging_table.prpd_credit_inquiry_pid
+     , staging_table.prpd_appraisal_pid
+     , staging_table.prpd_appraisal_form_pid
+     , staging_table.prpd_tax_transcript_request_pid
+     , staging_table.prpd_trash
+     , staging_table.prpd_smart_doc_pid
+     , staging_table.prpd_proposal_doc_set_pid
+     , staging_table.prpd_doc_fulfill_status_type
+     , staging_table.prpd_status_unparsed_name
+     , staging_table.prpd_status_datetime
+     , staging_table.prpd_status_reason
+     , staging_table.prpd_doc_excluded
+     , staging_table.prpd_doc_excluded_reason
+     , staging_table.prpd_doc_excluded_unparsed_name
+     , staging_table.prpd_doc_excluded_datetime
+     , staging_table.prpd_doc_approval_type
+     , staging_table.prpd_borrower_edit
+     , staging_table.prpd_last_status_reason
+     , staging_table.prpd_borrower_associated_address_pid
+     , staging_table.prpd_construction_cost_pid
+     , staging_table.prpd_construction_draw_pid
+     , staging_table.prpd_proposal_contractor_pid
+     , staging_table.prpd_doc_provider_group_type
+     , staging_table.prpd_doc_req_fulfill_status_type
+     , staging_table.prpd_doc_req_decision_status_type
+     , FALSE as data_source_deleted_flag
+     , now() AS data_source_updated_datetime
+FROM staging_octane.proposal_doc_old staging_table
+         LEFT JOIN history_octane.proposal_doc_old history_table on staging_table.prpd_pid = history_table.prpd_pid and staging_table.prpd_version = history_table.prpd_version
+WHERE history_table.prpd_pid is NULL
+UNION ALL
+SELECT history_table.prpd_pid
+     , history_table.prpd_version+1
+     , history_table.prpd_doc_name
+     , history_table.prpd_doc_number
+     , history_table.prpd_borrower_access
+     , history_table.prpd_deal_child_type
+     , history_table.prpd_deal_child_name
+     , history_table.prpd_deal_pid
+     , history_table.prpd_proposal_pid
+     , history_table.prpd_loan_pid
+     , history_table.prpd_borrower_pid
+     , history_table.prpd_borrower_income_pid
+     , history_table.prpd_job_income_pid
+     , history_table.prpd_borrower_job_gap_pid
+     , history_table.prpd_other_income_pid
+     , history_table.prpd_business_income_pid
+     , history_table.prpd_rental_income_pid
+     , history_table.prpd_asset_pid
+     , history_table.prpd_asset_large_deposit_pid
+     , history_table.prpd_liability_pid
+     , history_table.prpd_reo_place_pid
+     , history_table.prpd_property_place_pid
+     , history_table.prpd_residence_place_pid
+     , history_table.prpd_borrower_residence_pid
+     , history_table.prpd_application_pid
+     , history_table.prpd_credit_inquiry_pid
+     , history_table.prpd_appraisal_pid
+     , history_table.prpd_appraisal_form_pid
+     , history_table.prpd_tax_transcript_request_pid
+     , history_table.prpd_trash
+     , history_table.prpd_smart_doc_pid
+     , history_table.prpd_proposal_doc_set_pid
+     , history_table.prpd_doc_fulfill_status_type
+     , history_table.prpd_status_unparsed_name
+     , history_table.prpd_status_datetime
+     , history_table.prpd_status_reason
+     , history_table.prpd_doc_excluded
+     , history_table.prpd_doc_excluded_reason
+     , history_table.prpd_doc_excluded_unparsed_name
+     , history_table.prpd_doc_excluded_datetime
+     , history_table.prpd_doc_approval_type
+     , history_table.prpd_borrower_edit
+     , history_table.prpd_last_status_reason
+     , history_table.prpd_borrower_associated_address_pid
+     , history_table.prpd_construction_cost_pid
+     , history_table.prpd_construction_draw_pid
+     , history_table.prpd_proposal_contractor_pid
+     , history_table.prpd_doc_provider_group_type
+     , history_table.prpd_doc_req_fulfill_status_type
+     , history_table.prpd_doc_req_decision_status_type
+     , TRUE as data_source_deleted_flag
+     , now() AS data_source_updated_datetime
+FROM history_octane.proposal_doc_old history_table
+         LEFT JOIN staging_octane.proposal_doc_old staging_table on staging_table.prpd_pid = history_table.prpd_pid
+WHERE staging_table.prpd_pid is NULL
+  AND not exists (select 1 from history_octane.proposal_doc_old deleted_records where deleted_records.prpd_pid = history_table.prpd_pid and deleted_records.data_source_deleted_flag = True)'
+    WHERE dwid = (
+            SELECT table_input_step.dwid
+            FROM mdi.process
+                JOIN mdi.table_input_step ON process.dwid = table_input_step.process_dwid
+                JOIN mdi.table_output_step ON process.dwid = table_output_step.process_dwid
+                    AND table_output_step.target_table = 'proposal_doc'
+        );
+
+-- table_output_step
+UPDATE mdi.table_output_step
+    SET target_table = 'proposal_doc_old'
+    WHERE dwid = (
+        SELECT table_output_step.dwid
+        FROM mdi.table_output_step
+        WHERE table_output_step.target_schema = 'history_octane'
+            AND table_output_step.target_table = 'proposal_doc'
+        );
+
+-- state_machine_definition
+UPDATE mdi.state_machine_definition
+    SET comment = 'ETL to copy proposal_doc_old data from staging_octane to history_octane'
+    WHERE process_dwid = (
+        SELECT process.dwid
+        FROM mdi.process
+            JOIN mdi.table_output_step ON process.dwid = table_output_step.process_dwid
+                AND table_output_step.target_schema = 'history_octane'
+                AND table_output_step.target_table = 'proposal_doc_old'
+        );
+
 -- Insert metadata for new tables: deal_note_category_type, doc_status_type, proposal_doc_new
 WITH new_staging_table_definitions AS (
     INSERT INTO mdi.edw_table_definition (database_name, schema_name, table_name,
                                           primary_source_edw_table_definition_dwid)
         VALUES ('staging', 'staging_octane', 'deal_note_category_type', NULL)
             , ('staging', 'staging_octane', 'doc_status_type', NULL)
-            , ('staging', 'staging_octane', 'proposal_doc_new', NULL)
+            , ('staging', 'staging_octane', 'proposal_doc', NULL)
         RETURNING dwid, table_name
 )
 
@@ -42,110 +202,110 @@ WITH new_staging_table_definitions AS (
         , ('history_octane', 'doc_status_type', 'value', FALSE, 2)
         , ('history_octane', 'doc_status_type', 'data_source_updated_datetime', FALSE, 3)
         , ('history_octane', 'doc_status_type', 'data_source_deleted_flag', FALSE, 4)
-        -- staging_octane.proposal_doc_new
-        , ('staging_octane', 'proposal_doc_new', 'prpd_pid', TRUE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_version', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_doc_name', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_doc_name', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_borrower_access', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_deal_child_type', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_deal_child_name', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_deal_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_proposal_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_loan_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_borrower_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_borrower_income_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_job_income_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_borrower_job_gap_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_other_income_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_business_income_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_rental_income_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_asset_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_asset_large_deposit_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_liability_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_reo_place_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_property_place_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_residence_place_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_borrower_residence_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_application_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_credit_inquiry_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_appraisal_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_appraisal_form_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_tax_transcript_request_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_trash', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_smart_doc_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_proposal_doc_set_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_doc_fulfill_status_type', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_status_unparsed_name', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_status_datetime', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_status_reason', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_doc_excluded', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_doc_excluded_reason', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_doc_excluded_unparsed_name', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_doc_excluded_datetime', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_doc_approval_type', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_borrower_edit', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_borrower_associated_address_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_construction_cost_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_construction_draw_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_proposal_contractor_pid', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_doc_provider_group_type', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_doc_req_fulfill_status_type', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_doc_req_decision_status_type', FALSE, NULL)
-        , ('staging_octane', 'proposal_doc_new', 'prpd_doc_status_type', FALSE, NULL)
-        -- history_octane.proposal_doc_new
-        , ('history_octane', 'proposal_doc_new', 'prpd_pid', TRUE, 1)
-        , ('history_octane', 'proposal_doc_new', 'prpd_version', FALSE, 2)
-        , ('history_octane', 'proposal_doc_new', 'prpd_doc_name', FALSE, 3)
-        , ('history_octane', 'proposal_doc_new', 'prpd_doc_name', FALSE, 4)
-        , ('history_octane', 'proposal_doc_new', 'prpd_borrower_access', FALSE, 5)
-        , ('history_octane', 'proposal_doc_new', 'prpd_deal_child_type', FALSE, 6)
-        , ('history_octane', 'proposal_doc_new', 'prpd_deal_child_name', FALSE, 7)
-        , ('history_octane', 'proposal_doc_new', 'prpd_deal_pid', FALSE, 8)
-        , ('history_octane', 'proposal_doc_new', 'prpd_proposal_pid', FALSE, 9)
-        , ('history_octane', 'proposal_doc_new', 'prpd_loan_pid', FALSE, 10)
-        , ('history_octane', 'proposal_doc_new', 'prpd_borrower_pid', FALSE, 11)
-        , ('history_octane', 'proposal_doc_new', 'prpd_borrower_income_pid', FALSE, 12)
-        , ('history_octane', 'proposal_doc_new', 'prpd_job_income_pid', FALSE, 13)
-        , ('history_octane', 'proposal_doc_new', 'prpd_borrower_job_gap_pid', FALSE, 14)
-        , ('history_octane', 'proposal_doc_new', 'prpd_other_income_pid', FALSE, 15)
-        , ('history_octane', 'proposal_doc_new', 'prpd_business_income_pid', FALSE, 16)
-        , ('history_octane', 'proposal_doc_new', 'prpd_rental_income_pid', FALSE, 17)
-        , ('history_octane', 'proposal_doc_new', 'prpd_asset_pid', FALSE, 18)
-        , ('history_octane', 'proposal_doc_new', 'prpd_asset_large_deposit_pid', FALSE, 19)
-        , ('history_octane', 'proposal_doc_new', 'prpd_liability_pid', FALSE, 20)
-        , ('history_octane', 'proposal_doc_new', 'prpd_reo_place_pid', FALSE, 21)
-        , ('history_octane', 'proposal_doc_new', 'prpd_property_place_pid', FALSE, 22)
-        , ('history_octane', 'proposal_doc_new', 'prpd_residence_place_pid', FALSE, 23)
-        , ('history_octane', 'proposal_doc_new', 'prpd_borrower_residence_pid', FALSE, 24)
-        , ('history_octane', 'proposal_doc_new', 'prpd_application_pid', FALSE, 25)
-        , ('history_octane', 'proposal_doc_new', 'prpd_credit_inquiry_pid', FALSE, 26)
-        , ('history_octane', 'proposal_doc_new', 'prpd_appraisal_pid', FALSE, 27)
-        , ('history_octane', 'proposal_doc_new', 'prpd_appraisal_form_pid', FALSE, 28)
-        , ('history_octane', 'proposal_doc_new', 'prpd_tax_transcript_request_pid', FALSE, 29)
-        , ('history_octane', 'proposal_doc_new', 'prpd_trash', FALSE, 30)
-        , ('history_octane', 'proposal_doc_new', 'prpd_smart_doc_pid', FALSE, 31)
-        , ('history_octane', 'proposal_doc_new', 'prpd_proposal_doc_set_pid', FALSE, 32)
-        , ('history_octane', 'proposal_doc_new', 'prpd_doc_fulfill_status_type', FALSE, 33)
-        , ('history_octane', 'proposal_doc_new', 'prpd_status_unparsed_name', FALSE, 34)
-        , ('history_octane', 'proposal_doc_new', 'prpd_status_datetime', FALSE, 35)
-        , ('history_octane', 'proposal_doc_new', 'prpd_status_reason', FALSE, 36)
-        , ('history_octane', 'proposal_doc_new', 'prpd_doc_excluded', FALSE, 37)
-        , ('history_octane', 'proposal_doc_new', 'prpd_doc_excluded_reason', FALSE, 38)
-        , ('history_octane', 'proposal_doc_new', 'prpd_doc_excluded_unparsed_name', FALSE, 39)
-        , ('history_octane', 'proposal_doc_new', 'prpd_doc_excluded_datetime', FALSE, 40)
-        , ('history_octane', 'proposal_doc_new', 'prpd_doc_approval_type', FALSE, 41)
-        , ('history_octane', 'proposal_doc_new', 'prpd_borrower_edit', FALSE, 42)
-        , ('history_octane', 'proposal_doc_new', 'prpd_borrower_associated_address_pid', FALSE, 43)
-        , ('history_octane', 'proposal_doc_new', 'prpd_construction_cost_pid', FALSE, 44)
-        , ('history_octane', 'proposal_doc_new', 'prpd_construction_draw_pid', FALSE, 45)
-        , ('history_octane', 'proposal_doc_new', 'prpd_proposal_contractor_pid', FALSE, 46)
-        , ('history_octane', 'proposal_doc_new', 'prpd_doc_provider_group_type', FALSE, 47)
-        , ('history_octane', 'proposal_doc_new', 'prpd_doc_req_fulfill_status_type', FALSE, 48)
-        , ('history_octane', 'proposal_doc_new', 'prpd_doc_req_decision_status_type', FALSE, 49)
-        , ('history_octane', 'proposal_doc_new', 'prpd_doc_status_type', FALSE, 50)
-        , ('history_octane', 'proposal_doc_new', 'data_source_updated_datetime', FALSE, 51)
-        , ('history_octane', 'proposal_doc_new', 'data_source_deleted_flag', FALSE, 52)
+        -- staging_octane.proposal_doc
+        , ('staging_octane', 'proposal_doc', 'prpd_pid', TRUE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_version', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_doc_name', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_doc_name', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_borrower_access', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_deal_child_type', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_deal_child_name', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_deal_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_proposal_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_loan_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_borrower_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_borrower_income_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_job_income_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_borrower_job_gap_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_other_income_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_business_income_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_rental_income_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_asset_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_asset_large_deposit_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_liability_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_reo_place_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_property_place_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_residence_place_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_borrower_residence_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_application_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_credit_inquiry_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_appraisal_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_appraisal_form_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_tax_transcript_request_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_trash', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_smart_doc_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_proposal_doc_set_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_doc_fulfill_status_type', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_status_unparsed_name', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_status_datetime', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_status_reason', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_doc_excluded', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_doc_excluded_reason', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_doc_excluded_unparsed_name', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_doc_excluded_datetime', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_doc_approval_type', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_borrower_edit', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_borrower_associated_address_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_construction_cost_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_construction_draw_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_proposal_contractor_pid', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_doc_provider_group_type', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_doc_req_fulfill_status_type', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_doc_req_decision_status_type', FALSE, NULL)
+        , ('staging_octane', 'proposal_doc', 'prpd_doc_status_type', FALSE, NULL)
+        -- history_octane.proposal_doc
+        , ('history_octane', 'proposal_doc', 'prpd_pid', TRUE, 1)
+        , ('history_octane', 'proposal_doc', 'prpd_version', FALSE, 2)
+        , ('history_octane', 'proposal_doc', 'prpd_doc_name', FALSE, 3)
+        , ('history_octane', 'proposal_doc', 'prpd_doc_name', FALSE, 4)
+        , ('history_octane', 'proposal_doc', 'prpd_borrower_access', FALSE, 5)
+        , ('history_octane', 'proposal_doc', 'prpd_deal_child_type', FALSE, 6)
+        , ('history_octane', 'proposal_doc', 'prpd_deal_child_name', FALSE, 7)
+        , ('history_octane', 'proposal_doc', 'prpd_deal_pid', FALSE, 8)
+        , ('history_octane', 'proposal_doc', 'prpd_proposal_pid', FALSE, 9)
+        , ('history_octane', 'proposal_doc', 'prpd_loan_pid', FALSE, 10)
+        , ('history_octane', 'proposal_doc', 'prpd_borrower_pid', FALSE, 11)
+        , ('history_octane', 'proposal_doc', 'prpd_borrower_income_pid', FALSE, 12)
+        , ('history_octane', 'proposal_doc', 'prpd_job_income_pid', FALSE, 13)
+        , ('history_octane', 'proposal_doc', 'prpd_borrower_job_gap_pid', FALSE, 14)
+        , ('history_octane', 'proposal_doc', 'prpd_other_income_pid', FALSE, 15)
+        , ('history_octane', 'proposal_doc', 'prpd_business_income_pid', FALSE, 16)
+        , ('history_octane', 'proposal_doc', 'prpd_rental_income_pid', FALSE, 17)
+        , ('history_octane', 'proposal_doc', 'prpd_asset_pid', FALSE, 18)
+        , ('history_octane', 'proposal_doc', 'prpd_asset_large_deposit_pid', FALSE, 19)
+        , ('history_octane', 'proposal_doc', 'prpd_liability_pid', FALSE, 20)
+        , ('history_octane', 'proposal_doc', 'prpd_reo_place_pid', FALSE, 21)
+        , ('history_octane', 'proposal_doc', 'prpd_property_place_pid', FALSE, 22)
+        , ('history_octane', 'proposal_doc', 'prpd_residence_place_pid', FALSE, 23)
+        , ('history_octane', 'proposal_doc', 'prpd_borrower_residence_pid', FALSE, 24)
+        , ('history_octane', 'proposal_doc', 'prpd_application_pid', FALSE, 25)
+        , ('history_octane', 'proposal_doc', 'prpd_credit_inquiry_pid', FALSE, 26)
+        , ('history_octane', 'proposal_doc', 'prpd_appraisal_pid', FALSE, 27)
+        , ('history_octane', 'proposal_doc', 'prpd_appraisal_form_pid', FALSE, 28)
+        , ('history_octane', 'proposal_doc', 'prpd_tax_transcript_request_pid', FALSE, 29)
+        , ('history_octane', 'proposal_doc', 'prpd_trash', FALSE, 30)
+        , ('history_octane', 'proposal_doc', 'prpd_smart_doc_pid', FALSE, 31)
+        , ('history_octane', 'proposal_doc', 'prpd_proposal_doc_set_pid', FALSE, 32)
+        , ('history_octane', 'proposal_doc', 'prpd_doc_fulfill_status_type', FALSE, 33)
+        , ('history_octane', 'proposal_doc', 'prpd_status_unparsed_name', FALSE, 34)
+        , ('history_octane', 'proposal_doc', 'prpd_status_datetime', FALSE, 35)
+        , ('history_octane', 'proposal_doc', 'prpd_status_reason', FALSE, 36)
+        , ('history_octane', 'proposal_doc', 'prpd_doc_excluded', FALSE, 37)
+        , ('history_octane', 'proposal_doc', 'prpd_doc_excluded_reason', FALSE, 38)
+        , ('history_octane', 'proposal_doc', 'prpd_doc_excluded_unparsed_name', FALSE, 39)
+        , ('history_octane', 'proposal_doc', 'prpd_doc_excluded_datetime', FALSE, 40)
+        , ('history_octane', 'proposal_doc', 'prpd_doc_approval_type', FALSE, 41)
+        , ('history_octane', 'proposal_doc', 'prpd_borrower_edit', FALSE, 42)
+        , ('history_octane', 'proposal_doc', 'prpd_borrower_associated_address_pid', FALSE, 43)
+        , ('history_octane', 'proposal_doc', 'prpd_construction_cost_pid', FALSE, 44)
+        , ('history_octane', 'proposal_doc', 'prpd_construction_draw_pid', FALSE, 45)
+        , ('history_octane', 'proposal_doc', 'prpd_proposal_contractor_pid', FALSE, 46)
+        , ('history_octane', 'proposal_doc', 'prpd_doc_provider_group_type', FALSE, 47)
+        , ('history_octane', 'proposal_doc', 'prpd_doc_req_fulfill_status_type', FALSE, 48)
+        , ('history_octane', 'proposal_doc', 'prpd_doc_req_decision_status_type', FALSE, 49)
+        , ('history_octane', 'proposal_doc', 'prpd_doc_status_type', FALSE, 50)
+        , ('history_octane', 'proposal_doc', 'data_source_updated_datetime', FALSE, 51)
+        , ('history_octane', 'proposal_doc', 'data_source_deleted_flag', FALSE, 52)
 )
 
 , new_staging_field_definitions AS (
@@ -184,7 +344,7 @@ WHERE history_table.code is NULL')
 FROM staging_octane.doc_status_type staging_table
          LEFT JOIN history_octane.doc_status_type history_table on staging_table.code = history_table.code AND staging_table.value = history_table.value
 WHERE history_table.code is NULL')
-        , ('SP-100848', 'proposal_doc_new', 'prpd_pid', '--finding records to insert into history_octane.proposal_doc_new
+        , ('SP-100848', 'proposal_doc', 'prpd_pid', '--finding records to insert into history_octane.proposal_doc
 SELECT staging_table.prpd_pid
      , staging_table.prpd_version
      , staging_table.prpd_doc_name
@@ -237,8 +397,8 @@ SELECT staging_table.prpd_pid
      , staging_table.prpd_doc_status_type
      , FALSE as data_source_deleted_flag
      , now() AS data_source_updated_datetime
-FROM staging_octane.proposal_doc_new staging_table
-         LEFT JOIN history_octane.proposal_doc_new history_table on staging_table.prpd_pid = history_table.prpd_pid and staging_table.prpd_version = history_table.prpd_version
+FROM staging_octane.proposal_doc staging_table
+         LEFT JOIN history_octane.proposal_doc history_table on staging_table.prpd_pid = history_table.prpd_pid and staging_table.prpd_version = history_table.prpd_version
 WHERE history_table.prpd_pid is NULL
 UNION ALL
 SELECT history_table.prpd_pid
@@ -293,10 +453,10 @@ SELECT history_table.prpd_pid
      , history_table.prpd_doc_status_type
      , TRUE as data_source_deleted_flag
      , now() AS data_source_updated_datetime
-FROM history_octane.proposal_doc_new history_table
-         LEFT JOIN staging_octane.proposal_doc_new staging_table on staging_table.prpd_pid = history_table.prpd_pid
+FROM history_octane.proposal_doc history_table
+         LEFT JOIN staging_octane.proposal_doc staging_table on staging_table.prpd_pid = history_table.prpd_pid
 WHERE staging_table.prpd_pid is NULL
-  AND not exists (select 1 from history_octane.proposal_doc_new deleted_records where deleted_records.prpd_pid = history_table.prpd_pid and deleted_records.data_source_deleted_flag = True)')
+  AND not exists (select 1 from history_octane.proposal_doc deleted_records where deleted_records.prpd_pid = history_table.prpd_pid and deleted_records.data_source_deleted_flag = True)')
 )
 
 , new_processes AS (
@@ -373,7 +533,7 @@ WHERE staging_table.prpd_pid is NULL
         SELECT new_processes.dwid, new_processes.name, new_processes.description
         FROM new_processes
 )
-SELECT 'Finished inserting metadata for new tables: deal_note_category_type, doc_status_type, proposal_doc_new';
+SELECT 'Finished inserting metadata for new tables: deal_note_category_type, doc_status_type, proposal_doc';
 
 /*
 Insert metadata for new columns:
@@ -644,9 +804,9 @@ Remove metadata for dropped columns:
     - smart_doc.sd_days_before_key_date
     - smart_doc.sd_warning_days
     - smart_doc.sd_doc_key_date_type
-    - proposal_doc.prpd_valid_from_date
-    - proposal_doc.prpd_valid_through_date
-    - proposal_doc.prpd_key_date
+    - proposal_doc_old.prpd_valid_from_date
+    - proposal_doc_old.prpd_valid_through_date
+    - proposal_doc_old.prpd_key_date
 */
 
 -- Nullify source_edw_field_definition_dwid values for history_octane rows
@@ -657,7 +817,7 @@ UPDATE mdi.edw_field_definition
         FROM mdi.edw_table_definition
                  JOIN mdi.edw_field_definition ON edw_table_definition.dwid = edw_field_definition.edw_table_definition_dwid
         WHERE edw_table_definition.schema_name = 'history_octane'
-          AND edw_table_definition.table_name IN ('smart_doc', 'proposal_doc')
+          AND edw_table_definition.table_name IN ('smart_doc', 'proposal_doc_old')
           AND edw_field_definition.field_name IN ('sd_doc_validity_type', 'sd_expiration_rule_type',
                                                   'sd_days_before_key_date', 'sd_warning_days', 'sd_doc_key_date_type',
                                                   'prpd_valid_from_date', 'prpd_valid_through_date', 'prpd_key_date')
@@ -670,13 +830,13 @@ DELETE FROM mdi.edw_field_definition
         FROM mdi.edw_table_definition
             JOIN mdi.edw_field_definition ON edw_table_definition.dwid = edw_field_definition.edw_table_definition_dwid
         WHERE edw_table_definition.schema_name = 'staging_octane'
-            AND edw_table_definition.table_name IN ('smart_doc', 'proposal_doc')
+            AND edw_table_definition.table_name IN ('smart_doc', 'proposal_doc_old')
             AND edw_field_definition.field_name IN ('sd_doc_validity_type', 'sd_expiration_rule_type',
                                                     'sd_days_before_key_date', 'sd_warning_days', 'sd_doc_key_date_type',
                                                     'prpd_valid_from_date', 'prpd_valid_through_date', 'prpd_key_date')
         );
 
--- Update the table_input_step sql queries for the ETLs that maintain the smart_doc and proposal_doc tables
+-- Update the table_input_step sql queries for the ETLs that maintain the smart_doc and proposal_doc_old tables
 -- smart_doc:
 UPDATE mdi.table_input_step
     SET sql = '--finding records to insert into history_octane.smart_doc
@@ -774,9 +934,9 @@ WHERE staging_table.sd_pid is NULL
                 AND table_output_step.target_table = 'smart_doc'
         );
 
--- proposal_doc:
+-- proposal_doc_old:
 UPDATE mdi.table_input_step
-SET sql = '--finding records to insert into history_octane.proposal_doc
+SET sql = '--finding records to insert into history_octane.proposal_doc_old
 SELECT staging_table.prpd_pid
 , staging_table.prpd_version
 , staging_table.prpd_doc_name
@@ -829,8 +989,8 @@ SELECT staging_table.prpd_pid
 , staging_table.prpd_doc_req_decision_status_type
 , FALSE as data_source_deleted_flag
 , now() AS data_source_updated_datetime
-FROM staging_octane.proposal_doc staging_table
-         LEFT JOIN history_octane.proposal_doc history_table on staging_table.prpd_pid = history_table.prpd_pid and staging_table.prpd_version = history_table.prpd_version
+FROM staging_octane.proposal_doc_old staging_table
+         LEFT JOIN history_octane.proposal_doc_old history_table on staging_table.prpd_pid = history_table.prpd_pid and staging_table.prpd_version = history_table.prpd_version
 WHERE history_table.prpd_pid is NULL
 UNION ALL
 SELECT history_table.prpd_pid
@@ -885,16 +1045,16 @@ SELECT history_table.prpd_pid
 , history_table.prpd_doc_req_decision_status_type
 , TRUE as data_source_deleted_flag
 , now() AS data_source_updated_datetime
-FROM history_octane.proposal_doc history_table
-         LEFT JOIN staging_octane.proposal_doc staging_table on staging_table.prpd_pid = history_table.prpd_pid
+FROM history_octane.proposal_doc_old history_table
+         LEFT JOIN staging_octane.proposal_doc_old staging_table on staging_table.prpd_pid = history_table.prpd_pid
 WHERE staging_table.prpd_pid is NULL
-  AND not exists (select 1 from history_octane.proposal_doc deleted_records where deleted_records.prpd_pid = history_table.prpd_pid and deleted_records.data_source_deleted_flag = True)'
+  AND not exists (select 1 from history_octane.proposal_doc_old deleted_records where deleted_records.prpd_pid = history_table.prpd_pid and deleted_records.data_source_deleted_flag = True)'
 WHERE dwid = (
     SELECT table_input_step.dwid
     FROM mdi.process
              JOIN mdi.table_input_step ON process.dwid = table_input_step.process_dwid
              JOIN mdi.table_output_step ON process.dwid = table_output_step.process_dwid
-        AND table_output_step.target_table = 'proposal_doc'
+        AND table_output_step.target_table = 'proposal_doc_old'
 );
 
 -- Remove table_output_field records for fields removed from the smart_doc and proposal_doc tables
@@ -903,10 +1063,14 @@ WHERE dwid IN (
     SELECT table_output_field.dwid
     FROM mdi.process
         JOIN mdi.table_output_step ON process.dwid = table_output_step.process_dwid
-            AND table_output_step.target_table IN ('smart_doc', 'proposal_doc')
+            AND table_output_step.target_table IN ('smart_doc', 'proposal_doc_old')
         JOIN mdi.table_output_field ON table_output_step.dwid = table_output_field.table_output_step_dwid
             AND table_output_field.database_field_name IN ('sd_doc_validity_type', 'sd_expiration_rule_type',
                                                            'sd_days_before_key_date', 'sd_warning_days',
                                                            'sd_doc_key_date_type', 'prpd_valid_from_date',
                                                            'prpd_valid_through_date', 'prpd_key_date')
     );
+
+SELECT 'Finished removing metadata for dropped columns: smart_doc.sd_doc_validity_type, smart_doc.sd_expiration_rule_type,
+    smart_doc.sd_days_before_key_date, smart_doc.sd_warning_days,smart_doc.sd_doc_key_date_type, proposal_doc.prpd_valid_from_date,
+    proposal_doc.prpd_valid_through_date, proposal_doc.prpd_key_date';
