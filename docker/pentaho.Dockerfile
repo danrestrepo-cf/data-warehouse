@@ -25,6 +25,7 @@ RUN yum install -y python3-pip && pip3 install pip --upgrade && \
     aws --version
 
 COPY aws-s3-download.sh /
+COPY aws-s3-upload-failure-json.sh /
 
 # Run a test job to verify the install works
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:~/bin/aws:/data-integration \
@@ -46,7 +47,7 @@ WORKDIR $KETTLE_HOME
 # COPY ecs-example.json /
 
 COPY pentaho.sh /
-RUN chmod +x /pentaho.sh /aws-s3-download.sh
+RUN chmod +x /pentaho.sh /aws-s3-download.sh /aws-s3-upload-failure-json.sh
 
 ENTRYPOINT ["sh", "/pentaho.sh"]
 CMD ["help"]
