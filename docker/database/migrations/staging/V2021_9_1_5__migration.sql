@@ -309,9 +309,6 @@ CREATE INDEX fkt_prpd_doc_req_fulfill_status_type
 CREATE INDEX fkt_prpd_doc_status_type
     ON history_octane.proposal_doc_new (prpd_doc_status_type);
 
-CREATE INDEX fk_proposal_doc_validity_1
-    ON history_octane.proposal_doc_validity (prpdv_proposal_doc_pid);
-
 CREATE INDEX fk_deal_note_4
     ON history_octane.deal_note (dn_proposal_doc_pid);
 
@@ -323,3 +320,31 @@ CREATE INDEX fk_proposal_doc_file_1
 
 CREATE INDEX fk_proposal_req_1
     ON history_octane.proposal_req (prpr_proposal_doc_pid);
+
+
+/*
+MANUAL CHANGES
+Octane's 2021.9.3.2 release includes a re-creation of the proposal_doc table, where a NEW proposal_doc table is being
+created as proposal_doc_new, the OLD proposal_doc table is being renamed to proposal_doc_old, and then the NEW
+proposal_doc_table is being renamed to proposal_doc.
+
+The current (as of 2021-09-17) Octane catch-up migration generator is not equipped to pick up table renames, so these
+changes are being appended to this script manually.
+
+The task for updating the migration generator to pick up table renames is here:
+    https://app.asana.com/0/0/1201008538181099
+*/
+
+-- staging_octane changes
+ALTER TABLE staging_octane.proposal_doc
+    RENAME TO proposal_doc_old;
+
+ALTER TABLE staging_octane.proposal_doc_new
+    RENAME TO proposal_doc;
+
+-- history_octane changes
+ALTER TABLE history_octane.proposal_doc
+    RENAME TO proposal_doc_old;
+
+ALTER TABLE history_octane.proposal_doc_new
+    RENAME TO proposal_doc;
