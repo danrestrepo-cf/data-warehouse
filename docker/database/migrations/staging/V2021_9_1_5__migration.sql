@@ -20,7 +20,8 @@ ALTER TABLE staging_octane.proposal_doc
 ALTER TABLE staging_octane.proposal_doc
     DROP COLUMN prpd_valid_from_date,
     DROP COLUMN prpd_valid_through_date,
-    DROP COLUMN prpd_key_date;
+    DROP COLUMN prpd_key_date,
+    DROP COLUMN prpd_last_status_reason;
 
 ALTER TABLE staging_octane.asset
     ADD COLUMN as_deposit_date date,

@@ -435,6 +435,7 @@ Remove metadata for dropped columns:
     - proposal_doc.prpd_valid_from_date
     - proposal_doc.prpd_valid_through_date
     - proposal_doc.prpd_key_date
+    - proposal_doc.prpd_last_status_reason
 */
 
 -- Nullify source_edw_field_definition_dwid values for history_octane rows
@@ -448,7 +449,8 @@ UPDATE mdi.edw_field_definition
           AND edw_table_definition.table_name IN ('smart_doc', 'proposal_doc')
           AND edw_field_definition.field_name IN ('sd_doc_validity_type', 'sd_expiration_rule_type',
                                                   'sd_days_before_key_date', 'sd_warning_days', 'sd_doc_key_date_type',
-                                                  'prpd_valid_from_date', 'prpd_valid_through_date', 'prpd_key_date')
+                                                  'prpd_valid_from_date', 'prpd_valid_through_date', 'prpd_key_date',
+                                                  'prpd_last_status_reason')
     );
 
 -- Remove edw_field_definition records for staging_octane rows
@@ -461,7 +463,8 @@ DELETE FROM mdi.edw_field_definition
             AND edw_table_definition.table_name IN ('smart_doc', 'proposal_doc')
             AND edw_field_definition.field_name IN ('sd_doc_validity_type', 'sd_expiration_rule_type',
                                                     'sd_days_before_key_date', 'sd_warning_days', 'sd_doc_key_date_type',
-                                                    'prpd_valid_from_date', 'prpd_valid_through_date', 'prpd_key_date')
+                                                    'prpd_valid_from_date', 'prpd_valid_through_date',
+                                                    'prpd_key_date', 'prpd_last_status_reason')
         );
 
 -- Update the table_input_step sql queries for the ETLs that maintain the smart_doc and proposal_doc tables
@@ -607,7 +610,6 @@ SELECT staging_table.prpd_pid
 , staging_table.prpd_doc_excluded_datetime
 , staging_table.prpd_doc_approval_type
 , staging_table.prpd_borrower_edit
-, staging_table.prpd_last_status_reason
 , staging_table.prpd_borrower_associated_address_pid
 , staging_table.prpd_construction_cost_pid
 , staging_table.prpd_construction_draw_pid
@@ -664,7 +666,6 @@ SELECT history_table.prpd_pid
 , history_table.prpd_doc_excluded_datetime
 , history_table.prpd_doc_approval_type
 , history_table.prpd_borrower_edit
-, history_table.prpd_last_status_reason
 , history_table.prpd_borrower_associated_address_pid
 , history_table.prpd_construction_cost_pid
 , history_table.prpd_construction_draw_pid
@@ -698,9 +699,10 @@ WHERE dwid IN (
             AND table_output_field.database_field_name IN ('sd_doc_validity_type', 'sd_expiration_rule_type',
                                                            'sd_days_before_key_date', 'sd_warning_days',
                                                            'sd_doc_key_date_type', 'prpd_valid_from_date',
-                                                           'prpd_valid_through_date', 'prpd_key_date')
+                                                           'prpd_valid_through_date', 'prpd_key_date',
+                                                           'prpd_last_status_reason')
     );
 
 SELECT 'Finished removing metadata for dropped columns: smart_doc.sd_doc_validity_type, smart_doc.sd_expiration_rule_type,
     smart_doc.sd_days_before_key_date, smart_doc.sd_warning_days,smart_doc.sd_doc_key_date_type, proposal_doc.prpd_valid_from_date,
-    proposal_doc.prpd_valid_through_date, proposal_doc.prpd_key_date';
+    proposal_doc.prpd_valid_through_date, proposal_doc.prpd_key_date, proposal_doc.prpd_last_status_reason';
