@@ -50,11 +50,10 @@ fi
 echo "[INPUT] metadata endpoint=${ECS_CONTAINER_METADATA_URI_V4}"
 if [[ -n "${ECS_CONTAINER_METADATA_URI_V4}" ]]; then
   # https://docs.aws.amazon.com/AmazonECS/latest/userguide/task-metadata-endpoint-v4-fargate.html
-  etl_batch_id=$(curl "${ECS_CONTAINER_METADATA_URI_V4}" | jq -r '.Containers[0].LogOptions["awslogs-stream"]' | sed 's~.*/~~')
+  etl_batch_id=$(curl "${ECS_CONTAINER_METADATA_URI_V4}" | jq -r '.LogOptions["awslogs-stream"]' | sed 's~.*/~~')
 # Intentionally commented out, LEFT IN FOR TESTING.  Normally we want a random ID
 #elif [[ -f "/ecs-example.json" ]]; then
-#  etl_batch_id=$(cat /ecs-example.json | jq -r '.Containers[0].LogOptions["awslogs-stream"]' | sed 's~.*/~~')
-export ETL_BATCH_ID=${etl_batch_id}
+#  etl_batch_id=$(cat /ecs-example.json | jq -r '.LogOptions["awslogs-stream"]' | sed 's~.*/~~')
 fi
 
 if [[ "$etl_batch_id" -eq "" ]]; then
@@ -138,11 +137,11 @@ run_pan() {
 run_kitchen() {
   # we purposefully do not echo the 'params' variable because it can contain a password.
   # script output already shows non sensitive parameter values that are passed in.
-  echo ./kitchen.sh -rep=PentahoFileRepository -level=Detailed -job=$@
+  echo ./kitchen.sh -rep=PentahoFileRepository -level=Detailed -job=$@  "||" /aws-s3-upload-failure-json.sh "kitchen.sh exited with code = ???" "${etl_batch_id}" "${AWS_ENVIRONMENT}"
   # we want "params" to split / expand, so ignore the shellcheck
   # shellcheck disable=SC2086
 
-  kitchen.sh -rep=PentahoFileRepository -level=Detailed ${params} "${input_data_parameter}" -job=$@ || /aws-s3-upload-failure-json.sh "kitchen.sh exited with code = ${?}"
+  kitchen.sh -rep=PentahoFileRepository -level=Detailed ${params} "${input_data_parameter}" -job=$@ || /aws-s3-upload-failure-json.sh "kitchen.sh exited with code = ${?}" "${etl_batch_id}" "${AWS_ENVIRONMENT}"
 }
 
 print_usage() {
