@@ -35,9 +35,6 @@ def main():
         )
         schedules_filepath = os.path.join(infrastructure_dir_path, 'schedules.tf')
         write_to_file(schedules_file_contents, schedules_filepath)
-    except StateMachinesCreator.InvalidMetadataError:
-        print("Invalid state machine configuration detected. Now exiting.")
-        exit(2)
     except RuntimeError as e:
         print(e)
         exit(2)
