@@ -629,7 +629,7 @@ Insert metadata for new columns:
     - branch.br_location_pid
     - branch_license.brml_company_pid
     - branch_license.brml_location_pid
-    - deal.d_license_location
+    - deal.d_license_location_pid
     - borrower_declarations.bdec_intend_to_occupy_more_than_14_days
     - proposal.prp_cash_out_reason_investment_or_business_property
     - proposal.prp_cash_out_reason_business_debt_or_debt_consolidation
@@ -641,7 +641,7 @@ WITH new_fields (table_name, field_name, field_order) AS (
     VALUES ('branch', 'br_location_pid', 27)
         , ('branch_license', 'brml_company_pid', 11)
         , ('branch_license', 'brml_location_pid', 12)
-        , ('deal', 'd_license_location', 56)
+        , ('deal', 'd_license_location_pid', 56)
         , ('borrower_declarations', 'bdec_intend_to_occupy_more_than_14_days', 23)
         , ('proposal', 'prp_cash_out_reason_investment_or_business_property', 239)
         , ('proposal', 'prp_cash_out_reason_business_debt_or_debt_consolidation', 240)
@@ -898,7 +898,7 @@ SELECT staging_table.d_pid
 , staging_table.d_early_wire_request
 , staging_table.d_enable_electronic_transaction
 , staging_table.d_initial_cancel_status_date
-, staging_table.d_license_location
+, staging_table.d_license_location_pid
 , FALSE AS data_source_deleted_flag
 , NOW( ) AS data_source_updated_datetime
 FROM staging_octane.deal staging_table
@@ -960,7 +960,7 @@ SELECT history_table.d_pid
 , history_table.d_early_wire_request
 , history_table.d_enable_electronic_transaction
 , history_table.d_initial_cancel_status_date
-, history_table.d_license_location
+, history_table.d_license_location_pid
 , TRUE AS data_source_deleted_flag
 , NOW( ) AS data_source_updated_datetime
 FROM history_octane.deal history_table
@@ -2088,6 +2088,6 @@ WHERE staging_table.prp_pid IS NULL
 )
 
 SELECT 'Finished inserting metadata for new columns: branch.br_location_pid, branch_license.brml_company_pid
-    , branch_license.brml_location_pid, deal.d_license_location, borrower_declarations.bdec_intend_to_occupy_more_than_14_days
+    , branch_license.brml_location_pid, deal.d_license_location_pid, borrower_declarations.bdec_intend_to_occupy_more_than_14_days
     , proposal.prp_cash_out_reason_investment_or_business_property, proposal.prp_cash_out_reason_business_debt_or_debt_consolidation
     , proposal.prp_non_business_cash_out_reason_acknowledged, loan_hedge.lh_qualified_mortgage_status_type';
