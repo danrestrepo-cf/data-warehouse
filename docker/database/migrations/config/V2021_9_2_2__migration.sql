@@ -642,7 +642,7 @@ WITH new_fields (table_name, field_name, field_order) AS (
         , ('branch_license', 'brml_company_pid', 11)
         , ('branch_license', 'brml_location_pid', 12)
         , ('deal', 'd_license_location_pid', 56)
-        , ('borrower_declarations', 'bdec_intend_to_occupy_more_than_14_days', 23)
+        , ('borrower_declarations', 'bdec_intend_to_occupy_more_than_14_days', 22)
         , ('proposal', 'prp_cash_out_reason_investment_or_business_property', 239)
         , ('proposal', 'prp_cash_out_reason_business_debt_or_debt_consolidation', 240)
         , ('proposal', 'prp_non_business_cash_out_reason_acknowledged', 241)
