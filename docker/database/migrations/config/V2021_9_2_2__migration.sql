@@ -66,7 +66,7 @@ WITH new_staging_table_definitions AS (
         , ('staging_octane', 'location', 'loc_address_street2', FALSE, NULL)
         , ('staging_octane', 'location', 'loc_address_city', FALSE, NULL)
         , ('staging_octane', 'location', 'loc_address_state', FALSE, NULL)
-        , ('staging_octane', 'location', 'local_address_postal_code', FALSE, NULL)
+        , ('staging_octane', 'location', 'loc_address_postal_code', FALSE, NULL)
         , ('staging_octane', 'location', 'loc_location_name', FALSE, NULL)
         , ('staging_octane', 'location', 'loc_location_id', FALSE, NULL)
         , ('staging_octane', 'location', 'loc_location_remote', FALSE, NULL)
@@ -81,7 +81,7 @@ WITH new_staging_table_definitions AS (
         , ('history_octane', 'location', 'loc_address_street2', FALSE, 5)
         , ('history_octane', 'location', 'loc_address_city', FALSE, 6)
         , ('history_octane', 'location', 'loc_address_state', FALSE, 7)
-        , ('history_octane', 'location', 'local_address_postal_code', FALSE, 8)
+        , ('history_octane', 'location', 'loc_address_postal_code', FALSE, 8)
         , ('history_octane', 'location', 'loc_location_name', FALSE, 9)
         , ('history_octane', 'location', 'loc_location_id', FALSE, 10)
         , ('history_octane', 'location', 'loc_location_remote', FALSE, 11)
@@ -112,12 +112,12 @@ WITH new_staging_table_definitions AS (
         , ('history_octane', 'location_lease', 'data_source_deleted_flag', FALSE, 10)
         -- staging_octane.company_location_type
         , ('staging_octane', 'company_location_type', 'code', TRUE, NULL)
-        , ('staging_octane', 'compnay_location_type', 'value', FALSE, NULL)
+        , ('staging_octane', 'company_location_type', 'value', FALSE, NULL)
         -- history_octane.company_location_type
         , ('history_octane', 'company_location_type', 'code', TRUE, 1)
         , ('history_octane', 'company_location_type', 'value', FALSE, 2)
-        , ('history_octane', 'data_source_updated_datetime', 'value', FALSE, 3)
-        , ('history_octane', 'data_source_deleted_flag', 'value', FALSE, 4)
+        , ('history_octane', 'data_source_updated_datetime', 'data_source_updated_datetime', FALSE, 3)
+        , ('history_octane', 'data_source_deleted_flag', 'data_source_deleted_flag', FALSE, 4)
         -- staging_octane.company_location
         , ('staging_octane', 'company_location', 'cmloc_pid', TRUE, NULL)
         , ('staging_octane', 'company_location', 'cmloc_version', FALSE, NULL)
