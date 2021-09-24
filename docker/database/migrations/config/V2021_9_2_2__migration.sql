@@ -116,8 +116,8 @@ WITH new_staging_table_definitions AS (
         -- history_octane.company_location_type
         , ('history_octane', 'company_location_type', 'code', TRUE, 1)
         , ('history_octane', 'company_location_type', 'value', FALSE, 2)
-        , ('history_octane', 'data_source_updated_datetime', 'data_source_updated_datetime', FALSE, 3)
-        , ('history_octane', 'data_source_deleted_flag', 'data_source_deleted_flag', FALSE, 4)
+        , ('history_octane', 'company_location_type', 'data_source_updated_datetime', FALSE, 3)
+        , ('history_octane', 'company_location_type', 'data_source_deleted_flag', FALSE, 4)
         -- staging_octane.company_location
         , ('staging_octane', 'company_location', 'cmloc_pid', TRUE, NULL)
         , ('staging_octane', 'company_location', 'cmloc_version', FALSE, NULL)
