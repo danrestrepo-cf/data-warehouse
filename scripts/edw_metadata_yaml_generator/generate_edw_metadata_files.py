@@ -1,3 +1,4 @@
+import sys
 import os
 import shutil
 import copy
@@ -20,6 +21,7 @@ yaml.add_representer(str, str_presenter)
 
 
 def main():
+    validate_args()
     # default output directory of data-warehouse/edw-metadata
     output_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', 'edw-metadata'))
     if os.path.isdir(output_dir):
@@ -31,8 +33,19 @@ def main():
             exit(0)
     print(f'Generating EDW metadata files in directory: {output_dir}')
     os.mkdir(output_dir)
-    generate_metadata(output_dir, "C:\\Users\\chris.edwards_cardin\\Downloads\\rds-combined-ca-bundle.pem")
+    ssl_ca_filepath = sys.argv[1]
+    generate_metadata(output_dir, ssl_ca_filepath)
     print('Metadata files written successfully!')
+
+
+def validate_args():
+    if len(sys.argv) != 2 or not os.path.isfile(sys.argv[1]):
+        print('usage: python generate_edw_metadata_files.py [ssl_ca_filepath]')
+        print()
+        print('A valid AWS ssl certificate can be downloaded at the following link, ' +
+              'provided you are already authenticated with AWS:')
+        print('https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem')
+        exit(1)
 
 
 def generate_metadata(output_dir: str, ssl_ca_filepath: str):
