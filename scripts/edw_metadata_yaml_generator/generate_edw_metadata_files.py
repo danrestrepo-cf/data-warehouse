@@ -21,9 +21,20 @@ yaml.add_representer(str, str_presenter)
 
 
 def main():
-    validate_args()
-    # default output directory of data-warehouse/edw-metadata
+    # validate and parse command line arguments
+    if len(sys.argv) != 2 or not os.path.isfile(sys.argv[1]):
+        print('usage: python generate_edw_metadata_files.py [ssl_ca_filepath]')
+        print()
+        print('A valid AWS ssl certificate can be downloaded at the following link, ' +
+              'provided you are already authenticated with AWS:')
+        print('https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem')
+        exit(1)
+    ssl_ca_filepath = sys.argv[1]
+
+    # default output root directory is data-warehouse/edw-metadata
     output_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', 'edw-metadata'))
+
+    # delete output directory if it already exists
     if os.path.isdir(output_dir):
         should_overwrite_output_dir = input(f'The directory "{output_dir}" already exists. Are you sure you want to overwrite it (y / n)? ')
         if should_overwrite_output_dir.lower() == 'y':
@@ -32,47 +43,9 @@ def main():
             print(f'{output_dir} was NOT overwritten. Exiting script execution.')
             exit(0)
     print(f'Generating EDW metadata files in directory: {output_dir}')
+
+    # create output directory structure
     os.mkdir(output_dir)
-    ssl_ca_filepath = sys.argv[1]
-    generate_metadata(output_dir, ssl_ca_filepath)
-    print('Metadata files written successfully!')
-
-
-def validate_args():
-    if len(sys.argv) != 2 or not os.path.isfile(sys.argv[1]):
-        print('usage: python generate_edw_metadata_files.py [ssl_ca_filepath]')
-        print()
-        print('A valid AWS ssl certificate can be downloaded at the following link, ' +
-              'provided you are already authenticated with AWS:')
-        print('https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem')
-        exit(1)
-
-
-def generate_metadata(output_dir: str, ssl_ca_filepath: str):
-    staging_octane_metadata = generate_staging_octane_metadata(ssl_ca_filepath)
-    table_etl_processes = generate_etl_process_metadata()
-
-    history_octane_metadata = copy.deepcopy(staging_octane_metadata)
-
-    for metadata in history_octane_metadata.values():
-        metadata['primary_source_table'] = f'staging.staging_octane.{metadata["name"]}'
-        for column in metadata['columns'].keys():
-            metadata['columns'][column]['source'] = {
-                'field': f'primary_source_table.columns.{column}'
-            }
-        if metadata['name'] in table_etl_processes:
-            metadata['etls'] = {
-                table_etl_processes[metadata['name']]['process']: {
-                    'hardcoded_data_source': 'Octane',
-                    'input_type': 'table',
-                    'output_type': 'insert',
-                    'json_output_field': metadata['primary_key'][0],
-                    'truncate_table': False,
-                    'input_sql': generate_table_input_sql(metadata)
-                }
-            }
-            metadata['next_etls'] = table_etl_processes[metadata['name']]['next_processes']
-
     staging_database_dir = os.path.join(output_dir, 'staging')
     os.mkdir(staging_database_dir)
     staging_octane_schema_dir = os.path.join(staging_database_dir, 'staging_octane')
@@ -80,15 +53,18 @@ def generate_metadata(output_dir: str, ssl_ca_filepath: str):
     history_octane_schema_dir = os.path.join(staging_database_dir, 'history_octane')
     os.mkdir(history_octane_schema_dir)
 
-    for table_name, metadata in staging_octane_metadata.items():
-        filepath = os.path.join(staging_octane_schema_dir, f'{table_name}.yaml')
-        with open(filepath, 'w') as output_file:
-            yaml.dump(metadata, output_file, default_flow_style=False, sort_keys=False)
+    # generate metadata
+    staging_octane_metadata = generate_staging_octane_metadata(ssl_ca_filepath)
+    table_etl_processes = generate_etl_process_metadata()
+    history_octane_metadata = generate_history_octane_metadata(staging_octane_metadata, table_etl_processes)
 
+    # write metadata to files
+    for table_name, metadata in staging_octane_metadata.items():
+        write_metadata_yaml_file(staging_octane_schema_dir, table_name, metadata)
     for table_name, metadata in history_octane_metadata.items():
-        filepath = os.path.join(history_octane_schema_dir, f'{table_name}.yaml')
-        with open(filepath, 'w') as output_file:
-            yaml.dump(metadata, output_file, default_flow_style=False, sort_keys=False)
+        write_metadata_yaml_file(history_octane_schema_dir, table_name, metadata)
+
+    print('Metadata files written successfully!')
 
 
 def generate_staging_octane_metadata(ssl_ca_filepath: str) -> dict:
@@ -186,6 +162,30 @@ def generate_etl_process_metadata() -> dict:
         return table_etl_processes
 
 
+def generate_history_octane_metadata(staging_octane_metadata: dict, table_etl_processes: dict) -> dict:
+    history_octane_metadata = copy.deepcopy(staging_octane_metadata)
+
+    for metadata in history_octane_metadata.values():
+        metadata['primary_source_table'] = f'staging.staging_octane.{metadata["name"]}'
+        for column in metadata['columns'].keys():
+            metadata['columns'][column]['source'] = {
+                'field': f'primary_source_table.columns.{column}'
+            }
+        if metadata['name'] in table_etl_processes:
+            metadata['etls'] = {
+                table_etl_processes[metadata['name']]['process']: {
+                    'hardcoded_data_source': 'Octane',
+                    'input_type': 'table',
+                    'output_type': 'insert',
+                    'json_output_field': metadata['primary_key'][0],
+                    'truncate_table': False,
+                    'input_sql': generate_table_input_sql(metadata)
+                }
+            }
+            metadata['next_etls'] = table_etl_processes[metadata['name']]['next_processes']
+    return history_octane_metadata
+
+
 def generate_table_input_sql(table_metadata: dict) -> str:
     table_name = table_metadata['name']
     columns = list(table_metadata['columns'].keys())
@@ -202,8 +202,8 @@ def generate_table_input_sql(table_metadata: dict) -> str:
                            f'WHERE history_table.code IS NULL;'
     else:
         primary_key_column = table_metadata['primary_key'][0]
-        lura_column_prefix = primary_key_column
-        version_column = f'{lura_column_prefix}_version'
+        octane_table_column_prefix = primary_key_column.split('_')[0]
+        version_column = f'{octane_table_column_prefix}_version'
         history_select_columns = generate_select_columns_string('history_table', columns, increment_version=True)
         table_input_sql += f'LEFT JOIN history_octane.{table_name} history_table\n' + \
                            f'          ON staging_table.{primary_key_column} = history_table.{primary_key_column} AND staging_table.{version_column} = history_table.{version_column}\n' + \
@@ -233,6 +233,12 @@ def generate_select_columns_string(table_prefix: str, columns: List[str], increm
         else:
             select_columns.append(f'{table_prefix}.{col}')
     return '\n     , '.join(select_columns)
+
+
+def write_metadata_yaml_file(output_dir: str, table_name: str, metadata: dict):
+    filepath = os.path.join(output_dir, f'{table_name}.yaml')
+    with open(filepath, 'w') as output_file:
+        yaml.dump(metadata, output_file, default_flow_style=False, sort_keys=False)
 
 
 if __name__ == '__main__':
