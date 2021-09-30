@@ -210,12 +210,12 @@ WHERE dwid = (
 -- smart_mi_rate_case:
 UPDATE mdi.table_input_step
 SET sql = '--finding records to insert into hitory_octane.smart_mi_rate_case
-SELECT staging_table.smrc_pid, staging_table.smrc_version, staging_table.smrc_smart_mi_rate_card_pid, staging_table.smrc_criteria_html, staging_table.smrc_ordinal, staging_table.smrc_criteria_pid, staging_table.smrc_else_case, staging_table.smrc_amount_description, staging_table.smrc_upfront_percent, staging_table.smrc_initial_monthly_payment_annual_percent, staging_table.smrc_coverage_percent, staging_table.smrc_ltv_cutoff_percent, staging_table.smrc_midpoint_cutoff_required, staging_table.smrc_required_monthly_payment_count, staging_table.smrc_initial_duration_months, FALSE as data_source_deleted_flag, now() AS data_source_updated_datetime
+SELECT staging_table.smrc_pid, staging_table.smrc_version, staging_table.smrc_smart_mi_rate_card_pid, staging_table.smrc_ordinal, staging_table.smrc_criteria_pid, staging_table.smrc_else_case, staging_table.smrc_amount_description, staging_table.smrc_upfront_percent, staging_table.smrc_initial_monthly_payment_annual_percent, staging_table.smrc_coverage_percent, staging_table.smrc_ltv_cutoff_percent, staging_table.smrc_midpoint_cutoff_required, staging_table.smrc_required_monthly_payment_count, staging_table.smrc_initial_duration_months, FALSE as data_source_deleted_flag, now() AS data_source_updated_datetime
 FROM staging_octane.smart_mi_rate_case staging_table
 LEFT JOIN history_octane.smart_mi_rate_case history_table on staging_table.smrc_pid = history_table.smrc_pid and staging_table.smrc_version = history_table.smrc_version
 WHERE history_table.smrc_pid is NULL
 UNION ALL
-SELECT history_table.smrc_pid, history_table.smrc_version+1, history_table.smrc_smart_mi_rate_card_pid, history_table.smrc_criteria_html, history_table.smrc_ordinal, history_table.smrc_criteria_pid, history_table.smrc_else_case, history_table.smrc_amount_description, history_table.smrc_upfront_percent, history_table.smrc_initial_monthly_payment_annual_percent, history_table.smrc_coverage_percent, history_table.smrc_ltv_cutoff_percent, history_table.smrc_midpoint_cutoff_required, history_table.smrc_required_monthly_payment_count, history_table.smrc_initial_duration_months, TRUE as data_source_deleted_flag, now() AS data_source_updated_datetime
+SELECT history_table.smrc_pid, history_table.smrc_version+1, history_table.smrc_smart_mi_rate_card_pid, history_table.smrc_ordinal, history_table.smrc_criteria_pid, history_table.smrc_else_case, history_table.smrc_amount_description, history_table.smrc_upfront_percent, history_table.smrc_initial_monthly_payment_annual_percent, history_table.smrc_coverage_percent, history_table.smrc_ltv_cutoff_percent, history_table.smrc_midpoint_cutoff_required, history_table.smrc_required_monthly_payment_count, history_table.smrc_initial_duration_months, TRUE as data_source_deleted_flag, now() AS data_source_updated_datetime
 FROM history_octane.smart_mi_rate_case history_table
 LEFT JOIN staging_octane.smart_mi_rate_case staging_table on staging_table.smrc_pid = history_table.smrc_pid
 WHERE staging_table.smrc_pid is NULL
@@ -230,12 +230,12 @@ WHERE dwid = (
 -- smart_mi_rate_adjustment_case:
 UPDATE mdi.table_input_step
 SET sql = '--finding records to insert into hitory_octane.smart_mi_rate_adjustment_case
-SELECT staging_table.smrac_pid, staging_table.smrac_version, staging_table.smrac_smart_mi_rate_card_pid, staging_table.smrac_rate_adjustment_percent, staging_table.smrac_criteria_html, staging_table.smrac_criteria_pid, FALSE as data_source_deleted_flag, now() AS data_source_updated_datetime
+SELECT staging_table.smrac_pid, staging_table.smrac_version, staging_table.smrac_smart_mi_rate_card_pid, staging_table.smrac_rate_adjustment_percent, staging_table.smrac_criteria_pid, FALSE as data_source_deleted_flag, now() AS data_source_updated_datetime
 FROM staging_octane.smart_mi_rate_adjustment_case staging_table
 LEFT JOIN history_octane.smart_mi_rate_adjustment_case history_table on staging_table.smrac_pid = history_table.smrac_pid and staging_table.smrac_version = history_table.smrac_version
 WHERE history_table.smrac_pid is NULL
 UNION ALL
-SELECT history_table.smrac_pid, history_table.smrac_version+1, history_table.smrac_smart_mi_rate_card_pid, history_table.smrac_rate_adjustment_percent, history_table.smrac_criteria_html, history_table.smrac_criteria_pid, TRUE as data_source_deleted_flag, now() AS data_source_updated_datetime
+SELECT history_table.smrac_pid, history_table.smrac_version+1, history_table.smrac_smart_mi_rate_card_pid, history_table.smrac_rate_adjustment_percent, history_table.smrac_criteria_pid, TRUE as data_source_deleted_flag, now() AS data_source_updated_datetime
 FROM history_octane.smart_mi_rate_adjustment_case history_table
 LEFT JOIN staging_octane.smart_mi_rate_adjustment_case staging_table on staging_table.smrac_pid = history_table.smrac_pid
 WHERE staging_table.smrac_pid is NULL
@@ -250,12 +250,12 @@ WHERE dwid = (
 -- smart_mi_surcharge_case:
 UPDATE mdi.table_input_step
 SET sql = '--finding records to insert into hitory_octane.smart_mi_surcharge_case
-SELECT staging_table.smsc_pid, staging_table.smsc_version, staging_table.smsc_smart_mi_surcharge_pid, staging_table.smsc_criteria_pid, staging_table.smsc_government_surcharge_percent, staging_table.smsc_minimum_surcharge_amount, staging_table.smsc_criteria_html, FALSE as data_source_deleted_flag, now() AS data_source_updated_datetime
+SELECT staging_table.smsc_pid, staging_table.smsc_version, staging_table.smsc_smart_mi_surcharge_pid, staging_table.smsc_criteria_pid, staging_table.smsc_government_surcharge_percent, staging_table.smsc_minimum_surcharge_amount, FALSE as data_source_deleted_flag, now() AS data_source_updated_datetime
 FROM staging_octane.smart_mi_surcharge_case staging_table
 LEFT JOIN history_octane.smart_mi_surcharge_case history_table on staging_table.smsc_pid = history_table.smsc_pid and staging_table.smsc_version = history_table.smsc_version
 WHERE history_table.smsc_pid is NULL
 UNION ALL
-SELECT history_table.smsc_pid, history_table.smsc_version+1, history_table.smsc_smart_mi_surcharge_pid, history_table.smsc_criteria_pid, history_table.smsc_government_surcharge_percent, history_table.smsc_minimum_surcharge_amount, history_table.smsc_criteria_html, TRUE as data_source_deleted_flag, now() AS data_source_updated_datetime
+SELECT history_table.smsc_pid, history_table.smsc_version+1, history_table.smsc_smart_mi_surcharge_pid, history_table.smsc_criteria_pid, history_table.smsc_government_surcharge_percent, history_table.smsc_minimum_surcharge_amount, TRUE as data_source_deleted_flag, now() AS data_source_updated_datetime
 FROM history_octane.smart_mi_surcharge_case history_table
 LEFT JOIN staging_octane.smart_mi_surcharge_case staging_table on staging_table.smsc_pid = history_table.smsc_pid
 WHERE staging_table.smsc_pid is NULL
@@ -280,7 +280,6 @@ SELECT staging_table.coc_pid
 , staging_table.coc_create_datetime
 , staging_table.coc_construction_cost_amount
 , staging_table.coc_construction_cost_notes
-, staging_table.coc_contractor_pid
 , staging_table.coc_proposal_contractor_pid
 , staging_table.coc_payee
 , staging_table.coc_effective_construction_cost_calculation_percent
@@ -314,7 +313,6 @@ SELECT history_table.coc_pid
 , history_table.coc_create_datetime
 , history_table.coc_construction_cost_amount
 , history_table.coc_construction_cost_notes
-, history_table.coc_contractor_pid
 , history_table.coc_proposal_contractor_pid
 , history_table.coc_payee
 , history_table.coc_effective_construction_cost_calculation_percent
