@@ -2,7 +2,9 @@ import sys
 import os
 import shutil
 import copy
+import csv
 from typing import List
+from collections import defaultdict
 
 import yaml
 
@@ -31,8 +33,17 @@ def main():
         exit(1)
     ssl_ca_filepath = sys.argv[1]
 
+    # define output directory file paths
     # default output root directory is data-warehouse/edw-metadata
     output_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', 'edw-metadata'))
+    staging_database_dir = os.path.join(output_dir, 'staging')
+    staging_octane_schema_dir = os.path.join(staging_database_dir, 'staging_octane')
+    history_octane_schema_dir = os.path.join(staging_database_dir, 'history_octane')
+
+    # define input file paths for excluded table and field metadata
+    excluded_table_prefixes_filepath = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'octane_excluded_table_prefixes.csv')
+    excluded_tables_filepath = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'octane_excluded_tables.csv')
+    excluded_columns_filepath = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'octane_excluded_columns.csv')
 
     # delete output directory if it already exists
     if os.path.isdir(output_dir):
@@ -42,33 +53,27 @@ def main():
         else:
             print(f'{output_dir} was NOT overwritten. Exiting script execution.')
             exit(0)
+
     print(f'Generating EDW metadata files in directory: {output_dir}')
 
     # create output directory structure
     os.mkdir(output_dir)
-    staging_database_dir = os.path.join(output_dir, 'staging')
     os.mkdir(staging_database_dir)
-    staging_octane_schema_dir = os.path.join(staging_database_dir, 'staging_octane')
     os.mkdir(staging_octane_schema_dir)
-    history_octane_schema_dir = os.path.join(staging_database_dir, 'history_octane')
     os.mkdir(history_octane_schema_dir)
 
-    # generate metadata
-    staging_octane_metadata = generate_staging_octane_metadata(ssl_ca_filepath)
-    table_etl_processes = generate_etl_process_metadata()
-    history_octane_metadata = generate_history_octane_metadata(staging_octane_metadata, table_etl_processes)
+    # read in and parse metadata related to excluded tables and fields in Octane's DB
+    excluded_table_prefixes = {row['table_prefix'] for row in read_csv_to_list_of_dicts(excluded_table_prefixes_filepath)}
+    excluded_tables = {row['table_name'] for row in read_csv_to_list_of_dicts(excluded_tables_filepath)}
+    excluded_columns_raw = read_csv_to_list_of_dicts(excluded_columns_filepath)
+    excluded_columns = defaultdict(set)
+    for row in excluded_columns_raw:
+        excluded_columns[row['table_name']].add(row['column_name'])
 
-    # write metadata to files
-    for table_name, metadata in staging_octane_metadata.items():
-        write_metadata_yaml_file(staging_octane_schema_dir, table_name, metadata)
-    for table_name, metadata in history_octane_metadata.items():
-        write_metadata_yaml_file(history_octane_schema_dir, table_name, metadata)
+    octane_data_filterer = OctaneDataFilterer(excluded_table_prefixes, excluded_tables, excluded_columns)
 
-    print('Metadata files written successfully!')
-
-
-def generate_staging_octane_metadata(ssl_ca_filepath: str) -> dict:
-    octane_db_connection = OctaneDB(
+    # define database connections to Octane cert and EDW local
+    octane_connection = OctaneDB(
         host="cert-lura-db.cluster-ro-c67hguplwubq.us-east-1.rds.amazonaws.com",
         dbname="lura_qa",
         region="us-east-1",
@@ -78,62 +83,104 @@ def generate_staging_octane_metadata(ssl_ca_filepath: str) -> dict:
         ssl_ca_filepath=ssl_ca_filepath
     )
 
-    with octane_db_connection as cursor:
-        column_metadata = cursor.select_as_list_of_dicts("""
-                SELECT
-                    columns.table_name
+    edw_connection = EDW(
+        host='localhost',
+        dbname='config',
+        user='postgres',
+        password='testonly'
+    )
+
+    # generate EDW metadata
+    staging_octane_metadata = generate_staging_octane_metadata(octane_connection, octane_data_filterer)
+    table_etl_processes = generate_etl_process_metadata(edw_connection)
+    history_octane_metadata = generate_history_octane_metadata(staging_octane_metadata, table_etl_processes)
+
+    # write EDW metadata to yaml files
+    for table_name, metadata in staging_octane_metadata.items():
+        write_metadata_yaml_file(staging_octane_schema_dir, table_name, metadata)
+    for table_name, metadata in history_octane_metadata.items():
+        write_metadata_yaml_file(history_octane_schema_dir, table_name, metadata)
+
+    print('Metadata files written successfully!')
+
+
+class OctaneDataFilterer:
+
+    def __init__(self, excluded_table_prefixes: iter, excluded_tables: iter, excluded_columns: dict):
+        self.excluded_table_prefixes = excluded_table_prefixes
+        self.excluded_tables = excluded_tables
+        self.excluded_columns = excluded_columns
+
+    def row_should_be_excluded(self, row: dict) -> bool:
+        return (row['table_name'] in self.excluded_tables) or \
+               (row['table_name'] in self.excluded_columns and row['column_name'] in self.excluded_columns[row['table_name']]) or \
+               (any([row['table_name'].startswith(prefix) for prefix in self.excluded_table_prefixes]))
+
+
+def generate_staging_octane_metadata(octane_connection: OctaneDB, octane_data_filterer: OctaneDataFilterer) -> dict:
+    with octane_connection as cursor:
+        column_metadata = cursor.select_as_list_of_dicts(f"""
+                SELECT columns.table_name
                     , columns.column_name
                     , columns.ordinal_position
                     , UPPER( columns.column_type ) AS column_type
                     , columns.column_key = 'PRI' AS is_primary_key
                 FROM information_schema.columns
                 WHERE columns.table_schema = 'lura_qa'
-                  AND columns.table_name NOT LIKE 'QRTZ_%'
                 ORDER BY columns.table_name, columns.ordinal_position;
             """)
 
         fk_metadata = cursor.select_as_list_of_dicts("""
-                SELECT
-                    table_name
+                SELECT table_name
                     , column_name
                     , constraint_name
                     , referenced_table_name
                     , referenced_column_name
                 FROM information_schema.key_column_usage
-                WHERE key_column_usage.table_name NOT LIKE 'QRTZ_%'
-                  AND key_column_usage.referenced_table_schema IS NOT NULL
+                WHERE key_column_usage.referenced_table_schema IS NOT NULL;
             """)
 
         staging_octane_data = {}
         for row in column_metadata:
-            if row['table_name'] not in staging_octane_data:
-                staging_octane_data[row['table_name']] = {
-                    'name': row['table_name'],
-                    'primary_key': [],
-                    'columns': {}
+            if not octane_data_filterer.row_should_be_excluded(row):
+                if row['table_name'] not in staging_octane_data:
+                    # add all possibly-needed keys to the dict now to enforce key ordering
+                    # keys with no value (e.g. None, empty list, etc) will be filtered out before being written to a file
+                    staging_octane_data[row['table_name']] = {
+                        'name': row['table_name'],
+                        'primary_source_table': None,
+                        'primary_key': [],
+                        'foreign_keys': {},
+                        'columns': {},
+                        'etls': {},
+                        'next_etls': {}
+                    }
+                if row['is_primary_key'] == 1:
+                    staging_octane_data[row['table_name']]['primary_key'].append(row['column_name'])
+                staging_octane_data[row['table_name']]['columns'][row['column_name']] = {
+                    'data_type': row['column_type']
                 }
-            if row['is_primary_key'] == 1:
-                staging_octane_data[row['table_name']]['primary_key'].append(row['column_name'])
-            staging_octane_data[row['table_name']]['columns'][row['column_name']] = {
-                'data_type': row['column_type']
-            }
 
         for row in fk_metadata:
-            if 'foreign_keys' not in staging_octane_data[row['table_name']]:
-                staging_octane_data[row['table_name']]['foreign_keys'] = {}
-            staging_octane_data[row['table_name']]['foreign_keys'][row['constraint_name']] = {
-                'columns': [row['column_name']],
-                'references': {
-                    'columns': [row['referenced_column_name']],
-                    'schema': 'staging_octane',
-                    'table': row['referenced_table_name']
+            if not octane_data_filterer.row_should_be_excluded(row):
+                staging_octane_data[row['table_name']]['foreign_keys'][row['constraint_name']] = {
+                    'columns': [row['column_name']],
+                    'references': {
+                        'columns': [row['referenced_column_name']],
+                        'schema': 'staging_octane',
+                        'table': row['referenced_table_name']
+                    }
                 }
-            }
         return staging_octane_data
 
 
-def generate_etl_process_metadata() -> dict:
-    with EDW() as cursor:
+def read_csv_to_list_of_dicts(filepath: str) -> List[dict]:
+    with open(filepath) as file:
+        return list(csv.DictReader(file))
+
+
+def generate_etl_process_metadata(edw_connection: EDW) -> dict:
+    with edw_connection as cursor:
         raw_table_etl_processes = cursor.select_as_list_of_dicts("""
             SELECT table_output_step.target_table
                  , process.name AS process
@@ -172,15 +219,13 @@ def generate_history_octane_metadata(staging_octane_metadata: dict, table_etl_pr
                 'field': f'primary_source_table.columns.{column}'
             }
         if metadata['name'] in table_etl_processes:
-            metadata['etls'] = {
-                table_etl_processes[metadata['name']]['process']: {
-                    'hardcoded_data_source': 'Octane',
-                    'input_type': 'table',
-                    'output_type': 'insert',
-                    'json_output_field': metadata['primary_key'][0],
-                    'truncate_table': False,
-                    'input_sql': generate_table_input_sql(metadata)
-                }
+            metadata['etls'][table_etl_processes[metadata['name']]['process']] = {
+                'hardcoded_data_source': 'Octane',
+                'input_type': 'table',
+                'output_type': 'insert',
+                'json_output_field': metadata['primary_key'][0],
+                'truncate_table': False,
+                'input_sql': generate_table_input_sql(metadata)
             }
             metadata['next_etls'] = table_etl_processes[metadata['name']]['next_processes']
     return history_octane_metadata
@@ -238,7 +283,11 @@ def generate_select_columns_string(table_prefix: str, columns: List[str], increm
 def write_metadata_yaml_file(output_dir: str, table_name: str, metadata: dict):
     filepath = os.path.join(output_dir, f'{table_name}.yaml')
     with open(filepath, 'w') as output_file:
-        yaml.dump(metadata, output_file, default_flow_style=False, sort_keys=False)
+        yaml.dump(filter_out_keys_with_no_value(metadata), output_file, default_flow_style=False, sort_keys=False)
+
+
+def filter_out_keys_with_no_value(metadata: dict) -> dict:
+    return {key: value for key, value in metadata.items() if value != [] and value != {} and value is not None}
 
 
 if __name__ == '__main__':
