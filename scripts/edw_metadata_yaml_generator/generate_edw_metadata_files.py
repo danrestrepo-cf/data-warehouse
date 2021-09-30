@@ -119,7 +119,7 @@ class OctaneDataFilterer:
 
 def generate_staging_octane_metadata(octane_connection: OctaneDB, octane_data_filterer: OctaneDataFilterer) -> dict:
     with octane_connection as cursor:
-        column_metadata = cursor.select_as_list_of_dicts(f"""
+        column_metadata = cursor.select_as_list_of_dicts("""
                 SELECT columns.table_name
                     , columns.column_name
                     , columns.ordinal_position
