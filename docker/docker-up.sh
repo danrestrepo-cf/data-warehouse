@@ -9,14 +9,26 @@ function run_compose_file {
 
   echo -e "== Applying ${migration_category} migrations"
 
-  waitFor=""
+  waitFor=()
   for database in ingress staging config; do
-    waitFor="${waitFor} ${project_name}_flyway-${database}_1"
+    waitFor+=("${project_name}_flyway-${database}_1")
   done
 
   docker-compose --project-name ${project_name} -f ${path_to_script}/docker-compose-${migration_category}.yml up --detach
+
   echo -e "== Waiting for ${migration_category} migrations"
-  docker wait ${waitFor}
+  for container in "${waitFor[@]}"; do
+    echo "Waiting for $container"
+
+    # docker wait returns a success status, but echos the actual status, so capture that and compare
+    # i.e., if the container fails then it'll echo a "1" but its return status is still 0
+    result=$(docker wait ${container})
+    if [ $result != "0" ]; then
+      echo "====== FAILURE in ${container} ======="
+      docker logs ${container}
+      echo "====== FAILURE in ${container} ======="
+    fi
+  done
 }
 
 # run initial compose file with project name set to the base project name
