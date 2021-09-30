@@ -186,13 +186,13 @@ WHERE dwid IN (
 -- smart_doc_validity_date_case:
 UPDATE mdi.table_input_step
 SET sql = '--finding records to insert into history_octane.smart_doc_validity_date_case
-SELECT staging_table.sdvdc_pid,  staging_table.sdvdc_version,  staging_table.sdvdc_smart_doc_pid,  staging_table.sdvdc_criteria_pid,  staging_table.sdvdc_criteria_html,  staging_table.sdvdc_deal_child_type,  staging_table.sdvdc_deal_child_relationship_type,  staging_table.sdvdc_doc_validity_type,  staging_table.sdvdc_doc_key_date_type,  staging_table.sdvdc_expiration_calendar_rule_type,  staging_table.sdvdc_days_before_key_date,  staging_table.sdvdc_warning_days,  staging_table.sdvdc_ordinal,  staging_table.sdvdc_else_case,  staging_table.sdvdc_active,  FALSE AS data_source_deleted_flag,  NOW( ) AS data_source_updated_datetime
+SELECT staging_table.sdvdc_pid,  staging_table.sdvdc_version,  staging_table.sdvdc_smart_doc_pid,  staging_table.sdvdc_criteria_pid, staging_table.sdvdc_deal_child_type,  staging_table.sdvdc_deal_child_relationship_type,  staging_table.sdvdc_doc_validity_type,  staging_table.sdvdc_doc_key_date_type,  staging_table.sdvdc_expiration_calendar_rule_type,  staging_table.sdvdc_days_before_key_date,  staging_table.sdvdc_warning_days,  staging_table.sdvdc_ordinal,  staging_table.sdvdc_else_case,  staging_table.sdvdc_active,  FALSE AS data_source_deleted_flag,  NOW( ) AS data_source_updated_datetime
 FROM staging_octane.smart_doc_validity_date_case staging_table
 LEFT JOIN history_octane.smart_doc_validity_date_case history_table
 ON staging_table.sdvdc_pid = history_table.sdvdc_pid AND staging_table.sdvdc_version = history_table.sdvdc_version
 WHERE history_table.sdvdc_pid IS NULL
 UNION ALL
-SELECT history_table.sdvdc_pid,  history_table.sdvdc_version + 1,  history_table.sdvdc_smart_doc_pid,  history_table.sdvdc_criteria_pid,  history_table.sdvdc_criteria_html,  history_table.sdvdc_deal_child_type,  history_table.sdvdc_deal_child_relationship_type,  history_table.sdvdc_doc_validity_type,  history_table.sdvdc_doc_key_date_type,  history_table.sdvdc_expiration_calendar_rule_type,  history_table.sdvdc_days_before_key_date,  history_table.sdvdc_warning_days,  history_table.sdvdc_ordinal,  history_table.sdvdc_else_case,  history_table.sdvdc_active,  TRUE AS data_source_deleted_flag,  NOW( ) AS data_source_updated_datetime
+SELECT history_table.sdvdc_pid,  history_table.sdvdc_version + 1,  history_table.sdvdc_smart_doc_pid,  history_table.sdvdc_criteria_pid, history_table.sdvdc_deal_child_type,  history_table.sdvdc_deal_child_relationship_type,  history_table.sdvdc_doc_validity_type,  history_table.sdvdc_doc_key_date_type,  history_table.sdvdc_expiration_calendar_rule_type,  history_table.sdvdc_days_before_key_date,  history_table.sdvdc_warning_days,  history_table.sdvdc_ordinal,  history_table.sdvdc_else_case,  history_table.sdvdc_active,  TRUE AS data_source_deleted_flag,  NOW( ) AS data_source_updated_datetime
 FROM history_octane.smart_doc_validity_date_case history_table
 LEFT JOIN staging_octane.smart_doc_validity_date_case staging_table
 ON staging_table.sdvdc_pid = history_table.sdvdc_pid
