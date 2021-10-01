@@ -3,8 +3,10 @@ import os
 import shutil
 import copy
 import csv
+import glob
 from typing import List
 from collections import defaultdict
+from pathlib import Path
 
 import yaml
 
@@ -33,36 +35,30 @@ def main():
         exit(1)
     ssl_ca_filepath = sys.argv[1]
 
-    # define output directory file paths
-    # default output root directory is data-warehouse/edw-metadata
-    output_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', 'edw-metadata'))
-    staging_database_dir = os.path.join(output_dir, 'staging')
-    staging_octane_schema_dir = os.path.join(staging_database_dir, 'staging_octane')
-    history_octane_schema_dir = os.path.join(staging_database_dir, 'history_octane')
+    # define file paths for and (if needed) create output directory structure
+    # default output root directory is data-warehouse/metadata
+    root_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', 'metadata', 'edw', 'db.staging'))
+    staging_octane_schema_dir = os.path.join(root_dir, 'schema.staging_octane')
+    history_octane_schema_dir = os.path.join(root_dir, 'schema.history_octane')
 
-    # define input file paths for excluded table and field metadata
+    if not os.path.isdir(staging_octane_schema_dir):
+        Path(staging_octane_schema_dir).mkdir(parents=True, exist_ok=True)
+
+    if not os.path.isdir(history_octane_schema_dir):
+        Path(history_octane_schema_dir).mkdir(parents=True, exist_ok=True)
+
+    # delete any existing staging_octane and history_octane TABLE metadata files
+    for file in glob.glob(f'{staging_octane_schema_dir}/table.*.yaml'):
+        os.remove(file)
+
+    for file in glob.glob(f'{history_octane_schema_dir}/table.*.yaml'):
+        os.remove(file)
+
+    # read in and parse metadata related to excluded tables and fields in Octane's DB
     excluded_table_prefixes_filepath = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'octane_excluded_table_prefixes.csv')
     excluded_tables_filepath = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'octane_excluded_tables.csv')
     excluded_columns_filepath = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'octane_excluded_columns.csv')
 
-    # delete output directory if it already exists
-    if os.path.isdir(output_dir):
-        should_overwrite_output_dir = input(f'The directory "{output_dir}" already exists. Are you sure you want to overwrite it (y / n)? ')
-        if should_overwrite_output_dir.lower() == 'y':
-            shutil.rmtree(output_dir)
-        else:
-            print(f'{output_dir} was NOT overwritten. Exiting script execution.')
-            exit(0)
-
-    print(f'Generating EDW metadata files in directory: {output_dir}')
-
-    # create output directory structure
-    os.mkdir(output_dir)
-    os.mkdir(staging_database_dir)
-    os.mkdir(staging_octane_schema_dir)
-    os.mkdir(history_octane_schema_dir)
-
-    # read in and parse metadata related to excluded tables and fields in Octane's DB
     excluded_table_prefixes = {row['table_prefix'] for row in read_csv_to_list_of_dicts(excluded_table_prefixes_filepath)}
     excluded_tables = {row['table_name'] for row in read_csv_to_list_of_dicts(excluded_tables_filepath)}
     excluded_columns_raw = read_csv_to_list_of_dicts(excluded_columns_filepath)
@@ -96,10 +92,12 @@ def main():
     history_octane_metadata = generate_history_octane_metadata(staging_octane_metadata, table_etl_processes)
 
     # write EDW metadata to yaml files
+    print('Writing staging_octane table metadata files')
     for table_name, metadata in staging_octane_metadata.items():
-        write_metadata_yaml_file(staging_octane_schema_dir, table_name, metadata)
+        write_table_metadata_yaml_file(staging_octane_schema_dir, table_name, metadata)
+    print('Writing history_octane table metadata files')
     for table_name, metadata in history_octane_metadata.items():
-        write_metadata_yaml_file(history_octane_schema_dir, table_name, metadata)
+        write_table_metadata_yaml_file(history_octane_schema_dir, table_name, metadata)
 
     print('Metadata files written successfully!')
 
@@ -279,8 +277,8 @@ def generate_select_columns_string(table_prefix: str, columns: List[str], increm
     return '\n     , '.join(select_columns)
 
 
-def write_metadata_yaml_file(output_dir: str, table_name: str, metadata: dict):
-    filepath = os.path.join(output_dir, f'{table_name}.yaml')
+def write_table_metadata_yaml_file(output_dir: str, table_name: str, metadata: dict):
+    filepath = os.path.join(output_dir, f'table.{table_name}.yaml')
     with open(filepath, 'w') as output_file:
         yaml.dump(filter_out_keys_with_no_value(metadata), output_file, default_flow_style=False, sort_keys=False)
 
