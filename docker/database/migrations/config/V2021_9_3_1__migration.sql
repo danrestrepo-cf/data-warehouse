@@ -406,4 +406,78 @@ SET database_field_name = 'l_guaranty_fee_after_alternate_payment_method_basis_p
     , database_stream_name = 'l_guaranty_fee_after_alternate_payment_method_basis_points'
 WHERE database_field_name = 'l_guaranty_fee_after_alternate_payment_method_percent';
 
+-- update loan_dim (SP-200012) ETL to account for renamed columns in history_octane.loan
+UPDATE mdi.table_input_step
+SET sql = 'SELECT
+            ''loan_pid'' || ''~'' || ''data_source_dwid'' as data_source_integration_columns,
+            COALESCE(CAST(primary_table.l_pid as text), ''<NULL>'')  || ''~'' || COALESCE(CAST(1 as text), ''<NULL>'')  as data_source_integration_id,
+    now() as edw_created_datetime,
+    now() as edw_modified_datetime,
+    primary_table.data_source_updated_datetime as data_source_modified_datetime,
+    primary_table.l_last_unprocessed_changes_datetime as last_unprocessed_changes_datetime,
+    primary_table.l_locked_price_change_percent as locked_price_change_percent,
+    primary_table.l_mi_requirement_ltv_ratio_percent as mi_requirement_ltv_ratio_percent,
+    primary_table.l_base_loan_amount_ltv_ratio_percent as base_loan_amount_ltv_ratio_percent,
+    primary_table.l_arm_index_current_value_percent as arm_index_current_value_percent,
+    primary_table.l_arm_index_datetime as arm_index_datetime,
+    primary_table.l_product_terms_pid as product_terms_pid,
+    primary_table.l_proposal_pid as proposal_pid,
+    primary_table.l_pid as loan_pid,
+    primary_table.l_fhac_case_assignment_messages as fhac_case_assignment_messages,
+    primary_table.l_product_choice_datetime as product_choice_datetime,
+    primary_table.l_fnm_mbs_investor_contract_id as fnm_mbs_investor_contract_id,
+    primary_table.l_base_guaranty_fee_basis_points as base_guaranty_fee_percent,
+    primary_table.l_guaranty_fee_basis_points as guaranty_fee_percent,
+    primary_table.l_guaranty_fee_after_alternate_payment_method_basis_points as guaranty_fee_after_alternate_payment_method_percent,
+    primary_table.l_fnm_investor_product_plan_id as fnm_investor_product_plan_id,
+    primary_table.l_uldd_loan_comment as uldd_loan_comment,
+    primary_table.l_hmda_rate_spread_percent as hmda_rate_spread_percent,
+    primary_table.l_hoepa_apr as hoepa_apr,
+    primary_table.l_hoepa_rate_spread as hoepa_rate_spread,
+    primary_table.l_rate_sheet_undiscounted_rate_percent as rate_sheet_undiscounted_rate_percent,
+    primary_table.l_effective_undiscounted_rate_percent as effective_undiscounted_rate_percent,
+    CASE WHEN primary_table.l_lien_priority_type IS NULL OR t1317.prp_structure_type IS NULL THEN NULL WHEN primary_table.l_lien_priority_type = ''FIRST'' OR t1317.prp_structure_type = ''STANDALONE_2ND'' THEN t1317.d_los_loan_id_main ELSE t1317.d_los_loan_id_piggyback END as los_loan_number
+FROM (
+    SELECT
+        <<loan_partial_load_condition>> as include_record,
+        loan.*
+    FROM history_octane.loan
+    LEFT JOIN history_octane.loan AS history_records ON loan.l_pid = history_records.l_pid
+        AND loan.data_source_updated_datetime < history_records.data_source_updated_datetime
+    WHERE history_records.l_pid IS NULL
+) AS primary_table
 
+INNER JOIN (
+    SELECT * FROM (
+        SELECT
+            proposal.*
+        FROM history_octane.proposal
+        LEFT JOIN history_octane.proposal AS history_records ON proposal.prp_pid = history_records.prp_pid
+            AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
+        WHERE history_records.prp_pid IS NULL
+    ) as primary_table
+
+        -- child join start
+    INNER JOIN
+    (
+        SELECT
+            <<deal_partial_load_condition>> as include_record,
+            deal.*
+        FROM
+            history_octane.deal
+            LEFT JOIN history_octane.deal AS history_records ON deal.d_pid = history_records.d_pid
+                AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
+        WHERE
+            history_records.d_pid IS NULL
+    ) AS t1441 ON primary_table.prp_deal_pid = t1441.d_pid
+    -- child join end
+
+) AS t1317 ON primary_table.l_proposal_pid = t1317.prp_pid
+WHERE
+    GREATEST(primary_table.include_record, t1317.include_record) IS TRUE
+ORDER BY
+    primary_table.data_source_updated_datetime ASC
+;'
+FROM mdi.process
+WHERE process.dwid = table_input_step.process_dwid
+AND process.name = 'SP-200012';
