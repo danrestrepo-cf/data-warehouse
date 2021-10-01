@@ -124,7 +124,6 @@ def generate_staging_octane_metadata(octane_connection: OctaneDB, octane_data_fi
                     , columns.column_name
                     , UPPER( columns.column_type ) AS column_type
                     , columns.column_key = 'PRI' AS is_primary_key
-                    , columns.is_nullable = 'YES' AS is_nullable
                 FROM information_schema.columns
                 WHERE columns.table_schema = 'lura_qa'
                 ORDER BY columns.table_name, columns.ordinal_position;
@@ -158,8 +157,7 @@ def generate_staging_octane_metadata(octane_connection: OctaneDB, octane_data_fi
                 if row['is_primary_key'] == 1:
                     staging_octane_data[row['table_name']]['primary_key'].append(row['column_name'])
                 staging_octane_data[row['table_name']]['columns'][row['column_name']] = {
-                    'data_type': row['column_type'],
-                    'is_nullable': row['is_nullable'] == 1
+                    'data_type': row['column_type']
                 }
 
         for row in fk_metadata:
