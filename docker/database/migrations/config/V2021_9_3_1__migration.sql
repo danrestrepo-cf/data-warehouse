@@ -2,9 +2,6 @@
 -- EDW | star_loan table metadata shows key fields as updatable
 -- https://app.asana.com/0/0/1200753845956817
 --
---
--- Main | EDW - Octane schemas from prod-release to v2021.10.1.0 on uat https://app.asana.com/0/0/1201077269203237/
---
 
 UPDATE mdi.insert_update_field
     SET update_flag = 'N'
@@ -16,6 +13,10 @@ UPDATE mdi.insert_update_field
             AND insert_update_key.key_lookup = insert_update_field.update_lookup
             AND insert_update_field.update_flag = 'Y'
         );
+
+--
+-- Main | EDW - Octane schemas from prod-release to v2021.10.1.0 on uat https://app.asana.com/0/0/1201077269203237/
+--
 
 /*
 Add fields:
