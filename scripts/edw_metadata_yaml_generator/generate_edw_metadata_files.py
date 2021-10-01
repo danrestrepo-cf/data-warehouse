@@ -215,6 +215,12 @@ def generate_history_octane_metadata(staging_octane_metadata: dict, table_etl_pr
             metadata['columns'][column]['source'] = {
                 'field': f'primary_source_table.columns.{column}'
             }
+        metadata['columns']['data_source_updated_datetime'] = {
+            'data_type': 'TIMESTAMPTZ'
+        }
+        metadata['columns']['data_source_deleted_flag'] = {
+            'data_type': 'BOOLEAN'
+        }
         if metadata['name'] in table_etl_processes:
             metadata['etls'][table_etl_processes[metadata['name']]['process']] = {
                 'hardcoded_data_source': 'Octane',
