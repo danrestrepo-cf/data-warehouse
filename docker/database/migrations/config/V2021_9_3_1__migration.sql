@@ -31,7 +31,7 @@ Add fields:
 WITH
     new_fields (table_name, field_name, field_order) AS (
     VALUES ('proposal_doc_validity', 'prpdv_criteria_html', 17)
-         , ('loan', 'l_buyup_buydown_basis_points', 115)
+         , ('loan', 'l_buyup_buydown_basis_points', 116)
          , ('proposal_doc_set', 'prpds_docs_last_updated_datetime', 31)
 )
 
