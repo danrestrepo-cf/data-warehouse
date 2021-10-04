@@ -1,6 +1,5 @@
 import sys
 import os
-import shutil
 import copy
 import csv
 import glob
