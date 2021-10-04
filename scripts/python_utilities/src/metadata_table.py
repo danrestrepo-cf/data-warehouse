@@ -2,6 +2,12 @@ from dataclasses import dataclass
 from typing import List, Iterable
 
 
+@dataclass
+class Row:
+    key: dict
+    attributes: dict
+
+
 class MetadataTable:
 
     def __init__(self, name: str, key_fields: List[str]):
@@ -24,8 +30,8 @@ class MetadataTable:
             self.add_row(row)
 
     @property
-    def rows(self):
-        return self._rows.values()
+    def rows(self) -> List[Row]:
+        return list(self._rows.values())
 
     def row_exists_with_key(self, key: dict):
         """Return true if a row exists in the table with the given key, false otherwise"""
@@ -52,9 +58,3 @@ class MetadataTable:
     class InvalidKeyValuesException(Exception):
         def __init__(self, key: tuple):
             super().__init__(f'No row exists with key values matching {key}')
-
-
-@dataclass
-class Row:
-    key: dict
-    attributes: dict
