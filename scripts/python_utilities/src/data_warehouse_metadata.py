@@ -61,6 +61,7 @@ class TableMetadata:
     def __init__(self, name: str, primary_source_table: TableAddress = None):
         self.name = name
         self.primary_source_table = primary_source_table
+        self.primary_key = []
         self.next_etls = []
         self._columns = {}
         self._etls = {}
