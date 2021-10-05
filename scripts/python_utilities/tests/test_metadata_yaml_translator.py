@@ -5,7 +5,12 @@ import os
 import shutil
 import yaml
 
-from metadata_yaml_translator import generate_data_warehouse_metadata_from_yaml, InvalidTableYAMLFileException
+from metadata_yaml_translator import (generate_data_warehouse_metadata_from_yaml,
+                                      InvalidTableYAMLFileException,
+                                      parse_foreign_column_path,
+                                      parse_etl_data_source,
+                                      parse_etl_input_type,
+                                      parse_etl_output_type)
 from data_warehouse_metadata import (DataWarehouseMetadata,
                                      DatabaseMetadata,
                                      SchemaMetadata,
@@ -391,6 +396,73 @@ class TestGenerateDataWarehouseWithInvalidETLFields(unittest.TestCase):
         if os.path.isdir(self.root_filepath):
             shutil.rmtree(self.root_filepath)
 
+
+class TestGenerateDataWarehouseWithInvalidPrimarySourceTable(unittest.TestCase):
+
+    def setUp(self) -> None:
+        self.root_filepath = os.path.join(test_dir, 'dw')
+        self.db1_filepath = os.path.join(self.root_filepath, 'db.db1')
+        self.sch1_filepath = os.path.join(self.db1_filepath, 'schema.sch1')
+        self.bad_pst_table_filepath = os.path.join(self.sch1_filepath, 'table.bad_pst.yaml')
+        os.mkdir(self.root_filepath)
+        os.mkdir(self.db1_filepath)
+        os.mkdir(self.sch1_filepath)
+        write_yaml({'name': 'bad_pst', 'primary_source_table': 'a_table'}, self.bad_pst_table_filepath)
+
+    def test_throws_error_if_primary_source_table_has_an_incorrect_format(self):
+        with self.assertRaises(InvalidTableYAMLFileException):
+            generate_data_warehouse_metadata_from_yaml(self.root_filepath)
+
+    def tearDown(self) -> None:
+        if os.path.isdir(self.root_filepath):
+            shutil.rmtree(self.root_filepath)
+
+
+class TestParseForeignColumnPath(unittest.TestCase):
+
+    def test_throws_error_if_path_is_none(self):
+        with self.assertRaises(InvalidTableYAMLFileException):
+            parse_foreign_column_path(None)
+
+    def test_throws_error_if_path_doesnt_start_with_primary_source_table(self):
+        with self.assertRaises(InvalidTableYAMLFileException):
+            parse_foreign_column_path('')
+
+    def test_throws_error_if_path_has_odd_number_of_periods(self):
+        with self.assertRaises(InvalidTableYAMLFileException):
+            parse_foreign_column_path('primary_source_table.foreign_keys.fk_1.foreign_keys')
+
+    def test_throws_error_if_path_contains_an_invalid_keyword(self):
+        with self.assertRaises(InvalidTableYAMLFileException):
+            parse_foreign_column_path('primary_source_table.strange_keys.fk_1')
+
+    def test_throws_error_if_the_destination_column_appears_in_the_path_before_its_end(self):
+        with self.assertRaises(InvalidTableYAMLFileException):
+            parse_foreign_column_path('primary_source_table.columns.col1.foreign_keys.fk_2')
+
+    def test_throws_error_if_the_path_contains_no_destination_column(self):
+        with self.assertRaises(InvalidTableYAMLFileException):
+            parse_foreign_column_path('primary_source_table.foreign_keys.fk_2')
+
+    def test_correctly_parses_valid_path(self):
+        expected = ForeignColumnPath(['fk_1', 'fk_2', 'fk_3'], 'col')
+        test_path = 'primary_source_table.foreign_keys.fk_1.foreign_keys.fk_2.foreign_keys.fk_3.columns.col'
+        self.assertEqual(expected, parse_foreign_column_path(test_path))
+
+
+class TestParseETLEnumParsers(unittest.TestCase):
+
+    def test_throws_error_if_data_source_is_invalid(self):
+        with self.assertRaises(InvalidTableYAMLFileException):
+            parse_etl_data_source('invalid_data_source')
+
+    def test_throws_error_if_input_type_is_invalid(self):
+        with self.assertRaises(InvalidTableYAMLFileException):
+            parse_etl_input_type('invalid_input_type')
+
+    def test_throws_error_if_output_type_is_invalid(self):
+        with self.assertRaises(InvalidTableYAMLFileException):
+            parse_etl_output_type('invalid_input_type')
 
 if __name__ == '__main__':
     unittest.main()

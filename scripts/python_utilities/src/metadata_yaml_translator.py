@@ -2,7 +2,7 @@ import pathlib
 import glob
 import os
 import yaml
-from typing import List, Optional
+from typing import List
 
 from data_warehouse_metadata import (DataWarehouseMetadata,
                                      DatabaseMetadata,
@@ -15,8 +15,7 @@ from data_warehouse_metadata import (DataWarehouseMetadata,
                                      TableAddress,
                                      ETLDataSource,
                                      ETLInputType,
-                                     ETLOutputType,
-                                     InvalidMetadataKeyException)
+                                     ETLOutputType)
 
 
 def generate_data_warehouse_metadata_from_yaml(root_dir_file_path: str) -> DataWarehouseMetadata:
@@ -36,7 +35,10 @@ def generate_data_warehouse_metadata_from_yaml(root_dir_file_path: str) -> DataW
                 table_yaml = read_yaml_file(table_yaml_path)
                 table = TableMetadata(table_yaml['name'])
                 if 'primary_source_table' in table_yaml:
-                    # todo: add error checking
+                    if not table_yaml['primary_source_table'] or table_yaml['primary_source_table'].count('.') != 2:
+                        raise InvalidTableYAMLFileException(
+                            f'Primary source table for table "{table_yaml["name"]}" is not in the format "database.schema.table"'
+                        )
                     source_table_components = table_yaml['primary_source_table'].split('.')
                     table.primary_source_table = TableAddress(
                         database=source_table_components[0],
@@ -109,38 +111,42 @@ def read_yaml_file(filepath: str) -> dict:
 
 
 def parse_foreign_column_path(path: str) -> ForeignColumnPath:
-    # todo: add error checking
+    if not path or not path.startswith('primary_source_table') or path.count('.') < 2 or path.count('.') % 2 == 1:
+        raise InvalidTableYAMLFileException(f'Source field path "{path}" could not be parsed')
     split_path = path.split('.')
     fk_path = []
     for i in range(1, len(split_path), 2):
         if split_path[i] == 'foreign_keys':
+            if i == len(split_path) - 2:  # reached the end of the path without encountering "columns"
+                raise InvalidTableYAMLFileException(f'Source field path "{path}" could not be parsed')
             fk_path.append(split_path[i + 1])
         elif split_path[i] == 'columns':
+            if i != len(split_path) - 2:  # "columns" is not the last thing in the path
+                raise InvalidTableYAMLFileException(f'Source field path "{path}" could not be parsed')
             return ForeignColumnPath(fk_path, split_path[i + 1])
+        else:
+            raise InvalidTableYAMLFileException(f'Source field path "{path}" could not be parsed')
 
 
 def parse_etl_data_source(raw_data_source: str) -> ETLDataSource:
-    if raw_data_source is None:
-        return None
-    elif raw_data_source.lower() == 'octane':
+    if raw_data_source.lower() == 'octane':
         return ETLDataSource.OCTANE
-    # todo: add error checking
+    else:
+        raise InvalidTableYAMLFileException(f'Invalid ETL data source: {raw_data_source}')
 
 
 def parse_etl_input_type(raw_input_type: str) -> ETLInputType:
-    if raw_input_type is None:
-        return None
-    elif raw_input_type.lower() == 'table':
+    if raw_input_type.lower() == 'table':
         return ETLInputType.TABLE
-    # todo: add error checking
+    else:
+        raise InvalidTableYAMLFileException(f'Invalid ETL input type: {raw_input_type}')
 
 
 def parse_etl_output_type(raw_output_type: str) -> ETLOutputType:
-    if raw_output_type is None:
-        return None
-    elif raw_output_type.lower() == 'insert':
+    if raw_output_type.lower() == 'insert':
         return ETLOutputType.INSERT
-    # todo: add error checking
+    else:
+        raise InvalidTableYAMLFileException(f'Invalid ETL output type: {raw_output_type}')
 
 
 class InvalidTableYAMLFileException(Exception):
