@@ -15,6 +15,9 @@ from data_warehouse_metadata import (DataWarehouseMetadata,
                                      ForeignKeyMetadata,
                                      ForeignColumnPath,
                                      TableAddress,
+                                     ETLDataSource,
+                                     ETLInputType,
+                                     ETLOutputType,
                                      InvalidMetadataKeyException)
 
 test_dir = os.path.dirname(os.path.abspath(__file__))
@@ -192,6 +195,58 @@ class TestGenerateDataWarehouseWithFullYAMLFile(unittest.TestCase):
                     }
                 }
             },
+            'columns': {
+                'col1': {
+                    'data_type': 'BIGINT',
+                    'source': {
+                        'field': 'primary_source_table.columns.t01_col1'
+                    }
+                },
+                'col2': {
+                    'data_type': 'BIGINT',
+                    'source': {
+                        'field': 'primary_source_table.columns.t01_col2'
+                    }
+                },
+                'col3': {
+                    'data_type': 'VARCHAR(16)',
+                    'source': {
+                        'field': 'primary_source_table.foreign_keys.fk_1.foreign_keys.fk_3.columns.distant_col1'
+                    }
+                }
+            },
+            'etls': {
+                'SP-101': {
+                    'hardcoded_data_source': 'Octane',
+                    'input_type': 'table',
+                    'output_type': 'insert',
+                    'json_output_field': 'col1',
+                    'truncate_table': False,
+                    'insert_update_keys': [
+                        'col1',
+                        'col2'
+                    ],
+                    'delete_keys': [
+                        'col1',
+                        'col2'
+                    ],
+                    'input_sql': 'SELECT * FROM sch1.table01;',
+                },
+                'SP-102': {
+                    'hardcoded_data_source': 'Octane',
+                    'input_type': 'table',
+                    'output_type': 'insert',
+                    'json_output_field': 'col2',
+                    'truncate_table': True,
+                    'insert_update_keys': [
+                        'col3'
+                    ],
+                    'delete_keys': [
+                        'col2'
+                    ],
+                    'input_sql': 'SELECT * FROM sch1.table02;',
+                }
+            },
             'next_etls': [
                 'SP-201',
                 'SP-202'
@@ -212,6 +267,51 @@ class TestGenerateDataWarehouseWithFullYAMLFile(unittest.TestCase):
             ForeignKeyMetadata('fk_2', TableAddress('db1', 'sch3', 'table12'), ['col3'], ['t12_col7'])
         ]
         self.assertEqual(expected, self.table1_metadata.foreign_keys)
+
+    def test_parses_columns_into_ColumnMetadata_objects(self):
+        expected = [
+            ColumnMetadata('col1', 'BIGINT', ForeignColumnPath([], 't01_col1')),
+            ColumnMetadata('col2', 'BIGINT', ForeignColumnPath([], 't01_col2')),
+            ColumnMetadata('col3', 'VARCHAR(16)', ForeignColumnPath(['fk_1', 'fk_3'], 'distant_col1'))
+        ]
+        self.assertEqual(expected, self.table1_metadata.columns)
+
+    def test_parses_etls_into_ETLMetadata_objects(self):
+        expected = [
+            ETLMetadata(
+                process_name='SP-101',
+                hardcoded_data_source=ETLDataSource.OCTANE,
+                input_type=ETLInputType.TABLE,
+                output_type=ETLOutputType.INSERT,
+                json_output_field='col1',
+                truncate_table=False,
+                insert_update_keys=[
+                    'col1',
+                    'col2'
+                ],
+                delete_keys=[
+                    'col1',
+                    'col2'
+                ],
+                input_sql='SELECT * FROM sch1.table01;'
+            ),
+            ETLMetadata(
+                process_name='SP-102',
+                hardcoded_data_source=ETLDataSource.OCTANE,
+                input_type=ETLInputType.TABLE,
+                output_type=ETLOutputType.INSERT,
+                json_output_field='col2',
+                truncate_table=True,
+                insert_update_keys=[
+                    'col3'
+                ],
+                delete_keys=[
+                    'col2'
+                ],
+                input_sql='SELECT * FROM sch1.table02;'
+            )
+        ]
+        self.assertEqual(expected, self.table1_metadata.etls)
 
     def tearDown(self) -> None:
         if os.path.isdir(self.root_filepath):

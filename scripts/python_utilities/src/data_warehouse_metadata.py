@@ -33,7 +33,7 @@ class ETLInputType(Enum):
 
 
 class ETLOutputType(Enum):
-    TABLE = 'table'
+    INSERT = 'insert'
 
 
 @dataclass
@@ -41,7 +41,7 @@ class ETLMetadata:
     process_name: str
     hardcoded_data_source: ETLDataSource = ETLDataSource.OCTANE
     input_type: ETLInputType = ETLInputType.TABLE
-    output_type: ETLOutputType = ETLOutputType.TABLE
+    output_type: ETLOutputType = ETLOutputType.INSERT
     json_output_field: str = None
     truncate_table: bool = None
     insert_update_keys: List[str] = None

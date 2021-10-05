@@ -13,6 +13,9 @@ from data_warehouse_metadata import (DataWarehouseMetadata,
                                      ForeignKeyMetadata,
                                      ForeignColumnPath,
                                      TableAddress,
+                                     ETLDataSource,
+                                     ETLInputType,
+                                     ETLOutputType,
                                      InvalidMetadataKeyException)
 
 
@@ -50,6 +53,26 @@ def generate_data_warehouse_metadata_from_yaml(root_dir_file_path: str) -> DataW
                             native_columns=fk_data['columns'],
                             foreign_columns=fk_data['references']['columns']
                         ))
+                if 'columns' in table_yaml:
+                    for column_name, column_data in table_yaml['columns'].items():
+                        table.add_column(ColumnMetadata(
+                            name=column_name,
+                            data_type=column_data['data_type'],
+                            source_field=parse_foreign_column_path(column_data['source']['field'])
+                        ))
+                if 'etls' in table_yaml:
+                    for etl_process_name, etl_data in table_yaml['etls'].items():
+                        table.add_etl(ETLMetadata(
+                            process_name=etl_process_name,
+                            hardcoded_data_source=parse_etl_data_source(etl_data['hardcoded_data_source']),
+                            input_type=parse_etl_input_type(etl_data['input_type']),
+                            output_type=parse_etl_output_type(etl_data['output_type']),
+                            json_output_field=etl_data['json_output_field'],
+                            truncate_table=etl_data['truncate_table'],
+                            insert_update_keys=etl_data['insert_update_keys'],
+                            delete_keys=etl_data['delete_keys'],
+                            input_sql=etl_data['input_sql']
+                        ))
                 if 'next_etls' in table_yaml:
                     table.next_etls = table_yaml['next_etls']
                 schema.add_table(table)
@@ -77,6 +100,35 @@ def read_yaml_file(filepath: str) -> dict:
 def strip_dot_prefix_and_suffix(s: str) -> str:
     """Returns the given string with dot-separated prefix and suffix removed (if any exist). E.g. 'a.b.c' -> 'b'"""
     return '.'.join((s.split('.')[1:-1]))
+
+
+def parse_foreign_column_path(path: str) -> ForeignColumnPath:
+    # todo: add error checking
+    split_path = path.split('.')
+    fk_path = []
+    for i in range(1, len(split_path), 2):
+        if split_path[i] == 'foreign_keys':
+            fk_path.append(split_path[i + 1])
+        elif split_path[i] == 'columns':
+            return ForeignColumnPath(fk_path, split_path[i + 1])
+
+
+def parse_etl_data_source(raw_data_source: str) -> ETLDataSource:
+    if raw_data_source.lower() == 'octane':
+        return ETLDataSource.OCTANE
+    # todo: add error checking
+
+
+def parse_etl_input_type(raw_input_type: str) -> ETLInputType:
+    if raw_input_type.lower() == 'table':
+        return ETLInputType.TABLE
+    # todo: add error checking
+
+
+def parse_etl_output_type(raw_output_type: str) -> ETLOutputType:
+    if raw_output_type.lower() == 'insert':
+        return ETLOutputType.INSERT
+    # todo: add error checking
 
 
 class InvalidTableYAMLFileException(Exception):
