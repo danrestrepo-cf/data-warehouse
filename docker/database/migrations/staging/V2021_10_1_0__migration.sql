@@ -5,6 +5,13 @@ product_choice_dim, hmda_purchaser_of_loan; fix transaction_dim grain)
 https://app.asana.com/0/0/1201078773927539
 */
 
+-- Update transaction_dim's zero row
+UPDATE star_loan.transaction_dim
+    SET data_source_integration_columns = 'deal_pid~data_source_dwid'
+        , data_source_integration_id = '0~0'
+    WHERE dwid = 0;
+
+-- Add key roles and beneficiary investor columns to loan_fact
 ALTER TABLE star_loan.loan_fact
     ADD COLUMN account_executive_lender_user_dwid BIGINT
     , ADD COLUMN closing_doc_specialist_lender_user_dwid BIGINT
