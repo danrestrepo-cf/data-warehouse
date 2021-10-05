@@ -5,7 +5,7 @@ import os
 import shutil
 import yaml
 
-from metadata_yaml_translator import generate_data_warehouse_metadata_from_yaml
+from metadata_yaml_translator import generate_data_warehouse_metadata_from_yaml, InvalidTableYAMLFileException
 from data_warehouse_metadata import (DataWarehouseMetadata,
                                      DatabaseMetadata,
                                      SchemaMetadata,
@@ -157,6 +157,7 @@ class TestGenerateDataWarehouseWithFullYAMLFile(unittest.TestCase):
         self.db1_filepath = os.path.join(self.root_filepath, 'db.db1')
         self.sch1_filepath = os.path.join(self.db1_filepath, 'schema.sch1')
         self.table1_filepath = os.path.join(self.sch1_filepath, 'table.table1.yaml')
+        self.table2_filepath = os.path.join(self.sch1_filepath, 'table.table2.yaml')
         os.mkdir(self.root_filepath)
         os.mkdir(self.db1_filepath)
         os.mkdir(self.sch1_filepath)
@@ -252,9 +253,40 @@ class TestGenerateDataWarehouseWithFullYAMLFile(unittest.TestCase):
                 'SP-202'
             ]
         }
+        table2_metadata = {
+            'name': 'table2',
+            'columns': {
+                'col0': {}
+            },
+            'etls': {
+                'SP-100': {
+                    'hardcoded_data_source': 'Octane',
+                    'input_type': 'table',
+                    'output_type': 'insert'
+                }
+            }
+        }
         write_yaml(table1_metadata, self.table1_filepath)
+        write_yaml(table2_metadata, self.table2_filepath)
         self.metadata = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
         self.table1_metadata = self.metadata.get_database('db1').get_schema('sch1').get_table('table1')
+        self.table2_metadata = self.metadata.get_database('db1').get_schema('sch1').get_table('table2')
+
+    def test_translates_missing_keys_into_null_values(self):
+        expected_cols = [ColumnMetadata(name='col0', data_type=None, source_field=None)]
+        expected_etls = [ETLMetadata(
+            process_name='SP-100',
+            hardcoded_data_source=ETLDataSource.OCTANE,
+            input_type=ETLInputType.TABLE,
+            output_type=ETLOutputType.INSERT,
+            json_output_field=None,
+            truncate_table=None,
+            insert_update_keys=None,
+            delete_keys=None,
+            input_sql=None
+        )]
+        self.assertEqual(expected_cols, self.table2_metadata.columns)
+        self.assertEqual(expected_etls, self.table2_metadata.etls)
 
     def test_parses_simple_attributes_correctly(self):
         self.assertEqual(TableAddress('db1', 'sch2', 'table01'), self.table1_metadata.primary_source_table)
@@ -312,6 +344,48 @@ class TestGenerateDataWarehouseWithFullYAMLFile(unittest.TestCase):
             )
         ]
         self.assertEqual(expected, self.table1_metadata.etls)
+
+    def tearDown(self) -> None:
+        if os.path.isdir(self.root_filepath):
+            shutil.rmtree(self.root_filepath)
+
+
+class TestGenerateDataWarehouseWithInvalidForeignKeyFields(unittest.TestCase):
+
+    def setUp(self) -> None:
+        self.root_filepath = os.path.join(test_dir, 'dw')
+        self.db1_filepath = os.path.join(self.root_filepath, 'db.db1')
+        self.sch1_filepath = os.path.join(self.db1_filepath, 'schema.sch1')
+        self.bad_fk_fields_table_filepath = os.path.join(self.sch1_filepath, 'table.bad_fk_fields.yaml')
+        os.mkdir(self.root_filepath)
+        os.mkdir(self.db1_filepath)
+        os.mkdir(self.sch1_filepath)
+        write_yaml({'name': 'bad_fk_fields', 'foreign_keys': {'fk_1': {}}}, self.bad_fk_fields_table_filepath)
+
+    def test_throws_error_if_fk_doesnt_have_all_required_fields(self):
+        with self.assertRaises(InvalidTableYAMLFileException):
+            generate_data_warehouse_metadata_from_yaml(self.root_filepath)
+
+    def tearDown(self) -> None:
+        if os.path.isdir(self.root_filepath):
+            shutil.rmtree(self.root_filepath)
+
+
+class TestGenerateDataWarehouseWithInvalidETLFields(unittest.TestCase):
+
+    def setUp(self) -> None:
+        self.root_filepath = os.path.join(test_dir, 'dw')
+        self.db1_filepath = os.path.join(self.root_filepath, 'db.db1')
+        self.sch1_filepath = os.path.join(self.db1_filepath, 'schema.sch1')
+        self.bad_etl_fields_table_filepath = os.path.join(self.sch1_filepath, 'table.bad_etl_fields.yaml')
+        os.mkdir(self.root_filepath)
+        os.mkdir(self.db1_filepath)
+        os.mkdir(self.sch1_filepath)
+        write_yaml({'name': 'bad_etl_fields', 'etls': {'SP-100': {}}}, self.bad_etl_fields_table_filepath)
+
+    def test_throws_error_if_etl_doesnt_have_all_required_fields(self):
+        with self.assertRaises(InvalidTableYAMLFileException):
+            generate_data_warehouse_metadata_from_yaml(self.root_filepath)
 
     def tearDown(self) -> None:
         if os.path.isdir(self.root_filepath):
