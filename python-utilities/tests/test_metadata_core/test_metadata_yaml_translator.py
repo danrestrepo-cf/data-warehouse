@@ -1,29 +1,27 @@
 import unittest
-import context
 import pathlib
 import os
 import shutil
 import yaml
 
-from metadata_yaml_translator import (generate_data_warehouse_metadata_from_yaml,
-                                      InvalidTableYAMLFileException,
-                                      parse_foreign_column_path,
-                                      parse_etl_data_source,
-                                      parse_etl_input_type,
-                                      parse_etl_output_type)
-from data_warehouse_metadata import (DataWarehouseMetadata,
-                                     DatabaseMetadata,
-                                     SchemaMetadata,
-                                     TableMetadata,
-                                     ColumnMetadata,
-                                     ETLMetadata,
-                                     ForeignKeyMetadata,
-                                     ForeignColumnPath,
-                                     TableAddress,
-                                     ETLDataSource,
-                                     ETLInputType,
-                                     ETLOutputType,
-                                     InvalidMetadataKeyException)
+from lib.metadata_core.metadata_yaml_translator import (generate_data_warehouse_metadata_from_yaml,
+                                                        InvalidTableYAMLFileException,
+                                                        parse_foreign_column_path,
+                                                        parse_etl_data_source,
+                                                        parse_etl_input_type,
+                                                        parse_etl_output_type)
+from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
+                                                       DatabaseMetadata,
+                                                       SchemaMetadata,
+                                                       TableMetadata,
+                                                       ColumnMetadata,
+                                                       ETLMetadata,
+                                                       ForeignKeyMetadata,
+                                                       ForeignColumnPath,
+                                                       TableAddress,
+                                                       ETLDataSource,
+                                                       ETLInputType,
+                                                       ETLOutputType)
 
 test_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -463,6 +461,7 @@ class TestParseETLEnumParsers(unittest.TestCase):
     def test_throws_error_if_output_type_is_invalid(self):
         with self.assertRaises(InvalidTableYAMLFileException):
             parse_etl_output_type('invalid_input_type')
+
 
 if __name__ == '__main__':
     unittest.main()

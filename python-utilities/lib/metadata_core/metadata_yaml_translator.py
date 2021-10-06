@@ -4,18 +4,18 @@ import os
 import yaml
 from typing import List
 
-from data_warehouse_metadata import (DataWarehouseMetadata,
-                                     DatabaseMetadata,
-                                     SchemaMetadata,
-                                     TableMetadata,
-                                     ColumnMetadata,
-                                     ETLMetadata,
-                                     ForeignKeyMetadata,
-                                     ForeignColumnPath,
-                                     TableAddress,
-                                     ETLDataSource,
-                                     ETLInputType,
-                                     ETLOutputType)
+from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
+                                                       DatabaseMetadata,
+                                                       SchemaMetadata,
+                                                       TableMetadata,
+                                                       ColumnMetadata,
+                                                       ETLMetadata,
+                                                       ForeignKeyMetadata,
+                                                       ForeignColumnPath,
+                                                       TableAddress,
+                                                       ETLDataSource,
+                                                       ETLInputType,
+                                                       ETLOutputType)
 
 
 def generate_data_warehouse_metadata_from_yaml(root_dir_file_path: str) -> DataWarehouseMetadata:

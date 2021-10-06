@@ -1,15 +1,13 @@
 import unittest
-import context
 
-from data_warehouse_metadata import (DataWarehouseMetadata,
-                                     DatabaseMetadata,
-                                     SchemaMetadata,
-                                     TableMetadata,
-                                     ColumnMetadata,
-                                     ETLMetadata,
-                                     ForeignKeyMetadata,
-                                     ForeignColumnPath,
-                                     InvalidMetadataKeyException)
+from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
+                                                                        DatabaseMetadata,
+                                                                        SchemaMetadata,
+                                                                        TableMetadata,
+                                                                        ColumnMetadata,
+                                                                        ETLMetadata,
+                                                                        ForeignKeyMetadata,
+                                                                        InvalidMetadataKeyException)
 
 
 class TestDataWarehouseMetadata(unittest.TestCase):

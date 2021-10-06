@@ -1,7 +1,5 @@
 import unittest
-import context
-
-from metadata_table import MetadataTable, Row
+from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 
 
 class TestMetadataTable(unittest.TestCase):
