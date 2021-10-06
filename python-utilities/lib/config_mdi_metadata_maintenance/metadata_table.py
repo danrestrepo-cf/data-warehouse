@@ -7,6 +7,10 @@ class Row:
     key: dict
     attributes: dict
 
+    @property
+    def full_row(self) -> dict:
+        return {**self.key, **self.attributes}
+
 
 class MetadataTable:
 
@@ -49,6 +53,12 @@ class MetadataTable:
             if key_field not in d:
                 raise self.InvalidKeyFieldsException(self._key_fields, d)
         return tuple(d[key_field] for key_field in self._key_fields)
+
+    def __repr__(self):
+        return f'MetadataTable(rows={repr(self.rows)})'
+
+    def __eq__(self, other: 'MetadataTable') -> bool:
+        return isinstance(other, MetadataTable) and self.rows == other.rows
 
     class InvalidKeyFieldsException(Exception):
         def __init__(self, key_fields: List[str], row: dict):
