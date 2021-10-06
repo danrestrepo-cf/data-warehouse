@@ -10,8 +10,7 @@ class Row:
 
 class MetadataTable:
 
-    def __init__(self, name: str, key_fields: List[str]):
-        self.name = name
+    def __init__(self, key_fields: List[str]):
         self._rows = {}
         self._key_fields = key_fields
         return
