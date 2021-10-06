@@ -45,8 +45,7 @@ def generate_data_warehouse_metadata_from_yaml(root_dir_file_path: str) -> DataW
                         schema=source_table_components[1],
                         table=source_table_components[2]
                     )
-                if 'primary_key' in table_yaml:
-                    table.primary_key = table_yaml.get('primary_key')
+                table.primary_key = table_yaml.get('primary_key')
                 if 'foreign_keys' in table_yaml:
                     for fk_name, fk_data in table_yaml['foreign_keys'].items():
                         if 'columns' not in fk_data or 'references' not in fk_data or 'schema' not in fk_data['references'] or \
@@ -86,8 +85,7 @@ def generate_data_warehouse_metadata_from_yaml(root_dir_file_path: str) -> DataW
                             delete_keys=etl_data.get('delete_keys'),
                             input_sql=etl_data.get('input_sql')
                         ))
-                if 'next_etls' in table_yaml:
-                    table.next_etls = table_yaml['next_etls']
+                table.next_etls = table_yaml.get('next_etls')
                 schema.add_table(table)
     return data_warehouse
 
