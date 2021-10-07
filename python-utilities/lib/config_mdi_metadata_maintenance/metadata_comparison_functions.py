@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 
 from lib.db_connections import LocalEDWConnection
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
+from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper, DefaultRowGrouper
 from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata
 
 
@@ -19,9 +20,9 @@ class MetadataComparisonFunctions(ABC):
     def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:
         pass
 
-    # @abstractmethod
-    # def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
-    #     pass
+    @abstractmethod
+    def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
+        pass
 
     @abstractmethod
     def generate_insert_sql(self, rows: List[Row]) -> str:
@@ -84,6 +85,9 @@ class ProcessMetadataComparisonFunctions(MetadataComparisonFunctions):
                                           f'{source_table.database}.{source_table.schema}.{source_table.table} to {database.name}.{schema.name}.{table.name}'
                         metadata_table.add_row({'process_name': etl.process_name, 'process_description': description})
         return metadata_table
+
+    def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
+        return DefaultRowGrouper()
 
     def generate_insert_sql(self, rows: List[Row]) -> str:
         return "INSERT\n" + \

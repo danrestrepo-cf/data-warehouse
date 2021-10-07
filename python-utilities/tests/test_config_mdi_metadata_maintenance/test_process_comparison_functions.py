@@ -9,7 +9,7 @@ from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        TableMetadata,
                                                        ETLMetadata,
                                                        TableAddress)
-from lib.config_mdi_metadata_maintenance.metadata_comparison_configurations import (ProcessMetadataComparisonFunctions)
+from lib.config_mdi_metadata_maintenance.metadata_comparison_functions import (ProcessMetadataComparisonFunctions)
 
 
 class TestProcessMetadataComparisonFunctions(unittest.TestCase):
@@ -60,6 +60,15 @@ class TestProcessMetadataComparisonFunctions(unittest.TestCase):
              'process_description': 'table -> table-insert ETL from ingress.ingress_schema_1.table3 to ingress.ingress_schema_2.table3'}
         ])
         self.assertEqual(expected, ProcessMetadataComparisonFunctions().construct_metadata_table_from_source(dw_metadata))
+
+    def test_construct_insert_row_grouper(self):
+        test_data = [
+            Row(key={'process_name': 'SP-1'}, attributes={'process_description': 'ETL to populate table1'}),
+            Row(key={'process_name': 'SP-2'}, attributes={'process_description': 'ETL to populate table2'}),
+            Row(key={'process_name': 'SP-3'}, attributes={'process_description': 'ETL to populate table3'})
+        ]
+        row_grouper = ProcessMetadataComparisonFunctions().construct_insert_row_grouper(DataWarehouseMetadata('dw'))
+        self.assertEqual([test_data], row_grouper.group_rows(test_data))
 
     def test_generate_insert_sql(self):
         test_data = [
