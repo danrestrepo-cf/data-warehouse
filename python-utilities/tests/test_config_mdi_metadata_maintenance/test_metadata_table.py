@@ -1,18 +1,19 @@
 import unittest
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
+from lib.config_mdi_metadata_maintenance.multi_key_map import MultiKeyMap
 
 
 class TestMetadataTable(unittest.TestCase):
     def test_throws_error_if_single_added_row_doesnt_contain_all_key_fields(self):
         table = MetadataTable(key_fields=['key1', 'key2'])
-        with self.assertRaises(MetadataTable.InvalidKeyFieldsException):
+        with self.assertRaises(MultiKeyMap.InvalidKeyFieldsException):
             table.add_row({})
-        with self.assertRaises(MetadataTable.InvalidKeyFieldsException):
+        with self.assertRaises(MultiKeyMap.InvalidKeyFieldsException):
             table.add_row({'key1': 1})
 
     def test_throws_error_if_any_added_row_doesnt_contain_all_key_fields(self):
         table = MetadataTable(key_fields=['key1', 'key2'])
-        with self.assertRaises(MetadataTable.InvalidKeyFieldsException):
+        with self.assertRaises(MultiKeyMap.InvalidKeyFieldsException):
             table.add_rows([{'key1': 1, 'key2': 2},
                             {'key1': 3, 'key2': 4},
                             {'key1': 5, 'other_column_name': 6}])
@@ -33,7 +34,7 @@ class TestMetadataTable(unittest.TestCase):
 
     def test_throws_error_if_user_requests_attributes_for_nonexistent_key(self):
         table = MetadataTable(key_fields=['key1', 'key2'])
-        with self.assertRaises(MetadataTable.InvalidKeyValuesException):
+        with self.assertRaises(MultiKeyMap.InvalidKeyValuesException):
             table.get_attributes_by_key({'key1': 1, 'key2': 2})
 
     def test_can_iterate_through_table_rows(self):
