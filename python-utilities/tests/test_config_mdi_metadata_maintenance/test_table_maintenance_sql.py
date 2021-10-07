@@ -6,7 +6,7 @@ from tests.test_utils import MockLocalEDWConnection
 from lib.config_mdi_metadata_maintenance.metadata_table import Row, MetadataTable
 from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper
 from lib.db_connections import LocalEDWConnection
-from lib.config_mdi_metadata_maintenance.maintenance_sql_generator import generate_metadata_maintenance_sql, TableMaintenanceSQL
+from lib.config_mdi_metadata_maintenance.table_maintenance_sql import generate_table_maintenance_sql, TableMaintenanceSQL
 from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
 from lib.config_mdi_metadata_maintenance.metadata_comparison_functions import MetadataComparisonFunctions
@@ -67,8 +67,8 @@ class TestGenerateMetadataMaintenanceSQL(unittest.TestCase):
             update_sql='',
             delete_sql=''
         )
-        self.assertEqual(expected, generate_metadata_maintenance_sql(db_connection, DataWarehouseMetadata('dw'),
-                                                                     TestingMetadataComparisonFunctions()))
+        self.assertEqual(expected, generate_table_maintenance_sql(db_connection, DataWarehouseMetadata('dw'),
+                                                                  TestingMetadataComparisonFunctions()))
 
     def test_returns_only_empty_strings_if_no_metadata_differences_are_found(self):
         db_connection = MockLocalEDWConnection([
@@ -104,7 +104,7 @@ class TestGenerateMetadataMaintenanceSQL(unittest.TestCase):
             update_sql='',
             delete_sql=''
         )
-        self.assertEqual(expected, generate_metadata_maintenance_sql(db_connection, dw_metadata, TestingMetadataComparisonFunctions()))
+        self.assertEqual(expected, generate_table_maintenance_sql(db_connection, dw_metadata, TestingMetadataComparisonFunctions()))
 
     def test_returns_appropriate_insert_sql_if_metadata_is_missing_on_the_config_side(self):
         db_connection = MockLocalEDWConnection([])
@@ -141,7 +141,7 @@ class TestGenerateMetadataMaintenanceSQL(unittest.TestCase):
             update_sql='',
             delete_sql=''
         )
-        self.assertEqual(expected, generate_metadata_maintenance_sql(db_connection, dw_metadata, TestingMetadataComparisonFunctions()))
+        self.assertEqual(expected, generate_table_maintenance_sql(db_connection, dw_metadata, TestingMetadataComparisonFunctions()))
 
     def test_creates_one_insert_sql_statement_per_row_group(self):
         db_connection = MockLocalEDWConnection([])
@@ -182,7 +182,60 @@ class TestGenerateMetadataMaintenanceSQL(unittest.TestCase):
             update_sql='',
             delete_sql=''
         )
-        self.assertEqual(expected, generate_metadata_maintenance_sql(db_connection, dw_metadata, TestingMetadataComparisonFunctions()))
+        self.assertEqual(expected, generate_table_maintenance_sql(db_connection, dw_metadata, TestingMetadataComparisonFunctions()))
+
+    def test_returns_appropriate_update_sql_if_metadata_is_different_between_source_and_config(self):
+        db_connection = MockLocalEDWConnection([
+            {'column_name': 'col1', 'data_type': 'INT'},
+            {'column_name': 'col2', 'data_type': 'TEXT'}
+        ])
+        dw_metadata = construct_data_warehouse_metadata_from_dict(
+            {
+                'name': 'dw1',
+                'databases': [
+                    {
+                        'name': 'db1',
+                        'schemas': [
+                            {
+                                'name': 'schema1',
+                                'tables': [
+                                    {
+                                        'name': 'table1',
+                                        'columns': {
+                                            'col1': {
+                                                'data_type': 'TEXT'
+                                            },
+                                            'col2': {
+                                                'data_type': 'INT'
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        )
+        expected = TableMaintenanceSQL(
+            insert_sql='',
+            update_sql='UPDATE rows: [Row(key={\'column_name\': \'col1\'}, attributes={\'data_type\': \'TEXT\'}), Row(key={\'column_name\': \'col2\'}, attributes={\'data_type\': \'INT\'})]',
+            delete_sql=''
+        )
+        self.assertEqual(expected, generate_table_maintenance_sql(db_connection, dw_metadata, TestingMetadataComparisonFunctions()))
+
+    def test_returns_appropriate_delete_sql_if_metadata_is_missing_from_source(self):
+        db_connection = MockLocalEDWConnection([
+            {'column_name': 'col1', 'data_type': 'INT'},
+            {'column_name': 'col2', 'data_type': 'TEXT'}
+        ])
+        dw_metadata = DataWarehouseMetadata('dw')
+        expected = TableMaintenanceSQL(
+            insert_sql='',
+            update_sql='',
+            delete_sql='DELETE rows: [Row(key={\'column_name\': \'col1\'}, attributes={\'data_type\': \'INT\'}), Row(key={\'column_name\': \'col2\'}, attributes={\'data_type\': \'TEXT\'})]'
+        )
+        self.assertEqual(expected, generate_table_maintenance_sql(db_connection, dw_metadata, TestingMetadataComparisonFunctions()))
 
 
 if __name__ == '__main__':
