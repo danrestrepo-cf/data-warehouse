@@ -5,7 +5,7 @@ product_choice_dim, hmda_purchaser_of_loan; fix transaction_dim grain)
 https://app.asana.com/0/0/1201078773927539
 */
 
--- Update SP-200019 / Dimension ETL to populate transaction_dim from history_octane table input sql
+-- Update SP-200019 / Dimension ETL to populate transaction_dim from history_octane
 UPDATE mdi.table_input_step
     SET sql = 'SELECT  ''deal_pid'' || ''~'' || ''data_source_dwid'' as data_source_integration_columns,
     COALESCE(CAST(t1441.d_pid as text), ''<NULL>'')  || ''~'' || COALESCE(CAST(1 as text), ''<NULL>'')  as data_source_integration_id,
@@ -49,6 +49,67 @@ UPDATE mdi.table_input_step
 
 
 -- Update SP-300001 / ETL to maintain loan_fact table input sql
+-- insert new insert_update_field rows:
+WITH insert_update_step_dwid AS (
+    SELECT insert_update_step.dwid
+    FROM mdi.insert_update_step
+    WHERE table_name = 'loan_fact'
+)
+
+, new_insert_update_field_rows (update_lookup, update_stream, update_flag, is_sensitive) AS (
+    VALUES ('account_executive_lender_user_dwid', 'account_executive_lender_user_dwid', 'Y', FALSE)
+         , ('closing_doc_specialist_lender_user_dwid', 'closing_doc_specialist_lender_user_dwid', 'Y', FALSE)
+         , ('closing_scheduler_lender_user_dwid', 'closing_scheduler_lender_user_dwid', 'Y', FALSE)
+         , ('collateral_to_investor_lender_user_dwid', 'collateral_to_investor_lender_user_dwid', 'Y', FALSE)
+         , ('collateral_underwriter_lender_user_dwid', 'collateral_underwriter_lender_user_dwid', 'Y', FALSE)
+         , ('correspondent_client_advocate_lender_user_dwid', 'correspondent_client_advocate_lender_user_dwid', 'Y',
+            FALSE)
+         , ('final_documents_to_investor_lender_user_dwid', 'final_documents_to_investor_lender_user_dwid', 'Y', FALSE)
+         , ('flood_insurance_specialist_lender_user_dwid', 'flood_insurance_specialist_lender_user_dwid', 'Y', FALSE)
+         , ('funder_lender_user_dwid', 'funder_lender_user_dwid', 'Y', FALSE)
+         , ('government_insurance_lender_user_dwid', 'government_insurance_lender_user_dwid', 'Y', FALSE)
+         , ('ho6_specialist_lender_user_dwid', 'ho6_specialist_lender_user_dwid', 'Y', FALSE)
+         , ('hoa_specialist_lender_user_dwid', 'hoa_specialist_lender_user_dwid', 'Y', FALSE)
+         , ('hoi_specialist_lender_user_dwid', 'hoi_specialist_lender_user_dwid', 'Y', FALSE)
+         , ('hud_va_lender_officer_lender_user_dwid', 'hud_va_lender_officer_lender_user_dwid', 'Y', FALSE)
+         , ('internal_construction_manager_lender_user_dwid', 'internal_construction_manager_lender_user_dwid', 'Y',
+            FALSE)
+         , ('investor_conditions_lender_user_dwid', 'investor_conditions_lender_user_dwid', 'Y', FALSE)
+         , ('investor_stack_to_investor_lender_user_dwid', 'investor_stack_to_investor_lender_user_dwid', 'Y', FALSE)
+         , ('loan_officer_assistant_lender_user_dwid', 'loan_officer_assistant_lender_user_dwid', 'Y', FALSE)
+         , ('loan_payoff_specialist_lender_user_dwid', 'loan_payoff_specialist_lender_user_dwid', 'Y', FALSE)
+         , ('originator_lender_user_dwid', 'originator_lender_user_dwid', 'Y', FALSE)
+         , ('processor_lender_user_dwid', 'processor_lender_user_dwid', 'Y', FALSE)
+         , ('project_underwriter_lender_user_dwid', 'project_underwriter_lender_user_dwid', 'Y', FALSE)
+         , ('subordination_specialist_lender_user_dwid', 'subordination_specialist_lender_user_dwid', 'Y', FALSE)
+         , ('supplemental_originator_lender_user_dwid', 'supplemental_originator_lender_user_dwid', 'Y', FALSE)
+         , ('title_specialist_lender_user_dwid', 'title_specialist_lender_user_dwid', 'Y', FALSE)
+         , ('transaction_assistant_lender_user_dwid', 'transaction_assistant_lender_user_dwid', 'Y', FALSE)
+         , ('underwriter_lender_user_dwid', 'underwriter_lender_user_dwid', 'Y', FALSE)
+         , ('underwriting_manager_lender_user_dwid', 'underwriting_manager_lender_user_dwid', 'Y', FALSE)
+         , ('va_specialist_lender_user_dwid', 'va_specialist_lender_user_dwid', 'Y', FALSE)
+         , ('verbal_voe_specialist_lender_user_dwid', 'verbal_voe_specialist_lender_user_dwid', 'Y', FALSE)
+         , ('voe_specialist_lender_user_dwid', 'voe_specialist_lender_user_dwid', 'Y', FALSE)
+         , ('wholesale_client_advocate_lender_user_dwid', 'wholesale_client_advocate_lender_user_dwid', 'Y', FALSE)
+         , ('wire_specialist_lender_user_dwid', 'wire_specialist_lender_user_dwid', 'Y', FALSE)
+         , ('initial_beneficiary_investor_dwid', 'initial_beneficiary_investor_dwid', 'Y', FALSE)
+         , ('first_beneficiary_after_initial_investor_dwid', 'first_beneficiary_after_initial_investor_dwid', 'Y',
+            FALSE)
+         , ('most_recent_purchasing_beneficiary_investor_dwid', 'most_recent_purchasing_beneficiary_investor_dwid',
+            'Y', FALSE)
+         , ('current_beneficiary_investor_dwid', 'current_beneficiary_investor_dwid', 'Y', FALSE)
+)
+
+INSERT INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)
+    SELECT insert_update_step_dwid.dwid
+        , new_insert_update_field_rows.update_lookup
+        , new_insert_update_field_rows.update_stream
+        , new_insert_update_field_rows.update_flag::mdi.pentaho_y_or_n
+        , new_insert_update_field_rows.is_sensitive
+    FROM insert_update_step_dwid
+        CROSS JOIN new_insert_update_field_rows;
+
+-- update table_input_step.sql row
 UPDATE mdi.table_input_step
     SET sql = 'SELECT COALESCE(loan_fact.edw_created_datetime, NOW()) AS edw_created_datetime
     , NOW() AS edw_modified_datetime
@@ -161,10 +222,10 @@ UPDATE mdi.table_input_step
     , COALESCE(voe_specialist.dwid, 0) AS voe_specialist_lender_user_dwid
     , COALESCE(wholesale_client_advocate.dwid, 0) AS wholesale_client_advocate_lender_user_dwid
     , COALESCE(wire_specialist.dwid, 0) AS wire_specialist_lender_user_dwid
-    , COALESCE(current_loan_beneficiary_investor_dim.dwid, 0) AS current_loan_beneficiary_investor_dwid
-    , COALESCE(initial_loan_beneficiary_investor_dim.dwid, 0) AS initial_loan_beneficiary_investor_dwid
-    , COALESCE(first_loan_beneficiary_investor_after_initial_dim.dwid, 0) AS
-        first_loan_beneficiary_investor_after_initial_dwid
+    , COALESCE(current_beneficiary_investor_dim.dwid, 0) AS current_beneficiary_investor_dwid
+    , COALESCE(initial_beneficiary_investor_dim.dwid, 0) AS initial_beneficiary_investor_dwid
+    , COALESCE(first_beneficiary_after_initial_investor_dim.dwid, 0) AS
+        first_beneficiary_after_initial_investor_dwid
     , COALESCE(most_recent_purchasing_beneficiary_investor_dim.dwid, 0) AS
         most_recent_purchasing_beneficiary_investor_dwid
 FROM
@@ -177,7 +238,7 @@ FROM
             AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
         WHERE deal.data_source_deleted_flag IS FALSE
           AND history_records.d_pid IS NULL) AS deal
-        -- history_octane proposal
+    -- history_octane proposal
     JOIN (
         SELECT proposal.*
              , <<proposal_partial_load_condition>> AS include_record
@@ -186,7 +247,7 @@ FROM
             AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
         WHERE proposal.data_source_deleted_flag IS FALSE
           AND history_records.prp_pid IS NULL) AS proposal ON deal.d_active_proposal_pid = proposal.prp_pid
-        -- history_octane (primary) application
+    -- history_octane (primary) application
     JOIN (
         SELECT application.*
              , <<application_partial_load_condition>> AS include_record
@@ -196,7 +257,7 @@ FROM
         WHERE application.data_source_deleted_flag IS FALSE
           AND history_records.apl_pid IS NULL) AS primary_application ON proposal.prp_pid = primary_application.apl_proposal_pid
         AND primary_application.apl_primary_application IS TRUE
-        -- history_octane loan
+    -- history_octane loan
     JOIN (
         SELECT loan.*
              , <<loan_partial_load_condition>> AS include_record
@@ -205,7 +266,7 @@ FROM
             AND loan.data_source_updated_datetime < history_records.data_source_updated_datetime
         WHERE loan.data_source_deleted_flag IS FALSE
           AND history_records.l_pid IS NULL) AS loan ON proposal.prp_pid = loan.l_proposal_pid
-        -- history_octane deal_key_roles
+    -- history_octane deal_key_roles
     JOIN (
         SELECT deal_key_roles.*
              , <<deal_key_roles_partial_load_condition>> AS include_record
@@ -214,7 +275,7 @@ FROM
             AND deal_key_roles.data_source_updated_datetime < history_records.data_source_updated_datetime
         WHERE deal_key_roles.data_source_deleted_flag IS FALSE
           AND history_records.dkrs_pid IS NULL) AS deal_key_roles ON deal.d_pid = deal_key_roles.dkrs_deal_pid
-        -- history_octane.borrower B1
+    -- history_octane.borrower B1
     JOIN (
         SELECT * FROM (
             SELECT borrower.*
@@ -236,7 +297,7 @@ FROM
         ) AS application ON borrower.b_application_pid = application.apl_pid
     ) AS borrower_b1 ON proposal.prp_pid = borrower_b1.apl_proposal_pid
         AND borrower_b1.b_borrower_tiny_id_type = ''B1''
-        -- history_octane.borrower B2
+    -- history_octane.borrower B2
     LEFT JOIN (
         SELECT * FROM (
             SELECT borrower.b_pid
@@ -260,7 +321,7 @@ FROM
         ) AS application ON borrower.b_application_pid = application.apl_pid
     ) AS borrower_b2 ON proposal.prp_pid = borrower_b2.apl_proposal_pid
         AND borrower_b2.b_borrower_tiny_id_type = ''B2''
-        -- history_octane.borrower B3
+    -- history_octane.borrower B3
     LEFT JOIN (
         SELECT * FROM (
             SELECT borrower.b_pid
@@ -284,7 +345,7 @@ FROM
         ) AS application ON borrower.b_application_pid = application.apl_pid
     ) AS borrower_b3 ON proposal.prp_pid = borrower_b3.apl_proposal_pid
         AND borrower_b3.b_borrower_tiny_id_type = ''B3''
-        -- history_octane.borrower B4
+    -- history_octane.borrower B4
     LEFT JOIN (
         SELECT * FROM (
             SELECT borrower.b_pid
@@ -308,7 +369,7 @@ FROM
         ) AS application ON borrower.b_application_pid = application.apl_pid
     ) AS borrower_b4 ON proposal.prp_pid = borrower_b4.apl_proposal_pid
         AND borrower_b4.b_borrower_tiny_id_type = ''B4''
-        -- history_octane.borrower B5
+    -- history_octane.borrower B5
     LEFT JOIN (
         SELECT * FROM (
             SELECT borrower.b_pid
@@ -332,7 +393,7 @@ FROM
         ) AS application ON borrower.b_application_pid = application.apl_pid
     ) AS borrower_b5 ON proposal.prp_pid = borrower_b5.apl_proposal_pid
         AND borrower_b5.b_borrower_tiny_id_type = ''B5''
-        -- history_octane.borrower C1
+    -- history_octane.borrower C1
     LEFT JOIN (
         SELECT * FROM (
             SELECT borrower.b_pid
@@ -356,7 +417,7 @@ FROM
         ) AS application ON borrower.b_application_pid = application.apl_pid
     ) AS borrower_c1 ON proposal.prp_pid = borrower_c1.apl_proposal_pid
         AND borrower_c1.b_borrower_tiny_id_type = ''C1''
-        -- history_octane.borrower C2
+    -- history_octane.borrower C2
     LEFT JOIN (
         SELECT * FROM (
             SELECT borrower.b_pid
@@ -380,7 +441,7 @@ FROM
         ) AS application ON borrower.b_application_pid = application.apl_pid
     ) AS borrower_c2 ON proposal.prp_pid = borrower_c2.apl_proposal_pid
         AND borrower_c2.b_borrower_tiny_id_type = ''C2''
-        -- history_octane.borrower C3
+    -- history_octane.borrower C3
     LEFT JOIN (
         SELECT * FROM (
             SELECT borrower.b_pid
@@ -404,7 +465,7 @@ FROM
         ) AS application ON borrower.b_application_pid = application.apl_pid
     ) AS borrower_c3 ON proposal.prp_pid = borrower_c3.apl_proposal_pid
         AND borrower_c3.b_borrower_tiny_id_type = ''C3''
-        -- history_octane.borrower C4
+    -- history_octane.borrower C4
     LEFT JOIN (
         SELECT * FROM (
             SELECT borrower.b_pid
@@ -428,7 +489,7 @@ FROM
         ) AS application ON borrower.b_application_pid = application.apl_pid
     ) AS borrower_c4 ON proposal.prp_pid = borrower_c4.apl_proposal_pid
         AND borrower_c4.b_borrower_tiny_id_type = ''C4''
-        -- history_octane.borrower C5
+    -- history_octane.borrower C5
     LEFT JOIN (
         SELECT * FROM (
             SELECT borrower.b_pid
@@ -452,7 +513,7 @@ FROM
         ) AS application ON borrower.b_application_pid = application.apl_pid
     ) AS borrower_c5 ON proposal.prp_pid = borrower_c5.apl_proposal_pid
         AND borrower_c5.b_borrower_tiny_id_type = ''C5''
-        -- history_octane.borrower N1
+    -- history_octane.borrower N1
     LEFT JOIN (
         SELECT * FROM (
             SELECT borrower.b_pid
@@ -476,7 +537,7 @@ FROM
         ) AS application ON borrower.b_application_pid = application.apl_pid
     ) AS borrower_n1 ON proposal.prp_pid = borrower_n1.apl_proposal_pid
         AND borrower_n1.b_borrower_tiny_id_type = ''N1''
-        -- history_octane.borrower N2
+    -- history_octane.borrower N2
     LEFT JOIN (
         SELECT * FROM (
             SELECT borrower.b_pid
@@ -500,7 +561,7 @@ FROM
         ) AS application ON borrower.b_application_pid = application.apl_pid
     ) AS borrower_n2 ON proposal.prp_pid = borrower_n2.apl_proposal_pid
         AND borrower_n2.b_borrower_tiny_id_type = ''N2''
-        -- history_octane.borrower N3
+    -- history_octane.borrower N3
     LEFT JOIN (
         SELECT * FROM (
             SELECT borrower.b_pid
@@ -524,7 +585,7 @@ FROM
         ) AS application ON borrower.b_application_pid = application.apl_pid
     ) AS borrower_n3 ON proposal.prp_pid = borrower_n3.apl_proposal_pid
         AND borrower_n3.b_borrower_tiny_id_type = ''N3''
-        -- history_octane.borrower N4
+    -- history_octane.borrower N4
     LEFT JOIN (
         SELECT * FROM (
             SELECT borrower.b_pid
@@ -548,7 +609,7 @@ FROM
         ) AS application ON borrower.b_application_pid = application.apl_pid
     ) AS borrower_n4 ON proposal.prp_pid = borrower_n4.apl_proposal_pid
         AND borrower_n4.b_borrower_tiny_id_type = ''N4''
-        -- history_octane.borrower N5
+    -- history_octane.borrower N5
     LEFT JOIN (
         SELECT * FROM (
             SELECT borrower.b_pid
@@ -572,7 +633,7 @@ FROM
         ) AS application ON borrower.b_application_pid = application.apl_pid
     ) AS borrower_n5 ON proposal.prp_pid = borrower_n5.apl_proposal_pid
         AND borrower_n5.b_borrower_tiny_id_type = ''N5''
-        -- history_octane.borrower N6
+    -- history_octane.borrower N6
     LEFT JOIN (
         SELECT * FROM (
             SELECT borrower.b_pid
@@ -596,7 +657,7 @@ FROM
         ) AS application ON borrower.b_application_pid = application.apl_pid
     ) AS borrower_n6 ON proposal.prp_pid = borrower_n6.apl_proposal_pid
         AND borrower_n6.b_borrower_tiny_id_type = ''N6''
-        -- history_octane.borrower N7
+    -- history_octane.borrower N7
     LEFT JOIN (
         SELECT * FROM (
             SELECT borrower.b_pid
@@ -620,7 +681,7 @@ FROM
         ) AS application ON borrower.b_application_pid = application.apl_pid
     ) AS borrower_n7 ON proposal.prp_pid = borrower_n7.apl_proposal_pid
         AND borrower_n7.b_borrower_tiny_id_type = ''N7''
-        -- history_octane.borrower N8
+    -- history_octane.borrower N8
     LEFT JOIN (
         SELECT * FROM (
             SELECT borrower.b_pid
@@ -644,7 +705,7 @@ FROM
         ) AS application ON borrower.b_application_pid = application.apl_pid
     ) AS borrower_n8 ON proposal.prp_pid = borrower_n8.apl_proposal_pid
         AND borrower_n8.b_borrower_tiny_id_type = ''N8''
-        -- history_octane.loan_beneficiary: current
+    -- history_octane.loan_beneficiary: current
     LEFT JOIN (
         SELECT loan_beneficiary.*
              , <<loan_beneficiary_partial_load_condition>> AS include_record
@@ -656,7 +717,7 @@ FROM
           AND history_records.lb_pid IS NULL
     ) AS current_loan_beneficiary ON loan.l_pid = current_loan_beneficiary.lb_loan_pid
         AND current_loan_beneficiary.lb_current IS TRUE
-        -- history_octane.loan_beneficiary: initial beneficiary
+    -- history_octane.loan_beneficiary: initial beneficiary
     LEFT JOIN (
         SELECT loan_beneficiary.*
             , <<loan_beneficiary_partial_load_condition>> AS include_record
@@ -668,7 +729,7 @@ FROM
           AND history_records.lb_pid IS NULL
     ) AS initial_loan_beneficiary ON loan.l_pid = initial_loan_beneficiary.lb_loan_pid
         AND initial_loan_beneficiary.lb_initial IS TRUE
-        -- history_octane.loan_beneficiary: first beneficiary after initial
+    -- history_octane.loan_beneficiary: first beneficiary after initial
     LEFT JOIN (
         SELECT non_initial_loan_beneficiary.*
             , <<loan_beneficiary_partial_load_condition>> AS include_record
@@ -687,7 +748,7 @@ FROM
           AND history_records.lb_pid IS NULL
     ) AS first_loan_beneficiary_after_initial ON loan.l_pid = first_loan_beneficiary_after_initial.lb_loan_pid
         AND first_loan_beneficiary_after_initial.first_beneficiary_after_initial_investor IS TRUE
-        -- history_octane.loan_beneficiary: most recent purchasing beneficiary
+    -- history_octane.loan_beneficiary: most recent purchasing beneficiary
     LEFT JOIN (
         SELECT loan_beneficiary_max_lb_pid_per_loan.*
             , <<loan_beneficiary_partial_load_condition>> AS include_record
@@ -708,7 +769,7 @@ FROM
     ) AS most_recent_purchasing_beneficiary ON loan.l_pid = most_recent_purchasing_beneficiary.lb_loan_pid
         AND most_recent_purchasing_beneficiary.lb_loan_benef_transfer_status_type IN (''SHIPPED'', ''APPROVED_WITH_CONDITIONS'',
                                                                                       ''PENDING_WIRE'', ''PENDING'', ''PURCHASED'')
-        -- history_octane.loan_funding
+    -- history_octane.loan_funding
     LEFT JOIN (
         SELECT loan_funding.*
              , <<loan_funding_partial_load_condition>> AS include_record
@@ -719,7 +780,7 @@ FROM
           AND history_records.lf_pid IS NULL
     ) AS active_loan_funding ON loan.l_pid = active_loan_funding.lf_loan_pid
         AND active_loan_funding.lf_return_confirmed_date IS NULL
-        -- history_octane.interim_funder
+    -- history_octane.interim_funder
     LEFT JOIN (
         SELECT interim_funder.*
              , <<interim_funder_partial_load_condition>> AS include_record
@@ -729,7 +790,7 @@ FROM
         WHERE interim_funder.data_source_deleted_flag IS FALSE
           AND history_records.if_pid IS NULL
     ) AS interim_funder ON active_loan_funding.lf_interim_funder_pid = interim_funder.if_pid
-        -- history_octane.product_terms
+    -- history_octane.product_terms
     LEFT JOIN (
         SELECT product_terms.*
              , <<product_terms_partial_load_condition>> AS include_record
@@ -739,7 +800,7 @@ FROM
         WHERE product_terms.data_source_deleted_flag IS FALSE
           AND history_records.pt_pid IS NULL
     ) AS product_terms ON loan.l_product_terms_pid = product_terms.pt_pid
-        -- history_octane.product
+    -- history_octane.product
     LEFT JOIN (
         SELECT product.*
              , <<product_partial_load_condition>> AS include_record
@@ -749,7 +810,7 @@ FROM
         WHERE product.data_source_deleted_flag IS FALSE
           AND history_records.p_pid IS NULL
     ) AS product ON product_terms.pt_product_pid = product.p_pid
-        -- history_octane.investor
+    -- history_octane.investor
     LEFT JOIN (
         SELECT investor.*
              , <<investor_partial_load_condition>> AS include_record
@@ -759,22 +820,22 @@ FROM
         WHERE investor.data_source_deleted_flag IS FALSE
           AND history_records.i_pid IS NULL
     ) AS product_investor ON product.p_investor_pid = product_investor.i_pid
-        -- history_octane.hmda_purchaser_of_loan_2017_type
+    -- history_octane.hmda_purchaser_of_loan_2017_type
     LEFT JOIN history_octane.hmda_purchaser_of_loan_2017_type ON loan.l_hmda_purchaser_of_loan_2017_type =
                                                                  hmda_purchaser_of_loan_2017_type.code
         AND hmda_purchaser_of_loan_2017_type.data_source_deleted_flag IS FALSE
-        -- history_octane.hmda_purchaser_of_loan_2018_type
+    -- history_octane.hmda_purchaser_of_loan_2018_type
     LEFT JOIN history_octane.hmda_purchaser_of_loan_2018_type ON loan.l_hmda_purchaser_of_loan_2018_type =
                                                                  hmda_purchaser_of_loan_2018_type.code
         AND hmda_purchaser_of_loan_2018_type.data_source_deleted_flag IS FALSE
-        -- star_loan.loan_dim
+    -- star_loan.loan_dim
     JOIN (
         SELECT loan_dim.*
              , <<loan_dim_partial_load_condition>> AS include_record
         FROM star_loan.loan_dim
     ) AS loan_dim ON loan.l_pid = loan_dim.loan_pid
         AND loan_dim.data_source_dwid = 1
-        -- star_loan.loan_fact
+    -- star_loan.loan_fact
     LEFT JOIN star_loan.loan_fact ON loan_dim.dwid = loan_fact.loan_dwid
         AND loan_fact.data_source_dwid = 1
         -- star_loan.application_dim
@@ -784,7 +845,7 @@ FROM
         FROM star_loan.application_dim
     ) AS application_dim ON primary_application.apl_pid = application_dim.application_pid
         AND application_dim.data_source_dwid = 1
-        -- star_loan.loan_junk_dim
+    -- star_loan.loan_junk_dim
     LEFT JOIN (
         SELECT loan_junk_dim.*
             , <<loan_junk_partial_load_condition>> AS include_record
@@ -811,7 +872,7 @@ FROM
         AND loan.l_texas_equity_auto IS NOT DISTINCT FROM loan_junk_dim.texas_equity_auto_code
         AND loan.l_texas_equity IS NOT DISTINCT FROM loan_junk_dim.texas_equity_code
         AND loan_junk_dim.data_source_dwid = 1
-        -- star_loan.product_choice_dim
+    -- star_loan.product_choice_dim
     LEFT JOIN (
         SELECT product_choice_dim.*
             , <<product_choice_dim_partial_load_condition>> AS include_record
@@ -822,7 +883,7 @@ FROM
         AND loan.l_mortgage_type IS NOT DISTINCT FROM product_choice_dim.mortgage_type_code
         AND loan.l_prepay_penalty_schedule_type IS NOT DISTINCT FROM product_choice_dim.prepay_penalty_schedule_code
         AND product_choice_dim.data_source_dwid = 1
-        -- star_loan.transaction_junk_dim
+    -- star_loan.transaction_junk_dim
     LEFT JOIN (
         SELECT transaction_junk_dim.*
             , <<transaction_junk_dim_partial_load_condition>> AS include_record
@@ -834,14 +895,14 @@ FROM
         AND proposal.prp_structure_type IS NOT DISTINCT FROM transaction_junk_dim.structure_code
         AND proposal.prp_loan_purpose_type IS NOT DISTINCT FROM transaction_junk_dim.loan_purpose_code
         AND transaction_junk_dim.data_source_dwid = 1
-        -- star_loan.transaction_dim
+    -- star_loan.transaction_dim
     LEFT JOIN (
         SELECT transaction_dim.*
              , <<transaction_dim_partial_load_condition>> AS include_record
         FROM star_loan.transaction_dim
     ) AS transaction_dim ON deal.d_pid = transaction_dim.deal_pid
         AND transaction_dim.data_source_dwid = 1
-        -- star_loan.loan_beneficiary_dim: current beneficiary
+    -- star_loan.loan_beneficiary_dim: current beneficiary
     LEFT JOIN (
         SELECT loan_beneficiary_dim.*
              , <<loan_beneficiary_dim_partial_load_condition>> AS include_record
@@ -849,31 +910,31 @@ FROM
     ) AS current_loan_beneficiary_dim
         ON current_loan_beneficiary.lb_pid = current_loan_beneficiary_dim.loan_beneficiary_pid
         AND current_loan_beneficiary_dim.data_source_dwid = 1
-        -- star_loan.investor_dim: current loan beneficiary investor
+    -- star_loan.investor_dim: current beneficiary investor
     LEFT JOIN (
         SELECT investor_dim.*
             , <<investor_dim_partial_load_condition>> AS include_record
         FROM star_loan.investor_dim
-    ) AS current_loan_beneficiary_investor_dim
-        ON current_loan_beneficiary.lb_investor_pid = current_loan_beneficiary_investor_dim.investor_pid
-        AND current_loan_beneficiary_investor_dim.data_source_dwid = 1
-        -- star_loan.investor_dim: initial loan beneficiary investor
+    ) AS current_beneficiary_investor_dim
+        ON current_loan_beneficiary.lb_investor_pid = current_beneficiary_investor_dim.investor_pid
+        AND current_beneficiary_investor_dim.data_source_dwid = 1
+    -- star_loan.investor_dim: initial beneficiary investor
     LEFT JOIN (
         SELECT investor_dim.*
             , <<investor_dim_partial_load_condition>> AS include_record
         FROM star_loan.investor_dim
-    ) AS initial_loan_beneficiary_investor_dim
-        ON initial_loan_beneficiary.lb_investor_pid = initial_loan_beneficiary_investor_dim.investor_pid
-        AND initial_loan_beneficiary_investor_dim.data_source_dwid = 1
-        -- star_loan.investor_dim: first loan beneficiary investor after initial
+    ) AS initial_beneficiary_investor_dim
+        ON initial_loan_beneficiary.lb_investor_pid = initial_beneficiary_investor_dim.investor_pid
+        AND initial_beneficiary_investor_dim.data_source_dwid = 1
+    -- star_loan.investor_dim: first beneficiary after initial investor
     LEFT JOIN (
         SELECT investor_dim.*
             , <<investor_dim_partial_load_condition>> AS include_record
         FROM star_loan.investor_dim
-    ) AS first_loan_beneficiary_investor_after_initial_dim
-        ON first_loan_beneficiary_after_initial.lb_investor_pid = first_loan_beneficiary_investor_after_initial_dim.investor_pid
-        AND first_loan_beneficiary_investor_after_initial_dim.data_source_dwid = 1
-        -- star_loan.investor_dim: most recent purchasing beneficiary investor
+    ) AS first_beneficiary_after_initial_investor_dim
+        ON first_loan_beneficiary_after_initial.lb_investor_pid = first_beneficiary_after_initial_investor_dim.investor_pid
+        AND first_beneficiary_after_initial_investor_dim.data_source_dwid = 1
+    -- star_loan.investor_dim: most recent purchasing beneficiary investor
     LEFT JOIN (
         SELECT investor_dim.*
             , <<investor_dim_partial_load_condition>> AS include_record
@@ -881,140 +942,140 @@ FROM
     ) AS most_recent_purchasing_beneficiary_investor_dim
         ON most_recent_purchasing_beneficiary.lb_investor_pid = most_recent_purchasing_beneficiary_investor_dim.investor_pid
         AND most_recent_purchasing_beneficiary_investor_dim.data_source_dwid = 1
-        -- star_loan.loan_funding_dim
+    -- star_loan.loan_funding_dim
     LEFT JOIN (
         SELECT loan_funding_dim.*
              , <<loan_funding_dim_partial_load_condition>> AS include_record
         FROM star_loan.loan_funding_dim
     ) AS loan_funding_dim ON active_loan_funding.lf_pid = loan_funding_dim.loan_funding_pid
         AND loan_funding_dim.data_source_dwid = 1
-        -- star_loan.borrower B1
+    -- star_loan.borrower B1
     LEFT JOIN (
         SELECT borrower_dim.*
              , <<borrower_dim_partial_load_condition>> AS include_record
         FROM star_loan.borrower_dim
     ) AS borrower_b1_dim ON borrower_b1.b_pid = borrower_b1_dim.borrower_pid
         AND borrower_b1_dim.data_source_dwid = 1
-        -- star_loan.borrower B2
+    -- star_loan.borrower B2
     LEFT JOIN (
         SELECT borrower_dim.*
              , <<borrower_dim_partial_load_condition>> AS include_record
         FROM star_loan.borrower_dim
     ) AS borrower_b2_dim ON borrower_b2.b_pid = borrower_b2_dim.borrower_pid
         AND borrower_b2_dim.data_source_dwid = 1
-        -- star_loan.borrower B3
+    -- star_loan.borrower B3
     LEFT JOIN (
         SELECT borrower_dim.*
              , <<borrower_dim_partial_load_condition>> AS include_record
         FROM star_loan.borrower_dim
     ) AS borrower_b3_dim ON borrower_b3.b_pid = borrower_b3_dim.borrower_pid
         AND borrower_b3_dim.data_source_dwid = 1
-        -- star_loan.borrower B4
+    -- star_loan.borrower B4
     LEFT JOIN (
         SELECT borrower_dim.*
              , <<borrower_dim_partial_load_condition>> AS include_record
         FROM star_loan.borrower_dim
     ) AS borrower_b4_dim ON borrower_b4.b_pid = borrower_b4_dim.borrower_pid
         AND borrower_b4_dim.data_source_dwid = 1
-        -- star_loan.borrower B5
+    -- star_loan.borrower B5
     LEFT JOIN (
         SELECT borrower_dim.*
              , <<borrower_dim_partial_load_condition>> AS include_record
         FROM star_loan.borrower_dim
     ) AS borrower_b5_dim ON borrower_b5.b_pid = borrower_b5_dim.borrower_pid
         AND borrower_b5_dim.data_source_dwid = 1
-        -- star_loan.borrower C1
+    -- star_loan.borrower C1
     LEFT JOIN (
         SELECT borrower_dim.*
              , <<borrower_dim_partial_load_condition>> AS include_record
         FROM star_loan.borrower_dim
     ) AS borrower_c1_dim ON borrower_c1.b_pid = borrower_c1_dim.borrower_pid
         AND borrower_c1_dim.data_source_dwid = 1
-        -- star_loan.borrower C2
+    -- star_loan.borrower C2
     LEFT JOIN (
         SELECT borrower_dim.*
              , <<borrower_dim_partial_load_condition>> AS include_record
         FROM star_loan.borrower_dim
     ) AS borrower_c2_dim ON borrower_c2.b_pid = borrower_c2_dim.borrower_pid
         AND borrower_c2_dim.data_source_dwid = 1
-        -- star_loan.borrower C3
+    -- star_loan.borrower C3
     LEFT JOIN (
         SELECT borrower_dim.*
              , <<borrower_dim_partial_load_condition>> AS include_record
         FROM star_loan.borrower_dim
     ) AS borrower_c3_dim ON borrower_c3.b_pid = borrower_c3_dim.borrower_pid
         AND borrower_c3_dim.data_source_dwid = 1
-        -- star_loan.borrower C4
+    -- star_loan.borrower C4
     LEFT JOIN (
         SELECT borrower_dim.*
              , <<borrower_dim_partial_load_condition>> AS include_record
         FROM star_loan.borrower_dim
     ) AS borrower_c4_dim ON borrower_c4.b_pid = borrower_c4_dim.borrower_pid
         AND borrower_c4_dim.data_source_dwid = 1
-        -- star_loan.borrower C5
+    -- star_loan.borrower C5
     LEFT JOIN (
         SELECT borrower_dim.*
              , <<borrower_dim_partial_load_condition>> AS include_record
         FROM star_loan.borrower_dim
     ) AS borrower_c5_dim ON borrower_c5.b_pid = borrower_c5_dim.borrower_pid
         AND borrower_c5_dim.data_source_dwid = 1
-        -- star_loan.borrower N1
+    -- star_loan.borrower N1
     LEFT JOIN (
         SELECT borrower_dim.*
              , <<borrower_dim_partial_load_condition>> AS include_record
         FROM star_loan.borrower_dim
     ) AS borrower_n1_dim ON borrower_n1.b_pid = borrower_n1_dim.borrower_pid
         AND borrower_n1_dim.data_source_dwid = 1
-        -- star_loan.borrower N2
+    -- star_loan.borrower N2
     LEFT JOIN (
         SELECT borrower_dim.*
              , <<borrower_dim_partial_load_condition>> AS include_record
         FROM star_loan.borrower_dim
     ) AS borrower_n2_dim ON borrower_n2.b_pid = borrower_n2_dim.borrower_pid
         AND borrower_n2_dim.data_source_dwid = 1
-        -- star_loan.borrower N3
+    -- star_loan.borrower N3
     LEFT JOIN (
         SELECT borrower_dim.*
              , <<borrower_dim_partial_load_condition>> AS include_record
         FROM star_loan.borrower_dim
     ) AS borrower_n3_dim ON borrower_n3.b_pid = borrower_n3_dim.borrower_pid
         AND borrower_n3_dim.data_source_dwid = 1
-        -- star_loan.borrower N4
+    -- star_loan.borrower N4
     LEFT JOIN (
         SELECT borrower_dim.*
              , <<borrower_dim_partial_load_condition>> AS include_record
         FROM star_loan.borrower_dim
     ) AS borrower_n4_dim ON borrower_n4.b_pid = borrower_n4_dim.borrower_pid
         AND borrower_n4_dim.data_source_dwid = 1
-        -- star_loan.borrower N5
+    -- star_loan.borrower N5
     LEFT JOIN (
         SELECT borrower_dim.*
              , <<borrower_dim_partial_load_condition>> AS include_record
         FROM star_loan.borrower_dim
     ) AS borrower_n5_dim ON borrower_n5.b_pid = borrower_n5_dim.borrower_pid
         AND borrower_n5_dim.data_source_dwid = 1
-        -- star_loan.borrower N6
+    -- star_loan.borrower N6
     LEFT JOIN (
         SELECT borrower_dim.*
              , <<borrower_dim_partial_load_condition>> AS include_record
         FROM star_loan.borrower_dim
     ) AS borrower_n6_dim ON borrower_n6.b_pid = borrower_n6_dim.borrower_pid
         AND borrower_n6_dim.data_source_dwid = 1
-        -- star_loan.borrower N7
+    -- star_loan.borrower N7
     LEFT JOIN (
         SELECT borrower_dim.*
              , <<borrower_dim_partial_load_condition>> AS include_record
         FROM star_loan.borrower_dim
     ) AS borrower_n7_dim ON borrower_n7.b_pid = borrower_n7_dim.borrower_pid
         AND borrower_n7_dim.data_source_dwid = 1
-        -- star_loan.borrower N8
+    -- star_loan.borrower N8
     LEFT JOIN (
         SELECT borrower_dim.*
              , <<borrower_dim_partial_load_condition>> AS include_record
         FROM star_loan.borrower_dim
     ) AS borrower_n8_dim ON borrower_n8.b_pid = borrower_n8_dim.borrower_pid
         AND borrower_n8_dim.data_source_dwid = 1
-        -- star_loan.borrower_demographics_dim
+    -- star_loan.borrower_demographics_dim
     LEFT JOIN (
         SELECT borrower_demographics_dim.*
             , <<borrower_demographics_dim_partial_load_condition>> AS include_record
@@ -1074,7 +1135,7 @@ FROM
         AND borrower_b1.b_sex_collected_visual_or_surname IS NOT DISTINCT FROM borrower_demographics_dim.sex_collected_visual_or_surname_code
         AND borrower_b1.b_sex_refused IS NOT DISTINCT FROM borrower_demographics_dim.sex_refused_code
         AND borrower_demographics_dim.data_source_dwid = 1
-        -- star_loan.borrower_lending_profile_dim
+    -- star_loan.borrower_lending_profile_dim
     LEFT JOIN (
         SELECT borrower_lending_profile_dim.*
             , <<borrower_lending_profile_dim_partial_load_condition>> AS include_record
@@ -1108,7 +1169,7 @@ FROM
         AND borrower_b1.b_spousal_homestead IS NOT DISTINCT FROM borrower_lending_profile_dim.spousal_homestead_code
         AND borrower_b1.b_titleholder IS NOT DISTINCT FROM borrower_lending_profile_dim.titleholder_code
         AND borrower_lending_profile_dim.data_source_dwid = 1
-        -- star_loan.lender_user_dim: collateral_to_custodian_lender_user_dwid
+    -- star_loan.lender_user_dim: collateral_to_custodian
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1116,7 +1177,7 @@ FROM
     ) AS collateral_to_custodian
         ON deal_key_roles.dkrs_collateral_to_custodian_lender_user_pid = collateral_to_custodian.lender_user_pid
         AND collateral_to_custodian.data_source_dwid = 1
-        -- star_loan.lender_user_dim: account_executive_lender_user_dwid
+    -- star_loan.lender_user_dim: account_executive
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1124,7 +1185,7 @@ FROM
     ) AS account_executive
         ON deal_key_roles.dkrs_account_executive_lender_user_pid = account_executive.lender_user_pid
         AND account_executive.data_source_dwid = 1
-        -- star_loan.lender_user_dim: closing_doc_specialist_lender_user_dwid
+    -- star_loan.lender_user_dim: closing_doc_specialist
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1132,7 +1193,7 @@ FROM
     ) AS closing_doc_specialist
         ON deal_key_roles.dkrs_closing_doc_specialist_lender_user_pid = closing_doc_specialist.lender_user_pid
         AND closing_doc_specialist.data_source_dwid = 1
-        -- star_loan.lender_user_dim: closing_scheduler_lender_user_dwid
+    -- star_loan.lender_user_dim: closing_scheduler
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1140,7 +1201,7 @@ FROM
     ) AS closing_scheduler
         ON deal_key_roles.dkrs_closing_scheduler_lender_user_pid = closing_scheduler.lender_user_pid
         AND closing_scheduler.data_source_dwid = 1
-        -- star_loan.lender_user_dim: collateral_to_investor_lender_user_dwid
+    -- star_loan.lender_user_dim: collateral_to_investor
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1148,7 +1209,7 @@ FROM
     ) AS collateral_to_investor
         ON deal_key_roles.dkrs_collateral_to_investor_lender_user_pid = collateral_to_investor.lender_user_pid
         AND collateral_to_investor.data_source_dwid = 1
-        -- star_loan.lender_user_dim: collateral_underwriter_lender_user_dwid
+    -- star_loan.lender_user_dim: collateral_underwriter
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1156,7 +1217,7 @@ FROM
     ) AS collateral_underwriter
         ON deal_key_roles.dkrs_collateral_underwriter_lender_user_pid = collateral_underwriter.lender_user_pid
         AND collateral_underwriter.data_source_dwid = 1
-        -- star_loan.lender_user_dim: correspondent_client_advocate_lender_user_dwid
+    -- star_loan.lender_user_dim: correspondent_client_advocate
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1164,7 +1225,7 @@ FROM
     ) AS correspondent_client_advocate
         ON deal_key_roles.dkrs_correspondent_client_advocate_lender_user_pid = correspondent_client_advocate.lender_user_pid
         AND correspondent_client_advocate.data_source_dwid = 1
-        -- star_loan.lender_user_dim: final_documents_to_investor_lender_user_dwid
+    -- star_loan.lender_user_dim: final_documents_to_investor
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1172,7 +1233,7 @@ FROM
     ) AS final_documents_to_investor
         ON deal_key_roles.dkrs_final_documents_to_investor_lender_user_pid = final_documents_to_investor.lender_user_pid
         AND final_documents_to_investor.data_source_dwid = 1
-        -- star_loan.lender_user_dim: flood_insurance_specialist_lender_user_dwid
+    -- star_loan.lender_user_dim: flood_insurance_specialist
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1180,7 +1241,7 @@ FROM
     ) AS flood_insurance_specialist
         ON deal_key_roles.dkrs_flood_insurance_specialist_lender_user_pid = flood_insurance_specialist.lender_user_pid
         AND flood_insurance_specialist.data_source_dwid = 1
-        -- star_loan.lender_user_dim: funder_lender_user_dwid
+    -- star_loan.lender_user_dim: funder
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1188,7 +1249,7 @@ FROM
     ) AS funder
         ON deal_key_roles.dkrs_funder_lender_user_pid = funder.lender_user_pid
         AND funder.data_source_dwid = 1
-        -- star_loan.lender_user_dim: government_insurance_lender_user_dwid
+    -- star_loan.lender_user_dim: government_insurance
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1196,7 +1257,7 @@ FROM
     ) AS government_insurance
         ON deal_key_roles.dkrs_government_insurance_lender_user_pid = government_insurance.lender_user_pid
         AND government_insurance.data_source_dwid = 1
-        -- star_loan.lender_user_dim: ho6_specialist_lender_user_dwid
+    -- star_loan.lender_user_dim: ho6_specialist
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1204,7 +1265,7 @@ FROM
     ) AS ho6_specialist
         ON deal_key_roles.dkrs_ho6_specialist_lender_user_pid = ho6_specialist.lender_user_pid
         AND ho6_specialist.data_source_dwid = 1
-        -- star_loan.lender_user_dim: hoa_specialist_lender_user_dwid
+    -- star_loan.lender_user_dim: hoa_specialist
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1212,7 +1273,7 @@ FROM
     ) AS hoa_specialist
         ON deal_key_roles.dkrs_hoa_specialist_lender_user_pid = hoa_specialist.lender_user_pid
         AND hoa_specialist.data_source_dwid = 1
-        -- star_loan.lender_user_dim: hoi_specialist_lender_user_dwid
+    -- star_loan.lender_user_dim: hoi_specialist
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1220,7 +1281,7 @@ FROM
     ) AS hoi_specialist
         ON deal_key_roles.dkrs_hoi_specialist_lender_user_pid = hoi_specialist.lender_user_pid
         AND hoi_specialist.data_source_dwid = 1
-        -- star_loan.lender_user_dim: hud_va_lender_officer_lender_user_dwid
+    -- star_loan.lender_user_dim: hud_va_lender_officer
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1228,7 +1289,7 @@ FROM
     ) AS hud_va_lender_officer
         ON deal_key_roles.dkrs_hud_va_lender_officer_lender_user_pid = hud_va_lender_officer.lender_user_pid
         AND hud_va_lender_officer.data_source_dwid = 1
-        -- star_loan.lender_user_dim: internal_construction_manager_lender_user_dwid
+    -- star_loan.lender_user_dim: internal_construction_manager
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1236,7 +1297,7 @@ FROM
     ) AS internal_construction_manager
         ON deal_key_roles.dkrs_internal_construction_manager_lender_user_pid = internal_construction_manager.lender_user_pid
         AND internal_construction_manager.data_source_dwid = 1
-        -- star_loan.lender_user_dim: investor_conditions_lender_user_dwid
+    -- star_loan.lender_user_dim: investor_conditions
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1244,7 +1305,7 @@ FROM
     ) AS investor_conditions
         ON deal_key_roles.dkrs_investor_conditions_lender_user_pid = investor_conditions.lender_user_pid
         AND investor_conditions.data_source_dwid = 1
-        -- star_loan.lender_user_dim: investor_stack_to_investor_lender_user_dwid
+    -- star_loan.lender_user_dim: investor_stack_to_investor
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1252,7 +1313,7 @@ FROM
     ) AS investor_stack_to_investor
         ON deal_key_roles.dkrs_investor_stack_to_investor_lender_user_pid = investor_stack_to_investor.lender_user_pid
         AND investor_stack_to_investor.data_source_dwid = 1
-        -- star_loan.lender_user_dim: loan_officer_assistant_lender_user_dwid
+    -- star_loan.lender_user_dim: loan_officer_assistant
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1260,7 +1321,7 @@ FROM
     ) AS loan_officer_assistant
         ON deal_key_roles.dkrs_loan_officer_assistant_lender_user_pid = loan_officer_assistant.lender_user_pid
         AND loan_officer_assistant.data_source_dwid = 1
-        -- star_loan.lender_user_dim: loan_payoff_specialist_lender_user_dwid
+    -- star_loan.lender_user_dim: loan_payoff_specialist
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1268,7 +1329,7 @@ FROM
     ) AS loan_payoff_specialist
         ON deal_key_roles.dkrs_loan_payoff_specialist_lender_user_pid = loan_payoff_specialist.lender_user_pid
         AND loan_payoff_specialist.data_source_dwid = 1
-        -- star_loan.lender_user_dim: originator_lender_user_dwid
+    -- star_loan.lender_user_dim: originator
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1276,7 +1337,7 @@ FROM
     ) AS originator
         ON deal_key_roles.dkrs_originator_lender_user_pid = originator.lender_user_pid
         AND originator.data_source_dwid = 1
-        -- star_loan.lender_user_dim: processor_lender_user_dwid
+    -- star_loan.lender_user_dim: processor
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1284,7 +1345,7 @@ FROM
     ) AS processor
         ON deal_key_roles.dkrs_processor_lender_user_pid = processor.lender_user_pid
         AND processor.data_source_dwid = 1
-        -- star_loan.lender_user_dim: project_underwriter_lender_user_dwid
+    -- star_loan.lender_user_dim: project_underwriter
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1292,7 +1353,7 @@ FROM
     ) AS project_underwriter
         ON deal_key_roles.dkrs_project_underwriter_lender_user_pid = project_underwriter.lender_user_pid
         AND project_underwriter.data_source_dwid = 1
-        -- star_loan.lender_user_dim: subordination_specialist_lender_user_dwid
+    -- star_loan.lender_user_dim: subordination_specialist
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1300,7 +1361,7 @@ FROM
     ) AS subordination_specialist
         ON deal_key_roles.dkrs_subordination_specialist_lender_user_pid = subordination_specialist.lender_user_pid
         AND subordination_specialist.data_source_dwid = 1
-        -- star_loan.lender_user_dim: supplemental_originator_lender_user_dwid
+    -- star_loan.lender_user_dim: supplemental_originator
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1308,7 +1369,7 @@ FROM
     ) AS supplemental_originator
               ON deal_key_roles.dkrs_supplemental_originator_lender_user_pid = supplemental_originator.lender_user_pid
                   AND supplemental_originator.data_source_dwid = 1
-        -- star_loan.lender_user_dim: title_specialist_lender_user_dwid
+    -- star_loan.lender_user_dim: title_specialist
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1316,7 +1377,7 @@ FROM
     ) AS title_specialist
         ON deal_key_roles.dkrs_title_specialist_lender_user_pid = title_specialist.lender_user_pid
         AND title_specialist.data_source_dwid = 1
-        -- star_loan.lender_user_dim: transaction_assistant_lender_user_dwid
+    -- star_loan.lender_user_dim: transaction_assistant
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1324,7 +1385,7 @@ FROM
     ) AS transaction_assistant
         ON deal_key_roles.dkrs_transaction_assistant_lender_user_pid = transaction_assistant.lender_user_pid
         AND transaction_assistant.data_source_dwid = 1
-        -- star_loan.lender_user_dim: underwriter_lender_user_dwid
+    -- star_loan.lender_user_dim: underwriter
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1332,7 +1393,7 @@ FROM
     ) AS underwriter
         ON deal_key_roles.dkrs_underwriter_lender_user_pid = underwriter.lender_user_pid
         AND underwriter.data_source_dwid = 1
-        -- star_loan.lender_user_dim: underwriting_manager_lender_user_dwid
+    -- star_loan.lender_user_dim: underwriting_manager
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1340,7 +1401,7 @@ FROM
     ) AS underwriting_manager
         ON deal_key_roles.dkrs_underwriting_manager_lender_user_pid = underwriting_manager.lender_user_pid
         AND underwriting_manager.data_source_dwid = 1
-        -- star_loan.lender_user_dim: va_specialist_lender_user_dwid
+    -- star_loan.lender_user_dim: va_specialist
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1348,7 +1409,7 @@ FROM
     ) AS va_specialist
         ON deal_key_roles.dkrs_va_specialist_lender_user_pid = va_specialist.lender_user_pid
         AND va_specialist.data_source_dwid = 1
-        -- star_loan.lender_user_dim: verbal_voe_specialist_lender_user_dwid
+    -- star_loan.lender_user_dim: verbal_voe_specialist
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1356,7 +1417,7 @@ FROM
     ) AS verbal_voe_specialist
         ON deal_key_roles.dkrs_verbal_voe_specialist_lender_user_pid = verbal_voe_specialist.lender_user_pid
         AND verbal_voe_specialist.data_source_dwid = 1
-        -- star_loan.lender_user_dim: voe_specialist_lender_user_dwid
+    -- star_loan.lender_user_dim: voe_specialist
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1364,7 +1425,7 @@ FROM
     ) AS voe_specialist
         ON deal_key_roles.dkrs_voe_specialist_lender_user_pid = voe_specialist.lender_user_pid
         AND voe_specialist.data_source_dwid = 1
-        -- star_loan.lender_user_dim: wholesale_client_advocate_lender_user_dwid
+    -- star_loan.lender_user_dim: wholesale_client_advocate
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1372,7 +1433,7 @@ FROM
     ) AS wholesale_client_advocate
         ON deal_key_roles.dkrs_wholesale_client_advocate_lender_user_pid = wholesale_client_advocate.lender_user_pid
         AND wholesale_client_advocate.data_source_dwid = 1
-        -- star_loan.lender_user_dim: wire_specialist_lender_user_dwid
+    -- star_loan.lender_user_dim: wire_specialist
     LEFT JOIN (
         SELECT lender_user_dim.*
              , <<lender_user_dim_partial_load_condition>> AS include_record
@@ -1380,35 +1441,35 @@ FROM
     ) AS wire_specialist
         ON deal_key_roles.dkrs_wire_specialist_lender_user_pid = wire_specialist.lender_user_pid
         AND wire_specialist.data_source_dwid = 1
-        -- star_loan.interim_funder_dim
+    -- star_loan.interim_funder_dim
     LEFT JOIN (
         SELECT interim_funder_dim.*
              , <<interim_funder_dim_partial_load_condition>> AS include_record
         FROM star_loan.interim_funder_dim
     ) AS interim_funder_dim ON interim_funder.if_pid = interim_funder_dim.interim_funder_pid
         AND interim_funder_dim.data_source_dwid = 1
-        -- star_loan.product_terms_dim
+    -- star_loan.product_terms_dim
     LEFT JOIN (
         SELECT product_terms_dim.*
              , <<product_terms_dim_partial_load_condition>> AS include_record
         FROM star_loan.product_terms_dim
     ) AS product_terms_dim ON product_terms.pt_pid = product_terms_dim.product_terms_pid
         AND product_terms_dim.data_source_dwid = 1
-        -- star_loan.product_dim
+    -- star_loan.product_dim
     LEFT JOIN (
         SELECT product_dim.*
              , <<product_dim_partial_load_condition>> AS include_record
         FROM star_loan.product_dim
     ) AS product_dim ON product.p_pid = product_dim.product_pid
         AND product_dim.data_source_dwid = 1
-        -- star_loan.investor_dim
+    -- star_loan.investor_dim
     LEFT JOIN (
         SELECT investor_dim.*
              , <<investor_dim_partial_load_condition>> AS include_record
         FROM star_loan.investor_dim
     ) AS investor_dim ON product_investor.i_pid = investor_dim.investor_pid
         AND investor_dim.data_source_dwid = 1
-        -- star_loan.hmda_purchaser_of_loan_dim
+    -- star_loan.hmda_purchaser_of_loan_dim
     LEFT JOIN (
         SELECT hmda_purchaser_of_loan_dim.*
              , <<hmda_purchaser_of_loan_dim_partial_load_condition>> AS include_record
@@ -1416,7 +1477,7 @@ FROM
     ) AS hmda_purchaser_of_loan_dim ON hmda_purchaser_of_loan_2017_type.code IS NOT DISTINCT FROM hmda_purchaser_of_loan_dim.code_2017
         AND hmda_purchaser_of_loan_2018_type.code IS NOT DISTINCT FROM hmda_purchaser_of_loan_dim.code_2018
         AND hmda_purchaser_of_loan_dim.data_source_dwid = 1
-        -- star_loan.date_dim joins for date dwids
+    -- star_loan.date_dim joins for date dwids
     LEFT JOIN star_common.date_dim agency_case_id_assigned_date_dim ON loan.l_agency_case_id_assigned_date =
                                                                        agency_case_id_assigned_date_dim.value
     LEFT JOIN star_common.date_dim apor_date_dim ON loan.l_apor_date = apor_date_dim.value
@@ -1504,9 +1565,9 @@ WHERE GREATEST(deal.include_record, proposal.include_record, primary_application
                verbal_voe_specialist.include_record, voe_specialist.include_record,
                wholesale_client_advocate.include_record,
                wire_specialist.include_record,
-               current_loan_beneficiary_dim.include_record, current_loan_beneficiary_investor_dim.include_record,
-               initial_loan_beneficiary_investor_dim.include_record,
-               first_loan_beneficiary_investor_after_initial_dim.include_record,
+               current_loan_beneficiary_dim.include_record, current_beneficiary_investor_dim.include_record,
+               initial_beneficiary_investor_dim.include_record,
+               first_beneficiary_after_initial_investor_dim.include_record,
                most_recent_purchasing_beneficiary_investor_dim.include_record,
                loan_dim.include_record, loan_funding_dim.include_record, product_dim.include_record,
                product_terms_dim.include_record, transaction_dim.include_record) IS TRUE
