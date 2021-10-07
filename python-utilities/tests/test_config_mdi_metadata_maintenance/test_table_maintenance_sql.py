@@ -59,7 +59,7 @@ class TestingMetadataComparisonFunctions(MetadataComparisonFunctions):
         return f'DELETE rows: {str(rows)}'
 
 
-class TestGenerateMetadataMaintenanceSQL(unittest.TestCase):
+class TestGenerateTableMaintenanceSQL(unittest.TestCase):
     def test_returns_only_empty_strings_if_no_metadata_exists_on_either_side(self):
         db_connection = MockLocalEDWConnection([])
         expected = TableMaintenanceSQL(
