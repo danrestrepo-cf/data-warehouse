@@ -59,7 +59,7 @@ def construct_table_metadata_from_dict(table_dict: dict, database_name: str) -> 
     table = TableMetadata(table_dict['name'])
     if 'primary_source_table' in table_dict:
         if not table_dict['primary_source_table'] or table_dict['primary_source_table'].count('.') != 2:
-            raise InvalidTableYAMLFileException(
+            raise InvalidTableMetadataException(
                 f'Primary source table for table "{table_dict["name"]}" is not in the format "database.schema.table"'
             )
         source_table_components = table_dict['primary_source_table'].split('.')
@@ -73,7 +73,7 @@ def construct_table_metadata_from_dict(table_dict: dict, database_name: str) -> 
         for fk_name, fk_data in table_dict['foreign_keys'].items():
             if 'columns' not in fk_data or 'references' not in fk_data or 'schema' not in fk_data['references'] or \
                     'table' not in fk_data['references']:
-                raise InvalidTableYAMLFileException(f'Foreign key "{fk_name}" is missing one or more required metadata fields')
+                raise InvalidTableMetadataException(f'Foreign key "{fk_name}" is missing one or more required metadata fields')
             table.add_foreign_key(ForeignKeyMetadata(
                 name=fk_name,
                 table=TableAddress(
@@ -96,7 +96,7 @@ def construct_table_metadata_from_dict(table_dict: dict, database_name: str) -> 
     if 'etls' in table_dict:
         for etl_process_name, etl_data in table_dict['etls'].items():
             if 'hardcoded_data_source' not in etl_data or 'input_type' not in etl_data or 'output_type' not in etl_data:
-                raise InvalidTableYAMLFileException(f'ETL "{etl_process_name}" is missing one or more required metadata fields')
+                raise InvalidTableMetadataException(f'ETL "{etl_process_name}" is missing one or more required metadata fields')
             table.add_etl(ETLMetadata(
                 process_name=etl_process_name,
                 hardcoded_data_source=parse_etl_data_source(etl_data.get('hardcoded_data_source')),
@@ -132,42 +132,42 @@ def read_yaml_file(filepath: str) -> dict:
 
 def parse_foreign_column_path(path: str) -> ForeignColumnPath:
     if not path or not path.startswith('primary_source_table') or path.count('.') < 2 or path.count('.') % 2 == 1:
-        raise InvalidTableYAMLFileException(f'Source field path "{path}" could not be parsed')
+        raise InvalidTableMetadataException(f'Source field path "{path}" could not be parsed')
     split_path = path.split('.')
     fk_path = []
     for i in range(1, len(split_path), 2):
         if split_path[i] == 'foreign_keys':
             if i == len(split_path) - 2:  # reached the end of the path without encountering "columns"
-                raise InvalidTableYAMLFileException(f'Source field path "{path}" could not be parsed')
+                raise InvalidTableMetadataException(f'Source field path "{path}" could not be parsed')
             fk_path.append(split_path[i + 1])
         elif split_path[i] == 'columns':
             if i != len(split_path) - 2:  # "columns" is not the last thing in the path
-                raise InvalidTableYAMLFileException(f'Source field path "{path}" could not be parsed')
+                raise InvalidTableMetadataException(f'Source field path "{path}" could not be parsed')
             return ForeignColumnPath(fk_path, split_path[i + 1])
         else:
-            raise InvalidTableYAMLFileException(f'Source field path "{path}" could not be parsed')
+            raise InvalidTableMetadataException(f'Source field path "{path}" could not be parsed')
 
 
 def parse_etl_data_source(raw_data_source: str) -> ETLDataSource:
     if raw_data_source.lower() == 'octane':
         return ETLDataSource.OCTANE
     else:
-        raise InvalidTableYAMLFileException(f'Invalid ETL data source: {raw_data_source}')
+        raise InvalidTableMetadataException(f'Invalid ETL data source: {raw_data_source}')
 
 
 def parse_etl_input_type(raw_input_type: str) -> ETLInputType:
     if raw_input_type.lower() == 'table':
         return ETLInputType.TABLE
     else:
-        raise InvalidTableYAMLFileException(f'Invalid ETL input type: {raw_input_type}')
+        raise InvalidTableMetadataException(f'Invalid ETL input type: {raw_input_type}')
 
 
 def parse_etl_output_type(raw_output_type: str) -> ETLOutputType:
     if raw_output_type.lower() == 'insert':
         return ETLOutputType.INSERT
     else:
-        raise InvalidTableYAMLFileException(f'Invalid ETL output type: {raw_output_type}')
+        raise InvalidTableMetadataException(f'Invalid ETL output type: {raw_output_type}')
 
 
-class InvalidTableYAMLFileException(Exception):
+class InvalidTableMetadataException(Exception):
     pass
