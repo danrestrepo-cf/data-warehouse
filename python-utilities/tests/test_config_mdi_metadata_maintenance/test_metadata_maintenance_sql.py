@@ -4,7 +4,7 @@ from typing import List
 from tests.test_utils import MockLocalEDWConnection
 
 from lib.config_mdi_metadata_maintenance.metadata_table import Row, MetadataTable
-from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper
+from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper, SingleGroupRowGrouper
 from lib.db_connections import LocalEDWConnection
 from lib.config_mdi_metadata_maintenance.metadata_maintenance_sql import MetadataMaintenanceSQLGenerator, TableMaintenanceSQL
 from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata
@@ -241,6 +241,187 @@ class TestGenerateTableMaintenanceSQL(unittest.TestCase):
         )
         generator = MetadataMaintenanceSQLGenerator(db_connection, dw_metadata)
         self.assertEqual(expected, generator.generate_table_metadata_maintenance_sql(TestingMetadataComparisonFunctions()))
+
+
+# MetadataComparisonFunctions subclasses used for testing the full metadata maintenance process
+class TestComparisonFunctions1(MetadataComparisonFunctions):
+
+    def __init__(self):
+        super().__init__(key_fields=['column_name'])
+
+    def construct_metadata_table_from_config_db(self, local_edw_connection: LocalEDWConnection) -> MetadataTable:
+        # mock DB connection will return pre-set results regardless of the query run, so query is just set to empty str
+        return self.construct_metadata_table_from_sql_query_results(local_edw_connection, "")
+
+    def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:
+        metadata_table = self.construct_empty_metadata_table()
+        for database in data_warehouse_metadata.databases:
+            for schema in database.schemas:
+                for table in schema.tables:
+                    for column in table.columns:
+                        metadata_table.add_row({'column_name': column.name, 'data_type': column.data_type})
+        return metadata_table
+
+    def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
+        return SingleGroupRowGrouper()
+
+    def generate_insert_sql(self, rows: List[Row]) -> str:
+        return f'INSERT rows for Table1'
+
+    def generate_update_sql(self, rows: List[Row]) -> str:
+        return f'UPDATE rows for Table1'
+
+    def generate_delete_sql(self, rows: List[Row]) -> str:
+        return f'DELETE rows for Table1'
+
+
+class TestComparisonFunctions2(MetadataComparisonFunctions):
+
+    def __init__(self):
+        super().__init__(key_fields=['column_name'])
+
+    def construct_metadata_table_from_config_db(self, local_edw_connection: LocalEDWConnection) -> MetadataTable:
+        # mock DB connection will return pre-set results regardless of the query run, so query is just set to empty str
+        return self.construct_metadata_table_from_sql_query_results(local_edw_connection, "")
+
+    def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:
+        metadata_table = self.construct_empty_metadata_table()
+        for database in data_warehouse_metadata.databases:
+            for schema in database.schemas:
+                for table in schema.tables:
+                    for column in table.columns:
+                        metadata_table.add_row({'column_name': column.name, 'data_type': column.data_type})
+        return metadata_table
+
+    def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
+        return SingleGroupRowGrouper()
+
+    def generate_insert_sql(self, rows: List[Row]) -> str:
+        return f'INSERT rows for Table2'
+
+    def generate_update_sql(self, rows: List[Row]) -> str:
+        return f'UPDATE rows for Table2'
+
+    def generate_delete_sql(self, rows: List[Row]) -> str:
+        return f'DELETE rows for Table2'
+
+
+class TestComparisonFunctions3(MetadataComparisonFunctions):
+
+    def __init__(self):
+        super().__init__(key_fields=['column_name'])
+
+    def construct_metadata_table_from_config_db(self, local_edw_connection: LocalEDWConnection) -> MetadataTable:
+        # mock DB connection will return pre-set results regardless of the query run, so query is just set to empty str
+        return self.construct_metadata_table_from_sql_query_results(local_edw_connection, "")
+
+    def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:
+        metadata_table = self.construct_empty_metadata_table()
+        for database in data_warehouse_metadata.databases:
+            for schema in database.schemas:
+                for table in schema.tables:
+                    for column in table.columns:
+                        metadata_table.add_row({'column_name': column.name, 'data_type': column.data_type})
+        return metadata_table
+
+    def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
+        return SingleGroupRowGrouper()
+
+    def generate_insert_sql(self, rows: List[Row]) -> str:
+        return f'INSERT rows for Table3'
+
+    def generate_update_sql(self, rows: List[Row]) -> str:
+        return f'UPDATE rows for Table3'
+
+    def generate_delete_sql(self, rows: List[Row]) -> str:
+        return f'DELETE rows for Table3'
+
+
+class TestSetOrderErrorChecking(unittest.TestCase):
+
+    def test_set_insert_order_throws_error_if_table_list_doesnt_match_known_comparison_functions(self):
+        generator = MetadataMaintenanceSQLGenerator(MockLocalEDWConnection([]), DataWarehouseMetadata('dw'))
+        generator.add_metadata_comparison_functions('Table1', TestComparisonFunctions1())
+        generator.add_metadata_comparison_functions('Table2', TestComparisonFunctions2())
+        generator.add_metadata_comparison_functions('Table3', TestComparisonFunctions3())
+        with self.assertRaises(MetadataMaintenanceSQLGenerator.InvalidTableOrderException) as e:
+            generator.set_insert_table_order(['Table2'])
+        expected_msg = 'Tables missing from table order list: Table1, Table3'
+        self.assertEqual(expected_msg, str(e.exception))
+
+    def test_set_update_order_throws_error_if_table_list_doesnt_match_known_comparison_functions(self):
+        generator = MetadataMaintenanceSQLGenerator(MockLocalEDWConnection([]), DataWarehouseMetadata('dw'))
+        generator.add_metadata_comparison_functions('Table1', TestComparisonFunctions1())
+        generator.add_metadata_comparison_functions('Table2', TestComparisonFunctions2())
+        generator.add_metadata_comparison_functions('Table3', TestComparisonFunctions3())
+        with self.assertRaises(MetadataMaintenanceSQLGenerator.InvalidTableOrderException) as e:
+            generator.set_update_table_order(['Table1', 'Table2', 'Table3', 'Table4', 'Table5'])
+        expected_msg = 'Unknown tables in table order list: Table4, Table5'
+        self.assertEqual(expected_msg, str(e.exception))
+
+    def test_set_delete_order_throws_error_if_table_list_doesnt_match_known_comparison_functions(self):
+        generator = MetadataMaintenanceSQLGenerator(MockLocalEDWConnection([]), DataWarehouseMetadata('dw'))
+        generator.add_metadata_comparison_functions('Table1', TestComparisonFunctions1())
+        generator.add_metadata_comparison_functions('Table2', TestComparisonFunctions2())
+        generator.add_metadata_comparison_functions('Table3', TestComparisonFunctions3())
+        with self.assertRaises(MetadataMaintenanceSQLGenerator.InvalidTableOrderException) as e:
+            generator.set_delete_table_order(['Table1', 'Table3', 'Table4'])
+        expected_msg = 'Tables missing from table order list: Table2; Unknown tables in table order list: Table4'
+        self.assertEqual(expected_msg, str(e.exception))
+
+
+class TestGenerateAllMetadataMaintenanceSQL(unittest.TestCase):
+
+    def test_returns_all_generated_sql_in_the_order_in_which_the_comparison_functions_were_recorded_by_default(self):
+        db_connection = MockLocalEDWConnection([
+            {'column_name': 'col1', 'data_type': 'INT'},
+            {'column_name': 'col2', 'data_type': 'TEXT'}
+        ])
+        dw_metadata = construct_data_warehouse_metadata_from_dict(
+            {
+                'name': 'dw1',
+                'databases': [
+                    {
+                        'name': 'db1',
+                        'schemas': [
+                            {
+                                'name': 'schema1',
+                                'tables': [
+                                    {
+                                        'name': 'table1',
+                                        'columns': {
+                                            'col1': {
+                                                'data_type': 'TEXT'
+                                            },
+                                            'col3': {
+                                                'data_type': 'INT'
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        )
+        generator = MetadataMaintenanceSQLGenerator(db_connection, dw_metadata)
+        generator.add_metadata_comparison_functions('Table1', TestComparisonFunctions1())
+        generator.add_metadata_comparison_functions('Table2', TestComparisonFunctions2())
+        generator.add_metadata_comparison_functions('Table3', TestComparisonFunctions3())
+        expected = '--Insertions\n' + \
+                   'INSERT rows for Table1\n\n' + \
+                   'INSERT rows for Table2\n\n' + \
+                   'INSERT rows for Table3\n\n' + \
+                   '--Updates\n' + \
+                   'UPDATE rows for Table1\n\n' + \
+                   'UPDATE rows for Table2\n\n' + \
+                   'UPDATE rows for Table3\n\n' + \
+                   '--Deletions\n' + \
+                   'DELETE rows for Table1\n\n' + \
+                   'DELETE rows for Table2\n\n' + \
+                   'DELETE rows for Table3'
+        self.assertEqual(expected, generator.generate_all_metadata_maintenance_sql())
 
 
 if __name__ == '__main__':
