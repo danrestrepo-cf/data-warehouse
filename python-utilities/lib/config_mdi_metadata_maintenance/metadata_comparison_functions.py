@@ -36,6 +36,13 @@ class MetadataComparisonFunctions(ABC):
     def generate_delete_sql(self, rows: List[Row]) -> str:
         pass
 
+    def construct_metadata_table_from_sql_query_results(self, local_edw_connection: LocalEDWConnection, sql_query: str) -> MetadataTable:
+        with local_edw_connection as cursor:
+            raw_data = cursor.select(sql_query)
+            metadata_table = self.construct_empty_metadata_table()
+            metadata_table.add_rows(raw_data)
+            return metadata_table
+
     def construct_empty_metadata_table(self) -> MetadataTable:
         return MetadataTable(self.key_fields)
 
@@ -59,17 +66,13 @@ class ProcessMetadataComparisonFunctions(MetadataComparisonFunctions):
         super().__init__(key_fields=['process_name'])
 
     def construct_metadata_table_from_config_db(self, local_edw_connection: LocalEDWConnection) -> MetadataTable:
-        with local_edw_connection as cursor:
-            raw_data = cursor.select("""
+        return self.construct_metadata_table_from_sql_query_results(local_edw_connection, """
                 SELECT process.name AS process_name
                      , process.description AS process_description
                 FROM mdi.process
                 JOIN mdi.table_output_step
                      ON process.dwid = table_output_step.process_dwid;
             """)
-            metadata_table = self.construct_empty_metadata_table()
-            metadata_table.add_rows(raw_data)
-            return metadata_table
 
     def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:
         metadata_table = self.construct_empty_metadata_table()
