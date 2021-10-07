@@ -19,12 +19,12 @@ class MultiKeyMap:
         """Return true if an entry exists in the map with the given key, false otherwise"""
         return self._create_key_values_tuple_from_dict(key) in self._values
 
-    def get_value_by_key(self, key: dict) -> dict:
+    def get_value_by_key(self, key: dict) -> Any:
         """Return the value associated with the given key, throwing an error if no entry with the given key exists"""
         key_tuple = self._create_key_values_tuple_from_dict(key)
         if key_tuple not in self._values:
             raise self.InvalidKeyValuesException(key_tuple)
-        return self._values[key_tuple].attributes
+        return self._values[key_tuple]
 
     def _create_key_values_tuple_from_dict(self, d: dict):
         """

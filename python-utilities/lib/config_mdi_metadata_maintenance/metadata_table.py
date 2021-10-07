@@ -43,7 +43,7 @@ class MetadataTable:
 
     def get_attributes_by_key(self, key: dict) -> dict:
         """Return non-key metadata attributes for the row with the given key"""
-        return self._map.get_value_by_key(key)
+        return self._map.get_value_by_key(key).attributes
 
     def __repr__(self):
         return f'MetadataTable(rows={repr(self.rows)})'
