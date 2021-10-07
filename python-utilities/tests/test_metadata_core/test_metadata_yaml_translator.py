@@ -5,7 +5,7 @@ import shutil
 import yaml
 
 from lib.metadata_core.metadata_yaml_translator import (generate_data_warehouse_metadata_from_yaml,
-                                                        InvalidTableYAMLFileException,
+                                                        InvalidTableMetadataException,
                                                         parse_foreign_column_path,
                                                         parse_etl_data_source,
                                                         parse_etl_input_type,
@@ -366,7 +366,7 @@ class TestGenerateDataWarehouseWithInvalidForeignKeyFields(unittest.TestCase):
         write_yaml({'name': 'bad_fk_fields', 'foreign_keys': {'fk_1': {}}}, self.bad_fk_fields_table_filepath)
 
     def test_throws_error_if_fk_doesnt_have_all_required_fields(self):
-        with self.assertRaises(InvalidTableYAMLFileException):
+        with self.assertRaises(InvalidTableMetadataException):
             generate_data_warehouse_metadata_from_yaml(self.root_filepath)
 
     def tearDown(self) -> None:
@@ -387,7 +387,7 @@ class TestGenerateDataWarehouseWithInvalidETLFields(unittest.TestCase):
         write_yaml({'name': 'bad_etl_fields', 'etls': {'SP-100': {}}}, self.bad_etl_fields_table_filepath)
 
     def test_throws_error_if_etl_doesnt_have_all_required_fields(self):
-        with self.assertRaises(InvalidTableYAMLFileException):
+        with self.assertRaises(InvalidTableMetadataException):
             generate_data_warehouse_metadata_from_yaml(self.root_filepath)
 
     def tearDown(self) -> None:
@@ -408,7 +408,7 @@ class TestGenerateDataWarehouseWithInvalidPrimarySourceTable(unittest.TestCase):
         write_yaml({'name': 'bad_pst', 'primary_source_table': 'a_table'}, self.bad_pst_table_filepath)
 
     def test_throws_error_if_primary_source_table_has_an_incorrect_format(self):
-        with self.assertRaises(InvalidTableYAMLFileException):
+        with self.assertRaises(InvalidTableMetadataException):
             generate_data_warehouse_metadata_from_yaml(self.root_filepath)
 
     def tearDown(self) -> None:
@@ -419,27 +419,27 @@ class TestGenerateDataWarehouseWithInvalidPrimarySourceTable(unittest.TestCase):
 class TestParseForeignColumnPath(unittest.TestCase):
 
     def test_throws_error_if_path_is_none(self):
-        with self.assertRaises(InvalidTableYAMLFileException):
+        with self.assertRaises(InvalidTableMetadataException):
             parse_foreign_column_path(None)
 
     def test_throws_error_if_path_doesnt_start_with_primary_source_table(self):
-        with self.assertRaises(InvalidTableYAMLFileException):
+        with self.assertRaises(InvalidTableMetadataException):
             parse_foreign_column_path('')
 
     def test_throws_error_if_path_has_odd_number_of_periods(self):
-        with self.assertRaises(InvalidTableYAMLFileException):
+        with self.assertRaises(InvalidTableMetadataException):
             parse_foreign_column_path('primary_source_table.foreign_keys.fk_1.foreign_keys')
 
     def test_throws_error_if_path_contains_an_invalid_keyword(self):
-        with self.assertRaises(InvalidTableYAMLFileException):
+        with self.assertRaises(InvalidTableMetadataException):
             parse_foreign_column_path('primary_source_table.strange_keys.fk_1')
 
     def test_throws_error_if_the_destination_column_appears_in_the_path_before_its_end(self):
-        with self.assertRaises(InvalidTableYAMLFileException):
+        with self.assertRaises(InvalidTableMetadataException):
             parse_foreign_column_path('primary_source_table.columns.col1.foreign_keys.fk_2')
 
     def test_throws_error_if_the_path_contains_no_destination_column(self):
-        with self.assertRaises(InvalidTableYAMLFileException):
+        with self.assertRaises(InvalidTableMetadataException):
             parse_foreign_column_path('primary_source_table.foreign_keys.fk_2')
 
     def test_correctly_parses_valid_path(self):
@@ -451,15 +451,15 @@ class TestParseForeignColumnPath(unittest.TestCase):
 class TestParseETLEnumParsers(unittest.TestCase):
 
     def test_throws_error_if_data_source_is_invalid(self):
-        with self.assertRaises(InvalidTableYAMLFileException):
+        with self.assertRaises(InvalidTableMetadataException):
             parse_etl_data_source('invalid_data_source')
 
     def test_throws_error_if_input_type_is_invalid(self):
-        with self.assertRaises(InvalidTableYAMLFileException):
+        with self.assertRaises(InvalidTableMetadataException):
             parse_etl_input_type('invalid_input_type')
 
     def test_throws_error_if_output_type_is_invalid(self):
-        with self.assertRaises(InvalidTableYAMLFileException):
+        with self.assertRaises(InvalidTableMetadataException):
             parse_etl_output_type('invalid_input_type')
 
 
