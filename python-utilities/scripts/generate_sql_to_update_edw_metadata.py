@@ -9,20 +9,28 @@ from lib.db_connections import LocalEDWConnection
 from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata
 from lib.metadata_core.metadata_yaml_translator import generate_data_warehouse_metadata_from_yaml
 from lib.config_mdi_metadata_maintenance.metadata_maintenance_sql import MetadataMaintenanceSQLGenerator
-from lib.config_mdi_metadata_maintenance.metadata_comparison_functions import (ProcessMetadataComparisonFunctions)
+from lib.config_mdi_metadata_maintenance.metadata_comparison_functions import (ProcessMetadataComparisonFunctions,
+                                                                               JSONOutputFieldMetadataComparisonFunctions)
 
 
 def main():
+    # parse commmand line arguments
     default_metadata_root_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', 'metadata', 'edw')
     argparser = argparse.ArgumentParser(description='Generate SQL to maintain metadata in the config.mdi schema')
     argparser.add_argument('-d', '--metadata_dir', type=str, default=default_metadata_root_dir)
     args = argparser.parse_args()
 
+    # read in metadata to be compared
     edw_connection = LocalEDWConnection(host='localhost', dbname='config', user='postgres', password='testonly')
     data_warehouse_metadata = generate_data_warehouse_metadata_from_yaml(args.metadata_dir)
     filter_metadata_to_staging_octane_and_history_octane_schemas(data_warehouse_metadata)
+
+    # set up SQL generator object
     sql_generator = MetadataMaintenanceSQLGenerator(edw_connection, data_warehouse_metadata)
     sql_generator.add_metadata_comparison_functions('process', ProcessMetadataComparisonFunctions())
+    sql_generator.add_metadata_comparison_functions('json_output_field', JSONOutputFieldMetadataComparisonFunctions())
+
+    # generate and output metadata maintenance SQL statements
     metadata_maintenance_sql = sql_generator.generate_all_metadata_maintenance_sql()
     if metadata_maintenance_sql == '':
         print('No metadata updates are necessary at this time')
