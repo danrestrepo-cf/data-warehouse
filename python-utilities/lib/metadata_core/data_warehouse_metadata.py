@@ -94,6 +94,18 @@ class TableMetadata:
         else:
             return self._foreign_keys[foreign_key_name]
 
+    def remove_column_metadata(self, column_name: str):
+        if column_name in self._columns:
+            del self._columns[column_name]
+
+    def remove_etl_metadata(self, etl_name: str):
+        if etl_name in self._etls:
+            del self._etls[etl_name]
+
+    def remove_foreign_key_metadata(self, foreign_key_name: str):
+        if foreign_key_name in self._foreign_keys:
+            del self._foreign_keys[foreign_key_name]
+
     @property
     def columns(self) -> List[ColumnMetadata]:
         return list(self._columns.values())
@@ -127,6 +139,10 @@ class SchemaMetadata:
         else:
             return self._tables[table_name]
 
+    def remove_table_metadata(self, table_name: str):
+        if table_name in self._tables:
+            del self._tables[table_name]
+
     @property
     def tables(self) -> List[TableMetadata]:
         return list(self._tables.values())
@@ -152,6 +168,10 @@ class DatabaseMetadata:
         else:
             return self._schemas[schema_name]
 
+    def remove_schema_metadata(self, schema_name: str):
+        if schema_name in self._schemas:
+            del self._schemas[schema_name]
+
     @property
     def schemas(self) -> List[SchemaMetadata]:
         return list(self._schemas.values())
@@ -176,6 +196,10 @@ class DataWarehouseMetadata:
             raise InvalidMetadataKeyException('data warehouse', self.name, 'database', database_name)
         else:
             return self._databases[database_name]
+
+    def remove_database_metadata(self, database_name: str):
+        if database_name in self._databases:
+            del self._databases[database_name]
 
     @property
     def databases(self) -> List[DatabaseMetadata]:
