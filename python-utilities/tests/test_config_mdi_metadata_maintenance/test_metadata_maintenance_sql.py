@@ -423,6 +423,60 @@ class TestGenerateAllMetadataMaintenanceSQL(unittest.TestCase):
                    'DELETE rows for Table3'
         self.assertEqual(expected, generator.generate_all_metadata_maintenance_sql())
 
+    def test_returns_all_generated_sql_in_custom_order_if_order_is_specified(self):
+        db_connection = MockLocalEDWConnection([
+            {'column_name': 'col1', 'data_type': 'INT'},
+            {'column_name': 'col2', 'data_type': 'TEXT'}
+        ])
+        dw_metadata = construct_data_warehouse_metadata_from_dict(
+            {
+                'name': 'dw1',
+                'databases': [
+                    {
+                        'name': 'db1',
+                        'schemas': [
+                            {
+                                'name': 'schema1',
+                                'tables': [
+                                    {
+                                        'name': 'table1',
+                                        'columns': {
+                                            'col1': {
+                                                'data_type': 'TEXT'
+                                            },
+                                            'col3': {
+                                                'data_type': 'INT'
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        )
+        generator = MetadataMaintenanceSQLGenerator(db_connection, dw_metadata)
+        generator.add_metadata_comparison_functions('Table1', TestComparisonFunctions1())
+        generator.add_metadata_comparison_functions('Table2', TestComparisonFunctions2())
+        generator.add_metadata_comparison_functions('Table3', TestComparisonFunctions3())
+        generator.set_insert_table_order(['Table2', 'Table3', 'Table1'])
+        generator.set_update_table_order(['Table2', 'Table1', 'Table3'])
+        generator.set_delete_table_order(['Table3', 'Table2', 'Table1'])
+        expected = '--Insertions\n' + \
+                   'INSERT rows for Table2\n\n' + \
+                   'INSERT rows for Table3\n\n' + \
+                   'INSERT rows for Table1\n\n' + \
+                   '--Updates\n' + \
+                   'UPDATE rows for Table2\n\n' + \
+                   'UPDATE rows for Table1\n\n' + \
+                   'UPDATE rows for Table3\n\n' + \
+                   '--Deletions\n' + \
+                   'DELETE rows for Table3\n\n' + \
+                   'DELETE rows for Table2\n\n' + \
+                   'DELETE rows for Table1'
+        self.assertEqual(expected, generator.generate_all_metadata_maintenance_sql())
+
 
 if __name__ == '__main__':
     unittest.main()
