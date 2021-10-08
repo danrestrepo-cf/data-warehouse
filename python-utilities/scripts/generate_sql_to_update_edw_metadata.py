@@ -10,7 +10,8 @@ from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata
 from lib.metadata_core.metadata_yaml_translator import generate_data_warehouse_metadata_from_yaml
 from lib.config_mdi_metadata_maintenance.metadata_maintenance_sql import MetadataMaintenanceSQLGenerator
 from lib.config_mdi_metadata_maintenance.metadata_comparison_functions import (ProcessMetadataComparisonFunctions,
-                                                                               JSONOutputFieldMetadataComparisonFunctions)
+                                                                               JSONOutputFieldMetadataComparisonFunctions,
+                                                                               StateMachineDefinitionMetadataComparisonFunctions)
 
 
 def main():
@@ -29,18 +30,16 @@ def main():
     sql_generator = MetadataMaintenanceSQLGenerator(edw_connection, data_warehouse_metadata)
     sql_generator.add_metadata_comparison_functions('process', ProcessMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('json_output_field', JSONOutputFieldMetadataComparisonFunctions())
-    sql_generator.set_insert_table_order([
+    sql_generator.add_metadata_comparison_functions('state_machine_definition', StateMachineDefinitionMetadataComparisonFunctions())
+    insert_and_update_table_order = [
         'process',
-        'json_output_field'
-    ])
-    sql_generator.set_update_table_order([
-        'process',
-        'json_output_field'
-    ])
-    sql_generator.set_delete_table_order([
         'json_output_field',
-        'process'
-    ])
+        'state_machine_definition'
+    ]
+    delete_table_order = list(reversed(insert_and_update_table_order))
+    sql_generator.set_insert_table_order(insert_and_update_table_order)
+    sql_generator.set_update_table_order(insert_and_update_table_order)
+    sql_generator.set_delete_table_order(delete_table_order)
 
     # generate and output metadata maintenance SQL statements
     metadata_maintenance_sql = sql_generator.generate_all_metadata_maintenance_sql()
