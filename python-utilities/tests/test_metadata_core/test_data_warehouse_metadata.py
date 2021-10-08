@@ -207,6 +207,11 @@ class TestTableMetadata(unittest.TestCase):
         table_metadata.remove_foreign_key_metadata('fk_1')
         self.assertEqual([], table_metadata.foreign_keys)
 
+    def test_can_generate_its_own_address(self):
+        table_metadata = TableMetadata(name='account', schema_name='staging_octane', database_name='staging')
+        expected = TableAddress(table='account', schema='staging_octane', database='staging')
+        self.assertEqual(expected, table_metadata.address)
+
 
 if __name__ == '__main__':
     unittest.main()

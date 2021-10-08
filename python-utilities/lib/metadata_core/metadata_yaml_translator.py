@@ -50,13 +50,13 @@ def construct_data_warehouse_metadata_from_dict(data_warehouse_dict: dict) -> Da
             schema_metadata = SchemaMetadata(schema_dict['name'])
             database_metadata.add_schema(schema_metadata)
             for table_dict in schema_dict['tables']:
-                table_metadata = construct_table_metadata_from_dict(table_dict, database_metadata.name)
+                table_metadata = construct_table_metadata_from_dict(table_dict, schema_metadata.name, database_metadata.name)
                 schema_metadata.add_table(table_metadata)
     return data_warehouse_metadata
 
 
-def construct_table_metadata_from_dict(table_dict: dict, database_name: str) -> TableMetadata:
-    table = TableMetadata(table_dict['name'])
+def construct_table_metadata_from_dict(table_dict: dict, schema_name: str, database_name: str) -> TableMetadata:
+    table = TableMetadata(name=table_dict['name'], schema_name=schema_name, database_name=database_name)
     if 'primary_source_table' in table_dict:
         if not table_dict['primary_source_table'] or table_dict['primary_source_table'].count('.') != 2:
             raise InvalidTableMetadataException(

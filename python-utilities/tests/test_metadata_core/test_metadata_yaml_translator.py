@@ -293,6 +293,8 @@ class TestGenerateDataWarehouseWithFullYAMLFile(unittest.TestCase):
 
     def test_parses_simple_attributes_correctly(self):
         self.assertEqual(TableAddress('db1', 'sch2', 'table01'), self.table1_metadata.primary_source_table)
+        self.assertEqual('db1', self.table1_metadata.database_name)
+        self.assertEqual('sch1', self.table1_metadata.schema_name)
         self.assertEqual(['col1', 'col2'], self.table1_metadata.primary_key)
         self.assertEqual(['SP-201', 'SP-202'], self.table1_metadata.next_etls)
 

@@ -58,8 +58,10 @@ class ColumnMetadata:
 
 class TableMetadata:
 
-    def __init__(self, name: str, primary_source_table: TableAddress = None):
+    def __init__(self, name: str, schema_name: str = None, database_name: str = None, primary_source_table: TableAddress = None):
         self.name = name
+        self.schema_name = schema_name
+        self.database_name = database_name
         self.primary_source_table = primary_source_table
         self.primary_key = []
         self.next_etls = []
@@ -117,6 +119,14 @@ class TableMetadata:
     @property
     def foreign_keys(self) -> List[ForeignKeyMetadata]:
         return list(self._foreign_keys.values())
+
+    @property
+    def address(self) -> TableAddress:
+        return TableAddress(
+            database=self.database_name,
+            schema=self.schema_name,
+            table=self.name
+        )
 
     def __eq__(self, other: 'TableMetadata') -> bool:
         return isinstance(other, TableMetadata) and \
