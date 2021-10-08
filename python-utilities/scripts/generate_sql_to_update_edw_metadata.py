@@ -29,6 +29,18 @@ def main():
     sql_generator = MetadataMaintenanceSQLGenerator(edw_connection, data_warehouse_metadata)
     sql_generator.add_metadata_comparison_functions('process', ProcessMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('json_output_field', JSONOutputFieldMetadataComparisonFunctions())
+    sql_generator.set_insert_table_order([
+        'process',
+        'json_output_field'
+    ])
+    sql_generator.set_update_table_order([
+        'process',
+        'json_output_field'
+    ])
+    sql_generator.set_delete_table_order([
+        'json_output_field',
+        'process'
+    ])
 
     # generate and output metadata maintenance SQL statements
     metadata_maintenance_sql = sql_generator.generate_all_metadata_maintenance_sql()
