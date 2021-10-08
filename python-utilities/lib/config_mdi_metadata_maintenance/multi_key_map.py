@@ -9,7 +9,10 @@ class MultiKeyMap:
     def add_entry(self, key_dict: dict, value: Any):
         """Add a single key-value pair to the Map. Key must have all required key fields."""
         key = self._create_key_values_tuple_from_dict(key_dict)
-        self._values[key] = value
+        if key in self._values:
+            raise self.DuplicateKeyValuesException(key)
+        else:
+            self._values[key] = value
 
     @property
     def values(self) -> List[Any]:
@@ -43,3 +46,7 @@ class MultiKeyMap:
     class InvalidKeyValuesException(Exception):
         def __init__(self, key: tuple):
             super().__init__(f'No entry exists with key values matching {key}')
+
+    class DuplicateKeyValuesException(Exception):
+        def __init__(self, key: tuple):
+            super().__init__(f'An entry with key: {key} already exists')

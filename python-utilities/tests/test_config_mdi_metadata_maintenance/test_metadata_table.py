@@ -18,6 +18,12 @@ class TestMetadataTable(unittest.TestCase):
                             {'key1': 3, 'key2': 4},
                             {'key1': 5, 'other_column_name': 6}])
 
+    def test_throws_error_if_added_row_has_duplicate_key(self):
+        table = MetadataTable(key_fields=['key1', 'key2'])
+        table.add_row({'key1': 1, 'key2': 2})
+        with self.assertRaises(MultiKeyMap.DuplicateKeyValuesException):
+            table.add_row({'key1': 1, 'key2': 2})
+
     def test_confirms_existence_of_added_row_by_its_key(self):
         table = MetadataTable(key_fields=['key1', 'key2'])
         table.add_row({'key1': 1, 'key2': 2, 'attribute1': 'one'})
