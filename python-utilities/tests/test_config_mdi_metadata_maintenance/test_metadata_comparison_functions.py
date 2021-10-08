@@ -3,6 +3,7 @@ import unittest
 from tests.test_utils import MockLocalEDWConnection
 
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
+from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
 from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        DatabaseMetadata,
                                                        SchemaMetadata,
@@ -26,31 +27,69 @@ class TestProcessMetadataComparisonFunctions(unittest.TestCase):
         self.assertEqual(expected, ProcessMetadataComparisonFunctions().construct_metadata_table_from_config_db(db_conn))
 
     def test_construct_metadata_table_from_source(self):
-        etl1_metadata = ETLMetadata(process_name='SP-1')
-        etl2_metadata = ETLMetadata(process_name='SP-2')
-        etl3_metadata = ETLMetadata(process_name='SP-3')
-
-        table1_metadata = TableMetadata(name='table1', primary_source_table=TableAddress('staging', 'staging_octane', 'table1'))
-        table1_metadata.add_etl(etl1_metadata)
-        table2_metadata = TableMetadata(name='table2', primary_source_table=TableAddress('staging', 'staging_octane', 'table2'))
-        table2_metadata.add_etl(etl2_metadata)
-        table3_metadata = TableMetadata(name='table3', primary_source_table=TableAddress('ingress', 'ingress_schema_1', 'table3'))
-        table3_metadata.add_etl(etl3_metadata)
-
-        schema1_metadata = SchemaMetadata(name='history_octane')
-        schema1_metadata.add_table(table1_metadata)
-        schema1_metadata.add_table(table2_metadata)
-        schema2_metadata = SchemaMetadata(name='ingress_schema_2')
-        schema2_metadata.add_table(table3_metadata)
-
-        db1_metadata = DatabaseMetadata(name='staging')
-        db1_metadata.add_schema(schema1_metadata)
-        db2_metadata = DatabaseMetadata(name='ingress')
-        db2_metadata.add_schema(schema2_metadata)
-
-        dw_metadata = DataWarehouseMetadata('edw')
-        dw_metadata.add_database(db1_metadata)
-        dw_metadata.add_database(db2_metadata)
+        dw_metadata = construct_data_warehouse_metadata_from_dict(
+            {
+                'name': 'edw',
+                'databases': [
+                    {
+                        'name': 'staging',
+                        'schemas': [
+                            {
+                                'name': 'history_octane',
+                                'tables': [
+                                    {
+                                        'name': 'table1',
+                                        'primary_source_table': 'staging.staging_octane.table1',
+                                        'etls': {
+                                            'SP-1': {
+                                                'data_type': 'TEXT',
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'insert'
+                                            }
+                                        }
+                                    },
+                                    {
+                                        'name': 'table2',
+                                        'primary_source_table': 'staging.staging_octane.table2',
+                                        'etls': {
+                                            'SP-2': {
+                                                'data_type': 'TEXT',
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'insert'
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        'name': 'ingress',
+                        'schemas': [
+                            {
+                                'name': 'ingress_schema_2',
+                                'tables': [
+                                    {
+                                        'name': 'table3',
+                                        'primary_source_table': 'ingress.ingress_schema_1.table3',
+                                        'etls': {
+                                            'SP-3': {
+                                                'data_type': 'TEXT',
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'insert'
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        )
 
         expected = MetadataTable(key_fields=['process_name'])
         expected.add_rows([
