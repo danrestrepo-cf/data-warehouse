@@ -764,6 +764,7 @@ FROM
         ) AS loan_beneficiary_max_lb_pid_per_loan
             LEFT JOIN history_octane.loan_beneficiary AS history_records
                 ON loan_beneficiary_max_lb_pid_per_loan.lb_pid = history_records.lb_pid
+                AND loan_beneficiary_max_lb_pid_per_loan.data_source_updated_datetime < history_records.data_source_updated_datetime
         WHERE loan_beneficiary_max_lb_pid_per_loan.data_source_deleted_flag IS FALSE
             AND history_records.lb_pid IS NULL
     ) AS most_recent_purchasing_beneficiary ON loan.l_pid = most_recent_purchasing_beneficiary.lb_loan_pid
