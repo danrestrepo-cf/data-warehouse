@@ -34,17 +34,16 @@ class MetadataMaintenanceSQLGenerator:
         for table_name, comparison_functions in self._comparison_functions.items():
             maintenance_sql_statements[table_name] = self.generate_table_metadata_maintenance_sql(comparison_functions)
         statement_separator = '\n\n'
-        insert_statements = statement_separator.join([maintenance_sql_statements[table].insert_sql for table in self._insert_table_order])
-        update_statements = statement_separator.join([maintenance_sql_statements[table].update_sql for table in self._update_table_order])
-        delete_statements = statement_separator.join([maintenance_sql_statements[table].delete_sql for table in self._delete_table_order])
-        return '--Insertions\n' + \
-               insert_statements + \
-               statement_separator + \
-               '--Updates\n' + \
-               update_statements + \
-               statement_separator + \
-               '--Deletions\n' + \
-               delete_statements
+
+        all_sql_strings = {
+            'Insertions': statement_separator.join([maintenance_sql_statements[table].insert_sql for table in self._insert_table_order
+                                                    if maintenance_sql_statements[table].insert_sql != '']),
+            'Updates': statement_separator.join([maintenance_sql_statements[table].update_sql for table in self._update_table_order
+                                                 if maintenance_sql_statements[table].update_sql != '']),
+            'Deletions': statement_separator.join([maintenance_sql_statements[table].delete_sql for table in self._delete_table_order
+                                                   if maintenance_sql_statements[table].delete_sql != ''])
+        }
+        return statement_separator.join([f'--{sql_type}\n{sql}' for sql_type, sql in all_sql_strings.items() if sql != ''])
 
     def generate_table_metadata_maintenance_sql(self, comparison_functions: MetadataComparisonFunctions) -> TableMaintenanceSQL:
         config_metadata_table = comparison_functions.construct_metadata_table_from_config_db(self._edw_connection)

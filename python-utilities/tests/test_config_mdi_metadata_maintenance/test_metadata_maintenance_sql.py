@@ -372,6 +372,45 @@ class TestSetOrderErrorChecking(unittest.TestCase):
 
 class TestGenerateAllMetadataMaintenanceSQL(unittest.TestCase):
 
+    def test_returns_empty_string_if_no_maintenance_is_needed(self):
+        db_connection = MockLocalEDWConnection([
+            {'column_name': 'col1', 'data_type': 'TEXT'},
+            {'column_name': 'col2', 'data_type': 'INT'}
+        ])
+        dw_metadata = construct_data_warehouse_metadata_from_dict(
+            {
+                'name': 'dw1',
+                'databases': [
+                    {
+                        'name': 'db1',
+                        'schemas': [
+                            {
+                                'name': 'schema1',
+                                'tables': [
+                                    {
+                                        'name': 'table1',
+                                        'columns': {
+                                            'col1': {
+                                                'data_type': 'TEXT'
+                                            },
+                                            'col2': {
+                                                'data_type': 'INT'
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        )
+        generator = MetadataMaintenanceSQLGenerator(db_connection, dw_metadata)
+        generator.add_metadata_comparison_functions('Table1', TestComparisonFunctions1())
+        generator.add_metadata_comparison_functions('Table2', TestComparisonFunctions2())
+        generator.add_metadata_comparison_functions('Table3', TestComparisonFunctions3())
+        self.assertEqual('', generator.generate_all_metadata_maintenance_sql())
+
     def test_returns_all_generated_sql_in_the_order_in_which_the_comparison_functions_were_recorded_by_default(self):
         db_connection = MockLocalEDWConnection([
             {'column_name': 'col1', 'data_type': 'INT'},
