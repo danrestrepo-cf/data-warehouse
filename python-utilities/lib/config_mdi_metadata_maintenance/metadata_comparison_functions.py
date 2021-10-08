@@ -71,7 +71,9 @@ class ProcessMetadataComparisonFunctions(MetadataComparisonFunctions):
                      , process.description AS process_description
                 FROM mdi.process
                 JOIN mdi.table_output_step
-                     ON process.dwid = table_output_step.process_dwid;
+                     ON process.dwid = table_output_step.process_dwid
+                -- hardcoded to only check history_octane until this script is updated to handle other schemas' ETLs
+                WHERE table_output_step.target_schema = 'history_octane';
             """)
 
     def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:
