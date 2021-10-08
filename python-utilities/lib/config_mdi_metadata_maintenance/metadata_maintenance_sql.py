@@ -36,14 +36,20 @@ class MetadataMaintenanceSQLGenerator:
         statement_separator = '\n\n'
 
         all_sql_strings = {
-            'Insertions': statement_separator.join([maintenance_sql_statements[table].insert_sql for table in self._insert_table_order
-                                                    if maintenance_sql_statements[table].insert_sql != '']),
-            'Updates': statement_separator.join([maintenance_sql_statements[table].update_sql for table in self._update_table_order
-                                                 if maintenance_sql_statements[table].update_sql != '']),
-            'Deletions': statement_separator.join([maintenance_sql_statements[table].delete_sql for table in self._delete_table_order
-                                                   if maintenance_sql_statements[table].delete_sql != ''])
+            'INSERTIONS': statement_separator.join([
+                f'--{table}\n{maintenance_sql_statements[table].insert_sql}' for table in self._insert_table_order
+                if maintenance_sql_statements[table].insert_sql != ''
+            ]),
+            'UPDATES': statement_separator.join([
+                f'--{table}\n{maintenance_sql_statements[table].update_sql}' for table in self._update_table_order
+                if maintenance_sql_statements[table].update_sql != ''
+            ]),
+            'DELETIONS': statement_separator.join([
+                f'--{table}\n{maintenance_sql_statements[table].delete_sql}' for table in self._delete_table_order
+                if maintenance_sql_statements[table].delete_sql != ''
+            ])
         }
-        return statement_separator.join([f'--{sql_type}\n{sql}' for sql_type, sql in all_sql_strings.items() if sql != ''])
+        return statement_separator.join([f'/*\n{sql_type}\n*/\n\n{sql}' for sql_type, sql in all_sql_strings.items() if sql != ''])
 
     def generate_table_metadata_maintenance_sql(self, comparison_functions: MetadataComparisonFunctions) -> TableMaintenanceSQL:
         config_metadata_table = comparison_functions.construct_metadata_table_from_config_db(self._edw_connection)

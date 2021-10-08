@@ -448,17 +448,26 @@ class TestGenerateAllMetadataMaintenanceSQL(unittest.TestCase):
         generator.add_metadata_comparison_functions('Table1', TestComparisonFunctions1())
         generator.add_metadata_comparison_functions('Table2', TestComparisonFunctions2())
         generator.add_metadata_comparison_functions('Table3', TestComparisonFunctions3())
-        expected = '--Insertions\n' + \
+        expected = '/*\nINSERTIONS\n*/\n\n' + \
+                   '--Table1\n' + \
                    'INSERT rows for Table1\n\n' + \
+                   '--Table2\n' + \
                    'INSERT rows for Table2\n\n' + \
+                   '--Table3\n' + \
                    'INSERT rows for Table3\n\n' + \
-                   '--Updates\n' + \
+                   '/*\nUPDATES\n*/\n\n' + \
+                   '--Table1\n' + \
                    'UPDATE rows for Table1\n\n' + \
+                   '--Table2\n' + \
                    'UPDATE rows for Table2\n\n' + \
+                   '--Table3\n' + \
                    'UPDATE rows for Table3\n\n' + \
-                   '--Deletions\n' + \
+                   '/*\nDELETIONS\n*/\n\n' + \
+                   '--Table1\n' + \
                    'DELETE rows for Table1\n\n' + \
+                   '--Table2\n' + \
                    'DELETE rows for Table2\n\n' + \
+                   '--Table3\n' + \
                    'DELETE rows for Table3'
         self.assertEqual(expected, generator.generate_all_metadata_maintenance_sql())
 
@@ -502,17 +511,26 @@ class TestGenerateAllMetadataMaintenanceSQL(unittest.TestCase):
         generator.set_insert_table_order(['Table2', 'Table3', 'Table1'])
         generator.set_update_table_order(['Table2', 'Table1', 'Table3'])
         generator.set_delete_table_order(['Table3', 'Table2', 'Table1'])
-        expected = '--Insertions\n' + \
+        expected = '/*\nINSERTIONS\n*/\n\n' + \
+                   '--Table2\n' + \
                    'INSERT rows for Table2\n\n' + \
+                   '--Table3\n' + \
                    'INSERT rows for Table3\n\n' + \
+                   '--Table1\n' + \
                    'INSERT rows for Table1\n\n' + \
-                   '--Updates\n' + \
+                   '/*\nUPDATES\n*/\n\n' + \
+                   '--Table2\n' + \
                    'UPDATE rows for Table2\n\n' + \
+                   '--Table1\n' + \
                    'UPDATE rows for Table1\n\n' + \
+                   '--Table3\n' + \
                    'UPDATE rows for Table3\n\n' + \
-                   '--Deletions\n' + \
+                   '/*\nDELETIONS\n*/\n\n' + \
+                   '--Table3\n' + \
                    'DELETE rows for Table3\n\n' + \
+                   '--Table2\n' + \
                    'DELETE rows for Table2\n\n' + \
+                   '--Table1\n' + \
                    'DELETE rows for Table1'
         self.assertEqual(expected, generator.generate_all_metadata_maintenance_sql())
 
