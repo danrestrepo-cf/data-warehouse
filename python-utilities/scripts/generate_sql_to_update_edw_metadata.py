@@ -1,3 +1,6 @@
+#
+#
+#
 import sys
 import os
 import argparse
@@ -20,7 +23,7 @@ def main():
 
     edw_connection = LocalEDWConnection(host='localhost', dbname='config', user='postgres', password='testonly')
     data_warehouse_metadata = generate_data_warehouse_metadata_from_yaml(args.metadata_dir)
-    filter_out_metadata_not_from_staging_octane_or_history_octane_schemas(data_warehouse_metadata)
+    filter_metadata_to_staging_octane_and_history_octane_schemas(data_warehouse_metadata)
     sql_generator = MetadataMaintenanceSQLGenerator(edw_connection, data_warehouse_metadata)
     sql_generator.add_metadata_comparison_functions('process', ProcessMetadataComparisonFunctions())
     metadata_maintenance_sql = sql_generator.generate_all_metadata_maintenance_sql()
@@ -30,7 +33,7 @@ def main():
         print(metadata_maintenance_sql)
 
 
-def filter_out_metadata_not_from_staging_octane_or_history_octane_schemas(metadata: DataWarehouseMetadata):
+def filter_metadata_to_staging_octane_and_history_octane_schemas(metadata: DataWarehouseMetadata):
     """
     Delete any metadata not from the staging.staging_octane or staging.history_octane schemas
 
