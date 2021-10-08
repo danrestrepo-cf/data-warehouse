@@ -731,26 +731,28 @@ FROM
         AND initial_loan_beneficiary.lb_initial IS TRUE
     -- history_octane.loan_beneficiary: first beneficiary after initial
     LEFT JOIN (
-        SELECT non_initial_loan_beneficiary.*
+        SELECT loan_beneficiary.*
             , <<loan_beneficiary_partial_load_condition>> AS include_record
         FROM (
             SELECT loan_beneficiary.*
-                ,  CASE WHEN (ROW_NUMBER() OVER (
-                PARTITION BY loan_beneficiary.lb_loan_pid ORDER BY loan_beneficiary.lb_pid) = 1
-                ) THEN TRUE ELSE FALSE
-                END AS first_beneficiary_after_initial_investor
             FROM history_octane.loan_beneficiary
-            WHERE lb_initial IS FALSE
-            ) AS non_initial_loan_beneficiary
-                LEFT JOIN history_octane.loan_beneficiary AS history_records ON non_initial_loan_beneficiary.lb_pid = history_records.lb_pid
-                    AND non_initial_loan_beneficiary.data_source_updated_datetime < history_records.data_source_updated_datetime
-        WHERE non_initial_loan_beneficiary.data_source_deleted_flag IS FALSE
-          AND history_records.lb_pid IS NULL
+                JOIN (
+                    SELECT loan_beneficiary.lb_loan_pid
+                        , MIN(loan_beneficiary.lb_pid) AS min_lb_pid
+                    FROM history_octane.loan_beneficiary
+                    WHERE loan_beneficiary.lb_initial IS FALSE
+                    GROUP BY loan_beneficiary.lb_loan_pid
+                ) AS min_lb_pid_per_loan ON loan_beneficiary.lb_pid = min_lb_pid_per_loan.min_lb_pid
+            ) AS loan_beneficiary
+                LEFT JOIN history_octane.loan_beneficiary AS history_records ON loan_beneficiary.lb_pid = history_records.lb_pid
+                    AND loan_beneficiary.data_source_updated_datetime < history_records.data_source_updated_datetime
+        WHERE loan_beneficiary.data_source_deleted_flag IS FALSE
+            AND history_records.lb_pid IS NULL
     ) AS first_loan_beneficiary_after_initial ON loan.l_pid = first_loan_beneficiary_after_initial.lb_loan_pid
         AND first_loan_beneficiary_after_initial.first_beneficiary_after_initial_investor IS TRUE
     -- history_octane.loan_beneficiary: most recent purchasing beneficiary
     LEFT JOIN (
-        SELECT loan_beneficiary_max_lb_pid_per_loan.*
+        SELECT loan_beneficiary.*
             , <<loan_beneficiary_partial_load_condition>> AS include_record
         FROM (
             SELECT loan_beneficiary.*
@@ -761,11 +763,11 @@ FROM
                     FROM history_octane.loan_beneficiary
                     GROUP BY loan_beneficiary.lb_loan_pid
                 ) AS max_lb_pid_per_loan ON loan_beneficiary.lb_pid = max_lb_pid_per_loan.max_lb_pid
-        ) AS loan_beneficiary_max_lb_pid_per_loan
+        ) AS loan_beneficiary
             LEFT JOIN history_octane.loan_beneficiary AS history_records
-                ON loan_beneficiary_max_lb_pid_per_loan.lb_pid = history_records.lb_pid
-                AND loan_beneficiary_max_lb_pid_per_loan.data_source_updated_datetime < history_records.data_source_updated_datetime
-        WHERE loan_beneficiary_max_lb_pid_per_loan.data_source_deleted_flag IS FALSE
+                ON loan_beneficiary.lb_pid = history_records.lb_pid
+                AND loan_beneficiary.data_source_updated_datetime < history_records.data_source_updated_datetime
+        WHERE loan_beneficiary.data_source_deleted_flag IS FALSE
             AND history_records.lb_pid IS NULL
     ) AS most_recent_purchasing_beneficiary ON loan.l_pid = most_recent_purchasing_beneficiary.lb_loan_pid
         AND most_recent_purchasing_beneficiary.lb_loan_benef_transfer_status_type IN (''SHIPPED'', ''APPROVED_WITH_CONDITIONS'',
@@ -849,7 +851,7 @@ FROM
     -- star_loan.loan_junk_dim
     LEFT JOIN (
         SELECT loan_junk_dim.*
-            , <<loan_junk_partial_load_condition>> AS include_record
+            , <<loan_junk_dim_partial_load_condition>> AS include_record
         FROM star_loan.loan_junk_dim
     ) AS loan_junk_dim ON loan.l_buydown_contributor_type IS NOT DISTINCT FROM loan_junk_dim.buydown_contributor_code
         AND loan.l_fha_program_code_type IS NOT DISTINCT FROM loan_junk_dim.fha_program_code
