@@ -749,7 +749,6 @@ FROM
         WHERE loan_beneficiary.data_source_deleted_flag IS FALSE
             AND history_records.lb_pid IS NULL
     ) AS first_loan_beneficiary_after_initial ON loan.l_pid = first_loan_beneficiary_after_initial.lb_loan_pid
-        AND first_loan_beneficiary_after_initial.first_beneficiary_after_initial_investor IS TRUE
     -- history_octane.loan_beneficiary: most recent purchasing beneficiary
     LEFT JOIN (
         SELECT loan_beneficiary.*
