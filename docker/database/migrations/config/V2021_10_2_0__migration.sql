@@ -760,6 +760,7 @@ FROM
                     SELECT loan_beneficiary.lb_loan_pid
                         , MAX(loan_beneficiary.lb_pid) AS max_lb_pid
                     FROM history_octane.loan_beneficiary
+                    WHERE loan_beneficiary.lb_loan_benef_transfer_status_type IN (''SHIPPED'', ''APPROVED_WITH_CONDITIONS'', ''PENDING_WIRE'', ''PENDING'', ''PURCHASED'')
                     GROUP BY loan_beneficiary.lb_loan_pid
                 ) AS max_lb_pid_per_loan ON loan_beneficiary.lb_pid = max_lb_pid_per_loan.max_lb_pid
         ) AS loan_beneficiary
@@ -769,8 +770,6 @@ FROM
         WHERE loan_beneficiary.data_source_deleted_flag IS FALSE
             AND history_records.lb_pid IS NULL
     ) AS most_recent_purchasing_beneficiary ON loan.l_pid = most_recent_purchasing_beneficiary.lb_loan_pid
-        AND most_recent_purchasing_beneficiary.lb_loan_benef_transfer_status_type IN (''SHIPPED'', ''APPROVED_WITH_CONDITIONS'',
-                                                                                      ''PENDING_WIRE'', ''PENDING'', ''PURCHASED'')
     -- history_octane.loan_funding
     LEFT JOIN (
         SELECT loan_funding.*
