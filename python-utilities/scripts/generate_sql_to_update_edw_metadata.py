@@ -11,7 +11,8 @@ from lib.metadata_core.metadata_yaml_translator import generate_data_warehouse_m
 from lib.config_mdi_metadata_maintenance.metadata_maintenance_sql import MetadataMaintenanceSQLGenerator
 from lib.config_mdi_metadata_maintenance.metadata_comparison_functions import (ProcessMetadataComparisonFunctions,
                                                                                JSONOutputFieldMetadataComparisonFunctions,
-                                                                               StateMachineDefinitionMetadataComparisonFunctions)
+                                                                               StateMachineDefinitionMetadataComparisonFunctions,
+                                                                               StateMachineStepMetadataComparisonFunctions)
 
 
 def main():
@@ -31,10 +32,12 @@ def main():
     sql_generator.add_metadata_comparison_functions('process', ProcessMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('json_output_field', JSONOutputFieldMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('state_machine_definition', StateMachineDefinitionMetadataComparisonFunctions())
+    sql_generator.add_metadata_comparison_functions('state_machine_step', StateMachineStepMetadataComparisonFunctions())
     insert_and_update_table_order = [
         'process',
         'json_output_field',
-        'state_machine_definition'
+        'state_machine_definition',
+        'state_machine_step'
     ]
     delete_table_order = list(reversed(insert_and_update_table_order))
     sql_generator.set_insert_table_order(insert_and_update_table_order)
