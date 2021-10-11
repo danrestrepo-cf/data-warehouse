@@ -17,7 +17,7 @@ from lib.config_mdi_metadata_maintenance.metadata_comparison_functions import (P
 
 
 def main():
-    # parse commmand line arguments
+    # parse command line arguments
     default_metadata_root_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', 'metadata', 'edw')
     default_output_file_path = os.path.realpath('./config_mdi_metadata_maintenance.sql')
     argparser = argparse.ArgumentParser(description='Generate SQL to maintain metadata in the config.mdi schema')
