@@ -11,11 +11,6 @@ class TableInputStepMetadataComparisonFunctions(MetadataComparisonFunctions):
 
     def __init__(self):
         super().__init__(key_fields=['process_name'])
-        self.connection_name_lookup = {
-            'staging': 'Staging DB Connection',
-            'ingress': 'Ingress DB Connection',
-            'config': 'Config DB Connection'
-        }
 
     def construct_metadata_table_from_config_db(self, local_edw_connection: LocalEDWConnection) -> MetadataTable:
         return self.construct_metadata_table_from_sql_query_results(local_edw_connection, """
@@ -45,11 +40,6 @@ class TableInputStepMetadataComparisonFunctions(MetadataComparisonFunctions):
                             'connectionname': self.get_connection_name(database.name)
                         })
         return metadata_table
-
-    def get_connection_name(self, database: str) -> str:
-        if database not in self.connection_name_lookup:
-            raise ValueError(f'No Pentaho connection name mapping could be found for database "{database}"')
-        return self.connection_name_lookup[database]
 
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
         return SingleGroupRowGrouper()

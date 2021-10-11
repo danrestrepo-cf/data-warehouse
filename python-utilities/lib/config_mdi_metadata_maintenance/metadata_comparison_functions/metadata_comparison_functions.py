@@ -69,6 +69,17 @@ class MetadataComparisonFunctions(ABC):
         )
 
     @staticmethod
+    def get_connection_name(database: str) -> str:
+        connection_name_lookup = {
+            'staging': 'Staging DB Connection',
+            'ingress': 'Ingress DB Connection',
+            'config': 'Config DB Connection'
+        }
+        if database not in connection_name_lookup:
+            raise ValueError(f'No Pentaho connection name mapping could be found for database "{database}"')
+        return connection_name_lookup[database]
+
+    @staticmethod
     def format_value_for_sql(value) -> str:
         if type(value) == str:
             return f"'{value}'"
