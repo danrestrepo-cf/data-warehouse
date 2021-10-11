@@ -12,7 +12,8 @@ from lib.config_mdi_metadata_maintenance.metadata_maintenance_sql import Metadat
 from lib.config_mdi_metadata_maintenance.metadata_comparison_functions import (ProcessMetadataComparisonFunctions,
                                                                                JSONOutputFieldMetadataComparisonFunctions,
                                                                                StateMachineDefinitionMetadataComparisonFunctions,
-                                                                               StateMachineStepMetadataComparisonFunctions)
+                                                                               StateMachineStepMetadataComparisonFunctions,
+                                                                               TableInputStepMetadataComparisonFunctions)
 
 
 def main():
@@ -30,11 +31,13 @@ def main():
     # set up SQL generator object
     sql_generator = MetadataMaintenanceSQLGenerator(edw_connection, data_warehouse_metadata)
     sql_generator.add_metadata_comparison_functions('process', ProcessMetadataComparisonFunctions())
+    sql_generator.add_metadata_comparison_functions('table_input_step', TableInputStepMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('json_output_field', JSONOutputFieldMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('state_machine_definition', StateMachineDefinitionMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('state_machine_step', StateMachineStepMetadataComparisonFunctions())
     insert_and_update_table_order = [
         'process',
+        'table_input_step',
         'json_output_field',
         'state_machine_definition',
         'state_machine_step'
