@@ -15,7 +15,8 @@ from lib.config_mdi_metadata_maintenance.metadata_comparison_functions import (P
                                                                                StateMachineStepMetadataComparisonFunctions,
                                                                                TableInputStepMetadataComparisonFunctions,
                                                                                TableOutputStepMetadataComparisonFunctions,
-                                                                               TableOutputFieldMetadataComparisonFunctions)
+                                                                               TableOutputFieldMetadataComparisonFunctions,
+                                                                               EDWJoinDefinitionMetadataComparisonFunctions)
 
 
 def main():
@@ -34,6 +35,7 @@ def main():
 
     # set up SQL generator object
     sql_generator = MetadataMaintenanceSQLGenerator(edw_connection, data_warehouse_metadata)
+    sql_generator.add_metadata_comparison_functions('edw_join_definition', EDWJoinDefinitionMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('process', ProcessMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('table_input_step', TableInputStepMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('table_output_step', TableOutputStepMetadataComparisonFunctions())
@@ -42,6 +44,7 @@ def main():
     sql_generator.add_metadata_comparison_functions('state_machine_definition', StateMachineDefinitionMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('state_machine_step', StateMachineStepMetadataComparisonFunctions())
     insert_and_update_table_order = [
+        'edw_join_definition',
         'process',
         'table_input_step',
         'table_output_step',
