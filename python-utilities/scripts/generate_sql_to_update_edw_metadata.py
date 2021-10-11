@@ -19,8 +19,10 @@ from lib.config_mdi_metadata_maintenance.metadata_comparison_functions import (P
 def main():
     # parse commmand line arguments
     default_metadata_root_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', 'metadata', 'edw')
+    default_output_file_path = os.path.realpath('./config_mdi_metadata_maintenance.sql')
     argparser = argparse.ArgumentParser(description='Generate SQL to maintain metadata in the config.mdi schema')
     argparser.add_argument('-d', '--metadata_dir', type=str, default=default_metadata_root_dir)
+    argparser.add_argument('-o', '--output_file', type=str, default=default_output_file_path)
     args = argparser.parse_args()
 
     # read in metadata to be compared
@@ -52,7 +54,9 @@ def main():
     if metadata_maintenance_sql == '':
         print('No metadata updates are necessary at this time')
     else:
-        print(metadata_maintenance_sql)
+        with open(args.output_file, 'w') as file:
+            file.write(metadata_maintenance_sql)
+        print(f'config.mdi metadata maintenance SQL successfully written to {args.output_file}')
 
 
 def filter_metadata_to_staging_octane_and_history_octane_schemas(metadata: DataWarehouseMetadata):
