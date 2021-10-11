@@ -108,7 +108,9 @@ def construct_table_metadata_from_dict(table_dict: dict, schema_name: str, datab
                 delete_keys=etl_data.get('delete_keys'),
                 input_sql=etl_data.get('input_sql')
             ))
-    table.next_etls = table_dict.get('next_etls')
+    if 'next_etls' in table_dict:
+        for process_name in table_dict['next_etls']:
+            table.next_etls.append(process_name)
     return table
 
 

@@ -144,8 +144,8 @@ class TestGenerateDataWarehouseWithMinimalYAMLFiles(unittest.TestCase):
         expected.add_database(db1)
         sch1 = SchemaMetadata('sch1')
         db1.add_schema(sch1)
-        sch1.add_table(TableMetadata('table1'))
-        sch1.add_table(TableMetadata('table2'))
+        sch1.add_table(TableMetadata('table1', schema_name='sch1', database_name='db1'))
+        sch1.add_table(TableMetadata('table2', schema_name='sch1', database_name='db1'))
         self.assertEqual(expected, generate_data_warehouse_metadata_from_yaml(self.root_filepath))
 
     def tearDown(self) -> None:

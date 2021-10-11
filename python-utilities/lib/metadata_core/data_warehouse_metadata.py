@@ -128,10 +128,28 @@ class TableMetadata:
             table=self.name
         )
 
+    def __repr__(self) -> str:
+        return f'TableMetadata(\n' \
+               f'    name={self.name},\n' \
+               f'    schema_name={self.schema_name}\n' \
+               f'    database_name={self.database_name}\n' \
+               f'    primary_source_table={repr(self.primary_source_table)}\n' \
+               f'    foreign_keys={repr(self.foreign_keys)}\n' \
+               f'    columns={repr(self.columns)}\n' \
+               f'    etls={repr(self.etls)}\n' \
+               f'    next_etls={repr(self.next_etls)}\n' \
+               f')'
+
     def __eq__(self, other: 'TableMetadata') -> bool:
         return isinstance(other, TableMetadata) and \
                self.name == other.name and \
-               self.primary_source_table == other.primary_source_table
+               self.schema_name == other.schema_name and \
+               self.database_name == other.database_name and \
+               self.primary_source_table == other.primary_source_table and \
+               self.foreign_keys == other.foreign_keys and \
+               self.columns == other.columns and \
+               self.etls == other.etls and \
+               self.next_etls == other.next_etls
 
 
 class SchemaMetadata:
@@ -156,6 +174,11 @@ class SchemaMetadata:
     @property
     def tables(self) -> List[TableMetadata]:
         return list(self._tables.values())
+
+    def __repr__(self) -> str:
+        return f'SchemaMetadata(\n' \
+               f'    name={self.name},\n' \
+               f'    tables={generate_collection_repr(self.tables)}'
 
     def __eq__(self, other: 'SchemaMetadata') -> bool:
         return isinstance(other, SchemaMetadata) and \
@@ -186,6 +209,11 @@ class DatabaseMetadata:
     def schemas(self) -> List[SchemaMetadata]:
         return list(self._schemas.values())
 
+    def __repr__(self) -> str:
+        return f'DatabaseMetadata(\n' \
+               f'    name={self.name},\n' \
+               f'    schemas={generate_collection_repr(self.schemas)}'
+
     def __eq__(self, other: 'DatabaseMetadata') -> bool:
         return isinstance(other, DatabaseMetadata) and \
                self.name == other.name and \
@@ -215,6 +243,11 @@ class DataWarehouseMetadata:
     def databases(self) -> List[DatabaseMetadata]:
         return list(self._databases.values())
 
+    def __repr__(self) -> str:
+        return f'DataWarehouseMetadata(\n' \
+               f'    name={self.name},\n' \
+               f'    databases={generate_collection_repr(self.databases)}'
+
     def __eq__(self, other: 'DataWarehouseMetadata') -> bool:
         return isinstance(other, DataWarehouseMetadata) and \
                self.name == other.name and \
@@ -224,3 +257,11 @@ class DataWarehouseMetadata:
 class InvalidMetadataKeyException(Exception):
     def __init__(self, parent_entity_type: str, parent_name: str, child_entity_type: str, child_name: str, ):
         super().__init__(f'{child_entity_type} "{child_name}" does not exist in {parent_entity_type} "{parent_name}"')
+
+
+def indent_multiline_str(s: str, indent: int = 4) -> str:
+    return '\n'.join([' ' * indent + line for line in s.split('\n')])
+
+def generate_collection_repr(collection: list) -> str:
+    reprs = "\n".join([indent_multiline_str(repr(item), indent=8) for item in collection])
+    return f'[\n{reprs}\n]'
