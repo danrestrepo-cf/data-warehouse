@@ -42,11 +42,9 @@ class TestStateMachineDefinitionMetadataComparisonFunctions(unittest.TestCase):
                                         'primary_source_table': 'staging.staging_octane.table1',
                                         'etls': {
                                             'SP-1': {
-                                                'data_type': 'TEXT',
                                                 'hardcoded_data_source': 'Octane',
                                                 'input_type': 'table',
                                                 'output_type': 'insert',
-                                                'json_output_field': 't1_pid'
                                             }
                                         }
                                     },
@@ -55,11 +53,9 @@ class TestStateMachineDefinitionMetadataComparisonFunctions(unittest.TestCase):
                                         'primary_source_table': 'staging.staging_octane.table2',
                                         'etls': {
                                             'SP-2': {
-                                                'data_type': 'TEXT',
                                                 'hardcoded_data_source': 'Octane',
                                                 'input_type': 'table',
                                                 'output_type': 'insert',
-                                                'json_output_field': 't2_pid'
                                             }
                                         }
                                     }
@@ -78,11 +74,9 @@ class TestStateMachineDefinitionMetadataComparisonFunctions(unittest.TestCase):
                                         'primary_source_table': 'ingress.ingress_schema_1.table3',
                                         'etls': {
                                             'SP-3': {
-                                                'data_type': 'TEXT',
                                                 'hardcoded_data_source': 'Octane',
                                                 'input_type': 'table',
                                                 'output_type': 'insert',
-                                                'json_output_field': 't3_pid'
                                             }
                                         }
                                     }
