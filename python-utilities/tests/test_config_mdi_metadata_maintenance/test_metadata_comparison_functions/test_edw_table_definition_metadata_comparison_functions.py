@@ -4,7 +4,6 @@ from tests.test_utils import MockLocalEDWConnection
 
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
-from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata
 from lib.config_mdi_metadata_maintenance.metadata_comparison_functions import EDWTableDefinitionMetadataComparisonFunctions
 
 
