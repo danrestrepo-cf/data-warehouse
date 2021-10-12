@@ -42,6 +42,17 @@ class TestDataWarehouseMetadata(unittest.TestCase):
         dw_metadata.remove_database_metadata('staging')
         self.assertEqual([], dw_metadata.databases)
 
+    def test_can_get_table_metadata_object_by_address(self):
+        table_metadata = TableMetadata('table1')
+        schema_metadata = SchemaMetadata('schema1')
+        schema_metadata.add_table(table_metadata)
+        database_metadata = DatabaseMetadata('db1')
+        database_metadata.add_schema(schema_metadata)
+        dw_metadata = DataWarehouseMetadata('edw')
+        dw_metadata.add_database(database_metadata)
+        table_address = TableAddress('db1', 'schema1', 'table1')
+        self.assertEqual(table_metadata, dw_metadata.get_table_by_address(table_address))
+
 
 class TestDatabaseMetadata(unittest.TestCase):
 

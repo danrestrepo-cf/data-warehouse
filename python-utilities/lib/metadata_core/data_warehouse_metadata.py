@@ -243,6 +243,9 @@ class DataWarehouseMetadata:
     def databases(self) -> List[DatabaseMetadata]:
         return list(self._databases.values())
 
+    def get_table_by_address(self, address: TableAddress) -> TableMetadata:
+        return self.get_database(address.database).get_schema(address.schema).get_table(address.table)
+
     def __repr__(self) -> str:
         return f'DataWarehouseMetadata(\n' \
                f'    name={self.name},\n' \
@@ -261,6 +264,7 @@ class InvalidMetadataKeyException(Exception):
 
 def indent_multiline_str(s: str, indent: int = 4) -> str:
     return '\n'.join([' ' * indent + line for line in s.split('\n')])
+
 
 def generate_collection_repr(collection: list) -> str:
     reprs = "\n".join([indent_multiline_str(repr(item), indent=8) for item in collection])
