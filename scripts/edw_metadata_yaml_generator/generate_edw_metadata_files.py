@@ -220,6 +220,8 @@ def generate_history_octane_metadata(staging_octane_metadata: dict, table_etl_pr
         metadata['columns']['data_source_deleted_flag'] = {
             'data_type': 'BOOLEAN'
         }
+        for foreign_key in metadata['foreign_keys'].keys():
+            metadata['foreign_keys'][foreign_key]['references']['schema'] = 'history_octane'
         if metadata['name'] in table_etl_processes:
             metadata['etls'][table_etl_processes[metadata['name']]['process']] = {
                 'hardcoded_data_source': 'Octane',
