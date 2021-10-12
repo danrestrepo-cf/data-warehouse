@@ -90,7 +90,7 @@ class TableMetadata:
         else:
             return self._etls[etl_process_name]
 
-    def get_foreign_key(self, foreign_key_name: str) -> ETLMetadata:
+    def get_foreign_key(self, foreign_key_name: str) -> ForeignKeyMetadata:
         if foreign_key_name not in self._foreign_keys:
             raise InvalidMetadataKeyException('table', self.name, 'foreign_key', foreign_key_name)
         else:
