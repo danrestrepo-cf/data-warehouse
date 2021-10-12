@@ -5,6 +5,7 @@ from tests.test_utils import MockLocalEDWConnection
 
 from lib.config_mdi_metadata_maintenance.metadata_table import Row, MetadataTable
 from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper, SingleGroupRowGrouper
+from lib.config_mdi_metadata_maintenance.multi_key_map import MultiKeyMap
 from lib.db_connections import LocalEDWConnection
 from lib.config_mdi_metadata_maintenance.metadata_maintenance_sql import MetadataMaintenanceSQLGenerator, TableMaintenanceSQL
 from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata
@@ -37,7 +38,7 @@ class TestingMetadataComparisonFunctions(MetadataComparisonFunctions):
         return metadata_table
 
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
-        row_grouper = RowGrouper(key_fields=['column_name'])
+        row_grouper = RowGrouper(MultiKeyMap(key_fields=['column_name']))
         for database in data_warehouse_metadata.databases:
             for schema in database.schemas:
                 for table in schema.tables:
