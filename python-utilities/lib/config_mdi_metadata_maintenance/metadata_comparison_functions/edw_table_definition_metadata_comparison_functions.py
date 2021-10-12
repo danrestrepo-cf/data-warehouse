@@ -4,7 +4,7 @@ from lib.config_mdi_metadata_maintenance.metadata_comparison_functions.metadata_
 from lib.db_connections import LocalEDWConnection
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper
-from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, ForeignKeyMetadata, TableAddress
+from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata
 from lib.config_mdi_metadata_maintenance.dependency_row_grouper_generator import DependencyRowGrouperGenerator, TableNodeLineageTracer
 
 
