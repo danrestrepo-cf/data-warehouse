@@ -1,10 +1,10 @@
 import unittest
 from typing import List
 
-from lib.config_mdi_metadata_maintenance.dependency_tree import (DependencyRowGrouperGenerator,
-                                                                 NodeLineageTracer,
-                                                                 TableNodeLineageTracer,
-                                                                 ColumnNodeLineageTracer)
+from lib.config_mdi_metadata_maintenance.dependency_row_grouper_generator import (DependencyRowGrouperGenerator,
+                                                                                  NodeLineageTracer,
+                                                                                  TableNodeLineageTracer,
+                                                                                  ColumnNodeLineageTracer)
 from lib.config_mdi_metadata_maintenance.metadata_table import Row
 from lib.config_mdi_metadata_maintenance.multi_key_map import MultiKeyMap
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
