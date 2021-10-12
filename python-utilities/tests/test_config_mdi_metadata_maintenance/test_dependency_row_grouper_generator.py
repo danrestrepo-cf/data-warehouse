@@ -118,31 +118,31 @@ class TestTableNodeLineageTracer(unittest.TestCase):
         node_lineage_tracer = TableNodeLineageTracer(self.dw_metadata)
         with self.assertRaises(NodeLineageTracer.InvalidNodeException):
             node_lineage_tracer.determine_node_parents({
-                'database': 'bad db',
-                'schema': 'bad schema',
-                'table': 'bad table'
+                'database_name': 'bad db',
+                'schema_name': 'bad schema',
+                'table_name': 'bad table'
             })
 
     def test_returns_empty_list_for_table_with_no_source_table(self):
         node_lineage_tracer = TableNodeLineageTracer(self.dw_metadata)
         expected = []
         self.assertEqual(expected, node_lineage_tracer.determine_node_parents({
-            'database': 'staging',
-            'schema': 'staging_octane',
-            'table': 'source_table'
+            'database_name': 'staging',
+            'schema_name': 'staging_octane',
+            'table_name': 'source_table'
         }))
 
     def test_returns_single_item_list_containing_source_table_key_if_table_has_a_source(self):
         node_lineage_tracer = TableNodeLineageTracer(self.dw_metadata)
         expected = [{
-            'database': 'staging',
-            'schema': 'staging_octane',
-            'table': 'source_table'
+            'database_name': 'staging',
+            'schema_name': 'staging_octane',
+            'table_name': 'source_table'
         }]
         self.assertEqual(expected, node_lineage_tracer.determine_node_parents({
-            'database': 'staging',
-            'schema': 'history_octane',
-            'table': 'table_with_source'
+            'database_name': 'staging',
+            'schema_name': 'history_octane',
+            'table_name': 'table_with_source'
         }))
 
 
@@ -232,50 +232,50 @@ class TestColumnNodeLineageTracer(unittest.TestCase):
         node_lineage_tracer = ColumnNodeLineageTracer(self.dw_metadata)
         with self.assertRaises(NodeLineageTracer.InvalidNodeException):
             node_lineage_tracer.determine_node_parents({
-                'database': 'bad db',
-                'schema': 'bad schema',
-                'table': 'bad table',
-                'column': 'bad column'
+                'database_name': 'bad db',
+                'schema_name': 'bad schema',
+                'table_name': 'bad table',
+                'column_name': 'bad column'
             })
 
     def test_returns_empty_list_for_column_with_no_source_column(self):
         node_lineage_tracer = ColumnNodeLineageTracer(self.dw_metadata)
         expected = []
         self.assertEqual(expected, node_lineage_tracer.determine_node_parents({
-            'database': 'staging',
-            'schema': 'staging_octane',
-            'table': 'source_table',
-            'column': 'source_column'
+            'database_name': 'staging',
+            'schema_name': 'staging_octane',
+            'table_name': 'source_table',
+            'column_name': 'source_column'
         }))
 
     def test_returns_single_item_list_containing_source_column_key_if_column_source_is_from_primary_source_table(self):
         node_lineage_tracer = ColumnNodeLineageTracer(self.dw_metadata)
         expected = [{
-            'database': 'staging',
-            'schema': 'staging_octane',
-            'table': 'source_table',
-            'column': 'source_column'
+            'database_name': 'staging',
+            'schema_name': 'staging_octane',
+            'table_name': 'source_table',
+            'column_name': 'source_column'
         }]
         self.assertEqual(expected, node_lineage_tracer.determine_node_parents({
-            'database': 'staging',
-            'schema': 'history_octane',
-            'table': 'table_with_source',
-            'column': 'column_with_source'
+            'database_name': 'staging',
+            'schema_name': 'history_octane',
+            'table_name': 'table_with_source',
+            'column_name': 'column_with_source'
         }))
 
     def test_returns_single_item_list_containing_source_column_key_if_column_source_is_from_distant_source_table(self):
         node_lineage_tracer = ColumnNodeLineageTracer(self.dw_metadata)
         expected = [{
-            'database': 'staging',
-            'schema': 'other_schema',
-            'table': 'distant_source_table',
-            'column': 'distant_source_column'
+            'database_name': 'staging',
+            'schema_name': 'other_schema',
+            'table_name': 'distant_source_table',
+            'column_name': 'distant_source_column'
         }]
         self.assertEqual(expected, node_lineage_tracer.determine_node_parents({
-            'database': 'staging',
-            'schema': 'history_octane',
-            'table': 'table_with_source',
-            'column': 'column_with_distant_source'
+            'database_name': 'staging',
+            'schema_name': 'history_octane',
+            'table_name': 'table_with_source',
+            'column_name': 'column_with_distant_source'
         }))
 
 
