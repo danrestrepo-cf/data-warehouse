@@ -63,8 +63,8 @@ class ColumnNodeLineageTracer(NodeLineageTracer):
             else:
                 return []
         except InvalidMetadataKeyException:
-            table_address = f'{node_key["database"]}.{node_key["schema"]}.{node_key["table"]}'
-            raise self.InvalidNodeException(f'Could not determine parents of table "{table_address}". Table doesn\'t exist in metadata.')
+            full_col_name = f'{node_key["database"]}.{node_key["schema"]}.{node_key["table"]}.{node_key["column"]}'
+            raise self.InvalidNodeException(f'Could not determine parents of column "{full_col_name}". Column doesn\'t exist in metadata.')
 
 
 class DependencyRowGrouperGenerator:
