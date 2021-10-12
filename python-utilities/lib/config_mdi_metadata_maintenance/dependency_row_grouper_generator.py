@@ -42,29 +42,29 @@ class TableNodeLineageTracer(NodeLineageTracer):
             raise self.InvalidNodeException(f'Could not determine parents of table "{table_address}". Table doesn\'t exist in metadata.')
 
 
-class ColumnNodeLineageTracer(NodeLineageTracer):
+class FieldNodeLineageTracer(NodeLineageTracer):
 
     def __init__(self, data_warehouse_metadata: DataWarehouseMetadata):
-        super().__init__(key_fields=['database_name', 'schema_name', 'table_name', 'column_name'])
+        super().__init__(key_fields=['database_name', 'schema_name', 'table_name', 'field_name'])
         self._metadata = data_warehouse_metadata
 
     def determine_node_parents(self, node_key: dict) -> List[dict]:
         table_address = TableAddress(database=node_key['database_name'], schema=node_key['schema_name'], table=node_key['table_name'])
         try:
             table_metadata = self._metadata.get_table_by_address(table_address)
-            source_table_metadata = table_metadata.get_column_source_table(node_key['column_name'], self._metadata)
-            column_metadata = table_metadata.get_column(node_key['column_name'])
+            source_table_metadata = table_metadata.get_column_source_table(node_key['field_name'], self._metadata)
+            column_metadata = table_metadata.get_column(node_key['field_name'])
             if column_metadata.source_field is not None:
                 return [{
                     'database_name': source_table_metadata.database_name,
                     'schema_name': source_table_metadata.schema_name,
                     'table_name': source_table_metadata.name,
-                    'column_name': column_metadata.source_field.column_name
+                    'field_name': column_metadata.source_field.column_name
                 }]
             else:
                 return []
         except InvalidMetadataKeyException:
-            full_col_name = f'{node_key["database_name"]}.{node_key["schema_name"]}.{node_key["table_name"]}.{node_key["column_name"]}'
+            full_col_name = f'{node_key["database_name"]}.{node_key["schema_name"]}.{node_key["table_name"]}.{node_key["field_name"]}'
             raise self.InvalidNodeException(f'Could not determine parents of column "{full_col_name}". Column doesn\'t exist in metadata.')
 
 
