@@ -74,7 +74,8 @@ class DependencyRowGrouperGenerator:
         self._map = MultiKeyMap(node_lineage_tracer.key_fields)
 
     def calculate_and_store_dependency_tree_node_depth(self, node_key: dict):
-        self._recursively_calculate_and_store_dependency_tree_node_depth(node_key, set())
+        if not self._map.entry_exists_with_key(node_key):
+            self._recursively_calculate_and_store_dependency_tree_node_depth(node_key, set())
 
     def _recursively_calculate_and_store_dependency_tree_node_depth(self, current_node_key: dict, seen_node_keys: set):
         node_key_tuple = self._map.create_key_values_tuple_from_dict(current_node_key)

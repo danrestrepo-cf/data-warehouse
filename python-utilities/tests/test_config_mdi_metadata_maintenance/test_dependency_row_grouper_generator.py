@@ -45,6 +45,12 @@ class TestDependencyRowGrouperGenerator(unittest.TestCase):
         grouper = self.row_grouper_generator.generate_row_grouper()
         self.assertEqual(0, grouper.get_row_group_number(make_row({'a': 5, 'b': 6})))
 
+    def test_adding_node_that_already_exists_does_nothing(self):
+        self.row_grouper_generator.calculate_and_store_dependency_tree_node_depth({'a': 5, 'b': 6})
+        self.row_grouper_generator.calculate_and_store_dependency_tree_node_depth({'a': 5, 'b': 6})
+        grouper = self.row_grouper_generator.generate_row_grouper()
+        self.assertEqual(0, grouper.get_row_group_number(make_row({'a': 5, 'b': 6})))
+
     def test_adds_node_with_parent_that_exists_in_the_tree_at_one_depth_below_parent(self):
         self.row_grouper_generator.calculate_and_store_dependency_tree_node_depth({'a': 5, 'b': 6})
         self.row_grouper_generator.calculate_and_store_dependency_tree_node_depth({'a': 3, 'b': 4})
