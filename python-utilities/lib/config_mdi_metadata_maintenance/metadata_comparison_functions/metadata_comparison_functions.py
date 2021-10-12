@@ -85,5 +85,7 @@ class MetadataComparisonFunctions(ABC):
             return f"'{value}'"
         elif type(value) == int:
             return str(value)
+        elif value is None:
+            return 'NULL'
         else:
             raise ValueError(f'Unable to format value of type {type(value)} for inclusion in SQL string: {value}')
