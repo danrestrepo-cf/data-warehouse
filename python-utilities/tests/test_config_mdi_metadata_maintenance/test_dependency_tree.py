@@ -166,7 +166,7 @@ class TestColumnNodeLineageTracer(unittest.TestCase):
                                             'column_with_distant_source': {
                                                 'data_source': 'TEXT',
                                                 'source': {
-                                                    'field': 'primary_source_table.foreign_keys.fk_1.foreign_keys.fk_2.foreign_keys.fk_3.columns.distant_source_column'
+                                                    'field': 'primary_source_table.foreign_keys.fk_1.columns.distant_source_column'
                                                 }
                                             }
 
@@ -193,7 +193,7 @@ class TestColumnNodeLineageTracer(unittest.TestCase):
                                                 'references': {
                                                     'columns': ['fk_col'],
                                                     'schema': 'other_schema',
-                                                    'table': 'other_table_1'
+                                                    'table': 'distant_source_table'
                                                 }
                                             }
                                         }
@@ -204,44 +204,11 @@ class TestColumnNodeLineageTracer(unittest.TestCase):
                                 'name': 'other_schema',
                                 'tables': [
                                     {
-                                        'name': 'other_table_1',
-                                        'columns': {
-                                            'fk_col': {
-                                                'data_source': 'TEXT'
-                                            }
-                                        },
-                                        'foreign_keys': {
-                                            'fk_2': {
-                                                'columns': ['fk_col'],
-                                                'references': {
-                                                    'columns': ['fk_col'],
-                                                    'schema': 'other_schema',
-                                                    'table': 'other_table_2'
-                                                }
-                                            }
-                                        }
-                                    },
-                                    {
-                                        'name': 'other_table_2',
-                                        'columns': {
-                                            'fk_col': {
-                                                'data_source': 'TEXT'
-                                            }
-                                        },
-                                        'foreign_keys': {
-                                            'fk_3': {
-                                                'columns': ['fk_col'],
-                                                'references': {
-                                                    'columns': ['fk_col'],
-                                                    'schema': 'other_schema',
-                                                    'table': 'distant_source_table'
-                                                }
-                                            }
-                                        }
-                                    },
-                                    {
                                         'name': 'distant_source_table',
                                         'columns': {
+                                            'fk_col': {
+                                                'data_source': 'TEXT'
+                                            },
                                             'distant_source_column': {
                                                 'data_source': 'TEXT'
                                             }

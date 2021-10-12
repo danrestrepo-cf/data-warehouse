@@ -9,6 +9,7 @@ from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        ForeignKeyMetadata,
                                                        InvalidMetadataKeyException,
                                                        TableAddress)
+from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
 
 
 class TestDataWarehouseMetadata(unittest.TestCase):
@@ -222,6 +223,141 @@ class TestTableMetadata(unittest.TestCase):
         table_metadata = TableMetadata(name='account', schema_name='staging_octane', database_name='staging')
         expected = TableAddress(table='account', schema='staging_octane', database='staging')
         self.assertEqual(expected, table_metadata.address)
+
+
+class TestTableMetadataCanGetColumnSourceTable(unittest.TestCase):
+
+    def setUp(self) -> None:
+        self.dw_metadata = construct_data_warehouse_metadata_from_dict(
+            {
+                'name': 'edw',
+                'databases': [
+                    {
+                        'name': 'staging',
+                        'schemas': [
+                            {
+                                'name': 'history_octane',
+                                'tables': [
+                                    {
+                                        'name': 'table_with_source',
+                                        'primary_source_table': 'staging.staging_octane.source_table',
+                                        'columns': {
+                                            'column_with_source': {
+                                                'data_source': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.source_column'
+                                                }
+                                            },
+                                            'column_with_distant_source': {
+                                                'data_source': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.foreign_keys.fk_1.foreign_keys.fk_2.foreign_keys.fk_3.columns.distant_source_column'
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                'name': 'staging_octane',
+                                'tables': [
+                                    {
+                                        'name': 'source_table',
+                                        'columns': {
+                                            'source_column': {
+                                                'data_source': 'TEXT'
+                                            },
+                                            'fk_col': {
+                                                'data_source': 'TEXT'
+                                            }
+                                        },
+                                        'foreign_keys': {
+                                            'fk_1': {
+                                                'columns': ['fk_col'],
+                                                'references': {
+                                                    'columns': ['fk_col'],
+                                                    'schema': 'other_schema',
+                                                    'table': 'other_table_1'
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                'name': 'other_schema',
+                                'tables': [
+                                    {
+                                        'name': 'other_table_1',
+                                        'columns': {
+                                            'fk_col': {
+                                                'data_source': 'TEXT'
+                                            }
+                                        },
+                                        'foreign_keys': {
+                                            'fk_2': {
+                                                'columns': ['fk_col'],
+                                                'references': {
+                                                    'columns': ['fk_col'],
+                                                    'schema': 'other_schema',
+                                                    'table': 'other_table_2'
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        'name': 'other_table_2',
+                                        'columns': {
+                                            'fk_col': {
+                                                'data_source': 'TEXT'
+                                            }
+                                        },
+                                        'foreign_keys': {
+                                            'fk_3': {
+                                                'columns': ['fk_col'],
+                                                'references': {
+                                                    'columns': ['fk_col'],
+                                                    'schema': 'other_schema',
+                                                    'table': 'distant_source_table'
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        'name': 'distant_source_table',
+                                        'columns': {
+                                            'distant_source_column': {
+                                                'data_source': 'TEXT'
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        )
+
+    def test_none_if_column_has_no_source(self):
+        table_address = TableAddress('staging', 'staging_octane', 'source_table')
+        table = self.dw_metadata.get_table_by_address(table_address)
+        self.assertEqual(None, table.get_column_source_table('source_column', self.dw_metadata))
+
+    def test_retrieves_primary_source_table_metadata_if_there_are_no_fk_steps(self):
+        table_address = TableAddress('staging', 'history_octane', 'table_with_source')
+        table = self.dw_metadata.get_table_by_address(table_address)
+        source_table_address = TableAddress('staging', 'staging_octane', 'source_table')
+        source_table = self.dw_metadata.get_table_by_address(source_table_address)
+        self.assertEqual(source_table, table.get_column_source_table('column_with_source', self.dw_metadata))
+
+    def test_follows_fk_steps_to_retrieve_distant_source_table_metadata(self):
+        table_address = TableAddress('staging', 'history_octane', 'table_with_source')
+        table = self.dw_metadata.get_table_by_address(table_address)
+        source_table_address = TableAddress('staging', 'other_schema', 'distant_source_table')
+        source_table = self.dw_metadata.get_table_by_address(source_table_address)
+        self.assertEqual(source_table, table.get_column_source_table('column_with_distant_source', self.dw_metadata))
 
 
 if __name__ == '__main__':

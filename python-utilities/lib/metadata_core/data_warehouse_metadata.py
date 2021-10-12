@@ -1,6 +1,6 @@
 from enum import Enum
 from dataclasses import dataclass
-from typing import List
+from typing import List, Optional
 
 
 @dataclass
@@ -107,6 +107,16 @@ class TableMetadata:
     def remove_foreign_key_metadata(self, foreign_key_name: str):
         if foreign_key_name in self._foreign_keys:
             del self._foreign_keys[foreign_key_name]
+
+    def get_column_source_table(self, column_name: str, data_warehouse_metadata: 'DataWarehouseMetadata') -> Optional['TableMetadata']:
+        source_field = self.get_column(column_name).source_field
+        if source_field is not None:
+            source_table = data_warehouse_metadata.get_table_by_address(self.primary_source_table)
+            for foreign_key in source_field.fk_steps:
+                source_table = data_warehouse_metadata.get_table_by_address(source_table.get_foreign_key(foreign_key).table)
+            return source_table
+        else:
+            return None
 
     @property
     def columns(self) -> List[ColumnMetadata]:

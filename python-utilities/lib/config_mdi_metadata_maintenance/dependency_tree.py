@@ -51,15 +51,13 @@ class ColumnNodeLineageTracer(NodeLineageTracer):
         table_address = TableAddress(database=node_key['database'], schema=node_key['schema'], table=node_key['table'])
         try:
             table_metadata = self._metadata.get_table_by_address(table_address)
+            source_table_metadata = table_metadata.get_column_source_table(node_key['column'], self._metadata)
             column_metadata = table_metadata.get_column(node_key['column'])
             if column_metadata.source_field is not None:
-                source_table = self._metadata.get_table_by_address(table_metadata.primary_source_table)
-                for foreign_key in column_metadata.source_field.fk_steps:
-                    source_table = self._metadata.get_table_by_address(source_table.get_foreign_key(foreign_key).table)
                 return [{
-                    'database': source_table.database_name,
-                    'schema': source_table.schema_name,
-                    'table': source_table.name,
+                    'database': source_table_metadata.database_name,
+                    'schema': source_table_metadata.schema_name,
+                    'table': source_table_metadata.name,
                     'column': column_metadata.source_field.column_name
                 }]
             else:
