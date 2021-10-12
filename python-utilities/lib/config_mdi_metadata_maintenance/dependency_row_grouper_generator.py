@@ -22,7 +22,7 @@ class NodeLineageTracer(ABC):
 class TableNodeLineageTracer(NodeLineageTracer):
 
     def __init__(self, data_warehouse_metadata: DataWarehouseMetadata):
-        super().__init__(key_fields=[])
+        super().__init__(key_fields=['database', 'schema', 'table'])
         self._metadata = data_warehouse_metadata
 
     def determine_node_parents(self, node_key: dict) -> List[dict]:
@@ -44,7 +44,7 @@ class TableNodeLineageTracer(NodeLineageTracer):
 class ColumnNodeLineageTracer(NodeLineageTracer):
 
     def __init__(self, data_warehouse_metadata: DataWarehouseMetadata):
-        super().__init__(key_fields=[])
+        super().__init__(key_fields=['database', 'schema', 'table', 'column'])
         self._metadata = data_warehouse_metadata
 
     def determine_node_parents(self, node_key: dict) -> List[dict]:
