@@ -154,7 +154,7 @@ def generate_staging_octane_metadata(octane_connection: OctaneDB, octane_data_fi
                 if row['is_primary_key'] == 1:
                     staging_octane_data[row['table_name']]['primary_key'].append(row['column_name'])
                 staging_octane_data[row['table_name']]['columns'][row['column_name']] = {
-                    'data_type': row['column_type']
+                    'data_type': map_data_type(row['column_type'])
                 }
 
         for row in fk_metadata:
@@ -173,6 +173,24 @@ def generate_staging_octane_metadata(octane_connection: OctaneDB, octane_data_fi
 def read_csv_to_list_of_dicts(filepath: str) -> List[dict]:
     with open(filepath) as file:
         return list(csv.DictReader(file))
+
+
+def map_data_type(data_type: str) -> str:
+    upper_data_type = data_type.upper()
+    if upper_data_type == 'DATE' or upper_data_type == 'TIME' or upper_data_type == 'TEXT' or upper_data_type.startswith('VARCHAR('):
+        return upper_data_type
+    elif upper_data_type == 'DATETIME':
+        return 'TIMESTAMP'
+    elif upper_data_type.startswith('TINYINT('):
+        return 'SMALLINT'
+    elif upper_data_type.startswith('INT('):
+        return 'INTEGER'
+    elif upper_data_type.startswith('BIGINT('):
+        return 'BIGINT'
+    elif upper_data_type.startswith('BIT('):
+        return 'BOOLEAN'
+    elif upper_data_type.startswith('DECIMAL('):
+        return f'NUMERIC{upper_data_type[7:]}'
 
 
 def generate_etl_process_metadata(edw_connection: EDW) -> dict:
