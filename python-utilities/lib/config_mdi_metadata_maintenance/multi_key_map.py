@@ -39,6 +39,9 @@ class MultiKeyMap:
                 raise self.InvalidKeyFieldsException(self._key_fields, d)
         return tuple(d[key_field] for key_field in self._key_fields)
 
+    def __repr__(self) -> str:
+        return repr(self._values)
+
     class InvalidKeyFieldsException(Exception):
         def __init__(self, key_fields: List[str], key_dict: dict):
             super().__init__(f'{key_dict} does not contain required key fields {key_fields}')
