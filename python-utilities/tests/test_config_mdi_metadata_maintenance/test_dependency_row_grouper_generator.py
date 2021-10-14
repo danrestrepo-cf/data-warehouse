@@ -427,7 +427,7 @@ class TestFieldDeleteNodeLineageTracer(unittest.TestCase):
                 'field_name': 'bad field'
             })
 
-    def test_returns_empty_list_for_field_with_no_dependent_tcolumn(self):
+    def test_returns_empty_list_for_field_with_no_dependent_column(self):
         node_lineage_tracer = FieldDeleteNodeLineageTracer(self.metadata_table)
         expected = []
         self.assertEqual(expected, node_lineage_tracer.determine_node_parents({
