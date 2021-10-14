@@ -108,6 +108,15 @@ class TestStateMachineDefinitionMetadataComparisonFunctions(unittest.TestCase):
         row_grouper = StateMachineDefinitionMetadataComparisonFunctions().construct_insert_row_grouper(DataWarehouseMetadata('dw'))
         self.assertEqual([test_data], row_grouper.group_rows(test_data))
 
+    def test_construct_delete_row_grouper(self):
+        test_data = [
+            Row(key={'process_name': 'SP-1'}, attributes={'state_machine_name': 'SP-1', 'state_machine_comment': 'State Machine for SP-1'}),
+            Row(key={'process_name': 'SP-2'}, attributes={'state_machine_name': 'SP-2', 'state_machine_comment': 'State Machine for SP-2'}),
+            Row(key={'process_name': 'SP-3'}, attributes={'state_machine_name': 'SP-3', 'state_machine_comment': 'State Machine for SP-3'})
+        ]
+        row_grouper = StateMachineDefinitionMetadataComparisonFunctions().construct_delete_row_grouper(MetadataTable([]))
+        self.assertEqual([test_data], row_grouper.group_rows(test_data))
+
     def test_generate_insert_sql(self):
         test_data = [
             Row(key={'process_name': 'SP-1'}, attributes={'state_machine_name': 'SP-1', 'state_machine_comment': 'State Machine for SP-1'}),

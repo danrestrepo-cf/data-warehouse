@@ -120,6 +120,21 @@ class TestTableOutputStepMetadataComparisonFunctions(unittest.TestCase):
         row_grouper = TableOutputStepMetadataComparisonFunctions().construct_insert_row_grouper(DataWarehouseMetadata('dw'))
         self.assertEqual([test_data], row_grouper.group_rows(test_data))
 
+    def test_construct_delete_row_grouper(self):
+        test_data = [
+            Row(key={'process_name': 'SP-1'},
+                attributes={'target_schema': 'history_octane', 'target_table': 'table1', 'truncate_table': 'Y',
+                            'connectionname': 'Staging DB Connection'}),
+            Row(key={'process_name': 'SP-2'},
+                attributes={'target_schema': 'history_octane', 'target_table': 'table2', 'truncate_table': 'Y',
+                            'connectionname': 'Staging DB Connection'}),
+            Row(key={'process_name': 'SP-3'},
+                attributes={'target_schema': 'history_octane', 'target_table': 'table3', 'truncate_table': 'Y',
+                            'connectionname': 'Staging DB Connection'})
+        ]
+        row_grouper = TableOutputStepMetadataComparisonFunctions().construct_delete_row_grouper(MetadataTable([]))
+        self.assertEqual([test_data], row_grouper.group_rows(test_data))
+
     def test_generate_insert_sql(self):
         test_data = [
             Row(key={'process_name': 'SP-1'},

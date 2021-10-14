@@ -266,6 +266,74 @@ class TestEDWFieldDefinitionMetadataComparisonFunctions(unittest.TestCase):
         ]
         self.assertEqual(expected, row_grouper.group_rows([c1_row, c1_src_row, c1_src_src_row, c2_row]))
 
+    def test_construct_delete_row_grouper(self):
+        metadata_table = MetadataTable(key_fields=[
+            'database_name',
+            'schema_name',
+            'table_name',
+            'field_name'
+        ])
+        metadata_table.add_rows([
+
+            {
+                'database_name': 'db1',
+                'schema_name': 'sch1',
+                'table_name': 't1',
+                'field_name': 'c1',
+                'data_type': 'TEXT',
+                'source_database_name': 'db1',
+                'source_schema_name': 'sch1',
+                'source_table_name': 't1_src',
+                'source_field_name': 'c1_src',
+            },
+            {
+                'database_name': 'db1',
+                'schema_name': 'sch1',
+                'table_name': 't1_src',
+                'field_name': 'c1_src',
+                'data_type': 'TEXT',
+                'source_database_name': 'db1',
+                'source_schema_name': 'sch1',
+                'source_table_name': 't1_src_src',
+                'source_field_name': 'c1_src_src',
+            },
+            {
+                'database_name': 'db1',
+                'schema_name': 'sch1',
+                'table_name': 't1_src_src',
+                'field_name': 'c1_src_src',
+                'data_type': 'TEXT',
+                'source_database_name': None,
+                'source_schema_name': None,
+                'source_table_name': None,
+                'source_field_name': None
+            },
+            {
+                'database_name': 'db2',
+                'schema_name': 'sch2',
+                'table_name': 't2',
+                'field_name': 'c2',
+                'data_type': 'INT',
+                'source_database_name': None,
+                'source_schema_name': None,
+                'source_table_name': None,
+                'source_field_name': None
+            }
+        ])
+
+        c1_row = metadata_table.rows[0]
+        c1_src_row = metadata_table.rows[1]
+        c1_src_src_row = metadata_table.rows[2]
+        c2_row = metadata_table.rows[3]
+
+        row_grouper = EDWFieldDefinitionMetadataComparisonFunctions().construct_delete_row_grouper(metadata_table)
+        expected = [
+            [c1_row, c2_row],
+            [c1_src_row],
+            [c1_src_src_row]
+        ]
+        self.assertEqual(expected, row_grouper.group_rows([c1_row, c1_src_row, c1_src_src_row, c2_row]))
+
     def test_generate_insert_sql(self):
         test_data = [
             Row(

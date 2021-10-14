@@ -209,6 +209,49 @@ class TestEDWJoinDefinitionMetadataComparisonFunctions(unittest.TestCase):
         row_grouper = EDWJoinDefinitionMetadataComparisonFunctions().construct_insert_row_grouper(DataWarehouseMetadata('dw'))
         self.assertEqual([test_data], row_grouper.group_rows(test_data))
 
+    def test_construct_delete_row_grouper(self):
+        test_data = [
+            Row(
+                key={
+                    'primary_database_name': 'db1',
+                    'primary_schema_name': 'sch1',
+                    'primary_table_name': 'table10',
+                    'target_database_name': 'db1',
+                    'target_schema_name': 'sch1',
+                    'target_table_name': 'table11',
+                    'join_condition': 'primary_table.col1 = target_table.col1'
+                },
+                attributes={}
+            ),
+            Row(
+                key={
+                    'primary_database_name': 'db1',
+                    'primary_schema_name': 'sch1',
+                    'primary_table_name': 'table20',
+                    'target_database_name': 'db1',
+                    'target_schema_name': 'sch1',
+                    'target_table_name': 'table21',
+                    'join_condition': 'primary_table.col1 = target_table.col1 AND primary_table.col2 = target_table.col2'
+                },
+                attributes={}
+            ),
+            Row(
+                key={
+
+                    'primary_database_name': 'db2',
+                    'primary_schema_name': 'sch2',
+                    'primary_table_name': 'table30',
+                    'target_database_name': 'db2',
+                    'target_schema_name': 'sch2',
+                    'target_table_name': 'table31',
+                    'join_condition': 'primary_table.col3 = target_table.col3'
+                },
+                attributes={}
+            )
+        ]
+        row_grouper = EDWJoinDefinitionMetadataComparisonFunctions().construct_delete_row_grouper(MetadataTable([]))
+        self.assertEqual([test_data], row_grouper.group_rows(test_data))
+
     def test_generate_insert_sql(self):
         test_data = [
             Row(

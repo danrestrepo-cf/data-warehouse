@@ -50,6 +50,16 @@ class TestingMetadataComparisonFunctions(MetadataComparisonFunctions):
                         row_grouper.add_group_assignment({'column_name': column.name}, group_number)
         return row_grouper
 
+    def construct_delete_row_grouper(self, metadata_table: MetadataTable) -> RowGrouper:
+        row_grouper = RowGrouper(MultiKeyMap(key_fields=['column_name']))
+        for row in metadata_table.rows:
+            if row.attributes['data_type'] == 'TEXT':
+                group_number = 1
+            else:
+                group_number = 0
+            row_grouper.add_group_assignment({'column_name': row.key['column_name']}, group_number)
+        return row_grouper
+
     def generate_insert_sql(self, rows: List[Row]) -> str:
         return f'INSERT rows: {str(rows)}'
 
@@ -231,6 +241,20 @@ class TestGenerateTableMaintenanceSQL(unittest.TestCase):
 
     def test_returns_appropriate_delete_sql_if_metadata_is_missing_from_source(self):
         db_connection = MockLocalEDWConnection([
+            {'column_name': 'col1', 'data_type': 'TEXT'},
+            {'column_name': 'col2', 'data_type': 'TEXT'}
+        ])
+        dw_metadata = DataWarehouseMetadata('dw')
+        expected = TableMaintenanceSQL(
+            insert_sql='',
+            update_sql='',
+            delete_sql='DELETE rows: [Row(key={\'column_name\': \'col1\'}, attributes={\'data_type\': \'TEXT\'}), Row(key={\'column_name\': \'col2\'}, attributes={\'data_type\': \'TEXT\'})]'
+        )
+        generator = MetadataMaintenanceSQLGenerator(db_connection, dw_metadata)
+        self.assertEqual(expected, generator.generate_table_metadata_maintenance_sql(TestingMetadataComparisonFunctions()))
+
+    def test_creates_one_delete_sql_statement_per_row_group(self):
+        db_connection = MockLocalEDWConnection([
             {'column_name': 'col1', 'data_type': 'INT'},
             {'column_name': 'col2', 'data_type': 'TEXT'}
         ])
@@ -238,7 +262,8 @@ class TestGenerateTableMaintenanceSQL(unittest.TestCase):
         expected = TableMaintenanceSQL(
             insert_sql='',
             update_sql='',
-            delete_sql='DELETE rows: [Row(key={\'column_name\': \'col1\'}, attributes={\'data_type\': \'INT\'}), Row(key={\'column_name\': \'col2\'}, attributes={\'data_type\': \'TEXT\'})]'
+            delete_sql='DELETE rows: [Row(key={\'column_name\': \'col1\'}, attributes={\'data_type\': \'INT\'})]\n\n' +
+                       'DELETE rows: [Row(key={\'column_name\': \'col2\'}, attributes={\'data_type\': \'TEXT\'})]'
         )
         generator = MetadataMaintenanceSQLGenerator(db_connection, dw_metadata)
         self.assertEqual(expected, generator.generate_table_metadata_maintenance_sql(TestingMetadataComparisonFunctions()))
@@ -264,6 +289,9 @@ class TestComparisonFunctions1(MetadataComparisonFunctions):
         return metadata_table
 
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
+        return SingleGroupRowGrouper()
+
+    def construct_delete_row_grouper(self, metadata_table: MetadataTable) -> RowGrouper:
         return SingleGroupRowGrouper()
 
     def generate_insert_sql(self, rows: List[Row]) -> str:
@@ -297,6 +325,9 @@ class TestComparisonFunctions2(MetadataComparisonFunctions):
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
         return SingleGroupRowGrouper()
 
+    def construct_delete_row_grouper(self, metadata_table: MetadataTable) -> RowGrouper:
+        return SingleGroupRowGrouper()
+
     def generate_insert_sql(self, rows: List[Row]) -> str:
         return f'INSERT rows for Table2'
 
@@ -326,6 +357,9 @@ class TestComparisonFunctions3(MetadataComparisonFunctions):
         return metadata_table
 
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
+        return SingleGroupRowGrouper()
+
+    def construct_delete_row_grouper(self, metadata_table: MetadataTable) -> RowGrouper:
         return SingleGroupRowGrouper()
 
     def generate_insert_sql(self, rows: List[Row]) -> str:

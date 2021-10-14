@@ -5,7 +5,9 @@ from lib.db_connections import LocalEDWConnection
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper
 from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata
-from lib.config_mdi_metadata_maintenance.dependency_row_grouper_generator import DependencyRowGrouperGenerator, FieldInsertNodeLineageTracer
+from lib.config_mdi_metadata_maintenance.dependency_row_grouper_generator import (DependencyRowGrouperGenerator,
+                                                                                  FieldInsertNodeLineageTracer,
+                                                                                  FieldDeleteNodeLineageTracer)
 
 
 class EDWFieldDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions):
@@ -82,6 +84,12 @@ class EDWFieldDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions)
                             'field_name': column.name
                         }
                         row_grouper_generator.calculate_and_store_dependency_tree_node_depth(dependency_tree_node_key)
+        return row_grouper_generator.generate_row_grouper()
+
+    def construct_delete_row_grouper(self, metadata_table: MetadataTable) -> RowGrouper:
+        row_grouper_generator = DependencyRowGrouperGenerator(FieldDeleteNodeLineageTracer(metadata_table))
+        for row in metadata_table.rows:
+            row_grouper_generator.calculate_and_store_dependency_tree_node_depth(row.key)
         return row_grouper_generator.generate_row_grouper()
 
     def generate_insert_sql(self, rows: List[Row]) -> str:

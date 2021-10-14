@@ -40,6 +40,9 @@ class StateMachineStepMetadataComparisonFunctions(MetadataComparisonFunctions):
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
         return SingleGroupRowGrouper()
 
+    def construct_delete_row_grouper(self, metadata_table: MetadataTable) -> RowGrouper:
+        return SingleGroupRowGrouper()
+
     def generate_insert_sql(self, rows: List[Row]) -> str:
         return "WITH insert_rows (process_name, next_process_name) AS (\n" + \
                "    VALUES " + self.construct_values_string_from_full_rows(rows, base_indent=4) + "\n" + \

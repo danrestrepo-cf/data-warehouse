@@ -25,6 +25,10 @@ class MetadataComparisonFunctions(ABC):
         pass
 
     @abstractmethod
+    def construct_delete_row_grouper(self, metadata_table: MetadataTable) -> RowGrouper:
+        pass
+
+    @abstractmethod
     def generate_insert_sql(self, rows: List[Row]) -> str:
         pass
 
