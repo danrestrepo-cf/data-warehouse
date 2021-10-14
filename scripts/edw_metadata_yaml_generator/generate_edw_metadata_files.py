@@ -274,7 +274,7 @@ def generate_table_input_sql(table_metadata: dict) -> str:
         history_select_columns = generate_select_columns_string('history_table', columns, increment_version=True)
         table_input_sql += f'LEFT JOIN history_octane.{table_name} history_table\n' + \
                            f'          ON staging_table.{primary_key_column} = history_table.{primary_key_column} AND staging_table.{version_column} = history_table.{version_column}\n' + \
-                           f'WHERE history_table.code IS NULL\n' + \
+                           f'WHERE history_table.{primary_key_column} IS NULL\n' + \
                            f'UNION ALL\n' + \
                            f'SELECT {history_select_columns}\n' + \
                            f'     , TRUE AS data_source_deleted_flag\n' + \
