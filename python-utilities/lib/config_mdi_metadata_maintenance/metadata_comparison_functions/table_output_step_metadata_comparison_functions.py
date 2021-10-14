@@ -77,4 +77,4 @@ class TableOutputStepMetadataComparisonFunctions(MetadataComparisonFunctions):
                "FROM mdi.table_output_step\n" + \
                "    USING delete_keys, mdi.process\n" + \
                "WHERE table_output_step.process_dwid = process.dwid\n" + \
-               "  AND process.name = delete_keys.process_name\n"
+               "  AND process.name = delete_keys.process_name;"
