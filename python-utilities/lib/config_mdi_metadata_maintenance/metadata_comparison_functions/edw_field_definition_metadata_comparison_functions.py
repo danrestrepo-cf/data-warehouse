@@ -5,7 +5,7 @@ from lib.db_connections import LocalEDWConnection
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper
 from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata
-from lib.config_mdi_metadata_maintenance.dependency_row_grouper_generator import DependencyRowGrouperGenerator, FieldNodeLineageTracer
+from lib.config_mdi_metadata_maintenance.dependency_row_grouper_generator import DependencyRowGrouperGenerator, FieldInsertNodeLineageTracer
 
 
 class EDWFieldDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions):
@@ -70,7 +70,7 @@ class EDWFieldDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions)
         return metadata_table
 
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
-        row_grouper_generator = DependencyRowGrouperGenerator(FieldNodeLineageTracer(data_warehouse_metadata))
+        row_grouper_generator = DependencyRowGrouperGenerator(FieldInsertNodeLineageTracer(data_warehouse_metadata))
         for database in data_warehouse_metadata.databases:
             for schema in database.schemas:
                 for table in schema.tables:

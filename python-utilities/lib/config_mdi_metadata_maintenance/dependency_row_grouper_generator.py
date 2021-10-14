@@ -19,7 +19,7 @@ class NodeLineageTracer(ABC):
         pass
 
 
-class TableNodeLineageTracer(NodeLineageTracer):
+class TableInsertNodeLineageTracer(NodeLineageTracer):
 
     def __init__(self, data_warehouse_metadata: DataWarehouseMetadata):
         super().__init__(key_fields=['database_name', 'schema_name', 'table_name'])
@@ -42,7 +42,7 @@ class TableNodeLineageTracer(NodeLineageTracer):
             raise self.InvalidNodeException(f'Could not determine parents of table "{table_address}". Table doesn\'t exist in metadata.')
 
 
-class FieldNodeLineageTracer(NodeLineageTracer):
+class FieldInsertNodeLineageTracer(NodeLineageTracer):
 
     def __init__(self, data_warehouse_metadata: DataWarehouseMetadata):
         super().__init__(key_fields=['database_name', 'schema_name', 'table_name', 'field_name'])

@@ -3,8 +3,8 @@ from typing import List
 
 from lib.config_mdi_metadata_maintenance.dependency_row_grouper_generator import (DependencyRowGrouperGenerator,
                                                                                   NodeLineageTracer,
-                                                                                  TableNodeLineageTracer,
-                                                                                  FieldNodeLineageTracer)
+                                                                                  TableInsertNodeLineageTracer,
+                                                                                  FieldInsertNodeLineageTracer)
 from lib.config_mdi_metadata_maintenance.metadata_table import Row
 from lib.config_mdi_metadata_maintenance.multi_key_map import MultiKeyMap
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
@@ -81,7 +81,7 @@ class TestDependencyRowGrouperGenerator(unittest.TestCase):
             self.row_grouper_generator.calculate_and_store_dependency_tree_node_depth({'a': 100, 'b': 101})
 
 
-class TestTableNodeLineageTracer(unittest.TestCase):
+class TestTableInsertNodeLineageTracer(unittest.TestCase):
 
     def setUp(self) -> None:
         self.dw_metadata = construct_data_warehouse_metadata_from_dict(
@@ -115,7 +115,7 @@ class TestTableNodeLineageTracer(unittest.TestCase):
         )
 
     def test_throws_error_if_given_table_doesnt_exist_in_metadata(self):
-        node_lineage_tracer = TableNodeLineageTracer(self.dw_metadata)
+        node_lineage_tracer = TableInsertNodeLineageTracer(self.dw_metadata)
         with self.assertRaises(NodeLineageTracer.InvalidNodeException):
             node_lineage_tracer.determine_node_parents({
                 'database_name': 'bad db',
@@ -124,7 +124,7 @@ class TestTableNodeLineageTracer(unittest.TestCase):
             })
 
     def test_returns_empty_list_for_table_with_no_source_table(self):
-        node_lineage_tracer = TableNodeLineageTracer(self.dw_metadata)
+        node_lineage_tracer = TableInsertNodeLineageTracer(self.dw_metadata)
         expected = []
         self.assertEqual(expected, node_lineage_tracer.determine_node_parents({
             'database_name': 'staging',
@@ -133,7 +133,7 @@ class TestTableNodeLineageTracer(unittest.TestCase):
         }))
 
     def test_returns_single_item_list_containing_source_table_key_if_table_has_a_source(self):
-        node_lineage_tracer = TableNodeLineageTracer(self.dw_metadata)
+        node_lineage_tracer = TableInsertNodeLineageTracer(self.dw_metadata)
         expected = [{
             'database_name': 'staging',
             'schema_name': 'staging_octane',
@@ -146,7 +146,7 @@ class TestTableNodeLineageTracer(unittest.TestCase):
         }))
 
 
-class TestFieldNodeLineageTracer(unittest.TestCase):
+class TestFieldInsertNodeLineageTracer(unittest.TestCase):
 
     def setUp(self) -> None:
         self.dw_metadata = construct_data_warehouse_metadata_from_dict(
@@ -229,7 +229,7 @@ class TestFieldNodeLineageTracer(unittest.TestCase):
         )
 
     def test_throws_error_if_given_column_doesnt_exist_in_metadata(self):
-        node_lineage_tracer = FieldNodeLineageTracer(self.dw_metadata)
+        node_lineage_tracer = FieldInsertNodeLineageTracer(self.dw_metadata)
         with self.assertRaises(NodeLineageTracer.InvalidNodeException):
             node_lineage_tracer.determine_node_parents({
                 'database_name': 'bad db',
@@ -239,7 +239,7 @@ class TestFieldNodeLineageTracer(unittest.TestCase):
             })
 
     def test_returns_empty_list_for_column_with_no_source_column(self):
-        node_lineage_tracer = FieldNodeLineageTracer(self.dw_metadata)
+        node_lineage_tracer = FieldInsertNodeLineageTracer(self.dw_metadata)
         expected = []
         self.assertEqual(expected, node_lineage_tracer.determine_node_parents({
             'database_name': 'staging',
@@ -249,7 +249,7 @@ class TestFieldNodeLineageTracer(unittest.TestCase):
         }))
 
     def test_returns_single_item_list_containing_source_column_key_if_column_source_is_from_primary_source_table(self):
-        node_lineage_tracer = FieldNodeLineageTracer(self.dw_metadata)
+        node_lineage_tracer = FieldInsertNodeLineageTracer(self.dw_metadata)
         expected = [{
             'database_name': 'staging',
             'schema_name': 'staging_octane',
@@ -264,7 +264,7 @@ class TestFieldNodeLineageTracer(unittest.TestCase):
         }))
 
     def test_returns_single_item_list_containing_source_column_key_if_column_source_is_from_distant_source_table(self):
-        node_lineage_tracer = FieldNodeLineageTracer(self.dw_metadata)
+        node_lineage_tracer = FieldInsertNodeLineageTracer(self.dw_metadata)
         expected = [{
             'database_name': 'staging',
             'schema_name': 'other_schema',
