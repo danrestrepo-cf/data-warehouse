@@ -49,17 +49,17 @@ class TableDeleteNodeLineageTracer(NodeLineageTracer):
         super().__init__(key_fields=['database_name', 'schema_name', 'table_name'])
         self._table_dependencies = MultiKeyMap(key_fields=['database_name', 'schema_name', 'table_name'])
         for row in metadata_table.rows:
+            dependent_table = row.key
+            if not self._table_dependencies.entry_exists_with_key(dependent_table):
+                self._table_dependencies.add_entry(dependent_table, [])
             if row.attributes['source_database_name'] is not None:
                 source_table = {
                     'database_name': row.attributes['source_database_name'],
                     'schema_name': row.attributes['source_schema_name'],
                     'table_name': row.attributes['source_table_name']
                 }
-                dependent_table = row.key
                 if not self._table_dependencies.entry_exists_with_key(source_table):
                     self._table_dependencies.add_entry(source_table, [])
-                if not self._table_dependencies.entry_exists_with_key(dependent_table):
-                    self._table_dependencies.add_entry(dependent_table, [])
                 self._table_dependencies.get_value_by_key(source_table).append(dependent_table)
 
     def determine_node_parents(self, node_key: dict) -> List[dict]:
@@ -102,6 +102,9 @@ class FieldDeleteNodeLineageTracer(NodeLineageTracer):
         super().__init__(key_fields=['database_name', 'schema_name', 'table_name', 'field_name'])
         self._field_dependencies = MultiKeyMap(key_fields=['database_name', 'schema_name', 'table_name', 'field_name'])
         for row in metadata_table.rows:
+            dependent_field = row.key
+            if not self._field_dependencies.entry_exists_with_key(dependent_field):
+                self._field_dependencies.add_entry(dependent_field, [])
             if row.attributes['source_database_name'] is not None:
                 source_field = {
                     'database_name': row.attributes['source_database_name'],
@@ -109,11 +112,8 @@ class FieldDeleteNodeLineageTracer(NodeLineageTracer):
                     'table_name': row.attributes['source_table_name'],
                     'field_name': row.attributes['source_field_name']
                 }
-                dependent_field = row.key
                 if not self._field_dependencies.entry_exists_with_key(source_field):
                     self._field_dependencies.add_entry(source_field, [])
-                if not self._field_dependencies.entry_exists_with_key(dependent_field):
-                    self._field_dependencies.add_entry(dependent_field, [])
                 self._field_dependencies.get_value_by_key(source_field).append(dependent_field)
 
     def determine_node_parents(self, node_key: dict) -> List[dict]:

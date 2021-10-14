@@ -152,6 +152,7 @@ class TestTableDeleteNodeLineageTracer(unittest.TestCase):
 
     def setUp(self) -> None:
         self.metadata_table = MetadataTable(key_fields=['database_name', 'schema_name', 'table_name'])
+        # todo: test for completely isolated table/field, e.g. one with no dependents or sources
         self.metadata_table.add_rows([
             {
                 'database_name': 'staging',
@@ -176,7 +177,15 @@ class TestTableDeleteNodeLineageTracer(unittest.TestCase):
                 'source_database_name': 'staging',
                 'source_schema_name': 'staging_octane',
                 'source_table_name': 'source_table'
-            }
+            },
+            {
+                'database_name': 'ingress',
+                'schema_name': 'ingress_schema',
+                'table_name': 'isolated_table',
+                'source_database_name': None,
+                'source_schema_name': None,
+                'source_table_name': None
+            },
         ])
 
     def test_throws_error_if_given_table_doesnt_exist_in_metadata(self):
@@ -200,6 +209,11 @@ class TestTableDeleteNodeLineageTracer(unittest.TestCase):
             'database_name': 'staging',
             'schema_name': 'history_octane',
             'table_name': 'other_table_with_source'
+        }))
+        self.assertEqual(expected, node_lineage_tracer.determine_node_parents({
+            'database_name': 'ingress',
+            'schema_name': 'ingress_schema',
+            'table_name': 'isolated_table'
         }))
 
     def test_returns_list_containing_dependent_table_keys_if_table_has_dependents(self):
@@ -390,7 +404,17 @@ class TestFieldDeleteNodeLineageTracer(unittest.TestCase):
                 'source_schema_name': 'staging_octane',
                 'source_table_name': 'source_table',
                 'source_field_name': 'source_field',
-            }
+            },
+            {
+                'database_name': 'ingress',
+                'schema_name': 'ingress_schema',
+                'table_name': 'isolated_table',
+                'field_name': 'isolated_field',
+                'source_database_name': None,
+                'source_schema_name': None,
+                'source_table_name': None,
+                'source_field_name': None
+            },
         ])
 
     def test_throws_error_if_given_field_doesnt_exist_in_metadata(self):
@@ -417,6 +441,12 @@ class TestFieldDeleteNodeLineageTracer(unittest.TestCase):
             'schema_name': 'history_octane',
             'table_name': 'table_with_source',
             'field_name': 'other_field_with_source'
+        }))
+        self.assertEqual(expected, node_lineage_tracer.determine_node_parents({
+            'database_name': 'ingress',
+            'schema_name': 'ingress_schema',
+            'table_name': 'isolated_table',
+            'field_name': 'isolated_field',
         }))
 
     def test_returns_list_containing_dependent_field_keys_if_field_has_dependents(self):
