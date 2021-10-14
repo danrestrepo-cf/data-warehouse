@@ -380,7 +380,7 @@ class TestEDWJoinDefinitionMetadataComparisonFunctions(unittest.TestCase):
                    ")\n" + \
                    "DELETE\n" + \
                    "FROM mdi.edw_join_definition\n" + \
-                   "    USING delete_keys, edw_table_definition primary_table, edw_table_definition target_table\n" + \
+                   "    USING delete_keys, mdi.edw_table_definition primary_table, mdi.edw_table_definition target_table\n" + \
                    "WHERE delete_keys.primary_database_name = primary_table.database_name\n" + \
                    "  AND delete_keys.primary_schema_name = primary_table.schema_name\n" + \
                    "  AND delete_keys.primary_table_name = primary_table.table_name\n" + \
