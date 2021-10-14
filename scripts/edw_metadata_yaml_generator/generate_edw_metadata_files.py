@@ -297,7 +297,7 @@ def generate_select_columns_string(table_prefix: str, columns: List[str], increm
     for col in columns:
         if col.endswith('_version') and increment_version:
             select_columns.append(f'{table_prefix}.{col} + 1')
-        else:
+        elif col not in ['data_source_updated_datetime', 'data_source_deleted_flag']:
             select_columns.append(f'{table_prefix}.{col}')
     return '\n     , '.join(select_columns)
 
