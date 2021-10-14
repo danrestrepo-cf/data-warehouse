@@ -21,7 +21,7 @@ class MetadataComparisonFunctions(ABC):
         pass
 
     @abstractmethod
-    def construct_dependency_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
+    def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
         pass
 
     @abstractmethod

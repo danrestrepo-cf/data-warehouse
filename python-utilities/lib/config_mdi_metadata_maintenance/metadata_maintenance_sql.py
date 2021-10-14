@@ -54,7 +54,7 @@ class MetadataMaintenanceSQLGenerator:
     def generate_table_metadata_maintenance_sql(self, comparison_functions: MetadataComparisonFunctions) -> TableMaintenanceSQL:
         config_metadata_table = comparison_functions.construct_metadata_table_from_config_db(self._edw_connection)
         source_metadata_table = comparison_functions.construct_metadata_table_from_source(self._source_metadata)
-        dependency_row_grouper = comparison_functions.construct_dependency_row_grouper(self._source_metadata)
+        insert_row_grouper = comparison_functions.construct_insert_row_grouper(self._source_metadata)
 
         insert_rows = []
         update_rows = []
@@ -71,7 +71,7 @@ class MetadataMaintenanceSQLGenerator:
                 delete_rows.append(row)
 
         if len(insert_rows) > 0:
-            insert_row_groups = dependency_row_grouper.group_rows(insert_rows)
+            insert_row_groups = insert_row_grouper.group_rows(insert_rows)
             insert_sql = '\n\n'.join([comparison_functions.generate_insert_sql(group) for group in insert_row_groups])
         else:
             insert_sql = ''

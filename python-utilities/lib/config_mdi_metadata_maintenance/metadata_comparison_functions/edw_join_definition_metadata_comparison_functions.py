@@ -68,7 +68,7 @@ class EDWJoinDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions):
             return ' AND '.join([f'primary_table.{primary_columns[i]} = target_table.{target_columns[i]}'
                                  for i in range(len(foreign_key.native_columns))])
 
-    def construct_dependency_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
+    def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
         return SingleGroupRowGrouper()
 
     def generate_insert_sql(self, rows: List[Row]) -> str:

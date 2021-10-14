@@ -99,13 +99,13 @@ class TestJSONOutputFieldMetadataComparisonFunctions(unittest.TestCase):
         ])
         self.assertEqual(expected, JSONOutputFieldMetadataComparisonFunctions().construct_metadata_table_from_source(dw_metadata))
 
-    def test_construct_dependency_row_grouper(self):
+    def test_construct_insert_row_grouper(self):
         test_data = [
             Row(key={'process_name': 'SP-1'}, attributes={'json_output_field': 't1_pid'}),
             Row(key={'process_name': 'SP-2'}, attributes={'json_output_field': 't2_pid'}),
             Row(key={'process_name': 'SP-3'}, attributes={'json_output_field': 't3_pid'})
         ]
-        row_grouper = JSONOutputFieldMetadataComparisonFunctions().construct_dependency_row_grouper(DataWarehouseMetadata('dw'))
+        row_grouper = JSONOutputFieldMetadataComparisonFunctions().construct_insert_row_grouper(DataWarehouseMetadata('dw'))
         self.assertEqual([test_data], row_grouper.group_rows(test_data))
 
     def test_generate_insert_sql(self):

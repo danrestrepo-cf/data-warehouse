@@ -133,7 +133,7 @@ class TestTableInputStepMetadataComparisonFunctions(unittest.TestCase):
         with self.assertRaises(ValueError):
             TableInputStepMetadataComparisonFunctions().construct_metadata_table_from_source(dw_metadata)
 
-    def test_construct_dependency_row_grouper(self):
+    def test_construct_insert_row_grouper(self):
         test_data = [
             Row(key={'process_name': 'SP-1'},
                 attributes={'data_source_dwid': 1, 'sql': 'SQL for SP-1', 'connectionname': 'Staging DB Connection'}),
@@ -142,7 +142,7 @@ class TestTableInputStepMetadataComparisonFunctions(unittest.TestCase):
             Row(key={'process_name': 'SP-3'},
                 attributes={'data_source_dwid': 1, 'sql': 'SQL for SP-3', 'connectionname': 'Staging DB Connection'}),
         ]
-        row_grouper = TableInputStepMetadataComparisonFunctions().construct_dependency_row_grouper(DataWarehouseMetadata('dw'))
+        row_grouper = TableInputStepMetadataComparisonFunctions().construct_insert_row_grouper(DataWarehouseMetadata('dw'))
         self.assertEqual([test_data], row_grouper.group_rows(test_data))
 
     def test_generate_insert_sql(self):
