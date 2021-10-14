@@ -88,13 +88,13 @@ class TestTableOutputFieldMetadataComparisonFunctions(unittest.TestCase):
         ])
         self.assertEqual(expected, TableOutputFieldMetadataComparisonFunctions().construct_metadata_table_from_source(dw_metadata))
 
-    def test_construct_insert_row_grouper(self):
+    def test_construct_dependency_row_grouper(self):
         test_data = [
             Row(key={'process_name': 'SP-1', 'database_field_name': 't1_col1'}, attributes={}),
             Row(key={'process_name': 'SP-1', 'database_field_name': 't1_col2'}, attributes={}),
             Row(key={'process_name': 'SP-2', 'database_field_name': 't2_col1'}, attributes={})
         ]
-        row_grouper = TableOutputFieldMetadataComparisonFunctions().construct_insert_row_grouper(DataWarehouseMetadata('dw'))
+        row_grouper = TableOutputFieldMetadataComparisonFunctions().construct_dependency_row_grouper(DataWarehouseMetadata('dw'))
         self.assertEqual([test_data], row_grouper.group_rows(test_data))
 
     def test_generate_insert_sql(self):

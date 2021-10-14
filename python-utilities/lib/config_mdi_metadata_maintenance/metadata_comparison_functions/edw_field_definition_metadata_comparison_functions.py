@@ -69,7 +69,7 @@ class EDWFieldDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions)
                         metadata_table.add_row(row)
         return metadata_table
 
-    def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
+    def construct_dependency_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
         row_grouper_generator = DependencyRowGrouperGenerator(FieldNodeLineageTracer(data_warehouse_metadata))
         for database in data_warehouse_metadata.databases:
             for schema in database.schemas:

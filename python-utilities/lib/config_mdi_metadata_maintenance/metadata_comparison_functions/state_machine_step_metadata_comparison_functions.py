@@ -37,7 +37,7 @@ class StateMachineStepMetadataComparisonFunctions(MetadataComparisonFunctions):
                             metadata_table.add_row({'process_name': etl.process_name, 'next_process_name': next_etl_process_name})
         return metadata_table
 
-    def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
+    def construct_dependency_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
         return SingleGroupRowGrouper()
 
     def generate_insert_sql(self, rows: List[Row]) -> str:

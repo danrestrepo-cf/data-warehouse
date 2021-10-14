@@ -105,7 +105,7 @@ class TestTableOutputStepMetadataComparisonFunctions(unittest.TestCase):
         ])
         self.assertEqual(expected, TableOutputStepMetadataComparisonFunctions().construct_metadata_table_from_source(dw_metadata))
 
-    def test_construct_insert_row_grouper(self):
+    def test_construct_dependency_row_grouper(self):
         test_data = [
             Row(key={'process_name': 'SP-1'},
                 attributes={'target_schema': 'history_octane', 'target_table': 'table1', 'truncate_table': 'Y',
@@ -117,7 +117,7 @@ class TestTableOutputStepMetadataComparisonFunctions(unittest.TestCase):
                 attributes={'target_schema': 'history_octane', 'target_table': 'table3', 'truncate_table': 'Y',
                             'connectionname': 'Staging DB Connection'})
         ]
-        row_grouper = TableOutputStepMetadataComparisonFunctions().construct_insert_row_grouper(DataWarehouseMetadata('dw'))
+        row_grouper = TableOutputStepMetadataComparisonFunctions().construct_dependency_row_grouper(DataWarehouseMetadata('dw'))
         self.assertEqual([test_data], row_grouper.group_rows(test_data))
 
     def test_generate_insert_sql(self):

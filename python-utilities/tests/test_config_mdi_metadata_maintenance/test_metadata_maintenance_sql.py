@@ -37,7 +37,7 @@ class TestingMetadataComparisonFunctions(MetadataComparisonFunctions):
                         metadata_table.add_row({'column_name': column.name, 'data_type': column.data_type})
         return metadata_table
 
-    def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
+    def construct_dependency_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
         row_grouper = RowGrouper(MultiKeyMap(key_fields=['column_name']))
         for database in data_warehouse_metadata.databases:
             for schema in database.schemas:
@@ -263,7 +263,7 @@ class TestComparisonFunctions1(MetadataComparisonFunctions):
                         metadata_table.add_row({'column_name': column.name, 'data_type': column.data_type})
         return metadata_table
 
-    def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
+    def construct_dependency_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
         return SingleGroupRowGrouper()
 
     def generate_insert_sql(self, rows: List[Row]) -> str:
@@ -294,7 +294,7 @@ class TestComparisonFunctions2(MetadataComparisonFunctions):
                         metadata_table.add_row({'column_name': column.name, 'data_type': column.data_type})
         return metadata_table
 
-    def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
+    def construct_dependency_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
         return SingleGroupRowGrouper()
 
     def generate_insert_sql(self, rows: List[Row]) -> str:
@@ -325,7 +325,7 @@ class TestComparisonFunctions3(MetadataComparisonFunctions):
                         metadata_table.add_row({'column_name': column.name, 'data_type': column.data_type})
         return metadata_table
 
-    def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
+    def construct_dependency_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
         return SingleGroupRowGrouper()
 
     def generate_insert_sql(self, rows: List[Row]) -> str:

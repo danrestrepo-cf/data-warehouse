@@ -143,7 +143,7 @@ class TestEDWTableDefinitionMetadataComparisonFunctions(unittest.TestCase):
         ])
         self.assertEqual(expected, EDWTableDefinitionMetadataComparisonFunctions().construct_metadata_table_from_source(self.metadata))
 
-    def test_construct_insert_row_grouper(self):
+    def test_construct_dependency_row_grouper(self):
         t1_row = Row(
             key={
                 'database_name': 'db1',
@@ -193,7 +193,7 @@ class TestEDWTableDefinitionMetadataComparisonFunctions(unittest.TestCase):
             }
         )
 
-        row_grouper = EDWTableDefinitionMetadataComparisonFunctions().construct_insert_row_grouper(self.metadata)
+        row_grouper = EDWTableDefinitionMetadataComparisonFunctions().construct_dependency_row_grouper(self.metadata)
         expected = [
             [t1_src_src_row, t2_row],
             [t1_src_row],

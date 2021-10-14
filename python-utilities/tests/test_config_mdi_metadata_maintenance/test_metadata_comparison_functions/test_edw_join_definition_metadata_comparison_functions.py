@@ -166,7 +166,7 @@ class TestEDWJoinDefinitionMetadataComparisonFunctions(unittest.TestCase):
         ])
         self.assertEqual(expected, EDWJoinDefinitionMetadataComparisonFunctions().construct_metadata_table_from_source(dw_metadata))
 
-    def test_construct_insert_row_grouper(self):
+    def test_construct_dependency_row_grouper(self):
         test_data = [
             Row(
                 key={
@@ -206,7 +206,7 @@ class TestEDWJoinDefinitionMetadataComparisonFunctions(unittest.TestCase):
                 attributes={}
             )
         ]
-        row_grouper = EDWJoinDefinitionMetadataComparisonFunctions().construct_insert_row_grouper(DataWarehouseMetadata('dw'))
+        row_grouper = EDWJoinDefinitionMetadataComparisonFunctions().construct_dependency_row_grouper(DataWarehouseMetadata('dw'))
         self.assertEqual([test_data], row_grouper.group_rows(test_data))
 
     def test_generate_insert_sql(self):

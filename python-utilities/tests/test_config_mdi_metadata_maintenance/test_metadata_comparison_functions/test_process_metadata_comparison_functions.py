@@ -97,13 +97,13 @@ class TestProcessMetadataComparisonFunctions(unittest.TestCase):
         ])
         self.assertEqual(expected, ProcessMetadataComparisonFunctions().construct_metadata_table_from_source(dw_metadata))
 
-    def test_construct_insert_row_grouper(self):
+    def test_construct_dependency_row_grouper(self):
         test_data = [
             Row(key={'process_name': 'SP-1'}, attributes={'process_description': 'ETL to populate table1'}),
             Row(key={'process_name': 'SP-2'}, attributes={'process_description': 'ETL to populate table2'}),
             Row(key={'process_name': 'SP-3'}, attributes={'process_description': 'ETL to populate table3'})
         ]
-        row_grouper = ProcessMetadataComparisonFunctions().construct_insert_row_grouper(DataWarehouseMetadata('dw'))
+        row_grouper = ProcessMetadataComparisonFunctions().construct_dependency_row_grouper(DataWarehouseMetadata('dw'))
         self.assertEqual([test_data], row_grouper.group_rows(test_data))
 
     def test_generate_insert_sql(self):

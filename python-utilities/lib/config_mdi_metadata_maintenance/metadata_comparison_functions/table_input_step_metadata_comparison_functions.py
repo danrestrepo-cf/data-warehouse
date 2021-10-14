@@ -41,7 +41,7 @@ class TableInputStepMetadataComparisonFunctions(MetadataComparisonFunctions):
                         })
         return metadata_table
 
-    def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
+    def construct_dependency_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
         return SingleGroupRowGrouper()
 
     def generate_insert_sql(self, rows: List[Row]) -> str:
