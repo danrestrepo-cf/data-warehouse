@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
 
+from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable
 from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper
 from lib.config_mdi_metadata_maintenance.multi_key_map import MultiKeyMap
 from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, InvalidMetadataKeyException, TableAddress
@@ -26,9 +27,9 @@ class TableInsertNodeLineageTracer(NodeLineageTracer):
         self._metadata = data_warehouse_metadata
 
     def determine_node_parents(self, node_key: dict) -> List[dict]:
+        table_address = TableAddress(database=node_key['database_name'], schema=node_key['schema_name'], table=node_key['table_name'])
         try:
-            table_metadata = self._metadata.get_database(node_key['database_name']).get_schema(node_key['schema_name']).get_table(
-                node_key['table_name'])
+            table_metadata = self._metadata.get_table_by_address(table_address)
             if table_metadata.primary_source_table is not None:
                 return [{
                     'database_name': table_metadata.primary_source_table.database,
@@ -38,6 +39,33 @@ class TableInsertNodeLineageTracer(NodeLineageTracer):
             else:
                 return []
         except InvalidMetadataKeyException:
+            table_address = f'{node_key["database_name"]}.{node_key["schema_name"]}.{node_key["table_name"]}'
+            raise self.InvalidNodeException(f'Could not determine parents of table "{table_address}". Table doesn\'t exist in metadata.')
+
+
+class TableDeleteNodeLineageTracer(NodeLineageTracer):
+
+    def __init__(self, metadata_table: MetadataTable):
+        super().__init__(key_fields=['database_name', 'schema_name', 'table_name'])
+        self._table_dependencies = MultiKeyMap(key_fields=['database_name', 'schema_name', 'table_name'])
+        for row in metadata_table.rows:
+            if row.attributes['source_database_name'] is not None:
+                source_table = {
+                    'database_name': row.attributes['source_database_name'],
+                    'schema_name': row.attributes['source_schema_name'],
+                    'table_name': row.attributes['source_table_name']
+                }
+                dependent_table = row.key
+                if not self._table_dependencies.entry_exists_with_key(source_table):
+                    self._table_dependencies.add_entry(source_table, [])
+                if not self._table_dependencies.entry_exists_with_key(dependent_table):
+                    self._table_dependencies.add_entry(dependent_table, [])
+                self._table_dependencies.get_value_by_key(source_table).append(dependent_table)
+
+    def determine_node_parents(self, node_key: dict) -> List[dict]:
+        try:
+            return self._table_dependencies.get_value_by_key(node_key)
+        except MultiKeyMap.InvalidKeyValuesException:
             table_address = f'{node_key["database_name"]}.{node_key["schema_name"]}.{node_key["table_name"]}'
             raise self.InvalidNodeException(f'Could not determine parents of table "{table_address}". Table doesn\'t exist in metadata.')
 
@@ -64,6 +92,34 @@ class FieldInsertNodeLineageTracer(NodeLineageTracer):
             else:
                 return []
         except InvalidMetadataKeyException:
+            full_col_name = f'{node_key["database_name"]}.{node_key["schema_name"]}.{node_key["table_name"]}.{node_key["field_name"]}'
+            raise self.InvalidNodeException(f'Could not determine parents of column "{full_col_name}". Column doesn\'t exist in metadata.')
+
+
+class FieldDeleteNodeLineageTracer(NodeLineageTracer):
+
+    def __init__(self, metadata_table: MetadataTable):
+        super().__init__(key_fields=['database_name', 'schema_name', 'table_name', 'field_name'])
+        self._field_dependencies = MultiKeyMap(key_fields=['database_name', 'schema_name', 'table_name', 'field_name'])
+        for row in metadata_table.rows:
+            if row.attributes['source_database_name'] is not None:
+                source_field = {
+                    'database_name': row.attributes['source_database_name'],
+                    'schema_name': row.attributes['source_schema_name'],
+                    'table_name': row.attributes['source_table_name'],
+                    'field_name': row.attributes['source_field_name']
+                }
+                dependent_field = row.key
+                if not self._field_dependencies.entry_exists_with_key(source_field):
+                    self._field_dependencies.add_entry(source_field, [])
+                if not self._field_dependencies.entry_exists_with_key(dependent_field):
+                    self._field_dependencies.add_entry(dependent_field, [])
+                self._field_dependencies.get_value_by_key(source_field).append(dependent_field)
+
+    def determine_node_parents(self, node_key: dict) -> List[dict]:
+        try:
+            return self._field_dependencies.get_value_by_key(node_key)
+        except MultiKeyMap.InvalidKeyValuesException:
             full_col_name = f'{node_key["database_name"]}.{node_key["schema_name"]}.{node_key["table_name"]}.{node_key["field_name"]}'
             raise self.InvalidNodeException(f'Could not determine parents of column "{full_col_name}". Column doesn\'t exist in metadata.')
 

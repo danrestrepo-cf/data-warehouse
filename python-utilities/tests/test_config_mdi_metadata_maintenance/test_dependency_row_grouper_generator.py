@@ -4,8 +4,10 @@ from typing import List
 from lib.config_mdi_metadata_maintenance.dependency_row_grouper_generator import (DependencyRowGrouperGenerator,
                                                                                   NodeLineageTracer,
                                                                                   TableInsertNodeLineageTracer,
-                                                                                  FieldInsertNodeLineageTracer)
-from lib.config_mdi_metadata_maintenance.metadata_table import Row
+                                                                                  TableDeleteNodeLineageTracer,
+                                                                                  FieldInsertNodeLineageTracer,
+                                                                                  FieldDeleteNodeLineageTracer)
+from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 from lib.config_mdi_metadata_maintenance.multi_key_map import MultiKeyMap
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
 
@@ -146,6 +148,81 @@ class TestTableInsertNodeLineageTracer(unittest.TestCase):
         }))
 
 
+class TestTableDeleteNodeLineageTracer(unittest.TestCase):
+
+    def setUp(self) -> None:
+        self.metadata_table = MetadataTable(key_fields=['database_name', 'schema_name', 'table_name'])
+        self.metadata_table.add_rows([
+            {
+                'database_name': 'staging',
+                'schema_name': 'staging_octane',
+                'table_name': 'source_table',
+                'source_database_name': None,
+                'source_schema_name': None,
+                'source_table_name': None
+            },
+            {
+                'database_name': 'staging',
+                'schema_name': 'history_octane',
+                'table_name': 'table_with_source',
+                'source_database_name': 'staging',
+                'source_schema_name': 'staging_octane',
+                'source_table_name': 'source_table'
+            },
+            {
+                'database_name': 'staging',
+                'schema_name': 'history_octane',
+                'table_name': 'other_table_with_source',
+                'source_database_name': 'staging',
+                'source_schema_name': 'staging_octane',
+                'source_table_name': 'source_table'
+            }
+        ])
+
+    def test_throws_error_if_given_table_doesnt_exist_in_metadata(self):
+        node_lineage_tracer = TableDeleteNodeLineageTracer(self.metadata_table)
+        with self.assertRaises(NodeLineageTracer.InvalidNodeException):
+            node_lineage_tracer.determine_node_parents({
+                'database_name': 'bad db',
+                'schema_name': 'bad schema',
+                'table_name': 'bad table'
+            })
+
+    def test_returns_empty_list_for_table_with_no_dependent_tables(self):
+        node_lineage_tracer = TableDeleteNodeLineageTracer(self.metadata_table)
+        expected = []
+        self.assertEqual(expected, node_lineage_tracer.determine_node_parents({
+            'database_name': 'staging',
+            'schema_name': 'history_octane',
+            'table_name': 'table_with_source'
+        }))
+        self.assertEqual(expected, node_lineage_tracer.determine_node_parents({
+            'database_name': 'staging',
+            'schema_name': 'history_octane',
+            'table_name': 'other_table_with_source'
+        }))
+
+    def test_returns_list_containing_dependent_table_keys_if_table_has_dependents(self):
+        node_lineage_tracer = TableDeleteNodeLineageTracer(self.metadata_table)
+        expected = [
+            {
+                'database_name': 'staging',
+                'schema_name': 'history_octane',
+                'table_name': 'table_with_source'
+            },
+            {
+                'database_name': 'staging',
+                'schema_name': 'history_octane',
+                'table_name': 'other_table_with_source'
+            }
+        ]
+        self.assertEqual(expected, node_lineage_tracer.determine_node_parents({
+            'database_name': 'staging',
+            'schema_name': 'staging_octane',
+            'table_name': 'source_table'
+        }))
+
+
 class TestFieldInsertNodeLineageTracer(unittest.TestCase):
 
     def setUp(self) -> None:
@@ -166,13 +243,13 @@ class TestFieldInsertNodeLineageTracer(unittest.TestCase):
                                             'column_with_source': {
                                                 'data_source': 'TEXT',
                                                 'source': {
-                                                    'field': 'primary_source_table.columns.source_column'
+                                                    'field': 'primary_source_table.columns.source_field'
                                                 }
                                             },
                                             'column_with_distant_source': {
                                                 'data_source': 'TEXT',
                                                 'source': {
-                                                    'field': 'primary_source_table.foreign_keys.fk_1.columns.distant_source_column'
+                                                    'field': 'primary_source_table.foreign_keys.fk_1.columns.distant_source_field'
                                                 }
                                             }
 
@@ -186,7 +263,7 @@ class TestFieldInsertNodeLineageTracer(unittest.TestCase):
                                     {
                                         'name': 'source_table',
                                         'columns': {
-                                            'source_column': {
+                                            'source_field': {
                                                 'data_source': 'TEXT'
                                             },
                                             'fk_col': {
@@ -215,7 +292,7 @@ class TestFieldInsertNodeLineageTracer(unittest.TestCase):
                                             'fk_col': {
                                                 'data_source': 'TEXT'
                                             },
-                                            'distant_source_column': {
+                                            'distant_source_field': {
                                                 'data_source': 'TEXT'
                                             }
                                         }
@@ -228,7 +305,7 @@ class TestFieldInsertNodeLineageTracer(unittest.TestCase):
             }
         )
 
-    def test_throws_error_if_given_column_doesnt_exist_in_metadata(self):
+    def test_throws_error_if_given_field_doesnt_exist_in_metadata(self):
         node_lineage_tracer = FieldInsertNodeLineageTracer(self.dw_metadata)
         with self.assertRaises(NodeLineageTracer.InvalidNodeException):
             node_lineage_tracer.determine_node_parents({
@@ -238,23 +315,23 @@ class TestFieldInsertNodeLineageTracer(unittest.TestCase):
                 'field_name': 'bad column'
             })
 
-    def test_returns_empty_list_for_column_with_no_source_column(self):
+    def test_returns_empty_list_for_field_with_no_source_field(self):
         node_lineage_tracer = FieldInsertNodeLineageTracer(self.dw_metadata)
         expected = []
         self.assertEqual(expected, node_lineage_tracer.determine_node_parents({
             'database_name': 'staging',
             'schema_name': 'staging_octane',
             'table_name': 'source_table',
-            'field_name': 'source_column'
+            'field_name': 'source_field'
         }))
 
-    def test_returns_single_item_list_containing_source_column_key_if_column_source_is_from_primary_source_table(self):
+    def test_returns_single_item_list_containing_source_field_key_if_field_source_is_from_primary_source_table(self):
         node_lineage_tracer = FieldInsertNodeLineageTracer(self.dw_metadata)
         expected = [{
             'database_name': 'staging',
             'schema_name': 'staging_octane',
             'table_name': 'source_table',
-            'field_name': 'source_column'
+            'field_name': 'source_field'
         }]
         self.assertEqual(expected, node_lineage_tracer.determine_node_parents({
             'database_name': 'staging',
@@ -263,19 +340,106 @@ class TestFieldInsertNodeLineageTracer(unittest.TestCase):
             'field_name': 'column_with_source'
         }))
 
-    def test_returns_single_item_list_containing_source_column_key_if_column_source_is_from_distant_source_table(self):
+    def test_returns_single_item_list_containing_source_field_key_if_field_source_is_from_distant_source_table(self):
         node_lineage_tracer = FieldInsertNodeLineageTracer(self.dw_metadata)
         expected = [{
             'database_name': 'staging',
             'schema_name': 'other_schema',
             'table_name': 'distant_source_table',
-            'field_name': 'distant_source_column'
+            'field_name': 'distant_source_field'
         }]
         self.assertEqual(expected, node_lineage_tracer.determine_node_parents({
             'database_name': 'staging',
             'schema_name': 'history_octane',
             'table_name': 'table_with_source',
             'field_name': 'column_with_distant_source'
+        }))
+
+
+class TestFieldDeleteNodeLineageTracer(unittest.TestCase):
+
+    def setUp(self) -> None:
+        self.metadata_table = MetadataTable(key_fields=['database_name', 'schema_name', 'table_name', 'field_name'])
+        self.metadata_table.add_rows([
+            {
+                'database_name': 'staging',
+                'schema_name': 'staging_octane',
+                'table_name': 'source_table',
+                'field_name': 'source_field',
+                'source_database_name': None,
+                'source_schema_name': None,
+                'source_table_name': None,
+                'source_field_name': None
+            },
+            {
+                'database_name': 'staging',
+                'schema_name': 'history_octane',
+                'table_name': 'table_with_source',
+                'field_name': 'field_with_source',
+                'source_database_name': 'staging',
+                'source_schema_name': 'staging_octane',
+                'source_table_name': 'source_table',
+                'source_field_name': 'source_field',
+            },
+            {
+                'database_name': 'staging',
+                'schema_name': 'history_octane',
+                'table_name': 'table_with_source',
+                'field_name': 'other_field_with_source',
+                'source_database_name': 'staging',
+                'source_schema_name': 'staging_octane',
+                'source_table_name': 'source_table',
+                'source_field_name': 'source_field',
+            }
+        ])
+
+    def test_throws_error_if_given_field_doesnt_exist_in_metadata(self):
+        node_lineage_tracer = FieldDeleteNodeLineageTracer(self.metadata_table)
+        with self.assertRaises(NodeLineageTracer.InvalidNodeException):
+            node_lineage_tracer.determine_node_parents({
+                'database_name': 'bad db',
+                'schema_name': 'bad schema',
+                'table_name': 'bad table',
+                'field_name': 'bad field'
+            })
+
+    def test_returns_empty_list_for_field_with_no_dependent_tcolumn(self):
+        node_lineage_tracer = FieldDeleteNodeLineageTracer(self.metadata_table)
+        expected = []
+        self.assertEqual(expected, node_lineage_tracer.determine_node_parents({
+            'database_name': 'staging',
+            'schema_name': 'history_octane',
+            'table_name': 'table_with_source',
+            'field_name': 'field_with_source'
+        }))
+        self.assertEqual(expected, node_lineage_tracer.determine_node_parents({
+            'database_name': 'staging',
+            'schema_name': 'history_octane',
+            'table_name': 'table_with_source',
+            'field_name': 'other_field_with_source'
+        }))
+
+    def test_returns_list_containing_dependent_field_keys_if_field_has_dependents(self):
+        node_lineage_tracer = FieldDeleteNodeLineageTracer(self.metadata_table)
+        expected = [
+            {
+                'database_name': 'staging',
+                'schema_name': 'history_octane',
+                'table_name': 'table_with_source',
+                'field_name': 'field_with_source'
+            },
+            {
+                'database_name': 'staging',
+                'schema_name': 'history_octane',
+                'table_name': 'table_with_source',
+                'field_name': 'other_field_with_source'
+            }
+        ]
+        self.assertEqual(expected, node_lineage_tracer.determine_node_parents({
+            'database_name': 'staging',
+            'schema_name': 'staging_octane',
+            'table_name': 'source_table',
+            'field_name': 'source_field'
         }))
 
 
