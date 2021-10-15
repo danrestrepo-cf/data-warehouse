@@ -459,42 +459,6 @@ WHERE staging_table.smp_pid IS NULL
         RETURNING dwid, name, description
 )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     , new_table_input_steps AS (
     INSERT INTO mdi.table_input_step (process_dwid, data_source_dwid, sql, limit_size, execute_for_each_row, replace_variables,
                                       enable_lazy_conversion, cached_row_meta, connectionname)
@@ -565,4 +529,4 @@ WHERE staging_table.smp_pid IS NULL
         SELECT new_processes.dwid, new_processes.name, new_processes.description
         FROM new_processes
 )
-SELECT 'Finished inserting metadata for new tables: smart_doc_validity_date_case, proposal_doc_validity';
+SELECT 'Finished inserting metadata for new tables';
