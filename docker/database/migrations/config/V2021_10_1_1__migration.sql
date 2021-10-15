@@ -381,7 +381,7 @@ WITH new_staging_table_definitions AS (
 )
 
     , new_process_variables (name, target_table, json_output_field, sql) AS (
-    VALUES ('SP-100862', 'smart_message_permission_type', 'sdvdc_pid', 'SELECT staging_table.code, staging_table.value, FALSE AS data_source_deleted_flag, now() AS data_source_updated_datetime
+    VALUES ('SP-100862', 'smart_message_permission_type', 'code', 'SELECT staging_table.code, staging_table.value, FALSE AS data_source_deleted_flag, now() AS data_source_updated_datetime
 FROM staging_octane.smart_message_permission_type staging_table
     LEFT JOIN history_octane.smart_message_permission_type history_table on staging_table.code = history_table.code AND staging_table.value = history_table.value
 WHERE history_table.code IS NULL')
