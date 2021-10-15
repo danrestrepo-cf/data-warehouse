@@ -117,7 +117,18 @@ WITH
 )
 
     , updated_table_input_sql (table_name, sql) AS (
-    VALUES ('loan_beneficiary',     '--finding records to insert into history_octane.proposal_doc_validity')
+    VALUES ('loan_beneficiary',     '
+            --finding records to insert into hitory_octane.loan_beneficiary
+            SELECT staging_table.lb_pid, staging_table.lb_version, staging_table.lb_loan_pid, staging_table.lb_investor_pid, staging_table.lb_investor_loan_id, staging_table.lb_from_date, staging_table.lb_through_date, staging_table.lb_current, staging_table.lb_initial, staging_table.lb_loan_benef_transfer_status_type, staging_table.lb_loan_file_ship_date, staging_table.lb_approved_with_conditions_date, staging_table.lb_rejected_date, staging_table.lb_pending_wire_date, staging_table.lb_purchase_advice_amount, staging_table.lb_mers_mom, staging_table.lb_mers_transfer_status_type, staging_table.lb_mers_transfer_creation_date, staging_table.lb_mers_transfer_override, staging_table.lb_mers_transfer_batch_pid, staging_table.lb_loan_file_courier_type, staging_table.lb_loan_file_tracking_number, staging_table.lb_collateral_courier_type, staging_table.lb_collateral_tracking_number, staging_table.lb_loan_file_delivery_method_type, staging_table.lb_pool_id, staging_table.lb_mbs_final_purchaser_investor_pid, staging_table.lb_early_funding, staging_table.lb_early_funding_date, staging_table.lb_delivery_aus_type, staging_table.lb_synthetic_unique_current, staging_table.lb_synthetic_unique_initial,FALSE as data_source_deleted_flag, now() AS data_source_updated_datetime
+            FROM staging_octane.loan_beneficiary staging_table
+            LEFT JOIN history_octane.loan_beneficiary history_table on staging_table.lb_pid = history_table.lb_pid and staging_table.lb_version = history_table.lb_version
+            WHERE history_table.lb_pid is NULL
+            UNION ALL
+            SELECT history_table.lb_pid, history_table.lb_version+1, history_table.lb_loan_pid, history_table.lb_investor_pid, history_table.lb_investor_loan_id, history_table.lb_from_date, history_table.lb_through_date, history_table.lb_current, history_table.lb_initial, history_table.lb_loan_benef_transfer_status_type, history_table.lb_loan_file_ship_date, history_table.lb_approved_with_conditions_date, history_table.lb_rejected_date, history_table.lb_pending_wire_date, history_table.lb_purchase_advice_amount, history_table.lb_mers_mom, history_table.lb_mers_transfer_status_type, history_table.lb_mers_transfer_creation_date, history_table.lb_mers_transfer_override, history_table.lb_mers_transfer_batch_pid, history_table.lb_loan_file_courier_type, history_table.lb_loan_file_tracking_number, history_table.lb_collateral_courier_type, history_table.lb_collateral_tracking_number, history_table.lb_loan_file_delivery_method_type, history_table.lb_pool_id, history_table.lb_mbs_final_purchaser_investor_pid, history_table.lb_early_funding, history_table.lb_early_funding_date, history_table.lb_delivery_aus_type, TRUE as data_source_deleted_flag, now() AS data_source_updated_datetime
+            FROM history_octane.loan_beneficiary history_table
+            LEFT JOIN staging_octane.loan_beneficiary staging_table on staging_table.lb_pid = history_table.lb_pid
+            WHERE staging_table.lb_pid is NULL
+                AND not exists (select 1 from history_octane.loan_beneficiary deleted_records where deleted_records.lb_pid = history_table.lb_pid and deleted_records.data_source_deleted_flag = True);')
          , ('smart_charge_case',    '--finding records to insert into history_octane.loan')
          , ('loan',                 '--finding records to insert into hitory_octane.proposal_doc_set')
          , ('proposal_summary',     '--finding records to insert into history_octane.loan')
