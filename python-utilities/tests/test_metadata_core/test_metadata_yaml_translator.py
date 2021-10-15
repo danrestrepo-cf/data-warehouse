@@ -540,6 +540,7 @@ class TestWriteDataWarehouseMetadataToYAML_ExistingDirectoriesAndFiles(MetadataD
         self.sch3_filepath = os.path.join(self.db2_filepath, 'schema.sch3')
         self.t1_filepath = os.path.join(self.sch1_filepath, 'table.t1.yaml')
         self.t2_filepath = os.path.join(self.sch1_filepath, 'table.t2.yaml')
+        self.v1_filepath = os.path.join(self.sch1_filepath, 'view.v1.yaml')
         self.t3_filepath = os.path.join(self.sch2_filepath, 'table.t3.yaml')
         os.mkdir(self.db1_filepath)
         os.mkdir(self.db2_filepath)
@@ -548,6 +549,7 @@ class TestWriteDataWarehouseMetadataToYAML_ExistingDirectoriesAndFiles(MetadataD
         os.mkdir(self.sch3_filepath)
         write_yaml({'name': 't1'}, self.t1_filepath)
         write_yaml({'name': 't2'}, self.t2_filepath)
+        write_yaml({'name': 'v1'}, self.v1_filepath)
         write_yaml({'name': 't3'}, self.t3_filepath)
 
         self.original_metadata_read_from_files = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
@@ -574,41 +576,43 @@ class TestWriteDataWarehouseMetadataToYAML_ExistingDirectoriesAndFiles(MetadataD
             }
         )
 
-    def test_doesnt_rebuild_data_warehouse_or_databases_or_schemas_by_default(self):
+    def test_doesnt_rebuild_any_directories_by_default(self):
         write_data_warehouse_metadata_to_yaml(test_dir, self.metadata_to_write)
         expected = self.original_metadata_read_from_files
         expected.get_table_by_address(TableAddress('db1', 'sch1', 't1')).primary_key.append('col1')
         result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
         self.assertEqual(expected, result)
 
-    def test_rebuilds_data_warehouse_if_relevant_option_is_set_to_true(self):
+    def test_rebuilds_entire_data_warehouse_directory_structure_if_relevant_option_is_set_to_true(self):
         write_data_warehouse_metadata_to_yaml(test_dir, self.metadata_to_write, rebuild_data_warehouse_dir=True)
         result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
         self.assertEqual(self.metadata_to_write, result)
 
-    def test_rebuilds_databases_if_relevant_option_is_set_to_true(self):
+    def test_rebuilds_databases_dirs_for_the_included_databases_if_relevant_option_is_set_to_true(self):
         write_data_warehouse_metadata_to_yaml(test_dir, self.metadata_to_write, rebuild_database_dirs=True)
-        result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
-        self.assertEqual(self.metadata_to_write, result)
-
-    def test_rebuilds_schemas_if_relevant_option_is_set_to_true(self):
-        write_data_warehouse_metadata_to_yaml(test_dir, self.metadata_to_write, rebuild_schema_dirs=True)
         expected = self.original_metadata_read_from_files
         expected.get_table_by_address(TableAddress('db1', 'sch1', 't1')).primary_key.append('col1')
         expected.get_database('db1').remove_schema_metadata('sch2')
         expected.get_database('db1').get_schema('sch1').remove_table_metadata('t2')
-        expected.get_database('db2').remove_schema_metadata('sch3')
         result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
         self.assertEqual(expected, result)
 
-    def test_rebuilds_tables_if_relevant_option_is_set_to_true(self):
+    def test_rebuilds_schema_dirs_for_the_included_schemas_if_relevant_option_is_set_to_true(self):
+        write_data_warehouse_metadata_to_yaml(test_dir, self.metadata_to_write, rebuild_schema_dirs=True)
+        expected = self.original_metadata_read_from_files
+        expected.get_table_by_address(TableAddress('db1', 'sch1', 't1')).primary_key.append('col1')
+        expected.get_database('db1').get_schema('sch1').remove_table_metadata('t2')
+        result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
+        self.assertEqual(expected, result)
+
+    def test_rebuilds_table_files_for_the_included_schemas_if_relevant_option_is_set_to_true(self):
         write_data_warehouse_metadata_to_yaml(test_dir, self.metadata_to_write, rebuild_table_files=True)
         expected = self.original_metadata_read_from_files
         expected.get_table_by_address(TableAddress('db1', 'sch1', 't1')).primary_key.append('col1')
         expected.get_database('db1').get_schema('sch1').remove_table_metadata('t2')
-        expected.get_database('db1').get_schema('sch2').remove_table_metadata('t3')
         result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
         self.assertEqual(expected, result)
+        self.assertTrue(os.path.exists(self.v1_filepath))
 
 
 if __name__ == '__main__':

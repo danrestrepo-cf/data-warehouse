@@ -217,34 +217,27 @@ class MetadataWriter:
 
     def write(self, metadata: DataWarehouseMetadata):
         root_dir = os.path.join(self.parent_dir_file_path, metadata.name)
-        self.rebuild_specified_metadata_directories_and_files(root_dir)
+        if self.rebuild_data_warehouse_dir:
+            self.recursively_delete_dir_contents(root_dir)
         self.make_dir_if_not_exists(root_dir)
         for database in metadata.databases:
             database_dir = os.path.join(root_dir, f'db.{database.name}')
+            if self.rebuild_database_dirs:
+                self.recursively_delete_dir_contents(database_dir)
             self.make_dir_if_not_exists(database_dir)
             for schema in database.schemas:
                 schema_dir = os.path.join(database_dir, f'schema.{schema.name}')
+                if self.rebuild_schema_dirs:
+                    self.recursively_delete_dir_contents(schema_dir)
                 self.make_dir_if_not_exists(schema_dir)
+                if self.rebuild_table_files:
+                    table_files = get_yaml_paths_with_prefix(schema_dir, 'table')
+                    for table_file in table_files:
+                        os.remove(table_file)
                 for table in schema.tables:
                     table_yaml_dict = self.filter_out_keys_with_no_value(self.create_yaml_dict_from_table_metadata(table))
                     table_file_path = os.path.join(schema_dir, f'table.{table.name}.yaml')
                     self.write_table_metadata_yaml_file(table_file_path, table_yaml_dict)
-
-    def rebuild_specified_metadata_directories_and_files(self, data_warehouse_root_dir: str):
-        if self.rebuild_data_warehouse_dir:
-            self.recursively_delete_dir_contents(data_warehouse_root_dir)
-        db_dirs = get_subdir_paths_with_prefix(data_warehouse_root_dir, 'db')
-        schema_dirs = [schema_dir for db_dir in db_dirs for schema_dir in get_subdir_paths_with_prefix(db_dir, 'schema')]
-        table_files = [table_file for schema_dir in schema_dirs for table_file in get_yaml_paths_with_prefix(schema_dir, 'table')]
-        if self.rebuild_database_dirs:
-            for db_dir in db_dirs:
-                self.recursively_delete_dir_contents(db_dir)
-        elif self.rebuild_schema_dirs:
-            for schema_dir in schema_dirs:
-                self.recursively_delete_dir_contents(schema_dir)
-        elif self.rebuild_table_files:
-            for table_file in table_files:
-                os.remove(table_file)
 
     @staticmethod
     def make_dir_if_not_exists(dir_path: str):
