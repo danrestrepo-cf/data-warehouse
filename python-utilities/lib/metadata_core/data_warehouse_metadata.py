@@ -144,6 +144,7 @@ class TableMetadata:
                f'    schema_name={self.schema_name}\n' \
                f'    database_name={self.database_name}\n' \
                f'    primary_source_table={repr(self.primary_source_table)}\n' \
+               f'    primary_key={repr(self.primary_key)}\n' \
                f'    foreign_keys={repr(self.foreign_keys)}\n' \
                f'    columns={repr(self.columns)}\n' \
                f'    etls={repr(self.etls)}\n' \
@@ -156,6 +157,7 @@ class TableMetadata:
                self.schema_name == other.schema_name and \
                self.database_name == other.database_name and \
                self.primary_source_table == other.primary_source_table and \
+               self.primary_key == other.primary_key and \
                self.foreign_keys == other.foreign_keys and \
                self.columns == other.columns and \
                self.etls == other.etls and \

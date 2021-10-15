@@ -1,8 +1,9 @@
 import pathlib
 import glob
 import os
+import shutil
 import yaml
-from typing import List
+from typing import List, Optional
 
 from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        DatabaseMetadata,
@@ -18,8 +19,123 @@ from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        ETLOutputType)
 
 
+# enable PyYAML to gracefully output multi-line string values (e.g. ETL SQL queries)
+# https://stackoverflow.com/a/33300001/15696521
+def str_presenter(dumper, data):
+    if len(data.splitlines()) > 1:  # check for multiline string
+        return dumper.represent_scalar('tag:yaml.org,2002:str', data, style='|')
+    return dumper.represent_scalar('tag:yaml.org,2002:str', data)
+
+
+yaml.add_representer(str, str_presenter)
+
+
 def generate_data_warehouse_metadata_from_yaml(root_dir_file_path: str) -> DataWarehouseMetadata:
     return construct_data_warehouse_metadata_from_dict(read_data_warehouse_yaml_files_into_dict(root_dir_file_path))
+
+
+def write_data_warehouse_metadata_to_yaml(parent_dir_file_path: str, metadata: DataWarehouseMetadata,
+                                          rebuild_data_warehouse_dir: bool = False, rebuild_database_dirs: bool = False,
+                                          rebuild_schema_dirs: bool = False, rebuild_table_files: bool = False):
+    root_dir = os.path.join(parent_dir_file_path, metadata.name)
+
+    if rebuild_data_warehouse_dir:
+        recursively_delete_dir_contents(root_dir)
+    db_dirs = get_subdir_paths_with_prefix(root_dir, 'db')
+    schema_dirs = [schema_dir for db_dir in db_dirs for schema_dir in get_subdir_paths_with_prefix(db_dir, 'schema')]
+    table_files = [table_file for schema_dir in schema_dirs for table_file in get_yaml_paths_with_prefix(schema_dir, 'table')]
+    if rebuild_database_dirs:
+        for db_dir in db_dirs:
+            recursively_delete_dir_contents(db_dir)
+    elif rebuild_schema_dirs:
+        for schema_dir in schema_dirs:
+            recursively_delete_dir_contents(schema_dir)
+    elif rebuild_table_files:
+        for table_file in table_files:
+            os.remove(table_file)
+
+    make_dir_if_not_exists(root_dir)
+    for database in metadata.databases:
+        database_dir = os.path.join(root_dir, f'db.{database.name}')
+        make_dir_if_not_exists(database_dir)
+        for schema in database.schemas:
+            schema_dir = os.path.join(database_dir, f'schema.{schema.name}')
+            make_dir_if_not_exists(schema_dir)
+            for table in schema.tables:
+                table_yaml_dict = filter_out_keys_with_no_value(create_yaml_dict_from_table_metadata(table))
+                table_file_path = os.path.join(schema_dir, f'table.{table.name}.yaml')
+                write_table_metadata_yaml_file(table_file_path, table_yaml_dict)
+
+
+def make_dir_if_not_exists(dir_path: str):
+    if not os.path.isdir(dir_path):
+        os.mkdir(dir_path)
+
+
+def recursively_delete_dir_contents(dir_path: str):
+    if os.path.isdir(dir_path):
+        shutil.rmtree(dir_path)
+
+
+def create_yaml_dict_from_table_metadata(table_metadata: TableMetadata) -> dict:
+    # the order in which these fields are set here determines the order in which they appear in the YAML file
+    return {
+        'name': table_metadata.name,
+        'primary_source_table': table_address_to_string(table_metadata.primary_source_table),
+        'primary_key': table_metadata.primary_key,
+        'foreign_keys': {foreign_key.name: {
+            'columns': foreign_key.native_columns,
+            'references': {
+                'columns': foreign_key.foreign_columns,
+                'schema': foreign_key.table.schema,
+                'table': foreign_key.table.table
+            }
+        } for foreign_key in table_metadata.foreign_keys},
+        'columns': {column.name: column_metadata_to_dict(column) for column in table_metadata.columns},
+        'etls': {etl.process_name: {
+            'hardcoded_data_source': 'Octane',
+            'input_type': etl.input_type.value,
+            'output_type': etl.output_type.value,
+            'json_output_field': etl.json_output_field,
+            'truncate_table': etl.truncate_table,
+            'insert_update_keys': etl.insert_update_keys,
+            'delete_keys': etl.delete_keys,
+            'input_sql': etl.input_sql
+        } for etl in table_metadata.etls},
+        'next_etls': table_metadata.next_etls
+    }
+
+
+def table_address_to_string(table_address: Optional[TableAddress]) -> Optional[str]:
+    if table_address is None:
+        return None
+    else:
+        return f'{table_address.database}.{table_address.schema}.{table_address.table}'
+
+
+def column_metadata_to_dict(column_metadata: ColumnMetadata) -> dict:
+    column_dict = {
+        'data_type': column_metadata.data_type
+    }
+    if column_metadata.source_field is not None:
+        source_field_string = 'primary_source_table'
+        foreign_key_steps_string = '.'.join([f'foreign_keys.{fk_step}' for fk_step in column_metadata.source_field.fk_steps])
+        if foreign_key_steps_string != '':
+            source_field_string += f'.{foreign_key_steps_string}'
+        source_field_string += f'.columns.{column_metadata.source_field.column_name}'
+        column_dict['source'] = {
+            'field': source_field_string
+        }
+    return column_dict
+
+
+def write_table_metadata_yaml_file(output_file_path: str, metadata: dict):
+    with open(output_file_path, 'w') as output_file:
+        yaml.dump(filter_out_keys_with_no_value(metadata), output_file, default_flow_style=False, sort_keys=False)
+
+
+def filter_out_keys_with_no_value(metadata: dict) -> dict:
+    return {key: value for key, value in metadata.items() if value != [] and value != {} and value is not None}
 
 
 def read_data_warehouse_yaml_files_into_dict(root_dir_file_path: str) -> dict:
@@ -68,7 +184,9 @@ def construct_table_metadata_from_dict(table_dict: dict, schema_name: str, datab
             schema=source_table_components[1],
             table=source_table_components[2]
         )
-    table.primary_key = table_dict.get('primary_key')
+    if 'primary_key' in table_dict:
+        for key_field in table_dict['primary_key']:
+            table.primary_key.append(key_field)
     if 'foreign_keys' in table_dict:
         for fk_name, fk_data in table_dict['foreign_keys'].items():
             if 'columns' not in fk_data or 'references' not in fk_data or 'schema' not in fk_data['references'] or \

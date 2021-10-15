@@ -5,6 +5,8 @@ import shutil
 import yaml
 
 from lib.metadata_core.metadata_yaml_translator import (generate_data_warehouse_metadata_from_yaml,
+                                                        write_data_warehouse_metadata_to_yaml,
+                                                        construct_data_warehouse_metadata_from_dict,
                                                         InvalidTableMetadataException,
                                                         parse_foreign_column_path,
                                                         parse_etl_data_source,
@@ -427,6 +429,190 @@ class TestParseETLEnumParsers(unittest.TestCase):
     def test_throws_error_if_output_type_is_invalid(self):
         with self.assertRaises(InvalidTableMetadataException):
             parse_etl_output_type('invalid_input_type')
+
+
+class TestWriteDataWarehouseMetadataToYAML_NoExistingDirectoryStructure(MetadataDirectoryTestCase):
+
+    def setUp(self) -> None:
+        # intentionally don't call super().setUp() so root dir is not created yet
+        self.root_filepath = os.path.join(test_dir, 'dw')
+
+    def test_creates_full_directory_structure_if_one_doesnt_exist_at_the_specified_output_location(self):
+        metadata = construct_data_warehouse_metadata_from_dict(
+            {
+                'name': 'dw',
+                'databases': [
+                    {
+                        'name': 'db1',
+                        'schemas': [
+                            {
+                                'name': 'sch1',
+                                'tables': [
+                                    {
+                                        'name': 't1',
+                                        'primary_source_table': 'db2.sch2.t2',
+                                        'primary_key': [
+                                            'col1', 'col2'
+                                        ],
+                                        'foreign_keys': {
+                                            'fk1': {
+                                                'columns': ['col3'],
+                                                'references': {
+                                                    'columns': ['col3'],
+                                                    'schema': 'sch2',
+                                                    'table': 't2'
+                                                }
+                                            },
+                                            'fk2': {
+                                                'columns': ['col2', 'col4'],
+                                                'references': {
+                                                    'columns': ['col7', 'col4'],
+                                                    'schema': 'sch3',
+                                                    'table': 't3'
+                                                }
+                                            }
+                                        },
+                                        'columns': {
+                                            'col1': {
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.foreign_keys.fk3.foreign_keys.fk67.columns.col1'
+                                                }
+                                            },
+                                            'col2': {
+                                                'data_type': 'INT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.col2'
+                                                }
+                                            },
+                                            'col3': {
+                                                'data_type': 'INT'
+                                            },
+                                            'col4': {
+                                                'data_type': 'INT'
+                                            }
+                                        },
+                                        'etls': {
+                                            'SP-1': {
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'insert',
+                                                'json_output_field': 'col1',
+                                                'truncate_table': False,
+                                                'insert_update_keys': ['col1', 'col2'],
+                                                'delete_keys': ['col2', 'col3'],
+                                                'input_sql': 'SQL for SP-1'
+                                            }
+                                        },
+                                        'next_etls': [
+                                            'SP-4', 'SP-5'
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        'name': 'db2',
+                        'schemas': [
+                            {
+                                'name': 'sch2',
+                                'tables': [
+                                    {
+                                        'name': 't2'
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        )
+        write_data_warehouse_metadata_to_yaml(test_dir, metadata)
+        result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
+        self.assertEqual(metadata, result)
+
+
+class TestWriteDataWarehouseMetadataToYAML_ExistingDirectoriesAndFiles(MetadataDirectoryTestCase):
+
+    def setUp(self) -> None:
+        super().setUp()
+        self.db1_filepath = os.path.join(self.root_filepath, 'db.db1')
+        self.db2_filepath = os.path.join(self.root_filepath, 'db.db2')
+        self.sch1_filepath = os.path.join(self.db1_filepath, 'schema.sch1')
+        self.sch2_filepath = os.path.join(self.db1_filepath, 'schema.sch2')
+        self.sch3_filepath = os.path.join(self.db2_filepath, 'schema.sch3')
+        self.t1_filepath = os.path.join(self.sch1_filepath, 'table.t1.yaml')
+        self.t2_filepath = os.path.join(self.sch1_filepath, 'table.t2.yaml')
+        self.t3_filepath = os.path.join(self.sch2_filepath, 'table.t3.yaml')
+        os.mkdir(self.db1_filepath)
+        os.mkdir(self.db2_filepath)
+        os.mkdir(self.sch1_filepath)
+        os.mkdir(self.sch2_filepath)
+        os.mkdir(self.sch3_filepath)
+        write_yaml({'name': 't1'}, self.t1_filepath)
+        write_yaml({'name': 't2'}, self.t2_filepath)
+        write_yaml({'name': 't3'}, self.t3_filepath)
+
+        self.original_metadata_read_from_files = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
+
+        self.metadata_to_write = construct_data_warehouse_metadata_from_dict(
+            {
+                'name': 'dw',
+                'databases': [
+                    {
+                        'name': 'db1',
+                        'schemas': [
+                            {
+                                'name': 'sch1',
+                                'tables': [
+                                    {
+                                        'name': 't1',
+                                        'primary_key': ['col1']
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        )
+
+    def test_doesnt_rebuild_data_warehouse_or_databases_or_schemas_by_default(self):
+        write_data_warehouse_metadata_to_yaml(test_dir, self.metadata_to_write)
+        expected = self.original_metadata_read_from_files
+        expected.get_table_by_address(TableAddress('db1', 'sch1', 't1')).primary_key.append('col1')
+        result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
+        self.assertEqual(expected, result)
+
+    def test_rebuilds_data_warehouse_if_relevant_option_is_set_to_true(self):
+        write_data_warehouse_metadata_to_yaml(test_dir, self.metadata_to_write, rebuild_data_warehouse_dir=True)
+        result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
+        self.assertEqual(self.metadata_to_write, result)
+
+    def test_rebuilds_databases_if_relevant_option_is_set_to_true(self):
+        write_data_warehouse_metadata_to_yaml(test_dir, self.metadata_to_write, rebuild_database_dirs=True)
+        result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
+        self.assertEqual(self.metadata_to_write, result)
+
+    def test_rebuilds_schemas_if_relevant_option_is_set_to_true(self):
+        write_data_warehouse_metadata_to_yaml(test_dir, self.metadata_to_write, rebuild_schema_dirs=True)
+        expected = self.original_metadata_read_from_files
+        expected.get_table_by_address(TableAddress('db1', 'sch1', 't1')).primary_key.append('col1')
+        expected.get_database('db1').remove_schema_metadata('sch2')
+        expected.get_database('db1').get_schema('sch1').remove_table_metadata('t2')
+        expected.get_database('db2').remove_schema_metadata('sch3')
+        result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
+        self.assertEqual(expected, result)
+
+    def test_rebuilds_tables_if_relevant_option_is_set_to_true(self):
+        write_data_warehouse_metadata_to_yaml(test_dir, self.metadata_to_write, rebuild_table_files=True)
+        expected = self.original_metadata_read_from_files
+        expected.get_table_by_address(TableAddress('db1', 'sch1', 't1')).primary_key.append('col1')
+        expected.get_database('db1').get_schema('sch1').remove_table_metadata('t2')
+        expected.get_database('db1').get_schema('sch2').remove_table_metadata('t3')
+        result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
+        self.assertEqual(expected, result)
 
 
 if __name__ == '__main__':
