@@ -31,35 +31,38 @@ def write_yaml(data: dict, output_file_path: str):
         yaml.dump(data, output_file, default_flow_style=False, sort_keys=False)
 
 
-class TestThrowErrorIfRootDirDoesntExist(unittest.TestCase):
-    def test_throws_error_if_root_dir_doesnt_exist(self):
-        with self.assertRaises(FileNotFoundError):
-            generate_data_warehouse_metadata_from_yaml('nonexistant_dir_12345')
-
-
-class TestGenerateEmptyDataWarehouse(unittest.TestCase):
+class MetadataDirectoryTestCase(unittest.TestCase):
+    """A test utility class containing standardized logic for created and destroying a test data warehouse metadata directory structure"""
 
     def setUp(self) -> None:
-        self.root_filepath = os.path.join(test_dir, 'empty_test_dw')
+        self.root_filepath = os.path.join(test_dir, 'dw')
         os.mkdir(self.root_filepath)
-
-    def test_generates_empty_data_warehouse_metadata_when_given_empty_dir(self):
-        expected = DataWarehouseMetadata('empty_test_dw')
-        self.assertEqual(expected, generate_data_warehouse_metadata_from_yaml(self.root_filepath))
 
     def tearDown(self) -> None:
         if os.path.isdir(self.root_filepath):
             shutil.rmtree(self.root_filepath)
 
 
-class TestGenerateDataWarehouseWithEmptyDatabases(unittest.TestCase):
+class TestThrowErrorIfRootDirDoesntExist(unittest.TestCase):
+    def test_throws_error_if_root_dir_doesnt_exist(self):
+        with self.assertRaises(FileNotFoundError):
+            generate_data_warehouse_metadata_from_yaml('nonexistant_dir_12345')
+
+
+class TestGenerateEmptyDataWarehouse(MetadataDirectoryTestCase):
+
+    def test_generates_empty_data_warehouse_metadata_when_given_empty_dir(self):
+        expected = DataWarehouseMetadata('dw')
+        self.assertEqual(expected, generate_data_warehouse_metadata_from_yaml(self.root_filepath))
+
+
+class TestGenerateDataWarehouseWithEmptyDatabases(MetadataDirectoryTestCase):
 
     def setUp(self) -> None:
-        self.root_filepath = os.path.join(test_dir, 'dw')
+        super().setUp()
         self.db1_filepath = os.path.join(self.root_filepath, 'db.db1')
         self.db2_filepath = os.path.join(self.root_filepath, 'db.db2')
         self.unrelated_file_filepath = os.path.join(self.root_filepath, 'db.something.txt')
-        os.mkdir(self.root_filepath)
         os.mkdir(self.db1_filepath)
         os.mkdir(self.db2_filepath)
         pathlib.Path(self.unrelated_file_filepath).touch()
@@ -70,20 +73,15 @@ class TestGenerateDataWarehouseWithEmptyDatabases(unittest.TestCase):
         expected.add_database(DatabaseMetadata('db2'))
         self.assertEqual(expected, generate_data_warehouse_metadata_from_yaml(self.root_filepath))
 
-    def tearDown(self) -> None:
-        if os.path.isdir(self.root_filepath):
-            shutil.rmtree(self.root_filepath)
 
-
-class TestGenerateDataWarehouseWithEmptySchemas(unittest.TestCase):
+class TestGenerateDataWarehouseWithEmptySchemas(MetadataDirectoryTestCase):
 
     def setUp(self) -> None:
-        self.root_filepath = os.path.join(test_dir, 'dw')
+        super().setUp()
         self.db1_filepath = os.path.join(self.root_filepath, 'db.db1')
         self.sch1_filepath = os.path.join(self.db1_filepath, 'schema.sch1')
         self.sch2_filepath = os.path.join(self.db1_filepath, 'schema.sch2')
         self.unrelated_file_filepath = os.path.join(self.db1_filepath, 'schema.something.txt')
-        os.mkdir(self.root_filepath)
         os.mkdir(self.db1_filepath)
         os.mkdir(self.sch1_filepath)
         os.mkdir(self.sch2_filepath)
@@ -97,19 +95,14 @@ class TestGenerateDataWarehouseWithEmptySchemas(unittest.TestCase):
         db1.add_schema(SchemaMetadata('sch2'))
         self.assertEqual(expected, generate_data_warehouse_metadata_from_yaml(self.root_filepath))
 
-    def tearDown(self) -> None:
-        if os.path.isdir(self.root_filepath):
-            shutil.rmtree(self.root_filepath)
 
-
-class TestThrowErrorIfYAMLFileIsUnparsable(unittest.TestCase):
+class TestThrowErrorIfYAMLFileIsUnparsable(MetadataDirectoryTestCase):
 
     def setUp(self) -> None:
-        self.root_filepath = os.path.join(test_dir, 'dw')
+        super().setUp()
         self.db1_filepath = os.path.join(self.root_filepath, 'db.db1')
         self.sch1_filepath = os.path.join(self.db1_filepath, 'schema.sch1')
         self.table1_filepath = os.path.join(self.sch1_filepath, 'table.table1.yaml')
-        os.mkdir(self.root_filepath)
         os.mkdir(self.db1_filepath)
         os.mkdir(self.sch1_filepath)
         with open(self.table1_filepath, 'w') as file:
@@ -119,20 +112,15 @@ class TestThrowErrorIfYAMLFileIsUnparsable(unittest.TestCase):
         with self.assertRaises(yaml.YAMLError):
             generate_data_warehouse_metadata_from_yaml(self.root_filepath)
 
-    def tearDown(self) -> None:
-        if os.path.isdir(self.root_filepath):
-            shutil.rmtree(self.root_filepath)
 
-
-class TestGenerateDataWarehouseWithMinimalYAMLFiles(unittest.TestCase):
+class TestGenerateDataWarehouseWithMinimalYAMLFiles(MetadataDirectoryTestCase):
 
     def setUp(self) -> None:
-        self.root_filepath = os.path.join(test_dir, 'dw')
+        super().setUp()
         self.db1_filepath = os.path.join(self.root_filepath, 'db.db1')
         self.sch1_filepath = os.path.join(self.db1_filepath, 'schema.sch1')
         self.table1_filepath = os.path.join(self.sch1_filepath, 'table.table1.yaml')
         self.table2_filepath = os.path.join(self.sch1_filepath, 'table.table2.yaml')
-        os.mkdir(self.root_filepath)
         os.mkdir(self.db1_filepath)
         os.mkdir(self.sch1_filepath)
         write_yaml({'name': 'table1'}, self.table1_filepath)
@@ -148,20 +136,15 @@ class TestGenerateDataWarehouseWithMinimalYAMLFiles(unittest.TestCase):
         sch1.add_table(TableMetadata('table2', schema_name='sch1', database_name='db1'))
         self.assertEqual(expected, generate_data_warehouse_metadata_from_yaml(self.root_filepath))
 
-    def tearDown(self) -> None:
-        if os.path.isdir(self.root_filepath):
-            shutil.rmtree(self.root_filepath)
 
-
-class TestGenerateDataWarehouseWithFullYAMLFile(unittest.TestCase):
+class TestGenerateDataWarehouseWithFullYAMLFile(MetadataDirectoryTestCase):
 
     def setUp(self) -> None:
-        self.root_filepath = os.path.join(test_dir, 'dw')
+        super().setUp()
         self.db1_filepath = os.path.join(self.root_filepath, 'db.db1')
         self.sch1_filepath = os.path.join(self.db1_filepath, 'schema.sch1')
         self.table1_filepath = os.path.join(self.sch1_filepath, 'table.table1.yaml')
         self.table2_filepath = os.path.join(self.sch1_filepath, 'table.table2.yaml')
-        os.mkdir(self.root_filepath)
         os.mkdir(self.db1_filepath)
         os.mkdir(self.sch1_filepath)
         table1_metadata = {
@@ -350,19 +333,14 @@ class TestGenerateDataWarehouseWithFullYAMLFile(unittest.TestCase):
         ]
         self.assertEqual(expected, self.table1_metadata.etls)
 
-    def tearDown(self) -> None:
-        if os.path.isdir(self.root_filepath):
-            shutil.rmtree(self.root_filepath)
 
-
-class TestGenerateDataWarehouseWithInvalidForeignKeyFields(unittest.TestCase):
+class TestGenerateDataWarehouseWithInvalidForeignKeyFields(MetadataDirectoryTestCase):
 
     def setUp(self) -> None:
-        self.root_filepath = os.path.join(test_dir, 'dw')
+        super().setUp()
         self.db1_filepath = os.path.join(self.root_filepath, 'db.db1')
         self.sch1_filepath = os.path.join(self.db1_filepath, 'schema.sch1')
         self.bad_fk_fields_table_filepath = os.path.join(self.sch1_filepath, 'table.bad_fk_fields.yaml')
-        os.mkdir(self.root_filepath)
         os.mkdir(self.db1_filepath)
         os.mkdir(self.sch1_filepath)
         write_yaml({'name': 'bad_fk_fields', 'foreign_keys': {'fk_1': {}}}, self.bad_fk_fields_table_filepath)
@@ -371,19 +349,14 @@ class TestGenerateDataWarehouseWithInvalidForeignKeyFields(unittest.TestCase):
         with self.assertRaises(InvalidTableMetadataException):
             generate_data_warehouse_metadata_from_yaml(self.root_filepath)
 
-    def tearDown(self) -> None:
-        if os.path.isdir(self.root_filepath):
-            shutil.rmtree(self.root_filepath)
 
-
-class TestGenerateDataWarehouseWithInvalidETLFields(unittest.TestCase):
+class TestGenerateDataWarehouseWithInvalidETLFields(MetadataDirectoryTestCase):
 
     def setUp(self) -> None:
-        self.root_filepath = os.path.join(test_dir, 'dw')
+        super().setUp()
         self.db1_filepath = os.path.join(self.root_filepath, 'db.db1')
         self.sch1_filepath = os.path.join(self.db1_filepath, 'schema.sch1')
         self.bad_etl_fields_table_filepath = os.path.join(self.sch1_filepath, 'table.bad_etl_fields.yaml')
-        os.mkdir(self.root_filepath)
         os.mkdir(self.db1_filepath)
         os.mkdir(self.sch1_filepath)
         write_yaml({'name': 'bad_etl_fields', 'etls': {'SP-100': {}}}, self.bad_etl_fields_table_filepath)
@@ -392,19 +365,14 @@ class TestGenerateDataWarehouseWithInvalidETLFields(unittest.TestCase):
         with self.assertRaises(InvalidTableMetadataException):
             generate_data_warehouse_metadata_from_yaml(self.root_filepath)
 
-    def tearDown(self) -> None:
-        if os.path.isdir(self.root_filepath):
-            shutil.rmtree(self.root_filepath)
 
-
-class TestGenerateDataWarehouseWithInvalidPrimarySourceTable(unittest.TestCase):
+class TestGenerateDataWarehouseWithInvalidPrimarySourceTable(MetadataDirectoryTestCase):
 
     def setUp(self) -> None:
-        self.root_filepath = os.path.join(test_dir, 'dw')
+        super().setUp()
         self.db1_filepath = os.path.join(self.root_filepath, 'db.db1')
         self.sch1_filepath = os.path.join(self.db1_filepath, 'schema.sch1')
         self.bad_pst_table_filepath = os.path.join(self.sch1_filepath, 'table.bad_pst.yaml')
-        os.mkdir(self.root_filepath)
         os.mkdir(self.db1_filepath)
         os.mkdir(self.sch1_filepath)
         write_yaml({'name': 'bad_pst', 'primary_source_table': 'a_table'}, self.bad_pst_table_filepath)
@@ -412,10 +380,6 @@ class TestGenerateDataWarehouseWithInvalidPrimarySourceTable(unittest.TestCase):
     def test_throws_error_if_primary_source_table_has_an_incorrect_format(self):
         with self.assertRaises(InvalidTableMetadataException):
             generate_data_warehouse_metadata_from_yaml(self.root_filepath)
-
-    def tearDown(self) -> None:
-        if os.path.isdir(self.root_filepath):
-            shutil.rmtree(self.root_filepath)
 
 
 class TestParseForeignColumnPath(unittest.TestCase):
