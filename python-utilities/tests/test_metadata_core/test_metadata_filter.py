@@ -43,6 +43,23 @@ class TestMetadataFilterMatcher(unittest.TestCase):
         self.matcher.add_filter(MetadataFilter(schemas=['sch1']))
         self.assertTrue(self.matcher.matches(database='db1', schema='sch1', table='t1', column='doesnt_match'))
 
+    def test_an_attribute_consisting_only_of_an_asterisk_matches_anything(self):
+        self.matcher.add_filter(MetadataFilter(databases=['*'], schemas=['*'], tables=['*'], columns=['*']))
+        self.assertTrue(self.matcher.matches(database='db1', schema='sch1', table='t1', column='c1'))
+        self.assertTrue(self.matcher.matches(database='db2', schema='sch2', table='t2', column='c2'))
+
+    def test_asterisks_within_attributes_are_treated_like_wildcards(self):
+        self.matcher.add_filter(MetadataFilter(databases=['d*b*1'], schemas=['*ch*'], tables=['t*'], columns=['*olu*']))
+        self.assertTrue(self.matcher.matches(database='db1', schema='sch1', table='t1', column='olum'))
+        self.assertTrue(self.matcher.matches(database='database1', schema='schema1', table='table1', column='column1'))
+
+    def test_has_filters_returns_false_if_no_filters_have_been_added_to_the_filter_matcher(self):
+        self.assertFalse(self.matcher.has_filters)
+
+    def test_has_filters_returns_true_if_at_least_one_filter_has_been_added_to_the_filter_matcher(self):
+        self.matcher.add_filter(MetadataFilter(databases=['db1']))
+        self.assertTrue(self.matcher.has_filters)
+
 
 if __name__ == '__main__':
     unittest.main()

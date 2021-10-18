@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from typing import List
+import re
 
 
 @dataclass
@@ -17,6 +18,10 @@ class MetadataFilterMatcher:
 
     def add_filter(self, metadata_filter: MetadataFilter):
         self._filters.append(metadata_filter)
+
+    @property
+    def has_filters(self) -> bool:
+        return len(self._filters) > 0
 
     def matches(self, database: str = None, schema: str = None, table: str = None, column: str = None) -> bool:
         if len(self._filters) == 0:
@@ -37,4 +42,4 @@ class MetadataFilterMatcher:
 
     @staticmethod
     def _attributes_match(filter_attr: str, input_attr: str) -> bool:
-        return filter_attr == input_attr
+        return input_attr is not None and bool(re.match(filter_attr.replace('*', '.*'), input_attr))
