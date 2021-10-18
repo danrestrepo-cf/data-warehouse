@@ -8,7 +8,7 @@ from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        ETLMetadata,
                                                        ForeignKeyMetadata,
                                                        InvalidMetadataKeyException)
-from metadata_core.metadata_object_path import TablePath
+from metadata_core.metadata_object_path import DatabasePath, SchemaPath, TablePath, ColumnPath
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
 
 
@@ -43,16 +43,35 @@ class TestDataWarehouseMetadata(unittest.TestCase):
         dw_metadata.remove_database_metadata('staging')
         self.assertEqual([], dw_metadata.databases)
 
-    def test_can_get_table_metadata_object_by_address(self):
-        table_metadata = TableMetadata('table1')
-        schema_metadata = SchemaMetadata('schema1')
-        schema_metadata.add_table(table_metadata)
-        database_metadata = DatabaseMetadata('db1')
-        database_metadata.add_schema(schema_metadata)
-        dw_metadata = DataWarehouseMetadata('edw')
-        dw_metadata.add_database(database_metadata)
-        table_address = TablePath('db1', 'schema1', 'table1')
-        self.assertEqual(table_metadata, dw_metadata.get_table_by_path(table_address))
+
+class TestDataWarehouseMetadataGetByPath(unittest.TestCase):
+
+    def setUp(self) -> None:
+        self.column_metadata = ColumnMetadata('col1')
+        self.table_metadata = TableMetadata('table1')
+        self.table_metadata.add_column(self.column_metadata)
+        self.schema_metadata = SchemaMetadata('schema1')
+        self.schema_metadata.add_table(self.table_metadata)
+        self.database_metadata = DatabaseMetadata('db1')
+        self.database_metadata.add_schema(self.schema_metadata)
+        self.dw_metadata = DataWarehouseMetadata('edw')
+        self.dw_metadata.add_database(self.database_metadata)
+
+    def test_can_get_database_metadata_object_by_path(self):
+        db_path = DatabasePath('db1')
+        self.assertEqual(self.database_metadata, self.dw_metadata.get_database_by_path(db_path))
+
+    def test_can_get_schema_metadata_object_by_path(self):
+        schema_path = SchemaPath('db1', 'schema1')
+        self.assertEqual(self.schema_metadata, self.dw_metadata.get_schema_by_path(schema_path))
+
+    def test_can_get_table_metadata_object_by_path(self):
+        table_path = TablePath('db1', 'schema1', 'table1')
+        self.assertEqual(self.table_metadata, self.dw_metadata.get_table_by_path(table_path))
+
+    def test_can_get_column_metadata_object_by_path(self):
+        column_path = ColumnPath('db1', 'schema1', 'table1', 'col1')
+        self.assertEqual(self.column_metadata, self.dw_metadata.get_column_by_path(column_path))
 
 
 class TestDatabaseMetadata(unittest.TestCase):

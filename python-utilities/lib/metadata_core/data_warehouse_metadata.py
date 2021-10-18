@@ -2,7 +2,7 @@ from enum import Enum
 from dataclasses import dataclass
 from typing import List, Optional
 
-from metadata_core.metadata_object_path import TablePath
+from metadata_core.metadata_object_path import DatabasePath, SchemaPath, TablePath, ColumnPath
 
 
 @dataclass
@@ -250,8 +250,17 @@ class DataWarehouseMetadata:
     def databases(self) -> List[DatabaseMetadata]:
         return list(self._databases.values())
 
+    def get_database_by_path(self, path: DatabasePath) -> DatabaseMetadata:
+        return self.get_database(path.database)
+
+    def get_schema_by_path(self, path: SchemaPath) -> SchemaMetadata:
+        return self.get_database(path.database).get_schema(path.schema)
+
     def get_table_by_path(self, path: TablePath) -> TableMetadata:
         return self.get_database(path.database).get_schema(path.schema).get_table(path.table)
+
+    def get_column_by_path(self, path: ColumnPath) -> ColumnMetadata:
+        return self.get_database(path.database).get_schema(path.schema).get_table(path.table).get_column(path.column)
 
     def __repr__(self) -> str:
         return f'DataWarehouseMetadata(\n' \
