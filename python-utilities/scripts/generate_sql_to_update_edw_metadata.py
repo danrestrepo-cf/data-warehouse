@@ -6,8 +6,9 @@ import argparse
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
 
 from lib.db_connections import LocalEDWConnection
-from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata
+from lib.metadata_core.metadata_object_path import SchemaPath
 from lib.metadata_core.metadata_yaml_translator import generate_data_warehouse_metadata_from_yaml
+from lib.metadata_core.metadata_filter import InclusiveMetadataFilterer
 from lib.config_mdi_metadata_maintenance.metadata_maintenance_sql import MetadataMaintenanceSQLGenerator
 from lib.config_mdi_metadata_maintenance.metadata_comparison_functions import (ProcessMetadataComparisonFunctions,
                                                                                JSONOutputFieldMetadataComparisonFunctions,
@@ -33,7 +34,12 @@ def main():
     # read in metadata to be compared
     edw_connection = LocalEDWConnection(host='localhost', dbname='config', user='postgres', password='testonly')
     data_warehouse_metadata = generate_data_warehouse_metadata_from_yaml(args.metadata_dir)
-    filter_metadata_to_staging_octane_and_history_octane_schemas(data_warehouse_metadata)
+
+    # filter metadata to only staging_octane and history_octane schemas, since only those are being maintained with YAML for now
+    filterer = InclusiveMetadataFilterer()
+    filterer.add_schema_criteria(SchemaPath('staging', 'staging_octane'))
+    filterer.add_schema_criteria(SchemaPath('staging', 'history_octane'))
+    data_warehouse_metadata = filterer.filter(data_warehouse_metadata)
 
     # set up SQL generator object
     sql_generator = MetadataMaintenanceSQLGenerator(edw_connection, data_warehouse_metadata)
@@ -72,25 +78,6 @@ def main():
         with open(args.output_file, 'w') as file:
             file.write(metadata_maintenance_sql)
         print(f'config.mdi metadata maintenance SQL successfully written to {args.output_file}')
-
-
-def filter_metadata_to_staging_octane_and_history_octane_schemas(metadata: DataWarehouseMetadata):
-    """
-    Delete any metadata not from the staging.staging_octane or staging.history_octane schemas
-
-    This is to prevent potentially misleading comparisons involving other schemas while
-    this script is still not properly configured to handle those other schemas. This
-    method and its usages should be REMOVED if/when the script is expanded to handle
-    schema metadata outside of staging_octane and history_octane.
-    """
-    for database in metadata.databases:
-        if database.name != 'staging':
-            metadata.remove_database_metadata(database.name)
-    if 'staging' in metadata.databases:
-        database = metadata.get_database('staging')
-        for schema in database.schemas:
-            if schema.name != 'staging_octane' and schema.name != 'history_octane':
-                database.remove_schema_metadata(schema.name)
 
 
 if __name__ == '__main__':
