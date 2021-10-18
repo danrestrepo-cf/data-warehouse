@@ -64,8 +64,8 @@ class EDWFieldDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions)
                             row['source_field_name'] = None
                         else:
                             source_table = table.get_column_source_table(column.name, data_warehouse_metadata)
-                            row['source_database_name'] = source_table.database_name
-                            row['source_schema_name'] = source_table.schema_name
+                            row['source_database_name'] = source_table.path.database
+                            row['source_schema_name'] = source_table.path.schema
                             row['source_table_name'] = source_table.name
                             row['source_field_name'] = column.source_field.column_name
                         metadata_table.add_row(row)

@@ -130,8 +130,8 @@ class TestGenerateDataWarehouseWithMinimalYAMLFiles(MetadataDirectoryTestCase):
         expected.add_database(db1)
         sch1 = SchemaMetadata('sch1')
         db1.add_schema(sch1)
-        sch1.add_table(TableMetadata('table1', schema_name='sch1', database_name='db1'))
-        sch1.add_table(TableMetadata('table2', schema_name='sch1', database_name='db1'))
+        sch1.add_table(TableMetadata('table1'))
+        sch1.add_table(TableMetadata('table2'))
         self.assertEqual(expected, generate_data_warehouse_metadata_from_yaml(self.root_filepath))
 
 
@@ -274,8 +274,8 @@ class TestGenerateDataWarehouseWithFullYAMLFile(MetadataDirectoryTestCase):
 
     def test_parses_simple_attributes_correctly(self):
         self.assertEqual(TablePath('db1', 'sch2', 'table01'), self.table1_metadata.primary_source_table)
-        self.assertEqual('db1', self.table1_metadata.database_name)
-        self.assertEqual('sch1', self.table1_metadata.schema_name)
+        self.assertEqual('db1', self.table1_metadata.path.database)
+        self.assertEqual('sch1', self.table1_metadata.path.schema)
         self.assertEqual(['col1', 'col2'], self.table1_metadata.primary_key)
         self.assertEqual(['SP-201', 'SP-202'], self.table1_metadata.next_etls)
 

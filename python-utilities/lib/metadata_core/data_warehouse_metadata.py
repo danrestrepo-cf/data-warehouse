@@ -44,19 +44,21 @@ class ETLMetadata:
     input_sql: str = None
 
 
-@dataclass
+@dataclass(init=False)
 class ColumnMetadata:
-    name: str
-    data_type: str = None
-    source_field: ForeignColumnPath = None
+
+    def __init__(self, name: str, data_type: str = None, source_field: ForeignColumnPath = None):
+        self.name = name
+        self.path = ColumnPath(database=None, schema=None, table=None, column=name)
+        self.data_type = data_type
+        self.source_field = source_field
 
 
 class TableMetadata:
 
-    def __init__(self, name: str, schema_name: str = None, database_name: str = None, primary_source_table: TablePath = None):
+    def __init__(self, name: str, primary_source_table: TablePath = None):
         self.name = name
-        self.schema_name = schema_name
-        self.database_name = database_name
+        self.path = TablePath(database=None, schema=None, table=name)
         self.primary_source_table = primary_source_table
         self.primary_key = []
         self.next_etls = []
@@ -66,6 +68,9 @@ class TableMetadata:
 
     def add_column(self, column: ColumnMetadata):
         self._columns[column.name] = column
+        column.path.database = self.path.database
+        column.path.schema = self.path.schema
+        column.path.table = self.name
 
     def add_etl(self, etl: ETLMetadata):
         self._etls[etl.process_name] = etl
@@ -125,19 +130,11 @@ class TableMetadata:
     def foreign_keys(self) -> List[ForeignKeyMetadata]:
         return list(self._foreign_keys.values())
 
-    @property
-    def address(self) -> TablePath:
-        return TablePath(
-            database=self.database_name,
-            schema=self.schema_name,
-            table=self.name
-        )
-
     def __repr__(self) -> str:
         return f'TableMetadata(\n' \
                f'    name={self.name},\n' \
-               f'    schema_name={self.schema_name}\n' \
-               f'    database_name={self.database_name}\n' \
+               f'    schema_name={self.path.schema}\n' \
+               f'    database_name={self.path.database}\n' \
                f'    primary_source_table={repr(self.primary_source_table)}\n' \
                f'    primary_key={repr(self.primary_key)}\n' \
                f'    foreign_keys={repr(self.foreign_keys)}\n' \
@@ -149,8 +146,7 @@ class TableMetadata:
     def __eq__(self, other: 'TableMetadata') -> bool:
         return isinstance(other, TableMetadata) and \
                self.name == other.name and \
-               self.schema_name == other.schema_name and \
-               self.database_name == other.database_name and \
+               self.path == other.path and \
                self.primary_source_table == other.primary_source_table and \
                self.primary_key == other.primary_key and \
                self.foreign_keys == other.foreign_keys and \
@@ -163,10 +159,13 @@ class SchemaMetadata:
 
     def __init__(self, name: str):
         self.name = name
+        self.path = SchemaPath(database=None, schema=name)
         self._tables = {}
 
     def add_table(self, table: TableMetadata):
         self._tables[table.name] = table
+        table.path.database = self.path.database
+        table.path.schema = self.name
 
     def get_table(self, table_name: str) -> TableMetadata:
         if table_name not in self._tables:
@@ -197,10 +196,12 @@ class DatabaseMetadata:
 
     def __init__(self, name: str):
         self.name = name
+        self.path = DatabasePath(database=name)
         self._schemas = {}
 
     def add_schema(self, schema: SchemaMetadata):
         self._schemas[schema.name] = schema
+        schema.path.database = self.name
 
     def get_schema(self, schema_name: str) -> SchemaMetadata:
         if schema_name not in self._schemas:

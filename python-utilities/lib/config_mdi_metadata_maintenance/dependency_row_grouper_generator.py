@@ -85,8 +85,8 @@ class FieldInsertNodeLineageTracer(NodeLineageTracer):
             column_metadata = table_metadata.get_column(node_key['field_name'])
             if column_metadata.source_field is not None:
                 return [{
-                    'database_name': source_table_metadata.database_name,
-                    'schema_name': source_table_metadata.schema_name,
+                    'database_name': source_table_metadata.path.database,
+                    'schema_name': source_table_metadata.path.schema,
                     'table_name': source_table_metadata.name,
                     'field_name': column_metadata.source_field.column_name
                 }]

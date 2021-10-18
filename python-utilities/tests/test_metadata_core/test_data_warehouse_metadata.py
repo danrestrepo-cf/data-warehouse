@@ -81,6 +81,16 @@ class TestDatabaseMetadata(unittest.TestCase):
         with self.assertRaises(InvalidMetadataKeyException):
             db_metadata.get_schema('staging_octane')
 
+    def test_initializes_with_database_path(self):
+        db_metadata = DatabaseMetadata('staging')
+        self.assertEqual(DatabasePath('staging'), db_metadata.path)
+
+    def test_adding_schema_automatically_updates_schema_path(self):
+        db_metadata = DatabaseMetadata('staging')
+        schema_metadata = SchemaMetadata('staging_octane')
+        db_metadata.add_schema(schema_metadata)
+        self.assertEqual(SchemaPath('staging', 'staging_octane'), schema_metadata.path)
+
     def test_can_get_schema_metadata_by_schema_name_if_the_schema_has_been_added_to_the_metadata(self):
         db_metadata = DatabaseMetadata('staging')
         db_metadata.add_schema(SchemaMetadata('staging_octane'))
@@ -113,10 +123,23 @@ class TestSchemaMetadata(unittest.TestCase):
         with self.assertRaises(InvalidMetadataKeyException):
             schema_metadata.get_table('account')
 
+    def test_initializes_with_schema_path_containing_null_database(self):
+        schema_metadata = SchemaMetadata('staging_octane')
+        self.assertEqual(SchemaPath(None, 'staging_octane'), schema_metadata.path)
+
+    def test_adding_table_automatically_updates_table_path(self):
+        schema_metadata = SchemaMetadata('staging_octane')
+        schema_metadata.path.database = 'staging'
+        table_metadata = TableMetadata('account')
+        schema_metadata.add_table(table_metadata)
+        self.assertEqual(TablePath('staging', 'staging_octane', 'account'), table_metadata.path)
+
     def test_can_get_table_metadata_by_table_name_if_the_table_has_been_added_to_the_metadata(self):
         schema_metadata = SchemaMetadata('staging_octane')
         schema_metadata.add_table(TableMetadata('account'))
-        self.assertEqual(TableMetadata('account'), schema_metadata.get_table('account'))
+        expected = TableMetadata('account')
+        expected.path.schema = 'staging_octane'
+        self.assertEqual(expected, schema_metadata.get_table('account'))
 
     def test_can_iterate_through_all_added_tables(self):
         schema_metadata = SchemaMetadata('staging_octane')
@@ -124,6 +147,8 @@ class TestSchemaMetadata(unittest.TestCase):
         schema_metadata.add_table(TableMetadata('deal'))
         schema_metadata.add_table(TableMetadata('loan'))
         expected = [TableMetadata('account'), TableMetadata('deal'), TableMetadata('loan')]
+        for table in expected:
+            table.path.schema = 'staging_octane'
         self.assertEqual(expected, [table for table in schema_metadata.tables])
 
     def test_can_remove_table_metadata(self):
@@ -144,6 +169,18 @@ class TestTableMetadata(unittest.TestCase):
         table_metadata = TableMetadata('deal')
         with self.assertRaises(InvalidMetadataKeyException):
             table_metadata.get_column('d_pid')
+
+    def test_initializes_with_table_path_containing_null_database_and_schema(self):
+        table_metadata = TableMetadata('deal')
+        self.assertEqual(TablePath(None, None, 'deal'), table_metadata.path)
+
+    def test_adding_column_automatically_updates_column_path(self):
+        table_metadata = TableMetadata('account')
+        table_metadata.path.database = 'staging'
+        table_metadata.path.schema = 'staging_octane'
+        column_metadata = ColumnMetadata('a_pid')
+        table_metadata.add_column(column_metadata)
+        self.assertEqual(ColumnPath('staging', 'staging_octane', 'account', 'a_pid'), column_metadata.path)
 
     def test_can_get_column_metadata_by_column_name_if_the_column_has_been_added_to_the_metadata(self):
         table_metadata = TableMetadata('deal')
@@ -237,11 +274,6 @@ class TestTableMetadata(unittest.TestCase):
         table_metadata = TableMetadata('account')
         table_metadata.remove_foreign_key_metadata('fk_1')
         self.assertEqual([], table_metadata.foreign_keys)
-
-    def test_can_generate_its_own_address(self):
-        table_metadata = TableMetadata(name='account', schema_name='staging_octane', database_name='staging')
-        expected = TablePath(table='account', schema='staging_octane', database='staging')
-        self.assertEqual(expected, table_metadata.address)
 
 
 class TestTableMetadataCanGetColumnSourceTable(unittest.TestCase):

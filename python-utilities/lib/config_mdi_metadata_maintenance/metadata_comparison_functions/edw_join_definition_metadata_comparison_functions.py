@@ -53,7 +53,7 @@ class EDWJoinDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions):
                             'target_database_name': foreign_key.table.database,
                             'target_schema_name': foreign_key.table.schema,
                             'target_table_name': foreign_key.table.table,
-                            'join_condition': self.construct_join_condition_string(table.address, foreign_key)
+                            'join_condition': self.construct_join_condition_string(table.path, foreign_key)
                         })
         return metadata_table
 
