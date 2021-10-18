@@ -1,7 +1,7 @@
 import copy
 import unittest
 
-from lib.metadata_core.metadata_filter import InclusiveMetadataFilterer, CriteriaMatcher
+from lib.metadata_core.metadata_filter import InclusiveMetadataFilterer, ExclusiveMetadataFilterer, CriteriaMatcher
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
 from lib.metadata_core.metadata_object_path import DatabasePath, SchemaPath, TablePath, ColumnPath
 
@@ -129,6 +129,99 @@ class TestInclusiveMetadataFilterer(unittest.TestCase):
         expected = copy.deepcopy(self.metadata)
         expected.get_database('db1').get_schema('sch1').get_table('t3').remove_column_metadata('c1')
         expected.get_database('db2').get_schema('sch2').get_table('t2').remove_column_metadata('c2')
+        self.assertEqual(expected, self.filterer.filter(self.metadata))
+
+
+class TestExclusiveMetadataFilterer(unittest.TestCase):
+
+    def setUp(self) -> None:
+        self.filterer = ExclusiveMetadataFilterer()
+        self.metadata = construct_data_warehouse_metadata_from_dict(
+            {
+                'name': 'edw',
+                'databases': [
+                    {
+                        'name': 'db1',
+                        'schemas': [
+                            {
+                                'name': 'sch1',
+                                'tables': [
+                                    {
+                                        'name': 't1'
+                                    },
+                                    {
+                                        'name': 't2',
+                                        'columns': {
+                                            'c1': {
+                                                'data_type': 'TEXT'
+                                            }
+                                        }
+                                    },
+                                    {
+                                        'name': 't3',
+                                        'columns': {
+                                            'c1': {
+                                                'data_type': 'TEXT'
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                'name': 'sch2'
+                            }
+                        ]
+                    },
+                    {
+                        'name': 'db2',
+                        'schemas': [
+                            {
+                                'name': 'sch2',
+                                'tables': [
+                                    {
+                                        'name': 't2',
+                                        'columns': {
+                                            'c2': {
+                                                'data_type': 'INT'
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        )
+
+    def test_does_nothing_if_no_filters_have_been_added(self):
+        expected = copy.deepcopy(self.metadata)
+        self.assertEqual(expected, self.filterer.filter(self.metadata))
+
+    def test_removes_any_databases_that_match_at_least_one_filter(self):
+        self.filterer.add_database_criteria(DatabasePath('db1'))
+        expected = copy.deepcopy(self.metadata)
+        expected.remove_database_metadata('db1')
+        self.assertEqual(expected, self.filterer.filter(self.metadata))
+
+    def test_removes_any_schemas_that_match_at_least_one_filter(self):
+        self.filterer.add_schema_criteria(SchemaPath('db1', 'sch*'))
+        expected = copy.deepcopy(self.metadata)
+        expected.get_database('db1').remove_schema_metadata('sch1')
+        expected.get_database('db1').remove_schema_metadata('sch2')
+        self.assertEqual(expected, self.filterer.filter(self.metadata))
+
+    def test_removes_any_tables_that_match_at_least_one_filter(self):
+        self.filterer.add_table_criteria(TablePath('db*', 'sch*', 't2'))
+        expected = copy.deepcopy(self.metadata)
+        expected.get_database('db1').get_schema('sch1').remove_table_metadata('t2')
+        expected.get_database('db2').get_schema('sch2').remove_table_metadata('t2')
+        self.assertEqual(expected, self.filterer.filter(self.metadata))
+
+    def test_removes_any_columns_that_do_not_match_at_least_one_filter(self):
+        self.filterer.add_column_criteria(ColumnPath('db1', 'sch1', 't2', 'c1'))
+        expected = copy.deepcopy(self.metadata)
+        expected.get_database('db1').get_schema('sch1').get_table('t2').remove_column_metadata('c1')
         self.assertEqual(expected, self.filterer.filter(self.metadata))
 
 

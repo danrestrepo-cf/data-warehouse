@@ -22,7 +22,6 @@ class CriteriaMatcher:
 
     def matches(self, item) -> bool:
         for criterion in self._criteria:
-            print(item, criterion)
             if all([self.input_value_matches_criteria_value(getattr(item, field_name), getattr(criterion, field_name)) for field_name in
                     self._field_names]):
                 return True
@@ -88,3 +87,10 @@ class InclusiveMetadataFilterer(MetadataFilterer):
     @staticmethod
     def metadata_should_be_filtered_out(criteria_match_result: bool) -> bool:
         return not criteria_match_result
+
+
+class ExclusiveMetadataFilterer(MetadataFilterer):
+
+    @staticmethod
+    def metadata_should_be_filtered_out(criteria_match_result: bool) -> bool:
+        return criteria_match_result
