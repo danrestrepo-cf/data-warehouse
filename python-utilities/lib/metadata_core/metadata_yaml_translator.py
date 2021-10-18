@@ -69,13 +69,16 @@ class DictToMetadataBuilder:
                             for table_dict in schema_dict['tables']:
                                 table_metadata = self.construct_table_metadata_from_dict(
                                     table_dict=table_dict,
+                                    schema_name=schema_metadata.name,
                                     database_name=database_metadata.name
                                 )
                                 schema_metadata.add_table(table_metadata)
         return data_warehouse_metadata
 
-    def construct_table_metadata_from_dict(self, table_dict: dict, database_name: str) -> TableMetadata:
+    def construct_table_metadata_from_dict(self, table_dict: dict, schema_name: str, database_name: str) -> TableMetadata:
         table = TableMetadata(name=table_dict['name'])
+        table.path.database = database_name
+        table.path.schema = schema_name
         if 'primary_source_table' in table_dict:
             if not table_dict['primary_source_table'] or table_dict['primary_source_table'].count('.') != 2:
                 raise self.InvalidTableMetadataException(
