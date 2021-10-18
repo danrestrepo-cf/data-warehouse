@@ -46,6 +46,9 @@ class ETLMetadata:
 
 @dataclass(init=False)
 class ColumnMetadata:
+    name: str
+    data_type: str = None
+    source_field: ForeignColumnPath = None
 
     def __init__(self, name: str, data_type: str = None, source_field: ForeignColumnPath = None):
         self.name = name
