@@ -4,7 +4,8 @@ from lib.config_mdi_metadata_maintenance.metadata_comparison_functions.metadata_
 from lib.db_connections import LocalEDWConnection
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper, SingleGroupRowGrouper
-from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, ForeignKeyMetadata, TableAddress
+from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, ForeignKeyMetadata
+from metadata_core.metadata_object_path import TablePath
 
 
 class EDWJoinDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions):
@@ -57,7 +58,7 @@ class EDWJoinDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions):
         return metadata_table
 
     @staticmethod
-    def construct_join_condition_string(primary_table: TableAddress, foreign_key: ForeignKeyMetadata) -> str:
+    def construct_join_condition_string(primary_table: TablePath, foreign_key: ForeignKeyMetadata) -> str:
         if len(foreign_key.native_columns) != len(foreign_key.foreign_columns):
             raise ValueError(f'Unable to generate join condition for foreign key "{foreign_key.name}" in table '
                              f'{primary_table.database}.{primary_table.schema}.{primary_table.table}. Primary table has a '

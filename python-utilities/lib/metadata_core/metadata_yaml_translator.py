@@ -13,10 +13,10 @@ from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        ETLMetadata,
                                                        ForeignKeyMetadata,
                                                        ForeignColumnPath,
-                                                       TableAddress,
                                                        ETLDataSource,
                                                        ETLInputType,
                                                        ETLOutputType)
+from metadata_core.metadata_object_path import TablePath
 
 
 # enable PyYAML to gracefully output multi-line string values (e.g. ETL SQL queries)
@@ -83,7 +83,7 @@ class DictToMetadataBuilder:
                     f'Primary source table for table "{table_dict["name"]}" is not in the format "database.schema.table"'
                 )
             source_table_components = table_dict['primary_source_table'].split('.')
-            table.primary_source_table = TableAddress(
+            table.primary_source_table = TablePath(
                 database=source_table_components[0],
                 schema=source_table_components[1],
                 table=source_table_components[2]
@@ -98,7 +98,7 @@ class DictToMetadataBuilder:
                     raise self.InvalidTableMetadataException(f'Foreign key "{fk_name}" is missing one or more required metadata fields')
                 table.add_foreign_key(ForeignKeyMetadata(
                     name=fk_name,
-                    table=TableAddress(
+                    table=TablePath(
                         database_name,
                         fk_data['references']['schema'],
                         fk_data['references']['table']
@@ -285,7 +285,7 @@ class MetadataWriter:
         }
 
     @staticmethod
-    def table_address_to_string(table_address: Optional[TableAddress]) -> Optional[str]:
+    def table_address_to_string(table_address: Optional[TablePath]) -> Optional[str]:
         if table_address is None:
             return None
         else:

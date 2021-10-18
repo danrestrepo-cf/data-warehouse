@@ -16,10 +16,10 @@ from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        ETLMetadata,
                                                        ForeignKeyMetadata,
                                                        ForeignColumnPath,
-                                                       TableAddress,
                                                        ETLDataSource,
                                                        ETLInputType,
                                                        ETLOutputType)
+from metadata_core.metadata_object_path import TablePath
 
 test_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -273,7 +273,7 @@ class TestGenerateDataWarehouseWithFullYAMLFile(MetadataDirectoryTestCase):
         self.assertEqual(expected_etls, self.table2_metadata.etls)
 
     def test_parses_simple_attributes_correctly(self):
-        self.assertEqual(TableAddress('db1', 'sch2', 'table01'), self.table1_metadata.primary_source_table)
+        self.assertEqual(TablePath('db1', 'sch2', 'table01'), self.table1_metadata.primary_source_table)
         self.assertEqual('db1', self.table1_metadata.database_name)
         self.assertEqual('sch1', self.table1_metadata.schema_name)
         self.assertEqual(['col1', 'col2'], self.table1_metadata.primary_key)
@@ -281,8 +281,8 @@ class TestGenerateDataWarehouseWithFullYAMLFile(MetadataDirectoryTestCase):
 
     def test_parses_foreign_keys_into_ForeignKeyMetadata_objects(self):
         expected = [
-            ForeignKeyMetadata('fk_1', TableAddress('db1', 'sch1', 'table2'), ['col1', 'col2'], ['t2_col1', 't2_col2']),
-            ForeignKeyMetadata('fk_2', TableAddress('db1', 'sch3', 'table12'), ['col3'], ['t12_col7'])
+            ForeignKeyMetadata('fk_1', TablePath('db1', 'sch1', 'table2'), ['col1', 'col2'], ['t2_col1', 't2_col2']),
+            ForeignKeyMetadata('fk_2', TablePath('db1', 'sch3', 'table12'), ['col3'], ['t12_col7'])
         ]
         self.assertEqual(expected, self.table1_metadata.foreign_keys)
 
@@ -579,7 +579,7 @@ class TestWriteDataWarehouseMetadataToYAML_ExistingDirectoriesAndFiles(MetadataD
     def test_doesnt_rebuild_any_directories_by_default(self):
         write_data_warehouse_metadata_to_yaml(test_dir, self.metadata_to_write)
         expected = self.original_metadata_read_from_files
-        expected.get_table_by_address(TableAddress('db1', 'sch1', 't1')).primary_key.append('col1')
+        expected.get_table_by_path(TablePath('db1', 'sch1', 't1')).primary_key.append('col1')
         result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
         self.assertEqual(expected, result)
 
@@ -591,7 +591,7 @@ class TestWriteDataWarehouseMetadataToYAML_ExistingDirectoriesAndFiles(MetadataD
     def test_rebuilds_databases_dirs_for_the_included_databases_if_relevant_option_is_set_to_true(self):
         write_data_warehouse_metadata_to_yaml(test_dir, self.metadata_to_write, rebuild_database_dirs=True)
         expected = self.original_metadata_read_from_files
-        expected.get_table_by_address(TableAddress('db1', 'sch1', 't1')).primary_key.append('col1')
+        expected.get_table_by_path(TablePath('db1', 'sch1', 't1')).primary_key.append('col1')
         expected.get_database('db1').remove_schema_metadata('sch2')
         expected.get_database('db1').get_schema('sch1').remove_table_metadata('t2')
         result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
@@ -600,7 +600,7 @@ class TestWriteDataWarehouseMetadataToYAML_ExistingDirectoriesAndFiles(MetadataD
     def test_rebuilds_schema_dirs_for_the_included_schemas_if_relevant_option_is_set_to_true(self):
         write_data_warehouse_metadata_to_yaml(test_dir, self.metadata_to_write, rebuild_schema_dirs=True)
         expected = self.original_metadata_read_from_files
-        expected.get_table_by_address(TableAddress('db1', 'sch1', 't1')).primary_key.append('col1')
+        expected.get_table_by_path(TablePath('db1', 'sch1', 't1')).primary_key.append('col1')
         expected.get_database('db1').get_schema('sch1').remove_table_metadata('t2')
         result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
         self.assertEqual(expected, result)
@@ -608,7 +608,7 @@ class TestWriteDataWarehouseMetadataToYAML_ExistingDirectoriesAndFiles(MetadataD
     def test_rebuilds_table_files_for_the_included_schemas_if_relevant_option_is_set_to_true(self):
         write_data_warehouse_metadata_to_yaml(test_dir, self.metadata_to_write, rebuild_table_files=True)
         expected = self.original_metadata_read_from_files
-        expected.get_table_by_address(TableAddress('db1', 'sch1', 't1')).primary_key.append('col1')
+        expected.get_table_by_path(TablePath('db1', 'sch1', 't1')).primary_key.append('col1')
         expected.get_database('db1').get_schema('sch1').remove_table_metadata('t2')
         result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
         self.assertEqual(expected, result)

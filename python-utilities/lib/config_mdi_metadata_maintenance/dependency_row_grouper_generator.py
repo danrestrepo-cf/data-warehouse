@@ -4,7 +4,8 @@ from typing import List
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable
 from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper
 from lib.config_mdi_metadata_maintenance.multi_key_map import MultiKeyMap
-from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, InvalidMetadataKeyException, TableAddress
+from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, InvalidMetadataKeyException
+from metadata_core.metadata_object_path import TablePath
 
 
 class NodeLineageTracer(ABC):
@@ -27,9 +28,9 @@ class TableInsertNodeLineageTracer(NodeLineageTracer):
         self._metadata = data_warehouse_metadata
 
     def determine_node_parents(self, node_key: dict) -> List[dict]:
-        table_address = TableAddress(database=node_key['database_name'], schema=node_key['schema_name'], table=node_key['table_name'])
+        table_address = TablePath(database=node_key['database_name'], schema=node_key['schema_name'], table=node_key['table_name'])
         try:
-            table_metadata = self._metadata.get_table_by_address(table_address)
+            table_metadata = self._metadata.get_table_by_path(table_address)
             if table_metadata.primary_source_table is not None:
                 return [{
                     'database_name': table_metadata.primary_source_table.database,
@@ -77,9 +78,9 @@ class FieldInsertNodeLineageTracer(NodeLineageTracer):
         self._metadata = data_warehouse_metadata
 
     def determine_node_parents(self, node_key: dict) -> List[dict]:
-        table_address = TableAddress(database=node_key['database_name'], schema=node_key['schema_name'], table=node_key['table_name'])
+        table_address = TablePath(database=node_key['database_name'], schema=node_key['schema_name'], table=node_key['table_name'])
         try:
-            table_metadata = self._metadata.get_table_by_address(table_address)
+            table_metadata = self._metadata.get_table_by_path(table_address)
             source_table_metadata = table_metadata.get_column_source_table(node_key['field_name'], self._metadata)
             column_metadata = table_metadata.get_column(node_key['field_name'])
             if column_metadata.source_field is not None:

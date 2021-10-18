@@ -2,12 +2,7 @@ from enum import Enum
 from dataclasses import dataclass
 from typing import List, Optional
 
-
-@dataclass
-class TableAddress:
-    database: str
-    schema: str
-    table: str
+from metadata_core.metadata_object_path import TablePath
 
 
 @dataclass
@@ -19,7 +14,7 @@ class ForeignColumnPath:
 @dataclass
 class ForeignKeyMetadata:
     name: str
-    table: TableAddress
+    table: TablePath
     native_columns: List[str]
     foreign_columns: List[str]
 
@@ -58,7 +53,7 @@ class ColumnMetadata:
 
 class TableMetadata:
 
-    def __init__(self, name: str, schema_name: str = None, database_name: str = None, primary_source_table: TableAddress = None):
+    def __init__(self, name: str, schema_name: str = None, database_name: str = None, primary_source_table: TablePath = None):
         self.name = name
         self.schema_name = schema_name
         self.database_name = database_name
@@ -111,9 +106,9 @@ class TableMetadata:
     def get_column_source_table(self, column_name: str, data_warehouse_metadata: 'DataWarehouseMetadata') -> Optional['TableMetadata']:
         source_field = self.get_column(column_name).source_field
         if source_field is not None:
-            source_table = data_warehouse_metadata.get_table_by_address(self.primary_source_table)
+            source_table = data_warehouse_metadata.get_table_by_path(self.primary_source_table)
             for foreign_key in source_field.fk_steps:
-                source_table = data_warehouse_metadata.get_table_by_address(source_table.get_foreign_key(foreign_key).table)
+                source_table = data_warehouse_metadata.get_table_by_path(source_table.get_foreign_key(foreign_key).table)
             return source_table
         else:
             return None
@@ -131,8 +126,8 @@ class TableMetadata:
         return list(self._foreign_keys.values())
 
     @property
-    def address(self) -> TableAddress:
-        return TableAddress(
+    def address(self) -> TablePath:
+        return TablePath(
             database=self.database_name,
             schema=self.schema_name,
             table=self.name
@@ -255,8 +250,8 @@ class DataWarehouseMetadata:
     def databases(self) -> List[DatabaseMetadata]:
         return list(self._databases.values())
 
-    def get_table_by_address(self, address: TableAddress) -> TableMetadata:
-        return self.get_database(address.database).get_schema(address.schema).get_table(address.table)
+    def get_table_by_path(self, path: TablePath) -> TableMetadata:
+        return self.get_database(path.database).get_schema(path.schema).get_table(path.table)
 
     def __repr__(self) -> str:
         return f'DataWarehouseMetadata(\n' \

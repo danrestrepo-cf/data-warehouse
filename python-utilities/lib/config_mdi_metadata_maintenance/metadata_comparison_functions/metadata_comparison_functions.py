@@ -4,7 +4,8 @@ from abc import ABC, abstractmethod
 from lib.db_connections import LocalEDWConnection
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper
-from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, ETLMetadata, TableAddress
+from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, ETLMetadata
+from metadata_core.metadata_object_path import TablePath
 
 
 class MetadataComparisonFunctions(ABC):
@@ -51,7 +52,7 @@ class MetadataComparisonFunctions(ABC):
         return MetadataTable(self.key_fields)
 
     @staticmethod
-    def construct_process_description(table: TableAddress, source_table: TableAddress, etl: ETLMetadata) -> str:
+    def construct_process_description(table: TablePath, source_table: TablePath, etl: ETLMetadata) -> str:
         if table.database == 'staging' and table.schema == 'history_octane' and source_table.database == 'staging' and source_table.schema == 'staging_octane':
             return f'ETL to copy {table.table} data from staging_octane to history_octane'
         else:

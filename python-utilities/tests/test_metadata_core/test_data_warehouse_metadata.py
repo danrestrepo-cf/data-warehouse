@@ -7,8 +7,8 @@ from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        ColumnMetadata,
                                                        ETLMetadata,
                                                        ForeignKeyMetadata,
-                                                       InvalidMetadataKeyException,
-                                                       TableAddress)
+                                                       InvalidMetadataKeyException)
+from metadata_core.metadata_object_path import TablePath
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
 
 
@@ -51,8 +51,8 @@ class TestDataWarehouseMetadata(unittest.TestCase):
         database_metadata.add_schema(schema_metadata)
         dw_metadata = DataWarehouseMetadata('edw')
         dw_metadata.add_database(database_metadata)
-        table_address = TableAddress('db1', 'schema1', 'table1')
-        self.assertEqual(table_metadata, dw_metadata.get_table_by_address(table_address))
+        table_address = TablePath('db1', 'schema1', 'table1')
+        self.assertEqual(table_metadata, dw_metadata.get_table_by_path(table_address))
 
 
 class TestDatabaseMetadata(unittest.TestCase):
@@ -186,13 +186,13 @@ class TestTableMetadata(unittest.TestCase):
 
     def test_can_get_foreign_key_metadata_by_foreign_key_name_if_the_foreign_key_has_been_added_to_the_metadata(self):
         table_metadata = TableMetadata('deal')
-        proposal_address = TableAddress('staging', 'staging_octane', 'proposal')
+        proposal_address = TablePath('staging', 'staging_octane', 'proposal')
         table_metadata.add_foreign_key(ForeignKeyMetadata('fk_0', proposal_address, [], []))
         self.assertEqual(ForeignKeyMetadata('fk_0', proposal_address, [], []), table_metadata.get_foreign_key('fk_0'))
 
     def test_can_iterate_through_all_added_foreign_keys(self):
         table_metadata = TableMetadata('deal')
-        proposal_address = TableAddress('staging', 'staging_octane', 'proposal')
+        proposal_address = TablePath('staging', 'staging_octane', 'proposal')
         table_metadata.add_foreign_key(ForeignKeyMetadata('fk_0', proposal_address, [], []))
         table_metadata.add_foreign_key(ForeignKeyMetadata('fk_1', proposal_address, [], []))
         table_metadata.add_foreign_key(ForeignKeyMetadata('fk_2', proposal_address, [], []))
@@ -207,7 +207,7 @@ class TestTableMetadata(unittest.TestCase):
         table_metadata = TableMetadata('account')
         table_metadata.add_foreign_key(ForeignKeyMetadata(
             name='fk_1',
-            table=TableAddress('db', 'schema', 'table'),
+            table=TablePath('db', 'schema', 'table'),
             native_columns=[],
             foreign_columns=[]
         ))
@@ -221,7 +221,7 @@ class TestTableMetadata(unittest.TestCase):
 
     def test_can_generate_its_own_address(self):
         table_metadata = TableMetadata(name='account', schema_name='staging_octane', database_name='staging')
-        expected = TableAddress(table='account', schema='staging_octane', database='staging')
+        expected = TablePath(table='account', schema='staging_octane', database='staging')
         self.assertEqual(expected, table_metadata.address)
 
 
@@ -341,22 +341,22 @@ class TestTableMetadataCanGetColumnSourceTable(unittest.TestCase):
         )
 
     def test_none_if_column_has_no_source(self):
-        table_address = TableAddress('staging', 'staging_octane', 'source_table')
-        table = self.dw_metadata.get_table_by_address(table_address)
+        table_address = TablePath('staging', 'staging_octane', 'source_table')
+        table = self.dw_metadata.get_table_by_path(table_address)
         self.assertEqual(None, table.get_column_source_table('source_column', self.dw_metadata))
 
     def test_retrieves_primary_source_table_metadata_if_there_are_no_fk_steps(self):
-        table_address = TableAddress('staging', 'history_octane', 'table_with_source')
-        table = self.dw_metadata.get_table_by_address(table_address)
-        source_table_address = TableAddress('staging', 'staging_octane', 'source_table')
-        source_table = self.dw_metadata.get_table_by_address(source_table_address)
+        table_address = TablePath('staging', 'history_octane', 'table_with_source')
+        table = self.dw_metadata.get_table_by_path(table_address)
+        source_table_address = TablePath('staging', 'staging_octane', 'source_table')
+        source_table = self.dw_metadata.get_table_by_path(source_table_address)
         self.assertEqual(source_table, table.get_column_source_table('column_with_source', self.dw_metadata))
 
     def test_follows_fk_steps_to_retrieve_distant_source_table_metadata(self):
-        table_address = TableAddress('staging', 'history_octane', 'table_with_source')
-        table = self.dw_metadata.get_table_by_address(table_address)
-        source_table_address = TableAddress('staging', 'other_schema', 'distant_source_table')
-        source_table = self.dw_metadata.get_table_by_address(source_table_address)
+        table_address = TablePath('staging', 'history_octane', 'table_with_source')
+        table = self.dw_metadata.get_table_by_path(table_address)
+        source_table_address = TablePath('staging', 'other_schema', 'distant_source_table')
+        source_table = self.dw_metadata.get_table_by_path(source_table_address)
         self.assertEqual(source_table, table.get_column_source_table('column_with_distant_source', self.dw_metadata))
 
 
