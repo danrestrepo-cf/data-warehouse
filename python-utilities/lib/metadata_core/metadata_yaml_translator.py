@@ -57,15 +57,22 @@ class DictToMetadataBuilder:
 
     def build_metadata(self, data_warehouse_dict: dict) -> DataWarehouseMetadata:
         data_warehouse_metadata = DataWarehouseMetadata(data_warehouse_dict['name'])
-        for database_dict in data_warehouse_dict['databases']:
-            database_metadata = DatabaseMetadata(database_dict['name'])
-            data_warehouse_metadata.add_database(database_metadata)
-            for schema_dict in database_dict['schemas']:
-                schema_metadata = SchemaMetadata(schema_dict['name'])
-                database_metadata.add_schema(schema_metadata)
-                for table_dict in schema_dict['tables']:
-                    table_metadata = self.construct_table_metadata_from_dict(table_dict, schema_metadata.name, database_metadata.name)
-                    schema_metadata.add_table(table_metadata)
+        if 'databases' in data_warehouse_dict:
+            for database_dict in data_warehouse_dict['databases']:
+                database_metadata = DatabaseMetadata(database_dict['name'])
+                data_warehouse_metadata.add_database(database_metadata)
+                if 'schemas' in database_dict:
+                    for schema_dict in database_dict['schemas']:
+                        schema_metadata = SchemaMetadata(schema_dict['name'])
+                        database_metadata.add_schema(schema_metadata)
+                        if 'tables' in schema_dict:
+                            for table_dict in schema_dict['tables']:
+                                table_metadata = self.construct_table_metadata_from_dict(
+                                    table_dict=table_dict,
+                                    schema_name=schema_metadata.name,
+                                    database_name=database_metadata.name
+                                )
+                                schema_metadata.add_table(table_metadata)
         return data_warehouse_metadata
 
     def construct_table_metadata_from_dict(self, table_dict: dict, schema_name: str, database_name: str) -> TableMetadata:
