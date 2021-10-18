@@ -70,6 +70,16 @@ class TestInclusiveMetadataFilterer(unittest.TestCase):
                                             'c1': {
                                                 'data_type': 'TEXT'
                                             }
+                                        },
+                                        'foreign_keys': {
+                                            'fk1': {
+                                                'columns': ['c1'],
+                                                'references': {
+                                                    'columns': ['c1_99'],
+                                                    'schema': 'sch99',
+                                                    'table': 'table99'
+                                                }
+                                            }
                                         }
                                     }
                                 ]
@@ -124,9 +134,10 @@ class TestInclusiveMetadataFilterer(unittest.TestCase):
         expected.get_database('db1').get_schema('sch1').remove_table_metadata('t3')
         self.assertEqual(expected, self.filterer.filter(self.metadata))
 
-    def test_removes_any_columns_that_do_not_match_at_least_one_filter(self):
+    def test_removes_any_columns_that_do_not_match_at_least_one_filter_as_well_as_their_foreign_keys(self):
         self.filterer.add_column_criteria(ColumnPath('db1', 'sch1', 't2', 'c1'))
         expected = copy.deepcopy(self.metadata)
+        expected.get_database('db1').get_schema('sch1').get_table('t3').remove_foreign_key_metadata('fk1')
         expected.get_database('db1').get_schema('sch1').get_table('t3').remove_column_metadata('c1')
         expected.get_database('db2').get_schema('sch2').get_table('t2').remove_column_metadata('c2')
         self.assertEqual(expected, self.filterer.filter(self.metadata))

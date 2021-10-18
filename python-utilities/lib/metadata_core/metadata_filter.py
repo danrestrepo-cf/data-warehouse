@@ -43,24 +43,24 @@ class MetadataFilterer(ABC):
     def filter(self, metadata: DataWarehouseMetadata) -> DataWarehouseMetadata:
         filtered_metadata = copy.deepcopy(metadata)
         for database in metadata.databases:
-            if self._database_matcher.has_criteria and self.metadata_should_be_filtered_out(
-                    self._database_matcher.matches(database.path)):
+            if self.metadata_should_be_filtered_out(self._database_matcher, database):
                 filtered_metadata.remove_database_metadata(database.name)
             else:
                 for schema in database.schemas:
-                    if self._schema_matcher.has_criteria and self.metadata_should_be_filtered_out(
-                            self._schema_matcher.matches(schema.path)):
+                    if self.metadata_should_be_filtered_out(self._schema_matcher, schema):
                         filtered_metadata.get_database(database.name).remove_schema_metadata(schema.name)
                     else:
                         for table in schema.tables:
-                            if self._table_matcher.has_criteria and self.metadata_should_be_filtered_out(
-                                    self._table_matcher.matches(table.path)):
+                            if self.metadata_should_be_filtered_out(self._table_matcher, table):
                                 filtered_metadata.get_schema_by_path(schema.path).remove_table_metadata(table.name)
                             else:
                                 for column in table.columns:
-                                    if self._column_matcher.has_criteria and self.metadata_should_be_filtered_out(
-                                            self._column_matcher.matches(column.path)):
+                                    if self.metadata_should_be_filtered_out(self._column_matcher, column):
                                         filtered_metadata.get_table_by_path(table.path).remove_column_metadata(column.name)
+                                        for foreign_key in table.foreign_keys:
+                                            if column.name in foreign_key.native_columns:
+                                                filtered_metadata.get_table_by_path(table.path).remove_foreign_key_metadata(
+                                                    foreign_key.name)
 
         return filtered_metadata
 
@@ -76,21 +76,24 @@ class MetadataFilterer(ABC):
     def add_column_criteria(self, column_path: ColumnPath) -> None:
         self._column_matcher.add_criteria(column_path)
 
+    def metadata_should_be_filtered_out(self, criteria_matcher: CriteriaMatcher, metadata_object) -> bool:
+        return criteria_matcher.has_criteria and self.process_match_result(criteria_matcher.matches(metadata_object.path))
+
     @staticmethod
     @abstractmethod
-    def metadata_should_be_filtered_out(criteria_match_result: bool) -> bool:
+    def process_match_result(criteria_match_result: bool) -> bool:
         pass
 
 
 class InclusiveMetadataFilterer(MetadataFilterer):
 
     @staticmethod
-    def metadata_should_be_filtered_out(criteria_match_result: bool) -> bool:
+    def process_match_result(criteria_match_result: bool) -> bool:
         return not criteria_match_result
 
 
 class ExclusiveMetadataFilterer(MetadataFilterer):
 
     @staticmethod
-    def metadata_should_be_filtered_out(criteria_match_result: bool) -> bool:
+    def process_match_result(criteria_match_result: bool) -> bool:
         return criteria_match_result
