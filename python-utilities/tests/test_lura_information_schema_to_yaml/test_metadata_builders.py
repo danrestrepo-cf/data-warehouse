@@ -115,9 +115,15 @@ class TestMapDataType(unittest.TestCase):
     def test_maps_text_to_itself(self):
         self.assertEqual('TEXT', map_data_type('text'))
 
+    def test_maps_blob_to_bytea(self):
+        self.assertEqual('BYTEA', map_data_type('blob'))
+
     def test_maps_varchar_to_itself(self):
         self.assertEqual('VARCHAR(16)', map_data_type('varchar(16)'))
         self.assertEqual('VARCHAR(256)', map_data_type('varCHAR(256)'))
+
+    def test_maps_timestamp_to_itself(self):
+        self.assertEqual('TIMESTAMP', map_data_type('timestamp'))
 
     def test_maps_datetime_to_timestamp(self):
         self.assertEqual('TIMESTAMP', map_data_type('datetime'))
@@ -125,6 +131,10 @@ class TestMapDataType(unittest.TestCase):
     def test_maps_tinyint_to_smallint(self):
         self.assertEqual('SMALLINT', map_data_type('TINYINT(8)'))
         self.assertEqual('SMALLINT', map_data_type('TINYINT(64)'))
+
+    def test_maps_smallint_to_smallint(self):
+        self.assertEqual('SMALLINT', map_data_type('SMALLINT(8)'))
+        self.assertEqual('SMALLINT', map_data_type('SMALLINT(64)'))
 
     def test_maps_int_to_integer(self):
         self.assertEqual('INTEGER', map_data_type('int(32)'))

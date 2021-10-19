@@ -61,11 +61,15 @@ def build_staging_octane_metadata(column_metadata: List[dict], foreign_key_metad
 
 def map_data_type(data_type: str) -> str:
     upper_data_type = data_type.upper()
-    if upper_data_type == 'DATE' or upper_data_type == 'TIME' or upper_data_type == 'TEXT' or upper_data_type.startswith('VARCHAR('):
+    if upper_data_type in ('DATE', 'TIME', 'TEXT', 'TIMESTAMP') or upper_data_type.startswith('VARCHAR('):
         return upper_data_type
     elif upper_data_type == 'DATETIME':
         return 'TIMESTAMP'
+    elif upper_data_type == 'BLOB':
+        return 'BYTEA'
     elif upper_data_type.startswith('TINYINT('):
+        return 'SMALLINT'
+    elif upper_data_type.startswith('SMALLINT('):
         return 'SMALLINT'
     elif upper_data_type.startswith('INT('):
         return 'INTEGER'
@@ -110,18 +114,19 @@ def generate_history_octane_metadata(metadata: DataWarehouseMetadata, table_to_p
                 foreign_columns=copy.copy(staging_fk.foreign_columns)
             )
             history_table.add_foreign_key(history_fk)
-        history_etl = ETLMetadata(
-            process_name=table_to_process_map[staging_table.name]['process'],
-            hardcoded_data_source=ETLDataSource.OCTANE,
-            input_type=ETLInputType.TABLE,
-            output_type=ETLOutputType.INSERT,
-            json_output_field=staging_table.primary_key[0],
-            truncate_table=False,
-            input_sql=generate_table_input_sql(staging_table)
-        )
-        history_table.add_etl(history_etl)
-        for process in table_to_process_map[staging_table.name]['next_processes']:
-            history_table.next_etls.append(process)
+        if staging_table.name in table_to_process_map:
+            history_etl = ETLMetadata(
+                process_name=table_to_process_map[staging_table.name]['process'],
+                hardcoded_data_source=ETLDataSource.OCTANE,
+                input_type=ETLInputType.TABLE,
+                output_type=ETLOutputType.INSERT,
+                json_output_field=staging_table.primary_key[0],
+                truncate_table=False,
+                input_sql=generate_table_input_sql(staging_table)
+            )
+            history_table.add_etl(history_etl)
+            for process in table_to_process_map[staging_table.name]['next_processes']:
+                history_table.next_etls.append(process)
     return metadata_with_history_octane
 
 
