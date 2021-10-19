@@ -7,7 +7,8 @@ import yaml
 from lib.metadata_core.metadata_yaml_translator import (generate_data_warehouse_metadata_from_yaml,
                                                         write_data_warehouse_metadata_to_yaml,
                                                         construct_data_warehouse_metadata_from_dict,
-                                                        DictToMetadataBuilder)
+                                                        DictToMetadataBuilder,
+                                                        filter_out_dict_keys_with_no_value)
 from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        DatabaseMetadata,
                                                        SchemaMetadata,
@@ -613,6 +614,41 @@ class TestWriteDataWarehouseMetadataToYAML_ExistingDirectoriesAndFiles(MetadataD
         result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
         self.assertEqual(expected, result)
         self.assertTrue(os.path.exists(self.v1_filepath))
+
+
+class TestFilterOutDictKeysWithNoValue(unittest.TestCase):
+
+    def test_filters_out_nulls_and_empty_lists_and_empty_dicts_at_the_top_level(self):
+        input_dict = {
+            'a': 'value',
+            'b': None,
+            'c': [],
+            'd': {}
+        }
+        expected = {'a': 'value'}
+        self.assertEqual(expected, filter_out_dict_keys_with_no_value(input_dict))
+
+    def test_recursively_filters_out_nulls_and_empty_lists_and_empty_dicts_at_any_depth(self):
+        input_dict = {
+            'a': 'value',
+            'b': None,
+            'c': {
+                'd': {
+                    'e': [],
+                    'f': 1
+                },
+                'g': {}
+            }
+        }
+        expected = {
+            'a': 'value',
+            'c': {
+                'd': {
+                    'f': 1
+                }
+            }
+        }
+        self.assertEqual(expected, filter_out_dict_keys_with_no_value(input_dict))
 
 
 if __name__ == '__main__':

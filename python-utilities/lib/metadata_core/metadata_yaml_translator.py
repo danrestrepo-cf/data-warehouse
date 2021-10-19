@@ -244,7 +244,7 @@ class MetadataWriter:
                     for table_file in table_files:
                         os.remove(table_file)
                 for table in schema.tables:
-                    table_yaml_dict = self.filter_out_keys_with_no_value(self.create_yaml_dict_from_table_metadata(table))
+                    table_yaml_dict = filter_out_dict_keys_with_no_value(self.create_yaml_dict_from_table_metadata(table))
                     table_file_path = os.path.join(schema_dir, f'table.{table.name}.yaml')
                     self.write_table_metadata_yaml_file(table_file_path, table_yaml_dict)
 
@@ -309,13 +309,22 @@ class MetadataWriter:
             }
         return column_dict
 
-    def write_table_metadata_yaml_file(self, output_file_path: str, metadata: dict):
-        with open(output_file_path, 'w') as output_file:
-            yaml.dump(self.filter_out_keys_with_no_value(metadata), output_file, default_flow_style=False, sort_keys=False)
-
     @staticmethod
-    def filter_out_keys_with_no_value(metadata: dict) -> dict:
-        return {key: value for key, value in metadata.items() if value != [] and value != {} and value is not None}
+    def write_table_metadata_yaml_file(output_file_path: str, metadata: dict):
+        with open(output_file_path, 'w') as output_file:
+            yaml.dump(metadata, output_file, default_flow_style=False, sort_keys=False)
+
+
+def filter_out_dict_keys_with_no_value(d: dict) -> dict:
+    result = {}
+    for key, value in d.items():
+        if value == [] or value == {} or value is None:
+            pass  # do nothing, don't add the value to the result
+        elif type(value) is dict:
+            result[key] = filter_out_dict_keys_with_no_value(value)
+        else:
+            result[key] = value
+    return result
 
 
 def get_subdir_paths_with_prefix(root_dir: str, prefix: str) -> List[str]:
