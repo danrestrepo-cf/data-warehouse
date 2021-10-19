@@ -116,7 +116,7 @@ def add_history_octane_metadata(metadata: DataWarehouseMetadata, table_to_proces
             output_type=ETLOutputType.INSERT,
             json_output_field=staging_table.primary_key[0],
             truncate_table=False,
-            input_sql='SQL for ' + table_to_process_map[staging_table.name]['process']
+            input_sql=generate_table_input_sql(staging_table)
         )
         history_table.add_etl(history_etl)
         for process in table_to_process_map[staging_table.name]['next_processes']:
@@ -147,3 +147,53 @@ def get_version_column_name(table: TableMetadata) -> Optional[str]:
             return probable_version_column_name
         except InvalidMetadataKeyException:
             return None
+
+
+def generate_table_input_sql(table_metadata: TableMetadata) -> str:
+    table_name = table_metadata.name
+    staging_select_columns = generate_select_columns_string('staging_table', table_metadata.columns, increment_version=False)
+    table_input_sql = f'--finding records to insert into history_octane.{table_name}\n' + \
+                      f'SELECT {staging_select_columns}\n' + \
+                      f'     , FALSE AS data_source_deleted_flag\n' + \
+                      f'     , NOW( ) AS data_source_updated_datetime\n' + \
+                      f'FROM staging_octane.{table_name} staging_table\n'
+
+    if table_name.endswith('_type'):
+        table_input_sql += f'LEFT JOIN history_octane.{table_name} history_table\n' + \
+                           f'          ON staging_table.code = history_table.code\n' \
+                           f'              AND staging_table.value = history_table.value\n' + \
+                           f'WHERE history_table.code IS NULL;'
+    else:
+        primary_key_column = table_metadata.primary_key[0]
+        octane_table_column_prefix = primary_key_column.split('_')[0]
+        version_column = f'{octane_table_column_prefix}_version'
+        history_select_columns = generate_select_columns_string('history_table', table_metadata.columns, increment_version=True)
+        table_input_sql += f'LEFT JOIN history_octane.{table_name} history_table\n' + \
+                           f'          ON staging_table.{primary_key_column} = history_table.{primary_key_column}\n' \
+                           f'              AND staging_table.{version_column} = history_table.{version_column}\n' + \
+                           f'WHERE history_table.{primary_key_column} IS NULL\n' + \
+                           f'UNION ALL\n' + \
+                           f'SELECT {history_select_columns}\n' + \
+                           f'     , TRUE AS data_source_deleted_flag\n' + \
+                           f'     , NOW( ) AS data_source_updated_datetime\n' + \
+                           f'FROM history_octane.{table_name} history_table\n' + \
+                           f'LEFT JOIN staging_octane.{table_name} staging_table\n' + \
+                           f'          ON staging_table.{primary_key_column} = history_table.{primary_key_column}\n' + \
+                           f'WHERE staging_table.{primary_key_column} IS NULL\n' + \
+                           f'  AND NOT EXISTS(\n' + \
+                           f'    SELECT 1\n' + \
+                           f'    FROM history_octane.{table_name} deleted_records\n' + \
+                           f'    WHERE deleted_records.{primary_key_column} = history_table.{primary_key_column}\n' + \
+                           f'      AND deleted_records.data_source_deleted_flag = TRUE\n' + \
+                           f'    );'
+    return table_input_sql
+
+
+def generate_select_columns_string(table_prefix: str, columns: List[ColumnMetadata], increment_version: bool) -> str:
+    select_columns = []
+    for col in columns:
+        if col.name.endswith('_version') and increment_version:
+            select_columns.append(f'{table_prefix}.{col.name} + 1')
+        elif col.name not in ['data_source_updated_datetime', 'data_source_deleted_flag']:
+            select_columns.append(f'{table_prefix}.{col.name}')
+    return '\n     , '.join(select_columns)

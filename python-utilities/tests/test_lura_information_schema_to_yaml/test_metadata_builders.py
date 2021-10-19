@@ -288,7 +288,36 @@ class TestAddHistoryOctaneMetadata(unittest.TestCase):
                             'output_type': 'insert',
                             'json_output_field': 'a_pid',
                             'truncate_table': False,
-                            'input_sql': 'SQL for SP-1'
+                            'input_sql': "--finding records to insert into history_octane.account\n" +
+                                         "SELECT staging_table.a_pid\n" +
+                                         "     , staging_table.a_fk_col_1\n" +
+                                         "     , staging_table.a_fk_col_2\n" +
+                                         "     , staging_table.a_version\n" +
+                                         "     , FALSE AS data_source_deleted_flag\n" +
+                                         "     , NOW( ) AS data_source_updated_datetime\n" +
+                                         "FROM staging_octane.account staging_table\n" +
+                                         "LEFT JOIN history_octane.account history_table\n" +
+                                         "          ON staging_table.a_pid = history_table.a_pid\n" +
+                                         "              AND staging_table.a_version = history_table.a_version\n" +
+                                         "WHERE history_table.a_pid IS NULL\n" +
+                                         "UNION ALL\n" +
+                                         "SELECT history_table.a_pid\n" +
+                                         "     , history_table.a_fk_col_1\n" +
+                                         "     , history_table.a_fk_col_2\n" +
+                                         "     , history_table.a_version + 1\n" +
+                                         "     , TRUE AS data_source_deleted_flag\n" +
+                                         "     , NOW( ) AS data_source_updated_datetime\n" +
+                                         "FROM history_octane.account history_table\n" +
+                                         "LEFT JOIN staging_octane.account staging_table\n" +
+                                         "          ON staging_table.a_pid = history_table.a_pid\n" +
+                                         "WHERE staging_table.a_pid IS NULL\n" +
+                                         "  AND NOT EXISTS(\n" +
+                                         "    SELECT 1\n" +
+                                         "    FROM history_octane.account deleted_records\n" +
+                                         "    WHERE deleted_records.a_pid = history_table.a_pid\n" +
+                                         "      AND deleted_records.data_source_deleted_flag = TRUE\n" +
+                                         "    );"
+
                         }
                     },
                     'next_etls': ['SP-10', 'SP-11']
@@ -324,7 +353,16 @@ class TestAddHistoryOctaneMetadata(unittest.TestCase):
                             'output_type': 'insert',
                             'json_output_field': 'code',
                             'truncate_table': False,
-                            'input_sql': 'SQL for SP-2'
+                            'input_sql': "--finding records to insert into history_octane.account_type\n" +
+                                         "SELECT staging_table.code\n" +
+                                         "     , staging_table.value\n" +
+                                         "     , FALSE AS data_source_deleted_flag\n" +
+                                         "     , NOW( ) AS data_source_updated_datetime\n" +
+                                         "FROM staging_octane.account_type staging_table\n" +
+                                         "LEFT JOIN history_octane.account_type history_table\n" +
+                                         "          ON staging_table.code = history_table.code\n" +
+                                         "              AND staging_table.value = history_table.value\n" +
+                                         "WHERE history_table.code IS NULL;"
                         }
                     },
                     'next_etls': ['SP-20', 'SP-21']
