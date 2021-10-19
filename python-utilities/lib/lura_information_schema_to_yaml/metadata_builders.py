@@ -1,5 +1,6 @@
 import copy
 from typing import List, Optional
+import re
 
 from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        SchemaMetadata,
@@ -78,7 +79,7 @@ def map_data_type(data_type: str) -> str:
         raise ValueError(f'Unable to map data type {upper_data_type}')
 
 
-def add_history_octane_metadata(metadata: DataWarehouseMetadata, table_to_process_map: dict) -> DataWarehouseMetadata:
+def generate_history_octane_metadata(metadata: DataWarehouseMetadata, table_to_process_map: dict) -> DataWarehouseMetadata:
     try:
         staging_octane_schema = metadata.get_database('staging').get_schema('staging_octane')
     except InvalidMetadataKeyException:
@@ -124,9 +125,45 @@ def add_history_octane_metadata(metadata: DataWarehouseMetadata, table_to_proces
     return metadata_with_history_octane
 
 
+def add_deleted_tables_and_columns_to_history_octane_metadata(metadata: DataWarehouseMetadata,
+                                                              deleted_columns_metadata: List[dict]) -> DataWarehouseMetadata:
+    metadata_copy = copy.deepcopy(metadata)
+    try:
+        history_octane_schema_copy = metadata_copy.get_database('staging').get_schema('history_octane')
+    except InvalidMetadataKeyException:
+        raise ValueError('Schema "history_octane" in database "staging" must be present in order to incorporate deleted tables and columns')
+    previously_deleted_tables = []
+    for row in deleted_columns_metadata:
+        if not history_octane_schema_copy.contains_table(row['table_name']):
+            history_table = TableMetadata(name=row['table_name'])
+            history_octane_schema_copy.add_table(history_table)
+            previously_deleted_tables.append(history_table)
+        else:
+            history_table = history_octane_schema_copy.get_table(row['table_name'])
+        if not history_table.contains_column(row['column_name']):
+            history_table.add_column(ColumnMetadata(name=row['column_name'], data_type=row['data_type']))
+    for table in previously_deleted_tables:
+        table.primary_key = derive_history_table_primary_key_from_scratch(table)
+    return metadata_copy
+
+
 def is_type_table(table: TableMetadata) -> str:
     return table.name.endswith('_type') and \
            table.primary_key == ['code']
+
+
+def derive_history_table_primary_key_from_scratch(table: TableMetadata) -> List[str]:
+    for column in table.columns:
+        pid_prefix_match = re.match(r'([a-z0-9]+)_pid', column.name)
+        if pid_prefix_match:
+            primary_key = [pid_prefix_match.group(0)]
+            probable_version_column_name = f'{pid_prefix_match.group(1)}_version'
+            if table.contains_column(probable_version_column_name):
+                primary_key.append(probable_version_column_name)
+            return primary_key
+        elif column.name == 'code':
+            return ['code']
+    return []  # primary key could not be derived
 
 
 def get_table_column_prefix(table: TableMetadata) -> Optional[str]:
@@ -142,10 +179,9 @@ def get_version_column_name(table: TableMetadata) -> Optional[str]:
         return None
     else:
         probable_version_column_name = f'{column_prefix}_version'
-        try:
-            table.get_column(probable_version_column_name)  # confirm the version column actually exists
+        if table.contains_column(probable_version_column_name):
             return probable_version_column_name
-        except InvalidMetadataKeyException:
+        else:
             return None
 
 

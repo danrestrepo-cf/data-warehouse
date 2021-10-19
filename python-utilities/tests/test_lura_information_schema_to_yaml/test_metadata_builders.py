@@ -1,6 +1,7 @@
 import unittest
 
-from lib.lura_information_schema_to_yaml.metadata_builders import build_staging_octane_metadata, map_data_type, add_history_octane_metadata
+from lib.lura_information_schema_to_yaml.metadata_builders import build_staging_octane_metadata, map_data_type, \
+    generate_history_octane_metadata, add_deleted_tables_and_columns_to_history_octane_metadata
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
 
 
@@ -150,7 +151,7 @@ class TestAddHistoryOctaneMetadata(unittest.TestCase):
 
     def test_throws_value_error_if_given_metadata_doesnt_contain_staging_octane_schema(self):
         with self.assertRaises(ValueError):
-            add_history_octane_metadata(construct_data_warehouse_metadata_from_dict({'name': 'edw'}), {})
+            generate_history_octane_metadata(construct_data_warehouse_metadata_from_dict({'name': 'edw'}), {})
 
     def test(self):
         metadata_dict = {
@@ -371,47 +372,104 @@ class TestAddHistoryOctaneMetadata(unittest.TestCase):
         })
 
         expected = construct_data_warehouse_metadata_from_dict(metadata_dict)
-        self.assertEqual(expected, add_history_octane_metadata(staging_metadata, table_to_process_map))
+        self.assertEqual(expected, generate_history_octane_metadata(staging_metadata, table_to_process_map))
 
 
-# history_octane_column_metadata = [
-#     {'table_name': 'account', 'column_name': 'a_deleted_column', 'data_type': 'TEXT'},
-#     {'table_name': 'deleted_table', 'column_name': 'dt_pid', 'data_type': 'BIGINT'},
-#     {'table_name': 'deleted_table', 'column_name': 'dt_version', 'data_type': 'INTEGER'},
-#     {'table_name': 'deleted_type_table', 'column_name': 'code', 'data_type': 'TEXT'},
-#     {'table_name': 'deleted_type_table', 'column_name': 'value', 'data_type': 'TEXT'}
-# ]
+class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
 
-# ,
-# {
-#     'name': 'deleted_table',
-#     'primary_key': ['dt_pid', 'dt_version'],
-#     'columns': {
-#         'dt_pid': {
-#             'data_type': 'BIGINT'
-#         },
-#         'dt_version': {
-#             'data_type': 'INTEGER'
-#         }
-#     }
-# },
-# {
-#     'name': 'deleted_type_table',
-#     'primary_key': ['code'],
-#     'columns': {
-#         'code': {
-#             'data_type': 'TEXT'
-#         },
-#         'value': {
-#             'data_type': 'TEXT'
-#         }
-#     }
-# }
+    def test(self):
+        deleted_column_metadata = [
+            {'table_name': 'account', 'column_name': 'a_deleted_column', 'data_type': 'TEXT'},
+            {'table_name': 'deleted_table', 'column_name': 'dt_pid', 'data_type': 'BIGINT'},
+            {'table_name': 'deleted_table', 'column_name': 'dt_version', 'data_type': 'INTEGER'},
+            {'table_name': 'deleted_type_table', 'column_name': 'code', 'data_type': 'TEXT'},
+            {'table_name': 'deleted_type_table', 'column_name': 'value', 'data_type': 'TEXT'}
+        ]
 
-#
-# 'a_deleted_column': {
-#     'data_type': 'TEXT'
-# },
+        input_metadata = construct_data_warehouse_metadata_from_dict({
+            'name': 'edw',
+            'databases': [
+                {
+                    'name': 'staging',
+                    'schemas': [
+                        {
+                            'name': 'history_octane',
+                            'tables': [
+                                {
+                                    'name': 'account',
+                                    'primary_key': ['a_pid'],
+                                    'columns': {
+                                        'a_pid': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'a_version': {
+                                            'data_type': 'INTEGER'
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
+
+        expected = construct_data_warehouse_metadata_from_dict({
+            'name': 'edw',
+            'databases': [
+                {
+                    'name': 'staging',
+                    'schemas': [
+                        {
+                            'name': 'history_octane',
+                            'tables': [
+                                {
+                                    'name': 'account',
+                                    'primary_key': ['a_pid'],
+                                    'columns': {
+                                        'a_pid': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'a_version': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'a_deleted_column': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                },
+                                {
+                                    'name': 'deleted_table',
+                                    'primary_key': ['dt_pid', 'dt_version'],
+                                    'columns': {
+                                        'dt_pid': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'dt_version': {
+                                            'data_type': 'INTEGER'
+                                        }
+                                    }
+                                },
+                                {
+                                    'name': 'deleted_type_table',
+                                    'primary_key': ['code'],
+                                    'columns': {
+                                        'code': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'value': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
+        self.assertEqual(expected, add_deleted_tables_and_columns_to_history_octane_metadata(input_metadata, deleted_column_metadata))
+
 
 if __name__ == '__main__':
     unittest.main()

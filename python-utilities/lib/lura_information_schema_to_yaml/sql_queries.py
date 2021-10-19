@@ -59,28 +59,37 @@ def get_etl_process_metadata(edw_connection: LocalEDWConnection) -> dict:
         return table_etl_processes
 
 
-def get_history_octane_column_metadata(edw_connection: LocalEDWConnection) -> List[dict]:
+def get_history_octane_metadata_for_deleted_columns(edw_connection: LocalEDWConnection) -> List[dict]:
     with edw_connection as cursor:
         return cursor.select_as_list_of_dicts("""
-            SELECT columns.table_name
-                 , columns.column_name
+            SELECT history_columns.table_name
+                 , history_columns.column_name
                  , CASE
-                       WHEN columns.data_type = 'numeric'
-                           THEN 'NUMERIC(' || columns.numeric_precision || ',' || columns.numeric_scale || ')'
-                       WHEN columns.data_type = 'character varying'
-                           THEN 'VARCHAR(' || columns.character_maximum_length || ')'
-                       WHEN columns.data_type = 'timestamp with time zone'
+                       WHEN history_columns.data_type = 'numeric'
+                           THEN 'NUMERIC(' || history_columns.numeric_precision || ',' || history_columns.numeric_scale || ')'
+                       WHEN history_columns.data_type = 'character varying'
+                           THEN 'VARCHAR(' || history_columns.character_maximum_length || ')'
+                       WHEN history_columns.data_type = 'timestamp with time zone'
                            THEN 'TIMESTAMPTZ'
-                       WHEN columns.data_type = 'timestamp without time zone'
+                       WHEN history_columns.data_type = 'timestamp without time zone'
                            THEN 'TIMESTAMP'
-                       WHEN columns.data_type = 'time with time zone'
+                       WHEN history_columns.data_type = 'time with time zone'
                            THEN 'TIMETZ'
-                       WHEN columns.data_type = 'time without time zone'
+                       WHEN history_columns.data_type = 'time without time zone'
                            THEN 'TIME'
                        ELSE
-                           UPPER( columns.data_type )
+                           UPPER( history_columns.data_type )
                 END AS data_type
-            FROM information_schema.columns
-            WHERE columns.table_schema = 'history_octane'
-            ORDER BY columns.table_name, columns.ordinal_position;
+            FROM information_schema.columns history_columns
+            LEFT JOIN (
+                SELECT *
+                FROM information_schema.columns
+                WHERE columns.table_schema = 'staging_octane'
+            ) AS staging_columns
+                      ON history_columns.table_name = staging_columns.table_name
+                          AND history_columns.column_name = staging_columns.column_name
+            WHERE history_columns.table_schema = 'history_octane'
+              AND history_columns.column_name NOT IN ('data_source_updated_datetime', 'data_source_deleted_flag')
+              AND staging_columns.table_schema IS NULL
+            ORDER BY history_columns.table_name, history_columns.ordinal_position;
 """)
