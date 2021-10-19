@@ -4,37 +4,7 @@ from lib.lura_information_schema_to_yaml.metadata_builders import build_staging_
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
 
 
-class TestStagingOctaneMetadataBuilder(unittest.TestCase):
-
-    def test_creates_staging_octane_data_warehouse_metadata_object_with_only_one_database_and_schema(self):
-        result = build_staging_octane_metadata([], [])
-        self.assertEqual('edw', result.name)
-        self.assertEqual(['staging'], [database.name for database in result.databases])
-        self.assertEqual(['staging_octane'], [schema.name for schema in result.get_database('staging').schemas])
-
-    def test_creates_one_table_metadata_object_per_unique_table_name_in_column_metadata(self):
-        column_metadata = [
-            {
-                'table_name': 't1',
-                'column_name': 'c1',
-                'column_type': 'TEXT',
-                'is_primary_key': 1
-            },
-            {
-                'table_name': 't1',
-                'column_name': 'c2',
-                'column_type': 'INT(64)',
-                'is_primary_key': 0
-            },
-            {
-                'table_name': 't2',
-                'column_name': 'c1',
-                'column_type': 'TEXT',
-                'is_primary_key': 1
-            }
-        ]
-        result = build_staging_octane_metadata(column_metadata, [])
-        self.assertEqual(['t1', 't2'], [table.name for table in result.get_database('staging').get_schema('staging_octane').tables])
+class TestBuildStagingOctaneMetadata(unittest.TestCase):
 
     def test_populates_primary_key_and_foreign_key_and_column_metadata_for_each_table(self):
         column_metadata = [
@@ -133,7 +103,7 @@ class TestStagingOctaneMetadataBuilder(unittest.TestCase):
         self.assertEqual(expected, build_staging_octane_metadata(column_metadata, foreign_key_metadata))
 
 
-class TestStagingOctaneMetadataBuilderDataTypeMapping(unittest.TestCase):
+class TestMapDataType(unittest.TestCase):
 
     def test_maps_date_to_itself(self):
         self.assertEqual('DATE', map_data_type('Date'))
