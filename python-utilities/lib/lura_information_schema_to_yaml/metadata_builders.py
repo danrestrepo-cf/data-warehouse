@@ -187,14 +187,14 @@ def get_version_column_name(table: TableMetadata) -> Optional[str]:
 
 def generate_table_input_sql(table_metadata: TableMetadata) -> str:
     table_name = table_metadata.name
-    staging_select_columns = generate_select_columns_string('staging_table', table_metadata.columns, increment_version=False)
+    staging_select_columns = generate_select_columns_string('staging_table', table_metadata, increment_version=False)
     table_input_sql = f'--finding records to insert into history_octane.{table_name}\n' + \
                       f'SELECT {staging_select_columns}\n' + \
                       f'     , FALSE AS data_source_deleted_flag\n' + \
                       f'     , NOW( ) AS data_source_updated_datetime\n' + \
                       f'FROM staging_octane.{table_name} staging_table\n'
 
-    if table_name.endswith('_type'):
+    if is_type_table(table_metadata):
         table_input_sql += f'LEFT JOIN history_octane.{table_name} history_table\n' + \
                            f'          ON staging_table.code = history_table.code\n' \
                            f'              AND staging_table.value = history_table.value\n' + \
@@ -203,7 +203,7 @@ def generate_table_input_sql(table_metadata: TableMetadata) -> str:
         primary_key_column = table_metadata.primary_key[0]
         octane_table_column_prefix = primary_key_column.split('_')[0]
         version_column = f'{octane_table_column_prefix}_version'
-        history_select_columns = generate_select_columns_string('history_table', table_metadata.columns, increment_version=True)
+        history_select_columns = generate_select_columns_string('history_table', table_metadata, increment_version=True)
         table_input_sql += f'LEFT JOIN history_octane.{table_name} history_table\n' + \
                            f'          ON staging_table.{primary_key_column} = history_table.{primary_key_column}\n' \
                            f'              AND staging_table.{version_column} = history_table.{version_column}\n' + \
@@ -225,11 +225,11 @@ def generate_table_input_sql(table_metadata: TableMetadata) -> str:
     return table_input_sql
 
 
-def generate_select_columns_string(table_prefix: str, columns: List[ColumnMetadata], increment_version: bool) -> str:
+def generate_select_columns_string(table_prefix: str, table: TableMetadata, increment_version: bool) -> str:
     select_columns = []
-    for col in columns:
-        if col.name.endswith('_version') and increment_version:
-            select_columns.append(f'{table_prefix}.{col.name} + 1')
-        elif col.name not in ['data_source_updated_datetime', 'data_source_deleted_flag']:
-            select_columns.append(f'{table_prefix}.{col.name}')
+    for column in table.columns:
+        if column.name == get_version_column_name(table) and increment_version:
+            select_columns.append(f'{table_prefix}.{column.name} + 1')
+        elif column.name not in ['data_source_updated_datetime', 'data_source_deleted_flag']:
+            select_columns.append(f'{table_prefix}.{column.name}')
     return '\n     , '.join(select_columns)
