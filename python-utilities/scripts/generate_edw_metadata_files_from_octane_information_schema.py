@@ -79,6 +79,8 @@ def main():
     # write metadata to YAML
     write_data_warehouse_metadata_to_yaml(output_parent_dir, metadata, rebuild_table_files=True)
 
+    print(f'"{metadata.name}" data warehouse metadata YAML files written successfully in {output_parent_dir}')
+
 
 def build_octane_metadata_filterer() -> ExclusiveMetadataFilterer:
     metadata_filterer = ExclusiveMetadataFilterer()
