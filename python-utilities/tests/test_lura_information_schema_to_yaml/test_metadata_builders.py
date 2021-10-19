@@ -147,13 +147,13 @@ class TestMapDataType(unittest.TestCase):
             map_data_type('unknown')
 
 
-class TestAddHistoryOctaneMetadata(unittest.TestCase):
+class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
 
     def test_throws_value_error_if_given_metadata_doesnt_contain_staging_octane_schema(self):
         with self.assertRaises(ValueError):
             generate_history_octane_metadata(construct_data_warehouse_metadata_from_dict({'name': 'edw'}), {})
 
-    def test(self):
+    def test_generates_history_octane_metadata_that_mirrors_existing_staging_octane_metadata_while_adding_history_specific_etl_data(self):
         metadata_dict = {
             'name': 'edw',
             'databases': [
@@ -377,7 +377,7 @@ class TestAddHistoryOctaneMetadata(unittest.TestCase):
 
 class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
 
-    def test(self):
+    def test_incorporates_given_columns_and_tables_into_the_given_data_warehouse_metadata_structure_if_they_dont_already_exist(self):
         deleted_column_metadata = [
             {'table_name': 'account', 'column_name': 'a_deleted_column', 'data_type': 'TEXT'},
             {'table_name': 'deleted_table', 'column_name': 'dt_pid', 'data_type': 'BIGINT'},
