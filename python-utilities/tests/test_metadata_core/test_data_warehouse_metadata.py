@@ -43,6 +43,12 @@ class TestDataWarehouseMetadata(unittest.TestCase):
         dw_metadata.remove_database_metadata('staging')
         self.assertEqual([], dw_metadata.databases)
 
+    def test_can_indicate_whether_it_contains_a_given_database_by_name(self):
+        dw_metadata = DataWarehouseMetadata('edw')
+        dw_metadata.add_database(DatabaseMetadata('staging'))
+        self.assertTrue(dw_metadata.contains_database('staging'))
+        self.assertFalse(dw_metadata.contains_database('ingress'))
+
 
 class TestDataWarehouseMetadataGetByPath(unittest.TestCase):
 
@@ -115,6 +121,12 @@ class TestDatabaseMetadata(unittest.TestCase):
         db_metadata.remove_schema_metadata('staging_octane')
         self.assertEqual([], db_metadata.schemas)
 
+    def test_can_indicate_whether_it_contains_a_given_schema_by_name(self):
+        db_metadata = DatabaseMetadata('staging')
+        db_metadata.add_schema(SchemaMetadata('staging_octane'))
+        self.assertTrue(db_metadata.contains_schema('staging_octane'))
+        self.assertFalse(db_metadata.contains_schema('history_octane'))
+
 
 class TestSchemaMetadata(unittest.TestCase):
 
@@ -162,6 +174,12 @@ class TestSchemaMetadata(unittest.TestCase):
         schema_metadata.remove_table_metadata('account')
         self.assertEqual([], schema_metadata.tables)
 
+    def test_can_indicate_whether_it_contains_a_given_table_by_name(self):
+        schema_metadata = SchemaMetadata('staging_octane')
+        schema_metadata.add_table(TableMetadata('account'))
+        self.assertTrue(schema_metadata.contains_table('account'))
+        self.assertFalse(schema_metadata.contains_table('deal'))
+
 
 class TestTableMetadata(unittest.TestCase):
 
@@ -206,6 +224,12 @@ class TestTableMetadata(unittest.TestCase):
         table_metadata.remove_column_metadata('a_pid')
         self.assertEqual([], table_metadata.columns)
 
+    def test_can_indicate_whether_it_contains_a_given_column_by_name(self):
+        table_metadata = TableMetadata('account')
+        table_metadata.add_column(ColumnMetadata('a_pid'))
+        self.assertTrue(table_metadata.contains_column('a_pid'))
+        self.assertFalse(table_metadata.contains_column('a_version'))
+
     def test_throws_error_if_user_tries_to_get_etl_that_doesnt_exist(self):
         table_metadata = TableMetadata('deal')
         with self.assertRaises(InvalidMetadataKeyException):
@@ -234,6 +258,12 @@ class TestTableMetadata(unittest.TestCase):
         table_metadata = TableMetadata('account')
         table_metadata.remove_etl_metadata('SP-100123')
         self.assertEqual([], table_metadata.etls)
+
+    def test_can_indicate_whether_it_contains_a_given_etl_by_name(self):
+        table_metadata = TableMetadata('account')
+        table_metadata.add_etl(ETLMetadata('SP-1'))
+        self.assertTrue(table_metadata.contains_etl('SP-1'))
+        self.assertFalse(table_metadata.contains_etl('SP-2'))
 
     def test_throws_error_if_user_tries_to_get_foreign_key_that_doesnt_exist(self):
         table_metadata = TableMetadata('deal')
@@ -274,6 +304,12 @@ class TestTableMetadata(unittest.TestCase):
         table_metadata = TableMetadata('account')
         table_metadata.remove_foreign_key_metadata('fk_1')
         self.assertEqual([], table_metadata.foreign_keys)
+
+    def test_can_indicate_whether_it_contains_a_given_foreign_key_by_name(self):
+        table_metadata = TableMetadata('account')
+        table_metadata.add_foreign_key(ForeignKeyMetadata('fk1', TablePath('db', 'sch', 't'), [], []))
+        self.assertTrue(table_metadata.contains_foreign_key('fk1'))
+        self.assertFalse(table_metadata.contains_foreign_key('fk2'))
 
 
 class TestTableMetadataCanGetColumnSourceTable(unittest.TestCase):

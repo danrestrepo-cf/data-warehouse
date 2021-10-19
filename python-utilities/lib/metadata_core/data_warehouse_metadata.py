@@ -111,6 +111,15 @@ class TableMetadata:
         if foreign_key_name in self._foreign_keys:
             del self._foreign_keys[foreign_key_name]
 
+    def contains_column(self, column_name: str) -> bool:
+        return column_name in self._columns
+
+    def contains_etl(self, process_name: str) -> bool:
+        return process_name in self._etls
+
+    def contains_foreign_key(self, foreign_key_name: str) -> bool:
+        return foreign_key_name in self._foreign_keys
+
     def get_column_source_table(self, column_name: str, data_warehouse_metadata: 'DataWarehouseMetadata') -> Optional['TableMetadata']:
         source_field = self.get_column(column_name).source_field
         if source_field is not None:
@@ -176,6 +185,9 @@ class SchemaMetadata:
         else:
             return self._tables[table_name]
 
+    def contains_table(self, table_name: str) -> bool:
+        return table_name in self._tables
+
     def remove_table_metadata(self, table_name: str):
         if table_name in self._tables:
             del self._tables[table_name]
@@ -212,6 +224,9 @@ class DatabaseMetadata:
         else:
             return self._schemas[schema_name]
 
+    def contains_schema(self, schema_name: str) -> bool:
+        return schema_name in self._schemas
+
     def remove_schema_metadata(self, schema_name: str):
         if schema_name in self._schemas:
             del self._schemas[schema_name]
@@ -245,6 +260,9 @@ class DataWarehouseMetadata:
             raise InvalidMetadataKeyException('data warehouse', self.name, 'database', database_name)
         else:
             return self._databases[database_name]
+
+    def contains_database(self, database_name: str) -> bool:
+        return database_name in self._databases
 
     def remove_database_metadata(self, database_name: str):
         if database_name in self._databases:
