@@ -29,7 +29,7 @@ class CriteriaMatcher:
 
     @staticmethod
     def input_value_matches_criteria_value(input_value, criteria_value) -> bool:
-        return input_value is not None and bool(re.match(criteria_value.replace('*', '.*'), input_value))
+        return input_value is not None and bool(re.match(f"^{criteria_value.replace('*', '.*')}$", input_value))
 
 
 class MetadataFilterer(ABC):
