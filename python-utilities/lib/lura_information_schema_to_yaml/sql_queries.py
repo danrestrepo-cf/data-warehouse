@@ -5,7 +5,7 @@ from lib.db_connections import OctaneDBConnection, LocalEDWConnection
 
 def get_octane_column_metadata(octane_connection: OctaneDBConnection) -> List[dict]:
     with octane_connection as cursor:
-        return cursor.select_as_list_of_dicts("""
+        return cursor.select("""
                 SELECT columns.table_name
                     , columns.column_name
                     , UPPER( columns.column_type ) AS column_type
@@ -18,7 +18,7 @@ def get_octane_column_metadata(octane_connection: OctaneDBConnection) -> List[di
 
 def get_octane_foreign_key_metadata(octane_connection: OctaneDBConnection) -> List[dict]:
     with octane_connection as cursor:
-        return cursor.select_as_list_of_dicts("""
+        return cursor.select("""
                 SELECT table_name
                     , column_name
                     , constraint_name
@@ -31,7 +31,7 @@ def get_octane_foreign_key_metadata(octane_connection: OctaneDBConnection) -> Li
 
 def get_etl_process_metadata(edw_connection: LocalEDWConnection) -> dict:
     with edw_connection as cursor:
-        raw_table_etl_processes = cursor.select_as_list_of_dicts("""
+        raw_table_etl_processes = cursor.select("""
             SELECT table_output_step.target_table
                  , process.name AS process
             FROM mdi.process
@@ -40,7 +40,7 @@ def get_etl_process_metadata(edw_connection: LocalEDWConnection) -> dict:
             WHERE table_output_step.target_schema = 'history_octane';
         """)
 
-        raw_next_etl_processes = cursor.select_as_list_of_dicts("""
+        raw_next_etl_processes = cursor.select("""
             SELECT table_output_step.target_table
                  , next_process.name AS next_process
             FROM mdi.state_machine_step
@@ -61,7 +61,7 @@ def get_etl_process_metadata(edw_connection: LocalEDWConnection) -> dict:
 
 def get_history_octane_metadata_for_deleted_columns(edw_connection: LocalEDWConnection) -> List[dict]:
     with edw_connection as cursor:
-        return cursor.select_as_list_of_dicts("""
+        return cursor.select("""
             SELECT history_columns.table_name
                  , history_columns.column_name
                  , CASE
