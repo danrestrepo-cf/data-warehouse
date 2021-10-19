@@ -85,7 +85,10 @@ def main():
 def build_octane_metadata_filterer() -> ExclusiveMetadataFilterer:
     metadata_filterer = ExclusiveMetadataFilterer()
     metadata_filterer.add_table_criteria(TablePath('staging', 'staging_octane', 'QRTZ*'))
+    metadata_filterer.add_table_criteria(TablePath('staging', 'staging_octane', '*_old'))
+    metadata_filterer.add_table_criteria(TablePath('staging', 'staging_octane', '*_new'))
     metadata_filterer.add_table_criteria(TablePath('staging', 'staging_octane', 'schema_version'))
+    metadata_filterer.add_table_criteria(TablePath('staging', 'staging_octane', 'lura_setting'))
     metadata_filterer.add_table_criteria(TablePath('staging', 'staging_octane', 'schema_version_post_data'))
     metadata_filterer.add_table_criteria(TablePath('staging', 'staging_octane', 'schema_version_pre_data'))
     metadata_filterer.add_table_criteria(TablePath('staging', 'staging_octane', 'borrower_user_reset_password'))
