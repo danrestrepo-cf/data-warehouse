@@ -1,7 +1,9 @@
-from lib.db_connections import OctaneDBConnection
+from typing import List
+
+from lib.db_connections import OctaneDBConnection, LocalEDWConnection
 
 
-def get_octane_column_metadata(octane_connection: OctaneDBConnection) -> dict:
+def get_octane_column_metadata(octane_connection: OctaneDBConnection) -> List[dict]:
     with octane_connection as cursor:
         return cursor.select_as_list_of_dicts("""
                 SELECT columns.table_name
@@ -14,7 +16,7 @@ def get_octane_column_metadata(octane_connection: OctaneDBConnection) -> dict:
             """)
 
 
-def get_octane_foreign_key_metadata(octane_connection: OctaneDBConnection) -> dict:
+def get_octane_foreign_key_metadata(octane_connection: OctaneDBConnection) -> List[dict]:
     with octane_connection as cursor:
         return cursor.select_as_list_of_dicts("""
                 SELECT table_name
@@ -25,3 +27,60 @@ def get_octane_foreign_key_metadata(octane_connection: OctaneDBConnection) -> di
                 FROM information_schema.key_column_usage
                 WHERE key_column_usage.referenced_table_schema IS NOT NULL;
             """)
+
+
+def get_etl_process_metadata(edw_connection: LocalEDWConnection) -> dict:
+    with edw_connection as cursor:
+        raw_table_etl_processes = cursor.select_as_list_of_dicts("""
+            SELECT table_output_step.target_table
+                 , process.name AS process
+            FROM mdi.process
+            JOIN mdi.table_output_step
+                 ON process.dwid = table_output_step.process_dwid
+            WHERE table_output_step.target_schema = 'history_octane';
+        """)
+
+        raw_next_etl_processes = cursor.select_as_list_of_dicts("""
+            SELECT table_output_step.target_table
+                 , next_process.name AS next_process
+            FROM mdi.state_machine_step
+            JOIN mdi.process
+                 ON state_machine_step.process_dwid = process.dwid
+            JOIN mdi.process next_process
+                 ON state_machine_step.next_process_dwid = next_process.dwid
+            JOIN mdi.table_output_step
+                 ON process.dwid = table_output_step.process_dwid
+            WHERE table_output_step.target_schema = 'history_octane';
+        """)
+
+        table_etl_processes = {row['target_table']: {'process': row['process'], 'next_processes': []} for row in raw_table_etl_processes}
+        for row in raw_next_etl_processes:
+            table_etl_processes[row['target_table']]['next_processes'].append(row['next_process'])
+        return table_etl_processes
+
+
+def get_history_octane_column_metadata(edw_connection: LocalEDWConnection) -> List[dict]:
+    with edw_connection as cursor:
+        return cursor.select_as_list_of_dicts("""
+            SELECT columns.table_name
+                 , columns.column_name
+                 , CASE
+                       WHEN columns.data_type = 'numeric'
+                           THEN 'NUMERIC(' || columns.numeric_precision || ',' || columns.numeric_scale || ')'
+                       WHEN columns.data_type = 'character varying'
+                           THEN 'VARCHAR(' || columns.character_maximum_length || ')'
+                       WHEN columns.data_type = 'timestamp with time zone'
+                           THEN 'TIMESTAMPTZ'
+                       WHEN columns.data_type = 'timestamp without time zone'
+                           THEN 'TIMESTAMP'
+                       WHEN columns.data_type = 'time with time zone'
+                           THEN 'TIMETZ'
+                       WHEN columns.data_type = 'time without time zone'
+                           THEN 'TIME'
+                       ELSE
+                           UPPER( columns.data_type )
+                END AS data_type
+            FROM information_schema.columns
+            WHERE columns.table_schema = 'history_octane'
+            ORDER BY columns.table_name, columns.ordinal_position;
+""")
