@@ -42,9 +42,18 @@ class TestTableOutputFieldMetadataComparisonFunctions(unittest.TestCase):
                                         'primary_source_table': 'staging.staging_octane.table1',
                                         'columns': {
                                             't1_col1': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.t1_col1_src'
+                                                }
                                             },
                                             't1_col2': {
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.t1_col2_src'
+                                                }
+                                            },
+                                            't1_col3': {
                                                 'data_type': 'TEXT'
                                             }
                                         },
@@ -61,7 +70,10 @@ class TestTableOutputFieldMetadataComparisonFunctions(unittest.TestCase):
                                         'primary_source_table': 'staging.staging_octane.table2',
                                         'columns': {
                                             't2_col1': {
-                                                'data_type': 'TEXT'
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.t2_col1_src'
+                                                }
                                             }
                                         },
                                         'etls': {

@@ -32,10 +32,11 @@ class TableOutputFieldMetadataComparisonFunctions(MetadataComparisonFunctions):
                 for table in schema.tables:
                     for etl in table.etls:
                         for column in table.columns:
-                            metadata_table.add_row({
-                                'process_name': etl.process_name,
-                                'database_field_name': column.name
-                            })
+                            if column.source_field is not None:
+                                metadata_table.add_row({
+                                    'process_name': etl.process_name,
+                                    'database_field_name': column.name
+                                })
         return metadata_table
 
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
