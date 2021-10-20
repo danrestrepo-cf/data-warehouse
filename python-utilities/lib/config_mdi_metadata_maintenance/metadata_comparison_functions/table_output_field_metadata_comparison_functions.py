@@ -26,6 +26,7 @@ class TableOutputFieldMetadataComparisonFunctions(MetadataComparisonFunctions):
             """)
 
     def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:
+        standard_sourceless_fields = ['data_source_updated_datetime', 'data_source_deleted_flag']
         metadata_table = self.construct_empty_metadata_table()
         for database in data_warehouse_metadata.databases:
             for schema in database.schemas:
@@ -33,7 +34,7 @@ class TableOutputFieldMetadataComparisonFunctions(MetadataComparisonFunctions):
                     for etl in table.etls:
                         if etl.output_type == ETLOutputType.INSERT:
                             for column in table.columns:
-                                if column.source_field is not None:
+                                if column.source_field is not None or column.name in standard_sourceless_fields:
                                     metadata_table.add_row({
                                         'process_name': etl.process_name,
                                         'database_field_name': column.name
