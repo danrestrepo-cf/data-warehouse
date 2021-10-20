@@ -128,8 +128,6 @@ def build_octane_metadata_filterer() -> ExclusiveMetadataFilterer:
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'lender_user', 'lu_previous_password_3'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'lender_user', 'lu_backup_phone'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'lender_user', 'lu_secret_key'))
-    metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'lender_user', 'lu_challenge_question_type'))
-    metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'lender_user', 'lu_challenge_question_answer'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'liability', 'lia_account_id'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'liability', 'lia_report_account_id'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'lp_request_credit', 'lprc_borrower_1_ssn'))
