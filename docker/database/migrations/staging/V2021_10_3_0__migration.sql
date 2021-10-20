@@ -63,3 +63,26 @@ ALTER TABLE history_octane.proposal_req
     ADD COLUMN prpr_proposal_review_pid bigint;
 
 CREATE INDEX fk_proposal_req_29 ON history_octane.proposal_req (prpr_proposal_review_pid);
+
+--
+-- EDW | Remove redundant org admin hierarchy tables from history octane
+-- https://app.asana.com/0/0/1201235415555624
+--
+
+DROP TABLE history_octane.org_division;
+DROP TABLE history_octane.org_division_leader;
+DROP TABLE history_octane.org_division_terms;
+DROP TABLE history_octane.org_group;
+DROP TABLE history_octane.org_group_leader;
+DROP TABLE history_octane.org_group_terms;
+DROP TABLE history_octane.org_leader_position_type;
+DROP TABLE history_octane.org_lender_user_terms;
+DROP TABLE history_octane.org_region;
+DROP TABLE history_octane.org_region_leader;
+DROP TABLE history_octane.org_region_terms;
+DROP TABLE history_octane.org_team;
+DROP TABLE history_octane.org_team_leader;
+DROP TABLE history_octane.org_team_terms;
+DROP TABLE history_octane.org_unit;
+DROP TABLE history_octane.org_unit_leader;
+DROP TABLE history_octane.org_unit_terms;
