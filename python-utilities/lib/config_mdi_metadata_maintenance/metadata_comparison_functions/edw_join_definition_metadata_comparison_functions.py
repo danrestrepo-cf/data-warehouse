@@ -29,7 +29,7 @@ class EDWJoinDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions):
                      , target_table_definition.database_name AS target_database_name
                      , target_table_definition.schema_name AS target_schema_name
                      , target_table_definition.table_name AS target_table_name
-                     , REGEXP_REPLACE(edw_join_definition.join_condition, 't[0-9]+\.', 'target_table.') AS join_condition
+                     , REGEXP_REPLACE(edw_join_definition.join_condition, 't[0-9]+\.', 'target_table.', 'g') AS join_condition
                 FROM mdi.edw_join_definition
                 JOIN mdi.edw_table_definition primary_table_definition
                      ON primary_table_definition.dwid = edw_join_definition.primary_edw_table_definition_dwid
