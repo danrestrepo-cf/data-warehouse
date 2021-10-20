@@ -245,7 +245,6 @@ class TestGenerateDataWarehouseWithFullYAMLFile(MetadataDirectoryTestCase):
             },
             'etls': {
                 'SP-100': {
-                    'hardcoded_data_source': 'Octane',
                     'input_type': 'table',
                     'output_type': 'insert'
                 }
@@ -261,7 +260,7 @@ class TestGenerateDataWarehouseWithFullYAMLFile(MetadataDirectoryTestCase):
         expected_cols = [ColumnMetadata(name='col0', data_type=None, source_field=None)]
         expected_etls = [ETLMetadata(
             process_name='SP-100',
-            hardcoded_data_source=ETLDataSource.OCTANE,
+            hardcoded_data_source=None,
             input_type=ETLInputType.TABLE,
             output_type=ETLOutputType.INSERT,
             json_output_field=None,

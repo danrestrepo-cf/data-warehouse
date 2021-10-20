@@ -119,7 +119,7 @@ class DictToMetadataBuilder:
                 table.add_column(column_metadata)
         if 'etls' in table_dict:
             for etl_process_name, etl_data in table_dict['etls'].items():
-                if 'hardcoded_data_source' not in etl_data or 'input_type' not in etl_data or 'output_type' not in etl_data:
+                if 'input_type' not in etl_data or 'output_type' not in etl_data:
                     raise self.InvalidTableMetadataException(f'ETL "{etl_process_name}" is missing one or more required metadata fields')
                 table.add_etl(ETLMetadata(
                     process_name=etl_process_name,
@@ -154,7 +154,9 @@ class DictToMetadataBuilder:
             else:
                 raise self.InvalidTableMetadataException(f'Source field path "{path}" could not be parsed')
 
-    def parse_etl_data_source(self, raw_data_source: str) -> ETLDataSource:
+    def parse_etl_data_source(self, raw_data_source: Optional[str]) -> Optional[ETLDataSource]:
+        if raw_data_source is None:
+            return None
         if raw_data_source.lower() == 'octane':
             return ETLDataSource.OCTANE
         else:
