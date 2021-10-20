@@ -117,7 +117,7 @@ def generate_history_octane_metadata(metadata: DataWarehouseMetadata, table_to_p
         if staging_table.name in table_to_process_map:
             history_etl = ETLMetadata(
                 process_name=table_to_process_map[staging_table.name]['process'],
-                hardcoded_data_source=ETLDataSource.OCTANE,
+                hardcoded_data_source=None,
                 input_type=ETLInputType.TABLE,
                 output_type=ETLOutputType.INSERT,
                 json_output_field=staging_table.primary_key[0],

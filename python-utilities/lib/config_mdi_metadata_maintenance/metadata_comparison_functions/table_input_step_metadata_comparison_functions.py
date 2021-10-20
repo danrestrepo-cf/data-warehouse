@@ -34,9 +34,10 @@ class TableInputStepMetadataComparisonFunctions(MetadataComparisonFunctions):
                 for table in schema.tables:
                     for etl in table.etls:
                         if etl.input_type == ETLInputType.TABLE:
+                            data_source_dwid = etl.hardcoded_data_source.value if etl.hardcoded_data_source else 0
                             metadata_table.add_row({
                                 'process_name': etl.process_name,
-                                'data_source_dwid': etl.hardcoded_data_source.value,
+                                'data_source_dwid': data_source_dwid,
                                 'sql': etl.input_sql,
                                 'connectionname': self.get_connection_name(database.name)
                             })

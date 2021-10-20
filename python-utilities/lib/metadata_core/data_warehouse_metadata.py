@@ -34,23 +34,23 @@ class ETLOutputType(Enum):
 @dataclass
 class ETLMetadata:
     process_name: str
-    hardcoded_data_source: ETLDataSource = ETLDataSource.OCTANE
+    hardcoded_data_source: Optional[ETLDataSource] = None
     input_type: ETLInputType = ETLInputType.TABLE
     output_type: ETLOutputType = ETLOutputType.INSERT
-    json_output_field: str = None
-    truncate_table: bool = None
-    insert_update_keys: List[str] = None
-    delete_keys: List[str] = None
-    input_sql: str = None
+    json_output_field: Optional[str] = None
+    truncate_table: Optional[bool] = None
+    insert_update_keys: Optional[List[str]] = None
+    delete_keys: Optional[List[str]] = None
+    input_sql: Optional[str] = None
 
 
 @dataclass(init=False)
 class ColumnMetadata:
     name: str
-    data_type: str = None
-    source_field: ForeignColumnPath = None
+    data_type: Optional[str] = None
+    source_field: Optional[ForeignColumnPath] = None
 
-    def __init__(self, name: str, data_type: str = None, source_field: ForeignColumnPath = None):
+    def __init__(self, name: str, data_type: Optional[str] = None, source_field: Optional[ForeignColumnPath] = None):
         self.name = name
         self.path = ColumnPath(database=None, schema=None, table=None, column=name)
         self.data_type = data_type
@@ -59,7 +59,7 @@ class ColumnMetadata:
 
 class TableMetadata:
 
-    def __init__(self, name: str, primary_source_table: TablePath = None):
+    def __init__(self, name: str, primary_source_table: Optional[TablePath] = None):
         self.name = name
         self.path = TablePath(database=None, schema=None, table=name)
         self.primary_source_table = primary_source_table

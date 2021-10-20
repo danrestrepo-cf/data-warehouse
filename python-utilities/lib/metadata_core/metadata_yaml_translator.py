@@ -276,7 +276,7 @@ class MetadataWriter:
             } for foreign_key in table_metadata.foreign_keys},
             'columns': {column.name: self.column_metadata_to_dict(column) for column in table_metadata.columns},
             'etls': {etl.process_name: {
-                'hardcoded_data_source': 'Octane',
+                'hardcoded_data_source': self.hardcoded_data_source_to_str(etl.hardcoded_data_source),
                 'input_type': etl.input_type.value,
                 'output_type': etl.output_type.value,
                 'json_output_field': etl.json_output_field,
@@ -315,6 +315,15 @@ class MetadataWriter:
     def write_table_metadata_yaml_file(output_file_path: str, metadata: dict):
         with open(output_file_path, 'w') as output_file:
             yaml.dump(metadata, output_file, default_flow_style=False, sort_keys=False)
+
+    @staticmethod
+    def hardcoded_data_source_to_str(data_source: Optional[ETLDataSource]) -> Optional[str]:
+        if data_source is None:
+            return None
+        elif data_source == ETLDataSource.OCTANE:
+            return 'Octane'
+        else:
+            raise ValueError(f'Unable to convert {data_source} to string in order to write metadata to file. No mapping defined.')
 
 
 def filter_out_dict_keys_with_no_value(d: dict) -> dict:

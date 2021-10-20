@@ -294,7 +294,6 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                     },
                     'etls': {
                         'SP-1': {
-                            'hardcoded_data_source': 'Octane',
                             'input_type': 'table',
                             'output_type': 'insert',
                             'json_output_field': 'a_pid',
@@ -359,7 +358,6 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                     },
                     'etls': {
                         'SP-2': {
-                            'hardcoded_data_source': 'Octane',
                             'input_type': 'table',
                             'output_type': 'insert',
                             'json_output_field': 'code',
