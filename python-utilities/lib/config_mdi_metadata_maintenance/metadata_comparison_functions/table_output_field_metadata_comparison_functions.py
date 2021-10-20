@@ -4,7 +4,7 @@ from lib.config_mdi_metadata_maintenance.metadata_comparison_functions.metadata_
 from lib.db_connections import LocalEDWConnection
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper, SingleGroupRowGrouper
-from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata
+from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, ETLOutputType
 
 
 class TableOutputFieldMetadataComparisonFunctions(MetadataComparisonFunctions):
@@ -31,12 +31,13 @@ class TableOutputFieldMetadataComparisonFunctions(MetadataComparisonFunctions):
             for schema in database.schemas:
                 for table in schema.tables:
                     for etl in table.etls:
-                        for column in table.columns:
-                            if column.source_field is not None:
-                                metadata_table.add_row({
-                                    'process_name': etl.process_name,
-                                    'database_field_name': column.name
-                                })
+                        if etl.output_type == ETLOutputType.INSERT:
+                            for column in table.columns:
+                                if column.source_field is not None:
+                                    metadata_table.add_row({
+                                        'process_name': etl.process_name,
+                                        'database_field_name': column.name
+                                    })
         return metadata_table
 
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
