@@ -1669,14 +1669,7 @@ WHERE GREATEST(deal.include_record, proposal.include_record, loan.include_record
 -- https://app.asana.com/0/0/1201244068307144
 --
 
-WITH loan_fact_table_definition AS (
-    SELECT edw_table_definition.dwid
-    FROM mdi.edw_table_definition
-    WHERE schema_name = 'star_loan'
-        AND table_name = 'loan_fact'
-)
-
-, new_loan_fact_fields (schema_name, table_name, field_name, key_field_flag, data_type, reporting_hidden,
+WITH new_loan_fact_fields (schema_name, table_name, field_name, key_field_flag, data_type, reporting_hidden,
     reporting_key_flag) AS (
         VALUES ('star_loan', 'loan_fact', 'account_executive_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
             , ('star_loan', 'loan_fact', 'closing_doc_specialist_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
@@ -1718,11 +1711,13 @@ WITH loan_fact_table_definition AS (
 )
 
 INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, reporting_hidden,
-                                      reporting_key_flag)
-    SELECT loan_fact_table_definition.dwid
+                                      reporting_key_flag, data_type)
+    SELECT edw_table_definition.dwid
         , new_loan_fact_fields.field_name
         , new_loan_fact_fields.key_field_flag
         , new_loan_fact_fields.reporting_hidden::mdi.looker_yes_no
         , new_loan_fact_fields.reporting_key_flag
-    FROM loan_fact_table_definition
-        CROSS JOIN new_loan_fact_fields;
+        , new_loan_fact_fields.data_type
+    FROM mdi.edw_table_definition
+        JOIN new_loan_fact_fields ON edw_table_definition.schema_name = new_loan_fact_fields.schema_name
+            AND edw_table_definition.table_name = new_loan_fact_fields.table_name;
