@@ -16,7 +16,7 @@ class TableInputStepMetadataComparisonFunctions(MetadataComparisonFunctions):
         return self.construct_metadata_table_from_sql_query_results(local_edw_connection, """
                 SELECT process.name AS process_name
                      , table_input_step.data_source_dwid
-                     , table_input_step.sql
+                     , TRANSLATE(table_input_step.sql, E'\r', '') AS sql  --standardize line endings for easier comparison
                      , table_input_step.connectionname
                 FROM mdi.table_input_step
                 JOIN mdi.process
