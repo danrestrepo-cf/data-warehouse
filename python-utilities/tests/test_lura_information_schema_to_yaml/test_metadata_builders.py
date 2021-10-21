@@ -1,8 +1,12 @@
 import unittest
 
-from lib.lura_information_schema_to_yaml.metadata_builders import build_staging_octane_metadata, map_data_type, \
-    generate_history_octane_metadata, add_deleted_tables_and_columns_to_history_octane_metadata
+from lib.lura_information_schema_to_yaml.metadata_builders import (build_staging_octane_metadata,
+                                                                   map_data_type,
+                                                                   generate_history_octane_metadata,
+                                                                   add_deleted_tables_and_columns_to_history_octane_metadata,
+                                                                   generate_table_input_sql)
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
+from lib.metadata_core.metadata_object_path import TablePath
 
 
 class TestBuildStagingOctaneMetadata(unittest.TestCase):
@@ -477,6 +481,108 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
             ]
         })
         self.assertEqual(expected, add_deleted_tables_and_columns_to_history_octane_metadata(input_metadata, deleted_column_metadata))
+
+
+class TestGenerateTableInputSQL(unittest.TestCase):
+
+    def setUp(self) -> None:
+        self.metadata = construct_data_warehouse_metadata_from_dict({
+            'name': 'edw',
+            'databases': [
+                {
+                    'name': 'staging',
+                    'schemas': [
+                        {
+                            'name': 'staging_octane',
+                            'tables': [
+                                {
+                                    'name': 'regular_table',
+                                    'primary_key': ['rt_pid'],
+                                    'columns': {
+                                        'rt_pid': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'rt_version': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'rt_normal_column': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'rt_decoy_version': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'rt_decoy_pid': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                },
+                                {
+                                    'name': 'regular_type',
+                                    'primary_key': ['code'],
+                                    'columns': {
+                                        'code': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'value': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
+
+    def test_produces_correct_sql_for_regular_table(self):
+        table = self.metadata.get_table_by_path(TablePath('staging', 'staging_octane', 'regular_table'))
+        expected = ("--finding records to insert into history_octane.regular_table\n" +
+                    "SELECT staging_table.rt_pid\n" +
+                    "     , staging_table.rt_version\n" +
+                    "     , staging_table.rt_normal_column\n" +
+                    "     , staging_table.rt_decoy_version\n" +
+                    "     , staging_table.rt_decoy_pid\n" +
+                    "     , FALSE AS data_source_deleted_flag\n" +
+                    "     , NOW( ) AS data_source_updated_datetime\n" +
+                    "FROM staging_octane.regular_table staging_table\n" +
+                    "LEFT JOIN history_octane.regular_table history_table\n" +
+                    "          ON staging_table.rt_pid = history_table.rt_pid\n" +
+                    "              AND staging_table.rt_version = history_table.rt_version\n" +
+                    "WHERE history_table.rt_pid IS NULL\n" +
+                    "UNION ALL\n" +
+                    "SELECT history_table.rt_pid\n" +
+                    "     , history_table.rt_version + 1\n" +
+                    "     , history_table.rt_normal_column\n" +
+                    "     , history_table.rt_decoy_version\n" +
+                    "     , history_table.rt_decoy_pid\n" +
+                    "     , TRUE AS data_source_deleted_flag\n" +
+                    "     , NOW( ) AS data_source_updated_datetime\n" +
+                    "FROM history_octane.regular_table history_table\n" +
+                    "LEFT JOIN staging_octane.regular_table staging_table\n" +
+                    "          ON staging_table.rt_pid = history_table.rt_pid\n" +
+                    "WHERE staging_table.rt_pid IS NULL\n" +
+                    "  AND NOT EXISTS(\n" +
+                    "    SELECT 1\n" +
+                    "    FROM history_octane.regular_table deleted_records\n" +
+                    "    WHERE deleted_records.rt_pid = history_table.rt_pid\n" +
+                    "      AND deleted_records.data_source_deleted_flag = TRUE\n" +
+                    "    );")
+        self.assertEqual(expected, generate_table_input_sql(table))
+
+    def test_produces_correct_sql_for_regular_type_table(self):
+        table = self.metadata.get_table_by_path(TablePath('staging', 'staging_octane', 'regular_type'))
+        expected = ("--finding records to insert into history_octane.regular_type\n" +
+                    "SELECT staging_table.code\n" +
+                    "     , staging_table.value\n" +
+                    "     , FALSE AS data_source_deleted_flag\n" +
+                    "     , NOW( ) AS data_source_updated_datetime\n" +
+                    "FROM staging_octane.regular_type staging_table\n" +
+                    "LEFT JOIN history_octane.regular_type history_table\n" +
+                    "          ON staging_table.code = history_table.code\n" +
+                    "              AND staging_table.value = history_table.value\n" +
+                    "WHERE history_table.code IS NULL;")
+        self.assertEqual(expected, generate_table_input_sql(table))
 
 
 if __name__ == '__main__':
