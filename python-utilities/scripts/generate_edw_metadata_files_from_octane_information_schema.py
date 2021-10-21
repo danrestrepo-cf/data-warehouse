@@ -138,7 +138,7 @@ def build_octane_metadata_filterer() -> ExclusiveMetadataFilterer:
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_bank_aba'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_bank_account_number'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_beneficiary_bank_aba'))
-    metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_beneficiary_account_number'))
+    metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_beneficiary_bank_account_number'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'tax_transcript_request', 'ttr_borrower1_ssn'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'tax_transcript_request', 'ttr_borrower2_ssn'))
     return metadata_filterer
