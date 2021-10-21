@@ -527,7 +527,46 @@ class TestGenerateTableInputSQL(unittest.TestCase):
                                             'data_type': 'TEXT'
                                         }
                                     }
-                                }
+                                },
+                                {
+                                    'name': 'no_version_table',
+                                    'primary_key': ['nv_pid'],
+                                    'columns': {
+                                        'nv_pid': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'nv_normal_column': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                },
+                                {
+                                    'name': 'some_id_sequence',
+                                    'primary_key': ['is_id'],
+                                    'columns': {
+                                        'is_id': {
+                                            'data_type': 'BIGINT'
+                                        }
+                                    }
+                                },
+                                {
+                                    'name': 'extra_fields_type',
+                                    'primary_key': ['code'],
+                                    'columns': {
+                                        'code': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'extra_field_1': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'extra_field_2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'value': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                },
                             ]
                         }
                     ]
@@ -580,6 +619,64 @@ class TestGenerateTableInputSQL(unittest.TestCase):
                     "FROM staging_octane.regular_type staging_table\n" +
                     "LEFT JOIN history_octane.regular_type history_table\n" +
                     "          ON staging_table.code = history_table.code\n" +
+                    "              AND staging_table.value = history_table.value\n" +
+                    "WHERE history_table.code IS NULL;")
+        self.assertEqual(expected, generate_table_input_sql(table))
+
+    def test_produces_correct_sql_for_table_without_a_version_column(self):
+        table = self.metadata.get_table_by_path(TablePath('staging', 'staging_octane', 'no_version_table'))
+        expected = ("--finding records to insert into history_octane.no_version_table\n" +
+                    "SELECT staging_table.nv_pid\n" +
+                    "     , staging_table.nv_normal_column\n" +
+                    "     , FALSE AS data_source_deleted_flag\n" +
+                    "     , NOW( ) AS data_source_updated_datetime\n" +
+                    "FROM staging_octane.no_version_table staging_table\n" +
+                    "LEFT JOIN history_octane.no_version_table history_table\n" +
+                    "          ON staging_table.nv_pid = history_table.nv_pid\n" +
+                    "WHERE history_table.nv_pid IS NULL\n" +
+                    "UNION ALL\n" +
+                    "SELECT history_table.nv_pid\n" +
+                    "     , history_table.nv_normal_column\n" +
+                    "     , TRUE AS data_source_deleted_flag\n" +
+                    "     , NOW( ) AS data_source_updated_datetime\n" +
+                    "FROM history_octane.no_version_table history_table\n" +
+                    "LEFT JOIN staging_octane.no_version_table staging_table\n" +
+                    "          ON staging_table.nv_pid = history_table.nv_pid\n" +
+                    "WHERE staging_table.nv_pid IS NULL\n" +
+                    "  AND NOT EXISTS(\n" +
+                    "    SELECT 1\n" +
+                    "    FROM history_octane.no_version_table deleted_records\n" +
+                    "    WHERE deleted_records.nv_pid = history_table.nv_pid\n" +
+                    "      AND deleted_records.data_source_deleted_flag = TRUE\n" +
+                    "    );")
+        self.assertEqual(expected, generate_table_input_sql(table))
+
+    def test_produces_correct_sql_for_id_sequence_table(self):
+        table = self.metadata.get_table_by_path(TablePath('staging', 'staging_octane', 'some_id_sequence'))
+        expected = ("--finding records to insert into history_octane.some_id_sequence\n" +
+                    "SELECT staging_table.is_id\n" +
+                    "     , FALSE AS data_source_deleted_flag\n" +
+                    "     , NOW( ) AS data_source_updated_datetime\n" +
+                    "FROM staging_octane.some_id_sequence staging_table\n" +
+                    "LEFT JOIN history_octane.some_id_sequence history_table\n" +
+                    "          ON staging_table.is_id = history_table.is_id\n" +
+                    "WHERE history_table.is_id IS NULL;")
+        self.assertEqual(expected, generate_table_input_sql(table))
+
+    def test_produces_correct_sql_for_type_table_with_extra_fields(self):
+        table = self.metadata.get_table_by_path(TablePath('staging', 'staging_octane', 'extra_fields_type'))
+        expected = ("--finding records to insert into history_octane.extra_fields_type\n" +
+                    "SELECT staging_table.code\n" +
+                    "     , staging_table.extra_field_1\n" +
+                    "     , staging_table.extra_field_2\n" +
+                    "     , staging_table.value\n" +
+                    "     , FALSE AS data_source_deleted_flag\n" +
+                    "     , NOW( ) AS data_source_updated_datetime\n" +
+                    "FROM staging_octane.extra_fields_type staging_table\n" +
+                    "LEFT JOIN history_octane.extra_fields_type history_table\n" +
+                    "          ON staging_table.code = history_table.code\n" +
+                    "              AND staging_table.extra_field_1 = history_table.extra_field_1\n" +
+                    "              AND staging_table.extra_field_2 = history_table.extra_field_2\n" +
                     "              AND staging_table.value = history_table.value\n" +
                     "WHERE history_table.code IS NULL;")
         self.assertEqual(expected, generate_table_input_sql(table))

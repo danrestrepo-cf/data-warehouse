@@ -157,6 +157,11 @@ def is_type_table(table: TableMetadata) -> str:
            table.primary_key == ['code']
 
 
+def is_id_sequence_table(table: TableMetadata) -> str:
+    return table.name.endswith('_id_sequence') and \
+           table.primary_key[0].endswith('_id')
+
+
 def derive_history_table_primary_key_from_scratch(table: TableMetadata) -> List[str]:
     for column in table.columns:
         pid_prefix_match = re.match(r'([a-z0-9]+)_pid', column.name)
@@ -190,50 +195,67 @@ def get_version_column_name(table: TableMetadata) -> Optional[str]:
             return None
 
 
-def generate_table_input_sql(table_metadata: TableMetadata) -> str:
-    table_name = table_metadata.name
-    staging_select_columns = generate_select_columns_string('staging_table', table_metadata, increment_version=False)
+def generate_table_input_sql(table: TableMetadata) -> str:
+    table_name = table.name
+    staging_select_columns = generate_select_columns_string('staging_table', table, columns_to_increment=[])
     table_input_sql = f'--finding records to insert into history_octane.{table_name}\n' + \
                       f'SELECT {staging_select_columns}\n' + \
                       f'     , FALSE AS data_source_deleted_flag\n' + \
                       f'     , NOW( ) AS data_source_updated_datetime\n' + \
                       f'FROM staging_octane.{table_name} staging_table\n'
 
-    if is_type_table(table_metadata):
+    if is_type_table(table):
         table_input_sql += f'LEFT JOIN history_octane.{table_name} history_table\n' + \
-                           f'          ON staging_table.code = history_table.code\n' \
-                           f'              AND staging_table.value = history_table.value\n' + \
-                           f'WHERE history_table.code IS NULL;'
+                           generate_join_columns_string([column.name for column in table.columns]) + '\n' + \
+                           f'WHERE history_table.code IS NULL'
     else:
-        primary_key_column = table_metadata.primary_key[0]
-        octane_table_column_prefix = primary_key_column.split('_')[0]
-        version_column = f'{octane_table_column_prefix}_version'
-        history_select_columns = generate_select_columns_string('history_table', table_metadata, increment_version=True)
+        primary_key_column = table.primary_key[0]
+        version_column = get_version_column_name(table)
+        history_select_columns = generate_select_columns_string('history_table', table, columns_to_increment=[version_column])
+
         table_input_sql += f'LEFT JOIN history_octane.{table_name} history_table\n' + \
-                           f'          ON staging_table.{primary_key_column} = history_table.{primary_key_column}\n' \
-                           f'              AND staging_table.{version_column} = history_table.{version_column}\n' + \
-                           f'WHERE history_table.{primary_key_column} IS NULL\n' + \
-                           f'UNION ALL\n' + \
-                           f'SELECT {history_select_columns}\n' + \
-                           f'     , TRUE AS data_source_deleted_flag\n' + \
-                           f'     , NOW( ) AS data_source_updated_datetime\n' + \
-                           f'FROM history_octane.{table_name} history_table\n' + \
-                           f'LEFT JOIN staging_octane.{table_name} staging_table\n' + \
-                           f'          ON staging_table.{primary_key_column} = history_table.{primary_key_column}\n' + \
-                           f'WHERE staging_table.{primary_key_column} IS NULL\n' + \
-                           f'  AND NOT EXISTS(\n' + \
-                           f'    SELECT 1\n' + \
-                           f'    FROM history_octane.{table_name} deleted_records\n' + \
-                           f'    WHERE deleted_records.{primary_key_column} = history_table.{primary_key_column}\n' + \
-                           f'      AND deleted_records.data_source_deleted_flag = TRUE\n' + \
-                           f'    );'
+                           generate_join_columns_string([primary_key_column]) + '\n'
+
+        if version_column is not None:
+            table_input_sql += f'              AND staging_table.{version_column} = history_table.{version_column}\n'
+
+        table_input_sql += f'WHERE history_table.{primary_key_column} IS NULL'
+
+        if not is_id_sequence_table(table):
+            table_input_sql += f'\n' + \
+                               f'UNION ALL\n' + \
+                               f'SELECT {history_select_columns}\n' + \
+                               f'     , TRUE AS data_source_deleted_flag\n' + \
+                               f'     , NOW( ) AS data_source_updated_datetime\n' + \
+                               f'FROM history_octane.{table_name} history_table\n' + \
+                               f'LEFT JOIN staging_octane.{table_name} staging_table\n' + \
+                               generate_join_columns_string([primary_key_column]) + '\n' + \
+                               f'WHERE staging_table.{primary_key_column} IS NULL\n' + \
+                               f'  AND NOT EXISTS(\n' + \
+                               f'    SELECT 1\n' + \
+                               f'    FROM history_octane.{table_name} deleted_records\n' + \
+                               f'    WHERE deleted_records.{primary_key_column} = history_table.{primary_key_column}\n' + \
+                               f'      AND deleted_records.data_source_deleted_flag = TRUE\n' + \
+                               f'    )'
+    table_input_sql += ';'
     return table_input_sql
 
 
-def generate_select_columns_string(table_prefix: str, table: TableMetadata, increment_version: bool) -> str:
+def generate_join_columns_string(columns: List[str], base_indent: int = 10) -> str:
+    base_indent_str = base_indent * ' '
+    join_columns_str = f'{base_indent_str}ON {generate_join_column_string(columns[0])}'
+    join_columns_str += ''.join([f'\n{base_indent_str}    AND {generate_join_column_string(column)}' for column in columns[1:]])
+    return join_columns_str
+
+
+def generate_join_column_string(column: str) -> str:
+    return f'staging_table.{column} = history_table.{column}'
+
+
+def generate_select_columns_string(table_prefix: str, table: TableMetadata, columns_to_increment: List[str]) -> str:
     select_columns = []
     for column in table.columns:
-        if column.name == get_version_column_name(table) and increment_version:
+        if column.name in columns_to_increment:
             select_columns.append(f'{table_prefix}.{column.name} + 1')
         elif column.name not in ['data_source_updated_datetime', 'data_source_deleted_flag']:
             select_columns.append(f'{table_prefix}.{column.name}')
