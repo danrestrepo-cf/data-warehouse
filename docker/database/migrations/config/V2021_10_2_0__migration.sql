@@ -1662,3 +1662,62 @@ WHERE GREATEST(deal.include_record, proposal.include_record, loan.include_record
             JOIN mdi.delete_step ON process.dwid = delete_step.process_dwid
                 AND delete_step.table_name = 'loan_fact'
         );
+
+
+--
+-- EDW | edw_field_definition is missing new loan_fact fields
+-- https://app.asana.com/0/0/1201244068307144
+--
+
+WITH new_loan_fact_fields (schema_name, table_name, field_name, key_field_flag, data_type, reporting_hidden,
+    reporting_key_flag) AS (
+        VALUES ('star_loan', 'loan_fact', 'account_executive_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'closing_doc_specialist_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'closing_scheduler_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'collateral_to_investor_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'collateral_underwriter_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'correspondent_client_advocate_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'current_beneficiary_investor_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'final_documents_to_investor_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'first_beneficiary_after_initial_investor_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'flood_insurance_specialist_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'funder_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'government_insurance_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'ho6_specialist_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'hoa_specialist_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'hoi_specialist_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'hud_va_lender_officer_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'initial_beneficiary_investor_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'internal_construction_manager_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'investor_conditions_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'investor_stack_to_investor_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'loan_officer_assistant_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'loan_payoff_specialist_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'most_recent_purchasing_beneficiary_investor_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'originator_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'processor_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'project_underwriter_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'subordination_specialist_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'supplemental_originator_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'title_specialist_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'transaction_assistant_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'underwriter_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'underwriting_manager_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'va_specialist_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'verbal_voe_specialist_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'voe_specialist_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'wholesale_client_advocate_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+            , ('star_loan', 'loan_fact', 'wire_specialist_lender_user_dwid', FALSE, 'BIGINT', 'yes', FALSE)
+)
+
+INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, reporting_hidden,
+                                      reporting_key_flag, data_type)
+    SELECT edw_table_definition.dwid
+        , new_loan_fact_fields.field_name
+        , new_loan_fact_fields.key_field_flag
+        , new_loan_fact_fields.reporting_hidden::mdi.looker_yes_no
+        , new_loan_fact_fields.reporting_key_flag
+        , new_loan_fact_fields.data_type
+    FROM mdi.edw_table_definition
+        JOIN new_loan_fact_fields ON edw_table_definition.schema_name = new_loan_fact_fields.schema_name
+            AND edw_table_definition.table_name = new_loan_fact_fields.table_name;
