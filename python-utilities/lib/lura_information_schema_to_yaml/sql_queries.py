@@ -1,9 +1,21 @@
+"""A set of SQL queries used to generate source data for the metadata YAML generation process."""
+
 from typing import List
 
 from lib.db_connections import OctaneDBConnection, LocalEDWConnection
 
 
 def get_octane_column_metadata(octane_connection: OctaneDBConnection) -> List[dict]:
+    """Get metadata about all columns (and their tables) from an Octane DB's information_schema.
+
+    Returns a list of dicts, each with the following structure:
+    {
+        'table_name': <table_name>,
+        'column_name': <column_name>,
+        'column_type': <column_type>,
+        'is_primary_key': <is_primary_key> (either 0 or 1, because MySQL doesn't have a native boolean type)
+    }
+    """
     with octane_connection as cursor:
         return cursor.select("""
                 SELECT columns.table_name
@@ -17,6 +29,17 @@ def get_octane_column_metadata(octane_connection: OctaneDBConnection) -> List[di
 
 
 def get_octane_foreign_key_metadata(octane_connection: OctaneDBConnection) -> List[dict]:
+    """Get metadata about all foreign keys from an Octane DB's information_schema.
+
+    Returns a list of dicts, each with the following structure:
+    {
+        'table_name': <table_name>,
+        'column_name': <column_name>,
+        'constraint_name': <constraint_name>,
+        'referenced_table_name': <referenced_table_name>,
+        'referenced_column_name': <referenced_column_name>
+    }
+    """
     with octane_connection as cursor:
         return cursor.select("""
                 SELECT table_name
@@ -30,6 +53,22 @@ def get_octane_foreign_key_metadata(octane_connection: OctaneDBConnection) -> Li
 
 
 def get_etl_process_metadata(edw_connection: LocalEDWConnection) -> dict:
+    """Get a mapping between history_octane table names and metadata about the ETL processes that populate those tables.
+
+    Returns a dict with the following structure:
+    {
+        <table_name1>: {
+            'process': <process_name>,
+            'next_processes': [
+                <process1>,
+                <process2>,
+                ...
+            ]
+        },
+        <table_name2>: {...},
+        ...
+    }
+    """
     with edw_connection as cursor:
         raw_table_etl_processes = cursor.select("""
             SELECT table_output_step.target_table
@@ -60,6 +99,15 @@ def get_etl_process_metadata(edw_connection: LocalEDWConnection) -> dict:
 
 
 def get_history_octane_metadata_for_deleted_columns(edw_connection: LocalEDWConnection) -> List[dict]:
+    """Get metadata about all history_octane columns (and their tables) from EDW's staging database information_schema.
+
+    Returns a list of dicts, each with the following structure:
+    {
+        'table_name': <table_name>,
+        'column_name': <column_name>,
+        'data_type': <data_type>,
+    }
+    """
     with edw_connection as cursor:
         return cursor.select("""
             SELECT history_columns.table_name

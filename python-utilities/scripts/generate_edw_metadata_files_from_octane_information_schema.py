@@ -1,3 +1,9 @@
+"""Generate and store YAML files containing metadata related to staging_octane and history_octane schemas.
+
+This script reads table, column, and foreign key information from both Octane
+and EDW information_schemas and synthesizes it into a series of YAML files, which
+are then saved in the /metadata directory in the data-warehouse repo.
+"""
 import sys
 import os
 
@@ -86,6 +92,7 @@ def main():
 
 
 def build_octane_metadata_filterer() -> ExclusiveMetadataFilterer:
+    """Construct a MetadataFilterer that *excludes* any sensitive tables/columns from this script's output."""
     metadata_filterer = ExclusiveMetadataFilterer()
     metadata_filterer.add_table_criteria(TablePath('staging', 'staging_octane', 'QRTZ*'))
     metadata_filterer.add_table_criteria(TablePath('staging', 'staging_octane', '*_old'))
