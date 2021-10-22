@@ -1,0 +1,49 @@
+{
+    "Comment": "SP-100865 - ETL to copy wf_step_note_monitor data from staging_octane to history_octane",
+    "StartAt": "SP-100865",
+    "States": {
+        "SP-100865": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::ecs:runTask.sync",
+            "Parameters": {
+                "LaunchType": "FARGATE",
+                "Cluster": "${ecsClusterARN}",
+                "TaskDefinition": "${mdi_2_arn}",
+                "NetworkConfiguration": {
+                    "AwsvpcConfiguration": {
+                        "AssignPublicIp": "DISABLED",
+                        "SecurityGroups": [
+                            "${securityGroupId}"
+                        ],
+                        "Subnets": ${subnetIDs}
+                    }
+                },
+                "Overrides": {
+                    "Memory": "2048",
+                    "ContainerOverrides": [
+                        {
+                            "Memory": 2048,
+                            "Environment": [
+                                {
+                                    "Name": "PROCESS_NAME",
+                                    "Value": "SP-100865"
+                                },
+                                {
+                                    "Name": "INPUT_DATA",
+                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
+                                },
+                                {
+                                    "Name": "TOKEN_ID",
+                                    "Value.$": "$$.Task.Token"
+                                }
+                            ],
+                            "Name": "${mdi_2_container}"
+                        }
+                    ]
+                }
+            },
+            "End": true
+        }
+    }
+}
+
