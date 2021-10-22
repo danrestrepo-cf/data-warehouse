@@ -412,16 +412,6 @@ DELETE FROM mdi.table_output_field
         WHERE table_output_step.target_table = 'construction_cost'
         );
 
--- mdi.edw_field_definition: delete staging_octane row for coc_payee
-DELETE FROM mdi.edw_field_definition
-    WHERE dwid = (
-        SELECT edw_field_definition.dwid
-        FROM mdi.edw_table_definition
-                 JOIN mdi.edw_field_definition ON edw_table_definition.dwid = edw_field_definition.edw_table_definition_dwid
-            AND edw_field_definition.field_name = 'coc_payee'
-        WHERE edw_table_definition.schema_name = 'staging_octane'
-        );
-
 -- mdi.edw_field_definition: nullify field source value for history_octane coc_payee
 UPDATE mdi.edw_field_definition
     SET source_edw_field_definition_dwid = NULL
@@ -431,6 +421,16 @@ UPDATE mdi.edw_field_definition
                  JOIN mdi.edw_field_definition ON edw_table_definition.dwid = edw_field_definition.edw_table_definition_dwid
             AND edw_field_definition.field_name = 'coc_payee'
         WHERE edw_table_definition.schema_name = 'history_octane'
+        );
+
+-- mdi.edw_field_definition: delete staging_octane row for coc_payee
+DELETE FROM mdi.edw_field_definition
+    WHERE dwid = (
+        SELECT edw_field_definition.dwid
+        FROM mdi.edw_table_definition
+                 JOIN mdi.edw_field_definition ON edw_table_definition.dwid = edw_field_definition.edw_table_definition_dwid
+            AND edw_field_definition.field_name = 'coc_payee'
+        WHERE edw_table_definition.schema_name = 'staging_octane'
         );
 
 SELECT 'Finished removing EDW metadata for deleted field: construction_cost.coc_payee';
@@ -494,6 +494,199 @@ WITH new_fields (table_name, field_name, field_order) AS (
 )
 
 , updated_table_input_sql (table_name, sql) AS (
-    VALUES ('construction_cost', '')
-        , ('lender_settings', '')
+    VALUES ('construction_cost', '--finding records to insert into history_octane.construction_cost
+SELECT staging_table.coc_pid
+, staging_table.coc_version
+, staging_table.coc_proposal_pid
+, staging_table.coc_construction_cost_category_type
+, staging_table.coc_construction_cost_funding_type
+, staging_table.coc_construction_cost_status_type
+, staging_table.coc_construction_cost_payee_type
+, staging_table.coc_create_datetime
+, staging_table.coc_construction_cost_amount
+, staging_table.coc_construction_cost_notes
+, staging_table.coc_proposal_contractor_pid
+, staging_table.coc_effective_construction_cost_calculation_percent
+, staging_table.coc_construction_cost_calculation_type
+, staging_table.coc_permit_pid
+, staging_table.coc_category_type_label
+, staging_table.coc_calculated_construction_cost_percent
+, staging_table.coc_overridden_construction_cost_percent
+, staging_table.coc_construction_cost_calculation_percent_override_reason
+, staging_table.coc_calculated_construction_cost_months
+, staging_table.coc_overridden_construction_cost_months
+, staging_table.coc_effective_construction_cost_months
+, staging_table.coc_construction_cost_months_override_reason
+, staging_table.coc_charge_type
+, staging_table.coc_draw_discrepancy_text
+, staging_table.coc_impeding_draw_discrepancy
+, staging_table.coc_borrower_pid
+, staging_table.coc_proposal_hud_consultant_pid
+, staging_table.coc_title_company_pid
+, staging_table.coc_payee_other_selected
+, staging_table.coc_payee_other_description
+, FALSE AS data_source_deleted_flag
+, NOW( ) AS data_source_updated_datetime
+FROM staging_octane.construction_cost staging_table
+LEFT JOIN history_octane.construction_cost history_table
+ON staging_table.coc_pid = history_table.coc_pid AND staging_table.coc_version = history_table.coc_version
+WHERE history_table.coc_pid IS NULL
+UNION ALL
+SELECT history_table.coc_pid
+, history_table.coc_version + 1
+, history_table.coc_proposal_pid
+, history_table.coc_construction_cost_category_type
+, history_table.coc_construction_cost_funding_type
+, history_table.coc_construction_cost_status_type
+, history_table.coc_construction_cost_payee_type
+, history_table.coc_create_datetime
+, history_table.coc_construction_cost_amount
+, history_table.coc_construction_cost_notes
+, history_table.coc_proposal_contractor_pid
+, history_table.coc_effective_construction_cost_calculation_percent
+, history_table.coc_construction_cost_calculation_type
+, history_table.coc_permit_pid
+, history_table.coc_category_type_label
+, history_table.coc_calculated_construction_cost_percent
+, history_table.coc_overridden_construction_cost_percent
+, history_table.coc_construction_cost_calculation_percent_override_reason
+, history_table.coc_calculated_construction_cost_months
+, history_table.coc_overridden_construction_cost_months
+, history_table.coc_effective_construction_cost_months
+, history_table.coc_construction_cost_months_override_reason
+, history_table.coc_charge_type
+, history_table.coc_draw_discrepancy_text
+, history_table.coc_impeding_draw_discrepancy
+, history_table.coc_borrower_pid
+, history_table.coc_proposal_hud_consultant_pid
+, history_table.coc_title_company_pid
+, history_table.coc_payee_other_selected
+, history_table.coc_payee_other_description
+, TRUE AS data_source_deleted_flag
+, NOW( ) AS data_source_updated_datetime
+FROM history_octane.construction_cost history_table
+LEFT JOIN staging_octane.construction_cost staging_table
+ON staging_table.coc_pid = history_table.coc_pid
+WHERE staging_table.coc_pid IS NULL
+AND NOT EXISTS( SELECT 1
+FROM history_octane.construction_cost deleted_records
+WHERE deleted_records.coc_pid = history_table.coc_pid AND deleted_records.data_source_deleted_flag = TRUE );
+')
+        , ('lender_settings', '--finding records to insert into history_octane.lender_settings
+SELECT staging_table.lss_pid
+, staging_table.lss_version
+, staging_table.lss_account_pid
+, staging_table.lss_company_time_zone_type
+, staging_table.lss_va_lender_id
+, staging_table.lss_usda_lender_id
+, staging_table.lss_fha_lender_id
+, staging_table.lss_fha_home_office_branch_pid
+, staging_table.lss_fha_sponsor_id
+, staging_table.lss_fha_sponsor_company_name
+, staging_table.lss_fha_sponsor_address_street1
+, staging_table.lss_fha_sponsor_address_street2
+, staging_table.lss_fha_sponsor_address_city
+, staging_table.lss_fha_sponsor_address_state
+, staging_table.lss_fha_sponsor_address_postal_code
+, staging_table.lss_fha_sponsor_address_country
+, staging_table.lss_fha_non_supervised_mortgagee
+, staging_table.lss_fnma_seller_id
+, staging_table.lss_fre_seller_id
+, staging_table.lss_lp_submission_type
+, staging_table.lss_lender_user_email_from
+, staging_table.lss_hmda_contact_pid
+, staging_table.lss_hmda_legal_entity_id
+, staging_table.lss_hmda_respondent_id
+, staging_table.lss_hmda_agency_id_type
+, staging_table.lss_prequalification_program
+, staging_table.lss_preapproval_program
+, staging_table.lss_pest_inspector_company_name
+, staging_table.lss_pest_inspector_phone
+, staging_table.lss_pest_inspector_website_url
+, staging_table.lss_pest_inspector_address_street1
+, staging_table.lss_pest_inspector_address_street2
+, staging_table.lss_pest_inspector_address_city
+, staging_table.lss_pest_inspector_address_state
+, staging_table.lss_pest_inspector_address_postal_code
+, staging_table.lss_take_application_hours
+, staging_table.lss_originator_title
+, staging_table.lss_default_credit_bureau_type
+, staging_table.lss_sap_minimum_decision_credit_score
+, staging_table.lss_default_standalone_lock_term_setting_pid
+, staging_table.lss_default_combo_lock_term_setting_pid
+, staging_table.lss_preferred_aus_type
+, staging_table.lss_borrower_quote_filter_pivot_type
+, staging_table.lss_borrower_quote_filter_pivot_lower_count
+, staging_table.lss_borrower_quote_filter_pivot_higher_count
+, staging_table.lss_fha_home_office_location_pid
+, FALSE as data_source_deleted_flag
+, now() AS data_source_updated_datetime
+FROM staging_octane.lender_settings staging_table
+LEFT JOIN history_octane.lender_settings history_table on staging_table.lss_pid = history_table.lss_pid and staging_table.lss_version = history_table.lss_version
+WHERE history_table.lss_pid is NULL
+UNION ALL
+SELECT history_table.lss_pid
+, history_table.lss_version+1
+, history_table.lss_account_pid
+, history_table.lss_company_time_zone_type
+, history_table.lss_va_lender_id
+, history_table.lss_usda_lender_id
+, history_table.lss_fha_lender_id
+, history_table.lss_fha_home_office_branch_pid
+, history_table.lss_fha_sponsor_id
+, history_table.lss_fha_sponsor_company_name
+, history_table.lss_fha_sponsor_address_street1
+, history_table.lss_fha_sponsor_address_street2
+, history_table.lss_fha_sponsor_address_city
+, history_table.lss_fha_sponsor_address_state
+, history_table.lss_fha_sponsor_address_postal_code
+, history_table.lss_fha_sponsor_address_country
+, history_table.lss_fha_non_supervised_mortgagee
+, history_table.lss_fnma_seller_id
+, history_table.lss_fre_seller_id
+, history_table.lss_lp_submission_type
+, history_table.lss_lender_user_email_from
+, history_table.lss_hmda_contact_pid
+, history_table.lss_hmda_legal_entity_id
+, history_table.lss_hmda_respondent_id
+, history_table.lss_hmda_agency_id_type
+, history_table.lss_prequalification_program
+, history_table.lss_preapproval_program
+, history_table.lss_pest_inspector_company_name
+, history_table.lss_pest_inspector_phone
+, history_table.lss_pest_inspector_website_url
+, history_table.lss_pest_inspector_address_street1
+, history_table.lss_pest_inspector_address_street2
+, history_table.lss_pest_inspector_address_city
+, history_table.lss_pest_inspector_address_state
+, history_table.lss_pest_inspector_address_postal_code
+, history_table.lss_take_application_hours
+, history_table.lss_originator_title
+, history_table.lss_default_credit_bureau_type
+, history_table.lss_sap_minimum_decision_credit_score
+, history_table.lss_default_standalone_lock_term_setting_pid
+, history_table.lss_default_combo_lock_term_setting_pid
+, history_table.lss_preferred_aus_type
+, history_table.lss_borrower_quote_filter_pivot_type
+, history_table.lss_borrower_quote_filter_pivot_lower_count
+, history_table.lss_borrower_quote_filter_pivot_higher_count
+, history_table.lss_fha_home_office_location_pid
+, TRUE as data_source_deleted_flag
+, now() AS data_source_updated_datetime
+FROM history_octane.lender_settings history_table
+LEFT JOIN staging_octane.lender_settings staging_table on staging_table.lss_pid = history_table.lss_pid
+WHERE staging_table.lss_pid is NULL
+    AND not exists (select 1 from history_octane.lender_settings deleted_records where deleted_records.lss_pid = history_table.lss_pid and deleted_records.data_source_deleted_flag = True);')
 )
+
+, updated_table_input_step AS (
+    UPDATE mdi.table_input_step
+        SET sql = updated_table_input_sql.sql
+        FROM updated_table_input_sql
+            , mdi.table_output_step
+        WHERE table_input_step.process_dwid = table_output_step.process_dwid
+            AND table_output_step.target_schema = 'history_octane'
+            AND table_output_step.target_table = updated_table_input_sql.table_name
+)
+
+SELECT 'Finished inserting metadata for new columns:';
