@@ -81,15 +81,6 @@ def get_history_octane_metadata_for_deleted_columns(edw_connection: LocalEDWConn
                            UPPER( history_columns.data_type )
                 END AS data_type
             FROM information_schema.columns history_columns
-            LEFT JOIN (
-                SELECT *
-                FROM information_schema.columns
-                WHERE columns.table_schema = 'staging_octane'
-            ) AS staging_columns
-                      ON history_columns.table_name = staging_columns.table_name
-                          AND history_columns.column_name = staging_columns.column_name
             WHERE history_columns.table_schema = 'history_octane'
-              AND history_columns.column_name NOT IN ('data_source_updated_datetime', 'data_source_deleted_flag')
-              AND staging_columns.table_schema IS NULL
             ORDER BY history_columns.table_name, history_columns.ordinal_position;
 """)

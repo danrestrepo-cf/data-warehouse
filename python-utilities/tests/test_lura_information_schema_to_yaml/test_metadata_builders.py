@@ -390,7 +390,9 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
 class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
 
     def test_incorporates_given_columns_and_tables_into_the_given_data_warehouse_metadata_structure_if_they_dont_already_exist(self):
-        deleted_column_metadata = [
+        history_column_metadata = [
+            {'table_name': 'account', 'column_name': 'a_pid', 'data_type': 'BIGINT'},
+            {'table_name': 'account', 'column_name': 'a_version', 'data_type': 'INTEGER'},
             {'table_name': 'account', 'column_name': 'a_deleted_column', 'data_type': 'TEXT'},
             {'table_name': 'deleted_table', 'column_name': 'dt_pid', 'data_type': 'BIGINT'},
             {'table_name': 'deleted_table', 'column_name': 'dt_version', 'data_type': 'INTEGER'},
@@ -480,7 +482,7 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                 }
             ]
         })
-        self.assertEqual(expected, add_deleted_tables_and_columns_to_history_octane_metadata(input_metadata, deleted_column_metadata))
+        self.assertEqual(expected, add_deleted_tables_and_columns_to_history_octane_metadata(input_metadata, history_column_metadata))
 
 
 class TestGenerateTableInputSQL(unittest.TestCase):
