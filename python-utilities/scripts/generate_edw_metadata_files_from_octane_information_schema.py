@@ -1,6 +1,9 @@
 import sys
 import os
 
+# this line allows the script to import directly from lib when run from the command line
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
+
 from lib.db_connections import OctaneDBConnection, LocalEDWConnection
 from lib.metadata_core.metadata_filter import ExclusiveMetadataFilterer
 from lib.metadata_core.metadata_object_path import TablePath, ColumnPath
@@ -138,7 +141,8 @@ def build_octane_metadata_filterer() -> ExclusiveMetadataFilterer:
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_bank_aba'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_bank_account_number'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_beneficiary_bank_aba'))
-    metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_beneficiary_bank_account_number'))
+    metadata_filterer.add_column_criteria(
+        ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_beneficiary_bank_account_number'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'tax_transcript_request', 'ttr_borrower1_ssn'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'tax_transcript_request', 'ttr_borrower2_ssn'))
     return metadata_filterer
