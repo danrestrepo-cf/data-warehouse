@@ -689,4 +689,5 @@ WHERE staging_table.lss_pid is NULL
             AND table_output_step.target_table = updated_table_input_sql.table_name
 )
 
-SELECT 'Finished inserting metadata for new columns:';
+SELECT 'Finished inserting metadata for new columns: coc_borrower_pid, coc_proposal_hud_consultant_pid, ' ||
+       'coc_title_company_pid, coc_payee_other_selected, coc_payee_other_description, lss_fha_home_office_location_pid';
