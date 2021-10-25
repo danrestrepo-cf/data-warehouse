@@ -1,3 +1,77 @@
+"""A collection of functions and classes that convert between DataWarehouseMetadata structures and YAML files
+
+Public Functions:
+- generate_data_warehouse_metadata_from_yaml
+    - reads in existing YAML files and constructs an in-memory DataWarehouseMetadata object for further manipulation
+- write_data_warehouse_metadata_to_yaml
+    - writes YAML files and their containing directory structure from a given DataWarehouseMetadata object
+- construct_data_warehouse_metadata_from_dict
+    - creates a DataWarehouseMetadata object from a dictionary structure that mirrors the standard directory and YAML structure
+    - this method is mainly useful for unit testing, as it provides an easy-to-read way of building an entire DataWarehouseMetadata
+      structure at once.
+
+The directory structure that this module reads from/writes to is as follows:
+- data warehouse directory
+    - database directory (prefixed with “db.”)
+        - schema directory (prefixed with “schema.”)
+            - YAML files for each table in the schema (prefixed with “table.”)
+
+For example:
+- edw
+    - db.staging
+        - schema.history_octane
+            - table.account.yaml
+            - table.account_contact.yaml
+            - ...
+
+Each table.*.yaml file conforms to the following structure:
+
+name: table_name
+primary_source_table: database.schema.source_table_name
+primary_key:
+  - pk_column_1
+# - etc...
+foreign_keys:
+  t1_c2_fkey:
+    columns:
+      - c2
+    references:
+      columns:
+        - c21
+      schema: s1
+      table: t2
+columns:
+  column_1:
+    data_type: data_type_name (e.g. bigint)
+    source:  # only used for history_octane metadata
+      field: primary_source_table.foreign_keys.t1_c2_fkey.columns.column_name
+  column_2:
+    data_type: data_type_name (e.g. bigint)
+    source:  # only used for history_octane metadata
+      field: primary_source_table.columns.column2
+# etc…
+etls:  # only used for history_octane metadata
+  SP-xxxxxx:
+    hardcoded_data_source: Octane
+    input_type: table  # or CSV, EXCEL, etc
+    output_type: insert
+    json_output_field: column_1
+    # - etc
+    truncate_table: false  # for insert
+    insert_update_keys: # for insert update
+      - column_1
+      - etc
+    #      - etc…
+    delete_keys: # for delete
+      - column_1
+    input_sql: |  # for table input_type
+      SELECT *
+      FROM schema.source_table_name
+  # etc…
+next_etls:
+  - SP-yyyyyy
+  - SP-zzzzzz
+"""
 import pathlib
 import glob
 import os
@@ -39,6 +113,71 @@ def generate_data_warehouse_metadata_from_yaml(root_dir_file_path: str) -> DataW
 def write_data_warehouse_metadata_to_yaml(parent_dir_file_path: str, metadata: DataWarehouseMetadata,
                                           rebuild_data_warehouse_dir: bool = False, rebuild_database_dirs: bool = False,
                                           rebuild_schema_dirs: bool = False, rebuild_table_files: bool = False):
+    """Write the contents of a DataWarehouseMetadata object to a directory structure/series of YAML files.
+
+    The four "rebuild_*" arguments to this function allow the user to specify which elements of any existing
+    directory/file structure should be completely deleted *before* writing any new output. This is useful
+    for propagating metadata deletions on to the YAML directories/files. It is important to note that,
+    if a given metadata hierarchy level (e.g. databases, tables, etc) is flagged for deleting/rebuilding,
+    only objects that are common to both the existing directory contents and the DataWarehouseMetadata object
+    will be considered for deletion.
+
+    Example scenario:
+
+    The given DataWarehouseMetadata has the following structure:
+    - edw
+        - staging
+            - staging_octane
+                - loan
+                - deal
+
+    And the directory structure currently consists of:
+    - edw
+        - staging
+            - staging_octane
+                - loan
+                - proposal
+            - star_loan
+                - loan_fact
+        - ingress
+            - dmi
+                - table1
+
+    executing write_data_warehouse_metadata_to_yaml('parent/dir/path', metadata, rebuild_table_files=True)
+    will result in the following directory structure:
+    - edw
+        - staging
+            - staging_octane
+                - loan
+                - deal
+            - star_loan
+                - loan_fact
+        - ingress
+            - dmi
+                - table1
+
+    Since rebuild_table_files was set to True, all tables *within schemas already present in both the files and the
+    DataWarehouseMetadata object* were deleted, and then re-populated by this function. As a result, only the tables
+    in the staging.staging_octane schema were rebuilt: the "proposal" table (in file, not in metadata object) was deleted,
+    the "deal" table (in metadata object, not in file) was created, and the "loan" table was simply recreated. Tables in
+    schemas *other* than staging.staging_octane were unaffected, because those schemas weren't included in the DataWarehouseMetadata
+    object being written. This functionality allows users to account for inserts, updates, *and* deletes within a small subsection
+    of the overall metadata directory structure without wiping out the entire thing (though wiping out the entire thing is still
+    an option via the rebuild_data_warehouse_dir argument).
+
+    :param parent_dir_file_path: the directory into which the metadata directory structure should be written. This should
+    be the directory that will *contain* the top-level data warehouse directory, not the data warehouse directory itself.
+    e.g. data-warehouse/metadata, not data-warehouse/metadata/edw
+    :param metadata: the metadata to be written
+    :param rebuild_data_warehouse_dir: whether or not to wipe out the existing data warehouse metadata directories/files
+    and rebuild them from scratch
+    :param rebuild_database_dirs: whether or not to wipe out the existing database metadata directories/files
+    and rebuild them from scratch
+    :param rebuild_schema_dirs: whether or not to wipe out the existing schema directories/files
+    within any databases present in the given metadata and rebuild them from scratch
+    :param rebuild_table_files: whether or not to wipe out the existing table metadata files
+    within any schemas present in the given metadata and rebuild them from scratch
+    """
     writer = MetadataWriter(parent_dir_file_path=parent_dir_file_path,
                             rebuild_data_warehouse_dir=rebuild_data_warehouse_dir,
                             rebuild_database_dirs=rebuild_database_dirs,
@@ -48,6 +187,65 @@ def write_data_warehouse_metadata_to_yaml(parent_dir_file_path: str, metadata: D
 
 
 def construct_data_warehouse_metadata_from_dict(data_warehouse_dict: dict) -> DataWarehouseMetadata:
+    """Construct a DataWarehouseMeatadata object from a dict comparable to the YAML directory/file structure described above.
+
+    Dict structure example:
+    {
+        'name': 'data-warehouse-name',
+        'databases': [
+            {
+                'name': 'database-name',
+                'schemas': [
+                    {
+                        'name': 'schema-name',
+                        'tables': [
+                            {
+                                'name': 't1',
+                                'primary_source_table': 'db2.sch2.t2',
+                                'primary_key': [
+                                    'col1', 'col2'
+                                ],
+                                'foreign_keys': {
+                                    'fk1': {
+                                        'columns': ['col3'],
+                                        'references': {
+                                            'columns': ['col3'],
+                                            'schema': 'sch2',
+                                            'table': 't2'
+                                        }
+                                    }
+                                },
+                                'columns': {
+                                    'col1': {
+                                        'data_type': 'TEXT',
+                                        'source': {
+                                            'field': 'primary_source_table.foreign_keys.fk3.foreign_keys.fk67.columns.col1'
+                                        }
+                                    }
+                                },
+                                'etls': {
+                                    'SP-1': {
+                                        'hardcoded_data_source': 'Octane',
+                                        'input_type': 'table',
+                                        'output_type': 'insert',
+                                        'json_output_field': 'col1',
+                                        'truncate_table': False,
+                                        'insert_update_keys': ['col1', 'col2'],
+                                        'delete_keys': ['col2', 'col3'],
+                                        'input_sql': 'SQL for SP-1'
+                                    }
+                                },
+                                'next_etls': [
+                                    'SP-4', 'SP-5'
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+    """
     return DictToMetadataBuilder().build_metadata(data_warehouse_dict)
 
 
