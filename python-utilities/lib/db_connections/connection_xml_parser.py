@@ -16,10 +16,10 @@ def get_connection_details_from_xml_file(file_path: str) -> ConnectionDetails:
 
     # get host, port, and database from connection url
     jdbc_url = connection_config_document.getElementsByTagName('jdbc-url')[0].firstChild.data
-    url_match_results = re.match(r'^jdbc:(mysql|postgresql)://([a-zA-Z0-9-.]+):([0-9]+)/([a-zA-Z_]+)$', jdbc_url)
-    connection_details.host = url_match_results.group(2)
-    connection_details.port = url_match_results.group(3)
-    connection_details.database = url_match_results.group(4)
+    url_match_results = re.match(r'^jdbc:[a-z]+://([a-zA-Z0-9-.]+):([0-9]+)/([a-zA-Z_]+)$', jdbc_url)
+    connection_details.host = url_match_results.group(1)
+    connection_details.port = url_match_results.group(2)
+    connection_details.database = url_match_results.group(3)
 
     # get region and credential from additional properties
     jdbc_additional_properties = connection_config_document.getElementsByTagName('jdbc-additional-properties')[0] \
