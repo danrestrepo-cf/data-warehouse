@@ -6,6 +6,7 @@ are then saved in the /metadata directory in the data-warehouse repo.
 """
 import sys
 import os
+import argparse
 
 # this line allows the script to import directly from lib when run from the command line
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
@@ -24,27 +25,59 @@ from lib.lura_information_schema_to_yaml.metadata_builders import (build_staging
 
 
 def main():
-    # validate and parse command line arguments
-    if len(sys.argv) != 3:
-        print('usage: python generate_edw_metadata_files.py octane_connection_name _ssl_ca_filepath')
-        print()
-        print('A valid AWS ssl certificate can be downloaded at the following link, ' +
-              'provided you are already authenticated with AWS:')
-        print('https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem')
-        exit(1)
-    octane_connection_name = sys.argv[1]
-    ssl_ca_filepath = sys.argv[2]
-    if not os.path.isfile(ssl_ca_filepath):
-        print(f'Error: invalid _ssl_ca_filepath "{ssl_ca_filepath}"')
+    default_output_parent_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', 'metadata'))
+
+    # parse command line arguments
+    argparser = argparse.ArgumentParser(description='Generate EDW metadata YAML files from Octane information schema')
+    argparser.add_argument(
+        '--ssl_ca_filepath',
+        type=str,
+        required=True,
+        help='filepath for a valid AWS SSL certificate file. This file can be downloaded from '
+             'https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem, provided the user '
+             'is already authenticated with AWS'
+    )
+    argparser.add_argument(
+        '--octane_connection',
+        type=str,
+        default='octane-cert',
+        help='the name of the octane database from which to read information_schema data. Defaults to octane-cert.'
+    )
+    argparser.add_argument(
+        '--edw_environment',
+        type=str,
+        default='local',
+        help='the edw environment (local, qa, prod) from which to read ETL process metadata and '
+             'history_octane information_schema data. Defaults to local.'
+    )
+    argparser.add_argument(
+        '--output_dir',
+        type=str,
+        default=default_output_parent_dir,
+        help='the directory in which to output the generated YAML files. Defaults to data-warehouse/metadata.'
+    )
+    argparser.add_argument(
+        '--octane_prod_username',
+        type=str,
+        default=None,
+        help='the username to use when logging into Octane\'s prod database. Only required if octane_connection is "octane-prod".'
+    )
+    args = argparser.parse_args()
+
+    if not os.path.isfile(args.ssl_ca_filepath):
+        print(f'Error: invalid ssl_ca_filepath "{args.ssl_ca_filepath}"')
         exit(1)
 
-    output_parent_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', 'metadata'))
+    if args.octane_connection == 'octane-prod' and args.octane_prod_username is None:
+        print('Error: must provide octane_prod_username argument when connecting to Octane prod')
+        exit(1)
+
     try:
         # establish database connections
         connection_factory = DBConnectionFactory()
-        octane_db_connection = connection_factory.get_connection(octane_connection_name, ssl_ca_filepath)
-        config_edw_connection = connection_factory.get_connection('edw-local-config')
-        staging_edw_connection = connection_factory.get_connection('edw-local-staging')
+        octane_db_connection = connection_factory.get_connection(args.octane_connection, args.ssl_ca_filepath, args.octane_prod_username)
+        config_edw_connection = connection_factory.get_connection(f'edw-{args.edw_environment}-config', args.ssl_ca_filepath)
+        staging_edw_connection = connection_factory.get_connection(f'edw-{args.edw_environment}-staging', args.ssl_ca_filepath)
 
         # pull source data
         octane_column_metadata = get_octane_column_metadata(octane_db_connection)
@@ -70,9 +103,9 @@ def main():
         )
 
         # write metadata to YAML
-        write_data_warehouse_metadata_to_yaml(output_parent_dir, metadata, rebuild_table_files=True)
+        write_data_warehouse_metadata_to_yaml(args.output_dir, metadata, rebuild_table_files=True)
 
-        print(f'"{metadata.name}" data warehouse metadata YAML files written successfully in {output_parent_dir}')
+        print(f'"{metadata.name}" data warehouse metadata YAML files written successfully in {args.output_dir}')
 
     except DBConnectionFactory.InvalidConnectionNameError as e:
         print(f'Error: {e}')
