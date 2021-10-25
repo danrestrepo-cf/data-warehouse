@@ -1,9 +1,12 @@
+"""A collection of utility classes/functions to be used in the unit test suite."""
+
 from typing import List
 
 from lib.db_connections.connections import DBConnection, DBCursor
 
 
 class MockDBConnection(DBConnection):
+    """A database connection that will always return the same results no matter the query."""
 
     def __init__(self, query_results: List[dict]):
         super().__init__()
@@ -17,6 +20,7 @@ class MockDBConnection(DBConnection):
 
 
 class MockDBCursor(DBCursor):
+    """A query cursor that will always return the same results no matter the query."""
 
     def __init__(self, query_results: List[dict]):
         super().__init__(None)
