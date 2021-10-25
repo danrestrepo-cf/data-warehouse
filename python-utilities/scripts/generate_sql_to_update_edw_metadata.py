@@ -1,3 +1,22 @@
+"""Generate SQL statements to update metadata stored in the EDW config.mdi schema so that it matches EDW YAML metadata files' contents.
+
+This script reads EDW metadata from the following tables in the config.mdi schema:
+- edw_table_definition
+- edw_field_definition
+- edw_join_definition
+- process
+- table_input_step
+- table_output_step
+- table_output_field
+- state_machine_definition
+- state_machine_step
+- json_output_field
+
+It then compares that data with the corresponding metadata in the EDW YAML metadata
+records, and generates INSERT, UPDATE, and DELETE SQL statements that, when executed
+on the EDW config database, will cause the config.mdi metadata to match that of the
+YAML files.
+"""
 import sys
 import os
 import argparse
