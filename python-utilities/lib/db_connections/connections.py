@@ -29,6 +29,9 @@ class DBConnection(ABC):
     def __exit__(self, exc_type, exc_val, exc_tb):
         pass
 
+    class DBConnectionError(Exception):
+        pass
+
 
 class DBCursor:
     """A simple wrapper around a database cursor with method(s) added to facilitate more expressive code"""
@@ -79,13 +82,17 @@ class AWSDBConnection(DBConnection):
     def establish_connection(self):
         pass
 
+    @abstractmethod
+    def create_cursor(self) -> DBCursor:
+        pass
+
     def __enter__(self) -> DBCursor:
 
         try:
             self._conn = self.establish_connection()
-            return DBCursor(self._conn.cursor(dictionary=True))
+            return self.create_cursor()
         except Exception as e:
-            print("Database connection failed due to {}".format(e))
+            raise self.DBConnectionError(f'Database connection failed due to {e}')
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self._conn.commit()
@@ -106,6 +113,9 @@ class AWSPostgresConnection(AWSDBConnection):
             sslrootcert=self._ssl_ca_filepath
         )
 
+    def create_cursor(self) -> DBCursor:
+        return DBCursor(self._conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor))
+
 
 class AWSMySQLConnection(AWSDBConnection):
     """A connection to a MySQL database hosted on AWS. When used as a context manager, returns a DBCursor instance."""
@@ -119,3 +129,6 @@ class AWSMySQLConnection(AWSDBConnection):
             database=self._connection_details.database,
             ssl_ca=self._ssl_ca_filepath
         )
+
+    def create_cursor(self) -> DBCursor:
+        return DBCursor(self._conn.cursor(dictionary=True))
