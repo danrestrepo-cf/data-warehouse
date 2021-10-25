@@ -23,7 +23,7 @@ def get_octane_column_metadata(octane_connection: DBConnection) -> List[dict]:
                     , UPPER( columns.column_type ) AS column_type
                     , columns.column_key = 'PRI' AS is_primary_key
                 FROM information_schema.columns
-                WHERE columns.table_schema = 'lura_qa'
+                WHERE columns.table_schema LIKE 'lura_%'
                 ORDER BY columns.table_name, columns.ordinal_position;
             """)
 
