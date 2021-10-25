@@ -1,6 +1,6 @@
 """A set of functions used to construct a DataWarehouseMetadata object by synthesizing information_schema data from Octane and EDW.
 
-The main functions intended for external use are:
+Public Functions:
 - build_staging_octane_metadata
 - generate_history_octane_metadata
 - add_deleted_tables_and_columns_to_history_octane_metadata
