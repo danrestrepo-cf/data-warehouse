@@ -5,7 +5,7 @@ from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable
 from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper
 from lib.config_mdi_metadata_maintenance.multi_key_map import MultiKeyMap
 from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, InvalidMetadataKeyException
-from metadata_core.metadata_object_path import TablePath
+from lib.metadata_core.metadata_object_path import TablePath
 
 
 class NodeLineageTracer(ABC):

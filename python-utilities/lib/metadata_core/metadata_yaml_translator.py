@@ -16,7 +16,7 @@ from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        ETLDataSource,
                                                        ETLInputType,
                                                        ETLOutputType)
-from metadata_core.metadata_object_path import TablePath
+from lib.metadata_core.metadata_object_path import TablePath
 
 
 # enable PyYAML to gracefully output multi-line string values (e.g. ETL SQL queries)

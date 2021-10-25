@@ -8,7 +8,7 @@ from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        ETLMetadata,
                                                        ForeignKeyMetadata,
                                                        InvalidMetadataKeyException)
-from metadata_core.metadata_object_path import DatabasePath, SchemaPath, TablePath, ColumnPath
+from lib.metadata_core.metadata_object_path import DatabasePath, SchemaPath, TablePath, ColumnPath
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
 
 

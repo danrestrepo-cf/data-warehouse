@@ -5,7 +5,7 @@ from lib.db_connections import DBConnection
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper, SingleGroupRowGrouper
 from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, ForeignKeyMetadata
-from metadata_core.metadata_object_path import TablePath
+from lib.metadata_core.metadata_object_path import TablePath
 
 
 class EDWJoinDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions):

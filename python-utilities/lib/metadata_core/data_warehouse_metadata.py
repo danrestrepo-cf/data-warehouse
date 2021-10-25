@@ -2,7 +2,7 @@ from enum import Enum
 from dataclasses import dataclass
 from typing import List, Optional
 
-from metadata_core.metadata_object_path import DatabasePath, SchemaPath, TablePath, ColumnPath
+from lib.metadata_core.metadata_object_path import DatabasePath, SchemaPath, TablePath, ColumnPath
 
 
 @dataclass

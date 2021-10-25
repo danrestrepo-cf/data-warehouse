@@ -20,7 +20,7 @@ from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        ETLDataSource,
                                                        ETLInputType,
                                                        ETLOutputType)
-from metadata_core.metadata_object_path import TablePath
+from lib.metadata_core.metadata_object_path import TablePath
 
 test_dir = os.path.dirname(os.path.abspath(__file__))
 
