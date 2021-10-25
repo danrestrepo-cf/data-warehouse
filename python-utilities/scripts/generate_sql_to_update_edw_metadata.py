@@ -27,12 +27,40 @@ def main():
     default_metadata_root_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', 'metadata', 'edw')
     default_output_file_path = os.path.realpath('./config_mdi_metadata_maintenance.sql')
     argparser = argparse.ArgumentParser(description='Generate SQL to maintain metadata in the config.mdi schema')
-    argparser.add_argument('-d', '--metadata_dir', type=str, default=default_metadata_root_dir)
-    argparser.add_argument('-o', '--output_file', type=str, default=default_output_file_path)
+    argparser.add_argument(
+        '--metadata_dir',
+        type=str,
+        default=default_metadata_root_dir,
+        help='the source directory for metadata files. Defaults to data-warehouse/metadata.'
+    )
+    argparser.add_argument(
+        '--output_file',
+        type=str,
+        default=default_output_file_path,
+        help='the file in which to output the generated SQL statements. Defaults to ./config_mdi_metadata_maintenance.sql'
+    )
+    argparser.add_argument(
+        '--edw_environment',
+        type=str,
+        default='local',
+        help='the edw environment from which to read config.mdi metadata for comparison. Defaults to local.'
+    )
+    argparser.add_argument(
+        '--ssl_ca_filepath',
+        type=str,
+        default=None,
+        help='filepath for a valid AWS SSL certificate file. Only required for non-local EDW environment connections.'
+    )
     args = argparser.parse_args()
 
+    if args.edw_environment != 'local' and args.ssl_ca_filepath is None:
+        print('Error: must specify an SSL certificate filepath if EDW environment is not "local"')
+        exit(1)
+
+    edw_connection = f'edw-{args.edw_environment}-config'
+
     # read in metadata to be compared
-    edw_connection = DBConnectionFactory().get_connection('edw-local-config')
+    edw_connection = DBConnectionFactory().get_connection(edw_connection, args.ssl_ca_filepath)
     data_warehouse_metadata = generate_data_warehouse_metadata_from_yaml(args.metadata_dir)
 
     # filter metadata to only staging_octane and history_octane schemas, since only those are being maintained with YAML for now
