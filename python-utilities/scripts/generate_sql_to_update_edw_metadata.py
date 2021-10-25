@@ -43,7 +43,7 @@ def main():
         '--edw_environment',
         type=str,
         default='local',
-        help='the edw environment from which to read config.mdi metadata for comparison. Defaults to local.'
+        help='the edw environment (local, qa, prod) from which to read config.mdi metadata for comparison. Defaults to local.'
     )
     argparser.add_argument(
         '--ssl_ca_filepath',
