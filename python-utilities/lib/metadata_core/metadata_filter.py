@@ -44,22 +44,22 @@ class MetadataFilterer(ABC):
         filtered_metadata = copy.deepcopy(metadata)
         for database in metadata.databases:
             if self.metadata_should_be_filtered_out(self._database_matcher, database):
-                filtered_metadata.remove_database_metadata(database.name)
+                filtered_metadata.remove_database(database.name)
             else:
                 for schema in database.schemas:
                     if self.metadata_should_be_filtered_out(self._schema_matcher, schema):
-                        filtered_metadata.get_database(database.name).remove_schema_metadata(schema.name)
+                        filtered_metadata.get_database(database.name).remove_schema(schema.name)
                     else:
                         for table in schema.tables:
                             if self.metadata_should_be_filtered_out(self._table_matcher, table):
-                                filtered_metadata.get_schema_by_path(schema.path).remove_table_metadata(table.name)
+                                filtered_metadata.get_schema_by_path(schema.path).remove_table(table.name)
                             else:
                                 for column in table.columns:
                                     if self.metadata_should_be_filtered_out(self._column_matcher, column):
-                                        filtered_metadata.get_table_by_path(table.path).remove_column_metadata(column.name)
+                                        filtered_metadata.get_table_by_path(table.path).remove_column(column.name)
                                         for foreign_key in table.foreign_keys:
                                             if column.name in foreign_key.native_columns:
-                                                filtered_metadata.get_table_by_path(table.path).remove_foreign_key_metadata(
+                                                filtered_metadata.get_table_by_path(table.path).remove_foreign_key(
                                                     foreign_key.name)
 
         return filtered_metadata

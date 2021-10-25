@@ -210,15 +210,15 @@ class TableMetadata:
         else:
             return self._foreign_keys[foreign_key_name]
 
-    def remove_column_metadata(self, column_name: str):
+    def remove_column(self, column_name: str):
         if column_name in self._columns:
             del self._columns[column_name]
 
-    def remove_etl_metadata(self, etl_name: str):
+    def remove_etl(self, etl_name: str):
         if etl_name in self._etls:
             del self._etls[etl_name]
 
-    def remove_foreign_key_metadata(self, foreign_key_name: str):
+    def remove_foreign_key(self, foreign_key_name: str):
         if foreign_key_name in self._foreign_keys:
             del self._foreign_keys[foreign_key_name]
 
@@ -301,7 +301,7 @@ class SchemaMetadata:
     def contains_table(self, table_name: str) -> bool:
         return table_name in self._tables
 
-    def remove_table_metadata(self, table_name: str):
+    def remove_table(self, table_name: str):
         if table_name in self._tables:
             del self._tables[table_name]
 
@@ -341,7 +341,7 @@ class DatabaseMetadata:
     def contains_schema(self, schema_name: str) -> bool:
         return schema_name in self._schemas
 
-    def remove_schema_metadata(self, schema_name: str):
+    def remove_schema(self, schema_name: str):
         if schema_name in self._schemas:
             del self._schemas[schema_name]
 
@@ -379,7 +379,7 @@ class DataWarehouseMetadata:
     def contains_database(self, database_name: str) -> bool:
         return database_name in self._databases
 
-    def remove_database_metadata(self, database_name: str):
+    def remove_database(self, database_name: str):
         if database_name in self._databases:
             del self._databases[database_name]
 

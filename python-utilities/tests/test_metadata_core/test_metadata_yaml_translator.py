@@ -592,8 +592,8 @@ class TestWriteDataWarehouseMetadataToYAML_ExistingDirectoriesAndFiles(MetadataD
         write_data_warehouse_metadata_to_yaml(test_dir, self.metadata_to_write, rebuild_database_dirs=True)
         expected = self.original_metadata_read_from_files
         expected.get_table_by_path(TablePath('db1', 'sch1', 't1')).primary_key.append('col1')
-        expected.get_database('db1').remove_schema_metadata('sch2')
-        expected.get_database('db1').get_schema('sch1').remove_table_metadata('t2')
+        expected.get_database('db1').remove_schema('sch2')
+        expected.get_database('db1').get_schema('sch1').remove_table('t2')
         result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
         self.assertEqual(expected, result)
 
@@ -601,7 +601,7 @@ class TestWriteDataWarehouseMetadataToYAML_ExistingDirectoriesAndFiles(MetadataD
         write_data_warehouse_metadata_to_yaml(test_dir, self.metadata_to_write, rebuild_schema_dirs=True)
         expected = self.original_metadata_read_from_files
         expected.get_table_by_path(TablePath('db1', 'sch1', 't1')).primary_key.append('col1')
-        expected.get_database('db1').get_schema('sch1').remove_table_metadata('t2')
+        expected.get_database('db1').get_schema('sch1').remove_table('t2')
         result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
         self.assertEqual(expected, result)
 
@@ -609,7 +609,7 @@ class TestWriteDataWarehouseMetadataToYAML_ExistingDirectoriesAndFiles(MetadataD
         write_data_warehouse_metadata_to_yaml(test_dir, self.metadata_to_write, rebuild_table_files=True)
         expected = self.original_metadata_read_from_files
         expected.get_table_by_path(TablePath('db1', 'sch1', 't1')).primary_key.append('col1')
-        expected.get_database('db1').get_schema('sch1').remove_table_metadata('t2')
+        expected.get_database('db1').get_schema('sch1').remove_table('t2')
         result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
         self.assertEqual(expected, result)
         self.assertTrue(os.path.exists(self.v1_filepath))

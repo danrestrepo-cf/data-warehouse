@@ -35,12 +35,12 @@ class TestDataWarehouseMetadata(unittest.TestCase):
     def test_can_remove_database_metadata(self):
         dw_metadata = DataWarehouseMetadata('edw')
         dw_metadata.add_database(DatabaseMetadata('staging'))
-        dw_metadata.remove_database_metadata('staging')
+        dw_metadata.remove_database('staging')
         self.assertEqual([], dw_metadata.databases)
 
     def test_removing_database_that_doesnt_exist_does_nothing(self):
         dw_metadata = DataWarehouseMetadata('edw')
-        dw_metadata.remove_database_metadata('staging')
+        dw_metadata.remove_database('staging')
         self.assertEqual([], dw_metadata.databases)
 
     def test_can_indicate_whether_it_contains_a_given_database_by_name(self):
@@ -113,12 +113,12 @@ class TestDatabaseMetadata(unittest.TestCase):
     def test_can_remove_schema_metadata(self):
         db_metadata = DatabaseMetadata('staging')
         db_metadata.add_schema(SchemaMetadata('staging_octane'))
-        db_metadata.remove_schema_metadata('staging_octane')
+        db_metadata.remove_schema('staging_octane')
         self.assertEqual([], db_metadata.schemas)
 
     def test_removing_schema_that_doesnt_exist_does_nothing(self):
         db_metadata = DatabaseMetadata('staging')
-        db_metadata.remove_schema_metadata('staging_octane')
+        db_metadata.remove_schema('staging_octane')
         self.assertEqual([], db_metadata.schemas)
 
     def test_can_indicate_whether_it_contains_a_given_schema_by_name(self):
@@ -166,12 +166,12 @@ class TestSchemaMetadata(unittest.TestCase):
     def test_can_remove_table_metadata(self):
         schema_metadata = SchemaMetadata('staging_octane')
         schema_metadata.add_table(TableMetadata('account'))
-        schema_metadata.remove_table_metadata('account')
+        schema_metadata.remove_table('account')
         self.assertEqual([], schema_metadata.tables)
 
     def test_removing_table_that_doesnt_exist_does_nothing(self):
         schema_metadata = SchemaMetadata('staging_octane')
-        schema_metadata.remove_table_metadata('account')
+        schema_metadata.remove_table('account')
         self.assertEqual([], schema_metadata.tables)
 
     def test_can_indicate_whether_it_contains_a_given_table_by_name(self):
@@ -216,12 +216,12 @@ class TestTableMetadata(unittest.TestCase):
     def test_can_remove_column_metadata(self):
         table_metadata = TableMetadata('account')
         table_metadata.add_column(ColumnMetadata('a_pid'))
-        table_metadata.remove_column_metadata('a_pid')
+        table_metadata.remove_column('a_pid')
         self.assertEqual([], table_metadata.columns)
 
     def test_removing_column_that_doesnt_exist_does_nothing(self):
         table_metadata = TableMetadata('account')
-        table_metadata.remove_column_metadata('a_pid')
+        table_metadata.remove_column('a_pid')
         self.assertEqual([], table_metadata.columns)
 
     def test_can_indicate_whether_it_contains_a_given_column_by_name(self):
@@ -251,12 +251,12 @@ class TestTableMetadata(unittest.TestCase):
     def test_can_remove_etl_metadata(self):
         table_metadata = TableMetadata('account')
         table_metadata.add_etl(ETLMetadata('SP-100123'))
-        table_metadata.remove_etl_metadata('SP-100123')
+        table_metadata.remove_etl('SP-100123')
         self.assertEqual([], table_metadata.etls)
 
     def test_removing_etl_that_doesnt_exist_does_nothing(self):
         table_metadata = TableMetadata('account')
-        table_metadata.remove_etl_metadata('SP-100123')
+        table_metadata.remove_etl('SP-100123')
         self.assertEqual([], table_metadata.etls)
 
     def test_can_indicate_whether_it_contains_a_given_etl_by_name(self):
@@ -297,12 +297,12 @@ class TestTableMetadata(unittest.TestCase):
             native_columns=[],
             foreign_columns=[]
         ))
-        table_metadata.remove_foreign_key_metadata('fk_1')
+        table_metadata.remove_foreign_key('fk_1')
         self.assertEqual([], table_metadata.foreign_keys)
 
     def test_removing_foreign_key_that_doesnt_exist_does_nothing(self):
         table_metadata = TableMetadata('account')
-        table_metadata.remove_foreign_key_metadata('fk_1')
+        table_metadata.remove_foreign_key('fk_1')
         self.assertEqual([], table_metadata.foreign_keys)
 
     def test_can_indicate_whether_it_contains_a_given_foreign_key_by_name(self):

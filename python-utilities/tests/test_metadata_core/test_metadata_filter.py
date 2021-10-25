@@ -118,28 +118,28 @@ class TestInclusiveMetadataFilterer(unittest.TestCase):
     def test_removes_any_databases_that_do_not_match_at_least_one_filter(self):
         self.filterer.add_database_criteria(DatabasePath('db1'))
         expected = copy.deepcopy(self.metadata)
-        expected.remove_database_metadata('db2')
+        expected.remove_database('db2')
         self.assertEqual(expected, self.filterer.filter(self.metadata))
 
     def test_removes_any_schemas_that_do_not_match_at_least_one_filter(self):
         self.filterer.add_schema_criteria(SchemaPath('db1', 'sch*'))
         expected = copy.deepcopy(self.metadata)
-        expected.get_database('db2').remove_schema_metadata('sch2')
+        expected.get_database('db2').remove_schema('sch2')
         self.assertEqual(expected, self.filterer.filter(self.metadata))
 
     def test_removes_any_tables_that_do_not_match_at_least_one_filter(self):
         self.filterer.add_table_criteria(TablePath('db*', 'sch*', 't2'))
         expected = copy.deepcopy(self.metadata)
-        expected.get_database('db1').get_schema('sch1').remove_table_metadata('t1')
-        expected.get_database('db1').get_schema('sch1').remove_table_metadata('t3')
+        expected.get_database('db1').get_schema('sch1').remove_table('t1')
+        expected.get_database('db1').get_schema('sch1').remove_table('t3')
         self.assertEqual(expected, self.filterer.filter(self.metadata))
 
     def test_removes_any_columns_that_do_not_match_at_least_one_filter_as_well_as_their_foreign_keys(self):
         self.filterer.add_column_criteria(ColumnPath('db1', 'sch1', 't2', 'c1'))
         expected = copy.deepcopy(self.metadata)
-        expected.get_database('db1').get_schema('sch1').get_table('t3').remove_foreign_key_metadata('fk1')
-        expected.get_database('db1').get_schema('sch1').get_table('t3').remove_column_metadata('c1')
-        expected.get_database('db2').get_schema('sch2').get_table('t2').remove_column_metadata('c2')
+        expected.get_database('db1').get_schema('sch1').get_table('t3').remove_foreign_key('fk1')
+        expected.get_database('db1').get_schema('sch1').get_table('t3').remove_column('c1')
+        expected.get_database('db2').get_schema('sch2').get_table('t2').remove_column('c2')
         self.assertEqual(expected, self.filterer.filter(self.metadata))
 
 
@@ -212,27 +212,27 @@ class TestExclusiveMetadataFilterer(unittest.TestCase):
     def test_removes_any_databases_that_match_at_least_one_filter(self):
         self.filterer.add_database_criteria(DatabasePath('db1'))
         expected = copy.deepcopy(self.metadata)
-        expected.remove_database_metadata('db1')
+        expected.remove_database('db1')
         self.assertEqual(expected, self.filterer.filter(self.metadata))
 
     def test_removes_any_schemas_that_match_at_least_one_filter(self):
         self.filterer.add_schema_criteria(SchemaPath('db1', 'sch*'))
         expected = copy.deepcopy(self.metadata)
-        expected.get_database('db1').remove_schema_metadata('sch1')
-        expected.get_database('db1').remove_schema_metadata('sch2')
+        expected.get_database('db1').remove_schema('sch1')
+        expected.get_database('db1').remove_schema('sch2')
         self.assertEqual(expected, self.filterer.filter(self.metadata))
 
     def test_removes_any_tables_that_match_at_least_one_filter(self):
         self.filterer.add_table_criteria(TablePath('db*', 'sch*', 't2'))
         expected = copy.deepcopy(self.metadata)
-        expected.get_database('db1').get_schema('sch1').remove_table_metadata('t2')
-        expected.get_database('db2').get_schema('sch2').remove_table_metadata('t2')
+        expected.get_database('db1').get_schema('sch1').remove_table('t2')
+        expected.get_database('db2').get_schema('sch2').remove_table('t2')
         self.assertEqual(expected, self.filterer.filter(self.metadata))
 
     def test_removes_any_columns_that_do_not_match_at_least_one_filter(self):
         self.filterer.add_column_criteria(ColumnPath('db1', 'sch1', 't2', 'c1'))
         expected = copy.deepcopy(self.metadata)
-        expected.get_database('db1').get_schema('sch1').get_table('t2').remove_column_metadata('c1')
+        expected.get_database('db1').get_schema('sch1').get_table('t2').remove_column('c1')
         self.assertEqual(expected, self.filterer.filter(self.metadata))
 
 
