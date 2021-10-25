@@ -47,6 +47,14 @@ class TestBuildStagingOctaneMetadata(unittest.TestCase):
                 'constraint_name': 'fk2',
                 'referenced_table_name': 't20',
                 'referenced_column_name': 'c20'
+            },
+            # should be completely ignored and not included in final output
+            {
+                'table_name': 'unknown_table',
+                'column_name': 'c2',
+                'constraint_name': 'fk2',
+                'referenced_table_name': 'other_unknown_table',
+                'referenced_column_name': 'c20'
             }
         ]
 

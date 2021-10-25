@@ -58,14 +58,15 @@ def build_staging_octane_metadata(column_metadata: List[dict], foreign_key_metad
         }
 
     for row in foreign_key_metadata:
-        tables_dict[row['table_name']]['foreign_keys'][row['constraint_name']] = {
-            'columns': [row['column_name']],
-            'references': {
-                'columns': [row['referenced_column_name']],
-                'schema': 'staging_octane',
-                'table': row['referenced_table_name']
+        if row['table_name'] in tables_dict:
+            tables_dict[row['table_name']]['foreign_keys'][row['constraint_name']] = {
+                'columns': [row['column_name']],
+                'references': {
+                    'columns': [row['referenced_column_name']],
+                    'schema': 'staging_octane',
+                    'table': row['referenced_table_name']
+                }
             }
-        }
 
     metadata_dict = {
         'name': 'edw',
