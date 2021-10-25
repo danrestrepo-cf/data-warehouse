@@ -5,6 +5,7 @@ from lib.db_connections.connection_details import ConnectionDetails
 
 
 def get_connection_details_from_xml_file(file_path: str) -> ConnectionDetails:
+    """Construct a ConnectionDetails object from an IntelliJ data source XML file."""
     xml_str = read_xml_file_without_comments(file_path)
     connection_config_document = minidom.parseString(xml_str)
     connection_details = ConnectionDetails()

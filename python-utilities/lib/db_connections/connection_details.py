@@ -3,6 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class ConnectionDetails:
+    """A simple data structure for holding database connection information."""
     host: str = None
     database: str = None
     region: str = None

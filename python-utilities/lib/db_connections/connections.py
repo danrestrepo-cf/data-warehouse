@@ -1,3 +1,12 @@
+"""A class hierarchy defining various ways of connecting to Mortgage Technology databases.
+
+DBConnection is the base of the hierarchy, and should be used in all type hints related
+to connection objects. The three instantiatable "leaves" of the hierarchy are:
+- LocalPostgresConnection: used mainly to connect to the local EDW database
+- AWSPostgresConnection: used to connect to any non-local EDW databases
+- AWSMySQLConnection: used to connect to any Octane databases
+"""
+
 from typing import List
 from abc import ABC, abstractmethod
 
