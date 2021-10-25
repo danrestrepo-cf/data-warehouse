@@ -1,3 +1,28 @@
+"""A collection of classes that store hierarchical data warehouse metadata.
+
+The class structure is as follows:
+- DataWarehouseMetadata (top level)
+    - has zero to many DatabaseMetadata
+        - has zero to many SchemaMetadata
+            - has zero to many TableMetadata
+                - has zero to many ColumnMetadata
+                    - has zero to one ForeignColumnPath
+                - has zero to many ForeignKeyMetadata
+                - has zero to many ETLMetadata
+
+Each node in the hierarchy contains several standardized methods for accessing and
+manipulating its child nodes:
+- get_<object> (e.g. schema.get_table('account'))
+    - return the child metadata object with the given name
+- add_<object> (e.g. database.add_schema(SchemaMetadata('star_loan')))
+    - add the given metadata object as a child of the current node
+- remove_<object> (e.g. data_warehouse.remove_database('staging'))
+    - remove the metadata object with the given name from the current node's children
+- contains_<object> (e.g. table.contains_etl('SP-123456'))
+    - return True if the current node has a child with the given name, False otherwise
+- <objects> (e.g. table.columns)
+    - a @property method that simply returns a list of child objects of the specified type
+"""
 from enum import Enum
 from dataclasses import dataclass
 from typing import List, Optional
@@ -7,12 +32,51 @@ from lib.metadata_core.metadata_object_path import DatabasePath, SchemaPath, Tab
 
 @dataclass
 class ForeignColumnPath:
+    """A data structure describing the "path" to a column in another table.
+
+    column_name is the name of the foreign column. fk_steps is a list of foreign
+    key names along the path to the foreign column. If fk_steps is empty, then the
+    "foreign" column (column_name) is in the starting table.
+
+    For example:
+
+    fk_steps = ['fk1', 'fk2', fk3']
+    column_name = 'dest_column'
+
+    To traverse this example path, start at the "home" table. If this path is valid,
+    the "home" table should have a foreign key called "fk1". If "fk1" describes
+    a join between the "home" table and table1, then (again, if the path is valid)
+    we can expect table1 in turn to have a foreign key called "fk2". Let's say
+    "fk2" describes a join to table2, and "fk3" describes a join between table2
+    and table3. We should then expect table3 to contain "dest_column", since that
+    is the last hop in the path.
+    """
     fk_steps: List[str]
     column_name: str
 
 
 @dataclass
 class ForeignKeyMetadata:
+    """Metadata describing a foreign key on a table.
+
+    Attributes:
+        name: the foreign key's name
+        table: the name of the other table in the foreign key relationship
+        native_columns: a list of the columns in *this* table that participate
+        in the foreign key relationship
+        foreign_columns: a list of the columns in the other table that participate
+        in the foreign key relationship
+
+    Native and Foreign columns are matched up in the order they appear in the lists,
+    so in the following example:
+
+    native_columns = ['a', 'b']
+    foreign_columns = ['c', 'd']
+
+    The corresponding join condition for this foreign key is implied to be:
+
+    table.a = foreign_table.c AND table.b = foreign_table.d
+    """
     name: str
     table: TablePath
     native_columns: List[str]
@@ -20,19 +84,46 @@ class ForeignKeyMetadata:
 
 
 class ETLDataSource(Enum):
+    """An Enum of possible EDW data sources.
+
+    The enum value corresponds to the data_source_dwid in EDW.
+    """
     OCTANE = 1
 
 
 class ETLInputType(Enum):
+    """An Enum of possible Pentaho ETL input types."""
     TABLE = 'table'
 
 
 class ETLOutputType(Enum):
+    """An Enum of possible Pentaho ETL output types."""
     INSERT = 'insert'
+    INSERT_UPDATE = 'insert_update'
+    DELETE = 'delete'
 
 
 @dataclass
 class ETLMetadata:
+    """Metadata describing an ETL that populates and/or maintains a table.
+
+    Attributes:
+        process_name: the name of the ETL's server process (e.g. SP-123456)
+        hardcoded_data_source: the primary data source of this ETL, translated to
+        a hardcoded dwid value in some EDW ETL processes
+        input_type: the format of data to be read in as input to this ETL
+        output_type: the type of action to be taken as the output of this ETL
+        json_output_field: the key column to be used in the ETL's MDI-2 output json
+        truncate_table: boolean indicating whether or not the ETL's target
+        table should be truncated before insertion. Only used for ETLs with
+        output_type INSERT
+        insert_upate_keys: a list of table columns to be used an an insert/update key.
+        Only used for ETLs with output_type INSERT_UPDATE
+        delete_keys: a list of table columns to be used as a delete key. Only used
+        for ETLs with output_type DELETE
+        input_sql: the SQL statement used as input to the ETL. Only used for ETLs
+        with input_type TABLE
+    """
     process_name: str
     hardcoded_data_source: Optional[ETLDataSource] = None
     input_type: ETLInputType = ETLInputType.TABLE
@@ -46,6 +137,14 @@ class ETLMetadata:
 
 @dataclass(init=False)
 class ColumnMetadata:
+    """Metadata describing a column in a table.
+
+    Attributes:
+        name: the column name
+        data_type: the column's data type
+        source_field: a ForeignColumnPath describing the location of the column's
+        source field, starting from the table's primary_source_table
+    """
     name: str
     data_type: Optional[str] = None
     source_field: Optional[ForeignColumnPath] = None
@@ -58,6 +157,18 @@ class ColumnMetadata:
 
 
 class TableMetadata:
+    """A bottom-level metadata hierarchy node containing all metadata for a single table within it
+
+    Attributes:
+        name: the table name
+        path: the path to this table in the metadata hierarchy
+        primary_source_table: the path to this table's source table in the metadata hierarchy
+        primary_key: a list of fields that constitue this table's primary key
+        columns: a list of metadata objects describing the table's columns
+        foreign_keys: a list of metadata objects describing the table's foreign_keys
+        etls: a list of metadata objects describing ETLs that populate/maintain the table
+        next_etls: a list of server processes to be triggered following any ETLs that maintain this table
+    """
 
     def __init__(self, name: str, primary_source_table: Optional[TablePath] = None):
         self.name = name
@@ -121,6 +232,7 @@ class TableMetadata:
         return foreign_key_name in self._foreign_keys
 
     def get_column_source_table(self, column_name: str, data_warehouse_metadata: 'DataWarehouseMetadata') -> Optional['TableMetadata']:
+        """Get the TableMetadata object for a given column's source table from within the given DataWarehouseMetadata structure."""
         source_field = self.get_column(column_name).source_field
         if source_field is not None:
             source_table = data_warehouse_metadata.get_table_by_path(self.primary_source_table)
@@ -168,6 +280,7 @@ class TableMetadata:
 
 
 class SchemaMetadata:
+    """A metadata hierarchy node containing all metadata for a single schema within it."""
 
     def __init__(self, name: str):
         self.name = name
@@ -208,6 +321,7 @@ class SchemaMetadata:
 
 
 class DatabaseMetadata:
+    """A metadata hierarchy node containing all metadata for a single database within it."""
 
     def __init__(self, name: str):
         self.name = name
@@ -247,6 +361,7 @@ class DatabaseMetadata:
 
 
 class DataWarehouseMetadata:
+    """A top-level metadata object containing an entire metadata hierarchy within it, starting with databases."""
 
     def __init__(self, name: str):
         self.name = name
@@ -296,14 +411,18 @@ class DataWarehouseMetadata:
 
 
 class InvalidMetadataKeyException(Exception):
+    """A generic exception to be thrown by the metadata hierarchy when the user attempts to access a child object that doesn't exist"""
+
     def __init__(self, parent_entity_type: str, parent_name: str, child_entity_type: str, child_name: str, ):
         super().__init__(f'{child_entity_type} "{child_name}" does not exist in {parent_entity_type} "{parent_name}"')
 
 
 def indent_multiline_str(s: str, indent: int = 4) -> str:
+    """Indent every line in a multi-line string by the given indentation amount."""
     return '\n'.join([' ' * indent + line for line in s.split('\n')])
 
 
 def generate_collection_repr(collection: list) -> str:
+    """Generate an easy-to-read repr for a list of repr-able objects."""
     reprs = "\n".join([indent_multiline_str(repr(item), indent=8) for item in collection])
     return f'[\n{reprs}\n]'
