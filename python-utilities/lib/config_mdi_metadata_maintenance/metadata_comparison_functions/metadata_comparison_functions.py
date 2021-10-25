@@ -1,7 +1,7 @@
 from typing import List
 from abc import ABC, abstractmethod
 
-from lib.db_connections import LocalEDWConnection
+from lib.db_connections import DBConnection
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper
 from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, ETLMetadata
@@ -14,7 +14,7 @@ class MetadataComparisonFunctions(ABC):
         self.key_fields = key_fields
 
     @abstractmethod
-    def construct_metadata_table_from_config_db(self, local_edw_connection: LocalEDWConnection) -> MetadataTable:
+    def construct_metadata_table_from_config_db(self, local_edw_connection: DBConnection) -> MetadataTable:
         pass
 
     @abstractmethod
@@ -41,9 +41,9 @@ class MetadataComparisonFunctions(ABC):
     def generate_delete_sql(self, rows: List[Row]) -> str:
         pass
 
-    def construct_metadata_table_from_sql_query_results(self, local_edw_connection: LocalEDWConnection, sql_query: str) -> MetadataTable:
+    def construct_metadata_table_from_sql_query_results(self, local_edw_connection: DBConnection, sql_query: str) -> MetadataTable:
         with local_edw_connection as cursor:
-            raw_data = cursor.select(sql_query)
+            raw_data = cursor.execute_and_fetch_all_results(sql_query)
             metadata_table = self.construct_empty_metadata_table()
             metadata_table.add_rows(raw_data)
             return metadata_table

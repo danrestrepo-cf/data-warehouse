@@ -5,7 +5,7 @@ import argparse
 # this line allows the script to import directly from lib when run from the command line
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
 
-from lib.db_connections import LocalEDWConnection
+from lib.db_connections import DBConnectionFactory
 from lib.metadata_core.metadata_object_path import SchemaPath
 from lib.metadata_core.metadata_yaml_translator import generate_data_warehouse_metadata_from_yaml
 from lib.metadata_core.metadata_filter import InclusiveMetadataFilterer
@@ -32,7 +32,7 @@ def main():
     args = argparser.parse_args()
 
     # read in metadata to be compared
-    edw_connection = LocalEDWConnection(host='localhost', dbname='config', user='postgres', password='testonly')
+    edw_connection = DBConnectionFactory().get_connection('edw-local-config')
     data_warehouse_metadata = generate_data_warehouse_metadata_from_yaml(args.metadata_dir)
 
     # filter metadata to only staging_octane and history_octane schemas, since only those are being maintained with YAML for now

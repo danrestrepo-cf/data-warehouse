@@ -2,10 +2,10 @@
 
 from typing import List
 
-from lib.db_connections import OctaneDBConnection, LocalEDWConnection
+from lib.db_connections import DBConnection
 
 
-def get_octane_column_metadata(octane_connection: OctaneDBConnection) -> List[dict]:
+def get_octane_column_metadata(octane_connection: DBConnection) -> List[dict]:
     """Get metadata about all columns (and their tables) from an Octane DB's information_schema.
 
     Returns a list of dicts, each with the following structure:
@@ -17,7 +17,7 @@ def get_octane_column_metadata(octane_connection: OctaneDBConnection) -> List[di
     }
     """
     with octane_connection as cursor:
-        return cursor.select("""
+        return cursor.execute_and_fetch_all_results("""
                 SELECT columns.table_name
                     , columns.column_name
                     , UPPER( columns.column_type ) AS column_type
@@ -28,7 +28,7 @@ def get_octane_column_metadata(octane_connection: OctaneDBConnection) -> List[di
             """)
 
 
-def get_octane_foreign_key_metadata(octane_connection: OctaneDBConnection) -> List[dict]:
+def get_octane_foreign_key_metadata(octane_connection: DBConnection) -> List[dict]:
     """Get metadata about all foreign keys from an Octane DB's information_schema.
 
     Returns a list of dicts, each with the following structure:
@@ -41,7 +41,7 @@ def get_octane_foreign_key_metadata(octane_connection: OctaneDBConnection) -> Li
     }
     """
     with octane_connection as cursor:
-        return cursor.select("""
+        return cursor.execute_and_fetch_all_results("""
                 SELECT table_name
                     , column_name
                     , constraint_name
@@ -52,7 +52,7 @@ def get_octane_foreign_key_metadata(octane_connection: OctaneDBConnection) -> Li
             """)
 
 
-def get_etl_process_metadata(edw_connection: LocalEDWConnection) -> dict:
+def get_etl_process_metadata(edw_connection: DBConnection) -> dict:
     """Get a mapping between history_octane table names and metadata about the ETL processes that populate those tables.
 
     Returns a dict with the following structure:
@@ -70,7 +70,7 @@ def get_etl_process_metadata(edw_connection: LocalEDWConnection) -> dict:
     }
     """
     with edw_connection as cursor:
-        raw_table_etl_processes = cursor.select("""
+        raw_table_etl_processes = cursor.execute_and_fetch_all_results("""
             SELECT table_output_step.target_table
                  , process.name AS process
             FROM mdi.process
@@ -79,7 +79,7 @@ def get_etl_process_metadata(edw_connection: LocalEDWConnection) -> dict:
             WHERE table_output_step.target_schema = 'history_octane';
         """)
 
-        raw_next_etl_processes = cursor.select("""
+        raw_next_etl_processes = cursor.execute_and_fetch_all_results("""
             SELECT table_output_step.target_table
                  , next_process.name AS next_process
             FROM mdi.state_machine_step
@@ -98,7 +98,7 @@ def get_etl_process_metadata(edw_connection: LocalEDWConnection) -> dict:
         return table_etl_processes
 
 
-def get_history_octane_metadata_for_deleted_columns(edw_connection: LocalEDWConnection) -> List[dict]:
+def get_history_octane_metadata_for_deleted_columns(edw_connection: DBConnection) -> List[dict]:
     """Get metadata about all history_octane columns (and their tables) from EDW's staging database information_schema.
 
     Returns a list of dicts, each with the following structure:
@@ -109,7 +109,7 @@ def get_history_octane_metadata_for_deleted_columns(edw_connection: LocalEDWConn
     }
     """
     with edw_connection as cursor:
-        return cursor.select("""
+        return cursor.execute_and_fetch_all_results("""
             SELECT history_columns.table_name
                  , history_columns.column_name
                  , CASE

@@ -1,6 +1,6 @@
 import unittest
 
-from tests.test_utils import MockLocalEDWConnection
+from tests.test_utils import MockDBConnection
 
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
@@ -21,7 +21,7 @@ class TestStateMachineStepMetadataComparisonFunctions(unittest.TestCase):
             {'process_name': 'SP-2', 'next_process_name': 'SP-20'},
             {'process_name': 'SP-3', 'next_process_name': 'SP-30'}
         ]
-        db_conn = MockLocalEDWConnection(query_results=test_data)
+        db_conn = MockDBConnection(query_results=test_data)
         expected = MetadataTable(key_fields=['process_name', 'next_process_name'])
         expected.add_rows(test_data)
         self.assertEqual(expected, StateMachineStepMetadataComparisonFunctions().construct_metadata_table_from_config_db(db_conn))

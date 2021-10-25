@@ -1,6 +1,6 @@
 import unittest
 
-from tests.test_utils import MockLocalEDWConnection
+from tests.test_utils import MockDBConnection
 
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
@@ -45,7 +45,7 @@ class TestEDWJoinDefinitionMetadataComparisonFunctions(unittest.TestCase):
                 'join_condition': 'primary_table.col3 = target_table.col3'
             },
         ]
-        db_conn = MockLocalEDWConnection(query_results=test_data)
+        db_conn = MockDBConnection(query_results=test_data)
         expected = MetadataTable(key_fields=[
             'primary_database_name',
             'primary_schema_name',

@@ -1,7 +1,7 @@
 from typing import List
 
 from lib.config_mdi_metadata_maintenance.metadata_comparison_functions.metadata_comparison_functions import MetadataComparisonFunctions
-from lib.db_connections import LocalEDWConnection
+from lib.db_connections import DBConnection
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper, SingleGroupRowGrouper
 from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, ForeignKeyMetadata
@@ -21,7 +21,7 @@ class EDWJoinDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions):
             'join_condition'
         ])
 
-    def construct_metadata_table_from_config_db(self, local_edw_connection: LocalEDWConnection) -> MetadataTable:
+    def construct_metadata_table_from_config_db(self, local_edw_connection: DBConnection) -> MetadataTable:
         return self.construct_metadata_table_from_sql_query_results(local_edw_connection, """
                 SELECT primary_table_definition.database_name AS primary_database_name
                      , primary_table_definition.schema_name AS primary_schema_name

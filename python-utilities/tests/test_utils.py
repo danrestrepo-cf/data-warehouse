@@ -1,9 +1,9 @@
 from typing import List
 
-from lib.db_connections import LocalEDWConnection, DBDictCursor
+from lib.db_connections.connections import DBConnection, DBCursor
 
 
-class MockLocalEDWConnection(LocalEDWConnection):
+class MockDBConnection(DBConnection):
 
     def __init__(self, query_results: List[dict]):
         super().__init__()
@@ -16,11 +16,11 @@ class MockLocalEDWConnection(LocalEDWConnection):
         pass
 
 
-class MockDBCursor(DBDictCursor):
+class MockDBCursor(DBCursor):
 
     def __init__(self, query_results: List[dict]):
         super().__init__(None)
         self.query_results = query_results
 
-    def select(self, sql: str) -> List[dict]:
+    def execute_and_fetch_all_results(self, sql: str) -> List[dict]:
         return self.query_results

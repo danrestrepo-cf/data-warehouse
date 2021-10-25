@@ -1,6 +1,6 @@
 import unittest
 
-from tests.test_utils import MockLocalEDWConnection
+from tests.test_utils import MockDBConnection
 
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
@@ -21,7 +21,7 @@ class TestJSONOutputFieldMetadataComparisonFunctions(unittest.TestCase):
             {'process_name': 'SP-2', 'json_output_field': 't2_pid'},
             {'process_name': 'SP-3', 'json_output_field': 't3_pid'}
         ]
-        db_conn = MockLocalEDWConnection(query_results=test_data)
+        db_conn = MockDBConnection(query_results=test_data)
         expected = MetadataTable(key_fields=['process_name'])
         expected.add_rows(test_data)
         self.assertEqual(expected, JSONOutputFieldMetadataComparisonFunctions().construct_metadata_table_from_config_db(db_conn))

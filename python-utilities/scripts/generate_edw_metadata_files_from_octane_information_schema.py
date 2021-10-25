@@ -10,7 +10,7 @@ import os
 # this line allows the script to import directly from lib when run from the command line
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
 
-from lib.db_connections import OctaneDBConnection, LocalEDWConnection
+from lib.db_connections import DBConnectionFactory
 from lib.metadata_core.metadata_filter import ExclusiveMetadataFilterer
 from lib.metadata_core.metadata_object_path import TablePath, ColumnPath
 from lib.metadata_core.metadata_yaml_translator import write_data_warehouse_metadata_to_yaml
@@ -25,70 +25,58 @@ from lib.lura_information_schema_to_yaml.metadata_builders import (build_staging
 
 def main():
     # validate and parse command line arguments
-    if len(sys.argv) != 2:
-        print('usage: python generate_edw_metadata_files.py [ssl_ca_filepath]')
+    if len(sys.argv) != 3:
+        print('usage: python generate_edw_metadata_files.py octane_connection_name _ssl_ca_filepath')
         print()
         print('A valid AWS ssl certificate can be downloaded at the following link, ' +
               'provided you are already authenticated with AWS:')
         print('https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem')
         exit(1)
-    ssl_ca_filepath = sys.argv[1]
+    octane_connection_name = sys.argv[1]
+    ssl_ca_filepath = sys.argv[2]
     if not os.path.isfile(ssl_ca_filepath):
-        print(f'Error: invalid ssl_ca_filepath "{ssl_ca_filepath}"')
+        print(f'Error: invalid _ssl_ca_filepath "{ssl_ca_filepath}"')
         exit(1)
 
     output_parent_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', 'metadata'))
+    try:
+        # establish database connections
+        connection_factory = DBConnectionFactory()
+        octane_db_connection = connection_factory.get_connection(octane_connection_name, ssl_ca_filepath)
+        config_edw_connection = connection_factory.get_connection('edw-local-config')
+        staging_edw_connection = connection_factory.get_connection('edw-local-staging')
 
-    # establish database connections
-    octane_db_connection = OctaneDBConnection(
-        host="cert-lura-db.cluster-ro-c67hguplwubq.us-east-1.rds.amazonaws.com",
-        dbname="lura_qa",
-        region="us-east-1",
-        user="engineer.readonly",
-        port="3306",
-        profile_name="octane-database-readonly",
-        ssl_ca_filepath=ssl_ca_filepath
-    )
-    config_edw_connection = LocalEDWConnection(
-        host='localhost',
-        dbname='config',
-        user='postgres',
-        password='testonly'
-    )
-    staging_edw_connection = LocalEDWConnection(
-        host='localhost',
-        dbname='staging',
-        user='postgres',
-        password='testonly'
-    )
+        # pull source data
+        octane_column_metadata = get_octane_column_metadata(octane_db_connection)
+        octane_foreign_key_metadata = get_octane_foreign_key_metadata(octane_db_connection)
+        etl_process_metadata = get_etl_process_metadata(config_edw_connection)
+        deleted_columns_metadata = get_history_octane_metadata_for_deleted_columns(staging_edw_connection)
 
-    # pull source data
-    octane_column_metadata = get_octane_column_metadata(octane_db_connection)
-    octane_foreign_key_metadata = get_octane_foreign_key_metadata(octane_db_connection)
-    etl_process_metadata = get_etl_process_metadata(config_edw_connection)
-    deleted_columns_metadata = get_history_octane_metadata_for_deleted_columns(staging_edw_connection)
+        # build metadata filterer
+        metadata_filterer = build_octane_metadata_filterer()
 
-    # build metadata filterer
-    metadata_filterer = build_octane_metadata_filterer()
-
-    # generate metadata
-    metadata = add_deleted_tables_and_columns_to_history_octane_metadata(
-        generate_history_octane_metadata(
-            metadata_filterer.filter(
-                build_staging_octane_metadata(
-                    octane_column_metadata,
-                    octane_foreign_key_metadata
-                )
+        # generate metadata
+        metadata = add_deleted_tables_and_columns_to_history_octane_metadata(
+            generate_history_octane_metadata(
+                metadata_filterer.filter(
+                    build_staging_octane_metadata(
+                        octane_column_metadata,
+                        octane_foreign_key_metadata
+                    )
+                ),
+                etl_process_metadata
             ),
-            etl_process_metadata
-        ),
-        deleted_columns_metadata
-    )
+            deleted_columns_metadata
+        )
 
-    # write metadata to YAML
-    write_data_warehouse_metadata_to_yaml(output_parent_dir, metadata, rebuild_table_files=True)
+        # write metadata to YAML
+        write_data_warehouse_metadata_to_yaml(output_parent_dir, metadata, rebuild_table_files=True)
 
-    print(f'"{metadata.name}" data warehouse metadata YAML files written successfully in {output_parent_dir}')
+        print(f'"{metadata.name}" data warehouse metadata YAML files written successfully in {output_parent_dir}')
+
+    except DBConnectionFactory.InvalidConnectionNameError as e:
+        print(f'Error: {e}')
+        exit(1)
 
 
 def build_octane_metadata_filterer() -> ExclusiveMetadataFilterer:

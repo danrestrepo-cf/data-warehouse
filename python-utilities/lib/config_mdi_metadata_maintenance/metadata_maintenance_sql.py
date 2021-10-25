@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import List
 
-from lib.db_connections import LocalEDWConnection
+from lib.db_connections import DBConnection
 from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata
 from lib.config_mdi_metadata_maintenance.metadata_comparison_functions import MetadataComparisonFunctions
 
@@ -15,7 +15,7 @@ class TableMaintenanceSQL:
 
 class MetadataMaintenanceSQLGenerator:
 
-    def __init__(self, edw_connection: LocalEDWConnection, source_metadata: DataWarehouseMetadata):
+    def __init__(self, edw_connection: DBConnection, source_metadata: DataWarehouseMetadata):
         self._edw_connection = edw_connection
         self._source_metadata = source_metadata
         self._comparison_functions = {}

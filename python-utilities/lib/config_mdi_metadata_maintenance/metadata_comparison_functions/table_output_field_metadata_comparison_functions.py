@@ -1,7 +1,7 @@
 from typing import List
 
 from lib.config_mdi_metadata_maintenance.metadata_comparison_functions.metadata_comparison_functions import MetadataComparisonFunctions
-from lib.db_connections import LocalEDWConnection
+from lib.db_connections import DBConnection
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper, SingleGroupRowGrouper
 from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, ETLOutputType
@@ -12,7 +12,7 @@ class TableOutputFieldMetadataComparisonFunctions(MetadataComparisonFunctions):
     def __init__(self):
         super().__init__(key_fields=['process_name', 'database_field_name'])
 
-    def construct_metadata_table_from_config_db(self, local_edw_connection: LocalEDWConnection) -> MetadataTable:
+    def construct_metadata_table_from_config_db(self, local_edw_connection: DBConnection) -> MetadataTable:
         return self.construct_metadata_table_from_sql_query_results(local_edw_connection, """
                 SELECT process.name AS process_name
                      , table_output_field.database_field_name

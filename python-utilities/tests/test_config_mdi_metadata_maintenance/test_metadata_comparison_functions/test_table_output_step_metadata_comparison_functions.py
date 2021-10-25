@@ -1,6 +1,6 @@
 import unittest
 
-from tests.test_utils import MockLocalEDWConnection
+from tests.test_utils import MockDBConnection
 
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
@@ -24,7 +24,7 @@ class TestTableOutputStepMetadataComparisonFunctions(unittest.TestCase):
             {'process_name': 'SP-3', 'target_schema': 'history_octane', 'target_table': 'table3', 'truncate_table': 'N',
              'connectionname': 'Staging DB Connection'},
         ]
-        db_conn = MockLocalEDWConnection(query_results=test_data)
+        db_conn = MockDBConnection(query_results=test_data)
         expected = MetadataTable(key_fields=['process_name'])
         expected.add_rows(test_data)
         self.assertEqual(expected, TableOutputStepMetadataComparisonFunctions().construct_metadata_table_from_config_db(db_conn))
