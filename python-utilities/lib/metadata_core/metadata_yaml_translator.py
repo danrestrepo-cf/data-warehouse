@@ -107,6 +107,7 @@ yaml.add_representer(str, str_presenter)
 # public functions
 
 def generate_data_warehouse_metadata_from_yaml(root_dir_file_path: str) -> DataWarehouseMetadata:
+    """Generate a DataWarehouseMetadata object by reading and parsing a metadata directory/file structure with the given root path."""
     return MetadataReader(root_dir_file_path).read()
 
 
@@ -252,8 +253,10 @@ def construct_data_warehouse_metadata_from_dict(data_warehouse_dict: dict) -> Da
 # internal classes/functions
 
 class DictToMetadataBuilder:
+    """A collection of functionality related to constructing a DataWarehouseMetadata object from a dictionary."""
 
     def build_metadata(self, data_warehouse_dict: dict) -> DataWarehouseMetadata:
+        """Construct a DataWarehouseMetadata object from the given dictionary."""
         data_warehouse_metadata = DataWarehouseMetadata(data_warehouse_dict['name'])
         if 'databases' in data_warehouse_dict:
             for database_dict in data_warehouse_dict['databases']:
@@ -274,6 +277,7 @@ class DictToMetadataBuilder:
         return data_warehouse_metadata
 
     def construct_table_metadata_from_dict(self, table_dict: dict, schema_name: str, database_name: str) -> TableMetadata:
+        """Construct a TableMetadata object from the given dictionary."""
         table = TableMetadata(name=table_dict['name'])
         table.path.database = database_name
         table.path.schema = schema_name
@@ -336,6 +340,23 @@ class DictToMetadataBuilder:
         return table
 
     def parse_foreign_column_path(self, path: str) -> ForeignColumnPath:
+        """Construct a ForeignColumnPath object from the given foreign path string.
+
+        A valid string is in the format:
+
+            primary_source_table.[foreign_keys.fk_name1.foreign_keys.fk_name2...].columns.foreign_column_name
+
+        For example, the path:
+
+            primary_source_table.foreign_keys.fk1.foreign_keys.fk2.columns.col1
+
+        Would be parsed into the following object:
+
+            ForeignColumnPath(
+                fk_steps = ['fk1', 'fk2'],
+                column_name = 'col1'
+            )
+        """
         if not path or not path.startswith('primary_source_table') or path.count('.') < 2 or path.count('.') % 2 == 1:
             raise self.InvalidTableMetadataException(f'Source field path "{path}" could not be parsed')
         split_path = path.split('.')
@@ -353,6 +374,7 @@ class DictToMetadataBuilder:
                 raise self.InvalidTableMetadataException(f'Source field path "{path}" could not be parsed')
 
     def parse_etl_data_source(self, raw_data_source: Optional[str]) -> Optional[ETLDataSource]:
+        """Parse the given string into an ETLDataSource Enum value."""
         if raw_data_source is None:
             return None
         if raw_data_source.lower() == 'octane':
@@ -361,12 +383,14 @@ class DictToMetadataBuilder:
             raise self.InvalidTableMetadataException(f'Invalid ETL data source: {raw_data_source}')
 
     def parse_etl_input_type(self, raw_input_type: str) -> ETLInputType:
+        """Parse the given string into an ETLInputType Enum value."""
         if raw_input_type.lower() == 'table':
             return ETLInputType.TABLE
         else:
             raise self.InvalidTableMetadataException(f'Invalid ETL input type: {raw_input_type}')
 
     def parse_etl_output_type(self, raw_output_type: str) -> ETLOutputType:
+        """Parse the given string into an ETLOutputType Enum value."""
         if raw_output_type.lower() == 'insert':
             return ETLOutputType.INSERT
         else:
@@ -377,15 +401,18 @@ class DictToMetadataBuilder:
 
 
 class MetadataReader:
+    """A collection of functionality related to reading YAML files into a DataWarehouseMetadata object."""
 
     def __init__(self, root_dir_file_path: str):
         self.root_dir_file_path = root_dir_file_path
         self.dict_to_metadata_builder = DictToMetadataBuilder()
 
     def read(self):
+        """Read a metadata directory/file structure like the one described above into a DataWarehouseMetadata object."""
         return self.dict_to_metadata_builder.build_metadata(self.read_data_warehouse_yaml_files_into_dict())
 
     def read_data_warehouse_yaml_files_into_dict(self) -> dict:
+        """Read a metadata directory/file structure like the one described above into a dictionary."""
         if not os.path.isdir(self.root_dir_file_path):
             raise FileNotFoundError(f'{self.root_dir_file_path} is not a valid directory path')
         data_warehouse_name = pathlib.PurePath(self.root_dir_file_path).name
@@ -410,11 +437,13 @@ class MetadataReader:
 
     @staticmethod
     def read_yaml_file(filepath: str) -> dict:
+        """Read a YAML file to a dictionary."""
         with open(filepath, 'r') as file:
             return yaml.safe_load(file)
 
 
 class MetadataWriter:
+    """A collection of functionality related to writing DataWarehouseMetadata objects to YAML files."""
 
     def __init__(self, parent_dir_file_path: str, rebuild_data_warehouse_dir: bool, rebuild_database_dirs: bool,
                  rebuild_schema_dirs: bool, rebuild_table_files: bool):
@@ -425,6 +454,7 @@ class MetadataWriter:
         self.rebuild_table_files = rebuild_table_files
 
     def write(self, metadata: DataWarehouseMetadata):
+        """Write the given DataWarehouseMetadata object to the directory/file structure described above."""
         root_dir = os.path.join(self.parent_dir_file_path, metadata.name)
         if self.rebuild_data_warehouse_dir:
             self.recursively_delete_dir_contents(root_dir)
@@ -455,14 +485,16 @@ class MetadataWriter:
 
     @staticmethod
     def recursively_delete_dir_contents(dir_path: str):
+        """Delete the directory with the given path and all of its contents."""
         if os.path.isdir(dir_path):
             shutil.rmtree(dir_path)
 
     def create_yaml_dict_from_table_metadata(self, table_metadata: TableMetadata) -> dict:
+        """Convert a TableMetadata object to a dict in preparation for writing it to YAML."""
         # the order in which these fields are set here determines the order in which they appear in the YAML file
         return {
             'name': table_metadata.name,
-            'primary_source_table': self.table_address_to_string(table_metadata.primary_source_table),
+            'primary_source_table': self.table_path_to_string(table_metadata.primary_source_table),
             'primary_key': table_metadata.primary_key,
             'foreign_keys': {foreign_key.name: {
                 'columns': foreign_key.native_columns,
@@ -487,14 +519,16 @@ class MetadataWriter:
         }
 
     @staticmethod
-    def table_address_to_string(table_address: Optional[TablePath]) -> Optional[str]:
-        if table_address is None:
+    def table_path_to_string(table_path: Optional[TablePath]) -> Optional[str]:
+        """Construct a string representation of a TablePath in preparation for writing it to YAML."""
+        if table_path is None:
             return None
         else:
-            return f'{table_address.database}.{table_address.schema}.{table_address.table}'
+            return f'{table_path.database}.{table_path.schema}.{table_path.table}'
 
     @staticmethod
     def column_metadata_to_dict(column_metadata: ColumnMetadata) -> dict:
+        """Convert a ColumnMetadata object to a dict in preparation for writing it to YAML."""
         column_dict = {
             'data_type': column_metadata.data_type
         }
@@ -511,11 +545,13 @@ class MetadataWriter:
 
     @staticmethod
     def write_table_metadata_yaml_file(output_file_path: str, metadata: dict):
+        """Write the given metadata dict to a YAML file."""
         with open(output_file_path, 'w') as output_file:
             yaml.dump(metadata, output_file, default_flow_style=False, sort_keys=False)
 
     @staticmethod
     def hardcoded_data_source_to_str(data_source: Optional[ETLDataSource]) -> Optional[str]:
+        """Map a ETLDataSource Enum value to a string so that it can be written to a file."""
         if data_source is None:
             return None
         elif data_source == ETLDataSource.OCTANE:
@@ -525,6 +561,11 @@ class MetadataWriter:
 
 
 def filter_out_dict_keys_with_no_value(d: dict) -> dict:
+    """Remove all key-value pairs from the given dict that have no meaningful value.
+
+    None, empty dicts, and empty lists all count as having "no meaningful value",
+    in that there would be no reason to output them to a YAML file.
+    """
     result = {}
     for key, value in d.items():
         if value == [] or value == {} or value is None:
@@ -537,8 +578,10 @@ def filter_out_dict_keys_with_no_value(d: dict) -> dict:
 
 
 def get_subdir_paths_with_prefix(root_dir: str, prefix: str) -> List[str]:
+    """Get a list of directory paths for all sub-directories of the given directory that have the given prefix."""
     return [item for item in glob.glob(os.path.join(root_dir, f'{prefix}.*')) if os.path.isdir(item)]
 
 
 def get_yaml_paths_with_prefix(root_dir: str, prefix: str) -> List[str]:
+    """Get a list of files paths for all files the given directory that have the given prefix."""
     return [item for item in glob.glob(os.path.join(root_dir, f'{prefix}.*.yaml')) if os.path.isfile(item)]
