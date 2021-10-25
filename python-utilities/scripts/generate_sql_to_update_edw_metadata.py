@@ -53,8 +53,9 @@ def main():
     )
     args = argparser.parse_args()
 
-    if args.edw_environment != 'local' and args.ssl_ca_filepath is None:
-        print('Error: must specify an SSL certificate filepath if EDW environment is not "local"')
+    if args.edw_environment != 'local' and not os.path.isfile(args.ssl_ca_filepath):
+        print(f'Error: File path "{args.ssl_ca_filepath}" is invalid. Must specify a valid SSL certificate filepath if '
+              f'EDW environment is not "local"')
         exit(1)
 
     edw_connection = f'edw-{args.edw_environment}-config'
