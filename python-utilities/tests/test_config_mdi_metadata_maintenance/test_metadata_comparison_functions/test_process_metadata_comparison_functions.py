@@ -122,7 +122,7 @@ class TestProcessMetadataComparisonFunctions(unittest.TestCase):
             Row(key={'process_name': 'SP-3'}, attributes={'process_description': 'ETL to populate table3'})
         ]
         expected = "INSERT\n" + \
-                   "INTO mdi.process (process_name, process_description)\n" + \
+                   "INTO mdi.process (name, description)\n" + \
                    "VALUES ('SP-1', 'ETL to populate table1')\n" + \
                    "     , ('SP-2', 'ETL to populate table2')\n" + \
                    "     , ('SP-3', 'ETL to populate table3');"

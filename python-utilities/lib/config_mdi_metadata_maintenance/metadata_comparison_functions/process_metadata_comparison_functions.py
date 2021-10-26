@@ -42,7 +42,7 @@ class ProcessMetadataComparisonFunctions(MetadataComparisonFunctions):
 
     def generate_insert_sql(self, rows: List[Row]) -> str:
         return "INSERT\n" + \
-               "INTO mdi.process (process_name, process_description)\n" + \
+               "INTO mdi.process (name, description)\n" + \
                "VALUES " + self.construct_values_string_from_full_rows(rows, base_indent=0) + ";"
 
     def generate_update_sql(self, rows: List[Row]) -> str:
