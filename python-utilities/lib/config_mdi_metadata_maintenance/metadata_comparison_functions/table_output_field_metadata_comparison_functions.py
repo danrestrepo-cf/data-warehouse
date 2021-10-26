@@ -8,6 +8,7 @@ from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, ETL
 
 
 class TableOutputFieldMetadataComparisonFunctions(MetadataComparisonFunctions):
+    """The set of metadata comparison functions used to maintain config.mdi.table_output_field."""
 
     def __init__(self):
         super().__init__(key_fields=['process_name', 'database_field_name'])

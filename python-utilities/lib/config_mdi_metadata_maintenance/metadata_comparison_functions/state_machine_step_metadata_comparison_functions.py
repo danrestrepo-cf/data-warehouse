@@ -8,6 +8,7 @@ from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata
 
 
 class StateMachineStepMetadataComparisonFunctions(MetadataComparisonFunctions):
+    """The set of metadata comparison functions used to maintain config.mdi.state_machine_step."""
 
     def __init__(self):
         super().__init__(key_fields=['process_name', 'next_process_name'])

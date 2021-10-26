@@ -8,6 +8,7 @@ from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata
 
 
 class JSONOutputFieldMetadataComparisonFunctions(MetadataComparisonFunctions):
+    """The set of metadata comparison functions used to maintain config.mdi.json_output_field."""
 
     def __init__(self):
         super().__init__(key_fields=['process_name'])

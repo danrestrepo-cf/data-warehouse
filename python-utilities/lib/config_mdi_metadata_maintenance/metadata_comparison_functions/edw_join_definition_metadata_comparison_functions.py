@@ -9,6 +9,7 @@ from lib.metadata_core.metadata_object_path import TablePath
 
 
 class EDWJoinDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions):
+    """The set of metadata comparison functions used to maintain config.mdi.edw_join_definition."""
 
     def __init__(self):
         super().__init__(key_fields=[

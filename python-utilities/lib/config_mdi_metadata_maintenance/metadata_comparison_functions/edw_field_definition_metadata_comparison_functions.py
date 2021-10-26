@@ -11,6 +11,7 @@ from lib.config_mdi_metadata_maintenance.dependency_row_grouper_generator import
 
 
 class EDWFieldDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions):
+    """The set of metadata comparison functions used to maintain config.mdi.edw_field_definition."""
 
     def __init__(self):
         super().__init__(key_fields=[
