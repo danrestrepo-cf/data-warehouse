@@ -26,6 +26,12 @@ variable schedule {
   type        = string
   description = "The schedule to trigger the state machine on."
 }
+
+variable enabled {
+  type        = bool
+  description = "If true, the trigger will be enabled (firing) when modifications are complete.  If its a rate then it will fire automatically when enabled."
+}
+
 variable trigger-input-json {
   type        = string
   description = "The input passed to the target state machine."

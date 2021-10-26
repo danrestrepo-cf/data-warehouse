@@ -3,7 +3,7 @@
 
 resource aws_cloudwatch_event_rule this {
   name       = var.name
-  is_enabled = true
+  is_enabled = var.enabled
 
   schedule_expression = var.schedule
 

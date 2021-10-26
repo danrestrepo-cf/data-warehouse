@@ -11,7 +11,8 @@ name_prefix="bi-managed"
 
 echo "Fetching step functions to disable, containing: ${name_prefix}"
 next_token="first"
-while [ "${next_token}" != "" ]; do
+# The next_token has "None None None" in it, which is odd, but we can regex check it
+while [ "${next_token}" != "" ] && [[ ! $next_token =~ "None" ]]; do
   pagination="--no-paginate"
   if [ "${next_token}" != "" ] && [ "${next_token}" != "first" ]; then
     echo "Has next token: ${next_token}"
