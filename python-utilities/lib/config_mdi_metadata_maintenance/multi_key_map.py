@@ -2,7 +2,11 @@ from typing import List, Any
 
 
 class MultiKeyMap:
+    """A generic data structure that maps multi-part keys to values."""
     def __init__(self, key_fields: List[str]):
+        """
+        :param key_fields: the list fields that make up the map's key
+        """
         self._key_fields = key_fields
         self._values = {}
 

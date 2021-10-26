@@ -1,3 +1,11 @@
+"""The MetadataTable is the central data structure in the "generate metadata maintenance SQL" process.
+
+It serves as a common structure that can be built from both the current contents of
+the config.mdi schema in EDW, and the EDW metadata YAML files. By converting
+both "sides" of the comparison to the same intermediate structure, direct
+comparison and reconciliation between the two is made significantly easier.
+"""
+
 from dataclasses import dataclass
 from typing import List, Iterable
 
@@ -6,15 +14,23 @@ from lib.config_mdi_metadata_maintenance.multi_key_map import MultiKeyMap
 
 @dataclass
 class Row:
+    """A row in a metadata table.
+
+    Attributes:
+        key: a dict representing the row's multi-field key
+        attributes: a dict containing all non-key fields in the row
+    """
     key: dict
     attributes: dict
 
     @property
     def full_row(self) -> dict:
+        """Return a single dict with all row fields, both key and non-key."""
         return {**self.key, **self.attributes}
 
 
 class MetadataTable:
+    """A table containing rows of metadata that all share the same key fields."""
 
     def __init__(self, key_fields: List[str]):
         self._key_fields = key_fields
