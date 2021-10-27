@@ -9,9 +9,8 @@ script.
 
 The "differing" functionality that is isolated in this abstraction includes:
 - What query to run to get the current contents of the config.mdi table in question
-- How to build a metadata table that matches the results from the query mentioned above
-  from a DataWarehouseMetadata object (that was previously generated from the YAML
-  data of record)
+- How to build a metadata table from a DataWarehouseMetadata object that matches
+  the result structure from the config.mdi query mentioned above
 - How to group rows when INSERTING data into the relevant config.mdi table
 - How to group rows when DELETING data from the relevant config.mdi table
 - How to write the SQL that will perform any necessary insertions into the config.mdi table
@@ -41,6 +40,8 @@ class MetadataComparisonFunctions(ABC):
 
     def __init__(self, key_fields: List[str]):
         self.key_fields = key_fields
+
+    # abstract methods
 
     @abstractmethod
     def construct_metadata_table_from_config_db(self, local_edw_connection: DBConnection) -> MetadataTable:
@@ -76,6 +77,8 @@ class MetadataComparisonFunctions(ABC):
     def generate_delete_sql(self, rows: List[Row]) -> str:
         """Generate SQL to DELETE rows from the appropriate config.mdi table."""
         pass
+
+    # helper methods to be used by subclasses when implementing the above abstract methods
 
     def construct_metadata_table_from_sql_query_results(self, local_edw_connection: DBConnection, sql_query: str) -> MetadataTable:
         """Construct a MetadataTable from the results of a query to the EDW config.mdi schema."""

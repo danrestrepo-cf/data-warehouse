@@ -25,11 +25,11 @@ class TableMaintenanceSQL:
 
 
 class MetadataMaintenanceSQLGenerator:
-    """A class that compares metadata from EDW's mdi.config schema and YAML files to generate SQL updating mdi.config accordingly.
+    """A class that generates SQL to update metadata in EDW's mdi.config schema such that it matches the given DataWarehouseMetadata object.
 
     This is the primary "connective tissue" class in the process that keeps mdi.config metadata in lockstep with
     the EDW YAML metadata files. It combines and draws on the functionality of the rest of the config_mdi_metadata_maintenance
-    module to produce the finished product: executable SQL statements.
+    module to produce the finished product: a string of executable SQL statements.
     """
 
     def __init__(self, edw_connection: DBConnection, source_metadata: DataWarehouseMetadata):
@@ -47,19 +47,47 @@ class MetadataMaintenanceSQLGenerator:
         self._delete_table_order = deque()  # deque instead of list for more efficient prepend/"append left" operations
 
     def add_metadata_comparison_functions(self, table_name: str, comparison_functions: MetadataComparisonFunctions):
-        """Add a set of metadata comparison functions to enable generating maintenance SQL for the specified table."""
+        """Add a set of metadata comparison functions to enable generating maintenance SQL for the specified table.
+
+        By default, the order in which a table's MetadataComparisonFunctions are
+        added via this method determines the order in which their respective table
+        SQL statements appear in the final output, though this order can be changed
+        via the "set_*_table_order" methods defined below.
+
+        Specifically, the order in which tables are added here matches the output
+        order for INSERTS and UPDATES, and is exactly *reversed* for DELETES. This
+        is because inter-table dependencies naturally flow the same direction
+        for insert and update statements, but in the opposite direction for deletes.
+
+        For example, if table1 had a foreign key to table2, in order to maintain
+        referential integrity, table1's records should be inserted AFTER table2's
+        records. On the other hand, table1's records should be deleted BEFORE
+        table2's records so that table1's foreign key doesn't point to non-existent
+        records in table2.
+        """
         self._comparison_functions[table_name] = comparison_functions
         self._insert_table_order.append(table_name)
         self._update_table_order.append(table_name)
         self._delete_table_order.appendleft(table_name)
 
     def generate_all_metadata_maintenance_sql(self) -> str:
-        """Produce the final string of all SQL statements generated using all currently-held set of metadata comparison functions.
+        """Produce the final string of all SQL statements generated using all currently-held sets of metadata comparison functions.
 
-        If a given category of SQL statement (e.g. Insertions, Updates, Deletions)
-        has no members, then that category will be omitted from the final result.
-        For example, of no deletions are necessary, there will simply be no "DELETIONS"
-        section in the output.
+        The result is a single string broken up into (at most) three sections:
+        INSERT, UPDATE, and DELETE. All INSERT statements appear together in the
+        INSERT section, all updates appear in the UPDATE section, and all deletes
+        appear in the DELETE section.
+
+        These sections are specifically ordered so that inserts happen before
+        updates which happen before deletes. This is because there are some cases
+        where an UPDATE is dependent on an INSERT having already occurred (e.g.
+        updating a foreign key field to refer to a record that needs to be inserted
+        first), and some cases where DELETE is dependent on UPDATE (e.g. updating
+        a foreign key column to NULL before deleting the record it used to reference).
+
+        If a given section of the output has no SQL statements, then that section
+        will be omitted from the final result. For example, of no deletions are
+        necessary, there will simply be no "DELETIONS" section in the output.
         """
         maintenance_sql_statements = {}
         for table_name, comparison_functions in self._comparison_functions.items():

@@ -2,9 +2,13 @@
 
 DBConnection is the base of the hierarchy, and should be used in all type hints related
 to connection objects. The three instantiatable "leaves" of the hierarchy are:
-- LocalPostgresConnection: used mainly to connect to the local EDW database
+- LocalPostgresConnection: used to connect to the local EDW database
 - AWSPostgresConnection: used to connect to any non-local EDW databases
 - AWSMySQLConnection: used to connect to any Octane databases
+
+While these classes *can* be individually instantiated, the preferred method
+of created database connection objects is to utilize the DBConnectionFactory
+class instead.
 """
 
 from typing import List

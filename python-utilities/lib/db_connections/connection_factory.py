@@ -33,9 +33,10 @@ class DBConnectionFactory:
     - octane-prod
 
     Disclaimer: in order for the returned connection objects to work, the user must
-    have already performed the proper authentication steps to allow connection to
-    the database in question. For example, authenticating with AWS via the VPN and
-    SSO (this must be done using an A- account in order to connect to prod).
+    have already performed the proper authentication steps on their computer/device
+    to allow connection to the database in question. For example, authenticating
+    with AWS via the VPN and SSO (this must be done using an A- account in order
+    to connect to Octane prod).
     """
 
     def __init__(self, data_sources_dir_path: str = default_data_sources_dir_path):
