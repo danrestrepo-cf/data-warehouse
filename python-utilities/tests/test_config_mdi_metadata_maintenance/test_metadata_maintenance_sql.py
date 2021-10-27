@@ -446,7 +446,7 @@ class TestGenerateAllMetadataMaintenanceSQL(unittest.TestCase):
         generator.add_metadata_comparison_functions('Table3', TestComparisonFunctions3())
         self.assertEqual('', generator.generate_all_metadata_maintenance_sql())
 
-    def test_returns_all_generated_sql_in_the_order_in_which_the_comparison_functions_were_recorded_by_default(self):
+    def test_returns_insert_and_update_sql_in_comparison_functions_addition_order_and_delete_sql_in_reverse_by_default(self):
         db_connection = MockDBConnection([
             {'column_name': 'col1', 'data_type': 'INT'},
             {'column_name': 'col2', 'data_type': 'TEXT'}
@@ -498,12 +498,12 @@ class TestGenerateAllMetadataMaintenanceSQL(unittest.TestCase):
                    '--Table3\n' + \
                    'UPDATE rows for Table3\n\n' + \
                    '/*\nDELETIONS\n*/\n\n' + \
-                   '--Table1\n' + \
-                   'DELETE rows for Table1\n\n' + \
+                   '--Table3\n' + \
+                   'DELETE rows for Table3\n\n' + \
                    '--Table2\n' + \
                    'DELETE rows for Table2\n\n' + \
-                   '--Table3\n' + \
-                   'DELETE rows for Table3'
+                   '--Table1\n' + \
+                   'DELETE rows for Table1'
         self.assertEqual(expected, generator.generate_all_metadata_maintenance_sql())
 
     def test_returns_all_generated_sql_in_custom_order_if_order_is_specified(self):

@@ -101,22 +101,6 @@ def main():
     sql_generator.add_metadata_comparison_functions('json_output_field', JSONOutputFieldMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('state_machine_definition', StateMachineDefinitionMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('state_machine_step', StateMachineStepMetadataComparisonFunctions())
-    insert_and_update_table_order = [
-        'edw_table_definition',
-        'edw_join_definition',
-        'edw_field_definition',
-        'process',
-        'table_input_step',
-        'table_output_step',
-        'table_output_field',
-        'json_output_field',
-        'state_machine_definition',
-        'state_machine_step'
-    ]
-    delete_table_order = list(reversed(insert_and_update_table_order))
-    sql_generator.set_insert_table_order(insert_and_update_table_order)
-    sql_generator.set_update_table_order(insert_and_update_table_order)
-    sql_generator.set_delete_table_order(delete_table_order)
 
     # generate and output metadata maintenance SQL statements
     metadata_maintenance_sql = sql_generator.generate_all_metadata_maintenance_sql()

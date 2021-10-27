@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import List
+from collections import deque
 
 from lib.db_connections import DBConnection
 from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata
@@ -43,14 +44,14 @@ class MetadataMaintenanceSQLGenerator:
         self._comparison_functions = {}
         self._insert_table_order = []
         self._update_table_order = []
-        self._delete_table_order = []
+        self._delete_table_order = deque()  # deque instead of list for more efficient prepend/"append left" operations
 
     def add_metadata_comparison_functions(self, table_name: str, comparison_functions: MetadataComparisonFunctions):
         """Add a set of metadata comparison functions to enable generating maintenance SQL for the specified table."""
         self._comparison_functions[table_name] = comparison_functions
         self._insert_table_order.append(table_name)
         self._update_table_order.append(table_name)
-        self._delete_table_order.append(table_name)
+        self._delete_table_order.appendleft(table_name)
 
     def generate_all_metadata_maintenance_sql(self) -> str:
         """Produce the final string of all SQL statements generated using all currently-held set of metadata comparison functions.
