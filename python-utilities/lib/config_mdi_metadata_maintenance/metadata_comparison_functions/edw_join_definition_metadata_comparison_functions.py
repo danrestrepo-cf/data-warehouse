@@ -36,9 +36,9 @@ class EDWJoinDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions):
                      ON primary_table_definition.dwid = edw_join_definition.primary_edw_table_definition_dwid
                 JOIN mdi.edw_table_definition target_table_definition
                      ON target_table_definition.dwid = edw_join_definition.target_edw_table_definition_dwid
-                -- hardcoded to only check staging/history_octane until this script is updated to handle other schemas' join metadata
-                WHERE primary_table_definition.schema_name IN ('staging_octane', 'history_octane')
-                  AND target_table_definition.schema_name IN ('staging_octane', 'history_octane');
+                -- hardcoded to only check history_octane until this script is updated to handle other schemas' join metadata
+                WHERE primary_table_definition.schema_name IN ('history_octane')
+                  AND target_table_definition.schema_name IN ('history_octane');
             """)
 
     def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:
@@ -46,16 +46,18 @@ class EDWJoinDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions):
         for database in data_warehouse_metadata.databases:
             for schema in database.schemas:
                 for table in schema.tables:
-                    for foreign_key in table.foreign_keys:
-                        metadata_table.add_row({
-                            'primary_database_name': database.name,
-                            'primary_schema_name': schema.name,
-                            'primary_table_name': table.name,
-                            'target_database_name': foreign_key.table.database,
-                            'target_schema_name': foreign_key.table.schema,
-                            'target_table_name': foreign_key.table.table,
-                            'join_condition': self.construct_join_condition_string(table.path, foreign_key)
-                        })
+                    # staging_octane tables are never to be used in joins, so they are excluded from join metadata
+                    if table.path.schema != 'staging_octane':
+                        for foreign_key in table.foreign_keys:
+                            metadata_table.add_row({
+                                'primary_database_name': database.name,
+                                'primary_schema_name': schema.name,
+                                'primary_table_name': table.name,
+                                'target_database_name': foreign_key.table.database,
+                                'target_schema_name': foreign_key.table.schema,
+                                'target_table_name': foreign_key.table.table,
+                                'join_condition': self.construct_join_condition_string(table.path, foreign_key)
+                            })
         return metadata_table
 
     @staticmethod
