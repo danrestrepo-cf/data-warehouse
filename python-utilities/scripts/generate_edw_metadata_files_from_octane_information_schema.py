@@ -144,6 +144,7 @@ def build_octane_metadata_filterer() -> ExclusiveMetadataFilterer:
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'borrower_va', 'bva_deceased_spouse_ssn'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'credit_request', 'crdr_borrower1_ssn'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'credit_request', 'crdr_borrower2_ssn'))
+    metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'credit_request_liability', 'crl_report_account_id'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'du_request_credit', 'durc_borrower_1_ssn'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'du_request_credit', 'durc_borrower_2_ssn'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'interim_funder', 'if_reimbursement_wire_routing_number'))
@@ -152,6 +153,7 @@ def build_octane_metadata_filterer() -> ExclusiveMetadataFilterer:
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'interim_funder', 'if_return_wire_account_number'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'lead', 'ld_borrower_ssn'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'lead', 'ld_coborrower_ssn'))
+    metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'lender_user', 'lu_challenge_question_answer'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'lender_user', 'lu_mobile_phone'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'lender_user', 'lu_password'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'lender_user', 'lu_previous_password_1'))
@@ -169,8 +171,7 @@ def build_octane_metadata_filterer() -> ExclusiveMetadataFilterer:
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_bank_aba'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_bank_account_number'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_beneficiary_bank_aba'))
-    metadata_filterer.add_column_criteria(
-        ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_beneficiary_bank_account_number'))
+    metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_beneficiary_bank_account_number'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'tax_transcript_request', 'ttr_borrower1_ssn'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'tax_transcript_request', 'ttr_borrower2_ssn'))
     return metadata_filterer
