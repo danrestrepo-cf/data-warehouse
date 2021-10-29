@@ -2672,7 +2672,7 @@ SELECT ''borrower_pid'' || ''~'' || ''data_source_dwid'' as data_source_integrat
     primary_table.data_source_updated_datetime ASC
 ) AS borrower_dim_incl_new_records
     LEFT JOIN star_loan.borrower_dim ON borrower_dim_incl_new_records.data_source_integration_id = borrower_dim.data_source_integration_id
-        AND borrower_dim_incl_new_records.application_pid = borrower_dim.application_pid
+        AND borrower_dim_incl_new_records.application_pid IS NOT DISTINCT FROM borrower_dim.application_pid
         AND borrower_dim_incl_new_records.alimony_child_support_explanation IS NOT DISTINCT FROM borrower_dim.alimony_child_support_explanation
         AND borrower_dim_incl_new_records.applicant_role IS NOT DISTINCT FROM borrower_dim.applicant_role
         AND borrower_dim_incl_new_records.applicant_role_code IS NOT DISTINCT FROM borrower_dim.applicant_role_code
