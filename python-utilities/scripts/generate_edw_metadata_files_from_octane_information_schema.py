@@ -38,17 +38,17 @@ def main():
              'is already authenticated with AWS'
     )
     argparser.add_argument(
-        '--octane_connection',
+        '--octane_env',
         type=str,
-        default='octane-cert',
-        help='the name of the octane database from which to read information_schema data. Defaults to octane-cert.'
+        default='cert',
+        help='the Octane database environment (e.g. cert, prod) from which to read information_schema data. Defaults to "cert".'
     )
     argparser.add_argument(
-        '--edw_environment',
+        '--edw_env',
         type=str,
         default='local',
-        help='the edw environment (local, qa, prod) from which to read ETL process metadata and '
-             'history_octane information_schema data. Defaults to local.'
+        help='the EDW environment (local, qa, prod) from which to read ETL process metadata and '
+             'history_octane information_schema data. Defaults to "local".'
     )
     argparser.add_argument(
         '--output_dir',
@@ -57,10 +57,10 @@ def main():
         help='the directory in which to output the generated YAML files. Defaults to data-warehouse/metadata.'
     )
     argparser.add_argument(
-        '--octane_prod_username',
+        '--prod_username',
         type=str,
         default=None,
-        help='the username to use when logging into Octane\'s prod database. Only required if octane_connection is "octane-prod".'
+        help='the username to use when logging into Octane\'s prod database. Only required if octane_env is "prod".'
     )
     args = argparser.parse_args()
 
@@ -68,16 +68,16 @@ def main():
         print(f'Error: invalid ssl_ca_filepath "{args.ssl_ca_filepath}"')
         exit(1)
 
-    if args.octane_connection == 'octane-prod' and args.octane_prod_username is None:
-        print('Error: must provide octane_prod_username argument when connecting to Octane prod')
+    if args.octane_env == 'octane-prod' and args.prod_username is None:
+        print('Error: must provide prod_username argument when connecting to Octane prod')
         exit(1)
 
     try:
         # establish database connections
         connection_factory = DBConnectionFactory()
-        octane_db_connection = connection_factory.get_connection(args.octane_connection, args.ssl_ca_filepath, args.octane_prod_username)
-        config_edw_connection = connection_factory.get_connection(f'edw-{args.edw_environment}-config', args.ssl_ca_filepath)
-        staging_edw_connection = connection_factory.get_connection(f'edw-{args.edw_environment}-staging', args.ssl_ca_filepath)
+        octane_db_connection = connection_factory.get_connection(f'octane-{args.octane_env}', args.ssl_ca_filepath, args.prod_username)
+        config_edw_connection = connection_factory.get_connection(f'edw-{args.edw_env}-config', args.ssl_ca_filepath)
+        staging_edw_connection = connection_factory.get_connection(f'edw-{args.edw_env}-staging', args.ssl_ca_filepath)
 
         # pull source data
         octane_column_metadata = get_octane_column_metadata(octane_db_connection)

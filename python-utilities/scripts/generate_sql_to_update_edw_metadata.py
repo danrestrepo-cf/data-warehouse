@@ -70,7 +70,7 @@ def main():
         help='the file in which to output the generated SQL statements. Defaults to ./config_mdi_metadata_maintenance.sql'
     )
     argparser.add_argument(
-        '--edw_environment',
+        '--edw_env',
         type=str,
         default='local',
         help='the edw environment (local, qa, prod) from which to read config.mdi metadata for comparison. Defaults to local.'
@@ -83,12 +83,12 @@ def main():
     )
     args = argparser.parse_args()
 
-    if args.edw_environment != 'local' and not os.path.isfile(args.ssl_ca_filepath):
+    if args.edw_env != 'local' and not os.path.isfile(args.ssl_ca_filepath):
         print(f'Error: File path "{args.ssl_ca_filepath}" is invalid. Must specify a valid SSL certificate filepath if '
               f'EDW environment is not "local"')
         exit(1)
 
-    edw_connection = f'edw-{args.edw_environment}-config'
+    edw_connection = f'edw-{args.edw_env}-config'
 
     # read in metadata to be compared
     edw_connection = DBConnectionFactory().get_connection(edw_connection, args.ssl_ca_filepath)
