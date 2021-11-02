@@ -1213,11 +1213,12 @@ WITH new_fields (table_name, field_name, field_order, target_join_table, target_
                      AND new_staging_field_definitions.field_name = new_fields.field_name
 )
    , new_history_join_definitions AS (
-    INSERT INTO mdi.edw_join_definition (primary_edw_table_definition_dwid, target_edw_table_definition_dwid, join_type, join_condition)
-        SELECT primary_table_definition.dwid
+    INSERT INTO mdi.edw_join_definition (dwid, primary_edw_table_definition_dwid, target_edw_table_definition_dwid, join_type, join_condition)
+        SELECT NEXTVAL( 'mdi.edw_join_definition_dwid_seq' )
+             , primary_table_definition.dwid
              , target_table_definition.dwid
              , 'left'
-             , 'primary_table.' || new_fields.field_name || ' = t' || NEXTVAL( 'mdi.edw_join_definition_dwid_seq' ) || '.' ||
+             , 'primary_table.' || new_fields.field_name || ' = t' || CURRVAL( 'mdi.edw_join_definition_dwid_seq' ) || '.' ||
                new_fields.target_join_column
         FROM new_fields
         JOIN mdi.edw_table_definition primary_table_definition
