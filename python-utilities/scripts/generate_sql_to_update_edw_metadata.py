@@ -32,8 +32,10 @@ import sys
 import os
 import argparse
 
+import constants
+
 # this line allows the script to import directly from lib when run from the command line
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
+sys.path.append(constants.PROJECT_DIR_PATH)
 
 from lib.db_connections import DBConnectionFactory
 from lib.metadata_core.metadata_object_path import SchemaPath
@@ -54,19 +56,17 @@ from lib.config_mdi_metadata_maintenance.metadata_comparison_functions import (P
 
 def main():
     # parse command line arguments
-    default_metadata_root_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', 'metadata', 'edw')
-    default_output_file_path = os.path.realpath('./config_mdi_metadata_maintenance.sql')
     argparser = argparse.ArgumentParser(description='Generate SQL to maintain metadata in the config.mdi schema')
     argparser.add_argument(
         '--metadata_dir',
         type=str,
-        default=default_metadata_root_dir,
+        default=os.path.join(constants.PROJECT_DIR_PATH, '..', 'metadata', 'edw'),
         help='the source directory for metadata files. Defaults to data-warehouse/metadata.'
     )
     argparser.add_argument(
         '--output_file',
         type=str,
-        default=default_output_file_path,
+        default=os.path.realpath('./config_mdi_metadata_maintenance.sql'),
         help='the file in which to output the generated SQL statements. Defaults to ./config_mdi_metadata_maintenance.sql'
     )
     argparser.add_argument(
@@ -78,7 +78,7 @@ def main():
     argparser.add_argument(
         '--ssl_ca_filepath',
         type=str,
-        default=None,
+        default=os.path.abspath(os.path.join(constants.PROJECT_DIR_PATH, 'rds-combined-ca-bundle.pem')),
         help='filepath for a valid AWS SSL certificate file. Only required for non-local EDW environment connections.'
     )
     args = argparser.parse_args()

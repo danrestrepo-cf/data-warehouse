@@ -8,8 +8,10 @@ import sys
 import os
 import argparse
 
+import constants
+
 # this line allows the script to import directly from lib when run from the command line
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
+sys.path.append(constants.PROJECT_DIR_PATH)
 
 from lib.db_connections import DBConnectionFactory
 from lib.metadata_core.metadata_filter import ExclusiveMetadataFilterer
@@ -25,17 +27,15 @@ from lib.lura_information_schema_to_yaml.metadata_builders import (build_staging
 
 
 def main():
-    default_output_parent_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', 'metadata'))
-
     # parse command line arguments
     argparser = argparse.ArgumentParser(description='Generate EDW metadata YAML files from Octane information schema')
     argparser.add_argument(
         '--ssl_ca_filepath',
         type=str,
-        required=True,
+        default=os.path.abspath(os.path.join(constants.PROJECT_DIR_PATH, 'rds-combined-ca-bundle.pem')),
         help='filepath for a valid AWS SSL certificate file. This file can be downloaded from '
              'https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem, provided the user '
-             'is already authenticated with AWS'
+             'is already authenticated with AWS. Only required for non-local database environment connections.'
     )
     argparser.add_argument(
         '--octane_env',
@@ -53,7 +53,7 @@ def main():
     argparser.add_argument(
         '--output_dir',
         type=str,
-        default=default_output_parent_dir,
+        default=os.path.abspath(os.path.join(constants.PROJECT_DIR_PATH, '..', 'metadata')),
         help='the directory in which to output the generated YAML files. Defaults to data-warehouse/metadata.'
     )
     argparser.add_argument(
@@ -171,7 +171,8 @@ def build_octane_metadata_filterer() -> ExclusiveMetadataFilterer:
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_bank_aba'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_bank_account_number'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_beneficiary_bank_aba'))
-    metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_beneficiary_bank_account_number'))
+    metadata_filterer.add_column_criteria(
+        ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_beneficiary_bank_account_number'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'tax_transcript_request', 'ttr_borrower1_ssn'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'tax_transcript_request', 'ttr_borrower2_ssn'))
     return metadata_filterer
