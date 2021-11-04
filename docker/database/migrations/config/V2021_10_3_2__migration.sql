@@ -22,36 +22,36 @@ WITH new_staging_table_definitions AS (
         RETURNING dwid, table_name
 )
 
-   , new_fields (schema_name, table_name, field_name, key_field_flag, field_order) AS (
-    VALUES ('staging_octane', 'password_settings', 'pws_pid', FALSE, NULL)
-         , ('staging_octane', 'password_settings', 'pws_version', FALSE, NULL)
-         , ('staging_octane', 'password_settings', 'pws_account_pid', FALSE, NULL)
-         , ('staging_octane', 'password_settings', 'pws_lender_user_expire_days', FALSE, NULL)
-         , ('staging_octane', 'password_settings', 'pws_lender_user_minimum_change_days', FALSE, NULL)
-         , ('staging_octane', 'password_settings', 'pws_lender_user_previous_password_ban', FALSE, NULL)
-         , ('staging_octane', 'password_settings', 'pws_minimum_length', FALSE, NULL)
-         , ('staging_octane', 'password_settings', 'pws_require_special_character', FALSE, NULL)
-         , ('staging_octane', 'password_settings', 'pws_require_uppercase_letter', FALSE, NULL)
-         , ('staging_octane', 'password_settings', 'pws_require_lowercase_letter', FALSE, NULL)
-         , ('staging_octane', 'password_settings', 'pws_require_digit', FALSE, NULL)
-         , ('history_octane', 'password_settings', 'pws_pid', FALSE, 1)
-         , ('history_octane', 'password_settings', 'pws_version', FALSE, 2)
-         , ('history_octane', 'password_settings', 'pws_account_pid', FALSE, 3)
-         , ('history_octane', 'password_settings', 'pws_lender_user_expire_days', FALSE, 4)
-         , ('history_octane', 'password_settings', 'pws_lender_user_minimum_change_days', FALSE, 5)
-         , ('history_octane', 'password_settings', 'pws_lender_user_previous_password_ban', FALSE, 6)
-         , ('history_octane', 'password_settings', 'pws_minimum_length', FALSE, 7)
-         , ('history_octane', 'password_settings', 'pws_require_special_character', FALSE, 8)
-         , ('history_octane', 'password_settings', 'pws_require_uppercase_letter', FALSE, 9)
-         , ('history_octane', 'password_settings', 'pws_require_lowercase_letter', FALSE, 10)
-         , ('history_octane', 'password_settings', 'pws_require_digit', FALSE, 11)
-         , ('history_octane', 'password_settings', 'data_source_updated_datetime', FALSE, 12)
-         , ('history_octane', 'password_settings', 'data_source_deleted_flag', FALSE, 13)
+   , new_fields (schema_name, table_name, field_name, data_type, field_order) AS (
+    VALUES ('staging_octane', 'password_settings', 'pws_pid', 'BIGINT', NULL)
+         , ('staging_octane', 'password_settings', 'pws_version', 'INTEGER', NULL)
+         , ('staging_octane', 'password_settings', 'pws_account_pid', 'BIGINT', NULL)
+         , ('staging_octane', 'password_settings', 'pws_lender_user_expire_days', 'INTEGER', NULL)
+         , ('staging_octane', 'password_settings', 'pws_lender_user_minimum_change_days', 'INTEGER', NULL)
+         , ('staging_octane', 'password_settings', 'pws_lender_user_previous_password_ban', 'INTEGER', NULL)
+         , ('staging_octane', 'password_settings', 'pws_minimum_length', 'INTEGER', NULL)
+         , ('staging_octane', 'password_settings', 'pws_require_special_character', 'BOOLEAN', NULL)
+         , ('staging_octane', 'password_settings', 'pws_require_uppercase_letter', 'BOOLEAN', NULL)
+         , ('staging_octane', 'password_settings', 'pws_require_lowercase_letter', 'BOOLEAN', NULL)
+         , ('staging_octane', 'password_settings', 'pws_require_digit', 'BOOLEAN', NULL)
+         , ('history_octane', 'password_settings', 'pws_pid', 'BIGINT', 1)
+         , ('history_octane', 'password_settings', 'pws_version', 'INTEGER', 2)
+         , ('history_octane', 'password_settings', 'pws_account_pid', 'BIGINT', 3)
+         , ('history_octane', 'password_settings', 'pws_lender_user_expire_days', 'INTEGER', 4)
+         , ('history_octane', 'password_settings', 'pws_lender_user_minimum_change_days', 'INTEGER', 5)
+         , ('history_octane', 'password_settings', 'pws_lender_user_previous_password_ban', 'INTEGER', 6)
+         , ('history_octane', 'password_settings', 'pws_minimum_length', 'INTEGER', 7)
+         , ('history_octane', 'password_settings', 'pws_require_special_character', 'BOOLEAN', 8)
+         , ('history_octane', 'password_settings', 'pws_require_uppercase_letter', 'BOOLEAN', 9)
+         , ('history_octane', 'password_settings', 'pws_require_lowercase_letter', 'BOOLEAN', 10)
+         , ('history_octane', 'password_settings', 'pws_require_digit', 'BOOLEAN', 11)
+         , ('history_octane', 'password_settings', 'data_source_updated_datetime', 'TIMESTAMPTZ', 12)
+         , ('history_octane', 'password_settings', 'data_source_deleted_flag', 'BOOLEAN', 13)
 )
 
    , new_staging_field_definitions AS (
     INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag)
-        SELECT new_staging_table_definitions.dwid, new_fields.field_name, new_fields.key_field_flag
+        SELECT new_staging_table_definitions.dwid, new_fields.field_name, FALSE
         FROM new_fields
         JOIN new_staging_table_definitions
              ON new_fields.table_name = new_staging_table_definitions.table_name
@@ -64,7 +64,7 @@ WITH new_staging_table_definitions AS (
                                           source_edw_field_definition_dwid)
         SELECT new_history_table_definitions.dwid
              , new_fields.field_name
-             , new_fields.key_field_flag
+             , FALSE
              , new_staging_field_definitions.dwid
         FROM new_fields
         JOIN new_staging_table_definitions
@@ -202,6 +202,29 @@ WHERE staging_table.pws_pid IS NULL
         FROM new_processes
 )
 SELECT 'Finished inserting metadata for new tables: password_settings';
+
+
+-- Insert join metadata for new table: password_settings
+WITH insert_rows (primary_database_name, primary_schema_name, primary_table_name, target_database_name, target_schema_name, target_table_name, join_condition) AS (
+    VALUES ('staging', 'history_octane', 'password_settings', 'staging', 'history_octane', 'account', 'primary_table.pws_account_pid = target_table.a_pid')
+)
+INSERT
+INTO mdi.edw_join_definition (dwid, primary_edw_table_definition_dwid, target_edw_table_definition_dwid, join_type, join_condition)
+SELECT NEXTVAL( 'mdi.edw_join_definition_dwid_seq' )
+     , primary_table.dwid
+     , target_table.dwid
+     , 'left'
+     , REPLACE( insert_rows.join_condition, 'target_table', 't' || CURRVAL( 'mdi.edw_join_definition_dwid_seq' ) )
+FROM insert_rows
+JOIN mdi.edw_table_definition primary_table
+     ON insert_rows.primary_database_name = primary_table.database_name
+         AND insert_rows.primary_schema_name = primary_table.schema_name
+         AND insert_rows.primary_table_name = primary_table.table_name
+JOIN mdi.edw_table_definition target_table
+     ON insert_rows.target_database_name = target_table.database_name
+         AND insert_rows.target_schema_name = target_table.schema_name
+         AND insert_rows.target_table_name = target_table.table_name;
+
 
 -- Insert metadata for new column: proposal.prp_va_energy_efficient_improvements_amount
 WITH new_fields (table_name, field_name, field_order) AS (
@@ -919,4 +942,4 @@ WHERE staging_table.a_pid IS NULL
 FROM mdi.table_output_step
 WHERE table_output_step.process_dwid = table_input_step.process_dwid
   AND table_output_step.target_table = 'account'
-  AND table_output_step.target_schema = 'staging_octane';
+  AND table_output_step.target_schema = 'history_octane';
