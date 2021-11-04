@@ -1,0 +1,71 @@
+name: performer_team
+primary_source_table: staging.staging_octane.performer_team
+primary_key:
+- ptm_pid
+- ptm_version
+foreign_keys:
+  fk_performer_team_1:
+    columns:
+    - ptm_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+columns:
+  ptm_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ptm_pid
+  ptm_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ptm_version
+  ptm_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ptm_account_pid
+  ptm_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ptm_name
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100041:
+    input_type: table
+    output_type: insert
+    json_output_field: ptm_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.performer_team
+      SELECT staging_table.ptm_pid
+           , staging_table.ptm_version
+           , staging_table.ptm_account_pid
+           , staging_table.ptm_name
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.performer_team staging_table
+      LEFT JOIN history_octane.performer_team history_table
+                ON staging_table.ptm_pid = history_table.ptm_pid
+                    AND staging_table.ptm_version = history_table.ptm_version
+      WHERE history_table.ptm_pid IS NULL
+      UNION ALL
+      SELECT history_table.ptm_pid
+           , history_table.ptm_version + 1
+           , history_table.ptm_account_pid
+           , history_table.ptm_name
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.performer_team history_table
+      LEFT JOIN staging_octane.performer_team staging_table
+                ON staging_table.ptm_pid = history_table.ptm_pid
+      WHERE staging_table.ptm_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.performer_team deleted_records
+          WHERE deleted_records.ptm_pid = history_table.ptm_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

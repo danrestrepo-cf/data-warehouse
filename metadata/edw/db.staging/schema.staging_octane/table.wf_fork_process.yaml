@@ -1,0 +1,29 @@
+name: wf_fork_process
+primary_key:
+- wfp_pid
+foreign_keys:
+  fk_wf_fork_process_1:
+    columns:
+    - wfp_wf_step_pid
+    references:
+      columns:
+      - ws_pid
+      schema: staging_octane
+      table: wf_step
+  fk_wf_fork_process_2:
+    columns:
+    - wfp_wf_process_pid
+    references:
+      columns:
+      - wpr_pid
+      schema: staging_octane
+      table: wf_process
+columns:
+  wfp_pid:
+    data_type: BIGINT
+  wfp_version:
+    data_type: INTEGER
+  wfp_wf_step_pid:
+    data_type: BIGINT
+  wfp_wf_process_pid:
+    data_type: BIGINT

@@ -1,0 +1,39 @@
+name: deal_performer_team_user
+primary_key:
+- dptu_pid
+foreign_keys:
+  fk_deal_performer_team_user_1:
+    columns:
+    - dptu_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: staging_octane
+      table: deal
+  fk_deal_performer_team_user_2:
+    columns:
+    - dptu_performer_team_pid
+    references:
+      columns:
+      - ptm_pid
+      schema: staging_octane
+      table: performer_team
+  fk_deal_performer_team_user_3:
+    columns:
+    - dptu_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+columns:
+  dptu_pid:
+    data_type: BIGINT
+  dptu_version:
+    data_type: INTEGER
+  dptu_deal_pid:
+    data_type: BIGINT
+  dptu_performer_team_pid:
+    data_type: BIGINT
+  dptu_user_pid:
+    data_type: BIGINT

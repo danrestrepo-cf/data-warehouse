@@ -1,0 +1,23 @@
+name: recording_district
+primary_key:
+- rdi_pid
+foreign_keys:
+  fkt_rdi_state_type:
+    columns:
+    - rdi_state_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: state_type
+columns:
+  rdi_pid:
+    data_type: BIGINT
+  rdi_version:
+    data_type: INTEGER
+  rdi_state_type:
+    data_type: VARCHAR(128)
+  rdi_district_name_with_qualifier:
+    data_type: VARCHAR(128)
+  rdi_district_name:
+    data_type: VARCHAR(128)

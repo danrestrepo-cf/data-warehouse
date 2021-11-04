@@ -1,0 +1,165 @@
+name: product
+primary_source_table: staging.staging_octane.product
+primary_key:
+- p_pid
+- p_version
+foreign_keys:
+  fk_product_1:
+    columns:
+    - p_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+  fk_product_2:
+    columns:
+    - p_investor_pid
+    references:
+      columns:
+      - i_pid
+      schema: history_octane
+      table: investor
+  fk_product_3:
+    columns:
+    - p_parent_product_pid
+    references:
+      columns:
+      - p_pid
+      schema: history_octane
+      table: product
+  fkt_p_fund_source_type:
+    columns:
+    - p_fund_source_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: fund_source_type
+  fkt_p_product_side_type:
+    columns:
+    - p_product_side_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: product_side_type
+columns:
+  p_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.p_pid
+  p_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.p_version
+  p_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.p_account_pid
+  p_investor_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.p_investor_pid
+  p_fund_source_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.p_fund_source_type
+  p_investor_product_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.p_investor_product_id
+  p_investor_product_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.p_investor_product_name
+  p_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.p_from_date
+  p_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.p_through_date
+  p_fnm_product_name:
+    data_type: VARCHAR(15)
+    source:
+      field: primary_source_table.columns.p_fnm_product_name
+  p_lock_auto_confirm:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.p_lock_auto_confirm
+  p_description:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.p_description
+  p_product_side_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.p_product_side_type
+  p_parent_product_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.p_parent_product_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100105:
+    input_type: table
+    output_type: insert
+    json_output_field: p_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.product
+      SELECT staging_table.p_pid
+           , staging_table.p_version
+           , staging_table.p_account_pid
+           , staging_table.p_investor_pid
+           , staging_table.p_fund_source_type
+           , staging_table.p_investor_product_id
+           , staging_table.p_investor_product_name
+           , staging_table.p_from_date
+           , staging_table.p_through_date
+           , staging_table.p_fnm_product_name
+           , staging_table.p_lock_auto_confirm
+           , staging_table.p_description
+           , staging_table.p_product_side_type
+           , staging_table.p_parent_product_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.product staging_table
+      LEFT JOIN history_octane.product history_table
+                ON staging_table.p_pid = history_table.p_pid
+                    AND staging_table.p_version = history_table.p_version
+      WHERE history_table.p_pid IS NULL
+      UNION ALL
+      SELECT history_table.p_pid
+           , history_table.p_version + 1
+           , history_table.p_account_pid
+           , history_table.p_investor_pid
+           , history_table.p_fund_source_type
+           , history_table.p_investor_product_id
+           , history_table.p_investor_product_name
+           , history_table.p_from_date
+           , history_table.p_through_date
+           , history_table.p_fnm_product_name
+           , history_table.p_lock_auto_confirm
+           , history_table.p_description
+           , history_table.p_product_side_type
+           , history_table.p_parent_product_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.product history_table
+      LEFT JOIN staging_octane.product staging_table
+                ON staging_table.p_pid = history_table.p_pid
+      WHERE staging_table.p_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.product deleted_records
+          WHERE deleted_records.p_pid = history_table.p_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );
+next_etls:
+- SP-200017

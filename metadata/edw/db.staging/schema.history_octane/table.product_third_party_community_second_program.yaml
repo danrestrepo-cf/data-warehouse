@@ -1,0 +1,79 @@
+name: product_third_party_community_second_program
+primary_source_table: staging.staging_octane.product_third_party_community_second_program
+primary_key:
+- ptpp_pid
+- ptpp_version
+foreign_keys:
+  fk_product_third_party_community_second_program_1:
+    columns:
+    - ptpp_product_terms_pid
+    references:
+      columns:
+      - pt_pid
+      schema: history_octane
+      table: product_terms
+  fk_product_third_party_community_second_program_2:
+    columns:
+    - ptpp_third_party_community_second_program_pid
+    references:
+      columns:
+      - tpcsp_pid
+      schema: history_octane
+      table: third_party_community_second_program
+columns:
+  ptpp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ptpp_pid
+  ptpp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ptpp_version
+  ptpp_product_terms_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ptpp_product_terms_pid
+  ptpp_third_party_community_second_program_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ptpp_third_party_community_second_program_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100341:
+    input_type: table
+    output_type: insert
+    json_output_field: ptpp_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.product_third_party_community_second_program
+      SELECT staging_table.ptpp_pid
+           , staging_table.ptpp_version
+           , staging_table.ptpp_product_terms_pid
+           , staging_table.ptpp_third_party_community_second_program_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.product_third_party_community_second_program staging_table
+      LEFT JOIN history_octane.product_third_party_community_second_program history_table
+                ON staging_table.ptpp_pid = history_table.ptpp_pid
+                    AND staging_table.ptpp_version = history_table.ptpp_version
+      WHERE history_table.ptpp_pid IS NULL
+      UNION ALL
+      SELECT history_table.ptpp_pid
+           , history_table.ptpp_version + 1
+           , history_table.ptpp_product_terms_pid
+           , history_table.ptpp_third_party_community_second_program_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.product_third_party_community_second_program history_table
+      LEFT JOIN staging_octane.product_third_party_community_second_program staging_table
+                ON staging_table.ptpp_pid = history_table.ptpp_pid
+      WHERE staging_table.ptpp_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.product_third_party_community_second_program deleted_records
+          WHERE deleted_records.ptpp_pid = history_table.ptpp_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

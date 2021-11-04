@@ -1,0 +1,85 @@
+name: smart_task_tag_modifier
+primary_source_table: staging.staging_octane.smart_task_tag_modifier
+primary_key:
+- sttm_pid
+- sttm_version
+foreign_keys:
+  fk_smart_task_tag_modifier_1:
+    columns:
+    - sttm_deal_tag_definition_pid
+    references:
+      columns:
+      - dtd_pid
+      schema: history_octane
+      table: deal_tag_definition
+  fk_smart_task_tag_modifier_2:
+    columns:
+    - sttm_smart_task_pid
+    references:
+      columns:
+      - st_pid
+      schema: history_octane
+      table: smart_task
+columns:
+  sttm_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sttm_pid
+  sttm_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sttm_version
+  sttm_deal_tag_definition_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sttm_deal_tag_definition_pid
+  sttm_smart_task_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sttm_smart_task_pid
+  sttm_add_tag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sttm_add_tag
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100193:
+    input_type: table
+    output_type: insert
+    json_output_field: sttm_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.smart_task_tag_modifier
+      SELECT staging_table.sttm_pid
+           , staging_table.sttm_version
+           , staging_table.sttm_deal_tag_definition_pid
+           , staging_table.sttm_smart_task_pid
+           , staging_table.sttm_add_tag
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.smart_task_tag_modifier staging_table
+      LEFT JOIN history_octane.smart_task_tag_modifier history_table
+                ON staging_table.sttm_pid = history_table.sttm_pid
+                    AND staging_table.sttm_version = history_table.sttm_version
+      WHERE history_table.sttm_pid IS NULL
+      UNION ALL
+      SELECT history_table.sttm_pid
+           , history_table.sttm_version + 1
+           , history_table.sttm_deal_tag_definition_pid
+           , history_table.sttm_smart_task_pid
+           , history_table.sttm_add_tag
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.smart_task_tag_modifier history_table
+      LEFT JOIN staging_octane.smart_task_tag_modifier staging_table
+                ON staging_table.sttm_pid = history_table.sttm_pid
+      WHERE staging_table.sttm_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.smart_task_tag_modifier deleted_records
+          WHERE deleted_records.sttm_pid = history_table.sttm_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

@@ -1,0 +1,28 @@
+name: deal_id_sequence
+primary_source_table: staging.staging_octane.deal_id_sequence
+primary_key:
+- dis_id
+columns:
+  dis_id:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dis_id
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100837:
+    input_type: table
+    output_type: insert
+    json_output_field: dis_id
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.deal_id_sequence
+      SELECT staging_table.dis_id
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.deal_id_sequence staging_table
+      LEFT JOIN history_octane.deal_id_sequence history_table
+                ON staging_table.dis_id = history_table.dis_id
+      WHERE history_table.dis_id IS NULL;

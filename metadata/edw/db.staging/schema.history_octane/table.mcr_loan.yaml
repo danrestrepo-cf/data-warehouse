@@ -1,0 +1,497 @@
+name: mcr_loan
+primary_source_table: staging.staging_octane.mcr_loan
+primary_key:
+- mcrl_pid
+- mcrl_version
+foreign_keys:
+  fk_mcr_loan_1:
+    columns:
+    - mcrl_mcr_snapshot_pid
+    references:
+      columns:
+      - mcrs_pid
+      schema: history_octane
+      table: mcr_snapshot
+  fkt_mcrl_channel_type:
+    columns:
+    - mcrl_channel_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: channel_type
+  fkt_mcrl_doc_level_type:
+    columns:
+    - mcrl_doc_level_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: doc_level_type
+  fkt_mcrl_financed_property_improvements_category_type:
+    columns:
+    - mcrl_financed_property_improvements_category_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: financed_property_improvements_category_type
+  fkt_mcrl_fund_source_type:
+    columns:
+    - mcrl_fund_source_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: fund_source_type
+  fkt_mcrl_funding_status_type:
+    columns:
+    - mcrl_funding_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: funding_status_type
+  fkt_mcrl_hmda_action_type:
+    columns:
+    - mcrl_hmda_action_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: hmda_action_type
+  fkt_mcrl_hmda_hoepa_status_type:
+    columns:
+    - mcrl_hmda_hoepa_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: hmda_hoepa_status_type
+  fkt_mcrl_interest_only_type:
+    columns:
+    - mcrl_interest_only_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: interest_only_type
+  fkt_mcrl_investor_hmda_purchaser_of_loan_type:
+    columns:
+    - mcrl_investor_hmda_purchaser_of_loan_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: investor_hmda_purchaser_of_loan_type
+  fkt_mcrl_lien_priority_type:
+    columns:
+    - mcrl_lien_priority_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: lien_priority_type
+  fkt_mcrl_loan_amortization_type:
+    columns:
+    - mcrl_loan_amortization_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: loan_amortization_type
+  fkt_mcrl_loan_purpose_type:
+    columns:
+    - mcrl_loan_purpose_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: loan_purpose_type
+  fkt_mcrl_mcr_loan_status_type:
+    columns:
+    - mcrl_mcr_loan_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mcr_loan_status_type
+  fkt_mcrl_mortgage_type:
+    columns:
+    - mcrl_mortgage_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mortgage_type
+  fkt_mcrl_prepay_penalty_schedule_type:
+    columns:
+    - mcrl_prepay_penalty_schedule_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: prepay_penalty_schedule_type
+  fkt_mcrl_product_special_program_type:
+    columns:
+    - mcrl_product_special_program_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: product_special_program_type
+  fkt_mcrl_property_category_type:
+    columns:
+    - mcrl_property_category_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: property_category_type
+  fkt_mcrl_property_usage_type:
+    columns:
+    - mcrl_property_usage_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: property_usage_type
+  fkt_mcrl_proposal_structure_type:
+    columns:
+    - mcrl_proposal_structure_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: proposal_structure_type
+  fkt_mcrl_qualified_mortgage_status_type:
+    columns:
+    - mcrl_qualified_mortgage_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: qualified_mortgage_status_type
+  fkt_mcrl_servicing_transfer_type:
+    columns:
+    - mcrl_servicing_transfer_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: servicing_transfer_type
+columns:
+  mcrl_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcrl_pid
+  mcrl_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mcrl_version
+  mcrl_loan_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcrl_loan_pid
+  mcrl_mcr_snapshot_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcrl_mcr_snapshot_pid
+  mcrl_los_loan_id:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcrl_los_loan_id
+  mcrl_originator_nmls_id:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.mcrl_originator_nmls_id
+  mcrl_loan_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.mcrl_loan_amount
+  mcrl_lien_priority_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_lien_priority_type
+  mcrl_mortgage_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_mortgage_type
+  mcrl_interest_only_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_interest_only_type
+  mcrl_prepay_penalty_schedule_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_prepay_penalty_schedule_type
+  mcrl_ltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.mcrl_ltv_ratio_percent
+  mcrl_note_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.mcrl_note_rate_percent
+  mcrl_hmda_action_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_hmda_action_type
+  mcrl_hmda_action_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.mcrl_hmda_action_date
+  mcrl_disclosure_mode_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.mcrl_disclosure_mode_date
+  mcrl_decision_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mcrl_decision_credit_score
+  mcrl_property_usage_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_property_usage_type
+  mcrl_doc_level_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_doc_level_type
+  mcrl_loan_purpose_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_loan_purpose_type
+  mcrl_mi_required:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.mcrl_mi_required
+  mcrl_proposal_structure_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_proposal_structure_type
+  mcrl_subject_property_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_subject_property_state
+  mcrl_property_category_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_property_category_type
+  mcrl_cltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.mcrl_cltv_ratio_percent
+  mcrl_funding_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_funding_status_type
+  mcrl_funding_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.mcrl_funding_date
+  mcrl_loan_amortization_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_loan_amortization_type
+  mcrl_product_special_program_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_product_special_program_type
+  mcrl_non_conforming:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.mcrl_non_conforming
+  mcrl_initial_payment_adjustment_term_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mcrl_initial_payment_adjustment_term_months
+  mcrl_subsequent_payment_adjustment_term_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mcrl_subsequent_payment_adjustment_term_months
+  mcrl_fund_source_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_fund_source_type
+  mcrl_channel_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_channel_type
+  mcrl_financed_units_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mcrl_financed_units_count
+  mcrl_cash_out_reason_home_improvement:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.mcrl_cash_out_reason_home_improvement
+  mcrl_hmda_hoepa_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_hmda_hoepa_status_type
+  mcrl_qualified_mortgage_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_qualified_mortgage_status_type
+  mcrl_lender_fee_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.mcrl_lender_fee_total_amount
+  mcrl_broker_fee_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.mcrl_broker_fee_total_amount
+  mcrl_investor_hmda_purchaser_of_loan_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_investor_hmda_purchaser_of_loan_type
+  mcrl_confirmed_release_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.mcrl_confirmed_release_datetime
+  mcrl_purchase_advice_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.mcrl_purchase_advice_date
+  mcrl_purchasing_beneficiary_investor_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcrl_purchasing_beneficiary_investor_pid
+  mcrl_mcr_loan_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_mcr_loan_status_type
+  mcrl_servicing_transfer_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_servicing_transfer_type
+  mcrl_financed_property_improvements_category_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_financed_property_improvements_category_type
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100042:
+    input_type: table
+    output_type: insert
+    json_output_field: mcrl_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.mcr_loan
+      SELECT staging_table.mcrl_pid
+           , staging_table.mcrl_version
+           , staging_table.mcrl_loan_pid
+           , staging_table.mcrl_mcr_snapshot_pid
+           , staging_table.mcrl_los_loan_id
+           , staging_table.mcrl_originator_nmls_id
+           , staging_table.mcrl_loan_amount
+           , staging_table.mcrl_lien_priority_type
+           , staging_table.mcrl_mortgage_type
+           , staging_table.mcrl_interest_only_type
+           , staging_table.mcrl_prepay_penalty_schedule_type
+           , staging_table.mcrl_ltv_ratio_percent
+           , staging_table.mcrl_note_rate_percent
+           , staging_table.mcrl_hmda_action_type
+           , staging_table.mcrl_hmda_action_date
+           , staging_table.mcrl_disclosure_mode_date
+           , staging_table.mcrl_decision_credit_score
+           , staging_table.mcrl_property_usage_type
+           , staging_table.mcrl_doc_level_type
+           , staging_table.mcrl_loan_purpose_type
+           , staging_table.mcrl_mi_required
+           , staging_table.mcrl_proposal_structure_type
+           , staging_table.mcrl_subject_property_state
+           , staging_table.mcrl_property_category_type
+           , staging_table.mcrl_cltv_ratio_percent
+           , staging_table.mcrl_funding_status_type
+           , staging_table.mcrl_funding_date
+           , staging_table.mcrl_loan_amortization_type
+           , staging_table.mcrl_product_special_program_type
+           , staging_table.mcrl_non_conforming
+           , staging_table.mcrl_initial_payment_adjustment_term_months
+           , staging_table.mcrl_subsequent_payment_adjustment_term_months
+           , staging_table.mcrl_fund_source_type
+           , staging_table.mcrl_channel_type
+           , staging_table.mcrl_financed_units_count
+           , staging_table.mcrl_cash_out_reason_home_improvement
+           , staging_table.mcrl_hmda_hoepa_status_type
+           , staging_table.mcrl_qualified_mortgage_status_type
+           , staging_table.mcrl_lender_fee_total_amount
+           , staging_table.mcrl_broker_fee_total_amount
+           , staging_table.mcrl_investor_hmda_purchaser_of_loan_type
+           , staging_table.mcrl_confirmed_release_datetime
+           , staging_table.mcrl_purchase_advice_date
+           , staging_table.mcrl_purchasing_beneficiary_investor_pid
+           , staging_table.mcrl_mcr_loan_status_type
+           , staging_table.mcrl_servicing_transfer_type
+           , staging_table.mcrl_financed_property_improvements_category_type
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.mcr_loan staging_table
+      LEFT JOIN history_octane.mcr_loan history_table
+                ON staging_table.mcrl_pid = history_table.mcrl_pid
+                    AND staging_table.mcrl_version = history_table.mcrl_version
+      WHERE history_table.mcrl_pid IS NULL
+      UNION ALL
+      SELECT history_table.mcrl_pid
+           , history_table.mcrl_version + 1
+           , history_table.mcrl_loan_pid
+           , history_table.mcrl_mcr_snapshot_pid
+           , history_table.mcrl_los_loan_id
+           , history_table.mcrl_originator_nmls_id
+           , history_table.mcrl_loan_amount
+           , history_table.mcrl_lien_priority_type
+           , history_table.mcrl_mortgage_type
+           , history_table.mcrl_interest_only_type
+           , history_table.mcrl_prepay_penalty_schedule_type
+           , history_table.mcrl_ltv_ratio_percent
+           , history_table.mcrl_note_rate_percent
+           , history_table.mcrl_hmda_action_type
+           , history_table.mcrl_hmda_action_date
+           , history_table.mcrl_disclosure_mode_date
+           , history_table.mcrl_decision_credit_score
+           , history_table.mcrl_property_usage_type
+           , history_table.mcrl_doc_level_type
+           , history_table.mcrl_loan_purpose_type
+           , history_table.mcrl_mi_required
+           , history_table.mcrl_proposal_structure_type
+           , history_table.mcrl_subject_property_state
+           , history_table.mcrl_property_category_type
+           , history_table.mcrl_cltv_ratio_percent
+           , history_table.mcrl_funding_status_type
+           , history_table.mcrl_funding_date
+           , history_table.mcrl_loan_amortization_type
+           , history_table.mcrl_product_special_program_type
+           , history_table.mcrl_non_conforming
+           , history_table.mcrl_initial_payment_adjustment_term_months
+           , history_table.mcrl_subsequent_payment_adjustment_term_months
+           , history_table.mcrl_fund_source_type
+           , history_table.mcrl_channel_type
+           , history_table.mcrl_financed_units_count
+           , history_table.mcrl_cash_out_reason_home_improvement
+           , history_table.mcrl_hmda_hoepa_status_type
+           , history_table.mcrl_qualified_mortgage_status_type
+           , history_table.mcrl_lender_fee_total_amount
+           , history_table.mcrl_broker_fee_total_amount
+           , history_table.mcrl_investor_hmda_purchaser_of_loan_type
+           , history_table.mcrl_confirmed_release_datetime
+           , history_table.mcrl_purchase_advice_date
+           , history_table.mcrl_purchasing_beneficiary_investor_pid
+           , history_table.mcrl_mcr_loan_status_type
+           , history_table.mcrl_servicing_transfer_type
+           , history_table.mcrl_financed_property_improvements_category_type
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.mcr_loan history_table
+      LEFT JOIN staging_octane.mcr_loan staging_table
+                ON staging_table.mcrl_pid = history_table.mcrl_pid
+      WHERE staging_table.mcrl_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.mcr_loan deleted_records
+          WHERE deleted_records.mcrl_pid = history_table.mcrl_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

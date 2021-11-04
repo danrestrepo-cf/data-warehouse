@@ -1,0 +1,123 @@
+name: mers_daily_report
+primary_source_table: staging.staging_octane.mers_daily_report
+primary_key:
+- medr_pid
+- medr_version
+foreign_keys:
+  fk_mers_daily_report_1:
+    columns:
+    - medr_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+  fk_mers_daily_report_2:
+    columns:
+    - medr_consolidated_report_text_repository_file_pid
+    references:
+      columns:
+      - rf_pid
+      schema: history_octane
+      table: repository_file
+  fkt_medr_import_status_type:
+    columns:
+    - medr_import_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mers_daily_report_import_status_type
+columns:
+  medr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.medr_pid
+  medr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.medr_version
+  medr_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.medr_account_pid
+  medr_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.medr_create_datetime
+  medr_report_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.medr_report_date
+  medr_import_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.medr_import_status_type
+  medr_import_status_messages:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.medr_import_status_messages
+  medr_import_attempt_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.medr_import_attempt_count
+  medr_imported_loan_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.medr_imported_loan_count
+  medr_consolidated_report_text_repository_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.medr_consolidated_report_text_repository_file_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100132:
+    input_type: table
+    output_type: insert
+    json_output_field: medr_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.mers_daily_report
+      SELECT staging_table.medr_pid
+           , staging_table.medr_version
+           , staging_table.medr_account_pid
+           , staging_table.medr_create_datetime
+           , staging_table.medr_report_date
+           , staging_table.medr_import_status_type
+           , staging_table.medr_import_status_messages
+           , staging_table.medr_import_attempt_count
+           , staging_table.medr_imported_loan_count
+           , staging_table.medr_consolidated_report_text_repository_file_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.mers_daily_report staging_table
+      LEFT JOIN history_octane.mers_daily_report history_table
+                ON staging_table.medr_pid = history_table.medr_pid
+                    AND staging_table.medr_version = history_table.medr_version
+      WHERE history_table.medr_pid IS NULL
+      UNION ALL
+      SELECT history_table.medr_pid
+           , history_table.medr_version + 1
+           , history_table.medr_account_pid
+           , history_table.medr_create_datetime
+           , history_table.medr_report_date
+           , history_table.medr_import_status_type
+           , history_table.medr_import_status_messages
+           , history_table.medr_import_attempt_count
+           , history_table.medr_imported_loan_count
+           , history_table.medr_consolidated_report_text_repository_file_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.mers_daily_report history_table
+      LEFT JOIN staging_octane.mers_daily_report staging_table
+                ON staging_table.medr_pid = history_table.medr_pid
+      WHERE staging_table.medr_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.mers_daily_report deleted_records
+          WHERE deleted_records.medr_pid = history_table.medr_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

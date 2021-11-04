@@ -1,0 +1,995 @@
+name: product_eligibility_rule
+primary_source_table: staging.staging_octane.product_eligibility_rule
+primary_key:
+- per_pid
+- per_version
+foreign_keys:
+  fk_product_eligibility_rule_1:
+    columns:
+    - per_product_eligibility_pid
+    references:
+      columns:
+      - pe_pid
+      schema: history_octane
+      table: product_eligibility
+  fkt_per_amortization_input_type:
+    columns:
+    - per_amortization_input_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: product_rule_domain_input_type
+  fkt_per_arms_length_input_type:
+    columns:
+    - per_arms_length_input_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: product_rule_domain_input_type
+  fkt_per_doc_level_input_type:
+    columns:
+    - per_doc_level_input_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: product_rule_domain_input_type
+  fkt_per_escrow_waiver_input_type:
+    columns:
+    - per_escrow_waiver_input_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: product_rule_domain_input_type
+  fkt_per_first_time_homebuyer_input_type:
+    columns:
+    - per_first_time_homebuyer_input_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: product_rule_domain_input_type
+  fkt_per_hazardous_lava_zone_input_type:
+    columns:
+    - per_hazardous_lava_zone_input_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: product_rule_domain_input_type
+  fkt_per_loan_purpose_input_type:
+    columns:
+    - per_loan_purpose_input_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: product_rule_domain_input_type
+  fkt_per_non_resident_alien_input_type:
+    columns:
+    - per_non_resident_alien_input_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: product_rule_domain_input_type
+  fkt_per_property_acres_input_type:
+    columns:
+    - per_property_acres_input_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: product_rule_domain_input_type
+  fkt_per_property_category_input_type:
+    columns:
+    - per_property_category_input_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: product_rule_domain_input_type
+  fkt_per_property_rights_input_type:
+    columns:
+    - per_property_rights_input_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: product_rule_domain_input_type
+  fkt_per_property_usage_input_type:
+    columns:
+    - per_property_usage_input_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: product_rule_domain_input_type
+  fkt_per_self_employed_input_type:
+    columns:
+    - per_self_employed_input_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: product_rule_domain_input_type
+  fkt_per_state_input_type:
+    columns:
+    - per_state_input_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: product_rule_domain_input_type
+  fkt_per_underwrite_accepted_input_type:
+    columns:
+    - per_underwrite_accepted_input_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: product_rule_domain_input_type
+columns:
+  per_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.per_pid
+  per_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.per_version
+  per_product_eligibility_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.per_product_eligibility_pid
+  per_summary:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.per_summary
+  per_note:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.per_note
+  per_group_id:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.per_group_id
+  per_loan_purpose_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_loan_purpose_input_type
+  per_property_usage_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_property_usage_input_type
+  per_doc_level_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_doc_level_input_type
+  per_property_category_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_property_category_input_type
+  per_first_time_homebuyer_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_first_time_homebuyer_input_type
+  per_self_employed_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_self_employed_input_type
+  per_amortization_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_amortization_input_type
+  per_non_resident_alien_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_non_resident_alien_input_type
+  per_hazardous_lava_zone_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_hazardous_lava_zone_input_type
+  per_property_rights_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_property_rights_input_type
+  per_property_acres_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_property_acres_input_type
+  per_arms_length_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_arms_length_input_type
+  per_underwrite_accepted_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_underwrite_accepted_input_type
+  per_state_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_state_input_type
+  per_escrow_waiver_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_escrow_waiver_input_type
+  per_minimum_credit_score_input:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_minimum_credit_score_input
+  per_minimum_loan_amount_input:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_minimum_loan_amount_input
+  per_maximum_loan_amount_input:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_maximum_loan_amount_input
+  per_maximum_ltv_ratio_input:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_maximum_ltv_ratio_input
+  per_newly_built_maximum_ltv_ratio_input:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_newly_built_maximum_ltv_ratio_input
+  per_subordinate_maximum_ltv_ratio_input:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_subordinate_maximum_ltv_ratio_input
+  per_maximum_cltv_ratio_input:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_maximum_cltv_ratio_input
+  per_maximum_housing_ratio_input:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_maximum_housing_ratio_input
+  per_maximum_debt_ratio_input:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_maximum_debt_ratio_input
+  per_lp_risk_assessment_accepted:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_lp_risk_assessment_accepted
+  per_du_risk_assessment_accepted:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_du_risk_assessment_accepted
+  per_manual_risk_assessment_accepted:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_manual_risk_assessment_accepted
+  per_loan_purpose_purchase:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_loan_purpose_purchase
+  per_loan_purpose_change_in_rate_term:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_loan_purpose_change_in_rate_term
+  per_loan_purpose_cash_out:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_loan_purpose_cash_out
+  per_property_usage_primary_residence:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_usage_primary_residence
+  per_property_usage_second_home:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_usage_second_home
+  per_property_usage_investment:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_usage_investment
+  per_doc_level_full:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_doc_level_full
+  per_doc_level_lite:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_doc_level_lite
+  per_doc_level_limited:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_doc_level_limited
+  per_doc_level_streamline_refinance:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_doc_level_streamline_refinance
+  per_property_category_detached:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_category_detached
+  per_property_category_attached:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_category_attached
+  per_property_category_condo_hotel:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_category_condo_hotel
+  per_property_category_duplex:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_category_duplex
+  per_property_category_triplex:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_category_triplex
+  per_property_category_fourplex:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_category_fourplex
+  per_property_category_commercial_residential:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_category_commercial_residential
+  per_property_category_condo_1_to_4_story:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_category_condo_1_to_4_story
+  per_property_category_condo_5_over_story:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_category_condo_5_over_story
+  per_property_category_manufactured_multi_wide:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_category_manufactured_multi_wide
+  per_property_category_manufactured_single_wide:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_category_manufactured_single_wide
+  per_property_category_townhouse_rowhouse:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_category_townhouse_rowhouse
+  per_property_category_land_and_lots:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_category_land_and_lots
+  per_property_category_farm:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_category_farm
+  per_first_time_homebuyer:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_first_time_homebuyer
+  per_not_first_time_homebuyer:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_not_first_time_homebuyer
+  per_self_employed:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_self_employed
+  per_not_self_employed:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_not_self_employed
+  per_amortization_fully:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_amortization_fully
+  per_amortization_interest_only:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_amortization_interest_only
+  per_non_resident_alien:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_non_resident_alien
+  per_not_non_resident_alien:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_not_non_resident_alien
+  per_arms_length:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_arms_length
+  per_not_arms_length:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_not_arms_length
+  per_hazardous_lava_zone:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_hazardous_lava_zone
+  per_not_hazardous_lava_zone:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_not_hazardous_lava_zone
+  per_property_rights_fee_simple:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_rights_fee_simple
+  per_property_rights_leasehold:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_rights_leasehold
+  per_under_10_acres:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_under_10_acres
+  per_not_under_10_acres:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_not_under_10_acres
+  per_escrow_waiver:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_escrow_waiver
+  per_not_escrow_waiver:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_not_escrow_waiver
+  per_minimum_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.per_minimum_credit_score
+  per_minimum_loan_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.per_minimum_loan_amount
+  per_maximum_loan_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.per_maximum_loan_amount
+  per_maximum_ltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.per_maximum_ltv_ratio_percent
+  per_newly_built_maximum_ltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.per_newly_built_maximum_ltv_ratio_percent
+  per_subordinate_maximum_ltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.per_subordinate_maximum_ltv_ratio_percent
+  per_maximum_cltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.per_maximum_cltv_ratio_percent
+  per_maximum_housing_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.per_maximum_housing_ratio_percent
+  per_maximum_debt_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.per_maximum_debt_ratio_percent
+  per_state_al:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_al
+  per_state_ak:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_ak
+  per_state_az:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_az
+  per_state_ar:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_ar
+  per_state_ca:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_ca
+  per_state_co:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_co
+  per_state_ct:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_ct
+  per_state_de:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_de
+  per_state_dc:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_dc
+  per_state_fl:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_fl
+  per_state_ga:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_ga
+  per_state_gu:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_gu
+  per_state_hi:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_hi
+  per_state_id:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_id
+  per_state_il:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_il
+  per_state_in:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_in
+  per_state_ia:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_ia
+  per_state_ks:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_ks
+  per_state_ky:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_ky
+  per_state_la:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_la
+  per_state_me:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_me
+  per_state_md:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_md
+  per_state_ma:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_ma
+  per_state_mi:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_mi
+  per_state_mn:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_mn
+  per_state_ms:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_ms
+  per_state_mo:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_mo
+  per_state_mt:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_mt
+  per_state_ne:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_ne
+  per_state_nv:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_nv
+  per_state_nh:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_nh
+  per_state_nj:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_nj
+  per_state_nm:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_nm
+  per_state_ny:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_ny
+  per_state_nc:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_nc
+  per_state_nd:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_nd
+  per_state_oh:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_oh
+  per_state_ok:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_ok
+  per_state_or:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_or
+  per_state_pa:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_pa
+  per_state_pr:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_pr
+  per_state_ri:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_ri
+  per_state_sc:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_sc
+  per_state_sd:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_sd
+  per_state_tn:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_tn
+  per_state_tx:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_tx
+  per_state_ut:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_ut
+  per_state_vt:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_vt
+  per_state_va:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_va
+  per_state_vi:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_vi
+  per_state_wa:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_wa
+  per_state_wv:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_wv
+  per_state_wi:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_wi
+  per_state_wy:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_wy
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100111:
+    input_type: table
+    output_type: insert
+    json_output_field: per_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.product_eligibility_rule
+      SELECT staging_table.per_pid
+           , staging_table.per_version
+           , staging_table.per_product_eligibility_pid
+           , staging_table.per_summary
+           , staging_table.per_note
+           , staging_table.per_group_id
+           , staging_table.per_loan_purpose_input_type
+           , staging_table.per_property_usage_input_type
+           , staging_table.per_doc_level_input_type
+           , staging_table.per_property_category_input_type
+           , staging_table.per_first_time_homebuyer_input_type
+           , staging_table.per_self_employed_input_type
+           , staging_table.per_amortization_input_type
+           , staging_table.per_non_resident_alien_input_type
+           , staging_table.per_hazardous_lava_zone_input_type
+           , staging_table.per_property_rights_input_type
+           , staging_table.per_property_acres_input_type
+           , staging_table.per_arms_length_input_type
+           , staging_table.per_underwrite_accepted_input_type
+           , staging_table.per_state_input_type
+           , staging_table.per_escrow_waiver_input_type
+           , staging_table.per_minimum_credit_score_input
+           , staging_table.per_minimum_loan_amount_input
+           , staging_table.per_maximum_loan_amount_input
+           , staging_table.per_maximum_ltv_ratio_input
+           , staging_table.per_newly_built_maximum_ltv_ratio_input
+           , staging_table.per_subordinate_maximum_ltv_ratio_input
+           , staging_table.per_maximum_cltv_ratio_input
+           , staging_table.per_maximum_housing_ratio_input
+           , staging_table.per_maximum_debt_ratio_input
+           , staging_table.per_lp_risk_assessment_accepted
+           , staging_table.per_du_risk_assessment_accepted
+           , staging_table.per_manual_risk_assessment_accepted
+           , staging_table.per_loan_purpose_purchase
+           , staging_table.per_loan_purpose_change_in_rate_term
+           , staging_table.per_loan_purpose_cash_out
+           , staging_table.per_property_usage_primary_residence
+           , staging_table.per_property_usage_second_home
+           , staging_table.per_property_usage_investment
+           , staging_table.per_doc_level_full
+           , staging_table.per_doc_level_lite
+           , staging_table.per_doc_level_limited
+           , staging_table.per_doc_level_streamline_refinance
+           , staging_table.per_property_category_detached
+           , staging_table.per_property_category_attached
+           , staging_table.per_property_category_condo_hotel
+           , staging_table.per_property_category_duplex
+           , staging_table.per_property_category_triplex
+           , staging_table.per_property_category_fourplex
+           , staging_table.per_property_category_commercial_residential
+           , staging_table.per_property_category_condo_1_to_4_story
+           , staging_table.per_property_category_condo_5_over_story
+           , staging_table.per_property_category_manufactured_multi_wide
+           , staging_table.per_property_category_manufactured_single_wide
+           , staging_table.per_property_category_townhouse_rowhouse
+           , staging_table.per_property_category_land_and_lots
+           , staging_table.per_property_category_farm
+           , staging_table.per_first_time_homebuyer
+           , staging_table.per_not_first_time_homebuyer
+           , staging_table.per_self_employed
+           , staging_table.per_not_self_employed
+           , staging_table.per_amortization_fully
+           , staging_table.per_amortization_interest_only
+           , staging_table.per_non_resident_alien
+           , staging_table.per_not_non_resident_alien
+           , staging_table.per_arms_length
+           , staging_table.per_not_arms_length
+           , staging_table.per_hazardous_lava_zone
+           , staging_table.per_not_hazardous_lava_zone
+           , staging_table.per_property_rights_fee_simple
+           , staging_table.per_property_rights_leasehold
+           , staging_table.per_under_10_acres
+           , staging_table.per_not_under_10_acres
+           , staging_table.per_escrow_waiver
+           , staging_table.per_not_escrow_waiver
+           , staging_table.per_minimum_credit_score
+           , staging_table.per_minimum_loan_amount
+           , staging_table.per_maximum_loan_amount
+           , staging_table.per_maximum_ltv_ratio_percent
+           , staging_table.per_newly_built_maximum_ltv_ratio_percent
+           , staging_table.per_subordinate_maximum_ltv_ratio_percent
+           , staging_table.per_maximum_cltv_ratio_percent
+           , staging_table.per_maximum_housing_ratio_percent
+           , staging_table.per_maximum_debt_ratio_percent
+           , staging_table.per_state_al
+           , staging_table.per_state_ak
+           , staging_table.per_state_az
+           , staging_table.per_state_ar
+           , staging_table.per_state_ca
+           , staging_table.per_state_co
+           , staging_table.per_state_ct
+           , staging_table.per_state_de
+           , staging_table.per_state_dc
+           , staging_table.per_state_fl
+           , staging_table.per_state_ga
+           , staging_table.per_state_gu
+           , staging_table.per_state_hi
+           , staging_table.per_state_id
+           , staging_table.per_state_il
+           , staging_table.per_state_in
+           , staging_table.per_state_ia
+           , staging_table.per_state_ks
+           , staging_table.per_state_ky
+           , staging_table.per_state_la
+           , staging_table.per_state_me
+           , staging_table.per_state_md
+           , staging_table.per_state_ma
+           , staging_table.per_state_mi
+           , staging_table.per_state_mn
+           , staging_table.per_state_ms
+           , staging_table.per_state_mo
+           , staging_table.per_state_mt
+           , staging_table.per_state_ne
+           , staging_table.per_state_nv
+           , staging_table.per_state_nh
+           , staging_table.per_state_nj
+           , staging_table.per_state_nm
+           , staging_table.per_state_ny
+           , staging_table.per_state_nc
+           , staging_table.per_state_nd
+           , staging_table.per_state_oh
+           , staging_table.per_state_ok
+           , staging_table.per_state_or
+           , staging_table.per_state_pa
+           , staging_table.per_state_pr
+           , staging_table.per_state_ri
+           , staging_table.per_state_sc
+           , staging_table.per_state_sd
+           , staging_table.per_state_tn
+           , staging_table.per_state_tx
+           , staging_table.per_state_ut
+           , staging_table.per_state_vt
+           , staging_table.per_state_va
+           , staging_table.per_state_vi
+           , staging_table.per_state_wa
+           , staging_table.per_state_wv
+           , staging_table.per_state_wi
+           , staging_table.per_state_wy
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.product_eligibility_rule staging_table
+      LEFT JOIN history_octane.product_eligibility_rule history_table
+                ON staging_table.per_pid = history_table.per_pid
+                    AND staging_table.per_version = history_table.per_version
+      WHERE history_table.per_pid IS NULL
+      UNION ALL
+      SELECT history_table.per_pid
+           , history_table.per_version + 1
+           , history_table.per_product_eligibility_pid
+           , history_table.per_summary
+           , history_table.per_note
+           , history_table.per_group_id
+           , history_table.per_loan_purpose_input_type
+           , history_table.per_property_usage_input_type
+           , history_table.per_doc_level_input_type
+           , history_table.per_property_category_input_type
+           , history_table.per_first_time_homebuyer_input_type
+           , history_table.per_self_employed_input_type
+           , history_table.per_amortization_input_type
+           , history_table.per_non_resident_alien_input_type
+           , history_table.per_hazardous_lava_zone_input_type
+           , history_table.per_property_rights_input_type
+           , history_table.per_property_acres_input_type
+           , history_table.per_arms_length_input_type
+           , history_table.per_underwrite_accepted_input_type
+           , history_table.per_state_input_type
+           , history_table.per_escrow_waiver_input_type
+           , history_table.per_minimum_credit_score_input
+           , history_table.per_minimum_loan_amount_input
+           , history_table.per_maximum_loan_amount_input
+           , history_table.per_maximum_ltv_ratio_input
+           , history_table.per_newly_built_maximum_ltv_ratio_input
+           , history_table.per_subordinate_maximum_ltv_ratio_input
+           , history_table.per_maximum_cltv_ratio_input
+           , history_table.per_maximum_housing_ratio_input
+           , history_table.per_maximum_debt_ratio_input
+           , history_table.per_lp_risk_assessment_accepted
+           , history_table.per_du_risk_assessment_accepted
+           , history_table.per_manual_risk_assessment_accepted
+           , history_table.per_loan_purpose_purchase
+           , history_table.per_loan_purpose_change_in_rate_term
+           , history_table.per_loan_purpose_cash_out
+           , history_table.per_property_usage_primary_residence
+           , history_table.per_property_usage_second_home
+           , history_table.per_property_usage_investment
+           , history_table.per_doc_level_full
+           , history_table.per_doc_level_lite
+           , history_table.per_doc_level_limited
+           , history_table.per_doc_level_streamline_refinance
+           , history_table.per_property_category_detached
+           , history_table.per_property_category_attached
+           , history_table.per_property_category_condo_hotel
+           , history_table.per_property_category_duplex
+           , history_table.per_property_category_triplex
+           , history_table.per_property_category_fourplex
+           , history_table.per_property_category_commercial_residential
+           , history_table.per_property_category_condo_1_to_4_story
+           , history_table.per_property_category_condo_5_over_story
+           , history_table.per_property_category_manufactured_multi_wide
+           , history_table.per_property_category_manufactured_single_wide
+           , history_table.per_property_category_townhouse_rowhouse
+           , history_table.per_property_category_land_and_lots
+           , history_table.per_property_category_farm
+           , history_table.per_first_time_homebuyer
+           , history_table.per_not_first_time_homebuyer
+           , history_table.per_self_employed
+           , history_table.per_not_self_employed
+           , history_table.per_amortization_fully
+           , history_table.per_amortization_interest_only
+           , history_table.per_non_resident_alien
+           , history_table.per_not_non_resident_alien
+           , history_table.per_arms_length
+           , history_table.per_not_arms_length
+           , history_table.per_hazardous_lava_zone
+           , history_table.per_not_hazardous_lava_zone
+           , history_table.per_property_rights_fee_simple
+           , history_table.per_property_rights_leasehold
+           , history_table.per_under_10_acres
+           , history_table.per_not_under_10_acres
+           , history_table.per_escrow_waiver
+           , history_table.per_not_escrow_waiver
+           , history_table.per_minimum_credit_score
+           , history_table.per_minimum_loan_amount
+           , history_table.per_maximum_loan_amount
+           , history_table.per_maximum_ltv_ratio_percent
+           , history_table.per_newly_built_maximum_ltv_ratio_percent
+           , history_table.per_subordinate_maximum_ltv_ratio_percent
+           , history_table.per_maximum_cltv_ratio_percent
+           , history_table.per_maximum_housing_ratio_percent
+           , history_table.per_maximum_debt_ratio_percent
+           , history_table.per_state_al
+           , history_table.per_state_ak
+           , history_table.per_state_az
+           , history_table.per_state_ar
+           , history_table.per_state_ca
+           , history_table.per_state_co
+           , history_table.per_state_ct
+           , history_table.per_state_de
+           , history_table.per_state_dc
+           , history_table.per_state_fl
+           , history_table.per_state_ga
+           , history_table.per_state_gu
+           , history_table.per_state_hi
+           , history_table.per_state_id
+           , history_table.per_state_il
+           , history_table.per_state_in
+           , history_table.per_state_ia
+           , history_table.per_state_ks
+           , history_table.per_state_ky
+           , history_table.per_state_la
+           , history_table.per_state_me
+           , history_table.per_state_md
+           , history_table.per_state_ma
+           , history_table.per_state_mi
+           , history_table.per_state_mn
+           , history_table.per_state_ms
+           , history_table.per_state_mo
+           , history_table.per_state_mt
+           , history_table.per_state_ne
+           , history_table.per_state_nv
+           , history_table.per_state_nh
+           , history_table.per_state_nj
+           , history_table.per_state_nm
+           , history_table.per_state_ny
+           , history_table.per_state_nc
+           , history_table.per_state_nd
+           , history_table.per_state_oh
+           , history_table.per_state_ok
+           , history_table.per_state_or
+           , history_table.per_state_pa
+           , history_table.per_state_pr
+           , history_table.per_state_ri
+           , history_table.per_state_sc
+           , history_table.per_state_sd
+           , history_table.per_state_tn
+           , history_table.per_state_tx
+           , history_table.per_state_ut
+           , history_table.per_state_vt
+           , history_table.per_state_va
+           , history_table.per_state_vi
+           , history_table.per_state_wa
+           , history_table.per_state_wv
+           , history_table.per_state_wi
+           , history_table.per_state_wy
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.product_eligibility_rule history_table
+      LEFT JOIN staging_octane.product_eligibility_rule staging_table
+                ON staging_table.per_pid = history_table.per_pid
+      WHERE staging_table.per_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.product_eligibility_rule deleted_records
+          WHERE deleted_records.per_pid = history_table.per_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

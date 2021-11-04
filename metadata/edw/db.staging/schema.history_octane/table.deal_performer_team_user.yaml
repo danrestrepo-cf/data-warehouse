@@ -1,0 +1,93 @@
+name: deal_performer_team_user
+primary_source_table: staging.staging_octane.deal_performer_team_user
+primary_key:
+- dptu_pid
+- dptu_version
+foreign_keys:
+  fk_deal_performer_team_user_1:
+    columns:
+    - dptu_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: history_octane
+      table: deal
+  fk_deal_performer_team_user_2:
+    columns:
+    - dptu_performer_team_pid
+    references:
+      columns:
+      - ptm_pid
+      schema: history_octane
+      table: performer_team
+  fk_deal_performer_team_user_3:
+    columns:
+    - dptu_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+columns:
+  dptu_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dptu_pid
+  dptu_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dptu_version
+  dptu_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dptu_deal_pid
+  dptu_performer_team_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dptu_performer_team_pid
+  dptu_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dptu_user_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100093:
+    input_type: table
+    output_type: insert
+    json_output_field: dptu_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.deal_performer_team_user
+      SELECT staging_table.dptu_pid
+           , staging_table.dptu_version
+           , staging_table.dptu_deal_pid
+           , staging_table.dptu_performer_team_pid
+           , staging_table.dptu_user_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.deal_performer_team_user staging_table
+      LEFT JOIN history_octane.deal_performer_team_user history_table
+                ON staging_table.dptu_pid = history_table.dptu_pid
+                    AND staging_table.dptu_version = history_table.dptu_version
+      WHERE history_table.dptu_pid IS NULL
+      UNION ALL
+      SELECT history_table.dptu_pid
+           , history_table.dptu_version + 1
+           , history_table.dptu_deal_pid
+           , history_table.dptu_performer_team_pid
+           , history_table.dptu_user_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.deal_performer_team_user history_table
+      LEFT JOIN staging_octane.deal_performer_team_user staging_table
+                ON staging_table.dptu_pid = history_table.dptu_pid
+      WHERE staging_table.dptu_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.deal_performer_team_user deleted_records
+          WHERE deleted_records.dptu_pid = history_table.dptu_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

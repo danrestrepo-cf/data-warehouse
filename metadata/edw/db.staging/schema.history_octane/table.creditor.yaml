@@ -1,0 +1,211 @@
+name: creditor
+primary_source_table: staging.staging_octane.creditor
+primary_key:
+- crd_pid
+- crd_version
+foreign_keys:
+  fk_creditor_1:
+    columns:
+    - crd_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+  fkt_crd_address_country:
+    columns:
+    - crd_address_country
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: country_type
+  fkt_crd_key_creditor_type:
+    columns:
+    - crd_key_creditor_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: key_creditor_type
+  fkt_crd_payoff_auto_teller:
+    columns:
+    - crd_payoff_auto_teller
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_crd_payoff_request_delivery_type:
+    columns:
+    - crd_payoff_request_delivery_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: payoff_request_delivery_type
+columns:
+  crd_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.crd_pid
+  crd_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.crd_version
+  crd_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.crd_account_pid
+  crd_payoff_request_delivery_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crd_payoff_request_delivery_type
+  crd_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crd_name
+  crd_payoff_phone_1:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crd_payoff_phone_1
+  crd_payoff_phone_1_extension:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.crd_payoff_phone_1_extension
+  crd_payoff_phone_2:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crd_payoff_phone_2
+  crd_payoff_phone_2_extension:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.crd_payoff_phone_2_extension
+  crd_payoff_fax:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crd_payoff_fax
+  crd_payoff_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.crd_payoff_email
+  crd_payoff_auto_teller:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crd_payoff_auto_teller
+  crd_last_updated:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.crd_last_updated
+  crd_last_updated_by:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crd_last_updated_by
+  crd_payoff_notes:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.crd_payoff_notes
+  crd_address_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crd_address_street1
+  crd_address_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crd_address_street2
+  crd_address_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crd_address_city
+  crd_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crd_address_state
+  crd_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crd_address_postal_code
+  crd_address_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crd_address_country
+  crd_key_creditor_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crd_key_creditor_type
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100072:
+    input_type: table
+    output_type: insert
+    json_output_field: crd_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.creditor
+      SELECT staging_table.crd_pid
+           , staging_table.crd_version
+           , staging_table.crd_account_pid
+           , staging_table.crd_payoff_request_delivery_type
+           , staging_table.crd_name
+           , staging_table.crd_payoff_phone_1
+           , staging_table.crd_payoff_phone_1_extension
+           , staging_table.crd_payoff_phone_2
+           , staging_table.crd_payoff_phone_2_extension
+           , staging_table.crd_payoff_fax
+           , staging_table.crd_payoff_email
+           , staging_table.crd_payoff_auto_teller
+           , staging_table.crd_last_updated
+           , staging_table.crd_last_updated_by
+           , staging_table.crd_payoff_notes
+           , staging_table.crd_address_street1
+           , staging_table.crd_address_street2
+           , staging_table.crd_address_city
+           , staging_table.crd_address_state
+           , staging_table.crd_address_postal_code
+           , staging_table.crd_address_country
+           , staging_table.crd_key_creditor_type
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.creditor staging_table
+      LEFT JOIN history_octane.creditor history_table
+                ON staging_table.crd_pid = history_table.crd_pid
+                    AND staging_table.crd_version = history_table.crd_version
+      WHERE history_table.crd_pid IS NULL
+      UNION ALL
+      SELECT history_table.crd_pid
+           , history_table.crd_version + 1
+           , history_table.crd_account_pid
+           , history_table.crd_payoff_request_delivery_type
+           , history_table.crd_name
+           , history_table.crd_payoff_phone_1
+           , history_table.crd_payoff_phone_1_extension
+           , history_table.crd_payoff_phone_2
+           , history_table.crd_payoff_phone_2_extension
+           , history_table.crd_payoff_fax
+           , history_table.crd_payoff_email
+           , history_table.crd_payoff_auto_teller
+           , history_table.crd_last_updated
+           , history_table.crd_last_updated_by
+           , history_table.crd_payoff_notes
+           , history_table.crd_address_street1
+           , history_table.crd_address_street2
+           , history_table.crd_address_city
+           , history_table.crd_address_state
+           , history_table.crd_address_postal_code
+           , history_table.crd_address_country
+           , history_table.crd_key_creditor_type
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.creditor history_table
+      LEFT JOIN staging_octane.creditor staging_table
+                ON staging_table.crd_pid = history_table.crd_pid
+      WHERE staging_table.crd_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.creditor deleted_records
+          WHERE deleted_records.crd_pid = history_table.crd_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

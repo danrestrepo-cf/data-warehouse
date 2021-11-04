@@ -1,0 +1,155 @@
+name: mortgage_credit_certificate_issuer
+primary_source_table: staging.staging_octane.mortgage_credit_certificate_issuer
+primary_key:
+- mcci_pid
+- mcci_version
+foreign_keys:
+  fk_mortgage_credit_certificate_issuer_1:
+    columns:
+    - mcci_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+columns:
+  mcci_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcci_pid
+  mcci_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mcci_version
+  mcci_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcci_account_pid
+  mcci_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.mcci_from_date
+  mcci_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.mcci_through_date
+  mcci_issuer_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcci_issuer_name
+  mcci_credit_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.mcci_credit_rate_percent
+  mcci_ein:
+    data_type: VARCHAR(10)
+    source:
+      field: primary_source_table.columns.mcci_ein
+  mcci_contact_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcci_contact_name
+  mcci_contact_phone:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcci_contact_phone
+  mcci_address_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcci_address_street1
+  mcci_address_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcci_address_street2
+  mcci_address_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcci_address_city
+  mcci_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcci_address_state
+  mcci_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcci_address_postal_code
+  mcci_contact_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.mcci_contact_email
+  mcci_web_url:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.mcci_web_url
+  mcci_notes:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.mcci_notes
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100229:
+    input_type: table
+    output_type: insert
+    json_output_field: mcci_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.mortgage_credit_certificate_issuer
+      SELECT staging_table.mcci_pid
+           , staging_table.mcci_version
+           , staging_table.mcci_account_pid
+           , staging_table.mcci_from_date
+           , staging_table.mcci_through_date
+           , staging_table.mcci_issuer_name
+           , staging_table.mcci_credit_rate_percent
+           , staging_table.mcci_ein
+           , staging_table.mcci_contact_name
+           , staging_table.mcci_contact_phone
+           , staging_table.mcci_address_street1
+           , staging_table.mcci_address_street2
+           , staging_table.mcci_address_city
+           , staging_table.mcci_address_state
+           , staging_table.mcci_address_postal_code
+           , staging_table.mcci_contact_email
+           , staging_table.mcci_web_url
+           , staging_table.mcci_notes
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.mortgage_credit_certificate_issuer staging_table
+      LEFT JOIN history_octane.mortgage_credit_certificate_issuer history_table
+                ON staging_table.mcci_pid = history_table.mcci_pid
+                    AND staging_table.mcci_version = history_table.mcci_version
+      WHERE history_table.mcci_pid IS NULL
+      UNION ALL
+      SELECT history_table.mcci_pid
+           , history_table.mcci_version + 1
+           , history_table.mcci_account_pid
+           , history_table.mcci_from_date
+           , history_table.mcci_through_date
+           , history_table.mcci_issuer_name
+           , history_table.mcci_credit_rate_percent
+           , history_table.mcci_ein
+           , history_table.mcci_contact_name
+           , history_table.mcci_contact_phone
+           , history_table.mcci_address_street1
+           , history_table.mcci_address_street2
+           , history_table.mcci_address_city
+           , history_table.mcci_address_state
+           , history_table.mcci_address_postal_code
+           , history_table.mcci_contact_email
+           , history_table.mcci_web_url
+           , history_table.mcci_notes
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.mortgage_credit_certificate_issuer history_table
+      LEFT JOIN staging_octane.mortgage_credit_certificate_issuer staging_table
+                ON staging_table.mcci_pid = history_table.mcci_pid
+      WHERE staging_table.mcci_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.mortgage_credit_certificate_issuer deleted_records
+          WHERE deleted_records.mcci_pid = history_table.mcci_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

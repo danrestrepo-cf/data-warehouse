@@ -1,0 +1,111 @@
+name: construction_draw_item
+primary_source_table: staging.staging_octane.construction_draw_item
+primary_key:
+- cdi_pid
+- cdi_version
+foreign_keys:
+  fk_construction_draw_item_1:
+    columns:
+    - cdi_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: history_octane
+      table: proposal
+  fk_construction_draw_item_2:
+    columns:
+    - cdi_construction_cost_pid
+    references:
+      columns:
+      - coc_pid
+      schema: history_octane
+      table: construction_cost
+  fk_construction_draw_item_3:
+    columns:
+    - cdi_construction_draw_pid
+    references:
+      columns:
+      - cd_pid
+      schema: history_octane
+      table: construction_draw
+columns:
+  cdi_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cdi_pid
+  cdi_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.cdi_version
+  cdi_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cdi_proposal_pid
+  cdi_construction_cost_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cdi_construction_cost_pid
+  cdi_construction_draw_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cdi_construction_draw_pid
+  cdi_construction_draw_item_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.cdi_construction_draw_item_amount
+  cdi_construction_draw_item_borrower_contribution_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.cdi_construction_draw_item_borrower_contribution_amount
+  cdi_construction_draw_item_lender_contribution_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.cdi_construction_draw_item_lender_contribution_amount
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100162:
+    input_type: table
+    output_type: insert
+    json_output_field: cdi_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.construction_draw_item
+      SELECT staging_table.cdi_pid
+           , staging_table.cdi_version
+           , staging_table.cdi_proposal_pid
+           , staging_table.cdi_construction_cost_pid
+           , staging_table.cdi_construction_draw_pid
+           , staging_table.cdi_construction_draw_item_amount
+           , staging_table.cdi_construction_draw_item_borrower_contribution_amount
+           , staging_table.cdi_construction_draw_item_lender_contribution_amount
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.construction_draw_item staging_table
+      LEFT JOIN history_octane.construction_draw_item history_table
+                ON staging_table.cdi_pid = history_table.cdi_pid
+                    AND staging_table.cdi_version = history_table.cdi_version
+      WHERE history_table.cdi_pid IS NULL
+      UNION ALL
+      SELECT history_table.cdi_pid
+           , history_table.cdi_version + 1
+           , history_table.cdi_proposal_pid
+           , history_table.cdi_construction_cost_pid
+           , history_table.cdi_construction_draw_pid
+           , history_table.cdi_construction_draw_item_amount
+           , history_table.cdi_construction_draw_item_borrower_contribution_amount
+           , history_table.cdi_construction_draw_item_lender_contribution_amount
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.construction_draw_item history_table
+      LEFT JOIN staging_octane.construction_draw_item staging_table
+                ON staging_table.cdi_pid = history_table.cdi_pid
+      WHERE staging_table.cdi_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.construction_draw_item deleted_records
+          WHERE deleted_records.cdi_pid = history_table.cdi_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

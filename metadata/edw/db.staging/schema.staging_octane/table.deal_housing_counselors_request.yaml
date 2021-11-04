@@ -1,0 +1,41 @@
+name: deal_housing_counselors_request
+primary_key:
+- dhcr_pid
+foreign_keys:
+  fk_deal_housing_counselors_request_1:
+    columns:
+    - dhcr_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: staging_octane
+      table: deal
+  fkt_dhcr_centroid_address_country:
+    columns:
+    - dhcr_centroid_address_country
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: country_type
+columns:
+  dhcr_pid:
+    data_type: BIGINT
+  dhcr_version:
+    data_type: INTEGER
+  dhcr_deal_pid:
+    data_type: BIGINT
+  dhcr_centroid_address_street1:
+    data_type: VARCHAR(128)
+  dhcr_centroid_address_street2:
+    data_type: VARCHAR(128)
+  dhcr_centroid_address_city:
+    data_type: VARCHAR(128)
+  dhcr_centroid_address_state:
+    data_type: VARCHAR(128)
+  dhcr_centroid_address_postal_code:
+    data_type: VARCHAR(128)
+  dhcr_centroid_address_country:
+    data_type: VARCHAR(128)
+  dhcr_error_messages:
+    data_type: TEXT

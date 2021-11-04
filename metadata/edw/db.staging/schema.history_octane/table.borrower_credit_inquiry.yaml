@@ -1,0 +1,79 @@
+name: borrower_credit_inquiry
+primary_source_table: staging.staging_octane.borrower_credit_inquiry
+primary_key:
+- bci_pid
+- bci_version
+foreign_keys:
+  fk_borrower_credit_inquiry_1:
+    columns:
+    - bci_credit_inquiry_pid
+    references:
+      columns:
+      - ci_pid
+      schema: history_octane
+      table: credit_inquiry
+  fk_borrower_credit_inquiry_2:
+    columns:
+    - bci_borrower_pid
+    references:
+      columns:
+      - b_pid
+      schema: history_octane
+      table: borrower
+columns:
+  bci_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bci_pid
+  bci_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bci_version
+  bci_credit_inquiry_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bci_credit_inquiry_pid
+  bci_borrower_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bci_borrower_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100314:
+    input_type: table
+    output_type: insert
+    json_output_field: bci_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.borrower_credit_inquiry
+      SELECT staging_table.bci_pid
+           , staging_table.bci_version
+           , staging_table.bci_credit_inquiry_pid
+           , staging_table.bci_borrower_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.borrower_credit_inquiry staging_table
+      LEFT JOIN history_octane.borrower_credit_inquiry history_table
+                ON staging_table.bci_pid = history_table.bci_pid
+                    AND staging_table.bci_version = history_table.bci_version
+      WHERE history_table.bci_pid IS NULL
+      UNION ALL
+      SELECT history_table.bci_pid
+           , history_table.bci_version + 1
+           , history_table.bci_credit_inquiry_pid
+           , history_table.bci_borrower_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.borrower_credit_inquiry history_table
+      LEFT JOIN staging_octane.borrower_credit_inquiry staging_table
+                ON staging_table.bci_pid = history_table.bci_pid
+      WHERE staging_table.bci_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.borrower_credit_inquiry deleted_records
+          WHERE deleted_records.bci_pid = history_table.bci_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

@@ -1,0 +1,79 @@
+name: bid_pool_file
+primary_source_table: staging.staging_octane.bid_pool_file
+primary_key:
+- bpf_pid
+- bpf_version
+foreign_keys:
+  fk_bid_pool_file_1:
+    columns:
+    - bpf_bid_pool_pid
+    references:
+      columns:
+      - bp_pid
+      schema: history_octane
+      table: bid_pool
+  fk_bid_pool_file_2:
+    columns:
+    - bpf_repository_file_pid
+    references:
+      columns:
+      - rf_pid
+      schema: history_octane
+      table: repository_file
+columns:
+  bpf_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bpf_pid
+  bpf_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bpf_version
+  bpf_bid_pool_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bpf_bid_pool_pid
+  bpf_repository_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bpf_repository_file_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100292:
+    input_type: table
+    output_type: insert
+    json_output_field: bpf_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.bid_pool_file
+      SELECT staging_table.bpf_pid
+           , staging_table.bpf_version
+           , staging_table.bpf_bid_pool_pid
+           , staging_table.bpf_repository_file_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.bid_pool_file staging_table
+      LEFT JOIN history_octane.bid_pool_file history_table
+                ON staging_table.bpf_pid = history_table.bpf_pid
+                    AND staging_table.bpf_version = history_table.bpf_version
+      WHERE history_table.bpf_pid IS NULL
+      UNION ALL
+      SELECT history_table.bpf_pid
+           , history_table.bpf_version + 1
+           , history_table.bpf_bid_pool_pid
+           , history_table.bpf_repository_file_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.bid_pool_file history_table
+      LEFT JOIN staging_octane.bid_pool_file staging_table
+                ON staging_table.bpf_pid = history_table.bpf_pid
+      WHERE staging_table.bpf_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.bid_pool_file deleted_records
+          WHERE deleted_records.bpf_pid = history_table.bpf_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

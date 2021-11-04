@@ -1,0 +1,1051 @@
+name: job_income
+primary_source_table: staging.staging_octane.job_income
+primary_key:
+- ji_pid
+- ji_version
+foreign_keys:
+  fk_job_income_1:
+    columns:
+    - ji_borrower_income_pid
+    references:
+      columns:
+      - bi_pid
+      schema: history_octane
+      table: borrower_income
+  fkt_ji_address_voe_verify_method_type:
+    columns:
+    - ji_address_voe_verify_method_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: voe_verify_method_type
+  fkt_ji_adjustment_income_calc_method_type:
+    columns:
+    - ji_adjustment_income_calc_method_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: income_history_calc_method_type
+  fkt_ji_base_income_calc_method_type:
+    columns:
+    - ji_base_income_calc_method_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: income_history_calc_method_type
+  fkt_ji_bonus_income_calc_method_type:
+    columns:
+    - ji_bonus_income_calc_method_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: income_history_calc_method_type
+  fkt_ji_commissions_income_calc_method_type:
+    columns:
+    - ji_commissions_income_calc_method_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: income_history_calc_method_type
+  fkt_ji_overtime_income_calc_method_type:
+    columns:
+    - ji_overtime_income_calc_method_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: income_history_calc_method_type
+  fkt_ji_phone_voe_verify_method_type:
+    columns:
+    - ji_phone_voe_verify_method_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: voe_verify_method_type
+  fkt_ji_tip_income_calc_method_type:
+    columns:
+    - ji_tip_income_calc_method_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: income_history_calc_method_type
+  fkt_ji_voe_third_party_verifier_type:
+    columns:
+    - ji_voe_third_party_verifier_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: voe_third_party_verifier_type
+  fkt_ji_voe_verbal_verify_method_type:
+    columns:
+    - ji_voe_verbal_verify_method_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: voe_verbal_verify_method_type
+columns:
+  ji_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ji_pid
+  ji_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ji_version
+  ji_borrower_income_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ji_borrower_income_pid
+  ji_estimated_mode:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ji_estimated_mode
+  ji_line_of_work_years:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ji_line_of_work_years
+  ji_voe_written_required:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ji_voe_written_required
+  ji_voe_written_system:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ji_voe_written_system
+  ji_voe_written_forced:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ji_voe_written_forced
+  ji_base_income_calc_method_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ji_base_income_calc_method_type
+  ji_monthly_base_unadjusted_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_base_unadjusted_amount
+  ji_monthly_base_adjustment_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_base_adjustment_amount
+  ji_overtime_income_calc_method_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ji_overtime_income_calc_method_type
+  ji_monthly_overtime_unadjusted_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_overtime_unadjusted_amount
+  ji_monthly_overtime_adjustment_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_overtime_adjustment_amount
+  ji_bonus_income_calc_method_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ji_bonus_income_calc_method_type
+  ji_monthly_bonus_unadjusted_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_bonus_unadjusted_amount
+  ji_monthly_bonus_adjustment_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_bonus_adjustment_amount
+  ji_commissions_income_calc_method_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ji_commissions_income_calc_method_type
+  ji_monthly_commissions_unadjusted_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_commissions_unadjusted_amount
+  ji_monthly_commissions_adjustment_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_commissions_adjustment_amount
+  ji_tip_income_calc_method_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ji_tip_income_calc_method_type
+  ji_monthly_tip_unadjusted_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_tip_unadjusted_amount
+  ji_monthly_tip_adjustment_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_tip_adjustment_amount
+  ji_adjustment_income_calc_method_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ji_adjustment_income_calc_method_type
+  ji_monthly_adjustment_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_adjustment_amount
+  ji_position:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ji_position
+  ji_employer_relative:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ji_employer_relative
+  ji_employer_property_seller:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ji_employer_property_seller
+  ji_employer_real_estate_broker:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ji_employer_real_estate_broker
+  ji_military_job:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ji_military_job
+  ji_estimated_monthly_military_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_estimated_monthly_military_amount
+  ji_monthly_military_base_pay_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_military_base_pay_amount
+  ji_monthly_military_clothes_allowance_ungrossed_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_military_clothes_allowance_ungrossed_amount
+  ji_monthly_military_combat_pay_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_military_combat_pay_amount
+  ji_monthly_military_flight_pay_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_military_flight_pay_amount
+  ji_monthly_military_hazard_pay_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_military_hazard_pay_amount
+  ji_monthly_military_housing_allowance_ungrossed_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_military_housing_allowance_ungrossed_amount
+  ji_monthly_military_overseas_pay_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_military_overseas_pay_amount
+  ji_monthly_military_prop_pay_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_military_prop_pay_amount
+  ji_monthly_military_quarters_allowance_ungrossed_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_military_quarters_allowance_ungrossed_amount
+  ji_monthly_military_rations_allowance_ungrossed_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_military_rations_allowance_ungrossed_amount
+  ji_military_gross_up:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ji_military_gross_up
+  ji_military_gross_up_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ji_military_gross_up_percent
+  ji_monthly_military_clothes_allowance_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_military_clothes_allowance_amount
+  ji_monthly_military_quarters_allowance_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_military_quarters_allowance_amount
+  ji_monthly_military_rations_allowance_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_military_rations_allowance_amount
+  ji_monthly_military_housing_allowance_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_military_housing_allowance_amount
+  ji_military_pay_subtotal_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_military_pay_subtotal_amount
+  ji_military_allowance_subtotal_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_military_allowance_subtotal_amount
+  ji_monthly_military_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_monthly_military_total_amount
+  ji_annual_military_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_annual_military_total_amount
+  ji_job_year1_year:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ji_job_year1_year
+  ji_job_year1_year_include:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ji_job_year1_year_include
+  ji_job_year1_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ji_job_year1_from_date
+  ji_job_year1_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ji_job_year1_through_date
+  ji_job_year1_months:
+    data_type: NUMERIC(4,2)
+    source:
+      field: primary_source_table.columns.ji_job_year1_months
+  ji_job_year1_base_input_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year1_base_input_amount
+  ji_job_year1_monthly_base_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year1_monthly_base_amount
+  ji_job_year1_overtime_input_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year1_overtime_input_amount
+  ji_job_year1_monthly_overtime_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year1_monthly_overtime_amount
+  ji_job_year1_bonus_input_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year1_bonus_input_amount
+  ji_job_year1_monthly_bonus_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year1_monthly_bonus_amount
+  ji_job_year1_commissions_input_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year1_commissions_input_amount
+  ji_job_year1_monthly_commissions_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year1_monthly_commissions_amount
+  ji_job_year1_tip_input_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year1_tip_input_amount
+  ji_job_year1_monthly_tip_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year1_monthly_tip_amount
+  ji_job_year1_adjustment_input_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year1_adjustment_input_amount
+  ji_job_year1_monthly_adjustment_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year1_monthly_adjustment_amount
+  ji_job_year1_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year1_monthly_total_amount
+  ji_job_year1_annual_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year1_annual_total_amount
+  ji_job_year1_monthly_total_commissions_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ji_job_year1_monthly_total_commissions_percent
+  ji_job_year2_year:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ji_job_year2_year
+  ji_job_year2_year_include:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ji_job_year2_year_include
+  ji_job_year2_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ji_job_year2_from_date
+  ji_job_year2_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ji_job_year2_through_date
+  ji_job_year2_months:
+    data_type: NUMERIC(4,2)
+    source:
+      field: primary_source_table.columns.ji_job_year2_months
+  ji_job_year2_base_input_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year2_base_input_amount
+  ji_job_year2_monthly_base_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year2_monthly_base_amount
+  ji_job_year2_overtime_input_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year2_overtime_input_amount
+  ji_job_year2_monthly_overtime_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year2_monthly_overtime_amount
+  ji_job_year2_bonus_input_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year2_bonus_input_amount
+  ji_job_year2_monthly_bonus_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year2_monthly_bonus_amount
+  ji_job_year2_commissions_input_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year2_commissions_input_amount
+  ji_job_year2_monthly_commissions_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year2_monthly_commissions_amount
+  ji_job_year2_tip_input_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year2_tip_input_amount
+  ji_job_year2_monthly_tip_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year2_monthly_tip_amount
+  ji_job_year2_adjustment_input_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year2_adjustment_input_amount
+  ji_job_year2_monthly_adjustment_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year2_monthly_adjustment_amount
+  ji_job_year2_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year2_monthly_total_amount
+  ji_job_year2_annual_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year2_annual_total_amount
+  ji_job_year2_monthly_total_commissions_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ji_job_year2_monthly_total_commissions_percent
+  ji_job_year3_year:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ji_job_year3_year
+  ji_job_year3_year_include:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ji_job_year3_year_include
+  ji_job_year3_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ji_job_year3_from_date
+  ji_job_year3_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ji_job_year3_through_date
+  ji_job_year3_months:
+    data_type: NUMERIC(4,2)
+    source:
+      field: primary_source_table.columns.ji_job_year3_months
+  ji_job_year3_base_input_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year3_base_input_amount
+  ji_job_year3_monthly_base_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year3_monthly_base_amount
+  ji_job_year3_overtime_input_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year3_overtime_input_amount
+  ji_job_year3_monthly_overtime_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year3_monthly_overtime_amount
+  ji_job_year3_bonus_input_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year3_bonus_input_amount
+  ji_job_year3_monthly_bonus_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year3_monthly_bonus_amount
+  ji_job_year3_commissions_input_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year3_commissions_input_amount
+  ji_job_year3_monthly_commissions_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year3_monthly_commissions_amount
+  ji_job_year3_tip_input_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year3_tip_input_amount
+  ji_job_year3_monthly_tip_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year3_monthly_tip_amount
+  ji_job_year3_adjustment_input_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year3_adjustment_input_amount
+  ji_job_year3_monthly_adjustment_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year3_monthly_adjustment_amount
+  ji_job_year3_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year3_monthly_total_amount
+  ji_job_year3_annual_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_job_year3_annual_total_amount
+  ji_job_year3_monthly_total_commissions_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ji_job_year3_monthly_total_commissions_percent
+  ji_estimated_monthly_base_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_estimated_monthly_base_amount
+  ji_estimated_monthly_bonus_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_estimated_monthly_bonus_amount
+  ji_estimated_monthly_overtime_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_estimated_monthly_overtime_amount
+  ji_estimated_monthly_commissions_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_estimated_monthly_commissions_amount
+  ji_estimated_monthly_tip_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_estimated_monthly_tip_amount
+  ji_estimated_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_estimated_monthly_total_amount
+  ji_estimated_annual_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_estimated_annual_total_amount
+  ji_estimated_monthly_total_commissions_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ji_estimated_monthly_total_commissions_percent
+  ji_worksheet_monthly_base_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_worksheet_monthly_base_amount
+  ji_worksheet_monthly_bonus_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_worksheet_monthly_bonus_amount
+  ji_worksheet_monthly_overtime_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_worksheet_monthly_overtime_amount
+  ji_worksheet_monthly_commissions_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_worksheet_monthly_commissions_amount
+  ji_worksheet_monthly_tip_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_worksheet_monthly_tip_amount
+  ji_worksheet_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_worksheet_monthly_total_amount
+  ji_worksheet_annual_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_worksheet_annual_total_amount
+  ji_worksheet_monthly_total_commissions_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ji_worksheet_monthly_total_commissions_percent
+  ji_working_monthly_base_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_working_monthly_base_amount
+  ji_working_monthly_bonus_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_working_monthly_bonus_amount
+  ji_working_monthly_overtime_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_working_monthly_overtime_amount
+  ji_working_monthly_commissions_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_working_monthly_commissions_amount
+  ji_working_monthly_tip_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_working_monthly_tip_amount
+  ji_working_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_working_monthly_total_amount
+  ji_working_annual_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ji_working_annual_total_amount
+  ji_working_monthly_total_commissions_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ji_working_monthly_total_commissions_percent
+  ji_underwriter_comments:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.ji_underwriter_comments
+  ji_foreign_income:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ji_foreign_income
+  ji_seasonal_income:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ji_seasonal_income
+  ji_voe_third_party_verifier_order_id:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.ji_voe_third_party_verifier_order_id
+  ji_employer_voe_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ji_employer_voe_name
+  ji_employer_voe_title:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ji_employer_voe_title
+  ji_employer_voe_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ji_employer_voe_phone
+  ji_employer_voe_phone_extension:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.ji_employer_voe_phone_extension
+  ji_employer_voe_fax:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ji_employer_voe_fax
+  ji_employer_voe_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.ji_employer_voe_email
+  ji_phone_voe_verify_method_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ji_phone_voe_verify_method_type
+  ji_address_voe_verify_method_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ji_address_voe_verify_method_type
+  ji_verified_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ji_verified_date
+  ji_verified_by:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ji_verified_by
+  ji_voe_verbal_verify_method_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ji_voe_verbal_verify_method_type
+  ji_voe_third_party_verifier_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ji_voe_third_party_verifier_type
+  ji_employer_other_interested_party:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ji_employer_other_interested_party
+  ji_employer_other_interested_party_description:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ji_employer_other_interested_party_description
+  ji_line_of_work_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ji_line_of_work_months
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100312:
+    input_type: table
+    output_type: insert
+    json_output_field: ji_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.job_income
+      SELECT staging_table.ji_pid
+           , staging_table.ji_version
+           , staging_table.ji_borrower_income_pid
+           , staging_table.ji_estimated_mode
+           , staging_table.ji_line_of_work_years
+           , staging_table.ji_voe_written_required
+           , staging_table.ji_voe_written_system
+           , staging_table.ji_voe_written_forced
+           , staging_table.ji_base_income_calc_method_type
+           , staging_table.ji_monthly_base_unadjusted_amount
+           , staging_table.ji_monthly_base_adjustment_amount
+           , staging_table.ji_overtime_income_calc_method_type
+           , staging_table.ji_monthly_overtime_unadjusted_amount
+           , staging_table.ji_monthly_overtime_adjustment_amount
+           , staging_table.ji_bonus_income_calc_method_type
+           , staging_table.ji_monthly_bonus_unadjusted_amount
+           , staging_table.ji_monthly_bonus_adjustment_amount
+           , staging_table.ji_commissions_income_calc_method_type
+           , staging_table.ji_monthly_commissions_unadjusted_amount
+           , staging_table.ji_monthly_commissions_adjustment_amount
+           , staging_table.ji_tip_income_calc_method_type
+           , staging_table.ji_monthly_tip_unadjusted_amount
+           , staging_table.ji_monthly_tip_adjustment_amount
+           , staging_table.ji_adjustment_income_calc_method_type
+           , staging_table.ji_monthly_adjustment_amount
+           , staging_table.ji_position
+           , staging_table.ji_employer_relative
+           , staging_table.ji_employer_property_seller
+           , staging_table.ji_employer_real_estate_broker
+           , staging_table.ji_military_job
+           , staging_table.ji_estimated_monthly_military_amount
+           , staging_table.ji_monthly_military_base_pay_amount
+           , staging_table.ji_monthly_military_clothes_allowance_ungrossed_amount
+           , staging_table.ji_monthly_military_combat_pay_amount
+           , staging_table.ji_monthly_military_flight_pay_amount
+           , staging_table.ji_monthly_military_hazard_pay_amount
+           , staging_table.ji_monthly_military_housing_allowance_ungrossed_amount
+           , staging_table.ji_monthly_military_overseas_pay_amount
+           , staging_table.ji_monthly_military_prop_pay_amount
+           , staging_table.ji_monthly_military_quarters_allowance_ungrossed_amount
+           , staging_table.ji_monthly_military_rations_allowance_ungrossed_amount
+           , staging_table.ji_military_gross_up
+           , staging_table.ji_military_gross_up_percent
+           , staging_table.ji_monthly_military_clothes_allowance_amount
+           , staging_table.ji_monthly_military_quarters_allowance_amount
+           , staging_table.ji_monthly_military_rations_allowance_amount
+           , staging_table.ji_monthly_military_housing_allowance_amount
+           , staging_table.ji_military_pay_subtotal_amount
+           , staging_table.ji_military_allowance_subtotal_amount
+           , staging_table.ji_monthly_military_total_amount
+           , staging_table.ji_annual_military_total_amount
+           , staging_table.ji_job_year1_year
+           , staging_table.ji_job_year1_year_include
+           , staging_table.ji_job_year1_from_date
+           , staging_table.ji_job_year1_through_date
+           , staging_table.ji_job_year1_months
+           , staging_table.ji_job_year1_base_input_amount
+           , staging_table.ji_job_year1_monthly_base_amount
+           , staging_table.ji_job_year1_overtime_input_amount
+           , staging_table.ji_job_year1_monthly_overtime_amount
+           , staging_table.ji_job_year1_bonus_input_amount
+           , staging_table.ji_job_year1_monthly_bonus_amount
+           , staging_table.ji_job_year1_commissions_input_amount
+           , staging_table.ji_job_year1_monthly_commissions_amount
+           , staging_table.ji_job_year1_tip_input_amount
+           , staging_table.ji_job_year1_monthly_tip_amount
+           , staging_table.ji_job_year1_adjustment_input_amount
+           , staging_table.ji_job_year1_monthly_adjustment_amount
+           , staging_table.ji_job_year1_monthly_total_amount
+           , staging_table.ji_job_year1_annual_total_amount
+           , staging_table.ji_job_year1_monthly_total_commissions_percent
+           , staging_table.ji_job_year2_year
+           , staging_table.ji_job_year2_year_include
+           , staging_table.ji_job_year2_from_date
+           , staging_table.ji_job_year2_through_date
+           , staging_table.ji_job_year2_months
+           , staging_table.ji_job_year2_base_input_amount
+           , staging_table.ji_job_year2_monthly_base_amount
+           , staging_table.ji_job_year2_overtime_input_amount
+           , staging_table.ji_job_year2_monthly_overtime_amount
+           , staging_table.ji_job_year2_bonus_input_amount
+           , staging_table.ji_job_year2_monthly_bonus_amount
+           , staging_table.ji_job_year2_commissions_input_amount
+           , staging_table.ji_job_year2_monthly_commissions_amount
+           , staging_table.ji_job_year2_tip_input_amount
+           , staging_table.ji_job_year2_monthly_tip_amount
+           , staging_table.ji_job_year2_adjustment_input_amount
+           , staging_table.ji_job_year2_monthly_adjustment_amount
+           , staging_table.ji_job_year2_monthly_total_amount
+           , staging_table.ji_job_year2_annual_total_amount
+           , staging_table.ji_job_year2_monthly_total_commissions_percent
+           , staging_table.ji_job_year3_year
+           , staging_table.ji_job_year3_year_include
+           , staging_table.ji_job_year3_from_date
+           , staging_table.ji_job_year3_through_date
+           , staging_table.ji_job_year3_months
+           , staging_table.ji_job_year3_base_input_amount
+           , staging_table.ji_job_year3_monthly_base_amount
+           , staging_table.ji_job_year3_overtime_input_amount
+           , staging_table.ji_job_year3_monthly_overtime_amount
+           , staging_table.ji_job_year3_bonus_input_amount
+           , staging_table.ji_job_year3_monthly_bonus_amount
+           , staging_table.ji_job_year3_commissions_input_amount
+           , staging_table.ji_job_year3_monthly_commissions_amount
+           , staging_table.ji_job_year3_tip_input_amount
+           , staging_table.ji_job_year3_monthly_tip_amount
+           , staging_table.ji_job_year3_adjustment_input_amount
+           , staging_table.ji_job_year3_monthly_adjustment_amount
+           , staging_table.ji_job_year3_monthly_total_amount
+           , staging_table.ji_job_year3_annual_total_amount
+           , staging_table.ji_job_year3_monthly_total_commissions_percent
+           , staging_table.ji_estimated_monthly_base_amount
+           , staging_table.ji_estimated_monthly_bonus_amount
+           , staging_table.ji_estimated_monthly_overtime_amount
+           , staging_table.ji_estimated_monthly_commissions_amount
+           , staging_table.ji_estimated_monthly_tip_amount
+           , staging_table.ji_estimated_monthly_total_amount
+           , staging_table.ji_estimated_annual_total_amount
+           , staging_table.ji_estimated_monthly_total_commissions_percent
+           , staging_table.ji_worksheet_monthly_base_amount
+           , staging_table.ji_worksheet_monthly_bonus_amount
+           , staging_table.ji_worksheet_monthly_overtime_amount
+           , staging_table.ji_worksheet_monthly_commissions_amount
+           , staging_table.ji_worksheet_monthly_tip_amount
+           , staging_table.ji_worksheet_monthly_total_amount
+           , staging_table.ji_worksheet_annual_total_amount
+           , staging_table.ji_worksheet_monthly_total_commissions_percent
+           , staging_table.ji_working_monthly_base_amount
+           , staging_table.ji_working_monthly_bonus_amount
+           , staging_table.ji_working_monthly_overtime_amount
+           , staging_table.ji_working_monthly_commissions_amount
+           , staging_table.ji_working_monthly_tip_amount
+           , staging_table.ji_working_monthly_total_amount
+           , staging_table.ji_working_annual_total_amount
+           , staging_table.ji_working_monthly_total_commissions_percent
+           , staging_table.ji_underwriter_comments
+           , staging_table.ji_foreign_income
+           , staging_table.ji_seasonal_income
+           , staging_table.ji_voe_third_party_verifier_order_id
+           , staging_table.ji_employer_voe_name
+           , staging_table.ji_employer_voe_title
+           , staging_table.ji_employer_voe_phone
+           , staging_table.ji_employer_voe_phone_extension
+           , staging_table.ji_employer_voe_fax
+           , staging_table.ji_employer_voe_email
+           , staging_table.ji_phone_voe_verify_method_type
+           , staging_table.ji_address_voe_verify_method_type
+           , staging_table.ji_verified_date
+           , staging_table.ji_verified_by
+           , staging_table.ji_voe_verbal_verify_method_type
+           , staging_table.ji_voe_third_party_verifier_type
+           , staging_table.ji_employer_other_interested_party
+           , staging_table.ji_employer_other_interested_party_description
+           , staging_table.ji_line_of_work_months
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.job_income staging_table
+      LEFT JOIN history_octane.job_income history_table
+                ON staging_table.ji_pid = history_table.ji_pid
+                    AND staging_table.ji_version = history_table.ji_version
+      WHERE history_table.ji_pid IS NULL
+      UNION ALL
+      SELECT history_table.ji_pid
+           , history_table.ji_version + 1
+           , history_table.ji_borrower_income_pid
+           , history_table.ji_estimated_mode
+           , history_table.ji_line_of_work_years
+           , history_table.ji_voe_written_required
+           , history_table.ji_voe_written_system
+           , history_table.ji_voe_written_forced
+           , history_table.ji_base_income_calc_method_type
+           , history_table.ji_monthly_base_unadjusted_amount
+           , history_table.ji_monthly_base_adjustment_amount
+           , history_table.ji_overtime_income_calc_method_type
+           , history_table.ji_monthly_overtime_unadjusted_amount
+           , history_table.ji_monthly_overtime_adjustment_amount
+           , history_table.ji_bonus_income_calc_method_type
+           , history_table.ji_monthly_bonus_unadjusted_amount
+           , history_table.ji_monthly_bonus_adjustment_amount
+           , history_table.ji_commissions_income_calc_method_type
+           , history_table.ji_monthly_commissions_unadjusted_amount
+           , history_table.ji_monthly_commissions_adjustment_amount
+           , history_table.ji_tip_income_calc_method_type
+           , history_table.ji_monthly_tip_unadjusted_amount
+           , history_table.ji_monthly_tip_adjustment_amount
+           , history_table.ji_adjustment_income_calc_method_type
+           , history_table.ji_monthly_adjustment_amount
+           , history_table.ji_position
+           , history_table.ji_employer_relative
+           , history_table.ji_employer_property_seller
+           , history_table.ji_employer_real_estate_broker
+           , history_table.ji_military_job
+           , history_table.ji_estimated_monthly_military_amount
+           , history_table.ji_monthly_military_base_pay_amount
+           , history_table.ji_monthly_military_clothes_allowance_ungrossed_amount
+           , history_table.ji_monthly_military_combat_pay_amount
+           , history_table.ji_monthly_military_flight_pay_amount
+           , history_table.ji_monthly_military_hazard_pay_amount
+           , history_table.ji_monthly_military_housing_allowance_ungrossed_amount
+           , history_table.ji_monthly_military_overseas_pay_amount
+           , history_table.ji_monthly_military_prop_pay_amount
+           , history_table.ji_monthly_military_quarters_allowance_ungrossed_amount
+           , history_table.ji_monthly_military_rations_allowance_ungrossed_amount
+           , history_table.ji_military_gross_up
+           , history_table.ji_military_gross_up_percent
+           , history_table.ji_monthly_military_clothes_allowance_amount
+           , history_table.ji_monthly_military_quarters_allowance_amount
+           , history_table.ji_monthly_military_rations_allowance_amount
+           , history_table.ji_monthly_military_housing_allowance_amount
+           , history_table.ji_military_pay_subtotal_amount
+           , history_table.ji_military_allowance_subtotal_amount
+           , history_table.ji_monthly_military_total_amount
+           , history_table.ji_annual_military_total_amount
+           , history_table.ji_job_year1_year
+           , history_table.ji_job_year1_year_include
+           , history_table.ji_job_year1_from_date
+           , history_table.ji_job_year1_through_date
+           , history_table.ji_job_year1_months
+           , history_table.ji_job_year1_base_input_amount
+           , history_table.ji_job_year1_monthly_base_amount
+           , history_table.ji_job_year1_overtime_input_amount
+           , history_table.ji_job_year1_monthly_overtime_amount
+           , history_table.ji_job_year1_bonus_input_amount
+           , history_table.ji_job_year1_monthly_bonus_amount
+           , history_table.ji_job_year1_commissions_input_amount
+           , history_table.ji_job_year1_monthly_commissions_amount
+           , history_table.ji_job_year1_tip_input_amount
+           , history_table.ji_job_year1_monthly_tip_amount
+           , history_table.ji_job_year1_adjustment_input_amount
+           , history_table.ji_job_year1_monthly_adjustment_amount
+           , history_table.ji_job_year1_monthly_total_amount
+           , history_table.ji_job_year1_annual_total_amount
+           , history_table.ji_job_year1_monthly_total_commissions_percent
+           , history_table.ji_job_year2_year
+           , history_table.ji_job_year2_year_include
+           , history_table.ji_job_year2_from_date
+           , history_table.ji_job_year2_through_date
+           , history_table.ji_job_year2_months
+           , history_table.ji_job_year2_base_input_amount
+           , history_table.ji_job_year2_monthly_base_amount
+           , history_table.ji_job_year2_overtime_input_amount
+           , history_table.ji_job_year2_monthly_overtime_amount
+           , history_table.ji_job_year2_bonus_input_amount
+           , history_table.ji_job_year2_monthly_bonus_amount
+           , history_table.ji_job_year2_commissions_input_amount
+           , history_table.ji_job_year2_monthly_commissions_amount
+           , history_table.ji_job_year2_tip_input_amount
+           , history_table.ji_job_year2_monthly_tip_amount
+           , history_table.ji_job_year2_adjustment_input_amount
+           , history_table.ji_job_year2_monthly_adjustment_amount
+           , history_table.ji_job_year2_monthly_total_amount
+           , history_table.ji_job_year2_annual_total_amount
+           , history_table.ji_job_year2_monthly_total_commissions_percent
+           , history_table.ji_job_year3_year
+           , history_table.ji_job_year3_year_include
+           , history_table.ji_job_year3_from_date
+           , history_table.ji_job_year3_through_date
+           , history_table.ji_job_year3_months
+           , history_table.ji_job_year3_base_input_amount
+           , history_table.ji_job_year3_monthly_base_amount
+           , history_table.ji_job_year3_overtime_input_amount
+           , history_table.ji_job_year3_monthly_overtime_amount
+           , history_table.ji_job_year3_bonus_input_amount
+           , history_table.ji_job_year3_monthly_bonus_amount
+           , history_table.ji_job_year3_commissions_input_amount
+           , history_table.ji_job_year3_monthly_commissions_amount
+           , history_table.ji_job_year3_tip_input_amount
+           , history_table.ji_job_year3_monthly_tip_amount
+           , history_table.ji_job_year3_adjustment_input_amount
+           , history_table.ji_job_year3_monthly_adjustment_amount
+           , history_table.ji_job_year3_monthly_total_amount
+           , history_table.ji_job_year3_annual_total_amount
+           , history_table.ji_job_year3_monthly_total_commissions_percent
+           , history_table.ji_estimated_monthly_base_amount
+           , history_table.ji_estimated_monthly_bonus_amount
+           , history_table.ji_estimated_monthly_overtime_amount
+           , history_table.ji_estimated_monthly_commissions_amount
+           , history_table.ji_estimated_monthly_tip_amount
+           , history_table.ji_estimated_monthly_total_amount
+           , history_table.ji_estimated_annual_total_amount
+           , history_table.ji_estimated_monthly_total_commissions_percent
+           , history_table.ji_worksheet_monthly_base_amount
+           , history_table.ji_worksheet_monthly_bonus_amount
+           , history_table.ji_worksheet_monthly_overtime_amount
+           , history_table.ji_worksheet_monthly_commissions_amount
+           , history_table.ji_worksheet_monthly_tip_amount
+           , history_table.ji_worksheet_monthly_total_amount
+           , history_table.ji_worksheet_annual_total_amount
+           , history_table.ji_worksheet_monthly_total_commissions_percent
+           , history_table.ji_working_monthly_base_amount
+           , history_table.ji_working_monthly_bonus_amount
+           , history_table.ji_working_monthly_overtime_amount
+           , history_table.ji_working_monthly_commissions_amount
+           , history_table.ji_working_monthly_tip_amount
+           , history_table.ji_working_monthly_total_amount
+           , history_table.ji_working_annual_total_amount
+           , history_table.ji_working_monthly_total_commissions_percent
+           , history_table.ji_underwriter_comments
+           , history_table.ji_foreign_income
+           , history_table.ji_seasonal_income
+           , history_table.ji_voe_third_party_verifier_order_id
+           , history_table.ji_employer_voe_name
+           , history_table.ji_employer_voe_title
+           , history_table.ji_employer_voe_phone
+           , history_table.ji_employer_voe_phone_extension
+           , history_table.ji_employer_voe_fax
+           , history_table.ji_employer_voe_email
+           , history_table.ji_phone_voe_verify_method_type
+           , history_table.ji_address_voe_verify_method_type
+           , history_table.ji_verified_date
+           , history_table.ji_verified_by
+           , history_table.ji_voe_verbal_verify_method_type
+           , history_table.ji_voe_third_party_verifier_type
+           , history_table.ji_employer_other_interested_party
+           , history_table.ji_employer_other_interested_party_description
+           , history_table.ji_line_of_work_months
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.job_income history_table
+      LEFT JOIN staging_octane.job_income staging_table
+                ON staging_table.ji_pid = history_table.ji_pid
+      WHERE staging_table.ji_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.job_income deleted_records
+          WHERE deleted_records.ji_pid = history_table.ji_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

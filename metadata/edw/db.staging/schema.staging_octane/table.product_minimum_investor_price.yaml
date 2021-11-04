@@ -1,0 +1,29 @@
+name: product_minimum_investor_price
+primary_key:
+- pminip_pid
+foreign_keys:
+  fk_product_minimum_investor_price_1:
+    columns:
+    - pminip_product_pid
+    references:
+      columns:
+      - p_pid
+      schema: staging_octane
+      table: product
+columns:
+  pminip_pid:
+    data_type: BIGINT
+  pminip_version:
+    data_type: INTEGER
+  pminip_product_pid:
+    data_type: BIGINT
+  pminip_from_date:
+    data_type: DATE
+  pminip_minimum_investor_price_percent:
+    data_type: NUMERIC(11,9)
+  pminip_minimum_includes_srp:
+    data_type: BOOLEAN
+  pminip_loan_amount_min:
+    data_type: NUMERIC(15,0)
+  pminip_loan_amount_max:
+    data_type: NUMERIC(15,0)

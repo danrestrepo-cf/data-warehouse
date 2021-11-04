@@ -1,0 +1,711 @@
+name: borrower
+primary_key:
+- b_pid
+foreign_keys:
+  fk_borrower_1:
+    columns:
+    - b_application_pid
+    references:
+      columns:
+      - apl_pid
+      schema: staging_octane
+      table: application
+  fk_borrower_2:
+    columns:
+    - b_mailing_place_pid
+    references:
+      columns:
+      - pl_pid
+      schema: staging_octane
+      table: place
+  fk_borrower_3:
+    columns:
+    - b_spouse_borrower_pid
+    references:
+      columns:
+      - b_pid
+      schema: staging_octane
+      table: borrower
+  fk_borrower_4:
+    columns:
+    - b_credit_request_pid
+    references:
+      columns:
+      - crdr_pid
+      schema: staging_octane
+      table: credit_request
+  fkt_b_alimony_child_support:
+    columns:
+    - b_alimony_child_support
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_applicant_role_type:
+    columns:
+    - b_applicant_role_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: applicant_role_type
+  fkt_b_application_taken_method_type:
+    columns:
+    - b_application_taken_method_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: application_taken_method_type
+  fkt_b_bankruptcy:
+    columns:
+    - b_bankruptcy
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_borrowed_down_payment:
+    columns:
+    - b_borrowed_down_payment
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_borrower_tiny_id_type:
+    columns:
+    - b_borrower_tiny_id_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: borrower_tiny_id_type
+  fkt_b_citizenship_residency_type:
+    columns:
+    - b_citizenship_residency_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: citizenship_residency_type
+  fkt_b_credit_report_authorization_method:
+    columns:
+    - b_credit_report_authorization_method
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: credit_authorization_method_type
+  fkt_b_disabled:
+    columns:
+    - b_disabled
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_domestic_relationship_state_type:
+    columns:
+    - b_domestic_relationship_state_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: state_type
+  fkt_b_ethnicity_collected_visual_or_surname:
+    columns:
+    - b_ethnicity_collected_visual_or_surname
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_ethnicity_refused:
+    columns:
+    - b_ethnicity_refused
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_has_dependents:
+    columns:
+    - b_has_dependents
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_homeowner_past_three_years:
+    columns:
+    - b_homeowner_past_three_years
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_homeownership_education_agency_type:
+    columns:
+    - b_homeownership_education_agency_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: housing_counseling_agency_type
+  fkt_b_homeownership_education_type:
+    columns:
+    - b_homeownership_education_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: homeownership_education_type
+  fkt_b_housing_counseling_agency_type:
+    columns:
+    - b_housing_counseling_agency_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: housing_counseling_agency_type
+  fkt_b_housing_counseling_type:
+    columns:
+    - b_housing_counseling_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: housing_counseling_type
+  fkt_b_intend_to_occupy:
+    columns:
+    - b_intend_to_occupy
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_legal_entity_type:
+    columns:
+    - b_legal_entity_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: legal_entity_type
+  fkt_b_lender_employee:
+    columns:
+    - b_lender_employee
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_marital_status_type:
+    columns:
+    - b_marital_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: marital_status_type
+  fkt_b_note_endorser:
+    columns:
+    - b_note_endorser
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_obligated_loan_foreclosure:
+    columns:
+    - b_obligated_loan_foreclosure
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_on_gsa_list:
+    columns:
+    - b_on_gsa_list
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_on_ldp_list:
+    columns:
+    - b_on_ldp_list
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_outstanding_judgements:
+    columns:
+    - b_outstanding_judgements
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_party_to_lawsuit:
+    columns:
+    - b_party_to_lawsuit
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_power_of_attorney:
+    columns:
+    - b_power_of_attorney
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_power_of_attorney_country:
+    columns:
+    - b_power_of_attorney_country
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: country_type
+  fkt_b_presently_delinquent:
+    columns:
+    - b_presently_delinquent
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_prior_property_title_type:
+    columns:
+    - b_prior_property_title_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: prior_property_title_type
+  fkt_b_prior_property_usage_type:
+    columns:
+    - b_prior_property_usage_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: property_usage_type
+  fkt_b_property_foreclosure:
+    columns:
+    - b_property_foreclosure
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_race_collected_visual_or_surname:
+    columns:
+    - b_race_collected_visual_or_surname
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_race_refused:
+    columns:
+    - b_race_refused
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_relationship_to_primary_borrower_type:
+    columns:
+    - b_relationship_to_primary_borrower_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: borrower_relationship_type
+  fkt_b_relationship_to_seller_type:
+    columns:
+    - b_relationship_to_seller_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: borrower_relationship_type
+  fkt_b_sex_collected_visual_or_surname:
+    columns:
+    - b_sex_collected_visual_or_surname
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_sex_refused:
+    columns:
+    - b_sex_refused
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_spousal_homestead:
+    columns:
+    - b_spousal_homestead
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_b_titleholder:
+    columns:
+    - b_titleholder
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+columns:
+  b_pid:
+    data_type: BIGINT
+  b_version:
+    data_type: INTEGER
+  b_alimony_child_support:
+    data_type: VARCHAR(128)
+  b_alimony_child_support_explanation:
+    data_type: VARCHAR(128)
+  b_application_pid:
+    data_type: BIGINT
+  b_application_signed_date:
+    data_type: DATE
+  b_application_taken_method_type:
+    data_type: VARCHAR(128)
+  b_bankruptcy:
+    data_type: VARCHAR(128)
+  b_bankruptcy_explanation:
+    data_type: VARCHAR(128)
+  b_birth_date:
+    data_type: DATE
+  b_borrowed_down_payment:
+    data_type: VARCHAR(128)
+  b_borrowed_down_payment_explanation:
+    data_type: VARCHAR(128)
+  b_applicant_role_type:
+    data_type: VARCHAR(128)
+  b_required_to_sign:
+    data_type: BOOLEAN
+  b_spousal_homestead:
+    data_type: VARCHAR(128)
+  b_has_no_ssn:
+    data_type: BOOLEAN
+  b_citizenship_residency_type:
+    data_type: VARCHAR(128)
+  b_credit_request_pid:
+    data_type: BIGINT
+  b_credit_report_identifier:
+    data_type: VARCHAR(32)
+  b_credit_report_authorization:
+    data_type: BOOLEAN
+  b_has_dependents:
+    data_type: VARCHAR(128)
+  b_dependent_count:
+    data_type: INTEGER
+  b_dependents_age_years:
+    data_type: VARCHAR(32)
+  b_email:
+    data_type: VARCHAR(256)
+  b_fax:
+    data_type: VARCHAR(32)
+  b_first_name:
+    data_type: VARCHAR(32)
+  b_nickname:
+    data_type: VARCHAR(32)
+  b_first_time_homebuyer:
+    data_type: BOOLEAN
+  b_lender_employee:
+    data_type: VARCHAR(128)
+  b_lender_employee_status_confirmed:
+    data_type: BOOLEAN
+  b_sex_refused:
+    data_type: VARCHAR(128)
+  b_sex_collected_visual_or_surname:
+    data_type: VARCHAR(128)
+  b_sex_male:
+    data_type: BOOLEAN
+  b_sex_female:
+    data_type: BOOLEAN
+  b_sex_not_obtainable:
+    data_type: BOOLEAN
+  b_ethnicity_refused:
+    data_type: VARCHAR(128)
+  b_ethnicity_collected_visual_or_surname:
+    data_type: VARCHAR(128)
+  b_ethnicity_hispanic_or_latino:
+    data_type: BOOLEAN
+  b_ethnicity_mexican:
+    data_type: BOOLEAN
+  b_ethnicity_puerto_rican:
+    data_type: BOOLEAN
+  b_ethnicity_cuban:
+    data_type: BOOLEAN
+  b_ethnicity_other_hispanic_or_latino:
+    data_type: BOOLEAN
+  b_ethnicity_other_hispanic_or_latino_description:
+    data_type: VARCHAR(100)
+  b_ethnicity_not_hispanic_or_latino:
+    data_type: BOOLEAN
+  b_ethnicity_not_obtainable:
+    data_type: BOOLEAN
+  b_homeowner_past_three_years:
+    data_type: VARCHAR(128)
+  b_home_phone:
+    data_type: VARCHAR(32)
+  b_intend_to_occupy:
+    data_type: VARCHAR(128)
+  b_last_name:
+    data_type: VARCHAR(32)
+  b_mailing_place_pid:
+    data_type: BIGINT
+  b_marital_status_type:
+    data_type: VARCHAR(128)
+  b_spouse_borrower_pid:
+    data_type: BIGINT
+  b_middle_name:
+    data_type: VARCHAR(32)
+  b_mobile_phone:
+    data_type: VARCHAR(32)
+  b_name_suffix:
+    data_type: VARCHAR(32)
+  b_note_endorser:
+    data_type: VARCHAR(128)
+  b_note_endorser_explanation:
+    data_type: VARCHAR(128)
+  b_obligated_loan_foreclosure:
+    data_type: VARCHAR(128)
+  b_obligated_loan_foreclosure_explanation:
+    data_type: VARCHAR(128)
+  b_office_phone:
+    data_type: VARCHAR(32)
+  b_office_phone_extension:
+    data_type: VARCHAR(16)
+  b_other_race_national_origin_description:
+    data_type: VARCHAR(32)
+  b_outstanding_judgements:
+    data_type: VARCHAR(128)
+  b_outstanding_judgments_explanation:
+    data_type: VARCHAR(128)
+  b_party_to_lawsuit:
+    data_type: VARCHAR(128)
+  b_party_to_lawsuit_explanation:
+    data_type: VARCHAR(128)
+  b_power_of_attorney:
+    data_type: VARCHAR(128)
+  b_power_of_attorney_signing_capacity:
+    data_type: VARCHAR(1024)
+  b_power_of_attorney_first_name:
+    data_type: VARCHAR(32)
+  b_power_of_attorney_last_name:
+    data_type: VARCHAR(32)
+  b_power_of_attorney_middle_name:
+    data_type: VARCHAR(32)
+  b_power_of_attorney_name_suffix:
+    data_type: VARCHAR(32)
+  b_power_of_attorney_company_name:
+    data_type: VARCHAR(128)
+  b_power_of_attorney_title:
+    data_type: VARCHAR(128)
+  b_power_of_attorney_office_phone:
+    data_type: VARCHAR(32)
+  b_power_of_attorney_office_phone_extension:
+    data_type: VARCHAR(16)
+  b_power_of_attorney_mobile_phone:
+    data_type: VARCHAR(32)
+  b_power_of_attorney_email:
+    data_type: VARCHAR(256)
+  b_power_of_attorney_fax:
+    data_type: VARCHAR(32)
+  b_power_of_attorney_city:
+    data_type: VARCHAR(128)
+  b_power_of_attorney_country:
+    data_type: VARCHAR(128)
+  b_power_of_attorney_postal_code:
+    data_type: VARCHAR(128)
+  b_power_of_attorney_state:
+    data_type: VARCHAR(128)
+  b_power_of_attorney_street1:
+    data_type: VARCHAR(128)
+  b_power_of_attorney_street2:
+    data_type: VARCHAR(128)
+  b_presently_delinquent:
+    data_type: VARCHAR(128)
+  b_presently_delinquent_explanation:
+    data_type: VARCHAR(128)
+  b_prior_property_title_type:
+    data_type: VARCHAR(128)
+  b_prior_property_usage_type:
+    data_type: VARCHAR(128)
+  b_property_foreclosure:
+    data_type: VARCHAR(128)
+  b_property_foreclosure_explanation:
+    data_type: VARCHAR(128)
+  b_race_refused:
+    data_type: VARCHAR(128)
+  b_race_collected_visual_or_surname:
+    data_type: VARCHAR(128)
+  b_race_american_indian_or_alaska_native:
+    data_type: BOOLEAN
+  b_race_other_american_indian_or_alaska_native_description:
+    data_type: VARCHAR(100)
+  b_race_asian:
+    data_type: BOOLEAN
+  b_race_asian_indian:
+    data_type: BOOLEAN
+  b_race_chinese:
+    data_type: BOOLEAN
+  b_race_filipino:
+    data_type: BOOLEAN
+  b_race_japanese:
+    data_type: BOOLEAN
+  b_race_korean:
+    data_type: BOOLEAN
+  b_race_vietnamese:
+    data_type: BOOLEAN
+  b_race_other_asian:
+    data_type: BOOLEAN
+  b_race_other_asian_description:
+    data_type: VARCHAR(100)
+  b_race_black_or_african_american:
+    data_type: BOOLEAN
+  b_race_information_not_provided:
+    data_type: BOOLEAN
+  b_race_national_origin_refusal:
+    data_type: BOOLEAN
+  b_race_native_hawaiian_or_other_pacific_islander:
+    data_type: BOOLEAN
+  b_race_native_hawaiian:
+    data_type: BOOLEAN
+  b_race_guamanian_or_chamorro:
+    data_type: BOOLEAN
+  b_race_samoan:
+    data_type: BOOLEAN
+  b_race_other_pacific_islander:
+    data_type: BOOLEAN
+  b_race_not_obtainable:
+    data_type: BOOLEAN
+  b_race_other_pacific_islander_description:
+    data_type: VARCHAR(100)
+  b_race_not_applicable:
+    data_type: BOOLEAN
+  b_race_white:
+    data_type: BOOLEAN
+  b_schooling_years:
+    data_type: INTEGER
+  b_titleholder:
+    data_type: VARCHAR(128)
+  b_experian_credit_score:
+    data_type: INTEGER
+  b_equifax_credit_score:
+    data_type: INTEGER
+  b_trans_union_credit_score:
+    data_type: INTEGER
+  b_decision_credit_score:
+    data_type: INTEGER
+  b_borrower_tiny_id_type:
+    data_type: VARCHAR(128)
+  b_first_time_home_buyer_explain:
+    data_type: VARCHAR(1024)
+  b_first_time_home_buyer_auto_compute:
+    data_type: BOOLEAN
+  b_caivrs_id:
+    data_type: VARCHAR(16)
+  b_caivrs_messages:
+    data_type: TEXT
+  b_on_ldp_list:
+    data_type: VARCHAR(128)
+  b_on_gsa_list:
+    data_type: VARCHAR(128)
+  b_monthly_job_federal_tax_amount:
+    data_type: NUMERIC(15,2)
+  b_monthly_job_state_tax_amount:
+    data_type: NUMERIC(15,2)
+  b_monthly_job_retirement_tax_amount:
+    data_type: NUMERIC(15,2)
+  b_monthly_job_medicare_tax_amount:
+    data_type: NUMERIC(15,2)
+  b_monthly_job_state_disability_insurance_amount:
+    data_type: NUMERIC(15,2)
+  b_monthly_job_other_tax_1_amount:
+    data_type: NUMERIC(15,2)
+  b_monthly_job_other_tax_1_description:
+    data_type: VARCHAR(128)
+  b_monthly_job_other_tax_2_amount:
+    data_type: NUMERIC(15,2)
+  b_monthly_job_other_tax_2_description:
+    data_type: VARCHAR(128)
+  b_monthly_job_other_tax_3_amount:
+    data_type: NUMERIC(15,2)
+  b_monthly_job_other_tax_3_description:
+    data_type: VARCHAR(128)
+  b_monthly_job_total_tax_amount:
+    data_type: NUMERIC(15,2)
+  b_homeownership_education_type:
+    data_type: VARCHAR(128)
+  b_homeownership_education_agency_type:
+    data_type: VARCHAR(128)
+  b_homeownership_education_id:
+    data_type: VARCHAR(128)
+  b_homeownership_education_name:
+    data_type: VARCHAR(128)
+  b_homeownership_education_complete_date:
+    data_type: DATE
+  b_housing_counseling_type:
+    data_type: VARCHAR(128)
+  b_housing_counseling_agency_type:
+    data_type: VARCHAR(128)
+  b_housing_counseling_id:
+    data_type: VARCHAR(128)
+  b_housing_counseling_name:
+    data_type: VARCHAR(128)
+  b_housing_counseling_complete_date:
+    data_type: DATE
+  b_legal_entity_type:
+    data_type: VARCHAR(128)
+  b_credit_report_authorization_datetime:
+    data_type: TIMESTAMP
+  b_credit_report_authorization_method:
+    data_type: VARCHAR(128)
+  b_credit_report_authorization_obtained_by_unparsed_name:
+    data_type: VARCHAR(128)
+  b_disabled:
+    data_type: VARCHAR(128)
+  b_usda_annual_child_care_expenses:
+    data_type: NUMERIC(15,2)
+  b_usda_disability_expenses:
+    data_type: NUMERIC(15,2)
+  b_usda_medical_expenses:
+    data_type: NUMERIC(15,2)
+  b_usda_income_from_assets:
+    data_type: NUMERIC(15,2)
+  b_usda_moderate_income_limit:
+    data_type: NUMERIC(15,2)
+  b_hud_employee:
+    data_type: BOOLEAN
+  b_relationship_to_primary_borrower_type:
+    data_type: VARCHAR(128)
+  b_relationship_to_seller_type:
+    data_type: VARCHAR(128)
+  b_preferred_first_name:
+    data_type: VARCHAR(32)
+  b_domestic_relationship_state_type:
+    data_type: VARCHAR(128)
+  b_credit_report_required:
+    data_type: BOOLEAN
+  b_closing_disclosure_signer:
+    data_type: BOOLEAN
+  b_snapshotted_pid:
+    data_type: BIGINT

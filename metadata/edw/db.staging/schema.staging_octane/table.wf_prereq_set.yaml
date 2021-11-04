@@ -1,0 +1,21 @@
+name: wf_prereq_set
+primary_key:
+- wps_pid
+foreign_keys:
+  fk_wf_prereq_set_1:
+    columns:
+    - wps_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+columns:
+  wps_pid:
+    data_type: BIGINT
+  wps_version:
+    data_type: INTEGER
+  wps_account_pid:
+    data_type: BIGINT
+  wps_wf_prereq_set_name:
+    data_type: VARCHAR(256)

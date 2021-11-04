@@ -1,0 +1,201 @@
+name: lender_lock_minor
+primary_key:
+- llmn_pid
+foreign_keys:
+  fk_lender_lock_minor_1:
+    columns:
+    - llmn_lender_lock_major_pid
+    references:
+      columns:
+      - llmj_pid
+      schema: staging_octane
+      table: lender_lock_major
+  fk_lender_lock_minor_2:
+    columns:
+    - llmn_creator_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_lender_lock_minor_3:
+    columns:
+    - llmn_product_terms_pid
+    references:
+      columns:
+      - pt_pid
+      schema: staging_octane
+      table: product_terms
+  fk_lender_lock_minor_4:
+    columns:
+    - llmn_offering_pid
+    references:
+      columns:
+      - of_pid
+      schema: staging_octane
+      table: offering
+  fk_lender_lock_minor_5:
+    columns:
+    - llmn_proposal_snapshot_pid
+    references:
+      columns:
+      - prp_pid
+      schema: staging_octane
+      table: proposal
+  fkt_llmn_aus_type:
+    columns:
+    - llmn_aus_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: aus_type
+  fkt_llmn_buydown_schedule_type:
+    columns:
+    - llmn_buydown_schedule_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: buydown_schedule_type
+  fkt_llmn_creator_agent_type:
+    columns:
+    - llmn_creator_agent_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: agent_type
+  fkt_llmn_interest_only_type:
+    columns:
+    - llmn_interest_only_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: interest_only_type
+  fkt_llmn_lender_lock_status_type:
+    columns:
+    - llmn_lender_lock_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: lender_lock_status_type
+  fkt_llmn_lock_commitment_type:
+    columns:
+    - llmn_lock_commitment_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: lock_commitment_type
+  fkt_llmn_mortgage_type:
+    columns:
+    - llmn_mortgage_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: mortgage_type
+  fkt_llmn_prepay_penalty_schedule_type:
+    columns:
+    - llmn_prepay_penalty_schedule_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: prepay_penalty_schedule_type
+columns:
+  llmn_pid:
+    data_type: BIGINT
+  llmn_version:
+    data_type: INTEGER
+  llmn_lender_lock_major_pid:
+    data_type: BIGINT
+  llmn_minor_version:
+    data_type: INTEGER
+  llmn_latest_version:
+    data_type: BOOLEAN
+  llmn_lender_lock_status_type:
+    data_type: VARCHAR(128)
+  llmn_create_datetime:
+    data_type: TIMESTAMP
+  llmn_creator_agent_type:
+    data_type: VARCHAR(128)
+  llmn_creator_lender_user_pid:
+    data_type: BIGINT
+  llmn_creator_unparsed_name:
+    data_type: VARCHAR(128)
+  llmn_effective_lock_expiration_datetime:
+    data_type: TIMESTAMP
+  llmn_effective_duration_days:
+    data_type: INTEGER
+  llmn_num_extensions:
+    data_type: INTEGER
+  llmn_investor_base_note_rate_percent:
+    data_type: NUMERIC(11,9)
+  llmn_investor_base_arm_margin_percent:
+    data_type: NUMERIC(11,9)
+  llmn_investor_base_price_percent:
+    data_type: NUMERIC(11,9)
+  llmn_lock_note_rate_percent:
+    data_type: NUMERIC(11,9)
+  llmn_lock_initial_note_rate_percent:
+    data_type: NUMERIC(11,9)
+  llmn_lock_arm_margin_percent:
+    data_type: NUMERIC(11,9)
+  llmn_lock_price_percent:
+    data_type: NUMERIC(11,9)
+  llmn_lock_price_raw_percent:
+    data_type: NUMERIC(11,9)
+  llmn_maximum_rebate_percent:
+    data_type: NUMERIC(11,9)
+  llmn_maximum_investor_price_percent:
+    data_type: NUMERIC(11,9)
+  llmn_maximum_investor_price_includes_srp:
+    data_type: BOOLEAN
+  llmn_created_historic_price_delta:
+    data_type: NUMERIC(11,9)
+  llmn_profit_table_name:
+    data_type: VARCHAR(128)
+  llmn_total_profit_margin_percent:
+    data_type: NUMERIC(11,9)
+  llmn_base_note_rate_percent:
+    data_type: NUMERIC(11,9)
+  llmn_base_arm_margin_percent:
+    data_type: NUMERIC(11,9)
+  llmn_base_price_percent:
+    data_type: NUMERIC(11,9)
+  llmn_pricing_datetime:
+    data_type: TIMESTAMP
+  llmn_effective_rate_sheet_datetime:
+    data_type: TIMESTAMP
+  llmn_apor_date:
+    data_type: DATE
+  llmn_proposal_snapshot_pid:
+    data_type: BIGINT
+  llmn_loan_amount:
+    data_type: NUMERIC(17,2)
+  llmn_base_loan_amount:
+    data_type: NUMERIC(17,2)
+  llmn_lock_commitment_type:
+    data_type: VARCHAR(128)
+  llmn_offering_pid:
+    data_type: BIGINT
+  llmn_product_terms_pid:
+    data_type: BIGINT
+  llmn_mortgage_type:
+    data_type: VARCHAR(128)
+  llmn_interest_only_type:
+    data_type: VARCHAR(128)
+  llmn_buydown_schedule_type:
+    data_type: VARCHAR(128)
+  llmn_prepay_penalty_schedule_type:
+    data_type: VARCHAR(128)
+  llmn_aus_type:
+    data_type: VARCHAR(128)
+  llmn_high_balance_hit_percent:
+    data_type: NUMERIC(11,9)
+  llmn_new_york_payup_percent:
+    data_type: NUMERIC(11,9)

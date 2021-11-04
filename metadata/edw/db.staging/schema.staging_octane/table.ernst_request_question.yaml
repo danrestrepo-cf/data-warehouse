@@ -1,0 +1,27 @@
+name: ernst_request_question
+primary_key:
+- enstq_pid
+foreign_keys:
+  fk_ernst_request_question_1:
+    columns:
+    - enstq_ernst_request_pid
+    references:
+      columns:
+      - enst_pid
+      schema: staging_octane
+      table: ernst_request
+columns:
+  enstq_pid:
+    data_type: BIGINT
+  enstq_version:
+    data_type: INTEGER
+  enstq_ernst_request_pid:
+    data_type: BIGINT
+  enstq_ernst_question_id:
+    data_type: VARCHAR(8)
+  enstq_question:
+    data_type: VARCHAR(1024)
+  enstq_yes_no_answer:
+    data_type: BOOLEAN
+  enstq_answer:
+    data_type: VARCHAR(16)

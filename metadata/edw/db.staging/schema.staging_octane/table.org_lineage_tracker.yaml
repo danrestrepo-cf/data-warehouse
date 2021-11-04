@@ -1,0 +1,33 @@
+name: org_lineage_tracker
+primary_key:
+- olt_pid
+foreign_keys:
+  fk_org_lineage_tracker_1:
+    columns:
+    - olt_org_node_pid
+    references:
+      columns:
+      - on_pid
+      schema: staging_octane
+      table: org_node
+  fk_org_lineage_tracker_2:
+    columns:
+    - olt_org_lineage_pid
+    references:
+      columns:
+      - ol_pid
+      schema: staging_octane
+      table: org_lineage
+columns:
+  olt_pid:
+    data_type: BIGINT
+  olt_version:
+    data_type: INTEGER
+  olt_org_node_pid:
+    data_type: BIGINT
+  olt_org_lineage_pid:
+    data_type: BIGINT
+  olt_from_date:
+    data_type: DATE
+  olt_through_date:
+    data_type: DATE

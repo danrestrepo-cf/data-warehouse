@@ -1,0 +1,21 @@
+name: aus_request_number_ticker
+primary_key:
+- arnt_pid
+foreign_keys:
+  fk_aus_request_number_ticker_1:
+    columns:
+    - arnt_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: staging_octane
+      table: proposal
+columns:
+  arnt_pid:
+    data_type: BIGINT
+  arnt_version:
+    data_type: INTEGER
+  arnt_proposal_pid:
+    data_type: BIGINT
+  arnt_next_aus_request_number:
+    data_type: INTEGER

@@ -1,0 +1,85 @@
+name: borrower_reo
+primary_source_table: staging.staging_octane.borrower_reo
+primary_key:
+- breo_pid
+- breo_version
+foreign_keys:
+  fk_borrower_reo_1:
+    columns:
+    - breo_borrower_pid
+    references:
+      columns:
+      - b_pid
+      schema: history_octane
+      table: borrower
+  fk_borrower_reo_2:
+    columns:
+    - breo_place_pid
+    references:
+      columns:
+      - pl_pid
+      schema: history_octane
+      table: place
+columns:
+  breo_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.breo_pid
+  breo_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.breo_version
+  breo_borrower_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.breo_borrower_pid
+  breo_place_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.breo_place_pid
+  breo_ownership_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.breo_ownership_percent
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100157:
+    input_type: table
+    output_type: insert
+    json_output_field: breo_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.borrower_reo
+      SELECT staging_table.breo_pid
+           , staging_table.breo_version
+           , staging_table.breo_borrower_pid
+           , staging_table.breo_place_pid
+           , staging_table.breo_ownership_percent
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.borrower_reo staging_table
+      LEFT JOIN history_octane.borrower_reo history_table
+                ON staging_table.breo_pid = history_table.breo_pid
+                    AND staging_table.breo_version = history_table.breo_version
+      WHERE history_table.breo_pid IS NULL
+      UNION ALL
+      SELECT history_table.breo_pid
+           , history_table.breo_version + 1
+           , history_table.breo_borrower_pid
+           , history_table.breo_place_pid
+           , history_table.breo_ownership_percent
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.borrower_reo history_table
+      LEFT JOIN staging_octane.borrower_reo staging_table
+                ON staging_table.breo_pid = history_table.breo_pid
+      WHERE staging_table.breo_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.borrower_reo deleted_records
+          WHERE deleted_records.breo_pid = history_table.breo_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

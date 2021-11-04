@@ -1,0 +1,99 @@
+name: trade_audit
+primary_source_table: staging.staging_octane.trade_audit
+primary_key:
+- ta_pid
+- ta_version
+foreign_keys:
+  fk_trade_audit_1:
+    columns:
+    - ta_trade_pid
+    references:
+      columns:
+      - t_pid
+      schema: history_octane
+      table: trade
+  fk_trade_audit_2:
+    columns:
+    - ta_lender_lock_major_pid
+    references:
+      columns:
+      - llmj_pid
+      schema: history_octane
+      table: lender_lock_major
+  fkt_ta_trade_audit_type:
+    columns:
+    - ta_trade_audit_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: trade_audit_type
+columns:
+  ta_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ta_pid
+  ta_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ta_version
+  ta_trade_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ta_trade_pid
+  ta_lender_lock_major_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ta_lender_lock_major_pid
+  ta_trade_audit_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ta_trade_audit_type
+  ta_message:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.ta_message
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100186:
+    input_type: table
+    output_type: insert
+    json_output_field: ta_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.trade_audit
+      SELECT staging_table.ta_pid
+           , staging_table.ta_version
+           , staging_table.ta_trade_pid
+           , staging_table.ta_lender_lock_major_pid
+           , staging_table.ta_trade_audit_type
+           , staging_table.ta_message
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.trade_audit staging_table
+      LEFT JOIN history_octane.trade_audit history_table
+                ON staging_table.ta_pid = history_table.ta_pid
+                    AND staging_table.ta_version = history_table.ta_version
+      WHERE history_table.ta_pid IS NULL
+      UNION ALL
+      SELECT history_table.ta_pid
+           , history_table.ta_version + 1
+           , history_table.ta_trade_pid
+           , history_table.ta_lender_lock_major_pid
+           , history_table.ta_trade_audit_type
+           , history_table.ta_message
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.trade_audit history_table
+      LEFT JOIN staging_octane.trade_audit staging_table
+                ON staging_table.ta_pid = history_table.ta_pid
+      WHERE staging_table.ta_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.trade_audit deleted_records
+          WHERE deleted_records.ta_pid = history_table.ta_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

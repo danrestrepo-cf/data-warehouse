@@ -1,0 +1,127 @@
+name: role_charge_permissions
+primary_source_table: staging.staging_octane.role_charge_permissions
+primary_key:
+- rcp_pid
+- rcp_version
+foreign_keys:
+  fk_role_charge_permissions_1:
+    columns:
+    - rcp_role_pid
+    references:
+      columns:
+      - r_pid
+      schema: history_octane
+      table: role
+  fkt_rcp_charge_type:
+    columns:
+    - rcp_charge_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: charge_type
+columns:
+  rcp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rcp_pid
+  rcp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.rcp_version
+  rcp_role_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rcp_role_pid
+  rcp_charge_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.rcp_charge_type
+  rcp_basic_editable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.rcp_basic_editable
+  rcp_financed_editable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.rcp_financed_editable
+  rcp_payer_non_lender_editable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.rcp_payer_non_lender_editable
+  rcp_payer_lender_editable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.rcp_payer_lender_editable
+  rcp_payee_editable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.rcp_payee_editable
+  rcp_apr_editable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.rcp_apr_editable
+  rcp_poc_editable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.rcp_poc_editable
+  rcp_wire_editable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.rcp_wire_editable
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100049:
+    input_type: table
+    output_type: insert
+    json_output_field: rcp_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.role_charge_permissions
+      SELECT staging_table.rcp_pid
+           , staging_table.rcp_version
+           , staging_table.rcp_role_pid
+           , staging_table.rcp_charge_type
+           , staging_table.rcp_basic_editable
+           , staging_table.rcp_financed_editable
+           , staging_table.rcp_payer_non_lender_editable
+           , staging_table.rcp_payer_lender_editable
+           , staging_table.rcp_payee_editable
+           , staging_table.rcp_apr_editable
+           , staging_table.rcp_poc_editable
+           , staging_table.rcp_wire_editable
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.role_charge_permissions staging_table
+      LEFT JOIN history_octane.role_charge_permissions history_table
+                ON staging_table.rcp_pid = history_table.rcp_pid
+                    AND staging_table.rcp_version = history_table.rcp_version
+      WHERE history_table.rcp_pid IS NULL
+      UNION ALL
+      SELECT history_table.rcp_pid
+           , history_table.rcp_version + 1
+           , history_table.rcp_role_pid
+           , history_table.rcp_charge_type
+           , history_table.rcp_basic_editable
+           , history_table.rcp_financed_editable
+           , history_table.rcp_payer_non_lender_editable
+           , history_table.rcp_payer_lender_editable
+           , history_table.rcp_payee_editable
+           , history_table.rcp_apr_editable
+           , history_table.rcp_poc_editable
+           , history_table.rcp_wire_editable
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.role_charge_permissions history_table
+      LEFT JOIN staging_octane.role_charge_permissions staging_table
+                ON staging_table.rcp_pid = history_table.rcp_pid
+      WHERE staging_table.rcp_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.role_charge_permissions deleted_records
+          WHERE deleted_records.rcp_pid = history_table.rcp_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

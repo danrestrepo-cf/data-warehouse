@@ -1,0 +1,205 @@
+name: lender_user
+primary_key:
+- lu_pid
+foreign_keys:
+  fk_lender_user_1:
+    columns:
+    - lu_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fk_lender_user_2:
+    columns:
+    - lu_branch_pid
+    references:
+      columns:
+      - br_pid
+      schema: staging_octane
+      table: branch
+  fk_lender_user_3:
+    columns:
+    - lu_performer_team_pid
+    references:
+      columns:
+      - ptm_pid
+      schema: staging_octane
+      table: performer_team
+  fk_lender_user_4:
+    columns:
+    - lu_default_lead_source_pid
+    references:
+      columns:
+      - lds_pid
+      schema: staging_octane
+      table: lead_source
+  fk_lender_user_5:
+    columns:
+    - lu_mercury_client_group_pid
+    references:
+      columns:
+      - mcg_pid
+      schema: staging_octane
+      table: mercury_client_group
+  fkt_lu_challenge_question_type:
+    columns:
+    - lu_challenge_question_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: challenge_question_type
+  fkt_lu_default_credit_bureau_type:
+    columns:
+    - lu_default_credit_bureau_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: credit_bureau_type
+  fkt_lu_lender_user_status_type:
+    columns:
+    - lu_lender_user_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: lender_user_status_type
+  fkt_lu_lender_user_type:
+    columns:
+    - lu_lender_user_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: lender_user_type
+  fkt_lu_time_zone:
+    columns:
+    - lu_time_zone
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: time_zone_type
+columns:
+  lu_pid:
+    data_type: BIGINT
+  lu_version:
+    data_type: INTEGER
+  lu_branch_pid:
+    data_type: BIGINT
+  lu_account_owner:
+    data_type: BOOLEAN
+  lu_account_pid:
+    data_type: BIGINT
+  lu_create_date:
+    data_type: DATE
+  lu_first_name:
+    data_type: VARCHAR(32)
+  lu_last_name:
+    data_type: VARCHAR(32)
+  lu_middle_name:
+    data_type: VARCHAR(32)
+  lu_name_suffix:
+    data_type: VARCHAR(32)
+  lu_company_name:
+    data_type: VARCHAR(128)
+  lu_title:
+    data_type: VARCHAR(128)
+  lu_office_phone:
+    data_type: VARCHAR(32)
+  lu_office_phone_extension:
+    data_type: VARCHAR(16)
+  lu_email:
+    data_type: VARCHAR(256)
+  lu_fax:
+    data_type: VARCHAR(32)
+  lu_city:
+    data_type: VARCHAR(128)
+  lu_country:
+    data_type: VARCHAR(128)
+  lu_postal_code:
+    data_type: VARCHAR(128)
+  lu_state:
+    data_type: VARCHAR(128)
+  lu_street1:
+    data_type: VARCHAR(128)
+  lu_street2:
+    data_type: VARCHAR(128)
+  lu_office_phone_use_branch:
+    data_type: BOOLEAN
+  lu_fax_use_branch:
+    data_type: BOOLEAN
+  lu_address_use_branch:
+    data_type: BOOLEAN
+  lu_start_date:
+    data_type: DATE
+  lu_through_date:
+    data_type: DATE
+  lu_time_zone:
+    data_type: VARCHAR(128)
+  lu_unparsed_name:
+    data_type: VARCHAR(128)
+  lu_lender_user_status_type:
+    data_type: VARCHAR(128)
+  lu_username:
+    data_type: VARCHAR(32)
+  lu_nmls_loan_originator_id:
+    data_type: VARCHAR(16)
+  lu_fha_chums_id:
+    data_type: VARCHAR(16)
+  lu_va_agent_id:
+    data_type: VARCHAR(32)
+  lu_search_text:
+    data_type: VARCHAR(256)
+  lu_company_user_id:
+    data_type: VARCHAR(32)
+  lu_force_password_change:
+    data_type: BOOLEAN
+  lu_last_password_change_date:
+    data_type: TIMESTAMP
+  lu_challenge_question_type:
+    data_type: VARCHAR(128)
+  lu_allow_external_ip:
+    data_type: BOOLEAN
+  lu_total_workload_cap:
+    data_type: INTEGER
+  lu_schedule_once_booking_page_id:
+    data_type: VARCHAR(128)
+  lu_performer_team_pid:
+    data_type: BIGINT
+  lu_esign_only:
+    data_type: BOOLEAN
+  lu_work_step_start_notices_enabled:
+    data_type: BOOLEAN
+  lu_smart_app_enabled:
+    data_type: BOOLEAN
+  lu_default_lead_source_pid:
+    data_type: BIGINT
+  lu_default_credit_bureau_type:
+    data_type: VARCHAR(128)
+  lu_originator_id:
+    data_type: VARCHAR(32)
+  lu_name_qualifier:
+    data_type: VARCHAR(16)
+  lu_training_mode:
+    data_type: BOOLEAN
+  lu_about_me:
+    data_type: VARCHAR(2000)
+  lu_lender_user_type:
+    data_type: VARCHAR(128)
+  lu_hire_date:
+    data_type: DATE
+  lu_mercury_client_group_pid:
+    data_type: BIGINT
+  lu_nickname:
+    data_type: VARCHAR(32)
+  lu_preferred_first_name:
+    data_type: VARCHAR(32)
+  lu_hub_directory:
+    data_type: BOOLEAN
+  lu_email_signature_title:
+    data_type: VARCHAR(128)
+  lu_termination_date:
+    data_type: DATE

@@ -1,0 +1,205 @@
+name: borrower_income
+primary_source_table: staging.staging_octane.borrower_income
+primary_key:
+- bi_pid
+- bi_version
+foreign_keys:
+  fk_borrower_income_1:
+    columns:
+    - bi_borrower_pid
+    references:
+      columns:
+      - b_pid
+      schema: history_octane
+      table: borrower
+  fkt_bi_borrower_income_category_type:
+    columns:
+    - bi_borrower_income_category_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: borrower_income_category_type
+  fkt_bi_business_ownership_type:
+    columns:
+    - bi_business_ownership_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: business_ownership_type
+  fkt_bi_job_gap_reason_type:
+    columns:
+    - bi_job_gap_reason_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: job_gap_reason_type
+  fkt_bi_source_address_country:
+    columns:
+    - bi_source_address_country
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: country_type
+columns:
+  bi_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bi_pid
+  bi_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bi_version
+  bi_borrower_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bi_borrower_pid
+  bi_borrower_income_category_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bi_borrower_income_category_type
+  bi_job_gap_reason_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bi_job_gap_reason_type
+  bi_job_gap_reason_explanation:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.bi_job_gap_reason_explanation
+  bi_business_ownership_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bi_business_ownership_type
+  bi_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.bi_from_date
+  bi_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.bi_through_date
+  bi_current:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.bi_current
+  bi_primary:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.bi_primary
+  bi_source_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bi_source_name
+  bi_source_address_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bi_source_address_street1
+  bi_source_address_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bi_source_address_street2
+  bi_source_address_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bi_source_address_city
+  bi_source_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bi_source_address_state
+  bi_source_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bi_source_address_postal_code
+  bi_source_address_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bi_source_address_country
+  bi_source_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.bi_source_phone
+  bi_source_phone_extension:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.bi_source_phone_extension
+  bi_synthetic_unique:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.bi_synthetic_unique
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100133:
+    input_type: table
+    output_type: insert
+    json_output_field: bi_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.borrower_income
+      SELECT staging_table.bi_pid
+           , staging_table.bi_version
+           , staging_table.bi_borrower_pid
+           , staging_table.bi_borrower_income_category_type
+           , staging_table.bi_job_gap_reason_type
+           , staging_table.bi_job_gap_reason_explanation
+           , staging_table.bi_business_ownership_type
+           , staging_table.bi_from_date
+           , staging_table.bi_through_date
+           , staging_table.bi_current
+           , staging_table.bi_primary
+           , staging_table.bi_source_name
+           , staging_table.bi_source_address_street1
+           , staging_table.bi_source_address_street2
+           , staging_table.bi_source_address_city
+           , staging_table.bi_source_address_state
+           , staging_table.bi_source_address_postal_code
+           , staging_table.bi_source_address_country
+           , staging_table.bi_source_phone
+           , staging_table.bi_source_phone_extension
+           , staging_table.bi_synthetic_unique
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.borrower_income staging_table
+      LEFT JOIN history_octane.borrower_income history_table
+                ON staging_table.bi_pid = history_table.bi_pid
+                    AND staging_table.bi_version = history_table.bi_version
+      WHERE history_table.bi_pid IS NULL
+      UNION ALL
+      SELECT history_table.bi_pid
+           , history_table.bi_version + 1
+           , history_table.bi_borrower_pid
+           , history_table.bi_borrower_income_category_type
+           , history_table.bi_job_gap_reason_type
+           , history_table.bi_job_gap_reason_explanation
+           , history_table.bi_business_ownership_type
+           , history_table.bi_from_date
+           , history_table.bi_through_date
+           , history_table.bi_current
+           , history_table.bi_primary
+           , history_table.bi_source_name
+           , history_table.bi_source_address_street1
+           , history_table.bi_source_address_street2
+           , history_table.bi_source_address_city
+           , history_table.bi_source_address_state
+           , history_table.bi_source_address_postal_code
+           , history_table.bi_source_address_country
+           , history_table.bi_source_phone
+           , history_table.bi_source_phone_extension
+           , history_table.bi_synthetic_unique
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.borrower_income history_table
+      LEFT JOIN staging_octane.borrower_income staging_table
+                ON staging_table.bi_pid = history_table.bi_pid
+      WHERE staging_table.bi_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.borrower_income deleted_records
+          WHERE deleted_records.bi_pid = history_table.bi_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

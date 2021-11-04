@@ -1,0 +1,36 @@
+name: hmda_hoepa_status_type
+primary_source_table: staging.staging_octane.hmda_hoepa_status_type
+primary_key:
+- code
+columns:
+  code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.code
+  value:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.value
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100529:
+    input_type: table
+    output_type: insert
+    json_output_field: code
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.hmda_hoepa_status_type
+      SELECT staging_table.code
+           , staging_table.value
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.hmda_hoepa_status_type staging_table
+      LEFT JOIN history_octane.hmda_hoepa_status_type history_table
+                ON staging_table.code = history_table.code
+                    AND staging_table.value = history_table.value
+      WHERE history_table.code IS NULL;
+next_etls:
+- SP-200014

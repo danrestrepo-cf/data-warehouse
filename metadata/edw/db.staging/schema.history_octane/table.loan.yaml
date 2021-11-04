@@ -1,0 +1,1013 @@
+name: loan
+primary_source_table: staging.staging_octane.loan
+primary_key:
+- l_pid
+- l_version
+foreign_keys:
+  fk_loan_1:
+    columns:
+    - l_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: history_octane
+      table: proposal
+  fk_loan_2:
+    columns:
+    - l_product_terms_pid
+    references:
+      columns:
+      - pt_pid
+      schema: history_octane
+      table: product_terms
+  fk_loan_3:
+    columns:
+    - l_offering_pid
+    references:
+      columns:
+      - of_pid
+      schema: history_octane
+      table: offering
+  fk_loan_4:
+    columns:
+    - l_mi_integration_vendor_request_pid
+    references:
+      columns:
+      - mivr_pid
+      schema: history_octane
+      table: mi_integration_vendor_request
+  fkt_l_aus_type:
+    columns:
+    - l_aus_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: aus_type
+  fkt_l_buydown_contributor_type:
+    columns:
+    - l_buydown_contributor_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: buydown_contributor_type
+  fkt_l_buydown_schedule_type:
+    columns:
+    - l_buydown_schedule_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: buydown_schedule_type
+  fkt_l_fha_program_code_type:
+    columns:
+    - l_fha_program_code_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: fha_program_code_type
+  fkt_l_hmda_hoepa_status_type:
+    columns:
+    - l_hmda_hoepa_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: hmda_hoepa_status_type
+  fkt_l_hmda_purchaser_of_loan_2018_type:
+    columns:
+    - l_hmda_purchaser_of_loan_2018_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: hmda_purchaser_of_loan_2018_type
+  fkt_l_hmda_purchaser_of_loan_type:
+    columns:
+    - l_hmda_purchaser_of_loan_2017_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: hmda_purchaser_of_loan_2017_type
+  fkt_l_interest_only_type:
+    columns:
+    - l_interest_only_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: interest_only_type
+  fkt_l_lien_priority_type:
+    columns:
+    - l_lien_priority_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: lien_priority_type
+  fkt_l_lock_commitment_type:
+    columns:
+    - l_lock_commitment_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: lock_commitment_type
+  fkt_l_lqa_purchase_eligibility_type:
+    columns:
+    - l_lqa_purchase_eligibility_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: lqa_purchase_eligibility_type
+  fkt_l_mi_company_name_type:
+    columns:
+    - l_mi_company_name_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mi_company_name_type
+  fkt_l_mi_initial_calculated_rate_type:
+    columns:
+    - l_mi_initial_calculated_rate_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mi_calculated_rate_type
+  fkt_l_mi_initial_calculation_type:
+    columns:
+    - l_mi_initial_calculation_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mi_initial_calculation_type
+  fkt_l_mi_input_type:
+    columns:
+    - l_mi_input_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mi_input_type
+  fkt_l_mi_payer_type:
+    columns:
+    - l_mi_payer_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mi_payer_type
+  fkt_l_mi_payment_type:
+    columns:
+    - l_mi_payment_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mi_payment_type
+  fkt_l_mi_premium_refundable_type:
+    columns:
+    - l_mi_premium_refundable_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mi_premium_refundable_type
+  fkt_l_mi_renewal_calculated_rate_type:
+    columns:
+    - l_mi_renewal_calculated_rate_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mi_calculated_rate_type
+  fkt_l_mi_renewal_calculation_type:
+    columns:
+    - l_mi_renewal_calculation_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mi_renewal_calculation_type
+  fkt_l_mortgage_type:
+    columns:
+    - l_mortgage_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mortgage_type
+  fkt_l_prepay_penalty_schedule_type:
+    columns:
+    - l_prepay_penalty_schedule_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: prepay_penalty_schedule_type
+  fkt_l_qualified_mortgage_rule_version_type:
+    columns:
+    - l_qualified_mortgage_rule_version_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: qualified_mortgage_rule_version_type
+  fkt_l_qualified_mortgage_status_type:
+    columns:
+    - l_qualified_mortgage_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: qualified_mortgage_status_type
+  fkt_l_qualifying_rate_type:
+    columns:
+    - l_qualifying_rate_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: qualifying_rate_type
+  fkt_l_texas_equity:
+    columns:
+    - l_texas_equity
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_l_texas_equity_auto:
+    columns:
+    - l_texas_equity_auto
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_na_type
+columns:
+  l_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.l_pid
+  l_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.l_version
+  l_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.l_proposal_pid
+  l_offering_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.l_offering_pid
+  l_product_terms_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.l_product_terms_pid
+  l_mortgage_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_mortgage_type
+  l_interest_only_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_interest_only_type
+  l_buydown_schedule_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_buydown_schedule_type
+  l_prepay_penalty_schedule_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_prepay_penalty_schedule_type
+  l_aus_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_aus_type
+  l_arm_index_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.l_arm_index_datetime
+  l_arm_index_current_value_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_arm_index_current_value_percent
+  l_arm_margin_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_arm_margin_percent
+  l_base_loan_amount:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.l_base_loan_amount
+  l_buydown_contributor_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_buydown_contributor_type
+  l_target_cash_out_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.l_target_cash_out_amount
+  l_heloc_maximum_balance_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.l_heloc_maximum_balance_amount
+  l_note_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_note_rate_percent
+  l_initial_note_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_initial_note_rate_percent
+  l_lien_priority_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_lien_priority_type
+  l_loan_amount:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.l_loan_amount
+  l_financed_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.l_financed_amount
+  l_ltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_ltv_ratio_percent
+  l_mi_requirement_ltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_mi_requirement_ltv_ratio_percent
+  l_mi_auto_compute:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.l_mi_auto_compute
+  l_mi_no_mi_product:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.l_mi_no_mi_product
+  l_mi_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_mi_input_type
+  l_mi_company_name_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_mi_company_name_type
+  l_mi_certificate_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.l_mi_certificate_id
+  l_mi_premium_refundable_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_mi_premium_refundable_type
+  l_mi_initial_calculation_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_mi_initial_calculation_type
+  l_mi_renewal_calculation_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_mi_renewal_calculation_type
+  l_mi_payer_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_mi_payer_type
+  l_mi_coverage_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_mi_coverage_percent
+  l_mi_ltv_cutoff_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_mi_ltv_cutoff_percent
+  l_mi_midpoint_cutoff_required:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.l_mi_midpoint_cutoff_required
+  l_mi_required_monthly_payment_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.l_mi_required_monthly_payment_count
+  l_mi_actual_monthly_payment_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.l_mi_actual_monthly_payment_count
+  l_mi_payment_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_mi_payment_type
+  l_mi_upfront_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.l_mi_upfront_amount
+  l_mi_upfront_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_mi_upfront_percent
+  l_mi_initial_monthly_payment_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.l_mi_initial_monthly_payment_amount
+  l_mi_renewal_monthly_payment_annual_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_mi_renewal_monthly_payment_annual_percent
+  l_mi_renewal_monthly_payment_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.l_mi_renewal_monthly_payment_amount
+  l_mi_initial_duration_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.l_mi_initial_duration_months
+  l_mi_initial_monthly_payment_annual_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_mi_initial_monthly_payment_annual_percent
+  l_mi_initial_calculated_rate_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_mi_initial_calculated_rate_type
+  l_mi_renewal_calculated_rate_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_mi_renewal_calculated_rate_type
+  l_mi_base_rate_label:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.l_mi_base_rate_label
+  l_mi_base_monthly_payment_annual_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_mi_base_monthly_payment_annual_percent
+  l_mi_base_upfront_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_mi_base_upfront_percent
+  l_mi_base_monthly_payment_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.l_mi_base_monthly_payment_amount
+  l_mi_base_upfront_payment_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.l_mi_base_upfront_payment_amount
+  l_qualifying_rate_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_qualifying_rate_type
+  l_qualifying_rate_input_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_qualifying_rate_input_percent
+  l_qualifying_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_qualifying_rate_percent
+  l_fha_program_code_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_fha_program_code_type
+  l_fha_principal_write_down:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.l_fha_principal_write_down
+  l_fhac_case_assignment_messages:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.l_fhac_case_assignment_messages
+  l_initial_pi_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.l_initial_pi_amount
+  l_qualifying_pi_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.l_qualifying_pi_amount
+  l_base_note_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_base_note_rate_percent
+  l_base_arm_margin_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_base_arm_margin_percent
+  l_base_price_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_base_price_percent
+  l_lock_price_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_lock_price_percent
+  l_lock_duration_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.l_lock_duration_days
+  l_lock_commitment_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_lock_commitment_type
+  l_product_choice_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.l_product_choice_datetime
+  l_hmda_purchaser_of_loan_2017_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_hmda_purchaser_of_loan_2017_type
+  l_hmda_purchaser_of_loan_2018_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_hmda_purchaser_of_loan_2018_type
+  l_texas_equity:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_texas_equity
+  l_texas_equity_auto:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_texas_equity_auto
+  l_fnm_mbs_investor_contract_id:
+    data_type: VARCHAR(6)
+    source:
+      field: primary_source_table.columns.l_fnm_mbs_investor_contract_id
+  l_base_guaranty_fee_basis_points:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.l_base_guaranty_fee_basis_points
+  l_guaranty_fee_basis_points:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.l_guaranty_fee_basis_points
+  l_guaranty_fee_after_alternate_payment_method_basis_points:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.l_guaranty_fee_after_alternate_payment_method_basis_points
+  l_fnm_investor_product_plan_id:
+    data_type: VARCHAR(5)
+    source:
+      field: primary_source_table.columns.l_fnm_investor_product_plan_id
+  l_uldd_loan_comment:
+    data_type: VARCHAR(60)
+    source:
+      field: primary_source_table.columns.l_uldd_loan_comment
+  l_principal_curtailment_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.l_principal_curtailment_amount
+  l_mi_lender_paid_rate_adjustment_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_mi_lender_paid_rate_adjustment_percent
+  l_apr:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_apr
+  l_finance_charge_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.l_finance_charge_amount
+  l_apor_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_apor_percent
+  l_apor_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.l_apor_date
+  l_hmda_rate_spread_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_hmda_rate_spread_percent
+  l_hoepa_apr:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_hoepa_apr
+  l_hoepa_rate_spread:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_hoepa_rate_spread
+  l_hoepa_fees_dollar_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.l_hoepa_fees_dollar_amount
+  l_hmda_hoepa_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_hmda_hoepa_status_type
+  l_rate_sheet_undiscounted_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_rate_sheet_undiscounted_rate_percent
+  l_effective_undiscounted_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_effective_undiscounted_rate_percent
+  l_last_unprocessed_changes_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.l_last_unprocessed_changes_datetime
+  l_locked_price_change_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_locked_price_change_percent
+  l_interest_rate_fee_change_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.l_interest_rate_fee_change_amount
+  l_lender_concession_candidate:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.l_lender_concession_candidate
+  l_durp_eligibility_opt_out:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.l_durp_eligibility_opt_out
+  l_qualified_mortgage_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_qualified_mortgage_status_type
+  l_qualified_mortgage:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.l_qualified_mortgage
+  l_lqa_purchase_eligibility_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_lqa_purchase_eligibility_type
+  l_student_loan_cash_out_refinance:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.l_student_loan_cash_out_refinance
+  l_mi_rate_quote_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_mi_rate_quote_id
+  l_mi_integration_vendor_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.l_mi_integration_vendor_request_pid
+  l_secondary_clear_to_commit:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.l_secondary_clear_to_commit
+  l_qm_eligible:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.l_qm_eligible
+  l_fha_endorsement_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.l_fha_endorsement_date
+  l_va_guaranty_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.l_va_guaranty_date
+  l_usda_guarantee_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.l_usda_guarantee_date
+  l_hpml:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.l_hpml
+  l_qualified_mortgage_rule_version_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_qualified_mortgage_rule_version_type
+  l_qualified_mortgage_apr:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_qualified_mortgage_apr
+  l_qualified_mortgage_max_allowed_rate_spread:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.l_qualified_mortgage_max_allowed_rate_spread
+  l_buyup_buydown_basis_points:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.l_buyup_buydown_basis_points
+  l_va_agency_case_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.l_va_agency_case_id
+  l_fha_agency_case_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.l_fha_agency_case_id
+  l_usda_agency_case_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.l_usda_agency_case_id
+  l_va_agency_case_id_assigned_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.l_va_agency_case_id_assigned_date
+  l_fha_agency_case_id_assigned_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.l_fha_agency_case_id_assigned_date
+  l_usda_agency_case_id_assigned_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.l_usda_agency_case_id_assigned_date
+  l_post_interest_only_first_payment_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.l_post_interest_only_first_payment_date
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  l_agency_case_id:
+    data_type: VARCHAR(32)
+  l_base_loan_amount_ltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+  l_agency_case_id_assigned_date:
+    data_type: DATE
+etls:
+  SP-100320:
+    input_type: table
+    output_type: insert
+    json_output_field: l_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.loan
+      SELECT staging_table.l_pid
+           , staging_table.l_version
+           , staging_table.l_proposal_pid
+           , staging_table.l_offering_pid
+           , staging_table.l_product_terms_pid
+           , staging_table.l_mortgage_type
+           , staging_table.l_interest_only_type
+           , staging_table.l_buydown_schedule_type
+           , staging_table.l_prepay_penalty_schedule_type
+           , staging_table.l_aus_type
+           , staging_table.l_arm_index_datetime
+           , staging_table.l_arm_index_current_value_percent
+           , staging_table.l_arm_margin_percent
+           , staging_table.l_base_loan_amount
+           , staging_table.l_buydown_contributor_type
+           , staging_table.l_target_cash_out_amount
+           , staging_table.l_heloc_maximum_balance_amount
+           , staging_table.l_note_rate_percent
+           , staging_table.l_initial_note_rate_percent
+           , staging_table.l_lien_priority_type
+           , staging_table.l_loan_amount
+           , staging_table.l_financed_amount
+           , staging_table.l_ltv_ratio_percent
+           , staging_table.l_mi_requirement_ltv_ratio_percent
+           , staging_table.l_mi_auto_compute
+           , staging_table.l_mi_no_mi_product
+           , staging_table.l_mi_input_type
+           , staging_table.l_mi_company_name_type
+           , staging_table.l_mi_certificate_id
+           , staging_table.l_mi_premium_refundable_type
+           , staging_table.l_mi_initial_calculation_type
+           , staging_table.l_mi_renewal_calculation_type
+           , staging_table.l_mi_payer_type
+           , staging_table.l_mi_coverage_percent
+           , staging_table.l_mi_ltv_cutoff_percent
+           , staging_table.l_mi_midpoint_cutoff_required
+           , staging_table.l_mi_required_monthly_payment_count
+           , staging_table.l_mi_actual_monthly_payment_count
+           , staging_table.l_mi_payment_type
+           , staging_table.l_mi_upfront_amount
+           , staging_table.l_mi_upfront_percent
+           , staging_table.l_mi_initial_monthly_payment_amount
+           , staging_table.l_mi_renewal_monthly_payment_annual_percent
+           , staging_table.l_mi_renewal_monthly_payment_amount
+           , staging_table.l_mi_initial_duration_months
+           , staging_table.l_mi_initial_monthly_payment_annual_percent
+           , staging_table.l_mi_initial_calculated_rate_type
+           , staging_table.l_mi_renewal_calculated_rate_type
+           , staging_table.l_mi_base_rate_label
+           , staging_table.l_mi_base_monthly_payment_annual_percent
+           , staging_table.l_mi_base_upfront_percent
+           , staging_table.l_mi_base_monthly_payment_amount
+           , staging_table.l_mi_base_upfront_payment_amount
+           , staging_table.l_qualifying_rate_type
+           , staging_table.l_qualifying_rate_input_percent
+           , staging_table.l_qualifying_rate_percent
+           , staging_table.l_fha_program_code_type
+           , staging_table.l_fha_principal_write_down
+           , staging_table.l_fhac_case_assignment_messages
+           , staging_table.l_initial_pi_amount
+           , staging_table.l_qualifying_pi_amount
+           , staging_table.l_base_note_rate_percent
+           , staging_table.l_base_arm_margin_percent
+           , staging_table.l_base_price_percent
+           , staging_table.l_lock_price_percent
+           , staging_table.l_lock_duration_days
+           , staging_table.l_lock_commitment_type
+           , staging_table.l_product_choice_datetime
+           , staging_table.l_hmda_purchaser_of_loan_2017_type
+           , staging_table.l_hmda_purchaser_of_loan_2018_type
+           , staging_table.l_texas_equity
+           , staging_table.l_texas_equity_auto
+           , staging_table.l_fnm_mbs_investor_contract_id
+           , staging_table.l_base_guaranty_fee_basis_points
+           , staging_table.l_guaranty_fee_basis_points
+           , staging_table.l_guaranty_fee_after_alternate_payment_method_basis_points
+           , staging_table.l_fnm_investor_product_plan_id
+           , staging_table.l_uldd_loan_comment
+           , staging_table.l_principal_curtailment_amount
+           , staging_table.l_mi_lender_paid_rate_adjustment_percent
+           , staging_table.l_apr
+           , staging_table.l_finance_charge_amount
+           , staging_table.l_apor_percent
+           , staging_table.l_apor_date
+           , staging_table.l_hmda_rate_spread_percent
+           , staging_table.l_hoepa_apr
+           , staging_table.l_hoepa_rate_spread
+           , staging_table.l_hoepa_fees_dollar_amount
+           , staging_table.l_hmda_hoepa_status_type
+           , staging_table.l_rate_sheet_undiscounted_rate_percent
+           , staging_table.l_effective_undiscounted_rate_percent
+           , staging_table.l_last_unprocessed_changes_datetime
+           , staging_table.l_locked_price_change_percent
+           , staging_table.l_interest_rate_fee_change_amount
+           , staging_table.l_lender_concession_candidate
+           , staging_table.l_durp_eligibility_opt_out
+           , staging_table.l_qualified_mortgage_status_type
+           , staging_table.l_qualified_mortgage
+           , staging_table.l_lqa_purchase_eligibility_type
+           , staging_table.l_student_loan_cash_out_refinance
+           , staging_table.l_mi_rate_quote_id
+           , staging_table.l_mi_integration_vendor_request_pid
+           , staging_table.l_secondary_clear_to_commit
+           , staging_table.l_qm_eligible
+           , staging_table.l_fha_endorsement_date
+           , staging_table.l_va_guaranty_date
+           , staging_table.l_usda_guarantee_date
+           , staging_table.l_hpml
+           , staging_table.l_qualified_mortgage_rule_version_type
+           , staging_table.l_qualified_mortgage_apr
+           , staging_table.l_qualified_mortgage_max_allowed_rate_spread
+           , staging_table.l_buyup_buydown_basis_points
+           , staging_table.l_va_agency_case_id
+           , staging_table.l_fha_agency_case_id
+           , staging_table.l_usda_agency_case_id
+           , staging_table.l_va_agency_case_id_assigned_date
+           , staging_table.l_fha_agency_case_id_assigned_date
+           , staging_table.l_usda_agency_case_id_assigned_date
+           , staging_table.l_post_interest_only_first_payment_date
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.loan staging_table
+      LEFT JOIN history_octane.loan history_table
+                ON staging_table.l_pid = history_table.l_pid
+                    AND staging_table.l_version = history_table.l_version
+      WHERE history_table.l_pid IS NULL
+      UNION ALL
+      SELECT history_table.l_pid
+           , history_table.l_version + 1
+           , history_table.l_proposal_pid
+           , history_table.l_offering_pid
+           , history_table.l_product_terms_pid
+           , history_table.l_mortgage_type
+           , history_table.l_interest_only_type
+           , history_table.l_buydown_schedule_type
+           , history_table.l_prepay_penalty_schedule_type
+           , history_table.l_aus_type
+           , history_table.l_arm_index_datetime
+           , history_table.l_arm_index_current_value_percent
+           , history_table.l_arm_margin_percent
+           , history_table.l_base_loan_amount
+           , history_table.l_buydown_contributor_type
+           , history_table.l_target_cash_out_amount
+           , history_table.l_heloc_maximum_balance_amount
+           , history_table.l_note_rate_percent
+           , history_table.l_initial_note_rate_percent
+           , history_table.l_lien_priority_type
+           , history_table.l_loan_amount
+           , history_table.l_financed_amount
+           , history_table.l_ltv_ratio_percent
+           , history_table.l_mi_requirement_ltv_ratio_percent
+           , history_table.l_mi_auto_compute
+           , history_table.l_mi_no_mi_product
+           , history_table.l_mi_input_type
+           , history_table.l_mi_company_name_type
+           , history_table.l_mi_certificate_id
+           , history_table.l_mi_premium_refundable_type
+           , history_table.l_mi_initial_calculation_type
+           , history_table.l_mi_renewal_calculation_type
+           , history_table.l_mi_payer_type
+           , history_table.l_mi_coverage_percent
+           , history_table.l_mi_ltv_cutoff_percent
+           , history_table.l_mi_midpoint_cutoff_required
+           , history_table.l_mi_required_monthly_payment_count
+           , history_table.l_mi_actual_monthly_payment_count
+           , history_table.l_mi_payment_type
+           , history_table.l_mi_upfront_amount
+           , history_table.l_mi_upfront_percent
+           , history_table.l_mi_initial_monthly_payment_amount
+           , history_table.l_mi_renewal_monthly_payment_annual_percent
+           , history_table.l_mi_renewal_monthly_payment_amount
+           , history_table.l_mi_initial_duration_months
+           , history_table.l_mi_initial_monthly_payment_annual_percent
+           , history_table.l_mi_initial_calculated_rate_type
+           , history_table.l_mi_renewal_calculated_rate_type
+           , history_table.l_mi_base_rate_label
+           , history_table.l_mi_base_monthly_payment_annual_percent
+           , history_table.l_mi_base_upfront_percent
+           , history_table.l_mi_base_monthly_payment_amount
+           , history_table.l_mi_base_upfront_payment_amount
+           , history_table.l_qualifying_rate_type
+           , history_table.l_qualifying_rate_input_percent
+           , history_table.l_qualifying_rate_percent
+           , history_table.l_fha_program_code_type
+           , history_table.l_fha_principal_write_down
+           , history_table.l_fhac_case_assignment_messages
+           , history_table.l_initial_pi_amount
+           , history_table.l_qualifying_pi_amount
+           , history_table.l_base_note_rate_percent
+           , history_table.l_base_arm_margin_percent
+           , history_table.l_base_price_percent
+           , history_table.l_lock_price_percent
+           , history_table.l_lock_duration_days
+           , history_table.l_lock_commitment_type
+           , history_table.l_product_choice_datetime
+           , history_table.l_hmda_purchaser_of_loan_2017_type
+           , history_table.l_hmda_purchaser_of_loan_2018_type
+           , history_table.l_texas_equity
+           , history_table.l_texas_equity_auto
+           , history_table.l_fnm_mbs_investor_contract_id
+           , history_table.l_base_guaranty_fee_basis_points
+           , history_table.l_guaranty_fee_basis_points
+           , history_table.l_guaranty_fee_after_alternate_payment_method_basis_points
+           , history_table.l_fnm_investor_product_plan_id
+           , history_table.l_uldd_loan_comment
+           , history_table.l_principal_curtailment_amount
+           , history_table.l_mi_lender_paid_rate_adjustment_percent
+           , history_table.l_apr
+           , history_table.l_finance_charge_amount
+           , history_table.l_apor_percent
+           , history_table.l_apor_date
+           , history_table.l_hmda_rate_spread_percent
+           , history_table.l_hoepa_apr
+           , history_table.l_hoepa_rate_spread
+           , history_table.l_hoepa_fees_dollar_amount
+           , history_table.l_hmda_hoepa_status_type
+           , history_table.l_rate_sheet_undiscounted_rate_percent
+           , history_table.l_effective_undiscounted_rate_percent
+           , history_table.l_last_unprocessed_changes_datetime
+           , history_table.l_locked_price_change_percent
+           , history_table.l_interest_rate_fee_change_amount
+           , history_table.l_lender_concession_candidate
+           , history_table.l_durp_eligibility_opt_out
+           , history_table.l_qualified_mortgage_status_type
+           , history_table.l_qualified_mortgage
+           , history_table.l_lqa_purchase_eligibility_type
+           , history_table.l_student_loan_cash_out_refinance
+           , history_table.l_mi_rate_quote_id
+           , history_table.l_mi_integration_vendor_request_pid
+           , history_table.l_secondary_clear_to_commit
+           , history_table.l_qm_eligible
+           , history_table.l_fha_endorsement_date
+           , history_table.l_va_guaranty_date
+           , history_table.l_usda_guarantee_date
+           , history_table.l_hpml
+           , history_table.l_qualified_mortgage_rule_version_type
+           , history_table.l_qualified_mortgage_apr
+           , history_table.l_qualified_mortgage_max_allowed_rate_spread
+           , history_table.l_buyup_buydown_basis_points
+           , history_table.l_va_agency_case_id
+           , history_table.l_fha_agency_case_id
+           , history_table.l_usda_agency_case_id
+           , history_table.l_va_agency_case_id_assigned_date
+           , history_table.l_fha_agency_case_id_assigned_date
+           , history_table.l_usda_agency_case_id_assigned_date
+           , history_table.l_post_interest_only_first_payment_date
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.loan history_table
+      LEFT JOIN staging_octane.loan staging_table
+                ON staging_table.l_pid = history_table.l_pid
+      WHERE staging_table.l_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.loan deleted_records
+          WHERE deleted_records.l_pid = history_table.l_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );
+next_etls:
+- SP-300002
+- SP-200016
+- SP-200015
+- SP-200014
+- SP-200012

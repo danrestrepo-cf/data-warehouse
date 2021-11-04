@@ -1,0 +1,65 @@
+name: lender_user_role
+primary_key:
+- lur_pid
+foreign_keys:
+  fk_lender_user_role_1:
+    columns:
+    - lur_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_lender_user_role_2:
+    columns:
+    - lur_role_pid
+    references:
+      columns:
+      - r_pid
+      schema: staging_octane
+      table: role
+  fk_lender_user_role_3:
+    columns:
+    - lur_criteria_pid
+    references:
+      columns:
+      - cr_pid
+      schema: staging_octane
+      table: criteria
+  fkt_lur_queue_type:
+    columns:
+    - lur_queue_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: lender_user_role_queue_type
+columns:
+  lur_pid:
+    data_type: BIGINT
+  lur_version:
+    data_type: INTEGER
+  lur_lender_user_pid:
+    data_type: BIGINT
+  lur_role_pid:
+    data_type: BIGINT
+  lur_criteria_pid:
+    data_type: BIGINT
+  lur_workload_cap:
+    data_type: INTEGER
+  lur_daily_cap:
+    data_type: INTEGER
+  lur_assignment_gap_minutes:
+    data_type: INTEGER
+  lur_secondary_role:
+    data_type: BOOLEAN
+  lur_subscribe_smart_messages:
+    data_type: BOOLEAN
+  lur_for_training_only:
+    data_type: BOOLEAN
+  lur_notes:
+    data_type: VARCHAR(16000)
+  lur_queue_type:
+    data_type: VARCHAR(128)
+  lur_queue_datetime:
+    data_type: TIMESTAMP

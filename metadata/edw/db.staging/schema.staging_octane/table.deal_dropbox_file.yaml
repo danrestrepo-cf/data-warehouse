@@ -1,0 +1,19 @@
+name: deal_dropbox_file
+primary_key:
+- ddf_pid
+foreign_keys:
+  fk_deal_dropbox_file_1:
+    columns:
+    - ddf_deal_file_pid
+    references:
+      columns:
+      - df_pid
+      schema: staging_octane
+      table: deal_file
+columns:
+  ddf_pid:
+    data_type: BIGINT
+  ddf_version:
+    data_type: INTEGER
+  ddf_deal_file_pid:
+    data_type: BIGINT

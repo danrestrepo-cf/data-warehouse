@@ -1,0 +1,47 @@
+name: borrower_residence
+primary_key:
+- bres_pid
+foreign_keys:
+  fk_borrower_residence_1:
+    columns:
+    - bres_borrower_pid
+    references:
+      columns:
+      - b_pid
+      schema: staging_octane
+      table: borrower
+  fk_borrower_residence_2:
+    columns:
+    - bres_place_pid
+    references:
+      columns:
+      - pl_pid
+      schema: staging_octane
+      table: place
+  fkt_bres_borrower_residency_basis_type:
+    columns:
+    - bres_borrower_residency_basis_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: borrower_residency_basis_type
+columns:
+  bres_pid:
+    data_type: BIGINT
+  bres_version:
+    data_type: INTEGER
+  bres_borrower_pid:
+    data_type: BIGINT
+  bres_place_pid:
+    data_type: BIGINT
+  bres_current:
+    data_type: BOOLEAN
+  bres_borrower_residency_basis_type:
+    data_type: VARCHAR(128)
+  bres_from_date:
+    data_type: DATE
+  bres_through_date:
+    data_type: DATE
+  bres_verification_required:
+    data_type: BOOLEAN

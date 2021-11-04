@@ -1,0 +1,157 @@
+name: ledger_book
+primary_source_table: staging.staging_octane.ledger_book
+primary_key:
+- lbk_pid
+- lbk_version
+foreign_keys:
+  fk_ledger_book_1:
+    columns:
+    - lbk_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+  fk_ledger_book_2:
+    columns:
+    - lbk_closed_by_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+  fk_ledger_book_3:
+    columns:
+    - lbk_processed_by_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+  fkt_lbk_ledger_book_status_type:
+    columns:
+    - lbk_ledger_book_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: ledger_book_status_type
+  fkt_lbk_ledger_book_type:
+    columns:
+    - lbk_ledger_book_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: ledger_book_type
+columns:
+  lbk_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lbk_pid
+  lbk_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lbk_version
+  lbk_ledger_book_id:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.lbk_ledger_book_id
+  lbk_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lbk_account_pid
+  lbk_ledger_book_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lbk_ledger_book_type
+  lbk_period_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lbk_period_from_date
+  lbk_period_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lbk_period_through_date
+  lbk_payroll_pay_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lbk_payroll_pay_date
+  lbk_ledger_book_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lbk_ledger_book_status_type
+  lbk_closed_by_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lbk_closed_by_lender_user_pid
+  lbk_closed_by_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lbk_closed_by_unparsed_name
+  lbk_processed_by_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lbk_processed_by_lender_user_pid
+  lbk_processed_by_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lbk_processed_by_unparsed_name
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100207:
+    input_type: table
+    output_type: insert
+    json_output_field: lbk_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.ledger_book
+      SELECT staging_table.lbk_pid
+           , staging_table.lbk_version
+           , staging_table.lbk_ledger_book_id
+           , staging_table.lbk_account_pid
+           , staging_table.lbk_ledger_book_type
+           , staging_table.lbk_period_from_date
+           , staging_table.lbk_period_through_date
+           , staging_table.lbk_payroll_pay_date
+           , staging_table.lbk_ledger_book_status_type
+           , staging_table.lbk_closed_by_lender_user_pid
+           , staging_table.lbk_closed_by_unparsed_name
+           , staging_table.lbk_processed_by_lender_user_pid
+           , staging_table.lbk_processed_by_unparsed_name
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.ledger_book staging_table
+      LEFT JOIN history_octane.ledger_book history_table
+                ON staging_table.lbk_pid = history_table.lbk_pid
+                    AND staging_table.lbk_version = history_table.lbk_version
+      WHERE history_table.lbk_pid IS NULL
+      UNION ALL
+      SELECT history_table.lbk_pid
+           , history_table.lbk_version + 1
+           , history_table.lbk_ledger_book_id
+           , history_table.lbk_account_pid
+           , history_table.lbk_ledger_book_type
+           , history_table.lbk_period_from_date
+           , history_table.lbk_period_through_date
+           , history_table.lbk_payroll_pay_date
+           , history_table.lbk_ledger_book_status_type
+           , history_table.lbk_closed_by_lender_user_pid
+           , history_table.lbk_closed_by_unparsed_name
+           , history_table.lbk_processed_by_lender_user_pid
+           , history_table.lbk_processed_by_unparsed_name
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.ledger_book history_table
+      LEFT JOIN staging_octane.ledger_book staging_table
+                ON staging_table.lbk_pid = history_table.lbk_pid
+      WHERE staging_table.lbk_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.ledger_book deleted_records
+          WHERE deleted_records.lbk_pid = history_table.lbk_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

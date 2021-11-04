@@ -1,0 +1,121 @@
+name: deal_snapshot
+primary_key:
+- desn_pid
+foreign_keys:
+  fk_deal_snapshot_1:
+    columns:
+    - desn_snapshot_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: staging_octane
+      table: proposal
+  fkt_desn_decision_appraisal_condition_type:
+    columns:
+    - desn_decision_appraisal_condition_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: appraisal_condition_type
+  fkt_desn_lender_lock_status_type_main:
+    columns:
+    - desn_lender_lock_status_type_main
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: lender_lock_status_type
+  fkt_desn_lender_lock_status_type_piggyback:
+    columns:
+    - desn_lender_lock_status_type_piggyback
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: lender_lock_status_type
+columns:
+  desn_pid:
+    data_type: BIGINT
+  desn_version:
+    data_type: INTEGER
+  desn_snapshot_proposal_pid:
+    data_type: BIGINT
+  desn_decision_appraisal_condition_type:
+    data_type: VARCHAR(128)
+  desn_lender_lock_effective_expiration_datetime_main:
+    data_type: TIMESTAMP
+  desn_lender_lock_effective_expiration_datetime_piggyback:
+    data_type: TIMESTAMP
+  desn_lender_lock_status_type_main:
+    data_type: VARCHAR(128)
+  desn_lender_lock_status_type_piggyback:
+    data_type: VARCHAR(128)
+  desn_lender_lock_id_main:
+    data_type: VARCHAR(11)
+  desn_lender_lock_id_piggyback:
+    data_type: VARCHAR(11)
+  desn_preferred_vendor_used:
+    data_type: BOOLEAN
+  desn_lender_lock_start_datetime_main:
+    data_type: TIMESTAMP
+  desn_lender_lock_start_datetime_piggyback:
+    data_type: TIMESTAMP
+  desn_lender_lock_effective_duration_days_main:
+    data_type: INTEGER
+  desn_lender_lock_effective_duration_days_piggyback:
+    data_type: INTEGER
+  desn_lead_source_name:
+    data_type: VARCHAR(128)
+  desn_appraisal_rush_request:
+    data_type: BOOLEAN
+  desn_appraisal_transfer_specified:
+    data_type: BOOLEAN
+  desn_borrower_requires_appraisal:
+    data_type: BOOLEAN
+  desn_lender_requires_appraisal:
+    data_type: BOOLEAN
+  desn_product_requires_appraisal:
+    data_type: BOOLEAN
+  desn_override_calculated_appraisal_required:
+    data_type: BOOLEAN
+  desn_decision_appraisal_appraised_value_amount:
+    data_type: NUMERIC(15,0)
+  desn_appraisal_required:
+    data_type: BOOLEAN
+  desn_lender_concession_total_approved_amount_main:
+    data_type: NUMERIC(15,2)
+  desn_lender_concession_total_approved_amount_piggyback:
+    data_type: NUMERIC(15,2)
+  desn_relock_fee_gross_amount_main:
+    data_type: NUMERIC(15,2)
+  desn_relock_fee_gross_amount_piggyback:
+    data_type: NUMERIC(15,2)
+  desn_relock_fee_amount_less_concessions_main:
+    data_type: NUMERIC(15,2)
+  desn_relock_fee_amount_less_concessions_piggyback:
+    data_type: NUMERIC(15,2)
+  desn_relock_fee_amount_concessed_main:
+    data_type: NUMERIC(15,2)
+  desn_relock_fee_amount_concessed_piggyback:
+    data_type: NUMERIC(15,2)
+  desn_lock_extension_fee_gross_amount_main:
+    data_type: NUMERIC(15,2)
+  desn_lock_extension_fee_gross_amount_piggyback:
+    data_type: NUMERIC(15,2)
+  desn_lock_extension_fee_amount_less_concessions_main:
+    data_type: NUMERIC(15,2)
+  desn_lock_extension_fee_amount_less_concessions_piggyback:
+    data_type: NUMERIC(15,2)
+  desn_lock_extension_fee_amount_concessed_main:
+    data_type: NUMERIC(15,2)
+  desn_lock_extension_fee_amount_concessed_piggyback:
+    data_type: NUMERIC(15,2)
+  desn_lender_concession_remaining_amount_main:
+    data_type: NUMERIC(15,2)
+  desn_lender_concession_remaining_amount_piggyback:
+    data_type: NUMERIC(15,2)
+  desn_charge_credit_for_interest_rate_main:
+    data_type: NUMERIC(15,2)
+  desn_charge_credit_for_interest_rate_piggyback:
+    data_type: NUMERIC(15,2)

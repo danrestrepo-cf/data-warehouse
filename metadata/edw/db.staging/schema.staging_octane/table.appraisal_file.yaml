@@ -1,0 +1,39 @@
+name: appraisal_file
+primary_key:
+- aprf_pid
+foreign_keys:
+  fk_appraisal_file_1:
+    columns:
+    - aprf_appraisal_pid
+    references:
+      columns:
+      - apr_pid
+      schema: staging_octane
+      table: appraisal
+  fk_appraisal_file_2:
+    columns:
+    - aprf_deal_file_pid
+    references:
+      columns:
+      - df_pid
+      schema: staging_octane
+      table: deal_file
+  fkt_aprf_appraisal_file_type:
+    columns:
+    - aprf_appraisal_file_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: appraisal_file_type
+columns:
+  aprf_pid:
+    data_type: BIGINT
+  aprf_version:
+    data_type: INTEGER
+  aprf_appraisal_pid:
+    data_type: BIGINT
+  aprf_deal_file_pid:
+    data_type: BIGINT
+  aprf_appraisal_file_type:
+    data_type: VARCHAR(128)

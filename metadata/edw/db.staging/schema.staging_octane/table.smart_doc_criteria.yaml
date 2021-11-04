@@ -1,0 +1,39 @@
+name: smart_doc_criteria
+primary_key:
+- sdc_pid
+foreign_keys:
+  fk_smart_doc_criteria_1:
+    columns:
+    - sdc_smart_doc_pid
+    references:
+      columns:
+      - sd_pid
+      schema: staging_octane
+      table: smart_doc
+  fk_smart_doc_criteria_2:
+    columns:
+    - sdc_criteria_pid
+    references:
+      columns:
+      - cr_pid
+      schema: staging_octane
+      table: criteria
+  fkt_sdc_deal_child_type:
+    columns:
+    - sdc_deal_child_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: deal_child_type
+columns:
+  sdc_pid:
+    data_type: BIGINT
+  sdc_version:
+    data_type: INTEGER
+  sdc_smart_doc_pid:
+    data_type: BIGINT
+  sdc_criteria_pid:
+    data_type: BIGINT
+  sdc_deal_child_type:
+    data_type: VARCHAR(128)

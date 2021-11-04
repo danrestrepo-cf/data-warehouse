@@ -1,0 +1,47 @@
+name: wf_deal_outcome
+primary_key:
+- wdo_pid
+foreign_keys:
+  fk_wf_deal_outcome_1:
+    columns:
+    - wdo_wf_deal_step_pid
+    references:
+      columns:
+      - wds_pid
+      schema: staging_octane
+      table: wf_deal_step
+  fk_wf_deal_outcome_2:
+    columns:
+    - wdo_transition_wf_deal_step_pid
+    references:
+      columns:
+      - wds_pid
+      schema: staging_octane
+      table: wf_deal_step
+  fkt_wdo_wf_outcome_type:
+    columns:
+    - wdo_wf_outcome_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: wf_outcome_type
+columns:
+  wdo_pid:
+    data_type: BIGINT
+  wdo_version:
+    data_type: INTEGER
+  wdo_wf_deal_step_pid:
+    data_type: BIGINT
+  wdo_wf_outcome_type:
+    data_type: VARCHAR(128)
+  wdo_outcome_name:
+    data_type: VARCHAR(128)
+  wdo_borrower_message:
+    data_type: VARCHAR(1024)
+  wdo_lender_description:
+    data_type: VARCHAR(256)
+  wdo_incomplete_outcome:
+    data_type: BOOLEAN
+  wdo_transition_wf_deal_step_pid:
+    data_type: BIGINT

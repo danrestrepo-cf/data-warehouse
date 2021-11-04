@@ -1,0 +1,35 @@
+name: ledger_entry_review_note_comment
+primary_key:
+- lerc_pid
+foreign_keys:
+  fk_ledger_entry_review_note_comment_1:
+    columns:
+    - lerc_ledger_entry_review_note_pid
+    references:
+      columns:
+      - lern_pid
+      schema: staging_octane
+      table: ledger_entry_review_note
+  fk_ledger_entry_review_note_comment_2:
+    columns:
+    - lerc_author_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+columns:
+  lerc_pid:
+    data_type: BIGINT
+  lerc_version:
+    data_type: INTEGER
+  lerc_ledger_entry_review_note_pid:
+    data_type: BIGINT
+  lerc_create_datetime:
+    data_type: TIMESTAMP
+  lerc_content:
+    data_type: VARCHAR(16000)
+  lerc_author_lender_user_pid:
+    data_type: BIGINT
+  lerc_author_unparsed_name:
+    data_type: VARCHAR(128)

@@ -1,0 +1,125 @@
+name: liability
+primary_key:
+- lia_pid
+foreign_keys:
+  fk_liability_new_11:
+    columns:
+    - lia_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: staging_octane
+      table: proposal
+  fk_liability_new_12:
+    columns:
+    - lia_credit_request_liability_pid
+    references:
+      columns:
+      - crl_pid
+      schema: staging_octane
+      table: credit_request_liability
+  fkt_lia_bankruptcy_exception_type:
+    columns:
+    - lia_bankruptcy_exception_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: bankruptcy_exception_type
+  fkt_lia_country:
+    columns:
+    - lia_country
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: country_type
+  fkt_lia_energy_related_type:
+    columns:
+    - lia_energy_related_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: liability_energy_related_type
+  fkt_lia_liability_disposition_type:
+    columns:
+    - lia_liability_disposition_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: liability_disposition_type
+  fkt_lia_liability_type:
+    columns:
+    - lia_liability_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: liability_type
+columns:
+  lia_pid:
+    data_type: BIGINT
+  lia_version:
+    data_type: INTEGER
+  lia_proposal_pid:
+    data_type: BIGINT
+  lia_aggregate_description:
+    data_type: VARCHAR(128)
+  lia_credit_request_liability_pid:
+    data_type: BIGINT
+  lia_description:
+    data_type: VARCHAR(128)
+  lia_city:
+    data_type: VARCHAR(128)
+  lia_country:
+    data_type: VARCHAR(128)
+  lia_postal_code:
+    data_type: VARCHAR(128)
+  lia_state:
+    data_type: VARCHAR(128)
+  lia_street1:
+    data_type: VARCHAR(128)
+  lia_street2:
+    data_type: VARCHAR(128)
+  lia_holder_name:
+    data_type: VARCHAR(128)
+  lia_holder_phone:
+    data_type: VARCHAR(32)
+  lia_holder_phone_extension:
+    data_type: VARCHAR(16)
+  lia_holder_fax:
+    data_type: VARCHAR(32)
+  lia_holder_email:
+    data_type: VARCHAR(256)
+  lia_account_opened_date:
+    data_type: DATE
+  lia_liability_disposition_type:
+    data_type: VARCHAR(128)
+  lia_liability_type:
+    data_type: VARCHAR(128)
+  lia_monthly_payment_amount:
+    data_type: NUMERIC(15,2)
+  lia_remaining_term_months:
+    data_type: INTEGER
+  lia_high_balance_amount:
+    data_type: NUMERIC(15,2)
+  lia_credit_limit_amount:
+    data_type: NUMERIC(15,0)
+  lia_past_due_amount:
+    data_type: NUMERIC(15,2)
+  lia_unpaid_balance_amount:
+    data_type: NUMERIC(15,2)
+  lia_report_value_overridden:
+    data_type: BOOLEAN
+  lia_bankruptcy_exception_type:
+    data_type: VARCHAR(128)
+  lia_note:
+    data_type: VARCHAR(1024)
+  lia_terms_months_count:
+    data_type: INTEGER
+  lia_payoff_amount:
+    data_type: NUMERIC(15,2)
+  lia_energy_related_type:
+    data_type: VARCHAR(128)

@@ -1,0 +1,35 @@
+name: location_note_comment
+primary_key:
+- locnc_pid
+foreign_keys:
+  fk_location_note_comment_1:
+    columns:
+    - locnc_location_note_pid
+    references:
+      columns:
+      - locn_pid
+      schema: staging_octane
+      table: location_note
+  fk_location_note_comment_2:
+    columns:
+    - locnc_author_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+columns:
+  locnc_pid:
+    data_type: BIGINT
+  locnc_version:
+    data_type: INTEGER
+  locnc_location_note_pid:
+    data_type: BIGINT
+  locnc_create_datetime:
+    data_type: TIMESTAMP
+  locnc_content:
+    data_type: VARCHAR(16000)
+  locnc_author_lender_user_pid:
+    data_type: BIGINT
+  locnc_author_unparsed_name:
+    data_type: VARCHAR(128)

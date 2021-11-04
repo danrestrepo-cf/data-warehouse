@@ -1,0 +1,33 @@
+name: bid_pool
+primary_key:
+- bp_pid
+foreign_keys:
+  fk_bid_pool_1:
+    columns:
+    - bp_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fkt_bp_bid_pool_status_type:
+    columns:
+    - bp_bid_pool_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: bid_pool_status_type
+columns:
+  bp_pid:
+    data_type: BIGINT
+  bp_version:
+    data_type: INTEGER
+  bp_account_pid:
+    data_type: BIGINT
+  bp_bid_pool_name:
+    data_type: VARCHAR(32)
+  bp_bid_pool_status_type:
+    data_type: VARCHAR(128)
+  bp_create_datetime:
+    data_type: DATE

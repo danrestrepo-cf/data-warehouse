@@ -1,0 +1,231 @@
+name: application
+primary_source_table: staging.staging_octane.application
+primary_key:
+- apl_pid
+- apl_version
+foreign_keys:
+  fk_application_1:
+    columns:
+    - apl_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: history_octane
+      table: proposal
+  fkt_apl_address_country:
+    columns:
+    - apl_address_country
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: country_type
+  fkt_apl_fha_borrower_certification_more_than_four_dwellings:
+    columns:
+    - apl_fha_borrower_certification_more_than_four_dwellings
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_apl_fha_borrower_certification_own_other_property:
+    columns:
+    - apl_fha_borrower_certification_own_other_property
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_apl_fha_borrower_certification_property_to_be_sold:
+    columns:
+    - apl_fha_borrower_certification_property_to_be_sold
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_apl_fha_borrower_certification_rental:
+    columns:
+    - apl_fha_borrower_certification_rental
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_apl_fha_va_bor_cert_sales_price_exceeds_type:
+    columns:
+    - apl_fha_va_bor_cert_sales_price_exceeds_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: fha_va_bor_cert_sales_price_exceeds_type
+  fkt_apl_va_borrower_certification_occupancy_type:
+    columns:
+    - apl_va_borrower_certification_occupancy_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: va_borrower_certification_occupancy_type
+columns:
+  apl_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.apl_pid
+  apl_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apl_version
+  apl_application_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apl_application_name
+  apl_primary_application:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.apl_primary_application
+  apl_urla:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.apl_urla
+  apl_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.apl_proposal_pid
+  apl_fha_borrower_certification_own_other_property:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apl_fha_borrower_certification_own_other_property
+  apl_fha_borrower_certification_property_to_be_sold:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apl_fha_borrower_certification_property_to_be_sold
+  apl_fha_borrower_certification_sales_price_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.apl_fha_borrower_certification_sales_price_amount
+  apl_fha_borrower_certification_mortgage_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.apl_fha_borrower_certification_mortgage_amount
+  apl_address_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apl_address_street1
+  apl_address_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apl_address_street2
+  apl_address_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apl_address_city
+  apl_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apl_address_state
+  apl_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apl_address_postal_code
+  apl_address_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apl_address_country
+  apl_fha_borrower_certification_rental:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apl_fha_borrower_certification_rental
+  apl_fha_borrower_certification_rental_explain:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.apl_fha_borrower_certification_rental_explain
+  apl_fha_borrower_certification_more_than_four_dwellings:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apl_fha_borrower_certification_more_than_four_dwellings
+  apl_va_borrower_certification_occupancy_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apl_va_borrower_certification_occupancy_type
+  apl_fha_va_bor_cert_sales_price_exceeds_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apl_fha_va_bor_cert_sales_price_exceeds_type
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100265:
+    input_type: table
+    output_type: insert
+    json_output_field: apl_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.application
+      SELECT staging_table.apl_pid
+           , staging_table.apl_version
+           , staging_table.apl_application_name
+           , staging_table.apl_primary_application
+           , staging_table.apl_urla
+           , staging_table.apl_proposal_pid
+           , staging_table.apl_fha_borrower_certification_own_other_property
+           , staging_table.apl_fha_borrower_certification_property_to_be_sold
+           , staging_table.apl_fha_borrower_certification_sales_price_amount
+           , staging_table.apl_fha_borrower_certification_mortgage_amount
+           , staging_table.apl_address_street1
+           , staging_table.apl_address_street2
+           , staging_table.apl_address_city
+           , staging_table.apl_address_state
+           , staging_table.apl_address_postal_code
+           , staging_table.apl_address_country
+           , staging_table.apl_fha_borrower_certification_rental
+           , staging_table.apl_fha_borrower_certification_rental_explain
+           , staging_table.apl_fha_borrower_certification_more_than_four_dwellings
+           , staging_table.apl_va_borrower_certification_occupancy_type
+           , staging_table.apl_fha_va_bor_cert_sales_price_exceeds_type
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.application staging_table
+      LEFT JOIN history_octane.application history_table
+                ON staging_table.apl_pid = history_table.apl_pid
+                    AND staging_table.apl_version = history_table.apl_version
+      WHERE history_table.apl_pid IS NULL
+      UNION ALL
+      SELECT history_table.apl_pid
+           , history_table.apl_version + 1
+           , history_table.apl_application_name
+           , history_table.apl_primary_application
+           , history_table.apl_urla
+           , history_table.apl_proposal_pid
+           , history_table.apl_fha_borrower_certification_own_other_property
+           , history_table.apl_fha_borrower_certification_property_to_be_sold
+           , history_table.apl_fha_borrower_certification_sales_price_amount
+           , history_table.apl_fha_borrower_certification_mortgage_amount
+           , history_table.apl_address_street1
+           , history_table.apl_address_street2
+           , history_table.apl_address_city
+           , history_table.apl_address_state
+           , history_table.apl_address_postal_code
+           , history_table.apl_address_country
+           , history_table.apl_fha_borrower_certification_rental
+           , history_table.apl_fha_borrower_certification_rental_explain
+           , history_table.apl_fha_borrower_certification_more_than_four_dwellings
+           , history_table.apl_va_borrower_certification_occupancy_type
+           , history_table.apl_fha_va_bor_cert_sales_price_exceeds_type
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.application history_table
+      LEFT JOIN staging_octane.application staging_table
+                ON staging_table.apl_pid = history_table.apl_pid
+      WHERE staging_table.apl_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.application deleted_records
+          WHERE deleted_records.apl_pid = history_table.apl_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );
+next_etls:
+- SP-200003

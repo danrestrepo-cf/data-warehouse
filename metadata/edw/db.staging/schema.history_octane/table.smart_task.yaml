@@ -1,0 +1,103 @@
+name: smart_task
+primary_source_table: staging.staging_octane.smart_task
+primary_key:
+- st_pid
+- st_version
+foreign_keys:
+  fk_smart_task_1:
+    columns:
+    - st_wf_step_pid
+    references:
+      columns:
+      - ws_pid
+      schema: history_octane
+      table: wf_step
+  fk_smart_task_2:
+    columns:
+    - st_criteria_pid
+    references:
+      columns:
+      - cr_pid
+      schema: history_octane
+      table: criteria
+columns:
+  st_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.st_pid
+  st_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.st_version
+  st_wf_step_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.st_wf_step_pid
+  st_description:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.st_description
+  st_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.st_from_date
+  st_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.st_through_date
+  st_wf_step_order:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.st_wf_step_order
+  st_criteria_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.st_criteria_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100192:
+    input_type: table
+    output_type: insert
+    json_output_field: st_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.smart_task
+      SELECT staging_table.st_pid
+           , staging_table.st_version
+           , staging_table.st_wf_step_pid
+           , staging_table.st_description
+           , staging_table.st_from_date
+           , staging_table.st_through_date
+           , staging_table.st_wf_step_order
+           , staging_table.st_criteria_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.smart_task staging_table
+      LEFT JOIN history_octane.smart_task history_table
+                ON staging_table.st_pid = history_table.st_pid
+                    AND staging_table.st_version = history_table.st_version
+      WHERE history_table.st_pid IS NULL
+      UNION ALL
+      SELECT history_table.st_pid
+           , history_table.st_version + 1
+           , history_table.st_wf_step_pid
+           , history_table.st_description
+           , history_table.st_from_date
+           , history_table.st_through_date
+           , history_table.st_wf_step_order
+           , history_table.st_criteria_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.smart_task history_table
+      LEFT JOIN staging_octane.smart_task staging_table
+                ON staging_table.st_pid = history_table.st_pid
+      WHERE staging_table.st_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.smart_task deleted_records
+          WHERE deleted_records.st_pid = history_table.st_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

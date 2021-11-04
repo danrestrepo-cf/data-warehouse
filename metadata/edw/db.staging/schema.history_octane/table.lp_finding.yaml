@@ -1,0 +1,99 @@
+name: lp_finding
+primary_source_table: staging.staging_octane.lp_finding
+primary_key:
+- lpf_pid
+- lpf_version
+foreign_keys:
+  fk_lp_finding_1:
+    columns:
+    - lpf_lp_request_pid
+    references:
+      columns:
+      - lpr_pid
+      schema: history_octane
+      table: lp_request
+  fkt_lpf_finding_yes_no_unknown_type:
+    columns:
+    - lpf_finding_yes_no_unknown_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_lpf_lp_finding_message_type:
+    columns:
+    - lpf_lp_finding_message_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: lp_finding_message_type
+columns:
+  lpf_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lpf_pid
+  lpf_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lpf_version
+  lpf_lp_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lpf_lp_request_pid
+  lpf_lp_finding_message_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lpf_lp_finding_message_type
+  lpf_finding_yes_no_unknown_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lpf_finding_yes_no_unknown_type
+  lpf_finding_value:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lpf_finding_value
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100310:
+    input_type: table
+    output_type: insert
+    json_output_field: lpf_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.lp_finding
+      SELECT staging_table.lpf_pid
+           , staging_table.lpf_version
+           , staging_table.lpf_lp_request_pid
+           , staging_table.lpf_lp_finding_message_type
+           , staging_table.lpf_finding_yes_no_unknown_type
+           , staging_table.lpf_finding_value
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.lp_finding staging_table
+      LEFT JOIN history_octane.lp_finding history_table
+                ON staging_table.lpf_pid = history_table.lpf_pid
+                    AND staging_table.lpf_version = history_table.lpf_version
+      WHERE history_table.lpf_pid IS NULL
+      UNION ALL
+      SELECT history_table.lpf_pid
+           , history_table.lpf_version + 1
+           , history_table.lpf_lp_request_pid
+           , history_table.lpf_lp_finding_message_type
+           , history_table.lpf_finding_yes_no_unknown_type
+           , history_table.lpf_finding_value
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.lp_finding history_table
+      LEFT JOIN staging_octane.lp_finding staging_table
+                ON staging_table.lpf_pid = history_table.lpf_pid
+      WHERE staging_table.lpf_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.lp_finding deleted_records
+          WHERE deleted_records.lpf_pid = history_table.lpf_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

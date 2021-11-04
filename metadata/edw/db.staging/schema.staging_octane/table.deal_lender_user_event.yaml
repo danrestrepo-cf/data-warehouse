@@ -1,0 +1,27 @@
+name: deal_lender_user_event
+primary_key:
+- dlue_pid
+foreign_keys:
+  fk_deal_lender_user_event_1:
+    columns:
+    - dlue_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: staging_octane
+      table: deal
+columns:
+  dlue_pid:
+    data_type: BIGINT
+  dlue_version:
+    data_type: INTEGER
+  dlue_deal_pid:
+    data_type: BIGINT
+  dlue_subject_lender_user_pid:
+    data_type: BIGINT
+  dlue_role_pid:
+    data_type: BIGINT
+  dlue_create_datetime:
+    data_type: TIMESTAMP
+  dlue_unparsed_text:
+    data_type: VARCHAR(1024)

@@ -1,0 +1,33 @@
+name: smart_mi_eligibility_case
+primary_key:
+- smec_pid
+foreign_keys:
+  fk_smart_mi_eligibility_case_1:
+    columns:
+    - smec_smart_mi_pid
+    references:
+      columns:
+      - sm_pid
+      schema: staging_octane
+      table: smart_mi
+  fk_smart_mi_eligibility_case_2:
+    columns:
+    - smec_criteria_pid
+    references:
+      columns:
+      - cr_pid
+      schema: staging_octane
+      table: criteria
+columns:
+  smec_pid:
+    data_type: BIGINT
+  smec_version:
+    data_type: INTEGER
+  smec_smart_mi_pid:
+    data_type: BIGINT
+  smec_criteria_pid:
+    data_type: BIGINT
+  smec_from_date:
+    data_type: DATE
+  smec_through_date:
+    data_type: DATE

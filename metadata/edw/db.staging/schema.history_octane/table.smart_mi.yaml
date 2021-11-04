@@ -1,0 +1,79 @@
+name: smart_mi
+primary_source_table: staging.staging_octane.smart_mi
+primary_key:
+- sm_pid
+- sm_version
+foreign_keys:
+  fk_smart_mi_1:
+    columns:
+    - sm_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+  fkt_sm_mi_company_name_type:
+    columns:
+    - sm_mi_company_name_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mi_company_name_type
+columns:
+  sm_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sm_pid
+  sm_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sm_version
+  sm_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sm_account_pid
+  sm_mi_company_name_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sm_mi_company_name_type
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100055:
+    input_type: table
+    output_type: insert
+    json_output_field: sm_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.smart_mi
+      SELECT staging_table.sm_pid
+           , staging_table.sm_version
+           , staging_table.sm_account_pid
+           , staging_table.sm_mi_company_name_type
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.smart_mi staging_table
+      LEFT JOIN history_octane.smart_mi history_table
+                ON staging_table.sm_pid = history_table.sm_pid
+                    AND staging_table.sm_version = history_table.sm_version
+      WHERE history_table.sm_pid IS NULL
+      UNION ALL
+      SELECT history_table.sm_pid
+           , history_table.sm_version + 1
+           , history_table.sm_account_pid
+           , history_table.sm_mi_company_name_type
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.smart_mi history_table
+      LEFT JOIN staging_octane.smart_mi staging_table
+                ON staging_table.sm_pid = history_table.sm_pid
+      WHERE staging_table.sm_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.smart_mi deleted_records
+          WHERE deleted_records.sm_pid = history_table.sm_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

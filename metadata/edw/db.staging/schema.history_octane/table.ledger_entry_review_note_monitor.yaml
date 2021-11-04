@@ -1,0 +1,79 @@
+name: ledger_entry_review_note_monitor
+primary_source_table: staging.staging_octane.ledger_entry_review_note_monitor
+primary_key:
+- lerm_pid
+- lerm_version
+foreign_keys:
+  fk_ledger_entry_review_note_monitor_1:
+    columns:
+    - lerm_ledger_entry_review_note_pid
+    references:
+      columns:
+      - lern_pid
+      schema: history_octane
+      table: ledger_entry_review_note
+  fk_ledger_entry_review_note_monitor_2:
+    columns:
+    - lerm_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+columns:
+  lerm_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lerm_pid
+  lerm_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lerm_version
+  lerm_ledger_entry_review_note_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lerm_ledger_entry_review_note_pid
+  lerm_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lerm_lender_user_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100376:
+    input_type: table
+    output_type: insert
+    json_output_field: lerm_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.ledger_entry_review_note_monitor
+      SELECT staging_table.lerm_pid
+           , staging_table.lerm_version
+           , staging_table.lerm_ledger_entry_review_note_pid
+           , staging_table.lerm_lender_user_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.ledger_entry_review_note_monitor staging_table
+      LEFT JOIN history_octane.ledger_entry_review_note_monitor history_table
+                ON staging_table.lerm_pid = history_table.lerm_pid
+                    AND staging_table.lerm_version = history_table.lerm_version
+      WHERE history_table.lerm_pid IS NULL
+      UNION ALL
+      SELECT history_table.lerm_pid
+           , history_table.lerm_version + 1
+           , history_table.lerm_ledger_entry_review_note_pid
+           , history_table.lerm_lender_user_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.ledger_entry_review_note_monitor history_table
+      LEFT JOIN staging_octane.ledger_entry_review_note_monitor staging_table
+                ON staging_table.lerm_pid = history_table.lerm_pid
+      WHERE staging_table.lerm_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.ledger_entry_review_note_monitor deleted_records
+          WHERE deleted_records.lerm_pid = history_table.lerm_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

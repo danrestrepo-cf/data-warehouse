@@ -1,0 +1,75 @@
+name: deal_real_estate_agent
+primary_key:
+- drea_pid
+foreign_keys:
+  fk_deal_real_estate_agent_1:
+    columns:
+    - drea_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: staging_octane
+      table: deal
+  fkt_drea_agency_type:
+    columns:
+    - drea_agency_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: agency_type
+  fkt_drea_country:
+    columns:
+    - drea_country
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: country_type
+columns:
+  drea_pid:
+    data_type: BIGINT
+  drea_version:
+    data_type: INTEGER
+  drea_deal_pid:
+    data_type: BIGINT
+  drea_first_name:
+    data_type: VARCHAR(32)
+  drea_middle_name:
+    data_type: VARCHAR(32)
+  drea_last_name:
+    data_type: VARCHAR(32)
+  drea_name_suffix:
+    data_type: VARCHAR(32)
+  drea_company_name:
+    data_type: VARCHAR(128)
+  drea_title:
+    data_type: VARCHAR(128)
+  drea_office_phone:
+    data_type: VARCHAR(32)
+  drea_office_phone_extension:
+    data_type: VARCHAR(16)
+  drea_mobile_phone:
+    data_type: VARCHAR(32)
+  drea_email:
+    data_type: VARCHAR(256)
+  drea_fax:
+    data_type: VARCHAR(32)
+  drea_street_1:
+    data_type: VARCHAR(128)
+  drea_street_2:
+    data_type: VARCHAR(128)
+  drea_city:
+    data_type: VARCHAR(128)
+  drea_state:
+    data_type: VARCHAR(128)
+  drea_country:
+    data_type: VARCHAR(128)
+  drea_postal_code:
+    data_type: VARCHAR(128)
+  drea_license_id:
+    data_type: VARCHAR(128)
+  drea_company_license_id:
+    data_type: VARCHAR(128)
+  drea_agency_type:
+    data_type: VARCHAR(128)

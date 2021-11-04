@@ -1,0 +1,119 @@
+name: liability_mortgage_payoff
+primary_key:
+- lmp_pid
+foreign_keys:
+  fk_liability_mortgage_payoff_1:
+    columns:
+    - lmp_liability_pid
+    references:
+      columns:
+      - lia_pid
+      schema: staging_octane
+      table: liability
+  fkt_lmp_heloc_advance_last_12_months_over_thousand:
+    columns:
+    - lmp_heloc_advance_last_12_months_over_thousand
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_lmp_include_within_cema:
+    columns:
+    - lmp_include_within_cema
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_lmp_interest_only:
+    columns:
+    - lmp_interest_only
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_lmp_loan_amortization_type:
+    columns:
+    - lmp_loan_amortization_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: loan_amortization_type
+  fkt_lmp_net_escrow:
+    columns:
+    - lmp_net_escrow
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_lmp_used_to_acquire_property:
+    columns:
+    - lmp_used_to_acquire_property
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+columns:
+  lmp_pid:
+    data_type: BIGINT
+  lmp_version:
+    data_type: INTEGER
+  lmp_liability_pid:
+    data_type: BIGINT
+  lmp_interest_rate_on_statement:
+    data_type: BOOLEAN
+  lmp_interest_rate_percent:
+    data_type: NUMERIC(11,9)
+  lmp_loan_amortization_type:
+    data_type: VARCHAR(128)
+  lmp_interest_only:
+    data_type: VARCHAR(128)
+  lmp_agency_case_id:
+    data_type: VARCHAR(32)
+  lmp_payoff_statement_date:
+    data_type: DATE
+  lmp_payoff_statement_good_through_date:
+    data_type: DATE
+  lmp_next_payment_due_date:
+    data_type: DATE
+  lmp_payoff_statement_interest:
+    data_type: NUMERIC(17,2)
+  lmp_daily_interest_amount:
+    data_type: NUMERIC(17,2)
+  lmp_monthly_interest_amount:
+    data_type: NUMERIC(17,2)
+  lmp_payoff_interest_pad_days:
+    data_type: INTEGER
+  lmp_effective_payoff_date:
+    data_type: DATE
+  lmp_effective_payoff_date_adjustment_amount:
+    data_type: NUMERIC(17,2)
+  lmp_effective_payoff_date_adjustment_days:
+    data_type: INTEGER
+  lmp_other_payoff_related_charges_amount:
+    data_type: NUMERIC(17,2)
+  lmp_unpaid_late_charges_amount:
+    data_type: NUMERIC(15,2)
+  lmp_mortgage_payoff_amount_estimated:
+    data_type: BOOLEAN
+  lmp_mip_due_amount:
+    data_type: NUMERIC(17,2)
+  lmp_used_to_acquire_property:
+    data_type: VARCHAR(128)
+  lmp_heloc_advance_last_12_months_over_thousand:
+    data_type: VARCHAR(128)
+  lmp_net_escrow:
+    data_type: VARCHAR(128)
+  lmp_current_escrow_balance_amount:
+    data_type: NUMERIC(17,2)
+  lmp_first_payment_date:
+    data_type: DATE
+  lmp_closing_date:
+    data_type: DATE
+  lmp_include_within_cema:
+    data_type: VARCHAR(128)

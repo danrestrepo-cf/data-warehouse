@@ -1,0 +1,37 @@
+name: credit_limit
+primary_key:
+- cl_pid
+foreign_keys:
+  fk_credit_limit_1:
+    columns:
+    - cl_interim_funder_pid
+    references:
+      columns:
+      - if_pid
+      schema: staging_octane
+      table: interim_funder
+  fkt_cl_credit_limit_type:
+    columns:
+    - cl_credit_limit_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: credit_limit_type
+columns:
+  cl_pid:
+    data_type: BIGINT
+  cl_version:
+    data_type: INTEGER
+  cl_interim_funder_pid:
+    data_type: BIGINT
+  cl_credit_limit_name:
+    data_type: VARCHAR(128)
+  cl_credit_limit_amount:
+    data_type: NUMERIC(15,2)
+  cl_credit_limit_type:
+    data_type: VARCHAR(128)
+  cl_from_date:
+    data_type: DATE
+  cl_through_date:
+    data_type: DATE

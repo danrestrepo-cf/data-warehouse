@@ -1,0 +1,41 @@
+name: du_finding
+primary_key:
+- duf_pid
+foreign_keys:
+  fk_du_finding_1:
+    columns:
+    - duf_du_request_pid
+    references:
+      columns:
+      - dur_pid
+      schema: staging_octane
+      table: du_request
+  fkt_duf_du_finding_message_type:
+    columns:
+    - duf_du_finding_message_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: du_finding_message_type
+  fkt_duf_finding_result:
+    columns:
+    - duf_finding_result
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+columns:
+  duf_pid:
+    data_type: BIGINT
+  duf_version:
+    data_type: INTEGER
+  duf_du_request_pid:
+    data_type: BIGINT
+  duf_du_finding_message_type:
+    data_type: VARCHAR(128)
+  duf_finding_result:
+    data_type: VARCHAR(128)
+  duf_finding_value:
+    data_type: VARCHAR(128)

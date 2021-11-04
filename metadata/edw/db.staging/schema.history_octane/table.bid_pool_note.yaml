@@ -1,0 +1,97 @@
+name: bid_pool_note
+primary_source_table: staging.staging_octane.bid_pool_note
+primary_key:
+- bpn_pid
+- bpn_version
+foreign_keys:
+  fk_bid_pool_note_1:
+    columns:
+    - bpn_bid_pool_pid
+    references:
+      columns:
+      - bp_pid
+      schema: history_octane
+      table: bid_pool
+  fk_bid_pool_note_2:
+    columns:
+    - bpn_author_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+columns:
+  bpn_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bpn_pid
+  bpn_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bpn_version
+  bpn_bid_pool_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bpn_bid_pool_pid
+  bpn_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.bpn_create_datetime
+  bpn_content:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.bpn_content
+  bpn_author_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bpn_author_lender_user_pid
+  bpn_author_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bpn_author_unparsed_name
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100273:
+    input_type: table
+    output_type: insert
+    json_output_field: bpn_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.bid_pool_note
+      SELECT staging_table.bpn_pid
+           , staging_table.bpn_version
+           , staging_table.bpn_bid_pool_pid
+           , staging_table.bpn_create_datetime
+           , staging_table.bpn_content
+           , staging_table.bpn_author_lender_user_pid
+           , staging_table.bpn_author_unparsed_name
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.bid_pool_note staging_table
+      LEFT JOIN history_octane.bid_pool_note history_table
+                ON staging_table.bpn_pid = history_table.bpn_pid
+                    AND staging_table.bpn_version = history_table.bpn_version
+      WHERE history_table.bpn_pid IS NULL
+      UNION ALL
+      SELECT history_table.bpn_pid
+           , history_table.bpn_version + 1
+           , history_table.bpn_bid_pool_pid
+           , history_table.bpn_create_datetime
+           , history_table.bpn_content
+           , history_table.bpn_author_lender_user_pid
+           , history_table.bpn_author_unparsed_name
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.bid_pool_note history_table
+      LEFT JOIN staging_octane.bid_pool_note staging_table
+                ON staging_table.bpn_pid = history_table.bpn_pid
+      WHERE staging_table.bpn_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.bid_pool_note deleted_records
+          WHERE deleted_records.bpn_pid = history_table.bpn_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

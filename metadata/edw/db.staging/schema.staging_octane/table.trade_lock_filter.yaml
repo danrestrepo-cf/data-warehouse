@@ -1,0 +1,31 @@
+name: trade_lock_filter
+primary_key:
+- tlf_pid
+foreign_keys:
+  fk_trade_lock_filter_1:
+    columns:
+    - tlf_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_trade_lock_filter_2:
+    columns:
+    - tlf_criteria_pid
+    references:
+      columns:
+      - cr_pid
+      schema: staging_octane
+      table: criteria
+columns:
+  tlf_pid:
+    data_type: BIGINT
+  tlf_version:
+    data_type: INTEGER
+  tlf_lender_user_pid:
+    data_type: BIGINT
+  tlf_name:
+    data_type: VARCHAR(128)
+  tlf_criteria_pid:
+    data_type: BIGINT

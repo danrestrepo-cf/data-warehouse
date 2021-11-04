@@ -1,0 +1,495 @@
+name: deal_key_roles
+primary_key:
+- dkrs_pid
+foreign_keys:
+  fk_deal_key_roles_1:
+    columns:
+    - dkrs_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: staging_octane
+      table: deal
+  fk_deal_key_roles_10:
+    columns:
+    - dkrs_final_documents_to_investor_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_11:
+    columns:
+    - dkrs_government_insurance_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_12:
+    columns:
+    - dkrs_funder_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_13:
+    columns:
+    - dkrs_processor_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_14:
+    columns:
+    - dkrs_underwriter_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_15:
+    columns:
+    - dkrs_project_underwriter_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_16:
+    columns:
+    - dkrs_closing_doc_specialist_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_17:
+    columns:
+    - dkrs_wholesale_client_advocate_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_18:
+    columns:
+    - dkrs_closing_scheduler_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_19:
+    columns:
+    - dkrs_collateral_underwriter_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_2:
+    columns:
+    - dkrs_originator_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_20:
+    columns:
+    - dkrs_correspondent_client_advocate_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_21:
+    columns:
+    - dkrs_flood_insurance_specialist_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_22:
+    columns:
+    - dkrs_hoa_specialist_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_23:
+    columns:
+    - dkrs_hoi_specialist_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_24:
+    columns:
+    - dkrs_ho6_specialist_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_25:
+    columns:
+    - dkrs_hud_va_lender_officer_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_26:
+    columns:
+    - dkrs_loan_officer_assistant_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_27:
+    columns:
+    - dkrs_loan_payoff_specialist_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_28:
+    columns:
+    - dkrs_subordination_specialist_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_29:
+    columns:
+    - dkrs_title_specialist_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_3:
+    columns:
+    - dkrs_supplemental_originator_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_30:
+    columns:
+    - dkrs_underwriting_manager_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_31:
+    columns:
+    - dkrs_va_specialist_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_32:
+    columns:
+    - dkrs_verbal_voe_specialist_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_33:
+    columns:
+    - dkrs_voe_specialist_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_34:
+    columns:
+    - dkrs_wire_specialist_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_35:
+    columns:
+    - dkrs_internal_construction_manager_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_36:
+    columns:
+    - dkrs_review_requester_1_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_37:
+    columns:
+    - dkrs_review_requester_2_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_38:
+    columns:
+    - dkrs_review_requester_3_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_39:
+    columns:
+    - dkrs_review_requester_4_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_4:
+    columns:
+    - dkrs_account_executive_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_40:
+    columns:
+    - dkrs_review_requester_5_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_5:
+    columns:
+    - dkrs_investor_conditions_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_6:
+    columns:
+    - dkrs_investor_stack_to_investor_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_7:
+    columns:
+    - dkrs_collateral_to_custodian_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_8:
+    columns:
+    - dkrs_collateral_to_investor_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_key_roles_9:
+    columns:
+    - dkrs_transaction_assistant_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+columns:
+  dkrs_pid:
+    data_type: BIGINT
+  dkrs_version:
+    data_type: INTEGER
+  dkrs_deal_pid:
+    data_type: BIGINT
+  dkrs_originator_lender_user_pid:
+    data_type: BIGINT
+  dkrs_originator_first_name:
+    data_type: VARCHAR(32)
+  dkrs_originator_last_name:
+    data_type: VARCHAR(32)
+  dkrs_originator_middle_name:
+    data_type: VARCHAR(32)
+  dkrs_originator_fmls_basic:
+    data_type: VARCHAR(128)
+  dkrs_originator_nmls_id:
+    data_type: VARCHAR(16)
+  dkrs_supplemental_originator_lender_user_pid:
+    data_type: BIGINT
+  dkrs_supplemental_originator_fmls:
+    data_type: VARCHAR(128)
+  dkrs_account_executive_lender_user_pid:
+    data_type: BIGINT
+  dkrs_account_executive_fmls:
+    data_type: VARCHAR(128)
+  dkrs_investor_conditions_lender_user_pid:
+    data_type: BIGINT
+  dkrs_investor_conditions_fmls:
+    data_type: VARCHAR(128)
+  dkrs_investor_stack_to_investor_lender_user_pid:
+    data_type: BIGINT
+  dkrs_investor_stack_to_investor_fmls:
+    data_type: VARCHAR(128)
+  dkrs_collateral_to_custodian_lender_user_pid:
+    data_type: BIGINT
+  dkrs_collateral_to_custodian_fmls:
+    data_type: VARCHAR(128)
+  dkrs_collateral_to_investor_lender_user_pid:
+    data_type: BIGINT
+  dkrs_collateral_to_investor_fmls:
+    data_type: VARCHAR(128)
+  dkrs_transaction_assistant_lender_user_pid:
+    data_type: BIGINT
+  dkrs_transaction_assistant_fmls:
+    data_type: VARCHAR(128)
+  dkrs_final_documents_to_investor_lender_user_pid:
+    data_type: BIGINT
+  dkrs_final_documents_to_investor_fmls:
+    data_type: VARCHAR(128)
+  dkrs_government_insurance_lender_user_pid:
+    data_type: BIGINT
+  dkrs_government_insurance_fmls:
+    data_type: VARCHAR(128)
+  dkrs_funder_lender_user_pid:
+    data_type: BIGINT
+  dkrs_funder_fmls:
+    data_type: VARCHAR(128)
+  dkrs_processor_lender_user_pid:
+    data_type: BIGINT
+  dkrs_processor_fmls:
+    data_type: VARCHAR(128)
+  dkrs_underwriter_lender_user_pid:
+    data_type: BIGINT
+  dkrs_underwriter_fmls:
+    data_type: VARCHAR(128)
+  dkrs_project_underwriter_lender_user_pid:
+    data_type: BIGINT
+  dkrs_project_underwriter_fmls:
+    data_type: VARCHAR(128)
+  dkrs_closing_doc_specialist_lender_user_pid:
+    data_type: BIGINT
+  dkrs_closing_doc_specialist_fmls:
+    data_type: VARCHAR(128)
+  dkrs_wholesale_client_advocate_lender_user_pid:
+    data_type: BIGINT
+  dkrs_wholesale_client_advocate_fmls:
+    data_type: VARCHAR(128)
+  dkrs_closing_scheduler_lender_user_pid:
+    data_type: BIGINT
+  dkrs_closing_scheduler_fmls:
+    data_type: VARCHAR(128)
+  dkrs_collateral_underwriter_lender_user_pid:
+    data_type: BIGINT
+  dkrs_collateral_underwriter_fmls:
+    data_type: VARCHAR(128)
+  dkrs_correspondent_client_advocate_lender_user_pid:
+    data_type: BIGINT
+  dkrs_correspondent_client_advocate_fmls:
+    data_type: VARCHAR(128)
+  dkrs_flood_insurance_specialist_lender_user_pid:
+    data_type: BIGINT
+  dkrs_flood_insurance_specialist_fmls:
+    data_type: VARCHAR(128)
+  dkrs_hoa_specialist_lender_user_pid:
+    data_type: BIGINT
+  dkrs_hoa_specialist_fmls:
+    data_type: VARCHAR(128)
+  dkrs_hoi_specialist_lender_user_pid:
+    data_type: BIGINT
+  dkrs_hoi_specialist_fmls:
+    data_type: VARCHAR(128)
+  dkrs_ho6_specialist_lender_user_pid:
+    data_type: BIGINT
+  dkrs_ho6_specialist_fmls:
+    data_type: VARCHAR(128)
+  dkrs_hud_va_lender_officer_lender_user_pid:
+    data_type: BIGINT
+  dkrs_hud_va_lender_officer_fmls:
+    data_type: VARCHAR(128)
+  dkrs_loan_officer_assistant_lender_user_pid:
+    data_type: BIGINT
+  dkrs_loan_officer_assistant_fmls:
+    data_type: VARCHAR(128)
+  dkrs_loan_payoff_specialist_lender_user_pid:
+    data_type: BIGINT
+  dkrs_loan_payoff_specialist_fmls:
+    data_type: VARCHAR(128)
+  dkrs_subordination_specialist_lender_user_pid:
+    data_type: BIGINT
+  dkrs_subordination_specialist_fmls:
+    data_type: VARCHAR(128)
+  dkrs_title_specialist_lender_user_pid:
+    data_type: BIGINT
+  dkrs_title_specialist_fmls:
+    data_type: VARCHAR(128)
+  dkrs_underwriting_manager_lender_user_pid:
+    data_type: BIGINT
+  dkrs_underwriting_manager_fmls:
+    data_type: VARCHAR(128)
+  dkrs_va_specialist_lender_user_pid:
+    data_type: BIGINT
+  dkrs_va_specialist_fmls:
+    data_type: VARCHAR(128)
+  dkrs_verbal_voe_specialist_lender_user_pid:
+    data_type: BIGINT
+  dkrs_verbal_voe_specialist_fmls:
+    data_type: VARCHAR(128)
+  dkrs_voe_specialist_lender_user_pid:
+    data_type: BIGINT
+  dkrs_voe_specialist_fmls:
+    data_type: VARCHAR(128)
+  dkrs_wire_specialist_lender_user_pid:
+    data_type: BIGINT
+  dkrs_wire_specialist_fmls:
+    data_type: VARCHAR(128)
+  dkrs_internal_construction_manager_lender_user_pid:
+    data_type: BIGINT
+  dkrs_internal_construction_manager_fmls:
+    data_type: VARCHAR(128)
+  dkrs_review_requester_1_lender_user_pid:
+    data_type: BIGINT
+  dkrs_review_requester_1_fmls:
+    data_type: VARCHAR(128)
+  dkrs_review_requester_2_lender_user_pid:
+    data_type: BIGINT
+  dkrs_review_requester_2_fmls:
+    data_type: VARCHAR(128)
+  dkrs_review_requester_3_lender_user_pid:
+    data_type: BIGINT
+  dkrs_review_requester_3_fmls:
+    data_type: VARCHAR(128)
+  dkrs_review_requester_4_lender_user_pid:
+    data_type: BIGINT
+  dkrs_review_requester_4_fmls:
+    data_type: VARCHAR(128)
+  dkrs_review_requester_5_lender_user_pid:
+    data_type: BIGINT
+  dkrs_review_requester_5_fmls:
+    data_type: VARCHAR(128)

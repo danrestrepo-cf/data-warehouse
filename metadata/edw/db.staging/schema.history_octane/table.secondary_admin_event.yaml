@@ -1,0 +1,115 @@
+name: secondary_admin_event
+primary_source_table: staging.staging_octane.secondary_admin_event
+primary_key:
+- sae_pid
+- sae_version
+foreign_keys:
+  fk_secondary_admin_event_1:
+    columns:
+    - sae_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+  fk_secondary_admin_event_2:
+    columns:
+    - sae_secondary_admin_event_entity_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: secondary_admin_event_entity_type
+columns:
+  sae_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sae_pid
+  sae_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sae_version
+  sae_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sae_account_pid
+  sae_secondary_admin_event_entity_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sae_secondary_admin_event_entity_type
+  sae_message:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.sae_message
+  sae_diff_list:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.sae_diff_list
+  sae_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sae_unparsed_name
+  sae_event_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.sae_event_date
+  sae_event_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.sae_event_datetime
+  sae_target_entity_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sae_target_entity_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100241:
+    input_type: table
+    output_type: insert
+    json_output_field: sae_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.secondary_admin_event
+      SELECT staging_table.sae_pid
+           , staging_table.sae_version
+           , staging_table.sae_account_pid
+           , staging_table.sae_secondary_admin_event_entity_type
+           , staging_table.sae_message
+           , staging_table.sae_diff_list
+           , staging_table.sae_unparsed_name
+           , staging_table.sae_event_date
+           , staging_table.sae_event_datetime
+           , staging_table.sae_target_entity_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.secondary_admin_event staging_table
+      LEFT JOIN history_octane.secondary_admin_event history_table
+                ON staging_table.sae_pid = history_table.sae_pid
+                    AND staging_table.sae_version = history_table.sae_version
+      WHERE history_table.sae_pid IS NULL
+      UNION ALL
+      SELECT history_table.sae_pid
+           , history_table.sae_version + 1
+           , history_table.sae_account_pid
+           , history_table.sae_secondary_admin_event_entity_type
+           , history_table.sae_message
+           , history_table.sae_diff_list
+           , history_table.sae_unparsed_name
+           , history_table.sae_event_date
+           , history_table.sae_event_datetime
+           , history_table.sae_target_entity_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.secondary_admin_event history_table
+      LEFT JOIN staging_octane.secondary_admin_event staging_table
+                ON staging_table.sae_pid = history_table.sae_pid
+      WHERE staging_table.sae_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.secondary_admin_event deleted_records
+          WHERE deleted_records.sae_pid = history_table.sae_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

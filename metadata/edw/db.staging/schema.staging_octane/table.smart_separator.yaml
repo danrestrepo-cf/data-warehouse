@@ -1,0 +1,41 @@
+name: smart_separator
+primary_key:
+- ssp_pid
+foreign_keys:
+  fk_smart_separator_1:
+    columns:
+    - ssp_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fk_smart_separator_2:
+    columns:
+    - ssp_custom_form_pid
+    references:
+      columns:
+      - cf_pid
+      schema: staging_octane
+      table: custom_form
+  fk_smart_separator_3:
+    columns:
+    - ssp_criteria_pid
+    references:
+      columns:
+      - cr_pid
+      schema: staging_octane
+      table: criteria
+columns:
+  ssp_pid:
+    data_type: BIGINT
+  ssp_version:
+    data_type: INTEGER
+  ssp_account_pid:
+    data_type: BIGINT
+  ssp_custom_form_pid:
+    data_type: BIGINT
+  ssp_criteria_pid:
+    data_type: BIGINT
+  ssp_separator_name:
+    data_type: VARCHAR(767)

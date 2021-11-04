@@ -1,0 +1,71 @@
+name: product_eligibility
+primary_source_table: staging.staging_octane.product_eligibility
+primary_key:
+- pe_pid
+- pe_version
+foreign_keys:
+  fk_product_eligibility_1:
+    columns:
+    - pe_product_pid
+    references:
+      columns:
+      - p_pid
+      schema: history_octane
+      table: product
+columns:
+  pe_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pe_pid
+  pe_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pe_version
+  pe_product_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pe_product_pid
+  pe_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.pe_from_date
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100281:
+    input_type: table
+    output_type: insert
+    json_output_field: pe_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.product_eligibility
+      SELECT staging_table.pe_pid
+           , staging_table.pe_version
+           , staging_table.pe_product_pid
+           , staging_table.pe_from_date
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.product_eligibility staging_table
+      LEFT JOIN history_octane.product_eligibility history_table
+                ON staging_table.pe_pid = history_table.pe_pid
+                    AND staging_table.pe_version = history_table.pe_version
+      WHERE history_table.pe_pid IS NULL
+      UNION ALL
+      SELECT history_table.pe_pid
+           , history_table.pe_version + 1
+           , history_table.pe_product_pid
+           , history_table.pe_from_date
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.product_eligibility history_table
+      LEFT JOIN staging_octane.product_eligibility staging_table
+                ON staging_table.pe_pid = history_table.pe_pid
+      WHERE staging_table.pe_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.product_eligibility deleted_records
+          WHERE deleted_records.pe_pid = history_table.pe_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

@@ -1,0 +1,79 @@
+name: proposal_contractor
+primary_source_table: staging.staging_octane.proposal_contractor
+primary_key:
+- pctr_pid
+- pctr_version
+foreign_keys:
+  fk_proposal_contractor_1:
+    columns:
+    - pctr_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: history_octane
+      table: proposal
+  fk_proposal_contractor_2:
+    columns:
+    - pctr_contractor_pid
+    references:
+      columns:
+      - ctr_pid
+      schema: history_octane
+      table: contractor
+columns:
+  pctr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pctr_pid
+  pctr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pctr_version
+  pctr_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pctr_proposal_pid
+  pctr_contractor_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pctr_contractor_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100160:
+    input_type: table
+    output_type: insert
+    json_output_field: pctr_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.proposal_contractor
+      SELECT staging_table.pctr_pid
+           , staging_table.pctr_version
+           , staging_table.pctr_proposal_pid
+           , staging_table.pctr_contractor_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.proposal_contractor staging_table
+      LEFT JOIN history_octane.proposal_contractor history_table
+                ON staging_table.pctr_pid = history_table.pctr_pid
+                    AND staging_table.pctr_version = history_table.pctr_version
+      WHERE history_table.pctr_pid IS NULL
+      UNION ALL
+      SELECT history_table.pctr_pid
+           , history_table.pctr_version + 1
+           , history_table.pctr_proposal_pid
+           , history_table.pctr_contractor_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.proposal_contractor history_table
+      LEFT JOIN staging_octane.proposal_contractor staging_table
+                ON staging_table.pctr_pid = history_table.pctr_pid
+      WHERE staging_table.pctr_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.proposal_contractor deleted_records
+          WHERE deleted_records.pctr_pid = history_table.pctr_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

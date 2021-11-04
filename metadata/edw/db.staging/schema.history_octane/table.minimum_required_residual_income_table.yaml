@@ -1,0 +1,56 @@
+name: minimum_required_residual_income_table
+primary_source_table: staging.staging_octane.minimum_required_residual_income_table
+primary_key:
+- mrit_pid
+- mrit_version
+columns:
+  mrit_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mrit_pid
+  mrit_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mrit_version
+  mrit_effective_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.mrit_effective_date
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100015:
+    input_type: table
+    output_type: insert
+    json_output_field: mrit_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.minimum_required_residual_income_table
+      SELECT staging_table.mrit_pid
+           , staging_table.mrit_version
+           , staging_table.mrit_effective_date
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.minimum_required_residual_income_table staging_table
+      LEFT JOIN history_octane.minimum_required_residual_income_table history_table
+                ON staging_table.mrit_pid = history_table.mrit_pid
+                    AND staging_table.mrit_version = history_table.mrit_version
+      WHERE history_table.mrit_pid IS NULL
+      UNION ALL
+      SELECT history_table.mrit_pid
+           , history_table.mrit_version + 1
+           , history_table.mrit_effective_date
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.minimum_required_residual_income_table history_table
+      LEFT JOIN staging_octane.minimum_required_residual_income_table staging_table
+                ON staging_table.mrit_pid = history_table.mrit_pid
+      WHERE staging_table.mrit_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.minimum_required_residual_income_table deleted_records
+          WHERE deleted_records.mrit_pid = history_table.mrit_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

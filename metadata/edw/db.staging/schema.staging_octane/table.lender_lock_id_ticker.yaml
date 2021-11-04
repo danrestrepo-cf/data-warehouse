@@ -1,0 +1,21 @@
+name: lender_lock_id_ticker
+primary_key:
+- lltk_pid
+foreign_keys:
+  fk_lender_lock_id_ticker_1:
+    columns:
+    - lltk_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+columns:
+  lltk_pid:
+    data_type: BIGINT
+  lltk_version:
+    data_type: INTEGER
+  lltk_account_pid:
+    data_type: BIGINT
+  lltk_next_lender_lock_id:
+    data_type: BIGINT

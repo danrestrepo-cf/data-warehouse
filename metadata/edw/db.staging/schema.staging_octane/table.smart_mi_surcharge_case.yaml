@@ -1,0 +1,33 @@
+name: smart_mi_surcharge_case
+primary_key:
+- smsc_pid
+foreign_keys:
+  fk_smart_mi_surcharge_case_1:
+    columns:
+    - smsc_smart_mi_surcharge_pid
+    references:
+      columns:
+      - sms_pid
+      schema: staging_octane
+      table: smart_mi_surcharge
+  fk_smart_mi_surcharge_case_2:
+    columns:
+    - smsc_criteria_pid
+    references:
+      columns:
+      - cr_pid
+      schema: staging_octane
+      table: criteria
+columns:
+  smsc_pid:
+    data_type: BIGINT
+  smsc_version:
+    data_type: INTEGER
+  smsc_smart_mi_surcharge_pid:
+    data_type: BIGINT
+  smsc_criteria_pid:
+    data_type: BIGINT
+  smsc_government_surcharge_percent:
+    data_type: NUMERIC(11,9)
+  smsc_minimum_surcharge_amount:
+    data_type: NUMERIC(15,2)

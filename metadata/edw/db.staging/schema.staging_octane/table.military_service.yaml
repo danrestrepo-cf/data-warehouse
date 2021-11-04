@@ -1,0 +1,57 @@
+name: military_service
+primary_key:
+- ms_pid
+foreign_keys:
+  fk_military_service_1:
+    columns:
+    - ms_borrower_pid
+    references:
+      columns:
+      - b_pid
+      schema: staging_octane
+      table: borrower
+  fkt_ms_military_branch_type:
+    columns:
+    - ms_military_branch_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: military_branch_type
+  fkt_ms_military_service_type:
+    columns:
+    - ms_military_service_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: military_service_type
+  fkt_ms_military_status_type:
+    columns:
+    - ms_military_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: military_status_type
+columns:
+  ms_pid:
+    data_type: BIGINT
+  ms_version:
+    data_type: INTEGER
+  ms_borrower_pid:
+    data_type: BIGINT
+  ms_from_date:
+    data_type: DATE
+  ms_through_date:
+    data_type: DATE
+  ms_name_used_during_service:
+    data_type: VARCHAR(128)
+  ms_service_number:
+    data_type: VARCHAR(32)
+  ms_military_branch_type:
+    data_type: VARCHAR(128)
+  ms_military_service_type:
+    data_type: VARCHAR(128)
+  ms_military_status_type:
+    data_type: VARCHAR(128)

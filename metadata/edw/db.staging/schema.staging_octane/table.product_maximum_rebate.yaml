@@ -1,0 +1,23 @@
+name: product_maximum_rebate
+primary_key:
+- pmr_pid
+foreign_keys:
+  fk_product_maximum_rebate_1:
+    columns:
+    - pmr_product_pid
+    references:
+      columns:
+      - p_pid
+      schema: staging_octane
+      table: product
+columns:
+  pmr_pid:
+    data_type: BIGINT
+  pmr_version:
+    data_type: INTEGER
+  pmr_product_pid:
+    data_type: BIGINT
+  pmr_from_date:
+    data_type: DATE
+  pmr_maximum_rebate_percent:
+    data_type: NUMERIC(11,9)

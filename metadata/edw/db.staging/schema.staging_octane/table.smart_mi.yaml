@@ -1,0 +1,29 @@
+name: smart_mi
+primary_key:
+- sm_pid
+foreign_keys:
+  fk_smart_mi_1:
+    columns:
+    - sm_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fkt_sm_mi_company_name_type:
+    columns:
+    - sm_mi_company_name_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: mi_company_name_type
+columns:
+  sm_pid:
+    data_type: BIGINT
+  sm_version:
+    data_type: INTEGER
+  sm_account_pid:
+    data_type: BIGINT
+  sm_mi_company_name_type:
+    data_type: VARCHAR(128)

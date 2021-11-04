@@ -1,0 +1,107 @@
+name: credit_inquiry
+primary_key:
+- ci_pid
+foreign_keys:
+  fk_credit_inquiry_1:
+    columns:
+    - ci_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: staging_octane
+      table: proposal
+  fk_credit_inquiry_2:
+    columns:
+    - ci_credit_request_pid
+    references:
+      columns:
+      - crdr_pid
+      schema: staging_octane
+      table: credit_request
+  fkt_ci_address_country:
+    columns:
+    - ci_address_country
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: country_type
+  fkt_ci_credit_business_type:
+    columns:
+    - ci_credit_business_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: credit_business_type
+  fkt_ci_credit_inquiry_result_type:
+    columns:
+    - ci_credit_inquiry_result_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: credit_inquiry_result_type
+  fkt_ci_credit_loan_type:
+    columns:
+    - ci_credit_loan_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: credit_loan_type
+  fkt_ci_explanation_type:
+    columns:
+    - ci_explanation_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: credit_inquiry_explanation_type
+columns:
+  ci_pid:
+    data_type: BIGINT
+  ci_version:
+    data_type: INTEGER
+  ci_proposal_pid:
+    data_type: BIGINT
+  ci_credit_request_pid:
+    data_type: BIGINT
+  ci_inquiry_date:
+    data_type: DATE
+  ci_name:
+    data_type: VARCHAR(128)
+  ci_address_street1:
+    data_type: VARCHAR(128)
+  ci_address_street2:
+    data_type: VARCHAR(128)
+  ci_address_city:
+    data_type: VARCHAR(128)
+  ci_address_state:
+    data_type: VARCHAR(128)
+  ci_address_postal_code:
+    data_type: VARCHAR(128)
+  ci_address_country:
+    data_type: VARCHAR(128)
+  ci_phone:
+    data_type: VARCHAR(32)
+  ci_credit_inquiry_result_type:
+    data_type: VARCHAR(128)
+  ci_credit_business_type:
+    data_type: VARCHAR(128)
+  ci_credit_loan_type:
+    data_type: VARCHAR(128)
+  ci_equifax_included:
+    data_type: BOOLEAN
+  ci_experian_included:
+    data_type: BOOLEAN
+  ci_trans_union_included:
+    data_type: BOOLEAN
+  ci_explanation_type:
+    data_type: VARCHAR(128)
+  ci_explanation_info:
+    data_type: VARCHAR(1024)
+  ci_credit_report_identifier:
+    data_type: VARCHAR(32)
+  ci_inquiry_date_provided:
+    data_type: BOOLEAN

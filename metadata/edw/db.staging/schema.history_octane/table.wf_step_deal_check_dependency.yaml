@@ -1,0 +1,79 @@
+name: wf_step_deal_check_dependency
+primary_source_table: staging.staging_octane.wf_step_deal_check_dependency
+primary_key:
+- wsdp_pid
+- wsdp_version
+foreign_keys:
+  fk_wf_step_deal_check_dependency_1:
+    columns:
+    - wsdp_wf_step_pid
+    references:
+      columns:
+      - ws_pid
+      schema: history_octane
+      table: wf_step
+  fk_wf_step_deal_check_dependency_2:
+    columns:
+    - wsdp_dependency_wf_step_pid
+    references:
+      columns:
+      - ws_pid
+      schema: history_octane
+      table: wf_step
+columns:
+  wsdp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wsdp_pid
+  wsdp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.wsdp_version
+  wsdp_wf_step_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wsdp_wf_step_pid
+  wsdp_dependency_wf_step_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wsdp_dependency_wf_step_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100203:
+    input_type: table
+    output_type: insert
+    json_output_field: wsdp_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.wf_step_deal_check_dependency
+      SELECT staging_table.wsdp_pid
+           , staging_table.wsdp_version
+           , staging_table.wsdp_wf_step_pid
+           , staging_table.wsdp_dependency_wf_step_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.wf_step_deal_check_dependency staging_table
+      LEFT JOIN history_octane.wf_step_deal_check_dependency history_table
+                ON staging_table.wsdp_pid = history_table.wsdp_pid
+                    AND staging_table.wsdp_version = history_table.wsdp_version
+      WHERE history_table.wsdp_pid IS NULL
+      UNION ALL
+      SELECT history_table.wsdp_pid
+           , history_table.wsdp_version + 1
+           , history_table.wsdp_wf_step_pid
+           , history_table.wsdp_dependency_wf_step_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.wf_step_deal_check_dependency history_table
+      LEFT JOIN staging_octane.wf_step_deal_check_dependency staging_table
+                ON staging_table.wsdp_pid = history_table.wsdp_pid
+      WHERE staging_table.wsdp_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.wf_step_deal_check_dependency deleted_records
+          WHERE deleted_records.wsdp_pid = history_table.wsdp_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

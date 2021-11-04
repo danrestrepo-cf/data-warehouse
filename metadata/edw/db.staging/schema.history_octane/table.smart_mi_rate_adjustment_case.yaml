@@ -1,0 +1,87 @@
+name: smart_mi_rate_adjustment_case
+primary_source_table: staging.staging_octane.smart_mi_rate_adjustment_case
+primary_key:
+- smrac_pid
+- smrac_version
+foreign_keys:
+  fk_smart_mi_rate_adjustment_case_1:
+    columns:
+    - smrac_smart_mi_rate_card_pid
+    references:
+      columns:
+      - smrca_pid
+      schema: history_octane
+      table: smart_mi_rate_card
+  fk_smart_mi_rate_adjustment_case_2:
+    columns:
+    - smrac_criteria_pid
+    references:
+      columns:
+      - cr_pid
+      schema: history_octane
+      table: criteria
+columns:
+  smrac_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smrac_pid
+  smrac_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.smrac_version
+  smrac_smart_mi_rate_card_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smrac_smart_mi_rate_card_pid
+  smrac_rate_adjustment_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.smrac_rate_adjustment_percent
+  smrac_criteria_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smrac_criteria_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  smrac_criteria_html:
+    data_type: VARCHAR(16000)
+etls:
+  SP-100246:
+    input_type: table
+    output_type: insert
+    json_output_field: smrac_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.smart_mi_rate_adjustment_case
+      SELECT staging_table.smrac_pid
+           , staging_table.smrac_version
+           , staging_table.smrac_smart_mi_rate_card_pid
+           , staging_table.smrac_rate_adjustment_percent
+           , staging_table.smrac_criteria_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.smart_mi_rate_adjustment_case staging_table
+      LEFT JOIN history_octane.smart_mi_rate_adjustment_case history_table
+                ON staging_table.smrac_pid = history_table.smrac_pid
+                    AND staging_table.smrac_version = history_table.smrac_version
+      WHERE history_table.smrac_pid IS NULL
+      UNION ALL
+      SELECT history_table.smrac_pid
+           , history_table.smrac_version + 1
+           , history_table.smrac_smart_mi_rate_card_pid
+           , history_table.smrac_rate_adjustment_percent
+           , history_table.smrac_criteria_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.smart_mi_rate_adjustment_case history_table
+      LEFT JOIN staging_octane.smart_mi_rate_adjustment_case staging_table
+                ON staging_table.smrac_pid = history_table.smrac_pid
+      WHERE staging_table.smrac_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.smart_mi_rate_adjustment_case deleted_records
+          WHERE deleted_records.smrac_pid = history_table.smrac_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

@@ -1,0 +1,29 @@
+name: deal_disaster_declaration
+primary_key:
+- ddd_pid
+foreign_keys:
+  fk_deal_disaster_declaration_1:
+    columns:
+    - ddd_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: staging_octane
+      table: deal
+  fk_deal_disaster_declaration_2:
+    columns:
+    - ddd_disaster_declaration_pid
+    references:
+      columns:
+      - dd_pid
+      schema: staging_octane
+      table: disaster_declaration
+columns:
+  ddd_pid:
+    data_type: BIGINT
+  ddd_version:
+    data_type: INTEGER
+  ddd_deal_pid:
+    data_type: BIGINT
+  ddd_disaster_declaration_pid:
+    data_type: BIGINT

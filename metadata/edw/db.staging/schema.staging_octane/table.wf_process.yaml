@@ -1,0 +1,43 @@
+name: wf_process
+primary_key:
+- wpr_pid
+foreign_keys:
+  fk_wf_process_1:
+    columns:
+    - wpr_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fkt_wpr_wf_process_status_type:
+    columns:
+    - wpr_wf_process_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: wf_process_status_type
+  fkt_wpr_wf_process_type:
+    columns:
+    - wpr_wf_process_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: wf_process_type
+columns:
+  wpr_pid:
+    data_type: BIGINT
+  wpr_version:
+    data_type: INTEGER
+  wpr_account_pid:
+    data_type: BIGINT
+  wpr_name:
+    data_type: VARCHAR(128)
+  wpr_wf_process_type:
+    data_type: VARCHAR(128)
+  wpr_criteria_pid:
+    data_type: BIGINT
+  wpr_wf_process_status_type:
+    data_type: VARCHAR(128)

@@ -1,0 +1,259 @@
+name: secondary_settings
+primary_source_table: staging.staging_octane.secondary_settings
+primary_key:
+- sset_pid
+- sset_version
+foreign_keys:
+  fk_secondary_settings_1:
+    columns:
+    - sset_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+  fk_secondary_settings_2:
+    columns:
+    - sset_default_lead_source_pid
+    references:
+      columns:
+      - lds_pid
+      schema: history_octane
+      table: lead_source
+  fk_secondary_settings_3:
+    columns:
+    - sset_default_mortech_account_pid
+    references:
+      columns:
+      - ma_pid
+      schema: history_octane
+      table: mortech_account
+  fk_secondary_settings_4:
+    columns:
+    - sset_default_beneficiary_investor_pid
+    references:
+      columns:
+      - i_pid
+      schema: history_octane
+      table: investor
+  fk_secondary_settings_5:
+    columns:
+    - sset_default_servicer_investor_pid
+    references:
+      columns:
+      - i_pid
+      schema: history_octane
+      table: investor
+columns:
+  sset_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sset_pid
+  sset_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sset_version
+  sset_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sset_account_pid
+  sset_default_lead_source_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sset_default_lead_source_pid
+  sset_default_mortech_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sset_default_mortech_account_pid
+  sset_default_beneficiary_investor_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sset_default_beneficiary_investor_pid
+  sset_default_servicer_investor_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sset_default_servicer_investor_pid
+  sset_initial_lender_lock_id:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sset_initial_lender_lock_id
+  sset_initial_lender_trade_id:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sset_initial_lender_trade_id
+  sset_lock_expiration_warning_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sset_lock_expiration_warning_days
+  sset_expired_lock_update_allowed_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sset_expired_lock_update_allowed_days
+  sset_disable_all_locking:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sset_disable_all_locking
+  sset_pricing_engine_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sset_pricing_engine_type
+  sset_price_match_check_suspend_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.sset_price_match_check_suspend_through_date
+  sset_mortech_disable_eligibility:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sset_mortech_disable_eligibility
+  sset_mortech_strict_eligibility:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sset_mortech_strict_eligibility
+  sset_zillow_appraisal_fee:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.sset_zillow_appraisal_fee
+  sset_zillow_title_fee:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.sset_zillow_title_fee
+  sset_zillow_recording_fee:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.sset_zillow_recording_fee
+  sset_mortech_floating_adjuster_prefixes:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.sset_mortech_floating_adjuster_prefixes
+  sset_rate_lock_acknowledgement_due_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sset_rate_lock_acknowledgement_due_days
+  sset_rate_lock_supporting_documentation_due_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sset_rate_lock_supporting_documentation_due_days
+  sset_rate_lock_appraisal_inspection_due_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sset_rate_lock_appraisal_inspection_due_days
+  sset_min_subordinate_financing_lock_term_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sset_min_subordinate_financing_lock_term_days
+  sset_servicer_loan_id_minimum_available_threshold:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sset_servicer_loan_id_minimum_available_threshold
+  sset_servicer_loan_id_minimum_available_warning_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.sset_servicer_loan_id_minimum_available_warning_email
+  sset_third_party_base_margin_prefixes:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.sset_third_party_base_margin_prefixes
+  sset_third_party_floating_margin_prefixes:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.sset_third_party_floating_margin_prefixes
+  sset_month_ami_uses_subsequent_year:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sset_month_ami_uses_subsequent_year
+  sset_day_ami_uses_subsequent_year:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sset_day_ami_uses_subsequent_year
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100174:
+    input_type: table
+    output_type: insert
+    json_output_field: sset_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.secondary_settings
+      SELECT staging_table.sset_pid
+           , staging_table.sset_version
+           , staging_table.sset_account_pid
+           , staging_table.sset_default_lead_source_pid
+           , staging_table.sset_default_mortech_account_pid
+           , staging_table.sset_default_beneficiary_investor_pid
+           , staging_table.sset_default_servicer_investor_pid
+           , staging_table.sset_initial_lender_lock_id
+           , staging_table.sset_initial_lender_trade_id
+           , staging_table.sset_lock_expiration_warning_days
+           , staging_table.sset_expired_lock_update_allowed_days
+           , staging_table.sset_disable_all_locking
+           , staging_table.sset_pricing_engine_type
+           , staging_table.sset_price_match_check_suspend_through_date
+           , staging_table.sset_mortech_disable_eligibility
+           , staging_table.sset_mortech_strict_eligibility
+           , staging_table.sset_zillow_appraisal_fee
+           , staging_table.sset_zillow_title_fee
+           , staging_table.sset_zillow_recording_fee
+           , staging_table.sset_mortech_floating_adjuster_prefixes
+           , staging_table.sset_rate_lock_acknowledgement_due_days
+           , staging_table.sset_rate_lock_supporting_documentation_due_days
+           , staging_table.sset_rate_lock_appraisal_inspection_due_days
+           , staging_table.sset_min_subordinate_financing_lock_term_days
+           , staging_table.sset_servicer_loan_id_minimum_available_threshold
+           , staging_table.sset_servicer_loan_id_minimum_available_warning_email
+           , staging_table.sset_third_party_base_margin_prefixes
+           , staging_table.sset_third_party_floating_margin_prefixes
+           , staging_table.sset_month_ami_uses_subsequent_year
+           , staging_table.sset_day_ami_uses_subsequent_year
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.secondary_settings staging_table
+      LEFT JOIN history_octane.secondary_settings history_table
+                ON staging_table.sset_pid = history_table.sset_pid
+                    AND staging_table.sset_version = history_table.sset_version
+      WHERE history_table.sset_pid IS NULL
+      UNION ALL
+      SELECT history_table.sset_pid
+           , history_table.sset_version + 1
+           , history_table.sset_account_pid
+           , history_table.sset_default_lead_source_pid
+           , history_table.sset_default_mortech_account_pid
+           , history_table.sset_default_beneficiary_investor_pid
+           , history_table.sset_default_servicer_investor_pid
+           , history_table.sset_initial_lender_lock_id
+           , history_table.sset_initial_lender_trade_id
+           , history_table.sset_lock_expiration_warning_days
+           , history_table.sset_expired_lock_update_allowed_days
+           , history_table.sset_disable_all_locking
+           , history_table.sset_pricing_engine_type
+           , history_table.sset_price_match_check_suspend_through_date
+           , history_table.sset_mortech_disable_eligibility
+           , history_table.sset_mortech_strict_eligibility
+           , history_table.sset_zillow_appraisal_fee
+           , history_table.sset_zillow_title_fee
+           , history_table.sset_zillow_recording_fee
+           , history_table.sset_mortech_floating_adjuster_prefixes
+           , history_table.sset_rate_lock_acknowledgement_due_days
+           , history_table.sset_rate_lock_supporting_documentation_due_days
+           , history_table.sset_rate_lock_appraisal_inspection_due_days
+           , history_table.sset_min_subordinate_financing_lock_term_days
+           , history_table.sset_servicer_loan_id_minimum_available_threshold
+           , history_table.sset_servicer_loan_id_minimum_available_warning_email
+           , history_table.sset_third_party_base_margin_prefixes
+           , history_table.sset_third_party_floating_margin_prefixes
+           , history_table.sset_month_ami_uses_subsequent_year
+           , history_table.sset_day_ami_uses_subsequent_year
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.secondary_settings history_table
+      LEFT JOIN staging_octane.secondary_settings staging_table
+                ON staging_table.sset_pid = history_table.sset_pid
+      WHERE staging_table.sset_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.secondary_settings deleted_records
+          WHERE deleted_records.sset_pid = history_table.sset_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

@@ -1,0 +1,101 @@
+name: deal_signer
+primary_source_table: staging.staging_octane.deal_signer
+primary_key:
+- dsi_pid
+- dsi_version
+foreign_keys:
+  fk_deal_signer_1:
+    columns:
+    - dsi_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: history_octane
+      table: deal
+columns:
+  dsi_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dsi_pid
+  dsi_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dsi_version
+  dsi_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dsi_deal_pid
+  dsi_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.dsi_email
+  dsi_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dsi_first_name
+  dsi_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dsi_middle_name
+  dsi_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dsi_last_name
+  dsi_name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dsi_name_suffix
+  dsi_signer_id:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.dsi_signer_id
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100270:
+    input_type: table
+    output_type: insert
+    json_output_field: dsi_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.deal_signer
+      SELECT staging_table.dsi_pid
+           , staging_table.dsi_version
+           , staging_table.dsi_deal_pid
+           , staging_table.dsi_email
+           , staging_table.dsi_first_name
+           , staging_table.dsi_middle_name
+           , staging_table.dsi_last_name
+           , staging_table.dsi_name_suffix
+           , staging_table.dsi_signer_id
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.deal_signer staging_table
+      LEFT JOIN history_octane.deal_signer history_table
+                ON staging_table.dsi_pid = history_table.dsi_pid
+                    AND staging_table.dsi_version = history_table.dsi_version
+      WHERE history_table.dsi_pid IS NULL
+      UNION ALL
+      SELECT history_table.dsi_pid
+           , history_table.dsi_version + 1
+           , history_table.dsi_deal_pid
+           , history_table.dsi_email
+           , history_table.dsi_first_name
+           , history_table.dsi_middle_name
+           , history_table.dsi_last_name
+           , history_table.dsi_name_suffix
+           , history_table.dsi_signer_id
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.deal_signer history_table
+      LEFT JOIN staging_octane.deal_signer staging_table
+                ON staging_table.dsi_pid = history_table.dsi_pid
+      WHERE staging_table.dsi_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.deal_signer deleted_records
+          WHERE deleted_records.dsi_pid = history_table.dsi_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

@@ -1,0 +1,377 @@
+name: du_request
+primary_source_table: staging.staging_octane.du_request
+primary_key:
+- dur_pid
+- dur_version
+foreign_keys:
+  fk_du_request_1:
+    columns:
+    - dur_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: history_octane
+      table: proposal
+  fk_du_request_2:
+    columns:
+    - dur_uw_findings_html_deal_file_pid
+    references:
+      columns:
+      - df_pid
+      schema: history_octane
+      table: deal_file
+  fk_du_request_3:
+    columns:
+    - dur_uw_analysis_html_deal_file_pid
+    references:
+      columns:
+      - df_pid
+      schema: history_octane
+      table: deal_file
+  fk_du_request_4:
+    columns:
+    - dur_uw_findings_pdf_deal_file_pid
+    references:
+      columns:
+      - df_pid
+      schema: history_octane
+      table: deal_file
+  fk_du_request_5:
+    columns:
+    - dur_requester_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+  fk_du_request_6:
+    columns:
+    - dur_response_deal_system_file_pid
+    references:
+      columns:
+      - dsf_pid
+      schema: history_octane
+      table: deal_system_file
+  fk_du_request_7:
+    columns:
+    - dur_proposal_snapshot_pid
+    references:
+      columns:
+      - prp_pid
+      schema: history_octane
+      table: proposal
+  fkt_dur_credit_bureau_type:
+    columns:
+    - dur_credit_bureau_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: credit_bureau_type
+  fkt_dur_du_recommendation_type:
+    columns:
+    - dur_du_recommendation_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: du_recommendation_type
+  fkt_dur_du_request_status_type:
+    columns:
+    - dur_du_request_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: du_request_status_type
+  fkt_dur_gse_version_type:
+    columns:
+    - dur_gse_version_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: gse_version_type
+  fkt_dur_mismo_version_type:
+    columns:
+    - dur_mismo_version_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mismo_version_type
+  fkt_dur_requester_agent_type:
+    columns:
+    - dur_requester_agent_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: agent_type
+columns:
+  dur_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dur_pid
+  dur_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dur_version
+  dur_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dur_proposal_pid
+  dur_proposal_snapshot_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dur_proposal_snapshot_pid
+  dur_uw_findings_html_deal_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dur_uw_findings_html_deal_file_pid
+  dur_uw_analysis_html_deal_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dur_uw_analysis_html_deal_file_pid
+  dur_uw_findings_pdf_deal_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dur_uw_findings_pdf_deal_file_pid
+  dur_uw_findings_xml_provided:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.dur_uw_findings_xml_provided
+  dur_requester_agent_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dur_requester_agent_type
+  dur_requester_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dur_requester_lender_user_pid
+  dur_requester_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dur_requester_unparsed_name
+  dur_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.dur_create_datetime
+  dur_mismo_version_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dur_mismo_version_type
+  dur_credit_bureau_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dur_credit_bureau_type
+  dur_globally_unique_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dur_globally_unique_id
+  dur_response_deal_system_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dur_response_deal_system_file_pid
+  dur_du_casefile_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dur_du_casefile_id
+  dur_du_request_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dur_du_request_status_type
+  dur_status_message:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.dur_status_message
+  dur_mp_status_log:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.dur_mp_status_log
+  dur_du_recommendation_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dur_du_recommendation_type
+  dur_du_version:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.dur_du_version
+  dur_du_submission_number:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dur_du_submission_number
+  dur_loan_amount:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.dur_loan_amount
+  dur_initial_pi_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.dur_initial_pi_amount
+  dur_note_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.dur_note_rate_percent
+  dur_initial_note_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.dur_initial_note_rate_percent
+  dur_ltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.dur_ltv_ratio_percent
+  dur_cltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.dur_cltv_ratio_percent
+  dur_housing_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.dur_housing_ratio_percent
+  dur_debt_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.dur_debt_ratio_percent
+  dur_du_ltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.dur_du_ltv_ratio_percent
+  dur_du_cltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.dur_du_cltv_ratio_percent
+  dur_du_housing_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.dur_du_housing_ratio_percent
+  dur_du_debt_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.dur_du_debt_ratio_percent
+  dur_aus_request_number:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dur_aus_request_number
+  dur_cash_from_borrower_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.dur_cash_from_borrower_amount
+  dur_aus_cash_from_borrower_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.dur_aus_cash_from_borrower_amount
+  dur_gse_version_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dur_gse_version_type
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100305:
+    input_type: table
+    output_type: insert
+    json_output_field: dur_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.du_request
+      SELECT staging_table.dur_pid
+           , staging_table.dur_version
+           , staging_table.dur_proposal_pid
+           , staging_table.dur_proposal_snapshot_pid
+           , staging_table.dur_uw_findings_html_deal_file_pid
+           , staging_table.dur_uw_analysis_html_deal_file_pid
+           , staging_table.dur_uw_findings_pdf_deal_file_pid
+           , staging_table.dur_uw_findings_xml_provided
+           , staging_table.dur_requester_agent_type
+           , staging_table.dur_requester_lender_user_pid
+           , staging_table.dur_requester_unparsed_name
+           , staging_table.dur_create_datetime
+           , staging_table.dur_mismo_version_type
+           , staging_table.dur_credit_bureau_type
+           , staging_table.dur_globally_unique_id
+           , staging_table.dur_response_deal_system_file_pid
+           , staging_table.dur_du_casefile_id
+           , staging_table.dur_du_request_status_type
+           , staging_table.dur_status_message
+           , staging_table.dur_mp_status_log
+           , staging_table.dur_du_recommendation_type
+           , staging_table.dur_du_version
+           , staging_table.dur_du_submission_number
+           , staging_table.dur_loan_amount
+           , staging_table.dur_initial_pi_amount
+           , staging_table.dur_note_rate_percent
+           , staging_table.dur_initial_note_rate_percent
+           , staging_table.dur_ltv_ratio_percent
+           , staging_table.dur_cltv_ratio_percent
+           , staging_table.dur_housing_ratio_percent
+           , staging_table.dur_debt_ratio_percent
+           , staging_table.dur_du_ltv_ratio_percent
+           , staging_table.dur_du_cltv_ratio_percent
+           , staging_table.dur_du_housing_ratio_percent
+           , staging_table.dur_du_debt_ratio_percent
+           , staging_table.dur_aus_request_number
+           , staging_table.dur_cash_from_borrower_amount
+           , staging_table.dur_aus_cash_from_borrower_amount
+           , staging_table.dur_gse_version_type
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.du_request staging_table
+      LEFT JOIN history_octane.du_request history_table
+                ON staging_table.dur_pid = history_table.dur_pid
+                    AND staging_table.dur_version = history_table.dur_version
+      WHERE history_table.dur_pid IS NULL
+      UNION ALL
+      SELECT history_table.dur_pid
+           , history_table.dur_version + 1
+           , history_table.dur_proposal_pid
+           , history_table.dur_proposal_snapshot_pid
+           , history_table.dur_uw_findings_html_deal_file_pid
+           , history_table.dur_uw_analysis_html_deal_file_pid
+           , history_table.dur_uw_findings_pdf_deal_file_pid
+           , history_table.dur_uw_findings_xml_provided
+           , history_table.dur_requester_agent_type
+           , history_table.dur_requester_lender_user_pid
+           , history_table.dur_requester_unparsed_name
+           , history_table.dur_create_datetime
+           , history_table.dur_mismo_version_type
+           , history_table.dur_credit_bureau_type
+           , history_table.dur_globally_unique_id
+           , history_table.dur_response_deal_system_file_pid
+           , history_table.dur_du_casefile_id
+           , history_table.dur_du_request_status_type
+           , history_table.dur_status_message
+           , history_table.dur_mp_status_log
+           , history_table.dur_du_recommendation_type
+           , history_table.dur_du_version
+           , history_table.dur_du_submission_number
+           , history_table.dur_loan_amount
+           , history_table.dur_initial_pi_amount
+           , history_table.dur_note_rate_percent
+           , history_table.dur_initial_note_rate_percent
+           , history_table.dur_ltv_ratio_percent
+           , history_table.dur_cltv_ratio_percent
+           , history_table.dur_housing_ratio_percent
+           , history_table.dur_debt_ratio_percent
+           , history_table.dur_du_ltv_ratio_percent
+           , history_table.dur_du_cltv_ratio_percent
+           , history_table.dur_du_housing_ratio_percent
+           , history_table.dur_du_debt_ratio_percent
+           , history_table.dur_aus_request_number
+           , history_table.dur_cash_from_borrower_amount
+           , history_table.dur_aus_cash_from_borrower_amount
+           , history_table.dur_gse_version_type
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.du_request history_table
+      LEFT JOIN staging_octane.du_request staging_table
+                ON staging_table.dur_pid = history_table.dur_pid
+      WHERE staging_table.dur_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.du_request deleted_records
+          WHERE deleted_records.dur_pid = history_table.dur_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );
