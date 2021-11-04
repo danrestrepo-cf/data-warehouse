@@ -133,6 +133,8 @@ def generate_history_octane_metadata(metadata: DataWarehouseMetadata, table_to_p
             <table_name2>: {...},
             ...
         }
+    :param processless_table_recorder: an object that records the names of any
+    history_octane tables for which no ETL process has been defined in EDW
     """
     try:
         staging_octane_schema = metadata.get_database('staging').get_schema('staging_octane')
