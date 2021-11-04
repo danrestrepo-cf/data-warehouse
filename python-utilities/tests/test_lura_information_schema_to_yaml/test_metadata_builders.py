@@ -1,10 +1,10 @@
 import unittest
 
 from lib.lura_information_schema_to_yaml.metadata_builders import (build_staging_octane_metadata,
-                                                                   map_data_type,
+                                                                   map_msql_data_type,
                                                                    generate_history_octane_metadata,
                                                                    add_deleted_tables_and_columns_to_history_octane_metadata,
-                                                                   generate_table_input_sql)
+                                                                   generate_history_octane_table_input_sql)
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
 from lib.metadata_core.metadata_object_path import TablePath
 
@@ -119,54 +119,54 @@ class TestBuildStagingOctaneMetadata(unittest.TestCase):
 class TestMapDataType(unittest.TestCase):
 
     def test_maps_date_to_itself(self):
-        self.assertEqual('DATE', map_data_type('Date'))
+        self.assertEqual('DATE', map_msql_data_type('Date'))
 
     def test_maps_time_to_itself(self):
-        self.assertEqual('TIME', map_data_type('TIMe'))
+        self.assertEqual('TIME', map_msql_data_type('TIMe'))
 
     def test_maps_text_to_itself(self):
-        self.assertEqual('TEXT', map_data_type('text'))
+        self.assertEqual('TEXT', map_msql_data_type('text'))
 
     def test_maps_blob_to_bytea(self):
-        self.assertEqual('BYTEA', map_data_type('blob'))
+        self.assertEqual('BYTEA', map_msql_data_type('blob'))
 
     def test_maps_varchar_to_itself(self):
-        self.assertEqual('VARCHAR(16)', map_data_type('varchar(16)'))
-        self.assertEqual('VARCHAR(256)', map_data_type('varCHAR(256)'))
+        self.assertEqual('VARCHAR(16)', map_msql_data_type('varchar(16)'))
+        self.assertEqual('VARCHAR(256)', map_msql_data_type('varCHAR(256)'))
 
     def test_maps_timestamp_to_itself(self):
-        self.assertEqual('TIMESTAMP', map_data_type('timestamp'))
+        self.assertEqual('TIMESTAMP', map_msql_data_type('timestamp'))
 
     def test_maps_datetime_to_timestamp(self):
-        self.assertEqual('TIMESTAMP', map_data_type('datetime'))
+        self.assertEqual('TIMESTAMP', map_msql_data_type('datetime'))
 
     def test_maps_tinyint_to_smallint(self):
-        self.assertEqual('SMALLINT', map_data_type('TINYINT(8)'))
-        self.assertEqual('SMALLINT', map_data_type('TINYINT(64)'))
+        self.assertEqual('SMALLINT', map_msql_data_type('TINYINT(8)'))
+        self.assertEqual('SMALLINT', map_msql_data_type('TINYINT(64)'))
 
     def test_maps_smallint_to_smallint(self):
-        self.assertEqual('SMALLINT', map_data_type('SMALLINT(8)'))
-        self.assertEqual('SMALLINT', map_data_type('SMALLINT(64)'))
+        self.assertEqual('SMALLINT', map_msql_data_type('SMALLINT(8)'))
+        self.assertEqual('SMALLINT', map_msql_data_type('SMALLINT(64)'))
 
     def test_maps_int_to_integer(self):
-        self.assertEqual('INTEGER', map_data_type('int(32)'))
-        self.assertEqual('INTEGER', map_data_type('int(64)'))
+        self.assertEqual('INTEGER', map_msql_data_type('int(32)'))
+        self.assertEqual('INTEGER', map_msql_data_type('int(64)'))
 
     def test_maps_bigint_to_bigint(self):
-        self.assertEqual('BIGINT', map_data_type('bigint(128)'))
-        self.assertEqual('BIGINT', map_data_type('bigint(64)'))
+        self.assertEqual('BIGINT', map_msql_data_type('bigint(128)'))
+        self.assertEqual('BIGINT', map_msql_data_type('bigint(64)'))
 
     def test_maps_bit_to_boolean(self):
-        self.assertEqual('BOOLEAN', map_data_type('BIT(1)'))
-        self.assertEqual('BOOLEAN', map_data_type('BIT(16)'))
+        self.assertEqual('BOOLEAN', map_msql_data_type('BIT(1)'))
+        self.assertEqual('BOOLEAN', map_msql_data_type('BIT(16)'))
 
     def test_maps_decimal_to_numeric(self):
-        self.assertEqual('NUMERIC(11,5)', map_data_type('DECIMAL(11,5)'))
-        self.assertEqual('NUMERIC(16,30)', map_data_type('DECIMAL(16,30)'))
+        self.assertEqual('NUMERIC(11,5)', map_msql_data_type('DECIMAL(11,5)'))
+        self.assertEqual('NUMERIC(16,30)', map_msql_data_type('DECIMAL(16,30)'))
 
     def test_raises_error_if_given_unknown_type(self):
         with self.assertRaises(ValueError):
-            map_data_type('unknown')
+            map_msql_data_type('unknown')
 
 
 class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
@@ -617,7 +617,7 @@ class TestGenerateTableInputSQL(unittest.TestCase):
                     "    WHERE deleted_records.rt_pid = history_table.rt_pid\n" +
                     "      AND deleted_records.data_source_deleted_flag = TRUE\n" +
                     "    );")
-        self.assertEqual(expected, generate_table_input_sql(table))
+        self.assertEqual(expected, generate_history_octane_table_input_sql(table))
 
     def test_produces_correct_sql_for_regular_type_table(self):
         table = self.metadata.get_table_by_path(TablePath('staging', 'staging_octane', 'regular_type'))
@@ -631,7 +631,7 @@ class TestGenerateTableInputSQL(unittest.TestCase):
                     "          ON staging_table.code = history_table.code\n" +
                     "              AND staging_table.value = history_table.value\n" +
                     "WHERE history_table.code IS NULL;")
-        self.assertEqual(expected, generate_table_input_sql(table))
+        self.assertEqual(expected, generate_history_octane_table_input_sql(table))
 
     def test_produces_correct_sql_for_table_without_a_version_column(self):
         table = self.metadata.get_table_by_path(TablePath('staging', 'staging_octane', 'no_version_table'))
@@ -659,7 +659,7 @@ class TestGenerateTableInputSQL(unittest.TestCase):
                     "    WHERE deleted_records.nv_pid = history_table.nv_pid\n" +
                     "      AND deleted_records.data_source_deleted_flag = TRUE\n" +
                     "    );")
-        self.assertEqual(expected, generate_table_input_sql(table))
+        self.assertEqual(expected, generate_history_octane_table_input_sql(table))
 
     def test_produces_correct_sql_for_id_sequence_table(self):
         table = self.metadata.get_table_by_path(TablePath('staging', 'staging_octane', 'some_id_sequence'))
@@ -671,7 +671,7 @@ class TestGenerateTableInputSQL(unittest.TestCase):
                     "LEFT JOIN history_octane.some_id_sequence history_table\n" +
                     "          ON staging_table.is_id = history_table.is_id\n" +
                     "WHERE history_table.is_id IS NULL;")
-        self.assertEqual(expected, generate_table_input_sql(table))
+        self.assertEqual(expected, generate_history_octane_table_input_sql(table))
 
     def test_produces_correct_sql_for_type_table_with_extra_fields(self):
         table = self.metadata.get_table_by_path(TablePath('staging', 'staging_octane', 'extra_fields_type'))
@@ -689,7 +689,7 @@ class TestGenerateTableInputSQL(unittest.TestCase):
                     "              AND staging_table.extra_field_2 = history_table.extra_field_2\n" +
                     "              AND staging_table.value = history_table.value\n" +
                     "WHERE history_table.code IS NULL;")
-        self.assertEqual(expected, generate_table_input_sql(table))
+        self.assertEqual(expected, generate_history_octane_table_input_sql(table))
 
 
 if __name__ == '__main__':

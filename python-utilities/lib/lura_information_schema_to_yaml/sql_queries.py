@@ -52,7 +52,7 @@ def get_octane_foreign_key_metadata(octane_connection: DBConnection) -> List[dic
             """)
 
 
-def get_etl_process_metadata(edw_connection: DBConnection) -> dict:
+def get_history_octane_etl_process_metadata(edw_connection: DBConnection) -> dict:
     """Get a mapping between history_octane table names and metadata about the ETL processes that populate those tables.
 
     Returns a dict with the following structure:

@@ -1,5 +1,9 @@
 """A set of functions used to construct a DataWarehouseMetadata object by synthesizing information_schema data from Octane and EDW.
 
+The resulting DataWarehouseMetadata object will only contain metadata pertaining
+to the staging_octane and history_octane schemas in EDW, as those are the only two
+schemas whose metadata is directly derivable from Octane's information schema.
+
 Public Functions:
 - build_staging_octane_metadata
 - generate_history_octane_metadata
@@ -54,7 +58,7 @@ def build_staging_octane_metadata(column_metadata: List[dict], foreign_key_metad
         if row['is_primary_key'] == 1:
             tables_dict[row['table_name']]['primary_key'].append(row['column_name'])
         tables_dict[row['table_name']]['columns'][row['column_name']] = {
-            'data_type': map_data_type(row['column_type'])
+            'data_type': map_msql_data_type(row['column_type'])
         }
 
     for row in foreign_key_metadata:
@@ -85,7 +89,7 @@ def build_staging_octane_metadata(column_metadata: List[dict], foreign_key_metad
     return construct_data_warehouse_metadata_from_dict(metadata_dict)
 
 
-def map_data_type(data_type: str) -> str:
+def map_msql_data_type(data_type: str) -> str:
     """Map a MySQL data type to the equivalent PostgreSQL data type."""
     upper_data_type = data_type.upper()
     if upper_data_type in ('DATE', 'TIME', 'TEXT', 'TIMESTAMP') or upper_data_type.startswith('VARCHAR('):
@@ -167,7 +171,7 @@ def generate_history_octane_metadata(metadata: DataWarehouseMetadata, table_to_p
                 output_type=ETLOutputType.INSERT,
                 json_output_field=staging_table.primary_key[0],
                 truncate_table=False,
-                input_sql=generate_table_input_sql(staging_table)
+                input_sql=generate_history_octane_table_input_sql(staging_table)
             )
             history_table.add_etl(history_etl)
             for process in table_to_process_map[staging_table.name]['next_processes']:
@@ -270,7 +274,7 @@ def get_version_column_name(table: TableMetadata) -> Optional[str]:
             return None
 
 
-def generate_table_input_sql(table: TableMetadata) -> str:
+def generate_history_octane_table_input_sql(table: TableMetadata) -> str:
     """Generate an ETL SELECT query used in the ETL process that populates the given table.
 
     All staging_octane -> history_octane ETL queries start by selecting every column from the
@@ -286,7 +290,7 @@ def generate_table_input_sql(table: TableMetadata) -> str:
       which no longer exist in the staging_octane table.
     """
     # SELECT statement - new rows from staging_octane table
-    staging_select_columns = generate_select_columns_string('staging_table', table, columns_to_increment=[])
+    staging_select_columns = generate_staging_to_history_select_columns_string('staging_table', table, columns_to_increment=[])
     table_input_sql = f'--finding records to insert into history_octane.{table.name}\n' + \
                       f'SELECT {staging_select_columns}\n' + \
                       f'     , FALSE AS data_source_deleted_flag\n' + \
@@ -303,12 +307,12 @@ def generate_table_input_sql(table: TableMetadata) -> str:
         if version_column is not None:
             join_columns.append(version_column)
     table_input_sql += f'LEFT JOIN history_octane.{table.name} history_table\n' + \
-                       generate_join_columns_string(join_columns) + '\n' + \
+                       generate_staging_to_history_join_columns_string(join_columns) + '\n' + \
                        f'WHERE history_table.{primary_key_column} IS NULL'
 
     # UNION ALL SELECT statement - deleted rows from staging_octane table (regular table ETLs only)
     if not (is_type_table(table) or is_id_sequence_table(table)):
-        history_select_columns = generate_select_columns_string('history_table', table, columns_to_increment=[version_column])
+        history_select_columns = generate_staging_to_history_select_columns_string('history_table', table, columns_to_increment=[version_column])
         table_input_sql += f'\n' + \
                            f'UNION ALL\n' + \
                            f'SELECT {history_select_columns}\n' + \
@@ -316,7 +320,7 @@ def generate_table_input_sql(table: TableMetadata) -> str:
                            f'     , NOW( ) AS data_source_updated_datetime\n' + \
                            f'FROM history_octane.{table.name} history_table\n' + \
                            f'LEFT JOIN staging_octane.{table.name} staging_table\n' + \
-                           generate_join_columns_string([primary_key_column]) + '\n' + \
+                           generate_staging_to_history_join_columns_string([primary_key_column]) + '\n' + \
                            f'WHERE staging_table.{primary_key_column} IS NULL\n' + \
                            f'  AND NOT EXISTS(\n' + \
                            f'    SELECT 1\n' + \
@@ -329,8 +333,8 @@ def generate_table_input_sql(table: TableMetadata) -> str:
     return table_input_sql
 
 
-def generate_select_columns_string(table_prefix: str, table: TableMetadata, columns_to_increment: List[str]) -> str:
-    """Generate a formatted list of columns to go into a SELECT statement.
+def generate_staging_to_history_select_columns_string(table_prefix: str, table: TableMetadata, columns_to_increment: List[str]) -> str:
+    """Generate a formatted list of columns to go into a SELECT statement for a staging_octane -> history_octane ETL.
 
     :param table_prefix: a prefix string to prepend to each column in the list. In staging -> history
     ETL queries, this is usually either "staging_table" or "history_table".
@@ -348,8 +352,8 @@ def generate_select_columns_string(table_prefix: str, table: TableMetadata, colu
     return '\n     , '.join(select_columns)
 
 
-def generate_join_columns_string(columns: List[str], base_indent: int = 10) -> str:
-    """Generate a full SQL join condition string given the list of columns on which to join.
+def generate_staging_to_history_join_columns_string(columns: List[str], base_indent: int = 10) -> str:
+    """Generate a full SQL join condition string for a staging_octane -> history_octane ETL given the list of columns on which to join.
 
     Since this function is only used in the context of staging_octane -> history_octane ETL
     query generation, only a single column list is needed. Every join condition will
@@ -359,11 +363,11 @@ def generate_join_columns_string(columns: List[str], base_indent: int = 10) -> s
     string "LEFT JOIN " (spaces included). This conforms to EDW formatting standards.
     """
     base_indent_str = base_indent * ' '
-    join_columns_str = f'{base_indent_str}ON {generate_join_column_string(columns[0])}'
-    join_columns_str += ''.join([f'\n{base_indent_str}    AND {generate_join_column_string(column)}' for column in columns[1:]])
+    join_columns_str = f'{base_indent_str}ON {generate_staging_to_history_join_column_string(columns[0])}'
+    join_columns_str += ''.join([f'\n{base_indent_str}    AND {generate_staging_to_history_join_column_string(column)}' for column in columns[1:]])
     return join_columns_str
 
 
-def generate_join_column_string(column: str) -> str:
+def generate_staging_to_history_join_column_string(column: str) -> str:
     """Generate a single join condition between a staging_octane column and its history_octane counterpart."""
     return f'staging_table.{column} = history_table.{column}'
