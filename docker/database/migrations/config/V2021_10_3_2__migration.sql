@@ -220,7 +220,7 @@ JOIN mdi.edw_table_definition target_table
 
 -- Insert metadata for new column: proposal.prp_va_energy_efficient_improvements_amount
 WITH new_fields (table_name, field_name, data_type, field_order) AS (
-    VALUES ('proposal', 'prp_va_energy_efficient_improvements_amount', numeric( 15, 2 ), 242)
+    VALUES ('proposal', 'prp_va_energy_efficient_improvements_amount', 'NUMERIC(15,2)', 242)
 )
    , new_staging_field_definitions AS (
     INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, data_type, key_field_flag)
