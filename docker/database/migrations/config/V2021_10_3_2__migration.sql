@@ -10,7 +10,6 @@ WITH new_staging_table_definitions AS (
         VALUES ('staging', 'staging_octane', 'password_settings', NULL)
         RETURNING dwid, table_name
 )
-
    , new_history_table_definitions AS (
     INSERT INTO mdi.edw_table_definition (database_name, schema_name, table_name,
                                           primary_source_edw_table_definition_dwid)
@@ -21,7 +20,6 @@ WITH new_staging_table_definitions AS (
         FROM new_staging_table_definitions
         RETURNING dwid, table_name
 )
-
    , new_fields (schema_name, table_name, field_name, data_type, field_order) AS (
     VALUES ('staging_octane', 'password_settings', 'pws_pid', 'BIGINT', NULL)
          , ('staging_octane', 'password_settings', 'pws_version', 'INTEGER', NULL)
@@ -48,22 +46,21 @@ WITH new_staging_table_definitions AS (
          , ('history_octane', 'password_settings', 'data_source_updated_datetime', 'TIMESTAMPTZ', 12)
          , ('history_octane', 'password_settings', 'data_source_deleted_flag', 'BOOLEAN', 13)
 )
-
    , new_staging_field_definitions AS (
-    INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag)
-        SELECT new_staging_table_definitions.dwid, new_fields.field_name, FALSE
+    INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, data_type, key_field_flag)
+        SELECT new_staging_table_definitions.dwid, new_fields.field_name, new_fields.data_type, FALSE
         FROM new_fields
         JOIN new_staging_table_definitions
              ON new_fields.table_name = new_staging_table_definitions.table_name
         WHERE new_fields.schema_name = 'staging_octane'
         RETURNING dwid, edw_table_definition_dwid, field_name
 )
-
    , new_history_field_definitions AS (
-    INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag,
+    INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, data_type, key_field_flag,
                                           source_edw_field_definition_dwid)
         SELECT new_history_table_definitions.dwid
              , new_fields.field_name
+             , new_fields.data_type
              , FALSE
              , new_staging_field_definitions.dwid
         FROM new_fields
@@ -77,7 +74,6 @@ WITH new_staging_table_definitions AS (
                       AND new_fields.field_name = new_staging_field_definitions.field_name
         WHERE new_fields.schema_name = 'history_octane'
 )
-
    , new_process_variables (name, target_table, json_output_field, sql) AS (
     VALUES ('SP-100869', 'password_settings', 'pws_pid', '--finding records to insert into history_octane.password_settings
 SELECT staging_table.pws_pid
@@ -130,7 +126,6 @@ WHERE staging_table.pws_pid IS NULL
         FROM new_process_variables
         RETURNING dwid, name, description
 )
-
    , new_table_input_steps AS (
     INSERT INTO mdi.table_input_step (process_dwid, data_source_dwid, sql, limit_size, execute_for_each_row, replace_variables,
                                       enable_lazy_conversion, cached_row_meta, connectionname)
@@ -147,7 +142,6 @@ WHERE staging_table.pws_pid IS NULL
         JOIN new_process_variables
              ON new_processes.name = new_process_variables.name
 )
-
    , new_table_output_steps AS (
     INSERT INTO mdi.table_output_step (process_dwid, target_schema, target_table, commit_size, partitioning_field, table_name_field,
                                        auto_generated_key_field, partition_data_per, table_name_defined_in_field,
@@ -174,7 +168,6 @@ WHERE staging_table.pws_pid IS NULL
              ON new_processes.name = new_process_variables.name
         RETURNING dwid, target_schema, target_table
 )
-
    , new_table_output_fields AS (
     INSERT INTO mdi.table_output_field (table_output_step_dwid, database_field_name, database_stream_name, field_order, is_sensitive)
         SELECT new_table_output_steps.dwid
@@ -187,7 +180,6 @@ WHERE staging_table.pws_pid IS NULL
              ON new_fields.schema_name = new_table_output_steps.target_schema
                  AND new_fields.table_name = new_table_output_steps.target_table
 )
-
    , new_json_output_fields AS (
     INSERT INTO mdi.json_output_field (process_dwid, field_name)
         SELECT new_processes.dwid, new_process_variables.json_output_field
@@ -195,7 +187,6 @@ WHERE staging_table.pws_pid IS NULL
         JOIN new_process_variables
              ON new_processes.name = new_process_variables.name
 )
-
    , new_state_machine_definitions AS (
     INSERT INTO mdi.state_machine_definition (process_dwid, name, comment)
         SELECT new_processes.dwid, new_processes.name, new_processes.description
@@ -205,7 +196,8 @@ SELECT 'Finished inserting metadata for new tables: password_settings';
 
 
 -- Insert join metadata for new table: password_settings
-WITH insert_rows (primary_database_name, primary_schema_name, primary_table_name, target_database_name, target_schema_name, target_table_name, join_condition) AS (
+WITH insert_rows (primary_database_name, primary_schema_name, primary_table_name, target_database_name, target_schema_name,
+                  target_table_name, join_condition) AS (
     VALUES ('staging', 'history_octane', 'password_settings', 'staging', 'history_octane', 'account', 'primary_table.pws_account_pid = target_table.a_pid')
 )
 INSERT
@@ -227,14 +219,14 @@ JOIN mdi.edw_table_definition target_table
 
 
 -- Insert metadata for new column: proposal.prp_va_energy_efficient_improvements_amount
-WITH new_fields (table_name, field_name, field_order) AS (
-    VALUES ('proposal', 'prp_va_energy_efficient_improvements_amount', 242)
+WITH new_fields (table_name, field_name, data_type, field_order) AS (
+    VALUES ('proposal', 'prp_va_energy_efficient_improvements_amount', numeric( 15, 2 ), 242)
 )
-
    , new_staging_field_definitions AS (
-    INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag)
+    INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, data_type, key_field_flag)
         SELECT edw_table_definition.dwid
              , new_fields.field_name
+             , new_fields.data_type
              , FALSE
         FROM new_fields
         JOIN mdi.edw_table_definition
@@ -242,11 +234,12 @@ WITH new_fields (table_name, field_name, field_order) AS (
                  AND new_fields.table_name = edw_table_definition.table_name
         RETURNING dwid, edw_table_definition_dwid, field_name
 )
-
    , new_history_field_definitions AS (
-    INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid)
+    INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, data_type, key_field_flag,
+                                          source_edw_field_definition_dwid)
         SELECT edw_table_definition.dwid
              , new_fields.field_name
+             , new_fields.data_type
              , FALSE
              , new_staging_field_definitions.dwid
         FROM new_fields
@@ -260,7 +253,6 @@ WITH new_fields (table_name, field_name, field_order) AS (
              ON new_staging_field_definitions.edw_table_definition_dwid = source_table_definition.dwid
                  AND new_staging_field_definitions.field_name = new_fields.field_name
 )
-
    , new_table_output_fields AS (
     INSERT INTO mdi.table_output_field (table_output_step_dwid, database_field_name, database_stream_name, field_order, is_sensitive)
         SELECT table_output_step.dwid
@@ -273,7 +265,6 @@ WITH new_fields (table_name, field_name, field_order) AS (
              ON table_output_step.target_schema = 'history_octane'
                  AND table_output_step.target_table = new_fields.table_name
 )
-
    , updated_table_input_sql (table_name, sql) AS (
     VALUES ('proposal', '--finding records to insert into history_octane.proposal
 SELECT staging_table.prp_pid
@@ -775,7 +766,6 @@ WHERE staging_table.prp_pid IS NULL
       AND deleted_records.data_source_deleted_flag = TRUE
     );')
 )
-
    , updated_table_input_step AS (
     UPDATE mdi.table_input_step
         SET sql = updated_table_input_sql.sql
