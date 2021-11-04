@@ -114,7 +114,8 @@ def map_msql_data_type(data_type: str) -> str:
         raise ValueError(f'Unable to map data type {upper_data_type}')
 
 
-def generate_history_octane_metadata(metadata: DataWarehouseMetadata, table_to_process_map: dict) -> DataWarehouseMetadata:
+def generate_history_octane_metadata(metadata: DataWarehouseMetadata, table_to_process_map: dict,
+                                     processless_table_recorder: 'ProcesslessTableRecorder' = None) -> DataWarehouseMetadata:
     """Generate a new DataWarehouseMetadata object with added history_octane metadata given existing staging_octane metadata.
 
     :param metadata: a DataWarehouseMetadata object that already contains staging_octane metadata within it.
@@ -176,7 +177,27 @@ def generate_history_octane_metadata(metadata: DataWarehouseMetadata, table_to_p
             history_table.add_etl(history_etl)
             for process in table_to_process_map[staging_table.name]['next_processes']:
                 history_table.next_etls.append(process)
+        elif processless_table_recorder is not None:
+            processless_table_recorder.add_table(staging_table.name)
     return metadata_with_history_octane
+
+
+class ProcesslessTableRecorder:
+    """A class that stores a list of history_octane table that do not have an ETL process defined in EDW."""
+
+    def __init__(self):
+        self._tables_without_processes = []
+
+    def add_table(self, table_name: str):
+        self._tables_without_processes.append(table_name)
+
+    @property
+    def tables(self) -> List[str]:
+        return self._tables_without_processes
+
+    def print_warnings(self):
+        for table in self._tables_without_processes:
+            print(f'Warning: no ETL process found for table "history_octane.{table}"')
 
 
 def add_deleted_tables_and_columns_to_history_octane_metadata(metadata: DataWarehouseMetadata,

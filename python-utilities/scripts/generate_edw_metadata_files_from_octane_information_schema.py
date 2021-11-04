@@ -23,7 +23,8 @@ from lib.lura_information_schema_to_yaml.sql_queries import (get_octane_column_m
                                                              get_history_octane_metadata_for_deleted_columns)
 from lib.lura_information_schema_to_yaml.metadata_builders import (build_staging_octane_metadata,
                                                                    generate_history_octane_metadata,
-                                                                   add_deleted_tables_and_columns_to_history_octane_metadata)
+                                                                   add_deleted_tables_and_columns_to_history_octane_metadata,
+                                                                   ProcesslessTableRecorder)
 
 
 def main():
@@ -89,6 +90,7 @@ def main():
         metadata_filterer = build_octane_metadata_filterer()
 
         # generate metadata
+        processless_table_recorder = ProcesslessTableRecorder()
         metadata = add_deleted_tables_and_columns_to_history_octane_metadata(
             generate_history_octane_metadata(
                 metadata_filterer.filter(
@@ -97,10 +99,13 @@ def main():
                         octane_foreign_key_metadata
                     )
                 ),
-                etl_process_metadata
+                etl_process_metadata,
+                processless_table_recorder
             ),
             deleted_columns_metadata
         )
+
+        processless_table_recorder.print_warnings()
 
         # write metadata to YAML
         write_data_warehouse_metadata_to_yaml(args.output_dir, metadata, rebuild_table_files=True)
@@ -171,8 +176,7 @@ def build_octane_metadata_filterer() -> ExclusiveMetadataFilterer:
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_bank_aba'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_bank_account_number'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_beneficiary_bank_aba'))
-    metadata_filterer.add_column_criteria(
-        ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_beneficiary_bank_account_number'))
+    metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'settlement_agent_wire', 'saw_beneficiary_bank_account_number'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'tax_transcript_request', 'ttr_borrower1_ssn'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'tax_transcript_request', 'ttr_borrower2_ssn'))
     return metadata_filterer

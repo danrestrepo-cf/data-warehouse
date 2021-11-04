@@ -4,7 +4,8 @@ from lib.lura_information_schema_to_yaml.metadata_builders import (build_staging
                                                                    map_msql_data_type,
                                                                    generate_history_octane_metadata,
                                                                    add_deleted_tables_and_columns_to_history_octane_metadata,
-                                                                   generate_history_octane_table_input_sql)
+                                                                   generate_history_octane_table_input_sql,
+                                                                   ProcesslessTableRecorder)
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
 from lib.metadata_core.metadata_object_path import TablePath
 
@@ -171,12 +172,8 @@ class TestMapDataType(unittest.TestCase):
 
 class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
 
-    def test_throws_value_error_if_given_metadata_doesnt_contain_staging_octane_schema(self):
-        with self.assertRaises(ValueError):
-            generate_history_octane_metadata(construct_data_warehouse_metadata_from_dict({'name': 'edw'}), {})
-
-    def test_generates_history_octane_metadata_that_mirrors_existing_staging_octane_metadata_while_adding_history_specific_etl_data(self):
-        metadata_dict = {
+    def setUp(self) -> None:
+        self.metadata_dict = {
             'name': 'edw',
             'databases': [
                 {
@@ -239,15 +236,15 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                 }
             ]
         }
-        staging_metadata = construct_data_warehouse_metadata_from_dict(metadata_dict)
+        self.staging_metadata = construct_data_warehouse_metadata_from_dict(self.metadata_dict)
 
-        table_to_process_map = {
+        self.table_to_process_map = {
             'account': {'process': 'SP-1', 'next_processes': ['SP-10', 'SP-11']},
             'account_type': {'process': 'SP-2', 'next_processes': ['SP-20', 'SP-21']}
         }
 
         # noinspection PyTypeChecker
-        metadata_dict['databases'][0]['schemas'].append({
+        self.metadata_dict['databases'][0]['schemas'].append({
             'name': 'history_octane',
             'tables': [
                 {
@@ -391,8 +388,18 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
             ]
         })
 
-        expected = construct_data_warehouse_metadata_from_dict(metadata_dict)
-        self.assertEqual(expected, generate_history_octane_metadata(staging_metadata, table_to_process_map))
+    def test_throws_value_error_if_given_metadata_doesnt_contain_staging_octane_schema(self):
+        with self.assertRaises(ValueError):
+            generate_history_octane_metadata(construct_data_warehouse_metadata_from_dict({'name': 'edw'}), {})
+
+    def test_generates_history_octane_metadata_that_mirrors_existing_staging_octane_metadata_while_adding_history_specific_etl_data(self):
+        expected = construct_data_warehouse_metadata_from_dict(self.metadata_dict)
+        self.assertEqual(expected, generate_history_octane_metadata(self.staging_metadata, self.table_to_process_map))
+
+    def test_records_all_tables_without_processes_in_the_given_recorder(self):
+        recorder = ProcesslessTableRecorder()
+        generate_history_octane_metadata(self.staging_metadata, {}, recorder)
+        self.assertEqual(['account', 'account_type'], recorder.tables)
 
 
 class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
