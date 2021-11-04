@@ -54,29 +54,30 @@ class DBConnectionFactory:
         An octane prod username is required if connecting to octane-prod, since
         each person uses a unique username to connect to that database.
         """
-        if connection_name == 'edw-local-config':
-            return LocalPostgresConnection(dbname='config')
-        elif connection_name == 'edw-local-staging':
-            return LocalPostgresConnection(dbname='staging')
-        elif connection_name == 'edw-local-ingress':
-            return LocalPostgresConnection(dbname='ingress')
-        elif connection_name == 'edw-qa-config':
+        valid_local_edw_connections = [
+            'edw-local-config',
+            'edw-local-staging',
+            'edw-local-ingress'
+
+        ]
+        valid_aws_edw_connections = [
+            'edw-qa-config',
+            'edw-qa-staging',
+            'edw-qa-ingress',
+            'edw-prod-config',
+            'edw-prod-staging',
+            'edw-prod-ingress'
+        ]
+        valid_aws_non_prod_octane_connections = [
+            'octane-alpha',
+            'octane-bravo',
+            'octane-cert'
+        ]
+        if connection_name in valid_local_edw_connections:
+            return LocalPostgresConnection(dbname=connection_name.split('-')[-1])
+        elif connection_name in valid_aws_edw_connections:
             return self._make_aws_edw_connection(connection_name, ssl_ca_filepath)
-        elif connection_name == 'edw-qa-staging':
-            return self._make_aws_edw_connection(connection_name, ssl_ca_filepath)
-        elif connection_name == 'edw-qa-ingress':
-            return self._make_aws_edw_connection(connection_name, ssl_ca_filepath)
-        elif connection_name == 'edw-prod-config':
-            return self._make_aws_edw_connection(connection_name, ssl_ca_filepath)
-        elif connection_name == 'edw-prod-staging':
-            return self._make_aws_edw_connection(connection_name, ssl_ca_filepath)
-        elif connection_name == 'edw-prod-ingress':
-            return self._make_aws_edw_connection(connection_name, ssl_ca_filepath)
-        elif connection_name == 'octane-alpha':
-            return self._make_aws_octane_connection(connection_name, ssl_ca_filepath)
-        elif connection_name == 'octane-bravo':
-            return self._make_aws_octane_connection(connection_name, ssl_ca_filepath)
-        elif connection_name == 'octane-cert':
+        elif connection_name in valid_aws_non_prod_octane_connections:
             return self._make_aws_octane_connection(connection_name, ssl_ca_filepath)
         elif connection_name == 'octane-prod':
             return self._make_aws_octane_connection(connection_name, ssl_ca_filepath, octane_prod_username)
