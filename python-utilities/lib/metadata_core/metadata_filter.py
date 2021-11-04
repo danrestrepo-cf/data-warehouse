@@ -40,7 +40,21 @@ from lib.metadata_core.metadata_object_path import DatabasePath, SchemaPath, Tab
 
 
 class CriteriaMatcher:
-    """A class that stores a set of criteria and determines whether given items match that criteria."""
+    """A class that stores a set of criteria and determines whether given items match that criteria.
+
+    Because this class is intended to be used to match against database identifiers,
+    e.g. table names, column names, etc., the allowed character set of both the
+    criteria and the items to match against is restricted to characters allowed
+    in SQL object identifiers. The values are further restricted to only
+    *English* letters (the SQL standard allows for any valid Unicode letter from
+    any language), since this code is only intended to be used with the Cardinal
+    EDW database (which uses only standard English letters in identifiers). The
+    final list of allowed characters includes:
+    - any upper- or lower-case letter in the English alphabet
+    - any digit from 0-9
+    - underscores
+    - asterisks (to use as wildcard characters)
+    """
 
     def __init__(self, field_names: List[str]):
         """
@@ -56,10 +70,12 @@ class CriteriaMatcher:
 
     def add_criteria(self, criteria) -> None:
         """Add the given criteria object to the list of criteria to match against."""
+        self._validate_all_field_values(criteria)
         self._criteria.append(criteria)
 
     def matches(self, item) -> bool:
         """Return True if the given item matches *any* previously-added criteria, False otherwise."""
+        self._validate_all_field_values(item)
         for criterion in self._criteria:
             if all([self.input_value_matches_criteria_value(getattr(item, field_name), getattr(criterion, field_name)) for field_name in
                     self._field_names]):
@@ -77,6 +93,15 @@ class CriteriaMatcher:
         E.g. "alpha" (input) matches "alpha" or "*lp*a" (criteria)
         """
         return input_value is not None and bool(re.match(f"^{criteria_value.replace('*', '.*')}$", input_value))
+
+    def _validate_all_field_values(self, item):
+        for field_name in self._field_names:
+            field_value = getattr(item, field_name)
+            if not re.match(r'^[a-zA-Z0-9_*]+$', field_value):
+                raise self.InvalidCharacterError(f'Value "{field_value}" contains invalid characters. Must be alphanumeric, _ or *.')
+
+    class InvalidCharacterError(Exception):
+        pass
 
 
 class MetadataFilterer(ABC):

@@ -38,6 +38,16 @@ class TestCriteriaMatcher(unittest.TestCase):
         self.assertTrue(criteria_matcher.matches(SchemaPath('db1', '123woo456hoo789')))
         self.assertFalse(criteria_matcher.matches(SchemaPath('db1', 'oohoo')))
 
+    def test_throws_error_if_criteria_contains_invalid_character(self):
+        criteria_matcher = CriteriaMatcher(['database', 'schema'])
+        with self.assertRaises(CriteriaMatcher.InvalidCharacterError):
+            criteria_matcher.add_criteria(SchemaPath('db1', '[something]'))
+
+    def test_throws_error_if_input_value_contains_invalid_character(self):
+        criteria_matcher = CriteriaMatcher(['database', 'schema'])
+        with self.assertRaises(CriteriaMatcher.InvalidCharacterError):
+            criteria_matcher.matches(SchemaPath('db1', 'schema$%$'))
+
 
 class TestInclusiveMetadataFilterer(unittest.TestCase):
 
