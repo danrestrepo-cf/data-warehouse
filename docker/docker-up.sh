@@ -11,6 +11,8 @@ function run_compose_file {
 
   waitFor=()
 
+  # baseline is the only migration category that does not build ingress, staging, and config flyway services, so the
+  # construction of its waitFor command is handled separately
   if [ $migration_category != "baseline" ]; then
     for database in ingress staging config; do
       waitFor+=("${project_name}_flyway-${database}_1")
