@@ -172,7 +172,7 @@ WHERE staging_table.cmlc_pid IS NULL
         SELECT new_processes.dwid, new_processes.name, new_processes.description
         FROM new_processes
 )
-SELECT 'Finished inserting metadata for new tables: company_license_contact';
+SELECT 'Finished inserting metadata for new tables.';
 
 --add new join definitions for new table: company_license_contact
 WITH insert_rows (primary_database_name, primary_schema_name, primary_table_name, target_database_name, target_schema_name,
@@ -263,6 +263,45 @@ WITH new_fields (table_name, field_name, data_type, field_order) AS (
                  AND table_output_step.target_table = new_fields.table_name
 )
 SELECT 'Finished inserting metadata for new columns.';
+
+/*
+Remove metadata for deleted fields:
+ - proposal_req.prpr_decision_status_reason
+ - proposal_req.prpr_fulfill_status_reason
+*/
+
+WITH deleted_fields (table_name, field_name) AS (
+    VALUES ('proposal_req', 'prpr_decision_status_reason')
+         , ('proposal_req', 'prpr_fulfill_status_reason')
+)
+   , delete_table_output_fields AS (
+    DELETE
+        FROM mdi.table_output_field
+            USING mdi.table_output_step, deleted_fields
+            WHERE table_output_field.table_output_step_dwid = table_output_step.dwid
+                AND table_output_field.database_field_name = deleted_fields.field_name
+                AND table_output_step.target_table = deleted_fields.table_name
+)
+   , nullify_history_field_sources AS (
+    UPDATE mdi.edw_field_definition
+        SET source_edw_field_definition_dwid = NULL
+        FROM mdi.edw_table_definition
+            JOIN deleted_fields
+            ON edw_table_definition.table_name = deleted_fields.table_name
+                AND edw_table_definition.schema_name = 'history_octane'
+        WHERE edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
+            AND edw_field_definition.field_name = deleted_fields.field_name
+)
+   , delete_staging_field_definitions AS (
+    DELETE
+        FROM mdi.edw_field_definition
+            USING mdi.edw_table_definition, deleted_fields
+            WHERE edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
+                AND edw_field_definition.field_name = deleted_fields.field_name
+                AND edw_table_definition.table_name = deleted_fields.table_name
+                AND edw_table_definition.schema_name = 'staging_octane'
+)
+SELECT 'Finished removing metadata for deleted fields.';
 
 
 --update table_input_step SQL for updated tables: lender_user, proposal, proposal_construction, lender_user_location, proposal_req
