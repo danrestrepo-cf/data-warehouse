@@ -346,6 +346,7 @@ SELECT staging_table.lu_pid
      , staging_table.lu_force_password_change
      , staging_table.lu_last_password_change_date
      , staging_table.lu_challenge_question_type
+     , staging_table.lu_challenge_question_answer
      , staging_table.lu_allow_external_ip
      , staging_table.lu_total_workload_cap
      , staging_table.lu_schedule_once_booking_page_id
@@ -416,6 +417,7 @@ SELECT history_table.lu_pid
      , history_table.lu_force_password_change
      , history_table.lu_last_password_change_date
      , history_table.lu_challenge_question_type
+     , history_table.lu_challenge_question_answer
      , history_table.lu_allow_external_ip
      , history_table.lu_total_workload_cap
      , history_table.lu_schedule_once_booking_page_id
