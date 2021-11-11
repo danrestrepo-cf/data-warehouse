@@ -173,3 +173,25 @@ WHERE staging_table.cmlc_pid IS NULL
         FROM new_processes
 )
 SELECT 'Finished inserting metadata for new tables: company_license_contact';
+
+--add new join definitions for new table: company_license_contact
+WITH insert_rows (primary_database_name, primary_schema_name, primary_table_name, target_database_name, target_schema_name, target_table_name, join_condition) AS (
+    VALUES ('staging', 'history_octane', 'company_license_contact', 'staging', 'history_octane', 'lender_user', 'primary_table.cmlc_lender_user_pid = target_table.lu_pid')
+         , ('staging', 'history_octane', 'company_license_contact', 'staging', 'history_octane', 'company_license', 'primary_table.cmlc_company_license_pid = target_table.cml_pid')
+)
+INSERT
+INTO mdi.edw_join_definition (dwid, primary_edw_table_definition_dwid, target_edw_table_definition_dwid, join_type, join_condition)
+SELECT NEXTVAL( 'mdi.edw_join_definition_dwid_seq' )
+     , primary_table.dwid
+     , target_table.dwid
+     , 'left'
+     , REPLACE( insert_rows.join_condition, 'target_table', 't' || CURRVAL( 'mdi.edw_join_definition_dwid_seq' ) )
+FROM insert_rows
+JOIN mdi.edw_table_definition primary_table
+     ON insert_rows.primary_database_name = primary_table.database_name
+         AND insert_rows.primary_schema_name = primary_table.schema_name
+         AND insert_rows.primary_table_name = primary_table.table_name
+JOIN mdi.edw_table_definition target_table
+     ON insert_rows.target_database_name = target_table.database_name
+         AND insert_rows.target_schema_name = target_table.schema_name
+         AND insert_rows.target_table_name = target_table.table_name;
