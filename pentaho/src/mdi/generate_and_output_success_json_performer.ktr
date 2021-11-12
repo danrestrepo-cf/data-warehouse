@@ -449,7 +449,7 @@
     <created_user>-</created_user>
     <created_date>2021/07/23 08:06:04.117</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/11/05 13:50:02.345</modified_date>
+    <modified_date>2021/11/12 09:11:58.261</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -493,9 +493,9 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Generate success output                                                                                                                                      
+      <note>Generate success output                                                                                                                                                                                                                              
 
-
+             
 
 
 
@@ -517,9 +517,9 @@
 
 
 </note>
-      <xloc>480</xloc>
+      <xloc>416</xloc>
       <yloc>496</yloc>
-      <width>719</width>
+      <width>1071</width>
       <heigth>490</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>11</fontsize>
@@ -687,12 +687,17 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[generate_and_output_json] SUCCESS - Update ETL log with final data</from>
+      <from>[generate_and_output_json] SUCCESS - Build output JSON and S3 file output path</from>
+      <to>[generate_and_output_json] SUCCESS - wait for ETL log to finish updating</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>[generate_and_output_json] SUCCESS - wait for ETL log to finish updating</from>
       <to>[generate_and_output_json] Write generated rows to log</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[generate_and_output_json] SUCCESS - Update ETL log with final data</from>
+      <from>[generate_and_output_json] SUCCESS - wait for ETL log to finish updating</from>
       <to>[generate_and_output_json] S3 file output</to>
       <enabled>Y</enabled>
     </hop>
@@ -952,6 +957,71 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     </GUI>
   </step>
   <step>
+    <name>[generate_and_output_json] SUCCESS - Update ETL log with final data</name>
+    <type>TransExecutor</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <specification_method>rep_name</specification_method>
+    <trans_object_id/>
+    <trans_name>update_etl_log_output_with_final_data</trans_name>
+    <filename/>
+    <directory_path>${Internal.Entry.Current.Directory}</directory_path>
+    <group_size>1</group_size>
+    <group_field/>
+    <group_time/>
+    <parameters>
+      <variablemapping>
+        <variable>status</variable>
+        <field/>
+        <input>success</input>
+      </variablemapping>
+      <variablemapping>
+        <variable>output_json</variable>
+        <field>mdi_output_json</field>
+        <input/>
+      </variablemapping>
+      <inherit_all_vars>Y</inherit_all_vars>
+    </parameters>
+    <execution_result_target_step/>
+    <execution_time_field>ExecutionTime</execution_time_field>
+    <execution_result_field>ExecutionResult</execution_result_field>
+    <execution_errors_field>ExecutionNrErrors</execution_errors_field>
+    <execution_lines_read_field>ExecutionLinesRead</execution_lines_read_field>
+    <execution_lines_written_field>ExecutionLinesWritten</execution_lines_written_field>
+    <execution_lines_input_field>ExecutionLinesInput</execution_lines_input_field>
+    <execution_lines_output_field>ExecutionLinesOutput</execution_lines_output_field>
+    <execution_lines_rejected_field>ExecutionLinesRejected</execution_lines_rejected_field>
+    <execution_lines_updated_field>ExecutionLinesUpdated</execution_lines_updated_field>
+    <execution_lines_deleted_field>ExecutionLinesDeleted</execution_lines_deleted_field>
+    <execution_files_retrieved_field>ExecutionFilesRetrieved</execution_files_retrieved_field>
+    <execution_exit_status_field>ExecutionExitStatus</execution_exit_status_field>
+    <execution_log_text_field>ExecutionLogText</execution_log_text_field>
+    <execution_log_channelid_field>ExecutionLogChannelId</execution_log_channelid_field>
+    <result_rows_target_step/>
+    <result_files_target_step/>
+    <result_files_file_name_field>FileName</result_files_file_name_field>
+    <executors_output_step/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1280</xloc>
+      <yloc>784</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>[generate_and_output_json] SUCCESS - Write to log</name>
     <type>WriteToLog</type>
     <description/>
@@ -1048,8 +1118,8 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     </GUI>
   </step>
   <step>
-    <name>[generate_and_output_json] SUCCESS - Update ETL log with final data</name>
-    <type>TransExecutor</type>
+    <name>[generate_and_output_json] SUCCESS - wait for ETL log to finish updating</name>
+    <type>BlockUntilStepsFinish</type>
     <description/>
     <distribute>N</distribute>
     <custom_distribution/>
@@ -1058,46 +1128,12 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <specification_method>rep_name</specification_method>
-    <trans_object_id/>
-    <trans_name>update_etl_log_output_with_final_data</trans_name>
-    <filename/>
-    <directory_path>${Internal.Entry.Current.Directory}</directory_path>
-    <group_size>1</group_size>
-    <group_field/>
-    <group_time/>
-    <parameters>
-      <variablemapping>
-        <variable>status</variable>
-        <field/>
-        <input>success</input>
-      </variablemapping>
-      <variablemapping>
-        <variable>output_json</variable>
-        <field>mdi_output_json</field>
-        <input/>
-      </variablemapping>
-      <inherit_all_vars>Y</inherit_all_vars>
-    </parameters>
-    <execution_result_target_step/>
-    <execution_time_field>ExecutionTime</execution_time_field>
-    <execution_result_field>ExecutionResult</execution_result_field>
-    <execution_errors_field>ExecutionNrErrors</execution_errors_field>
-    <execution_lines_read_field>ExecutionLinesRead</execution_lines_read_field>
-    <execution_lines_written_field>ExecutionLinesWritten</execution_lines_written_field>
-    <execution_lines_input_field>ExecutionLinesInput</execution_lines_input_field>
-    <execution_lines_output_field>ExecutionLinesOutput</execution_lines_output_field>
-    <execution_lines_rejected_field>ExecutionLinesRejected</execution_lines_rejected_field>
-    <execution_lines_updated_field>ExecutionLinesUpdated</execution_lines_updated_field>
-    <execution_lines_deleted_field>ExecutionLinesDeleted</execution_lines_deleted_field>
-    <execution_files_retrieved_field>ExecutionFilesRetrieved</execution_files_retrieved_field>
-    <execution_exit_status_field>ExecutionExitStatus</execution_exit_status_field>
-    <execution_log_text_field>ExecutionLogText</execution_log_text_field>
-    <execution_log_channelid_field>ExecutionLogChannelId</execution_log_channelid_field>
-    <result_rows_target_step/>
-    <result_files_target_step/>
-    <result_files_file_name_field>FileName</result_files_file_name_field>
-    <executors_output_step/>
+    <steps>
+      <step>
+        <name>[generate_and_output_json] SUCCESS - Update ETL log with final data</name>
+        <CopyNr>0</CopyNr>
+      </step>
+    </steps>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1108,7 +1144,7 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     </remotesteps>
     <GUI>
       <xloc>832</xloc>
-      <yloc>928</yloc>
+      <yloc>912</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
