@@ -78,34 +78,3 @@ ALTER TABLE history_octane.lender_user_location
     ADD COLUMN luloc_current_license_location BOOLEAN,
     ADD COLUMN luloc_synthetic_unique_current_physical_location BOOLEAN,
     ADD COLUMN luloc_synthetic_unique_current_license_location BOOLEAN;
-
---
--- EDW | Pentaho - log ETL start and end times and other metadata to a table in EDW
--- https://app.asana.com/0/0/1201311226688068
---
-
-CREATE TABLE star_common.etl_log (
-    dwid BIGSERIAL
-        PRIMARY KEY,
-    etl_batch_id TEXT NOT NULL,
-    etl_start_date_time TIMESTAMPTZ NOT NULL,
-    etl_end_date_time TIMESTAMPTZ,
-    etl_duration INTERVAL GENERATED ALWAYS AS (etl_end_date_time - etl_start_date_time) STORED,
-    status TEXT NOT NULL,
-    process_name TEXT NOT NULL,
-    controller_job_batch_id INTEGER,
-    input_json TEXT,
-    output_json TEXT,
-    input_rows_read BIGINT,
-    input_step_duration INTERVAL,
-    output_rows_inserted BIGINT DEFAULT 0,
-    output_rows_updated BIGINT DEFAULT 0,
-    output_rows_deleted BIGINT DEFAULT 0,
-    output_rows_rejected BIGINT DEFAULT 0,
-    output_total_rows BIGINT GENERATED ALWAYS AS (output_rows_inserted + output_rows_updated + output_rows_deleted + output_rows_rejected) STORED,
-    output_step_duration INTERVAL
-);
-
-CREATE INDEX idx_etl_log__etl_batch_id ON star_common.etl_log (etl_batch_id);
-CREATE INDEX idx_etl_log__etl_start_date_time ON star_common.etl_log (etl_start_date_time);
-CREATE INDEX idx_etl_log__etl_end_date_time ON star_common.etl_log (etl_end_date_time);
