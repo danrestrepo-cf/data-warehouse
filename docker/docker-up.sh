@@ -10,9 +10,16 @@ function run_compose_file {
   echo -e "== Applying ${migration_category} migrations"
 
   waitFor=()
-  for database in ingress staging config; do
-    waitFor+=("${project_name}_flyway-${database}_1")
-  done
+
+  # baseline is the only migration category that does not build ingress, staging, and config flyway services, so the
+  # construction of its waitFor command is handled separately
+  if [ $migration_category != "baseline" ]; then
+    for database in ingress staging config; do
+      waitFor+=("${project_name}_flyway-${database}_1")
+    done
+  else
+      waitFor+=("${project_name}_flyway-roles_1")
+  fi
 
   docker-compose --project-name ${project_name} -f ${path_to_script}/docker-compose-${migration_category}.yml up --detach
 
@@ -35,6 +42,6 @@ function run_compose_file {
 run_compose_file baseline ${base_project_name}
 
 # run all other compose files with the project name set to the base project suffixed with the migration category
-for migration_category in ddl permissions; do
+for migration_category in schemas ddl permissions; do
   run_compose_file ${migration_category} ${base_project_name}_${migration_category}
 done
