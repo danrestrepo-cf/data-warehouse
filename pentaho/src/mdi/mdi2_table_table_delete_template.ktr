@@ -469,7 +469,7 @@
     <created_user>-</created_user>
     <created_date>2020/09/15 15:00:08.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/11/09 15:15:46.693</modified_date>
+    <modified_date>2021/10/14 09:23:24.929</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -531,7 +531,7 @@
 
 </note>
       <xloc>96</xloc>
-      <yloc>496</yloc>
+      <yloc>368</yloc>
       <width>842</width>
       <heigth>116</heigth>
       <fontname>Segoe UI</fontname>
@@ -563,43 +563,10 @@
 
 
 </note>
-      <xloc>960</xloc>
+      <xloc>560</xloc>
       <yloc>48</yloc>
       <width>370</width>
       <heigth>283</heigth>
-      <fontname>Segoe UI</fontname>
-      <fontsize>12</fontsize>
-      <fontbold>Y</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>205</backgroundcolorgreen>
-      <backgroundcolorblue>112</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
-    <notepad>
-      <note>Extract count of lines read by input	                
-
-
-
-
-
-
-
-
-
-
-
-</note>
-      <xloc>544</xloc>
-      <yloc>48</yloc>
-      <width>363</width>
-      <heigth>284</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>12</fontsize>
       <fontbold>Y</fontbold>
@@ -733,33 +700,18 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
+      <from>[template_table_to_table_delete_json] Delete</from>
+      <to>[template_table_to_table_delete_json]  Specify logging fields (non-sensitive)</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
       <from>[template_table_to_table_delete_json] Table input</from>
       <to>[template_table_to_table_delete_json] Delete</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[template_table_to_table_delete_json] Input steps metrics</from>
-      <to>[template_table_to_table_delete_json] Set input line stats variables</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>[template_table_to_table_delete_json] Output steps metrics</from>
-      <to>[template_table_to_table_delete_json] add zero constant for unused fields</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[template_table_to_table_delete_json] add zero constant for unused fields</from>
-      <to>[template_table_to_table_delete_json] Set output line stats variables applicable to this process</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[template_table_to_table_delete_json] Delete</from>
-      <to>[template_table_to_table_insert_json] block error handling until output line stat variables are set</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>[template_table_to_table_insert_json] block error handling until output line stat variables are set</from>
-      <to>[template_table_to_table_delete_json]  Specify logging fields (non-sensitive)</to>
+      <to>[template_table_to_table_delete_json] Set lines_written variable</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -788,7 +740,7 @@
     </remotesteps>
     <GUI>
       <xloc>704</xloc>
-      <yloc>528</yloc>
+      <yloc>400</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -816,7 +768,7 @@
     </remotesteps>
     <GUI>
       <xloc>304</xloc>
-      <yloc>528</yloc>
+      <yloc>400</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -848,81 +800,6 @@
     <GUI>
       <xloc>304</xloc>
       <yloc>256</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_delete_json] Table input</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>Dummy DB Connection</connection>
-    <sql/>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>304</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_delete_json] Input steps metrics</name>
-    <type>StepsMetrics</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <steps>
-      <step>
-        <name>[template_table_to_table_delete_json] Table input</name>
-        <copyNr>0</copyNr>
-        <stepRequired>N</stepRequired>
-      </step>
-    </steps>
-    <stepnamefield>Step name</stepnamefield>
-    <stepidfield>Step id</stepidfield>
-    <steplinesinputfield>Lines input</steplinesinputfield>
-    <steplinesoutputfield>Lines output</steplinesoutputfield>
-    <steplinesreadfield>Lines read</steplinesreadfield>
-    <steplinesupdatedfield>Lines updated</steplinesupdatedfield>
-    <steplineswrittentfield>Lines written</steplineswrittentfield>
-    <steplineserrorsfield>Lines rejected</steplineserrorsfield>
-    <stepsecondsfield>Duration</stepsecondsfield>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>704</xloc>
-      <yloc>96</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -962,53 +839,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1136</xloc>
+      <xloc>736</xloc>
       <yloc>96</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_delete_json] Set input line stats variables</name>
-    <type>SetVariable</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <field_name>Lines input</field_name>
-        <variable_name>input_rows_read</variable_name>
-        <variable_type>ROOT_JOB</variable_type>
-        <default_value/>
-      </field>
-      <field>
-        <field_name>Duration</field_name>
-        <variable_name>input_step_duration</variable_name>
-        <variable_type>ROOT_JOB</variable_type>
-        <default_value/>
-      </field>
-    </fields>
-    <use_formatting>Y</use_formatting>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>704</xloc>
-      <yloc>224</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_delete_json] Set output line stats variables applicable to this process</name>
+    <name>[template_table_to_table_delete_json] Set lines_written variable</name>
     <type>SetVariable</type>
     <description/>
     <distribute>Y</distribute>
@@ -1022,38 +859,8 @@
       <field>
         <field_name>Lines written</field_name>
         <variable_name>lines_written</variable_name>
-        <variable_type>ROOT_JOB</variable_type>
-        <default_value>0</default_value>
-      </field>
-      <field>
-        <field_name>hardcoded_zero</field_name>
-        <variable_name>output_rows_inserted</variable_name>
-        <variable_type>ROOT_JOB</variable_type>
-        <default_value>0</default_value>
-      </field>
-      <field>
-        <field_name>hardcoded_zero</field_name>
-        <variable_name>output_rows_updated</variable_name>
-        <variable_type>ROOT_JOB</variable_type>
-        <default_value>0</default_value>
-      </field>
-      <field>
-        <field_name>Lines updated</field_name>
-        <variable_name>output_rows_deleted</variable_name>
-        <variable_type>ROOT_JOB</variable_type>
-        <default_value>0</default_value>
-      </field>
-      <field>
-        <field_name>Lines rejected</field_name>
-        <variable_name>output_rows_rejected</variable_name>
-        <variable_type>ROOT_JOB</variable_type>
-        <default_value>0</default_value>
-      </field>
-      <field>
-        <field_name>Duration</field_name>
-        <variable_name>output_step_duration</variable_name>
-        <variable_type>ROOT_JOB</variable_type>
-        <default_value>0</default_value>
+        <variable_type>GP_JOB</variable_type>
+        <default_value/>
       </field>
     </fields>
     <use_formatting>Y</use_formatting>
@@ -1066,67 +873,31 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1136</xloc>
-      <yloc>256</yloc>
+      <xloc>736</xloc>
+      <yloc>224</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>[template_table_to_table_delete_json] add zero constant for unused fields</name>
-    <type>Constant</type>
+    <name>[template_table_to_table_delete_json] Table input</name>
+    <type>TableInput</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <fields>
-      <field>
-        <name>hardcoded_zero</name>
-        <type>Number</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>0</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1136</xloc>
-      <yloc>176</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[template_table_to_table_insert_json] block error handling until output line stat variables are set</name>
-    <type>BlockUntilStepsFinish</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <steps>
-      <step>
-        <name>[template_table_to_table_delete_json] Set output line stats variables applicable to this process</name>
-        <CopyNr>0</CopyNr>
-      </step>
-    </steps>
+    <connection>Dummy DB Connection</connection>
+    <sql/>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta/>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1137,14 +908,14 @@
     </remotesteps>
     <GUI>
       <xloc>304</xloc>
-      <yloc>384</yloc>
+      <yloc>96</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step_error_handling>
     <error>
       <source_step>[template_table_to_table_delete_json] Delete</source_step>
-      <target_step>[template_table_to_table_insert_json] block error handling until output line stat variables are set</target_step>
+      <target_step>[template_table_to_table_delete_json]  Specify logging fields (non-sensitive)</target_step>
       <is_enabled>Y</is_enabled>
       <nr_valuename/>
       <descriptions_valuename/>
