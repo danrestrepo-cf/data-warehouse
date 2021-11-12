@@ -96,14 +96,18 @@ CREATE TABLE star_common.etl_log (
     controller_job_batch_id INTEGER,
     input_json TEXT,
     output_json TEXT,
-    input_rows_read BIGINT,
-    input_step_duration INTERVAL,
+    input_rows_read BIGINT DEFAULT 0,
+    -- store duration as # of milliseconds then calculate the duration because Pentaho can't write directly to an INTERVAL field by default
+    input_step_duration_ms BIGINT,
+    -- adding ".0" to "1000.0" in the below calculation forces floating-point division (answer is rounded to nearest integer otherwise)
+    input_step_duration INTERVAL GENERATED ALWAYS AS (MAKE_INTERVAL( secs := input_step_duration_ms / 1000.0 )) STORED,
     output_rows_inserted BIGINT DEFAULT 0,
     output_rows_updated BIGINT DEFAULT 0,
     output_rows_deleted BIGINT DEFAULT 0,
     output_rows_rejected BIGINT DEFAULT 0,
     output_total_rows BIGINT GENERATED ALWAYS AS (output_rows_inserted + output_rows_updated + output_rows_deleted + output_rows_rejected) STORED,
-    output_step_duration INTERVAL
+    output_step_duration_ms BIGINT,
+    output_step_duration INTERVAL GENERATED ALWAYS AS (MAKE_INTERVAL( secs := output_step_duration_ms / 1000.0 )) STORED
 );
 
 CREATE INDEX idx_etl_log__etl_batch_id ON star_common.etl_log (etl_batch_id);
