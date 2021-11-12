@@ -428,8 +428,8 @@
     <created_user>-</created_user>
     <created_date>2021/11/05 13:05:15.092</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2021/11/12 10:43:37.992</modified_date>
-    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
+    <modified_date>2021/11/05 13:28:37.996</modified_date>
+    <key_for_session_key/>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
@@ -498,62 +498,18 @@
     </hop>
     <hop>
       <from>[write_initial_etl_log_output] add "starting" status constant</from>
-      <to>[write_initial_etl_log_output] write initial data to etl_log</to>
+      <to>[write_initial_etl_log_output]</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>[write_initial_etl_log_output] write initial data to etl_log</from>
+      <from>[write_initial_etl_log_output]</from>
       <to>[write_initial_etl_log_output] save inserted etl_log dwid to global variable</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>[write_initial_etl_log_output] write initial data to etl_log</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>Staging DB Connection</connection>
-    <schema>star_common</schema>
-    <table>etl_log</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>N</use_batch>
-    <specify_fields>N</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>Y</return_keys>
-    <return_field>dwid</return_field>
-    <fields>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>368</xloc>
-      <yloc>416</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>[write_initial_etl_log_output] add "starting" status constant</name>
-    <type>Constant</type>
+    <name>[write_initial_etl_log_output] get starting timestamp and controller batch id</name>
+    <type>SystemInfo</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -564,16 +520,12 @@
     </partitioning>
     <fields>
       <field>
-        <name>status</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>started</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
+        <name>etl_start_date_time</name>
+        <type>system date (fixed)</type>
+      </field>
+      <field>
+        <name>controller_job_batch_id</name>
+        <type>job batch ID</type>
       </field>
     </fields>
     <attributes/>
@@ -586,7 +538,7 @@
     </remotesteps>
     <GUI>
       <xloc>368</xloc>
-      <yloc>304</yloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -654,8 +606,8 @@
     </GUI>
   </step>
   <step>
-    <name>[write_initial_etl_log_output] get starting timestamp and controller batch id</name>
-    <type>SystemInfo</type>
+    <name>[write_initial_etl_log_output] add "starting" status constant</name>
+    <type>Constant</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -666,12 +618,16 @@
     </partitioning>
     <fields>
       <field>
-        <name>etl_start_date_time</name>
-        <type>system date (fixed)</type>
-      </field>
-      <field>
-        <name>controller_job_batch_id</name>
-        <type>job batch ID</type>
+        <name>status</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>started</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
       </field>
     </fields>
     <attributes/>
@@ -684,7 +640,51 @@
     </remotesteps>
     <GUI>
       <xloc>368</xloc>
-      <yloc>192</yloc>
+      <yloc>304</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>[write_initial_etl_log_output]</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>Staging DB Connection</connection>
+    <schema>star_common</schema>
+    <table>etl_log</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>N</use_batch>
+    <specify_fields>N</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>Y</return_keys>
+    <return_field>dwid</return_field>
+    <fields>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>368</xloc>
+      <yloc>416</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
