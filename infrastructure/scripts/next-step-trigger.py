@@ -28,14 +28,38 @@ def execute(event, context):
 
         try:
             sfn = boto3.client('stepfunctions')
-
             state_machine_arn = sfn_arn_prefix + "-" + process_id
-            executions = sfn.list_executions(
+
+            # Return dictionary of step functions named under the *OLD* naming scheme, e.g. SP-100320
+            executions_base = sfn.list_executions(
                 stateMachineArn=state_machine_arn,
                 statusFilter='RUNNING',
                 maxResults=1
             )
-            num_executions = len(executions["executions"])
+
+            # Return dictionary of insert ETL step functions named under the *NEW* naming scheme, e.g. SP-200001-insert
+            executions_insert = sfn.list_executions(
+                stateMachineArn=(state_machine_arn + '-insert'),
+                statusFilter='RUNNING',
+                maxResults=1
+            )
+
+            # Return dictionary of insert-update ETL step functions named under the *NEW* naming scheme, e.g. SP-300001-insert-update
+            executions_insert_update = sfn.list_executions(
+                stateMachineArn=(state_machine_arn + '-insert-update'),
+                statusFilter='RUNNING',
+                maxResults=1
+            )
+
+            # Return dictionary of delete ETL step functions named under the *NEW* naming scheme, e.g. SP-300001-delete
+            executions_delete = sfn.list_executions(
+                stateMachineArn=(state_machine_arn + '-delete'),
+                statusFilter='RUNNING',
+                maxResults=1
+            )
+
+            num_executions = len(executions_base["executions"]) + len(executions_insert["executions"]) + len(
+                executions_insert_update["executions"]) + len(executions_delete["executions"])
             if num_executions == 0:
                 logger.info("Running {}".format(state_machine_arn))
                 sfn.start_execution(
