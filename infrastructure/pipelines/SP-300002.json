@@ -1,8 +1,8 @@
 {
     "Comment": "SP-300002 - ETL to remove records that are no longer valid from loan_fact",
-    "StartAt": "SP-300002",
+    "StartAt": "SP-300001-delete",
     "States": {
-        "SP-300002": {
+        "SP-300001-delete": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -19,14 +19,14 @@
                     }
                 },
                 "Overrides": {
-                    "Memory": "2048",
+                    "Memory": "4096",
                     "ContainerOverrides": [
                         {
-                            "Memory": 2048,
+                            "Memory": 4096,
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-300002"
+                                    "Value": "SP-300001-delete"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

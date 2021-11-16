@@ -1,8 +1,8 @@
 {
     "Comment": "SP-200002 - ETL to delete from loan_lender_user_access",
-    "StartAt": "SP-200002",
+    "StartAt": "SP-200001-delete",
     "States": {
-        "SP-200002": {
+        "SP-200001-delete": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-200002"
+                                    "Value": "SP-200001-delete"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

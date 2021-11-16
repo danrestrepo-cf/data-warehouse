@@ -1,8 +1,8 @@
 {
     "Comment": "SP-300001 - ETL to maintain loan_fact",
-    "StartAt": "SP-300001",
+    "StartAt": "SP-300001-insert-update",
     "States": {
-        "SP-300001": {
+        "SP-300001-insert-update": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-300001"
+                                    "Value": "SP-300001-insert-update"
                                 },
                                 {
                                     "Name": "INPUT_DATA",
@@ -53,12 +53,12 @@
                     "Next": "Success"
                 }
             ],
-            "Default": "SP-200001_message"
+            "Default": "SP-200001-insert_message"
         },
         "Success": {
             "Type": "Succeed"
         },
-        "SP-200001_message": {
+        "SP-200001-insert_message": {
             "Type": "Task",
             "Resource": "arn:aws:states:::sqs:sendMessage",
             "Parameters": {
@@ -68,7 +68,7 @@
                 "MessageAttributes": {
                     "ProcessId": {
                         "DataType": "String",
-                        "StringValue": "SP-200001"
+                        "StringValue": "SP-200001-insert"
                     }
                 },
                 "MessageBody.$": "States.JsonToString($)"

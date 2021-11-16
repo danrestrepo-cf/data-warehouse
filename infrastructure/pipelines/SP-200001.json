@@ -1,8 +1,8 @@
 {
     "Comment": "SP-200001 - ETL to insert into loan_lender_user_access",
-    "StartAt": "SP-200001",
+    "StartAt": "SP-200001-insert",
     "States": {
-        "SP-200001": {
+        "SP-200001-insert": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-200001"
+                                    "Value": "SP-200001-insert"
                                 },
                                 {
                                     "Name": "INPUT_DATA",
