@@ -30,20 +30,20 @@ def execute(event, context):
 
         try:
             sfn = boto3.client('stepfunctions')
-            step_function_arn = sfn_arn_prefix + "-" + process_id
-            step_function_arn_base = sfn_arn_prefix + "-" + process_id_base
+            state_machine_arn = sfn_arn_prefix + "-" + process_id
+            state_machine_arn_base = sfn_arn_prefix + "-" + process_id_base
 
             # Count running step functions named under the *OLD* naming scheme, e.g. SP-100320
-            base_executions = running_execution_counter(step_function_arn_base)
+            base_executions = running_execution_counter(state_machine_arn_base)
 
             # Count running insert ETL step functions named under the *NEW* naming scheme, e.g. SP-200001-insert
-            insert_executions = running_execution_counter(step_function_arn_base, '-insert')
+            insert_executions = running_execution_counter(state_machine_arn_base, '-insert')
 
             # Count running insert-update ETL step functions named under the *NEW* naming scheme, e.g. SP-300001-insert-update
-            insert_update_executions = running_execution_counter(step_function_arn_base, '-insert-update')
+            insert_update_executions = running_execution_counter(state_machine_arn_base, '-insert-update')
 
             # Count running delete ETL step functions named under the *NEW* naming scheme, e.g. SP-300001-delete
-            delete_executions = running_execution_counter(step_function_arn_base, '-delete')
+            delete_executions = running_execution_counter(state_machine_arn_base, '-delete')
 
             num_executions = base_executions[0] + insert_executions[0] + insert_update_executions[0] + delete_executions[0]
             step_function_found_flag = any([base_executions[1], insert_executions[1], insert_update_executions[1],
@@ -51,15 +51,15 @@ def execute(event, context):
 
             if num_executions == 0:
                 if step_function_found_flag:
-                    logger.info("Running {}".format(step_function_arn))
+                    logger.info("Running {}".format(state_machine_arn))
                     sfn.start_execution(
-                        stateMachineArn=step_function_arn,
+                        stateMachineArn=state_machine_arn,
                         input=next_step_input
                     )
                 else:
                     # Do not raise an exception because we do not want this message to go back onto the queue and
                     # cause an infinite loop
-                    logger.error("ERROR: State machine not found: {}".format(step_function_arn))
+                    logger.error("ERROR: State machine not found: {}".format(state_machine_arn))
             else:
                 logger.info("Num running executions is {} for step function {}, sleeping message."
                             .format(num_executions, process_id))
@@ -72,11 +72,11 @@ def execute(event, context):
             pass
 
 
-def running_execution_counter(step_function_arn_base: str, etl_type_suffix: Optional[str]) -> tuple:
+def running_execution_counter(state_machine_arn_base: str, etl_type_suffix: Optional[str]) -> tuple:
     sfn = boto3.client('stepfunctions')
     try:
         executions = sfn.list_executions(
-            stateMachineArn=(step_function_arn_base + etl_type_suffix),
+            stateMachineArn=(state_machine_arn_base + etl_type_suffix),
             statusFilter='RUNNING',
             maxResults=1
         )
