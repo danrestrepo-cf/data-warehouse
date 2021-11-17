@@ -82,7 +82,7 @@ def running_execution_counter(step_function_arn_base: str, etl_type_suffix: Opti
         )
         num_executions = len(executions["executions"])
         step_function_found_flag = True
-    except sfn.client.exceptions.StateMachineDoesNotExist:
+    except sfn.exceptions.StateMachineDoesNotExist:
         num_executions = 0
         step_function_found_flag = False
     return num_executions, step_function_found_flag
