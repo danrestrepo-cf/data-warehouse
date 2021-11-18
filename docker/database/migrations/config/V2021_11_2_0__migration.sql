@@ -1,5 +1,5 @@
 --
--- EDW | SQS and lambda deduplication
+-- EDW | Update lambda to allow only one running ETL per target table at a time
 -- https://app.asana.com/0/0/1201354667788164
 --
 
@@ -19,7 +19,6 @@ UPDATE mdi.process
 UPDATE mdi.process
     SET name = 'SP-300001-delete'
     WHERE name = 'SP-300002';
-
 
 -- mdi.state_machine_definition
 UPDATE mdi.state_machine_definition

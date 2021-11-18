@@ -72,7 +72,7 @@ def execute(event, context):
             pass
 
 
-def running_execution_counter(state_machine_arn_base: str, etl_type_suffix: Optional[str]) -> tuple:
+def running_execution_counter(state_machine_arn_base: str, etl_type_suffix: str = '') -> tuple:
     sfn = boto3.client('stepfunctions')
     try:
         executions = sfn.list_executions(
