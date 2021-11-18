@@ -1,8 +1,6 @@
 import boto3
 import logging
 import os
-from typing import Optional
-
 #
 # Read an SQS message that indicates which job should be triggered next
 #
