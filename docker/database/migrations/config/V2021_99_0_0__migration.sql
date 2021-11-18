@@ -316,6 +316,23 @@ WITH deleted_fields (table_name, field_name) AS (
 )
 SELECT 'Finished removing metadata for deleted fields.';
 
+-- Remove edw_join_definition data for deleted fields: deal_message_log.dmlog_attachment_deal_file_pid
+WITH delete_keys (primary_database_name, primary_schema_name, primary_table_name, target_database_name, target_schema_name,
+                  target_table_name, join_condition) AS (
+    VALUES ('staging', 'history_octane', 'deal_message_log', 'staging', 'history_octane', 'deal_file', 'primary_table.dmlog_attachment_deal_file_pid = target_table.df_pid')
+)
+DELETE
+FROM mdi.edw_join_definition
+    USING delete_keys, mdi.edw_table_definition primary_table, mdi.edw_table_definition target_table
+WHERE delete_keys.primary_database_name = primary_table.database_name
+  AND delete_keys.primary_schema_name = primary_table.schema_name
+  AND delete_keys.primary_table_name = primary_table.table_name
+  AND delete_keys.target_database_name = target_table.database_name
+  AND delete_keys.target_schema_name = target_table.schema_name
+  AND delete_keys.target_table_name = target_table.table_name
+  AND primary_table.dwid = edw_join_definition.primary_edw_table_definition_dwid
+  AND target_table.dwid = edw_join_definition.target_edw_table_definition_dwid
+  AND delete_keys.join_condition = REGEXP_REPLACE( edw_join_definition.join_condition, 't[0-9]+\.', 'target_table.' );
 
 --update table_input_step SQL for updated tables: smart_message, deal_message_log
 WITH updated_table_input_sql (table_name, sql) AS (
