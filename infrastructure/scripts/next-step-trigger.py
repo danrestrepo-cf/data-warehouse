@@ -10,6 +10,8 @@ import os
 #    3. The Step Function to call is the concatenation of ARN Prefix and ProcessID
 #
 def execute(event, context):
+    valid_etl_type_suffixes = ['', '-insert', 'insert-update', '-delete']
+
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
 
@@ -31,37 +33,33 @@ def execute(event, context):
             state_machine_arn = sfn_arn_prefix + "-" + process_id
             state_machine_arn_base = sfn_arn_prefix + "-" + process_id_base
 
-            # Count running step functions named under the *OLD* naming scheme, e.g. SP-100320
-            base_executions = running_execution_counter(state_machine_arn_base)
+            exact_step_function_exists = False
+            num_executions = 0
+            any_step_function_with_base_exists = False
 
-            # Count running insert ETL step functions named under the *NEW* naming scheme, e.g. SP-200001-insert
-            insert_executions = running_execution_counter(state_machine_arn_base, '-insert')
+            for suffix in valid_etl_type_suffixes:
+                execution_check = running_execution_counter(state_machine_arn_base, suffix)
+                if process_id_base + suffix == process_id:
+                    exact_step_function_exists = execution_check[1]
+                num_executions += execution_check[0]
+                any_step_function_with_base_exists = any_step_function_with_base_exists or execution_check[1]
 
-            # Count running insert-update ETL step functions named under the *NEW* naming scheme, e.g. SP-300001-insert-update
-            insert_update_executions = running_execution_counter(state_machine_arn_base, '-insert-update')
-
-            # Count running delete ETL step functions named under the *NEW* naming scheme, e.g. SP-300001-delete
-            delete_executions = running_execution_counter(state_machine_arn_base, '-delete')
-
-            num_executions = base_executions[0] + insert_executions[0] + insert_update_executions[0] + delete_executions[0]
-            step_function_found_flag = any([base_executions[1], insert_executions[1], insert_update_executions[1],
-                                            delete_executions[1]])
-
-            if num_executions == 0:
-                if step_function_found_flag:
-                    logger.info("Running {}".format(state_machine_arn))
-                    sfn.start_execution(
-                        stateMachineArn=state_machine_arn,
-                        input=next_step_input
-                    )
-                else:
-                    # Do not raise an exception because we do not want this message to go back onto the queue and
-                    # cause an infinite loop
-                    logger.error("ERROR: State machine not found: {}".format(state_machine_arn))
-            else:
+            if num_executions > 0:
                 logger.info("Num running executions is {} for step function {}, sleeping message."
                             .format(num_executions, process_id))
                 raise Exception("At least one execution of step function {} is running".format(process_id))
+            elif not any_step_function_with_base_exists:
+                # Do not raise an exception because we do not want this message to go back onto the queue and
+                # cause an infinite loop
+                logger.error("ERROR: No state machine with base process name {} exists".format(process_id_base))
+            elif not exact_step_function_exists:
+                logger.error("ERROR: State machine not found: {}".format(state_machine_arn))
+            else:
+                logger.info("Running {}".format(state_machine_arn))
+                sfn.start_execution(
+                    stateMachineArn=state_machine_arn,
+                    input=next_step_input
+                )
         except:
             logger.error("Failed to trigger {}".format(process_id))
             raise
