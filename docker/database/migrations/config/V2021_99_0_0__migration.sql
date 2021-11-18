@@ -206,6 +206,33 @@ WHERE staging_table.dmloga_pid IS NULL
 )
 SELECT 'Finished inserting metadata for new tables.';
 
+
+--add new join definitions for new tables: smart_message_available_attachment, deal_message_log_attachment
+WITH insert_rows (primary_database_name, primary_schema_name, primary_table_name, target_database_name, target_schema_name,
+                  target_table_name, join_condition) AS (
+    VALUES ('staging', 'history_octane', 'smart_message_available_attachment', 'staging', 'history_octane', 'smart_message', 'primary_table.smaa_smart_message_pid = target_table.smsg_pid')
+         , ('staging', 'history_octane', 'smart_message_available_attachment', 'staging', 'history_octane', 'smart_doc', 'primary_table.smaa_smart_doc_pid = target_table.sd_pid')
+         , ('staging', 'history_octane', 'deal_message_log_attachment', 'staging', 'history_octane', 'deal_message_log', 'primary_table.dmloga_deal_message_log_pid = target_table.dmlog_pid')
+         , ('staging', 'history_octane', 'deal_message_log_attachment', 'staging', 'history_octane', 'deal_file', 'primary_table.dmloga_deal_file_pid = target_table.df_pid')
+)
+INSERT
+INTO mdi.edw_join_definition (dwid, primary_edw_table_definition_dwid, target_edw_table_definition_dwid, join_type, join_condition)
+SELECT NEXTVAL( 'mdi.edw_join_definition_dwid_seq' )
+     , primary_table.dwid
+     , target_table.dwid
+     , 'left'
+     , REPLACE( insert_rows.join_condition, 'target_table', 't' || CURRVAL( 'mdi.edw_join_definition_dwid_seq' ) )
+FROM insert_rows
+JOIN mdi.edw_table_definition primary_table
+     ON insert_rows.primary_database_name = primary_table.database_name
+         AND insert_rows.primary_schema_name = primary_table.schema_name
+         AND insert_rows.primary_table_name = primary_table.table_name
+JOIN mdi.edw_table_definition target_table
+     ON insert_rows.target_database_name = target_table.database_name
+         AND insert_rows.target_schema_name = target_table.schema_name
+         AND insert_rows.target_table_name = target_table.table_name;
+
+
 -- Insert metadata for new columns: smart_message.smsg_allow_custom_text
 WITH new_fields (table_name, field_name, data_type, field_order) AS (
     VALUES ('smart_message', 'smsg_allow_custom_text', 'BOOLEAN', 17)
