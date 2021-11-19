@@ -354,7 +354,7 @@ WHERE delete_keys.primary_database_name = primary_table.database_name
   AND target_table.dwid = edw_join_definition.target_edw_table_definition_dwid
   AND delete_keys.join_condition = REGEXP_REPLACE( edw_join_definition.join_condition, 't[0-9]+\.', 'target_table.' );
 
---update table_input_step SQL for updated tables: smart_message, deal_message_log
+--update table_input_step SQL for updated tables: smart_message, deal_message_log, criteria_snippet, lead_source
 WITH updated_table_input_sql (table_name, sql) AS (
     VALUES ('smart_message', '--finding records to insert into history_octane.smart_message
 SELECT staging_table.smsg_pid
