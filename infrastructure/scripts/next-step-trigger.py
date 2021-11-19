@@ -38,11 +38,11 @@ def execute(event, context):
             any_step_function_with_base_exists = False
 
             for suffix in valid_etl_type_suffixes:
-                execution_check = running_execution_counter(state_machine_arn_base, suffix)
+                execution, exact_step_function_exists = fetch_running_executions(state_machine_arn_base, suffix)
                 if process_id_base + suffix == process_id:
-                    exact_step_function_exists = execution_check[1]
-                num_executions += execution_check[0]
-                any_step_function_with_base_exists = any_step_function_with_base_exists or execution_check[1]
+                    exact_step_function_exists
+                num_executions += execution
+                any_step_function_with_base_exists = any_step_function_with_base_exists or exact_step_function_exists
 
             if num_executions > 0:
                 logger.info("Num running executions is {} for step function {}, sleeping message."
@@ -68,7 +68,7 @@ def execute(event, context):
             pass
 
 
-def running_execution_counter(state_machine_arn_base: str, etl_type_suffix: str = '') -> tuple:
+def fetch_running_executions(state_machine_arn_base: str, etl_type_suffix: str = '') -> tuple:
     sfn = boto3.client('stepfunctions')
     try:
         executions = sfn.list_executions(
