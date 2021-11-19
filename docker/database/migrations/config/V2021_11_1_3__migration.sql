@@ -3,12 +3,13 @@
 -- https://app.asana.com/0/0/1201374364166630
 --
 
--- Insert metadata for new tables: smart_message_available_attachment
+-- Insert metadata for new tables: smart_message_available_attachment, deal_message_log_attachment, broker_compensation_type
 WITH new_staging_table_definitions AS (
     INSERT INTO mdi.edw_table_definition (database_name, schema_name, table_name,
                                           primary_source_edw_table_definition_dwid)
         VALUES ('staging', 'staging_octane', 'smart_message_available_attachment', NULL)
              , ('staging', 'staging_octane', 'deal_message_log_attachment', NULL)
+             , ('staging', 'staging_octane', 'broker_compensation_type', NULL)
         RETURNING dwid, table_name
 )
    , new_history_table_definitions AS (
@@ -42,6 +43,12 @@ WITH new_staging_table_definitions AS (
          , ('history_octane', 'deal_message_log_attachment', 'dmloga_deal_file_pid', 'BIGINT', 4)
          , ('history_octane', 'deal_message_log_attachment', 'data_source_updated_datetime', 'TIMESTAMPTZ', 5)
          , ('history_octane', 'deal_message_log_attachment', 'data_source_deleted_flag', 'BOOLEAN', 6)
+         , ('staging_octane', 'broker_compensation_type', 'code', 'VARCHAR(128)', NULL)
+         , ('staging_octane', 'broker_compensation_type', 'value', 'VARCHAR(1024)', NULL)
+         , ('history_octane', 'broker_compensation_type', 'code', 'VARCHAR(128)', 1)
+         , ('history_octane', 'broker_compensation_type', 'value', 'VARCHAR(1024)', 2)
+         , ('history_octane', 'broker_compensation_type', 'data_source_updated_datetime', 'TIMESTAMPTZ', 3)
+         , ('history_octane', 'broker_compensation_type', 'data_source_deleted_flag', 'BOOLEAN', 4)
 )
    , new_staging_field_definitions AS (
     INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, data_type, key_field_flag)
@@ -66,8 +73,7 @@ WITH new_staging_table_definitions AS (
         JOIN new_history_table_definitions
              ON new_fields.table_name = new_history_table_definitions.table_name
         LEFT JOIN new_staging_field_definitions
-                  ON new_staging_table_definitions.dwid =
-                     new_staging_field_definitions.edw_table_definition_dwid
+                  ON new_staging_table_definitions.dwid = new_staging_field_definitions.edw_table_definition_dwid
                       AND new_fields.field_name = new_staging_field_definitions.field_name
         WHERE new_fields.schema_name = 'history_octane'
 )
@@ -130,6 +136,16 @@ WHERE staging_table.dmloga_pid IS NULL
     WHERE deleted_records.dmloga_pid = history_table.dmloga_pid
       AND deleted_records.data_source_deleted_flag = TRUE
     );')
+         , ('SP-100873', 'broker_compensation_type', 'code', '--finding records to insert into history_octane.broker_compensation_type
+SELECT staging_table.code
+     , staging_table.value
+     , FALSE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM staging_octane.broker_compensation_type staging_table
+LEFT JOIN history_octane.broker_compensation_type history_table
+          ON staging_table.code = history_table.code
+              AND staging_table.value = history_table.value
+WHERE history_table.code IS NULL;')
 )
    , new_processes AS (
     INSERT INTO mdi.process (name, description)
@@ -208,12 +224,14 @@ SELECT 'Finished inserting metadata for new tables.';
 
 
 --add new join definitions for new tables: smart_message_available_attachment, deal_message_log_attachment
+--add new join definitions for new columns: lead_source.lds_broker_compensation_type
 WITH insert_rows (primary_database_name, primary_schema_name, primary_table_name, target_database_name, target_schema_name,
                   target_table_name, join_condition) AS (
     VALUES ('staging', 'history_octane', 'smart_message_available_attachment', 'staging', 'history_octane', 'smart_message', 'primary_table.smaa_smart_message_pid = target_table.smsg_pid')
          , ('staging', 'history_octane', 'smart_message_available_attachment', 'staging', 'history_octane', 'smart_doc', 'primary_table.smaa_smart_doc_pid = target_table.sd_pid')
          , ('staging', 'history_octane', 'deal_message_log_attachment', 'staging', 'history_octane', 'deal_message_log', 'primary_table.dmloga_deal_message_log_pid = target_table.dmlog_pid')
          , ('staging', 'history_octane', 'deal_message_log_attachment', 'staging', 'history_octane', 'deal_file', 'primary_table.dmloga_deal_file_pid = target_table.df_pid')
+         , ('staging', 'history_octane', 'lead_source', 'staging', 'history_octane', 'broker_compensation_type', 'primary_table.lds_broker_compensation_type = target_table.code')
 )
 INSERT
 INTO mdi.edw_join_definition (dwid, primary_edw_table_definition_dwid, target_edw_table_definition_dwid, join_type, join_condition)
@@ -236,6 +254,8 @@ JOIN mdi.edw_table_definition target_table
 -- Insert metadata for new columns: smart_message.smsg_allow_custom_text
 WITH new_fields (table_name, field_name, data_type, field_order) AS (
     VALUES ('smart_message', 'smsg_allow_custom_text', 'BOOLEAN', 17)
+         , ('criteria_snippet', 'crs_compatible_with_smart_charge_apr', 'BOOLEAN', 18)
+         , ('lead_source', 'lds_broker_compensation_type', 'VARCHAR(128)', 14)
 )
    , new_staging_field_definitions AS (
     INSERT INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, data_type, key_field_flag)
@@ -438,6 +458,108 @@ WHERE staging_table.dmlog_pid IS NULL
     SELECT 1
     FROM history_octane.deal_message_log deleted_records
     WHERE deleted_records.dmlog_pid = history_table.dmlog_pid
+      AND deleted_records.data_source_deleted_flag = TRUE
+    );')
+         , ('criteria_snippet', '--finding records to insert into history_octane.criteria_snippet
+SELECT staging_table.crs_pid
+     , staging_table.crs_version
+     , staging_table.crs_account_pid
+     , staging_table.crs_name
+     , staging_table.crs_criteria_pid
+     , staging_table.crs_description
+     , staging_table.crs_deal_child_type
+     , staging_table.crs_compatible_with_smart_charge_case
+     , staging_table.crs_compatible_with_smart_req
+     , staging_table.crs_compatible_with_stack_separator
+     , staging_table.crs_compatible_with_investor_eligibility
+     , staging_table.crs_compatible_with_wf_smart_task
+     , staging_table.crs_compatible_with_wf_outcome
+     , staging_table.crs_compatible_with_wf_smart_process
+     , staging_table.crs_compatible_with_smart_doc
+     , staging_table.crs_compatible_with_smart_doc_validity_date_case
+     , staging_table.crs_compatible_with_smart_charge_apr
+     , FALSE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM staging_octane.criteria_snippet staging_table
+LEFT JOIN history_octane.criteria_snippet history_table
+          ON staging_table.crs_pid = history_table.crs_pid
+              AND staging_table.crs_version = history_table.crs_version
+WHERE history_table.crs_pid IS NULL
+UNION ALL
+SELECT history_table.crs_pid
+     , history_table.crs_version + 1
+     , history_table.crs_account_pid
+     , history_table.crs_name
+     , history_table.crs_criteria_pid
+     , history_table.crs_description
+     , history_table.crs_deal_child_type
+     , history_table.crs_compatible_with_smart_charge_case
+     , history_table.crs_compatible_with_smart_req
+     , history_table.crs_compatible_with_stack_separator
+     , history_table.crs_compatible_with_investor_eligibility
+     , history_table.crs_compatible_with_wf_smart_task
+     , history_table.crs_compatible_with_wf_outcome
+     , history_table.crs_compatible_with_wf_smart_process
+     , history_table.crs_compatible_with_smart_doc
+     , history_table.crs_compatible_with_smart_doc_validity_date_case
+     , history_table.crs_compatible_with_smart_charge_apr
+     , TRUE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM history_octane.criteria_snippet history_table
+LEFT JOIN staging_octane.criteria_snippet staging_table
+          ON staging_table.crs_pid = history_table.crs_pid
+WHERE staging_table.crs_pid IS NULL
+  AND NOT EXISTS(
+    SELECT 1
+    FROM history_octane.criteria_snippet deleted_records
+    WHERE deleted_records.crs_pid = history_table.crs_pid
+      AND deleted_records.data_source_deleted_flag = TRUE
+    );')
+         , ('lead_source', '--finding records to insert into history_octane.lead_source
+SELECT staging_table.lds_pid
+     , staging_table.lds_version
+     , staging_table.lds_account_pid
+     , staging_table.lds_channel_pid
+     , staging_table.lds_lead_source_name
+     , staging_table.lds_mortech_lead_source_id
+     , staging_table.lds_lead_source_id
+     , staging_table.lds_active
+     , staging_table.lds_lead_id_required
+     , staging_table.lds_zero_margin_allowed
+     , staging_table.lds_mortech_account_pid
+     , staging_table.lds_training_only
+     , staging_table.lds_broker_compensation_type
+     , FALSE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM staging_octane.lead_source staging_table
+LEFT JOIN history_octane.lead_source history_table
+          ON staging_table.lds_pid = history_table.lds_pid
+              AND staging_table.lds_version = history_table.lds_version
+WHERE history_table.lds_pid IS NULL
+UNION ALL
+SELECT history_table.lds_pid
+     , history_table.lds_version + 1
+     , history_table.lds_account_pid
+     , history_table.lds_channel_pid
+     , history_table.lds_lead_source_name
+     , history_table.lds_mortech_lead_source_id
+     , history_table.lds_lead_source_id
+     , history_table.lds_active
+     , history_table.lds_lead_id_required
+     , history_table.lds_zero_margin_allowed
+     , history_table.lds_mortech_account_pid
+     , history_table.lds_training_only
+     , history_table.lds_broker_compensation_type
+     , TRUE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM history_octane.lead_source history_table
+LEFT JOIN staging_octane.lead_source staging_table
+          ON staging_table.lds_pid = history_table.lds_pid
+WHERE staging_table.lds_pid IS NULL
+  AND NOT EXISTS(
+    SELECT 1
+    FROM history_octane.lead_source deleted_records
+    WHERE deleted_records.lds_pid = history_table.lds_pid
       AND deleted_records.data_source_deleted_flag = TRUE
     );')
 )
