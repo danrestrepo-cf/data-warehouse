@@ -33,6 +33,20 @@ CREATE INDEX idx_deal_message_log_attachment__pid_version ON staging_octane.deal
 ALTER TABLE staging_octane.deal_message_log
     DROP COLUMN dmlog_attachment_deal_file_pid;
 
+ALTER TABLE staging_octane.criteria_snippet
+    ADD COLUMN crs_compatible_with_smart_charge_apr BOOLEAN;
+
+CREATE TABLE staging_octane.broker_compensation_type (
+    code VARCHAR(128),
+    value VARCHAR(1024),
+    CONSTRAINT pk_broker_compensation_type
+        PRIMARY KEY (code)
+);
+
+ALTER TABLE staging_octane.lead_source
+    ADD COLUMN lds_broker_compensation_type VARCHAR(128);
+
+
 --history_octane changes
 
 ALTER TABLE history_octane.smart_message
@@ -79,3 +93,22 @@ CREATE INDEX idx_deal_message_log_attachment__pid_version ON history_octane.deal
 CREATE INDEX fk_deal_message_log_attachment_1 ON history_octane.deal_message_log_attachment (dmloga_deal_message_log_pid);
 
 CREATE INDEX fk_deal_message_log_attachment_2 ON history_octane.deal_message_log_attachment (dmloga_deal_file_pid);
+
+ALTER TABLE history_octane.criteria_snippet
+    ADD COLUMN crs_compatible_with_smart_charge_apr BOOLEAN;
+
+CREATE TABLE history_octane.broker_compensation_type (
+    code VARCHAR(128),
+    value VARCHAR(1024),
+    data_source_updated_datetime timestamptz,
+    data_source_deleted_flag BOOLEAN
+);
+
+CREATE INDEX idx_broker_compensation_type__data_source_updated_datetime ON history_octane.broker_compensation_type (data_source_updated_datetime);
+
+CREATE INDEX idx_broker_compensation_type__data_source_deleted_flag ON history_octane.broker_compensation_type (data_source_deleted_flag);
+
+ALTER TABLE history_octane.lead_source
+    ADD COLUMN lds_broker_compensation_type VARCHAR(128);
+
+CREATE INDEX fkt_lds_broker_compensation_type ON history_octane.lead_source (lds_broker_compensation_type);
