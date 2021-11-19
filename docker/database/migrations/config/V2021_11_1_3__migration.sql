@@ -251,7 +251,7 @@ JOIN mdi.edw_table_definition target_table
          AND insert_rows.target_table_name = target_table.table_name;
 
 
--- Insert metadata for new columns: smart_message.smsg_allow_custom_text
+-- Insert metadata for new columns: smart_message.smsg_allow_custom_text, crs_compatible_with_smart_charge_apr, lds_broker_compensation_type
 WITH new_fields (table_name, field_name, data_type, field_order) AS (
     VALUES ('smart_message', 'smsg_allow_custom_text', 'BOOLEAN', 17)
          , ('criteria_snippet', 'crs_compatible_with_smart_charge_apr', 'BOOLEAN', 18)
