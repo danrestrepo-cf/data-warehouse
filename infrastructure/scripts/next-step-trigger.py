@@ -34,26 +34,26 @@ def execute(event, context):
             state_machine_arn_base = sfn_arn_prefix + "-" + process_id_base
 
             exact_step_function_exists = False
-            num_executions = 0
+            any_step_function_with_base_has_executions = False
             any_step_function_with_base_exists = False
 
             for suffix in valid_etl_type_suffixes:
-                execution, exact_step_function_exists = fetch_running_executions(state_machine_arn_base, suffix)
+                has_executions, step_function_exists = fetch_running_executions(state_machine_arn_base, suffix)
                 if process_id_base + suffix == process_id:
-                    exact_step_function_exists
-                num_executions += execution
-                any_step_function_with_base_exists = any_step_function_with_base_exists or exact_step_function_exists
+                    exact_step_function_exists = step_function_exists
+                any_step_function_with_base_has_executions = has_executions or any_step_function_with_base_has_executions
+                any_step_function_with_base_exists = any_step_function_with_base_exists or step_function_exists
 
-            if num_executions > 0:
-                logger.info("Num running executions is {} for step function {}, sleeping message."
-                            .format(num_executions, process_id))
+            if any_step_function_with_base_has_executions:
+                logger.info("Step function with base process_id {} is running, sleeping message."
+                            .format(process_id_base))
                 raise Exception("At least one execution of step function {} is running".format(process_id))
             elif not any_step_function_with_base_exists:
                 # Do not raise an exception because we do not want this message to go back onto the queue and
                 # cause an infinite loop
-                logger.error("ERROR: No state machine with base process name {} exists".format(process_id_base))
+                logger.error("No state machine with base process name {} exists".format(process_id_base))
             elif not exact_step_function_exists:
-                logger.error("ERROR: State machine not found: {}".format(state_machine_arn))
+                logger.error("State machine not found: {}".format(state_machine_arn))
             else:
                 logger.info("Running {}".format(state_machine_arn))
                 sfn.start_execution(
@@ -76,9 +76,9 @@ def fetch_running_executions(state_machine_arn_base: str, etl_type_suffix: str =
             statusFilter='RUNNING',
             maxResults=1
         )
-        num_executions = len(executions["executions"])
+        has_executions = len(executions["executions"]) > 0
         step_function_found_flag = True
     except sfn.exceptions.StateMachineDoesNotExist:
-        num_executions = 0
+        has_executions = False
         step_function_found_flag = False
-    return num_executions, step_function_found_flag
+    return has_executions, step_function_found_flag
