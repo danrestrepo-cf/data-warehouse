@@ -63,10 +63,10 @@
             "End": true,
             "Branches": [
                 {
-                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200001",
-                    "StartAt": "SP-200001_message",
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200001-delete",
+                    "StartAt": "SP-200001-delete_message",
                     "States": {
-                        "SP-200001_message": {
+                        "SP-200001-delete_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
@@ -76,7 +76,7 @@
                                 "MessageAttributes": {
                                     "ProcessId": {
                                         "DataType": "String",
-                                        "StringValue": "SP-200001"
+                                        "StringValue": "SP-200001-delete"
                                     }
                                 },
                                 "MessageBody.$": "States.JsonToString($)"
@@ -86,10 +86,10 @@
                     }
                 },
                 {
-                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200002",
-                    "StartAt": "SP-200002_message",
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200001-insert",
+                    "StartAt": "SP-200001-insert_message",
                     "States": {
-                        "SP-200002_message": {
+                        "SP-200001-insert_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
@@ -99,7 +99,7 @@
                                 "MessageAttributes": {
                                     "ProcessId": {
                                         "DataType": "String",
-                                        "StringValue": "SP-200002"
+                                        "StringValue": "SP-200001-insert"
                                     }
                                 },
                                 "MessageBody.$": "States.JsonToString($)"
