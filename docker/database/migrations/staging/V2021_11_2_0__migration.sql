@@ -559,6 +559,12 @@ ALTER TABLE history_octane.branch_status_type
 
 CREATE INDEX idx_branch_status_type__etl_batch_id ON history_octane.branch_status_type (etl_batch_id);
 
+--adding etl_batch_id to history_octane.broker_compensation_type
+ALTER TABLE history_octane.broker_compensation_type
+    ADD COLUMN etl_batch_id TEXT;
+
+CREATE INDEX idx_broker_compensation_type__etl_batch_id ON history_octane.broker_compensation_type (etl_batch_id);
+
 --adding etl_batch_id to history_octane.building_status_type
 ALTER TABLE history_octane.building_status_type
     ADD COLUMN etl_batch_id TEXT;
@@ -1332,6 +1338,12 @@ ALTER TABLE history_octane.deal_message_log
     ADD COLUMN etl_batch_id TEXT;
 
 CREATE INDEX idx_deal_message_log__etl_batch_id ON history_octane.deal_message_log (etl_batch_id);
+
+--adding etl_batch_id to history_octane.deal_message_log_attachment
+ALTER TABLE history_octane.deal_message_log_attachment
+    ADD COLUMN etl_batch_id TEXT;
+
+CREATE INDEX idx_deal_message_log_attachment__etl_batch_id ON history_octane.deal_message_log_attachment (etl_batch_id);
 
 --adding etl_batch_id to history_octane.deal_note
 ALTER TABLE history_octane.deal_note
@@ -4566,6 +4578,12 @@ ALTER TABLE history_octane.smart_message
     ADD COLUMN etl_batch_id TEXT;
 
 CREATE INDEX idx_smart_message__etl_batch_id ON history_octane.smart_message (etl_batch_id);
+
+--adding etl_batch_id to history_octane.smart_message_available_attachment
+ALTER TABLE history_octane.smart_message_available_attachment
+    ADD COLUMN etl_batch_id TEXT;
+
+CREATE INDEX idx_smart_message_available_attachment__etl_batch_id ON history_octane.smart_message_available_attachment (etl_batch_id);
 
 --adding etl_batch_id to history_octane.smart_message_delivery_type
 ALTER TABLE history_octane.smart_message_delivery_type
