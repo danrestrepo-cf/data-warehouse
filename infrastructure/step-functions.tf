@@ -26,6 +26,7 @@ module schedule-trigger {
   name               = "${local.bi-prefix}-${each.key}"
   state-machine-arn  = aws_sfn_state_machine.this[each.key].arn
   schedule           = each.value
+  enabled            = false
   trigger-role-arn   = data.aws_iam_role.event-trigger.arn
   trigger-input-json = jsonencode({
     load_type = "FULL_CHECK"
