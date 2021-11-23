@@ -1,0 +1,25 @@
+name: lead_supplemental_margin_row
+primary_key:
+- lsmr_pid
+foreign_keys:
+  fk_lead_supplemental_margin_row_1:
+    columns:
+    - lsmr_lead_supplemental_margin_table_pid
+    references:
+      columns:
+      - lsmt_pid
+      schema: staging_octane
+      table: lead_supplemental_margin_table
+columns:
+  lsmr_pid:
+    data_type: BIGINT
+  lsmr_version:
+    data_type: INTEGER
+  lsmr_lead_supplemental_margin_table_pid:
+    data_type: BIGINT
+  lsmr_over_anchor_rate_percent:
+    data_type: NUMERIC(11,9)
+  lsmr_company_supplemental_margin_percent:
+    data_type: NUMERIC(11,9)
+  lsmr_branch_supplemental_margin_percent:
+    data_type: NUMERIC(11,9)

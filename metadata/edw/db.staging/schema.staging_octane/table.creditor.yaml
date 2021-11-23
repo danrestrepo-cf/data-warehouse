@@ -1,0 +1,89 @@
+name: creditor
+primary_key:
+- crd_pid
+foreign_keys:
+  fk_creditor_1:
+    columns:
+    - crd_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fkt_crd_address_country:
+    columns:
+    - crd_address_country
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: country_type
+  fkt_crd_key_creditor_type:
+    columns:
+    - crd_key_creditor_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: key_creditor_type
+  fkt_crd_payoff_auto_teller:
+    columns:
+    - crd_payoff_auto_teller
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_crd_payoff_request_delivery_type:
+    columns:
+    - crd_payoff_request_delivery_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: payoff_request_delivery_type
+columns:
+  crd_pid:
+    data_type: BIGINT
+  crd_version:
+    data_type: INTEGER
+  crd_account_pid:
+    data_type: BIGINT
+  crd_payoff_request_delivery_type:
+    data_type: VARCHAR(128)
+  crd_name:
+    data_type: VARCHAR(128)
+  crd_payoff_phone_1:
+    data_type: VARCHAR(32)
+  crd_payoff_phone_1_extension:
+    data_type: VARCHAR(16)
+  crd_payoff_phone_2:
+    data_type: VARCHAR(32)
+  crd_payoff_phone_2_extension:
+    data_type: VARCHAR(16)
+  crd_payoff_fax:
+    data_type: VARCHAR(32)
+  crd_payoff_email:
+    data_type: VARCHAR(256)
+  crd_payoff_auto_teller:
+    data_type: VARCHAR(128)
+  crd_last_updated:
+    data_type: DATE
+  crd_last_updated_by:
+    data_type: VARCHAR(128)
+  crd_payoff_notes:
+    data_type: VARCHAR(1024)
+  crd_address_street1:
+    data_type: VARCHAR(128)
+  crd_address_street2:
+    data_type: VARCHAR(128)
+  crd_address_city:
+    data_type: VARCHAR(128)
+  crd_address_state:
+    data_type: VARCHAR(128)
+  crd_address_postal_code:
+    data_type: VARCHAR(128)
+  crd_address_country:
+    data_type: VARCHAR(128)
+  crd_key_creditor_type:
+    data_type: VARCHAR(128)

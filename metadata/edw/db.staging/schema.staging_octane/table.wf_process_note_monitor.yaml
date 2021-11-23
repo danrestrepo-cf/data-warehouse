@@ -1,0 +1,29 @@
+name: wf_process_note_monitor
+primary_key:
+- wfpnm_pid
+foreign_keys:
+  fk_wf_process_note_monitor_1:
+    columns:
+    - wfpnm_wf_process_note_pid
+    references:
+      columns:
+      - wfpn_pid
+      schema: staging_octane
+      table: wf_process_note
+  fk_wf_process_note_monitor_2:
+    columns:
+    - wfpnm_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+columns:
+  wfpnm_pid:
+    data_type: BIGINT
+  wfpnm_version:
+    data_type: INTEGER
+  wfpnm_wf_process_note_pid:
+    data_type: BIGINT
+  wfpnm_lender_user_pid:
+    data_type: BIGINT

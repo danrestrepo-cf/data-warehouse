@@ -1,0 +1,153 @@
+name: hmda_report_request
+primary_source_table: staging.staging_octane.hmda_report_request
+primary_key:
+- hrr_pid
+- hrr_version
+foreign_keys:
+  fk_hmda_report_request_1:
+    columns:
+    - hrr_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+  fk_hmda_report_request_2:
+    columns:
+    - hrr_repository_file_pid
+    references:
+      columns:
+      - rf_pid
+      schema: history_octane
+      table: repository_file
+  fkt_hrr_request_status_type:
+    columns:
+    - hrr_request_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: report_request_status_type
+columns:
+  hrr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.hrr_pid
+  hrr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.hrr_version
+  hrr_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.hrr_account_pid
+  hrr_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.hrr_create_datetime
+  hrr_start_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.hrr_start_datetime
+  hrr_end_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.hrr_end_datetime
+  hrr_request_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.hrr_request_status_type
+  hrr_request_status_messages:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.hrr_request_status_messages
+  hrr_requester_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.hrr_requester_unparsed_name
+  hrr_row_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.hrr_row_count
+  hrr_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.hrr_from_date
+  hrr_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.hrr_through_date
+  hrr_error_protection:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.hrr_error_protection
+  hrr_error_limit:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.hrr_error_limit
+  hrr_repository_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.hrr_repository_file_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100123:
+    input_type: table
+    output_type: insert
+    json_output_field: hrr_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.hmda_report_request
+      SELECT staging_table.hrr_pid
+           , staging_table.hrr_version
+           , staging_table.hrr_account_pid
+           , staging_table.hrr_create_datetime
+           , staging_table.hrr_start_datetime
+           , staging_table.hrr_end_datetime
+           , staging_table.hrr_request_status_type
+           , staging_table.hrr_request_status_messages
+           , staging_table.hrr_requester_unparsed_name
+           , staging_table.hrr_row_count
+           , staging_table.hrr_from_date
+           , staging_table.hrr_through_date
+           , staging_table.hrr_error_protection
+           , staging_table.hrr_error_limit
+           , staging_table.hrr_repository_file_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.hmda_report_request staging_table
+      LEFT JOIN history_octane.hmda_report_request history_table
+                ON staging_table.hrr_pid = history_table.hrr_pid
+                    AND staging_table.hrr_version = history_table.hrr_version
+      WHERE history_table.hrr_pid IS NULL
+      UNION ALL
+      SELECT history_table.hrr_pid
+           , history_table.hrr_version + 1
+           , history_table.hrr_account_pid
+           , history_table.hrr_create_datetime
+           , history_table.hrr_start_datetime
+           , history_table.hrr_end_datetime
+           , history_table.hrr_request_status_type
+           , history_table.hrr_request_status_messages
+           , history_table.hrr_requester_unparsed_name
+           , history_table.hrr_row_count
+           , history_table.hrr_from_date
+           , history_table.hrr_through_date
+           , history_table.hrr_error_protection
+           , history_table.hrr_error_limit
+           , history_table.hrr_repository_file_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.hmda_report_request history_table
+      LEFT JOIN staging_octane.hmda_report_request staging_table
+                ON staging_table.hrr_pid = history_table.hrr_pid
+      WHERE staging_table.hrr_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.hmda_report_request deleted_records
+          WHERE deleted_records.hrr_pid = history_table.hrr_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

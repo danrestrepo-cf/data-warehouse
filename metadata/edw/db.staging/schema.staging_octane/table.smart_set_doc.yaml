@@ -1,0 +1,31 @@
+name: smart_set_doc
+primary_key:
+- sstd_pid
+foreign_keys:
+  fk_smart_set_doc_1:
+    columns:
+    - sstd_smart_doc_set_pid
+    references:
+      columns:
+      - sdst_pid
+      schema: staging_octane
+      table: smart_doc_set
+  fk_smart_set_doc_2:
+    columns:
+    - sstd_smart_doc_pid
+    references:
+      columns:
+      - sd_pid
+      schema: staging_octane
+      table: smart_doc
+columns:
+  sstd_pid:
+    data_type: BIGINT
+  sstd_version:
+    data_type: INTEGER
+  sstd_smart_doc_set_pid:
+    data_type: BIGINT
+  sstd_smart_doc_pid:
+    data_type: BIGINT
+  sstd_sequence:
+    data_type: INTEGER

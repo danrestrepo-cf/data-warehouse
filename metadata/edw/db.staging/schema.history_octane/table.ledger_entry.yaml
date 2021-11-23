@@ -1,0 +1,299 @@
+name: ledger_entry
+primary_source_table: staging.staging_octane.ledger_entry
+primary_key:
+- le_pid
+- le_version
+foreign_keys:
+  fk_ledger_entry_1:
+    columns:
+    - le_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+  fk_ledger_entry_2:
+    columns:
+    - le_source_org_node_pid
+    references:
+      columns:
+      - on_pid
+      schema: history_octane
+      table: org_node
+  fk_ledger_entry_3:
+    columns:
+    - le_payee_org_node_pid
+    references:
+      columns:
+      - on_pid
+      schema: history_octane
+      table: org_node
+  fk_ledger_entry_4:
+    columns:
+    - le_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: history_octane
+      table: deal
+  fk_ledger_entry_5:
+    columns:
+    - le_monthly_ledger_book_pid
+    references:
+      columns:
+      - lbk_pid
+      schema: history_octane
+      table: ledger_book
+  fk_ledger_entry_6:
+    columns:
+    - le_payroll_ledger_book_pid
+    references:
+      columns:
+      - lbk_pid
+      schema: history_octane
+      table: ledger_book
+  fk_ledger_entry_7:
+    columns:
+    - le_payee_org_lineage_pid
+    references:
+      columns:
+      - ol_pid
+      schema: history_octane
+      table: org_lineage
+  fk_ledger_entry_8:
+    columns:
+    - le_source_org_lineage_pid
+    references:
+      columns:
+      - ol_pid
+      schema: history_octane
+      table: org_lineage
+  fk_ledger_entry_9:
+    columns:
+    - le_smart_ledger_plan_case_version_pid
+    references:
+      columns:
+      - slpcv_pid
+      schema: history_octane
+      table: smart_ledger_plan_case_version
+  fkt_le_ledger_entry_decision_status_type:
+    columns:
+    - le_ledger_entry_decision_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: ledger_entry_decision_status_type
+  fkt_le_ledger_entry_source_type:
+    columns:
+    - le_ledger_entry_source_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: ledger_entry_source_type
+  fkt_le_ledger_entry_type:
+    columns:
+    - le_ledger_entry_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: ledger_entry_type
+  fkt_le_loan_position_type:
+    columns:
+    - le_loan_position_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: loan_position_type
+columns:
+  le_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.le_pid
+  le_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.le_version
+  le_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.le_account_pid
+  le_ledger_entry_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.le_ledger_entry_type
+  le_ledger_entry_source_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.le_ledger_entry_source_type
+  le_estimate:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.le_estimate
+  le_ledger_entry_decision_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.le_ledger_entry_decision_status_type
+  le_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.le_create_datetime
+  le_entry_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.le_entry_amount
+  le_source_org_node_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.le_source_org_node_pid
+  le_payee_org_node_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.le_payee_org_node_pid
+  le_payee_org_lineage_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.le_payee_org_lineage_pid
+  le_source_org_lineage_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.le_source_org_lineage_pid
+  le_org_lineage_source_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.le_org_lineage_source_date
+  le_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.le_deal_pid
+  le_loan_position_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.le_loan_position_type
+  le_los_loan_id:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.le_los_loan_id
+  le_notes:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.le_notes
+  le_monthly_ledger_book_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.le_monthly_ledger_book_pid
+  le_payroll_ledger_book_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.le_payroll_ledger_book_pid
+  le_ledger_book_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.le_ledger_book_datetime
+  le_expense_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.le_expense_date
+  le_reversal:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.le_reversal
+  le_passthrough:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.le_passthrough
+  le_smart_ledger_plan_case_version_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.le_smart_ledger_plan_case_version_pid
+  le_synthetic_unique:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.le_synthetic_unique
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100214:
+    input_type: table
+    output_type: insert
+    json_output_field: le_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.ledger_entry
+      SELECT staging_table.le_pid
+           , staging_table.le_version
+           , staging_table.le_account_pid
+           , staging_table.le_ledger_entry_type
+           , staging_table.le_ledger_entry_source_type
+           , staging_table.le_estimate
+           , staging_table.le_ledger_entry_decision_status_type
+           , staging_table.le_create_datetime
+           , staging_table.le_entry_amount
+           , staging_table.le_source_org_node_pid
+           , staging_table.le_payee_org_node_pid
+           , staging_table.le_payee_org_lineage_pid
+           , staging_table.le_source_org_lineage_pid
+           , staging_table.le_org_lineage_source_date
+           , staging_table.le_deal_pid
+           , staging_table.le_loan_position_type
+           , staging_table.le_los_loan_id
+           , staging_table.le_notes
+           , staging_table.le_monthly_ledger_book_pid
+           , staging_table.le_payroll_ledger_book_pid
+           , staging_table.le_ledger_book_datetime
+           , staging_table.le_expense_date
+           , staging_table.le_reversal
+           , staging_table.le_passthrough
+           , staging_table.le_smart_ledger_plan_case_version_pid
+           , staging_table.le_synthetic_unique
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.ledger_entry staging_table
+      LEFT JOIN history_octane.ledger_entry history_table
+                ON staging_table.le_pid = history_table.le_pid
+                    AND staging_table.le_version = history_table.le_version
+      WHERE history_table.le_pid IS NULL
+      UNION ALL
+      SELECT history_table.le_pid
+           , history_table.le_version + 1
+           , history_table.le_account_pid
+           , history_table.le_ledger_entry_type
+           , history_table.le_ledger_entry_source_type
+           , history_table.le_estimate
+           , history_table.le_ledger_entry_decision_status_type
+           , history_table.le_create_datetime
+           , history_table.le_entry_amount
+           , history_table.le_source_org_node_pid
+           , history_table.le_payee_org_node_pid
+           , history_table.le_payee_org_lineage_pid
+           , history_table.le_source_org_lineage_pid
+           , history_table.le_org_lineage_source_date
+           , history_table.le_deal_pid
+           , history_table.le_loan_position_type
+           , history_table.le_los_loan_id
+           , history_table.le_notes
+           , history_table.le_monthly_ledger_book_pid
+           , history_table.le_payroll_ledger_book_pid
+           , history_table.le_ledger_book_datetime
+           , history_table.le_expense_date
+           , history_table.le_reversal
+           , history_table.le_passthrough
+           , history_table.le_smart_ledger_plan_case_version_pid
+           , history_table.le_synthetic_unique
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.ledger_entry history_table
+      LEFT JOIN staging_octane.ledger_entry staging_table
+                ON staging_table.le_pid = history_table.le_pid
+      WHERE staging_table.le_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.ledger_entry deleted_records
+          WHERE deleted_records.le_pid = history_table.le_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

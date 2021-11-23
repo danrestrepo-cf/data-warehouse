@@ -1,0 +1,79 @@
+name: role_export_permission
+primary_source_table: staging.staging_octane.role_export_permission
+primary_key:
+- rep_pid
+- rep_version
+foreign_keys:
+  fk_role_export_permission_1:
+    columns:
+    - rep_role_pid
+    references:
+      columns:
+      - r_pid
+      schema: history_octane
+      table: role
+  fkt_rep_export_permission_type:
+    columns:
+    - rep_export_permission_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: export_permission_type
+columns:
+  rep_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rep_pid
+  rep_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.rep_version
+  rep_role_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rep_role_pid
+  rep_export_permission_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.rep_export_permission_type
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100236:
+    input_type: table
+    output_type: insert
+    json_output_field: rep_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.role_export_permission
+      SELECT staging_table.rep_pid
+           , staging_table.rep_version
+           , staging_table.rep_role_pid
+           , staging_table.rep_export_permission_type
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.role_export_permission staging_table
+      LEFT JOIN history_octane.role_export_permission history_table
+                ON staging_table.rep_pid = history_table.rep_pid
+                    AND staging_table.rep_version = history_table.rep_version
+      WHERE history_table.rep_pid IS NULL
+      UNION ALL
+      SELECT history_table.rep_pid
+           , history_table.rep_version + 1
+           , history_table.rep_role_pid
+           , history_table.rep_export_permission_type
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.role_export_permission history_table
+      LEFT JOIN staging_octane.role_export_permission staging_table
+                ON staging_table.rep_pid = history_table.rep_pid
+      WHERE staging_table.rep_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.role_export_permission deleted_records
+          WHERE deleted_records.rep_pid = history_table.rep_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

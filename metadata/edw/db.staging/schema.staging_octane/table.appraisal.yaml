@@ -1,0 +1,345 @@
+name: appraisal
+primary_key:
+- apr_pid
+foreign_keys:
+  fk_appraisal_1:
+    columns:
+    - apr_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: staging_octane
+      table: deal
+  fk_apr_hve_confidence_level_type:
+    columns:
+    - apr_hve_confidence_level_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: hve_confidence_level_type
+  fkt_apr_appraisal_condition_type:
+    columns:
+    - apr_appraisal_condition_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: appraisal_condition_type
+  fkt_apr_appraisal_order_status_type:
+    columns:
+    - apr_appraisal_order_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: appraisal_order_status_type
+  fkt_apr_appraisal_purpose_type:
+    columns:
+    - apr_appraisal_purpose_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: appraisal_purpose_type
+  fkt_apr_appraisal_source_type:
+    columns:
+    - apr_appraisal_source_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: appraisal_source_type
+  fkt_apr_appraisal_underwriter_type:
+    columns:
+    - apr_appraisal_underwriter_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: appraisal_underwriter_type
+  fkt_apr_appraiser_address_country:
+    columns:
+    - apr_appraiser_address_country
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: country_type
+  fkt_apr_mortgage_type:
+    columns:
+    - apr_mortgage_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: mortgage_type
+  fkt_apr_neighborhood_location_type:
+    columns:
+    - apr_neighborhood_location_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: neighborhood_location_type
+  fkt_apr_order_appraisal:
+    columns:
+    - apr_order_appraisal
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_apr_payment_type:
+    columns:
+    - apr_payment_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: payment_type
+  fkt_apr_property_address_country:
+    columns:
+    - apr_property_address_country
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: country_type
+  fkt_apr_property_category_type:
+    columns:
+    - apr_property_category_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: property_category_type
+  fkt_apr_road_type:
+    columns:
+    - apr_road_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: road_type
+  fkt_apr_sanitation_type:
+    columns:
+    - apr_sanitation_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: sanitation_type
+  fkt_apr_water_type:
+    columns:
+    - apr_water_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: water_type
+columns:
+  apr_pid:
+    data_type: BIGINT
+  apr_version:
+    data_type: INTEGER
+  apr_appraised_value_amount:
+    data_type: BIGINT
+  apr_effective_date:
+    data_type: DATE
+  apr_deal_pid:
+    data_type: BIGINT
+  apr_decision_appraisal:
+    data_type: BOOLEAN
+  apr_appraisal_condition_type:
+    data_type: VARCHAR(128)
+  apr_appraiser_address_city:
+    data_type: VARCHAR(128)
+  apr_appraiser_address_country:
+    data_type: VARCHAR(128)
+  apr_appraiser_address_postal_code:
+    data_type: VARCHAR(128)
+  apr_appraiser_address_state:
+    data_type: VARCHAR(128)
+  apr_appraiser_address_street1:
+    data_type: VARCHAR(128)
+  apr_appraiser_address_street2:
+    data_type: VARCHAR(128)
+  apr_appraiser_company_name:
+    data_type: VARCHAR(128)
+  apr_appraiser_email:
+    data_type: VARCHAR(256)
+  apr_appraiser_fax:
+    data_type: VARCHAR(32)
+  apr_appraiser_first_name:
+    data_type: VARCHAR(32)
+  apr_appraiser_last_name:
+    data_type: VARCHAR(32)
+  apr_appraiser_middle_name:
+    data_type: VARCHAR(32)
+  apr_appraiser_mobile_phone:
+    data_type: VARCHAR(32)
+  apr_appraiser_name_suffix:
+    data_type: VARCHAR(32)
+  apr_appraiser_office_phone:
+    data_type: VARCHAR(32)
+  apr_appraiser_office_phone_extension:
+    data_type: VARCHAR(16)
+  apr_appraiser_title:
+    data_type: VARCHAR(128)
+  apr_appraiser_license_number:
+    data_type: VARCHAR(128)
+  apr_appraiser_supervisory_license_number:
+    data_type: VARCHAR(128)
+  apr_appraiser_license_state:
+    data_type: VARCHAR(128)
+  apr_appraisal_order_status_type:
+    data_type: VARCHAR(128)
+  apr_appraisal_order_id:
+    data_type: VARCHAR(32)
+  apr_appraisal_order_instructions:
+    data_type: VARCHAR(1024)
+  apr_property_address_city:
+    data_type: VARCHAR(128)
+  apr_property_address_country:
+    data_type: VARCHAR(128)
+  apr_property_address_postal_code:
+    data_type: VARCHAR(128)
+  apr_property_address_state:
+    data_type: VARCHAR(128)
+  apr_property_address_street1:
+    data_type: VARCHAR(128)
+  apr_property_address_street2:
+    data_type: VARCHAR(128)
+  apr_property_county_name:
+    data_type: VARCHAR(128)
+  apr_obtained_from_transfer:
+    data_type: BOOLEAN
+  apr_hud_provided:
+    data_type: BOOLEAN
+  apr_bedroom_count_unit_1:
+    data_type: INTEGER
+  apr_bedroom_count_unit_2:
+    data_type: INTEGER
+  apr_bedroom_count_unit_3:
+    data_type: INTEGER
+  apr_bedroom_count_unit_4:
+    data_type: INTEGER
+  apr_bathroom_count_unit_1:
+    data_type: INTEGER
+  apr_bathroom_count_unit_2:
+    data_type: INTEGER
+  apr_bathroom_count_unit_3:
+    data_type: INTEGER
+  apr_bathroom_count_unit_4:
+    data_type: INTEGER
+  apr_total_room_count_unit_1:
+    data_type: INTEGER
+  apr_total_room_count_unit_2:
+    data_type: INTEGER
+  apr_total_room_count_unit_3:
+    data_type: INTEGER
+  apr_total_room_count_unit_4:
+    data_type: INTEGER
+  apr_gross_living_area_square_feet_unit_1:
+    data_type: INTEGER
+  apr_gross_living_area_square_feet_unit_2:
+    data_type: INTEGER
+  apr_gross_living_area_square_feet_unit_3:
+    data_type: INTEGER
+  apr_gross_living_area_square_feet_unit_4:
+    data_type: INTEGER
+  apr_appraisal_underwriter_type:
+    data_type: VARCHAR(128)
+  apr_ucdp_doc_file_id:
+    data_type: VARCHAR(10)
+  apr_inspection_date:
+    data_type: DATE
+  apr_appraisal_reference_id:
+    data_type: VARCHAR(32)
+  apr_ucdp_ssr_id:
+    data_type: VARCHAR(16)
+  apr_sale_price_amount:
+    data_type: NUMERIC(15,0)
+  apr_property_tax_id:
+    data_type: VARCHAR(128)
+  apr_property_category_type:
+    data_type: VARCHAR(128)
+  apr_cost_to_build_new:
+    data_type: NUMERIC(15,0)
+  apr_monthly_hoa_amount:
+    data_type: NUMERIC(15,2)
+  apr_structure_built_year:
+    data_type: INTEGER
+  apr_structure_built_month:
+    data_type: INTEGER
+  apr_project_name:
+    data_type: VARCHAR(128)
+  apr_road_type:
+    data_type: VARCHAR(128)
+  apr_water_type:
+    data_type: VARCHAR(128)
+  apr_sanitation_type:
+    data_type: VARCHAR(128)
+  apr_neighborhood_location_type:
+    data_type: VARCHAR(128)
+  apr_site_area:
+    data_type: NUMERIC(15,0)
+  apr_due_date:
+    data_type: DATE
+  apr_order_date:
+    data_type: DATE
+  apr_payment_type:
+    data_type: VARCHAR(128)
+  apr_payment_received_date:
+    data_type: DATE
+  apr_appraisal_source_type:
+    data_type: VARCHAR(128)
+  apr_appraisal_purpose_type:
+    data_type: VARCHAR(128)
+  apr_exclude:
+    data_type: BOOLEAN
+  apr_order_appraisal:
+    data_type: VARCHAR(128)
+  apr_appraisal_id:
+    data_type: INTEGER
+  apr_mortgage_type:
+    data_type: VARCHAR(128)
+  apr_remaining_economic_life_years:
+    data_type: INTEGER
+  apr_deficient_economic_life_explanation:
+    data_type: VARCHAR(1024)
+  apr_hve_point_value_estimate_amount:
+    data_type: NUMERIC(15,2)
+  apr_hve_forecast_standard_deviation_percent:
+    data_type: NUMERIC(11,9)
+  apr_hve_confidence_level_type:
+    data_type: VARCHAR(128)
+  apr_hve_variance_percent:
+    data_type: NUMERIC(11,9)
+  apr_hve_excessive_value_message:
+    data_type: VARCHAR(1024)
+  apr_cu_risk_score:
+    data_type: NUMERIC(10,2)
+  apr_license_expiration_date:
+    data_type: DATE
+  apr_supervisor_required:
+    data_type: BOOLEAN
+  apr_supervisory_appraiser_first_name:
+    data_type: VARCHAR(32)
+  apr_supervisory_appraiser_middle_name:
+    data_type: VARCHAR(32)
+  apr_supervisory_appraiser_last_name:
+    data_type: VARCHAR(32)
+  apr_supervisory_appraiser_name_suffix:
+    data_type: VARCHAR(32)
+  apr_supervisory_license_state:
+    data_type: VARCHAR(128)
+  apr_supervisory_license_expiration_date:
+    data_type: DATE
+  apr_synthetic_unique:
+    data_type: BOOLEAN
+  apr_appraisal_invoice_amount:
+    data_type: NUMERIC(17,2)
+  apr_second_decision_appraisal:
+    data_type: BOOLEAN

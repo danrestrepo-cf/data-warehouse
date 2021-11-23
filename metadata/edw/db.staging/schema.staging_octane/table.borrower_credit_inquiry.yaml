@@ -1,0 +1,29 @@
+name: borrower_credit_inquiry
+primary_key:
+- bci_pid
+foreign_keys:
+  fk_borrower_credit_inquiry_1:
+    columns:
+    - bci_credit_inquiry_pid
+    references:
+      columns:
+      - ci_pid
+      schema: staging_octane
+      table: credit_inquiry
+  fk_borrower_credit_inquiry_2:
+    columns:
+    - bci_borrower_pid
+    references:
+      columns:
+      - b_pid
+      schema: staging_octane
+      table: borrower
+columns:
+  bci_pid:
+    data_type: BIGINT
+  bci_version:
+    data_type: INTEGER
+  bci_credit_inquiry_pid:
+    data_type: BIGINT
+  bci_borrower_pid:
+    data_type: BIGINT

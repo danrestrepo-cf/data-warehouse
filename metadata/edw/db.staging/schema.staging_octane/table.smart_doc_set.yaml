@@ -1,0 +1,43 @@
+name: smart_doc_set
+primary_key:
+- sdst_pid
+foreign_keys:
+  fk_smart_doc_set_1:
+    columns:
+    - sdst_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fkt_sdst_doc_set_type:
+    columns:
+    - sdst_doc_set_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: doc_set_type
+  fkt_sdst_smart_stack_doc_set_include_option_type:
+    columns:
+    - sdst_smart_stack_doc_set_include_option_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: smart_stack_doc_set_include_option_type
+columns:
+  sdst_pid:
+    data_type: BIGINT
+  sdst_version:
+    data_type: INTEGER
+  sdst_account_pid:
+    data_type: BIGINT
+  sdst_name:
+    data_type: VARCHAR(128)
+  sdst_doc_set_type:
+    data_type: VARCHAR(128)
+  sdst_active:
+    data_type: BOOLEAN
+  sdst_smart_stack_doc_set_include_option_type:
+    data_type: VARCHAR(128)

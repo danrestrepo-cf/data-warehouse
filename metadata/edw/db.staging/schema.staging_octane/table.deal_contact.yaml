@@ -1,0 +1,73 @@
+name: deal_contact
+primary_key:
+- dc_pid
+foreign_keys:
+  fk_deal_contact_1:
+    columns:
+    - dc_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: staging_octane
+      table: deal
+  fkt_dc_address_country:
+    columns:
+    - dc_address_country
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: country_type
+  fkt_dc_role_type:
+    columns:
+    - dc_role_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: deal_contact_role_type
+columns:
+  dc_pid:
+    data_type: BIGINT
+  dc_version:
+    data_type: INTEGER
+  dc_address_city:
+    data_type: VARCHAR(128)
+  dc_address_country:
+    data_type: VARCHAR(128)
+  dc_address_postal_code:
+    data_type: VARCHAR(128)
+  dc_address_state:
+    data_type: VARCHAR(128)
+  dc_address_street1:
+    data_type: VARCHAR(128)
+  dc_address_street2:
+    data_type: VARCHAR(128)
+  dc_company_name:
+    data_type: VARCHAR(128)
+  dc_deal_pid:
+    data_type: BIGINT
+  dc_email:
+    data_type: VARCHAR(256)
+  dc_fax:
+    data_type: VARCHAR(32)
+  dc_first_name:
+    data_type: VARCHAR(32)
+  dc_last_name:
+    data_type: VARCHAR(32)
+  dc_middle_name:
+    data_type: VARCHAR(32)
+  dc_mobile_phone:
+    data_type: VARCHAR(32)
+  dc_name_suffix:
+    data_type: VARCHAR(32)
+  dc_office_phone:
+    data_type: VARCHAR(32)
+  dc_office_phone_extension:
+    data_type: VARCHAR(16)
+  dc_role_type:
+    data_type: VARCHAR(128)
+  dc_title:
+    data_type: VARCHAR(128)
+  dc_company_license_id:
+    data_type: VARCHAR(128)

@@ -1,0 +1,25 @@
+name: apor
+primary_key:
+- ap_pid
+foreign_keys:
+  fkt_ap_loan_amortization_type:
+    columns:
+    - ap_loan_amortization_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: loan_amortization_type
+columns:
+  ap_pid:
+    data_type: BIGINT
+  ap_version:
+    data_type: INTEGER
+  ap_as_of_date:
+    data_type: DATE
+  ap_loan_amortization_type:
+    data_type: VARCHAR(128)
+  ap_term_years:
+    data_type: INTEGER
+  ap_apor_percent:
+    data_type: NUMERIC(11,9)

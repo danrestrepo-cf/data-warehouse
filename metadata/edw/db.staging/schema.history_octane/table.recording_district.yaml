@@ -1,0 +1,77 @@
+name: recording_district
+primary_source_table: staging.staging_octane.recording_district
+primary_key:
+- rdi_pid
+- rdi_version
+foreign_keys:
+  fkt_rdi_state_type:
+    columns:
+    - rdi_state_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: state_type
+columns:
+  rdi_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rdi_pid
+  rdi_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.rdi_version
+  rdi_state_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.rdi_state_type
+  rdi_district_name_with_qualifier:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.rdi_district_name_with_qualifier
+  rdi_district_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.rdi_district_name
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100257:
+    input_type: table
+    output_type: insert
+    json_output_field: rdi_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.recording_district
+      SELECT staging_table.rdi_pid
+           , staging_table.rdi_version
+           , staging_table.rdi_state_type
+           , staging_table.rdi_district_name_with_qualifier
+           , staging_table.rdi_district_name
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.recording_district staging_table
+      LEFT JOIN history_octane.recording_district history_table
+                ON staging_table.rdi_pid = history_table.rdi_pid
+                    AND staging_table.rdi_version = history_table.rdi_version
+      WHERE history_table.rdi_pid IS NULL
+      UNION ALL
+      SELECT history_table.rdi_pid
+           , history_table.rdi_version + 1
+           , history_table.rdi_state_type
+           , history_table.rdi_district_name_with_qualifier
+           , history_table.rdi_district_name
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.recording_district history_table
+      LEFT JOIN staging_octane.recording_district staging_table
+                ON staging_table.rdi_pid = history_table.rdi_pid
+      WHERE staging_table.rdi_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.recording_district deleted_records
+          WHERE deleted_records.rdi_pid = history_table.rdi_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

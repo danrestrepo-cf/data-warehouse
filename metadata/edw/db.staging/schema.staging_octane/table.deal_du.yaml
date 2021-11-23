@@ -1,0 +1,23 @@
+name: deal_du
+primary_key:
+- ddu_pid
+foreign_keys:
+  fk_deal_du_1:
+    columns:
+    - ddu_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: staging_octane
+      table: deal
+columns:
+  ddu_pid:
+    data_type: BIGINT
+  ddu_version:
+    data_type: INTEGER
+  ddu_deal_pid:
+    data_type: BIGINT
+  ddu_du_casefile_id:
+    data_type: VARCHAR(32)
+  ddu_du_institution_id:
+    data_type: VARCHAR(16)

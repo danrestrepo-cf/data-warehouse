@@ -1,0 +1,21 @@
+name: product_eligibility
+primary_key:
+- pe_pid
+foreign_keys:
+  fk_product_eligibility_1:
+    columns:
+    - pe_product_pid
+    references:
+      columns:
+      - p_pid
+      schema: staging_octane
+      table: product
+columns:
+  pe_pid:
+    data_type: BIGINT
+  pe_version:
+    data_type: INTEGER
+  pe_product_pid:
+    data_type: BIGINT
+  pe_from_date:
+    data_type: DATE

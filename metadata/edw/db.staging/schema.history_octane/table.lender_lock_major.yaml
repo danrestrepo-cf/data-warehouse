@@ -1,0 +1,343 @@
+name: lender_lock_major
+primary_source_table: staging.staging_octane.lender_lock_major
+primary_key:
+- llmj_pid
+- llmj_version
+foreign_keys:
+  fk_lender_lock_major_1:
+    columns:
+    - llmj_void_request_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+  fk_lender_lock_major_2:
+    columns:
+    - llmj_void_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+  fk_lender_lock_major_3:
+    columns:
+    - llmj_cancel_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+  fk_lender_lock_major_4:
+    columns:
+    - llmj_confirm_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+  fk_lender_lock_major_5:
+    columns:
+    - llmj_requester_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+  fk_lender_lock_major_6:
+    columns:
+    - llmj_loan_pid
+    references:
+      columns:
+      - l_pid
+      schema: history_octane
+      table: loan
+  fk_lender_lock_major_7:
+    columns:
+    - llmj_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+  fk_llmj_lock_series_pid:
+    columns:
+    - llmj_lock_series_pid
+    references:
+      columns:
+      - lsr_pid
+      schema: history_octane
+      table: lock_series
+  fkt_llmj_lien_priority_type:
+    columns:
+    - llmj_lien_priority_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: lien_priority_type
+  fkt_llmj_pricing_commitment_type:
+    columns:
+    - llmj_pricing_commitment_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: lock_commitment_type
+  fkt_llmj_requester_agent_type:
+    columns:
+    - llmj_requester_agent_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: agent_type
+columns:
+  llmj_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.llmj_pid
+  llmj_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.llmj_version
+  llmj_major_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.llmj_major_version
+  llmj_lender_lock_id:
+    data_type: VARCHAR(11)
+    source:
+      field: primary_source_table.columns.llmj_lender_lock_id
+  llmj_loan_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.llmj_loan_pid
+  llmj_lien_priority_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.llmj_lien_priority_type
+  llmj_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.llmj_account_pid
+  llmj_lock_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.llmj_lock_datetime
+  llmj_initial_duration_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.llmj_initial_duration_days
+  llmj_initial_lock_expiration_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.llmj_initial_lock_expiration_datetime
+  llmj_requester_agent_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.llmj_requester_agent_type
+  llmj_requester_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.llmj_requester_lender_user_pid
+  llmj_requester_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.llmj_requester_unparsed_name
+  llmj_request_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.llmj_request_datetime
+  llmj_confirm_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.llmj_confirm_datetime
+  llmj_confirm_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.llmj_confirm_lender_user_pid
+  llmj_confirm_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.llmj_confirm_unparsed_name
+  llmj_void_request_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.llmj_void_request_datetime
+  llmj_void_request_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.llmj_void_request_lender_user_pid
+  llmj_void_request_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.llmj_void_request_unparsed_name
+  llmj_void_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.llmj_void_datetime
+  llmj_void_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.llmj_void_lender_user_pid
+  llmj_void_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.llmj_void_unparsed_name
+  llmj_cancel_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.llmj_cancel_datetime
+  llmj_cancel_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.llmj_cancel_lender_user_pid
+  llmj_cancel_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.llmj_cancel_unparsed_name
+  llmj_auto_confirmed:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.llmj_auto_confirmed
+  llmj_active:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.llmj_active
+  llmj_relock_fee_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.llmj_relock_fee_percent
+  llmj_notes:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.llmj_notes
+  llmj_lender_concession_approved_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.llmj_lender_concession_approved_amount
+  llmj_clear_extension_fees_relock:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.llmj_clear_extension_fees_relock
+  llmj_pricing_duration_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.llmj_pricing_duration_days
+  llmj_pricing_commitment_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.llmj_pricing_commitment_type
+  llmj_expired_lock_successor:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.llmj_expired_lock_successor
+  llmj_lock_series_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.llmj_lock_series_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100151:
+    input_type: table
+    output_type: insert
+    json_output_field: llmj_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.lender_lock_major
+      SELECT staging_table.llmj_pid
+           , staging_table.llmj_version
+           , staging_table.llmj_major_version
+           , staging_table.llmj_lender_lock_id
+           , staging_table.llmj_loan_pid
+           , staging_table.llmj_lien_priority_type
+           , staging_table.llmj_account_pid
+           , staging_table.llmj_lock_datetime
+           , staging_table.llmj_initial_duration_days
+           , staging_table.llmj_initial_lock_expiration_datetime
+           , staging_table.llmj_requester_agent_type
+           , staging_table.llmj_requester_lender_user_pid
+           , staging_table.llmj_requester_unparsed_name
+           , staging_table.llmj_request_datetime
+           , staging_table.llmj_confirm_datetime
+           , staging_table.llmj_confirm_lender_user_pid
+           , staging_table.llmj_confirm_unparsed_name
+           , staging_table.llmj_void_request_datetime
+           , staging_table.llmj_void_request_lender_user_pid
+           , staging_table.llmj_void_request_unparsed_name
+           , staging_table.llmj_void_datetime
+           , staging_table.llmj_void_lender_user_pid
+           , staging_table.llmj_void_unparsed_name
+           , staging_table.llmj_cancel_datetime
+           , staging_table.llmj_cancel_lender_user_pid
+           , staging_table.llmj_cancel_unparsed_name
+           , staging_table.llmj_auto_confirmed
+           , staging_table.llmj_active
+           , staging_table.llmj_relock_fee_percent
+           , staging_table.llmj_notes
+           , staging_table.llmj_lender_concession_approved_amount
+           , staging_table.llmj_clear_extension_fees_relock
+           , staging_table.llmj_pricing_duration_days
+           , staging_table.llmj_pricing_commitment_type
+           , staging_table.llmj_expired_lock_successor
+           , staging_table.llmj_lock_series_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.lender_lock_major staging_table
+      LEFT JOIN history_octane.lender_lock_major history_table
+                ON staging_table.llmj_pid = history_table.llmj_pid
+                    AND staging_table.llmj_version = history_table.llmj_version
+      WHERE history_table.llmj_pid IS NULL
+      UNION ALL
+      SELECT history_table.llmj_pid
+           , history_table.llmj_version + 1
+           , history_table.llmj_major_version
+           , history_table.llmj_lender_lock_id
+           , history_table.llmj_loan_pid
+           , history_table.llmj_lien_priority_type
+           , history_table.llmj_account_pid
+           , history_table.llmj_lock_datetime
+           , history_table.llmj_initial_duration_days
+           , history_table.llmj_initial_lock_expiration_datetime
+           , history_table.llmj_requester_agent_type
+           , history_table.llmj_requester_lender_user_pid
+           , history_table.llmj_requester_unparsed_name
+           , history_table.llmj_request_datetime
+           , history_table.llmj_confirm_datetime
+           , history_table.llmj_confirm_lender_user_pid
+           , history_table.llmj_confirm_unparsed_name
+           , history_table.llmj_void_request_datetime
+           , history_table.llmj_void_request_lender_user_pid
+           , history_table.llmj_void_request_unparsed_name
+           , history_table.llmj_void_datetime
+           , history_table.llmj_void_lender_user_pid
+           , history_table.llmj_void_unparsed_name
+           , history_table.llmj_cancel_datetime
+           , history_table.llmj_cancel_lender_user_pid
+           , history_table.llmj_cancel_unparsed_name
+           , history_table.llmj_auto_confirmed
+           , history_table.llmj_active
+           , history_table.llmj_relock_fee_percent
+           , history_table.llmj_notes
+           , history_table.llmj_lender_concession_approved_amount
+           , history_table.llmj_clear_extension_fees_relock
+           , history_table.llmj_pricing_duration_days
+           , history_table.llmj_pricing_commitment_type
+           , history_table.llmj_expired_lock_successor
+           , history_table.llmj_lock_series_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.lender_lock_major history_table
+      LEFT JOIN staging_octane.lender_lock_major staging_table
+                ON staging_table.llmj_pid = history_table.llmj_pid
+      WHERE staging_table.llmj_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.lender_lock_major deleted_records
+          WHERE deleted_records.llmj_pid = history_table.llmj_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

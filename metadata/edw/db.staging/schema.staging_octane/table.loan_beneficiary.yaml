@@ -1,0 +1,157 @@
+name: loan_beneficiary
+primary_key:
+- lb_pid
+foreign_keys:
+  fk_loan_beneficiary_1:
+    columns:
+    - lb_loan_pid
+    references:
+      columns:
+      - l_pid
+      schema: staging_octane
+      table: loan
+  fk_loan_beneficiary_2:
+    columns:
+    - lb_investor_pid
+    references:
+      columns:
+      - i_pid
+      schema: staging_octane
+      table: investor
+  fk_loan_beneficiary_3:
+    columns:
+    - lb_mers_transfer_batch_pid
+    references:
+      columns:
+      - metb_pid
+      schema: staging_octane
+      table: mers_transfer_batch
+  fk_loan_beneficiary_4:
+    columns:
+    - lb_mbs_final_purchaser_investor_pid
+    references:
+      columns:
+      - i_pid
+      schema: staging_octane
+      table: investor
+  fkt_lb_collateral_courier_type:
+    columns:
+    - lb_collateral_courier_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: courier_type
+  fkt_lb_delivery_aus_type:
+    columns:
+    - lb_delivery_aus_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: delivery_aus_type
+  fkt_lb_early_funding:
+    columns:
+    - lb_early_funding
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_lb_loan_benef_transfer_status_type:
+    columns:
+    - lb_loan_benef_transfer_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: loan_benef_transfer_status_type
+  fkt_lb_loan_file_courier_type:
+    columns:
+    - lb_loan_file_courier_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: courier_type
+  fkt_lb_loan_file_delivery_method_type:
+    columns:
+    - lb_loan_file_delivery_method_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: loan_file_delivery_method_type
+  fkt_lb_mers_transfer_status_type:
+    columns:
+    - lb_mers_transfer_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: mers_transfer_status_type
+columns:
+  lb_pid:
+    data_type: BIGINT
+  lb_version:
+    data_type: INTEGER
+  lb_loan_pid:
+    data_type: BIGINT
+  lb_investor_pid:
+    data_type: BIGINT
+  lb_investor_loan_id:
+    data_type: VARCHAR(32)
+  lb_from_date:
+    data_type: DATE
+  lb_through_date:
+    data_type: DATE
+  lb_current:
+    data_type: BOOLEAN
+  lb_initial:
+    data_type: BOOLEAN
+  lb_loan_benef_transfer_status_type:
+    data_type: VARCHAR(128)
+  lb_loan_file_ship_date:
+    data_type: DATE
+  lb_approved_with_conditions_date:
+    data_type: DATE
+  lb_rejected_date:
+    data_type: DATE
+  lb_pending_wire_date:
+    data_type: DATE
+  lb_purchase_advice_amount:
+    data_type: NUMERIC(15,2)
+  lb_mers_mom:
+    data_type: BOOLEAN
+  lb_mers_transfer_status_type:
+    data_type: VARCHAR(128)
+  lb_mers_transfer_creation_date:
+    data_type: DATE
+  lb_mers_transfer_override:
+    data_type: BOOLEAN
+  lb_mers_transfer_batch_pid:
+    data_type: BIGINT
+  lb_loan_file_courier_type:
+    data_type: VARCHAR(128)
+  lb_loan_file_tracking_number:
+    data_type: VARCHAR(32)
+  lb_collateral_courier_type:
+    data_type: VARCHAR(128)
+  lb_collateral_tracking_number:
+    data_type: VARCHAR(32)
+  lb_loan_file_delivery_method_type:
+    data_type: VARCHAR(128)
+  lb_pool_id:
+    data_type: VARCHAR(32)
+  lb_mbs_final_purchaser_investor_pid:
+    data_type: BIGINT
+  lb_early_funding:
+    data_type: VARCHAR(128)
+  lb_early_funding_date:
+    data_type: DATE
+  lb_delivery_aus_type:
+    data_type: VARCHAR(128)
+  lb_synthetic_unique_current:
+    data_type: BOOLEAN
+  lb_synthetic_unique_initial:
+    data_type: BOOLEAN

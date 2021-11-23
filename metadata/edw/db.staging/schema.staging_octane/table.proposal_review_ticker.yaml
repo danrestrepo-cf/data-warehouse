@@ -1,0 +1,21 @@
+name: proposal_review_ticker
+primary_key:
+- prpret_pid
+foreign_keys:
+  fk_proposal_review_ticker_1:
+    columns:
+    - prpret_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: staging_octane
+      table: proposal
+columns:
+  prpret_pid:
+    data_type: BIGINT
+  prpret_version:
+    data_type: INTEGER
+  prpret_proposal_pid:
+    data_type: BIGINT
+  prpret_next_id:
+    data_type: INTEGER

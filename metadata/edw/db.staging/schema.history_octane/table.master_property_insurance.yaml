@@ -1,0 +1,271 @@
+name: master_property_insurance
+primary_source_table: staging.staging_octane.master_property_insurance
+primary_key:
+- mpi_pid
+- mpi_version
+foreign_keys:
+  fk_master_property_insurance_1:
+    columns:
+    - mpi_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: history_octane
+      table: proposal
+  fkt_mpi_address_country:
+    columns:
+    - mpi_address_country
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: country_type
+  fkt_mpi_agreed_amount_endorsement:
+    columns:
+    - mpi_agreed_amount_endorsement
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_mpi_coinsurance:
+    columns:
+    - mpi_coinsurance
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_mpi_master_property_insurance_type:
+    columns:
+    - mpi_master_property_insurance_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: master_property_insurance_type
+columns:
+  mpi_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mpi_pid
+  mpi_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mpi_version
+  mpi_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mpi_proposal_pid
+  mpi_master_property_insurance_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mpi_master_property_insurance_type
+  mpi_policy_effective_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.mpi_policy_effective_date
+  mpi_policy_expiration_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.mpi_policy_expiration_date
+  mpi_next_payment_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.mpi_next_payment_date
+  mpi_policy_property_coverage_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.mpi_policy_property_coverage_amount
+  mpi_policy_liability_coverage_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.mpi_policy_liability_coverage_amount
+  mpi_policy_fidelity_coverage_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.mpi_policy_fidelity_coverage_amount
+  mpi_policy_deductible_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.mpi_policy_deductible_amount
+  mpi_replacement_cost_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.mpi_replacement_cost_amount
+  mpi_coinsurance:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mpi_coinsurance
+  mpi_agreed_amount_endorsement:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mpi_agreed_amount_endorsement
+  mpi_company_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mpi_company_name
+  mpi_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.mpi_first_name
+  mpi_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.mpi_middle_name
+  mpi_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.mpi_last_name
+  mpi_name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.mpi_name_suffix
+  mpi_title:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mpi_title
+  mpi_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.mpi_email
+  mpi_mobile_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.mpi_mobile_phone
+  mpi_office_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.mpi_office_phone
+  mpi_office_phone_extension:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.mpi_office_phone_extension
+  mpi_fax:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.mpi_fax
+  mpi_address_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mpi_address_street1
+  mpi_address_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mpi_address_street2
+  mpi_address_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mpi_address_city
+  mpi_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mpi_address_state
+  mpi_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mpi_address_postal_code
+  mpi_address_country:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.mpi_address_country
+  mpi_policy_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mpi_policy_id
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100140:
+    input_type: table
+    output_type: insert
+    json_output_field: mpi_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.master_property_insurance
+      SELECT staging_table.mpi_pid
+           , staging_table.mpi_version
+           , staging_table.mpi_proposal_pid
+           , staging_table.mpi_master_property_insurance_type
+           , staging_table.mpi_policy_effective_date
+           , staging_table.mpi_policy_expiration_date
+           , staging_table.mpi_next_payment_date
+           , staging_table.mpi_policy_property_coverage_amount
+           , staging_table.mpi_policy_liability_coverage_amount
+           , staging_table.mpi_policy_fidelity_coverage_amount
+           , staging_table.mpi_policy_deductible_amount
+           , staging_table.mpi_replacement_cost_amount
+           , staging_table.mpi_coinsurance
+           , staging_table.mpi_agreed_amount_endorsement
+           , staging_table.mpi_company_name
+           , staging_table.mpi_first_name
+           , staging_table.mpi_middle_name
+           , staging_table.mpi_last_name
+           , staging_table.mpi_name_suffix
+           , staging_table.mpi_title
+           , staging_table.mpi_email
+           , staging_table.mpi_mobile_phone
+           , staging_table.mpi_office_phone
+           , staging_table.mpi_office_phone_extension
+           , staging_table.mpi_fax
+           , staging_table.mpi_address_street1
+           , staging_table.mpi_address_street2
+           , staging_table.mpi_address_city
+           , staging_table.mpi_address_state
+           , staging_table.mpi_address_postal_code
+           , staging_table.mpi_address_country
+           , staging_table.mpi_policy_id
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.master_property_insurance staging_table
+      LEFT JOIN history_octane.master_property_insurance history_table
+                ON staging_table.mpi_pid = history_table.mpi_pid
+                    AND staging_table.mpi_version = history_table.mpi_version
+      WHERE history_table.mpi_pid IS NULL
+      UNION ALL
+      SELECT history_table.mpi_pid
+           , history_table.mpi_version + 1
+           , history_table.mpi_proposal_pid
+           , history_table.mpi_master_property_insurance_type
+           , history_table.mpi_policy_effective_date
+           , history_table.mpi_policy_expiration_date
+           , history_table.mpi_next_payment_date
+           , history_table.mpi_policy_property_coverage_amount
+           , history_table.mpi_policy_liability_coverage_amount
+           , history_table.mpi_policy_fidelity_coverage_amount
+           , history_table.mpi_policy_deductible_amount
+           , history_table.mpi_replacement_cost_amount
+           , history_table.mpi_coinsurance
+           , history_table.mpi_agreed_amount_endorsement
+           , history_table.mpi_company_name
+           , history_table.mpi_first_name
+           , history_table.mpi_middle_name
+           , history_table.mpi_last_name
+           , history_table.mpi_name_suffix
+           , history_table.mpi_title
+           , history_table.mpi_email
+           , history_table.mpi_mobile_phone
+           , history_table.mpi_office_phone
+           , history_table.mpi_office_phone_extension
+           , history_table.mpi_fax
+           , history_table.mpi_address_street1
+           , history_table.mpi_address_street2
+           , history_table.mpi_address_city
+           , history_table.mpi_address_state
+           , history_table.mpi_address_postal_code
+           , history_table.mpi_address_country
+           , history_table.mpi_policy_id
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.master_property_insurance history_table
+      LEFT JOIN staging_octane.master_property_insurance staging_table
+                ON staging_table.mpi_pid = history_table.mpi_pid
+      WHERE staging_table.mpi_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.master_property_insurance deleted_records
+          WHERE deleted_records.mpi_pid = history_table.mpi_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

@@ -1,0 +1,29 @@
+name: bid_pool_note_monitor
+primary_key:
+- bpnm_pid
+foreign_keys:
+  fk_bid_pool_note_monitor_1:
+    columns:
+    - bpnm_bid_pool_note_pid
+    references:
+      columns:
+      - bpn_pid
+      schema: staging_octane
+      table: bid_pool_note
+  fk_bid_pool_note_monitor_2:
+    columns:
+    - bpnm_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+columns:
+  bpnm_pid:
+    data_type: BIGINT
+  bpnm_version:
+    data_type: INTEGER
+  bpnm_bid_pool_note_pid:
+    data_type: BIGINT
+  bpnm_lender_user_pid:
+    data_type: BIGINT

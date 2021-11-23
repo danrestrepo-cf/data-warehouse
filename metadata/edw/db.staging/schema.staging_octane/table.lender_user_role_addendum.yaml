@@ -1,0 +1,39 @@
+name: lender_user_role_addendum
+primary_key:
+- lura_pid
+foreign_keys:
+  fk_lender_user_role_addendum_1:
+    columns:
+    - lura_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_lender_user_role_addendum_2:
+    columns:
+    - lura_lender_user_role_pid
+    references:
+      columns:
+      - lur_pid
+      schema: staging_octane
+      table: lender_user_role
+  fk_lender_user_role_addendum_3:
+    columns:
+    - lura_role_pid
+    references:
+      columns:
+      - r_pid
+      schema: staging_octane
+      table: role
+columns:
+  lura_pid:
+    data_type: BIGINT
+  lura_version:
+    data_type: INTEGER
+  lura_lender_user_pid:
+    data_type: BIGINT
+  lura_lender_user_role_pid:
+    data_type: BIGINT
+  lura_role_pid:
+    data_type: BIGINT

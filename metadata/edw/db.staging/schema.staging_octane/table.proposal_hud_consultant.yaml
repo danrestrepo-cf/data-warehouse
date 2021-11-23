@@ -1,0 +1,47 @@
+name: proposal_hud_consultant
+primary_key:
+- phc_pid
+foreign_keys:
+  fk_proposal_hud_consultant_1:
+    columns:
+    - phc_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: staging_octane
+      table: proposal
+columns:
+  phc_pid:
+    data_type: BIGINT
+  phc_version:
+    data_type: INTEGER
+  phc_proposal_pid:
+    data_type: BIGINT
+  phc_consultant_id:
+    data_type: VARCHAR(8)
+  phc_company_name:
+    data_type: VARCHAR(128)
+  phc_first_name:
+    data_type: VARCHAR(32)
+  phc_last_name:
+    data_type: VARCHAR(32)
+  phc_email:
+    data_type: VARCHAR(256)
+  phc_mobile_phone:
+    data_type: VARCHAR(32)
+  phc_office_phone:
+    data_type: VARCHAR(32)
+  phc_office_phone_extension:
+    data_type: VARCHAR(16)
+  phc_fax:
+    data_type: VARCHAR(32)
+  phc_address_street1:
+    data_type: VARCHAR(128)
+  phc_address_street2:
+    data_type: VARCHAR(128)
+  phc_address_city:
+    data_type: VARCHAR(128)
+  phc_address_state:
+    data_type: VARCHAR(128)
+  phc_address_postal_code:
+    data_type: VARCHAR(128)

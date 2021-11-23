@@ -1,0 +1,101 @@
+name: sap_quote_request
+primary_source_table: staging.staging_octane.sap_quote_request
+primary_key:
+- sqr_pid
+- sqr_version
+foreign_keys:
+  fk_sap_quote_request_1:
+    columns:
+    - sqr_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: history_octane
+      table: deal
+columns:
+  sqr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sqr_pid
+  sqr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sqr_version
+  sqr_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sqr_deal_pid
+  sqr_include_conventional:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sqr_include_conventional
+  sqr_include_fha:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sqr_include_fha
+  sqr_include_va:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sqr_include_va
+  sqr_include_fixed_rate:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sqr_include_fixed_rate
+  sqr_include_arm:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sqr_include_arm
+  sqr_due_in_term_months_string_list:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.sqr_due_in_term_months_string_list
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100173:
+    input_type: table
+    output_type: insert
+    json_output_field: sqr_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.sap_quote_request
+      SELECT staging_table.sqr_pid
+           , staging_table.sqr_version
+           , staging_table.sqr_deal_pid
+           , staging_table.sqr_include_conventional
+           , staging_table.sqr_include_fha
+           , staging_table.sqr_include_va
+           , staging_table.sqr_include_fixed_rate
+           , staging_table.sqr_include_arm
+           , staging_table.sqr_due_in_term_months_string_list
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.sap_quote_request staging_table
+      LEFT JOIN history_octane.sap_quote_request history_table
+                ON staging_table.sqr_pid = history_table.sqr_pid
+                    AND staging_table.sqr_version = history_table.sqr_version
+      WHERE history_table.sqr_pid IS NULL
+      UNION ALL
+      SELECT history_table.sqr_pid
+           , history_table.sqr_version + 1
+           , history_table.sqr_deal_pid
+           , history_table.sqr_include_conventional
+           , history_table.sqr_include_fha
+           , history_table.sqr_include_va
+           , history_table.sqr_include_fixed_rate
+           , history_table.sqr_include_arm
+           , history_table.sqr_due_in_term_months_string_list
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.sap_quote_request history_table
+      LEFT JOIN staging_octane.sap_quote_request staging_table
+                ON staging_table.sqr_pid = history_table.sqr_pid
+      WHERE staging_table.sqr_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.sap_quote_request deleted_records
+          WHERE deleted_records.sqr_pid = history_table.sqr_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

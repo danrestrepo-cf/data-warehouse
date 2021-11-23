@@ -1,0 +1,97 @@
+name: product_originator
+primary_source_table: staging.staging_octane.product_originator
+primary_key:
+- po_pid
+- po_version
+foreign_keys:
+  fk_product_originator_1:
+    columns:
+    - po_product_pid
+    references:
+      columns:
+      - p_pid
+      schema: history_octane
+      table: product
+  fk_product_originator_2:
+    columns:
+    - po_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+columns:
+  po_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.po_pid
+  po_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.po_version
+  po_product_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.po_product_pid
+  po_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.po_lender_user_pid
+  po_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.po_from_date
+  po_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.po_through_date
+  po_price_adjustment_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.po_price_adjustment_percent
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100284:
+    input_type: table
+    output_type: insert
+    json_output_field: po_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.product_originator
+      SELECT staging_table.po_pid
+           , staging_table.po_version
+           , staging_table.po_product_pid
+           , staging_table.po_lender_user_pid
+           , staging_table.po_from_date
+           , staging_table.po_through_date
+           , staging_table.po_price_adjustment_percent
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.product_originator staging_table
+      LEFT JOIN history_octane.product_originator history_table
+                ON staging_table.po_pid = history_table.po_pid
+                    AND staging_table.po_version = history_table.po_version
+      WHERE history_table.po_pid IS NULL
+      UNION ALL
+      SELECT history_table.po_pid
+           , history_table.po_version + 1
+           , history_table.po_product_pid
+           , history_table.po_lender_user_pid
+           , history_table.po_from_date
+           , history_table.po_through_date
+           , history_table.po_price_adjustment_percent
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.product_originator history_table
+      LEFT JOIN staging_octane.product_originator staging_table
+                ON staging_table.po_pid = history_table.po_pid
+      WHERE staging_table.po_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.product_originator deleted_records
+          WHERE deleted_records.po_pid = history_table.po_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

@@ -1,0 +1,97 @@
+name: product_lock_term
+primary_source_table: staging.staging_octane.product_lock_term
+primary_key:
+- plt_pid
+- plt_version
+foreign_keys:
+  fk_product_lock_term_1:
+    columns:
+    - plt_product_pid
+    references:
+      columns:
+      - p_pid
+      schema: history_octane
+      table: product
+  fk_product_lock_term_2:
+    columns:
+    - plt_lock_term_setting_pid
+    references:
+      columns:
+      - lts_pid
+      schema: history_octane
+      table: lock_term_setting
+columns:
+  plt_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.plt_pid
+  plt_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.plt_version
+  plt_product_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.plt_product_pid
+  plt_lock_term_setting_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.plt_lock_term_setting_pid
+  plt_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.plt_from_date
+  plt_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.plt_through_date
+  plt_price_adjustment_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.plt_price_adjustment_percent
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100112:
+    input_type: table
+    output_type: insert
+    json_output_field: plt_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.product_lock_term
+      SELECT staging_table.plt_pid
+           , staging_table.plt_version
+           , staging_table.plt_product_pid
+           , staging_table.plt_lock_term_setting_pid
+           , staging_table.plt_from_date
+           , staging_table.plt_through_date
+           , staging_table.plt_price_adjustment_percent
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.product_lock_term staging_table
+      LEFT JOIN history_octane.product_lock_term history_table
+                ON staging_table.plt_pid = history_table.plt_pid
+                    AND staging_table.plt_version = history_table.plt_version
+      WHERE history_table.plt_pid IS NULL
+      UNION ALL
+      SELECT history_table.plt_pid
+           , history_table.plt_version + 1
+           , history_table.plt_product_pid
+           , history_table.plt_lock_term_setting_pid
+           , history_table.plt_from_date
+           , history_table.plt_through_date
+           , history_table.plt_price_adjustment_percent
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.product_lock_term history_table
+      LEFT JOIN staging_octane.product_lock_term staging_table
+                ON staging_table.plt_pid = history_table.plt_pid
+      WHERE staging_table.plt_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.product_lock_term deleted_records
+          WHERE deleted_records.plt_pid = history_table.plt_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

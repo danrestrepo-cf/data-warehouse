@@ -1,0 +1,35 @@
+name: proposal_doc_set_signer
+primary_key:
+- prpdss_pid
+foreign_keys:
+  fk_proposal_doc_set_signer_1:
+    columns:
+    - prpdss_proposal_doc_set_pid
+    references:
+      columns:
+      - prpds_pid
+      schema: staging_octane
+      table: proposal_doc_set
+  fk_proposal_doc_set_signer_2:
+    columns:
+    - prpdss_deal_signer_pid
+    references:
+      columns:
+      - dsi_pid
+      schema: staging_octane
+      table: deal_signer
+columns:
+  prpdss_pid:
+    data_type: BIGINT
+  prpdss_version:
+    data_type: INTEGER
+  prpdss_proposal_doc_set_pid:
+    data_type: BIGINT
+  prpdss_deal_signer_pid:
+    data_type: BIGINT
+  prpdss_esign_complete:
+    data_type: BOOLEAN
+  prpdss_received_datetime:
+    data_type: TIMESTAMP
+  prpdss_signed_datetime:
+    data_type: TIMESTAMP

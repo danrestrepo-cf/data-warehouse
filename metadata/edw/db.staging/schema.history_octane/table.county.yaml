@@ -1,0 +1,109 @@
+name: county
+primary_source_table: staging.staging_octane.county
+primary_key:
+- c_pid
+- c_version
+foreign_keys:
+  fkt_c_recording_district_type:
+    columns:
+    - c_recording_district_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: recording_district_type
+  fkt_c_state_type:
+    columns:
+    - c_state_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: state_type
+columns:
+  c_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.c_pid
+  c_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.c_version
+  c_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.c_name
+  c_state_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.c_state_type
+  c_county_fips:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.c_county_fips
+  c_recording_district_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.c_recording_district_type
+  c_torrens_available:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.c_torrens_available
+  c_defunct:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.c_defunct
+  c_mortech_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.c_mortech_name
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100058:
+    input_type: table
+    output_type: insert
+    json_output_field: c_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.county
+      SELECT staging_table.c_pid
+           , staging_table.c_version
+           , staging_table.c_name
+           , staging_table.c_state_type
+           , staging_table.c_county_fips
+           , staging_table.c_recording_district_type
+           , staging_table.c_torrens_available
+           , staging_table.c_defunct
+           , staging_table.c_mortech_name
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.county staging_table
+      LEFT JOIN history_octane.county history_table
+                ON staging_table.c_pid = history_table.c_pid
+                    AND staging_table.c_version = history_table.c_version
+      WHERE history_table.c_pid IS NULL
+      UNION ALL
+      SELECT history_table.c_pid
+           , history_table.c_version + 1
+           , history_table.c_name
+           , history_table.c_state_type
+           , history_table.c_county_fips
+           , history_table.c_recording_district_type
+           , history_table.c_torrens_available
+           , history_table.c_defunct
+           , history_table.c_mortech_name
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.county history_table
+      LEFT JOIN staging_octane.county staging_table
+                ON staging_table.c_pid = history_table.c_pid
+      WHERE staging_table.c_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.county deleted_records
+          WHERE deleted_records.c_pid = history_table.c_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

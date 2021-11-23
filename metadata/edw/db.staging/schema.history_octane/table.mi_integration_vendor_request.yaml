@@ -1,0 +1,255 @@
+name: mi_integration_vendor_request
+primary_source_table: staging.staging_octane.mi_integration_vendor_request
+primary_key:
+- mivr_pid
+- mivr_version
+foreign_keys:
+  fk_mi_integration_vendor_request_1:
+    columns:
+    - mivr_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: history_octane
+      table: proposal
+  fk_mi_integration_vendor_request_2:
+    columns:
+    - mivr_response_xml_pid
+    references:
+      columns:
+      - dsf_pid
+      schema: history_octane
+      table: deal_system_file
+  fk_mi_integration_vendor_request_3:
+    columns:
+    - mivr_request_xml_pid
+    references:
+      columns:
+      - dsf_pid
+      schema: history_octane
+      table: deal_system_file
+  fk_mi_integration_vendor_request_4:
+    columns:
+    - mivr_response_pdf_file_pid
+    references:
+      columns:
+      - df_pid
+      schema: history_octane
+      table: deal_file
+  fkt_mivr_mi_company_name_type:
+    columns:
+    - mivr_mi_company_name_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mi_company_name_type
+  fkt_mivr_mi_payer_type:
+    columns:
+    - mivr_mi_payer_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mi_payer_type
+  fkt_mivr_mi_payment_type:
+    columns:
+    - mivr_mi_payment_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mi_payment_type
+  fkt_mivr_request_status_type:
+    columns:
+    - mivr_request_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mi_integration_vendor_request_status_type
+  fkt_mivr_request_type:
+    columns:
+    - mivr_request_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mi_integration_request_type
+columns:
+  mivr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mivr_pid
+  mivr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mivr_version
+  mivr_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mivr_proposal_pid
+  mivr_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.mivr_create_datetime
+  mivr_mi_company_name_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mivr_mi_company_name_type
+  mivr_request_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mivr_request_type
+  mivr_mi_payment_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mivr_mi_payment_type
+  mivr_mi_payer_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mivr_mi_payer_type
+  mivr_mi_coverage_percentage:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.mivr_mi_coverage_percentage
+  mivr_mi_upfront_percentage:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.mivr_mi_upfront_percentage
+  mivr_mi_initial_monthly_annual_percentage:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.mivr_mi_initial_monthly_annual_percentage
+  mivr_mi_renewal_monthly_annual_percentage:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.mivr_mi_renewal_monthly_annual_percentage
+  mivr_mi_initial_duration_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mivr_mi_initial_duration_months
+  mivr_mi_rate_quote_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mivr_mi_rate_quote_id
+  mivr_mi_certificate_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mivr_mi_certificate_id
+  mivr_request_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mivr_request_status_type
+  mivr_request_time_to_completion_ms:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mivr_request_time_to_completion_ms
+  mivr_eligible_mi_products:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.mivr_eligible_mi_products
+  mivr_input_errors:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.mivr_input_errors
+  mivr_service_errors:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.mivr_service_errors
+  mivr_internal_errors:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.mivr_internal_errors
+  mivr_request_xml_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mivr_request_xml_pid
+  mivr_response_xml_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mivr_response_xml_pid
+  mivr_response_pdf_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mivr_response_pdf_file_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100141:
+    input_type: table
+    output_type: insert
+    json_output_field: mivr_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.mi_integration_vendor_request
+      SELECT staging_table.mivr_pid
+           , staging_table.mivr_version
+           , staging_table.mivr_proposal_pid
+           , staging_table.mivr_create_datetime
+           , staging_table.mivr_mi_company_name_type
+           , staging_table.mivr_request_type
+           , staging_table.mivr_mi_payment_type
+           , staging_table.mivr_mi_payer_type
+           , staging_table.mivr_mi_coverage_percentage
+           , staging_table.mivr_mi_upfront_percentage
+           , staging_table.mivr_mi_initial_monthly_annual_percentage
+           , staging_table.mivr_mi_renewal_monthly_annual_percentage
+           , staging_table.mivr_mi_initial_duration_months
+           , staging_table.mivr_mi_rate_quote_id
+           , staging_table.mivr_mi_certificate_id
+           , staging_table.mivr_request_status_type
+           , staging_table.mivr_request_time_to_completion_ms
+           , staging_table.mivr_eligible_mi_products
+           , staging_table.mivr_input_errors
+           , staging_table.mivr_service_errors
+           , staging_table.mivr_internal_errors
+           , staging_table.mivr_request_xml_pid
+           , staging_table.mivr_response_xml_pid
+           , staging_table.mivr_response_pdf_file_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.mi_integration_vendor_request staging_table
+      LEFT JOIN history_octane.mi_integration_vendor_request history_table
+                ON staging_table.mivr_pid = history_table.mivr_pid
+                    AND staging_table.mivr_version = history_table.mivr_version
+      WHERE history_table.mivr_pid IS NULL
+      UNION ALL
+      SELECT history_table.mivr_pid
+           , history_table.mivr_version + 1
+           , history_table.mivr_proposal_pid
+           , history_table.mivr_create_datetime
+           , history_table.mivr_mi_company_name_type
+           , history_table.mivr_request_type
+           , history_table.mivr_mi_payment_type
+           , history_table.mivr_mi_payer_type
+           , history_table.mivr_mi_coverage_percentage
+           , history_table.mivr_mi_upfront_percentage
+           , history_table.mivr_mi_initial_monthly_annual_percentage
+           , history_table.mivr_mi_renewal_monthly_annual_percentage
+           , history_table.mivr_mi_initial_duration_months
+           , history_table.mivr_mi_rate_quote_id
+           , history_table.mivr_mi_certificate_id
+           , history_table.mivr_request_status_type
+           , history_table.mivr_request_time_to_completion_ms
+           , history_table.mivr_eligible_mi_products
+           , history_table.mivr_input_errors
+           , history_table.mivr_service_errors
+           , history_table.mivr_internal_errors
+           , history_table.mivr_request_xml_pid
+           , history_table.mivr_response_xml_pid
+           , history_table.mivr_response_pdf_file_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.mi_integration_vendor_request history_table
+      LEFT JOIN staging_octane.mi_integration_vendor_request staging_table
+                ON staging_table.mivr_pid = history_table.mivr_pid
+      WHERE staging_table.mivr_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.mi_integration_vendor_request deleted_records
+          WHERE deleted_records.mivr_pid = history_table.mivr_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

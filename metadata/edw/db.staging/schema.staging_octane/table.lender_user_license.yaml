@@ -1,0 +1,47 @@
+name: lender_user_license
+primary_key:
+- luml_pid
+foreign_keys:
+  fk_lender_user_license_1:
+    columns:
+    - luml_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fkt_luml_license_type:
+    columns:
+    - luml_license_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: license_type
+  fkt_luml_state_type:
+    columns:
+    - luml_state_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: state_type
+columns:
+  luml_pid:
+    data_type: BIGINT
+  luml_version:
+    data_type: INTEGER
+  luml_lender_user_pid:
+    data_type: BIGINT
+  luml_license_type:
+    data_type: VARCHAR(128)
+  luml_state_type:
+    data_type: VARCHAR(128)
+  luml_license_number:
+    data_type: VARCHAR(128)
+  luml_from_date:
+    data_type: DATE
+  luml_through_date:
+    data_type: DATE
+  luml_note:
+    data_type: VARCHAR(256)

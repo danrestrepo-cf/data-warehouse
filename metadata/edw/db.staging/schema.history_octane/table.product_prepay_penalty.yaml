@@ -1,0 +1,79 @@
+name: product_prepay_penalty
+primary_source_table: staging.staging_octane.product_prepay_penalty
+primary_key:
+- ppp_pid
+- ppp_version
+foreign_keys:
+  fk_product_prepay_penalty_1:
+    columns:
+    - ppp_product_terms_pid
+    references:
+      columns:
+      - pt_pid
+      schema: history_octane
+      table: product_terms
+  fkt_ppp_prepay_penalty_schedule_type:
+    columns:
+    - ppp_prepay_penalty_schedule_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: prepay_penalty_schedule_type
+columns:
+  ppp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ppp_pid
+  ppp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ppp_version
+  ppp_product_terms_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ppp_product_terms_pid
+  ppp_prepay_penalty_schedule_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ppp_prepay_penalty_schedule_type
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100287:
+    input_type: table
+    output_type: insert
+    json_output_field: ppp_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.product_prepay_penalty
+      SELECT staging_table.ppp_pid
+           , staging_table.ppp_version
+           , staging_table.ppp_product_terms_pid
+           , staging_table.ppp_prepay_penalty_schedule_type
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.product_prepay_penalty staging_table
+      LEFT JOIN history_octane.product_prepay_penalty history_table
+                ON staging_table.ppp_pid = history_table.ppp_pid
+                    AND staging_table.ppp_version = history_table.ppp_version
+      WHERE history_table.ppp_pid IS NULL
+      UNION ALL
+      SELECT history_table.ppp_pid
+           , history_table.ppp_version + 1
+           , history_table.ppp_product_terms_pid
+           , history_table.ppp_prepay_penalty_schedule_type
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.product_prepay_penalty history_table
+      LEFT JOIN staging_octane.product_prepay_penalty staging_table
+                ON staging_table.ppp_pid = history_table.ppp_pid
+      WHERE staging_table.ppp_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.product_prepay_penalty deleted_records
+          WHERE deleted_records.ppp_pid = history_table.ppp_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

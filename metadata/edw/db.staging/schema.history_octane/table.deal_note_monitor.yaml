@@ -1,0 +1,79 @@
+name: deal_note_monitor
+primary_source_table: staging.staging_octane.deal_note_monitor
+primary_key:
+- dnm_pid
+- dnm_version
+foreign_keys:
+  fk_deal_note_monitor_1:
+    columns:
+    - dnm_deal_note_pid
+    references:
+      columns:
+      - dn_pid
+      schema: history_octane
+      table: deal_note
+  fk_deal_note_monitor_2:
+    columns:
+    - dnm_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+columns:
+  dnm_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dnm_pid
+  dnm_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dnm_version
+  dnm_deal_note_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dnm_deal_note_pid
+  dnm_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dnm_lender_user_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100362:
+    input_type: table
+    output_type: insert
+    json_output_field: dnm_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.deal_note_monitor
+      SELECT staging_table.dnm_pid
+           , staging_table.dnm_version
+           , staging_table.dnm_deal_note_pid
+           , staging_table.dnm_lender_user_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.deal_note_monitor staging_table
+      LEFT JOIN history_octane.deal_note_monitor history_table
+                ON staging_table.dnm_pid = history_table.dnm_pid
+                    AND staging_table.dnm_version = history_table.dnm_version
+      WHERE history_table.dnm_pid IS NULL
+      UNION ALL
+      SELECT history_table.dnm_pid
+           , history_table.dnm_version + 1
+           , history_table.dnm_deal_note_pid
+           , history_table.dnm_lender_user_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.deal_note_monitor history_table
+      LEFT JOIN staging_octane.deal_note_monitor staging_table
+                ON staging_table.dnm_pid = history_table.dnm_pid
+      WHERE staging_table.dnm_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.deal_note_monitor deleted_records
+          WHERE deleted_records.dnm_pid = history_table.dnm_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

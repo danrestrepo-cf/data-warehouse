@@ -1,0 +1,29 @@
+name: role_report
+primary_key:
+- rrp_pid
+foreign_keys:
+  fk_role_report_1:
+    columns:
+    - rrp_report_pid
+    references:
+      columns:
+      - rp_pid
+      schema: staging_octane
+      table: report
+  fk_role_report_2:
+    columns:
+    - rrp_role_pid
+    references:
+      columns:
+      - r_pid
+      schema: staging_octane
+      table: role
+columns:
+  rrp_pid:
+    data_type: BIGINT
+  rrp_version:
+    data_type: INTEGER
+  rrp_report_pid:
+    data_type: BIGINT
+  rrp_role_pid:
+    data_type: BIGINT

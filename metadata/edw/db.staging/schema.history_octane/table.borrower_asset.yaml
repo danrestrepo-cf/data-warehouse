@@ -1,0 +1,79 @@
+name: borrower_asset
+primary_source_table: staging.staging_octane.borrower_asset
+primary_key:
+- bas_pid
+- bas_version
+foreign_keys:
+  fk_borrower_asset_1:
+    columns:
+    - bas_borrower_pid
+    references:
+      columns:
+      - b_pid
+      schema: history_octane
+      table: borrower
+  fk_borrower_asset_2:
+    columns:
+    - bas_asset_pid
+    references:
+      columns:
+      - as_pid
+      schema: history_octane
+      table: asset
+columns:
+  bas_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bas_pid
+  bas_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bas_version
+  bas_borrower_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bas_borrower_pid
+  bas_asset_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bas_asset_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100126:
+    input_type: table
+    output_type: insert
+    json_output_field: bas_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.borrower_asset
+      SELECT staging_table.bas_pid
+           , staging_table.bas_version
+           , staging_table.bas_borrower_pid
+           , staging_table.bas_asset_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.borrower_asset staging_table
+      LEFT JOIN history_octane.borrower_asset history_table
+                ON staging_table.bas_pid = history_table.bas_pid
+                    AND staging_table.bas_version = history_table.bas_version
+      WHERE history_table.bas_pid IS NULL
+      UNION ALL
+      SELECT history_table.bas_pid
+           , history_table.bas_version + 1
+           , history_table.bas_borrower_pid
+           , history_table.bas_asset_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.borrower_asset history_table
+      LEFT JOIN staging_octane.borrower_asset staging_table
+                ON staging_table.bas_pid = history_table.bas_pid
+      WHERE staging_table.bas_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.borrower_asset deleted_records
+          WHERE deleted_records.bas_pid = history_table.bas_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

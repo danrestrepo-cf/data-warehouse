@@ -1,0 +1,39 @@
+name: lender_user_allowed_ip
+primary_key:
+- luip_pid
+foreign_keys:
+  fk_lender_user_allowed_ip_1:
+    columns:
+    - luip_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fkt_luip_status:
+    columns:
+    - luip_status
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: lender_user_allowed_ip_status_type
+columns:
+  luip_pid:
+    data_type: BIGINT
+  luip_version:
+    data_type: INTEGER
+  luip_lender_user_pid:
+    data_type: BIGINT
+  luip_status:
+    data_type: VARCHAR(128)
+  luip_ip_address:
+    data_type: VARCHAR(32)
+  luip_request_id:
+    data_type: VARCHAR(128)
+  luip_request_expiration_datetime:
+    data_type: TIMESTAMP
+  luip_last_used_datetime:
+    data_type: TIMESTAMP
+  luip_first_used_datetime:
+    data_type: TIMESTAMP

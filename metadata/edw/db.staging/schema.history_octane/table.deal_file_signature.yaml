@@ -1,0 +1,137 @@
+name: deal_file_signature
+primary_source_table: staging.staging_octane.deal_file_signature
+primary_key:
+- dfs_pid
+- dfs_version
+foreign_keys:
+  fk_deal_file_signature_1:
+    columns:
+    - dfs_deal_file_pid
+    references:
+      columns:
+      - df_pid
+      schema: history_octane
+      table: deal_file
+  fk_deal_file_signature_2:
+    columns:
+    - dfs_deal_signer_pid
+    references:
+      columns:
+      - dsi_pid
+      schema: history_octane
+      table: deal_signer
+  fkt_dfs_charge_type:
+    columns:
+    - dfs_charge_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: charge_type
+  fkt_dfs_signature_part_type:
+    columns:
+    - dfs_signature_part_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: signature_part_type
+columns:
+  dfs_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dfs_pid
+  dfs_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dfs_version
+  dfs_deal_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dfs_deal_file_pid
+  dfs_deal_signer_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dfs_deal_signer_pid
+  dfs_x:
+    data_type: NUMERIC(15,7)
+    source:
+      field: primary_source_table.columns.dfs_x
+  dfs_y:
+    data_type: NUMERIC(15,7)
+    source:
+      field: primary_source_table.columns.dfs_y
+  dfs_page_number:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dfs_page_number
+  dfs_page_height:
+    data_type: NUMERIC(15,7)
+    source:
+      field: primary_source_table.columns.dfs_page_height
+  dfs_signature_part_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dfs_signature_part_type
+  dfs_charge_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dfs_charge_type
+  dfs_charge_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.dfs_charge_amount
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100297:
+    input_type: table
+    output_type: insert
+    json_output_field: dfs_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.deal_file_signature
+      SELECT staging_table.dfs_pid
+           , staging_table.dfs_version
+           , staging_table.dfs_deal_file_pid
+           , staging_table.dfs_deal_signer_pid
+           , staging_table.dfs_x
+           , staging_table.dfs_y
+           , staging_table.dfs_page_number
+           , staging_table.dfs_page_height
+           , staging_table.dfs_signature_part_type
+           , staging_table.dfs_charge_type
+           , staging_table.dfs_charge_amount
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.deal_file_signature staging_table
+      LEFT JOIN history_octane.deal_file_signature history_table
+                ON staging_table.dfs_pid = history_table.dfs_pid
+                    AND staging_table.dfs_version = history_table.dfs_version
+      WHERE history_table.dfs_pid IS NULL
+      UNION ALL
+      SELECT history_table.dfs_pid
+           , history_table.dfs_version + 1
+           , history_table.dfs_deal_file_pid
+           , history_table.dfs_deal_signer_pid
+           , history_table.dfs_x
+           , history_table.dfs_y
+           , history_table.dfs_page_number
+           , history_table.dfs_page_height
+           , history_table.dfs_signature_part_type
+           , history_table.dfs_charge_type
+           , history_table.dfs_charge_amount
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.deal_file_signature history_table
+      LEFT JOIN staging_octane.deal_file_signature staging_table
+                ON staging_table.dfs_pid = history_table.dfs_pid
+      WHERE staging_table.dfs_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.deal_file_signature deleted_records
+          WHERE deleted_records.dfs_pid = history_table.dfs_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

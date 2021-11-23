@@ -1,0 +1,79 @@
+name: lender_user_photo
+primary_source_table: staging.staging_octane.lender_user_photo
+primary_key:
+- lup_pid
+- lup_version
+foreign_keys:
+  fk_lender_user_photo_1:
+    columns:
+    - lup_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+  fk_lender_user_photo_2:
+    columns:
+    - lup_repository_file_pid
+    references:
+      columns:
+      - rf_pid
+      schema: history_octane
+      table: repository_file
+columns:
+  lup_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lup_pid
+  lup_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lup_version
+  lup_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lup_lender_user_pid
+  lup_repository_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lup_repository_file_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100124:
+    input_type: table
+    output_type: insert
+    json_output_field: lup_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.lender_user_photo
+      SELECT staging_table.lup_pid
+           , staging_table.lup_version
+           , staging_table.lup_lender_user_pid
+           , staging_table.lup_repository_file_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.lender_user_photo staging_table
+      LEFT JOIN history_octane.lender_user_photo history_table
+                ON staging_table.lup_pid = history_table.lup_pid
+                    AND staging_table.lup_version = history_table.lup_version
+      WHERE history_table.lup_pid IS NULL
+      UNION ALL
+      SELECT history_table.lup_pid
+           , history_table.lup_version + 1
+           , history_table.lup_lender_user_pid
+           , history_table.lup_repository_file_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.lender_user_photo history_table
+      LEFT JOIN staging_octane.lender_user_photo staging_table
+                ON staging_table.lup_pid = history_table.lup_pid
+      WHERE staging_table.lup_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.lender_user_photo deleted_records
+          WHERE deleted_records.lup_pid = history_table.lup_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

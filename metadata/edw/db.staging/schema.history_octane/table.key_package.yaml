@@ -1,0 +1,93 @@
+name: key_package
+primary_source_table: staging.staging_octane.key_package
+primary_key:
+- kp_pid
+- kp_version
+foreign_keys:
+  fk_key_package_1:
+    columns:
+    - kp_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+  fk_key_package_2:
+    columns:
+    - kp_smart_doc_set_pid
+    references:
+      columns:
+      - sdst_pid
+      schema: history_octane
+      table: smart_doc_set
+  fkt_kp_key_package_type:
+    columns:
+    - kp_key_package_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: key_package_type
+columns:
+  kp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.kp_pid
+  kp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.kp_version
+  kp_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.kp_account_pid
+  kp_smart_doc_set_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.kp_smart_doc_set_pid
+  kp_key_package_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.kp_key_package_type
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100252:
+    input_type: table
+    output_type: insert
+    json_output_field: kp_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.key_package
+      SELECT staging_table.kp_pid
+           , staging_table.kp_version
+           , staging_table.kp_account_pid
+           , staging_table.kp_smart_doc_set_pid
+           , staging_table.kp_key_package_type
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.key_package staging_table
+      LEFT JOIN history_octane.key_package history_table
+                ON staging_table.kp_pid = history_table.kp_pid
+                    AND staging_table.kp_version = history_table.kp_version
+      WHERE history_table.kp_pid IS NULL
+      UNION ALL
+      SELECT history_table.kp_pid
+           , history_table.kp_version + 1
+           , history_table.kp_account_pid
+           , history_table.kp_smart_doc_set_pid
+           , history_table.kp_key_package_type
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.key_package history_table
+      LEFT JOIN staging_octane.key_package staging_table
+                ON staging_table.kp_pid = history_table.kp_pid
+      WHERE staging_table.kp_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.key_package deleted_records
+          WHERE deleted_records.kp_pid = history_table.kp_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

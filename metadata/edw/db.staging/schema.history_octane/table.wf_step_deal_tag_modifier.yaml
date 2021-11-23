@@ -1,0 +1,85 @@
+name: wf_step_deal_tag_modifier
+primary_source_table: staging.staging_octane.wf_step_deal_tag_modifier
+primary_key:
+- wsdt_pid
+- wsdt_version
+foreign_keys:
+  fk_wf_step_deal_tag_modifier_1:
+    columns:
+    - wsdt_deal_tag_definition_pid
+    references:
+      columns:
+      - dtd_pid
+      schema: history_octane
+      table: deal_tag_definition
+  fk_wf_step_deal_tag_modifier_2:
+    columns:
+    - wsdt_wf_step_pid
+    references:
+      columns:
+      - ws_pid
+      schema: history_octane
+      table: wf_step
+columns:
+  wsdt_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wsdt_pid
+  wsdt_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.wsdt_version
+  wsdt_deal_tag_definition_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wsdt_deal_tag_definition_pid
+  wsdt_wf_step_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wsdt_wf_step_pid
+  wsdt_add_tag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.wsdt_add_tag
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100204:
+    input_type: table
+    output_type: insert
+    json_output_field: wsdt_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.wf_step_deal_tag_modifier
+      SELECT staging_table.wsdt_pid
+           , staging_table.wsdt_version
+           , staging_table.wsdt_deal_tag_definition_pid
+           , staging_table.wsdt_wf_step_pid
+           , staging_table.wsdt_add_tag
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.wf_step_deal_tag_modifier staging_table
+      LEFT JOIN history_octane.wf_step_deal_tag_modifier history_table
+                ON staging_table.wsdt_pid = history_table.wsdt_pid
+                    AND staging_table.wsdt_version = history_table.wsdt_version
+      WHERE history_table.wsdt_pid IS NULL
+      UNION ALL
+      SELECT history_table.wsdt_pid
+           , history_table.wsdt_version + 1
+           , history_table.wsdt_deal_tag_definition_pid
+           , history_table.wsdt_wf_step_pid
+           , history_table.wsdt_add_tag
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.wf_step_deal_tag_modifier history_table
+      LEFT JOIN staging_octane.wf_step_deal_tag_modifier staging_table
+                ON staging_table.wsdt_pid = history_table.wsdt_pid
+      WHERE staging_table.wsdt_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.wf_step_deal_tag_modifier deleted_records
+          WHERE deleted_records.wsdt_pid = history_table.wsdt_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

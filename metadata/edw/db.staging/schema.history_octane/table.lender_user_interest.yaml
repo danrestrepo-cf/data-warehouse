@@ -1,0 +1,79 @@
+name: lender_user_interest
+primary_source_table: staging.staging_octane.lender_user_interest
+primary_key:
+- lui_pid
+- lui_version
+foreign_keys:
+  fk_lender_user_interest_1:
+    columns:
+    - lui_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+  fkt_lui_lender_user_interest_type:
+    columns:
+    - lui_lender_user_interest_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: lender_user_interest_type
+columns:
+  lui_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lui_pid
+  lui_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lui_version
+  lui_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lui_lender_user_pid
+  lui_lender_user_interest_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lui_lender_user_interest_type
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100033:
+    input_type: table
+    output_type: insert
+    json_output_field: lui_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.lender_user_interest
+      SELECT staging_table.lui_pid
+           , staging_table.lui_version
+           , staging_table.lui_lender_user_pid
+           , staging_table.lui_lender_user_interest_type
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.lender_user_interest staging_table
+      LEFT JOIN history_octane.lender_user_interest history_table
+                ON staging_table.lui_pid = history_table.lui_pid
+                    AND staging_table.lui_version = history_table.lui_version
+      WHERE history_table.lui_pid IS NULL
+      UNION ALL
+      SELECT history_table.lui_pid
+           , history_table.lui_version + 1
+           , history_table.lui_lender_user_pid
+           , history_table.lui_lender_user_interest_type
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.lender_user_interest history_table
+      LEFT JOIN staging_octane.lender_user_interest staging_table
+                ON staging_table.lui_pid = history_table.lui_pid
+      WHERE staging_table.lui_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.lender_user_interest deleted_records
+          WHERE deleted_records.lui_pid = history_table.lui_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

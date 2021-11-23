@@ -1,0 +1,85 @@
+name: formula_report_column
+primary_key:
+- frc_pid
+foreign_keys:
+  fk_formula_report_column_1:
+    columns:
+    - frc_report_row_pid
+    references:
+      columns:
+      - rprw_pid
+      schema: staging_octane
+      table: report_row
+  fkt_frc_field_type_1:
+    columns:
+    - frc_field_type_1
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: field_type
+  fkt_frc_field_type_2:
+    columns:
+    - frc_field_type_2
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: field_type
+  fkt_frc_field_type_3:
+    columns:
+    - frc_field_type_3
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: field_type
+  fkt_frc_field_type_4:
+    columns:
+    - frc_field_type_4
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: field_type
+  fkt_frc_field_type_5:
+    columns:
+    - frc_field_type_5
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: field_type
+  fkt_frc_field_type_6:
+    columns:
+    - frc_field_type_6
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: field_type
+columns:
+  frc_pid:
+    data_type: BIGINT
+  frc_version:
+    data_type: INTEGER
+  frc_report_row_pid:
+    data_type: BIGINT
+  frc_header:
+    data_type: VARCHAR(128)
+  frc_formula:
+    data_type: VARCHAR(1024)
+  frc_field_type_1:
+    data_type: VARCHAR(128)
+  frc_field_type_2:
+    data_type: VARCHAR(128)
+  frc_field_type_3:
+    data_type: VARCHAR(128)
+  frc_field_type_4:
+    data_type: VARCHAR(128)
+  frc_field_type_5:
+    data_type: VARCHAR(128)
+  frc_field_type_6:
+    data_type: VARCHAR(128)
+  frc_ordinal:
+    data_type: INTEGER

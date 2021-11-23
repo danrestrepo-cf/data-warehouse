@@ -1,0 +1,29 @@
+name: deal_note_monitor
+primary_key:
+- dnm_pid
+foreign_keys:
+  fk_deal_note_monitor_1:
+    columns:
+    - dnm_deal_note_pid
+    references:
+      columns:
+      - dn_pid
+      schema: staging_octane
+      table: deal_note
+  fk_deal_note_monitor_2:
+    columns:
+    - dnm_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+columns:
+  dnm_pid:
+    data_type: BIGINT
+  dnm_version:
+    data_type: INTEGER
+  dnm_deal_note_pid:
+    data_type: BIGINT
+  dnm_lender_user_pid:
+    data_type: BIGINT

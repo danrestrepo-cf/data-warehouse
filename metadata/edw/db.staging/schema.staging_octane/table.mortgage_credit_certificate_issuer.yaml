@@ -1,0 +1,49 @@
+name: mortgage_credit_certificate_issuer
+primary_key:
+- mcci_pid
+foreign_keys:
+  fk_mortgage_credit_certificate_issuer_1:
+    columns:
+    - mcci_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+columns:
+  mcci_pid:
+    data_type: BIGINT
+  mcci_version:
+    data_type: INTEGER
+  mcci_account_pid:
+    data_type: BIGINT
+  mcci_from_date:
+    data_type: DATE
+  mcci_through_date:
+    data_type: DATE
+  mcci_issuer_name:
+    data_type: VARCHAR(128)
+  mcci_credit_rate_percent:
+    data_type: NUMERIC(11,9)
+  mcci_ein:
+    data_type: VARCHAR(10)
+  mcci_contact_name:
+    data_type: VARCHAR(128)
+  mcci_contact_phone:
+    data_type: VARCHAR(128)
+  mcci_address_street1:
+    data_type: VARCHAR(128)
+  mcci_address_street2:
+    data_type: VARCHAR(128)
+  mcci_address_city:
+    data_type: VARCHAR(128)
+  mcci_address_state:
+    data_type: VARCHAR(128)
+  mcci_address_postal_code:
+    data_type: VARCHAR(128)
+  mcci_contact_email:
+    data_type: VARCHAR(256)
+  mcci_web_url:
+    data_type: VARCHAR(256)
+  mcci_notes:
+    data_type: VARCHAR(1024)

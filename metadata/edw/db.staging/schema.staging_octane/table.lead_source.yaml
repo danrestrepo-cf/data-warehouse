@@ -1,0 +1,53 @@
+name: lead_source
+primary_key:
+- lds_pid
+foreign_keys:
+  fk_lead_source_1:
+    columns:
+    - lds_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fk_lead_source_2:
+    columns:
+    - lds_channel_pid
+    references:
+      columns:
+      - ch_pid
+      schema: staging_octane
+      table: channel
+  fk_lead_source_3:
+    columns:
+    - lds_mortech_account_pid
+    references:
+      columns:
+      - ma_pid
+      schema: staging_octane
+      table: mortech_account
+columns:
+  lds_pid:
+    data_type: BIGINT
+  lds_version:
+    data_type: INTEGER
+  lds_account_pid:
+    data_type: BIGINT
+  lds_channel_pid:
+    data_type: BIGINT
+  lds_lead_source_name:
+    data_type: VARCHAR(128)
+  lds_mortech_lead_source_id:
+    data_type: VARCHAR(16)
+  lds_lead_source_id:
+    data_type: VARCHAR(32)
+  lds_active:
+    data_type: BOOLEAN
+  lds_lead_id_required:
+    data_type: BOOLEAN
+  lds_zero_margin_allowed:
+    data_type: BOOLEAN
+  lds_mortech_account_pid:
+    data_type: BIGINT
+  lds_training_only:
+    data_type: BOOLEAN

@@ -1,0 +1,39 @@
+name: deal_task
+primary_key:
+- dt_pid
+foreign_keys:
+  fk_deal_task_1:
+    columns:
+    - dt_wf_deal_step_pid
+    references:
+      columns:
+      - wds_pid
+      schema: staging_octane
+      table: wf_deal_step
+  fkt_dt_deal_task_status_type:
+    columns:
+    - dt_deal_task_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: deal_task_status_type
+columns:
+  dt_pid:
+    data_type: BIGINT
+  dt_version:
+    data_type: INTEGER
+  dt_wf_deal_step_pid:
+    data_type: BIGINT
+  dt_create_lender_user_name:
+    data_type: VARCHAR(128)
+  dt_create_datetime:
+    data_type: TIMESTAMP
+  dt_description:
+    data_type: VARCHAR(1024)
+  dt_complete_datetime:
+    data_type: TIMESTAMP
+  dt_deal_task_status_type:
+    data_type: VARCHAR(128)
+  dt_smart_task:
+    data_type: BOOLEAN

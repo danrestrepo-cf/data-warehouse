@@ -1,0 +1,31 @@
+name: wf_deal_step_performer_unavailable
+primary_key:
+- wdspu_pid
+foreign_keys:
+  fk_wf_deal_step_performer_unavailable_1:
+    columns:
+    - wdspu_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_wf_deal_step_performer_unavailable_2:
+    columns:
+    - wdspu_wf_deal_step_pid
+    references:
+      columns:
+      - wds_pid
+      schema: staging_octane
+      table: wf_deal_step
+columns:
+  wdspu_pid:
+    data_type: BIGINT
+  wdspu_version:
+    data_type: INTEGER
+  wdspu_lender_user_pid:
+    data_type: BIGINT
+  wdspu_wf_deal_step_pid:
+    data_type: BIGINT
+  wdspu_days_unavailable:
+    data_type: INTEGER

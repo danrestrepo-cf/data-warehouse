@@ -1,0 +1,79 @@
+name: wf_process_note_monitor
+primary_source_table: staging.staging_octane.wf_process_note_monitor
+primary_key:
+- wfpnm_pid
+- wfpnm_version
+foreign_keys:
+  fk_wf_process_note_monitor_1:
+    columns:
+    - wfpnm_wf_process_note_pid
+    references:
+      columns:
+      - wfpn_pid
+      schema: history_octane
+      table: wf_process_note
+  fk_wf_process_note_monitor_2:
+    columns:
+    - wfpnm_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+columns:
+  wfpnm_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wfpnm_pid
+  wfpnm_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.wfpnm_version
+  wfpnm_wf_process_note_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wfpnm_wf_process_note_pid
+  wfpnm_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wfpnm_lender_user_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100868:
+    input_type: table
+    output_type: insert
+    json_output_field: wfpnm_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.wf_process_note_monitor
+      SELECT staging_table.wfpnm_pid
+           , staging_table.wfpnm_version
+           , staging_table.wfpnm_wf_process_note_pid
+           , staging_table.wfpnm_lender_user_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.wf_process_note_monitor staging_table
+      LEFT JOIN history_octane.wf_process_note_monitor history_table
+                ON staging_table.wfpnm_pid = history_table.wfpnm_pid
+                    AND staging_table.wfpnm_version = history_table.wfpnm_version
+      WHERE history_table.wfpnm_pid IS NULL
+      UNION ALL
+      SELECT history_table.wfpnm_pid
+           , history_table.wfpnm_version + 1
+           , history_table.wfpnm_wf_process_note_pid
+           , history_table.wfpnm_lender_user_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.wf_process_note_monitor history_table
+      LEFT JOIN staging_octane.wf_process_note_monitor staging_table
+                ON staging_table.wfpnm_pid = history_table.wfpnm_pid
+      WHERE staging_table.wfpnm_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.wf_process_note_monitor deleted_records
+          WHERE deleted_records.wfpnm_pid = history_table.wfpnm_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

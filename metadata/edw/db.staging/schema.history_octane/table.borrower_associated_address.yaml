@@ -1,0 +1,317 @@
+name: borrower_associated_address
+primary_source_table: staging.staging_octane.borrower_associated_address
+primary_key:
+- baa_pid
+- baa_version
+foreign_keys:
+  fk_borrower_associated_address_1:
+    columns:
+    - baa_borrower_pid
+    references:
+      columns:
+      - b_pid
+      schema: history_octane
+      table: borrower
+  fk_borrower_associated_address_2:
+    columns:
+    - baa_credit_request_pid
+    references:
+      columns:
+      - crdr_pid
+      schema: history_octane
+      table: credit_request
+  fkt_baa_borrower_associated_address_explanation_type:
+    columns:
+    - baa_borrower_associated_address_explanation_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: borrower_associated_address_explanation_type
+  fkt_baa_borrower_associated_address_source_type:
+    columns:
+    - baa_borrower_associated_address_source_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: borrower_associated_address_source_type
+  fkt_baa_borrower_resided_at_address_after_date:
+    columns:
+    - baa_borrower_resided_at_address_after_date
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_baa_current:
+    columns:
+    - baa_current
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_baa_current_mailing_address:
+    columns:
+    - baa_current_mailing_address
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_baa_current_residence:
+    columns:
+    - baa_current_residence
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_baa_known_to_borrower:
+    columns:
+    - baa_known_to_borrower
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_baa_owned_by_borrower:
+    columns:
+    - baa_owned_by_borrower
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_baa_resided_at_address:
+    columns:
+    - baa_resided_at_address
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_baa_typo_of_loan_app_address:
+    columns:
+    - baa_typo_of_loan_app_address
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_baa_used_as_mailing_address:
+    columns:
+    - baa_used_as_mailing_address
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+columns:
+  baa_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.baa_pid
+  baa_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.baa_version
+  baa_borrower_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.baa_borrower_pid
+  baa_credit_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.baa_credit_request_pid
+  baa_credit_report_identifier:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.baa_credit_report_identifier
+  baa_borrower_associated_address_source_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.baa_borrower_associated_address_source_type
+  baa_reported_month:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.baa_reported_month
+  baa_reported_year:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.baa_reported_year
+  baa_reported_date_verified:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.baa_reported_date_verified
+  baa_reported_address_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.baa_reported_address_street1
+  baa_reported_address_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.baa_reported_address_street2
+  baa_reported_address_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.baa_reported_address_city
+  baa_reported_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.baa_reported_address_state
+  baa_reported_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.baa_reported_address_postal_code
+  baa_reported_address_country:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.baa_reported_address_country
+  baa_current:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.baa_current
+  baa_internal_note:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.baa_internal_note
+  baa_requires_explanation:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.baa_requires_explanation
+  baa_force_requires_explanation:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.baa_force_requires_explanation
+  baa_borrower_associated_address_explanation_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.baa_borrower_associated_address_explanation_type
+  baa_explanation_type_other_explanation:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.baa_explanation_type_other_explanation
+  baa_typo_of_loan_app_address:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.baa_typo_of_loan_app_address
+  baa_known_to_borrower:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.baa_known_to_borrower
+  baa_owned_by_borrower:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.baa_owned_by_borrower
+  baa_resided_at_address:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.baa_resided_at_address
+  baa_used_as_mailing_address:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.baa_used_as_mailing_address
+  baa_current_mailing_address:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.baa_current_mailing_address
+  baa_current_residence:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.baa_current_residence
+  baa_borrower_resided_at_address_after_date:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.baa_borrower_resided_at_address_after_date
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100127:
+    input_type: table
+    output_type: insert
+    json_output_field: baa_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.borrower_associated_address
+      SELECT staging_table.baa_pid
+           , staging_table.baa_version
+           , staging_table.baa_borrower_pid
+           , staging_table.baa_credit_request_pid
+           , staging_table.baa_credit_report_identifier
+           , staging_table.baa_borrower_associated_address_source_type
+           , staging_table.baa_reported_month
+           , staging_table.baa_reported_year
+           , staging_table.baa_reported_date_verified
+           , staging_table.baa_reported_address_street1
+           , staging_table.baa_reported_address_street2
+           , staging_table.baa_reported_address_city
+           , staging_table.baa_reported_address_state
+           , staging_table.baa_reported_address_postal_code
+           , staging_table.baa_reported_address_country
+           , staging_table.baa_current
+           , staging_table.baa_internal_note
+           , staging_table.baa_requires_explanation
+           , staging_table.baa_force_requires_explanation
+           , staging_table.baa_borrower_associated_address_explanation_type
+           , staging_table.baa_explanation_type_other_explanation
+           , staging_table.baa_typo_of_loan_app_address
+           , staging_table.baa_known_to_borrower
+           , staging_table.baa_owned_by_borrower
+           , staging_table.baa_resided_at_address
+           , staging_table.baa_used_as_mailing_address
+           , staging_table.baa_current_mailing_address
+           , staging_table.baa_current_residence
+           , staging_table.baa_borrower_resided_at_address_after_date
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.borrower_associated_address staging_table
+      LEFT JOIN history_octane.borrower_associated_address history_table
+                ON staging_table.baa_pid = history_table.baa_pid
+                    AND staging_table.baa_version = history_table.baa_version
+      WHERE history_table.baa_pid IS NULL
+      UNION ALL
+      SELECT history_table.baa_pid
+           , history_table.baa_version + 1
+           , history_table.baa_borrower_pid
+           , history_table.baa_credit_request_pid
+           , history_table.baa_credit_report_identifier
+           , history_table.baa_borrower_associated_address_source_type
+           , history_table.baa_reported_month
+           , history_table.baa_reported_year
+           , history_table.baa_reported_date_verified
+           , history_table.baa_reported_address_street1
+           , history_table.baa_reported_address_street2
+           , history_table.baa_reported_address_city
+           , history_table.baa_reported_address_state
+           , history_table.baa_reported_address_postal_code
+           , history_table.baa_reported_address_country
+           , history_table.baa_current
+           , history_table.baa_internal_note
+           , history_table.baa_requires_explanation
+           , history_table.baa_force_requires_explanation
+           , history_table.baa_borrower_associated_address_explanation_type
+           , history_table.baa_explanation_type_other_explanation
+           , history_table.baa_typo_of_loan_app_address
+           , history_table.baa_known_to_borrower
+           , history_table.baa_owned_by_borrower
+           , history_table.baa_resided_at_address
+           , history_table.baa_used_as_mailing_address
+           , history_table.baa_current_mailing_address
+           , history_table.baa_current_residence
+           , history_table.baa_borrower_resided_at_address_after_date
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.borrower_associated_address history_table
+      LEFT JOIN staging_octane.borrower_associated_address staging_table
+                ON staging_table.baa_pid = history_table.baa_pid
+      WHERE staging_table.baa_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.borrower_associated_address deleted_records
+          WHERE deleted_records.baa_pid = history_table.baa_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

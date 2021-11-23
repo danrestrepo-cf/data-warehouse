@@ -1,0 +1,35 @@
+name: deal_invoice_item
+primary_key:
+- dii_pid
+foreign_keys:
+  fk_deal_invoice_item_1:
+    columns:
+    - dii_deal_invoice_pid
+    references:
+      columns:
+      - di_pid
+      schema: staging_octane
+      table: deal_invoice
+  fkt_dii_charge_type:
+    columns:
+    - dii_charge_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: charge_type
+columns:
+  dii_pid:
+    data_type: BIGINT
+  dii_version:
+    data_type: INTEGER
+  dii_deal_invoice_pid:
+    data_type: BIGINT
+  dii_charge_type:
+    data_type: VARCHAR(128)
+  dii_item_amount:
+    data_type: NUMERIC(15,2)
+  dii_smart_item:
+    data_type: BOOLEAN
+  dii_adjustment:
+    data_type: BOOLEAN

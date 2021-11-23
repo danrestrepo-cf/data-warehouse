@@ -1,0 +1,110 @@
+name: qualified_mortgage_thresholds
+primary_source_table: staging.staging_octane.qualified_mortgage_thresholds
+primary_key:
+- qmt_pid
+- qmt_version
+columns:
+  qmt_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.qmt_pid
+  qmt_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.qmt_version
+  qmt_effective_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.qmt_effective_date
+  qmt_first_total_loan_amount_threshold:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.qmt_first_total_loan_amount_threshold
+  qmt_first_points_and_fees_threshold_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.qmt_first_points_and_fees_threshold_percent
+  qmt_second_total_loan_amount_threshold:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.qmt_second_total_loan_amount_threshold
+  qmt_second_points_and_fees_threshold_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.qmt_second_points_and_fees_threshold_amount
+  qmt_third_total_loan_amount_threshold:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.qmt_third_total_loan_amount_threshold
+  qmt_third_points_and_fees_threshold_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.qmt_third_points_and_fees_threshold_percent
+  qmt_fourth_total_loan_amount_threshold:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.qmt_fourth_total_loan_amount_threshold
+  qmt_fourth_points_and_fees_threshold_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.qmt_fourth_points_and_fees_threshold_amount
+  qmt_ceiling_points_and_fees_threshold_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.qmt_ceiling_points_and_fees_threshold_percent
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100231:
+    input_type: table
+    output_type: insert
+    json_output_field: qmt_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.qualified_mortgage_thresholds
+      SELECT staging_table.qmt_pid
+           , staging_table.qmt_version
+           , staging_table.qmt_effective_date
+           , staging_table.qmt_first_total_loan_amount_threshold
+           , staging_table.qmt_first_points_and_fees_threshold_percent
+           , staging_table.qmt_second_total_loan_amount_threshold
+           , staging_table.qmt_second_points_and_fees_threshold_amount
+           , staging_table.qmt_third_total_loan_amount_threshold
+           , staging_table.qmt_third_points_and_fees_threshold_percent
+           , staging_table.qmt_fourth_total_loan_amount_threshold
+           , staging_table.qmt_fourth_points_and_fees_threshold_amount
+           , staging_table.qmt_ceiling_points_and_fees_threshold_percent
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.qualified_mortgage_thresholds staging_table
+      LEFT JOIN history_octane.qualified_mortgage_thresholds history_table
+                ON staging_table.qmt_pid = history_table.qmt_pid
+                    AND staging_table.qmt_version = history_table.qmt_version
+      WHERE history_table.qmt_pid IS NULL
+      UNION ALL
+      SELECT history_table.qmt_pid
+           , history_table.qmt_version + 1
+           , history_table.qmt_effective_date
+           , history_table.qmt_first_total_loan_amount_threshold
+           , history_table.qmt_first_points_and_fees_threshold_percent
+           , history_table.qmt_second_total_loan_amount_threshold
+           , history_table.qmt_second_points_and_fees_threshold_amount
+           , history_table.qmt_third_total_loan_amount_threshold
+           , history_table.qmt_third_points_and_fees_threshold_percent
+           , history_table.qmt_fourth_total_loan_amount_threshold
+           , history_table.qmt_fourth_points_and_fees_threshold_amount
+           , history_table.qmt_ceiling_points_and_fees_threshold_percent
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.qualified_mortgage_thresholds history_table
+      LEFT JOIN staging_octane.qualified_mortgage_thresholds staging_table
+                ON staging_table.qmt_pid = history_table.qmt_pid
+      WHERE staging_table.qmt_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.qualified_mortgage_thresholds deleted_records
+          WHERE deleted_records.qmt_pid = history_table.qmt_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

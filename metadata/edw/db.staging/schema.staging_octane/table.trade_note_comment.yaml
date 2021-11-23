@@ -1,0 +1,35 @@
+name: trade_note_comment
+primary_key:
+- tnc_pid
+foreign_keys:
+  fk_trade_note_comment_1:
+    columns:
+    - tnc_trade_note_pid
+    references:
+      columns:
+      - tn_pid
+      schema: staging_octane
+      table: trade_note
+  fk_trade_note_comment_2:
+    columns:
+    - tnc_author_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+columns:
+  tnc_pid:
+    data_type: BIGINT
+  tnc_version:
+    data_type: INTEGER
+  tnc_trade_note_pid:
+    data_type: BIGINT
+  tnc_create_datetime:
+    data_type: TIMESTAMP
+  tnc_content:
+    data_type: VARCHAR(16000)
+  tnc_author_lender_user_pid:
+    data_type: BIGINT
+  tnc_author_unparsed_name:
+    data_type: VARCHAR(128)

@@ -1,0 +1,191 @@
+name: borrower_declarations
+primary_key:
+- bdec_pid
+foreign_keys:
+  fk_borrower_declarations_1:
+    columns:
+    - bdec_borrower_pid
+    references:
+      columns:
+      - b_pid
+      schema: staging_octane
+      table: borrower
+  fkt_bdec_applying_for_credit_before_closing:
+    columns:
+    - bdec_applying_for_credit_before_closing
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_bdec_bankruptcy_chapter_11:
+    columns:
+    - bdec_bankruptcy_chapter_11
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_bdec_bankruptcy_chapter_12:
+    columns:
+    - bdec_bankruptcy_chapter_12
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_bdec_bankruptcy_chapter_13:
+    columns:
+    - bdec_bankruptcy_chapter_13
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_bdec_bankruptcy_chapter_7:
+    columns:
+    - bdec_bankruptcy_chapter_7
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_bdec_borrowed_funds_undisclosed:
+    columns:
+    - bdec_borrowed_funds_undisclosed
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_bdec_completed_pre_foreclosure_short_sale:
+    columns:
+    - bdec_completed_pre_foreclosure_short_sale
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_bdec_conveyed_title_in_lieu_of_foreclosure:
+    columns:
+    - bdec_conveyed_title_in_lieu_of_foreclosure
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_bdec_cosigner_undisclosed:
+    columns:
+    - bdec_cosigner_undisclosed
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_bdec_currently_delinquent_federal_debt:
+    columns:
+    - bdec_currently_delinquent_federal_debt
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_bdec_fha_secondary_residence:
+    columns:
+    - bdec_fha_secondary_residence
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_bdec_intend_to_occupy_more_than_14_days:
+    columns:
+    - bdec_intend_to_occupy_more_than_14_days
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_bdec_other_mortgage_in_progress_before_closing:
+    columns:
+    - bdec_other_mortgage_in_progress_before_closing
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_bdec_party_to_lawsuit:
+    columns:
+    - bdec_party_to_lawsuit
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_bdec_priority_given_to_another_lien:
+    columns:
+    - bdec_priority_given_to_another_lien
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_bdec_property_foreclosure:
+    columns:
+    - bdec_property_foreclosure
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_bdec_relationship_with_seller:
+    columns:
+    - bdec_relationship_with_seller
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+columns:
+  bdec_pid:
+    data_type: BIGINT
+  bdec_version:
+    data_type: INTEGER
+  bdec_borrower_pid:
+    data_type: BIGINT
+  bdec_fha_secondary_residence:
+    data_type: VARCHAR(128)
+  bdec_relationship_with_seller:
+    data_type: VARCHAR(128)
+  bdec_borrowed_funds_undisclosed:
+    data_type: VARCHAR(128)
+  bdec_borrowed_funds_undisclosed_amount:
+    data_type: NUMERIC(15,2)
+  bdec_other_mortgage_in_progress_before_closing:
+    data_type: VARCHAR(128)
+  bdec_applying_for_credit_before_closing:
+    data_type: VARCHAR(128)
+  bdec_priority_given_to_another_lien:
+    data_type: VARCHAR(128)
+  bdec_cosigner_undisclosed:
+    data_type: VARCHAR(128)
+  bdec_currently_delinquent_federal_debt:
+    data_type: VARCHAR(128)
+  bdec_party_to_lawsuit:
+    data_type: VARCHAR(128)
+  bdec_conveyed_title_in_lieu_of_foreclosure:
+    data_type: VARCHAR(128)
+  bdec_completed_pre_foreclosure_short_sale:
+    data_type: VARCHAR(128)
+  bdec_property_foreclosure:
+    data_type: VARCHAR(128)
+  bdec_bankruptcy_chapter_7:
+    data_type: VARCHAR(128)
+  bdec_bankruptcy_chapter_11:
+    data_type: VARCHAR(128)
+  bdec_bankruptcy_chapter_12:
+    data_type: VARCHAR(128)
+  bdec_bankruptcy_chapter_13:
+    data_type: VARCHAR(128)
+  bdec_intend_to_occupy_more_than_14_days:
+    data_type: VARCHAR(128)

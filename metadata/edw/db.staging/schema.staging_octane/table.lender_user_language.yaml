@@ -1,0 +1,29 @@
+name: lender_user_language
+primary_key:
+- lul_pid
+foreign_keys:
+  fk_lender_user_language_1:
+    columns:
+    - lul_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fkt_lul_lender_user_language_type:
+    columns:
+    - lul_lender_user_language_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: lender_user_language_type
+columns:
+  lul_pid:
+    data_type: BIGINT
+  lul_version:
+    data_type: INTEGER
+  lul_lender_user_pid:
+    data_type: BIGINT
+  lul_lender_user_language_type:
+    data_type: VARCHAR(128)

@@ -1,0 +1,307 @@
+name: deal_settlement
+primary_source_table: staging.staging_octane.deal_settlement
+primary_key:
+- dsmt_pid
+- dsmt_version
+foreign_keys:
+  fk_deal_settlement_1:
+    columns:
+    - dsmt_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+  fk_deal_settlement_2:
+    columns:
+    - dsmt_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: history_octane
+      table: deal
+  fk_deal_settlement_3:
+    columns:
+    - dsmt_settlement_agent_pid
+    references:
+      columns:
+      - sa_pid
+      schema: history_octane
+      table: settlement_agent
+  fk_deal_settlement_4:
+    columns:
+    - dsmt_settlement_agent_office_pid
+    references:
+      columns:
+      - sao_pid
+      schema: history_octane
+      table: settlement_agent_office
+  fk_deal_settlement_5:
+    columns:
+    - dsmt_settlement_agent_wire_pid
+    references:
+      columns:
+      - saw_pid
+      schema: history_octane
+      table: settlement_agent_wire
+  fk_deal_settlement_6:
+    columns:
+    - dsmt_title_company_pid
+    references:
+      columns:
+      - tc_pid
+      schema: history_octane
+      table: title_company
+  fk_deal_settlement_7:
+    columns:
+    - dsmt_title_company_office_pid
+    references:
+      columns:
+      - tco_pid
+      schema: history_octane
+      table: title_company_office
+  fkt_dsmt_borrower_elected_preferred_settlement:
+    columns:
+    - dsmt_borrower_elected_preferred_settlement
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+columns:
+  dsmt_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dsmt_pid
+  dsmt_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dsmt_version
+  dsmt_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dsmt_account_pid
+  dsmt_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dsmt_deal_pid
+  dsmt_borrower_elected_preferred_settlement:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dsmt_borrower_elected_preferred_settlement
+  dsmt_settlement_agent_escrow_id:
+    data_type: VARCHAR(64)
+    source:
+      field: primary_source_table.columns.dsmt_settlement_agent_escrow_id
+  dsmt_title_company_reference_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dsmt_title_company_reference_id
+  dsmt_settlement_agent_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dsmt_settlement_agent_pid
+  dsmt_settlement_agent_office_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dsmt_settlement_agent_office_pid
+  dsmt_settlement_agent_wire_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dsmt_settlement_agent_wire_pid
+  dsmt_settlement_agent_first_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dsmt_settlement_agent_first_name
+  dsmt_settlement_agent_last_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dsmt_settlement_agent_last_name
+  dsmt_settlement_agent_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dsmt_settlement_agent_phone
+  dsmt_settlement_agent_phone_extension:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.dsmt_settlement_agent_phone_extension
+  dsmt_settlement_agent_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.dsmt_settlement_agent_email
+  dsmt_settlement_agent_contact_license_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dsmt_settlement_agent_contact_license_id
+  dsmt_settlement_agent_preferred_vendor:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.dsmt_settlement_agent_preferred_vendor
+  dsmt_for_further_credit:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dsmt_for_further_credit
+  dsmt_beneficiary_for_further_credit:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dsmt_beneficiary_for_further_credit
+  dsmt_title_company_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dsmt_title_company_pid
+  dsmt_title_company_office_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dsmt_title_company_office_pid
+  dsmt_title_company_first_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dsmt_title_company_first_name
+  dsmt_title_company_last_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dsmt_title_company_last_name
+  dsmt_title_company_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dsmt_title_company_phone
+  dsmt_title_company_phone_extension:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.dsmt_title_company_phone_extension
+  dsmt_title_company_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.dsmt_title_company_email
+  dsmt_title_company_contact_license_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dsmt_title_company_contact_license_id
+  dsmt_title_company_preferred_vendor:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.dsmt_title_company_preferred_vendor
+  dsmt_title_insurance_underwriter_company_name:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.dsmt_title_insurance_underwriter_company_name
+  dsmt_title_insurance_attorney_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dsmt_title_insurance_attorney_first_name
+  dsmt_title_insurance_attorney_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dsmt_title_insurance_attorney_middle_name
+  dsmt_title_insurance_attorney_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dsmt_title_insurance_attorney_last_name
+  dsmt_title_insurance_attorney_name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dsmt_title_insurance_attorney_name_suffix
+  dsmt_title_insurance_attorney_license_number:
+    data_type: VARCHAR(64)
+    source:
+      field: primary_source_table.columns.dsmt_title_insurance_attorney_license_number
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100269:
+    input_type: table
+    output_type: insert
+    json_output_field: dsmt_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.deal_settlement
+      SELECT staging_table.dsmt_pid
+           , staging_table.dsmt_version
+           , staging_table.dsmt_account_pid
+           , staging_table.dsmt_deal_pid
+           , staging_table.dsmt_borrower_elected_preferred_settlement
+           , staging_table.dsmt_settlement_agent_escrow_id
+           , staging_table.dsmt_title_company_reference_id
+           , staging_table.dsmt_settlement_agent_pid
+           , staging_table.dsmt_settlement_agent_office_pid
+           , staging_table.dsmt_settlement_agent_wire_pid
+           , staging_table.dsmt_settlement_agent_first_name
+           , staging_table.dsmt_settlement_agent_last_name
+           , staging_table.dsmt_settlement_agent_phone
+           , staging_table.dsmt_settlement_agent_phone_extension
+           , staging_table.dsmt_settlement_agent_email
+           , staging_table.dsmt_settlement_agent_contact_license_id
+           , staging_table.dsmt_settlement_agent_preferred_vendor
+           , staging_table.dsmt_for_further_credit
+           , staging_table.dsmt_beneficiary_for_further_credit
+           , staging_table.dsmt_title_company_pid
+           , staging_table.dsmt_title_company_office_pid
+           , staging_table.dsmt_title_company_first_name
+           , staging_table.dsmt_title_company_last_name
+           , staging_table.dsmt_title_company_phone
+           , staging_table.dsmt_title_company_phone_extension
+           , staging_table.dsmt_title_company_email
+           , staging_table.dsmt_title_company_contact_license_id
+           , staging_table.dsmt_title_company_preferred_vendor
+           , staging_table.dsmt_title_insurance_underwriter_company_name
+           , staging_table.dsmt_title_insurance_attorney_first_name
+           , staging_table.dsmt_title_insurance_attorney_middle_name
+           , staging_table.dsmt_title_insurance_attorney_last_name
+           , staging_table.dsmt_title_insurance_attorney_name_suffix
+           , staging_table.dsmt_title_insurance_attorney_license_number
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.deal_settlement staging_table
+      LEFT JOIN history_octane.deal_settlement history_table
+                ON staging_table.dsmt_pid = history_table.dsmt_pid
+                    AND staging_table.dsmt_version = history_table.dsmt_version
+      WHERE history_table.dsmt_pid IS NULL
+      UNION ALL
+      SELECT history_table.dsmt_pid
+           , history_table.dsmt_version + 1
+           , history_table.dsmt_account_pid
+           , history_table.dsmt_deal_pid
+           , history_table.dsmt_borrower_elected_preferred_settlement
+           , history_table.dsmt_settlement_agent_escrow_id
+           , history_table.dsmt_title_company_reference_id
+           , history_table.dsmt_settlement_agent_pid
+           , history_table.dsmt_settlement_agent_office_pid
+           , history_table.dsmt_settlement_agent_wire_pid
+           , history_table.dsmt_settlement_agent_first_name
+           , history_table.dsmt_settlement_agent_last_name
+           , history_table.dsmt_settlement_agent_phone
+           , history_table.dsmt_settlement_agent_phone_extension
+           , history_table.dsmt_settlement_agent_email
+           , history_table.dsmt_settlement_agent_contact_license_id
+           , history_table.dsmt_settlement_agent_preferred_vendor
+           , history_table.dsmt_for_further_credit
+           , history_table.dsmt_beneficiary_for_further_credit
+           , history_table.dsmt_title_company_pid
+           , history_table.dsmt_title_company_office_pid
+           , history_table.dsmt_title_company_first_name
+           , history_table.dsmt_title_company_last_name
+           , history_table.dsmt_title_company_phone
+           , history_table.dsmt_title_company_phone_extension
+           , history_table.dsmt_title_company_email
+           , history_table.dsmt_title_company_contact_license_id
+           , history_table.dsmt_title_company_preferred_vendor
+           , history_table.dsmt_title_insurance_underwriter_company_name
+           , history_table.dsmt_title_insurance_attorney_first_name
+           , history_table.dsmt_title_insurance_attorney_middle_name
+           , history_table.dsmt_title_insurance_attorney_last_name
+           , history_table.dsmt_title_insurance_attorney_name_suffix
+           , history_table.dsmt_title_insurance_attorney_license_number
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.deal_settlement history_table
+      LEFT JOIN staging_octane.deal_settlement staging_table
+                ON staging_table.dsmt_pid = history_table.dsmt_pid
+      WHERE staging_table.dsmt_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.deal_settlement deleted_records
+          WHERE deleted_records.dsmt_pid = history_table.dsmt_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

@@ -1,0 +1,195 @@
+name: deal_contact
+primary_source_table: staging.staging_octane.deal_contact
+primary_key:
+- dc_pid
+- dc_version
+foreign_keys:
+  fk_deal_contact_1:
+    columns:
+    - dc_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: history_octane
+      table: deal
+  fkt_dc_address_country:
+    columns:
+    - dc_address_country
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: country_type
+  fkt_dc_role_type:
+    columns:
+    - dc_role_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: deal_contact_role_type
+columns:
+  dc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dc_pid
+  dc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dc_version
+  dc_address_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dc_address_city
+  dc_address_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dc_address_country
+  dc_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dc_address_postal_code
+  dc_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dc_address_state
+  dc_address_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dc_address_street1
+  dc_address_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dc_address_street2
+  dc_company_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dc_company_name
+  dc_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dc_deal_pid
+  dc_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.dc_email
+  dc_fax:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dc_fax
+  dc_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dc_first_name
+  dc_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dc_last_name
+  dc_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dc_middle_name
+  dc_mobile_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dc_mobile_phone
+  dc_name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dc_name_suffix
+  dc_office_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dc_office_phone
+  dc_office_phone_extension:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.dc_office_phone_extension
+  dc_role_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dc_role_type
+  dc_title:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dc_title
+  dc_company_license_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dc_company_license_id
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100078:
+    input_type: table
+    output_type: insert
+    json_output_field: dc_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.deal_contact
+      SELECT staging_table.dc_pid
+           , staging_table.dc_version
+           , staging_table.dc_address_city
+           , staging_table.dc_address_country
+           , staging_table.dc_address_postal_code
+           , staging_table.dc_address_state
+           , staging_table.dc_address_street1
+           , staging_table.dc_address_street2
+           , staging_table.dc_company_name
+           , staging_table.dc_deal_pid
+           , staging_table.dc_email
+           , staging_table.dc_fax
+           , staging_table.dc_first_name
+           , staging_table.dc_last_name
+           , staging_table.dc_middle_name
+           , staging_table.dc_mobile_phone
+           , staging_table.dc_name_suffix
+           , staging_table.dc_office_phone
+           , staging_table.dc_office_phone_extension
+           , staging_table.dc_role_type
+           , staging_table.dc_title
+           , staging_table.dc_company_license_id
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.deal_contact staging_table
+      LEFT JOIN history_octane.deal_contact history_table
+                ON staging_table.dc_pid = history_table.dc_pid
+                    AND staging_table.dc_version = history_table.dc_version
+      WHERE history_table.dc_pid IS NULL
+      UNION ALL
+      SELECT history_table.dc_pid
+           , history_table.dc_version + 1
+           , history_table.dc_address_city
+           , history_table.dc_address_country
+           , history_table.dc_address_postal_code
+           , history_table.dc_address_state
+           , history_table.dc_address_street1
+           , history_table.dc_address_street2
+           , history_table.dc_company_name
+           , history_table.dc_deal_pid
+           , history_table.dc_email
+           , history_table.dc_fax
+           , history_table.dc_first_name
+           , history_table.dc_last_name
+           , history_table.dc_middle_name
+           , history_table.dc_mobile_phone
+           , history_table.dc_name_suffix
+           , history_table.dc_office_phone
+           , history_table.dc_office_phone_extension
+           , history_table.dc_role_type
+           , history_table.dc_title
+           , history_table.dc_company_license_id
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.deal_contact history_table
+      LEFT JOIN staging_octane.deal_contact staging_table
+                ON staging_table.dc_pid = history_table.dc_pid
+      WHERE staging_table.dc_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.deal_contact deleted_records
+          WHERE deleted_records.dc_pid = history_table.dc_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

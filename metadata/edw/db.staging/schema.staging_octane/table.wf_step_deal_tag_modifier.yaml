@@ -1,0 +1,31 @@
+name: wf_step_deal_tag_modifier
+primary_key:
+- wsdt_pid
+foreign_keys:
+  fk_wf_step_deal_tag_modifier_1:
+    columns:
+    - wsdt_deal_tag_definition_pid
+    references:
+      columns:
+      - dtd_pid
+      schema: staging_octane
+      table: deal_tag_definition
+  fk_wf_step_deal_tag_modifier_2:
+    columns:
+    - wsdt_wf_step_pid
+    references:
+      columns:
+      - ws_pid
+      schema: staging_octane
+      table: wf_step
+columns:
+  wsdt_pid:
+    data_type: BIGINT
+  wsdt_version:
+    data_type: INTEGER
+  wsdt_deal_tag_definition_pid:
+    data_type: BIGINT
+  wsdt_wf_step_pid:
+    data_type: BIGINT
+  wsdt_add_tag:
+    data_type: BOOLEAN

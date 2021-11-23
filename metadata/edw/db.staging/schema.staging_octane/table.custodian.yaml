@@ -1,0 +1,45 @@
+name: custodian
+primary_key:
+- cu_pid
+foreign_keys:
+  fkt_cu_address_country:
+    columns:
+    - cu_address_country
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: country_type
+columns:
+  cu_pid:
+    data_type: BIGINT
+  cu_version:
+    data_type: INTEGER
+  cu_account_pid:
+    data_type: BIGINT
+  cu_custodian_id:
+    data_type: VARCHAR(32)
+  cu_custodian_name:
+    data_type: VARCHAR(128)
+  cu_address_street1:
+    data_type: VARCHAR(128)
+  cu_address_street2:
+    data_type: VARCHAR(128)
+  cu_address_city:
+    data_type: VARCHAR(128)
+  cu_address_state:
+    data_type: VARCHAR(128)
+  cu_address_postal_code:
+    data_type: VARCHAR(128)
+  cu_address_country:
+    data_type: VARCHAR(128)
+  cu_custodian_phone:
+    data_type: VARCHAR(32)
+  cu_custodian_mers_org_id:
+    data_type: VARCHAR(7)
+  cu_whole_loan_fin:
+    data_type: VARCHAR(11)
+  cu_mbs_loan_fin:
+    data_type: VARCHAR(11)
+  cu_register_with_mers:
+    data_type: BOOLEAN

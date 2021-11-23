@@ -1,0 +1,14 @@
+name: wf_polling_time_slice
+primary_key:
+- wts_pid
+columns:
+  wts_pid:
+    data_type: BIGINT
+  wts_version:
+    data_type: INTEGER
+  wts_time_slice:
+    data_type: TIMESTAMP
+  wts_when_fired:
+    data_type: TIMESTAMP
+  wts_when_complete:
+    data_type: TIMESTAMP

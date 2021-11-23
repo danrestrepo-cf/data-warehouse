@@ -1,0 +1,71 @@
+name: wf_deal_step_timeout
+primary_source_table: staging.staging_octane.wf_deal_step_timeout
+primary_key:
+- wdst_pid
+- wdst_version
+foreign_keys:
+  fk_wf_deal_step_timeout_1:
+    columns:
+    - wdst_wf_deal_step_pid
+    references:
+      columns:
+      - wds_pid
+      schema: history_octane
+      table: wf_deal_step
+columns:
+  wdst_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wdst_pid
+  wdst_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.wdst_version
+  wdst_wf_deal_step_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wdst_wf_deal_step_pid
+  wdst_timeout_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.wdst_timeout_datetime
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100198:
+    input_type: table
+    output_type: insert
+    json_output_field: wdst_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.wf_deal_step_timeout
+      SELECT staging_table.wdst_pid
+           , staging_table.wdst_version
+           , staging_table.wdst_wf_deal_step_pid
+           , staging_table.wdst_timeout_datetime
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.wf_deal_step_timeout staging_table
+      LEFT JOIN history_octane.wf_deal_step_timeout history_table
+                ON staging_table.wdst_pid = history_table.wdst_pid
+                    AND staging_table.wdst_version = history_table.wdst_version
+      WHERE history_table.wdst_pid IS NULL
+      UNION ALL
+      SELECT history_table.wdst_pid
+           , history_table.wdst_version + 1
+           , history_table.wdst_wf_deal_step_pid
+           , history_table.wdst_timeout_datetime
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.wf_deal_step_timeout history_table
+      LEFT JOIN staging_octane.wf_deal_step_timeout staging_table
+                ON staging_table.wdst_pid = history_table.wdst_pid
+      WHERE staging_table.wdst_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.wf_deal_step_timeout deleted_records
+          WHERE deleted_records.wdst_pid = history_table.wdst_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

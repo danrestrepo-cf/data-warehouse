@@ -1,0 +1,401 @@
+name: job_income
+primary_key:
+- ji_pid
+foreign_keys:
+  fk_job_income_1:
+    columns:
+    - ji_borrower_income_pid
+    references:
+      columns:
+      - bi_pid
+      schema: staging_octane
+      table: borrower_income
+  fkt_ji_address_voe_verify_method_type:
+    columns:
+    - ji_address_voe_verify_method_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: voe_verify_method_type
+  fkt_ji_adjustment_income_calc_method_type:
+    columns:
+    - ji_adjustment_income_calc_method_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: income_history_calc_method_type
+  fkt_ji_base_income_calc_method_type:
+    columns:
+    - ji_base_income_calc_method_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: income_history_calc_method_type
+  fkt_ji_bonus_income_calc_method_type:
+    columns:
+    - ji_bonus_income_calc_method_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: income_history_calc_method_type
+  fkt_ji_commissions_income_calc_method_type:
+    columns:
+    - ji_commissions_income_calc_method_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: income_history_calc_method_type
+  fkt_ji_overtime_income_calc_method_type:
+    columns:
+    - ji_overtime_income_calc_method_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: income_history_calc_method_type
+  fkt_ji_phone_voe_verify_method_type:
+    columns:
+    - ji_phone_voe_verify_method_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: voe_verify_method_type
+  fkt_ji_tip_income_calc_method_type:
+    columns:
+    - ji_tip_income_calc_method_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: income_history_calc_method_type
+  fkt_ji_voe_third_party_verifier_type:
+    columns:
+    - ji_voe_third_party_verifier_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: voe_third_party_verifier_type
+  fkt_ji_voe_verbal_verify_method_type:
+    columns:
+    - ji_voe_verbal_verify_method_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: voe_verbal_verify_method_type
+columns:
+  ji_pid:
+    data_type: BIGINT
+  ji_version:
+    data_type: INTEGER
+  ji_borrower_income_pid:
+    data_type: BIGINT
+  ji_estimated_mode:
+    data_type: BOOLEAN
+  ji_line_of_work_years:
+    data_type: INTEGER
+  ji_voe_written_required:
+    data_type: BOOLEAN
+  ji_voe_written_system:
+    data_type: BOOLEAN
+  ji_voe_written_forced:
+    data_type: BOOLEAN
+  ji_base_income_calc_method_type:
+    data_type: VARCHAR(128)
+  ji_monthly_base_unadjusted_amount:
+    data_type: NUMERIC(15,2)
+  ji_monthly_base_adjustment_amount:
+    data_type: NUMERIC(15,2)
+  ji_overtime_income_calc_method_type:
+    data_type: VARCHAR(128)
+  ji_monthly_overtime_unadjusted_amount:
+    data_type: NUMERIC(15,2)
+  ji_monthly_overtime_adjustment_amount:
+    data_type: NUMERIC(15,2)
+  ji_bonus_income_calc_method_type:
+    data_type: VARCHAR(128)
+  ji_monthly_bonus_unadjusted_amount:
+    data_type: NUMERIC(15,2)
+  ji_monthly_bonus_adjustment_amount:
+    data_type: NUMERIC(15,2)
+  ji_commissions_income_calc_method_type:
+    data_type: VARCHAR(128)
+  ji_monthly_commissions_unadjusted_amount:
+    data_type: NUMERIC(15,2)
+  ji_monthly_commissions_adjustment_amount:
+    data_type: NUMERIC(15,2)
+  ji_tip_income_calc_method_type:
+    data_type: VARCHAR(128)
+  ji_monthly_tip_unadjusted_amount:
+    data_type: NUMERIC(15,2)
+  ji_monthly_tip_adjustment_amount:
+    data_type: NUMERIC(15,2)
+  ji_adjustment_income_calc_method_type:
+    data_type: VARCHAR(128)
+  ji_monthly_adjustment_amount:
+    data_type: NUMERIC(15,2)
+  ji_position:
+    data_type: VARCHAR(32)
+  ji_employer_relative:
+    data_type: BOOLEAN
+  ji_employer_property_seller:
+    data_type: BOOLEAN
+  ji_employer_real_estate_broker:
+    data_type: BOOLEAN
+  ji_military_job:
+    data_type: BOOLEAN
+  ji_estimated_monthly_military_amount:
+    data_type: NUMERIC(15,2)
+  ji_monthly_military_base_pay_amount:
+    data_type: NUMERIC(15,2)
+  ji_monthly_military_clothes_allowance_ungrossed_amount:
+    data_type: NUMERIC(15,2)
+  ji_monthly_military_combat_pay_amount:
+    data_type: NUMERIC(15,2)
+  ji_monthly_military_flight_pay_amount:
+    data_type: NUMERIC(15,2)
+  ji_monthly_military_hazard_pay_amount:
+    data_type: NUMERIC(15,2)
+  ji_monthly_military_housing_allowance_ungrossed_amount:
+    data_type: NUMERIC(15,2)
+  ji_monthly_military_overseas_pay_amount:
+    data_type: NUMERIC(15,2)
+  ji_monthly_military_prop_pay_amount:
+    data_type: NUMERIC(15,2)
+  ji_monthly_military_quarters_allowance_ungrossed_amount:
+    data_type: NUMERIC(15,2)
+  ji_monthly_military_rations_allowance_ungrossed_amount:
+    data_type: NUMERIC(15,2)
+  ji_military_gross_up:
+    data_type: BOOLEAN
+  ji_military_gross_up_percent:
+    data_type: NUMERIC(11,9)
+  ji_monthly_military_clothes_allowance_amount:
+    data_type: NUMERIC(15,2)
+  ji_monthly_military_quarters_allowance_amount:
+    data_type: NUMERIC(15,2)
+  ji_monthly_military_rations_allowance_amount:
+    data_type: NUMERIC(15,2)
+  ji_monthly_military_housing_allowance_amount:
+    data_type: NUMERIC(15,2)
+  ji_military_pay_subtotal_amount:
+    data_type: NUMERIC(15,2)
+  ji_military_allowance_subtotal_amount:
+    data_type: NUMERIC(15,2)
+  ji_monthly_military_total_amount:
+    data_type: NUMERIC(15,2)
+  ji_annual_military_total_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year1_year:
+    data_type: INTEGER
+  ji_job_year1_year_include:
+    data_type: BOOLEAN
+  ji_job_year1_from_date:
+    data_type: DATE
+  ji_job_year1_through_date:
+    data_type: DATE
+  ji_job_year1_months:
+    data_type: NUMERIC(4,2)
+  ji_job_year1_base_input_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year1_monthly_base_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year1_overtime_input_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year1_monthly_overtime_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year1_bonus_input_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year1_monthly_bonus_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year1_commissions_input_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year1_monthly_commissions_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year1_tip_input_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year1_monthly_tip_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year1_adjustment_input_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year1_monthly_adjustment_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year1_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year1_annual_total_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year1_monthly_total_commissions_percent:
+    data_type: NUMERIC(11,9)
+  ji_job_year2_year:
+    data_type: INTEGER
+  ji_job_year2_year_include:
+    data_type: BOOLEAN
+  ji_job_year2_from_date:
+    data_type: DATE
+  ji_job_year2_through_date:
+    data_type: DATE
+  ji_job_year2_months:
+    data_type: NUMERIC(4,2)
+  ji_job_year2_base_input_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year2_monthly_base_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year2_overtime_input_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year2_monthly_overtime_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year2_bonus_input_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year2_monthly_bonus_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year2_commissions_input_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year2_monthly_commissions_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year2_tip_input_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year2_monthly_tip_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year2_adjustment_input_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year2_monthly_adjustment_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year2_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year2_annual_total_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year2_monthly_total_commissions_percent:
+    data_type: NUMERIC(11,9)
+  ji_job_year3_year:
+    data_type: INTEGER
+  ji_job_year3_year_include:
+    data_type: BOOLEAN
+  ji_job_year3_from_date:
+    data_type: DATE
+  ji_job_year3_through_date:
+    data_type: DATE
+  ji_job_year3_months:
+    data_type: NUMERIC(4,2)
+  ji_job_year3_base_input_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year3_monthly_base_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year3_overtime_input_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year3_monthly_overtime_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year3_bonus_input_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year3_monthly_bonus_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year3_commissions_input_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year3_monthly_commissions_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year3_tip_input_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year3_monthly_tip_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year3_adjustment_input_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year3_monthly_adjustment_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year3_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year3_annual_total_amount:
+    data_type: NUMERIC(15,2)
+  ji_job_year3_monthly_total_commissions_percent:
+    data_type: NUMERIC(11,9)
+  ji_estimated_monthly_base_amount:
+    data_type: NUMERIC(15,2)
+  ji_estimated_monthly_bonus_amount:
+    data_type: NUMERIC(15,2)
+  ji_estimated_monthly_overtime_amount:
+    data_type: NUMERIC(15,2)
+  ji_estimated_monthly_commissions_amount:
+    data_type: NUMERIC(15,2)
+  ji_estimated_monthly_tip_amount:
+    data_type: NUMERIC(15,2)
+  ji_estimated_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+  ji_estimated_annual_total_amount:
+    data_type: NUMERIC(15,2)
+  ji_estimated_monthly_total_commissions_percent:
+    data_type: NUMERIC(11,9)
+  ji_worksheet_monthly_base_amount:
+    data_type: NUMERIC(15,2)
+  ji_worksheet_monthly_bonus_amount:
+    data_type: NUMERIC(15,2)
+  ji_worksheet_monthly_overtime_amount:
+    data_type: NUMERIC(15,2)
+  ji_worksheet_monthly_commissions_amount:
+    data_type: NUMERIC(15,2)
+  ji_worksheet_monthly_tip_amount:
+    data_type: NUMERIC(15,2)
+  ji_worksheet_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+  ji_worksheet_annual_total_amount:
+    data_type: NUMERIC(15,2)
+  ji_worksheet_monthly_total_commissions_percent:
+    data_type: NUMERIC(11,9)
+  ji_working_monthly_base_amount:
+    data_type: NUMERIC(15,2)
+  ji_working_monthly_bonus_amount:
+    data_type: NUMERIC(15,2)
+  ji_working_monthly_overtime_amount:
+    data_type: NUMERIC(15,2)
+  ji_working_monthly_commissions_amount:
+    data_type: NUMERIC(15,2)
+  ji_working_monthly_tip_amount:
+    data_type: NUMERIC(15,2)
+  ji_working_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+  ji_working_annual_total_amount:
+    data_type: NUMERIC(15,2)
+  ji_working_monthly_total_commissions_percent:
+    data_type: NUMERIC(11,9)
+  ji_underwriter_comments:
+    data_type: VARCHAR(1024)
+  ji_foreign_income:
+    data_type: BOOLEAN
+  ji_seasonal_income:
+    data_type: BOOLEAN
+  ji_voe_third_party_verifier_order_id:
+    data_type: VARCHAR(16)
+  ji_employer_voe_name:
+    data_type: VARCHAR(128)
+  ji_employer_voe_title:
+    data_type: VARCHAR(128)
+  ji_employer_voe_phone:
+    data_type: VARCHAR(32)
+  ji_employer_voe_phone_extension:
+    data_type: VARCHAR(16)
+  ji_employer_voe_fax:
+    data_type: VARCHAR(32)
+  ji_employer_voe_email:
+    data_type: VARCHAR(256)
+  ji_phone_voe_verify_method_type:
+    data_type: VARCHAR(128)
+  ji_address_voe_verify_method_type:
+    data_type: VARCHAR(128)
+  ji_verified_date:
+    data_type: DATE
+  ji_verified_by:
+    data_type: VARCHAR(128)
+  ji_voe_verbal_verify_method_type:
+    data_type: VARCHAR(128)
+  ji_voe_third_party_verifier_type:
+    data_type: VARCHAR(128)
+  ji_employer_other_interested_party:
+    data_type: BOOLEAN
+  ji_employer_other_interested_party_description:
+    data_type: VARCHAR(128)
+  ji_line_of_work_months:
+    data_type: INTEGER

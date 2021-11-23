@@ -1,0 +1,37 @@
+name: smart_task
+primary_key:
+- st_pid
+foreign_keys:
+  fk_smart_task_1:
+    columns:
+    - st_wf_step_pid
+    references:
+      columns:
+      - ws_pid
+      schema: staging_octane
+      table: wf_step
+  fk_smart_task_2:
+    columns:
+    - st_criteria_pid
+    references:
+      columns:
+      - cr_pid
+      schema: staging_octane
+      table: criteria
+columns:
+  st_pid:
+    data_type: BIGINT
+  st_version:
+    data_type: INTEGER
+  st_wf_step_pid:
+    data_type: BIGINT
+  st_description:
+    data_type: VARCHAR(1024)
+  st_from_date:
+    data_type: DATE
+  st_through_date:
+    data_type: DATE
+  st_wf_step_order:
+    data_type: INTEGER
+  st_criteria_pid:
+    data_type: BIGINT

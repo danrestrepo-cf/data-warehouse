@@ -1,0 +1,33 @@
+name: channel
+primary_key:
+- ch_pid
+foreign_keys:
+  fk_channel_1:
+    columns:
+    - ch_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fkt_ch_channel_type:
+    columns:
+    - ch_channel_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: channel_type
+columns:
+  ch_pid:
+    data_type: BIGINT
+  ch_version:
+    data_type: INTEGER
+  ch_account_pid:
+    data_type: BIGINT
+  ch_id:
+    data_type: VARCHAR(32)
+  ch_name:
+    data_type: VARCHAR(128)
+  ch_channel_type:
+    data_type: VARCHAR(128)

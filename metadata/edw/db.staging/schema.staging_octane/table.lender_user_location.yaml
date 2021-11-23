@@ -1,0 +1,63 @@
+name: lender_user_location
+primary_key:
+- luloc_pid
+foreign_keys:
+  fk_lender_user_location_1:
+    columns:
+    - luloc_company_pid
+    references:
+      columns:
+      - cm_pid
+      schema: staging_octane
+      table: company
+  fk_lender_user_location_2:
+    columns:
+    - luloc_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_lender_user_location_3:
+    columns:
+    - luloc_location_pid
+    references:
+      columns:
+      - loc_pid
+      schema: staging_octane
+      table: location
+  fkt_luloc_lender_user_location_type:
+    columns:
+    - luloc_lender_user_location_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: lender_user_location_type
+  fkt_luloc_workspace_type:
+    columns:
+    - luloc_workspace_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: workspace_type
+columns:
+  luloc_pid:
+    data_type: BIGINT
+  luloc_version:
+    data_type: INTEGER
+  luloc_company_pid:
+    data_type: BIGINT
+  luloc_lender_user_pid:
+    data_type: BIGINT
+  luloc_location_pid:
+    data_type: BIGINT
+  luloc_from_date:
+    data_type: DATE
+  luloc_lender_user_location_type:
+    data_type: VARCHAR(128)
+  luloc_workspace_type:
+    data_type: VARCHAR(128)
+  luloc_workspace_code:
+    data_type: VARCHAR(16)

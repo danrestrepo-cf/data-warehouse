@@ -1,0 +1,31 @@
+name: proposal_doc_set_id_ticker
+primary_key:
+- pdstk_pid
+foreign_keys:
+  fk_proposal_doc_set_id_ticker_1:
+    columns:
+    - pdstk_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: staging_octane
+      table: proposal
+  fk_proposal_doc_set_id_ticker_2:
+    columns:
+    - pdstk_smart_doc_set_pid
+    references:
+      columns:
+      - sdst_pid
+      schema: staging_octane
+      table: smart_doc_set
+columns:
+  pdstk_pid:
+    data_type: BIGINT
+  pdstk_version:
+    data_type: INTEGER
+  pdstk_proposal_pid:
+    data_type: BIGINT
+  pdstk_smart_doc_set_pid:
+    data_type: BIGINT
+  pdstk_next_proposal_doc_set_id:
+    data_type: INTEGER

@@ -1,0 +1,23 @@
+name: loan_mi_rate_adjustment
+primary_key:
+- lmra_pid
+foreign_keys:
+  fk_loan_mi_rate_adjustment_1:
+    columns:
+    - lmra_loan_pid
+    references:
+      columns:
+      - l_pid
+      schema: staging_octane
+      table: loan
+columns:
+  lmra_pid:
+    data_type: BIGINT
+  lmra_version:
+    data_type: INTEGER
+  lmra_loan_pid:
+    data_type: BIGINT
+  lmra_case_name:
+    data_type: VARCHAR(16000)
+  lmra_rate_adjustment_percent:
+    data_type: NUMERIC(11,9)

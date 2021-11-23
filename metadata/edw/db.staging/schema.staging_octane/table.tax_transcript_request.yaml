@@ -1,0 +1,295 @@
+name: tax_transcript_request
+primary_key:
+- ttr_pid
+foreign_keys:
+  fk_tax_transcript_request_1:
+    columns:
+    - ttr_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: staging_octane
+      table: deal
+  fk_tax_transcript_request_2:
+    columns:
+    - ttr_requester_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_tax_transcript_request_3:
+    columns:
+    - ttr_signed_4506t_deal_file_pid
+    references:
+      columns:
+      - df_pid
+      schema: staging_octane
+      table: deal_file
+  fk_tax_transcript_request_4:
+    columns:
+    - ttr_borrower1_pid
+    references:
+      columns:
+      - b_pid
+      schema: staging_octane
+      table: borrower
+  fk_tax_transcript_request_5:
+    columns:
+    - ttr_borrower2_pid
+    references:
+      columns:
+      - b_pid
+      schema: staging_octane
+      table: borrower
+  fkt_ttr_borrower1_current_country:
+    columns:
+    - ttr_borrower1_current_country
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: country_type
+  fkt_ttr_borrower1_prior_country:
+    columns:
+    - ttr_borrower1_prior_country
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: country_type
+  fkt_ttr_borrower2_current_country:
+    columns:
+    - ttr_borrower2_current_country
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: country_type
+  fkt_ttr_borrower2_prior_country:
+    columns:
+    - ttr_borrower2_prior_country
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: country_type
+  fkt_ttr_business_ownership_type:
+    columns:
+    - ttr_business_ownership_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: business_ownership_type
+  fkt_ttr_company_country:
+    columns:
+    - ttr_company_country
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: country_type
+  fkt_ttr_credit_request_type:
+    columns:
+    - ttr_credit_request_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: credit_request_type
+  fkt_ttr_mismo_version_type:
+    columns:
+    - ttr_mismo_version_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: mismo_version_type
+  fkt_ttr_requester_agent_type:
+    columns:
+    - ttr_requester_agent_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: agent_type
+  fkt_ttr_tax_transcript_request_status_type:
+    columns:
+    - ttr_tax_transcript_request_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: tax_transcript_request_status_type
+columns:
+  ttr_pid:
+    data_type: BIGINT
+  ttr_version:
+    data_type: INTEGER
+  ttr_deal_pid:
+    data_type: BIGINT
+  ttr_create_datetime:
+    data_type: TIMESTAMP
+  ttr_requester_agent_type:
+    data_type: VARCHAR(128)
+  ttr_requester_lender_user_pid:
+    data_type: BIGINT
+  ttr_requester_unparsed_name:
+    data_type: VARCHAR(128)
+  ttr_mismo_version_type:
+    data_type: VARCHAR(128)
+  ttr_credit_request_type:
+    data_type: VARCHAR(128)
+  ttr_request_error_messages:
+    data_type: TEXT
+  ttr_request_success_messages:
+    data_type: TEXT
+  ttr_tracking_number:
+    data_type: VARCHAR(16)
+  ttr_tax_transcript_request_status_type:
+    data_type: VARCHAR(128)
+  ttr_update_reason:
+    data_type: VARCHAR(1024)
+  ttr_last_status_query_datetime:
+    data_type: TIMESTAMP
+  ttr_signed_4506t_deal_file_pid:
+    data_type: BIGINT
+  ttr_company:
+    data_type: BOOLEAN
+  ttr_company_name:
+    data_type: VARCHAR(128)
+  ttr_company_city:
+    data_type: VARCHAR(128)
+  ttr_company_country:
+    data_type: VARCHAR(128)
+  ttr_company_postal_code:
+    data_type: VARCHAR(128)
+  ttr_company_state:
+    data_type: VARCHAR(128)
+  ttr_company_street1:
+    data_type: VARCHAR(128)
+  ttr_company_street2:
+    data_type: VARCHAR(128)
+  ttr_company_ein:
+    data_type: VARCHAR(16)
+  ttr_borrower1_pid:
+    data_type: BIGINT
+  ttr_borrower1_first_name:
+    data_type: VARCHAR(32)
+  ttr_borrower1_middle_name:
+    data_type: VARCHAR(32)
+  ttr_borrower1_last_name:
+    data_type: VARCHAR(32)
+  ttr_borrower1_name_suffix:
+    data_type: VARCHAR(32)
+  ttr_borrower1_birth_date:
+    data_type: DATE
+  ttr_borrower1_current_city:
+    data_type: VARCHAR(128)
+  ttr_borrower1_current_country:
+    data_type: VARCHAR(128)
+  ttr_borrower1_current_postal_code:
+    data_type: VARCHAR(128)
+  ttr_borrower1_current_state:
+    data_type: VARCHAR(128)
+  ttr_borrower1_current_street1:
+    data_type: VARCHAR(128)
+  ttr_borrower1_current_street2:
+    data_type: VARCHAR(128)
+  ttr_borrower1_prior_city:
+    data_type: VARCHAR(128)
+  ttr_borrower1_prior_country:
+    data_type: VARCHAR(128)
+  ttr_borrower1_prior_postal_code:
+    data_type: VARCHAR(128)
+  ttr_borrower1_prior_state:
+    data_type: VARCHAR(128)
+  ttr_borrower1_prior_street1:
+    data_type: VARCHAR(128)
+  ttr_borrower1_prior_street2:
+    data_type: VARCHAR(128)
+  ttr_borrower1_monthly_income_amount:
+    data_type: NUMERIC(15,2)
+  ttr_borrower2_pid:
+    data_type: BIGINT
+  ttr_borrower2_first_name:
+    data_type: VARCHAR(32)
+  ttr_borrower2_middle_name:
+    data_type: VARCHAR(32)
+  ttr_borrower2_last_name:
+    data_type: VARCHAR(32)
+  ttr_borrower2_name_suffix:
+    data_type: VARCHAR(32)
+  ttr_borrower2_birth_date:
+    data_type: DATE
+  ttr_borrower2_current_city:
+    data_type: VARCHAR(128)
+  ttr_borrower2_current_country:
+    data_type: VARCHAR(128)
+  ttr_borrower2_current_postal_code:
+    data_type: VARCHAR(128)
+  ttr_borrower2_current_state:
+    data_type: VARCHAR(128)
+  ttr_borrower2_current_street1:
+    data_type: VARCHAR(128)
+  ttr_borrower2_current_street2:
+    data_type: VARCHAR(128)
+  ttr_borrower2_prior_city:
+    data_type: VARCHAR(128)
+  ttr_borrower2_prior_country:
+    data_type: VARCHAR(128)
+  ttr_borrower2_prior_postal_code:
+    data_type: VARCHAR(128)
+  ttr_borrower2_prior_state:
+    data_type: VARCHAR(128)
+  ttr_borrower2_prior_street1:
+    data_type: VARCHAR(128)
+  ttr_borrower2_prior_street2:
+    data_type: VARCHAR(128)
+  ttr_borrower2_monthly_income_amount:
+    data_type: NUMERIC(15,2)
+  ttr_year1:
+    data_type: INTEGER
+  ttr_year2:
+    data_type: INTEGER
+  ttr_year3:
+    data_type: INTEGER
+  ttr_year4:
+    data_type: INTEGER
+  ttr_include_w_2:
+    data_type: BOOLEAN
+  ttr_include_1099:
+    data_type: BOOLEAN
+  ttr_include_1040:
+    data_type: BOOLEAN
+  ttr_include_1040_return_transcript:
+    data_type: BOOLEAN
+  ttr_include_1040_account_transcript:
+    data_type: BOOLEAN
+  ttr_include_1040_record_of_account:
+    data_type: BOOLEAN
+  ttr_include_1065:
+    data_type: BOOLEAN
+  ttr_include_1065_return_transcript:
+    data_type: BOOLEAN
+  ttr_include_1065_account_transcript:
+    data_type: BOOLEAN
+  ttr_include_1065_record_of_account:
+    data_type: BOOLEAN
+  ttr_include_1120:
+    data_type: BOOLEAN
+  ttr_include_1120_return_transcript:
+    data_type: BOOLEAN
+  ttr_include_1120_account_transcript:
+    data_type: BOOLEAN
+  ttr_include_1120_record_of_account:
+    data_type: BOOLEAN
+  ttr_archived:
+    data_type: BOOLEAN
+  ttr_company_phone:
+    data_type: VARCHAR(32)
+  ttr_company_phone_extension:
+    data_type: VARCHAR(16)
+  ttr_business_ownership_type:
+    data_type: VARCHAR(128)

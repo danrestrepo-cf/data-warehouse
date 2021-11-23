@@ -1,0 +1,55 @@
+name: ledger_entry_import_loan_status
+primary_key:
+- leils_pid
+foreign_keys:
+  fk_ledger_entry_import_loan_status_1:
+    columns:
+    - leils_ledger_entry_import_status_pid
+    references:
+      columns:
+      - leis_pid
+      schema: staging_octane
+      table: ledger_entry_import_status
+  fk_ledger_entry_import_loan_status_2:
+    columns:
+    - leils_ledger_entry_pid
+    references:
+      columns:
+      - le_pid
+      schema: staging_octane
+      table: ledger_entry
+  fkt_leils_ledger_entry_import_status_type:
+    columns:
+    - leils_ledger_entry_import_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: ledger_entry_import_status_type
+columns:
+  leils_pid:
+    data_type: BIGINT
+  leils_version:
+    data_type: INTEGER
+  leils_ledger_entry_import_status_pid:
+    data_type: BIGINT
+  leils_ledger_entry_pid:
+    data_type: BIGINT
+  leils_los_loan_id:
+    data_type: VARCHAR(32)
+  leils_payee_unparsed_name:
+    data_type: VARCHAR(128)
+  leils_entry_amount:
+    data_type: NUMERIC(15,2)
+  leils_entry_description:
+    data_type: VARCHAR(1024)
+  leils_start_datetime:
+    data_type: TIMESTAMP
+  leils_complete_datetime:
+    data_type: TIMESTAMP
+  leils_ledger_entry_import_status_type:
+    data_type: VARCHAR(128)
+  leils_failure_info:
+    data_type: VARCHAR(16000)
+  leils_raw_row:
+    data_type: VARCHAR(16000)

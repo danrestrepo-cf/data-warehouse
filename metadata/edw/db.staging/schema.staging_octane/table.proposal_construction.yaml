@@ -1,0 +1,61 @@
+name: proposal_construction
+primary_key:
+- prpc_pid
+foreign_keys:
+  fk_proposal_construction_1:
+    columns:
+    - prpc_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: staging_octane
+      table: proposal
+  fkt_prpc_any_utilities_inoperable:
+    columns:
+    - prpc_any_utilities_inoperable
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_prpc_mortgage_payment_reserves_required:
+    columns:
+    - prpc_mortgage_payment_reserves_required
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+columns:
+  prpc_pid:
+    data_type: BIGINT
+  prpc_version:
+    data_type: INTEGER
+  prpc_proposal_pid:
+    data_type: BIGINT
+  prpc_architectural_exhibits:
+    data_type: BOOLEAN
+  prpc_feasibility_study:
+    data_type: BOOLEAN
+  prpc_expected_months_to_complete:
+    data_type: INTEGER
+  prpc_extension_needed:
+    data_type: BOOLEAN
+  prpc_extension_period_months:
+    data_type: INTEGER
+  prpc_any_utilities_inoperable:
+    data_type: VARCHAR(128)
+  prpc_non_habitable_months:
+    data_type: INTEGER
+  prpc_non_habitable_units:
+    data_type: INTEGER
+  prpc_number_of_draws:
+    data_type: INTEGER
+  prpc_construction_confirmed_start_date:
+    data_type: DATE
+  prpc_loan_in_process_account_closed_date:
+    data_type: DATE
+  prpc_mortgage_payment_reserves_required:
+    data_type: VARCHAR(128)
+  prpc_estimated_permit_amount_applicable:
+    data_type: BOOLEAN

@@ -1,0 +1,74 @@
+name: announcement
+primary_source_table: staging.staging_octane.announcement
+primary_key:
+- ann_pid
+- ann_version
+columns:
+  ann_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ann_pid
+  ann_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ann_version
+  ann_lender_text:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.ann_lender_text
+  ann_borrower_text:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.ann_borrower_text
+  ann_from_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.ann_from_datetime
+  ann_to_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.ann_to_datetime
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100018:
+    input_type: table
+    output_type: insert
+    json_output_field: ann_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.announcement
+      SELECT staging_table.ann_pid
+           , staging_table.ann_version
+           , staging_table.ann_lender_text
+           , staging_table.ann_borrower_text
+           , staging_table.ann_from_datetime
+           , staging_table.ann_to_datetime
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.announcement staging_table
+      LEFT JOIN history_octane.announcement history_table
+                ON staging_table.ann_pid = history_table.ann_pid
+                    AND staging_table.ann_version = history_table.ann_version
+      WHERE history_table.ann_pid IS NULL
+      UNION ALL
+      SELECT history_table.ann_pid
+           , history_table.ann_version + 1
+           , history_table.ann_lender_text
+           , history_table.ann_borrower_text
+           , history_table.ann_from_datetime
+           , history_table.ann_to_datetime
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.announcement history_table
+      LEFT JOIN staging_octane.announcement staging_table
+                ON staging_table.ann_pid = history_table.ann_pid
+      WHERE staging_table.ann_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.announcement deleted_records
+          WHERE deleted_records.ann_pid = history_table.ann_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

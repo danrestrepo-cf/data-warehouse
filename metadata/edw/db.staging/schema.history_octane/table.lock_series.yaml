@@ -1,0 +1,91 @@
+name: lock_series
+primary_source_table: staging.staging_octane.lock_series
+primary_key:
+- lsr_pid
+- lsr_version
+foreign_keys:
+  fk_lock_series_1:
+    columns:
+    - lsr_loan_pid
+    references:
+      columns:
+      - l_pid
+      schema: history_octane
+      table: loan
+  fk_lock_series_2:
+    columns:
+    - lsr_org_lineage_pid
+    references:
+      columns:
+      - ol_pid
+      schema: history_octane
+      table: org_lineage
+columns:
+  lsr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lsr_pid
+  lsr_loan_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lsr_loan_pid
+  lsr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lsr_version
+  lsr_vintage_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lsr_vintage_date
+  lsr_series_id:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lsr_series_id
+  lsr_org_lineage_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lsr_org_lineage_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100324:
+    input_type: table
+    output_type: insert
+    json_output_field: lsr_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.lock_series
+      SELECT staging_table.lsr_pid
+           , staging_table.lsr_loan_pid
+           , staging_table.lsr_version
+           , staging_table.lsr_vintage_date
+           , staging_table.lsr_series_id
+           , staging_table.lsr_org_lineage_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.lock_series staging_table
+      LEFT JOIN history_octane.lock_series history_table
+                ON staging_table.lsr_pid = history_table.lsr_pid
+                    AND staging_table.lsr_version = history_table.lsr_version
+      WHERE history_table.lsr_pid IS NULL
+      UNION ALL
+      SELECT history_table.lsr_pid
+           , history_table.lsr_loan_pid
+           , history_table.lsr_version + 1
+           , history_table.lsr_vintage_date
+           , history_table.lsr_series_id
+           , history_table.lsr_org_lineage_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.lock_series history_table
+      LEFT JOIN staging_octane.lock_series staging_table
+                ON staging_table.lsr_pid = history_table.lsr_pid
+      WHERE staging_table.lsr_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.lock_series deleted_records
+          WHERE deleted_records.lsr_pid = history_table.lsr_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

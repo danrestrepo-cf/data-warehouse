@@ -1,0 +1,115 @@
+name: backfill_loan_status
+primary_source_table: staging.staging_octane.backfill_loan_status
+primary_key:
+- bfls_pid
+- bfls_version
+foreign_keys:
+  fk_backfill_loan_status_1:
+    columns:
+    - bfls_backfill_status_pid
+    references:
+      columns:
+      - bfs_pid
+      schema: history_octane
+      table: backfill_status
+  fkt_bfls_backfill_status_type:
+    columns:
+    - bfls_backfill_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: backfill_status_type
+columns:
+  bfls_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bfls_pid
+  bfls_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bfls_version
+  bfls_backfill_status_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bfls_backfill_status_pid
+  bfls_los_loan_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.bfls_los_loan_id
+  bfls_started_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.bfls_started_datetime
+  bfls_completed_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.bfls_completed_datetime
+  bfls_backfill_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bfls_backfill_status_type
+  bfls_failure_info:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.bfls_failure_info
+  bfls_raw_loan_row:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.bfls_raw_loan_row
+  bfls_warning_info:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.bfls_warning_info
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100272:
+    input_type: table
+    output_type: insert
+    json_output_field: bfls_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.backfill_loan_status
+      SELECT staging_table.bfls_pid
+           , staging_table.bfls_version
+           , staging_table.bfls_backfill_status_pid
+           , staging_table.bfls_los_loan_id
+           , staging_table.bfls_started_datetime
+           , staging_table.bfls_completed_datetime
+           , staging_table.bfls_backfill_status_type
+           , staging_table.bfls_failure_info
+           , staging_table.bfls_raw_loan_row
+           , staging_table.bfls_warning_info
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.backfill_loan_status staging_table
+      LEFT JOIN history_octane.backfill_loan_status history_table
+                ON staging_table.bfls_pid = history_table.bfls_pid
+                    AND staging_table.bfls_version = history_table.bfls_version
+      WHERE history_table.bfls_pid IS NULL
+      UNION ALL
+      SELECT history_table.bfls_pid
+           , history_table.bfls_version + 1
+           , history_table.bfls_backfill_status_pid
+           , history_table.bfls_los_loan_id
+           , history_table.bfls_started_datetime
+           , history_table.bfls_completed_datetime
+           , history_table.bfls_backfill_status_type
+           , history_table.bfls_failure_info
+           , history_table.bfls_raw_loan_row
+           , history_table.bfls_warning_info
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.backfill_loan_status history_table
+      LEFT JOIN staging_octane.backfill_loan_status staging_table
+                ON staging_table.bfls_pid = history_table.bfls_pid
+      WHERE staging_table.bfls_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.backfill_loan_status deleted_records
+          WHERE deleted_records.bfls_pid = history_table.bfls_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

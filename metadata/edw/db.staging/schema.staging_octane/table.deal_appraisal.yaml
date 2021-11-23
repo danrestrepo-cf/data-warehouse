@@ -1,0 +1,79 @@
+name: deal_appraisal
+primary_key:
+- dappr_pid
+foreign_keys:
+  fk_deal_appraisal_1:
+    columns:
+    - dappr_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: staging_octane
+      table: deal
+  fkt_dappr_appraisal_entry_contact_type:
+    columns:
+    - dappr_appraisal_entry_contact_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: appraisal_entry_contact_type
+  fkt_dappr_appraisal_hold_reason_type:
+    columns:
+    - dappr_appraisal_hold_reason_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: appraisal_hold_reason_type
+  fkt_dappr_appraisal_hold_type:
+    columns:
+    - dappr_appraisal_hold_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: appraisal_hold_type
+  fkt_dappr_borrower_requires_appraisal:
+    columns:
+    - dappr_borrower_requires_appraisal
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+columns:
+  dappr_pid:
+    data_type: BIGINT
+  dappr_version:
+    data_type: INTEGER
+  dappr_deal_pid:
+    data_type: BIGINT
+  dappr_door_lock_combination:
+    data_type: BOOLEAN
+  dappr_appraisal_entry_contact_type:
+    data_type: VARCHAR(128)
+  dappr_appraisal_hold_type:
+    data_type: VARCHAR(128)
+  dappr_appraisal_hold_reason_type:
+    data_type: VARCHAR(128)
+  dappr_hold_release_date:
+    data_type: DATE
+  dappr_rush_request:
+    data_type: BOOLEAN
+  dappr_transfer_specified:
+    data_type: BOOLEAN
+  dappr_calculated_appraisal_required:
+    data_type: BOOLEAN
+  dappr_override_calculated_appraisal_required:
+    data_type: BOOLEAN
+  dappr_override_calculated_appraisal_required_reason:
+    data_type: VARCHAR(16000)
+  dappr_borrower_requires_appraisal:
+    data_type: VARCHAR(128)
+  dappr_lender_requires_appraisal:
+    data_type: BOOLEAN
+  dappr_product_requires_appraisal:
+    data_type: BOOLEAN
+  dappr_appraisal_required:
+    data_type: BOOLEAN

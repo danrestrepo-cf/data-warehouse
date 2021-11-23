@@ -1,0 +1,25 @@
+name: loan_org_lineage_update
+primary_key:
+- lolu_pid
+foreign_keys:
+  fk_loan_org_lineage_update_1:
+    columns:
+    - lolu_loan_pid
+    references:
+      columns:
+      - l_pid
+      schema: staging_octane
+      table: loan
+columns:
+  lolu_pid:
+    data_type: BIGINT
+  lolu_version:
+    data_type: INTEGER
+  lolu_loan_pid:
+    data_type: BIGINT
+  lolu_scheduled_date:
+    data_type: DATE
+  lolu_try_count:
+    data_type: INTEGER
+  lolu_latest_exception_message:
+    data_type: VARCHAR(16000)

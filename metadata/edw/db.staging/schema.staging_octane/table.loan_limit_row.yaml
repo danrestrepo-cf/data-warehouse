@@ -1,0 +1,57 @@
+name: loan_limit_row
+primary_key:
+- llr_pid
+foreign_keys:
+  fk_loan_limit_row_1:
+    columns:
+    - llr_loan_limit_table_pid
+    references:
+      columns:
+      - llt_pid
+      schema: staging_octane
+      table: loan_limit_table
+  fk_loan_limit_row_2:
+    columns:
+    - llr_loan_limit_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: loan_limit_type
+  fk_loan_limit_row_3:
+    columns:
+    - llr_state_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: state_type
+  fk_loan_limit_row_4:
+    columns:
+    - llr_county_pid
+    references:
+      columns:
+      - c_pid
+      schema: staging_octane
+      table: county
+columns:
+  llr_pid:
+    data_type: BIGINT
+  llr_version:
+    data_type: INTEGER
+  llr_loan_limit_table_pid:
+    data_type: BIGINT
+  llr_loan_limit_type:
+    data_type: VARCHAR(128)
+  llr_state_type:
+    data_type: VARCHAR(128)
+  llr_county_pid:
+    data_type: BIGINT
+  llr_one_unit_limit_amount:
+    data_type: NUMERIC(15,2)
+  llr_two_unit_limit_amount:
+    data_type: NUMERIC(15,2)
+  llr_three_unit_limit_amount:
+    data_type: NUMERIC(15,2)
+  llr_four_unit_limit_amount:
+    data_type: NUMERIC(15,2)

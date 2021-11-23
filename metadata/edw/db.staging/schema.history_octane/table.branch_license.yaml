@@ -1,0 +1,137 @@
+name: branch_license
+primary_source_table: staging.staging_octane.branch_license
+primary_key:
+- brml_pid
+- brml_version
+foreign_keys:
+  fk_branch_license_2:
+    columns:
+    - brml_company_pid
+    references:
+      columns:
+      - cm_pid
+      schema: history_octane
+      table: company
+  fk_branch_license_3:
+    columns:
+    - brml_location_pid
+    references:
+      columns:
+      - loc_pid
+      schema: history_octane
+      table: location
+  fkt_brml_license_type:
+    columns:
+    - brml_license_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: license_type
+  fkt_brml_state_type:
+    columns:
+    - brml_state_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: state_type
+columns:
+  brml_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.brml_pid
+  brml_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.brml_version
+  brml_branch_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.brml_branch_pid
+  brml_license_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.brml_license_type
+  brml_state_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.brml_state_type
+  brml_license_number:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.brml_license_number
+  brml_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.brml_from_date
+  brml_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.brml_through_date
+  brml_note:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.brml_note
+  brml_company_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.brml_company_pid
+  brml_location_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.brml_location_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100076:
+    input_type: table
+    output_type: insert
+    json_output_field: brml_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.branch_license
+      SELECT staging_table.brml_pid
+           , staging_table.brml_version
+           , staging_table.brml_branch_pid
+           , staging_table.brml_license_type
+           , staging_table.brml_state_type
+           , staging_table.brml_license_number
+           , staging_table.brml_from_date
+           , staging_table.brml_through_date
+           , staging_table.brml_note
+           , staging_table.brml_company_pid
+           , staging_table.brml_location_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.branch_license staging_table
+      LEFT JOIN history_octane.branch_license history_table
+                ON staging_table.brml_pid = history_table.brml_pid
+                    AND staging_table.brml_version = history_table.brml_version
+      WHERE history_table.brml_pid IS NULL
+      UNION ALL
+      SELECT history_table.brml_pid
+           , history_table.brml_version + 1
+           , history_table.brml_branch_pid
+           , history_table.brml_license_type
+           , history_table.brml_state_type
+           , history_table.brml_license_number
+           , history_table.brml_from_date
+           , history_table.brml_through_date
+           , history_table.brml_note
+           , history_table.brml_company_pid
+           , history_table.brml_location_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.branch_license history_table
+      LEFT JOIN staging_octane.branch_license staging_table
+                ON staging_table.brml_pid = history_table.brml_pid
+      WHERE staging_table.brml_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.branch_license deleted_records
+          WHERE deleted_records.brml_pid = history_table.brml_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

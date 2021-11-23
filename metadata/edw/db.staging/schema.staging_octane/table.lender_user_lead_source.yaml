@@ -1,0 +1,29 @@
+name: lender_user_lead_source
+primary_key:
+- lulds_pid
+foreign_keys:
+  fk_lender_user_lead_source_1:
+    columns:
+    - lulds_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_lender_user_lead_source_2:
+    columns:
+    - lulds_lead_source_pid
+    references:
+      columns:
+      - lds_pid
+      schema: staging_octane
+      table: lead_source
+columns:
+  lulds_pid:
+    data_type: BIGINT
+  lulds_version:
+    data_type: INTEGER
+  lulds_lender_user_pid:
+    data_type: BIGINT
+  lulds_lead_source_pid:
+    data_type: BIGINT

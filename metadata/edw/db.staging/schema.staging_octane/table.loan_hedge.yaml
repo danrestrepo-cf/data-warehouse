@@ -1,0 +1,615 @@
+name: loan_hedge
+primary_key:
+- lh_pid
+foreign_keys:
+  fk_loan_hedge_1:
+    columns:
+    - lh_loan_pid
+    references:
+      columns:
+      - l_pid
+      schema: staging_octane
+      table: loan
+columns:
+  lh_pid:
+    data_type: BIGINT
+  lh_version:
+    data_type: INTEGER
+  lh_loan_pid:
+    data_type: BIGINT
+  lh_update_datetime:
+    data_type: TIMESTAMP
+  lh_update_pending_datetime:
+    data_type: TIMESTAMP
+  lh_transaction_status_date:
+    data_type: DATE
+  lh_loan_number:
+    data_type: BIGINT
+  lh_product_code:
+    data_type: VARCHAR(128)
+  lh_note_rate:
+    data_type: NUMERIC(11,9)
+  lh_loan_amount:
+    data_type: NUMERIC(17,2)
+  lh_lock_date:
+    data_type: TIMESTAMP
+  lh_buy_side_lock_expires_date:
+    data_type: TIMESTAMP
+  lh_lock_expiration_date:
+    data_type: TIMESTAMP
+  lh_secondary_cost:
+    data_type: NUMERIC(11,9)
+  lh_total_cost_basis:
+    data_type: NUMERIC(11,9)
+  lh_total_lender_margin:
+    data_type: NUMERIC(17,9)
+  lh_stage:
+    data_type: VARCHAR(128)
+  lh_fund_date:
+    data_type: TIMESTAMP
+  lh_allocation_date:
+    data_type: TIMESTAMP
+  lh_estimated_fund_date:
+    data_type: DATE
+  lh_purchased_by_investor_date:
+    data_type: DATE
+  lh_commitment_number:
+    data_type: VARCHAR(32)
+  lh_property_occupancy:
+    data_type: VARCHAR(128)
+  lh_property_type:
+    data_type: VARCHAR(128)
+  lh_property_type_supplemental:
+    data_type: VARCHAR(16)
+  lh_property_state:
+    data_type: VARCHAR(128)
+  lh_property_zip:
+    data_type: VARCHAR(128)
+  lh_property_number_of_units:
+    data_type: INTEGER
+  lh_purchase_price:
+    data_type: NUMERIC(15,0)
+  lh_appraised_value:
+    data_type: NUMERIC(15,0)
+  lh_purpose:
+    data_type: VARCHAR(128)
+  lh_refinance_type:
+    data_type: VARCHAR(128)
+  lh_lien_position:
+    data_type: VARCHAR(128)
+  lh_impounds:
+    data_type: VARCHAR(16)
+  lh_buydown_type:
+    data_type: VARCHAR(128)
+  lh_buydown:
+    data_type: VARCHAR(8)
+  lh_ltv:
+    data_type: NUMERIC(11,9)
+  lh_original_ltv:
+    data_type: NUMERIC(11,9)
+  lh_cltv:
+    data_type: NUMERIC(11,9)
+  lh_original_cltv:
+    data_type: NUMERIC(11,9)
+  lh_effective_credit_score:
+    data_type: INTEGER
+  lh_doc_type:
+    data_type: VARCHAR(128)
+  lh_debt_to_income:
+    data_type: NUMERIC(11,9)
+  lh_prepayment_penalty:
+    data_type: BOOLEAN
+  lh_prepayment_penalty_term:
+    data_type: INTEGER
+  lh_interest_only:
+    data_type: BOOLEAN
+  lh_lock_type:
+    data_type: VARCHAR(128)
+  lh_lock_period:
+    data_type: INTEGER
+  lh_fees_collected_bps:
+    data_type: VARCHAR(8)
+  lh_channel:
+    data_type: VARCHAR(32)
+  lh_loan_officer:
+    data_type: VARCHAR(128)
+  lh_branch:
+    data_type: VARCHAR(128)
+  lh_broker:
+    data_type: VARCHAR(8)
+  lh_correspondent:
+    data_type: VARCHAR(8)
+  lh_origination_source:
+    data_type: VARCHAR(32)
+  lh_investor:
+    data_type: VARCHAR(128)
+  lh_investor_total_price:
+    data_type: NUMERIC(11,9)
+  lh_investor_base_price:
+    data_type: NUMERIC(11,9)
+  lh_investor_srp_paid:
+    data_type: VARCHAR(8)
+  lh_investor_loan_number:
+    data_type: VARCHAR(32)
+  lh_pmi:
+    data_type: BOOLEAN
+  lh_pmi_percent:
+    data_type: NUMERIC(11,9)
+  lh_mi_cert_number:
+    data_type: VARCHAR(128)
+  lh_srp_paid:
+    data_type: VARCHAR(8)
+  lh_discount_points:
+    data_type: VARCHAR(8)
+  lh_date_docs_back:
+    data_type: VARCHAR(8)
+  lh_note_date:
+    data_type: DATE
+  lh_close_date:
+    data_type: TIMESTAMP
+  lh_first_payment_date:
+    data_type: DATE
+  lh_last_payment_date:
+    data_type: DATE
+  lh_next_scheduled_payment_due_date:
+    data_type: VARCHAR(8)
+  lh_scheduled_principal_and_interest:
+    data_type: NUMERIC(15,2)
+  lh_current_principal_and_interest:
+    data_type: NUMERIC(15,2)
+  lh_minimum_principal_and_interest:
+    data_type: NUMERIC(15,2)
+  lh_current_unpaid_principal_balance:
+    data_type: NUMERIC(17,2)
+  lh_original_interest_rate:
+    data_type: NUMERIC(11,9)
+  lh_maturity_date:
+    data_type: DATE
+  lh_amortization_term:
+    data_type: INTEGER
+  lh_yearly_payment_cap:
+    data_type: VARCHAR(8)
+  lh_arm_margin:
+    data_type: NUMERIC(11,9)
+  lh_arm_adjustment_date:
+    data_type: DATE
+  lh_first_arm_period:
+    data_type: INTEGER
+  lh_first_arm_adjustment_cap:
+    data_type: NUMERIC(11,9)
+  lh_arm_life_floor:
+    data_type: NUMERIC(11,9)
+  lh_arm_life_ceiling:
+    data_type: NUMERIC(11,9)
+  lh_first_arm_payment_adjustment_date:
+    data_type: VARCHAR(8)
+  lh_arm_period_after_first:
+    data_type: VARCHAR(8)
+  lh_arm_adjustment_cap_after_first:
+    data_type: NUMERIC(11,9)
+  lh_first_payment_cap:
+    data_type: VARCHAR(8)
+  lh_payment_cap_option:
+    data_type: VARCHAR(8)
+  lh_neg_am_flag:
+    data_type: VARCHAR(8)
+  lh_maximum_negative_amortization:
+    data_type: VARCHAR(8)
+  lh_arm_convertible:
+    data_type: VARCHAR(8)
+  lh_arm_index:
+    data_type: VARCHAR(8)
+  lh_dual_loan_flag:
+    data_type: VARCHAR(8)
+  lh_other_loan_number:
+    data_type: VARCHAR(8)
+  lh_agency_extract_fields:
+    data_type: VARCHAR(8)
+  lh_warehouse_bank:
+    data_type: VARCHAR(128)
+  lh_wire_amount:
+    data_type: NUMERIC(15,2)
+  lh_credit_rating_agency_fields:
+    data_type: VARCHAR(8)
+  lh_levels_fields:
+    data_type: VARCHAR(8)
+  lh_data_fields:
+    data_type: VARCHAR(8)
+  lh_loan_status:
+    data_type: VARCHAR(128)
+  lh_suspense_yes_no:
+    data_type: VARCHAR(8)
+  lh_loan_type:
+    data_type: VARCHAR(128)
+  lh_hud_borr_paid_by_for_borr_other_amount:
+    data_type: VARCHAR(8)
+  lh_fees_line_user_def_fee_one_borr:
+    data_type: VARCHAR(8)
+  lh_uw_suspended_cleared_date:
+    data_type: VARCHAR(8)
+  lh_underwriting_suspended_date:
+    data_type: VARCHAR(8)
+  lh_line_orig_charge:
+    data_type: NUMERIC(15,2)
+  lh_amortization_type:
+    data_type: VARCHAR(32)
+  lh_milestone:
+    data_type: VARCHAR(128)
+  lh_msa:
+    data_type: VARCHAR(8)
+  lh_county_code:
+    data_type: VARCHAR(8)
+  lh_ship_date_to_investor:
+    data_type: DATE
+  lh_borrower_last_name:
+    data_type: VARCHAR(32)
+  lh_purchase_advice_suspense_fee:
+    data_type: VARCHAR(8)
+  lh_purchase_advice_early_delivery_amount:
+    data_type: VARCHAR(8)
+  lh_purchase_advice_llpa:
+    data_type: VARCHAR(8)
+  lh_purchase_advice_fmna:
+    data_type: VARCHAR(8)
+  lh_purchase_advice_rp:
+    data_type: VARCHAR(8)
+  lh_lock_info_relock_amount:
+    data_type: VARCHAR(8)
+  lh_lock_info_loan_basis:
+    data_type: NUMERIC(11,9)
+  lh_lock_info_lock_request_fulfilled_date_time:
+    data_type: VARCHAR(8)
+  lh_lock_info_rate_lock_request_rate_sheet_id:
+    data_type: VARCHAR(8)
+  lh_current_status_change_date:
+    data_type: DATE
+  lh_aus_type:
+    data_type: VARCHAR(8)
+  lh_buy_side_base_arm_margin:
+    data_type: VARCHAR(8)
+  lh_uldd_poolid:
+    data_type: VARCHAR(32)
+  lh_warehouse_co_name:
+    data_type: VARCHAR(128)
+  lh_underwriting_investor_eligibility_wells_fargo:
+    data_type: VARCHAR(8)
+  lh_underwriting_investor_eligibility_chase:
+    data_type: VARCHAR(8)
+  lh_du_fail_reason:
+    data_type: VARCHAR(8)
+  lh_lpmi_total_costs_on_lock:
+    data_type: VARCHAR(8)
+  lh_lpmi_after_lock_required:
+    data_type: VARCHAR(8)
+  lh_lpmi_after_lock_bps:
+    data_type: VARCHAR(8)
+  lh_mi_company_name_type:
+    data_type: VARCHAR(128)
+  lh_lpmi_frequency:
+    data_type: VARCHAR(128)
+  lh_lpmi_estimated_amount_of_lender_paid_mi:
+    data_type: VARCHAR(8)
+  lh_mortgage_insurance_premium_source_type:
+    data_type: VARCHAR(16)
+  lh_loan_amount_repeat:
+    data_type: NUMERIC(17,2)
+  lh_product_code_repeat:
+    data_type: VARCHAR(128)
+  lh_note_rate_repeat:
+    data_type: NUMERIC(11,9)
+  lh_loan_info_loan_id:
+    data_type: VARCHAR(8)
+  lh_salable_loan:
+    data_type: VARCHAR(8)
+  lh_sale_hold:
+    data_type: VARCHAR(8)
+  lh_sale_hold_comments:
+    data_type: VARCHAR(8)
+  lh_pf_disbursement_ledger_date:
+    data_type: DATE
+  lh_aus_eligibility:
+    data_type: VARCHAR(8)
+  lh_texas_cash_out:
+    data_type: BOOLEAN
+  lh_acceptable_du:
+    data_type: BOOLEAN
+  lh_acceptable_lp:
+    data_type: BOOLEAN
+  lh_financed_property_count:
+    data_type: INTEGER
+  lh_payoff_primary_lien_holder_company:
+    data_type: VARCHAR(8)
+  lh_payoff_junior_lien_holder_company:
+    data_type: VARCHAR(8)
+  lh_base_loan_amount:
+    data_type: NUMERIC(17,2)
+  lh_funding_authorized:
+    data_type: VARCHAR(32)
+  lh_credit_committee_fico_exception:
+    data_type: VARCHAR(8)
+  lh_home_ready_eligibility:
+    data_type: VARCHAR(8)
+  lh_home_ready_borr_acceptance:
+    data_type: VARCHAR(8)
+  lh_home_ready_eligibility_review:
+    data_type: VARCHAR(8)
+  lh_home_possible_eligibility:
+    data_type: VARCHAR(8)
+  lh_home_possible_eligibility_review:
+    data_type: VARCHAR(8)
+  lh_piw:
+    data_type: VARCHAR(8)
+  lh_piw_fee:
+    data_type: VARCHAR(8)
+  lh_uw_investor_eligibility_fnma:
+    data_type: VARCHAR(8)
+  lh_uw_investor_eligibility_fhlmc:
+    data_type: VARCHAR(8)
+  lh_appraisal_form:
+    data_type: VARCHAR(128)
+  lh_ext_cos_total_amt:
+    data_type: VARCHAR(8)
+  lh_fnmcu_risk_score:
+    data_type: VARCHAR(8)
+  lh_borrower_income_verification:
+    data_type: VARCHAR(8)
+  lh_co_borrower_income_verification:
+    data_type: VARCHAR(8)
+  lh_day_one_income_verification_available:
+    data_type: VARCHAR(8)
+  lh_subject_property_estimated_value:
+    data_type: NUMERIC(15,0)
+  lh_transaction_status:
+    data_type: VARCHAR(128)
+  lh_buy_status:
+    data_type: VARCHAR(128)
+  lh_appraisal_exists:
+    data_type: BOOLEAN
+  lh_du_piw_eligible:
+    data_type: BOOLEAN
+  lh_lp_appraisal_waiver_eligible:
+    data_type: BOOLEAN
+  lh_borrower_first_name:
+    data_type: VARCHAR(32)
+  lh_co_borrower_first_name:
+    data_type: VARCHAR(32)
+  lh_co_borrower_last_name:
+    data_type: VARCHAR(32)
+  lh_total_borrower_income:
+    data_type: NUMERIC(15,2)
+  lh_subject_property_city:
+    data_type: VARCHAR(128)
+  lh_subject_property_county:
+    data_type: VARCHAR(128)
+  lh_subject_property_zip:
+    data_type: VARCHAR(128)
+  lh_borrower_decision_credit_score:
+    data_type: INTEGER
+  lh_co_borrower_decision_credit_score:
+    data_type: INTEGER
+  lh_underwriter_disposition:
+    data_type: VARCHAR(128)
+  lh_underwrite_risk_assessment_type:
+    data_type: VARCHAR(128)
+  lh_subject_property_address:
+    data_type: VARCHAR(1024)
+  lh_original_lock_date:
+    data_type: TIMESTAMP
+  lh_original_lock_period:
+    data_type: INTEGER
+  lh_borrower_income_docs_required_count:
+    data_type: INTEGER
+  lh_borrower_income_docs_fulfilled_count:
+    data_type: INTEGER
+  lh_borrower_income_docs_approved_count:
+    data_type: INTEGER
+  lh_borrower_asset_docs_required_count:
+    data_type: INTEGER
+  lh_borrower_asset_docs_fulfilled_count:
+    data_type: INTEGER
+  lh_borrower_asset_docs_approved_count:
+    data_type: INTEGER
+  lh_borrower_credit_docs_required_count:
+    data_type: INTEGER
+  lh_borrower_credit_docs_fulfilled_count:
+    data_type: INTEGER
+  lh_borrower_credit_docs_approved_count:
+    data_type: INTEGER
+  lh_initial_uw_submit_date_time:
+    data_type: TIMESTAMP
+  lh_cd_clear_date:
+    data_type: DATE
+  lh_lender_concession_total_approved_amount:
+    data_type: NUMERIC(15,2)
+  lh_relock_fee_gross_amount:
+    data_type: NUMERIC(15,2)
+  lh_relock_fee_amount_less_concessions:
+    data_type: NUMERIC(15,2)
+  lh_relock_fee_amount_concessed:
+    data_type: NUMERIC(15,2)
+  lh_lock_extension_fee_gross_amount:
+    data_type: NUMERIC(15,2)
+  lh_lock_extension_fee_amount_less_concessions:
+    data_type: NUMERIC(15,2)
+  lh_lock_extension_fee_amount_concessed:
+    data_type: NUMERIC(15,2)
+  lh_general_lender_concessions_amount_non_itemized:
+    data_type: NUMERIC(15,2)
+  lh_day_one_concessions:
+    data_type: NUMERIC(15,2)
+  lh_investor_lock_commitment_type:
+    data_type: VARCHAR(128)
+  lh_signed_closing_doc_received_datetime:
+    data_type: TIMESTAMP
+  lh_geocoding_msa_code:
+    data_type: VARCHAR(32)
+  lh_geocoding_state_code:
+    data_type: VARCHAR(32)
+  lh_geocoding_county_code:
+    data_type: VARCHAR(32)
+  lh_geocoding_census_tract:
+    data_type: VARCHAR(32)
+  lh_tolerance_cure_amount:
+    data_type: NUMERIC(15,2)
+  lh_self_employed_flag:
+    data_type: BOOLEAN
+  lh_first_time_homebuyer:
+    data_type: BOOLEAN
+  lh_mortgage_insurance_lpmi_rate_adjustment:
+    data_type: NUMERIC(11,9)
+  lh_eligible_for_qm_status:
+    data_type: BOOLEAN
+  lh_safe_harbor_test_passed:
+    data_type: BOOLEAN
+  lh_hpml:
+    data_type: BOOLEAN
+  lh_hoepa:
+    data_type: VARCHAR(128)
+  lh_funding_status:
+    data_type: VARCHAR(128)
+  lh_early_funding:
+    data_type: VARCHAR(128)
+  lh_early_funding_date:
+    data_type: DATE
+  lh_lqa_purchase_eligibility_type:
+    data_type: VARCHAR(128)
+  lh_transferred_appraisal:
+    data_type: BOOLEAN
+  lh_appraisal_cu_risk_score:
+    data_type: VARCHAR(32)
+  lh_mi_upfront_rate:
+    data_type: NUMERIC(11,9)
+  lh_loan_funding_requested_date:
+    data_type: DATE
+  lh_student_loan_cash_out:
+    data_type: BOOLEAN
+  lh_octane_high_balance:
+    data_type: BOOLEAN
+  lh_borrower_final_price:
+    data_type: NUMERIC(11,9)
+  lh_charge_credit_for_interest_rate:
+    data_type: NUMERIC(15,2)
+  lh_contract_processing_fee:
+    data_type: NUMERIC(15,2)
+  lh_escrow_holdback:
+    data_type: BOOLEAN
+  lh_appraiser_license_number:
+    data_type: VARCHAR(128)
+  lh_mcc_present:
+    data_type: BOOLEAN
+  lh_grant_present:
+    data_type: BOOLEAN
+  lh_cema:
+    data_type: VARCHAR(128)
+  lh_supplemental_margin_company:
+    data_type: NUMERIC(15,2)
+  lh_supplemental_margin_branch:
+    data_type: NUMERIC(15,2)
+  lh_supplemental_margin_total:
+    data_type: NUMERIC(15,2)
+  lh_concessions_renegotiations_amount:
+    data_type: NUMERIC(15,2)
+  lh_fund_source_type:
+    data_type: VARCHAR(128)
+  lh_purchase_contract_funding_date:
+    data_type: DATE
+  lh_product_id:
+    data_type: VARCHAR(32)
+  lh_community_second:
+    data_type: BOOLEAN
+  lh_current_taxes_and_insurance:
+    data_type: NUMERIC(15,2)
+  lh_multiple_applicants:
+    data_type: BOOLEAN
+  lh_community_second_liability:
+    data_type: BOOLEAN
+  lh_property_rights_type:
+    data_type: VARCHAR(128)
+  lh_mbs_final_purchaser:
+    data_type: VARCHAR(128)
+  lh_hmda_universal_loan_id:
+    data_type: VARCHAR(45)
+  lh_lp_ace_eligible:
+    data_type: BOOLEAN
+  lh_family_advantage_product:
+    data_type: BOOLEAN
+  lh_effective_rate_sheet_datetime:
+    data_type: TIMESTAMP
+  lh_debt_to_income_excluding_mi:
+    data_type: NUMERIC(11,9)
+  lh_clear_to_commit:
+    data_type: BOOLEAN
+  lh_b2_first_name:
+    data_type: VARCHAR(32)
+  lh_b2_last_name:
+    data_type: VARCHAR(32)
+  lh_c2_first_name:
+    data_type: VARCHAR(32)
+  lh_c2_last_name:
+    data_type: VARCHAR(32)
+  lh_b3_first_name:
+    data_type: VARCHAR(32)
+  lh_b3_last_name:
+    data_type: VARCHAR(32)
+  lh_c3_first_name:
+    data_type: VARCHAR(32)
+  lh_c3_last_name:
+    data_type: VARCHAR(32)
+  lh_b4_first_name:
+    data_type: VARCHAR(32)
+  lh_b4_last_name:
+    data_type: VARCHAR(32)
+  lh_c4_first_name:
+    data_type: VARCHAR(32)
+  lh_c4_last_name:
+    data_type: VARCHAR(32)
+  lh_b5_first_name:
+    data_type: VARCHAR(32)
+  lh_b5_last_name:
+    data_type: VARCHAR(32)
+  lh_c5_first_name:
+    data_type: VARCHAR(32)
+  lh_c5_last_name:
+    data_type: VARCHAR(32)
+  lh_texas_home_equity_conversion:
+    data_type: BOOLEAN
+  lh_interest_only_heloc:
+    data_type: BOOLEAN
+  lh_interest_only_term_months:
+    data_type: INTEGER
+  lh_investor_lock_product_name:
+    data_type: VARCHAR(128)
+  lh_investor_lock_product_id:
+    data_type: VARCHAR(32)
+  lh_rebuttable_presumption:
+    data_type: BOOLEAN
+  lh_non_conforming:
+    data_type: BOOLEAN
+  lh_num_deal_updates_since_update_pending:
+    data_type: INTEGER
+  lh_borrower_engagement_percent:
+    data_type: NUMERIC(11,9)
+  lh_loan_create_date:
+    data_type: DATE
+  lh_high_balance_hit_percent:
+    data_type: NUMERIC(11,9)
+  lh_new_york_payup_percent:
+    data_type: NUMERIC(11,9)
+  lh_ship_date_to_custodian:
+    data_type: DATE
+  lh_lock_vintage:
+    data_type: DATE
+  lh_lock_series:
+    data_type: INTEGER
+  lh_investor_total:
+    data_type: NUMERIC(11,9)
+  lh_velocify_lead_id:
+    data_type: VARCHAR(32)
+  lh_collateral_tracking_number:
+    data_type: VARCHAR(32)
+  lh_qualified_mortgage_status_type:
+    data_type: VARCHAR(128)
+  lh_charges_enabled_date:
+    data_type: DATE
+  lh_application_date:
+    data_type: DATE

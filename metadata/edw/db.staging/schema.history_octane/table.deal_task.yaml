@@ -1,0 +1,109 @@
+name: deal_task
+primary_source_table: staging.staging_octane.deal_task
+primary_key:
+- dt_pid
+- dt_version
+foreign_keys:
+  fk_deal_task_1:
+    columns:
+    - dt_wf_deal_step_pid
+    references:
+      columns:
+      - wds_pid
+      schema: history_octane
+      table: wf_deal_step
+  fkt_dt_deal_task_status_type:
+    columns:
+    - dt_deal_task_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: deal_task_status_type
+columns:
+  dt_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dt_pid
+  dt_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dt_version
+  dt_wf_deal_step_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dt_wf_deal_step_pid
+  dt_create_lender_user_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dt_create_lender_user_name
+  dt_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.dt_create_datetime
+  dt_description:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.dt_description
+  dt_complete_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.dt_complete_datetime
+  dt_deal_task_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dt_deal_task_status_type
+  dt_smart_task:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.dt_smart_task
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+etls:
+  SP-100364:
+    input_type: table
+    output_type: insert
+    json_output_field: dt_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.deal_task
+      SELECT staging_table.dt_pid
+           , staging_table.dt_version
+           , staging_table.dt_wf_deal_step_pid
+           , staging_table.dt_create_lender_user_name
+           , staging_table.dt_create_datetime
+           , staging_table.dt_description
+           , staging_table.dt_complete_datetime
+           , staging_table.dt_deal_task_status_type
+           , staging_table.dt_smart_task
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.deal_task staging_table
+      LEFT JOIN history_octane.deal_task history_table
+                ON staging_table.dt_pid = history_table.dt_pid
+                    AND staging_table.dt_version = history_table.dt_version
+      WHERE history_table.dt_pid IS NULL
+      UNION ALL
+      SELECT history_table.dt_pid
+           , history_table.dt_version + 1
+           , history_table.dt_wf_deal_step_pid
+           , history_table.dt_create_lender_user_name
+           , history_table.dt_create_datetime
+           , history_table.dt_description
+           , history_table.dt_complete_datetime
+           , history_table.dt_deal_task_status_type
+           , history_table.dt_smart_task
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.deal_task history_table
+      LEFT JOIN staging_octane.deal_task staging_table
+                ON staging_table.dt_pid = history_table.dt_pid
+      WHERE staging_table.dt_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.deal_task deleted_records
+          WHERE deleted_records.dt_pid = history_table.dt_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );
