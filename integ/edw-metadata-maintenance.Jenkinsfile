@@ -60,7 +60,7 @@ pipeline {
                         sh 'cp src/main/resources/dev_sample_logback.groovy src/main/resources/logback.groovy'
 
                         sh './gradlew clean'
-                        sh './gradlew -Pcompose=jenkins aws-get-login dockerComposeUp'
+                        sh './gradlew -Pcompose=jenkins-no-edw aws-get-login dockerComposeUp'
                         // Give Docker time to bring the database up
                         sh 'sleep 30'
                         script {
