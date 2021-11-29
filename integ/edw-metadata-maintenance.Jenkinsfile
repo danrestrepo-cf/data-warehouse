@@ -73,7 +73,7 @@ pipeline {
                         sh 'sleep 30'
                         script {
                             if (params.octane_git_branch != 'prod_release' || params.run_environment_loader) {
-                                sh "./gradlew -Pcompose=jenkins aws-get-login runEnvLoader --args ${env.DB_ENV_LOADER}"
+                                sh "./gradlew -Pcompose=jenkins-no-edw aws-get-login runEnvLoader --args ${env.DB_ENV_LOADER}"
                             } else {
                                 sh 'scripts/pull-and-run-db-restore-and-migration-all.sh'
                             }
