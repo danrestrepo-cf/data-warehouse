@@ -46,6 +46,14 @@ pipeline {
                 sh ''' docker rm $(docker ps -a -q) || true'''
             }
         }
+        stage('Build EDW') {
+            steps {
+                sh "./integ/scripts/s3-artifact-download.sh './docker/pentaho/install' 'pdi-ce-9.0.0.0-423.zip' 'data-warehouse/pdi-ce-9.0.0.0-423.zip'"
+                dir('./docker') {
+                    sh './docker-rebuild.sh'
+                }
+            }
+        }
         stage('Build Octane database') {
             steps {
                 withEnv(readFile(params.env_file).split('\n').findAll { !it.startsWith('#') } as List) {
@@ -71,14 +79,6 @@ pipeline {
                             }
                         }
                     }
-                }
-            }
-        }
-        stage('Build EDW') {
-            steps {
-                sh "./integ/scripts/s3-artifact-download.sh './docker/pentaho/install' 'pdi-ce-9.0.0.0-423.zip' 'data-warehouse/pdi-ce-9.0.0.0-423.zip'"
-                dir('./docker') {
-                    sh './docker-rebuild.sh'
                 }
             }
         }
