@@ -27,7 +27,7 @@ pipeline {
         ZOOM_TOKEN_STATUS = credentials('zoom-token-bi-jenkins')
         ZOOM_WEBHOOK_STATUS = credentials('zoom-webhook-bi-jenkins')
         // Output path for file containing SQL statements to update EDW config.mdi data in accordance with Octane
-        CONFIG_METADATA_MAINTENANCE_FILE_OUTPUT_PATH = './config_mdi_metadata_maintenance.sql'
+        CONFIG_METADATA_MAINTENANCE_FILE_OUTPUT_PATH = '**/config_mdi_metadata_maintenance.sql'
     }
     stages {
         stage('Notify') {
@@ -90,7 +90,7 @@ pipeline {
     }
     post {
         always {
-            archiveArtifacts artifacts: "./metadata/**/*.yaml, ${env.CONFIG_METADATA_MAINTENANCE_FILE_OUTPUT_PATH}"
+            archiveArtifacts artifacts: "**/metadata, ${env.CONFIG_METADATA_MAINTENANCE_FILE_OUTPUT_PATH}"
             zoom(currentBuild.currentResult)
             cleanWs()
         }
