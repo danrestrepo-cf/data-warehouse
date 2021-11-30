@@ -74,8 +74,8 @@ class LocalMySqlConnection(DBConnection):
 
     def __enter__(self):
         try:
-            self.conn = MySQLdb.connect(host='127.0.0.1', database=self.dbname, user=self.user)
-            return DBCursor(self.conn.cursor(dictionary=True))
+            self.conn = MySQLdb.connect(host='127.0.0.1', database=self.dbname, user=self.user, cursorclass=MySQLdb.cursors.DictCursor)
+            return DBCursor(self.conn.cursor())
         except Exception as e:
             raise self.DBConnectionError(f'Database connection failed due to {e}')
 
