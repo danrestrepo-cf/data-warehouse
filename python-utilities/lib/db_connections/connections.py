@@ -15,6 +15,7 @@ from typing import List
 from abc import ABC, abstractmethod
 
 import MySQLdb
+import MySQLdb.cursors
 import psycopg2
 import psycopg2.extras
 
