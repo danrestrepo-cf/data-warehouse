@@ -2,7 +2,7 @@
 
 set -e
 
-if [ "$1" -lt 1 ]; then
+if [ -z "$1" ]; then
   echo "ERROR: No argument provided for config metadata maintenance file output path."
   exit 1
 fi

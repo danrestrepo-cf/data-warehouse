@@ -14,7 +14,7 @@ class instead.
 from typing import List
 from abc import ABC, abstractmethod
 
-import mysql.connector
+import MySQLdb
 import psycopg2
 import psycopg2.extras
 
@@ -74,7 +74,7 @@ class LocalMySqlConnection(DBConnection):
 
     def __enter__(self):
         try:
-            self.conn = mysql.connector.connect(host='127.0.0.1', database=self.dbname, user=self.user)
+            self.conn = MySQLdb.connect(host='127.0.0.1', database=self.dbname, user=self.user)
             return DBCursor(self.conn.cursor())
         except Exception as e:
             raise self.DBConnectionError(f'Database connection failed due to {e}')
