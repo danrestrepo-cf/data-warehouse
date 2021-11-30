@@ -84,7 +84,7 @@ pipeline {
         }
         stage('Run EDW metadata maintenance') {
             steps {
-                sh "edw-metadata-maintenance.sh ${env.CONFIG_METADATA_MAINTENANCE_FILE_OUTPUT_PATH}"
+                sh "./edw-metadata-maintenance.sh ${env.CONFIG_METADATA_MAINTENANCE_FILE_OUTPUT_PATH}"
             }
         }
     }
