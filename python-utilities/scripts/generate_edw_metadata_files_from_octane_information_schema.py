@@ -31,54 +31,19 @@ def main():
     # parse command line arguments
     argparser = argparse.ArgumentParser(description='Generate EDW metadata YAML files from Octane information schema')
     argparser.add_argument(
-        '--ssl_ca_filepath',
-        type=str,
-        default=os.path.abspath(os.path.join(constants.PROJECT_DIR_PATH, 'rds-combined-ca-bundle.pem')),
-        help='filepath for a valid AWS SSL certificate file. This file can be downloaded from '
-             'https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem, provided the user '
-             'is already authenticated with AWS. Only required for non-local database environment connections.'
-    )
-    argparser.add_argument(
-        '--octane_env',
-        type=str,
-        default='cert',
-        help='the Octane database environment (e.g. cert, prod) from which to read information_schema data. Defaults to "cert".'
-    )
-    argparser.add_argument(
-        '--edw_env',
-        type=str,
-        default='local',
-        help='the EDW environment (local, qa, prod) from which to read ETL process metadata and '
-             'history_octane information_schema data. Defaults to "local".'
-    )
-    argparser.add_argument(
         '--output_dir',
         type=str,
         default=os.path.abspath(os.path.join(constants.PROJECT_DIR_PATH, '..', 'metadata')),
         help='the directory in which to output the generated YAML files. Defaults to data-warehouse/metadata.'
     )
-    argparser.add_argument(
-        '--prod_username',
-        type=str,
-        default=None,
-        help='the username to use when logging into Octane\'s prod database. Only required if octane_env is "prod".'
-    )
     args = argparser.parse_args()
-
-    if not os.path.isfile(args.ssl_ca_filepath):
-        print(f'Error: invalid ssl_ca_filepath "{args.ssl_ca_filepath}"')
-        exit(1)
-
-    if args.octane_env == 'octane-prod' and args.prod_username is None:
-        print('Error: must provide prod_username argument when connecting to Octane prod')
-        exit(1)
 
     try:
         # establish database connections
         connection_factory = DBConnectionFactory()
-        octane_db_connection = connection_factory.get_connection(f'octane-{args.octane_env}', args.ssl_ca_filepath, args.prod_username)
-        config_edw_connection = connection_factory.get_connection(f'edw-{args.edw_env}-config', args.ssl_ca_filepath)
-        staging_edw_connection = connection_factory.get_connection(f'edw-{args.edw_env}-staging', args.ssl_ca_filepath)
+        octane_db_connection = connection_factory.get_connection('octane-local')
+        config_edw_connection = connection_factory.get_connection('edw-local-config')
+        staging_edw_connection = connection_factory.get_connection('edw-local-staging')
 
         # pull source data
         octane_column_metadata = get_octane_column_metadata(octane_db_connection)

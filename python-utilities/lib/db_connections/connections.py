@@ -14,12 +14,10 @@ class instead.
 from typing import List
 from abc import ABC, abstractmethod
 
-import mysql.connector
+import MySQLdb
+import MySQLdb.cursors
 import psycopg2
 import psycopg2.extras
-import boto3
-
-from lib.db_connections.connection_details import ConnectionDetails
 
 
 class DBConnection(ABC):
@@ -57,82 +55,31 @@ class LocalPostgresConnection(DBConnection):
         self.password = password
 
     def __enter__(self):
-        self.conn = psycopg2.connect(host='localhost', database=self.dbname, user=self.user, password=self.password)
-        return DBCursor(self.conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor))
+        try:
+            self.conn = psycopg2.connect(host='localhost', database=self.dbname, user=self.user, password=self.password)
+            return DBCursor(self.conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor))
+        except Exception as e:
+                raise self.DBConnectionError(f'Database connection failed due to {e}')
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.conn.commit()
         self.conn.close()
 
 
-class AWSDBConnection(DBConnection):
-    """An abstract class defining a connection to a database hosted on AWS."""
+class LocalMySqlConnection(DBConnection):
+    """A connection to the local MySQL instance."""
 
-    def __init__(self, connection_details: ConnectionDetails, ssl_ca_filepath: str):
-        self._connection_details = connection_details
-        self._ssl_ca_filepath = ssl_ca_filepath
+    def __init__(self, dbname: str = 'lura_cert', user: str = 'root'):
+        self.dbname = dbname
+        self.user = user
 
-        session = boto3.Session(profile_name=self._connection_details.profile_name)
-        client = session.client('rds')
-
-        self._token = client.generate_db_auth_token(
-            DBHostname=self._connection_details.host,
-            Port=self._connection_details.port,
-            DBUsername=self._connection_details.user,
-            Region=self._connection_details.region
-        )
-
-    @abstractmethod
-    def establish_connection(self):
-        pass
-
-    @abstractmethod
-    def create_cursor(self) -> DBCursor:
-        pass
-
-    def __enter__(self) -> DBCursor:
-
+    def __enter__(self):
         try:
-            self._conn = self.establish_connection()
-            return self.create_cursor()
+            self.conn = MySQLdb.connect(host='127.0.0.1', database=self.dbname, user=self.user, cursorclass=MySQLdb.cursors.DictCursor)
+            return DBCursor(self.conn.cursor())
         except Exception as e:
             raise self.DBConnectionError(f'Database connection failed due to {e}')
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self._conn.commit()
-        self._conn.close()
-
-
-class AWSPostgresConnection(AWSDBConnection):
-    """A connection to a PostgreSQL database hosted on AWS. When used as a context manager, returns a DBCursor instance."""
-
-    def establish_connection(self):
-        return psycopg2.connect(
-            host=self._connection_details.host,
-            port=self._connection_details.port,
-            database=self._connection_details.database,
-            user=self._connection_details.user,
-            password=self._token,
-            sslmode='prefer',
-            sslrootcert=self._ssl_ca_filepath
-        )
-
-    def create_cursor(self) -> DBCursor:
-        return DBCursor(self._conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor))
-
-
-class AWSMySQLConnection(AWSDBConnection):
-    """A connection to a MySQL database hosted on AWS. When used as a context manager, returns a DBCursor instance."""
-
-    def establish_connection(self):
-        return mysql.connector.connect(
-            host=self._connection_details.host,
-            user=self._connection_details.user,
-            passwd=self._token,
-            port=self._connection_details.port,
-            database=self._connection_details.database,
-            ssl_ca=self._ssl_ca_filepath
-        )
-
-    def create_cursor(self) -> DBCursor:
-        return DBCursor(self._conn.cursor(dictionary=True))
+        self.conn.commit()
+        self.conn.close()

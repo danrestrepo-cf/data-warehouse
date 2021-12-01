@@ -23,7 +23,7 @@ def get_octane_column_metadata(octane_connection: DBConnection) -> List[dict]:
                     , UPPER( columns.column_type ) AS column_type
                     , columns.column_key = 'PRI' AS is_primary_key
                 FROM information_schema.columns
-                WHERE columns.table_schema LIKE 'lura_%'
+                WHERE columns.table_schema = 'lura_cert'
                 ORDER BY columns.table_name, columns.ordinal_position;
             """)
 
@@ -48,7 +48,8 @@ def get_octane_foreign_key_metadata(octane_connection: DBConnection) -> List[dic
                     , referenced_table_name
                     , referenced_column_name
                 FROM information_schema.key_column_usage
-                WHERE key_column_usage.referenced_table_schema IS NOT NULL;
+                WHERE key_column_usage.referenced_table_schema IS NOT NULL
+                    AND key_column_usage.referenced_table_schema = 'lura_cert';
             """)
 
 
