@@ -9,6 +9,13 @@ if [ "$#" -lt 3 ]; then
   exit 1
 fi
 
+jenkins=${JENKINS_ENVIRONMENT:-false}
+
+image="postgres:11"
+if [ $jenkins = "true" ]; then
+  image="188213074036.dkr.ecr.us-east-1.amazonaws.com/lura/dev-postgres:11"
+fi
+
 database=$1
 testpath=$2
 
@@ -17,4 +24,4 @@ docker run -i \
   --network ${project_name}_default \
   -e PGPASSWORD=testonly \
   -v $(pwd)/$testpath:/input \
-  --rm postgres:11 psql -U postgres "postgresql://${project_name}_database_1:5432/$database" ${@:3}
+  --rm ${image} psql -U postgres "postgresql://${project_name}_database_1:5432/$database" ${@:3}

@@ -3,6 +3,8 @@
 path_to_script=$(dirname "$0")
 base_project_name=edw
 
+jenkins=${JENKINS_ENVIRONMENT:-false}
+
 function run_compose_file {
   migration_category=$1
   project_name=$2
@@ -10,6 +12,11 @@ function run_compose_file {
   echo -e "== Applying ${migration_category} migrations"
 
   waitFor=()
+
+  override=""
+  if [ $jenkins = "true" ]; then
+    override="-f ${path_to_script}/docker-compose-${migration_category}-ci.yml"
+  fi
 
   # baseline is the only migration category that does not build ingress, staging, and config flyway services, so the
   # construction of its waitFor command is handled separately
@@ -21,7 +28,7 @@ function run_compose_file {
       waitFor+=("${project_name}_flyway-roles_1")
   fi
 
-  docker-compose --project-name ${project_name} -f ${path_to_script}/docker-compose-${migration_category}.yml up --detach
+  docker-compose --project-name ${project_name} -f ${path_to_script}/docker-compose-${migration_category}.yml ${override} up --detach
 
   echo -e "== Waiting for ${migration_category} migrations"
   for container in "${waitFor[@]}"; do
