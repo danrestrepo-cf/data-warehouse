@@ -30,6 +30,8 @@ pipeline {
         )
     }
     environment {
+        JENKINS_ENVIRONMENT = 'true'
+
         // just for notifications
         ZOOM_TOKEN_STATUS = credentials('zoom-token-bi-jenkins')
         ZOOM_WEBHOOK_STATUS = credentials('zoom-webhook-bi-jenkins')
@@ -92,6 +94,7 @@ pipeline {
                     steps {
                         sh "./integ/scripts/s3-artifact-download.sh './docker/pentaho/install' 'pdi-ce-9.0.0.0-423.zip' 'data-warehouse/pdi-ce-9.0.0.0-423.zip'"
                         dir("./docker") {
+                            sh "./aws-ecr-login.sh 188213074036"
                             sh "./docker-rebuild.sh"
                         }
                     }
