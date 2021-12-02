@@ -1,0 +1,107 @@
+name: appraisal_order_request_file
+primary_source_table: staging.staging_octane.appraisal_order_request_file
+primary_key:
+- aorf_pid
+- aorf_version
+foreign_keys:
+  fk_appraisal_order_request_file_1:
+    columns:
+    - aorf_appraisal_order_request_pid
+    references:
+      columns:
+      - aprq_pid
+      schema: history_octane
+      table: appraisal_order_request
+  fk_appraisal_order_request_file_2:
+    columns:
+    - aorf_deal_file_pid
+    references:
+      columns:
+      - df_pid
+      schema: history_octane
+      table: deal_file
+  fkt_aorf_appraisal_order_request_file_type:
+    columns:
+    - aorf_appraisal_order_request_file_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: appraisal_order_request_file_type
+columns:
+  aorf_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.aorf_pid
+  aorf_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.aorf_version
+  aorf_appraisal_order_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.aorf_appraisal_order_request_pid
+  aorf_deal_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.aorf_deal_file_pid
+  aorf_appraisal_order_request_file_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.aorf_appraisal_order_request_file_type
+  aorf_vendor_document_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.aorf_vendor_document_datetime
+  aorf_vendor_document_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.aorf_vendor_document_id
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100303:
+    input_type: table
+    output_type: insert
+    json_output_field: aorf_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.appraisal_order_request_file
+      SELECT staging_table.aorf_pid
+           , staging_table.aorf_version
+           , staging_table.aorf_appraisal_order_request_pid
+           , staging_table.aorf_deal_file_pid
+           , staging_table.aorf_appraisal_order_request_file_type
+           , staging_table.aorf_vendor_document_datetime
+           , staging_table.aorf_vendor_document_id
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.appraisal_order_request_file staging_table
+      LEFT JOIN history_octane.appraisal_order_request_file history_table
+                ON staging_table.aorf_pid = history_table.aorf_pid
+                    AND staging_table.aorf_version = history_table.aorf_version
+      WHERE history_table.aorf_pid IS NULL
+      UNION ALL
+      SELECT history_table.aorf_pid
+           , history_table.aorf_version + 1
+           , history_table.aorf_appraisal_order_request_pid
+           , history_table.aorf_deal_file_pid
+           , history_table.aorf_appraisal_order_request_file_type
+           , history_table.aorf_vendor_document_datetime
+           , history_table.aorf_vendor_document_id
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.appraisal_order_request_file history_table
+      LEFT JOIN staging_octane.appraisal_order_request_file staging_table
+                ON staging_table.aorf_pid = history_table.aorf_pid
+      WHERE staging_table.aorf_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.appraisal_order_request_file deleted_records
+          WHERE deleted_records.aorf_pid = history_table.aorf_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

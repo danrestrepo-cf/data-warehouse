@@ -1,0 +1,81 @@
+name: smart_message_available_attachment
+primary_source_table: staging.staging_octane.smart_message_available_attachment
+primary_key:
+- smaa_pid
+- smaa_version
+foreign_keys:
+  fk_smart_message_available_attachment_1:
+    columns:
+    - smaa_smart_message_pid
+    references:
+      columns:
+      - smsg_pid
+      schema: history_octane
+      table: smart_message
+  fk_smart_message_available_attachment_2:
+    columns:
+    - smaa_smart_doc_pid
+    references:
+      columns:
+      - sd_pid
+      schema: history_octane
+      table: smart_doc
+columns:
+  smaa_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smaa_pid
+  smaa_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.smaa_version
+  smaa_smart_message_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smaa_smart_message_pid
+  smaa_smart_doc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smaa_smart_doc_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100871:
+    input_type: table
+    output_type: insert
+    json_output_field: smaa_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.smart_message_available_attachment
+      SELECT staging_table.smaa_pid
+           , staging_table.smaa_version
+           , staging_table.smaa_smart_message_pid
+           , staging_table.smaa_smart_doc_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.smart_message_available_attachment staging_table
+      LEFT JOIN history_octane.smart_message_available_attachment history_table
+                ON staging_table.smaa_pid = history_table.smaa_pid
+                    AND staging_table.smaa_version = history_table.smaa_version
+      WHERE history_table.smaa_pid IS NULL
+      UNION ALL
+      SELECT history_table.smaa_pid
+           , history_table.smaa_version + 1
+           , history_table.smaa_smart_message_pid
+           , history_table.smaa_smart_doc_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.smart_message_available_attachment history_table
+      LEFT JOIN staging_octane.smart_message_available_attachment staging_table
+                ON staging_table.smaa_pid = history_table.smaa_pid
+      WHERE staging_table.smaa_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.smart_message_available_attachment deleted_records
+          WHERE deleted_records.smaa_pid = history_table.smaa_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

@@ -1,0 +1,319 @@
+name: account
+primary_source_table: staging.staging_octane.account
+primary_key:
+- a_pid
+- a_version
+foreign_keys:
+  fkt_a_account_status_type:
+    columns:
+    - a_account_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: account_status_type
+columns:
+  a_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.a_pid
+  a_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.a_version
+  a_account_id:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.a_account_id
+  a_account_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.a_account_name
+  a_gfe_interest_rate_expiration_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.a_gfe_interest_rate_expiration_days
+  a_gfe_lock_duration_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.a_gfe_lock_duration_days
+  a_gfe_lock_before_settlement_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.a_gfe_lock_before_settlement_days
+  a_proposal_expiration_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.a_proposal_expiration_days
+  a_uw_expiration_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.a_uw_expiration_days
+  a_conditional_commitment_expiration_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.a_conditional_commitment_expiration_days
+  a_account_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.a_account_from_date
+  a_account_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.a_account_status_type
+  a_account_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.a_account_through_date
+  a_initial_los_loan_id:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.a_initial_los_loan_id
+  a_uuts_master_contact_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.a_uuts_master_contact_name
+  a_uuts_master_contact_title:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.a_uuts_master_contact_title
+  a_uuts_master_office_phone:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.a_uuts_master_office_phone
+  a_uuts_master_office_phone_extension:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.a_uuts_master_office_phone_extension
+  a_allonge_representative_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.a_allonge_representative_name
+  a_allonge_representative_title:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.a_allonge_representative_title
+  a_account_borrower_site_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.a_account_borrower_site_id
+  a_originator_borrower_sites_enabled:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.a_originator_borrower_sites_enabled
+  a_company_borrower_site_enabled:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.a_company_borrower_site_enabled
+  a_discount_included_in_origination_fee:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.a_discount_included_in_origination_fee
+  a_uuts_use_master_contact:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.a_uuts_use_master_contact
+  a_borrower_job_gap_lookback_years:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.a_borrower_job_gap_lookback_years
+  a_borrower_job_gap_minimum_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.a_borrower_job_gap_minimum_days
+  a_lender_app_host:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.a_lender_app_host
+  a_lender_app_ip_address:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.a_lender_app_ip_address
+  a_advance_period_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.a_advance_period_days
+  a_account_destroy_mode:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.a_account_destroy_mode
+  a_paid_through_current_month_required_day_of_month:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.a_paid_through_current_month_required_day_of_month
+  a_disclosure_change_threshold_cash_to_close:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.a_disclosure_change_threshold_cash_to_close
+  a_disclosure_change_threshold_monthly_payment:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.a_disclosure_change_threshold_monthly_payment
+  a_disclosure_action_required_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.a_disclosure_action_required_days
+  a_le_to_cd_seasoning_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.a_le_to_cd_seasoning_days
+  a_disclosure_max_arm_apr_change_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.a_disclosure_max_arm_apr_change_percent
+  a_disclosure_max_non_arm_apr_change_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.a_disclosure_max_non_arm_apr_change_percent
+  a_initial_le_delivered_mailed_seasoning_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.a_initial_le_delivered_mailed_seasoning_days
+  a_revised_le_delivered_mailed_seasoning_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.a_revised_le_delivered_mailed_seasoning_days
+  a_revised_le_received_signed_seasoning_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.a_revised_le_received_signed_seasoning_days
+  a_significant_cd_delivered_mailed_seasoning_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.a_significant_cd_delivered_mailed_seasoning_days
+  a_significant_cd_received_signed_seasoning_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.a_significant_cd_received_signed_seasoning_days
+  a_supported_states:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.a_supported_states
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  a_lender_user_password_expire_days:
+    data_type: INTEGER
+  a_lender_user_password_minimum_change_days:
+    data_type: INTEGER
+  a_lender_user_previous_password_ban:
+    data_type: INTEGER
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100019:
+    input_type: table
+    output_type: insert
+    json_output_field: a_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.account
+      SELECT staging_table.a_pid
+           , staging_table.a_version
+           , staging_table.a_account_id
+           , staging_table.a_account_name
+           , staging_table.a_gfe_interest_rate_expiration_days
+           , staging_table.a_gfe_lock_duration_days
+           , staging_table.a_gfe_lock_before_settlement_days
+           , staging_table.a_proposal_expiration_days
+           , staging_table.a_uw_expiration_days
+           , staging_table.a_conditional_commitment_expiration_days
+           , staging_table.a_account_from_date
+           , staging_table.a_account_status_type
+           , staging_table.a_account_through_date
+           , staging_table.a_initial_los_loan_id
+           , staging_table.a_uuts_master_contact_name
+           , staging_table.a_uuts_master_contact_title
+           , staging_table.a_uuts_master_office_phone
+           , staging_table.a_uuts_master_office_phone_extension
+           , staging_table.a_allonge_representative_name
+           , staging_table.a_allonge_representative_title
+           , staging_table.a_account_borrower_site_id
+           , staging_table.a_originator_borrower_sites_enabled
+           , staging_table.a_company_borrower_site_enabled
+           , staging_table.a_discount_included_in_origination_fee
+           , staging_table.a_uuts_use_master_contact
+           , staging_table.a_borrower_job_gap_lookback_years
+           , staging_table.a_borrower_job_gap_minimum_days
+           , staging_table.a_lender_app_host
+           , staging_table.a_lender_app_ip_address
+           , staging_table.a_advance_period_days
+           , staging_table.a_account_destroy_mode
+           , staging_table.a_paid_through_current_month_required_day_of_month
+           , staging_table.a_disclosure_change_threshold_cash_to_close
+           , staging_table.a_disclosure_change_threshold_monthly_payment
+           , staging_table.a_disclosure_action_required_days
+           , staging_table.a_le_to_cd_seasoning_days
+           , staging_table.a_disclosure_max_arm_apr_change_percent
+           , staging_table.a_disclosure_max_non_arm_apr_change_percent
+           , staging_table.a_initial_le_delivered_mailed_seasoning_days
+           , staging_table.a_revised_le_delivered_mailed_seasoning_days
+           , staging_table.a_revised_le_received_signed_seasoning_days
+           , staging_table.a_significant_cd_delivered_mailed_seasoning_days
+           , staging_table.a_significant_cd_received_signed_seasoning_days
+           , staging_table.a_supported_states
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.account staging_table
+      LEFT JOIN history_octane.account history_table
+                ON staging_table.a_pid = history_table.a_pid
+                    AND staging_table.a_version = history_table.a_version
+      WHERE history_table.a_pid IS NULL
+      UNION ALL
+      SELECT history_table.a_pid
+           , history_table.a_version + 1
+           , history_table.a_account_id
+           , history_table.a_account_name
+           , history_table.a_gfe_interest_rate_expiration_days
+           , history_table.a_gfe_lock_duration_days
+           , history_table.a_gfe_lock_before_settlement_days
+           , history_table.a_proposal_expiration_days
+           , history_table.a_uw_expiration_days
+           , history_table.a_conditional_commitment_expiration_days
+           , history_table.a_account_from_date
+           , history_table.a_account_status_type
+           , history_table.a_account_through_date
+           , history_table.a_initial_los_loan_id
+           , history_table.a_uuts_master_contact_name
+           , history_table.a_uuts_master_contact_title
+           , history_table.a_uuts_master_office_phone
+           , history_table.a_uuts_master_office_phone_extension
+           , history_table.a_allonge_representative_name
+           , history_table.a_allonge_representative_title
+           , history_table.a_account_borrower_site_id
+           , history_table.a_originator_borrower_sites_enabled
+           , history_table.a_company_borrower_site_enabled
+           , history_table.a_discount_included_in_origination_fee
+           , history_table.a_uuts_use_master_contact
+           , history_table.a_borrower_job_gap_lookback_years
+           , history_table.a_borrower_job_gap_minimum_days
+           , history_table.a_lender_app_host
+           , history_table.a_lender_app_ip_address
+           , history_table.a_advance_period_days
+           , history_table.a_account_destroy_mode
+           , history_table.a_paid_through_current_month_required_day_of_month
+           , history_table.a_disclosure_change_threshold_cash_to_close
+           , history_table.a_disclosure_change_threshold_monthly_payment
+           , history_table.a_disclosure_action_required_days
+           , history_table.a_le_to_cd_seasoning_days
+           , history_table.a_disclosure_max_arm_apr_change_percent
+           , history_table.a_disclosure_max_non_arm_apr_change_percent
+           , history_table.a_initial_le_delivered_mailed_seasoning_days
+           , history_table.a_revised_le_delivered_mailed_seasoning_days
+           , history_table.a_revised_le_received_signed_seasoning_days
+           , history_table.a_significant_cd_delivered_mailed_seasoning_days
+           , history_table.a_significant_cd_received_signed_seasoning_days
+           , history_table.a_supported_states
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.account history_table
+      LEFT JOIN staging_octane.account staging_table
+                ON staging_table.a_pid = history_table.a_pid
+      WHERE staging_table.a_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.account deleted_records
+          WHERE deleted_records.a_pid = history_table.a_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

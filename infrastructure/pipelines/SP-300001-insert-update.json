@@ -1,0 +1,80 @@
+{
+    "Comment": "SP-300001-insert-update - ETL to maintain loan_fact",
+    "StartAt": "SP-300001-insert-update",
+    "States": {
+        "SP-300001-insert-update": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+            "Parameters": {
+                "LaunchType": "FARGATE",
+                "Cluster": "${ecsClusterARN}",
+                "TaskDefinition": "${mdi_2_arn}",
+                "NetworkConfiguration": {
+                    "AwsvpcConfiguration": {
+                        "AssignPublicIp": "DISABLED",
+                        "SecurityGroups": [
+                            "${securityGroupId}"
+                        ],
+                        "Subnets": ${subnetIDs}
+                    }
+                },
+                "Overrides": {
+                    "Memory": "4096",
+                    "ContainerOverrides": [
+                        {
+                            "Memory": 4096,
+                            "Environment": [
+                                {
+                                    "Name": "PROCESS_NAME",
+                                    "Value": "SP-300001-insert-update"
+                                },
+                                {
+                                    "Name": "INPUT_DATA",
+                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
+                                },
+                                {
+                                    "Name": "TOKEN_ID",
+                                    "Value.$": "$$.Task.Token"
+                                }
+                            ],
+                            "Name": "${mdi_2_container}"
+                        }
+                    ]
+                }
+            },
+            "Next": "Load_type_choice"
+        },
+        "Load_type_choice": {
+            "Type": "Choice",
+            "Choices": [
+                {
+                    "Variable": "$.load_type",
+                    "StringEquals": "NONE",
+                    "Next": "Success"
+                }
+            ],
+            "Default": "SP-200001-insert_message"
+        },
+        "Success": {
+            "Type": "Succeed"
+        },
+        "SP-200001-insert_message": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::sqs:sendMessage",
+            "Parameters": {
+                "QueueUrl": "${fullCheckQueueUrl}",
+                "MessageGroupId": "loan_lender_user_access",
+                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                "MessageAttributes": {
+                    "ProcessId": {
+                        "DataType": "String",
+                        "StringValue": "SP-200001-insert"
+                    }
+                },
+                "MessageBody.$": "States.JsonToString($)"
+            },
+            "End": true
+        }
+    }
+}
+

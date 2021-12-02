@@ -1,0 +1,81 @@
+name: proposal_doc_set_snapshot
+primary_source_table: staging.staging_octane.proposal_doc_set_snapshot
+primary_key:
+- prpdssn_pid
+- prpdssn_version
+foreign_keys:
+  fk_proposal_doc_set_snapshot_1:
+    columns:
+    - prpdssn_proposal_doc_set_pid
+    references:
+      columns:
+      - prpds_pid
+      schema: history_octane
+      table: proposal_doc_set
+  fk_proposal_doc_set_snapshot_2:
+    columns:
+    - prpdssn_snapshot_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: history_octane
+      table: proposal
+columns:
+  prpdssn_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpdssn_pid
+  prpdssn_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.prpdssn_version
+  prpdssn_proposal_doc_set_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpdssn_proposal_doc_set_pid
+  prpdssn_snapshot_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpdssn_snapshot_proposal_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100166:
+    input_type: table
+    output_type: insert
+    json_output_field: prpdssn_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.proposal_doc_set_snapshot
+      SELECT staging_table.prpdssn_pid
+           , staging_table.prpdssn_version
+           , staging_table.prpdssn_proposal_doc_set_pid
+           , staging_table.prpdssn_snapshot_proposal_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.proposal_doc_set_snapshot staging_table
+      LEFT JOIN history_octane.proposal_doc_set_snapshot history_table
+                ON staging_table.prpdssn_pid = history_table.prpdssn_pid
+                    AND staging_table.prpdssn_version = history_table.prpdssn_version
+      WHERE history_table.prpdssn_pid IS NULL
+      UNION ALL
+      SELECT history_table.prpdssn_pid
+           , history_table.prpdssn_version + 1
+           , history_table.prpdssn_proposal_doc_set_pid
+           , history_table.prpdssn_snapshot_proposal_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.proposal_doc_set_snapshot history_table
+      LEFT JOIN staging_octane.proposal_doc_set_snapshot staging_table
+                ON staging_table.prpdssn_pid = history_table.prpdssn_pid
+      WHERE staging_table.prpdssn_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.proposal_doc_set_snapshot deleted_records
+          WHERE deleted_records.prpdssn_pid = history_table.prpdssn_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

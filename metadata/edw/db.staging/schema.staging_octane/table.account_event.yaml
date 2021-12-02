@@ -1,0 +1,41 @@
+name: account_event
+primary_key:
+- ae_pid
+foreign_keys:
+  fk_account_event_1:
+    columns:
+    - ae_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fkt_ae_account_event_type:
+    columns:
+    - ae_account_event_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: account_event_type
+columns:
+  ae_pid:
+    data_type: BIGINT
+  ae_version:
+    data_type: INTEGER
+  ae_account_pid:
+    data_type: BIGINT
+  ae_create_datetime:
+    data_type: TIMESTAMP
+  ae_account_event_type:
+    data_type: VARCHAR(128)
+  ae_detail:
+    data_type: VARCHAR(16000)
+  ae_source_unparsed_name:
+    data_type: VARCHAR(128)
+  ae_ip_address:
+    data_type: VARCHAR(32)
+  ae_client_agent:
+    data_type: VARCHAR(256)
+  ae_event_date:
+    data_type: DATE

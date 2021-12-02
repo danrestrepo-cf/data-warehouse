@@ -1,0 +1,85 @@
+name: area_median_income_table
+primary_source_table: staging.staging_octane.area_median_income_table
+primary_key:
+- amit_pid
+- amit_version
+foreign_keys:
+  fk_area_median_income_table_1:
+    columns:
+    - amit_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+columns:
+  amit_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.amit_pid
+  amit_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.amit_version
+  amit_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.amit_account_pid
+  amit_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.amit_from_date
+  amit_uploader_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.amit_uploader_unparsed_name
+  amit_upload_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.amit_upload_datetime
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100021:
+    input_type: table
+    output_type: insert
+    json_output_field: amit_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.area_median_income_table
+      SELECT staging_table.amit_pid
+           , staging_table.amit_version
+           , staging_table.amit_account_pid
+           , staging_table.amit_from_date
+           , staging_table.amit_uploader_unparsed_name
+           , staging_table.amit_upload_datetime
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.area_median_income_table staging_table
+      LEFT JOIN history_octane.area_median_income_table history_table
+                ON staging_table.amit_pid = history_table.amit_pid
+                    AND staging_table.amit_version = history_table.amit_version
+      WHERE history_table.amit_pid IS NULL
+      UNION ALL
+      SELECT history_table.amit_pid
+           , history_table.amit_version + 1
+           , history_table.amit_account_pid
+           , history_table.amit_from_date
+           , history_table.amit_uploader_unparsed_name
+           , history_table.amit_upload_datetime
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.area_median_income_table history_table
+      LEFT JOIN staging_octane.area_median_income_table staging_table
+                ON staging_table.amit_pid = history_table.amit_pid
+      WHERE staging_table.amit_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.area_median_income_table deleted_records
+          WHERE deleted_records.amit_pid = history_table.amit_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

@@ -1,0 +1,81 @@
+name: role_performer_assign
+primary_source_table: staging.staging_octane.role_performer_assign
+primary_key:
+- rpa_pid
+- rpa_version
+foreign_keys:
+  fk_role_performer_assign_1:
+    columns:
+    - rpa_role_pid
+    references:
+      columns:
+      - r_pid
+      schema: history_octane
+      table: role
+  fk_role_performer_assign_2:
+    columns:
+    - rpa_assignee_role_pid
+    references:
+      columns:
+      - r_pid
+      schema: history_octane
+      table: role
+columns:
+  rpa_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rpa_pid
+  rpa_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.rpa_version
+  rpa_role_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rpa_role_pid
+  rpa_assignee_role_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rpa_assignee_role_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100239:
+    input_type: table
+    output_type: insert
+    json_output_field: rpa_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.role_performer_assign
+      SELECT staging_table.rpa_pid
+           , staging_table.rpa_version
+           , staging_table.rpa_role_pid
+           , staging_table.rpa_assignee_role_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.role_performer_assign staging_table
+      LEFT JOIN history_octane.role_performer_assign history_table
+                ON staging_table.rpa_pid = history_table.rpa_pid
+                    AND staging_table.rpa_version = history_table.rpa_version
+      WHERE history_table.rpa_pid IS NULL
+      UNION ALL
+      SELECT history_table.rpa_pid
+           , history_table.rpa_version + 1
+           , history_table.rpa_role_pid
+           , history_table.rpa_assignee_role_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.role_performer_assign history_table
+      LEFT JOIN staging_octane.role_performer_assign staging_table
+                ON staging_table.rpa_pid = history_table.rpa_pid
+      WHERE staging_table.rpa_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.role_performer_assign deleted_records
+          WHERE deleted_records.rpa_pid = history_table.rpa_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

@@ -1,0 +1,21 @@
+name: lender_concession_request_number_ticker
+primary_key:
+- lcrnt_pid
+foreign_keys:
+  fk_lender_concession_request_number_ticker_1:
+    columns:
+    - lcrnt_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: staging_octane
+      table: proposal
+columns:
+  lcrnt_pid:
+    data_type: BIGINT
+  lcrnt_version:
+    data_type: INTEGER
+  lcrnt_proposal_pid:
+    data_type: BIGINT
+  lcrnt_next_lender_concession_request_number:
+    data_type: BIGINT

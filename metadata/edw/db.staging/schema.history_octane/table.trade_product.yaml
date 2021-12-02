@@ -1,0 +1,81 @@
+name: trade_product
+primary_source_table: staging.staging_octane.trade_product
+primary_key:
+- tp_pid
+- tp_version
+foreign_keys:
+  fk_trade_product_1:
+    columns:
+    - tp_product_pid
+    references:
+      columns:
+      - p_pid
+      schema: history_octane
+      table: product
+  fk_trade_product_2:
+    columns:
+    - tp_trade_pid
+    references:
+      columns:
+      - t_pid
+      schema: history_octane
+      table: trade
+columns:
+  tp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.tp_pid
+  tp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.tp_version
+  tp_product_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.tp_product_pid
+  tp_trade_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.tp_trade_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100354:
+    input_type: table
+    output_type: insert
+    json_output_field: tp_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.trade_product
+      SELECT staging_table.tp_pid
+           , staging_table.tp_version
+           , staging_table.tp_product_pid
+           , staging_table.tp_trade_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.trade_product staging_table
+      LEFT JOIN history_octane.trade_product history_table
+                ON staging_table.tp_pid = history_table.tp_pid
+                    AND staging_table.tp_version = history_table.tp_version
+      WHERE history_table.tp_pid IS NULL
+      UNION ALL
+      SELECT history_table.tp_pid
+           , history_table.tp_version + 1
+           , history_table.tp_product_pid
+           , history_table.tp_trade_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.trade_product history_table
+      LEFT JOIN staging_octane.trade_product staging_table
+                ON staging_table.tp_pid = history_table.tp_pid
+      WHERE staging_table.tp_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.trade_product deleted_records
+          WHERE deleted_records.tp_pid = history_table.tp_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

@@ -1,0 +1,325 @@
+name: deal_snapshot
+primary_source_table: staging.staging_octane.deal_snapshot
+primary_key:
+- desn_pid
+- desn_version
+foreign_keys:
+  fk_deal_snapshot_1:
+    columns:
+    - desn_snapshot_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: history_octane
+      table: proposal
+  fkt_desn_decision_appraisal_condition_type:
+    columns:
+    - desn_decision_appraisal_condition_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: appraisal_condition_type
+  fkt_desn_lender_lock_status_type_main:
+    columns:
+    - desn_lender_lock_status_type_main
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: lender_lock_status_type
+  fkt_desn_lender_lock_status_type_piggyback:
+    columns:
+    - desn_lender_lock_status_type_piggyback
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: lender_lock_status_type
+columns:
+  desn_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.desn_pid
+  desn_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.desn_version
+  desn_snapshot_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.desn_snapshot_proposal_pid
+  desn_decision_appraisal_condition_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.desn_decision_appraisal_condition_type
+  desn_lender_lock_effective_expiration_datetime_main:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.desn_lender_lock_effective_expiration_datetime_main
+  desn_lender_lock_effective_expiration_datetime_piggyback:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.desn_lender_lock_effective_expiration_datetime_piggyback
+  desn_lender_lock_status_type_main:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.desn_lender_lock_status_type_main
+  desn_lender_lock_status_type_piggyback:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.desn_lender_lock_status_type_piggyback
+  desn_lender_lock_id_main:
+    data_type: VARCHAR(11)
+    source:
+      field: primary_source_table.columns.desn_lender_lock_id_main
+  desn_lender_lock_id_piggyback:
+    data_type: VARCHAR(11)
+    source:
+      field: primary_source_table.columns.desn_lender_lock_id_piggyback
+  desn_preferred_vendor_used:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.desn_preferred_vendor_used
+  desn_lender_lock_start_datetime_main:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.desn_lender_lock_start_datetime_main
+  desn_lender_lock_start_datetime_piggyback:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.desn_lender_lock_start_datetime_piggyback
+  desn_lender_lock_effective_duration_days_main:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.desn_lender_lock_effective_duration_days_main
+  desn_lender_lock_effective_duration_days_piggyback:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.desn_lender_lock_effective_duration_days_piggyback
+  desn_lead_source_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.desn_lead_source_name
+  desn_appraisal_rush_request:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.desn_appraisal_rush_request
+  desn_appraisal_transfer_specified:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.desn_appraisal_transfer_specified
+  desn_borrower_requires_appraisal:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.desn_borrower_requires_appraisal
+  desn_lender_requires_appraisal:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.desn_lender_requires_appraisal
+  desn_product_requires_appraisal:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.desn_product_requires_appraisal
+  desn_override_calculated_appraisal_required:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.desn_override_calculated_appraisal_required
+  desn_decision_appraisal_appraised_value_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.desn_decision_appraisal_appraised_value_amount
+  desn_appraisal_required:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.desn_appraisal_required
+  desn_lender_concession_total_approved_amount_main:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.desn_lender_concession_total_approved_amount_main
+  desn_lender_concession_total_approved_amount_piggyback:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.desn_lender_concession_total_approved_amount_piggyback
+  desn_relock_fee_gross_amount_main:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.desn_relock_fee_gross_amount_main
+  desn_relock_fee_gross_amount_piggyback:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.desn_relock_fee_gross_amount_piggyback
+  desn_relock_fee_amount_less_concessions_main:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.desn_relock_fee_amount_less_concessions_main
+  desn_relock_fee_amount_less_concessions_piggyback:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.desn_relock_fee_amount_less_concessions_piggyback
+  desn_relock_fee_amount_concessed_main:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.desn_relock_fee_amount_concessed_main
+  desn_relock_fee_amount_concessed_piggyback:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.desn_relock_fee_amount_concessed_piggyback
+  desn_lock_extension_fee_gross_amount_main:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.desn_lock_extension_fee_gross_amount_main
+  desn_lock_extension_fee_gross_amount_piggyback:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.desn_lock_extension_fee_gross_amount_piggyback
+  desn_lock_extension_fee_amount_less_concessions_main:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.desn_lock_extension_fee_amount_less_concessions_main
+  desn_lock_extension_fee_amount_less_concessions_piggyback:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.desn_lock_extension_fee_amount_less_concessions_piggyback
+  desn_lock_extension_fee_amount_concessed_main:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.desn_lock_extension_fee_amount_concessed_main
+  desn_lock_extension_fee_amount_concessed_piggyback:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.desn_lock_extension_fee_amount_concessed_piggyback
+  desn_lender_concession_remaining_amount_main:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.desn_lender_concession_remaining_amount_main
+  desn_lender_concession_remaining_amount_piggyback:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.desn_lender_concession_remaining_amount_piggyback
+  desn_charge_credit_for_interest_rate_main:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.desn_charge_credit_for_interest_rate_main
+  desn_charge_credit_for_interest_rate_piggyback:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.desn_charge_credit_for_interest_rate_piggyback
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100315:
+    input_type: table
+    output_type: insert
+    json_output_field: desn_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.deal_snapshot
+      SELECT staging_table.desn_pid
+           , staging_table.desn_version
+           , staging_table.desn_snapshot_proposal_pid
+           , staging_table.desn_decision_appraisal_condition_type
+           , staging_table.desn_lender_lock_effective_expiration_datetime_main
+           , staging_table.desn_lender_lock_effective_expiration_datetime_piggyback
+           , staging_table.desn_lender_lock_status_type_main
+           , staging_table.desn_lender_lock_status_type_piggyback
+           , staging_table.desn_lender_lock_id_main
+           , staging_table.desn_lender_lock_id_piggyback
+           , staging_table.desn_preferred_vendor_used
+           , staging_table.desn_lender_lock_start_datetime_main
+           , staging_table.desn_lender_lock_start_datetime_piggyback
+           , staging_table.desn_lender_lock_effective_duration_days_main
+           , staging_table.desn_lender_lock_effective_duration_days_piggyback
+           , staging_table.desn_lead_source_name
+           , staging_table.desn_appraisal_rush_request
+           , staging_table.desn_appraisal_transfer_specified
+           , staging_table.desn_borrower_requires_appraisal
+           , staging_table.desn_lender_requires_appraisal
+           , staging_table.desn_product_requires_appraisal
+           , staging_table.desn_override_calculated_appraisal_required
+           , staging_table.desn_decision_appraisal_appraised_value_amount
+           , staging_table.desn_appraisal_required
+           , staging_table.desn_lender_concession_total_approved_amount_main
+           , staging_table.desn_lender_concession_total_approved_amount_piggyback
+           , staging_table.desn_relock_fee_gross_amount_main
+           , staging_table.desn_relock_fee_gross_amount_piggyback
+           , staging_table.desn_relock_fee_amount_less_concessions_main
+           , staging_table.desn_relock_fee_amount_less_concessions_piggyback
+           , staging_table.desn_relock_fee_amount_concessed_main
+           , staging_table.desn_relock_fee_amount_concessed_piggyback
+           , staging_table.desn_lock_extension_fee_gross_amount_main
+           , staging_table.desn_lock_extension_fee_gross_amount_piggyback
+           , staging_table.desn_lock_extension_fee_amount_less_concessions_main
+           , staging_table.desn_lock_extension_fee_amount_less_concessions_piggyback
+           , staging_table.desn_lock_extension_fee_amount_concessed_main
+           , staging_table.desn_lock_extension_fee_amount_concessed_piggyback
+           , staging_table.desn_lender_concession_remaining_amount_main
+           , staging_table.desn_lender_concession_remaining_amount_piggyback
+           , staging_table.desn_charge_credit_for_interest_rate_main
+           , staging_table.desn_charge_credit_for_interest_rate_piggyback
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.deal_snapshot staging_table
+      LEFT JOIN history_octane.deal_snapshot history_table
+                ON staging_table.desn_pid = history_table.desn_pid
+                    AND staging_table.desn_version = history_table.desn_version
+      WHERE history_table.desn_pid IS NULL
+      UNION ALL
+      SELECT history_table.desn_pid
+           , history_table.desn_version + 1
+           , history_table.desn_snapshot_proposal_pid
+           , history_table.desn_decision_appraisal_condition_type
+           , history_table.desn_lender_lock_effective_expiration_datetime_main
+           , history_table.desn_lender_lock_effective_expiration_datetime_piggyback
+           , history_table.desn_lender_lock_status_type_main
+           , history_table.desn_lender_lock_status_type_piggyback
+           , history_table.desn_lender_lock_id_main
+           , history_table.desn_lender_lock_id_piggyback
+           , history_table.desn_preferred_vendor_used
+           , history_table.desn_lender_lock_start_datetime_main
+           , history_table.desn_lender_lock_start_datetime_piggyback
+           , history_table.desn_lender_lock_effective_duration_days_main
+           , history_table.desn_lender_lock_effective_duration_days_piggyback
+           , history_table.desn_lead_source_name
+           , history_table.desn_appraisal_rush_request
+           , history_table.desn_appraisal_transfer_specified
+           , history_table.desn_borrower_requires_appraisal
+           , history_table.desn_lender_requires_appraisal
+           , history_table.desn_product_requires_appraisal
+           , history_table.desn_override_calculated_appraisal_required
+           , history_table.desn_decision_appraisal_appraised_value_amount
+           , history_table.desn_appraisal_required
+           , history_table.desn_lender_concession_total_approved_amount_main
+           , history_table.desn_lender_concession_total_approved_amount_piggyback
+           , history_table.desn_relock_fee_gross_amount_main
+           , history_table.desn_relock_fee_gross_amount_piggyback
+           , history_table.desn_relock_fee_amount_less_concessions_main
+           , history_table.desn_relock_fee_amount_less_concessions_piggyback
+           , history_table.desn_relock_fee_amount_concessed_main
+           , history_table.desn_relock_fee_amount_concessed_piggyback
+           , history_table.desn_lock_extension_fee_gross_amount_main
+           , history_table.desn_lock_extension_fee_gross_amount_piggyback
+           , history_table.desn_lock_extension_fee_amount_less_concessions_main
+           , history_table.desn_lock_extension_fee_amount_less_concessions_piggyback
+           , history_table.desn_lock_extension_fee_amount_concessed_main
+           , history_table.desn_lock_extension_fee_amount_concessed_piggyback
+           , history_table.desn_lender_concession_remaining_amount_main
+           , history_table.desn_lender_concession_remaining_amount_piggyback
+           , history_table.desn_charge_credit_for_interest_rate_main
+           , history_table.desn_charge_credit_for_interest_rate_piggyback
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.deal_snapshot history_table
+      LEFT JOIN staging_octane.deal_snapshot staging_table
+                ON staging_table.desn_pid = history_table.desn_pid
+      WHERE staging_table.desn_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.deal_snapshot deleted_records
+          WHERE deleted_records.desn_pid = history_table.desn_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

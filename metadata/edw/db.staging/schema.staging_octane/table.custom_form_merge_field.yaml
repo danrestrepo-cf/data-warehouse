@@ -1,0 +1,29 @@
+name: custom_form_merge_field
+primary_key:
+- cfmf_pid
+foreign_keys:
+  fk_form_merge_field_1:
+    columns:
+    - cfmf_custom_form_pid
+    references:
+      columns:
+      - cf_pid
+      schema: staging_octane
+      table: custom_form
+  fkt_cfmf_field_type:
+    columns:
+    - cfmf_field_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: field_type
+columns:
+  cfmf_pid:
+    data_type: BIGINT
+  cfmf_version:
+    data_type: INTEGER
+  cfmf_custom_form_pid:
+    data_type: BIGINT
+  cfmf_field_type:
+    data_type: VARCHAR(128)

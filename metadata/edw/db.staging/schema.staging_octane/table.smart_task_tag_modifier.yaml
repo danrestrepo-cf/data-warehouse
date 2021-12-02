@@ -1,0 +1,31 @@
+name: smart_task_tag_modifier
+primary_key:
+- sttm_pid
+foreign_keys:
+  fk_smart_task_tag_modifier_1:
+    columns:
+    - sttm_deal_tag_definition_pid
+    references:
+      columns:
+      - dtd_pid
+      schema: staging_octane
+      table: deal_tag_definition
+  fk_smart_task_tag_modifier_2:
+    columns:
+    - sttm_smart_task_pid
+    references:
+      columns:
+      - st_pid
+      schema: staging_octane
+      table: smart_task
+columns:
+  sttm_pid:
+    data_type: BIGINT
+  sttm_version:
+    data_type: INTEGER
+  sttm_deal_tag_definition_pid:
+    data_type: BIGINT
+  sttm_smart_task_pid:
+    data_type: BIGINT
+  sttm_add_tag:
+    data_type: BOOLEAN

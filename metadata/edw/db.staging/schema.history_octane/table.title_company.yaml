@@ -1,0 +1,91 @@
+name: title_company
+primary_source_table: staging.staging_octane.title_company
+primary_key:
+- tc_pid
+- tc_version
+foreign_keys:
+  fk_title_company_1:
+    columns:
+    - tc_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+columns:
+  tc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.tc_pid
+  tc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.tc_version
+  tc_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.tc_account_pid
+  tc_company_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.tc_company_name
+  tc_admin_lock:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.tc_admin_lock
+  tc_active:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.tc_active
+  tc_preferred_vendor:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.tc_preferred_vendor
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100066:
+    input_type: table
+    output_type: insert
+    json_output_field: tc_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.title_company
+      SELECT staging_table.tc_pid
+           , staging_table.tc_version
+           , staging_table.tc_account_pid
+           , staging_table.tc_company_name
+           , staging_table.tc_admin_lock
+           , staging_table.tc_active
+           , staging_table.tc_preferred_vendor
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.title_company staging_table
+      LEFT JOIN history_octane.title_company history_table
+                ON staging_table.tc_pid = history_table.tc_pid
+                    AND staging_table.tc_version = history_table.tc_version
+      WHERE history_table.tc_pid IS NULL
+      UNION ALL
+      SELECT history_table.tc_pid
+           , history_table.tc_version + 1
+           , history_table.tc_account_pid
+           , history_table.tc_company_name
+           , history_table.tc_admin_lock
+           , history_table.tc_active
+           , history_table.tc_preferred_vendor
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.title_company history_table
+      LEFT JOIN staging_octane.title_company staging_table
+                ON staging_table.tc_pid = history_table.tc_pid
+      WHERE staging_table.tc_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.title_company deleted_records
+          WHERE deleted_records.tc_pid = history_table.tc_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

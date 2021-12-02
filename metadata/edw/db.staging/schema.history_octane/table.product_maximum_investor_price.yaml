@@ -1,0 +1,97 @@
+name: product_maximum_investor_price
+primary_source_table: staging.staging_octane.product_maximum_investor_price
+primary_key:
+- pmip_pid
+- pmip_version
+foreign_keys:
+  fk_product_maximum_investor_price_1:
+    columns:
+    - pmip_product_pid
+    references:
+      columns:
+      - p_pid
+      schema: history_octane
+      table: product
+columns:
+  pmip_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pmip_pid
+  pmip_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pmip_version
+  pmip_product_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pmip_product_pid
+  pmip_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.pmip_from_date
+  pmip_maximum_investor_price_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pmip_maximum_investor_price_percent
+  pmip_maximum_includes_srp:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pmip_maximum_includes_srp
+  pmip_loan_amount_min:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.pmip_loan_amount_min
+  pmip_loan_amount_max:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.pmip_loan_amount_max
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100113:
+    input_type: table
+    output_type: insert
+    json_output_field: pmip_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.product_maximum_investor_price
+      SELECT staging_table.pmip_pid
+           , staging_table.pmip_version
+           , staging_table.pmip_product_pid
+           , staging_table.pmip_from_date
+           , staging_table.pmip_maximum_investor_price_percent
+           , staging_table.pmip_maximum_includes_srp
+           , staging_table.pmip_loan_amount_min
+           , staging_table.pmip_loan_amount_max
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.product_maximum_investor_price staging_table
+      LEFT JOIN history_octane.product_maximum_investor_price history_table
+                ON staging_table.pmip_pid = history_table.pmip_pid
+                    AND staging_table.pmip_version = history_table.pmip_version
+      WHERE history_table.pmip_pid IS NULL
+      UNION ALL
+      SELECT history_table.pmip_pid
+           , history_table.pmip_version + 1
+           , history_table.pmip_product_pid
+           , history_table.pmip_from_date
+           , history_table.pmip_maximum_investor_price_percent
+           , history_table.pmip_maximum_includes_srp
+           , history_table.pmip_loan_amount_min
+           , history_table.pmip_loan_amount_max
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.product_maximum_investor_price history_table
+      LEFT JOIN staging_octane.product_maximum_investor_price staging_table
+                ON staging_table.pmip_pid = history_table.pmip_pid
+      WHERE staging_table.pmip_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.product_maximum_investor_price deleted_records
+          WHERE deleted_records.pmip_pid = history_table.pmip_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

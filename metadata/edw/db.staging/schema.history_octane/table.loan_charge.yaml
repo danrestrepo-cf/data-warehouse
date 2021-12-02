@@ -1,0 +1,477 @@
+name: loan_charge
+primary_source_table: staging.staging_octane.loan_charge
+primary_key:
+- lc_pid
+- lc_version
+foreign_keys:
+  fk_loan_charge_1:
+    columns:
+    - lc_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: history_octane
+      table: proposal
+  fk_loan_charge_2:
+    columns:
+    - lc_obligation_pid
+    references:
+      columns:
+      - ob_pid
+      schema: history_octane
+      table: obligation
+  fkt_lc_charge_input_type:
+    columns:
+    - lc_charge_input_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: charge_input_type
+  fkt_lc_charge_payee_type:
+    columns:
+    - lc_charge_payee_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: charge_payee_type
+  fkt_lc_charge_source_type:
+    columns:
+    - lc_charge_source_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: charge_source_type
+  fkt_lc_charge_type:
+    columns:
+    - lc_charge_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: charge_type
+  fkt_lc_configured_charge_payee_type:
+    columns:
+    - lc_configured_charge_payee_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: charge_payee_type
+  fkt_lc_configured_charge_payer_type:
+    columns:
+    - lc_configured_charge_payer_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: charge_payer_type
+  fkt_lc_loan_position_type:
+    columns:
+    - lc_loan_position_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: loan_position_type
+  fkt_lc_manual_circumstance_change_type_1:
+    columns:
+    - lc_manual_circumstance_change_type_1
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: circumstance_change_type
+  fkt_lc_manual_circumstance_change_type_2:
+    columns:
+    - lc_manual_circumstance_change_type_2
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: circumstance_change_type
+  fkt_lc_obligation_charge_input_type:
+    columns:
+    - lc_obligation_charge_input_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: obligation_charge_input_type
+columns:
+  lc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lc_pid
+  lc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lc_version
+  lc_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lc_proposal_pid
+  lc_obligation_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lc_obligation_pid
+  lc_account_charge_ordinal:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lc_account_charge_ordinal
+  lc_loan_position_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lc_loan_position_type
+  lc_charge_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lc_charge_type
+  lc_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lc_name
+  lc_charge_payee_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lc_charge_payee_type
+  lc_paid_to:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lc_paid_to
+  lc_poc_applicable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lc_poc_applicable
+  lc_reduction_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.lc_reduction_amount
+  lc_apr:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lc_apr
+  lc_base_amount:
+    data_type: NUMERIC(16,3)
+    source:
+      field: primary_source_table.columns.lc_base_amount
+  lc_configured_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lc_configured_total_amount
+  lc_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lc_total_amount
+  lc_charge_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lc_charge_input_type
+  lc_charge_input_type_base_amount:
+    data_type: NUMERIC(16,3)
+    source:
+      field: primary_source_table.columns.lc_charge_input_type_base_amount
+  lc_charge_input_type_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lc_charge_input_type_percent
+  lc_charge_input_type_currency:
+    data_type: NUMERIC(16,3)
+    source:
+      field: primary_source_table.columns.lc_charge_input_type_currency
+  lc_hud_section_number:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.lc_hud_section_number
+  lc_hud_line_number:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.lc_hud_line_number
+  lc_user_defined:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lc_user_defined
+  lc_months_auto_compute:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lc_months_auto_compute
+  lc_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lc_months
+  lc_per_diem_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lc_per_diem_amount
+  lc_per_diem_rate:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lc_per_diem_rate
+  lc_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lc_days
+  lc_financed:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lc_financed
+  lc_financed_auto_compute:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lc_financed_auto_compute
+  lc_financed_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.lc_financed_amount
+  lc_auto_compute:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lc_auto_compute
+  lc_charge_source_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lc_charge_source_type
+  lc_obligation_charge_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lc_obligation_charge_input_type
+  lc_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lc_from_date
+  lc_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lc_through_date
+  lc_smart_charge_config_warning:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.lc_smart_charge_config_warning
+  lc_reduction_amount_warning:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.lc_reduction_amount_warning
+  lc_advance_amount_warning:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.lc_advance_amount_warning
+  lc_fha_mip_refund_warning:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.lc_fha_mip_refund_warning
+  lc_aggregate_adjustment_compute_warning:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.lc_aggregate_adjustment_compute_warning
+  lc_advance_obligation_compute_warning:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.lc_advance_obligation_compute_warning
+  lc_escrow_obligation_compute_warning:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.lc_escrow_obligation_compute_warning
+  lc_excess_financing_concession_warning:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.lc_excess_financing_concession_warning
+  lc_amount_exceeds_cap_warning:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.lc_amount_exceeds_cap_warning
+  lc_subtract_lenders_title_insurance_amount:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lc_subtract_lenders_title_insurance_amount
+  lc_lender_insurance_exceeds_owner_insurance_warning:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.lc_lender_insurance_exceeds_owner_insurance_warning
+  lc_manual_circumstance_change_type_1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lc_manual_circumstance_change_type_1
+  lc_manual_circumstance_change_type_2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lc_manual_circumstance_change_type_2
+  lc_configured_charge_payer_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lc_configured_charge_payer_type
+  lc_configured_charge_payee_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lc_configured_charge_payee_type
+  lc_configured_paid_by:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lc_configured_paid_by
+  lc_configured_paid_to:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lc_configured_paid_to
+  lc_configured_poc:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lc_configured_poc
+  lc_configured_financed:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lc_configured_financed
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  lc_charge_payer_type:
+    data_type: VARCHAR(128)
+  lc_paid_by:
+    data_type: VARCHAR(128)
+  lc_poc:
+    data_type: BOOLEAN
+  lc_charge_wire_action_type:
+    data_type: VARCHAR(128)
+  lc_charge_wire_action_auto_compute:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100156:
+    input_type: table
+    output_type: insert
+    json_output_field: lc_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.loan_charge
+      SELECT staging_table.lc_pid
+           , staging_table.lc_version
+           , staging_table.lc_proposal_pid
+           , staging_table.lc_obligation_pid
+           , staging_table.lc_account_charge_ordinal
+           , staging_table.lc_loan_position_type
+           , staging_table.lc_charge_type
+           , staging_table.lc_name
+           , staging_table.lc_charge_payee_type
+           , staging_table.lc_paid_to
+           , staging_table.lc_poc_applicable
+           , staging_table.lc_reduction_amount
+           , staging_table.lc_apr
+           , staging_table.lc_base_amount
+           , staging_table.lc_configured_total_amount
+           , staging_table.lc_total_amount
+           , staging_table.lc_charge_input_type
+           , staging_table.lc_charge_input_type_base_amount
+           , staging_table.lc_charge_input_type_percent
+           , staging_table.lc_charge_input_type_currency
+           , staging_table.lc_hud_section_number
+           , staging_table.lc_hud_line_number
+           , staging_table.lc_user_defined
+           , staging_table.lc_months_auto_compute
+           , staging_table.lc_months
+           , staging_table.lc_per_diem_amount
+           , staging_table.lc_per_diem_rate
+           , staging_table.lc_days
+           , staging_table.lc_financed
+           , staging_table.lc_financed_auto_compute
+           , staging_table.lc_financed_amount
+           , staging_table.lc_auto_compute
+           , staging_table.lc_charge_source_type
+           , staging_table.lc_obligation_charge_input_type
+           , staging_table.lc_from_date
+           , staging_table.lc_through_date
+           , staging_table.lc_smart_charge_config_warning
+           , staging_table.lc_reduction_amount_warning
+           , staging_table.lc_advance_amount_warning
+           , staging_table.lc_fha_mip_refund_warning
+           , staging_table.lc_aggregate_adjustment_compute_warning
+           , staging_table.lc_advance_obligation_compute_warning
+           , staging_table.lc_escrow_obligation_compute_warning
+           , staging_table.lc_excess_financing_concession_warning
+           , staging_table.lc_amount_exceeds_cap_warning
+           , staging_table.lc_subtract_lenders_title_insurance_amount
+           , staging_table.lc_lender_insurance_exceeds_owner_insurance_warning
+           , staging_table.lc_manual_circumstance_change_type_1
+           , staging_table.lc_manual_circumstance_change_type_2
+           , staging_table.lc_configured_charge_payer_type
+           , staging_table.lc_configured_charge_payee_type
+           , staging_table.lc_configured_paid_by
+           , staging_table.lc_configured_paid_to
+           , staging_table.lc_configured_poc
+           , staging_table.lc_configured_financed
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.loan_charge staging_table
+      LEFT JOIN history_octane.loan_charge history_table
+                ON staging_table.lc_pid = history_table.lc_pid
+                    AND staging_table.lc_version = history_table.lc_version
+      WHERE history_table.lc_pid IS NULL
+      UNION ALL
+      SELECT history_table.lc_pid
+           , history_table.lc_version + 1
+           , history_table.lc_proposal_pid
+           , history_table.lc_obligation_pid
+           , history_table.lc_account_charge_ordinal
+           , history_table.lc_loan_position_type
+           , history_table.lc_charge_type
+           , history_table.lc_name
+           , history_table.lc_charge_payee_type
+           , history_table.lc_paid_to
+           , history_table.lc_poc_applicable
+           , history_table.lc_reduction_amount
+           , history_table.lc_apr
+           , history_table.lc_base_amount
+           , history_table.lc_configured_total_amount
+           , history_table.lc_total_amount
+           , history_table.lc_charge_input_type
+           , history_table.lc_charge_input_type_base_amount
+           , history_table.lc_charge_input_type_percent
+           , history_table.lc_charge_input_type_currency
+           , history_table.lc_hud_section_number
+           , history_table.lc_hud_line_number
+           , history_table.lc_user_defined
+           , history_table.lc_months_auto_compute
+           , history_table.lc_months
+           , history_table.lc_per_diem_amount
+           , history_table.lc_per_diem_rate
+           , history_table.lc_days
+           , history_table.lc_financed
+           , history_table.lc_financed_auto_compute
+           , history_table.lc_financed_amount
+           , history_table.lc_auto_compute
+           , history_table.lc_charge_source_type
+           , history_table.lc_obligation_charge_input_type
+           , history_table.lc_from_date
+           , history_table.lc_through_date
+           , history_table.lc_smart_charge_config_warning
+           , history_table.lc_reduction_amount_warning
+           , history_table.lc_advance_amount_warning
+           , history_table.lc_fha_mip_refund_warning
+           , history_table.lc_aggregate_adjustment_compute_warning
+           , history_table.lc_advance_obligation_compute_warning
+           , history_table.lc_escrow_obligation_compute_warning
+           , history_table.lc_excess_financing_concession_warning
+           , history_table.lc_amount_exceeds_cap_warning
+           , history_table.lc_subtract_lenders_title_insurance_amount
+           , history_table.lc_lender_insurance_exceeds_owner_insurance_warning
+           , history_table.lc_manual_circumstance_change_type_1
+           , history_table.lc_manual_circumstance_change_type_2
+           , history_table.lc_configured_charge_payer_type
+           , history_table.lc_configured_charge_payee_type
+           , history_table.lc_configured_paid_by
+           , history_table.lc_configured_paid_to
+           , history_table.lc_configured_poc
+           , history_table.lc_configured_financed
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.loan_charge history_table
+      LEFT JOIN staging_octane.loan_charge staging_table
+                ON staging_table.lc_pid = history_table.lc_pid
+      WHERE staging_table.lc_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.loan_charge deleted_records
+          WHERE deleted_records.lc_pid = history_table.lc_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

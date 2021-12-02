@@ -1,0 +1,28 @@
+name: qualified_mortgage_thresholds
+primary_key:
+- qmt_pid
+columns:
+  qmt_pid:
+    data_type: BIGINT
+  qmt_version:
+    data_type: INTEGER
+  qmt_effective_date:
+    data_type: DATE
+  qmt_first_total_loan_amount_threshold:
+    data_type: NUMERIC(15,0)
+  qmt_first_points_and_fees_threshold_percent:
+    data_type: NUMERIC(11,9)
+  qmt_second_total_loan_amount_threshold:
+    data_type: NUMERIC(15,0)
+  qmt_second_points_and_fees_threshold_amount:
+    data_type: NUMERIC(15,0)
+  qmt_third_total_loan_amount_threshold:
+    data_type: NUMERIC(15,0)
+  qmt_third_points_and_fees_threshold_percent:
+    data_type: NUMERIC(11,9)
+  qmt_fourth_total_loan_amount_threshold:
+    data_type: NUMERIC(15,0)
+  qmt_fourth_points_and_fees_threshold_amount:
+    data_type: NUMERIC(15,0)
+  qmt_ceiling_points_and_fees_threshold_percent:
+    data_type: NUMERIC(11,9)

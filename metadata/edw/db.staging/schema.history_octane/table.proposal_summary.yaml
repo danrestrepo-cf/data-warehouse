@@ -1,0 +1,1261 @@
+name: proposal_summary
+primary_source_table: staging.staging_octane.proposal_summary
+primary_key:
+- ps_pid
+- ps_version
+foreign_keys:
+  fk_proposal_summary_1:
+    columns:
+    - ps_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: history_octane
+      table: proposal
+  fk_proposal_summary_2:
+    columns:
+    - ps_subject_property_subordinate_2nd_creditor_pid
+    references:
+      columns:
+      - crd_pid
+      schema: history_octane
+      table: creditor
+  fk_proposal_summary_3:
+    columns:
+    - ps_subject_property_subordinate_3rd_creditor_pid
+    references:
+      columns:
+      - crd_pid
+      schema: history_octane
+      table: creditor
+  fk_proposal_summary_4:
+    columns:
+    - ps_investor_pid_main
+    references:
+      columns:
+      - i_pid
+      schema: history_octane
+      table: investor
+  fk_proposal_summary_5:
+    columns:
+    - ps_investor_pid_piggyback
+    references:
+      columns:
+      - i_pid
+      schema: history_octane
+      table: investor
+  fk_proposal_summary_6:
+    columns:
+    - ps_mortgage_credit_certificate_issuer_pid
+    references:
+      columns:
+      - mcci_pid
+      schema: history_octane
+      table: mortgage_credit_certificate_issuer
+  fk_proposal_summary_7:
+    columns:
+    - ps_product_pid_main
+    references:
+      columns:
+      - p_pid
+      schema: history_octane
+      table: product
+  fk_proposal_summary_8:
+    columns:
+    - ps_product_pid_piggyback
+    references:
+      columns:
+      - p_pid
+      schema: history_octane
+      table: product
+  fkt_ps_b1_citizenship_residency_type:
+    columns:
+    - ps_b1_citizenship_residency_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: citizenship_residency_type
+  fkt_ps_b1_gender_type:
+    columns:
+    - ps_b1_gender_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: gender_type
+  fkt_ps_b1_hmda_ethnicity_type:
+    columns:
+    - ps_b1_hmda_ethnicity_2017_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: hmda_ethnicity_2017_type
+  fkt_ps_b1_hmda_race_type:
+    columns:
+    - ps_b1_hmda_race_2017_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: hmda_race_2017_type
+  fkt_ps_b2_citizenship_residency_type:
+    columns:
+    - ps_b2_citizenship_residency_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: citizenship_residency_type
+  fkt_ps_b2_gender_type:
+    columns:
+    - ps_b2_gender_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: gender_type
+  fkt_ps_b2_hmda_ethnicity_type:
+    columns:
+    - ps_b2_hmda_ethnicity_2017_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: hmda_ethnicity_2017_type
+  fkt_ps_b2_hmda_race_type:
+    columns:
+    - ps_b2_hmda_race_2017_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: hmda_race_2017_type
+  fkt_ps_c1_citizenship_residency_type:
+    columns:
+    - ps_c1_citizenship_residency_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: citizenship_residency_type
+  fkt_ps_c1_gender_type:
+    columns:
+    - ps_c1_gender_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: gender_type
+  fkt_ps_c1_hmda_ethnicity_type:
+    columns:
+    - ps_c1_hmda_ethnicity_2017_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: hmda_ethnicity_2017_type
+  fkt_ps_c1_hmda_race_type:
+    columns:
+    - ps_c1_hmda_race_2017_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: hmda_race_2017_type
+  fkt_ps_fha_section_of_act_coarse_type_main:
+    columns:
+    - ps_fha_section_of_act_coarse_type_main
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: section_of_act_coarse_type
+  fkt_ps_fha_section_of_act_coarse_type_piggyback:
+    columns:
+    - ps_fha_section_of_act_coarse_type_piggyback
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: section_of_act_coarse_type
+  fkt_ps_fha_special_program_type_main:
+    columns:
+    - ps_fha_special_program_type_main
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: fha_special_program_type
+  fkt_ps_fha_special_program_type_piggyback:
+    columns:
+    - ps_fha_special_program_type_piggyback
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: fha_special_program_type
+  fkt_ps_fund_source_type_main:
+    columns:
+    - ps_fund_source_type_main
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: fund_source_type
+  fkt_ps_fund_source_type_piggyback:
+    columns:
+    - ps_fund_source_type_piggyback
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: fund_source_type
+  fkt_ps_mortgage_type_main:
+    columns:
+    - ps_mortgage_type_main
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mortgage_type
+  fkt_ps_mortgage_type_piggyback:
+    columns:
+    - ps_mortgage_type_piggyback
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mortgage_type
+  fkt_ps_product_fnm_community_lending_product_type_main:
+    columns:
+    - ps_product_fnm_community_lending_product_type_main
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: fnm_community_lending_product_type
+  fkt_ps_product_fnm_community_lending_product_type_piggyback:
+    columns:
+    - ps_product_fnm_community_lending_product_type_piggyback
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: fnm_community_lending_product_type
+  fkt_ps_product_fre_community_program_type_main:
+    columns:
+    - ps_product_fre_community_program_type_main
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: fre_community_program_type
+  fkt_ps_product_fre_community_program_type_piggyback:
+    columns:
+    - ps_product_fre_community_program_type_piggyback
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: fre_community_program_type
+  fkt_ps_product_special_program_type_main:
+    columns:
+    - ps_product_special_program_type_main
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: product_special_program_type
+  fkt_ps_product_special_program_type_piggyback:
+    columns:
+    - ps_product_special_program_type_piggyback
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: product_special_program_type
+  fkt_ps_property_category_type:
+    columns:
+    - ps_property_category_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: property_category_type
+  fkt_ps_proposal_structure_type:
+    columns:
+    - ps_proposal_structure_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: proposal_structure_type
+  fkt_ps_subject_property_country:
+    columns:
+    - ps_subject_property_country
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: country_type
+columns:
+  ps_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ps_pid
+  ps_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ps_version
+  ps_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ps_proposal_pid
+  ps_subject_property_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_subject_property_city
+  ps_subject_property_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_subject_property_country
+  ps_subject_property_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_subject_property_postal_code
+  ps_subject_property_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_subject_property_state
+  ps_subject_property_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_subject_property_street1
+  ps_subject_property_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_subject_property_street2
+  ps_note_rate_percent_main:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ps_note_rate_percent_main
+  ps_note_rate_percent_piggyback:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ps_note_rate_percent_piggyback
+  ps_initial_note_rate_percent_main:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ps_initial_note_rate_percent_main
+  ps_initial_note_rate_percent_piggyback:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ps_initial_note_rate_percent_piggyback
+  ps_base_loan_amount_main:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.ps_base_loan_amount_main
+  ps_base_loan_amount_piggyback:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.ps_base_loan_amount_piggyback
+  ps_loan_amount_main:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.ps_loan_amount_main
+  ps_loan_amount_piggyback:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.ps_loan_amount_piggyback
+  ps_product_special_program_type_main:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_product_special_program_type_main
+  ps_product_special_program_type_piggyback:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_product_special_program_type_piggyback
+  ps_investor_pid_main:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ps_investor_pid_main
+  ps_investor_pid_piggyback:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ps_investor_pid_piggyback
+  ps_product_fnm_community_lending_product_type_main:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_product_fnm_community_lending_product_type_main
+  ps_product_fnm_community_lending_product_type_piggyback:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_product_fnm_community_lending_product_type_piggyback
+  ps_product_fre_community_program_type_main:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_product_fre_community_program_type_main
+  ps_product_fre_community_program_type_piggyback:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_product_fre_community_program_type_piggyback
+  ps_mortgage_type_main:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_mortgage_type_main
+  ps_mortgage_type_piggyback:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_mortgage_type_piggyback
+  ps_b1_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ps_b1_first_name
+  ps_c1_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ps_c1_first_name
+  ps_b2_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ps_b2_first_name
+  ps_b1_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ps_b1_last_name
+  ps_c1_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ps_c1_last_name
+  ps_b2_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ps_b2_last_name
+  ps_b1_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ps_b1_middle_name
+  ps_c1_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ps_c1_middle_name
+  ps_b2_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ps_b2_middle_name
+  ps_b1_preferred_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ps_b1_preferred_first_name
+  ps_b2_preferred_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ps_b2_preferred_first_name
+  ps_c1_preferred_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ps_c1_preferred_first_name
+  ps_b1_birth_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ps_b1_birth_date
+  ps_c1_birth_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ps_c1_birth_date
+  ps_b1_monthly_income:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_b1_monthly_income
+  ps_c1_monthly_income:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_c1_monthly_income
+  ps_b2_monthly_income:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_b2_monthly_income
+  ps_b1_has_business_income:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ps_b1_has_business_income
+  ps_c1_has_business_income:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ps_c1_has_business_income
+  ps_b2_has_business_income:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ps_b2_has_business_income
+  ps_b1_citizenship_residency_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_b1_citizenship_residency_type
+  ps_c1_citizenship_residency_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_c1_citizenship_residency_type
+  ps_b2_citizenship_residency_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_b2_citizenship_residency_type
+  ps_b1_hmda_ethnicity_2017_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_b1_hmda_ethnicity_2017_type
+  ps_c1_hmda_ethnicity_2017_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_c1_hmda_ethnicity_2017_type
+  ps_b2_hmda_ethnicity_2017_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_b2_hmda_ethnicity_2017_type
+  ps_b1_decision_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ps_b1_decision_credit_score
+  ps_c1_decision_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ps_c1_decision_credit_score
+  ps_b2_decision_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ps_b2_decision_credit_score
+  ps_b1_gender_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_b1_gender_type
+  ps_c1_gender_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_c1_gender_type
+  ps_b2_gender_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_b2_gender_type
+  ps_b1_hmda_race_2017_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_b1_hmda_race_2017_type
+  ps_c1_hmda_race_2017_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_c1_hmda_race_2017_type
+  ps_b2_hmda_race_2017_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_b2_hmda_race_2017_type
+  ps_any_lender_employee_borrower:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ps_any_lender_employee_borrower
+  ps_upfront_mi_percent_main:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ps_upfront_mi_percent_main
+  ps_upfront_mi_percent_piggyback:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ps_upfront_mi_percent_piggyback
+  ps_primary_application_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_primary_application_name
+  ps_investor_loan_id_main:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ps_investor_loan_id_main
+  ps_investor_loan_id_piggyback:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ps_investor_loan_id_piggyback
+  ps_initial_servicer_investor_loan_id_main:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ps_initial_servicer_investor_loan_id_main
+  ps_initial_servicer_investor_loan_id_piggyback:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ps_initial_servicer_investor_loan_id_piggyback
+  ps_current_servicer_investor_loan_id_main:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ps_current_servicer_investor_loan_id_main
+  ps_current_servicer_investor_loan_id_piggyback:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ps_current_servicer_investor_loan_id_piggyback
+  ps_offering_id_main:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ps_offering_id_main
+  ps_offering_id_piggyback:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ps_offering_id_piggyback
+  ps_proposal_structure_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_proposal_structure_type
+  ps_loan_maturity_date_main:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ps_loan_maturity_date_main
+  ps_loan_maturity_date_piggyback:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ps_loan_maturity_date_piggyback
+  ps_ltv_ratio_percent_main:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ps_ltv_ratio_percent_main
+  ps_ltv_ratio_percent_piggyback:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ps_ltv_ratio_percent_piggyback
+  ps_cltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ps_cltv_ratio_percent
+  ps_hcltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ps_hcltv_ratio_percent
+  ps_hcltv_applicable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ps_hcltv_applicable
+  ps_debt_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ps_debt_ratio_percent
+  ps_housing_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ps_housing_ratio_percent
+  ps_property_category_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_property_category_type
+  ps_any_first_time_home_buyer:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ps_any_first_time_home_buyer
+  ps_primary_housing_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_primary_housing_expense_amount
+  ps_non_primary_housing_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_non_primary_housing_expense_amount
+  ps_income_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_income_monthly_total_amount
+  ps_asset_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_asset_total_amount
+  ps_liquid_asset_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_liquid_asset_total_amount
+  ps_liability_unpaid_balance_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_liability_unpaid_balance_total_amount
+  ps_liability_monthly_payment_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_liability_monthly_payment_total_amount
+  ps_monthly_pitia_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_monthly_pitia_amount
+  ps_cash_from_borrower_amount_signed:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_cash_from_borrower_amount_signed
+  ps_proposed_monthly_housing_and_debt_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_proposed_monthly_housing_and_debt_amount
+  ps_funding_date_main:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ps_funding_date_main
+  ps_funding_date_piggyback:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ps_funding_date_piggyback
+  ps_interim_funder_company_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_interim_funder_company_name
+  ps_interim_funder_mers_org_id:
+    data_type: VARCHAR(7)
+    source:
+      field: primary_source_table.columns.ps_interim_funder_mers_org_id
+  ps_funding_scheduled_release_date_main:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ps_funding_scheduled_release_date_main
+  ps_funding_scheduled_release_date_piggyback:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ps_funding_scheduled_release_date_piggyback
+  ps_uuts_aus_recommendation_description:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ps_uuts_aus_recommendation_description
+  ps_interest_rate_fee_amount_signed:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_interest_rate_fee_amount_signed
+  ps_interest_rate_fee_amount_signed_main:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_interest_rate_fee_amount_signed_main
+  ps_interest_rate_fee_amount_signed_piggyback:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_interest_rate_fee_amount_signed_piggyback
+  ps_origination_fees_amount_signed:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_origination_fees_amount_signed
+  ps_origination_fees_amount_signed_main:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_origination_fees_amount_signed_main
+  ps_origination_fees_amount_signed_piggyback:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_origination_fees_amount_signed_piggyback
+  ps_any_escrow_waived:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ps_any_escrow_waived
+  ps_initial_rate_adjustment_date_main:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ps_initial_rate_adjustment_date_main
+  ps_initial_rate_adjustment_date_piggyback:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ps_initial_rate_adjustment_date_piggyback
+  ps_tolerance_cure_amount_signed:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_tolerance_cure_amount_signed
+  ps_tolerance_cure_amount_signed_main:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_tolerance_cure_amount_signed_main
+  ps_tolerance_cure_amount_signed_piggyback:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_tolerance_cure_amount_signed_piggyback
+  ps_subject_property_existing_subordinate_2nd:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ps_subject_property_existing_subordinate_2nd
+  ps_subject_property_subordinate_2nd_creditor_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ps_subject_property_subordinate_2nd_creditor_pid
+  ps_subject_property_existing_subordinate_3rd:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ps_subject_property_existing_subordinate_3rd
+  ps_subject_property_subordinate_3rd_creditor_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ps_subject_property_subordinate_3rd_creditor_pid
+  ps_total_monthly_solar_lease_payments_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_total_monthly_solar_lease_payments_amount
+  ps_total_debt_payoff_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_total_debt_payoff_amount
+  ps_total_new_subordinate_financing_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_total_new_subordinate_financing_amount
+  ps_total_grant_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_total_grant_amount
+  ps_any_third_party_community_second:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ps_any_third_party_community_second
+  ps_any_grant_program:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ps_any_grant_program
+  ps_initial_loan_estimate_loan_amount_main:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.ps_initial_loan_estimate_loan_amount_main
+  ps_initial_loan_estimate_loan_amount_piggyback:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.ps_initial_loan_estimate_loan_amount_piggyback
+  ps_any_mortgage_credit_certificate:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ps_any_mortgage_credit_certificate
+  ps_debt_ratio_excluding_mi_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ps_debt_ratio_excluding_mi_percent
+  ps_fund_source_type_main:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_fund_source_type_main
+  ps_fund_source_type_piggyback:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_fund_source_type_piggyback
+  ps_mortgage_credit_certificate_issuer_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ps_mortgage_credit_certificate_issuer_pid
+  ps_subject_property_new_subordinate_2nd:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ps_subject_property_new_subordinate_2nd
+  ps_subject_property_new_subordinate_3rd:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ps_subject_property_new_subordinate_3rd
+  ps_any_borrower_self_employed:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ps_any_borrower_self_employed
+  ps_fha_section_of_act_coarse_type_main:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_fha_section_of_act_coarse_type_main
+  ps_fha_section_of_act_coarse_type_piggyback:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_fha_section_of_act_coarse_type_piggyback
+  ps_fha_special_program_type_main:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_fha_special_program_type_main
+  ps_fha_special_program_type_piggyback:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ps_fha_special_program_type_piggyback
+  ps_product_pid_main:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ps_product_pid_main
+  ps_product_pid_piggyback:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ps_product_pid_piggyback
+  ps_net_origination_charge_main:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_net_origination_charge_main
+  ps_net_origination_charge_piggyback:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_net_origination_charge_piggyback
+  ps_household_income_guideline_percent:
+    data_type: NUMERIC(22,9)
+    source:
+      field: primary_source_table.columns.ps_household_income_guideline_percent
+  ps_applicant_count:
+    data_type: SMALLINT
+    source:
+      field: primary_source_table.columns.ps_applicant_count
+  ps_early_wire_total_charge_amount_main:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_early_wire_total_charge_amount_main
+  ps_early_wire_total_charge_amount_piggyback:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ps_early_wire_total_charge_amount_piggyback
+  ps_funding_scheduled_release_date_auto_compute_main:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ps_funding_scheduled_release_date_auto_compute_main
+  ps_funding_scheduled_release_date_auto_compute_piggyback:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ps_funding_scheduled_release_date_auto_compute_piggyback
+  ps_any_hoa_certification_fee:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ps_any_hoa_certification_fee
+  ps_effective_agency_case_id_main:
+    data_type: VARCHAR(64)
+    source:
+      field: primary_source_table.columns.ps_effective_agency_case_id_main
+  ps_effective_agency_case_id_piggyback:
+    data_type: VARCHAR(64)
+    source:
+      field: primary_source_table.columns.ps_effective_agency_case_id_piggyback
+  ps_effective_agency_case_id_assigned_date_main:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ps_effective_agency_case_id_assigned_date_main
+  ps_effective_agency_case_id_assigned_date_piggyback:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ps_effective_agency_case_id_assigned_date_piggyback
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100329:
+    input_type: table
+    output_type: insert
+    json_output_field: ps_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.proposal_summary
+      SELECT staging_table.ps_pid
+           , staging_table.ps_version
+           , staging_table.ps_proposal_pid
+           , staging_table.ps_subject_property_city
+           , staging_table.ps_subject_property_country
+           , staging_table.ps_subject_property_postal_code
+           , staging_table.ps_subject_property_state
+           , staging_table.ps_subject_property_street1
+           , staging_table.ps_subject_property_street2
+           , staging_table.ps_note_rate_percent_main
+           , staging_table.ps_note_rate_percent_piggyback
+           , staging_table.ps_initial_note_rate_percent_main
+           , staging_table.ps_initial_note_rate_percent_piggyback
+           , staging_table.ps_base_loan_amount_main
+           , staging_table.ps_base_loan_amount_piggyback
+           , staging_table.ps_loan_amount_main
+           , staging_table.ps_loan_amount_piggyback
+           , staging_table.ps_product_special_program_type_main
+           , staging_table.ps_product_special_program_type_piggyback
+           , staging_table.ps_investor_pid_main
+           , staging_table.ps_investor_pid_piggyback
+           , staging_table.ps_product_fnm_community_lending_product_type_main
+           , staging_table.ps_product_fnm_community_lending_product_type_piggyback
+           , staging_table.ps_product_fre_community_program_type_main
+           , staging_table.ps_product_fre_community_program_type_piggyback
+           , staging_table.ps_mortgage_type_main
+           , staging_table.ps_mortgage_type_piggyback
+           , staging_table.ps_b1_first_name
+           , staging_table.ps_c1_first_name
+           , staging_table.ps_b2_first_name
+           , staging_table.ps_b1_last_name
+           , staging_table.ps_c1_last_name
+           , staging_table.ps_b2_last_name
+           , staging_table.ps_b1_middle_name
+           , staging_table.ps_c1_middle_name
+           , staging_table.ps_b2_middle_name
+           , staging_table.ps_b1_preferred_first_name
+           , staging_table.ps_b2_preferred_first_name
+           , staging_table.ps_c1_preferred_first_name
+           , staging_table.ps_b1_birth_date
+           , staging_table.ps_c1_birth_date
+           , staging_table.ps_b1_monthly_income
+           , staging_table.ps_c1_monthly_income
+           , staging_table.ps_b2_monthly_income
+           , staging_table.ps_b1_has_business_income
+           , staging_table.ps_c1_has_business_income
+           , staging_table.ps_b2_has_business_income
+           , staging_table.ps_b1_citizenship_residency_type
+           , staging_table.ps_c1_citizenship_residency_type
+           , staging_table.ps_b2_citizenship_residency_type
+           , staging_table.ps_b1_hmda_ethnicity_2017_type
+           , staging_table.ps_c1_hmda_ethnicity_2017_type
+           , staging_table.ps_b2_hmda_ethnicity_2017_type
+           , staging_table.ps_b1_decision_credit_score
+           , staging_table.ps_c1_decision_credit_score
+           , staging_table.ps_b2_decision_credit_score
+           , staging_table.ps_b1_gender_type
+           , staging_table.ps_c1_gender_type
+           , staging_table.ps_b2_gender_type
+           , staging_table.ps_b1_hmda_race_2017_type
+           , staging_table.ps_c1_hmda_race_2017_type
+           , staging_table.ps_b2_hmda_race_2017_type
+           , staging_table.ps_any_lender_employee_borrower
+           , staging_table.ps_upfront_mi_percent_main
+           , staging_table.ps_upfront_mi_percent_piggyback
+           , staging_table.ps_primary_application_name
+           , staging_table.ps_investor_loan_id_main
+           , staging_table.ps_investor_loan_id_piggyback
+           , staging_table.ps_initial_servicer_investor_loan_id_main
+           , staging_table.ps_initial_servicer_investor_loan_id_piggyback
+           , staging_table.ps_current_servicer_investor_loan_id_main
+           , staging_table.ps_current_servicer_investor_loan_id_piggyback
+           , staging_table.ps_offering_id_main
+           , staging_table.ps_offering_id_piggyback
+           , staging_table.ps_proposal_structure_type
+           , staging_table.ps_loan_maturity_date_main
+           , staging_table.ps_loan_maturity_date_piggyback
+           , staging_table.ps_ltv_ratio_percent_main
+           , staging_table.ps_ltv_ratio_percent_piggyback
+           , staging_table.ps_cltv_ratio_percent
+           , staging_table.ps_hcltv_ratio_percent
+           , staging_table.ps_hcltv_applicable
+           , staging_table.ps_debt_ratio_percent
+           , staging_table.ps_housing_ratio_percent
+           , staging_table.ps_property_category_type
+           , staging_table.ps_any_first_time_home_buyer
+           , staging_table.ps_primary_housing_expense_amount
+           , staging_table.ps_non_primary_housing_expense_amount
+           , staging_table.ps_income_monthly_total_amount
+           , staging_table.ps_asset_total_amount
+           , staging_table.ps_liquid_asset_total_amount
+           , staging_table.ps_liability_unpaid_balance_total_amount
+           , staging_table.ps_liability_monthly_payment_total_amount
+           , staging_table.ps_monthly_pitia_amount
+           , staging_table.ps_cash_from_borrower_amount_signed
+           , staging_table.ps_proposed_monthly_housing_and_debt_amount
+           , staging_table.ps_funding_date_main
+           , staging_table.ps_funding_date_piggyback
+           , staging_table.ps_interim_funder_company_name
+           , staging_table.ps_interim_funder_mers_org_id
+           , staging_table.ps_funding_scheduled_release_date_main
+           , staging_table.ps_funding_scheduled_release_date_piggyback
+           , staging_table.ps_uuts_aus_recommendation_description
+           , staging_table.ps_interest_rate_fee_amount_signed
+           , staging_table.ps_interest_rate_fee_amount_signed_main
+           , staging_table.ps_interest_rate_fee_amount_signed_piggyback
+           , staging_table.ps_origination_fees_amount_signed
+           , staging_table.ps_origination_fees_amount_signed_main
+           , staging_table.ps_origination_fees_amount_signed_piggyback
+           , staging_table.ps_any_escrow_waived
+           , staging_table.ps_initial_rate_adjustment_date_main
+           , staging_table.ps_initial_rate_adjustment_date_piggyback
+           , staging_table.ps_tolerance_cure_amount_signed
+           , staging_table.ps_tolerance_cure_amount_signed_main
+           , staging_table.ps_tolerance_cure_amount_signed_piggyback
+           , staging_table.ps_subject_property_existing_subordinate_2nd
+           , staging_table.ps_subject_property_subordinate_2nd_creditor_pid
+           , staging_table.ps_subject_property_existing_subordinate_3rd
+           , staging_table.ps_subject_property_subordinate_3rd_creditor_pid
+           , staging_table.ps_total_monthly_solar_lease_payments_amount
+           , staging_table.ps_total_debt_payoff_amount
+           , staging_table.ps_total_new_subordinate_financing_amount
+           , staging_table.ps_total_grant_amount
+           , staging_table.ps_any_third_party_community_second
+           , staging_table.ps_any_grant_program
+           , staging_table.ps_initial_loan_estimate_loan_amount_main
+           , staging_table.ps_initial_loan_estimate_loan_amount_piggyback
+           , staging_table.ps_any_mortgage_credit_certificate
+           , staging_table.ps_debt_ratio_excluding_mi_percent
+           , staging_table.ps_fund_source_type_main
+           , staging_table.ps_fund_source_type_piggyback
+           , staging_table.ps_mortgage_credit_certificate_issuer_pid
+           , staging_table.ps_subject_property_new_subordinate_2nd
+           , staging_table.ps_subject_property_new_subordinate_3rd
+           , staging_table.ps_any_borrower_self_employed
+           , staging_table.ps_fha_section_of_act_coarse_type_main
+           , staging_table.ps_fha_section_of_act_coarse_type_piggyback
+           , staging_table.ps_fha_special_program_type_main
+           , staging_table.ps_fha_special_program_type_piggyback
+           , staging_table.ps_product_pid_main
+           , staging_table.ps_product_pid_piggyback
+           , staging_table.ps_net_origination_charge_main
+           , staging_table.ps_net_origination_charge_piggyback
+           , staging_table.ps_household_income_guideline_percent
+           , staging_table.ps_applicant_count
+           , staging_table.ps_early_wire_total_charge_amount_main
+           , staging_table.ps_early_wire_total_charge_amount_piggyback
+           , staging_table.ps_funding_scheduled_release_date_auto_compute_main
+           , staging_table.ps_funding_scheduled_release_date_auto_compute_piggyback
+           , staging_table.ps_any_hoa_certification_fee
+           , staging_table.ps_effective_agency_case_id_main
+           , staging_table.ps_effective_agency_case_id_piggyback
+           , staging_table.ps_effective_agency_case_id_assigned_date_main
+           , staging_table.ps_effective_agency_case_id_assigned_date_piggyback
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.proposal_summary staging_table
+      LEFT JOIN history_octane.proposal_summary history_table
+                ON staging_table.ps_pid = history_table.ps_pid
+                    AND staging_table.ps_version = history_table.ps_version
+      WHERE history_table.ps_pid IS NULL
+      UNION ALL
+      SELECT history_table.ps_pid
+           , history_table.ps_version + 1
+           , history_table.ps_proposal_pid
+           , history_table.ps_subject_property_city
+           , history_table.ps_subject_property_country
+           , history_table.ps_subject_property_postal_code
+           , history_table.ps_subject_property_state
+           , history_table.ps_subject_property_street1
+           , history_table.ps_subject_property_street2
+           , history_table.ps_note_rate_percent_main
+           , history_table.ps_note_rate_percent_piggyback
+           , history_table.ps_initial_note_rate_percent_main
+           , history_table.ps_initial_note_rate_percent_piggyback
+           , history_table.ps_base_loan_amount_main
+           , history_table.ps_base_loan_amount_piggyback
+           , history_table.ps_loan_amount_main
+           , history_table.ps_loan_amount_piggyback
+           , history_table.ps_product_special_program_type_main
+           , history_table.ps_product_special_program_type_piggyback
+           , history_table.ps_investor_pid_main
+           , history_table.ps_investor_pid_piggyback
+           , history_table.ps_product_fnm_community_lending_product_type_main
+           , history_table.ps_product_fnm_community_lending_product_type_piggyback
+           , history_table.ps_product_fre_community_program_type_main
+           , history_table.ps_product_fre_community_program_type_piggyback
+           , history_table.ps_mortgage_type_main
+           , history_table.ps_mortgage_type_piggyback
+           , history_table.ps_b1_first_name
+           , history_table.ps_c1_first_name
+           , history_table.ps_b2_first_name
+           , history_table.ps_b1_last_name
+           , history_table.ps_c1_last_name
+           , history_table.ps_b2_last_name
+           , history_table.ps_b1_middle_name
+           , history_table.ps_c1_middle_name
+           , history_table.ps_b2_middle_name
+           , history_table.ps_b1_preferred_first_name
+           , history_table.ps_b2_preferred_first_name
+           , history_table.ps_c1_preferred_first_name
+           , history_table.ps_b1_birth_date
+           , history_table.ps_c1_birth_date
+           , history_table.ps_b1_monthly_income
+           , history_table.ps_c1_monthly_income
+           , history_table.ps_b2_monthly_income
+           , history_table.ps_b1_has_business_income
+           , history_table.ps_c1_has_business_income
+           , history_table.ps_b2_has_business_income
+           , history_table.ps_b1_citizenship_residency_type
+           , history_table.ps_c1_citizenship_residency_type
+           , history_table.ps_b2_citizenship_residency_type
+           , history_table.ps_b1_hmda_ethnicity_2017_type
+           , history_table.ps_c1_hmda_ethnicity_2017_type
+           , history_table.ps_b2_hmda_ethnicity_2017_type
+           , history_table.ps_b1_decision_credit_score
+           , history_table.ps_c1_decision_credit_score
+           , history_table.ps_b2_decision_credit_score
+           , history_table.ps_b1_gender_type
+           , history_table.ps_c1_gender_type
+           , history_table.ps_b2_gender_type
+           , history_table.ps_b1_hmda_race_2017_type
+           , history_table.ps_c1_hmda_race_2017_type
+           , history_table.ps_b2_hmda_race_2017_type
+           , history_table.ps_any_lender_employee_borrower
+           , history_table.ps_upfront_mi_percent_main
+           , history_table.ps_upfront_mi_percent_piggyback
+           , history_table.ps_primary_application_name
+           , history_table.ps_investor_loan_id_main
+           , history_table.ps_investor_loan_id_piggyback
+           , history_table.ps_initial_servicer_investor_loan_id_main
+           , history_table.ps_initial_servicer_investor_loan_id_piggyback
+           , history_table.ps_current_servicer_investor_loan_id_main
+           , history_table.ps_current_servicer_investor_loan_id_piggyback
+           , history_table.ps_offering_id_main
+           , history_table.ps_offering_id_piggyback
+           , history_table.ps_proposal_structure_type
+           , history_table.ps_loan_maturity_date_main
+           , history_table.ps_loan_maturity_date_piggyback
+           , history_table.ps_ltv_ratio_percent_main
+           , history_table.ps_ltv_ratio_percent_piggyback
+           , history_table.ps_cltv_ratio_percent
+           , history_table.ps_hcltv_ratio_percent
+           , history_table.ps_hcltv_applicable
+           , history_table.ps_debt_ratio_percent
+           , history_table.ps_housing_ratio_percent
+           , history_table.ps_property_category_type
+           , history_table.ps_any_first_time_home_buyer
+           , history_table.ps_primary_housing_expense_amount
+           , history_table.ps_non_primary_housing_expense_amount
+           , history_table.ps_income_monthly_total_amount
+           , history_table.ps_asset_total_amount
+           , history_table.ps_liquid_asset_total_amount
+           , history_table.ps_liability_unpaid_balance_total_amount
+           , history_table.ps_liability_monthly_payment_total_amount
+           , history_table.ps_monthly_pitia_amount
+           , history_table.ps_cash_from_borrower_amount_signed
+           , history_table.ps_proposed_monthly_housing_and_debt_amount
+           , history_table.ps_funding_date_main
+           , history_table.ps_funding_date_piggyback
+           , history_table.ps_interim_funder_company_name
+           , history_table.ps_interim_funder_mers_org_id
+           , history_table.ps_funding_scheduled_release_date_main
+           , history_table.ps_funding_scheduled_release_date_piggyback
+           , history_table.ps_uuts_aus_recommendation_description
+           , history_table.ps_interest_rate_fee_amount_signed
+           , history_table.ps_interest_rate_fee_amount_signed_main
+           , history_table.ps_interest_rate_fee_amount_signed_piggyback
+           , history_table.ps_origination_fees_amount_signed
+           , history_table.ps_origination_fees_amount_signed_main
+           , history_table.ps_origination_fees_amount_signed_piggyback
+           , history_table.ps_any_escrow_waived
+           , history_table.ps_initial_rate_adjustment_date_main
+           , history_table.ps_initial_rate_adjustment_date_piggyback
+           , history_table.ps_tolerance_cure_amount_signed
+           , history_table.ps_tolerance_cure_amount_signed_main
+           , history_table.ps_tolerance_cure_amount_signed_piggyback
+           , history_table.ps_subject_property_existing_subordinate_2nd
+           , history_table.ps_subject_property_subordinate_2nd_creditor_pid
+           , history_table.ps_subject_property_existing_subordinate_3rd
+           , history_table.ps_subject_property_subordinate_3rd_creditor_pid
+           , history_table.ps_total_monthly_solar_lease_payments_amount
+           , history_table.ps_total_debt_payoff_amount
+           , history_table.ps_total_new_subordinate_financing_amount
+           , history_table.ps_total_grant_amount
+           , history_table.ps_any_third_party_community_second
+           , history_table.ps_any_grant_program
+           , history_table.ps_initial_loan_estimate_loan_amount_main
+           , history_table.ps_initial_loan_estimate_loan_amount_piggyback
+           , history_table.ps_any_mortgage_credit_certificate
+           , history_table.ps_debt_ratio_excluding_mi_percent
+           , history_table.ps_fund_source_type_main
+           , history_table.ps_fund_source_type_piggyback
+           , history_table.ps_mortgage_credit_certificate_issuer_pid
+           , history_table.ps_subject_property_new_subordinate_2nd
+           , history_table.ps_subject_property_new_subordinate_3rd
+           , history_table.ps_any_borrower_self_employed
+           , history_table.ps_fha_section_of_act_coarse_type_main
+           , history_table.ps_fha_section_of_act_coarse_type_piggyback
+           , history_table.ps_fha_special_program_type_main
+           , history_table.ps_fha_special_program_type_piggyback
+           , history_table.ps_product_pid_main
+           , history_table.ps_product_pid_piggyback
+           , history_table.ps_net_origination_charge_main
+           , history_table.ps_net_origination_charge_piggyback
+           , history_table.ps_household_income_guideline_percent
+           , history_table.ps_applicant_count
+           , history_table.ps_early_wire_total_charge_amount_main
+           , history_table.ps_early_wire_total_charge_amount_piggyback
+           , history_table.ps_funding_scheduled_release_date_auto_compute_main
+           , history_table.ps_funding_scheduled_release_date_auto_compute_piggyback
+           , history_table.ps_any_hoa_certification_fee
+           , history_table.ps_effective_agency_case_id_main
+           , history_table.ps_effective_agency_case_id_piggyback
+           , history_table.ps_effective_agency_case_id_assigned_date_main
+           , history_table.ps_effective_agency_case_id_assigned_date_piggyback
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.proposal_summary history_table
+      LEFT JOIN staging_octane.proposal_summary staging_table
+                ON staging_table.ps_pid = history_table.ps_pid
+      WHERE staging_table.ps_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.proposal_summary deleted_records
+          WHERE deleted_records.ps_pid = history_table.ps_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

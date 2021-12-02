@@ -1,0 +1,179 @@
+name: account_grant_program
+primary_source_table: staging.staging_octane.account_grant_program
+primary_key:
+- agp_pid
+- agp_version
+foreign_keys:
+  fk_account_grant_program_1:
+    columns:
+    - agp_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+  fkt_agp_program_funds_type:
+    columns:
+    - agp_program_funds_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: gift_funds_type
+  fkt_agp_wire_action_type:
+    columns:
+    - agp_wire_action_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: charge_wire_action_type
+columns:
+  agp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.agp_pid
+  agp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.agp_version
+  agp_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.agp_account_pid
+  agp_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.agp_from_date
+  agp_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.agp_through_date
+  agp_program_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.agp_program_id
+  agp_program_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.agp_program_name
+  agp_program_funds_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.agp_program_funds_type
+  agp_donor_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.agp_donor_name
+  agp_donor_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.agp_donor_phone
+  agp_address_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.agp_address_street1
+  agp_address_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.agp_address_street2
+  agp_address_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.agp_address_city
+  agp_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.agp_address_state
+  agp_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.agp_address_postal_code
+  agp_address_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.agp_address_country
+  agp_ein:
+    data_type: VARCHAR(10)
+    source:
+      field: primary_source_table.columns.agp_ein
+  agp_wire_action_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.agp_wire_action_type
+  agp_notes:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.agp_notes
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100028:
+    input_type: table
+    output_type: insert
+    json_output_field: agp_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.account_grant_program
+      SELECT staging_table.agp_pid
+           , staging_table.agp_version
+           , staging_table.agp_account_pid
+           , staging_table.agp_from_date
+           , staging_table.agp_through_date
+           , staging_table.agp_program_id
+           , staging_table.agp_program_name
+           , staging_table.agp_program_funds_type
+           , staging_table.agp_donor_name
+           , staging_table.agp_donor_phone
+           , staging_table.agp_address_street1
+           , staging_table.agp_address_street2
+           , staging_table.agp_address_city
+           , staging_table.agp_address_state
+           , staging_table.agp_address_postal_code
+           , staging_table.agp_address_country
+           , staging_table.agp_ein
+           , staging_table.agp_wire_action_type
+           , staging_table.agp_notes
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.account_grant_program staging_table
+      LEFT JOIN history_octane.account_grant_program history_table
+                ON staging_table.agp_pid = history_table.agp_pid
+                    AND staging_table.agp_version = history_table.agp_version
+      WHERE history_table.agp_pid IS NULL
+      UNION ALL
+      SELECT history_table.agp_pid
+           , history_table.agp_version + 1
+           , history_table.agp_account_pid
+           , history_table.agp_from_date
+           , history_table.agp_through_date
+           , history_table.agp_program_id
+           , history_table.agp_program_name
+           , history_table.agp_program_funds_type
+           , history_table.agp_donor_name
+           , history_table.agp_donor_phone
+           , history_table.agp_address_street1
+           , history_table.agp_address_street2
+           , history_table.agp_address_city
+           , history_table.agp_address_state
+           , history_table.agp_address_postal_code
+           , history_table.agp_address_country
+           , history_table.agp_ein
+           , history_table.agp_wire_action_type
+           , history_table.agp_notes
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.account_grant_program history_table
+      LEFT JOIN staging_octane.account_grant_program staging_table
+                ON staging_table.agp_pid = history_table.agp_pid
+      WHERE staging_table.agp_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.account_grant_program deleted_records
+          WHERE deleted_records.agp_pid = history_table.agp_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

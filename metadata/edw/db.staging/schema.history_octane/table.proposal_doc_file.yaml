@@ -1,0 +1,115 @@
+name: proposal_doc_file
+primary_source_table: staging.staging_octane.proposal_doc_file
+primary_key:
+- prpdf_pid
+- prpdf_version
+foreign_keys:
+  fk_proposal_doc_file_1:
+    columns:
+    - prpdf_proposal_doc_pid
+    references:
+      columns:
+      - prpd_pid
+      schema: history_octane
+      table: proposal_doc
+  fk_proposal_doc_file_2:
+    columns:
+    - prpdf_deal_file_pid
+    references:
+      columns:
+      - df_pid
+      schema: history_octane
+      table: deal_file
+  fkt_prpdf_included_file:
+    columns:
+    - prpdf_included_file
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_prpdf_proposal_doc_file_type:
+    columns:
+    - prpdf_proposal_doc_file_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: proposal_doc_file_type
+columns:
+  prpdf_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpdf_pid
+  prpdf_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.prpdf_version
+  prpdf_proposal_doc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpdf_proposal_doc_pid
+  prpdf_deal_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpdf_deal_file_pid
+  prpdf_proposal_doc_file_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prpdf_proposal_doc_file_type
+  prpdf_included_file:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prpdf_included_file
+  prpdf_key_doc:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prpdf_key_doc
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100343:
+    input_type: table
+    output_type: insert
+    json_output_field: prpdf_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.proposal_doc_file
+      SELECT staging_table.prpdf_pid
+           , staging_table.prpdf_version
+           , staging_table.prpdf_proposal_doc_pid
+           , staging_table.prpdf_deal_file_pid
+           , staging_table.prpdf_proposal_doc_file_type
+           , staging_table.prpdf_included_file
+           , staging_table.prpdf_key_doc
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.proposal_doc_file staging_table
+      LEFT JOIN history_octane.proposal_doc_file history_table
+                ON staging_table.prpdf_pid = history_table.prpdf_pid
+                    AND staging_table.prpdf_version = history_table.prpdf_version
+      WHERE history_table.prpdf_pid IS NULL
+      UNION ALL
+      SELECT history_table.prpdf_pid
+           , history_table.prpdf_version + 1
+           , history_table.prpdf_proposal_doc_pid
+           , history_table.prpdf_deal_file_pid
+           , history_table.prpdf_proposal_doc_file_type
+           , history_table.prpdf_included_file
+           , history_table.prpdf_key_doc
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.proposal_doc_file history_table
+      LEFT JOIN staging_octane.proposal_doc_file staging_table
+                ON staging_table.prpdf_pid = history_table.prpdf_pid
+      WHERE staging_table.prpdf_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.proposal_doc_file deleted_records
+          WHERE deleted_records.prpdf_pid = history_table.prpdf_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

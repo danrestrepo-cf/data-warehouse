@@ -1,0 +1,23 @@
+name: new_lock_only_add_on
+primary_key:
+- nlo_pid
+foreign_keys:
+  fk_new_lock_only_add_on_1:
+    columns:
+    - nlo_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+columns:
+  nlo_pid:
+    data_type: BIGINT
+  nlo_version:
+    data_type: INTEGER
+  nlo_account_pid:
+    data_type: BIGINT
+  nlo_add_on_prefix:
+    data_type: VARCHAR(32)
+  nlo_add_on_description:
+    data_type: VARCHAR(256)

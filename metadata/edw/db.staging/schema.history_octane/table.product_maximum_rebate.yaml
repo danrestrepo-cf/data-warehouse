@@ -1,0 +1,79 @@
+name: product_maximum_rebate
+primary_source_table: staging.staging_octane.product_maximum_rebate
+primary_key:
+- pmr_pid
+- pmr_version
+foreign_keys:
+  fk_product_maximum_rebate_1:
+    columns:
+    - pmr_product_pid
+    references:
+      columns:
+      - p_pid
+      schema: history_octane
+      table: product
+columns:
+  pmr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pmr_pid
+  pmr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pmr_version
+  pmr_product_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pmr_product_pid
+  pmr_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.pmr_from_date
+  pmr_maximum_rebate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pmr_maximum_rebate_percent
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100282:
+    input_type: table
+    output_type: insert
+    json_output_field: pmr_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.product_maximum_rebate
+      SELECT staging_table.pmr_pid
+           , staging_table.pmr_version
+           , staging_table.pmr_product_pid
+           , staging_table.pmr_from_date
+           , staging_table.pmr_maximum_rebate_percent
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.product_maximum_rebate staging_table
+      LEFT JOIN history_octane.product_maximum_rebate history_table
+                ON staging_table.pmr_pid = history_table.pmr_pid
+                    AND staging_table.pmr_version = history_table.pmr_version
+      WHERE history_table.pmr_pid IS NULL
+      UNION ALL
+      SELECT history_table.pmr_pid
+           , history_table.pmr_version + 1
+           , history_table.pmr_product_pid
+           , history_table.pmr_from_date
+           , history_table.pmr_maximum_rebate_percent
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.product_maximum_rebate history_table
+      LEFT JOIN staging_octane.product_maximum_rebate staging_table
+                ON staging_table.pmr_pid = history_table.pmr_pid
+      WHERE staging_table.pmr_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.product_maximum_rebate deleted_records
+          WHERE deleted_records.pmr_pid = history_table.pmr_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

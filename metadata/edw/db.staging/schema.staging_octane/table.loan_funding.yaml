@@ -1,0 +1,105 @@
+name: loan_funding
+primary_key:
+- lf_pid
+foreign_keys:
+  fk_loan_funding_1:
+    columns:
+    - lf_loan_pid
+    references:
+      columns:
+      - l_pid
+      schema: staging_octane
+      table: loan
+  fk_loan_funding_2:
+    columns:
+    - lf_interim_funder_pid
+    references:
+      columns:
+      - if_pid
+      schema: staging_octane
+      table: interim_funder
+  fk_loan_funding_3:
+    columns:
+    - lf_proposal_snapshot_pid
+    references:
+      columns:
+      - prp_pid
+      schema: staging_octane
+      table: proposal
+  fkt_lf_collateral_courier_type:
+    columns:
+    - lf_collateral_courier_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: courier_type
+  fkt_lf_funding_status_type:
+    columns:
+    - lf_funding_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: funding_status_type
+columns:
+  lf_pid:
+    data_type: BIGINT
+  lf_version:
+    data_type: INTEGER
+  lf_loan_pid:
+    data_type: BIGINT
+  lf_interim_funder_pid:
+    data_type: BIGINT
+  lf_proposal_snapshot_pid:
+    data_type: BIGINT
+  lf_interim_funder_loan_id:
+    data_type: VARCHAR(32)
+  lf_funding_status_type:
+    data_type: VARCHAR(128)
+  lf_requested_date:
+    data_type: DATE
+  lf_confirmed_release_datetime:
+    data_type: TIMESTAMP
+  lf_wire_amount:
+    data_type: NUMERIC(15,2)
+  lf_interim_funder_fee_amount:
+    data_type: NUMERIC(15,2)
+  lf_release_wire_federal_reference_number:
+    data_type: VARCHAR(32)
+  lf_disbursement_date:
+    data_type: DATE
+  lf_return_request_date:
+    data_type: DATE
+  lf_return_confirmed_date:
+    data_type: DATE
+  lf_funds_authorization_code:
+    data_type: VARCHAR(32)
+  lf_scheduled_release_date:
+    data_type: DATE
+  lf_funds_authorized_datetime:
+    data_type: TIMESTAMP
+  lf_funding_date:
+    data_type: DATE
+  lf_collateral_sent_date:
+    data_type: DATE
+  lf_collateral_tracking_number:
+    data_type: VARCHAR(32)
+  lf_collateral_courier_type:
+    data_type: VARCHAR(128)
+  lf_post_wire_adjustment_amount:
+    data_type: NUMERIC(15,2)
+  lf_net_wire_amount:
+    data_type: NUMERIC(15,2)
+  lf_early_wire_charge_day_count:
+    data_type: INTEGER
+  lf_early_wire_daily_charge_amount:
+    data_type: NUMERIC(15,2)
+  lf_early_wire_total_charge_amount:
+    data_type: NUMERIC(15,2)
+  lf_scheduled_release_date_auto_compute:
+    data_type: BOOLEAN
+  lf_early_wire_request:
+    data_type: BOOLEAN
+  lf_synthetic_unique_active:
+    data_type: BOOLEAN

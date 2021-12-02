@@ -86,10 +86,10 @@
                     }
                 },
                 {
-                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-300001",
-                    "StartAt": "SP-300001_message",
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-300001-insert-update",
+                    "StartAt": "SP-300001-insert-update_message",
                     "States": {
-                        "SP-300001_message": {
+                        "SP-300001-insert-update_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
@@ -99,7 +99,7 @@
                                 "MessageAttributes": {
                                     "ProcessId": {
                                         "DataType": "String",
-                                        "StringValue": "SP-300001"
+                                        "StringValue": "SP-300001-insert-update"
                                     }
                                 },
                                 "MessageBody.$": "States.JsonToString($)"

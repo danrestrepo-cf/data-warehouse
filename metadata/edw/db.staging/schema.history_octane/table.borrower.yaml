@@ -1,0 +1,1427 @@
+name: borrower
+primary_source_table: staging.staging_octane.borrower
+primary_key:
+- b_pid
+- b_version
+foreign_keys:
+  fk_borrower_1:
+    columns:
+    - b_application_pid
+    references:
+      columns:
+      - apl_pid
+      schema: history_octane
+      table: application
+  fk_borrower_2:
+    columns:
+    - b_mailing_place_pid
+    references:
+      columns:
+      - pl_pid
+      schema: history_octane
+      table: place
+  fk_borrower_3:
+    columns:
+    - b_spouse_borrower_pid
+    references:
+      columns:
+      - b_pid
+      schema: history_octane
+      table: borrower
+  fk_borrower_4:
+    columns:
+    - b_credit_request_pid
+    references:
+      columns:
+      - crdr_pid
+      schema: history_octane
+      table: credit_request
+  fkt_b_alimony_child_support:
+    columns:
+    - b_alimony_child_support
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_applicant_role_type:
+    columns:
+    - b_applicant_role_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: applicant_role_type
+  fkt_b_application_taken_method_type:
+    columns:
+    - b_application_taken_method_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: application_taken_method_type
+  fkt_b_bankruptcy:
+    columns:
+    - b_bankruptcy
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_borrowed_down_payment:
+    columns:
+    - b_borrowed_down_payment
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_borrower_tiny_id_type:
+    columns:
+    - b_borrower_tiny_id_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: borrower_tiny_id_type
+  fkt_b_citizenship_residency_type:
+    columns:
+    - b_citizenship_residency_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: citizenship_residency_type
+  fkt_b_credit_report_authorization_method:
+    columns:
+    - b_credit_report_authorization_method
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: credit_authorization_method_type
+  fkt_b_disabled:
+    columns:
+    - b_disabled
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_domestic_relationship_state_type:
+    columns:
+    - b_domestic_relationship_state_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: state_type
+  fkt_b_ethnicity_collected_visual_or_surname:
+    columns:
+    - b_ethnicity_collected_visual_or_surname
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_ethnicity_refused:
+    columns:
+    - b_ethnicity_refused
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_has_dependents:
+    columns:
+    - b_has_dependents
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_homeowner_past_three_years:
+    columns:
+    - b_homeowner_past_three_years
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_homeownership_education_agency_type:
+    columns:
+    - b_homeownership_education_agency_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: housing_counseling_agency_type
+  fkt_b_homeownership_education_type:
+    columns:
+    - b_homeownership_education_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: homeownership_education_type
+  fkt_b_housing_counseling_agency_type:
+    columns:
+    - b_housing_counseling_agency_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: housing_counseling_agency_type
+  fkt_b_housing_counseling_type:
+    columns:
+    - b_housing_counseling_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: housing_counseling_type
+  fkt_b_intend_to_occupy:
+    columns:
+    - b_intend_to_occupy
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_legal_entity_type:
+    columns:
+    - b_legal_entity_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: legal_entity_type
+  fkt_b_lender_employee:
+    columns:
+    - b_lender_employee
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_marital_status_type:
+    columns:
+    - b_marital_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: marital_status_type
+  fkt_b_note_endorser:
+    columns:
+    - b_note_endorser
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_obligated_loan_foreclosure:
+    columns:
+    - b_obligated_loan_foreclosure
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_on_gsa_list:
+    columns:
+    - b_on_gsa_list
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_on_ldp_list:
+    columns:
+    - b_on_ldp_list
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_outstanding_judgements:
+    columns:
+    - b_outstanding_judgements
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_party_to_lawsuit:
+    columns:
+    - b_party_to_lawsuit
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_power_of_attorney:
+    columns:
+    - b_power_of_attorney
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_power_of_attorney_country:
+    columns:
+    - b_power_of_attorney_country
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: country_type
+  fkt_b_presently_delinquent:
+    columns:
+    - b_presently_delinquent
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_prior_property_title_type:
+    columns:
+    - b_prior_property_title_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: prior_property_title_type
+  fkt_b_prior_property_usage_type:
+    columns:
+    - b_prior_property_usage_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: property_usage_type
+  fkt_b_property_foreclosure:
+    columns:
+    - b_property_foreclosure
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_race_collected_visual_or_surname:
+    columns:
+    - b_race_collected_visual_or_surname
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_race_refused:
+    columns:
+    - b_race_refused
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_relationship_to_primary_borrower_type:
+    columns:
+    - b_relationship_to_primary_borrower_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: borrower_relationship_type
+  fkt_b_relationship_to_seller_type:
+    columns:
+    - b_relationship_to_seller_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: borrower_relationship_type
+  fkt_b_sex_collected_visual_or_surname:
+    columns:
+    - b_sex_collected_visual_or_surname
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_sex_refused:
+    columns:
+    - b_sex_refused
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_spousal_homestead:
+    columns:
+    - b_spousal_homestead
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_b_titleholder:
+    columns:
+    - b_titleholder
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+columns:
+  b_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.b_pid
+  b_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.b_version
+  b_alimony_child_support:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_alimony_child_support
+  b_alimony_child_support_explanation:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_alimony_child_support_explanation
+  b_application_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.b_application_pid
+  b_application_signed_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.b_application_signed_date
+  b_application_taken_method_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_application_taken_method_type
+  b_bankruptcy:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_bankruptcy
+  b_bankruptcy_explanation:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_bankruptcy_explanation
+  b_birth_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.b_birth_date
+  b_borrowed_down_payment:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_borrowed_down_payment
+  b_borrowed_down_payment_explanation:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_borrowed_down_payment_explanation
+  b_applicant_role_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_applicant_role_type
+  b_required_to_sign:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_required_to_sign
+  b_spousal_homestead:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_spousal_homestead
+  b_has_no_ssn:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_has_no_ssn
+  b_citizenship_residency_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_citizenship_residency_type
+  b_credit_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.b_credit_request_pid
+  b_credit_report_identifier:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_credit_report_identifier
+  b_credit_report_authorization:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_credit_report_authorization
+  b_has_dependents:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_has_dependents
+  b_dependent_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.b_dependent_count
+  b_dependents_age_years:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_dependents_age_years
+  b_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.b_email
+  b_fax:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_fax
+  b_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_first_name
+  b_nickname:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_nickname
+  b_first_time_homebuyer:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_first_time_homebuyer
+  b_lender_employee:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_lender_employee
+  b_lender_employee_status_confirmed:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_lender_employee_status_confirmed
+  b_sex_refused:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_sex_refused
+  b_sex_collected_visual_or_surname:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_sex_collected_visual_or_surname
+  b_sex_male:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_sex_male
+  b_sex_female:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_sex_female
+  b_sex_not_obtainable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_sex_not_obtainable
+  b_ethnicity_refused:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_ethnicity_refused
+  b_ethnicity_collected_visual_or_surname:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_ethnicity_collected_visual_or_surname
+  b_ethnicity_hispanic_or_latino:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_ethnicity_hispanic_or_latino
+  b_ethnicity_mexican:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_ethnicity_mexican
+  b_ethnicity_puerto_rican:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_ethnicity_puerto_rican
+  b_ethnicity_cuban:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_ethnicity_cuban
+  b_ethnicity_other_hispanic_or_latino:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_ethnicity_other_hispanic_or_latino
+  b_ethnicity_other_hispanic_or_latino_description:
+    data_type: VARCHAR(100)
+    source:
+      field: primary_source_table.columns.b_ethnicity_other_hispanic_or_latino_description
+  b_ethnicity_not_hispanic_or_latino:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_ethnicity_not_hispanic_or_latino
+  b_ethnicity_not_obtainable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_ethnicity_not_obtainable
+  b_homeowner_past_three_years:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_homeowner_past_three_years
+  b_home_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_home_phone
+  b_intend_to_occupy:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_intend_to_occupy
+  b_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_last_name
+  b_mailing_place_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.b_mailing_place_pid
+  b_marital_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_marital_status_type
+  b_spouse_borrower_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.b_spouse_borrower_pid
+  b_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_middle_name
+  b_mobile_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_mobile_phone
+  b_name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_name_suffix
+  b_note_endorser:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_note_endorser
+  b_note_endorser_explanation:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_note_endorser_explanation
+  b_obligated_loan_foreclosure:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_obligated_loan_foreclosure
+  b_obligated_loan_foreclosure_explanation:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_obligated_loan_foreclosure_explanation
+  b_office_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_office_phone
+  b_office_phone_extension:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.b_office_phone_extension
+  b_other_race_national_origin_description:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_other_race_national_origin_description
+  b_outstanding_judgements:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_outstanding_judgements
+  b_outstanding_judgments_explanation:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_outstanding_judgments_explanation
+  b_party_to_lawsuit:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_party_to_lawsuit
+  b_party_to_lawsuit_explanation:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_party_to_lawsuit_explanation
+  b_power_of_attorney:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney
+  b_power_of_attorney_signing_capacity:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_signing_capacity
+  b_power_of_attorney_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_first_name
+  b_power_of_attorney_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_last_name
+  b_power_of_attorney_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_middle_name
+  b_power_of_attorney_name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_name_suffix
+  b_power_of_attorney_company_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_company_name
+  b_power_of_attorney_title:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_title
+  b_power_of_attorney_office_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_office_phone
+  b_power_of_attorney_office_phone_extension:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_office_phone_extension
+  b_power_of_attorney_mobile_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_mobile_phone
+  b_power_of_attorney_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_email
+  b_power_of_attorney_fax:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_fax
+  b_power_of_attorney_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_city
+  b_power_of_attorney_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_country
+  b_power_of_attorney_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_postal_code
+  b_power_of_attorney_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_state
+  b_power_of_attorney_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_street1
+  b_power_of_attorney_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_street2
+  b_presently_delinquent:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_presently_delinquent
+  b_presently_delinquent_explanation:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_presently_delinquent_explanation
+  b_prior_property_title_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_prior_property_title_type
+  b_prior_property_usage_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_prior_property_usage_type
+  b_property_foreclosure:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_property_foreclosure
+  b_property_foreclosure_explanation:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_property_foreclosure_explanation
+  b_race_refused:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_race_refused
+  b_race_collected_visual_or_surname:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_race_collected_visual_or_surname
+  b_race_american_indian_or_alaska_native:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_american_indian_or_alaska_native
+  b_race_other_american_indian_or_alaska_native_description:
+    data_type: VARCHAR(100)
+    source:
+      field: primary_source_table.columns.b_race_other_american_indian_or_alaska_native_description
+  b_race_asian:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_asian
+  b_race_asian_indian:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_asian_indian
+  b_race_chinese:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_chinese
+  b_race_filipino:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_filipino
+  b_race_japanese:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_japanese
+  b_race_korean:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_korean
+  b_race_vietnamese:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_vietnamese
+  b_race_other_asian:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_other_asian
+  b_race_other_asian_description:
+    data_type: VARCHAR(100)
+    source:
+      field: primary_source_table.columns.b_race_other_asian_description
+  b_race_black_or_african_american:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_black_or_african_american
+  b_race_information_not_provided:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_information_not_provided
+  b_race_national_origin_refusal:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_national_origin_refusal
+  b_race_native_hawaiian_or_other_pacific_islander:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_native_hawaiian_or_other_pacific_islander
+  b_race_native_hawaiian:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_native_hawaiian
+  b_race_guamanian_or_chamorro:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_guamanian_or_chamorro
+  b_race_samoan:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_samoan
+  b_race_other_pacific_islander:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_other_pacific_islander
+  b_race_not_obtainable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_not_obtainable
+  b_race_other_pacific_islander_description:
+    data_type: VARCHAR(100)
+    source:
+      field: primary_source_table.columns.b_race_other_pacific_islander_description
+  b_race_not_applicable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_not_applicable
+  b_race_white:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_white
+  b_schooling_years:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.b_schooling_years
+  b_titleholder:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_titleholder
+  b_experian_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.b_experian_credit_score
+  b_equifax_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.b_equifax_credit_score
+  b_trans_union_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.b_trans_union_credit_score
+  b_decision_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.b_decision_credit_score
+  b_borrower_tiny_id_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_borrower_tiny_id_type
+  b_first_time_home_buyer_explain:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.b_first_time_home_buyer_explain
+  b_first_time_home_buyer_auto_compute:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_first_time_home_buyer_auto_compute
+  b_caivrs_id:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.b_caivrs_id
+  b_caivrs_messages:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.b_caivrs_messages
+  b_on_ldp_list:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_on_ldp_list
+  b_on_gsa_list:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_on_gsa_list
+  b_monthly_job_federal_tax_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.b_monthly_job_federal_tax_amount
+  b_monthly_job_state_tax_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.b_monthly_job_state_tax_amount
+  b_monthly_job_retirement_tax_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.b_monthly_job_retirement_tax_amount
+  b_monthly_job_medicare_tax_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.b_monthly_job_medicare_tax_amount
+  b_monthly_job_state_disability_insurance_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.b_monthly_job_state_disability_insurance_amount
+  b_monthly_job_other_tax_1_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.b_monthly_job_other_tax_1_amount
+  b_monthly_job_other_tax_1_description:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_monthly_job_other_tax_1_description
+  b_monthly_job_other_tax_2_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.b_monthly_job_other_tax_2_amount
+  b_monthly_job_other_tax_2_description:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_monthly_job_other_tax_2_description
+  b_monthly_job_other_tax_3_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.b_monthly_job_other_tax_3_amount
+  b_monthly_job_other_tax_3_description:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_monthly_job_other_tax_3_description
+  b_monthly_job_total_tax_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.b_monthly_job_total_tax_amount
+  b_homeownership_education_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_homeownership_education_type
+  b_homeownership_education_agency_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_homeownership_education_agency_type
+  b_homeownership_education_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_homeownership_education_id
+  b_homeownership_education_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_homeownership_education_name
+  b_homeownership_education_complete_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.b_homeownership_education_complete_date
+  b_housing_counseling_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_housing_counseling_type
+  b_housing_counseling_agency_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_housing_counseling_agency_type
+  b_housing_counseling_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_housing_counseling_id
+  b_housing_counseling_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_housing_counseling_name
+  b_housing_counseling_complete_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.b_housing_counseling_complete_date
+  b_legal_entity_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_legal_entity_type
+  b_credit_report_authorization_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.b_credit_report_authorization_datetime
+  b_credit_report_authorization_method:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_credit_report_authorization_method
+  b_credit_report_authorization_obtained_by_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_credit_report_authorization_obtained_by_unparsed_name
+  b_disabled:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_disabled
+  b_usda_annual_child_care_expenses:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.b_usda_annual_child_care_expenses
+  b_usda_disability_expenses:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.b_usda_disability_expenses
+  b_usda_medical_expenses:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.b_usda_medical_expenses
+  b_usda_income_from_assets:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.b_usda_income_from_assets
+  b_usda_moderate_income_limit:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.b_usda_moderate_income_limit
+  b_hud_employee:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_hud_employee
+  b_relationship_to_primary_borrower_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_relationship_to_primary_borrower_type
+  b_relationship_to_seller_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_relationship_to_seller_type
+  b_preferred_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_preferred_first_name
+  b_domestic_relationship_state_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_domestic_relationship_state_type
+  b_credit_report_required:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_credit_report_required
+  b_closing_disclosure_signer:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_closing_disclosure_signer
+  b_snapshotted_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.b_snapshotted_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100308:
+    input_type: table
+    output_type: insert
+    json_output_field: b_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.borrower
+      SELECT staging_table.b_pid
+           , staging_table.b_version
+           , staging_table.b_alimony_child_support
+           , staging_table.b_alimony_child_support_explanation
+           , staging_table.b_application_pid
+           , staging_table.b_application_signed_date
+           , staging_table.b_application_taken_method_type
+           , staging_table.b_bankruptcy
+           , staging_table.b_bankruptcy_explanation
+           , staging_table.b_birth_date
+           , staging_table.b_borrowed_down_payment
+           , staging_table.b_borrowed_down_payment_explanation
+           , staging_table.b_applicant_role_type
+           , staging_table.b_required_to_sign
+           , staging_table.b_spousal_homestead
+           , staging_table.b_has_no_ssn
+           , staging_table.b_citizenship_residency_type
+           , staging_table.b_credit_request_pid
+           , staging_table.b_credit_report_identifier
+           , staging_table.b_credit_report_authorization
+           , staging_table.b_has_dependents
+           , staging_table.b_dependent_count
+           , staging_table.b_dependents_age_years
+           , staging_table.b_email
+           , staging_table.b_fax
+           , staging_table.b_first_name
+           , staging_table.b_nickname
+           , staging_table.b_first_time_homebuyer
+           , staging_table.b_lender_employee
+           , staging_table.b_lender_employee_status_confirmed
+           , staging_table.b_sex_refused
+           , staging_table.b_sex_collected_visual_or_surname
+           , staging_table.b_sex_male
+           , staging_table.b_sex_female
+           , staging_table.b_sex_not_obtainable
+           , staging_table.b_ethnicity_refused
+           , staging_table.b_ethnicity_collected_visual_or_surname
+           , staging_table.b_ethnicity_hispanic_or_latino
+           , staging_table.b_ethnicity_mexican
+           , staging_table.b_ethnicity_puerto_rican
+           , staging_table.b_ethnicity_cuban
+           , staging_table.b_ethnicity_other_hispanic_or_latino
+           , staging_table.b_ethnicity_other_hispanic_or_latino_description
+           , staging_table.b_ethnicity_not_hispanic_or_latino
+           , staging_table.b_ethnicity_not_obtainable
+           , staging_table.b_homeowner_past_three_years
+           , staging_table.b_home_phone
+           , staging_table.b_intend_to_occupy
+           , staging_table.b_last_name
+           , staging_table.b_mailing_place_pid
+           , staging_table.b_marital_status_type
+           , staging_table.b_spouse_borrower_pid
+           , staging_table.b_middle_name
+           , staging_table.b_mobile_phone
+           , staging_table.b_name_suffix
+           , staging_table.b_note_endorser
+           , staging_table.b_note_endorser_explanation
+           , staging_table.b_obligated_loan_foreclosure
+           , staging_table.b_obligated_loan_foreclosure_explanation
+           , staging_table.b_office_phone
+           , staging_table.b_office_phone_extension
+           , staging_table.b_other_race_national_origin_description
+           , staging_table.b_outstanding_judgements
+           , staging_table.b_outstanding_judgments_explanation
+           , staging_table.b_party_to_lawsuit
+           , staging_table.b_party_to_lawsuit_explanation
+           , staging_table.b_power_of_attorney
+           , staging_table.b_power_of_attorney_signing_capacity
+           , staging_table.b_power_of_attorney_first_name
+           , staging_table.b_power_of_attorney_last_name
+           , staging_table.b_power_of_attorney_middle_name
+           , staging_table.b_power_of_attorney_name_suffix
+           , staging_table.b_power_of_attorney_company_name
+           , staging_table.b_power_of_attorney_title
+           , staging_table.b_power_of_attorney_office_phone
+           , staging_table.b_power_of_attorney_office_phone_extension
+           , staging_table.b_power_of_attorney_mobile_phone
+           , staging_table.b_power_of_attorney_email
+           , staging_table.b_power_of_attorney_fax
+           , staging_table.b_power_of_attorney_city
+           , staging_table.b_power_of_attorney_country
+           , staging_table.b_power_of_attorney_postal_code
+           , staging_table.b_power_of_attorney_state
+           , staging_table.b_power_of_attorney_street1
+           , staging_table.b_power_of_attorney_street2
+           , staging_table.b_presently_delinquent
+           , staging_table.b_presently_delinquent_explanation
+           , staging_table.b_prior_property_title_type
+           , staging_table.b_prior_property_usage_type
+           , staging_table.b_property_foreclosure
+           , staging_table.b_property_foreclosure_explanation
+           , staging_table.b_race_refused
+           , staging_table.b_race_collected_visual_or_surname
+           , staging_table.b_race_american_indian_or_alaska_native
+           , staging_table.b_race_other_american_indian_or_alaska_native_description
+           , staging_table.b_race_asian
+           , staging_table.b_race_asian_indian
+           , staging_table.b_race_chinese
+           , staging_table.b_race_filipino
+           , staging_table.b_race_japanese
+           , staging_table.b_race_korean
+           , staging_table.b_race_vietnamese
+           , staging_table.b_race_other_asian
+           , staging_table.b_race_other_asian_description
+           , staging_table.b_race_black_or_african_american
+           , staging_table.b_race_information_not_provided
+           , staging_table.b_race_national_origin_refusal
+           , staging_table.b_race_native_hawaiian_or_other_pacific_islander
+           , staging_table.b_race_native_hawaiian
+           , staging_table.b_race_guamanian_or_chamorro
+           , staging_table.b_race_samoan
+           , staging_table.b_race_other_pacific_islander
+           , staging_table.b_race_not_obtainable
+           , staging_table.b_race_other_pacific_islander_description
+           , staging_table.b_race_not_applicable
+           , staging_table.b_race_white
+           , staging_table.b_schooling_years
+           , staging_table.b_titleholder
+           , staging_table.b_experian_credit_score
+           , staging_table.b_equifax_credit_score
+           , staging_table.b_trans_union_credit_score
+           , staging_table.b_decision_credit_score
+           , staging_table.b_borrower_tiny_id_type
+           , staging_table.b_first_time_home_buyer_explain
+           , staging_table.b_first_time_home_buyer_auto_compute
+           , staging_table.b_caivrs_id
+           , staging_table.b_caivrs_messages
+           , staging_table.b_on_ldp_list
+           , staging_table.b_on_gsa_list
+           , staging_table.b_monthly_job_federal_tax_amount
+           , staging_table.b_monthly_job_state_tax_amount
+           , staging_table.b_monthly_job_retirement_tax_amount
+           , staging_table.b_monthly_job_medicare_tax_amount
+           , staging_table.b_monthly_job_state_disability_insurance_amount
+           , staging_table.b_monthly_job_other_tax_1_amount
+           , staging_table.b_monthly_job_other_tax_1_description
+           , staging_table.b_monthly_job_other_tax_2_amount
+           , staging_table.b_monthly_job_other_tax_2_description
+           , staging_table.b_monthly_job_other_tax_3_amount
+           , staging_table.b_monthly_job_other_tax_3_description
+           , staging_table.b_monthly_job_total_tax_amount
+           , staging_table.b_homeownership_education_type
+           , staging_table.b_homeownership_education_agency_type
+           , staging_table.b_homeownership_education_id
+           , staging_table.b_homeownership_education_name
+           , staging_table.b_homeownership_education_complete_date
+           , staging_table.b_housing_counseling_type
+           , staging_table.b_housing_counseling_agency_type
+           , staging_table.b_housing_counseling_id
+           , staging_table.b_housing_counseling_name
+           , staging_table.b_housing_counseling_complete_date
+           , staging_table.b_legal_entity_type
+           , staging_table.b_credit_report_authorization_datetime
+           , staging_table.b_credit_report_authorization_method
+           , staging_table.b_credit_report_authorization_obtained_by_unparsed_name
+           , staging_table.b_disabled
+           , staging_table.b_usda_annual_child_care_expenses
+           , staging_table.b_usda_disability_expenses
+           , staging_table.b_usda_medical_expenses
+           , staging_table.b_usda_income_from_assets
+           , staging_table.b_usda_moderate_income_limit
+           , staging_table.b_hud_employee
+           , staging_table.b_relationship_to_primary_borrower_type
+           , staging_table.b_relationship_to_seller_type
+           , staging_table.b_preferred_first_name
+           , staging_table.b_domestic_relationship_state_type
+           , staging_table.b_credit_report_required
+           , staging_table.b_closing_disclosure_signer
+           , staging_table.b_snapshotted_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.borrower staging_table
+      LEFT JOIN history_octane.borrower history_table
+                ON staging_table.b_pid = history_table.b_pid
+                    AND staging_table.b_version = history_table.b_version
+      WHERE history_table.b_pid IS NULL
+      UNION ALL
+      SELECT history_table.b_pid
+           , history_table.b_version + 1
+           , history_table.b_alimony_child_support
+           , history_table.b_alimony_child_support_explanation
+           , history_table.b_application_pid
+           , history_table.b_application_signed_date
+           , history_table.b_application_taken_method_type
+           , history_table.b_bankruptcy
+           , history_table.b_bankruptcy_explanation
+           , history_table.b_birth_date
+           , history_table.b_borrowed_down_payment
+           , history_table.b_borrowed_down_payment_explanation
+           , history_table.b_applicant_role_type
+           , history_table.b_required_to_sign
+           , history_table.b_spousal_homestead
+           , history_table.b_has_no_ssn
+           , history_table.b_citizenship_residency_type
+           , history_table.b_credit_request_pid
+           , history_table.b_credit_report_identifier
+           , history_table.b_credit_report_authorization
+           , history_table.b_has_dependents
+           , history_table.b_dependent_count
+           , history_table.b_dependents_age_years
+           , history_table.b_email
+           , history_table.b_fax
+           , history_table.b_first_name
+           , history_table.b_nickname
+           , history_table.b_first_time_homebuyer
+           , history_table.b_lender_employee
+           , history_table.b_lender_employee_status_confirmed
+           , history_table.b_sex_refused
+           , history_table.b_sex_collected_visual_or_surname
+           , history_table.b_sex_male
+           , history_table.b_sex_female
+           , history_table.b_sex_not_obtainable
+           , history_table.b_ethnicity_refused
+           , history_table.b_ethnicity_collected_visual_or_surname
+           , history_table.b_ethnicity_hispanic_or_latino
+           , history_table.b_ethnicity_mexican
+           , history_table.b_ethnicity_puerto_rican
+           , history_table.b_ethnicity_cuban
+           , history_table.b_ethnicity_other_hispanic_or_latino
+           , history_table.b_ethnicity_other_hispanic_or_latino_description
+           , history_table.b_ethnicity_not_hispanic_or_latino
+           , history_table.b_ethnicity_not_obtainable
+           , history_table.b_homeowner_past_three_years
+           , history_table.b_home_phone
+           , history_table.b_intend_to_occupy
+           , history_table.b_last_name
+           , history_table.b_mailing_place_pid
+           , history_table.b_marital_status_type
+           , history_table.b_spouse_borrower_pid
+           , history_table.b_middle_name
+           , history_table.b_mobile_phone
+           , history_table.b_name_suffix
+           , history_table.b_note_endorser
+           , history_table.b_note_endorser_explanation
+           , history_table.b_obligated_loan_foreclosure
+           , history_table.b_obligated_loan_foreclosure_explanation
+           , history_table.b_office_phone
+           , history_table.b_office_phone_extension
+           , history_table.b_other_race_national_origin_description
+           , history_table.b_outstanding_judgements
+           , history_table.b_outstanding_judgments_explanation
+           , history_table.b_party_to_lawsuit
+           , history_table.b_party_to_lawsuit_explanation
+           , history_table.b_power_of_attorney
+           , history_table.b_power_of_attorney_signing_capacity
+           , history_table.b_power_of_attorney_first_name
+           , history_table.b_power_of_attorney_last_name
+           , history_table.b_power_of_attorney_middle_name
+           , history_table.b_power_of_attorney_name_suffix
+           , history_table.b_power_of_attorney_company_name
+           , history_table.b_power_of_attorney_title
+           , history_table.b_power_of_attorney_office_phone
+           , history_table.b_power_of_attorney_office_phone_extension
+           , history_table.b_power_of_attorney_mobile_phone
+           , history_table.b_power_of_attorney_email
+           , history_table.b_power_of_attorney_fax
+           , history_table.b_power_of_attorney_city
+           , history_table.b_power_of_attorney_country
+           , history_table.b_power_of_attorney_postal_code
+           , history_table.b_power_of_attorney_state
+           , history_table.b_power_of_attorney_street1
+           , history_table.b_power_of_attorney_street2
+           , history_table.b_presently_delinquent
+           , history_table.b_presently_delinquent_explanation
+           , history_table.b_prior_property_title_type
+           , history_table.b_prior_property_usage_type
+           , history_table.b_property_foreclosure
+           , history_table.b_property_foreclosure_explanation
+           , history_table.b_race_refused
+           , history_table.b_race_collected_visual_or_surname
+           , history_table.b_race_american_indian_or_alaska_native
+           , history_table.b_race_other_american_indian_or_alaska_native_description
+           , history_table.b_race_asian
+           , history_table.b_race_asian_indian
+           , history_table.b_race_chinese
+           , history_table.b_race_filipino
+           , history_table.b_race_japanese
+           , history_table.b_race_korean
+           , history_table.b_race_vietnamese
+           , history_table.b_race_other_asian
+           , history_table.b_race_other_asian_description
+           , history_table.b_race_black_or_african_american
+           , history_table.b_race_information_not_provided
+           , history_table.b_race_national_origin_refusal
+           , history_table.b_race_native_hawaiian_or_other_pacific_islander
+           , history_table.b_race_native_hawaiian
+           , history_table.b_race_guamanian_or_chamorro
+           , history_table.b_race_samoan
+           , history_table.b_race_other_pacific_islander
+           , history_table.b_race_not_obtainable
+           , history_table.b_race_other_pacific_islander_description
+           , history_table.b_race_not_applicable
+           , history_table.b_race_white
+           , history_table.b_schooling_years
+           , history_table.b_titleholder
+           , history_table.b_experian_credit_score
+           , history_table.b_equifax_credit_score
+           , history_table.b_trans_union_credit_score
+           , history_table.b_decision_credit_score
+           , history_table.b_borrower_tiny_id_type
+           , history_table.b_first_time_home_buyer_explain
+           , history_table.b_first_time_home_buyer_auto_compute
+           , history_table.b_caivrs_id
+           , history_table.b_caivrs_messages
+           , history_table.b_on_ldp_list
+           , history_table.b_on_gsa_list
+           , history_table.b_monthly_job_federal_tax_amount
+           , history_table.b_monthly_job_state_tax_amount
+           , history_table.b_monthly_job_retirement_tax_amount
+           , history_table.b_monthly_job_medicare_tax_amount
+           , history_table.b_monthly_job_state_disability_insurance_amount
+           , history_table.b_monthly_job_other_tax_1_amount
+           , history_table.b_monthly_job_other_tax_1_description
+           , history_table.b_monthly_job_other_tax_2_amount
+           , history_table.b_monthly_job_other_tax_2_description
+           , history_table.b_monthly_job_other_tax_3_amount
+           , history_table.b_monthly_job_other_tax_3_description
+           , history_table.b_monthly_job_total_tax_amount
+           , history_table.b_homeownership_education_type
+           , history_table.b_homeownership_education_agency_type
+           , history_table.b_homeownership_education_id
+           , history_table.b_homeownership_education_name
+           , history_table.b_homeownership_education_complete_date
+           , history_table.b_housing_counseling_type
+           , history_table.b_housing_counseling_agency_type
+           , history_table.b_housing_counseling_id
+           , history_table.b_housing_counseling_name
+           , history_table.b_housing_counseling_complete_date
+           , history_table.b_legal_entity_type
+           , history_table.b_credit_report_authorization_datetime
+           , history_table.b_credit_report_authorization_method
+           , history_table.b_credit_report_authorization_obtained_by_unparsed_name
+           , history_table.b_disabled
+           , history_table.b_usda_annual_child_care_expenses
+           , history_table.b_usda_disability_expenses
+           , history_table.b_usda_medical_expenses
+           , history_table.b_usda_income_from_assets
+           , history_table.b_usda_moderate_income_limit
+           , history_table.b_hud_employee
+           , history_table.b_relationship_to_primary_borrower_type
+           , history_table.b_relationship_to_seller_type
+           , history_table.b_preferred_first_name
+           , history_table.b_domestic_relationship_state_type
+           , history_table.b_credit_report_required
+           , history_table.b_closing_disclosure_signer
+           , history_table.b_snapshotted_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.borrower history_table
+      LEFT JOIN staging_octane.borrower staging_table
+                ON staging_table.b_pid = history_table.b_pid
+      WHERE staging_table.b_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.borrower deleted_records
+          WHERE deleted_records.b_pid = history_table.b_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );
+next_etls:
+- SP-200006
+- SP-200005
+- SP-200004

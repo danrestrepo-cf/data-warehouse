@@ -1,0 +1,41 @@
+name: deal_invoice_file
+primary_key:
+- dif_pid
+foreign_keys:
+  fk_deal_invoice_file_1:
+    columns:
+    - dif_deal_file_pid
+    references:
+      columns:
+      - df_pid
+      schema: staging_octane
+      table: deal_file
+  fk_deal_invoice_file_2:
+    columns:
+    - dif_deal_invoice_pid
+    references:
+      columns:
+      - di_pid
+      schema: staging_octane
+      table: deal_invoice
+  fkt_dif_deal_invoice_file_type:
+    columns:
+    - dif_deal_invoice_file_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: deal_invoice_file_type
+columns:
+  dif_pid:
+    data_type: BIGINT
+  dif_version:
+    data_type: INTEGER
+  dif_deal_invoice_file_type:
+    data_type: VARCHAR(128)
+  dif_deal_file_pid:
+    data_type: BIGINT
+  dif_deal_invoice_pid:
+    data_type: BIGINT
+  dif_create_datetime:
+    data_type: TIMESTAMP

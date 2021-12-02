@@ -1,0 +1,943 @@
+name: proposal
+primary_key:
+- prp_pid
+foreign_keys:
+  fk_proposal_1:
+    columns:
+    - prp_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: staging_octane
+      table: deal
+  fk_proposal_2:
+    columns:
+    - prp_decision_lp_request_pid
+    references:
+      columns:
+      - lpr_pid
+      schema: staging_octane
+      table: lp_request
+  fk_proposal_3:
+    columns:
+    - prp_decision_du_request_pid
+    references:
+      columns:
+      - dur_pid
+      schema: staging_octane
+      table: du_request
+  fk_proposal_5:
+    columns:
+    - prp_decision_credit_score_borrower_pid
+    references:
+      columns:
+      - b_pid
+      schema: staging_octane
+      table: borrower
+  fk_proposal_7:
+    columns:
+    - prp_trustee_pid
+    references:
+      columns:
+      - tru_pid
+      schema: staging_octane
+      table: trustee
+  fk_proposal_8:
+    columns:
+    - prp_decision_veteran_borrower_pid
+    references:
+      columns:
+      - b_pid
+      schema: staging_octane
+      table: borrower
+  fkt_prp_any_vesting_changes:
+    columns:
+    - prp_any_vesting_changes
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_prp_arms_length:
+    columns:
+    - prp_arms_length
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_prp_cema:
+    columns:
+    - prp_cema
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_na_unknown_type
+  fkt_prp_construction_lot_ownership_status_type:
+    columns:
+    - prp_construction_lot_ownership_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: construction_lot_ownership_status_type
+  fkt_prp_disaster_declaration_check_date_type:
+    columns:
+    - prp_disaster_declaration_check_date_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: disaster_declaration_check_date_type
+  fkt_prp_disclosure_action_type:
+    columns:
+    - prp_disclosure_action_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: disclosure_action_type
+  fkt_prp_doc_level_type:
+    columns:
+    - prp_doc_level_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: doc_level_type
+  fkt_prp_early_first_payment:
+    columns:
+    - prp_early_first_payment
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_prp_earthquake_insurance_applicable:
+    columns:
+    - prp_earthquake_insurance_applicable
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_prp_effective_property_value_explanation_type:
+    columns:
+    - prp_effective_property_value_explanation_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: effective_property_value_explanation_type
+  fkt_prp_effective_property_value_type:
+    columns:
+    - prp_effective_property_value_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: effective_property_value_type
+  fkt_prp_effective_signing_location_state:
+    columns:
+    - prp_effective_signing_location_state
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: state_type
+  fkt_prp_fha_eligible_maximum_financing:
+    columns:
+    - prp_fha_eligible_maximum_financing
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_prp_fha_non_arms_length_ltv_exception_type:
+    columns:
+    - prp_fha_non_arms_length_ltv_exception_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: fha_non_arms_length_ltv_limit_exception_type
+  fkt_prp_financed_property_improvements_category_type:
+    columns:
+    - prp_financed_property_improvements_category_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: financed_property_improvements_category_type
+  fkt_prp_flood_insurance_applicable:
+    columns:
+    - prp_flood_insurance_applicable
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_prp_fre_ctp_closing_feature_type:
+    columns:
+    - prp_fre_ctp_closing_feature_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: fre_ctp_closing_feature_type
+  fkt_prp_gse_version_type:
+    columns:
+    - prp_gse_version_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: gse_version_type
+  fkt_prp_hazard_insurance_applicable:
+    columns:
+    - prp_hazard_insurance_applicable
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_prp_hud_consultant:
+    columns:
+    - prp_hud_consultant
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_prp_hud_fha_de_approval_type:
+    columns:
+    - prp_hud_fha_de_approval_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: hud_fha_de_approval_type
+  fkt_prp_intent_to_proceed_type:
+    columns:
+    - prp_intent_to_proceed_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: intent_to_proceed_type
+  fkt_prp_loan_purpose_type:
+    columns:
+    - prp_loan_purpose_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: loan_purpose_type
+  fkt_prp_mortgagee_builder_seller_relationship:
+    columns:
+    - prp_mortgagee_builder_seller_relationship
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_prp_non_business_cash_out_reason_acknowledged:
+    columns:
+    - prp_non_business_cash_out_reason_acknowledged
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_na_type
+  fkt_prp_property_acquired_through_ancillary_relief:
+    columns:
+    - prp_property_acquired_through_ancillary_relief
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_prp_property_acquired_through_inheritance:
+    columns:
+    - prp_property_acquired_through_inheritance
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_prp_property_repairs_holdback_calc_type:
+    columns:
+    - prp_property_repairs_holdback_calc_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: property_repairs_holdback_calc_type
+  fkt_prp_property_repairs_holdback_payer_type:
+    columns:
+    - prp_property_repairs_holdback_payer_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: property_repairs_holdback_payer_type
+  fkt_prp_property_repairs_required_type:
+    columns:
+    - prp_property_repairs_required_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: property_repairs_required_type
+  fkt_prp_property_usage_type:
+    columns:
+    - prp_property_usage_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: property_usage_type
+  fkt_prp_proposal_type:
+    columns:
+    - prp_proposal_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: proposal_type
+  fkt_prp_rescission_notification_type:
+    columns:
+    - prp_rescission_notification_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: rescission_notification_type
+  fkt_prp_security_instrument_type:
+    columns:
+    - prp_security_instrument_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: security_instrument_type
+  fkt_prp_separate_transaction_for_land_acquisition:
+    columns:
+    - prp_separate_transaction_for_land_acquisition
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_prp_structure_type:
+    columns:
+    - prp_structure_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: proposal_structure_type
+  fkt_prp_taxes_escrowed:
+    columns:
+    - prp_taxes_escrowed
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_prp_trustee_address_country:
+    columns:
+    - prp_trustee_address_country
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: country_type
+  fkt_prp_underwrite_disposition_type:
+    columns:
+    - prp_underwrite_disposition_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: underwrite_disposition_type
+  fkt_prp_underwrite_method_type:
+    columns:
+    - prp_underwrite_method_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: underwrite_method_type
+  fkt_prp_underwrite_risk_assessment_type:
+    columns:
+    - prp_underwrite_risk_assessment_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: underwrite_risk_assessment_type
+  fkt_prp_usda_gsa_sam_exclusion:
+    columns:
+    - prp_usda_gsa_sam_exclusion
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_prp_usda_rd_single_family_housing_type:
+    columns:
+    - prp_usda_rd_single_family_housing_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: usda_rd_single_family_housing_type
+  fkt_prp_va_meets_credit_standards:
+    columns:
+    - prp_va_meets_credit_standards
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_prp_va_monthly_utilities_included:
+    columns:
+    - prp_va_monthly_utilities_included
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_prp_va_notice_of_value_source_type:
+    columns:
+    - prp_va_notice_of_value_source_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: va_notice_of_value_source_type
+  fkt_prp_va_past_credit_record_type:
+    columns:
+    - prp_va_past_credit_record_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: va_past_credit_record_type
+  fkt_prp_vesting_change_titleholder_added:
+    columns:
+    - prp_vesting_change_titleholder_added
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_prp_vesting_change_titleholder_name_change:
+    columns:
+    - prp_vesting_change_titleholder_name_change
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_prp_vesting_change_titleholder_removed:
+    columns:
+    - prp_vesting_change_titleholder_removed
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_prp_windstorm_insurance_applicable:
+    columns:
+    - prp_windstorm_insurance_applicable
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+columns:
+  prp_pid:
+    data_type: BIGINT
+  prp_version:
+    data_type: INTEGER
+  prp_decision_lp_request_pid:
+    data_type: BIGINT
+  prp_decision_du_request_pid:
+    data_type: BIGINT
+  prp_proposal_type:
+    data_type: VARCHAR(128)
+  prp_description:
+    data_type: VARCHAR(256)
+  prp_doc_level_type:
+    data_type: VARCHAR(128)
+  prp_loan_purpose_type:
+    data_type: VARCHAR(128)
+  prp_name:
+    data_type: VARCHAR(128)
+  prp_create_datetime:
+    data_type: TIMESTAMP
+  prp_effective_funding_date:
+    data_type: DATE
+  prp_estimated_funding_date:
+    data_type: DATE
+  prp_calculated_earliest_allowed_consummation_date:
+    data_type: DATE
+  prp_overridden_earliest_allowed_consummation_date:
+    data_type: DATE
+  prp_effective_earliest_allowed_consummation_date:
+    data_type: DATE
+  prp_earliest_allowed_consummation_date_override_reason:
+    data_type: TEXT
+  prp_last_requested_disclosure_date:
+    data_type: DATE
+  prp_closing_document_sign_datetime:
+    data_type: TIMESTAMP
+  prp_scheduled_closing_document_sign_datetime:
+    data_type: TIMESTAMP
+  prp_rescission_through_date:
+    data_type: DATE
+  prp_rescission_notification_date:
+    data_type: DATE
+  prp_rescission_notification_by:
+    data_type: VARCHAR(256)
+  prp_rescission_notification_type:
+    data_type: VARCHAR(128)
+  prp_rescission_effective_date:
+    data_type: DATE
+  prp_first_payment_date:
+    data_type: DATE
+  prp_first_payment_date_auto_compute:
+    data_type: BOOLEAN
+  prp_property_usage_type:
+    data_type: VARCHAR(128)
+  prp_estimated_property_value_amount:
+    data_type: NUMERIC(15,0)
+  prp_smart_charges_enabled:
+    data_type: BOOLEAN
+  prp_charges_updated_datetime:
+    data_type: TIMESTAMP
+  prp_smart_docs_enabled:
+    data_type: BOOLEAN
+  prp_docs_enabled_datetime:
+    data_type: TIMESTAMP
+  prp_request_fha_mip_refund_required:
+    data_type: BOOLEAN
+  prp_request_recording_fees_required:
+    data_type: BOOLEAN
+  prp_request_property_taxes_required:
+    data_type: BOOLEAN
+  prp_property_tax_request_error_messages:
+    data_type: TEXT
+  prp_fha_mip_refund_request_input_error:
+    data_type: BOOLEAN
+  prp_recording_fees_request_input_error:
+    data_type: BOOLEAN
+  prp_property_taxes_request_input_error:
+    data_type: BOOLEAN
+  prp_publish:
+    data_type: BOOLEAN
+  prp_publish_date:
+    data_type: DATE
+  prp_ipc_auto_compute:
+    data_type: BOOLEAN
+  prp_ipc_limit_percent:
+    data_type: NUMERIC(11,9)
+  prp_ipc_maximum_amount_allowed:
+    data_type: NUMERIC(15,2)
+  prp_ipc_amount:
+    data_type: NUMERIC(15,2)
+  prp_ipc_percent:
+    data_type: NUMERIC(11,9)
+  prp_ipc_financing_concession_amount:
+    data_type: NUMERIC(15,2)
+  prp_ipc_non_cash_concession_amount:
+    data_type: NUMERIC(15,2)
+  prp_sale_price_amount:
+    data_type: NUMERIC(15,0)
+  prp_structure_type:
+    data_type: VARCHAR(128)
+  prp_deal_pid:
+    data_type: BIGINT
+  prp_gfe_interest_rate_expiration_date:
+    data_type: DATE
+  prp_gfe_lock_duration_days:
+    data_type: INTEGER
+  prp_gfe_lock_before_settlement_days:
+    data_type: INTEGER
+  prp_proposal_expiration_date:
+    data_type: DATE
+  prp_uuts_master_contact_name:
+    data_type: VARCHAR(128)
+  prp_uuts_master_contact_title:
+    data_type: VARCHAR(128)
+  prp_uuts_master_office_phone:
+    data_type: VARCHAR(32)
+  prp_uuts_master_office_phone_extension:
+    data_type: VARCHAR(16)
+  prp_underwrite_risk_assessment_type:
+    data_type: VARCHAR(128)
+  prp_underwriting_comments:
+    data_type: VARCHAR(1024)
+  prp_reserves_auto_compute:
+    data_type: BOOLEAN
+  prp_reserves_amount:
+    data_type: NUMERIC(15,2)
+  prp_reserves_months:
+    data_type: INTEGER
+  prp_underwrite_disposition_type:
+    data_type: VARCHAR(128)
+  prp_underwrite_publish_date:
+    data_type: DATE
+  prp_underwrite_expiration_date:
+    data_type: DATE
+  prp_usda_gsa_sam_exclusion:
+    data_type: VARCHAR(128)
+  prp_usda_gsa_sam_checked_date:
+    data_type: DATE
+  prp_usda_rd_single_family_housing_type:
+    data_type: VARCHAR(128)
+  prp_underwrite_method_type:
+    data_type: VARCHAR(128)
+  prp_mi_required:
+    data_type: BOOLEAN
+  prp_decision_credit_score_borrower_pid:
+    data_type: BIGINT
+  prp_decision_credit_score:
+    data_type: INTEGER
+  prp_estimated_credit_score:
+    data_type: INTEGER
+  prp_effective_credit_score:
+    data_type: INTEGER
+  prp_mortgagee_builder_seller_relationship:
+    data_type: VARCHAR(128)
+  prp_fha_prior_agency_case_id:
+    data_type: VARCHAR(32)
+  prp_fha_prior_agency_case_endorsement_date:
+    data_type: DATE
+  prp_fha_refinance_authorization_number:
+    data_type: VARCHAR(16)
+  prp_fha_refinance_authorization_expiration_date:
+    data_type: DATE
+  prp_fhac_refinance_authorization_messages:
+    data_type: TEXT
+  prp_hud_fha_de_approval_type:
+    data_type: VARCHAR(128)
+  prp_owner_occupancy_not_required:
+    data_type: BOOLEAN
+  prp_va_monthly_utilities_included:
+    data_type: VARCHAR(128)
+  prp_va_maintenance_utilities_auto_compute:
+    data_type: BOOLEAN
+  prp_va_monthly_maintenance_utilities_amount:
+    data_type: NUMERIC(15,2)
+  prp_va_maintenance_utilities_per_square_feet_amount:
+    data_type: NUMERIC(15,2)
+  prp_household_size_count:
+    data_type: INTEGER
+  prp_va_past_credit_record_type:
+    data_type: VARCHAR(128)
+  prp_va_meets_credit_standards:
+    data_type: VARCHAR(128)
+  prp_va_prior_paid_in_full_loan_number:
+    data_type: VARCHAR(32)
+  prp_note_date:
+    data_type: DATE
+  prp_security_instrument_type:
+    data_type: VARCHAR(128)
+  prp_trustee_pid:
+    data_type: BIGINT
+  prp_trustee_name:
+    data_type: VARCHAR(128)
+  prp_trustee_address_street1:
+    data_type: VARCHAR(128)
+  prp_trustee_address_street2:
+    data_type: VARCHAR(128)
+  prp_trustee_address_city:
+    data_type: VARCHAR(128)
+  prp_trustee_address_state:
+    data_type: VARCHAR(128)
+  prp_trustee_address_postal_code:
+    data_type: VARCHAR(128)
+  prp_trustee_address_country:
+    data_type: VARCHAR(128)
+  prp_trustee_mers_org_id:
+    data_type: VARCHAR(7)
+  prp_trustee_phone_number:
+    data_type: VARCHAR(32)
+  prp_fre_ctp_closing_feature_type:
+    data_type: VARCHAR(128)
+  prp_fre_ctp_first_payment_due_date:
+    data_type: DATE
+  prp_purchase_contract_date:
+    data_type: DATE
+  prp_purchase_contract_financing_contingency_date:
+    data_type: DATE
+  prp_purchase_contract_funding_date:
+    data_type: DATE
+  prp_effective_property_value_type:
+    data_type: VARCHAR(128)
+  prp_effective_property_value_amount:
+    data_type: NUMERIC(15,0)
+  prp_decision_appraised_value_amount:
+    data_type: NUMERIC(15,0)
+  prp_fha_va_reasonable_value_amount:
+    data_type: NUMERIC(15,0)
+  prp_cd_clear_date:
+    data_type: DATE
+  prp_disaster_declaration_check_date_type:
+    data_type: VARCHAR(128)
+  prp_disaster_declaration_check_date:
+    data_type: DATE
+  prp_any_disaster_declaration_before_appraisal:
+    data_type: BOOLEAN
+  prp_any_disaster_declaration_after_appraisal:
+    data_type: BOOLEAN
+  prp_any_disaster_declaration:
+    data_type: BOOLEAN
+  prp_early_first_payment:
+    data_type: VARCHAR(128)
+  prp_property_acquired_through_inheritance:
+    data_type: VARCHAR(128)
+  prp_property_acquired_through_ancillary_relief:
+    data_type: VARCHAR(128)
+  prp_delayed_financing_exception_guidelines_applicable:
+    data_type: BOOLEAN
+  prp_delayed_financing_exception_verified:
+    data_type: BOOLEAN
+  prp_effective_property_value_explanation_type:
+    data_type: VARCHAR(128)
+  prp_taxes_escrowed:
+    data_type: VARCHAR(128)
+  prp_flood_insurance_applicable:
+    data_type: VARCHAR(128)
+  prp_windstorm_insurance_applicable:
+    data_type: VARCHAR(128)
+  prp_earthquake_insurance_applicable:
+    data_type: VARCHAR(128)
+  prp_arms_length:
+    data_type: VARCHAR(128)
+  prp_fha_non_arms_length_ltv_exception_type:
+    data_type: VARCHAR(128)
+  prp_fha_non_arms_length_ltv_exception_verified:
+    data_type: BOOLEAN
+  prp_escrow_cushion_months:
+    data_type: INTEGER
+  prp_escrow_cushion_months_auto_compute:
+    data_type: BOOLEAN
+  prp_fha_eligible_maximum_financing:
+    data_type: VARCHAR(128)
+  prp_hazard_insurance_applicable:
+    data_type: VARCHAR(128)
+  prp_property_repairs_required_type:
+    data_type: VARCHAR(128)
+  prp_property_repairs_description:
+    data_type: VARCHAR(1024)
+  prp_property_repairs_cost_amount:
+    data_type: NUMERIC(15,2)
+  prp_property_repairs_holdback_calc_type:
+    data_type: VARCHAR(128)
+  prp_property_repairs_holdback_amount:
+    data_type: NUMERIC(15,2)
+  prp_property_repairs_holdback_payer_type:
+    data_type: VARCHAR(128)
+  prp_property_repairs_holdback_administrator:
+    data_type: VARCHAR(128)
+  prp_property_repairs_holdback_required_completion_date:
+    data_type: DATE
+  prp_property_repairs_completed_notification_date:
+    data_type: DATE
+  prp_property_repairs_inspection_ordered_date:
+    data_type: DATE
+  prp_property_repairs_inspection_completed_date:
+    data_type: DATE
+  prp_property_repairs_funds_released_contractor_date:
+    data_type: DATE
+  prp_anti_steering_lowest_rate_option_rate_percent:
+    data_type: NUMERIC(11,9)
+  prp_anti_steering_lowest_rate_option_fee_amount:
+    data_type: NUMERIC(15,2)
+  prp_anti_steering_lowest_rate_wo_neg_option_rate_percent:
+    data_type: NUMERIC(11,9)
+  prp_anti_steering_lowest_rate_wo_neg_option_fee_amount:
+    data_type: NUMERIC(15,2)
+  prp_anti_steering_lowest_cost_option_rate_percent:
+    data_type: NUMERIC(11,9)
+  prp_anti_steering_lowest_cost_option_fee_amount:
+    data_type: NUMERIC(15,2)
+  prp_initial_uw_submit_datetime:
+    data_type: TIMESTAMP
+  prp_va_notice_of_value_source_type:
+    data_type: VARCHAR(128)
+  prp_va_notice_of_value_date:
+    data_type: DATE
+  prp_va_notice_of_value_estimated_reasonable_value_amount:
+    data_type: NUMERIC(15,0)
+  prp_sar_significant_adjustments:
+    data_type: BOOLEAN
+  prp_separate_transaction_for_land_acquisition:
+    data_type: VARCHAR(128)
+  prp_land_acquisition_transaction_date:
+    data_type: DATE
+  prp_land_acquisition_price:
+    data_type: NUMERIC(15,0)
+  prp_cash_out_reason_home_improvement:
+    data_type: BOOLEAN
+  prp_cash_out_reason_debt_or_debt_consolidation:
+    data_type: BOOLEAN
+  prp_cash_out_reason_personal_use:
+    data_type: BOOLEAN
+  prp_cash_out_reason_future_investment_not_under_contract:
+    data_type: BOOLEAN
+  prp_cash_out_reason_future_investment_under_contract:
+    data_type: BOOLEAN
+  prp_cash_out_reason_other:
+    data_type: BOOLEAN
+  prp_cash_out_reason_other_text:
+    data_type: VARCHAR(128)
+  prp_decision_veteran_borrower_pid:
+    data_type: BIGINT
+  prp_signed_closing_doc_received_datetime:
+    data_type: TIMESTAMP
+  prp_other_lender_requires_appraisal:
+    data_type: BOOLEAN
+  prp_other_lender_requires_appraisal_reason:
+    data_type: TEXT
+  prp_texas_equity_determination_datetime:
+    data_type: TIMESTAMP
+  prp_texas_equity_conversion_determination_datetime:
+    data_type: TIMESTAMP
+  prp_texas_equity_determination_datetime_override:
+    data_type: BOOLEAN
+  prp_texas_equity_determination_datetime_override_reason:
+    data_type: TEXT
+  prp_texas_equity_conversion_determination_datetime_override:
+    data_type: BOOLEAN
+  prp_texas_equity_conversion_determ_datetime_override_reason:
+    data_type: TEXT
+  prp_cema:
+    data_type: VARCHAR(128)
+  prp_cema_borrower_savings:
+    data_type: NUMERIC(15,2)
+  prp_any_vesting_changes:
+    data_type: VARCHAR(128)
+  prp_vesting_change_titleholder_added:
+    data_type: VARCHAR(128)
+  prp_vesting_change_titleholder_removed:
+    data_type: VARCHAR(128)
+  prp_vesting_change_titleholder_name_change:
+    data_type: VARCHAR(128)
+  prp_deed_taxes_applicable:
+    data_type: BOOLEAN
+  prp_deed_taxes_applicable_explanation:
+    data_type: VARCHAR(1024)
+  prp_deed_taxes_auto_compute:
+    data_type: BOOLEAN
+  prp_deed_taxes_auto_compute_override_reason:
+    data_type: VARCHAR(1024)
+  prp_intent_to_proceed_date:
+    data_type: DATE
+  prp_intent_to_proceed_type:
+    data_type: VARCHAR(128)
+  prp_intent_to_proceed_provider_unparsed_name:
+    data_type: VARCHAR(128)
+  prp_intent_to_proceed_obtainer_unparsed_name:
+    data_type: VARCHAR(128)
+  prp_cash_out_reason_student_loans:
+    data_type: BOOLEAN
+  prp_household_income_exclusive_edit:
+    data_type: BOOLEAN
+  prp_purchase_contract_received_date:
+    data_type: DATE
+  prp_down_payment_percent_mode:
+    data_type: BOOLEAN
+  prp_lender_escrow_loan_amount:
+    data_type: NUMERIC(15,2)
+  prp_underwrite_disposition_note:
+    data_type: VARCHAR(1024)
+  prp_rescission_applicable:
+    data_type: BOOLEAN
+  prp_area_median_income:
+    data_type: NUMERIC(15,2)
+  prp_total_income_to_ami_ratio:
+    data_type: NUMERIC(14,9)
+  prp_cr_tracker_url:
+    data_type: VARCHAR(1024)
+  prp_construction_borrower_contribution_amount:
+    data_type: NUMERIC(15,2)
+  prp_construction_lot_ownership_status_type:
+    data_type: VARCHAR(128)
+  prp_intent_to_proceed_provided:
+    data_type: BOOLEAN
+  prp_effective_signing_location_state:
+    data_type: VARCHAR(128)
+  prp_effective_signing_location_city:
+    data_type: VARCHAR(128)
+  prp_va_required_guaranty_amount:
+    data_type: NUMERIC(15,2)
+  prp_va_amount_used_to_calculate_maximum_guaranty:
+    data_type: NUMERIC(15,2)
+  prp_va_actual_guaranty_amount:
+    data_type: NUMERIC(15,2)
+  prp_last_corrective_disclosure_processed_datetime:
+    data_type: TIMESTAMP
+  prp_user_entered_note_date:
+    data_type: DATE
+  prp_effective_note_date:
+    data_type: DATE
+  prp_lender_escrow_loan_due_date:
+    data_type: DATE
+  prp_va_maximum_base_loan_amount:
+    data_type: NUMERIC(15,2)
+  prp_va_maximum_funding_fee_amount:
+    data_type: NUMERIC(15,2)
+  prp_va_maximum_total_loan_amount:
+    data_type: NUMERIC(15,2)
+  prp_va_required_cash_amount:
+    data_type: NUMERIC(15,2)
+  prp_va_guaranty_percent:
+    data_type: NUMERIC(11,9)
+  prp_gse_version_type:
+    data_type: VARCHAR(128)
+  prp_minimum_household_income_amount:
+    data_type: NUMERIC(15,2)
+  prp_minimum_residual_income_amount:
+    data_type: NUMERIC(15,2)
+  prp_minimum_residual_income_auto_compute:
+    data_type: BOOLEAN
+  prp_financed_property_improvements_category_type:
+    data_type: VARCHAR(128)
+  prp_adjusted_as_is_value_amount:
+    data_type: NUMERIC(15,0)
+  prp_after_improved_value_amount:
+    data_type: NUMERIC(15,0)
+  prp_hud_consultant:
+    data_type: VARCHAR(128)
+  prp_disclosure_action_type:
+    data_type: VARCHAR(128)
+  prp_financed_property_improvements:
+    data_type: BOOLEAN
+  prp_estimated_hard_construction_cost_amount:
+    data_type: BIGINT
+  prp_initial_uw_disposition_datetime:
+    data_type: TIMESTAMP
+  prp_preapproval_uw_submit_datetime:
+    data_type: TIMESTAMP
+  prp_preapproval_uw_disposition_datetime:
+    data_type: TIMESTAMP
+  prp_down_payment_percent:
+    data_type: NUMERIC(11,9)
+  prp_cash_out_reason_investment_or_business_property:
+    data_type: BOOLEAN
+  prp_cash_out_reason_business_debt_or_debt_consolidation:
+    data_type: BOOLEAN
+  prp_non_business_cash_out_reason_acknowledged:
+    data_type: VARCHAR(128)
+  prp_va_energy_efficient_improvements_amount:
+    data_type: NUMERIC(15,2)
+  prp_proposed_additional_monthly_payment:
+    data_type: NUMERIC(17,2)
+  prp_term_borrower_intends_to_retain_property:
+    data_type: INTEGER

@@ -1,0 +1,119 @@
+name: wf_deal_outcome
+primary_source_table: staging.staging_octane.wf_deal_outcome
+primary_key:
+- wdo_pid
+- wdo_version
+foreign_keys:
+  fk_wf_deal_outcome_1:
+    columns:
+    - wdo_wf_deal_step_pid
+    references:
+      columns:
+      - wds_pid
+      schema: history_octane
+      table: wf_deal_step
+  fk_wf_deal_outcome_2:
+    columns:
+    - wdo_transition_wf_deal_step_pid
+    references:
+      columns:
+      - wds_pid
+      schema: history_octane
+      table: wf_deal_step
+  fkt_wdo_wf_outcome_type:
+    columns:
+    - wdo_wf_outcome_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: wf_outcome_type
+columns:
+  wdo_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wdo_pid
+  wdo_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.wdo_version
+  wdo_wf_deal_step_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wdo_wf_deal_step_pid
+  wdo_wf_outcome_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.wdo_wf_outcome_type
+  wdo_outcome_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.wdo_outcome_name
+  wdo_borrower_message:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.wdo_borrower_message
+  wdo_lender_description:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.wdo_lender_description
+  wdo_incomplete_outcome:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.wdo_incomplete_outcome
+  wdo_transition_wf_deal_step_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wdo_transition_wf_deal_step_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100197:
+    input_type: table
+    output_type: insert
+    json_output_field: wdo_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.wf_deal_outcome
+      SELECT staging_table.wdo_pid
+           , staging_table.wdo_version
+           , staging_table.wdo_wf_deal_step_pid
+           , staging_table.wdo_wf_outcome_type
+           , staging_table.wdo_outcome_name
+           , staging_table.wdo_borrower_message
+           , staging_table.wdo_lender_description
+           , staging_table.wdo_incomplete_outcome
+           , staging_table.wdo_transition_wf_deal_step_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.wf_deal_outcome staging_table
+      LEFT JOIN history_octane.wf_deal_outcome history_table
+                ON staging_table.wdo_pid = history_table.wdo_pid
+                    AND staging_table.wdo_version = history_table.wdo_version
+      WHERE history_table.wdo_pid IS NULL
+      UNION ALL
+      SELECT history_table.wdo_pid
+           , history_table.wdo_version + 1
+           , history_table.wdo_wf_deal_step_pid
+           , history_table.wdo_wf_outcome_type
+           , history_table.wdo_outcome_name
+           , history_table.wdo_borrower_message
+           , history_table.wdo_lender_description
+           , history_table.wdo_incomplete_outcome
+           , history_table.wdo_transition_wf_deal_step_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.wf_deal_outcome history_table
+      LEFT JOIN staging_octane.wf_deal_outcome staging_table
+                ON staging_table.wdo_pid = history_table.wdo_pid
+      WHERE staging_table.wdo_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.wf_deal_outcome deleted_records
+          WHERE deleted_records.wdo_pid = history_table.wdo_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

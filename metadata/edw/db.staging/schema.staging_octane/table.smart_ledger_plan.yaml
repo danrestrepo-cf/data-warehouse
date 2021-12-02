@@ -1,0 +1,33 @@
+name: smart_ledger_plan
+primary_key:
+- slp_pid
+foreign_keys:
+  fk_smart_ledger_plan_1:
+    columns:
+    - slp_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fk_smart_ledger_plan_2:
+    columns:
+    - slp_org_node_pid
+    references:
+      columns:
+      - on_pid
+      schema: staging_octane
+      table: org_node
+columns:
+  slp_pid:
+    data_type: BIGINT
+  slp_version:
+    data_type: INTEGER
+  slp_account_pid:
+    data_type: BIGINT
+  slp_org_node_pid:
+    data_type: BIGINT
+  slp_plan_name:
+    data_type: VARCHAR(128)
+  slp_plan_id:
+    data_type: BIGINT

@@ -1,0 +1,439 @@
+name: other_income
+primary_source_table: staging.staging_octane.other_income
+primary_key:
+- oi_pid
+- oi_version
+foreign_keys:
+  fk_other_income_1:
+    columns:
+    - oi_borrower_income_pid
+    references:
+      columns:
+      - bi_pid
+      schema: history_octane
+      table: borrower_income
+  fk_other_income_2:
+    columns:
+    - oi_mortgage_credit_certificate_issuer_pid
+    references:
+      columns:
+      - mcci_pid
+      schema: history_octane
+      table: mortgage_credit_certificate_issuer
+  fkt_oi_calc_method_type:
+    columns:
+    - oi_calc_method_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: income_history_calc_method_type
+  fkt_oi_other_income_type:
+    columns:
+    - oi_other_income_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: other_income_type
+columns:
+  oi_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.oi_pid
+  oi_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.oi_version
+  oi_other_income_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.oi_other_income_type
+  oi_borrower_income_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.oi_borrower_income_pid
+  oi_estimated_net_income_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_estimated_net_income_amount
+  oi_estimated_mode:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.oi_estimated_mode
+  oi_worksheet_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_worksheet_monthly_total_amount
+  oi_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_monthly_total_amount
+  oi_borrower_income_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.oi_borrower_income_percent
+  oi_description:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.oi_description
+  oi_calc_method_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.oi_calc_method_type
+  oi_common_year1_year:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.oi_common_year1_year
+  oi_common_year1_year_include:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.oi_common_year1_year_include
+  oi_common_year1_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.oi_common_year1_from_date
+  oi_common_year1_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.oi_common_year1_through_date
+  oi_common_year1_months:
+    data_type: NUMERIC(4,2)
+    source:
+      field: primary_source_table.columns.oi_common_year1_months
+  oi_common_year1_annual_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_common_year1_annual_total_amount
+  oi_common_year1_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_common_year1_monthly_total_amount
+  oi_common_year2_year:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.oi_common_year2_year
+  oi_common_year2_year_include:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.oi_common_year2_year_include
+  oi_common_year2_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.oi_common_year2_from_date
+  oi_common_year2_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.oi_common_year2_through_date
+  oi_common_year2_months:
+    data_type: NUMERIC(4,2)
+    source:
+      field: primary_source_table.columns.oi_common_year2_months
+  oi_common_year2_annual_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_common_year2_annual_total_amount
+  oi_common_year2_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_common_year2_monthly_total_amount
+  oi_common_year3_year:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.oi_common_year3_year
+  oi_common_year3_year_include:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.oi_common_year3_year_include
+  oi_common_year3_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.oi_common_year3_from_date
+  oi_common_year3_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.oi_common_year3_through_date
+  oi_common_year3_months:
+    data_type: NUMERIC(4,2)
+    source:
+      field: primary_source_table.columns.oi_common_year3_months
+  oi_common_year3_annual_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_common_year3_annual_total_amount
+  oi_common_year3_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_common_year3_monthly_total_amount
+  oi_simple_year1_unadjusted_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_simple_year1_unadjusted_amount
+  oi_simple_year1_income_federal_tax_exempt:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.oi_simple_year1_income_federal_tax_exempt
+  oi_simple_year1_tax_exempt_tax_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.oi_simple_year1_tax_exempt_tax_rate_percent
+  oi_simple_year1_tax_exempt_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_simple_year1_tax_exempt_amount
+  oi_simple_year2_unadjusted_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_simple_year2_unadjusted_amount
+  oi_simple_year2_income_federal_tax_exempt:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.oi_simple_year2_income_federal_tax_exempt
+  oi_simple_year2_tax_exempt_tax_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.oi_simple_year2_tax_exempt_tax_rate_percent
+  oi_simple_year2_tax_exempt_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_simple_year2_tax_exempt_amount
+  oi_simple_year3_unadjusted_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_simple_year3_unadjusted_amount
+  oi_simple_year3_income_federal_tax_exempt:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.oi_simple_year3_income_federal_tax_exempt
+  oi_simple_year3_tax_exempt_tax_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.oi_simple_year3_tax_exempt_tax_rate_percent
+  oi_simple_year3_tax_exempt_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_simple_year3_tax_exempt_amount
+  oi_simple_unadjusted_monthly_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_simple_unadjusted_monthly_amount
+  oi_simple_income_federal_tax_exempt:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.oi_simple_income_federal_tax_exempt
+  oi_simple_tax_exempt_tax_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.oi_simple_tax_exempt_tax_rate_percent
+  oi_simple_tax_exempt_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_simple_tax_exempt_amount
+  oi_simple_calculated_monthly_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_simple_calculated_monthly_amount
+  oi_underwriter_comments:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.oi_underwriter_comments
+  oi_mortgage_credit_certificate_issuer_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.oi_mortgage_credit_certificate_issuer_pid
+  oi_mcc_reservation_number:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.oi_mcc_reservation_number
+  oi_mcc_reservation_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.oi_mcc_reservation_date
+  oi_mcc_reservation_expiration_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.oi_mcc_reservation_expiration_date
+  oi_mcc_commitment_number:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.oi_mcc_commitment_number
+  oi_mcc_underwriting_certification_deadline_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.oi_mcc_underwriting_certification_deadline_date
+  oi_mcc_delivered_by_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.oi_mcc_delivered_by_date
+  oi_unadjusted_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_unadjusted_monthly_total_amount
+  oi_simple_year1_unadjusted_monthly_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_simple_year1_unadjusted_monthly_amount
+  oi_simple_year2_unadjusted_monthly_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_simple_year2_unadjusted_monthly_amount
+  oi_simple_year3_unadjusted_monthly_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.oi_simple_year3_unadjusted_monthly_amount
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100131:
+    input_type: table
+    output_type: insert
+    json_output_field: oi_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.other_income
+      SELECT staging_table.oi_pid
+           , staging_table.oi_version
+           , staging_table.oi_other_income_type
+           , staging_table.oi_borrower_income_pid
+           , staging_table.oi_estimated_net_income_amount
+           , staging_table.oi_estimated_mode
+           , staging_table.oi_worksheet_monthly_total_amount
+           , staging_table.oi_monthly_total_amount
+           , staging_table.oi_borrower_income_percent
+           , staging_table.oi_description
+           , staging_table.oi_calc_method_type
+           , staging_table.oi_common_year1_year
+           , staging_table.oi_common_year1_year_include
+           , staging_table.oi_common_year1_from_date
+           , staging_table.oi_common_year1_through_date
+           , staging_table.oi_common_year1_months
+           , staging_table.oi_common_year1_annual_total_amount
+           , staging_table.oi_common_year1_monthly_total_amount
+           , staging_table.oi_common_year2_year
+           , staging_table.oi_common_year2_year_include
+           , staging_table.oi_common_year2_from_date
+           , staging_table.oi_common_year2_through_date
+           , staging_table.oi_common_year2_months
+           , staging_table.oi_common_year2_annual_total_amount
+           , staging_table.oi_common_year2_monthly_total_amount
+           , staging_table.oi_common_year3_year
+           , staging_table.oi_common_year3_year_include
+           , staging_table.oi_common_year3_from_date
+           , staging_table.oi_common_year3_through_date
+           , staging_table.oi_common_year3_months
+           , staging_table.oi_common_year3_annual_total_amount
+           , staging_table.oi_common_year3_monthly_total_amount
+           , staging_table.oi_simple_year1_unadjusted_amount
+           , staging_table.oi_simple_year1_income_federal_tax_exempt
+           , staging_table.oi_simple_year1_tax_exempt_tax_rate_percent
+           , staging_table.oi_simple_year1_tax_exempt_amount
+           , staging_table.oi_simple_year2_unadjusted_amount
+           , staging_table.oi_simple_year2_income_federal_tax_exempt
+           , staging_table.oi_simple_year2_tax_exempt_tax_rate_percent
+           , staging_table.oi_simple_year2_tax_exempt_amount
+           , staging_table.oi_simple_year3_unadjusted_amount
+           , staging_table.oi_simple_year3_income_federal_tax_exempt
+           , staging_table.oi_simple_year3_tax_exempt_tax_rate_percent
+           , staging_table.oi_simple_year3_tax_exempt_amount
+           , staging_table.oi_simple_unadjusted_monthly_amount
+           , staging_table.oi_simple_income_federal_tax_exempt
+           , staging_table.oi_simple_tax_exempt_tax_rate_percent
+           , staging_table.oi_simple_tax_exempt_amount
+           , staging_table.oi_simple_calculated_monthly_amount
+           , staging_table.oi_underwriter_comments
+           , staging_table.oi_mortgage_credit_certificate_issuer_pid
+           , staging_table.oi_mcc_reservation_number
+           , staging_table.oi_mcc_reservation_date
+           , staging_table.oi_mcc_reservation_expiration_date
+           , staging_table.oi_mcc_commitment_number
+           , staging_table.oi_mcc_underwriting_certification_deadline_date
+           , staging_table.oi_mcc_delivered_by_date
+           , staging_table.oi_unadjusted_monthly_total_amount
+           , staging_table.oi_simple_year1_unadjusted_monthly_amount
+           , staging_table.oi_simple_year2_unadjusted_monthly_amount
+           , staging_table.oi_simple_year3_unadjusted_monthly_amount
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.other_income staging_table
+      LEFT JOIN history_octane.other_income history_table
+                ON staging_table.oi_pid = history_table.oi_pid
+                    AND staging_table.oi_version = history_table.oi_version
+      WHERE history_table.oi_pid IS NULL
+      UNION ALL
+      SELECT history_table.oi_pid
+           , history_table.oi_version + 1
+           , history_table.oi_other_income_type
+           , history_table.oi_borrower_income_pid
+           , history_table.oi_estimated_net_income_amount
+           , history_table.oi_estimated_mode
+           , history_table.oi_worksheet_monthly_total_amount
+           , history_table.oi_monthly_total_amount
+           , history_table.oi_borrower_income_percent
+           , history_table.oi_description
+           , history_table.oi_calc_method_type
+           , history_table.oi_common_year1_year
+           , history_table.oi_common_year1_year_include
+           , history_table.oi_common_year1_from_date
+           , history_table.oi_common_year1_through_date
+           , history_table.oi_common_year1_months
+           , history_table.oi_common_year1_annual_total_amount
+           , history_table.oi_common_year1_monthly_total_amount
+           , history_table.oi_common_year2_year
+           , history_table.oi_common_year2_year_include
+           , history_table.oi_common_year2_from_date
+           , history_table.oi_common_year2_through_date
+           , history_table.oi_common_year2_months
+           , history_table.oi_common_year2_annual_total_amount
+           , history_table.oi_common_year2_monthly_total_amount
+           , history_table.oi_common_year3_year
+           , history_table.oi_common_year3_year_include
+           , history_table.oi_common_year3_from_date
+           , history_table.oi_common_year3_through_date
+           , history_table.oi_common_year3_months
+           , history_table.oi_common_year3_annual_total_amount
+           , history_table.oi_common_year3_monthly_total_amount
+           , history_table.oi_simple_year1_unadjusted_amount
+           , history_table.oi_simple_year1_income_federal_tax_exempt
+           , history_table.oi_simple_year1_tax_exempt_tax_rate_percent
+           , history_table.oi_simple_year1_tax_exempt_amount
+           , history_table.oi_simple_year2_unadjusted_amount
+           , history_table.oi_simple_year2_income_federal_tax_exempt
+           , history_table.oi_simple_year2_tax_exempt_tax_rate_percent
+           , history_table.oi_simple_year2_tax_exempt_amount
+           , history_table.oi_simple_year3_unadjusted_amount
+           , history_table.oi_simple_year3_income_federal_tax_exempt
+           , history_table.oi_simple_year3_tax_exempt_tax_rate_percent
+           , history_table.oi_simple_year3_tax_exempt_amount
+           , history_table.oi_simple_unadjusted_monthly_amount
+           , history_table.oi_simple_income_federal_tax_exempt
+           , history_table.oi_simple_tax_exempt_tax_rate_percent
+           , history_table.oi_simple_tax_exempt_amount
+           , history_table.oi_simple_calculated_monthly_amount
+           , history_table.oi_underwriter_comments
+           , history_table.oi_mortgage_credit_certificate_issuer_pid
+           , history_table.oi_mcc_reservation_number
+           , history_table.oi_mcc_reservation_date
+           , history_table.oi_mcc_reservation_expiration_date
+           , history_table.oi_mcc_commitment_number
+           , history_table.oi_mcc_underwriting_certification_deadline_date
+           , history_table.oi_mcc_delivered_by_date
+           , history_table.oi_unadjusted_monthly_total_amount
+           , history_table.oi_simple_year1_unadjusted_monthly_amount
+           , history_table.oi_simple_year2_unadjusted_monthly_amount
+           , history_table.oi_simple_year3_unadjusted_monthly_amount
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.other_income history_table
+      LEFT JOIN staging_octane.other_income staging_table
+                ON staging_table.oi_pid = history_table.oi_pid
+      WHERE staging_table.oi_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.other_income deleted_records
+          WHERE deleted_records.oi_pid = history_table.oi_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

@@ -1,0 +1,151 @@
+name: lead_source
+primary_source_table: staging.staging_octane.lead_source
+primary_key:
+- lds_pid
+- lds_version
+foreign_keys:
+  fk_lead_source_1:
+    columns:
+    - lds_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+  fk_lead_source_2:
+    columns:
+    - lds_channel_pid
+    references:
+      columns:
+      - ch_pid
+      schema: history_octane
+      table: channel
+  fk_lead_source_3:
+    columns:
+    - lds_mortech_account_pid
+    references:
+      columns:
+      - ma_pid
+      schema: history_octane
+      table: mortech_account
+  fkt_lds_broker_compensation_type:
+    columns:
+    - lds_broker_compensation_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: broker_compensation_type
+columns:
+  lds_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lds_pid
+  lds_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lds_version
+  lds_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lds_account_pid
+  lds_channel_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lds_channel_pid
+  lds_lead_source_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lds_lead_source_name
+  lds_mortech_lead_source_id:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.lds_mortech_lead_source_id
+  lds_lead_source_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lds_lead_source_id
+  lds_active:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lds_active
+  lds_lead_id_required:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lds_lead_id_required
+  lds_zero_margin_allowed:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lds_zero_margin_allowed
+  lds_mortech_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lds_mortech_account_pid
+  lds_training_only:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lds_training_only
+  lds_broker_compensation_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lds_broker_compensation_type
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100038:
+    input_type: table
+    output_type: insert
+    json_output_field: lds_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.lead_source
+      SELECT staging_table.lds_pid
+           , staging_table.lds_version
+           , staging_table.lds_account_pid
+           , staging_table.lds_channel_pid
+           , staging_table.lds_lead_source_name
+           , staging_table.lds_mortech_lead_source_id
+           , staging_table.lds_lead_source_id
+           , staging_table.lds_active
+           , staging_table.lds_lead_id_required
+           , staging_table.lds_zero_margin_allowed
+           , staging_table.lds_mortech_account_pid
+           , staging_table.lds_training_only
+           , staging_table.lds_broker_compensation_type
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.lead_source staging_table
+      LEFT JOIN history_octane.lead_source history_table
+                ON staging_table.lds_pid = history_table.lds_pid
+                    AND staging_table.lds_version = history_table.lds_version
+      WHERE history_table.lds_pid IS NULL
+      UNION ALL
+      SELECT history_table.lds_pid
+           , history_table.lds_version + 1
+           , history_table.lds_account_pid
+           , history_table.lds_channel_pid
+           , history_table.lds_lead_source_name
+           , history_table.lds_mortech_lead_source_id
+           , history_table.lds_lead_source_id
+           , history_table.lds_active
+           , history_table.lds_lead_id_required
+           , history_table.lds_zero_margin_allowed
+           , history_table.lds_mortech_account_pid
+           , history_table.lds_training_only
+           , history_table.lds_broker_compensation_type
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.lead_source history_table
+      LEFT JOIN staging_octane.lead_source staging_table
+                ON staging_table.lds_pid = history_table.lds_pid
+      WHERE staging_table.lds_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.lead_source deleted_records
+          WHERE deleted_records.lds_pid = history_table.lds_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

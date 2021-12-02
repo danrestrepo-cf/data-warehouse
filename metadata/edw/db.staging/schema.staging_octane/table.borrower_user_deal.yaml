@@ -1,0 +1,59 @@
+name: borrower_user_deal
+primary_key:
+- bud_pid
+foreign_keys:
+  fk_borrower_user_deal_1:
+    columns:
+    - bud_borrower_user_pid
+    references:
+      columns:
+      - bu_pid
+      schema: staging_octane
+      table: borrower_user
+  fk_borrower_user_deal_2:
+    columns:
+    - bud_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: staging_octane
+      table: deal
+  fk_borrower_user_deal_3:
+    columns:
+    - bud_borrower_pid
+    references:
+      columns:
+      - b_pid
+      schema: staging_octane
+      table: borrower
+  fkt_bud_borrower_user_deal_access_type:
+    columns:
+    - bud_borrower_user_deal_access_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: borrower_user_deal_access_type
+columns:
+  bud_pid:
+    data_type: BIGINT
+  bud_version:
+    data_type: INTEGER
+  bud_borrower_user_pid:
+    data_type: BIGINT
+  bud_deal_pid:
+    data_type: BIGINT
+  bud_borrower_pid:
+    data_type: BIGINT
+  bud_borrower_user_deal_access_type:
+    data_type: VARCHAR(128)
+  bud_electronic_transaction_consent:
+    data_type: BOOLEAN
+  bud_electronic_transaction_consent_datetime:
+    data_type: TIMESTAMP
+  bud_electronic_transaction_consent_ip_address:
+    data_type: VARCHAR(32)
+  bud_create_datetime:
+    data_type: TIMESTAMP
+  bud_uuid:
+    data_type: VARCHAR(36)

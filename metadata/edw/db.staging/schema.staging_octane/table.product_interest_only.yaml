@@ -1,0 +1,31 @@
+name: product_interest_only
+primary_key:
+- pio_pid
+foreign_keys:
+  fk_product_interest_only_1:
+    columns:
+    - pio_product_terms_pid
+    references:
+      columns:
+      - pt_pid
+      schema: staging_octane
+      table: product_terms
+  fkt_pio_interest_only_type:
+    columns:
+    - pio_interest_only_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: interest_only_type
+columns:
+  pio_pid:
+    data_type: BIGINT
+  pio_version:
+    data_type: INTEGER
+  pio_product_terms_pid:
+    data_type: BIGINT
+  pio_interest_only_type:
+    data_type: VARCHAR(128)
+  pio_balloon_payment:
+    data_type: BOOLEAN

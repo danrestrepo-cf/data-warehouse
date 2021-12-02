@@ -1,0 +1,159 @@
+name: loan_recording
+primary_source_table: staging.staging_octane.loan_recording
+primary_key:
+- lr_pid
+- lr_version
+foreign_keys:
+  fk_loan_recording_1:
+    columns:
+    - lr_loan_pid
+    references:
+      columns:
+      - l_pid
+      schema: history_octane
+      table: loan
+  fkt_lr_mers_registration_status_type:
+    columns:
+    - lr_mers_registration_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mers_registration_status_type
+columns:
+  lr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lr_pid
+  lr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lr_version
+  lr_loan_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lr_loan_pid
+  lr_recording_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lr_recording_date
+  lr_recording_instrument_number:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.lr_recording_instrument_number
+  lr_recording_book_number:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.lr_recording_book_number
+  lr_recording_volume_number:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.lr_recording_volume_number
+  lr_recording_page_number:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.lr_recording_page_number
+  lr_recording_jurisdiction_name:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.lr_recording_jurisdiction_name
+  lr_recording_witness_unparsed_name:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.lr_recording_witness_unparsed_name
+  lr_re_recording:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lr_re_recording
+  lr_mers_registration_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lr_mers_registration_status_type
+  lr_mers_registration_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lr_mers_registration_date
+  lr_mers_registration_errors:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.lr_mers_registration_errors
+  lr_mers_registration_warnings:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.lr_mers_registration_warnings
+  lr_mers_transfer_errors:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.lr_mers_transfer_errors
+  lr_mers_transfer_warnings:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.lr_mers_transfer_warnings
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100149:
+    input_type: table
+    output_type: insert
+    json_output_field: lr_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.loan_recording
+      SELECT staging_table.lr_pid
+           , staging_table.lr_version
+           , staging_table.lr_loan_pid
+           , staging_table.lr_recording_date
+           , staging_table.lr_recording_instrument_number
+           , staging_table.lr_recording_book_number
+           , staging_table.lr_recording_volume_number
+           , staging_table.lr_recording_page_number
+           , staging_table.lr_recording_jurisdiction_name
+           , staging_table.lr_recording_witness_unparsed_name
+           , staging_table.lr_re_recording
+           , staging_table.lr_mers_registration_status_type
+           , staging_table.lr_mers_registration_date
+           , staging_table.lr_mers_registration_errors
+           , staging_table.lr_mers_registration_warnings
+           , staging_table.lr_mers_transfer_errors
+           , staging_table.lr_mers_transfer_warnings
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.loan_recording staging_table
+      LEFT JOIN history_octane.loan_recording history_table
+                ON staging_table.lr_pid = history_table.lr_pid
+                    AND staging_table.lr_version = history_table.lr_version
+      WHERE history_table.lr_pid IS NULL
+      UNION ALL
+      SELECT history_table.lr_pid
+           , history_table.lr_version + 1
+           , history_table.lr_loan_pid
+           , history_table.lr_recording_date
+           , history_table.lr_recording_instrument_number
+           , history_table.lr_recording_book_number
+           , history_table.lr_recording_volume_number
+           , history_table.lr_recording_page_number
+           , history_table.lr_recording_jurisdiction_name
+           , history_table.lr_recording_witness_unparsed_name
+           , history_table.lr_re_recording
+           , history_table.lr_mers_registration_status_type
+           , history_table.lr_mers_registration_date
+           , history_table.lr_mers_registration_errors
+           , history_table.lr_mers_registration_warnings
+           , history_table.lr_mers_transfer_errors
+           , history_table.lr_mers_transfer_warnings
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.loan_recording history_table
+      LEFT JOIN staging_octane.loan_recording staging_table
+                ON staging_table.lr_pid = history_table.lr_pid
+      WHERE staging_table.lr_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.loan_recording deleted_records
+          WHERE deleted_records.lr_pid = history_table.lr_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

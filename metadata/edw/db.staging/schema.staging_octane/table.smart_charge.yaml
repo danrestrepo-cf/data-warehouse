@@ -1,0 +1,61 @@
+name: smart_charge
+primary_key:
+- sc_pid
+foreign_keys:
+  fk_smart_charge_1:
+    columns:
+    - sc_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fk_smart_charge_2:
+    columns:
+    - sc_apr_criteria_pid
+    references:
+      columns:
+      - cr_pid
+      schema: staging_octane
+      table: criteria
+  fkt_sc_charge_type:
+    columns:
+    - sc_charge_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: charge_type
+  fkt_sc_loan_position_type:
+    columns:
+    - sc_loan_position_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: loan_position_type
+  fkt_sc_smart_charge_apr_type:
+    columns:
+    - sc_smart_charge_apr_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: smart_charge_apr_type
+columns:
+  sc_pid:
+    data_type: BIGINT
+  sc_version:
+    data_type: INTEGER
+  sc_account_pid:
+    data_type: BIGINT
+  sc_charge_type:
+    data_type: VARCHAR(128)
+  sc_loan_position_type:
+    data_type: VARCHAR(128)
+  sc_name:
+    data_type: VARCHAR(128)
+  sc_smart_charge_apr_type:
+    data_type: VARCHAR(128)
+  sc_apr_criteria_pid:
+    data_type: BIGINT

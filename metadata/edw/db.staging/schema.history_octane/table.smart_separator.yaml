@@ -1,0 +1,101 @@
+name: smart_separator
+primary_source_table: staging.staging_octane.smart_separator
+primary_key:
+- ssp_pid
+- ssp_version
+foreign_keys:
+  fk_smart_separator_1:
+    columns:
+    - ssp_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+  fk_smart_separator_2:
+    columns:
+    - ssp_custom_form_pid
+    references:
+      columns:
+      - cf_pid
+      schema: history_octane
+      table: custom_form
+  fk_smart_separator_3:
+    columns:
+    - ssp_criteria_pid
+    references:
+      columns:
+      - cr_pid
+      schema: history_octane
+      table: criteria
+columns:
+  ssp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ssp_pid
+  ssp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ssp_version
+  ssp_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ssp_account_pid
+  ssp_custom_form_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ssp_custom_form_pid
+  ssp_criteria_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ssp_criteria_pid
+  ssp_separator_name:
+    data_type: VARCHAR(767)
+    source:
+      field: primary_source_table.columns.ssp_separator_name
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100335:
+    input_type: table
+    output_type: insert
+    json_output_field: ssp_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.smart_separator
+      SELECT staging_table.ssp_pid
+           , staging_table.ssp_version
+           , staging_table.ssp_account_pid
+           , staging_table.ssp_custom_form_pid
+           , staging_table.ssp_criteria_pid
+           , staging_table.ssp_separator_name
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.smart_separator staging_table
+      LEFT JOIN history_octane.smart_separator history_table
+                ON staging_table.ssp_pid = history_table.ssp_pid
+                    AND staging_table.ssp_version = history_table.ssp_version
+      WHERE history_table.ssp_pid IS NULL
+      UNION ALL
+      SELECT history_table.ssp_pid
+           , history_table.ssp_version + 1
+           , history_table.ssp_account_pid
+           , history_table.ssp_custom_form_pid
+           , history_table.ssp_criteria_pid
+           , history_table.ssp_separator_name
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.smart_separator history_table
+      LEFT JOIN staging_octane.smart_separator staging_table
+                ON staging_table.ssp_pid = history_table.ssp_pid
+      WHERE staging_table.ssp_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.smart_separator deleted_records
+          WHERE deleted_records.ssp_pid = history_table.ssp_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

@@ -7,6 +7,17 @@ pipeline {
         choice(name: "environment", description: "Choose which environment to run on.",
             choices: ["qa", "prod"]
         )
+
+        // special control options for EDW deploy
+        booleanParam(name: "clear_pending", defaultValue: false, description: "Purge the SQS queues on deploy.")
+        booleanParam(name: "stop_jobs", defaultValue: false, description: "Stop running Step Functions on deploy.")
+
+        // Octane actions
+        string(name: 'octane_git_branch', defaultValue: "prod-release", description: "Git branch to use with Octane.")
+        choice(name: 'octane_environment', description: "Environment to use with Octane",
+            choices: ["cert", "prod"]
+        )
+        booleanParam(name: "start_dms", defaultValue: false, description: "Start DMS after EDW deploy completes.  Do NOT enable if its for a pending Octane update.")
     }
     options {
         ansiColor("xterm")
@@ -46,11 +57,53 @@ pipeline {
                 sh '''docker rm $(docker ps -a -q) || true'''
             }
         }
-        stage("Build Docker images") {
+        stage("Disable New Jobs") {
+            environment {
+                AWS_PROFILE = "${params.environment}"
+            }
             steps {
-                sh "./integ/scripts/s3-artifact-download.sh './docker/pentaho/install' 'pdi-ce-9.0.0.0-423.zip' 'data-warehouse/pdi-ce-9.0.0.0-423.zip'"
-                dir("./docker") {
-                    sh "./docker-rebuild.sh"
+                sh "integ/scripts/events-toggle-triggers.sh ${params.environment} disable"
+            }
+        }
+        stage("Purge Pending Jobs") {
+            when { equals expected: true, actual: params.clear_pending}
+            environment {
+                AWS_PROFILE = "${params.environment}"
+            }
+            steps {
+                sh "integ/scripts/clear-sqs.sh ${params.environment}"
+            }
+        }
+        stage("Prepare Deploy") {
+            parallel {
+                stage("Stop DMS") {
+                    steps {
+                       build job: 'mt-ops-edw-dms-task-manager',
+                           propagate: true,
+                           wait: true,
+                           parameters: [
+                               string(name: 'git_branch', value: params.octane_git_branch),
+                               string(name: 'app_env', value: params.octane_environment),
+                               string(name: 'action', value: 'stop')
+                           ]
+                    }
+                }
+                stage("Build Docker images") {
+                    steps {
+                        sh "./integ/scripts/s3-artifact-download.sh './docker/pentaho/install' 'pdi-ce-9.0.0.0-423.zip' 'data-warehouse/pdi-ce-9.0.0.0-423.zip'"
+                        dir("./docker") {
+                            sh "./docker-rebuild.sh"
+                        }
+                    }
+                }
+                stage("Stop Running Jobs") {
+                    when { equals expected: true, actual: params.stop_jobs}
+                    environment {
+                        AWS_PROFILE = "${params.environment}"
+                    }
+                    steps {
+                        sh "integ/scripts/step-functions-stop-executions.sh ${params.environment}"
+                    }
                 }
             }
         }
@@ -59,7 +112,6 @@ pipeline {
                 AWS_PROFILE = "${params.environment}"
             }
             steps {
-                sh "integ/scripts/events-disable-triggers.sh ${params.environment}"
                 dir("./docker") {
                     sh "./run-migration.sh ${params.environment}"
                     sh "./push-image.sh ${params.environment} pentaho"
@@ -80,6 +132,32 @@ pipeline {
                     ]
             }
         }
+        stage("Resume Jobs") {
+            parallel {
+                stage("Enable New Jobs") {
+                    environment {
+                        AWS_PROFILE = "${params.environment}"
+                    }
+                    steps {
+                        sh "sleep 10"
+                        sh "integ/scripts/events-toggle-triggers.sh ${params.environment} enable"
+                    }
+                }
+                stage("Update DMS") {
+                    when { equals expected: true, actual: params.start_dms}
+                    steps {
+                       build job: 'mt-ops-edw-dms-task-manager',
+                           propagate: true,
+                           wait: true,
+                           parameters: [
+                               string(name: 'git_branch', value: params.octane_git_branch),
+                               string(name: 'app_env', value: params.octane_environment),
+                               string(name: 'action', value: "update-and-start")
+                           ]
+                    }
+                }
+            }
+        }
     }
     post {
         always {
@@ -91,24 +169,24 @@ pipeline {
     }
 }
 
-def zoom(status) {
+def zoomMessage(status, token, webhook, message = null) {
     wrap([$class: 'BuildUser']) {
         zoomSend(
-            authToken: env.ZOOM_TOKEN_STATUS,
-            webhookUrl: env.ZOOM_WEBHOOK_STATUS,
+            authToken: token,
+            webhookUrl: webhook,
             message: "${env.JOB_NAME} #${currentBuild.number} for ${params.environment} - ${status}\n" +
+                "   Clear Pending ETLs (SQS)? ${params.clear_pending}\n" +
+                "   Stop Running ETLs? ${params.stop_jobs}\n" +
+                (message == null ? "" : "    ${message}\n") +
                 "Submitted by ${env.BUILD_USER} for ${params.git_branch}"
         )
     }
 }
 
-def zoomAlarm(status) {
-    wrap([$class: 'BuildUser']) {
-        zoomSend(
-            authToken: env.ZOOM_TOKEN_ALARM,
-            webhookUrl: env.ZOOM_WEBHOOK_ALARM,
-            message: "${env.JOB_NAME} #${currentBuild.number} for ${params.environment} - ${status}\n" +
-                "Submitted by ${env.BUILD_USER} for ${params.git_branch}"
-        )
-    }
+def zoom(status) {
+    zoomMessage(status, env.ZOOM_TOKEN_STATUS, env.ZOOM_WEBHOOK_STATUS)
+}
+
+def zoomAlarm(status, message = null) {
+    zoomMessage(status, env.ZOOM_TOKEN_ALARM, env.ZOOM_WEBHOOK_ALARM, message)
 }

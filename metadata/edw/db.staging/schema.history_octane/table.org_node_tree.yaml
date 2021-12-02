@@ -1,0 +1,67 @@
+name: org_node_tree
+primary_source_table: staging.staging_octane.org_node_tree
+primary_key:
+- ont_pid
+- ont_version
+foreign_keys:
+  fk_org_node_tree_1:
+    columns:
+    - ont_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+columns:
+  ont_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ont_pid
+  ont_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ont_version
+  ont_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ont_account_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100366:
+    input_type: table
+    output_type: insert
+    json_output_field: ont_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.org_node_tree
+      SELECT staging_table.ont_pid
+           , staging_table.ont_version
+           , staging_table.ont_account_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.org_node_tree staging_table
+      LEFT JOIN history_octane.org_node_tree history_table
+                ON staging_table.ont_pid = history_table.ont_pid
+                    AND staging_table.ont_version = history_table.ont_version
+      WHERE history_table.ont_pid IS NULL
+      UNION ALL
+      SELECT history_table.ont_pid
+           , history_table.ont_version + 1
+           , history_table.ont_account_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.org_node_tree history_table
+      LEFT JOIN staging_octane.org_node_tree staging_table
+                ON staging_table.ont_pid = history_table.ont_pid
+      WHERE staging_table.ont_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.org_node_tree deleted_records
+          WHERE deleted_records.ont_pid = history_table.ont_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

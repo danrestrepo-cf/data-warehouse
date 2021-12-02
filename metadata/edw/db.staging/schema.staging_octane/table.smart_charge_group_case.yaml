@@ -1,0 +1,23 @@
+name: smart_charge_group_case
+primary_key:
+- scgc_pid
+foreign_keys:
+  fk_smart_charge_group_case_1:
+    columns:
+    - scgc_smart_charge_group_pid
+    references:
+      columns:
+      - scg_pid
+      schema: staging_octane
+      table: smart_charge_group
+columns:
+  scgc_pid:
+    data_type: BIGINT
+  scgc_version:
+    data_type: INTEGER
+  scgc_smart_charge_group_pid:
+    data_type: BIGINT
+  scgc_from_date:
+    data_type: DATE
+  scgc_through_date:
+    data_type: DATE

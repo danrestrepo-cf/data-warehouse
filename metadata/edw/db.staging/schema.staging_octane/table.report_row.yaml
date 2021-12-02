@@ -1,0 +1,35 @@
+name: report_row
+primary_key:
+- rprw_pid
+foreign_keys:
+  fk_report_row_1:
+    columns:
+    - rprw_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fkt_rprw_report_type:
+    columns:
+    - rprw_report_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: report_type
+columns:
+  rprw_pid:
+    data_type: BIGINT
+  rprw_version:
+    data_type: INTEGER
+  rprw_account_pid:
+    data_type: BIGINT
+  rprw_report_type:
+    data_type: VARCHAR(128)
+  rprw_name:
+    data_type: VARCHAR(128)
+  rprw_description:
+    data_type: VARCHAR(1024)
+  rprw_formula_row:
+    data_type: BOOLEAN

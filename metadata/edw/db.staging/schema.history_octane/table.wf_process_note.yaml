@@ -1,0 +1,99 @@
+name: wf_process_note
+primary_source_table: staging.staging_octane.wf_process_note
+primary_key:
+- wfpn_pid
+- wfpn_version
+foreign_keys:
+  fk_wf_process_note_1:
+    columns:
+    - wfpn_wf_process_pid
+    references:
+      columns:
+      - wpr_pid
+      schema: history_octane
+      table: wf_process
+  fk_wf_process_note_2:
+    columns:
+    - wfpn_author_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+columns:
+  wfpn_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wfpn_pid
+  wfpn_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.wfpn_version
+  wfpn_wf_process_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wfpn_wf_process_pid
+  wfpn_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.wfpn_create_datetime
+  wfpn_content:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.wfpn_content
+  wfpn_author_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wfpn_author_lender_user_pid
+  wfpn_author_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.wfpn_author_unparsed_name
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100866:
+    input_type: table
+    output_type: insert
+    json_output_field: wfpn_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.wf_process_note
+      SELECT staging_table.wfpn_pid
+           , staging_table.wfpn_version
+           , staging_table.wfpn_wf_process_pid
+           , staging_table.wfpn_create_datetime
+           , staging_table.wfpn_content
+           , staging_table.wfpn_author_lender_user_pid
+           , staging_table.wfpn_author_unparsed_name
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.wf_process_note staging_table
+      LEFT JOIN history_octane.wf_process_note history_table
+                ON staging_table.wfpn_pid = history_table.wfpn_pid
+                    AND staging_table.wfpn_version = history_table.wfpn_version
+      WHERE history_table.wfpn_pid IS NULL
+      UNION ALL
+      SELECT history_table.wfpn_pid
+           , history_table.wfpn_version + 1
+           , history_table.wfpn_wf_process_pid
+           , history_table.wfpn_create_datetime
+           , history_table.wfpn_content
+           , history_table.wfpn_author_lender_user_pid
+           , history_table.wfpn_author_unparsed_name
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.wf_process_note history_table
+      LEFT JOIN staging_octane.wf_process_note staging_table
+                ON staging_table.wfpn_pid = history_table.wfpn_pid
+      WHERE staging_table.wfpn_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.wf_process_note deleted_records
+          WHERE deleted_records.wfpn_pid = history_table.wfpn_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

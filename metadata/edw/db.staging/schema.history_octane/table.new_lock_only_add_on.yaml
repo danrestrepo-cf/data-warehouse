@@ -1,0 +1,79 @@
+name: new_lock_only_add_on
+primary_source_table: staging.staging_octane.new_lock_only_add_on
+primary_key:
+- nlo_pid
+- nlo_version
+foreign_keys:
+  fk_new_lock_only_add_on_1:
+    columns:
+    - nlo_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+columns:
+  nlo_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.nlo_pid
+  nlo_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.nlo_version
+  nlo_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.nlo_account_pid
+  nlo_add_on_prefix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.nlo_add_on_prefix
+  nlo_add_on_description:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.nlo_add_on_description
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100016:
+    input_type: table
+    output_type: insert
+    json_output_field: nlo_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.new_lock_only_add_on
+      SELECT staging_table.nlo_pid
+           , staging_table.nlo_version
+           , staging_table.nlo_account_pid
+           , staging_table.nlo_add_on_prefix
+           , staging_table.nlo_add_on_description
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.new_lock_only_add_on staging_table
+      LEFT JOIN history_octane.new_lock_only_add_on history_table
+                ON staging_table.nlo_pid = history_table.nlo_pid
+                    AND staging_table.nlo_version = history_table.nlo_version
+      WHERE history_table.nlo_pid IS NULL
+      UNION ALL
+      SELECT history_table.nlo_pid
+           , history_table.nlo_version + 1
+           , history_table.nlo_account_pid
+           , history_table.nlo_add_on_prefix
+           , history_table.nlo_add_on_description
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.new_lock_only_add_on history_table
+      LEFT JOIN staging_octane.new_lock_only_add_on staging_table
+                ON staging_table.nlo_pid = history_table.nlo_pid
+      WHERE staging_table.nlo_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.new_lock_only_add_on deleted_records
+          WHERE deleted_records.nlo_pid = history_table.nlo_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

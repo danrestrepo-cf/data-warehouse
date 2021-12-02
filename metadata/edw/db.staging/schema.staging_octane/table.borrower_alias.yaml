@@ -1,0 +1,43 @@
+name: borrower_alias
+primary_key:
+- ba_pid
+foreign_keys:
+  fk_borrower_alias_1:
+    columns:
+    - ba_borrower_pid
+    references:
+      columns:
+      - b_pid
+      schema: staging_octane
+      table: borrower
+  fk_borrower_alias_2:
+    columns:
+    - ba_credit_request_pid
+    references:
+      columns:
+      - crdr_pid
+      schema: staging_octane
+      table: credit_request
+columns:
+  ba_pid:
+    data_type: BIGINT
+  ba_version:
+    data_type: INTEGER
+  ba_account_number:
+    data_type: VARCHAR(32)
+  ba_borrower_pid:
+    data_type: BIGINT
+  ba_credit_request_pid:
+    data_type: BIGINT
+  ba_creditor_name:
+    data_type: VARCHAR(32)
+  ba_first_name:
+    data_type: VARCHAR(32)
+  ba_last_name:
+    data_type: VARCHAR(32)
+  ba_middle_name:
+    data_type: VARCHAR(32)
+  ba_name_suffix:
+    data_type: VARCHAR(32)
+  ba_credit_report_identifier:
+    data_type: VARCHAR(32)

@@ -1,0 +1,51 @@
+name: settlement_agent_office
+primary_key:
+- sao_pid
+foreign_keys:
+  fk_settlement_agent_office_1:
+    columns:
+    - sao_settlement_agent_pid
+    references:
+      columns:
+      - sa_pid
+      schema: staging_octane
+      table: settlement_agent
+  fkt_sao_address_country:
+    columns:
+    - sao_address_country
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: country_type
+columns:
+  sao_pid:
+    data_type: BIGINT
+  sao_version:
+    data_type: INTEGER
+  sao_settlement_agent_pid:
+    data_type: BIGINT
+  sao_active:
+    data_type: BOOLEAN
+  sao_address_street1:
+    data_type: VARCHAR(128)
+  sao_address_street2:
+    data_type: VARCHAR(128)
+  sao_address_city:
+    data_type: VARCHAR(128)
+  sao_address_state:
+    data_type: VARCHAR(128)
+  sao_address_postal_code:
+    data_type: VARCHAR(128)
+  sao_address_country:
+    data_type: VARCHAR(128)
+  sao_phone:
+    data_type: VARCHAR(32)
+  sao_fax:
+    data_type: VARCHAR(32)
+  sao_docs_email:
+    data_type: VARCHAR(256)
+  sao_fund_email:
+    data_type: VARCHAR(256)
+  sao_schedule_email:
+    data_type: VARCHAR(256)

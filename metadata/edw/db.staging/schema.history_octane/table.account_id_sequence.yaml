@@ -1,0 +1,30 @@
+name: account_id_sequence
+primary_source_table: staging.staging_octane.account_id_sequence
+primary_key:
+- ais_id
+columns:
+  ais_id:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ais_id
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100836:
+    input_type: table
+    output_type: insert
+    json_output_field: ais_id
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.account_id_sequence
+      SELECT staging_table.ais_id
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.account_id_sequence staging_table
+      LEFT JOIN history_octane.account_id_sequence history_table
+                ON staging_table.ais_id = history_table.ais_id
+      WHERE history_table.ais_id IS NULL;

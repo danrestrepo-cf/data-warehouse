@@ -1,0 +1,105 @@
+name: credit_limit
+primary_source_table: staging.staging_octane.credit_limit
+primary_key:
+- cl_pid
+- cl_version
+foreign_keys:
+  fk_credit_limit_1:
+    columns:
+    - cl_interim_funder_pid
+    references:
+      columns:
+      - if_pid
+      schema: history_octane
+      table: interim_funder
+  fkt_cl_credit_limit_type:
+    columns:
+    - cl_credit_limit_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: credit_limit_type
+columns:
+  cl_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cl_pid
+  cl_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.cl_version
+  cl_interim_funder_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cl_interim_funder_pid
+  cl_credit_limit_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cl_credit_limit_name
+  cl_credit_limit_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.cl_credit_limit_amount
+  cl_credit_limit_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cl_credit_limit_type
+  cl_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.cl_from_date
+  cl_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.cl_through_date
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100031:
+    input_type: table
+    output_type: insert
+    json_output_field: cl_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.credit_limit
+      SELECT staging_table.cl_pid
+           , staging_table.cl_version
+           , staging_table.cl_interim_funder_pid
+           , staging_table.cl_credit_limit_name
+           , staging_table.cl_credit_limit_amount
+           , staging_table.cl_credit_limit_type
+           , staging_table.cl_from_date
+           , staging_table.cl_through_date
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.credit_limit staging_table
+      LEFT JOIN history_octane.credit_limit history_table
+                ON staging_table.cl_pid = history_table.cl_pid
+                    AND staging_table.cl_version = history_table.cl_version
+      WHERE history_table.cl_pid IS NULL
+      UNION ALL
+      SELECT history_table.cl_pid
+           , history_table.cl_version + 1
+           , history_table.cl_interim_funder_pid
+           , history_table.cl_credit_limit_name
+           , history_table.cl_credit_limit_amount
+           , history_table.cl_credit_limit_type
+           , history_table.cl_from_date
+           , history_table.cl_through_date
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.credit_limit history_table
+      LEFT JOIN staging_octane.credit_limit staging_table
+                ON staging_table.cl_pid = history_table.cl_pid
+      WHERE staging_table.cl_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.credit_limit deleted_records
+          WHERE deleted_records.cl_pid = history_table.cl_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

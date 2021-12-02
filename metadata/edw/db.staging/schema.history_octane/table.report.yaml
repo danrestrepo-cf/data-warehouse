@@ -1,0 +1,149 @@
+name: report
+primary_source_table: staging.staging_octane.report
+primary_key:
+- rp_pid
+- rp_version
+foreign_keys:
+  fk_report_1:
+    columns:
+    - rp_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+  fk_report_3:
+    columns:
+    - rp_criteria_pid
+    references:
+      columns:
+      - cr_pid
+      schema: history_octane
+      table: criteria
+  fkt_rp_report_type:
+    columns:
+    - rp_report_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: report_type
+columns:
+  rp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rp_pid
+  rp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.rp_version
+  rp_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rp_account_pid
+  rp_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.rp_name
+  rp_description:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.rp_description
+  rp_report_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.rp_report_type
+  rp_report_row_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rp_report_row_pid
+  rp_criteria_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rp_criteria_pid
+  rp_accessible_only:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.rp_accessible_only
+  rp_analysis_report:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.rp_analysis_report
+  rp_publish:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.rp_publish
+  rp_test_data_report:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.rp_test_data_report
+  rp_allow_view:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.rp_allow_view
+  rp_allow_excel_export:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.rp_allow_excel_export
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100043:
+    input_type: table
+    output_type: insert
+    json_output_field: rp_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.report
+      SELECT staging_table.rp_pid
+           , staging_table.rp_version
+           , staging_table.rp_account_pid
+           , staging_table.rp_name
+           , staging_table.rp_description
+           , staging_table.rp_report_type
+           , staging_table.rp_report_row_pid
+           , staging_table.rp_criteria_pid
+           , staging_table.rp_accessible_only
+           , staging_table.rp_analysis_report
+           , staging_table.rp_publish
+           , staging_table.rp_test_data_report
+           , staging_table.rp_allow_view
+           , staging_table.rp_allow_excel_export
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.report staging_table
+      LEFT JOIN history_octane.report history_table
+                ON staging_table.rp_pid = history_table.rp_pid
+                    AND staging_table.rp_version = history_table.rp_version
+      WHERE history_table.rp_pid IS NULL
+      UNION ALL
+      SELECT history_table.rp_pid
+           , history_table.rp_version + 1
+           , history_table.rp_account_pid
+           , history_table.rp_name
+           , history_table.rp_description
+           , history_table.rp_report_type
+           , history_table.rp_report_row_pid
+           , history_table.rp_criteria_pid
+           , history_table.rp_accessible_only
+           , history_table.rp_analysis_report
+           , history_table.rp_publish
+           , history_table.rp_test_data_report
+           , history_table.rp_allow_view
+           , history_table.rp_allow_excel_export
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.report history_table
+      LEFT JOIN staging_octane.report staging_table
+                ON staging_table.rp_pid = history_table.rp_pid
+      WHERE staging_table.rp_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.report deleted_records
+          WHERE deleted_records.rp_pid = history_table.rp_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

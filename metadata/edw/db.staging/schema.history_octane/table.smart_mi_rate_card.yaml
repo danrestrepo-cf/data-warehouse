@@ -1,0 +1,113 @@
+name: smart_mi_rate_card
+primary_source_table: staging.staging_octane.smart_mi_rate_card
+primary_key:
+- smrca_pid
+- smrca_version
+foreign_keys:
+  fk_smart_mi_rate_card_1:
+    columns:
+    - smrca_smart_mi_pid
+    references:
+      columns:
+      - sm_pid
+      schema: history_octane
+      table: smart_mi
+  fkt_smrca_mi_payer_type:
+    columns:
+    - smrca_mi_payer_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mi_payer_type
+  fkt_smrca_mi_payment_type:
+    columns:
+    - smrca_mi_payment_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mi_payment_type
+columns:
+  smrca_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smrca_pid
+  smrca_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.smrca_version
+  smrca_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.smrca_from_date
+  smrca_mi_payment_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.smrca_mi_payment_type
+  smrca_mi_payer_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.smrca_mi_payer_type
+  smrca_minimum_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.smrca_minimum_rate_percent
+  smrca_smart_mi_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smrca_smart_mi_pid
+  smrca_maximum_renewal_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.smrca_maximum_renewal_rate_percent
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100057:
+    input_type: table
+    output_type: insert
+    json_output_field: smrca_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.smart_mi_rate_card
+      SELECT staging_table.smrca_pid
+           , staging_table.smrca_version
+           , staging_table.smrca_from_date
+           , staging_table.smrca_mi_payment_type
+           , staging_table.smrca_mi_payer_type
+           , staging_table.smrca_minimum_rate_percent
+           , staging_table.smrca_smart_mi_pid
+           , staging_table.smrca_maximum_renewal_rate_percent
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.smart_mi_rate_card staging_table
+      LEFT JOIN history_octane.smart_mi_rate_card history_table
+                ON staging_table.smrca_pid = history_table.smrca_pid
+                    AND staging_table.smrca_version = history_table.smrca_version
+      WHERE history_table.smrca_pid IS NULL
+      UNION ALL
+      SELECT history_table.smrca_pid
+           , history_table.smrca_version + 1
+           , history_table.smrca_from_date
+           , history_table.smrca_mi_payment_type
+           , history_table.smrca_mi_payer_type
+           , history_table.smrca_minimum_rate_percent
+           , history_table.smrca_smart_mi_pid
+           , history_table.smrca_maximum_renewal_rate_percent
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.smart_mi_rate_card history_table
+      LEFT JOIN staging_octane.smart_mi_rate_card staging_table
+                ON staging_table.smrca_pid = history_table.smrca_pid
+      WHERE staging_table.smrca_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.smart_mi_rate_card deleted_records
+          WHERE deleted_records.smrca_pid = history_table.smrca_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

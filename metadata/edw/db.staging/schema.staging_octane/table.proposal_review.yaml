@@ -1,0 +1,59 @@
+name: proposal_review
+primary_key:
+- prpre_pid
+foreign_keys:
+  fk_proposal_review_1:
+    columns:
+    - prpre_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: staging_octane
+      table: proposal
+  fk_proposal_review_2:
+    columns:
+    - prpre_request_by_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_proposal_review_3:
+    columns:
+    - prpre_decision_by_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fkt_prpre_proposal_review_status_type:
+    columns:
+    - prpre_proposal_review_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: proposal_review_status_type
+columns:
+  prpre_pid:
+    data_type: BIGINT
+  prpre_version:
+    data_type: INTEGER
+  prpre_proposal_pid:
+    data_type: BIGINT
+  prpre_request_id:
+    data_type: INTEGER
+  prpre_request_datetime:
+    data_type: TIMESTAMP
+  prpre_request_by_lender_user_pid:
+    data_type: BIGINT
+  prpre_request_summary:
+    data_type: TEXT
+  prpre_proposal_review_status_type:
+    data_type: VARCHAR(128)
+  prpre_decision_datetime:
+    data_type: TIMESTAMP
+  prpre_decision_by_lender_user_pid:
+    data_type: BIGINT
+  prpre_decision_summary:
+    data_type: TEXT

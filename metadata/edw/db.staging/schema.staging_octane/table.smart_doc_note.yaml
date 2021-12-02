@@ -1,0 +1,35 @@
+name: smart_doc_note
+primary_key:
+- sdn_pid
+foreign_keys:
+  fk_smart_doc_note_1:
+    columns:
+    - sdn_smart_doc_pid
+    references:
+      columns:
+      - sd_pid
+      schema: staging_octane
+      table: smart_doc
+  fk_smart_doc_note_2:
+    columns:
+    - sdn_author_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+columns:
+  sdn_pid:
+    data_type: BIGINT
+  sdn_version:
+    data_type: INTEGER
+  sdn_smart_doc_pid:
+    data_type: BIGINT
+  sdn_create_datetime:
+    data_type: TIMESTAMP
+  sdn_content:
+    data_type: VARCHAR(16000)
+  sdn_author_lender_user_pid:
+    data_type: BIGINT
+  sdn_author_unparsed_name:
+    data_type: VARCHAR(128)

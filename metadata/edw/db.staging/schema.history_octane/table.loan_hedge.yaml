@@ -1,0 +1,1855 @@
+name: loan_hedge
+primary_source_table: staging.staging_octane.loan_hedge
+primary_key:
+- lh_pid
+- lh_version
+foreign_keys:
+  fk_loan_hedge_1:
+    columns:
+    - lh_loan_pid
+    references:
+      columns:
+      - l_pid
+      schema: history_octane
+      table: loan
+columns:
+  lh_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lh_pid
+  lh_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_version
+  lh_loan_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lh_loan_pid
+  lh_update_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.lh_update_datetime
+  lh_update_pending_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.lh_update_pending_datetime
+  lh_transaction_status_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lh_transaction_status_date
+  lh_loan_number:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lh_loan_number
+  lh_product_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_product_code
+  lh_note_rate:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_note_rate
+  lh_loan_amount:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.lh_loan_amount
+  lh_lock_date:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.lh_lock_date
+  lh_buy_side_lock_expires_date:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.lh_buy_side_lock_expires_date
+  lh_lock_expiration_date:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.lh_lock_expiration_date
+  lh_secondary_cost:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_secondary_cost
+  lh_total_cost_basis:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_total_cost_basis
+  lh_total_lender_margin:
+    data_type: NUMERIC(17,9)
+    source:
+      field: primary_source_table.columns.lh_total_lender_margin
+  lh_stage:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_stage
+  lh_fund_date:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.lh_fund_date
+  lh_allocation_date:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.lh_allocation_date
+  lh_estimated_fund_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lh_estimated_fund_date
+  lh_purchased_by_investor_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lh_purchased_by_investor_date
+  lh_commitment_number:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_commitment_number
+  lh_property_occupancy:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_property_occupancy
+  lh_property_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_property_type
+  lh_property_type_supplemental:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.lh_property_type_supplemental
+  lh_property_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_property_state
+  lh_property_zip:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_property_zip
+  lh_property_number_of_units:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_property_number_of_units
+  lh_purchase_price:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.lh_purchase_price
+  lh_appraised_value:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.lh_appraised_value
+  lh_purpose:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_purpose
+  lh_refinance_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_refinance_type
+  lh_lien_position:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_lien_position
+  lh_impounds:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.lh_impounds
+  lh_buydown_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_buydown_type
+  lh_buydown:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_buydown
+  lh_ltv:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_ltv
+  lh_original_ltv:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_original_ltv
+  lh_cltv:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_cltv
+  lh_original_cltv:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_original_cltv
+  lh_effective_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_effective_credit_score
+  lh_doc_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_doc_type
+  lh_debt_to_income:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_debt_to_income
+  lh_prepayment_penalty:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_prepayment_penalty
+  lh_prepayment_penalty_term:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_prepayment_penalty_term
+  lh_interest_only:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_interest_only
+  lh_lock_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_lock_type
+  lh_lock_period:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_lock_period
+  lh_fees_collected_bps:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_fees_collected_bps
+  lh_channel:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_channel
+  lh_loan_officer:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_loan_officer
+  lh_branch:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_branch
+  lh_broker:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_broker
+  lh_correspondent:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_correspondent
+  lh_origination_source:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_origination_source
+  lh_investor:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_investor
+  lh_investor_total_price:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_investor_total_price
+  lh_investor_base_price:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_investor_base_price
+  lh_investor_srp_paid:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_investor_srp_paid
+  lh_investor_loan_number:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_investor_loan_number
+  lh_pmi:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_pmi
+  lh_pmi_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_pmi_percent
+  lh_mi_cert_number:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_mi_cert_number
+  lh_srp_paid:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_srp_paid
+  lh_discount_points:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_discount_points
+  lh_date_docs_back:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_date_docs_back
+  lh_note_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lh_note_date
+  lh_close_date:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.lh_close_date
+  lh_first_payment_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lh_first_payment_date
+  lh_last_payment_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lh_last_payment_date
+  lh_next_scheduled_payment_due_date:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_next_scheduled_payment_due_date
+  lh_scheduled_principal_and_interest:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_scheduled_principal_and_interest
+  lh_current_principal_and_interest:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_current_principal_and_interest
+  lh_minimum_principal_and_interest:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_minimum_principal_and_interest
+  lh_current_unpaid_principal_balance:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.lh_current_unpaid_principal_balance
+  lh_original_interest_rate:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_original_interest_rate
+  lh_maturity_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lh_maturity_date
+  lh_amortization_term:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_amortization_term
+  lh_yearly_payment_cap:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_yearly_payment_cap
+  lh_arm_margin:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_arm_margin
+  lh_arm_adjustment_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lh_arm_adjustment_date
+  lh_first_arm_period:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_first_arm_period
+  lh_first_arm_adjustment_cap:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_first_arm_adjustment_cap
+  lh_arm_life_floor:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_arm_life_floor
+  lh_arm_life_ceiling:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_arm_life_ceiling
+  lh_first_arm_payment_adjustment_date:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_first_arm_payment_adjustment_date
+  lh_arm_period_after_first:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_arm_period_after_first
+  lh_arm_adjustment_cap_after_first:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_arm_adjustment_cap_after_first
+  lh_first_payment_cap:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_first_payment_cap
+  lh_payment_cap_option:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_payment_cap_option
+  lh_neg_am_flag:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_neg_am_flag
+  lh_maximum_negative_amortization:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_maximum_negative_amortization
+  lh_arm_convertible:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_arm_convertible
+  lh_arm_index:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_arm_index
+  lh_dual_loan_flag:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_dual_loan_flag
+  lh_other_loan_number:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_other_loan_number
+  lh_agency_extract_fields:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_agency_extract_fields
+  lh_warehouse_bank:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_warehouse_bank
+  lh_wire_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_wire_amount
+  lh_credit_rating_agency_fields:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_credit_rating_agency_fields
+  lh_levels_fields:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_levels_fields
+  lh_data_fields:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_data_fields
+  lh_loan_status:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_loan_status
+  lh_suspense_yes_no:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_suspense_yes_no
+  lh_loan_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_loan_type
+  lh_hud_borr_paid_by_for_borr_other_amount:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_hud_borr_paid_by_for_borr_other_amount
+  lh_fees_line_user_def_fee_one_borr:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_fees_line_user_def_fee_one_borr
+  lh_uw_suspended_cleared_date:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_uw_suspended_cleared_date
+  lh_underwriting_suspended_date:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_underwriting_suspended_date
+  lh_line_orig_charge:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_line_orig_charge
+  lh_amortization_type:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_amortization_type
+  lh_milestone:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_milestone
+  lh_msa:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_msa
+  lh_county_code:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_county_code
+  lh_ship_date_to_investor:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lh_ship_date_to_investor
+  lh_borrower_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_borrower_last_name
+  lh_purchase_advice_suspense_fee:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_purchase_advice_suspense_fee
+  lh_purchase_advice_early_delivery_amount:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_purchase_advice_early_delivery_amount
+  lh_purchase_advice_llpa:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_purchase_advice_llpa
+  lh_purchase_advice_fmna:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_purchase_advice_fmna
+  lh_purchase_advice_rp:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_purchase_advice_rp
+  lh_lock_info_relock_amount:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_lock_info_relock_amount
+  lh_lock_info_loan_basis:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_lock_info_loan_basis
+  lh_lock_info_lock_request_fulfilled_date_time:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_lock_info_lock_request_fulfilled_date_time
+  lh_lock_info_rate_lock_request_rate_sheet_id:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_lock_info_rate_lock_request_rate_sheet_id
+  lh_current_status_change_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lh_current_status_change_date
+  lh_aus_type:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_aus_type
+  lh_buy_side_base_arm_margin:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_buy_side_base_arm_margin
+  lh_uldd_poolid:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_uldd_poolid
+  lh_warehouse_co_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_warehouse_co_name
+  lh_underwriting_investor_eligibility_wells_fargo:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_underwriting_investor_eligibility_wells_fargo
+  lh_underwriting_investor_eligibility_chase:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_underwriting_investor_eligibility_chase
+  lh_du_fail_reason:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_du_fail_reason
+  lh_lpmi_total_costs_on_lock:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_lpmi_total_costs_on_lock
+  lh_lpmi_after_lock_required:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_lpmi_after_lock_required
+  lh_lpmi_after_lock_bps:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_lpmi_after_lock_bps
+  lh_mi_company_name_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_mi_company_name_type
+  lh_lpmi_frequency:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_lpmi_frequency
+  lh_lpmi_estimated_amount_of_lender_paid_mi:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_lpmi_estimated_amount_of_lender_paid_mi
+  lh_mortgage_insurance_premium_source_type:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.lh_mortgage_insurance_premium_source_type
+  lh_loan_amount_repeat:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.lh_loan_amount_repeat
+  lh_product_code_repeat:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_product_code_repeat
+  lh_note_rate_repeat:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_note_rate_repeat
+  lh_loan_info_loan_id:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_loan_info_loan_id
+  lh_salable_loan:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_salable_loan
+  lh_sale_hold:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_sale_hold
+  lh_sale_hold_comments:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_sale_hold_comments
+  lh_pf_disbursement_ledger_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lh_pf_disbursement_ledger_date
+  lh_aus_eligibility:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_aus_eligibility
+  lh_texas_cash_out:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_texas_cash_out
+  lh_acceptable_du:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_acceptable_du
+  lh_acceptable_lp:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_acceptable_lp
+  lh_financed_property_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_financed_property_count
+  lh_payoff_primary_lien_holder_company:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_payoff_primary_lien_holder_company
+  lh_payoff_junior_lien_holder_company:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_payoff_junior_lien_holder_company
+  lh_base_loan_amount:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.lh_base_loan_amount
+  lh_funding_authorized:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_funding_authorized
+  lh_credit_committee_fico_exception:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_credit_committee_fico_exception
+  lh_home_ready_eligibility:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_home_ready_eligibility
+  lh_home_ready_borr_acceptance:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_home_ready_borr_acceptance
+  lh_home_ready_eligibility_review:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_home_ready_eligibility_review
+  lh_home_possible_eligibility:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_home_possible_eligibility
+  lh_home_possible_eligibility_review:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_home_possible_eligibility_review
+  lh_piw:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_piw
+  lh_piw_fee:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_piw_fee
+  lh_uw_investor_eligibility_fnma:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_uw_investor_eligibility_fnma
+  lh_uw_investor_eligibility_fhlmc:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_uw_investor_eligibility_fhlmc
+  lh_appraisal_form:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_appraisal_form
+  lh_ext_cos_total_amt:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_ext_cos_total_amt
+  lh_fnmcu_risk_score:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_fnmcu_risk_score
+  lh_borrower_income_verification:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_borrower_income_verification
+  lh_co_borrower_income_verification:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_co_borrower_income_verification
+  lh_day_one_income_verification_available:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.lh_day_one_income_verification_available
+  lh_subject_property_estimated_value:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.lh_subject_property_estimated_value
+  lh_transaction_status:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_transaction_status
+  lh_buy_status:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_buy_status
+  lh_appraisal_exists:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_appraisal_exists
+  lh_du_piw_eligible:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_du_piw_eligible
+  lh_lp_appraisal_waiver_eligible:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_lp_appraisal_waiver_eligible
+  lh_borrower_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_borrower_first_name
+  lh_co_borrower_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_co_borrower_first_name
+  lh_co_borrower_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_co_borrower_last_name
+  lh_total_borrower_income:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_total_borrower_income
+  lh_subject_property_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_subject_property_city
+  lh_subject_property_county:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_subject_property_county
+  lh_subject_property_zip:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_subject_property_zip
+  lh_borrower_decision_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_borrower_decision_credit_score
+  lh_co_borrower_decision_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_co_borrower_decision_credit_score
+  lh_underwriter_disposition:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_underwriter_disposition
+  lh_underwrite_risk_assessment_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_underwrite_risk_assessment_type
+  lh_subject_property_address:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.lh_subject_property_address
+  lh_original_lock_date:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.lh_original_lock_date
+  lh_original_lock_period:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_original_lock_period
+  lh_borrower_income_docs_required_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_borrower_income_docs_required_count
+  lh_borrower_income_docs_fulfilled_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_borrower_income_docs_fulfilled_count
+  lh_borrower_income_docs_approved_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_borrower_income_docs_approved_count
+  lh_borrower_asset_docs_required_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_borrower_asset_docs_required_count
+  lh_borrower_asset_docs_fulfilled_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_borrower_asset_docs_fulfilled_count
+  lh_borrower_asset_docs_approved_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_borrower_asset_docs_approved_count
+  lh_borrower_credit_docs_required_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_borrower_credit_docs_required_count
+  lh_borrower_credit_docs_fulfilled_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_borrower_credit_docs_fulfilled_count
+  lh_borrower_credit_docs_approved_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_borrower_credit_docs_approved_count
+  lh_initial_uw_submit_date_time:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.lh_initial_uw_submit_date_time
+  lh_cd_clear_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lh_cd_clear_date
+  lh_lender_concession_total_approved_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_lender_concession_total_approved_amount
+  lh_relock_fee_gross_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_relock_fee_gross_amount
+  lh_relock_fee_amount_less_concessions:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_relock_fee_amount_less_concessions
+  lh_relock_fee_amount_concessed:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_relock_fee_amount_concessed
+  lh_lock_extension_fee_gross_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_lock_extension_fee_gross_amount
+  lh_lock_extension_fee_amount_less_concessions:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_lock_extension_fee_amount_less_concessions
+  lh_lock_extension_fee_amount_concessed:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_lock_extension_fee_amount_concessed
+  lh_general_lender_concessions_amount_non_itemized:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_general_lender_concessions_amount_non_itemized
+  lh_day_one_concessions:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_day_one_concessions
+  lh_investor_lock_commitment_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_investor_lock_commitment_type
+  lh_signed_closing_doc_received_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.lh_signed_closing_doc_received_datetime
+  lh_geocoding_msa_code:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_geocoding_msa_code
+  lh_geocoding_state_code:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_geocoding_state_code
+  lh_geocoding_county_code:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_geocoding_county_code
+  lh_geocoding_census_tract:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_geocoding_census_tract
+  lh_tolerance_cure_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_tolerance_cure_amount
+  lh_self_employed_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_self_employed_flag
+  lh_first_time_homebuyer:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_first_time_homebuyer
+  lh_mortgage_insurance_lpmi_rate_adjustment:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_mortgage_insurance_lpmi_rate_adjustment
+  lh_eligible_for_qm_status:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_eligible_for_qm_status
+  lh_safe_harbor_test_passed:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_safe_harbor_test_passed
+  lh_hpml:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_hpml
+  lh_hoepa:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_hoepa
+  lh_funding_status:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_funding_status
+  lh_early_funding:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_early_funding
+  lh_early_funding_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lh_early_funding_date
+  lh_lqa_purchase_eligibility_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_lqa_purchase_eligibility_type
+  lh_transferred_appraisal:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_transferred_appraisal
+  lh_appraisal_cu_risk_score:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_appraisal_cu_risk_score
+  lh_mi_upfront_rate:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_mi_upfront_rate
+  lh_loan_funding_requested_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lh_loan_funding_requested_date
+  lh_student_loan_cash_out:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_student_loan_cash_out
+  lh_octane_high_balance:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_octane_high_balance
+  lh_borrower_final_price:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_borrower_final_price
+  lh_charge_credit_for_interest_rate:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_charge_credit_for_interest_rate
+  lh_contract_processing_fee:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_contract_processing_fee
+  lh_escrow_holdback:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_escrow_holdback
+  lh_appraiser_license_number:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_appraiser_license_number
+  lh_mcc_present:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_mcc_present
+  lh_grant_present:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_grant_present
+  lh_cema:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_cema
+  lh_supplemental_margin_company:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_supplemental_margin_company
+  lh_supplemental_margin_branch:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_supplemental_margin_branch
+  lh_supplemental_margin_total:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_supplemental_margin_total
+  lh_concessions_renegotiations_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_concessions_renegotiations_amount
+  lh_fund_source_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_fund_source_type
+  lh_purchase_contract_funding_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lh_purchase_contract_funding_date
+  lh_product_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_product_id
+  lh_community_second:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_community_second
+  lh_current_taxes_and_insurance:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lh_current_taxes_and_insurance
+  lh_multiple_applicants:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_multiple_applicants
+  lh_community_second_liability:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_community_second_liability
+  lh_property_rights_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_property_rights_type
+  lh_mbs_final_purchaser:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_mbs_final_purchaser
+  lh_hmda_universal_loan_id:
+    data_type: VARCHAR(45)
+    source:
+      field: primary_source_table.columns.lh_hmda_universal_loan_id
+  lh_lp_ace_eligible:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_lp_ace_eligible
+  lh_family_advantage_product:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_family_advantage_product
+  lh_effective_rate_sheet_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.lh_effective_rate_sheet_datetime
+  lh_debt_to_income_excluding_mi:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_debt_to_income_excluding_mi
+  lh_clear_to_commit:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_clear_to_commit
+  lh_b2_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_b2_first_name
+  lh_b2_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_b2_last_name
+  lh_c2_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_c2_first_name
+  lh_c2_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_c2_last_name
+  lh_b3_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_b3_first_name
+  lh_b3_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_b3_last_name
+  lh_c3_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_c3_first_name
+  lh_c3_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_c3_last_name
+  lh_b4_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_b4_first_name
+  lh_b4_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_b4_last_name
+  lh_c4_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_c4_first_name
+  lh_c4_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_c4_last_name
+  lh_b5_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_b5_first_name
+  lh_b5_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_b5_last_name
+  lh_c5_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_c5_first_name
+  lh_c5_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_c5_last_name
+  lh_texas_home_equity_conversion:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_texas_home_equity_conversion
+  lh_interest_only_heloc:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_interest_only_heloc
+  lh_interest_only_term_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_interest_only_term_months
+  lh_investor_lock_product_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_investor_lock_product_name
+  lh_investor_lock_product_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_investor_lock_product_id
+  lh_rebuttable_presumption:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_rebuttable_presumption
+  lh_non_conforming:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lh_non_conforming
+  lh_num_deal_updates_since_update_pending:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_num_deal_updates_since_update_pending
+  lh_borrower_engagement_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_borrower_engagement_percent
+  lh_loan_create_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lh_loan_create_date
+  lh_high_balance_hit_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_high_balance_hit_percent
+  lh_new_york_payup_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_new_york_payup_percent
+  lh_ship_date_to_custodian:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lh_ship_date_to_custodian
+  lh_lock_vintage:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lh_lock_vintage
+  lh_lock_series:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lh_lock_series
+  lh_investor_total:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lh_investor_total
+  lh_velocify_lead_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_velocify_lead_id
+  lh_collateral_tracking_number:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lh_collateral_tracking_number
+  lh_qualified_mortgage_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lh_qualified_mortgage_status_type
+  lh_charges_enabled_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lh_charges_enabled_date
+  lh_application_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lh_application_date
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100325:
+    input_type: table
+    output_type: insert
+    json_output_field: lh_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.loan_hedge
+      SELECT staging_table.lh_pid
+           , staging_table.lh_version
+           , staging_table.lh_loan_pid
+           , staging_table.lh_update_datetime
+           , staging_table.lh_update_pending_datetime
+           , staging_table.lh_transaction_status_date
+           , staging_table.lh_loan_number
+           , staging_table.lh_product_code
+           , staging_table.lh_note_rate
+           , staging_table.lh_loan_amount
+           , staging_table.lh_lock_date
+           , staging_table.lh_buy_side_lock_expires_date
+           , staging_table.lh_lock_expiration_date
+           , staging_table.lh_secondary_cost
+           , staging_table.lh_total_cost_basis
+           , staging_table.lh_total_lender_margin
+           , staging_table.lh_stage
+           , staging_table.lh_fund_date
+           , staging_table.lh_allocation_date
+           , staging_table.lh_estimated_fund_date
+           , staging_table.lh_purchased_by_investor_date
+           , staging_table.lh_commitment_number
+           , staging_table.lh_property_occupancy
+           , staging_table.lh_property_type
+           , staging_table.lh_property_type_supplemental
+           , staging_table.lh_property_state
+           , staging_table.lh_property_zip
+           , staging_table.lh_property_number_of_units
+           , staging_table.lh_purchase_price
+           , staging_table.lh_appraised_value
+           , staging_table.lh_purpose
+           , staging_table.lh_refinance_type
+           , staging_table.lh_lien_position
+           , staging_table.lh_impounds
+           , staging_table.lh_buydown_type
+           , staging_table.lh_buydown
+           , staging_table.lh_ltv
+           , staging_table.lh_original_ltv
+           , staging_table.lh_cltv
+           , staging_table.lh_original_cltv
+           , staging_table.lh_effective_credit_score
+           , staging_table.lh_doc_type
+           , staging_table.lh_debt_to_income
+           , staging_table.lh_prepayment_penalty
+           , staging_table.lh_prepayment_penalty_term
+           , staging_table.lh_interest_only
+           , staging_table.lh_lock_type
+           , staging_table.lh_lock_period
+           , staging_table.lh_fees_collected_bps
+           , staging_table.lh_channel
+           , staging_table.lh_loan_officer
+           , staging_table.lh_branch
+           , staging_table.lh_broker
+           , staging_table.lh_correspondent
+           , staging_table.lh_origination_source
+           , staging_table.lh_investor
+           , staging_table.lh_investor_total_price
+           , staging_table.lh_investor_base_price
+           , staging_table.lh_investor_srp_paid
+           , staging_table.lh_investor_loan_number
+           , staging_table.lh_pmi
+           , staging_table.lh_pmi_percent
+           , staging_table.lh_mi_cert_number
+           , staging_table.lh_srp_paid
+           , staging_table.lh_discount_points
+           , staging_table.lh_date_docs_back
+           , staging_table.lh_note_date
+           , staging_table.lh_close_date
+           , staging_table.lh_first_payment_date
+           , staging_table.lh_last_payment_date
+           , staging_table.lh_next_scheduled_payment_due_date
+           , staging_table.lh_scheduled_principal_and_interest
+           , staging_table.lh_current_principal_and_interest
+           , staging_table.lh_minimum_principal_and_interest
+           , staging_table.lh_current_unpaid_principal_balance
+           , staging_table.lh_original_interest_rate
+           , staging_table.lh_maturity_date
+           , staging_table.lh_amortization_term
+           , staging_table.lh_yearly_payment_cap
+           , staging_table.lh_arm_margin
+           , staging_table.lh_arm_adjustment_date
+           , staging_table.lh_first_arm_period
+           , staging_table.lh_first_arm_adjustment_cap
+           , staging_table.lh_arm_life_floor
+           , staging_table.lh_arm_life_ceiling
+           , staging_table.lh_first_arm_payment_adjustment_date
+           , staging_table.lh_arm_period_after_first
+           , staging_table.lh_arm_adjustment_cap_after_first
+           , staging_table.lh_first_payment_cap
+           , staging_table.lh_payment_cap_option
+           , staging_table.lh_neg_am_flag
+           , staging_table.lh_maximum_negative_amortization
+           , staging_table.lh_arm_convertible
+           , staging_table.lh_arm_index
+           , staging_table.lh_dual_loan_flag
+           , staging_table.lh_other_loan_number
+           , staging_table.lh_agency_extract_fields
+           , staging_table.lh_warehouse_bank
+           , staging_table.lh_wire_amount
+           , staging_table.lh_credit_rating_agency_fields
+           , staging_table.lh_levels_fields
+           , staging_table.lh_data_fields
+           , staging_table.lh_loan_status
+           , staging_table.lh_suspense_yes_no
+           , staging_table.lh_loan_type
+           , staging_table.lh_hud_borr_paid_by_for_borr_other_amount
+           , staging_table.lh_fees_line_user_def_fee_one_borr
+           , staging_table.lh_uw_suspended_cleared_date
+           , staging_table.lh_underwriting_suspended_date
+           , staging_table.lh_line_orig_charge
+           , staging_table.lh_amortization_type
+           , staging_table.lh_milestone
+           , staging_table.lh_msa
+           , staging_table.lh_county_code
+           , staging_table.lh_ship_date_to_investor
+           , staging_table.lh_borrower_last_name
+           , staging_table.lh_purchase_advice_suspense_fee
+           , staging_table.lh_purchase_advice_early_delivery_amount
+           , staging_table.lh_purchase_advice_llpa
+           , staging_table.lh_purchase_advice_fmna
+           , staging_table.lh_purchase_advice_rp
+           , staging_table.lh_lock_info_relock_amount
+           , staging_table.lh_lock_info_loan_basis
+           , staging_table.lh_lock_info_lock_request_fulfilled_date_time
+           , staging_table.lh_lock_info_rate_lock_request_rate_sheet_id
+           , staging_table.lh_current_status_change_date
+           , staging_table.lh_aus_type
+           , staging_table.lh_buy_side_base_arm_margin
+           , staging_table.lh_uldd_poolid
+           , staging_table.lh_warehouse_co_name
+           , staging_table.lh_underwriting_investor_eligibility_wells_fargo
+           , staging_table.lh_underwriting_investor_eligibility_chase
+           , staging_table.lh_du_fail_reason
+           , staging_table.lh_lpmi_total_costs_on_lock
+           , staging_table.lh_lpmi_after_lock_required
+           , staging_table.lh_lpmi_after_lock_bps
+           , staging_table.lh_mi_company_name_type
+           , staging_table.lh_lpmi_frequency
+           , staging_table.lh_lpmi_estimated_amount_of_lender_paid_mi
+           , staging_table.lh_mortgage_insurance_premium_source_type
+           , staging_table.lh_loan_amount_repeat
+           , staging_table.lh_product_code_repeat
+           , staging_table.lh_note_rate_repeat
+           , staging_table.lh_loan_info_loan_id
+           , staging_table.lh_salable_loan
+           , staging_table.lh_sale_hold
+           , staging_table.lh_sale_hold_comments
+           , staging_table.lh_pf_disbursement_ledger_date
+           , staging_table.lh_aus_eligibility
+           , staging_table.lh_texas_cash_out
+           , staging_table.lh_acceptable_du
+           , staging_table.lh_acceptable_lp
+           , staging_table.lh_financed_property_count
+           , staging_table.lh_payoff_primary_lien_holder_company
+           , staging_table.lh_payoff_junior_lien_holder_company
+           , staging_table.lh_base_loan_amount
+           , staging_table.lh_funding_authorized
+           , staging_table.lh_credit_committee_fico_exception
+           , staging_table.lh_home_ready_eligibility
+           , staging_table.lh_home_ready_borr_acceptance
+           , staging_table.lh_home_ready_eligibility_review
+           , staging_table.lh_home_possible_eligibility
+           , staging_table.lh_home_possible_eligibility_review
+           , staging_table.lh_piw
+           , staging_table.lh_piw_fee
+           , staging_table.lh_uw_investor_eligibility_fnma
+           , staging_table.lh_uw_investor_eligibility_fhlmc
+           , staging_table.lh_appraisal_form
+           , staging_table.lh_ext_cos_total_amt
+           , staging_table.lh_fnmcu_risk_score
+           , staging_table.lh_borrower_income_verification
+           , staging_table.lh_co_borrower_income_verification
+           , staging_table.lh_day_one_income_verification_available
+           , staging_table.lh_subject_property_estimated_value
+           , staging_table.lh_transaction_status
+           , staging_table.lh_buy_status
+           , staging_table.lh_appraisal_exists
+           , staging_table.lh_du_piw_eligible
+           , staging_table.lh_lp_appraisal_waiver_eligible
+           , staging_table.lh_borrower_first_name
+           , staging_table.lh_co_borrower_first_name
+           , staging_table.lh_co_borrower_last_name
+           , staging_table.lh_total_borrower_income
+           , staging_table.lh_subject_property_city
+           , staging_table.lh_subject_property_county
+           , staging_table.lh_subject_property_zip
+           , staging_table.lh_borrower_decision_credit_score
+           , staging_table.lh_co_borrower_decision_credit_score
+           , staging_table.lh_underwriter_disposition
+           , staging_table.lh_underwrite_risk_assessment_type
+           , staging_table.lh_subject_property_address
+           , staging_table.lh_original_lock_date
+           , staging_table.lh_original_lock_period
+           , staging_table.lh_borrower_income_docs_required_count
+           , staging_table.lh_borrower_income_docs_fulfilled_count
+           , staging_table.lh_borrower_income_docs_approved_count
+           , staging_table.lh_borrower_asset_docs_required_count
+           , staging_table.lh_borrower_asset_docs_fulfilled_count
+           , staging_table.lh_borrower_asset_docs_approved_count
+           , staging_table.lh_borrower_credit_docs_required_count
+           , staging_table.lh_borrower_credit_docs_fulfilled_count
+           , staging_table.lh_borrower_credit_docs_approved_count
+           , staging_table.lh_initial_uw_submit_date_time
+           , staging_table.lh_cd_clear_date
+           , staging_table.lh_lender_concession_total_approved_amount
+           , staging_table.lh_relock_fee_gross_amount
+           , staging_table.lh_relock_fee_amount_less_concessions
+           , staging_table.lh_relock_fee_amount_concessed
+           , staging_table.lh_lock_extension_fee_gross_amount
+           , staging_table.lh_lock_extension_fee_amount_less_concessions
+           , staging_table.lh_lock_extension_fee_amount_concessed
+           , staging_table.lh_general_lender_concessions_amount_non_itemized
+           , staging_table.lh_day_one_concessions
+           , staging_table.lh_investor_lock_commitment_type
+           , staging_table.lh_signed_closing_doc_received_datetime
+           , staging_table.lh_geocoding_msa_code
+           , staging_table.lh_geocoding_state_code
+           , staging_table.lh_geocoding_county_code
+           , staging_table.lh_geocoding_census_tract
+           , staging_table.lh_tolerance_cure_amount
+           , staging_table.lh_self_employed_flag
+           , staging_table.lh_first_time_homebuyer
+           , staging_table.lh_mortgage_insurance_lpmi_rate_adjustment
+           , staging_table.lh_eligible_for_qm_status
+           , staging_table.lh_safe_harbor_test_passed
+           , staging_table.lh_hpml
+           , staging_table.lh_hoepa
+           , staging_table.lh_funding_status
+           , staging_table.lh_early_funding
+           , staging_table.lh_early_funding_date
+           , staging_table.lh_lqa_purchase_eligibility_type
+           , staging_table.lh_transferred_appraisal
+           , staging_table.lh_appraisal_cu_risk_score
+           , staging_table.lh_mi_upfront_rate
+           , staging_table.lh_loan_funding_requested_date
+           , staging_table.lh_student_loan_cash_out
+           , staging_table.lh_octane_high_balance
+           , staging_table.lh_borrower_final_price
+           , staging_table.lh_charge_credit_for_interest_rate
+           , staging_table.lh_contract_processing_fee
+           , staging_table.lh_escrow_holdback
+           , staging_table.lh_appraiser_license_number
+           , staging_table.lh_mcc_present
+           , staging_table.lh_grant_present
+           , staging_table.lh_cema
+           , staging_table.lh_supplemental_margin_company
+           , staging_table.lh_supplemental_margin_branch
+           , staging_table.lh_supplemental_margin_total
+           , staging_table.lh_concessions_renegotiations_amount
+           , staging_table.lh_fund_source_type
+           , staging_table.lh_purchase_contract_funding_date
+           , staging_table.lh_product_id
+           , staging_table.lh_community_second
+           , staging_table.lh_current_taxes_and_insurance
+           , staging_table.lh_multiple_applicants
+           , staging_table.lh_community_second_liability
+           , staging_table.lh_property_rights_type
+           , staging_table.lh_mbs_final_purchaser
+           , staging_table.lh_hmda_universal_loan_id
+           , staging_table.lh_lp_ace_eligible
+           , staging_table.lh_family_advantage_product
+           , staging_table.lh_effective_rate_sheet_datetime
+           , staging_table.lh_debt_to_income_excluding_mi
+           , staging_table.lh_clear_to_commit
+           , staging_table.lh_b2_first_name
+           , staging_table.lh_b2_last_name
+           , staging_table.lh_c2_first_name
+           , staging_table.lh_c2_last_name
+           , staging_table.lh_b3_first_name
+           , staging_table.lh_b3_last_name
+           , staging_table.lh_c3_first_name
+           , staging_table.lh_c3_last_name
+           , staging_table.lh_b4_first_name
+           , staging_table.lh_b4_last_name
+           , staging_table.lh_c4_first_name
+           , staging_table.lh_c4_last_name
+           , staging_table.lh_b5_first_name
+           , staging_table.lh_b5_last_name
+           , staging_table.lh_c5_first_name
+           , staging_table.lh_c5_last_name
+           , staging_table.lh_texas_home_equity_conversion
+           , staging_table.lh_interest_only_heloc
+           , staging_table.lh_interest_only_term_months
+           , staging_table.lh_investor_lock_product_name
+           , staging_table.lh_investor_lock_product_id
+           , staging_table.lh_rebuttable_presumption
+           , staging_table.lh_non_conforming
+           , staging_table.lh_num_deal_updates_since_update_pending
+           , staging_table.lh_borrower_engagement_percent
+           , staging_table.lh_loan_create_date
+           , staging_table.lh_high_balance_hit_percent
+           , staging_table.lh_new_york_payup_percent
+           , staging_table.lh_ship_date_to_custodian
+           , staging_table.lh_lock_vintage
+           , staging_table.lh_lock_series
+           , staging_table.lh_investor_total
+           , staging_table.lh_velocify_lead_id
+           , staging_table.lh_collateral_tracking_number
+           , staging_table.lh_qualified_mortgage_status_type
+           , staging_table.lh_charges_enabled_date
+           , staging_table.lh_application_date
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.loan_hedge staging_table
+      LEFT JOIN history_octane.loan_hedge history_table
+                ON staging_table.lh_pid = history_table.lh_pid
+                    AND staging_table.lh_version = history_table.lh_version
+      WHERE history_table.lh_pid IS NULL
+      UNION ALL
+      SELECT history_table.lh_pid
+           , history_table.lh_version + 1
+           , history_table.lh_loan_pid
+           , history_table.lh_update_datetime
+           , history_table.lh_update_pending_datetime
+           , history_table.lh_transaction_status_date
+           , history_table.lh_loan_number
+           , history_table.lh_product_code
+           , history_table.lh_note_rate
+           , history_table.lh_loan_amount
+           , history_table.lh_lock_date
+           , history_table.lh_buy_side_lock_expires_date
+           , history_table.lh_lock_expiration_date
+           , history_table.lh_secondary_cost
+           , history_table.lh_total_cost_basis
+           , history_table.lh_total_lender_margin
+           , history_table.lh_stage
+           , history_table.lh_fund_date
+           , history_table.lh_allocation_date
+           , history_table.lh_estimated_fund_date
+           , history_table.lh_purchased_by_investor_date
+           , history_table.lh_commitment_number
+           , history_table.lh_property_occupancy
+           , history_table.lh_property_type
+           , history_table.lh_property_type_supplemental
+           , history_table.lh_property_state
+           , history_table.lh_property_zip
+           , history_table.lh_property_number_of_units
+           , history_table.lh_purchase_price
+           , history_table.lh_appraised_value
+           , history_table.lh_purpose
+           , history_table.lh_refinance_type
+           , history_table.lh_lien_position
+           , history_table.lh_impounds
+           , history_table.lh_buydown_type
+           , history_table.lh_buydown
+           , history_table.lh_ltv
+           , history_table.lh_original_ltv
+           , history_table.lh_cltv
+           , history_table.lh_original_cltv
+           , history_table.lh_effective_credit_score
+           , history_table.lh_doc_type
+           , history_table.lh_debt_to_income
+           , history_table.lh_prepayment_penalty
+           , history_table.lh_prepayment_penalty_term
+           , history_table.lh_interest_only
+           , history_table.lh_lock_type
+           , history_table.lh_lock_period
+           , history_table.lh_fees_collected_bps
+           , history_table.lh_channel
+           , history_table.lh_loan_officer
+           , history_table.lh_branch
+           , history_table.lh_broker
+           , history_table.lh_correspondent
+           , history_table.lh_origination_source
+           , history_table.lh_investor
+           , history_table.lh_investor_total_price
+           , history_table.lh_investor_base_price
+           , history_table.lh_investor_srp_paid
+           , history_table.lh_investor_loan_number
+           , history_table.lh_pmi
+           , history_table.lh_pmi_percent
+           , history_table.lh_mi_cert_number
+           , history_table.lh_srp_paid
+           , history_table.lh_discount_points
+           , history_table.lh_date_docs_back
+           , history_table.lh_note_date
+           , history_table.lh_close_date
+           , history_table.lh_first_payment_date
+           , history_table.lh_last_payment_date
+           , history_table.lh_next_scheduled_payment_due_date
+           , history_table.lh_scheduled_principal_and_interest
+           , history_table.lh_current_principal_and_interest
+           , history_table.lh_minimum_principal_and_interest
+           , history_table.lh_current_unpaid_principal_balance
+           , history_table.lh_original_interest_rate
+           , history_table.lh_maturity_date
+           , history_table.lh_amortization_term
+           , history_table.lh_yearly_payment_cap
+           , history_table.lh_arm_margin
+           , history_table.lh_arm_adjustment_date
+           , history_table.lh_first_arm_period
+           , history_table.lh_first_arm_adjustment_cap
+           , history_table.lh_arm_life_floor
+           , history_table.lh_arm_life_ceiling
+           , history_table.lh_first_arm_payment_adjustment_date
+           , history_table.lh_arm_period_after_first
+           , history_table.lh_arm_adjustment_cap_after_first
+           , history_table.lh_first_payment_cap
+           , history_table.lh_payment_cap_option
+           , history_table.lh_neg_am_flag
+           , history_table.lh_maximum_negative_amortization
+           , history_table.lh_arm_convertible
+           , history_table.lh_arm_index
+           , history_table.lh_dual_loan_flag
+           , history_table.lh_other_loan_number
+           , history_table.lh_agency_extract_fields
+           , history_table.lh_warehouse_bank
+           , history_table.lh_wire_amount
+           , history_table.lh_credit_rating_agency_fields
+           , history_table.lh_levels_fields
+           , history_table.lh_data_fields
+           , history_table.lh_loan_status
+           , history_table.lh_suspense_yes_no
+           , history_table.lh_loan_type
+           , history_table.lh_hud_borr_paid_by_for_borr_other_amount
+           , history_table.lh_fees_line_user_def_fee_one_borr
+           , history_table.lh_uw_suspended_cleared_date
+           , history_table.lh_underwriting_suspended_date
+           , history_table.lh_line_orig_charge
+           , history_table.lh_amortization_type
+           , history_table.lh_milestone
+           , history_table.lh_msa
+           , history_table.lh_county_code
+           , history_table.lh_ship_date_to_investor
+           , history_table.lh_borrower_last_name
+           , history_table.lh_purchase_advice_suspense_fee
+           , history_table.lh_purchase_advice_early_delivery_amount
+           , history_table.lh_purchase_advice_llpa
+           , history_table.lh_purchase_advice_fmna
+           , history_table.lh_purchase_advice_rp
+           , history_table.lh_lock_info_relock_amount
+           , history_table.lh_lock_info_loan_basis
+           , history_table.lh_lock_info_lock_request_fulfilled_date_time
+           , history_table.lh_lock_info_rate_lock_request_rate_sheet_id
+           , history_table.lh_current_status_change_date
+           , history_table.lh_aus_type
+           , history_table.lh_buy_side_base_arm_margin
+           , history_table.lh_uldd_poolid
+           , history_table.lh_warehouse_co_name
+           , history_table.lh_underwriting_investor_eligibility_wells_fargo
+           , history_table.lh_underwriting_investor_eligibility_chase
+           , history_table.lh_du_fail_reason
+           , history_table.lh_lpmi_total_costs_on_lock
+           , history_table.lh_lpmi_after_lock_required
+           , history_table.lh_lpmi_after_lock_bps
+           , history_table.lh_mi_company_name_type
+           , history_table.lh_lpmi_frequency
+           , history_table.lh_lpmi_estimated_amount_of_lender_paid_mi
+           , history_table.lh_mortgage_insurance_premium_source_type
+           , history_table.lh_loan_amount_repeat
+           , history_table.lh_product_code_repeat
+           , history_table.lh_note_rate_repeat
+           , history_table.lh_loan_info_loan_id
+           , history_table.lh_salable_loan
+           , history_table.lh_sale_hold
+           , history_table.lh_sale_hold_comments
+           , history_table.lh_pf_disbursement_ledger_date
+           , history_table.lh_aus_eligibility
+           , history_table.lh_texas_cash_out
+           , history_table.lh_acceptable_du
+           , history_table.lh_acceptable_lp
+           , history_table.lh_financed_property_count
+           , history_table.lh_payoff_primary_lien_holder_company
+           , history_table.lh_payoff_junior_lien_holder_company
+           , history_table.lh_base_loan_amount
+           , history_table.lh_funding_authorized
+           , history_table.lh_credit_committee_fico_exception
+           , history_table.lh_home_ready_eligibility
+           , history_table.lh_home_ready_borr_acceptance
+           , history_table.lh_home_ready_eligibility_review
+           , history_table.lh_home_possible_eligibility
+           , history_table.lh_home_possible_eligibility_review
+           , history_table.lh_piw
+           , history_table.lh_piw_fee
+           , history_table.lh_uw_investor_eligibility_fnma
+           , history_table.lh_uw_investor_eligibility_fhlmc
+           , history_table.lh_appraisal_form
+           , history_table.lh_ext_cos_total_amt
+           , history_table.lh_fnmcu_risk_score
+           , history_table.lh_borrower_income_verification
+           , history_table.lh_co_borrower_income_verification
+           , history_table.lh_day_one_income_verification_available
+           , history_table.lh_subject_property_estimated_value
+           , history_table.lh_transaction_status
+           , history_table.lh_buy_status
+           , history_table.lh_appraisal_exists
+           , history_table.lh_du_piw_eligible
+           , history_table.lh_lp_appraisal_waiver_eligible
+           , history_table.lh_borrower_first_name
+           , history_table.lh_co_borrower_first_name
+           , history_table.lh_co_borrower_last_name
+           , history_table.lh_total_borrower_income
+           , history_table.lh_subject_property_city
+           , history_table.lh_subject_property_county
+           , history_table.lh_subject_property_zip
+           , history_table.lh_borrower_decision_credit_score
+           , history_table.lh_co_borrower_decision_credit_score
+           , history_table.lh_underwriter_disposition
+           , history_table.lh_underwrite_risk_assessment_type
+           , history_table.lh_subject_property_address
+           , history_table.lh_original_lock_date
+           , history_table.lh_original_lock_period
+           , history_table.lh_borrower_income_docs_required_count
+           , history_table.lh_borrower_income_docs_fulfilled_count
+           , history_table.lh_borrower_income_docs_approved_count
+           , history_table.lh_borrower_asset_docs_required_count
+           , history_table.lh_borrower_asset_docs_fulfilled_count
+           , history_table.lh_borrower_asset_docs_approved_count
+           , history_table.lh_borrower_credit_docs_required_count
+           , history_table.lh_borrower_credit_docs_fulfilled_count
+           , history_table.lh_borrower_credit_docs_approved_count
+           , history_table.lh_initial_uw_submit_date_time
+           , history_table.lh_cd_clear_date
+           , history_table.lh_lender_concession_total_approved_amount
+           , history_table.lh_relock_fee_gross_amount
+           , history_table.lh_relock_fee_amount_less_concessions
+           , history_table.lh_relock_fee_amount_concessed
+           , history_table.lh_lock_extension_fee_gross_amount
+           , history_table.lh_lock_extension_fee_amount_less_concessions
+           , history_table.lh_lock_extension_fee_amount_concessed
+           , history_table.lh_general_lender_concessions_amount_non_itemized
+           , history_table.lh_day_one_concessions
+           , history_table.lh_investor_lock_commitment_type
+           , history_table.lh_signed_closing_doc_received_datetime
+           , history_table.lh_geocoding_msa_code
+           , history_table.lh_geocoding_state_code
+           , history_table.lh_geocoding_county_code
+           , history_table.lh_geocoding_census_tract
+           , history_table.lh_tolerance_cure_amount
+           , history_table.lh_self_employed_flag
+           , history_table.lh_first_time_homebuyer
+           , history_table.lh_mortgage_insurance_lpmi_rate_adjustment
+           , history_table.lh_eligible_for_qm_status
+           , history_table.lh_safe_harbor_test_passed
+           , history_table.lh_hpml
+           , history_table.lh_hoepa
+           , history_table.lh_funding_status
+           , history_table.lh_early_funding
+           , history_table.lh_early_funding_date
+           , history_table.lh_lqa_purchase_eligibility_type
+           , history_table.lh_transferred_appraisal
+           , history_table.lh_appraisal_cu_risk_score
+           , history_table.lh_mi_upfront_rate
+           , history_table.lh_loan_funding_requested_date
+           , history_table.lh_student_loan_cash_out
+           , history_table.lh_octane_high_balance
+           , history_table.lh_borrower_final_price
+           , history_table.lh_charge_credit_for_interest_rate
+           , history_table.lh_contract_processing_fee
+           , history_table.lh_escrow_holdback
+           , history_table.lh_appraiser_license_number
+           , history_table.lh_mcc_present
+           , history_table.lh_grant_present
+           , history_table.lh_cema
+           , history_table.lh_supplemental_margin_company
+           , history_table.lh_supplemental_margin_branch
+           , history_table.lh_supplemental_margin_total
+           , history_table.lh_concessions_renegotiations_amount
+           , history_table.lh_fund_source_type
+           , history_table.lh_purchase_contract_funding_date
+           , history_table.lh_product_id
+           , history_table.lh_community_second
+           , history_table.lh_current_taxes_and_insurance
+           , history_table.lh_multiple_applicants
+           , history_table.lh_community_second_liability
+           , history_table.lh_property_rights_type
+           , history_table.lh_mbs_final_purchaser
+           , history_table.lh_hmda_universal_loan_id
+           , history_table.lh_lp_ace_eligible
+           , history_table.lh_family_advantage_product
+           , history_table.lh_effective_rate_sheet_datetime
+           , history_table.lh_debt_to_income_excluding_mi
+           , history_table.lh_clear_to_commit
+           , history_table.lh_b2_first_name
+           , history_table.lh_b2_last_name
+           , history_table.lh_c2_first_name
+           , history_table.lh_c2_last_name
+           , history_table.lh_b3_first_name
+           , history_table.lh_b3_last_name
+           , history_table.lh_c3_first_name
+           , history_table.lh_c3_last_name
+           , history_table.lh_b4_first_name
+           , history_table.lh_b4_last_name
+           , history_table.lh_c4_first_name
+           , history_table.lh_c4_last_name
+           , history_table.lh_b5_first_name
+           , history_table.lh_b5_last_name
+           , history_table.lh_c5_first_name
+           , history_table.lh_c5_last_name
+           , history_table.lh_texas_home_equity_conversion
+           , history_table.lh_interest_only_heloc
+           , history_table.lh_interest_only_term_months
+           , history_table.lh_investor_lock_product_name
+           , history_table.lh_investor_lock_product_id
+           , history_table.lh_rebuttable_presumption
+           , history_table.lh_non_conforming
+           , history_table.lh_num_deal_updates_since_update_pending
+           , history_table.lh_borrower_engagement_percent
+           , history_table.lh_loan_create_date
+           , history_table.lh_high_balance_hit_percent
+           , history_table.lh_new_york_payup_percent
+           , history_table.lh_ship_date_to_custodian
+           , history_table.lh_lock_vintage
+           , history_table.lh_lock_series
+           , history_table.lh_investor_total
+           , history_table.lh_velocify_lead_id
+           , history_table.lh_collateral_tracking_number
+           , history_table.lh_qualified_mortgage_status_type
+           , history_table.lh_charges_enabled_date
+           , history_table.lh_application_date
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.loan_hedge history_table
+      LEFT JOIN staging_octane.loan_hedge staging_table
+                ON staging_table.lh_pid = history_table.lh_pid
+      WHERE staging_table.lh_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.loan_hedge deleted_records
+          WHERE deleted_records.lh_pid = history_table.lh_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

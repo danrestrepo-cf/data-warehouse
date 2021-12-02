@@ -1,0 +1,87 @@
+name: lender_user_deal_visit
+primary_source_table: staging.staging_octane.lender_user_deal_visit
+primary_key:
+- ludv_pid
+- ludv_version
+foreign_keys:
+  fk_lender_user_deal_visit_1:
+    columns:
+    - ludv_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+  fk_lender_user_deal_visit_2:
+    columns:
+    - ludv_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: history_octane
+      table: deal
+columns:
+  ludv_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ludv_pid
+  ludv_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ludv_version
+  ludv_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ludv_deal_pid
+  ludv_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ludv_lender_user_pid
+  ludv_visited_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.ludv_visited_datetime
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100097:
+    input_type: table
+    output_type: insert
+    json_output_field: ludv_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.lender_user_deal_visit
+      SELECT staging_table.ludv_pid
+           , staging_table.ludv_version
+           , staging_table.ludv_deal_pid
+           , staging_table.ludv_lender_user_pid
+           , staging_table.ludv_visited_datetime
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.lender_user_deal_visit staging_table
+      LEFT JOIN history_octane.lender_user_deal_visit history_table
+                ON staging_table.ludv_pid = history_table.ludv_pid
+                    AND staging_table.ludv_version = history_table.ludv_version
+      WHERE history_table.ludv_pid IS NULL
+      UNION ALL
+      SELECT history_table.ludv_pid
+           , history_table.ludv_version + 1
+           , history_table.ludv_deal_pid
+           , history_table.ludv_lender_user_pid
+           , history_table.ludv_visited_datetime
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.lender_user_deal_visit history_table
+      LEFT JOIN staging_octane.lender_user_deal_visit staging_table
+                ON staging_table.ludv_pid = history_table.ludv_pid
+      WHERE staging_table.ludv_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.lender_user_deal_visit deleted_records
+          WHERE deleted_records.ludv_pid = history_table.ludv_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

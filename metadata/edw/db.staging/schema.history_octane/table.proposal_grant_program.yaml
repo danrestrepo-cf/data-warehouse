@@ -1,0 +1,87 @@
+name: proposal_grant_program
+primary_source_table: staging.staging_octane.proposal_grant_program
+primary_key:
+- pgp_pid
+- pgp_version
+foreign_keys:
+  fk_proposal_grant_program_1:
+    columns:
+    - pgp_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: history_octane
+      table: proposal
+  fk_proposal_grant_program_2:
+    columns:
+    - pgp_account_grant_program_pid
+    references:
+      columns:
+      - agp_pid
+      schema: history_octane
+      table: account_grant_program
+columns:
+  pgp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pgp_pid
+  pgp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pgp_version
+  pgp_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pgp_proposal_pid
+  pgp_account_grant_program_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pgp_account_grant_program_pid
+  pgp_grant_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.pgp_grant_amount
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100168:
+    input_type: table
+    output_type: insert
+    json_output_field: pgp_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.proposal_grant_program
+      SELECT staging_table.pgp_pid
+           , staging_table.pgp_version
+           , staging_table.pgp_proposal_pid
+           , staging_table.pgp_account_grant_program_pid
+           , staging_table.pgp_grant_amount
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.proposal_grant_program staging_table
+      LEFT JOIN history_octane.proposal_grant_program history_table
+                ON staging_table.pgp_pid = history_table.pgp_pid
+                    AND staging_table.pgp_version = history_table.pgp_version
+      WHERE history_table.pgp_pid IS NULL
+      UNION ALL
+      SELECT history_table.pgp_pid
+           , history_table.pgp_version + 1
+           , history_table.pgp_proposal_pid
+           , history_table.pgp_account_grant_program_pid
+           , history_table.pgp_grant_amount
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.proposal_grant_program history_table
+      LEFT JOIN staging_octane.proposal_grant_program staging_table
+                ON staging_table.pgp_pid = history_table.pgp_pid
+      WHERE staging_table.pgp_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.proposal_grant_program deleted_records
+          WHERE deleted_records.pgp_pid = history_table.pgp_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

@@ -1,0 +1,557 @@
+name: proposal_req
+primary_source_table: staging.staging_octane.proposal_req
+primary_key:
+- prpr_pid
+- prpr_version
+foreign_keys:
+  fk_proposal_req_1:
+    columns:
+    - prpr_proposal_doc_pid
+    references:
+      columns:
+      - prpd_pid
+      schema: history_octane
+      table: proposal_doc
+  fk_proposal_req_10:
+    columns:
+    - prpr_business_income_pid
+    references:
+      columns:
+      - bui_pid
+      schema: history_octane
+      table: business_income
+  fk_proposal_req_11:
+    columns:
+    - prpr_rental_income_pid
+    references:
+      columns:
+      - ri_pid
+      schema: history_octane
+      table: rental_income
+  fk_proposal_req_12:
+    columns:
+    - prpr_asset_pid
+    references:
+      columns:
+      - as_pid
+      schema: history_octane
+      table: asset
+  fk_proposal_req_13:
+    columns:
+    - prpr_asset_large_deposit_pid
+    references:
+      columns:
+      - ald_pid
+      schema: history_octane
+      table: asset_large_deposit
+  fk_proposal_req_14:
+    columns:
+    - prpr_liability_pid
+    references:
+      columns:
+      - lia_pid
+      schema: history_octane
+      table: liability
+  fk_proposal_req_15:
+    columns:
+    - prpr_reo_place_pid
+    references:
+      columns:
+      - pl_pid
+      schema: history_octane
+      table: place
+  fk_proposal_req_16:
+    columns:
+    - prpr_property_place_pid
+    references:
+      columns:
+      - pl_pid
+      schema: history_octane
+      table: place
+  fk_proposal_req_17:
+    columns:
+    - prpr_residence_place_pid
+    references:
+      columns:
+      - pl_pid
+      schema: history_octane
+      table: place
+  fk_proposal_req_18:
+    columns:
+    - prpr_borrower_residence_pid
+    references:
+      columns:
+      - bres_pid
+      schema: history_octane
+      table: borrower_residence
+  fk_proposal_req_19:
+    columns:
+    - prpr_application_pid
+    references:
+      columns:
+      - apl_pid
+      schema: history_octane
+      table: application
+  fk_proposal_req_2:
+    columns:
+    - prpr_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: history_octane
+      table: deal
+  fk_proposal_req_20:
+    columns:
+    - prpr_credit_inquiry_pid
+    references:
+      columns:
+      - ci_pid
+      schema: history_octane
+      table: credit_inquiry
+  fk_proposal_req_21:
+    columns:
+    - prpr_appraisal_pid
+    references:
+      columns:
+      - apr_pid
+      schema: history_octane
+      table: appraisal
+  fk_proposal_req_22:
+    columns:
+    - prpr_appraisal_form_pid
+    references:
+      columns:
+      - aprfm_pid
+      schema: history_octane
+      table: appraisal_form
+  fk_proposal_req_23:
+    columns:
+    - prpr_tax_transcript_request_pid
+    references:
+      columns:
+      - ttr_pid
+      schema: history_octane
+      table: tax_transcript_request
+  fk_proposal_req_24:
+    columns:
+    - prpr_borrower_associated_address_pid
+    references:
+      columns:
+      - baa_pid
+      schema: history_octane
+      table: borrower_associated_address
+  fk_proposal_req_26:
+    columns:
+    - prpr_construction_cost_pid
+    references:
+      columns:
+      - coc_pid
+      schema: history_octane
+      table: construction_cost
+  fk_proposal_req_27:
+    columns:
+    - prpr_construction_draw_pid
+    references:
+      columns:
+      - cd_pid
+      schema: history_octane
+      table: construction_draw
+  fk_proposal_req_28:
+    columns:
+    - prpr_proposal_contractor_pid
+    references:
+      columns:
+      - pctr_pid
+      schema: history_octane
+      table: proposal_contractor
+  fk_proposal_req_29:
+    columns:
+    - prpr_proposal_review_pid
+    references:
+      columns:
+      - prpre_pid
+      schema: history_octane
+      table: proposal_review
+  fk_proposal_req_3:
+    columns:
+    - prpr_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: history_octane
+      table: proposal
+  fk_proposal_req_4:
+    columns:
+    - prpr_loan_pid
+    references:
+      columns:
+      - l_pid
+      schema: history_octane
+      table: loan
+  fk_proposal_req_5:
+    columns:
+    - prpr_borrower_pid
+    references:
+      columns:
+      - b_pid
+      schema: history_octane
+      table: borrower
+  fk_proposal_req_6:
+    columns:
+    - prpr_borrower_income_pid
+    references:
+      columns:
+      - bi_pid
+      schema: history_octane
+      table: borrower_income
+  fk_proposal_req_7:
+    columns:
+    - prpr_job_income_pid
+    references:
+      columns:
+      - ji_pid
+      schema: history_octane
+      table: job_income
+  fk_proposal_req_8:
+    columns:
+    - prpr_borrower_job_gap_pid
+    references:
+      columns:
+      - bjg_pid
+      schema: history_octane
+      table: borrower_job_gap
+  fk_proposal_req_9:
+    columns:
+    - prpr_other_income_pid
+    references:
+      columns:
+      - oi_pid
+      schema: history_octane
+      table: other_income
+  fkt_prpr_deal_child_type:
+    columns:
+    - prpr_deal_child_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: deal_child_type
+  fkt_prpr_req_decision_status_type:
+    columns:
+    - prpr_req_decision_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: req_decision_status_type
+  fkt_prpr_req_fulfill_status_type:
+    columns:
+    - prpr_req_fulfill_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: req_fulfill_status_type
+columns:
+  prpr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_pid
+  prpr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.prpr_version
+  prpr_proposal_doc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_proposal_doc_pid
+  prpr_req_name:
+    data_type: VARCHAR(767)
+    source:
+      field: primary_source_table.columns.prpr_req_name
+  prpr_borrower_access:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prpr_borrower_access
+  prpr_req_id:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.prpr_req_id
+  prpr_req_fulfill_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prpr_req_fulfill_status_type
+  prpr_fulfill_status_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prpr_fulfill_status_unparsed_name
+  prpr_fulfill_status_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.prpr_fulfill_status_datetime
+  prpr_req_decision_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prpr_req_decision_status_type
+  prpr_decision_status_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prpr_decision_status_unparsed_name
+  prpr_decision_status_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.prpr_decision_status_datetime
+  prpr_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_deal_pid
+  prpr_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_proposal_pid
+  prpr_loan_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_loan_pid
+  prpr_borrower_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_borrower_pid
+  prpr_borrower_income_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_borrower_income_pid
+  prpr_job_income_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_job_income_pid
+  prpr_borrower_job_gap_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_borrower_job_gap_pid
+  prpr_other_income_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_other_income_pid
+  prpr_business_income_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_business_income_pid
+  prpr_rental_income_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_rental_income_pid
+  prpr_asset_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_asset_pid
+  prpr_asset_large_deposit_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_asset_large_deposit_pid
+  prpr_liability_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_liability_pid
+  prpr_reo_place_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_reo_place_pid
+  prpr_property_place_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_property_place_pid
+  prpr_residence_place_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_residence_place_pid
+  prpr_borrower_residence_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_borrower_residence_pid
+  prpr_application_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_application_pid
+  prpr_credit_inquiry_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_credit_inquiry_pid
+  prpr_appraisal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_appraisal_pid
+  prpr_appraisal_form_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_appraisal_form_pid
+  prpr_tax_transcript_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_tax_transcript_request_pid
+  prpr_deal_child_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prpr_deal_child_type
+  prpr_deal_child_name:
+    data_type: VARCHAR(767)
+    source:
+      field: primary_source_table.columns.prpr_deal_child_name
+  prpr_smart_req:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prpr_smart_req
+  prpr_smart_req_criteria_html:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.prpr_smart_req_criteria_html
+  prpr_trash:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prpr_trash
+  prpr_borrower_associated_address_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_borrower_associated_address_pid
+  prpr_construction_cost_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_construction_cost_pid
+  prpr_construction_draw_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_construction_draw_pid
+  prpr_proposal_contractor_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_proposal_contractor_pid
+  prpr_proposal_review_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpr_proposal_review_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  prpr_fulfill_status_reason:
+    data_type: VARCHAR(1024)
+  prpr_decision_status_reason:
+    data_type: VARCHAR(1024)
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100344:
+    input_type: table
+    output_type: insert
+    json_output_field: prpr_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.proposal_req
+      SELECT staging_table.prpr_pid
+           , staging_table.prpr_version
+           , staging_table.prpr_proposal_doc_pid
+           , staging_table.prpr_req_name
+           , staging_table.prpr_borrower_access
+           , staging_table.prpr_req_id
+           , staging_table.prpr_req_fulfill_status_type
+           , staging_table.prpr_fulfill_status_unparsed_name
+           , staging_table.prpr_fulfill_status_datetime
+           , staging_table.prpr_req_decision_status_type
+           , staging_table.prpr_decision_status_unparsed_name
+           , staging_table.prpr_decision_status_datetime
+           , staging_table.prpr_deal_pid
+           , staging_table.prpr_proposal_pid
+           , staging_table.prpr_loan_pid
+           , staging_table.prpr_borrower_pid
+           , staging_table.prpr_borrower_income_pid
+           , staging_table.prpr_job_income_pid
+           , staging_table.prpr_borrower_job_gap_pid
+           , staging_table.prpr_other_income_pid
+           , staging_table.prpr_business_income_pid
+           , staging_table.prpr_rental_income_pid
+           , staging_table.prpr_asset_pid
+           , staging_table.prpr_asset_large_deposit_pid
+           , staging_table.prpr_liability_pid
+           , staging_table.prpr_reo_place_pid
+           , staging_table.prpr_property_place_pid
+           , staging_table.prpr_residence_place_pid
+           , staging_table.prpr_borrower_residence_pid
+           , staging_table.prpr_application_pid
+           , staging_table.prpr_credit_inquiry_pid
+           , staging_table.prpr_appraisal_pid
+           , staging_table.prpr_appraisal_form_pid
+           , staging_table.prpr_tax_transcript_request_pid
+           , staging_table.prpr_deal_child_type
+           , staging_table.prpr_deal_child_name
+           , staging_table.prpr_smart_req
+           , staging_table.prpr_smart_req_criteria_html
+           , staging_table.prpr_trash
+           , staging_table.prpr_borrower_associated_address_pid
+           , staging_table.prpr_construction_cost_pid
+           , staging_table.prpr_construction_draw_pid
+           , staging_table.prpr_proposal_contractor_pid
+           , staging_table.prpr_proposal_review_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.proposal_req staging_table
+      LEFT JOIN history_octane.proposal_req history_table
+                ON staging_table.prpr_pid = history_table.prpr_pid
+                    AND staging_table.prpr_version = history_table.prpr_version
+      WHERE history_table.prpr_pid IS NULL
+      UNION ALL
+      SELECT history_table.prpr_pid
+           , history_table.prpr_version + 1
+           , history_table.prpr_proposal_doc_pid
+           , history_table.prpr_req_name
+           , history_table.prpr_borrower_access
+           , history_table.prpr_req_id
+           , history_table.prpr_req_fulfill_status_type
+           , history_table.prpr_fulfill_status_unparsed_name
+           , history_table.prpr_fulfill_status_datetime
+           , history_table.prpr_req_decision_status_type
+           , history_table.prpr_decision_status_unparsed_name
+           , history_table.prpr_decision_status_datetime
+           , history_table.prpr_deal_pid
+           , history_table.prpr_proposal_pid
+           , history_table.prpr_loan_pid
+           , history_table.prpr_borrower_pid
+           , history_table.prpr_borrower_income_pid
+           , history_table.prpr_job_income_pid
+           , history_table.prpr_borrower_job_gap_pid
+           , history_table.prpr_other_income_pid
+           , history_table.prpr_business_income_pid
+           , history_table.prpr_rental_income_pid
+           , history_table.prpr_asset_pid
+           , history_table.prpr_asset_large_deposit_pid
+           , history_table.prpr_liability_pid
+           , history_table.prpr_reo_place_pid
+           , history_table.prpr_property_place_pid
+           , history_table.prpr_residence_place_pid
+           , history_table.prpr_borrower_residence_pid
+           , history_table.prpr_application_pid
+           , history_table.prpr_credit_inquiry_pid
+           , history_table.prpr_appraisal_pid
+           , history_table.prpr_appraisal_form_pid
+           , history_table.prpr_tax_transcript_request_pid
+           , history_table.prpr_deal_child_type
+           , history_table.prpr_deal_child_name
+           , history_table.prpr_smart_req
+           , history_table.prpr_smart_req_criteria_html
+           , history_table.prpr_trash
+           , history_table.prpr_borrower_associated_address_pid
+           , history_table.prpr_construction_cost_pid
+           , history_table.prpr_construction_draw_pid
+           , history_table.prpr_proposal_contractor_pid
+           , history_table.prpr_proposal_review_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.proposal_req history_table
+      LEFT JOIN staging_octane.proposal_req staging_table
+                ON staging_table.prpr_pid = history_table.prpr_pid
+      WHERE staging_table.prpr_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.proposal_req deleted_records
+          WHERE deleted_records.prpr_pid = history_table.prpr_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

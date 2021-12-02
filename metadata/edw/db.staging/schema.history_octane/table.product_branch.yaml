@@ -1,0 +1,99 @@
+name: product_branch
+primary_source_table: staging.staging_octane.product_branch
+primary_key:
+- pbr_pid
+- pbr_version
+foreign_keys:
+  fk_product_branch_1:
+    columns:
+    - pbr_product_pid
+    references:
+      columns:
+      - p_pid
+      schema: history_octane
+      table: product
+  fk_product_branch_2:
+    columns:
+    - pbr_branch_pid
+    references:
+      columns:
+      - br_pid
+      schema: history_octane
+      table: branch
+columns:
+  pbr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pbr_pid
+  pbr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pbr_version
+  pbr_product_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pbr_product_pid
+  pbr_branch_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pbr_branch_pid
+  pbr_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.pbr_from_date
+  pbr_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.pbr_through_date
+  pbr_price_adjustment_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pbr_price_adjustment_percent
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100109:
+    input_type: table
+    output_type: insert
+    json_output_field: pbr_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.product_branch
+      SELECT staging_table.pbr_pid
+           , staging_table.pbr_version
+           , staging_table.pbr_product_pid
+           , staging_table.pbr_branch_pid
+           , staging_table.pbr_from_date
+           , staging_table.pbr_through_date
+           , staging_table.pbr_price_adjustment_percent
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.product_branch staging_table
+      LEFT JOIN history_octane.product_branch history_table
+                ON staging_table.pbr_pid = history_table.pbr_pid
+                    AND staging_table.pbr_version = history_table.pbr_version
+      WHERE history_table.pbr_pid IS NULL
+      UNION ALL
+      SELECT history_table.pbr_pid
+           , history_table.pbr_version + 1
+           , history_table.pbr_product_pid
+           , history_table.pbr_branch_pid
+           , history_table.pbr_from_date
+           , history_table.pbr_through_date
+           , history_table.pbr_price_adjustment_percent
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.product_branch history_table
+      LEFT JOIN staging_octane.product_branch staging_table
+                ON staging_table.pbr_pid = history_table.pbr_pid
+      WHERE staging_table.pbr_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.product_branch deleted_records
+          WHERE deleted_records.pbr_pid = history_table.pbr_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

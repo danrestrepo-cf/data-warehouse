@@ -1,0 +1,143 @@
+name: lender_lock_add_on
+primary_source_table: staging.staging_octane.lender_lock_add_on
+primary_key:
+- lla_pid
+- lla_version
+foreign_keys:
+  fk_lender_lock_add_on_1:
+    columns:
+    - lla_lender_lock_minor_pid
+    references:
+      columns:
+      - llmn_pid
+      schema: history_octane
+      table: lender_lock_minor
+  fk_lender_lock_add_on_2:
+    columns:
+    - lla_creator_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+  fkt_lla_lock_add_on_type:
+    columns:
+    - lla_lock_add_on_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: lock_add_on_type
+columns:
+  lla_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lla_pid
+  lla_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lla_version
+  lla_lender_lock_minor_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lla_lender_lock_minor_pid
+  lla_lock_add_on_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lla_lock_add_on_type
+  lla_investor_price_adjustment_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lla_investor_price_adjustment_percent
+  lla_account_price_adjustment_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lla_account_price_adjustment_percent
+  lla_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.lla_create_datetime
+  lla_creator_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lla_creator_lender_user_pid
+  lla_creator_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lla_creator_unparsed_name
+  lla_summary:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.lla_summary
+  lla_rate_adjustment_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lla_rate_adjustment_percent
+  lla_price_adjustment_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lla_price_adjustment_percent
+  lla_arm_margin_adjustment_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lla_arm_margin_adjustment_percent
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100153:
+    input_type: table
+    output_type: insert
+    json_output_field: lla_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.lender_lock_add_on
+      SELECT staging_table.lla_pid
+           , staging_table.lla_version
+           , staging_table.lla_lender_lock_minor_pid
+           , staging_table.lla_lock_add_on_type
+           , staging_table.lla_investor_price_adjustment_percent
+           , staging_table.lla_account_price_adjustment_percent
+           , staging_table.lla_create_datetime
+           , staging_table.lla_creator_lender_user_pid
+           , staging_table.lla_creator_unparsed_name
+           , staging_table.lla_summary
+           , staging_table.lla_rate_adjustment_percent
+           , staging_table.lla_price_adjustment_percent
+           , staging_table.lla_arm_margin_adjustment_percent
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.lender_lock_add_on staging_table
+      LEFT JOIN history_octane.lender_lock_add_on history_table
+                ON staging_table.lla_pid = history_table.lla_pid
+                    AND staging_table.lla_version = history_table.lla_version
+      WHERE history_table.lla_pid IS NULL
+      UNION ALL
+      SELECT history_table.lla_pid
+           , history_table.lla_version + 1
+           , history_table.lla_lender_lock_minor_pid
+           , history_table.lla_lock_add_on_type
+           , history_table.lla_investor_price_adjustment_percent
+           , history_table.lla_account_price_adjustment_percent
+           , history_table.lla_create_datetime
+           , history_table.lla_creator_lender_user_pid
+           , history_table.lla_creator_unparsed_name
+           , history_table.lla_summary
+           , history_table.lla_rate_adjustment_percent
+           , history_table.lla_price_adjustment_percent
+           , history_table.lla_arm_margin_adjustment_percent
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.lender_lock_add_on history_table
+      LEFT JOIN staging_octane.lender_lock_add_on staging_table
+                ON staging_table.lla_pid = history_table.lla_pid
+      WHERE staging_table.lla_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.lender_lock_add_on deleted_records
+          WHERE deleted_records.lla_pid = history_table.lla_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

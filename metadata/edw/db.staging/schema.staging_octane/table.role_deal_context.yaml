@@ -1,0 +1,29 @@
+name: role_deal_context
+primary_key:
+- rdc_pid
+foreign_keys:
+  fk_role_deal_context_1:
+    columns:
+    - rdc_role_pid
+    references:
+      columns:
+      - r_pid
+      schema: staging_octane
+      table: role
+  fkt_rdc_deal_context_permission_type:
+    columns:
+    - rdc_deal_context_permission_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: deal_context_permission_type
+columns:
+  rdc_pid:
+    data_type: BIGINT
+  rdc_version:
+    data_type: INTEGER
+  rdc_role_pid:
+    data_type: BIGINT
+  rdc_deal_context_permission_type:
+    data_type: VARCHAR(128)

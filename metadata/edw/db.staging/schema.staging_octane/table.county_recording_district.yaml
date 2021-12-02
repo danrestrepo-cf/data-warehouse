@@ -1,0 +1,29 @@
+name: county_recording_district
+primary_key:
+- crdi_pid
+foreign_keys:
+  fk_county_recording_district_1:
+    columns:
+    - crdi_county_pid
+    references:
+      columns:
+      - c_pid
+      schema: staging_octane
+      table: county
+  fk_county_recording_district_2:
+    columns:
+    - crdi_recording_district_pid
+    references:
+      columns:
+      - rdi_pid
+      schema: staging_octane
+      table: recording_district
+columns:
+  crdi_pid:
+    data_type: BIGINT
+  crdi_version:
+    data_type: INTEGER
+  crdi_county_pid:
+    data_type: BIGINT
+  crdi_recording_district_pid:
+    data_type: BIGINT

@@ -1,0 +1,95 @@
+name: appraisal_form
+primary_source_table: staging.staging_octane.appraisal_form
+primary_key:
+- aprfm_pid
+- aprfm_version
+foreign_keys:
+  fk_appraisal_form_1:
+    columns:
+    - aprfm_appraisal_pid
+    references:
+      columns:
+      - apr_pid
+      schema: history_octane
+      table: appraisal
+  fkt_aprfm_appraisal_form_type:
+    columns:
+    - aprfm_appraisal_form_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: appraisal_form_type
+  fkt_aprfm_appraisal_source_type:
+    columns:
+    - aprfm_appraisal_source_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: appraisal_source_type
+columns:
+  aprfm_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.aprfm_pid
+  aprfm_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.aprfm_version
+  aprfm_appraisal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.aprfm_appraisal_pid
+  aprfm_appraisal_source_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.aprfm_appraisal_source_type
+  aprfm_appraisal_form_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.aprfm_appraisal_form_type
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100006:
+    input_type: table
+    output_type: insert
+    json_output_field: aprfm_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.appraisal_form
+      SELECT staging_table.aprfm_pid
+           , staging_table.aprfm_version
+           , staging_table.aprfm_appraisal_pid
+           , staging_table.aprfm_appraisal_source_type
+           , staging_table.aprfm_appraisal_form_type
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.appraisal_form staging_table
+      LEFT JOIN history_octane.appraisal_form history_table
+                ON staging_table.aprfm_pid = history_table.aprfm_pid
+                    AND staging_table.aprfm_version = history_table.aprfm_version
+      WHERE history_table.aprfm_pid IS NULL
+      UNION ALL
+      SELECT history_table.aprfm_pid
+           , history_table.aprfm_version + 1
+           , history_table.aprfm_appraisal_pid
+           , history_table.aprfm_appraisal_source_type
+           , history_table.aprfm_appraisal_form_type
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.appraisal_form history_table
+      LEFT JOIN staging_octane.appraisal_form staging_table
+                ON staging_table.aprfm_pid = history_table.aprfm_pid
+      WHERE staging_table.aprfm_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.appraisal_form deleted_records
+          WHERE deleted_records.aprfm_pid = history_table.aprfm_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

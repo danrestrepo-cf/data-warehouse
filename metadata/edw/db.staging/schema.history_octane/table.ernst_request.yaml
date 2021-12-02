@@ -1,0 +1,407 @@
+name: ernst_request
+primary_source_table: staging.staging_octane.ernst_request
+primary_key:
+- enst_pid
+- enst_version
+foreign_keys:
+  fk_ernst_request_1:
+    columns:
+    - enst_loan_pid
+    references:
+      columns:
+      - l_pid
+      schema: history_octane
+      table: loan
+  fk_ernst_request_2:
+    columns:
+    - enst_response_deal_system_file_pid
+    references:
+      columns:
+      - dsf_pid
+      schema: history_octane
+      table: deal_system_file
+  fkt_enst_deed_request_type:
+    columns:
+    - enst_deed_request_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: ernst_deed_request_type
+  fkt_enst_ernst_request_status_type:
+    columns:
+    - enst_ernst_request_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: ernst_request_status_type
+  fkt_enst_loan_position_type:
+    columns:
+    - enst_loan_position_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: loan_position_type
+  fkt_enst_security_instrument_request_type:
+    columns:
+    - enst_security_instrument_request_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: ernst_security_instrument_request_type
+columns:
+  enst_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.enst_pid
+  enst_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_version
+  enst_loan_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.enst_loan_pid
+  enst_response_deal_system_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.enst_response_deal_system_file_pid
+  enst_auto_compute:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.enst_auto_compute
+  enst_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.enst_create_datetime
+  enst_ernst_request_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.enst_ernst_request_status_type
+  enst_error_messages:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.enst_error_messages
+  enst_state:
+    data_type: VARCHAR(2)
+    source:
+      field: primary_source_table.columns.enst_state
+  enst_ernst_page_rec:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.enst_ernst_page_rec
+  enst_sub_jurisdiction_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.enst_sub_jurisdiction_name
+  enst_torrens:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.enst_torrens
+  enst_security_instrument_request_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.enst_security_instrument_request_type
+  enst_security_instrument_index_fee_requested:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.enst_security_instrument_index_fee_requested
+  enst_security_instrument_index_fee_grantor_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_security_instrument_index_fee_grantor_count
+  enst_security_instrument_index_fee_grantees_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_security_instrument_index_fee_grantees_count
+  enst_security_instrument_index_fee_surnames_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_security_instrument_index_fee_surnames_count
+  enst_security_instrument_index_fee_signatures_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_security_instrument_index_fee_signatures_count
+  enst_security_instrument_page_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_security_instrument_page_count
+  enst_security_instrument_modification_amendment_page_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_security_instrument_modification_amendment_page_count
+  enst_security_instrument_page_breakdown:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.enst_security_instrument_page_breakdown
+  enst_mortgage_new_debt_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.enst_mortgage_new_debt_amount
+  enst_mortgage_original_debt_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.enst_mortgage_original_debt_amount
+  enst_mortgage_unpaid_balance_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.enst_mortgage_unpaid_balance_amount
+  enst_deed_request_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.enst_deed_request_type
+  enst_deed_index_fee_requested:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.enst_deed_index_fee_requested
+  enst_deed_index_fee_grantor_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_deed_index_fee_grantor_count
+  enst_deed_index_fee_grantees_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_deed_index_fee_grantees_count
+  enst_deed_index_fee_surnames_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_deed_index_fee_surnames_count
+  enst_deed_index_fee_signatures_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_deed_index_fee_signatures_count
+  enst_deed_page_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_deed_page_count
+  enst_deed_page_breakdown:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.enst_deed_page_breakdown
+  enst_deed_consideration_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.enst_deed_consideration_amount
+  enst_deed_amendment_page_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_deed_amendment_page_count
+  enst_include_assignment:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.enst_include_assignment
+  enst_assign_index_fee_requested:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.enst_assign_index_fee_requested
+  enst_assign_index_fee_grantor_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_assign_index_fee_grantor_count
+  enst_assign_index_fee_grantees_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_assign_index_fee_grantees_count
+  enst_assign_index_fee_surnames_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_assign_index_fee_surnames_count
+  enst_assign_index_fee_signatures_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_assign_index_fee_signatures_count
+  enst_assignment_page_count_per_doc:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_assignment_page_count_per_doc
+  enst_assignment_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_assignment_count
+  enst_include_poa:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.enst_include_poa
+  enst_poa_page_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_poa_page_count
+  enst_include_subordination:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.enst_include_subordination
+  enst_subord_index_fee_requested:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.enst_subord_index_fee_requested
+  enst_subord_index_fee_grantor_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_subord_index_fee_grantor_count
+  enst_subord_index_fee_grantees_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_subord_index_fee_grantees_count
+  enst_subord_index_fee_surnames_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_subord_index_fee_surnames_count
+  enst_subord_index_fee_signatures_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_subord_index_fee_signatures_count
+  enst_subordination_page_count_per_doc:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_subordination_page_count_per_doc
+  enst_subordination_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_subordination_count
+  enst_loan_position_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.enst_loan_position_type
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100139:
+    input_type: table
+    output_type: insert
+    json_output_field: enst_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.ernst_request
+      SELECT staging_table.enst_pid
+           , staging_table.enst_version
+           , staging_table.enst_loan_pid
+           , staging_table.enst_response_deal_system_file_pid
+           , staging_table.enst_auto_compute
+           , staging_table.enst_create_datetime
+           , staging_table.enst_ernst_request_status_type
+           , staging_table.enst_error_messages
+           , staging_table.enst_state
+           , staging_table.enst_ernst_page_rec
+           , staging_table.enst_sub_jurisdiction_name
+           , staging_table.enst_torrens
+           , staging_table.enst_security_instrument_request_type
+           , staging_table.enst_security_instrument_index_fee_requested
+           , staging_table.enst_security_instrument_index_fee_grantor_count
+           , staging_table.enst_security_instrument_index_fee_grantees_count
+           , staging_table.enst_security_instrument_index_fee_surnames_count
+           , staging_table.enst_security_instrument_index_fee_signatures_count
+           , staging_table.enst_security_instrument_page_count
+           , staging_table.enst_security_instrument_modification_amendment_page_count
+           , staging_table.enst_security_instrument_page_breakdown
+           , staging_table.enst_mortgage_new_debt_amount
+           , staging_table.enst_mortgage_original_debt_amount
+           , staging_table.enst_mortgage_unpaid_balance_amount
+           , staging_table.enst_deed_request_type
+           , staging_table.enst_deed_index_fee_requested
+           , staging_table.enst_deed_index_fee_grantor_count
+           , staging_table.enst_deed_index_fee_grantees_count
+           , staging_table.enst_deed_index_fee_surnames_count
+           , staging_table.enst_deed_index_fee_signatures_count
+           , staging_table.enst_deed_page_count
+           , staging_table.enst_deed_page_breakdown
+           , staging_table.enst_deed_consideration_amount
+           , staging_table.enst_deed_amendment_page_count
+           , staging_table.enst_include_assignment
+           , staging_table.enst_assign_index_fee_requested
+           , staging_table.enst_assign_index_fee_grantor_count
+           , staging_table.enst_assign_index_fee_grantees_count
+           , staging_table.enst_assign_index_fee_surnames_count
+           , staging_table.enst_assign_index_fee_signatures_count
+           , staging_table.enst_assignment_page_count_per_doc
+           , staging_table.enst_assignment_count
+           , staging_table.enst_include_poa
+           , staging_table.enst_poa_page_count
+           , staging_table.enst_include_subordination
+           , staging_table.enst_subord_index_fee_requested
+           , staging_table.enst_subord_index_fee_grantor_count
+           , staging_table.enst_subord_index_fee_grantees_count
+           , staging_table.enst_subord_index_fee_surnames_count
+           , staging_table.enst_subord_index_fee_signatures_count
+           , staging_table.enst_subordination_page_count_per_doc
+           , staging_table.enst_subordination_count
+           , staging_table.enst_loan_position_type
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.ernst_request staging_table
+      LEFT JOIN history_octane.ernst_request history_table
+                ON staging_table.enst_pid = history_table.enst_pid
+                    AND staging_table.enst_version = history_table.enst_version
+      WHERE history_table.enst_pid IS NULL
+      UNION ALL
+      SELECT history_table.enst_pid
+           , history_table.enst_version + 1
+           , history_table.enst_loan_pid
+           , history_table.enst_response_deal_system_file_pid
+           , history_table.enst_auto_compute
+           , history_table.enst_create_datetime
+           , history_table.enst_ernst_request_status_type
+           , history_table.enst_error_messages
+           , history_table.enst_state
+           , history_table.enst_ernst_page_rec
+           , history_table.enst_sub_jurisdiction_name
+           , history_table.enst_torrens
+           , history_table.enst_security_instrument_request_type
+           , history_table.enst_security_instrument_index_fee_requested
+           , history_table.enst_security_instrument_index_fee_grantor_count
+           , history_table.enst_security_instrument_index_fee_grantees_count
+           , history_table.enst_security_instrument_index_fee_surnames_count
+           , history_table.enst_security_instrument_index_fee_signatures_count
+           , history_table.enst_security_instrument_page_count
+           , history_table.enst_security_instrument_modification_amendment_page_count
+           , history_table.enst_security_instrument_page_breakdown
+           , history_table.enst_mortgage_new_debt_amount
+           , history_table.enst_mortgage_original_debt_amount
+           , history_table.enst_mortgage_unpaid_balance_amount
+           , history_table.enst_deed_request_type
+           , history_table.enst_deed_index_fee_requested
+           , history_table.enst_deed_index_fee_grantor_count
+           , history_table.enst_deed_index_fee_grantees_count
+           , history_table.enst_deed_index_fee_surnames_count
+           , history_table.enst_deed_index_fee_signatures_count
+           , history_table.enst_deed_page_count
+           , history_table.enst_deed_page_breakdown
+           , history_table.enst_deed_consideration_amount
+           , history_table.enst_deed_amendment_page_count
+           , history_table.enst_include_assignment
+           , history_table.enst_assign_index_fee_requested
+           , history_table.enst_assign_index_fee_grantor_count
+           , history_table.enst_assign_index_fee_grantees_count
+           , history_table.enst_assign_index_fee_surnames_count
+           , history_table.enst_assign_index_fee_signatures_count
+           , history_table.enst_assignment_page_count_per_doc
+           , history_table.enst_assignment_count
+           , history_table.enst_include_poa
+           , history_table.enst_poa_page_count
+           , history_table.enst_include_subordination
+           , history_table.enst_subord_index_fee_requested
+           , history_table.enst_subord_index_fee_grantor_count
+           , history_table.enst_subord_index_fee_grantees_count
+           , history_table.enst_subord_index_fee_surnames_count
+           , history_table.enst_subord_index_fee_signatures_count
+           , history_table.enst_subordination_page_count_per_doc
+           , history_table.enst_subordination_count
+           , history_table.enst_loan_position_type
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.ernst_request history_table
+      LEFT JOIN staging_octane.ernst_request staging_table
+                ON staging_table.enst_pid = history_table.enst_pid
+      WHERE staging_table.enst_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.ernst_request deleted_records
+          WHERE deleted_records.enst_pid = history_table.enst_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

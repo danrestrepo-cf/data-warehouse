@@ -1,0 +1,29 @@
+name: role_performer_assign
+primary_key:
+- rpa_pid
+foreign_keys:
+  fk_role_performer_assign_1:
+    columns:
+    - rpa_role_pid
+    references:
+      columns:
+      - r_pid
+      schema: staging_octane
+      table: role
+  fk_role_performer_assign_2:
+    columns:
+    - rpa_assignee_role_pid
+    references:
+      columns:
+      - r_pid
+      schema: staging_octane
+      table: role
+columns:
+  rpa_pid:
+    data_type: BIGINT
+  rpa_version:
+    data_type: INTEGER
+  rpa_role_pid:
+    data_type: BIGINT
+  rpa_assignee_role_pid:
+    data_type: BIGINT

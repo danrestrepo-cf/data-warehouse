@@ -1,0 +1,73 @@
+name: county_sub_jurisdiction
+primary_source_table: staging.staging_octane.county_sub_jurisdiction
+primary_key:
+- csju_pid
+- csju_version
+foreign_keys:
+  fk_county_sub_jurisdiction_1:
+    columns:
+    - csju_county_pid
+    references:
+      columns:
+      - c_pid
+      schema: history_octane
+      table: county
+columns:
+  csju_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.csju_pid
+  csju_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.csju_version
+  csju_county_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.csju_county_pid
+  csju_sub_jurisdiction_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.csju_sub_jurisdiction_name
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100061:
+    input_type: table
+    output_type: insert
+    json_output_field: csju_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.county_sub_jurisdiction
+      SELECT staging_table.csju_pid
+           , staging_table.csju_version
+           , staging_table.csju_county_pid
+           , staging_table.csju_sub_jurisdiction_name
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.county_sub_jurisdiction staging_table
+      LEFT JOIN history_octane.county_sub_jurisdiction history_table
+                ON staging_table.csju_pid = history_table.csju_pid
+                    AND staging_table.csju_version = history_table.csju_version
+      WHERE history_table.csju_pid IS NULL
+      UNION ALL
+      SELECT history_table.csju_pid
+           , history_table.csju_version + 1
+           , history_table.csju_county_pid
+           , history_table.csju_sub_jurisdiction_name
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.county_sub_jurisdiction history_table
+      LEFT JOIN staging_octane.county_sub_jurisdiction staging_table
+                ON staging_table.csju_pid = history_table.csju_pid
+      WHERE staging_table.csju_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.county_sub_jurisdiction deleted_records
+          WHERE deleted_records.csju_pid = history_table.csju_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

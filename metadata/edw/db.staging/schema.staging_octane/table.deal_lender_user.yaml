@@ -1,0 +1,63 @@
+name: deal_lender_user
+primary_key:
+- dlu_pid
+foreign_keys:
+  fk_deal_lender_user_1:
+    columns:
+    - dlu_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: staging_octane
+      table: deal
+  fk_deal_lender_user_2:
+    columns:
+    - dlu_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_deal_lender_user_3:
+    columns:
+    - dlu_role_pid
+    references:
+      columns:
+      - r_pid
+      schema: staging_octane
+      table: role
+  fkt_dlu_legacy_role_assignment_type:
+    columns:
+    - dlu_legacy_role_assignment_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: legacy_role_assignment_type
+  fkt_dlu_loan_access_type:
+    columns:
+    - dlu_loan_access_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: loan_access_type
+columns:
+  dlu_pid:
+    data_type: BIGINT
+  dlu_version:
+    data_type: INTEGER
+  dlu_deal_pid:
+    data_type: BIGINT
+  dlu_lender_user_pid:
+    data_type: BIGINT
+  dlu_role_pid:
+    data_type: BIGINT
+  dlu_loan_access_type:
+    data_type: VARCHAR(128)
+  dlu_legacy_role_assignment_type:
+    data_type: VARCHAR(128)
+  dlu_legacy_role_assignment_date:
+    data_type: DATE
+  dlu_synthetic_unique:
+    data_type: VARCHAR(32)

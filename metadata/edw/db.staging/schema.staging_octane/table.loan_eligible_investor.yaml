@@ -1,0 +1,29 @@
+name: loan_eligible_investor
+primary_key:
+- lei_pid
+foreign_keys:
+  fk_loan_eligible_investor_1:
+    columns:
+    - lei_loan_pid
+    references:
+      columns:
+      - l_pid
+      schema: staging_octane
+      table: loan
+  fk_loan_eligible_investor_2:
+    columns:
+    - lei_investor_pid
+    references:
+      columns:
+      - i_pid
+      schema: staging_octane
+      table: investor
+columns:
+  lei_pid:
+    data_type: BIGINT
+  lei_version:
+    data_type: INTEGER
+  lei_loan_pid:
+    data_type: BIGINT
+  lei_investor_pid:
+    data_type: BIGINT
