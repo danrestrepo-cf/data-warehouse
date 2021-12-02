@@ -348,6 +348,8 @@ SELECT staging_table.lu_pid
      , staging_table.lu_hub_directory
      , staging_table.lu_email_signature_title
      , staging_table.lu_termination_date
+     , staging_table.lu_marketing_details_enabled
+     , staging_table.lu_marketing_details_featured_review
      , FALSE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM staging_octane.lender_user staging_table
@@ -416,6 +418,8 @@ SELECT history_table.lu_pid
      , history_table.lu_hub_directory
      , history_table.lu_email_signature_title
      , history_table.lu_termination_date
+     , history_table.lu_marketing_details_enabled
+     , history_table.lu_marketing_details_featured_review
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM history_octane.lender_user history_table
@@ -741,9 +745,6 @@ WITH update_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'history_octane', 'account', 'a_lender_app_ip_address', 'VARCHAR(32)', 'staging', 'staging_octane', 'account', 'a_lender_app_ip_address')
          , ('staging', 'history_octane', 'account', 'a_advance_period_days', 'INTEGER', 'staging', 'staging_octane', 'account', 'a_advance_period_days')
          , ('staging', 'history_octane', 'account', 'a_account_destroy_mode', 'BOOLEAN', 'staging', 'staging_octane', 'account', 'a_account_destroy_mode')
-         , ('staging', 'history_octane', 'account', 'a_lender_user_password_expire_days', 'INTEGER', 'staging', 'staging_octane', 'account', 'a_lender_user_password_expire_days')
-         , ('staging', 'history_octane', 'account', 'a_lender_user_password_minimum_change_days', 'INTEGER', 'staging', 'staging_octane', 'account', 'a_lender_user_password_minimum_change_days')
-         , ('staging', 'history_octane', 'account', 'a_lender_user_previous_password_ban', 'INTEGER', 'staging', 'staging_octane', 'account', 'a_lender_user_previous_password_ban')
          , ('staging', 'history_octane', 'account', 'a_paid_through_current_month_required_day_of_month', 'INTEGER', 'staging', 'staging_octane', 'account', 'a_paid_through_current_month_required_day_of_month')
          , ('staging', 'history_octane', 'account', 'a_disclosure_change_threshold_cash_to_close', 'NUMERIC(15,2)', 'staging', 'staging_octane', 'account', 'a_disclosure_change_threshold_cash_to_close')
          , ('staging', 'history_octane', 'account', 'a_disclosure_change_threshold_monthly_payment', 'NUMERIC(15,2)', 'staging', 'staging_octane', 'account', 'a_disclosure_change_threshold_monthly_payment')
@@ -759,6 +760,9 @@ WITH update_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'history_octane', 'account', 'a_supported_states', 'TEXT', 'staging', 'staging_octane', 'account', 'a_supported_states')
          , ('staging', 'history_octane', 'account', 'data_source_updated_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'account', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'account', 'a_lender_user_password_expire_days', 'INTEGER', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'account', 'a_lender_user_password_minimum_change_days', 'INTEGER', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'account', 'a_lender_user_previous_password_ban', 'INTEGER', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'account_contact', 'ac_pid', 'BIGINT', 'staging', 'staging_octane', 'account_contact', 'ac_pid')
          , ('staging', 'history_octane', 'account_contact', 'ac_version', 'INTEGER', 'staging', 'staging_octane', 'account_contact', 'ac_version')
          , ('staging', 'history_octane', 'account_contact', 'ac_account_pid', 'BIGINT', 'staging', 'staging_octane', 'account_contact', 'ac_account_pid')
@@ -3378,12 +3382,12 @@ WITH update_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'history_octane', 'deal_message_log', 'dmlog_email_body', 'TEXT', 'staging', 'staging_octane', 'deal_message_log', 'dmlog_email_body')
          , ('staging', 'history_octane', 'deal_message_log', 'dmlog_sent_securely', 'BOOLEAN', 'staging', 'staging_octane', 'deal_message_log', 'dmlog_sent_securely')
          , ('staging', 'history_octane', 'deal_message_log', 'dmlog_cover_letter_deal_file_pid', 'BIGINT', 'staging', 'staging_octane', 'deal_message_log', 'dmlog_cover_letter_deal_file_pid')
-         , ('staging', 'history_octane', 'deal_message_log', 'dmlog_attachment_deal_file_pid', 'BIGINT', 'staging', 'staging_octane', 'deal_message_log', 'dmlog_attachment_deal_file_pid')
          , ('staging', 'history_octane', 'deal_message_log', 'dmlog_cc_recipients', 'VARCHAR(16000)', 'staging', 'staging_octane', 'deal_message_log', 'dmlog_cc_recipients')
          , ('staging', 'history_octane', 'deal_message_log', 'dmlog_bcc_recipients', 'VARCHAR(16000)', 'staging', 'staging_octane', 'deal_message_log', 'dmlog_bcc_recipients')
          , ('staging', 'history_octane', 'deal_message_log', 'dmlog_plain_text', 'BOOLEAN', 'staging', 'staging_octane', 'deal_message_log', 'dmlog_plain_text')
          , ('staging', 'history_octane', 'deal_message_log', 'data_source_updated_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'deal_message_log', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'deal_message_log', 'dmlog_attachment_deal_file_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'deal_note', 'dn_pid', 'BIGINT', 'staging', 'staging_octane', 'deal_note', 'dn_pid')
          , ('staging', 'history_octane', 'deal_note', 'dn_version', 'INTEGER', 'staging', 'staging_octane', 'deal_note', 'dn_version')
          , ('staging', 'history_octane', 'deal_note', 'dn_deal_pid', 'BIGINT', 'staging', 'staging_octane', 'deal_note', 'dn_deal_pid')
@@ -6378,8 +6382,8 @@ WITH update_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'history_octane', 'lock_extension_status_type', 'data_source_updated_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'lock_extension_status_type', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'lock_series', 'lsr_pid', 'BIGINT', 'staging', 'staging_octane', 'lock_series', 'lsr_pid')
-         , ('staging', 'history_octane', 'lock_series', 'lsr_loan_pid', 'BIGINT', 'staging', 'staging_octane', 'lock_series', 'lsr_loan_pid')
          , ('staging', 'history_octane', 'lock_series', 'lsr_version', 'INTEGER', 'staging', 'staging_octane', 'lock_series', 'lsr_version')
+         , ('staging', 'history_octane', 'lock_series', 'lsr_loan_pid', 'BIGINT', 'staging', 'staging_octane', 'lock_series', 'lsr_loan_pid')
          , ('staging', 'history_octane', 'lock_series', 'lsr_vintage_date', 'DATE', 'staging', 'staging_octane', 'lock_series', 'lsr_vintage_date')
          , ('staging', 'history_octane', 'lock_series', 'lsr_series_id', 'INTEGER', 'staging', 'staging_octane', 'lock_series', 'lsr_series_id')
          , ('staging', 'history_octane', 'lock_series', 'lsr_org_lineage_pid', 'BIGINT', 'staging', 'staging_octane', 'lock_series', 'lsr_org_lineage_pid')
@@ -8527,11 +8531,9 @@ WITH update_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'history_octane', 'proposal_req', 'prpr_req_id', 'INTEGER', 'staging', 'staging_octane', 'proposal_req', 'prpr_req_id')
          , ('staging', 'history_octane', 'proposal_req', 'prpr_req_fulfill_status_type', 'VARCHAR(128)', 'staging', 'staging_octane', 'proposal_req', 'prpr_req_fulfill_status_type')
          , ('staging', 'history_octane', 'proposal_req', 'prpr_fulfill_status_unparsed_name', 'VARCHAR(128)', 'staging', 'staging_octane', 'proposal_req', 'prpr_fulfill_status_unparsed_name')
-         , ('staging', 'history_octane', 'proposal_req', 'prpr_fulfill_status_reason', 'VARCHAR(1024)', 'staging', 'staging_octane', 'proposal_req', 'prpr_fulfill_status_reason')
          , ('staging', 'history_octane', 'proposal_req', 'prpr_fulfill_status_datetime', 'TIMESTAMP', 'staging', 'staging_octane', 'proposal_req', 'prpr_fulfill_status_datetime')
          , ('staging', 'history_octane', 'proposal_req', 'prpr_req_decision_status_type', 'VARCHAR(128)', 'staging', 'staging_octane', 'proposal_req', 'prpr_req_decision_status_type')
          , ('staging', 'history_octane', 'proposal_req', 'prpr_decision_status_unparsed_name', 'VARCHAR(128)', 'staging', 'staging_octane', 'proposal_req', 'prpr_decision_status_unparsed_name')
-         , ('staging', 'history_octane', 'proposal_req', 'prpr_decision_status_reason', 'VARCHAR(1024)', 'staging', 'staging_octane', 'proposal_req', 'prpr_decision_status_reason')
          , ('staging', 'history_octane', 'proposal_req', 'prpr_decision_status_datetime', 'TIMESTAMP', 'staging', 'staging_octane', 'proposal_req', 'prpr_decision_status_datetime')
          , ('staging', 'history_octane', 'proposal_req', 'prpr_deal_pid', 'BIGINT', 'staging', 'staging_octane', 'proposal_req', 'prpr_deal_pid')
          , ('staging', 'history_octane', 'proposal_req', 'prpr_proposal_pid', 'BIGINT', 'staging', 'staging_octane', 'proposal_req', 'prpr_proposal_pid')
@@ -8567,6 +8569,8 @@ WITH update_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'history_octane', 'proposal_req', 'prpr_proposal_review_pid', 'BIGINT', 'staging', 'staging_octane', 'proposal_req', 'prpr_proposal_review_pid')
          , ('staging', 'history_octane', 'proposal_req', 'data_source_updated_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'proposal_req', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'proposal_req', 'prpr_fulfill_status_reason', 'VARCHAR(1024)', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'proposal_req', 'prpr_decision_status_reason', 'VARCHAR(1024)', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'proposal_review', 'prpre_pid', 'BIGINT', 'staging', 'staging_octane', 'proposal_review', 'prpre_pid')
          , ('staging', 'history_octane', 'proposal_review', 'prpre_version', 'INTEGER', 'staging', 'staging_octane', 'proposal_review', 'prpre_version')
          , ('staging', 'history_octane', 'proposal_review', 'prpre_proposal_pid', 'BIGINT', 'staging', 'staging_octane', 'proposal_review', 'prpre_proposal_pid')
@@ -10662,9 +10666,6 @@ WITH update_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'staging_octane', 'account', 'a_lender_app_ip_address', 'VARCHAR(32)', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'account', 'a_advance_period_days', 'INTEGER', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'account', 'a_account_destroy_mode', 'BOOLEAN', NULL, NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'account', 'a_lender_user_password_expire_days', 'INTEGER', NULL, NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'account', 'a_lender_user_password_minimum_change_days', 'INTEGER', NULL, NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'account', 'a_lender_user_previous_password_ban', 'INTEGER', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'account', 'a_paid_through_current_month_required_day_of_month', 'INTEGER', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'account', 'a_disclosure_change_threshold_cash_to_close', 'NUMERIC(15,2)', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'account', 'a_disclosure_change_threshold_monthly_payment', 'NUMERIC(15,2)', NULL, NULL, NULL, NULL)
@@ -12849,7 +12850,6 @@ WITH update_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'staging_octane', 'deal_message_log', 'dmlog_email_body', 'TEXT', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'deal_message_log', 'dmlog_sent_securely', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'deal_message_log', 'dmlog_cover_letter_deal_file_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'deal_message_log', 'dmlog_attachment_deal_file_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'deal_message_log', 'dmlog_cc_recipients', 'VARCHAR(16000)', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'deal_message_log', 'dmlog_bcc_recipients', 'VARCHAR(16000)', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'deal_message_log', 'dmlog_plain_text', 'BOOLEAN', NULL, NULL, NULL, NULL)
@@ -15301,8 +15301,8 @@ WITH update_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'staging_octane', 'lock_extension_status_type', 'code', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'lock_extension_status_type', 'value', 'VARCHAR(1024)', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'lock_series', 'lsr_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'lock_series', 'lsr_loan_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'lock_series', 'lsr_version', 'INTEGER', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'lock_series', 'lsr_loan_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'lock_series', 'lsr_vintage_date', 'DATE', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'lock_series', 'lsr_series_id', 'INTEGER', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'lock_series', 'lsr_org_lineage_pid', 'BIGINT', NULL, NULL, NULL, NULL)
@@ -17125,11 +17125,9 @@ WITH update_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'staging_octane', 'proposal_req', 'prpr_req_id', 'INTEGER', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'proposal_req', 'prpr_req_fulfill_status_type', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'proposal_req', 'prpr_fulfill_status_unparsed_name', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'proposal_req', 'prpr_fulfill_status_reason', 'VARCHAR(1024)', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'proposal_req', 'prpr_fulfill_status_datetime', 'TIMESTAMP', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'proposal_req', 'prpr_req_decision_status_type', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'proposal_req', 'prpr_decision_status_unparsed_name', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'proposal_req', 'prpr_decision_status_reason', 'VARCHAR(1024)', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'proposal_req', 'prpr_decision_status_datetime', 'TIMESTAMP', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'proposal_req', 'prpr_deal_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'proposal_req', 'prpr_proposal_pid', 'BIGINT', NULL, NULL, NULL, NULL)
@@ -18793,122 +18791,7 @@ WHERE edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
 
 --table_input_step
 WITH update_rows (process_name, data_source_dwid, sql, connectionname) AS (
-    VALUES ('SP-100019', 0, '--finding records to insert into history_octane.account
-SELECT staging_table.a_pid
-     , staging_table.a_version
-     , staging_table.a_account_id
-     , staging_table.a_account_name
-     , staging_table.a_gfe_interest_rate_expiration_days
-     , staging_table.a_gfe_lock_duration_days
-     , staging_table.a_gfe_lock_before_settlement_days
-     , staging_table.a_proposal_expiration_days
-     , staging_table.a_uw_expiration_days
-     , staging_table.a_conditional_commitment_expiration_days
-     , staging_table.a_account_from_date
-     , staging_table.a_account_status_type
-     , staging_table.a_account_through_date
-     , staging_table.a_initial_los_loan_id
-     , staging_table.a_uuts_master_contact_name
-     , staging_table.a_uuts_master_contact_title
-     , staging_table.a_uuts_master_office_phone
-     , staging_table.a_uuts_master_office_phone_extension
-     , staging_table.a_allonge_representative_name
-     , staging_table.a_allonge_representative_title
-     , staging_table.a_account_borrower_site_id
-     , staging_table.a_originator_borrower_sites_enabled
-     , staging_table.a_company_borrower_site_enabled
-     , staging_table.a_discount_included_in_origination_fee
-     , staging_table.a_uuts_use_master_contact
-     , staging_table.a_borrower_job_gap_lookback_years
-     , staging_table.a_borrower_job_gap_minimum_days
-     , staging_table.a_lender_app_host
-     , staging_table.a_lender_app_ip_address
-     , staging_table.a_advance_period_days
-     , staging_table.a_account_destroy_mode
-     , staging_table.a_lender_user_password_expire_days
-     , staging_table.a_lender_user_password_minimum_change_days
-     , staging_table.a_lender_user_previous_password_ban
-     , staging_table.a_paid_through_current_month_required_day_of_month
-     , staging_table.a_disclosure_change_threshold_cash_to_close
-     , staging_table.a_disclosure_change_threshold_monthly_payment
-     , staging_table.a_disclosure_action_required_days
-     , staging_table.a_le_to_cd_seasoning_days
-     , staging_table.a_disclosure_max_arm_apr_change_percent
-     , staging_table.a_disclosure_max_non_arm_apr_change_percent
-     , staging_table.a_initial_le_delivered_mailed_seasoning_days
-     , staging_table.a_revised_le_delivered_mailed_seasoning_days
-     , staging_table.a_revised_le_received_signed_seasoning_days
-     , staging_table.a_significant_cd_delivered_mailed_seasoning_days
-     , staging_table.a_significant_cd_received_signed_seasoning_days
-     , staging_table.a_supported_states
-     , FALSE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM staging_octane.account staging_table
-LEFT JOIN history_octane.account history_table
-          ON staging_table.a_pid = history_table.a_pid
-              AND staging_table.a_version = history_table.a_version
-WHERE history_table.a_pid IS NULL
-UNION ALL
-SELECT history_table.a_pid
-     , history_table.a_version + 1
-     , history_table.a_account_id
-     , history_table.a_account_name
-     , history_table.a_gfe_interest_rate_expiration_days
-     , history_table.a_gfe_lock_duration_days
-     , history_table.a_gfe_lock_before_settlement_days
-     , history_table.a_proposal_expiration_days
-     , history_table.a_uw_expiration_days
-     , history_table.a_conditional_commitment_expiration_days
-     , history_table.a_account_from_date
-     , history_table.a_account_status_type
-     , history_table.a_account_through_date
-     , history_table.a_initial_los_loan_id
-     , history_table.a_uuts_master_contact_name
-     , history_table.a_uuts_master_contact_title
-     , history_table.a_uuts_master_office_phone
-     , history_table.a_uuts_master_office_phone_extension
-     , history_table.a_allonge_representative_name
-     , history_table.a_allonge_representative_title
-     , history_table.a_account_borrower_site_id
-     , history_table.a_originator_borrower_sites_enabled
-     , history_table.a_company_borrower_site_enabled
-     , history_table.a_discount_included_in_origination_fee
-     , history_table.a_uuts_use_master_contact
-     , history_table.a_borrower_job_gap_lookback_years
-     , history_table.a_borrower_job_gap_minimum_days
-     , history_table.a_lender_app_host
-     , history_table.a_lender_app_ip_address
-     , history_table.a_advance_period_days
-     , history_table.a_account_destroy_mode
-     , history_table.a_lender_user_password_expire_days
-     , history_table.a_lender_user_password_minimum_change_days
-     , history_table.a_lender_user_previous_password_ban
-     , history_table.a_paid_through_current_month_required_day_of_month
-     , history_table.a_disclosure_change_threshold_cash_to_close
-     , history_table.a_disclosure_change_threshold_monthly_payment
-     , history_table.a_disclosure_action_required_days
-     , history_table.a_le_to_cd_seasoning_days
-     , history_table.a_disclosure_max_arm_apr_change_percent
-     , history_table.a_disclosure_max_non_arm_apr_change_percent
-     , history_table.a_initial_le_delivered_mailed_seasoning_days
-     , history_table.a_revised_le_delivered_mailed_seasoning_days
-     , history_table.a_revised_le_received_signed_seasoning_days
-     , history_table.a_significant_cd_delivered_mailed_seasoning_days
-     , history_table.a_significant_cd_received_signed_seasoning_days
-     , history_table.a_supported_states
-     , TRUE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM history_octane.account history_table
-LEFT JOIN staging_octane.account staging_table
-          ON staging_table.a_pid = history_table.a_pid
-WHERE staging_table.a_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.account deleted_records
-    WHERE deleted_records.a_pid = history_table.a_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
-         , ('SP-100023', 0, '--finding records to insert into history_octane.account_contact
+    VALUES ('SP-100023', 0, '--finding records to insert into history_octane.account_contact
 SELECT staging_table.ac_pid
      , staging_table.ac_version
      , staging_table.ac_account_pid
@@ -24567,59 +24450,6 @@ LEFT JOIN history_octane.criteria_pid_operand_type history_table
           ON staging_table.code = history_table.code
               AND staging_table.value = history_table.value
 WHERE history_table.code IS NULL;', 'Staging DB Connection')
-         , ('SP-100026', 0, '--finding records to insert into history_octane.criteria_snippet
-SELECT staging_table.crs_pid
-     , staging_table.crs_version
-     , staging_table.crs_account_pid
-     , staging_table.crs_name
-     , staging_table.crs_criteria_pid
-     , staging_table.crs_description
-     , staging_table.crs_deal_child_type
-     , staging_table.crs_compatible_with_smart_charge_case
-     , staging_table.crs_compatible_with_smart_req
-     , staging_table.crs_compatible_with_stack_separator
-     , staging_table.crs_compatible_with_investor_eligibility
-     , staging_table.crs_compatible_with_wf_smart_task
-     , staging_table.crs_compatible_with_wf_outcome
-     , staging_table.crs_compatible_with_wf_smart_process
-     , staging_table.crs_compatible_with_smart_doc
-     , staging_table.crs_compatible_with_smart_doc_validity_date_case
-     , FALSE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM staging_octane.criteria_snippet staging_table
-LEFT JOIN history_octane.criteria_snippet history_table
-          ON staging_table.crs_pid = history_table.crs_pid
-              AND staging_table.crs_version = history_table.crs_version
-WHERE history_table.crs_pid IS NULL
-UNION ALL
-SELECT history_table.crs_pid
-     , history_table.crs_version + 1
-     , history_table.crs_account_pid
-     , history_table.crs_name
-     , history_table.crs_criteria_pid
-     , history_table.crs_description
-     , history_table.crs_deal_child_type
-     , history_table.crs_compatible_with_smart_charge_case
-     , history_table.crs_compatible_with_smart_req
-     , history_table.crs_compatible_with_stack_separator
-     , history_table.crs_compatible_with_investor_eligibility
-     , history_table.crs_compatible_with_wf_smart_task
-     , history_table.crs_compatible_with_wf_outcome
-     , history_table.crs_compatible_with_wf_smart_process
-     , history_table.crs_compatible_with_smart_doc
-     , history_table.crs_compatible_with_smart_doc_validity_date_case
-     , TRUE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM history_octane.criteria_snippet history_table
-LEFT JOIN staging_octane.criteria_snippet staging_table
-          ON staging_table.crs_pid = history_table.crs_pid
-WHERE staging_table.crs_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.criteria_snippet deleted_records
-    WHERE deleted_records.crs_pid = history_table.crs_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
          , ('SP-100221', 0, '--finding records to insert into history_octane.custodian
 SELECT staging_table.cu_pid
      , staging_table.cu_version
@@ -26116,59 +25946,6 @@ WHERE staging_table.dlp_pid IS NULL
     SELECT 1
     FROM history_octane.deal_lp deleted_records
     WHERE deleted_records.dlp_pid = history_table.dlp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
-         , ('SP-100300', 0, '--finding records to insert into history_octane.deal_message_log
-SELECT staging_table.dmlog_pid
-     , staging_table.dmlog_version
-     , staging_table.dmlog_deal_pid
-     , staging_table.dmlog_sent_datetime
-     , staging_table.dmlog_delivery_type
-     , staging_table.dmlog_to_recipients
-     , staging_table.dmlog_email_reply_to
-     , staging_table.dmlog_name
-     , staging_table.dmlog_email_subject
-     , staging_table.dmlog_email_body
-     , staging_table.dmlog_sent_securely
-     , staging_table.dmlog_cover_letter_deal_file_pid
-     , staging_table.dmlog_attachment_deal_file_pid
-     , staging_table.dmlog_cc_recipients
-     , staging_table.dmlog_bcc_recipients
-     , staging_table.dmlog_plain_text
-     , FALSE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM staging_octane.deal_message_log staging_table
-LEFT JOIN history_octane.deal_message_log history_table
-          ON staging_table.dmlog_pid = history_table.dmlog_pid
-              AND staging_table.dmlog_version = history_table.dmlog_version
-WHERE history_table.dmlog_pid IS NULL
-UNION ALL
-SELECT history_table.dmlog_pid
-     , history_table.dmlog_version + 1
-     , history_table.dmlog_deal_pid
-     , history_table.dmlog_sent_datetime
-     , history_table.dmlog_delivery_type
-     , history_table.dmlog_to_recipients
-     , history_table.dmlog_email_reply_to
-     , history_table.dmlog_name
-     , history_table.dmlog_email_subject
-     , history_table.dmlog_email_body
-     , history_table.dmlog_sent_securely
-     , history_table.dmlog_cover_letter_deal_file_pid
-     , history_table.dmlog_attachment_deal_file_pid
-     , history_table.dmlog_cc_recipients
-     , history_table.dmlog_bcc_recipients
-     , history_table.dmlog_plain_text
-     , TRUE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM history_octane.deal_message_log history_table
-LEFT JOIN staging_octane.deal_message_log staging_table
-          ON staging_table.dmlog_pid = history_table.dmlog_pid
-WHERE staging_table.dmlog_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.deal_message_log deleted_records
-    WHERE deleted_records.dmlog_pid = history_table.dmlog_pid
       AND deleted_records.data_source_deleted_flag = TRUE
     );', 'Staging DB Connection')
          , ('SP-100360', 0, '--finding records to insert into history_octane.deal_note
@@ -29969,51 +29746,6 @@ WHERE staging_table.ldc_pid IS NULL
     WHERE deleted_records.ldc_pid = history_table.ldc_pid
       AND deleted_records.data_source_deleted_flag = TRUE
     );', 'Staging DB Connection')
-         , ('SP-100038', 0, '--finding records to insert into history_octane.lead_source
-SELECT staging_table.lds_pid
-     , staging_table.lds_version
-     , staging_table.lds_account_pid
-     , staging_table.lds_channel_pid
-     , staging_table.lds_lead_source_name
-     , staging_table.lds_mortech_lead_source_id
-     , staging_table.lds_lead_source_id
-     , staging_table.lds_active
-     , staging_table.lds_lead_id_required
-     , staging_table.lds_zero_margin_allowed
-     , staging_table.lds_mortech_account_pid
-     , staging_table.lds_training_only
-     , FALSE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM staging_octane.lead_source staging_table
-LEFT JOIN history_octane.lead_source history_table
-          ON staging_table.lds_pid = history_table.lds_pid
-              AND staging_table.lds_version = history_table.lds_version
-WHERE history_table.lds_pid IS NULL
-UNION ALL
-SELECT history_table.lds_pid
-     , history_table.lds_version + 1
-     , history_table.lds_account_pid
-     , history_table.lds_channel_pid
-     , history_table.lds_lead_source_name
-     , history_table.lds_mortech_lead_source_id
-     , history_table.lds_lead_source_id
-     , history_table.lds_active
-     , history_table.lds_lead_id_required
-     , history_table.lds_zero_margin_allowed
-     , history_table.lds_mortech_account_pid
-     , history_table.lds_training_only
-     , TRUE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM history_octane.lead_source history_table
-LEFT JOIN staging_octane.lead_source staging_table
-          ON staging_table.lds_pid = history_table.lds_pid
-WHERE staging_table.lds_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lead_source deleted_records
-    WHERE deleted_records.lds_pid = history_table.lds_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
          , ('SP-100228', 0, '--finding records to insert into history_octane.lead_supplemental_margin_row
 SELECT staging_table.lsmr_pid
      , staging_table.lsmr_version
@@ -31430,45 +31162,6 @@ WHERE staging_table.luml_pid IS NULL
     SELECT 1
     FROM history_octane.lender_user_license deleted_records
     WHERE deleted_records.luml_pid = history_table.luml_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
-         , ('SP-100855', 0, '--finding records to insert into history_octane.lender_user_location
-SELECT staging_table.luloc_pid
-     , staging_table.luloc_version
-     , staging_table.luloc_company_pid
-     , staging_table.luloc_lender_user_pid
-     , staging_table.luloc_location_pid
-     , staging_table.luloc_from_date
-     , staging_table.luloc_lender_user_location_type
-     , staging_table.luloc_workspace_type
-     , staging_table.luloc_workspace_code
-     , FALSE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM staging_octane.lender_user_location staging_table
-LEFT JOIN history_octane.lender_user_location history_table
-          ON staging_table.luloc_pid = history_table.luloc_pid
-              AND staging_table.luloc_version = history_table.luloc_version
-WHERE history_table.luloc_pid IS NULL
-UNION ALL
-SELECT history_table.luloc_pid
-     , history_table.luloc_version + 1
-     , history_table.luloc_company_pid
-     , history_table.luloc_lender_user_pid
-     , history_table.luloc_location_pid
-     , history_table.luloc_from_date
-     , history_table.luloc_lender_user_location_type
-     , history_table.luloc_workspace_type
-     , history_table.luloc_workspace_code
-     , TRUE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM history_octane.lender_user_location history_table
-LEFT JOIN staging_octane.lender_user_location staging_table
-          ON staging_table.luloc_pid = history_table.luloc_pid
-WHERE staging_table.luloc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lender_user_location deleted_records
-    WHERE deleted_records.luloc_pid = history_table.luloc_pid
       AND deleted_records.data_source_deleted_flag = TRUE
     );', 'Staging DB Connection')
          , ('SP-100853', 0, '--finding records to insert into history_octane.lender_user_location_type
@@ -34041,8 +33734,8 @@ LEFT JOIN history_octane.lock_extension_status_type history_table
 WHERE history_table.code IS NULL;', 'Staging DB Connection')
          , ('SP-100324', 0, '--finding records to insert into history_octane.lock_series
 SELECT staging_table.lsr_pid
-     , staging_table.lsr_loan_pid
      , staging_table.lsr_version
+     , staging_table.lsr_loan_pid
      , staging_table.lsr_vintage_date
      , staging_table.lsr_series_id
      , staging_table.lsr_org_lineage_pid
@@ -34055,8 +33748,8 @@ LEFT JOIN history_octane.lock_series history_table
 WHERE history_table.lsr_pid IS NULL
 UNION ALL
 SELECT history_table.lsr_pid
-     , history_table.lsr_loan_pid
      , history_table.lsr_version + 1
+     , history_table.lsr_loan_pid
      , history_table.lsr_vintage_date
      , history_table.lsr_series_id
      , history_table.lsr_org_lineage_pid
@@ -38559,556 +38252,6 @@ LEFT JOIN history_octane.property_usage_type history_table
           ON staging_table.code = history_table.code
               AND staging_table.value = history_table.value
 WHERE history_table.code IS NULL;', 'Staging DB Connection')
-         , ('SP-100317', 0, '--finding records to insert into history_octane.proposal
-SELECT staging_table.prp_pid
-     , staging_table.prp_version
-     , staging_table.prp_decision_lp_request_pid
-     , staging_table.prp_decision_du_request_pid
-     , staging_table.prp_proposal_type
-     , staging_table.prp_description
-     , staging_table.prp_doc_level_type
-     , staging_table.prp_loan_purpose_type
-     , staging_table.prp_name
-     , staging_table.prp_create_datetime
-     , staging_table.prp_effective_funding_date
-     , staging_table.prp_estimated_funding_date
-     , staging_table.prp_calculated_earliest_allowed_consummation_date
-     , staging_table.prp_overridden_earliest_allowed_consummation_date
-     , staging_table.prp_effective_earliest_allowed_consummation_date
-     , staging_table.prp_earliest_allowed_consummation_date_override_reason
-     , staging_table.prp_last_requested_disclosure_date
-     , staging_table.prp_closing_document_sign_datetime
-     , staging_table.prp_scheduled_closing_document_sign_datetime
-     , staging_table.prp_rescission_through_date
-     , staging_table.prp_rescission_notification_date
-     , staging_table.prp_rescission_notification_by
-     , staging_table.prp_rescission_notification_type
-     , staging_table.prp_rescission_effective_date
-     , staging_table.prp_first_payment_date
-     , staging_table.prp_first_payment_date_auto_compute
-     , staging_table.prp_property_usage_type
-     , staging_table.prp_estimated_property_value_amount
-     , staging_table.prp_smart_charges_enabled
-     , staging_table.prp_charges_updated_datetime
-     , staging_table.prp_smart_docs_enabled
-     , staging_table.prp_docs_enabled_datetime
-     , staging_table.prp_request_fha_mip_refund_required
-     , staging_table.prp_request_recording_fees_required
-     , staging_table.prp_request_property_taxes_required
-     , staging_table.prp_property_tax_request_error_messages
-     , staging_table.prp_fha_mip_refund_request_input_error
-     , staging_table.prp_recording_fees_request_input_error
-     , staging_table.prp_property_taxes_request_input_error
-     , staging_table.prp_publish
-     , staging_table.prp_publish_date
-     , staging_table.prp_ipc_auto_compute
-     , staging_table.prp_ipc_limit_percent
-     , staging_table.prp_ipc_maximum_amount_allowed
-     , staging_table.prp_ipc_amount
-     , staging_table.prp_ipc_percent
-     , staging_table.prp_ipc_financing_concession_amount
-     , staging_table.prp_ipc_non_cash_concession_amount
-     , staging_table.prp_sale_price_amount
-     , staging_table.prp_structure_type
-     , staging_table.prp_deal_pid
-     , staging_table.prp_gfe_interest_rate_expiration_date
-     , staging_table.prp_gfe_lock_duration_days
-     , staging_table.prp_gfe_lock_before_settlement_days
-     , staging_table.prp_proposal_expiration_date
-     , staging_table.prp_uuts_master_contact_name
-     , staging_table.prp_uuts_master_contact_title
-     , staging_table.prp_uuts_master_office_phone
-     , staging_table.prp_uuts_master_office_phone_extension
-     , staging_table.prp_underwrite_risk_assessment_type
-     , staging_table.prp_underwriting_comments
-     , staging_table.prp_reserves_auto_compute
-     , staging_table.prp_reserves_amount
-     , staging_table.prp_reserves_months
-     , staging_table.prp_underwrite_disposition_type
-     , staging_table.prp_underwrite_publish_date
-     , staging_table.prp_underwrite_expiration_date
-     , staging_table.prp_usda_gsa_sam_exclusion
-     , staging_table.prp_usda_gsa_sam_checked_date
-     , staging_table.prp_usda_rd_single_family_housing_type
-     , staging_table.prp_underwrite_method_type
-     , staging_table.prp_mi_required
-     , staging_table.prp_decision_credit_score_borrower_pid
-     , staging_table.prp_decision_credit_score
-     , staging_table.prp_estimated_credit_score
-     , staging_table.prp_effective_credit_score
-     , staging_table.prp_mortgagee_builder_seller_relationship
-     , staging_table.prp_fha_prior_agency_case_id
-     , staging_table.prp_fha_prior_agency_case_endorsement_date
-     , staging_table.prp_fha_refinance_authorization_number
-     , staging_table.prp_fha_refinance_authorization_expiration_date
-     , staging_table.prp_fhac_refinance_authorization_messages
-     , staging_table.prp_hud_fha_de_approval_type
-     , staging_table.prp_owner_occupancy_not_required
-     , staging_table.prp_va_monthly_utilities_included
-     , staging_table.prp_va_maintenance_utilities_auto_compute
-     , staging_table.prp_va_monthly_maintenance_utilities_amount
-     , staging_table.prp_va_maintenance_utilities_per_square_feet_amount
-     , staging_table.prp_household_size_count
-     , staging_table.prp_va_past_credit_record_type
-     , staging_table.prp_va_meets_credit_standards
-     , staging_table.prp_va_prior_paid_in_full_loan_number
-     , staging_table.prp_note_date
-     , staging_table.prp_security_instrument_type
-     , staging_table.prp_trustee_pid
-     , staging_table.prp_trustee_name
-     , staging_table.prp_trustee_address_street1
-     , staging_table.prp_trustee_address_street2
-     , staging_table.prp_trustee_address_city
-     , staging_table.prp_trustee_address_state
-     , staging_table.prp_trustee_address_postal_code
-     , staging_table.prp_trustee_address_country
-     , staging_table.prp_trustee_mers_org_id
-     , staging_table.prp_trustee_phone_number
-     , staging_table.prp_fre_ctp_closing_feature_type
-     , staging_table.prp_fre_ctp_first_payment_due_date
-     , staging_table.prp_purchase_contract_date
-     , staging_table.prp_purchase_contract_financing_contingency_date
-     , staging_table.prp_purchase_contract_funding_date
-     , staging_table.prp_effective_property_value_type
-     , staging_table.prp_effective_property_value_amount
-     , staging_table.prp_decision_appraised_value_amount
-     , staging_table.prp_fha_va_reasonable_value_amount
-     , staging_table.prp_cd_clear_date
-     , staging_table.prp_disaster_declaration_check_date_type
-     , staging_table.prp_disaster_declaration_check_date
-     , staging_table.prp_any_disaster_declaration_before_appraisal
-     , staging_table.prp_any_disaster_declaration_after_appraisal
-     , staging_table.prp_any_disaster_declaration
-     , staging_table.prp_early_first_payment
-     , staging_table.prp_property_acquired_through_inheritance
-     , staging_table.prp_property_acquired_through_ancillary_relief
-     , staging_table.prp_delayed_financing_exception_guidelines_applicable
-     , staging_table.prp_delayed_financing_exception_verified
-     , staging_table.prp_effective_property_value_explanation_type
-     , staging_table.prp_taxes_escrowed
-     , staging_table.prp_flood_insurance_applicable
-     , staging_table.prp_windstorm_insurance_applicable
-     , staging_table.prp_earthquake_insurance_applicable
-     , staging_table.prp_arms_length
-     , staging_table.prp_fha_non_arms_length_ltv_exception_type
-     , staging_table.prp_fha_non_arms_length_ltv_exception_verified
-     , staging_table.prp_escrow_cushion_months
-     , staging_table.prp_escrow_cushion_months_auto_compute
-     , staging_table.prp_fha_eligible_maximum_financing
-     , staging_table.prp_hazard_insurance_applicable
-     , staging_table.prp_property_repairs_required_type
-     , staging_table.prp_property_repairs_description
-     , staging_table.prp_property_repairs_cost_amount
-     , staging_table.prp_property_repairs_holdback_calc_type
-     , staging_table.prp_property_repairs_holdback_amount
-     , staging_table.prp_property_repairs_holdback_payer_type
-     , staging_table.prp_property_repairs_holdback_administrator
-     , staging_table.prp_property_repairs_holdback_required_completion_date
-     , staging_table.prp_property_repairs_completed_notification_date
-     , staging_table.prp_property_repairs_inspection_ordered_date
-     , staging_table.prp_property_repairs_inspection_completed_date
-     , staging_table.prp_property_repairs_funds_released_contractor_date
-     , staging_table.prp_anti_steering_lowest_rate_option_rate_percent
-     , staging_table.prp_anti_steering_lowest_rate_option_fee_amount
-     , staging_table.prp_anti_steering_lowest_rate_wo_neg_option_rate_percent
-     , staging_table.prp_anti_steering_lowest_rate_wo_neg_option_fee_amount
-     , staging_table.prp_anti_steering_lowest_cost_option_rate_percent
-     , staging_table.prp_anti_steering_lowest_cost_option_fee_amount
-     , staging_table.prp_initial_uw_submit_datetime
-     , staging_table.prp_va_notice_of_value_source_type
-     , staging_table.prp_va_notice_of_value_date
-     , staging_table.prp_va_notice_of_value_estimated_reasonable_value_amount
-     , staging_table.prp_sar_significant_adjustments
-     , staging_table.prp_separate_transaction_for_land_acquisition
-     , staging_table.prp_land_acquisition_transaction_date
-     , staging_table.prp_land_acquisition_price
-     , staging_table.prp_cash_out_reason_home_improvement
-     , staging_table.prp_cash_out_reason_debt_or_debt_consolidation
-     , staging_table.prp_cash_out_reason_personal_use
-     , staging_table.prp_cash_out_reason_future_investment_not_under_contract
-     , staging_table.prp_cash_out_reason_future_investment_under_contract
-     , staging_table.prp_cash_out_reason_other
-     , staging_table.prp_cash_out_reason_other_text
-     , staging_table.prp_decision_veteran_borrower_pid
-     , staging_table.prp_signed_closing_doc_received_datetime
-     , staging_table.prp_other_lender_requires_appraisal
-     , staging_table.prp_other_lender_requires_appraisal_reason
-     , staging_table.prp_texas_equity_determination_datetime
-     , staging_table.prp_texas_equity_conversion_determination_datetime
-     , staging_table.prp_texas_equity_determination_datetime_override
-     , staging_table.prp_texas_equity_determination_datetime_override_reason
-     , staging_table.prp_texas_equity_conversion_determination_datetime_override
-     , staging_table.prp_texas_equity_conversion_determ_datetime_override_reason
-     , staging_table.prp_cema
-     , staging_table.prp_cema_borrower_savings
-     , staging_table.prp_any_vesting_changes
-     , staging_table.prp_vesting_change_titleholder_added
-     , staging_table.prp_vesting_change_titleholder_removed
-     , staging_table.prp_vesting_change_titleholder_name_change
-     , staging_table.prp_deed_taxes_applicable
-     , staging_table.prp_deed_taxes_applicable_explanation
-     , staging_table.prp_deed_taxes_auto_compute
-     , staging_table.prp_deed_taxes_auto_compute_override_reason
-     , staging_table.prp_intent_to_proceed_date
-     , staging_table.prp_intent_to_proceed_type
-     , staging_table.prp_intent_to_proceed_provider_unparsed_name
-     , staging_table.prp_intent_to_proceed_obtainer_unparsed_name
-     , staging_table.prp_cash_out_reason_student_loans
-     , staging_table.prp_household_income_exclusive_edit
-     , staging_table.prp_purchase_contract_received_date
-     , staging_table.prp_down_payment_percent_mode
-     , staging_table.prp_lender_escrow_loan_amount
-     , staging_table.prp_underwrite_disposition_note
-     , staging_table.prp_rescission_applicable
-     , staging_table.prp_area_median_income
-     , staging_table.prp_total_income_to_ami_ratio
-     , staging_table.prp_cr_tracker_url
-     , staging_table.prp_construction_borrower_contribution_amount
-     , staging_table.prp_construction_lot_ownership_status_type
-     , staging_table.prp_intent_to_proceed_provided
-     , staging_table.prp_effective_signing_location_state
-     , staging_table.prp_effective_signing_location_city
-     , staging_table.prp_va_required_guaranty_amount
-     , staging_table.prp_va_amount_used_to_calculate_maximum_guaranty
-     , staging_table.prp_va_actual_guaranty_amount
-     , staging_table.prp_last_corrective_disclosure_processed_datetime
-     , staging_table.prp_user_entered_note_date
-     , staging_table.prp_effective_note_date
-     , staging_table.prp_lender_escrow_loan_due_date
-     , staging_table.prp_va_maximum_base_loan_amount
-     , staging_table.prp_va_maximum_funding_fee_amount
-     , staging_table.prp_va_maximum_total_loan_amount
-     , staging_table.prp_va_required_cash_amount
-     , staging_table.prp_va_guaranty_percent
-     , staging_table.prp_gse_version_type
-     , staging_table.prp_minimum_household_income_amount
-     , staging_table.prp_minimum_residual_income_amount
-     , staging_table.prp_minimum_residual_income_auto_compute
-     , staging_table.prp_financed_property_improvements_category_type
-     , staging_table.prp_adjusted_as_is_value_amount
-     , staging_table.prp_after_improved_value_amount
-     , staging_table.prp_hud_consultant
-     , staging_table.prp_disclosure_action_type
-     , staging_table.prp_financed_property_improvements
-     , staging_table.prp_estimated_hard_construction_cost_amount
-     , staging_table.prp_initial_uw_disposition_datetime
-     , staging_table.prp_preapproval_uw_submit_datetime
-     , staging_table.prp_preapproval_uw_disposition_datetime
-     , staging_table.prp_down_payment_percent
-     , staging_table.prp_cash_out_reason_investment_or_business_property
-     , staging_table.prp_cash_out_reason_business_debt_or_debt_consolidation
-     , staging_table.prp_non_business_cash_out_reason_acknowledged
-     , FALSE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM staging_octane.proposal staging_table
-LEFT JOIN history_octane.proposal history_table
-          ON staging_table.prp_pid = history_table.prp_pid
-              AND staging_table.prp_version = history_table.prp_version
-WHERE history_table.prp_pid IS NULL
-UNION ALL
-SELECT history_table.prp_pid
-     , history_table.prp_version + 1
-     , history_table.prp_decision_lp_request_pid
-     , history_table.prp_decision_du_request_pid
-     , history_table.prp_proposal_type
-     , history_table.prp_description
-     , history_table.prp_doc_level_type
-     , history_table.prp_loan_purpose_type
-     , history_table.prp_name
-     , history_table.prp_create_datetime
-     , history_table.prp_effective_funding_date
-     , history_table.prp_estimated_funding_date
-     , history_table.prp_calculated_earliest_allowed_consummation_date
-     , history_table.prp_overridden_earliest_allowed_consummation_date
-     , history_table.prp_effective_earliest_allowed_consummation_date
-     , history_table.prp_earliest_allowed_consummation_date_override_reason
-     , history_table.prp_last_requested_disclosure_date
-     , history_table.prp_closing_document_sign_datetime
-     , history_table.prp_scheduled_closing_document_sign_datetime
-     , history_table.prp_rescission_through_date
-     , history_table.prp_rescission_notification_date
-     , history_table.prp_rescission_notification_by
-     , history_table.prp_rescission_notification_type
-     , history_table.prp_rescission_effective_date
-     , history_table.prp_first_payment_date
-     , history_table.prp_first_payment_date_auto_compute
-     , history_table.prp_property_usage_type
-     , history_table.prp_estimated_property_value_amount
-     , history_table.prp_smart_charges_enabled
-     , history_table.prp_charges_updated_datetime
-     , history_table.prp_smart_docs_enabled
-     , history_table.prp_docs_enabled_datetime
-     , history_table.prp_request_fha_mip_refund_required
-     , history_table.prp_request_recording_fees_required
-     , history_table.prp_request_property_taxes_required
-     , history_table.prp_property_tax_request_error_messages
-     , history_table.prp_fha_mip_refund_request_input_error
-     , history_table.prp_recording_fees_request_input_error
-     , history_table.prp_property_taxes_request_input_error
-     , history_table.prp_publish
-     , history_table.prp_publish_date
-     , history_table.prp_ipc_auto_compute
-     , history_table.prp_ipc_limit_percent
-     , history_table.prp_ipc_maximum_amount_allowed
-     , history_table.prp_ipc_amount
-     , history_table.prp_ipc_percent
-     , history_table.prp_ipc_financing_concession_amount
-     , history_table.prp_ipc_non_cash_concession_amount
-     , history_table.prp_sale_price_amount
-     , history_table.prp_structure_type
-     , history_table.prp_deal_pid
-     , history_table.prp_gfe_interest_rate_expiration_date
-     , history_table.prp_gfe_lock_duration_days
-     , history_table.prp_gfe_lock_before_settlement_days
-     , history_table.prp_proposal_expiration_date
-     , history_table.prp_uuts_master_contact_name
-     , history_table.prp_uuts_master_contact_title
-     , history_table.prp_uuts_master_office_phone
-     , history_table.prp_uuts_master_office_phone_extension
-     , history_table.prp_underwrite_risk_assessment_type
-     , history_table.prp_underwriting_comments
-     , history_table.prp_reserves_auto_compute
-     , history_table.prp_reserves_amount
-     , history_table.prp_reserves_months
-     , history_table.prp_underwrite_disposition_type
-     , history_table.prp_underwrite_publish_date
-     , history_table.prp_underwrite_expiration_date
-     , history_table.prp_usda_gsa_sam_exclusion
-     , history_table.prp_usda_gsa_sam_checked_date
-     , history_table.prp_usda_rd_single_family_housing_type
-     , history_table.prp_underwrite_method_type
-     , history_table.prp_mi_required
-     , history_table.prp_decision_credit_score_borrower_pid
-     , history_table.prp_decision_credit_score
-     , history_table.prp_estimated_credit_score
-     , history_table.prp_effective_credit_score
-     , history_table.prp_mortgagee_builder_seller_relationship
-     , history_table.prp_fha_prior_agency_case_id
-     , history_table.prp_fha_prior_agency_case_endorsement_date
-     , history_table.prp_fha_refinance_authorization_number
-     , history_table.prp_fha_refinance_authorization_expiration_date
-     , history_table.prp_fhac_refinance_authorization_messages
-     , history_table.prp_hud_fha_de_approval_type
-     , history_table.prp_owner_occupancy_not_required
-     , history_table.prp_va_monthly_utilities_included
-     , history_table.prp_va_maintenance_utilities_auto_compute
-     , history_table.prp_va_monthly_maintenance_utilities_amount
-     , history_table.prp_va_maintenance_utilities_per_square_feet_amount
-     , history_table.prp_household_size_count
-     , history_table.prp_va_past_credit_record_type
-     , history_table.prp_va_meets_credit_standards
-     , history_table.prp_va_prior_paid_in_full_loan_number
-     , history_table.prp_note_date
-     , history_table.prp_security_instrument_type
-     , history_table.prp_trustee_pid
-     , history_table.prp_trustee_name
-     , history_table.prp_trustee_address_street1
-     , history_table.prp_trustee_address_street2
-     , history_table.prp_trustee_address_city
-     , history_table.prp_trustee_address_state
-     , history_table.prp_trustee_address_postal_code
-     , history_table.prp_trustee_address_country
-     , history_table.prp_trustee_mers_org_id
-     , history_table.prp_trustee_phone_number
-     , history_table.prp_fre_ctp_closing_feature_type
-     , history_table.prp_fre_ctp_first_payment_due_date
-     , history_table.prp_purchase_contract_date
-     , history_table.prp_purchase_contract_financing_contingency_date
-     , history_table.prp_purchase_contract_funding_date
-     , history_table.prp_effective_property_value_type
-     , history_table.prp_effective_property_value_amount
-     , history_table.prp_decision_appraised_value_amount
-     , history_table.prp_fha_va_reasonable_value_amount
-     , history_table.prp_cd_clear_date
-     , history_table.prp_disaster_declaration_check_date_type
-     , history_table.prp_disaster_declaration_check_date
-     , history_table.prp_any_disaster_declaration_before_appraisal
-     , history_table.prp_any_disaster_declaration_after_appraisal
-     , history_table.prp_any_disaster_declaration
-     , history_table.prp_early_first_payment
-     , history_table.prp_property_acquired_through_inheritance
-     , history_table.prp_property_acquired_through_ancillary_relief
-     , history_table.prp_delayed_financing_exception_guidelines_applicable
-     , history_table.prp_delayed_financing_exception_verified
-     , history_table.prp_effective_property_value_explanation_type
-     , history_table.prp_taxes_escrowed
-     , history_table.prp_flood_insurance_applicable
-     , history_table.prp_windstorm_insurance_applicable
-     , history_table.prp_earthquake_insurance_applicable
-     , history_table.prp_arms_length
-     , history_table.prp_fha_non_arms_length_ltv_exception_type
-     , history_table.prp_fha_non_arms_length_ltv_exception_verified
-     , history_table.prp_escrow_cushion_months
-     , history_table.prp_escrow_cushion_months_auto_compute
-     , history_table.prp_fha_eligible_maximum_financing
-     , history_table.prp_hazard_insurance_applicable
-     , history_table.prp_property_repairs_required_type
-     , history_table.prp_property_repairs_description
-     , history_table.prp_property_repairs_cost_amount
-     , history_table.prp_property_repairs_holdback_calc_type
-     , history_table.prp_property_repairs_holdback_amount
-     , history_table.prp_property_repairs_holdback_payer_type
-     , history_table.prp_property_repairs_holdback_administrator
-     , history_table.prp_property_repairs_holdback_required_completion_date
-     , history_table.prp_property_repairs_completed_notification_date
-     , history_table.prp_property_repairs_inspection_ordered_date
-     , history_table.prp_property_repairs_inspection_completed_date
-     , history_table.prp_property_repairs_funds_released_contractor_date
-     , history_table.prp_anti_steering_lowest_rate_option_rate_percent
-     , history_table.prp_anti_steering_lowest_rate_option_fee_amount
-     , history_table.prp_anti_steering_lowest_rate_wo_neg_option_rate_percent
-     , history_table.prp_anti_steering_lowest_rate_wo_neg_option_fee_amount
-     , history_table.prp_anti_steering_lowest_cost_option_rate_percent
-     , history_table.prp_anti_steering_lowest_cost_option_fee_amount
-     , history_table.prp_initial_uw_submit_datetime
-     , history_table.prp_va_notice_of_value_source_type
-     , history_table.prp_va_notice_of_value_date
-     , history_table.prp_va_notice_of_value_estimated_reasonable_value_amount
-     , history_table.prp_sar_significant_adjustments
-     , history_table.prp_separate_transaction_for_land_acquisition
-     , history_table.prp_land_acquisition_transaction_date
-     , history_table.prp_land_acquisition_price
-     , history_table.prp_cash_out_reason_home_improvement
-     , history_table.prp_cash_out_reason_debt_or_debt_consolidation
-     , history_table.prp_cash_out_reason_personal_use
-     , history_table.prp_cash_out_reason_future_investment_not_under_contract
-     , history_table.prp_cash_out_reason_future_investment_under_contract
-     , history_table.prp_cash_out_reason_other
-     , history_table.prp_cash_out_reason_other_text
-     , history_table.prp_decision_veteran_borrower_pid
-     , history_table.prp_signed_closing_doc_received_datetime
-     , history_table.prp_other_lender_requires_appraisal
-     , history_table.prp_other_lender_requires_appraisal_reason
-     , history_table.prp_texas_equity_determination_datetime
-     , history_table.prp_texas_equity_conversion_determination_datetime
-     , history_table.prp_texas_equity_determination_datetime_override
-     , history_table.prp_texas_equity_determination_datetime_override_reason
-     , history_table.prp_texas_equity_conversion_determination_datetime_override
-     , history_table.prp_texas_equity_conversion_determ_datetime_override_reason
-     , history_table.prp_cema
-     , history_table.prp_cema_borrower_savings
-     , history_table.prp_any_vesting_changes
-     , history_table.prp_vesting_change_titleholder_added
-     , history_table.prp_vesting_change_titleholder_removed
-     , history_table.prp_vesting_change_titleholder_name_change
-     , history_table.prp_deed_taxes_applicable
-     , history_table.prp_deed_taxes_applicable_explanation
-     , history_table.prp_deed_taxes_auto_compute
-     , history_table.prp_deed_taxes_auto_compute_override_reason
-     , history_table.prp_intent_to_proceed_date
-     , history_table.prp_intent_to_proceed_type
-     , history_table.prp_intent_to_proceed_provider_unparsed_name
-     , history_table.prp_intent_to_proceed_obtainer_unparsed_name
-     , history_table.prp_cash_out_reason_student_loans
-     , history_table.prp_household_income_exclusive_edit
-     , history_table.prp_purchase_contract_received_date
-     , history_table.prp_down_payment_percent_mode
-     , history_table.prp_lender_escrow_loan_amount
-     , history_table.prp_underwrite_disposition_note
-     , history_table.prp_rescission_applicable
-     , history_table.prp_area_median_income
-     , history_table.prp_total_income_to_ami_ratio
-     , history_table.prp_cr_tracker_url
-     , history_table.prp_construction_borrower_contribution_amount
-     , history_table.prp_construction_lot_ownership_status_type
-     , history_table.prp_intent_to_proceed_provided
-     , history_table.prp_effective_signing_location_state
-     , history_table.prp_effective_signing_location_city
-     , history_table.prp_va_required_guaranty_amount
-     , history_table.prp_va_amount_used_to_calculate_maximum_guaranty
-     , history_table.prp_va_actual_guaranty_amount
-     , history_table.prp_last_corrective_disclosure_processed_datetime
-     , history_table.prp_user_entered_note_date
-     , history_table.prp_effective_note_date
-     , history_table.prp_lender_escrow_loan_due_date
-     , history_table.prp_va_maximum_base_loan_amount
-     , history_table.prp_va_maximum_funding_fee_amount
-     , history_table.prp_va_maximum_total_loan_amount
-     , history_table.prp_va_required_cash_amount
-     , history_table.prp_va_guaranty_percent
-     , history_table.prp_gse_version_type
-     , history_table.prp_minimum_household_income_amount
-     , history_table.prp_minimum_residual_income_amount
-     , history_table.prp_minimum_residual_income_auto_compute
-     , history_table.prp_financed_property_improvements_category_type
-     , history_table.prp_adjusted_as_is_value_amount
-     , history_table.prp_after_improved_value_amount
-     , history_table.prp_hud_consultant
-     , history_table.prp_disclosure_action_type
-     , history_table.prp_financed_property_improvements
-     , history_table.prp_estimated_hard_construction_cost_amount
-     , history_table.prp_initial_uw_disposition_datetime
-     , history_table.prp_preapproval_uw_submit_datetime
-     , history_table.prp_preapproval_uw_disposition_datetime
-     , history_table.prp_down_payment_percent
-     , history_table.prp_cash_out_reason_investment_or_business_property
-     , history_table.prp_cash_out_reason_business_debt_or_debt_consolidation
-     , history_table.prp_non_business_cash_out_reason_acknowledged
-     , TRUE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM history_octane.proposal history_table
-LEFT JOIN staging_octane.proposal staging_table
-          ON staging_table.prp_pid = history_table.prp_pid
-WHERE staging_table.prp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal deleted_records
-    WHERE deleted_records.prp_pid = history_table.prp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
-         , ('SP-100826', 0, '--finding records to insert into history_octane.proposal_construction
-SELECT staging_table.prpc_pid
-     , staging_table.prpc_version
-     , staging_table.prpc_proposal_pid
-     , staging_table.prpc_architectural_exhibits
-     , staging_table.prpc_feasibility_study
-     , staging_table.prpc_expected_months_to_complete
-     , staging_table.prpc_extension_needed
-     , staging_table.prpc_extension_period_months
-     , staging_table.prpc_any_utilities_inoperable
-     , staging_table.prpc_non_habitable_months
-     , staging_table.prpc_non_habitable_units
-     , staging_table.prpc_number_of_draws
-     , staging_table.prpc_construction_confirmed_start_date
-     , staging_table.prpc_loan_in_process_account_closed_date
-     , staging_table.prpc_mortgage_payment_reserves_required
-     , staging_table.prpc_estimated_permit_amount_applicable
-     , FALSE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM staging_octane.proposal_construction staging_table
-LEFT JOIN history_octane.proposal_construction history_table
-          ON staging_table.prpc_pid = history_table.prpc_pid
-              AND staging_table.prpc_version = history_table.prpc_version
-WHERE history_table.prpc_pid IS NULL
-UNION ALL
-SELECT history_table.prpc_pid
-     , history_table.prpc_version + 1
-     , history_table.prpc_proposal_pid
-     , history_table.prpc_architectural_exhibits
-     , history_table.prpc_feasibility_study
-     , history_table.prpc_expected_months_to_complete
-     , history_table.prpc_extension_needed
-     , history_table.prpc_extension_period_months
-     , history_table.prpc_any_utilities_inoperable
-     , history_table.prpc_non_habitable_months
-     , history_table.prpc_non_habitable_units
-     , history_table.prpc_number_of_draws
-     , history_table.prpc_construction_confirmed_start_date
-     , history_table.prpc_loan_in_process_account_closed_date
-     , history_table.prpc_mortgage_payment_reserves_required
-     , history_table.prpc_estimated_permit_amount_applicable
-     , TRUE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM history_octane.proposal_construction history_table
-LEFT JOIN staging_octane.proposal_construction staging_table
-          ON staging_table.prpc_pid = history_table.prpc_pid
-WHERE staging_table.prpc_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal_construction deleted_records
-    WHERE deleted_records.prpc_pid = history_table.prpc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
          , ('SP-100160', 0, '--finding records to insert into history_octane.proposal_contractor
 SELECT staging_table.pctr_pid
      , staging_table.pctr_version
@@ -39675,119 +38818,6 @@ WHERE staging_table.phc_pid IS NULL
     SELECT 1
     FROM history_octane.proposal_hud_consultant deleted_records
     WHERE deleted_records.phc_pid = history_table.phc_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
-         , ('SP-100344', 0, '--finding records to insert into history_octane.proposal_req
-SELECT staging_table.prpr_pid
-     , staging_table.prpr_version
-     , staging_table.prpr_proposal_doc_pid
-     , staging_table.prpr_req_name
-     , staging_table.prpr_borrower_access
-     , staging_table.prpr_req_id
-     , staging_table.prpr_req_fulfill_status_type
-     , staging_table.prpr_fulfill_status_unparsed_name
-     , staging_table.prpr_fulfill_status_reason
-     , staging_table.prpr_fulfill_status_datetime
-     , staging_table.prpr_req_decision_status_type
-     , staging_table.prpr_decision_status_unparsed_name
-     , staging_table.prpr_decision_status_reason
-     , staging_table.prpr_decision_status_datetime
-     , staging_table.prpr_deal_pid
-     , staging_table.prpr_proposal_pid
-     , staging_table.prpr_loan_pid
-     , staging_table.prpr_borrower_pid
-     , staging_table.prpr_borrower_income_pid
-     , staging_table.prpr_job_income_pid
-     , staging_table.prpr_borrower_job_gap_pid
-     , staging_table.prpr_other_income_pid
-     , staging_table.prpr_business_income_pid
-     , staging_table.prpr_rental_income_pid
-     , staging_table.prpr_asset_pid
-     , staging_table.prpr_asset_large_deposit_pid
-     , staging_table.prpr_liability_pid
-     , staging_table.prpr_reo_place_pid
-     , staging_table.prpr_property_place_pid
-     , staging_table.prpr_residence_place_pid
-     , staging_table.prpr_borrower_residence_pid
-     , staging_table.prpr_application_pid
-     , staging_table.prpr_credit_inquiry_pid
-     , staging_table.prpr_appraisal_pid
-     , staging_table.prpr_appraisal_form_pid
-     , staging_table.prpr_tax_transcript_request_pid
-     , staging_table.prpr_deal_child_type
-     , staging_table.prpr_deal_child_name
-     , staging_table.prpr_smart_req
-     , staging_table.prpr_smart_req_criteria_html
-     , staging_table.prpr_trash
-     , staging_table.prpr_borrower_associated_address_pid
-     , staging_table.prpr_construction_cost_pid
-     , staging_table.prpr_construction_draw_pid
-     , staging_table.prpr_proposal_contractor_pid
-     , staging_table.prpr_proposal_review_pid
-     , FALSE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM staging_octane.proposal_req staging_table
-LEFT JOIN history_octane.proposal_req history_table
-          ON staging_table.prpr_pid = history_table.prpr_pid
-              AND staging_table.prpr_version = history_table.prpr_version
-WHERE history_table.prpr_pid IS NULL
-UNION ALL
-SELECT history_table.prpr_pid
-     , history_table.prpr_version + 1
-     , history_table.prpr_proposal_doc_pid
-     , history_table.prpr_req_name
-     , history_table.prpr_borrower_access
-     , history_table.prpr_req_id
-     , history_table.prpr_req_fulfill_status_type
-     , history_table.prpr_fulfill_status_unparsed_name
-     , history_table.prpr_fulfill_status_reason
-     , history_table.prpr_fulfill_status_datetime
-     , history_table.prpr_req_decision_status_type
-     , history_table.prpr_decision_status_unparsed_name
-     , history_table.prpr_decision_status_reason
-     , history_table.prpr_decision_status_datetime
-     , history_table.prpr_deal_pid
-     , history_table.prpr_proposal_pid
-     , history_table.prpr_loan_pid
-     , history_table.prpr_borrower_pid
-     , history_table.prpr_borrower_income_pid
-     , history_table.prpr_job_income_pid
-     , history_table.prpr_borrower_job_gap_pid
-     , history_table.prpr_other_income_pid
-     , history_table.prpr_business_income_pid
-     , history_table.prpr_rental_income_pid
-     , history_table.prpr_asset_pid
-     , history_table.prpr_asset_large_deposit_pid
-     , history_table.prpr_liability_pid
-     , history_table.prpr_reo_place_pid
-     , history_table.prpr_property_place_pid
-     , history_table.prpr_residence_place_pid
-     , history_table.prpr_borrower_residence_pid
-     , history_table.prpr_application_pid
-     , history_table.prpr_credit_inquiry_pid
-     , history_table.prpr_appraisal_pid
-     , history_table.prpr_appraisal_form_pid
-     , history_table.prpr_tax_transcript_request_pid
-     , history_table.prpr_deal_child_type
-     , history_table.prpr_deal_child_name
-     , history_table.prpr_smart_req
-     , history_table.prpr_smart_req_criteria_html
-     , history_table.prpr_trash
-     , history_table.prpr_borrower_associated_address_pid
-     , history_table.prpr_construction_cost_pid
-     , history_table.prpr_construction_draw_pid
-     , history_table.prpr_proposal_contractor_pid
-     , history_table.prpr_proposal_review_pid
-     , TRUE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM history_octane.proposal_req history_table
-LEFT JOIN staging_octane.proposal_req staging_table
-          ON staging_table.prpr_pid = history_table.prpr_pid
-WHERE staging_table.prpr_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal_req deleted_records
-    WHERE deleted_records.prpr_pid = history_table.prpr_pid
       AND deleted_records.data_source_deleted_flag = TRUE
     );', 'Staging DB Connection')
          , ('SP-100327', 0, '--finding records to insert into history_octane.proposal_review
@@ -42881,57 +41911,6 @@ WHERE staging_table.slpcv_pid IS NULL
     SELECT 1
     FROM history_octane.smart_ledger_plan_case_version deleted_records
     WHERE deleted_records.slpcv_pid = history_table.slpcv_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
-         , ('SP-100179', 0, '--finding records to insert into history_octane.smart_message
-SELECT staging_table.smsg_pid
-     , staging_table.smsg_version
-     , staging_table.smsg_account_pid
-     , staging_table.smsg_name
-     , staging_table.smsg_delivery_type
-     , staging_table.smsg_reply_to_role_pid
-     , staging_table.smsg_email_subject
-     , staging_table.smsg_message_source_type
-     , staging_table.smsg_smart_doc_pid
-     , staging_table.smsg_smart_stack_pid
-     , staging_table.smsg_allow_ad_hoc
-     , staging_table.smsg_send_securely
-     , staging_table.smsg_id_num
-     , staging_table.smsg_message_body
-     , staging_table.smsg_email_closing_type
-     , FALSE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM staging_octane.smart_message staging_table
-LEFT JOIN history_octane.smart_message history_table
-          ON staging_table.smsg_pid = history_table.smsg_pid
-              AND staging_table.smsg_version = history_table.smsg_version
-WHERE history_table.smsg_pid IS NULL
-UNION ALL
-SELECT history_table.smsg_pid
-     , history_table.smsg_version + 1
-     , history_table.smsg_account_pid
-     , history_table.smsg_name
-     , history_table.smsg_delivery_type
-     , history_table.smsg_reply_to_role_pid
-     , history_table.smsg_email_subject
-     , history_table.smsg_message_source_type
-     , history_table.smsg_smart_doc_pid
-     , history_table.smsg_smart_stack_pid
-     , history_table.smsg_allow_ad_hoc
-     , history_table.smsg_send_securely
-     , history_table.smsg_id_num
-     , history_table.smsg_message_body
-     , history_table.smsg_email_closing_type
-     , TRUE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM history_octane.smart_message history_table
-LEFT JOIN staging_octane.smart_message staging_table
-          ON staging_table.smsg_pid = history_table.smsg_pid
-WHERE staging_table.smsg_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.smart_message deleted_records
-    WHERE deleted_records.smsg_pid = history_table.smsg_pid
       AND deleted_records.data_source_deleted_flag = TRUE
     );', 'Staging DB Connection')
          , ('SP-100796', 0, '--finding records to insert into history_octane.smart_message_delivery_type
