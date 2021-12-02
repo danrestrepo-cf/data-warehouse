@@ -669,6 +669,8 @@ columns:
     data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
 etls:
   SP-100017:
     input_type: table
@@ -868,4 +870,4 @@ etls:
             AND deleted_records.data_source_deleted_flag = TRUE
           );
 next_etls:
-- SP-300001
+- SP-300001-insert-update

@@ -93,10 +93,16 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.crs_compatible_with_smart_doc_validity_date_case
+  crs_compatible_with_smart_charge_apr:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.crs_compatible_with_smart_charge_apr
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
 etls:
   SP-100026:
     input_type: table
@@ -121,6 +127,7 @@ etls:
            , staging_table.crs_compatible_with_wf_smart_process
            , staging_table.crs_compatible_with_smart_doc
            , staging_table.crs_compatible_with_smart_doc_validity_date_case
+           , staging_table.crs_compatible_with_smart_charge_apr
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.criteria_snippet staging_table
@@ -145,6 +152,7 @@ etls:
            , history_table.crs_compatible_with_wf_smart_process
            , history_table.crs_compatible_with_smart_doc
            , history_table.crs_compatible_with_smart_doc_validity_date_case
+           , history_table.crs_compatible_with_smart_charge_apr
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.criteria_snippet history_table

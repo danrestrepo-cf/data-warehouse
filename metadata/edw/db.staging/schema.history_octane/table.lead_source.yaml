@@ -28,6 +28,14 @@ foreign_keys:
       - ma_pid
       schema: history_octane
       table: mortech_account
+  fkt_lds_broker_compensation_type:
+    columns:
+    - lds_broker_compensation_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: broker_compensation_type
 columns:
   lds_pid:
     data_type: BIGINT
@@ -77,10 +85,16 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.lds_training_only
+  lds_broker_compensation_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lds_broker_compensation_type
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
 etls:
   SP-100038:
     input_type: table
@@ -101,6 +115,7 @@ etls:
            , staging_table.lds_zero_margin_allowed
            , staging_table.lds_mortech_account_pid
            , staging_table.lds_training_only
+           , staging_table.lds_broker_compensation_type
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.lead_source staging_table
@@ -121,6 +136,7 @@ etls:
            , history_table.lds_zero_margin_allowed
            , history_table.lds_mortech_account_pid
            , history_table.lds_training_only
+           , history_table.lds_broker_compensation_type
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.lead_source history_table

@@ -18,14 +18,6 @@ foreign_keys:
       - df_pid
       schema: staging_octane
       table: deal_file
-  fk_deal_message_log_3:
-    columns:
-    - dmlog_attachment_deal_file_pid
-    references:
-      columns:
-      - df_pid
-      schema: staging_octane
-      table: deal_file
   fkt_dmlog_delivery_type:
     columns:
     - dmlog_delivery_type
@@ -58,8 +50,6 @@ columns:
   dmlog_sent_securely:
     data_type: BOOLEAN
   dmlog_cover_letter_deal_file_pid:
-    data_type: BIGINT
-  dmlog_attachment_deal_file_pid:
     data_type: BIGINT
   dmlog_cc_recipients:
     data_type: VARCHAR(16000)

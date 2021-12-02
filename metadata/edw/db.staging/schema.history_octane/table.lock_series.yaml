@@ -25,14 +25,14 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lsr_pid
-  lsr_loan_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lsr_loan_pid
   lsr_version:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.lsr_version
+  lsr_loan_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lsr_loan_pid
   lsr_vintage_date:
     data_type: DATE
     source:
@@ -49,6 +49,8 @@ columns:
     data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
 etls:
   SP-100324:
     input_type: table
@@ -58,8 +60,8 @@ etls:
     input_sql: |-
       --finding records to insert into history_octane.lock_series
       SELECT staging_table.lsr_pid
-           , staging_table.lsr_loan_pid
            , staging_table.lsr_version
+           , staging_table.lsr_loan_pid
            , staging_table.lsr_vintage_date
            , staging_table.lsr_series_id
            , staging_table.lsr_org_lineage_pid
@@ -72,8 +74,8 @@ etls:
       WHERE history_table.lsr_pid IS NULL
       UNION ALL
       SELECT history_table.lsr_pid
-           , history_table.lsr_loan_pid
            , history_table.lsr_version + 1
+           , history_table.lsr_loan_pid
            , history_table.lsr_vintage_date
            , history_table.lsr_series_id
            , history_table.lsr_org_lineage_pid
