@@ -3,8 +3,8 @@
 pipeline {
     agent { label 'edw-test' }
     parameters {
-        string(name: 'octane_git_tag', defaultValue: '', description: 'Enter the octane release tag to build. E.g. v2021.1.1.0.')
-        string(name: 'edw_git_tag', defaultValue: '', description: 'Enter the data-warehouse release tag to build. E.g. v2021.1.1.0.')
+        string(name: 'octane_git_branch', defaultValue: '', description: 'Enter the octane branch id to build. E.g. v2021.1.1.0-release.')
+        string(name: 'edw_git_branch', defaultValue: '', description: 'Enter the data-warehouse branch id to build. E.g. v2021.1.1.0-release.')
         choice(
                 name: 'env_file',
                 choices: ['/var/taggartsoftware/jenkins/junit-2021.2.lura.env'],
