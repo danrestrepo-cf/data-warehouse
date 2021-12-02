@@ -137,18 +137,6 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.a_account_destroy_mode
-  a_lender_user_password_expire_days:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.a_lender_user_password_expire_days
-  a_lender_user_password_minimum_change_days:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.a_lender_user_password_minimum_change_days
-  a_lender_user_previous_password_ban:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.a_lender_user_previous_password_ban
   a_paid_through_current_month_required_day_of_month:
     data_type: INTEGER
     source:
@@ -205,6 +193,14 @@ columns:
     data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  a_lender_user_password_expire_days:
+    data_type: INTEGER
+  a_lender_user_password_minimum_change_days:
+    data_type: INTEGER
+  a_lender_user_previous_password_ban:
+    data_type: INTEGER
+  etl_batch_id:
+    data_type: TEXT
 etls:
   SP-100019:
     input_type: table
@@ -244,9 +240,6 @@ etls:
            , staging_table.a_lender_app_ip_address
            , staging_table.a_advance_period_days
            , staging_table.a_account_destroy_mode
-           , staging_table.a_lender_user_password_expire_days
-           , staging_table.a_lender_user_password_minimum_change_days
-           , staging_table.a_lender_user_previous_password_ban
            , staging_table.a_paid_through_current_month_required_day_of_month
            , staging_table.a_disclosure_change_threshold_cash_to_close
            , staging_table.a_disclosure_change_threshold_monthly_payment
@@ -299,9 +292,6 @@ etls:
            , history_table.a_lender_app_ip_address
            , history_table.a_advance_period_days
            , history_table.a_account_destroy_mode
-           , history_table.a_lender_user_password_expire_days
-           , history_table.a_lender_user_password_minimum_change_days
-           , history_table.a_lender_user_previous_password_ban
            , history_table.a_paid_through_current_month_required_day_of_month
            , history_table.a_disclosure_change_threshold_cash_to_close
            , history_table.a_disclosure_change_threshold_monthly_payment

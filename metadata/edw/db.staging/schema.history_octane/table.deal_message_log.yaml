@@ -20,14 +20,6 @@ foreign_keys:
       - df_pid
       schema: history_octane
       table: deal_file
-  fk_deal_message_log_3:
-    columns:
-    - dmlog_attachment_deal_file_pid
-    references:
-      columns:
-      - df_pid
-      schema: history_octane
-      table: deal_file
   fkt_dmlog_delivery_type:
     columns:
     - dmlog_delivery_type
@@ -85,10 +77,6 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dmlog_cover_letter_deal_file_pid
-  dmlog_attachment_deal_file_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dmlog_attachment_deal_file_pid
   dmlog_cc_recipients:
     data_type: VARCHAR(16000)
     source:
@@ -105,6 +93,10 @@ columns:
     data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  dmlog_attachment_deal_file_pid:
+    data_type: BIGINT
+  etl_batch_id:
+    data_type: TEXT
 etls:
   SP-100300:
     input_type: table
@@ -125,7 +117,6 @@ etls:
            , staging_table.dmlog_email_body
            , staging_table.dmlog_sent_securely
            , staging_table.dmlog_cover_letter_deal_file_pid
-           , staging_table.dmlog_attachment_deal_file_pid
            , staging_table.dmlog_cc_recipients
            , staging_table.dmlog_bcc_recipients
            , staging_table.dmlog_plain_text
@@ -149,7 +140,6 @@ etls:
            , history_table.dmlog_email_body
            , history_table.dmlog_sent_securely
            , history_table.dmlog_cover_letter_deal_file_pid
-           , history_table.dmlog_attachment_deal_file_pid
            , history_table.dmlog_cc_recipients
            , history_table.dmlog_bcc_recipients
            , history_table.dmlog_plain_text

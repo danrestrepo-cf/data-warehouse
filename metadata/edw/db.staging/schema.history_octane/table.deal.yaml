@@ -373,6 +373,8 @@ columns:
     data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
 etls:
   SP-100267:
     input_type: table
@@ -512,6 +514,6 @@ etls:
             AND deleted_records.data_source_deleted_flag = TRUE
           );
 next_etls:
-- SP-300002
+- SP-300001-delete
 - SP-200020
 - SP-200019

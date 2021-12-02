@@ -739,6 +739,8 @@ columns:
     data_type: NUMERIC(11,9)
   l_agency_case_id_assigned_date:
     data_type: DATE
+  etl_batch_id:
+    data_type: TEXT
 etls:
   SP-100320:
     input_type: table
@@ -1006,7 +1008,7 @@ etls:
             AND deleted_records.data_source_deleted_flag = TRUE
           );
 next_etls:
-- SP-300002
+- SP-300001-delete
 - SP-200016
 - SP-200015
 - SP-200014

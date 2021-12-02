@@ -333,10 +333,20 @@ columns:
     data_type: DATE
     source:
       field: primary_source_table.columns.lu_termination_date
+  lu_marketing_details_enabled:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lu_marketing_details_enabled
+  lu_marketing_details_featured_review:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.lu_marketing_details_featured_review
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
 etls:
   SP-100090:
     input_type: table
@@ -405,6 +415,8 @@ etls:
            , staging_table.lu_hub_directory
            , staging_table.lu_email_signature_title
            , staging_table.lu_termination_date
+           , staging_table.lu_marketing_details_enabled
+           , staging_table.lu_marketing_details_featured_review
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.lender_user staging_table
@@ -473,6 +485,8 @@ etls:
            , history_table.lu_hub_directory
            , history_table.lu_email_signature_title
            , history_table.lu_termination_date
+           , history_table.lu_marketing_details_enabled
+           , history_table.lu_marketing_details_featured_review
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.lender_user history_table
@@ -486,6 +500,6 @@ etls:
             AND deleted_records.data_source_deleted_flag = TRUE
           );
 next_etls:
-- SP-200002
-- SP-200001
+- SP-200001-delete
+- SP-200001-insert
 - SP-200010

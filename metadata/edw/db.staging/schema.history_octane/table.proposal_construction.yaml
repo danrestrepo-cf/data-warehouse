@@ -93,10 +93,16 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.prpc_estimated_permit_amount_applicable
+  prpc_contingency_reserve_required:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prpc_contingency_reserve_required
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
 etls:
   SP-100826:
     input_type: table
@@ -121,6 +127,7 @@ etls:
            , staging_table.prpc_loan_in_process_account_closed_date
            , staging_table.prpc_mortgage_payment_reserves_required
            , staging_table.prpc_estimated_permit_amount_applicable
+           , staging_table.prpc_contingency_reserve_required
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.proposal_construction staging_table
@@ -145,6 +152,7 @@ etls:
            , history_table.prpc_loan_in_process_account_closed_date
            , history_table.prpc_mortgage_payment_reserves_required
            , history_table.prpc_estimated_permit_amount_applicable
+           , history_table.prpc_contingency_reserve_required
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.proposal_construction history_table

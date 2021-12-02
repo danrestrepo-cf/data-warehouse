@@ -1,0 +1,33 @@
+name: company_license_contact
+primary_key:
+- cmlc_pid
+foreign_keys:
+  fk_company_license_contact_1:
+    columns:
+    - cmlc_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_company_license_contact_2:
+    columns:
+    - cmlc_company_license_pid
+    references:
+      columns:
+      - cml_pid
+      schema: staging_octane
+      table: company_license
+columns:
+  cmlc_pid:
+    data_type: BIGINT
+  cmlc_version:
+    data_type: INTEGER
+  cmlc_lender_user_pid:
+    data_type: BIGINT
+  cmlc_company_license_pid:
+    data_type: BIGINT
+  cmlc_from_date:
+    data_type: DATE
+  cmlc_through_date:
+    data_type: DATE

@@ -229,6 +229,8 @@ columns:
     data_type: BIGINT
   coc_payee:
     data_type: VARCHAR(128)
+  etl_batch_id:
+    data_type: TEXT
 etls:
   SP-100161:
     input_type: table

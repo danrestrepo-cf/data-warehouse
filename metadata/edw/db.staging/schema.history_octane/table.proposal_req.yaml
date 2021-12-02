@@ -285,10 +285,6 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.prpr_fulfill_status_unparsed_name
-  prpr_fulfill_status_reason:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.prpr_fulfill_status_reason
   prpr_fulfill_status_datetime:
     data_type: TIMESTAMP
     source:
@@ -301,10 +297,6 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.prpr_decision_status_unparsed_name
-  prpr_decision_status_reason:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.prpr_decision_status_reason
   prpr_decision_status_datetime:
     data_type: TIMESTAMP
     source:
@@ -441,6 +433,12 @@ columns:
     data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  prpr_fulfill_status_reason:
+    data_type: VARCHAR(1024)
+  prpr_decision_status_reason:
+    data_type: VARCHAR(1024)
+  etl_batch_id:
+    data_type: TEXT
 etls:
   SP-100344:
     input_type: table
@@ -457,11 +455,9 @@ etls:
            , staging_table.prpr_req_id
            , staging_table.prpr_req_fulfill_status_type
            , staging_table.prpr_fulfill_status_unparsed_name
-           , staging_table.prpr_fulfill_status_reason
            , staging_table.prpr_fulfill_status_datetime
            , staging_table.prpr_req_decision_status_type
            , staging_table.prpr_decision_status_unparsed_name
-           , staging_table.prpr_decision_status_reason
            , staging_table.prpr_decision_status_datetime
            , staging_table.prpr_deal_pid
            , staging_table.prpr_proposal_pid
@@ -511,11 +507,9 @@ etls:
            , history_table.prpr_req_id
            , history_table.prpr_req_fulfill_status_type
            , history_table.prpr_fulfill_status_unparsed_name
-           , history_table.prpr_fulfill_status_reason
            , history_table.prpr_fulfill_status_datetime
            , history_table.prpr_req_decision_status_type
            , history_table.prpr_decision_status_unparsed_name
-           , history_table.prpr_decision_status_reason
            , history_table.prpr_decision_status_datetime
            , history_table.prpr_deal_pid
            , history_table.prpr_proposal_pid

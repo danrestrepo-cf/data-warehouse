@@ -1,0 +1,93 @@
+name: company_license_contact
+primary_source_table: staging.staging_octane.company_license_contact
+primary_key:
+- cmlc_pid
+- cmlc_version
+foreign_keys:
+  fk_company_license_contact_1:
+    columns:
+    - cmlc_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+  fk_company_license_contact_2:
+    columns:
+    - cmlc_company_license_pid
+    references:
+      columns:
+      - cml_pid
+      schema: history_octane
+      table: company_license
+columns:
+  cmlc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cmlc_pid
+  cmlc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.cmlc_version
+  cmlc_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cmlc_lender_user_pid
+  cmlc_company_license_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cmlc_company_license_pid
+  cmlc_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.cmlc_from_date
+  cmlc_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.cmlc_through_date
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100870:
+    input_type: table
+    output_type: insert
+    json_output_field: cmlc_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.company_license_contact
+      SELECT staging_table.cmlc_pid
+           , staging_table.cmlc_version
+           , staging_table.cmlc_lender_user_pid
+           , staging_table.cmlc_company_license_pid
+           , staging_table.cmlc_from_date
+           , staging_table.cmlc_through_date
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.company_license_contact staging_table
+      LEFT JOIN history_octane.company_license_contact history_table
+                ON staging_table.cmlc_pid = history_table.cmlc_pid
+                    AND staging_table.cmlc_version = history_table.cmlc_version
+      WHERE history_table.cmlc_pid IS NULL
+      UNION ALL
+      SELECT history_table.cmlc_pid
+           , history_table.cmlc_version + 1
+           , history_table.cmlc_lender_user_pid
+           , history_table.cmlc_company_license_pid
+           , history_table.cmlc_from_date
+           , history_table.cmlc_through_date
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.company_license_contact history_table
+      LEFT JOIN staging_octane.company_license_contact staging_table
+                ON staging_table.cmlc_pid = history_table.cmlc_pid
+      WHERE staging_table.cmlc_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.company_license_contact deleted_records
+          WHERE deleted_records.cmlc_pid = history_table.cmlc_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );
