@@ -1,0 +1,79 @@
+name: mcr_request
+primary_key:
+- mcrr_pid
+foreign_keys:
+  fk_mcr_request_1:
+    columns:
+    - mcrr_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fkt_mcrr_mcr_error_status_type:
+    columns:
+    - mcrr_mcr_error_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: mcr_error_status_type
+  fkt_mcrr_mcr_status_type:
+    columns:
+    - mcrr_mcr_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: mcr_status_type
+  fkt_mcrr_quarter_type:
+    columns:
+    - mcrr_quarter_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: quarter_type
+  fkt_mcrr_request_status_type:
+    columns:
+    - mcrr_request_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: report_request_status_type
+columns:
+  mcrr_pid:
+    data_type: BIGINT
+  mcrr_version:
+    data_type: INTEGER
+  mcrr_account_pid:
+    data_type: BIGINT
+  mcrr_create_datetime:
+    data_type: TIMESTAMP
+  mcrr_start_datetime:
+    data_type: TIMESTAMP
+  mcrr_end_datetime:
+    data_type: TIMESTAMP
+  mcrr_request_status_type:
+    data_type: VARCHAR(128)
+  mcrr_request_status_messages:
+    data_type: TEXT
+  mcrr_mcr_error_status_type:
+    data_type: VARCHAR(128)
+  mcrr_mcr_status_type:
+    data_type: VARCHAR(128)
+  mcrr_requester_unparsed_name:
+    data_type: VARCHAR(128)
+  mcrr_year:
+    data_type: INTEGER
+  mcrr_quarter_type:
+    data_type: VARCHAR(128)
+  mcrr_mcr_xml_file_pid:
+    data_type: BIGINT
+  mcrr_error_csv_file_pid:
+    data_type: BIGINT
+  mcrr_mcr_loan_data_csv_file_pid:
+    data_type: BIGINT
+  mcrr_csv_input_files_zip_pid:
+    data_type: BIGINT

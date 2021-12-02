@@ -1,0 +1,14 @@
+name: zip_code_info
+primary_key:
+- zci_pid
+columns:
+  zci_pid:
+    data_type: BIGINT
+  zci_version:
+    data_type: INTEGER
+  zci_zip_code:
+    data_type: VARCHAR(5)
+  zci_latitude:
+    data_type: NUMERIC(9,6)
+  zci_longitude:
+    data_type: NUMERIC(9,6)

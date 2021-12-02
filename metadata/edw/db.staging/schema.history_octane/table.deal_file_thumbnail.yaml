@@ -1,0 +1,87 @@
+name: deal_file_thumbnail
+primary_source_table: staging.staging_octane.deal_file_thumbnail
+primary_key:
+- dft_pid
+- dft_version
+foreign_keys:
+  fk_deal_file_thumbnail_1:
+    columns:
+    - dft_deal_file_pid
+    references:
+      columns:
+      - df_pid
+      schema: history_octane
+      table: deal_file
+  fk_deal_file_thumbnail_2:
+    columns:
+    - dft_deal_system_file_pid
+    references:
+      columns:
+      - dsf_pid
+      schema: history_octane
+      table: deal_system_file
+columns:
+  dft_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dft_pid
+  dft_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dft_version
+  dft_deal_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dft_deal_file_pid
+  dft_deal_system_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dft_deal_system_file_pid
+  dft_page_number:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dft_page_number
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100304:
+    input_type: table
+    output_type: insert
+    json_output_field: dft_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.deal_file_thumbnail
+      SELECT staging_table.dft_pid
+           , staging_table.dft_version
+           , staging_table.dft_deal_file_pid
+           , staging_table.dft_deal_system_file_pid
+           , staging_table.dft_page_number
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.deal_file_thumbnail staging_table
+      LEFT JOIN history_octane.deal_file_thumbnail history_table
+                ON staging_table.dft_pid = history_table.dft_pid
+                    AND staging_table.dft_version = history_table.dft_version
+      WHERE history_table.dft_pid IS NULL
+      UNION ALL
+      SELECT history_table.dft_pid
+           , history_table.dft_version + 1
+           , history_table.dft_deal_file_pid
+           , history_table.dft_deal_system_file_pid
+           , history_table.dft_page_number
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.deal_file_thumbnail history_table
+      LEFT JOIN staging_octane.deal_file_thumbnail staging_table
+                ON staging_table.dft_pid = history_table.dft_pid
+      WHERE staging_table.dft_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.deal_file_thumbnail deleted_records
+          WHERE deleted_records.dft_pid = history_table.dft_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

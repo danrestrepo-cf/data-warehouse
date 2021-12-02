@@ -1,0 +1,79 @@
+name: deal_lp
+primary_source_table: staging.staging_octane.deal_lp
+primary_key:
+- dlp_pid
+- dlp_version
+foreign_keys:
+  fk_deal_lp_1:
+    columns:
+    - dlp_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: history_octane
+      table: deal
+columns:
+  dlp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dlp_pid
+  dlp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dlp_version
+  dlp_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dlp_deal_pid
+  dlp_lp_loan_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dlp_lp_loan_id
+  dlp_lp_key_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dlp_lp_key_id
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100084:
+    input_type: table
+    output_type: insert
+    json_output_field: dlp_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.deal_lp
+      SELECT staging_table.dlp_pid
+           , staging_table.dlp_version
+           , staging_table.dlp_deal_pid
+           , staging_table.dlp_lp_loan_id
+           , staging_table.dlp_lp_key_id
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.deal_lp staging_table
+      LEFT JOIN history_octane.deal_lp history_table
+                ON staging_table.dlp_pid = history_table.dlp_pid
+                    AND staging_table.dlp_version = history_table.dlp_version
+      WHERE history_table.dlp_pid IS NULL
+      UNION ALL
+      SELECT history_table.dlp_pid
+           , history_table.dlp_version + 1
+           , history_table.dlp_deal_pid
+           , history_table.dlp_lp_loan_id
+           , history_table.dlp_lp_key_id
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.deal_lp history_table
+      LEFT JOIN staging_octane.deal_lp staging_table
+                ON staging_table.dlp_pid = history_table.dlp_pid
+      WHERE staging_table.dlp_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.deal_lp deleted_records
+          WHERE deleted_records.dlp_pid = history_table.dlp_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

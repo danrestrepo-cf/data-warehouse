@@ -1,7 +1,7 @@
 #! groovy
 
 pipeline {
-    agent { label "dev-data-warehouse-deploy-agent" }
+    agent { label "edw-test" }
     parameters {
         string(name: "git_branch", defaultValue: "", description: "Enter the name of the branch to build. E.g. master")
     }

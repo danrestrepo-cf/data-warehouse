@@ -1,0 +1,73 @@
+name: county_city
+primary_source_table: staging.staging_octane.county_city
+primary_key:
+- cci_pid
+- cci_version
+foreign_keys:
+  fk_county_city_1:
+    columns:
+    - cci_county_pid
+    references:
+      columns:
+      - c_pid
+      schema: history_octane
+      table: county
+columns:
+  cci_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cci_pid
+  cci_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.cci_version
+  cci_county_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cci_county_pid
+  cci_city_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cci_city_name
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100060:
+    input_type: table
+    output_type: insert
+    json_output_field: cci_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.county_city
+      SELECT staging_table.cci_pid
+           , staging_table.cci_version
+           , staging_table.cci_county_pid
+           , staging_table.cci_city_name
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.county_city staging_table
+      LEFT JOIN history_octane.county_city history_table
+                ON staging_table.cci_pid = history_table.cci_pid
+                    AND staging_table.cci_version = history_table.cci_version
+      WHERE history_table.cci_pid IS NULL
+      UNION ALL
+      SELECT history_table.cci_pid
+           , history_table.cci_version + 1
+           , history_table.cci_county_pid
+           , history_table.cci_city_name
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.county_city history_table
+      LEFT JOIN staging_octane.county_city staging_table
+                ON staging_table.cci_pid = history_table.cci_pid
+      WHERE staging_table.cci_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.county_city deleted_records
+          WHERE deleted_records.cci_pid = history_table.cci_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

@@ -1,0 +1,385 @@
+name: smart_doc
+primary_source_table: staging.staging_octane.smart_doc
+primary_key:
+- sd_pid
+- sd_version
+foreign_keys:
+  fk_smart_doc_1:
+    columns:
+    - sd_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+  fk_smart_doc_2:
+    columns:
+    - sd_custom_form_pid
+    references:
+      columns:
+      - cf_pid
+      schema: history_octane
+      table: custom_form
+  fkt_sd_deal_child_type:
+    columns:
+    - sd_deal_child_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: deal_child_type
+  fkt_sd_doc_action_type:
+    columns:
+    - sd_doc_action_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: doc_action_type
+  fkt_sd_doc_approval_type:
+    columns:
+    - sd_doc_approval_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: doc_approval_type
+  fkt_sd_doc_borrower_access_mode_type:
+    columns:
+    - sd_doc_borrower_access_mode_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: doc_borrower_access_mode_type
+  fkt_sd_doc_category_type:
+    columns:
+    - sd_doc_category_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: doc_category_type
+  fkt_sd_doc_external_provider_type:
+    columns:
+    - sd_doc_external_provider_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: doc_external_provider_type
+  fkt_sd_doc_file_source_type:
+    columns:
+    - sd_doc_file_source_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: doc_file_source_type
+  fkt_sd_doc_fulfill_status_type_default:
+    columns:
+    - sd_doc_fulfill_status_type_default
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: doc_fulfill_status_type
+  fkt_sd_doc_set_type:
+    columns:
+    - sd_doc_set_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: doc_set_type
+  fkt_sd_key_doc_include_file:
+    columns:
+    - sd_key_doc_include_file
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_sd_key_doc_type:
+    columns:
+    - sd_key_doc_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: key_doc_type
+  fkt_sd_prior_to_type:
+    columns:
+    - sd_prior_to_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: prior_to_type
+columns:
+  sd_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sd_pid
+  sd_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sd_version
+  sd_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sd_account_pid
+  sd_doc_set_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_doc_set_type
+  sd_custom_form_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sd_custom_form_pid
+  sd_doc_name:
+    data_type: VARCHAR(767)
+    source:
+      field: primary_source_table.columns.sd_doc_name
+  sd_doc_number:
+    data_type: NUMERIC(15,3)
+    source:
+      field: primary_source_table.columns.sd_doc_number
+  sd_doc_category_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_doc_category_type
+  sd_doc_file_source_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_doc_file_source_type
+  sd_doc_external_provider_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_doc_external_provider_type
+  sd_broker_applicable_provider:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_broker_applicable_provider
+  sd_action_entities_from_merge_field:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_action_entities_from_merge_field
+  sd_action_entity_applicant:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_action_entity_applicant
+  sd_action_entity_non_applicant:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_action_entity_non_applicant
+  sd_action_entity_underwriter:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_action_entity_underwriter
+  sd_action_entity_originator:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_action_entity_originator
+  sd_doc_borrower_access_mode_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_doc_borrower_access_mode_type
+  sd_borrower_explanation:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.sd_borrower_explanation
+  sd_deal_child_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_deal_child_type
+  sd_doc_fulfill_status_type_default:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_doc_fulfill_status_type_default
+  sd_prior_to_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_prior_to_type
+  sd_doc_action_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_doc_action_type
+  sd_e_delivery:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_e_delivery
+  sd_active:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_active
+  sd_key_doc_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_key_doc_type
+  sd_key_doc_include_file:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_key_doc_include_file
+  sd_doc_approval_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_doc_approval_type
+  sd_auto_approve:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_auto_approve
+  sd_auto_include_on_request:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_auto_include_on_request
+  sd_poa_applicable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_poa_applicable
+  sd_action_entity_hud_va_lender_officer:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_action_entity_hud_va_lender_officer
+  sd_action_entity_collateral_underwriter:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_action_entity_collateral_underwriter
+  sd_action_entity_wholesale_client_advocate:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_action_entity_wholesale_client_advocate
+  sd_action_entity_correspondent_client_advocate:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_action_entity_correspondent_client_advocate
+  sd_action_entity_government_insurance:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_action_entity_government_insurance
+  sd_action_entity_underwriting_manager:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_action_entity_underwriting_manager
+  sd_action_entity_effective_collateral_underwriter:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_action_entity_effective_collateral_underwriter
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  sd_doc_validity_type:
+    data_type: VARCHAR(128)
+  sd_doc_key_date_type:
+    data_type: VARCHAR(128)
+  sd_expiration_rule_type:
+    data_type: VARCHAR(128)
+  sd_days_before_key_date:
+    data_type: INTEGER
+  sd_warning_days:
+    data_type: INTEGER
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100333:
+    input_type: table
+    output_type: insert
+    json_output_field: sd_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.smart_doc
+      SELECT staging_table.sd_pid
+           , staging_table.sd_version
+           , staging_table.sd_account_pid
+           , staging_table.sd_doc_set_type
+           , staging_table.sd_custom_form_pid
+           , staging_table.sd_doc_name
+           , staging_table.sd_doc_number
+           , staging_table.sd_doc_category_type
+           , staging_table.sd_doc_file_source_type
+           , staging_table.sd_doc_external_provider_type
+           , staging_table.sd_broker_applicable_provider
+           , staging_table.sd_action_entities_from_merge_field
+           , staging_table.sd_action_entity_applicant
+           , staging_table.sd_action_entity_non_applicant
+           , staging_table.sd_action_entity_underwriter
+           , staging_table.sd_action_entity_originator
+           , staging_table.sd_doc_borrower_access_mode_type
+           , staging_table.sd_borrower_explanation
+           , staging_table.sd_deal_child_type
+           , staging_table.sd_doc_fulfill_status_type_default
+           , staging_table.sd_prior_to_type
+           , staging_table.sd_doc_action_type
+           , staging_table.sd_e_delivery
+           , staging_table.sd_active
+           , staging_table.sd_key_doc_type
+           , staging_table.sd_key_doc_include_file
+           , staging_table.sd_doc_approval_type
+           , staging_table.sd_auto_approve
+           , staging_table.sd_auto_include_on_request
+           , staging_table.sd_poa_applicable
+           , staging_table.sd_action_entity_hud_va_lender_officer
+           , staging_table.sd_action_entity_collateral_underwriter
+           , staging_table.sd_action_entity_wholesale_client_advocate
+           , staging_table.sd_action_entity_correspondent_client_advocate
+           , staging_table.sd_action_entity_government_insurance
+           , staging_table.sd_action_entity_underwriting_manager
+           , staging_table.sd_action_entity_effective_collateral_underwriter
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.smart_doc staging_table
+      LEFT JOIN history_octane.smart_doc history_table
+                ON staging_table.sd_pid = history_table.sd_pid
+                    AND staging_table.sd_version = history_table.sd_version
+      WHERE history_table.sd_pid IS NULL
+      UNION ALL
+      SELECT history_table.sd_pid
+           , history_table.sd_version + 1
+           , history_table.sd_account_pid
+           , history_table.sd_doc_set_type
+           , history_table.sd_custom_form_pid
+           , history_table.sd_doc_name
+           , history_table.sd_doc_number
+           , history_table.sd_doc_category_type
+           , history_table.sd_doc_file_source_type
+           , history_table.sd_doc_external_provider_type
+           , history_table.sd_broker_applicable_provider
+           , history_table.sd_action_entities_from_merge_field
+           , history_table.sd_action_entity_applicant
+           , history_table.sd_action_entity_non_applicant
+           , history_table.sd_action_entity_underwriter
+           , history_table.sd_action_entity_originator
+           , history_table.sd_doc_borrower_access_mode_type
+           , history_table.sd_borrower_explanation
+           , history_table.sd_deal_child_type
+           , history_table.sd_doc_fulfill_status_type_default
+           , history_table.sd_prior_to_type
+           , history_table.sd_doc_action_type
+           , history_table.sd_e_delivery
+           , history_table.sd_active
+           , history_table.sd_key_doc_type
+           , history_table.sd_key_doc_include_file
+           , history_table.sd_doc_approval_type
+           , history_table.sd_auto_approve
+           , history_table.sd_auto_include_on_request
+           , history_table.sd_poa_applicable
+           , history_table.sd_action_entity_hud_va_lender_officer
+           , history_table.sd_action_entity_collateral_underwriter
+           , history_table.sd_action_entity_wholesale_client_advocate
+           , history_table.sd_action_entity_correspondent_client_advocate
+           , history_table.sd_action_entity_government_insurance
+           , history_table.sd_action_entity_underwriting_manager
+           , history_table.sd_action_entity_effective_collateral_underwriter
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.smart_doc history_table
+      LEFT JOIN staging_octane.smart_doc staging_table
+                ON staging_table.sd_pid = history_table.sd_pid
+      WHERE staging_table.sd_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.smart_doc deleted_records
+          WHERE deleted_records.sd_pid = history_table.sd_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

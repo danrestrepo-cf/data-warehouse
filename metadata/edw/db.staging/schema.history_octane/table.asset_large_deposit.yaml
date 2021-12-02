@@ -1,0 +1,79 @@
+name: asset_large_deposit
+primary_source_table: staging.staging_octane.asset_large_deposit
+primary_key:
+- ald_pid
+- ald_version
+foreign_keys:
+  fk_asset_large_deposit_1:
+    columns:
+    - ald_asset_pid
+    references:
+      columns:
+      - as_pid
+      schema: history_octane
+      table: asset
+columns:
+  ald_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ald_pid
+  ald_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ald_version
+  ald_asset_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ald_asset_pid
+  ald_deposit_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ald_deposit_amount
+  ald_deposit_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ald_deposit_date
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100071:
+    input_type: table
+    output_type: insert
+    json_output_field: ald_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.asset_large_deposit
+      SELECT staging_table.ald_pid
+           , staging_table.ald_version
+           , staging_table.ald_asset_pid
+           , staging_table.ald_deposit_amount
+           , staging_table.ald_deposit_date
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.asset_large_deposit staging_table
+      LEFT JOIN history_octane.asset_large_deposit history_table
+                ON staging_table.ald_pid = history_table.ald_pid
+                    AND staging_table.ald_version = history_table.ald_version
+      WHERE history_table.ald_pid IS NULL
+      UNION ALL
+      SELECT history_table.ald_pid
+           , history_table.ald_version + 1
+           , history_table.ald_asset_pid
+           , history_table.ald_deposit_amount
+           , history_table.ald_deposit_date
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.asset_large_deposit history_table
+      LEFT JOIN staging_octane.asset_large_deposit staging_table
+                ON staging_table.ald_pid = history_table.ald_pid
+      WHERE staging_table.ald_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.asset_large_deposit deleted_records
+          WHERE deleted_records.ald_pid = history_table.ald_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

@@ -1,0 +1,29 @@
+name: deal_message_log_attachment
+primary_key:
+- dmloga_pid
+foreign_keys:
+  fk_deal_message_log_attachment_1:
+    columns:
+    - dmloga_deal_message_log_pid
+    references:
+      columns:
+      - dmlog_pid
+      schema: staging_octane
+      table: deal_message_log
+  fk_deal_message_log_attachment_2:
+    columns:
+    - dmloga_deal_file_pid
+    references:
+      columns:
+      - df_pid
+      schema: staging_octane
+      table: deal_file
+columns:
+  dmloga_pid:
+    data_type: BIGINT
+  dmloga_version:
+    data_type: INTEGER
+  dmloga_deal_message_log_pid:
+    data_type: BIGINT
+  dmloga_deal_file_pid:
+    data_type: BIGINT

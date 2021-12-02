@@ -1,0 +1,59 @@
+name: branch_license
+primary_key:
+- brml_pid
+foreign_keys:
+  fk_branch_license_2:
+    columns:
+    - brml_company_pid
+    references:
+      columns:
+      - cm_pid
+      schema: staging_octane
+      table: company
+  fk_branch_license_3:
+    columns:
+    - brml_location_pid
+    references:
+      columns:
+      - loc_pid
+      schema: staging_octane
+      table: location
+  fkt_brml_license_type:
+    columns:
+    - brml_license_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: license_type
+  fkt_brml_state_type:
+    columns:
+    - brml_state_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: state_type
+columns:
+  brml_pid:
+    data_type: BIGINT
+  brml_version:
+    data_type: INTEGER
+  brml_branch_pid:
+    data_type: BIGINT
+  brml_license_type:
+    data_type: VARCHAR(128)
+  brml_state_type:
+    data_type: VARCHAR(128)
+  brml_license_number:
+    data_type: VARCHAR(128)
+  brml_from_date:
+    data_type: DATE
+  brml_through_date:
+    data_type: DATE
+  brml_note:
+    data_type: VARCHAR(256)
+  brml_company_pid:
+    data_type: BIGINT
+  brml_location_pid:
+    data_type: BIGINT

@@ -1,0 +1,81 @@
+name: deal_system_file
+primary_source_table: staging.staging_octane.deal_system_file
+primary_key:
+- dsf_pid
+- dsf_version
+foreign_keys:
+  fk_deal_system_file_1:
+    columns:
+    - dsf_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: history_octane
+      table: deal
+  fk_deal_system_file_2:
+    columns:
+    - dsf_repository_file_pid
+    references:
+      columns:
+      - rf_pid
+      schema: history_octane
+      table: repository_file
+columns:
+  dsf_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dsf_pid
+  dsf_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dsf_version
+  dsf_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dsf_deal_pid
+  dsf_repository_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dsf_repository_file_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100301:
+    input_type: table
+    output_type: insert
+    json_output_field: dsf_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.deal_system_file
+      SELECT staging_table.dsf_pid
+           , staging_table.dsf_version
+           , staging_table.dsf_deal_pid
+           , staging_table.dsf_repository_file_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.deal_system_file staging_table
+      LEFT JOIN history_octane.deal_system_file history_table
+                ON staging_table.dsf_pid = history_table.dsf_pid
+                    AND staging_table.dsf_version = history_table.dsf_version
+      WHERE history_table.dsf_pid IS NULL
+      UNION ALL
+      SELECT history_table.dsf_pid
+           , history_table.dsf_version + 1
+           , history_table.dsf_deal_pid
+           , history_table.dsf_repository_file_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.deal_system_file history_table
+      LEFT JOIN staging_octane.deal_system_file staging_table
+                ON staging_table.dsf_pid = history_table.dsf_pid
+      WHERE staging_table.dsf_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.deal_system_file deleted_records
+          WHERE deleted_records.dsf_pid = history_table.dsf_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

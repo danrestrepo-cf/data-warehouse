@@ -1,0 +1,93 @@
+name: docusign_package
+primary_source_table: staging.staging_octane.docusign_package
+primary_key:
+- dcsp_pid
+- dcsp_version
+foreign_keys:
+  fk_docusign_package_1:
+    columns:
+    - dcsp_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: history_octane
+      table: proposal
+  fkt_dcsp_esign_package_status_type:
+    columns:
+    - dcsp_esign_package_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: esign_package_status_type
+columns:
+  dcsp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcsp_pid
+  dcsp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dcsp_version
+  dcsp_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcsp_proposal_pid
+  dcsp_envelope_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dcsp_envelope_id
+  dcsp_esign_package_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dcsp_esign_package_status_type
+  dcsp_status_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.dcsp_status_datetime
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100316:
+    input_type: table
+    output_type: insert
+    json_output_field: dcsp_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.docusign_package
+      SELECT staging_table.dcsp_pid
+           , staging_table.dcsp_version
+           , staging_table.dcsp_proposal_pid
+           , staging_table.dcsp_envelope_id
+           , staging_table.dcsp_esign_package_status_type
+           , staging_table.dcsp_status_datetime
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.docusign_package staging_table
+      LEFT JOIN history_octane.docusign_package history_table
+                ON staging_table.dcsp_pid = history_table.dcsp_pid
+                    AND staging_table.dcsp_version = history_table.dcsp_version
+      WHERE history_table.dcsp_pid IS NULL
+      UNION ALL
+      SELECT history_table.dcsp_pid
+           , history_table.dcsp_version + 1
+           , history_table.dcsp_proposal_pid
+           , history_table.dcsp_envelope_id
+           , history_table.dcsp_esign_package_status_type
+           , history_table.dcsp_status_datetime
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.docusign_package history_table
+      LEFT JOIN staging_octane.docusign_package staging_table
+                ON staging_table.dcsp_pid = history_table.dcsp_pid
+      WHERE staging_table.dcsp_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.docusign_package deleted_records
+          WHERE deleted_records.dcsp_pid = history_table.dcsp_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

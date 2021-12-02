@@ -1,0 +1,29 @@
+name: wf_deal_fork_process
+primary_key:
+- wdfp_pid
+foreign_keys:
+  fk_wf_deal_fork_process_1:
+    columns:
+    - wdfp_wf_deal_step_pid
+    references:
+      columns:
+      - wds_pid
+      schema: staging_octane
+      table: wf_deal_step
+  fk_wf_deal_fork_process_2:
+    columns:
+    - wdfp_wf_deal_process_pid
+    references:
+      columns:
+      - wdpr_pid
+      schema: staging_octane
+      table: wf_deal_process
+columns:
+  wdfp_pid:
+    data_type: BIGINT
+  wdfp_version:
+    data_type: INTEGER
+  wdfp_wf_deal_step_pid:
+    data_type: BIGINT
+  wdfp_wf_deal_process_pid:
+    data_type: BIGINT

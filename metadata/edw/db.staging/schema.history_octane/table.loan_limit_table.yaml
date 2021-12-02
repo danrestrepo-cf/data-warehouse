@@ -1,0 +1,99 @@
+name: loan_limit_table
+primary_source_table: staging.staging_octane.loan_limit_table
+primary_key:
+- llt_pid
+- llt_version
+foreign_keys:
+  fk_loan_limit_table_1:
+    columns:
+    - llt_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+  fk_loan_limit_table_2:
+    columns:
+    - llt_loan_limit_table_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: loan_limit_table_type
+columns:
+  llt_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.llt_pid
+  llt_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.llt_version
+  llt_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.llt_account_pid
+  llt_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.llt_from_date
+  llt_loan_limit_table_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.llt_loan_limit_table_type
+  llt_uploader_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.llt_uploader_unparsed_name
+  llt_upload_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.llt_upload_datetime
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100224:
+    input_type: table
+    output_type: insert
+    json_output_field: llt_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.loan_limit_table
+      SELECT staging_table.llt_pid
+           , staging_table.llt_version
+           , staging_table.llt_account_pid
+           , staging_table.llt_from_date
+           , staging_table.llt_loan_limit_table_type
+           , staging_table.llt_uploader_unparsed_name
+           , staging_table.llt_upload_datetime
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.loan_limit_table staging_table
+      LEFT JOIN history_octane.loan_limit_table history_table
+                ON staging_table.llt_pid = history_table.llt_pid
+                    AND staging_table.llt_version = history_table.llt_version
+      WHERE history_table.llt_pid IS NULL
+      UNION ALL
+      SELECT history_table.llt_pid
+           , history_table.llt_version + 1
+           , history_table.llt_account_pid
+           , history_table.llt_from_date
+           , history_table.llt_loan_limit_table_type
+           , history_table.llt_uploader_unparsed_name
+           , history_table.llt_upload_datetime
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.loan_limit_table history_table
+      LEFT JOIN staging_octane.loan_limit_table staging_table
+                ON staging_table.llt_pid = history_table.llt_pid
+      WHERE staging_table.llt_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.loan_limit_table deleted_records
+          WHERE deleted_records.llt_pid = history_table.llt_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

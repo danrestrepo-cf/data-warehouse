@@ -1,0 +1,43 @@
+name: circumstance_change
+primary_key:
+- cc_pid
+foreign_keys:
+  fk_circumstance_change_1:
+    columns:
+    - cc_loan_pid
+    references:
+      columns:
+      - l_pid
+      schema: staging_octane
+      table: loan
+  fkt_cc_circumstance_change_type:
+    columns:
+    - cc_circumstance_change_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: circumstance_change_type
+columns:
+  cc_pid:
+    data_type: BIGINT
+  cc_version:
+    data_type: INTEGER
+  cc_loan_pid:
+    data_type: BIGINT
+  cc_create_datetime:
+    data_type: TIMESTAMP
+  cc_circumstance_change_type:
+    data_type: VARCHAR(128)
+  cc_source_unparsed_name:
+    data_type: VARCHAR(128)
+  cc_expired:
+    data_type: BOOLEAN
+  cc_previous_formatted_value:
+    data_type: VARCHAR(1024)
+  cc_to_formatted_value:
+    data_type: VARCHAR(1024)
+  cc_expiration_date:
+    data_type: DATE
+  cc_system_added:
+    data_type: BOOLEAN

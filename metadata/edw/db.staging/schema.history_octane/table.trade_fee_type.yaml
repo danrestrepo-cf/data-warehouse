@@ -1,0 +1,73 @@
+name: trade_fee_type
+primary_source_table: staging.staging_octane.trade_fee_type
+primary_key:
+- tft_pid
+- tft_version
+foreign_keys:
+  fk_trade_fee_type_1:
+    columns:
+    - tft_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+columns:
+  tft_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.tft_pid
+  tft_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.tft_version
+  tft_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.tft_account_pid
+  tft_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.tft_name
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100261:
+    input_type: table
+    output_type: insert
+    json_output_field: tft_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.trade_fee_type
+      SELECT staging_table.tft_pid
+           , staging_table.tft_version
+           , staging_table.tft_account_pid
+           , staging_table.tft_name
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.trade_fee_type staging_table
+      LEFT JOIN history_octane.trade_fee_type history_table
+                ON staging_table.tft_pid = history_table.tft_pid
+                    AND staging_table.tft_version = history_table.tft_version
+      WHERE history_table.tft_pid IS NULL
+      UNION ALL
+      SELECT history_table.tft_pid
+           , history_table.tft_version + 1
+           , history_table.tft_account_pid
+           , history_table.tft_name
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.trade_fee_type history_table
+      LEFT JOIN staging_octane.trade_fee_type staging_table
+                ON staging_table.tft_pid = history_table.tft_pid
+      WHERE staging_table.tft_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.trade_fee_type deleted_records
+          WHERE deleted_records.tft_pid = history_table.tft_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

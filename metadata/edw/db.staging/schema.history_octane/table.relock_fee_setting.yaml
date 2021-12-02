@@ -1,0 +1,79 @@
+name: relock_fee_setting
+primary_source_table: staging.staging_octane.relock_fee_setting
+primary_key:
+- rfs_pid
+- rfs_version
+foreign_keys:
+  fk_relock_fee_setting_1:
+    columns:
+    - rfs_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+columns:
+  rfs_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rfs_pid
+  rfs_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.rfs_version
+  rfs_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rfs_account_pid
+  rfs_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.rfs_from_date
+  rfs_relock_fee_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.rfs_relock_fee_percent
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100232:
+    input_type: table
+    output_type: insert
+    json_output_field: rfs_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.relock_fee_setting
+      SELECT staging_table.rfs_pid
+           , staging_table.rfs_version
+           , staging_table.rfs_account_pid
+           , staging_table.rfs_from_date
+           , staging_table.rfs_relock_fee_percent
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.relock_fee_setting staging_table
+      LEFT JOIN history_octane.relock_fee_setting history_table
+                ON staging_table.rfs_pid = history_table.rfs_pid
+                    AND staging_table.rfs_version = history_table.rfs_version
+      WHERE history_table.rfs_pid IS NULL
+      UNION ALL
+      SELECT history_table.rfs_pid
+           , history_table.rfs_version + 1
+           , history_table.rfs_account_pid
+           , history_table.rfs_from_date
+           , history_table.rfs_relock_fee_percent
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.relock_fee_setting history_table
+      LEFT JOIN staging_octane.relock_fee_setting staging_table
+                ON staging_table.rfs_pid = history_table.rfs_pid
+      WHERE staging_table.rfs_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.relock_fee_setting deleted_records
+          WHERE deleted_records.rfs_pid = history_table.rfs_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

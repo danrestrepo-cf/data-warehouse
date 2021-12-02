@@ -1,0 +1,29 @@
+name: admin_user_event
+primary_key:
+- aue_pid
+foreign_keys:
+  fkt_aue_admin_user_event_type:
+    columns:
+    - aue_admin_user_event_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: admin_user_event_type
+columns:
+  aue_pid:
+    data_type: BIGINT
+  aue_version:
+    data_type: INTEGER
+  aue_create_datetime:
+    data_type: TIMESTAMP
+  aue_detail:
+    data_type: VARCHAR(16000)
+  aue_source_unparsed_name:
+    data_type: VARCHAR(128)
+  aue_admin_user_event_type:
+    data_type: VARCHAR(128)
+  aue_ip_address:
+    data_type: VARCHAR(32)
+  aue_client_agent:
+    data_type: VARCHAR(256)

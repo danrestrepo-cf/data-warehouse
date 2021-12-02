@@ -1,0 +1,81 @@
+name: bid_pool_lender_lock
+primary_source_table: staging.staging_octane.bid_pool_lender_lock
+primary_key:
+- bpll_pid
+- bpll_version
+foreign_keys:
+  fk_bid_pool_lender_lock_1:
+    columns:
+    - bpll_bid_pool_pid
+    references:
+      columns:
+      - bp_pid
+      schema: history_octane
+      table: bid_pool
+  fk_bid_pool_lender_lock_2:
+    columns:
+    - bpll_lender_lock_major_pid
+    references:
+      columns:
+      - llmj_pid
+      schema: history_octane
+      table: lender_lock_major
+columns:
+  bpll_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bpll_pid
+  bpll_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bpll_version
+  bpll_bid_pool_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bpll_bid_pool_pid
+  bpll_lender_lock_major_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bpll_lender_lock_major_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100321:
+    input_type: table
+    output_type: insert
+    json_output_field: bpll_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.bid_pool_lender_lock
+      SELECT staging_table.bpll_pid
+           , staging_table.bpll_version
+           , staging_table.bpll_bid_pool_pid
+           , staging_table.bpll_lender_lock_major_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.bid_pool_lender_lock staging_table
+      LEFT JOIN history_octane.bid_pool_lender_lock history_table
+                ON staging_table.bpll_pid = history_table.bpll_pid
+                    AND staging_table.bpll_version = history_table.bpll_version
+      WHERE history_table.bpll_pid IS NULL
+      UNION ALL
+      SELECT history_table.bpll_pid
+           , history_table.bpll_version + 1
+           , history_table.bpll_bid_pool_pid
+           , history_table.bpll_lender_lock_major_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.bid_pool_lender_lock history_table
+      LEFT JOIN staging_octane.bid_pool_lender_lock staging_table
+                ON staging_table.bpll_pid = history_table.bpll_pid
+      WHERE staging_table.bpll_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.bid_pool_lender_lock deleted_records
+          WHERE deleted_records.bpll_pid = history_table.bpll_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

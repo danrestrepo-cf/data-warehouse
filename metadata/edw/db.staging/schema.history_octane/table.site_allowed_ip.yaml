@@ -1,0 +1,79 @@
+name: site_allowed_ip
+primary_source_table: staging.staging_octane.site_allowed_ip
+primary_key:
+- saip_pid
+- saip_version
+foreign_keys:
+  fk_site_allowed_ip_1:
+    columns:
+    - saip_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+columns:
+  saip_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.saip_pid
+  saip_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.saip_version
+  saip_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.saip_account_pid
+  saip_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.saip_name
+  saip_ip_address:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.saip_ip_address
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100053:
+    input_type: table
+    output_type: insert
+    json_output_field: saip_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.site_allowed_ip
+      SELECT staging_table.saip_pid
+           , staging_table.saip_version
+           , staging_table.saip_account_pid
+           , staging_table.saip_name
+           , staging_table.saip_ip_address
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.site_allowed_ip staging_table
+      LEFT JOIN history_octane.site_allowed_ip history_table
+                ON staging_table.saip_pid = history_table.saip_pid
+                    AND staging_table.saip_version = history_table.saip_version
+      WHERE history_table.saip_pid IS NULL
+      UNION ALL
+      SELECT history_table.saip_pid
+           , history_table.saip_version + 1
+           , history_table.saip_account_pid
+           , history_table.saip_name
+           , history_table.saip_ip_address
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.site_allowed_ip history_table
+      LEFT JOIN staging_octane.site_allowed_ip staging_table
+                ON staging_table.saip_pid = history_table.saip_pid
+      WHERE staging_table.saip_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.site_allowed_ip deleted_records
+          WHERE deleted_records.saip_pid = history_table.saip_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

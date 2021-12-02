@@ -1,0 +1,281 @@
+name: credit_request_liability
+primary_source_table: staging.staging_octane.credit_request_liability
+primary_key:
+- crl_pid
+- crl_version
+foreign_keys:
+  fk_credit_request_liability_1:
+    columns:
+    - crl_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: history_octane
+      table: deal
+  fk_credit_request_liability_2:
+    columns:
+    - crl_credit_request_pid
+    references:
+      columns:
+      - crdr_pid
+      schema: history_octane
+      table: credit_request
+  fkt_crl_consumer_dispute:
+    columns:
+    - crl_consumer_dispute
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_crl_derogatory_data:
+    columns:
+    - crl_derogatory_data
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_crl_report_liability_account_ownership_type:
+    columns:
+    - crl_report_liability_account_ownership_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: liability_account_ownership_type
+  fkt_crl_report_liability_account_status_type:
+    columns:
+    - crl_report_liability_account_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: liability_account_status_type
+  fkt_crl_report_liability_current_rating_type:
+    columns:
+    - crl_report_liability_current_rating_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: liability_current_rating_type
+  fkt_crl_report_liability_type:
+    columns:
+    - crl_report_liability_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: liability_type
+columns:
+  crl_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.crl_pid
+  crl_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.crl_version
+  crl_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.crl_deal_pid
+  crl_credit_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.crl_credit_request_pid
+  crl_credit_report_identifier:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crl_credit_report_identifier
+  crl_report_liability_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crl_report_liability_type
+  crl_report_holder_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crl_report_holder_name
+  crl_report_account_opened_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.crl_report_account_opened_date
+  crl_account_reported_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.crl_account_reported_date
+  crl_last_activity_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.crl_last_activity_date
+  crl_most_recent_adverse_rating_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.crl_most_recent_adverse_rating_date
+  crl_report_monthly_payment_amount:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.crl_report_monthly_payment_amount
+  crl_report_remaining_term_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.crl_report_remaining_term_months
+  crl_months_reviewed_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.crl_months_reviewed_count
+  crl_report_unpaid_balance_amount:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.crl_report_unpaid_balance_amount
+  crl_report_credit_limit_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.crl_report_credit_limit_amount
+  crl_report_past_due_amount:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.crl_report_past_due_amount
+  crl_report_terms_months_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.crl_report_terms_months_count
+  crl_report_liability_current_rating_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crl_report_liability_current_rating_type
+  crl_report_liability_account_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crl_report_liability_account_status_type
+  crl_report_liability_account_ownership_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crl_report_liability_account_ownership_type
+  crl_consumer_dispute:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crl_consumer_dispute
+  crl_derogatory_data:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crl_derogatory_data
+  crl_late_30_days_count:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.crl_late_30_days_count
+  crl_late_60_days_count:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.crl_late_60_days_count
+  crl_late_90_days_count:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.crl_late_90_days_count
+  crl_equifax_included:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.crl_equifax_included
+  crl_experian_included:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.crl_experian_included
+  crl_trans_union_included:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.crl_trans_union_included
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  crl_temp_liability_pid:
+    data_type: BIGINT
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100821:
+    input_type: table
+    output_type: insert
+    json_output_field: crl_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.credit_request_liability
+      SELECT staging_table.crl_pid
+           , staging_table.crl_version
+           , staging_table.crl_deal_pid
+           , staging_table.crl_credit_request_pid
+           , staging_table.crl_credit_report_identifier
+           , staging_table.crl_report_liability_type
+           , staging_table.crl_report_holder_name
+           , staging_table.crl_report_account_opened_date
+           , staging_table.crl_account_reported_date
+           , staging_table.crl_last_activity_date
+           , staging_table.crl_most_recent_adverse_rating_date
+           , staging_table.crl_report_monthly_payment_amount
+           , staging_table.crl_report_remaining_term_months
+           , staging_table.crl_months_reviewed_count
+           , staging_table.crl_report_unpaid_balance_amount
+           , staging_table.crl_report_credit_limit_amount
+           , staging_table.crl_report_past_due_amount
+           , staging_table.crl_report_terms_months_count
+           , staging_table.crl_report_liability_current_rating_type
+           , staging_table.crl_report_liability_account_status_type
+           , staging_table.crl_report_liability_account_ownership_type
+           , staging_table.crl_consumer_dispute
+           , staging_table.crl_derogatory_data
+           , staging_table.crl_late_30_days_count
+           , staging_table.crl_late_60_days_count
+           , staging_table.crl_late_90_days_count
+           , staging_table.crl_equifax_included
+           , staging_table.crl_experian_included
+           , staging_table.crl_trans_union_included
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.credit_request_liability staging_table
+      LEFT JOIN history_octane.credit_request_liability history_table
+                ON staging_table.crl_pid = history_table.crl_pid
+                    AND staging_table.crl_version = history_table.crl_version
+      WHERE history_table.crl_pid IS NULL
+      UNION ALL
+      SELECT history_table.crl_pid
+           , history_table.crl_version + 1
+           , history_table.crl_deal_pid
+           , history_table.crl_credit_request_pid
+           , history_table.crl_credit_report_identifier
+           , history_table.crl_report_liability_type
+           , history_table.crl_report_holder_name
+           , history_table.crl_report_account_opened_date
+           , history_table.crl_account_reported_date
+           , history_table.crl_last_activity_date
+           , history_table.crl_most_recent_adverse_rating_date
+           , history_table.crl_report_monthly_payment_amount
+           , history_table.crl_report_remaining_term_months
+           , history_table.crl_months_reviewed_count
+           , history_table.crl_report_unpaid_balance_amount
+           , history_table.crl_report_credit_limit_amount
+           , history_table.crl_report_past_due_amount
+           , history_table.crl_report_terms_months_count
+           , history_table.crl_report_liability_current_rating_type
+           , history_table.crl_report_liability_account_status_type
+           , history_table.crl_report_liability_account_ownership_type
+           , history_table.crl_consumer_dispute
+           , history_table.crl_derogatory_data
+           , history_table.crl_late_30_days_count
+           , history_table.crl_late_60_days_count
+           , history_table.crl_late_90_days_count
+           , history_table.crl_equifax_included
+           , history_table.crl_experian_included
+           , history_table.crl_trans_union_included
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.credit_request_liability history_table
+      LEFT JOIN staging_octane.credit_request_liability staging_table
+                ON staging_table.crl_pid = history_table.crl_pid
+      WHERE staging_table.crl_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.credit_request_liability deleted_records
+          WHERE deleted_records.crl_pid = history_table.crl_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

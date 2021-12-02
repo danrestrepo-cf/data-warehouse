@@ -1,0 +1,93 @@
+name: smart_ledger_plan
+primary_source_table: staging.staging_octane.smart_ledger_plan
+primary_key:
+- slp_pid
+- slp_version
+foreign_keys:
+  fk_smart_ledger_plan_1:
+    columns:
+    - slp_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+  fk_smart_ledger_plan_2:
+    columns:
+    - slp_org_node_pid
+    references:
+      columns:
+      - on_pid
+      schema: history_octane
+      table: org_node
+columns:
+  slp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.slp_pid
+  slp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.slp_version
+  slp_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.slp_account_pid
+  slp_org_node_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.slp_org_node_pid
+  slp_plan_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.slp_plan_name
+  slp_plan_id:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.slp_plan_id
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100210:
+    input_type: table
+    output_type: insert
+    json_output_field: slp_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.smart_ledger_plan
+      SELECT staging_table.slp_pid
+           , staging_table.slp_version
+           , staging_table.slp_account_pid
+           , staging_table.slp_org_node_pid
+           , staging_table.slp_plan_name
+           , staging_table.slp_plan_id
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.smart_ledger_plan staging_table
+      LEFT JOIN history_octane.smart_ledger_plan history_table
+                ON staging_table.slp_pid = history_table.slp_pid
+                    AND staging_table.slp_version = history_table.slp_version
+      WHERE history_table.slp_pid IS NULL
+      UNION ALL
+      SELECT history_table.slp_pid
+           , history_table.slp_version + 1
+           , history_table.slp_account_pid
+           , history_table.slp_org_node_pid
+           , history_table.slp_plan_name
+           , history_table.slp_plan_id
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.smart_ledger_plan history_table
+      LEFT JOIN staging_octane.smart_ledger_plan staging_table
+                ON staging_table.slp_pid = history_table.slp_pid
+      WHERE staging_table.slp_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.smart_ledger_plan deleted_records
+          WHERE deleted_records.slp_pid = history_table.slp_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

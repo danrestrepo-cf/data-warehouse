@@ -1,0 +1,39 @@
+name: appraisal_form
+primary_key:
+- aprfm_pid
+foreign_keys:
+  fk_appraisal_form_1:
+    columns:
+    - aprfm_appraisal_pid
+    references:
+      columns:
+      - apr_pid
+      schema: staging_octane
+      table: appraisal
+  fkt_aprfm_appraisal_form_type:
+    columns:
+    - aprfm_appraisal_form_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: appraisal_form_type
+  fkt_aprfm_appraisal_source_type:
+    columns:
+    - aprfm_appraisal_source_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: appraisal_source_type
+columns:
+  aprfm_pid:
+    data_type: BIGINT
+  aprfm_version:
+    data_type: INTEGER
+  aprfm_appraisal_pid:
+    data_type: BIGINT
+  aprfm_appraisal_source_type:
+    data_type: VARCHAR(128)
+  aprfm_appraisal_form_type:
+    data_type: VARCHAR(128)

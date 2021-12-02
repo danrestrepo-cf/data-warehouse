@@ -1,0 +1,167 @@
+name: construction_draw
+primary_source_table: staging.staging_octane.construction_draw
+primary_key:
+- cd_pid
+- cd_version
+foreign_keys:
+  fk_construction_draw_1:
+    columns:
+    - cd_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: history_octane
+      table: proposal
+  fkt_cd_construction_draw_status_type:
+    columns:
+    - cd_construction_draw_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: construction_draw_status_type
+  fkt_cd_construction_draw_type:
+    columns:
+    - cd_construction_draw_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: construction_draw_type
+columns:
+  cd_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cd_pid
+  cd_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.cd_version
+  cd_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cd_proposal_pid
+  cd_construction_draw_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cd_construction_draw_type
+  cd_construction_draw_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cd_construction_draw_status_type
+  cd_scheduled_disbursement_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.cd_scheduled_disbursement_date
+  cd_confirmation_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.cd_confirmation_datetime
+  cd_inspection_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.cd_inspection_datetime
+  cd_disbursement_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.cd_disbursement_datetime
+  cd_boarded_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.cd_boarded_datetime
+  cd_voided_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.cd_voided_datetime
+  cd_construction_draw_notes:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.cd_construction_draw_notes
+  cd_total_draw_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.cd_total_draw_amount
+  cd_borrower_contribution_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.cd_borrower_contribution_amount
+  cd_lender_contribution_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.cd_lender_contribution_amount
+  cd_construction_draw_number:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.cd_construction_draw_number
+  cd_construction_draw_disbursed_at_closing:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.cd_construction_draw_disbursed_at_closing
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100136:
+    input_type: table
+    output_type: insert
+    json_output_field: cd_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.construction_draw
+      SELECT staging_table.cd_pid
+           , staging_table.cd_version
+           , staging_table.cd_proposal_pid
+           , staging_table.cd_construction_draw_type
+           , staging_table.cd_construction_draw_status_type
+           , staging_table.cd_scheduled_disbursement_date
+           , staging_table.cd_confirmation_datetime
+           , staging_table.cd_inspection_datetime
+           , staging_table.cd_disbursement_datetime
+           , staging_table.cd_boarded_datetime
+           , staging_table.cd_voided_datetime
+           , staging_table.cd_construction_draw_notes
+           , staging_table.cd_total_draw_amount
+           , staging_table.cd_borrower_contribution_amount
+           , staging_table.cd_lender_contribution_amount
+           , staging_table.cd_construction_draw_number
+           , staging_table.cd_construction_draw_disbursed_at_closing
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.construction_draw staging_table
+      LEFT JOIN history_octane.construction_draw history_table
+                ON staging_table.cd_pid = history_table.cd_pid
+                    AND staging_table.cd_version = history_table.cd_version
+      WHERE history_table.cd_pid IS NULL
+      UNION ALL
+      SELECT history_table.cd_pid
+           , history_table.cd_version + 1
+           , history_table.cd_proposal_pid
+           , history_table.cd_construction_draw_type
+           , history_table.cd_construction_draw_status_type
+           , history_table.cd_scheduled_disbursement_date
+           , history_table.cd_confirmation_datetime
+           , history_table.cd_inspection_datetime
+           , history_table.cd_disbursement_datetime
+           , history_table.cd_boarded_datetime
+           , history_table.cd_voided_datetime
+           , history_table.cd_construction_draw_notes
+           , history_table.cd_total_draw_amount
+           , history_table.cd_borrower_contribution_amount
+           , history_table.cd_lender_contribution_amount
+           , history_table.cd_construction_draw_number
+           , history_table.cd_construction_draw_disbursed_at_closing
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.construction_draw history_table
+      LEFT JOIN staging_octane.construction_draw staging_table
+                ON staging_table.cd_pid = history_table.cd_pid
+      WHERE staging_table.cd_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.construction_draw deleted_records
+          WHERE deleted_records.cd_pid = history_table.cd_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

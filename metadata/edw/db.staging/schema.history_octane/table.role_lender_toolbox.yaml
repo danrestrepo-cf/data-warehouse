@@ -1,0 +1,81 @@
+name: role_lender_toolbox
+primary_source_table: staging.staging_octane.role_lender_toolbox
+primary_key:
+- rlet_pid
+- rlet_version
+foreign_keys:
+  fk_role_lender_toolbox_1:
+    columns:
+    - rlet_role_pid
+    references:
+      columns:
+      - r_pid
+      schema: history_octane
+      table: role
+  fkt_rlet_lender_toolbox_permission_type:
+    columns:
+    - rlet_lender_toolbox_permission_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: lender_toolbox_permission_type
+columns:
+  rlet_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rlet_pid
+  rlet_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.rlet_version
+  rlet_role_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rlet_role_pid
+  rlet_lender_toolbox_permission_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.rlet_lender_toolbox_permission_type
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100237:
+    input_type: table
+    output_type: insert
+    json_output_field: rlet_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.role_lender_toolbox
+      SELECT staging_table.rlet_pid
+           , staging_table.rlet_version
+           , staging_table.rlet_role_pid
+           , staging_table.rlet_lender_toolbox_permission_type
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.role_lender_toolbox staging_table
+      LEFT JOIN history_octane.role_lender_toolbox history_table
+                ON staging_table.rlet_pid = history_table.rlet_pid
+                    AND staging_table.rlet_version = history_table.rlet_version
+      WHERE history_table.rlet_pid IS NULL
+      UNION ALL
+      SELECT history_table.rlet_pid
+           , history_table.rlet_version + 1
+           , history_table.rlet_role_pid
+           , history_table.rlet_lender_toolbox_permission_type
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.role_lender_toolbox history_table
+      LEFT JOIN staging_octane.role_lender_toolbox staging_table
+                ON staging_table.rlet_pid = history_table.rlet_pid
+      WHERE staging_table.rlet_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.role_lender_toolbox deleted_records
+          WHERE deleted_records.rlet_pid = history_table.rlet_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

@@ -1,0 +1,39 @@
+name: license_req
+primary_key:
+- mlr_pid
+foreign_keys:
+  fk_license_req_1:
+    columns:
+    - mlr_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fkt_mlr_license_type:
+    columns:
+    - mlr_license_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: license_type
+  fkt_mlr_state_type:
+    columns:
+    - mlr_state_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: state_type
+columns:
+  mlr_pid:
+    data_type: BIGINT
+  mlr_version:
+    data_type: INTEGER
+  mlr_account_pid:
+    data_type: BIGINT
+  mlr_state_type:
+    data_type: VARCHAR(128)
+  mlr_license_type:
+    data_type: VARCHAR(128)

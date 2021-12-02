@@ -1,0 +1,59 @@
+name: stripe_payment
+primary_key:
+- stpm_pid
+foreign_keys:
+  fk_stripe_payment_1:
+    columns:
+    - stpm_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fkt_stpm_payment_request_type:
+    columns:
+    - stpm_payment_request_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: payment_request_type
+  fkt_stpm_stripe_payment_status_type:
+    columns:
+    - stpm_stripe_payment_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: stripe_payment_status_type
+columns:
+  stpm_pid:
+    data_type: BIGINT
+  stpm_version:
+    data_type: INTEGER
+  stpm_account_pid:
+    data_type: BIGINT
+  stpm_submit_datetime:
+    data_type: TIMESTAMP
+  stpm_payer_unparsed_name:
+    data_type: VARCHAR(128)
+  stpm_invoice_amount:
+    data_type: NUMERIC(15,2)
+  stpm_payment_request_type:
+    data_type: VARCHAR(128)
+  stpm_stripe_payment_status_type:
+    data_type: VARCHAR(128)
+  stpm_payment_status_messages:
+    data_type: TEXT
+  stpm_status_datetime:
+    data_type: TIMESTAMP
+  stpm_token:
+    data_type: VARCHAR(128)
+  stpm_receipt_email:
+    data_type: VARCHAR(256)
+  stpm_stripe_id:
+    data_type: VARCHAR(128)
+  stpm_refund_stripe_id:
+    data_type: VARCHAR(128)
+  stpm_receipt_url:
+    data_type: VARCHAR(256)

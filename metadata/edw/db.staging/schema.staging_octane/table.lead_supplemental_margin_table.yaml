@@ -1,0 +1,21 @@
+name: lead_supplemental_margin_table
+primary_key:
+- lsmt_pid
+foreign_keys:
+  fk_lead_supplemental_margin_table_1:
+    columns:
+    - lsmt_lead_source_pid
+    references:
+      columns:
+      - lds_pid
+      schema: staging_octane
+      table: lead_source
+columns:
+  lsmt_pid:
+    data_type: BIGINT
+  lsmt_version:
+    data_type: INTEGER
+  lsmt_lead_source_pid:
+    data_type: BIGINT
+  lsmt_effective_datetime:
+    data_type: TIMESTAMP

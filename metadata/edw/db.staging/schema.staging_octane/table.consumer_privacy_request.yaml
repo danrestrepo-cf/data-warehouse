@@ -1,0 +1,99 @@
+name: consumer_privacy_request
+primary_key:
+- cpr_pid
+foreign_keys:
+  fk_consumer_privacy_request_1:
+    columns:
+    - cpr_receiver_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_consumer_privacy_request_2:
+    columns:
+    - cpr_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fk_consumer_privacy_request_3:
+    columns:
+    - cpr_know_repository_file_pid
+    references:
+      columns:
+      - rf_pid
+      schema: staging_octane
+      table: repository_file
+  fk_consumer_privacy_request_4:
+    columns:
+    - cpr_delete_repository_file_pid
+    references:
+      columns:
+      - rf_pid
+      schema: staging_octane
+      table: repository_file
+  fkt_cpr_request_todo:
+    columns:
+    - cpr_request_todo
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: consumer_privacy_request_type
+  fkt_cpr_request_type:
+    columns:
+    - cpr_request_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: consumer_privacy_request_type
+  fkt_cpr_searched_subject_property_state_type:
+    columns:
+    - cpr_searched_subject_property_state_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: state_type
+columns:
+  cpr_pid:
+    data_type: BIGINT
+  cpr_version:
+    data_type: INTEGER
+  cpr_request_id:
+    data_type: INTEGER
+  cpr_receiver_lender_user_pid:
+    data_type: BIGINT
+  cpr_account_pid:
+    data_type: BIGINT
+  cpr_borrower_last_name:
+    data_type: VARCHAR(128)
+  cpr_searched_email:
+    data_type: VARCHAR(256)
+  cpr_searched_phone:
+    data_type: VARCHAR(32)
+  cpr_searched_los_loan_id:
+    data_type: BIGINT
+  cpr_searched_subject_property_street:
+    data_type: VARCHAR(128)
+  cpr_searched_subject_property_city:
+    data_type: VARCHAR(128)
+  cpr_searched_subject_property_state_type:
+    data_type: VARCHAR(128)
+  cpr_received_date:
+    data_type: TIMESTAMP
+  cpr_know_datetime:
+    data_type: TIMESTAMP
+  cpr_delete_datetime:
+    data_type: TIMESTAMP
+  cpr_request_type:
+    data_type: VARCHAR(128)
+  cpr_request_todo:
+    data_type: VARCHAR(128)
+  cpr_know_repository_file_pid:
+    data_type: BIGINT
+  cpr_delete_repository_file_pid:
+    data_type: BIGINT

@@ -1,0 +1,117 @@
+name: deal_invoice_payment_method
+primary_key:
+- dipm_pid
+foreign_keys:
+  fk_deal_invoice_payment_method_1:
+    columns:
+    - dipm_deal_invoice_pid
+    references:
+      columns:
+      - di_pid
+      schema: staging_octane
+      table: deal_invoice
+  fk_deal_invoice_payment_method_2:
+    columns:
+    - dipm_stripe_payment_pid
+    references:
+      columns:
+      - stpm_pid
+      schema: staging_octane
+      table: stripe_payment
+  fk_deal_invoice_payment_method_3:
+    columns:
+    - dipm_stripe_payment_refund_pid
+    references:
+      columns:
+      - stpm_pid
+      schema: staging_octane
+      table: stripe_payment
+  fk_deal_invoice_payment_method_4:
+    columns:
+    - dipm_requester_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fkt_dipm_configured_payer_type:
+    columns:
+    - dipm_configured_payer_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: invoice_payer_type
+  fkt_dipm_payer_type:
+    columns:
+    - dipm_payer_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: invoice_payer_type
+  fkt_dipm_payment_fulfill_type:
+    columns:
+    - dipm_payment_fulfill_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: payment_fulfill_type
+  fkt_dipm_payment_processing_company_type:
+    columns:
+    - dipm_payment_processing_company_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: payment_processing_company_type
+  fkt_dipm_payment_submission_type:
+    columns:
+    - dipm_payment_submission_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: invoice_payment_submission_type
+  fkt_dipm_requester_agent_type:
+    columns:
+    - dipm_requester_agent_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: agent_type
+columns:
+  dipm_pid:
+    data_type: BIGINT
+  dipm_version:
+    data_type: INTEGER
+  dipm_deal_invoice_pid:
+    data_type: BIGINT
+  dipm_payer_type:
+    data_type: VARCHAR(128)
+  dipm_configured_payer_type:
+    data_type: VARCHAR(128)
+  dipm_payer_unparsed_name:
+    data_type: VARCHAR(128)
+  dipm_payment_fulfill_type:
+    data_type: VARCHAR(128)
+  dipm_payment_transfer_los_loan_id_main:
+    data_type: BIGINT
+  dipm_payment_processing_company_type:
+    data_type: VARCHAR(128)
+  dipm_stripe_payment_pid:
+    data_type: BIGINT
+  dipm_stripe_payment_refund_pid:
+    data_type: BIGINT
+  dipm_requester_agent_type:
+    data_type: VARCHAR(128)
+  dipm_requester_lender_user_pid:
+    data_type: BIGINT
+  dipm_requester_unparsed_name:
+    data_type: VARCHAR(128)
+  dipm_payment_submission_type:
+    data_type: VARCHAR(128)
+  dipm_payment_completed_date:
+    data_type: DATE

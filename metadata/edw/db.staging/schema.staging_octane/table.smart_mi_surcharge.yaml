@@ -1,0 +1,21 @@
+name: smart_mi_surcharge
+primary_key:
+- sms_pid
+foreign_keys:
+  fk_smart_mi_surcharge_1:
+    columns:
+    - sms_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+columns:
+  sms_pid:
+    data_type: BIGINT
+  sms_version:
+    data_type: INTEGER
+  sms_account_pid:
+    data_type: BIGINT
+  sms_from_date:
+    data_type: DATE

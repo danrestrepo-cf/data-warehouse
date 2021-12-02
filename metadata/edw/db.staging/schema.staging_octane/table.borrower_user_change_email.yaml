@@ -1,0 +1,35 @@
+name: borrower_user_change_email
+primary_key:
+- buce_pid
+foreign_keys:
+  fk_borrower_user_change_email_1:
+    columns:
+    - buce_borrower_user_pid
+    references:
+      columns:
+      - bu_pid
+      schema: staging_octane
+      table: borrower_user
+  fk_borrower_user_change_email_2:
+    columns:
+    - buce_borrower_user_deal_pid
+    references:
+      columns:
+      - bud_pid
+      schema: staging_octane
+      table: borrower_user_deal
+columns:
+  buce_pid:
+    data_type: BIGINT
+  buce_version:
+    data_type: INTEGER
+  buce_borrower_user_pid:
+    data_type: BIGINT
+  buce_create_datetime:
+    data_type: TIMESTAMP
+  buce_change_email_id:
+    data_type: VARCHAR(128)
+  buce_email:
+    data_type: VARCHAR(256)
+  buce_borrower_user_deal_pid:
+    data_type: BIGINT

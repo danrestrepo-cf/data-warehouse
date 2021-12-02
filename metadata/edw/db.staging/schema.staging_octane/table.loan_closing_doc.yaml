@@ -1,0 +1,49 @@
+name: loan_closing_doc
+primary_key:
+- lcd_pid
+foreign_keys:
+  fk_loan_closing_doc_1:
+    columns:
+    - lcd_loan_pid
+    references:
+      columns:
+      - l_pid
+      schema: staging_octane
+      table: loan
+  fk_loan_closing_doc_2:
+    columns:
+    - lcd_unsigned_closing_doc_deal_file_pid
+    references:
+      columns:
+      - df_pid
+      schema: staging_octane
+      table: deal_file
+  fkt_lcd_dsi_closing_document_status_type:
+    columns:
+    - lcd_dsi_closing_document_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: closing_document_status_type
+columns:
+  lcd_pid:
+    data_type: BIGINT
+  lcd_version:
+    data_type: INTEGER
+  lcd_loan_pid:
+    data_type: BIGINT
+  lcd_dsi_websheet_number:
+    data_type: VARCHAR(16)
+  lcd_dsi_doc_code:
+    data_type: VARCHAR(32)
+  lcd_dsi_transaction_id:
+    data_type: VARCHAR(128)
+  lcd_dsi_closing_document_status_type:
+    data_type: VARCHAR(128)
+  lcd_dsi_fatal_messages:
+    data_type: TEXT
+  lcd_dsi_warning_messages:
+    data_type: TEXT
+  lcd_unsigned_closing_doc_deal_file_pid:
+    data_type: BIGINT

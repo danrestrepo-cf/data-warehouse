@@ -1,0 +1,95 @@
+name: lender_user_role_addendum
+primary_source_table: staging.staging_octane.lender_user_role_addendum
+primary_key:
+- lura_pid
+- lura_version
+foreign_keys:
+  fk_lender_user_role_addendum_1:
+    columns:
+    - lura_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+  fk_lender_user_role_addendum_2:
+    columns:
+    - lura_lender_user_role_pid
+    references:
+      columns:
+      - lur_pid
+      schema: history_octane
+      table: lender_user_role
+  fk_lender_user_role_addendum_3:
+    columns:
+    - lura_role_pid
+    references:
+      columns:
+      - r_pid
+      schema: history_octane
+      table: role
+columns:
+  lura_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lura_pid
+  lura_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lura_version
+  lura_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lura_lender_user_pid
+  lura_lender_user_role_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lura_lender_user_role_pid
+  lura_role_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lura_role_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100100:
+    input_type: table
+    output_type: insert
+    json_output_field: lura_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.lender_user_role_addendum
+      SELECT staging_table.lura_pid
+           , staging_table.lura_version
+           , staging_table.lura_lender_user_pid
+           , staging_table.lura_lender_user_role_pid
+           , staging_table.lura_role_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.lender_user_role_addendum staging_table
+      LEFT JOIN history_octane.lender_user_role_addendum history_table
+                ON staging_table.lura_pid = history_table.lura_pid
+                    AND staging_table.lura_version = history_table.lura_version
+      WHERE history_table.lura_pid IS NULL
+      UNION ALL
+      SELECT history_table.lura_pid
+           , history_table.lura_version + 1
+           , history_table.lura_lender_user_pid
+           , history_table.lura_lender_user_role_pid
+           , history_table.lura_role_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.lender_user_role_addendum history_table
+      LEFT JOIN staging_octane.lender_user_role_addendum staging_table
+                ON staging_table.lura_pid = history_table.lura_pid
+      WHERE staging_table.lura_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.lender_user_role_addendum deleted_records
+          WHERE deleted_records.lura_pid = history_table.lura_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

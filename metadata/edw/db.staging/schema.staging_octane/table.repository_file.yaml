@@ -1,0 +1,77 @@
+name: repository_file
+primary_key:
+- rf_pid
+foreign_keys:
+  fk_repository_file_1:
+    columns:
+    - rf_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fk_repository_file_2:
+    columns:
+    - rf_uploader_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_repository_file_3:
+    columns:
+    - rf_uploader_borrower_user_pid
+    references:
+      columns:
+      - bu_pid
+      schema: staging_octane
+      table: borrower_user
+  fkt_rf_repository_type:
+    columns:
+    - rf_repository_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: lura_file_repository_type
+  fkt_rf_uploader_agent_type:
+    columns:
+    - rf_uploader_agent_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: agent_type
+columns:
+  rf_pid:
+    data_type: BIGINT
+  rf_version:
+    data_type: INTEGER
+  rf_account_pid:
+    data_type: BIGINT
+  rf_repository_type:
+    data_type: VARCHAR(128)
+  rf_client_filename:
+    data_type: VARCHAR(128)
+  rf_repository_filename:
+    data_type: VARCHAR(128)
+  rf_upload_datetime:
+    data_type: TIMESTAMP
+  rf_uploader_name:
+    data_type: VARCHAR(128)
+  rf_uploader_agent_type:
+    data_type: VARCHAR(128)
+  rf_uploader_lender_user_pid:
+    data_type: BIGINT
+  rf_uploader_borrower_user_pid:
+    data_type: BIGINT
+  rf_description:
+    data_type: VARCHAR(256)
+  rf_file_size:
+    data_type: BIGINT
+  rf_mime_type:
+    data_type: VARCHAR(128)
+  rf_delete_datetime:
+    data_type: TIMESTAMP
+  rf_file_checksum:
+    data_type: VARCHAR(128)

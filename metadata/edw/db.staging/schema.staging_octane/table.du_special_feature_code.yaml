@@ -1,0 +1,23 @@
+name: du_special_feature_code
+primary_key:
+- dusfc_pid
+foreign_keys:
+  fk_du_special_feature_code_1:
+    columns:
+    - dusfc_du_request_pid
+    references:
+      columns:
+      - dur_pid
+      schema: staging_octane
+      table: du_request
+columns:
+  dusfc_pid:
+    data_type: BIGINT
+  dusfc_version:
+    data_type: INTEGER
+  dusfc_du_request_pid:
+    data_type: BIGINT
+  dusfc_special_feature_code:
+    data_type: VARCHAR(32)
+  dusfc_special_feature_description:
+    data_type: VARCHAR(128)

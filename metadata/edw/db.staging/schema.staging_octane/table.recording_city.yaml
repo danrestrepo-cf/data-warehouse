@@ -1,0 +1,23 @@
+name: recording_city
+primary_key:
+- rc_pid
+foreign_keys:
+  fkt_rc_state_type:
+    columns:
+    - rc_state_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: state_type
+columns:
+  rc_pid:
+    data_type: BIGINT
+  rc_version:
+    data_type: INTEGER
+  rc_city_name:
+    data_type: VARCHAR(128)
+  rc_state_type:
+    data_type: VARCHAR(128)
+  rc_recording_city_name:
+    data_type: VARCHAR(128)

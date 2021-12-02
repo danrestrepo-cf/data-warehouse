@@ -1,0 +1,259 @@
+name: deal_summary
+primary_source_table: staging.staging_octane.deal_summary
+primary_key:
+- ds_pid
+- ds_version
+foreign_keys:
+  fk_deal_summary_1:
+    columns:
+    - ds_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: history_octane
+      table: deal
+  fkt_ds_deal_stage_type:
+    columns:
+    - ds_deal_stage_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: deal_stage_type
+  fkt_ds_decision_appraisal_condition_type:
+    columns:
+    - ds_decision_appraisal_condition_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: appraisal_condition_type
+  fkt_ds_funding_status_type_main:
+    columns:
+    - ds_funding_status_type_main
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: funding_status_type
+  fkt_ds_funding_status_type_piggyback:
+    columns:
+    - ds_funding_status_type_piggyback
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: funding_status_type
+  fkt_ds_lender_lock_status_type_main:
+    columns:
+    - ds_lender_lock_status_type_main
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: lender_lock_status_type
+  fkt_ds_lender_lock_status_type_piggyback:
+    columns:
+    - ds_lender_lock_status_type_piggyback
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: lender_lock_status_type
+columns:
+  ds_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ds_pid
+  ds_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ds_version
+  ds_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ds_deal_pid
+  ds_lender_lock_expiration_datetime_main:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.ds_lender_lock_expiration_datetime_main
+  ds_lender_lock_expiration_datetime_piggyback:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.ds_lender_lock_expiration_datetime_piggyback
+  ds_lender_lock_status_type_main:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ds_lender_lock_status_type_main
+  ds_lender_lock_status_type_piggyback:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ds_lender_lock_status_type_piggyback
+  ds_decision_appraisal_condition_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ds_decision_appraisal_condition_type
+  ds_funding_status_type_main:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ds_funding_status_type_main
+  ds_funding_status_type_piggyback:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ds_funding_status_type_piggyback
+  ds_purchase_advice_date_main:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ds_purchase_advice_date_main
+  ds_purchase_advice_date_piggyback:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ds_purchase_advice_date_piggyback
+  ds_last_wf_phase_number:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ds_last_wf_phase_number
+  ds_last_wf_phase_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ds_last_wf_phase_name
+  ds_eligible_investor_ids_main:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.ds_eligible_investor_ids_main
+  ds_eligible_investor_ids_piggyback:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.ds_eligible_investor_ids_piggyback
+  ds_decision_appraisal_cu_risk_score:
+    data_type: NUMERIC(10,2)
+    source:
+      field: primary_source_table.columns.ds_decision_appraisal_cu_risk_score
+  ds_deal_stage_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ds_deal_stage_type
+  ds_deal_stage_from_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.ds_deal_stage_from_datetime
+  ds_funded_main:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ds_funded_main
+  ds_funded_piggyback:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ds_funded_piggyback
+  ds_most_recent_user_update_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ds_most_recent_user_update_date
+  ds_lock_vintage_date_main:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ds_lock_vintage_date_main
+  ds_lock_vintage_date_piggyback:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ds_lock_vintage_date_piggyback
+  ds_lender_lock_datetime_main:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.ds_lender_lock_datetime_main
+  ds_lender_lock_datetime_piggyback:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.ds_lender_lock_datetime_piggyback
+  ds_any_unrequested_packages:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ds_any_unrequested_packages
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100087:
+    input_type: table
+    output_type: insert
+    json_output_field: ds_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.deal_summary
+      SELECT staging_table.ds_pid
+           , staging_table.ds_version
+           , staging_table.ds_deal_pid
+           , staging_table.ds_lender_lock_expiration_datetime_main
+           , staging_table.ds_lender_lock_expiration_datetime_piggyback
+           , staging_table.ds_lender_lock_status_type_main
+           , staging_table.ds_lender_lock_status_type_piggyback
+           , staging_table.ds_decision_appraisal_condition_type
+           , staging_table.ds_funding_status_type_main
+           , staging_table.ds_funding_status_type_piggyback
+           , staging_table.ds_purchase_advice_date_main
+           , staging_table.ds_purchase_advice_date_piggyback
+           , staging_table.ds_last_wf_phase_number
+           , staging_table.ds_last_wf_phase_name
+           , staging_table.ds_eligible_investor_ids_main
+           , staging_table.ds_eligible_investor_ids_piggyback
+           , staging_table.ds_decision_appraisal_cu_risk_score
+           , staging_table.ds_deal_stage_type
+           , staging_table.ds_deal_stage_from_datetime
+           , staging_table.ds_funded_main
+           , staging_table.ds_funded_piggyback
+           , staging_table.ds_most_recent_user_update_date
+           , staging_table.ds_lock_vintage_date_main
+           , staging_table.ds_lock_vintage_date_piggyback
+           , staging_table.ds_lender_lock_datetime_main
+           , staging_table.ds_lender_lock_datetime_piggyback
+           , staging_table.ds_any_unrequested_packages
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.deal_summary staging_table
+      LEFT JOIN history_octane.deal_summary history_table
+                ON staging_table.ds_pid = history_table.ds_pid
+                    AND staging_table.ds_version = history_table.ds_version
+      WHERE history_table.ds_pid IS NULL
+      UNION ALL
+      SELECT history_table.ds_pid
+           , history_table.ds_version + 1
+           , history_table.ds_deal_pid
+           , history_table.ds_lender_lock_expiration_datetime_main
+           , history_table.ds_lender_lock_expiration_datetime_piggyback
+           , history_table.ds_lender_lock_status_type_main
+           , history_table.ds_lender_lock_status_type_piggyback
+           , history_table.ds_decision_appraisal_condition_type
+           , history_table.ds_funding_status_type_main
+           , history_table.ds_funding_status_type_piggyback
+           , history_table.ds_purchase_advice_date_main
+           , history_table.ds_purchase_advice_date_piggyback
+           , history_table.ds_last_wf_phase_number
+           , history_table.ds_last_wf_phase_name
+           , history_table.ds_eligible_investor_ids_main
+           , history_table.ds_eligible_investor_ids_piggyback
+           , history_table.ds_decision_appraisal_cu_risk_score
+           , history_table.ds_deal_stage_type
+           , history_table.ds_deal_stage_from_datetime
+           , history_table.ds_funded_main
+           , history_table.ds_funded_piggyback
+           , history_table.ds_most_recent_user_update_date
+           , history_table.ds_lock_vintage_date_main
+           , history_table.ds_lock_vintage_date_piggyback
+           , history_table.ds_lender_lock_datetime_main
+           , history_table.ds_lender_lock_datetime_piggyback
+           , history_table.ds_any_unrequested_packages
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.deal_summary history_table
+      LEFT JOIN staging_octane.deal_summary staging_table
+                ON staging_table.ds_pid = history_table.ds_pid
+      WHERE staging_table.ds_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.deal_summary deleted_records
+          WHERE deleted_records.ds_pid = history_table.ds_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

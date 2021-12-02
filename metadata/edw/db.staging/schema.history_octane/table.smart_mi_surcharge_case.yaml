@@ -1,0 +1,95 @@
+name: smart_mi_surcharge_case
+primary_source_table: staging.staging_octane.smart_mi_surcharge_case
+primary_key:
+- smsc_pid
+- smsc_version
+foreign_keys:
+  fk_smart_mi_surcharge_case_1:
+    columns:
+    - smsc_smart_mi_surcharge_pid
+    references:
+      columns:
+      - sms_pid
+      schema: history_octane
+      table: smart_mi_surcharge
+  fk_smart_mi_surcharge_case_2:
+    columns:
+    - smsc_criteria_pid
+    references:
+      columns:
+      - cr_pid
+      schema: history_octane
+      table: criteria
+columns:
+  smsc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smsc_pid
+  smsc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.smsc_version
+  smsc_smart_mi_surcharge_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smsc_smart_mi_surcharge_pid
+  smsc_criteria_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smsc_criteria_pid
+  smsc_government_surcharge_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.smsc_government_surcharge_percent
+  smsc_minimum_surcharge_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.smsc_minimum_surcharge_amount
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  smsc_criteria_html:
+    data_type: VARCHAR(16000)
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100249:
+    input_type: table
+    output_type: insert
+    json_output_field: smsc_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.smart_mi_surcharge_case
+      SELECT staging_table.smsc_pid
+           , staging_table.smsc_version
+           , staging_table.smsc_smart_mi_surcharge_pid
+           , staging_table.smsc_criteria_pid
+           , staging_table.smsc_government_surcharge_percent
+           , staging_table.smsc_minimum_surcharge_amount
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.smart_mi_surcharge_case staging_table
+      LEFT JOIN history_octane.smart_mi_surcharge_case history_table
+                ON staging_table.smsc_pid = history_table.smsc_pid
+                    AND staging_table.smsc_version = history_table.smsc_version
+      WHERE history_table.smsc_pid IS NULL
+      UNION ALL
+      SELECT history_table.smsc_pid
+           , history_table.smsc_version + 1
+           , history_table.smsc_smart_mi_surcharge_pid
+           , history_table.smsc_criteria_pid
+           , history_table.smsc_government_surcharge_percent
+           , history_table.smsc_minimum_surcharge_amount
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.smart_mi_surcharge_case history_table
+      LEFT JOIN staging_octane.smart_mi_surcharge_case staging_table
+                ON staging_table.smsc_pid = history_table.smsc_pid
+      WHERE staging_table.smsc_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.smart_mi_surcharge_case deleted_records
+          WHERE deleted_records.smsc_pid = history_table.smsc_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

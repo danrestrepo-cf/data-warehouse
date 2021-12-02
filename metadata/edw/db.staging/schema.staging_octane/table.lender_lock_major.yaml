@@ -1,0 +1,165 @@
+name: lender_lock_major
+primary_key:
+- llmj_pid
+foreign_keys:
+  fk_lender_lock_major_1:
+    columns:
+    - llmj_void_request_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_lender_lock_major_2:
+    columns:
+    - llmj_void_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_lender_lock_major_3:
+    columns:
+    - llmj_cancel_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_lender_lock_major_4:
+    columns:
+    - llmj_confirm_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_lender_lock_major_5:
+    columns:
+    - llmj_requester_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_lender_lock_major_6:
+    columns:
+    - llmj_loan_pid
+    references:
+      columns:
+      - l_pid
+      schema: staging_octane
+      table: loan
+  fk_lender_lock_major_7:
+    columns:
+    - llmj_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fk_llmj_lock_series_pid:
+    columns:
+    - llmj_lock_series_pid
+    references:
+      columns:
+      - lsr_pid
+      schema: staging_octane
+      table: lock_series
+  fkt_llmj_lien_priority_type:
+    columns:
+    - llmj_lien_priority_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: lien_priority_type
+  fkt_llmj_pricing_commitment_type:
+    columns:
+    - llmj_pricing_commitment_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: lock_commitment_type
+  fkt_llmj_requester_agent_type:
+    columns:
+    - llmj_requester_agent_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: agent_type
+columns:
+  llmj_pid:
+    data_type: BIGINT
+  llmj_version:
+    data_type: INTEGER
+  llmj_major_version:
+    data_type: INTEGER
+  llmj_lender_lock_id:
+    data_type: VARCHAR(11)
+  llmj_loan_pid:
+    data_type: BIGINT
+  llmj_lien_priority_type:
+    data_type: VARCHAR(128)
+  llmj_account_pid:
+    data_type: BIGINT
+  llmj_lock_datetime:
+    data_type: TIMESTAMP
+  llmj_initial_duration_days:
+    data_type: INTEGER
+  llmj_initial_lock_expiration_datetime:
+    data_type: TIMESTAMP
+  llmj_requester_agent_type:
+    data_type: VARCHAR(128)
+  llmj_requester_lender_user_pid:
+    data_type: BIGINT
+  llmj_requester_unparsed_name:
+    data_type: VARCHAR(128)
+  llmj_request_datetime:
+    data_type: TIMESTAMP
+  llmj_confirm_datetime:
+    data_type: TIMESTAMP
+  llmj_confirm_lender_user_pid:
+    data_type: BIGINT
+  llmj_confirm_unparsed_name:
+    data_type: VARCHAR(128)
+  llmj_void_request_datetime:
+    data_type: TIMESTAMP
+  llmj_void_request_lender_user_pid:
+    data_type: BIGINT
+  llmj_void_request_unparsed_name:
+    data_type: VARCHAR(128)
+  llmj_void_datetime:
+    data_type: TIMESTAMP
+  llmj_void_lender_user_pid:
+    data_type: BIGINT
+  llmj_void_unparsed_name:
+    data_type: VARCHAR(128)
+  llmj_cancel_datetime:
+    data_type: TIMESTAMP
+  llmj_cancel_lender_user_pid:
+    data_type: BIGINT
+  llmj_cancel_unparsed_name:
+    data_type: VARCHAR(128)
+  llmj_auto_confirmed:
+    data_type: BOOLEAN
+  llmj_active:
+    data_type: BOOLEAN
+  llmj_relock_fee_percent:
+    data_type: NUMERIC(11,9)
+  llmj_notes:
+    data_type: VARCHAR(16000)
+  llmj_lender_concession_approved_amount:
+    data_type: NUMERIC(15,2)
+  llmj_clear_extension_fees_relock:
+    data_type: BOOLEAN
+  llmj_pricing_duration_days:
+    data_type: INTEGER
+  llmj_pricing_commitment_type:
+    data_type: VARCHAR(128)
+  llmj_expired_lock_successor:
+    data_type: BOOLEAN
+  llmj_lock_series_pid:
+    data_type: BIGINT

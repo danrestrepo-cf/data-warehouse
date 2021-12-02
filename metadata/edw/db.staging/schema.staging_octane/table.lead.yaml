@@ -1,0 +1,107 @@
+name: lead
+primary_key:
+- ld_pid
+foreign_keys:
+  fk_lead_1:
+    columns:
+    - ld_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: staging_octane
+      table: deal
+columns:
+  ld_pid:
+    data_type: BIGINT
+  ld_version:
+    data_type: INTEGER
+  ld_deal_pid:
+    data_type: BIGINT
+  ld_lead_datetime:
+    data_type: VARCHAR(32)
+  ld_velocify_campaign_id:
+    data_type: VARCHAR(32)
+  ld_velocify_campaign_title:
+    data_type: VARCHAR(32)
+  ld_originator_email:
+    data_type: VARCHAR(256)
+  ld_customer_service_rep_name:
+    data_type: VARCHAR(128)
+  ld_velocify_lead_id:
+    data_type: VARCHAR(32)
+  ld_tracking_id:
+    data_type: VARCHAR(256)
+  ld_zillow_zq:
+    data_type: VARCHAR(256)
+  ld_reference_id:
+    data_type: VARCHAR(256)
+  ld_apr_percent:
+    data_type: VARCHAR(16)
+  ld_interest_rate:
+    data_type: VARCHAR(16)
+  ld_rate_type:
+    data_type: VARCHAR(32)
+  ld_fico_score:
+    data_type: VARCHAR(16)
+  ld_loan_type:
+    data_type: VARCHAR(32)
+  ld_notes:
+    data_type: VARCHAR(1024)
+  ld_loan_purpose_type:
+    data_type: VARCHAR(32)
+  ld_purchase_price:
+    data_type: VARCHAR(32)
+  ld_existing_home_value:
+    data_type: VARCHAR(32)
+  ld_loan_amount:
+    data_type: VARCHAR(32)
+  ld_property_use:
+    data_type: VARCHAR(32)
+  ld_subject_property_street:
+    data_type: VARCHAR(128)
+  ld_subject_property_city:
+    data_type: VARCHAR(128)
+  ld_subject_property_state:
+    data_type: VARCHAR(128)
+  ld_subject_property_postal_code:
+    data_type: VARCHAR(128)
+  ld_subject_property_type:
+    data_type: VARCHAR(32)
+  ld_borrower_first_name:
+    data_type: VARCHAR(32)
+  ld_borrower_last_name:
+    data_type: VARCHAR(32)
+  ld_borrower_home_phone:
+    data_type: VARCHAR(32)
+  ld_borrower_mobile_phone:
+    data_type: VARCHAR(32)
+  ld_borrower_email:
+    data_type: VARCHAR(256)
+  ld_borrower_birth_date:
+    data_type: VARCHAR(32)
+  ld_borrower_residence_street:
+    data_type: VARCHAR(128)
+  ld_borrower_residence_city:
+    data_type: VARCHAR(128)
+  ld_borrower_residence_state:
+    data_type: VARCHAR(128)
+  ld_borrower_residence_postal_code:
+    data_type: VARCHAR(128)
+  ld_coborrower_first_name:
+    data_type: VARCHAR(32)
+  ld_coborrower_middle_name:
+    data_type: VARCHAR(32)
+  ld_coborrower_last_name:
+    data_type: VARCHAR(32)
+  ld_coborrower_email:
+    data_type: VARCHAR(256)
+  ld_coborrower_birth_date:
+    data_type: VARCHAR(32)
+  ld_borrower_current_job_employer_name:
+    data_type: VARCHAR(128)
+  ld_borrower_current_job_position:
+    data_type: VARCHAR(32)
+  ld_borrower_years_on_job:
+    data_type: VARCHAR(16)
+  ld_borrower_gross_monthly_income:
+    data_type: VARCHAR(32)

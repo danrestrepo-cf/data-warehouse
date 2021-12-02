@@ -1,0 +1,115 @@
+name: ledger_entry_review
+primary_key:
+- ler_pid
+foreign_keys:
+  fk_ledger_entry_review_1:
+    columns:
+    - ler_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fk_ledger_entry_review_2:
+    columns:
+    - ler_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: staging_octane
+      table: deal
+  fk_ledger_entry_review_3:
+    columns:
+    - ler_org_node_pid
+    references:
+      columns:
+      - on_pid
+      schema: staging_octane
+      table: org_node
+  fk_ledger_entry_review_4:
+    columns:
+    - ler_ledger_entry_pid
+    references:
+      columns:
+      - le_pid
+      schema: staging_octane
+      table: ledger_entry
+  fk_ledger_entry_review_5:
+    columns:
+    - ler_request_by_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_ledger_entry_review_6:
+    columns:
+    - ler_review_by_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fkt_ler_ledger_entry_review_reason_type:
+    columns:
+    - ler_ledger_entry_review_reason_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: ledger_entry_review_reason_type
+  fkt_ler_ledger_entry_review_status_type:
+    columns:
+    - ler_ledger_entry_review_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: ledger_entry_review_status_type
+  fkt_ler_ledger_entry_type:
+    columns:
+    - ler_ledger_entry_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: ledger_entry_type
+  fkt_ler_loan_position_type:
+    columns:
+    - ler_loan_position_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: loan_position_type
+columns:
+  ler_pid:
+    data_type: BIGINT
+  ler_version:
+    data_type: INTEGER
+  ler_account_pid:
+    data_type: BIGINT
+  ler_deal_pid:
+    data_type: BIGINT
+  ler_org_node_pid:
+    data_type: BIGINT
+  ler_ledger_entry_pid:
+    data_type: BIGINT
+  ler_ledger_entry_review_reason_type:
+    data_type: VARCHAR(128)
+  ler_ledger_entry_review_status_type:
+    data_type: VARCHAR(128)
+  ler_request_by_lender_user_pid:
+    data_type: BIGINT
+  ler_request_datetime:
+    data_type: TIMESTAMP
+  ler_review_by_lender_user_pid:
+    data_type: BIGINT
+  ler_review_datetime:
+    data_type: TIMESTAMP
+  ler_ledger_entry_type:
+    data_type: VARCHAR(128)
+  ler_entry_amount:
+    data_type: NUMERIC(15,2)
+  ler_loan_position_type:
+    data_type: VARCHAR(128)

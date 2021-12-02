@@ -1,0 +1,263 @@
+name: public_record
+primary_source_table: staging.staging_octane.public_record
+primary_key:
+- pr_pid
+- pr_version
+foreign_keys:
+  fk_public_record_1:
+    columns:
+    - pr_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: history_octane
+      table: proposal
+  fk_public_record_2:
+    columns:
+    - pr_credit_request_pid
+    references:
+      columns:
+      - crdr_pid
+      schema: history_octane
+      table: credit_request
+  fkt_pr_bankruptcy_exception_type:
+    columns:
+    - pr_bankruptcy_exception_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: bankruptcy_exception_type
+  fkt_pr_public_record_disposition_type:
+    columns:
+    - pr_public_record_disposition_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: public_record_disposition_type
+  fkt_pr_public_record_type:
+    columns:
+    - pr_public_record_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: public_record_type
+  fkt_pr_report_public_record_disposition_type:
+    columns:
+    - pr_report_public_record_disposition_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: public_record_disposition_type
+columns:
+  pr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pr_pid
+  pr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pr_version
+  pr_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pr_proposal_pid
+  pr_credit_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pr_credit_request_pid
+  pr_public_record_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pr_public_record_type
+  pr_public_record_type_other_description:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pr_public_record_type_other_description
+  pr_public_record_disposition_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pr_public_record_disposition_type
+  pr_report_public_record_disposition_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pr_report_public_record_disposition_type
+  pr_disposition_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.pr_disposition_date
+  pr_filed_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.pr_filed_date
+  pr_reported_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.pr_reported_date
+  pr_settled_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.pr_settled_date
+  pr_paid_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.pr_paid_date
+  pr_docket_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pr_docket_id
+  pr_bankruptcy_exception_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pr_bankruptcy_exception_type
+  pr_bankruptcy_assets_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.pr_bankruptcy_assets_amount
+  pr_bankruptcy_exempt_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.pr_bankruptcy_exempt_amount
+  pr_bankruptcy_liabilities_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.pr_bankruptcy_liabilities_amount
+  pr_legal_obligation_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.pr_legal_obligation_amount
+  pr_court_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pr_court_name
+  pr_plaintiff_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pr_plaintiff_name
+  pr_defendant_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pr_defendant_name
+  pr_attorney_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pr_attorney_name
+  pr_comment:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.pr_comment
+  pr_note:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.pr_note
+  pr_equifax_included:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pr_equifax_included
+  pr_experian_included:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pr_experian_included
+  pr_trans_union_included:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pr_trans_union_included
+  pr_credit_report_identifier:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pr_credit_report_identifier
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100170:
+    input_type: table
+    output_type: insert
+    json_output_field: pr_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.public_record
+      SELECT staging_table.pr_pid
+           , staging_table.pr_version
+           , staging_table.pr_proposal_pid
+           , staging_table.pr_credit_request_pid
+           , staging_table.pr_public_record_type
+           , staging_table.pr_public_record_type_other_description
+           , staging_table.pr_public_record_disposition_type
+           , staging_table.pr_report_public_record_disposition_type
+           , staging_table.pr_disposition_date
+           , staging_table.pr_filed_date
+           , staging_table.pr_reported_date
+           , staging_table.pr_settled_date
+           , staging_table.pr_paid_date
+           , staging_table.pr_docket_id
+           , staging_table.pr_bankruptcy_exception_type
+           , staging_table.pr_bankruptcy_assets_amount
+           , staging_table.pr_bankruptcy_exempt_amount
+           , staging_table.pr_bankruptcy_liabilities_amount
+           , staging_table.pr_legal_obligation_amount
+           , staging_table.pr_court_name
+           , staging_table.pr_plaintiff_name
+           , staging_table.pr_defendant_name
+           , staging_table.pr_attorney_name
+           , staging_table.pr_comment
+           , staging_table.pr_note
+           , staging_table.pr_equifax_included
+           , staging_table.pr_experian_included
+           , staging_table.pr_trans_union_included
+           , staging_table.pr_credit_report_identifier
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.public_record staging_table
+      LEFT JOIN history_octane.public_record history_table
+                ON staging_table.pr_pid = history_table.pr_pid
+                    AND staging_table.pr_version = history_table.pr_version
+      WHERE history_table.pr_pid IS NULL
+      UNION ALL
+      SELECT history_table.pr_pid
+           , history_table.pr_version + 1
+           , history_table.pr_proposal_pid
+           , history_table.pr_credit_request_pid
+           , history_table.pr_public_record_type
+           , history_table.pr_public_record_type_other_description
+           , history_table.pr_public_record_disposition_type
+           , history_table.pr_report_public_record_disposition_type
+           , history_table.pr_disposition_date
+           , history_table.pr_filed_date
+           , history_table.pr_reported_date
+           , history_table.pr_settled_date
+           , history_table.pr_paid_date
+           , history_table.pr_docket_id
+           , history_table.pr_bankruptcy_exception_type
+           , history_table.pr_bankruptcy_assets_amount
+           , history_table.pr_bankruptcy_exempt_amount
+           , history_table.pr_bankruptcy_liabilities_amount
+           , history_table.pr_legal_obligation_amount
+           , history_table.pr_court_name
+           , history_table.pr_plaintiff_name
+           , history_table.pr_defendant_name
+           , history_table.pr_attorney_name
+           , history_table.pr_comment
+           , history_table.pr_note
+           , history_table.pr_equifax_included
+           , history_table.pr_experian_included
+           , history_table.pr_trans_union_included
+           , history_table.pr_credit_report_identifier
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.public_record history_table
+      LEFT JOIN staging_octane.public_record staging_table
+                ON staging_table.pr_pid = history_table.pr_pid
+      WHERE staging_table.pr_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.public_record deleted_records
+          WHERE deleted_records.pr_pid = history_table.pr_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

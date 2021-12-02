@@ -1,0 +1,101 @@
+name: du_finding
+primary_source_table: staging.staging_octane.du_finding
+primary_key:
+- duf_pid
+- duf_version
+foreign_keys:
+  fk_du_finding_1:
+    columns:
+    - duf_du_request_pid
+    references:
+      columns:
+      - dur_pid
+      schema: history_octane
+      table: du_request
+  fkt_duf_du_finding_message_type:
+    columns:
+    - duf_du_finding_message_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: du_finding_message_type
+  fkt_duf_finding_result:
+    columns:
+    - duf_finding_result
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+columns:
+  duf_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.duf_pid
+  duf_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.duf_version
+  duf_du_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.duf_du_request_pid
+  duf_du_finding_message_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.duf_du_finding_message_type
+  duf_finding_result:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.duf_finding_result
+  duf_finding_value:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.duf_finding_value
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100840:
+    input_type: table
+    output_type: insert
+    json_output_field: duf_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.du_finding
+      SELECT staging_table.duf_pid
+           , staging_table.duf_version
+           , staging_table.duf_du_request_pid
+           , staging_table.duf_du_finding_message_type
+           , staging_table.duf_finding_result
+           , staging_table.duf_finding_value
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.du_finding staging_table
+      LEFT JOIN history_octane.du_finding history_table
+                ON staging_table.duf_pid = history_table.duf_pid
+                    AND staging_table.duf_version = history_table.duf_version
+      WHERE history_table.duf_pid IS NULL
+      UNION ALL
+      SELECT history_table.duf_pid
+           , history_table.duf_version + 1
+           , history_table.duf_du_request_pid
+           , history_table.duf_du_finding_message_type
+           , history_table.duf_finding_result
+           , history_table.duf_finding_value
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.du_finding history_table
+      LEFT JOIN staging_octane.du_finding staging_table
+                ON staging_table.duf_pid = history_table.duf_pid
+      WHERE staging_table.duf_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.du_finding deleted_records
+          WHERE deleted_records.duf_pid = history_table.duf_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

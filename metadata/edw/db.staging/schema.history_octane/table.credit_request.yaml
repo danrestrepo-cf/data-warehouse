@@ -1,0 +1,615 @@
+name: credit_request
+primary_source_table: staging.staging_octane.credit_request
+primary_key:
+- crdr_pid
+- crdr_version
+foreign_keys:
+  fk_credit_request_1:
+    columns:
+    - crdr_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: history_octane
+      table: deal
+  fk_credit_request_2:
+    columns:
+    - crdr_credit_report_file_pid
+    references:
+      columns:
+      - df_pid
+      schema: history_octane
+      table: deal_file
+  fk_credit_request_3:
+    columns:
+    - crdr_credit_score_disclosure_file_pid
+    references:
+      columns:
+      - df_pid
+      schema: history_octane
+      table: deal_file
+  fk_credit_request_4:
+    columns:
+    - crdr_requester_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+  fk_credit_request_5:
+    columns:
+    - crdr_lp_request_pid
+    references:
+      columns:
+      - lpr_pid
+      schema: history_octane
+      table: lp_request
+  fk_credit_request_6:
+    columns:
+    - crdr_du_request_pid
+    references:
+      columns:
+      - dur_pid
+      schema: history_octane
+      table: du_request
+  fk_credit_request_7:
+    columns:
+    - crdr_xml_response_file_pid
+    references:
+      columns:
+      - dsf_pid
+      schema: history_octane
+      table: deal_system_file
+  fkt_crdr_borrower1_equifax_credit_score_model_type:
+    columns:
+    - crdr_borrower1_equifax_credit_score_model_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: credit_score_model_type
+  fkt_crdr_borrower1_experian_credit_score_model_type:
+    columns:
+    - crdr_borrower1_experian_credit_score_model_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: credit_score_model_type
+  fkt_crdr_borrower1_residence_country:
+    columns:
+    - crdr_borrower1_residence_country
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: country_type
+  fkt_crdr_borrower1_trans_union_credit_score_model_type:
+    columns:
+    - crdr_borrower1_trans_union_credit_score_model_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: credit_score_model_type
+  fkt_crdr_borrower2_equifax_credit_score_model_type:
+    columns:
+    - crdr_borrower2_equifax_credit_score_model_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: credit_score_model_type
+  fkt_crdr_borrower2_experian_credit_score_model_type:
+    columns:
+    - crdr_borrower2_experian_credit_score_model_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: credit_score_model_type
+  fkt_crdr_borrower2_residence_country:
+    columns:
+    - crdr_borrower2_residence_country
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: country_type
+  fkt_crdr_borrower2_trans_union_credit_score_model_type:
+    columns:
+    - crdr_borrower2_trans_union_credit_score_model_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: credit_score_model_type
+  fkt_crdr_credit_bureau_type:
+    columns:
+    - crdr_credit_bureau_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: credit_bureau_type
+  fkt_crdr_credit_report_request_action_type:
+    columns:
+    - crdr_credit_report_request_action_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: credit_report_request_action_type
+  fkt_crdr_credit_report_type:
+    columns:
+    - crdr_credit_report_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: credit_report_type
+  fkt_crdr_credit_request_status_type:
+    columns:
+    - crdr_credit_request_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: credit_request_status_type
+  fkt_crdr_credit_request_type:
+    columns:
+    - crdr_credit_request_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: credit_request_type
+  fkt_crdr_credit_request_via_type:
+    columns:
+    - crdr_credit_request_via_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: credit_request_via_type
+  fkt_crdr_mismo_version_type:
+    columns:
+    - crdr_mismo_version_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mismo_version_type
+  fkt_crdr_requester_agent_type:
+    columns:
+    - crdr_requester_agent_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: agent_type
+columns:
+  crdr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.crdr_pid
+  crdr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.crdr_version
+  crdr_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.crdr_deal_pid
+  crdr_credit_report_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.crdr_credit_report_file_pid
+  crdr_credit_score_disclosure_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.crdr_credit_score_disclosure_file_pid
+  crdr_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.crdr_create_datetime
+  crdr_requester_agent_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_requester_agent_type
+  crdr_requester_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.crdr_requester_lender_user_pid
+  crdr_requester_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_requester_unparsed_name
+  crdr_credit_request_via_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_credit_request_via_type
+  crdr_lp_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.crdr_lp_request_pid
+  crdr_du_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.crdr_du_request_pid
+  crdr_mismo_version_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_mismo_version_type
+  crdr_credit_bureau_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_credit_bureau_type
+  crdr_credit_report_request_action_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_credit_report_request_action_type
+  crdr_credit_report_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_credit_report_type
+  crdr_credit_report_product_description:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crdr_credit_report_product_description
+  crdr_credit_request_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_credit_request_type
+  crdr_credit_repositories_selected_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.crdr_credit_repositories_selected_count
+  crdr_equifax_included:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.crdr_equifax_included
+  crdr_experian_included:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.crdr_experian_included
+  crdr_trans_union_included:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.crdr_trans_union_included
+  crdr_borrower1_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crdr_borrower1_first_name
+  crdr_borrower1_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crdr_borrower1_middle_name
+  crdr_borrower1_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crdr_borrower1_last_name
+  crdr_borrower1_name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crdr_borrower1_name_suffix
+  crdr_borrower1_birth_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.crdr_borrower1_birth_date
+  crdr_borrower1_residence_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower1_residence_city
+  crdr_borrower1_residence_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower1_residence_country
+  crdr_borrower1_residence_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower1_residence_postal_code
+  crdr_borrower1_residence_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower1_residence_state
+  crdr_borrower1_residence_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower1_residence_street1
+  crdr_borrower1_residence_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower1_residence_street2
+  crdr_borrower1_experian_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.crdr_borrower1_experian_credit_score
+  crdr_borrower1_equifax_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.crdr_borrower1_equifax_credit_score
+  crdr_borrower1_trans_union_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.crdr_borrower1_trans_union_credit_score
+  crdr_borrower1_equifax_credit_score_model_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower1_equifax_credit_score_model_type
+  crdr_borrower1_experian_credit_score_model_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower1_experian_credit_score_model_type
+  crdr_borrower1_trans_union_credit_score_model_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower1_trans_union_credit_score_model_type
+  crdr_borrower2_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crdr_borrower2_first_name
+  crdr_borrower2_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crdr_borrower2_middle_name
+  crdr_borrower2_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crdr_borrower2_last_name
+  crdr_borrower2_name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crdr_borrower2_name_suffix
+  crdr_borrower2_birth_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.crdr_borrower2_birth_date
+  crdr_borrower2_residence_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower2_residence_city
+  crdr_borrower2_residence_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower2_residence_country
+  crdr_borrower2_residence_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower2_residence_postal_code
+  crdr_borrower2_residence_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower2_residence_state
+  crdr_borrower2_residence_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower2_residence_street1
+  crdr_borrower2_residence_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower2_residence_street2
+  crdr_borrower2_experian_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.crdr_borrower2_experian_credit_score
+  crdr_borrower2_equifax_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.crdr_borrower2_equifax_credit_score
+  crdr_borrower2_trans_union_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.crdr_borrower2_trans_union_credit_score
+  crdr_borrower2_equifax_credit_score_model_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower2_equifax_credit_score_model_type
+  crdr_borrower2_experian_credit_score_model_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower2_experian_credit_score_model_type
+  crdr_borrower2_trans_union_credit_score_model_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower2_trans_union_credit_score_model_type
+  crdr_contains_importable_data:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.crdr_contains_importable_data
+  crdr_credit_report_identifier:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crdr_credit_report_identifier
+  crdr_credit_report_price:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.crdr_credit_report_price
+  crdr_credit_request_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_credit_request_status_type
+  crdr_request_error_messages:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.crdr_request_error_messages
+  crdr_bureau_status_messages:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.crdr_bureau_status_messages
+  crdr_bureau_credit_report_url:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.crdr_bureau_credit_report_url
+  crdr_last_status_query_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.crdr_last_status_query_datetime
+  crdr_xml_response_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.crdr_xml_response_file_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100306:
+    input_type: table
+    output_type: insert
+    json_output_field: crdr_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.credit_request
+      SELECT staging_table.crdr_pid
+           , staging_table.crdr_version
+           , staging_table.crdr_deal_pid
+           , staging_table.crdr_credit_report_file_pid
+           , staging_table.crdr_credit_score_disclosure_file_pid
+           , staging_table.crdr_create_datetime
+           , staging_table.crdr_requester_agent_type
+           , staging_table.crdr_requester_lender_user_pid
+           , staging_table.crdr_requester_unparsed_name
+           , staging_table.crdr_credit_request_via_type
+           , staging_table.crdr_lp_request_pid
+           , staging_table.crdr_du_request_pid
+           , staging_table.crdr_mismo_version_type
+           , staging_table.crdr_credit_bureau_type
+           , staging_table.crdr_credit_report_request_action_type
+           , staging_table.crdr_credit_report_type
+           , staging_table.crdr_credit_report_product_description
+           , staging_table.crdr_credit_request_type
+           , staging_table.crdr_credit_repositories_selected_count
+           , staging_table.crdr_equifax_included
+           , staging_table.crdr_experian_included
+           , staging_table.crdr_trans_union_included
+           , staging_table.crdr_borrower1_first_name
+           , staging_table.crdr_borrower1_middle_name
+           , staging_table.crdr_borrower1_last_name
+           , staging_table.crdr_borrower1_name_suffix
+           , staging_table.crdr_borrower1_birth_date
+           , staging_table.crdr_borrower1_residence_city
+           , staging_table.crdr_borrower1_residence_country
+           , staging_table.crdr_borrower1_residence_postal_code
+           , staging_table.crdr_borrower1_residence_state
+           , staging_table.crdr_borrower1_residence_street1
+           , staging_table.crdr_borrower1_residence_street2
+           , staging_table.crdr_borrower1_experian_credit_score
+           , staging_table.crdr_borrower1_equifax_credit_score
+           , staging_table.crdr_borrower1_trans_union_credit_score
+           , staging_table.crdr_borrower1_equifax_credit_score_model_type
+           , staging_table.crdr_borrower1_experian_credit_score_model_type
+           , staging_table.crdr_borrower1_trans_union_credit_score_model_type
+           , staging_table.crdr_borrower2_first_name
+           , staging_table.crdr_borrower2_middle_name
+           , staging_table.crdr_borrower2_last_name
+           , staging_table.crdr_borrower2_name_suffix
+           , staging_table.crdr_borrower2_birth_date
+           , staging_table.crdr_borrower2_residence_city
+           , staging_table.crdr_borrower2_residence_country
+           , staging_table.crdr_borrower2_residence_postal_code
+           , staging_table.crdr_borrower2_residence_state
+           , staging_table.crdr_borrower2_residence_street1
+           , staging_table.crdr_borrower2_residence_street2
+           , staging_table.crdr_borrower2_experian_credit_score
+           , staging_table.crdr_borrower2_equifax_credit_score
+           , staging_table.crdr_borrower2_trans_union_credit_score
+           , staging_table.crdr_borrower2_equifax_credit_score_model_type
+           , staging_table.crdr_borrower2_experian_credit_score_model_type
+           , staging_table.crdr_borrower2_trans_union_credit_score_model_type
+           , staging_table.crdr_contains_importable_data
+           , staging_table.crdr_credit_report_identifier
+           , staging_table.crdr_credit_report_price
+           , staging_table.crdr_credit_request_status_type
+           , staging_table.crdr_request_error_messages
+           , staging_table.crdr_bureau_status_messages
+           , staging_table.crdr_bureau_credit_report_url
+           , staging_table.crdr_last_status_query_datetime
+           , staging_table.crdr_xml_response_file_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.credit_request staging_table
+      LEFT JOIN history_octane.credit_request history_table
+                ON staging_table.crdr_pid = history_table.crdr_pid
+                    AND staging_table.crdr_version = history_table.crdr_version
+      WHERE history_table.crdr_pid IS NULL
+      UNION ALL
+      SELECT history_table.crdr_pid
+           , history_table.crdr_version + 1
+           , history_table.crdr_deal_pid
+           , history_table.crdr_credit_report_file_pid
+           , history_table.crdr_credit_score_disclosure_file_pid
+           , history_table.crdr_create_datetime
+           , history_table.crdr_requester_agent_type
+           , history_table.crdr_requester_lender_user_pid
+           , history_table.crdr_requester_unparsed_name
+           , history_table.crdr_credit_request_via_type
+           , history_table.crdr_lp_request_pid
+           , history_table.crdr_du_request_pid
+           , history_table.crdr_mismo_version_type
+           , history_table.crdr_credit_bureau_type
+           , history_table.crdr_credit_report_request_action_type
+           , history_table.crdr_credit_report_type
+           , history_table.crdr_credit_report_product_description
+           , history_table.crdr_credit_request_type
+           , history_table.crdr_credit_repositories_selected_count
+           , history_table.crdr_equifax_included
+           , history_table.crdr_experian_included
+           , history_table.crdr_trans_union_included
+           , history_table.crdr_borrower1_first_name
+           , history_table.crdr_borrower1_middle_name
+           , history_table.crdr_borrower1_last_name
+           , history_table.crdr_borrower1_name_suffix
+           , history_table.crdr_borrower1_birth_date
+           , history_table.crdr_borrower1_residence_city
+           , history_table.crdr_borrower1_residence_country
+           , history_table.crdr_borrower1_residence_postal_code
+           , history_table.crdr_borrower1_residence_state
+           , history_table.crdr_borrower1_residence_street1
+           , history_table.crdr_borrower1_residence_street2
+           , history_table.crdr_borrower1_experian_credit_score
+           , history_table.crdr_borrower1_equifax_credit_score
+           , history_table.crdr_borrower1_trans_union_credit_score
+           , history_table.crdr_borrower1_equifax_credit_score_model_type
+           , history_table.crdr_borrower1_experian_credit_score_model_type
+           , history_table.crdr_borrower1_trans_union_credit_score_model_type
+           , history_table.crdr_borrower2_first_name
+           , history_table.crdr_borrower2_middle_name
+           , history_table.crdr_borrower2_last_name
+           , history_table.crdr_borrower2_name_suffix
+           , history_table.crdr_borrower2_birth_date
+           , history_table.crdr_borrower2_residence_city
+           , history_table.crdr_borrower2_residence_country
+           , history_table.crdr_borrower2_residence_postal_code
+           , history_table.crdr_borrower2_residence_state
+           , history_table.crdr_borrower2_residence_street1
+           , history_table.crdr_borrower2_residence_street2
+           , history_table.crdr_borrower2_experian_credit_score
+           , history_table.crdr_borrower2_equifax_credit_score
+           , history_table.crdr_borrower2_trans_union_credit_score
+           , history_table.crdr_borrower2_equifax_credit_score_model_type
+           , history_table.crdr_borrower2_experian_credit_score_model_type
+           , history_table.crdr_borrower2_trans_union_credit_score_model_type
+           , history_table.crdr_contains_importable_data
+           , history_table.crdr_credit_report_identifier
+           , history_table.crdr_credit_report_price
+           , history_table.crdr_credit_request_status_type
+           , history_table.crdr_request_error_messages
+           , history_table.crdr_bureau_status_messages
+           , history_table.crdr_bureau_credit_report_url
+           , history_table.crdr_last_status_query_datetime
+           , history_table.crdr_xml_response_file_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.credit_request history_table
+      LEFT JOIN staging_octane.credit_request staging_table
+                ON staging_table.crdr_pid = history_table.crdr_pid
+      WHERE staging_table.crdr_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.credit_request deleted_records
+          WHERE deleted_records.crdr_pid = history_table.crdr_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

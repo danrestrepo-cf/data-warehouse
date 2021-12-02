@@ -1,0 +1,81 @@
+name: product_deal_check_exclusion
+primary_source_table: staging.staging_octane.product_deal_check_exclusion
+primary_key:
+- pdce_pid
+- pdce_version
+foreign_keys:
+  fk_product_deal_check_exclusion_1:
+    columns:
+    - pdce_product_pid
+    references:
+      columns:
+      - p_pid
+      schema: history_octane
+      table: product
+  fkt_pdce_deal_check_type:
+    columns:
+    - pdce_deal_check_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: deal_check_type
+columns:
+  pdce_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pdce_pid
+  pdce_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pdce_version
+  pdce_product_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pdce_product_pid
+  pdce_deal_check_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pdce_deal_check_type
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100110:
+    input_type: table
+    output_type: insert
+    json_output_field: pdce_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.product_deal_check_exclusion
+      SELECT staging_table.pdce_pid
+           , staging_table.pdce_version
+           , staging_table.pdce_product_pid
+           , staging_table.pdce_deal_check_type
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.product_deal_check_exclusion staging_table
+      LEFT JOIN history_octane.product_deal_check_exclusion history_table
+                ON staging_table.pdce_pid = history_table.pdce_pid
+                    AND staging_table.pdce_version = history_table.pdce_version
+      WHERE history_table.pdce_pid IS NULL
+      UNION ALL
+      SELECT history_table.pdce_pid
+           , history_table.pdce_version + 1
+           , history_table.pdce_product_pid
+           , history_table.pdce_deal_check_type
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.product_deal_check_exclusion history_table
+      LEFT JOIN staging_octane.product_deal_check_exclusion staging_table
+                ON staging_table.pdce_pid = history_table.pdce_pid
+      WHERE staging_table.pdce_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.product_deal_check_exclusion deleted_records
+          WHERE deleted_records.pdce_pid = history_table.pdce_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

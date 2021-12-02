@@ -1,0 +1,671 @@
+name: tax_transcript_request
+primary_source_table: staging.staging_octane.tax_transcript_request
+primary_key:
+- ttr_pid
+- ttr_version
+foreign_keys:
+  fk_tax_transcript_request_1:
+    columns:
+    - ttr_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: history_octane
+      table: deal
+  fk_tax_transcript_request_2:
+    columns:
+    - ttr_requester_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+  fk_tax_transcript_request_3:
+    columns:
+    - ttr_signed_4506t_deal_file_pid
+    references:
+      columns:
+      - df_pid
+      schema: history_octane
+      table: deal_file
+  fk_tax_transcript_request_4:
+    columns:
+    - ttr_borrower1_pid
+    references:
+      columns:
+      - b_pid
+      schema: history_octane
+      table: borrower
+  fk_tax_transcript_request_5:
+    columns:
+    - ttr_borrower2_pid
+    references:
+      columns:
+      - b_pid
+      schema: history_octane
+      table: borrower
+  fkt_ttr_borrower1_current_country:
+    columns:
+    - ttr_borrower1_current_country
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: country_type
+  fkt_ttr_borrower1_prior_country:
+    columns:
+    - ttr_borrower1_prior_country
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: country_type
+  fkt_ttr_borrower2_current_country:
+    columns:
+    - ttr_borrower2_current_country
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: country_type
+  fkt_ttr_borrower2_prior_country:
+    columns:
+    - ttr_borrower2_prior_country
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: country_type
+  fkt_ttr_business_ownership_type:
+    columns:
+    - ttr_business_ownership_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: business_ownership_type
+  fkt_ttr_company_country:
+    columns:
+    - ttr_company_country
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: country_type
+  fkt_ttr_credit_request_type:
+    columns:
+    - ttr_credit_request_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: credit_request_type
+  fkt_ttr_mismo_version_type:
+    columns:
+    - ttr_mismo_version_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mismo_version_type
+  fkt_ttr_requester_agent_type:
+    columns:
+    - ttr_requester_agent_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: agent_type
+  fkt_ttr_tax_transcript_request_status_type:
+    columns:
+    - ttr_tax_transcript_request_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: tax_transcript_request_status_type
+columns:
+  ttr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ttr_pid
+  ttr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ttr_version
+  ttr_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ttr_deal_pid
+  ttr_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.ttr_create_datetime
+  ttr_requester_agent_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_requester_agent_type
+  ttr_requester_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ttr_requester_lender_user_pid
+  ttr_requester_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_requester_unparsed_name
+  ttr_mismo_version_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_mismo_version_type
+  ttr_credit_request_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_credit_request_type
+  ttr_request_error_messages:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.ttr_request_error_messages
+  ttr_request_success_messages:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.ttr_request_success_messages
+  ttr_tracking_number:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.ttr_tracking_number
+  ttr_tax_transcript_request_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_tax_transcript_request_status_type
+  ttr_update_reason:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.ttr_update_reason
+  ttr_last_status_query_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.ttr_last_status_query_datetime
+  ttr_signed_4506t_deal_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ttr_signed_4506t_deal_file_pid
+  ttr_company:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_company
+  ttr_company_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_company_name
+  ttr_company_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_company_city
+  ttr_company_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_company_country
+  ttr_company_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_company_postal_code
+  ttr_company_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_company_state
+  ttr_company_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_company_street1
+  ttr_company_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_company_street2
+  ttr_company_ein:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.ttr_company_ein
+  ttr_borrower1_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ttr_borrower1_pid
+  ttr_borrower1_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_first_name
+  ttr_borrower1_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_middle_name
+  ttr_borrower1_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_last_name
+  ttr_borrower1_name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_name_suffix
+  ttr_borrower1_birth_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ttr_borrower1_birth_date
+  ttr_borrower1_current_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_current_city
+  ttr_borrower1_current_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_current_country
+  ttr_borrower1_current_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_current_postal_code
+  ttr_borrower1_current_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_current_state
+  ttr_borrower1_current_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_current_street1
+  ttr_borrower1_current_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_current_street2
+  ttr_borrower1_prior_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_prior_city
+  ttr_borrower1_prior_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_prior_country
+  ttr_borrower1_prior_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_prior_postal_code
+  ttr_borrower1_prior_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_prior_state
+  ttr_borrower1_prior_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_prior_street1
+  ttr_borrower1_prior_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_prior_street2
+  ttr_borrower1_monthly_income_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_monthly_income_amount
+  ttr_borrower2_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ttr_borrower2_pid
+  ttr_borrower2_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_first_name
+  ttr_borrower2_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_middle_name
+  ttr_borrower2_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_last_name
+  ttr_borrower2_name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_name_suffix
+  ttr_borrower2_birth_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ttr_borrower2_birth_date
+  ttr_borrower2_current_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_current_city
+  ttr_borrower2_current_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_current_country
+  ttr_borrower2_current_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_current_postal_code
+  ttr_borrower2_current_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_current_state
+  ttr_borrower2_current_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_current_street1
+  ttr_borrower2_current_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_current_street2
+  ttr_borrower2_prior_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_prior_city
+  ttr_borrower2_prior_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_prior_country
+  ttr_borrower2_prior_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_prior_postal_code
+  ttr_borrower2_prior_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_prior_state
+  ttr_borrower2_prior_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_prior_street1
+  ttr_borrower2_prior_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_prior_street2
+  ttr_borrower2_monthly_income_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_monthly_income_amount
+  ttr_year1:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ttr_year1
+  ttr_year2:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ttr_year2
+  ttr_year3:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ttr_year3
+  ttr_year4:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ttr_year4
+  ttr_include_w_2:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_w_2
+  ttr_include_1099:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1099
+  ttr_include_1040:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1040
+  ttr_include_1040_return_transcript:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1040_return_transcript
+  ttr_include_1040_account_transcript:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1040_account_transcript
+  ttr_include_1040_record_of_account:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1040_record_of_account
+  ttr_include_1065:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1065
+  ttr_include_1065_return_transcript:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1065_return_transcript
+  ttr_include_1065_account_transcript:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1065_account_transcript
+  ttr_include_1065_record_of_account:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1065_record_of_account
+  ttr_include_1120:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1120
+  ttr_include_1120_return_transcript:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1120_return_transcript
+  ttr_include_1120_account_transcript:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1120_account_transcript
+  ttr_include_1120_record_of_account:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1120_record_of_account
+  ttr_archived:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_archived
+  ttr_company_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ttr_company_phone
+  ttr_company_phone_extension:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.ttr_company_phone_extension
+  ttr_business_ownership_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_business_ownership_type
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100340:
+    input_type: table
+    output_type: insert
+    json_output_field: ttr_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.tax_transcript_request
+      SELECT staging_table.ttr_pid
+           , staging_table.ttr_version
+           , staging_table.ttr_deal_pid
+           , staging_table.ttr_create_datetime
+           , staging_table.ttr_requester_agent_type
+           , staging_table.ttr_requester_lender_user_pid
+           , staging_table.ttr_requester_unparsed_name
+           , staging_table.ttr_mismo_version_type
+           , staging_table.ttr_credit_request_type
+           , staging_table.ttr_request_error_messages
+           , staging_table.ttr_request_success_messages
+           , staging_table.ttr_tracking_number
+           , staging_table.ttr_tax_transcript_request_status_type
+           , staging_table.ttr_update_reason
+           , staging_table.ttr_last_status_query_datetime
+           , staging_table.ttr_signed_4506t_deal_file_pid
+           , staging_table.ttr_company
+           , staging_table.ttr_company_name
+           , staging_table.ttr_company_city
+           , staging_table.ttr_company_country
+           , staging_table.ttr_company_postal_code
+           , staging_table.ttr_company_state
+           , staging_table.ttr_company_street1
+           , staging_table.ttr_company_street2
+           , staging_table.ttr_company_ein
+           , staging_table.ttr_borrower1_pid
+           , staging_table.ttr_borrower1_first_name
+           , staging_table.ttr_borrower1_middle_name
+           , staging_table.ttr_borrower1_last_name
+           , staging_table.ttr_borrower1_name_suffix
+           , staging_table.ttr_borrower1_birth_date
+           , staging_table.ttr_borrower1_current_city
+           , staging_table.ttr_borrower1_current_country
+           , staging_table.ttr_borrower1_current_postal_code
+           , staging_table.ttr_borrower1_current_state
+           , staging_table.ttr_borrower1_current_street1
+           , staging_table.ttr_borrower1_current_street2
+           , staging_table.ttr_borrower1_prior_city
+           , staging_table.ttr_borrower1_prior_country
+           , staging_table.ttr_borrower1_prior_postal_code
+           , staging_table.ttr_borrower1_prior_state
+           , staging_table.ttr_borrower1_prior_street1
+           , staging_table.ttr_borrower1_prior_street2
+           , staging_table.ttr_borrower1_monthly_income_amount
+           , staging_table.ttr_borrower2_pid
+           , staging_table.ttr_borrower2_first_name
+           , staging_table.ttr_borrower2_middle_name
+           , staging_table.ttr_borrower2_last_name
+           , staging_table.ttr_borrower2_name_suffix
+           , staging_table.ttr_borrower2_birth_date
+           , staging_table.ttr_borrower2_current_city
+           , staging_table.ttr_borrower2_current_country
+           , staging_table.ttr_borrower2_current_postal_code
+           , staging_table.ttr_borrower2_current_state
+           , staging_table.ttr_borrower2_current_street1
+           , staging_table.ttr_borrower2_current_street2
+           , staging_table.ttr_borrower2_prior_city
+           , staging_table.ttr_borrower2_prior_country
+           , staging_table.ttr_borrower2_prior_postal_code
+           , staging_table.ttr_borrower2_prior_state
+           , staging_table.ttr_borrower2_prior_street1
+           , staging_table.ttr_borrower2_prior_street2
+           , staging_table.ttr_borrower2_monthly_income_amount
+           , staging_table.ttr_year1
+           , staging_table.ttr_year2
+           , staging_table.ttr_year3
+           , staging_table.ttr_year4
+           , staging_table.ttr_include_w_2
+           , staging_table.ttr_include_1099
+           , staging_table.ttr_include_1040
+           , staging_table.ttr_include_1040_return_transcript
+           , staging_table.ttr_include_1040_account_transcript
+           , staging_table.ttr_include_1040_record_of_account
+           , staging_table.ttr_include_1065
+           , staging_table.ttr_include_1065_return_transcript
+           , staging_table.ttr_include_1065_account_transcript
+           , staging_table.ttr_include_1065_record_of_account
+           , staging_table.ttr_include_1120
+           , staging_table.ttr_include_1120_return_transcript
+           , staging_table.ttr_include_1120_account_transcript
+           , staging_table.ttr_include_1120_record_of_account
+           , staging_table.ttr_archived
+           , staging_table.ttr_company_phone
+           , staging_table.ttr_company_phone_extension
+           , staging_table.ttr_business_ownership_type
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.tax_transcript_request staging_table
+      LEFT JOIN history_octane.tax_transcript_request history_table
+                ON staging_table.ttr_pid = history_table.ttr_pid
+                    AND staging_table.ttr_version = history_table.ttr_version
+      WHERE history_table.ttr_pid IS NULL
+      UNION ALL
+      SELECT history_table.ttr_pid
+           , history_table.ttr_version + 1
+           , history_table.ttr_deal_pid
+           , history_table.ttr_create_datetime
+           , history_table.ttr_requester_agent_type
+           , history_table.ttr_requester_lender_user_pid
+           , history_table.ttr_requester_unparsed_name
+           , history_table.ttr_mismo_version_type
+           , history_table.ttr_credit_request_type
+           , history_table.ttr_request_error_messages
+           , history_table.ttr_request_success_messages
+           , history_table.ttr_tracking_number
+           , history_table.ttr_tax_transcript_request_status_type
+           , history_table.ttr_update_reason
+           , history_table.ttr_last_status_query_datetime
+           , history_table.ttr_signed_4506t_deal_file_pid
+           , history_table.ttr_company
+           , history_table.ttr_company_name
+           , history_table.ttr_company_city
+           , history_table.ttr_company_country
+           , history_table.ttr_company_postal_code
+           , history_table.ttr_company_state
+           , history_table.ttr_company_street1
+           , history_table.ttr_company_street2
+           , history_table.ttr_company_ein
+           , history_table.ttr_borrower1_pid
+           , history_table.ttr_borrower1_first_name
+           , history_table.ttr_borrower1_middle_name
+           , history_table.ttr_borrower1_last_name
+           , history_table.ttr_borrower1_name_suffix
+           , history_table.ttr_borrower1_birth_date
+           , history_table.ttr_borrower1_current_city
+           , history_table.ttr_borrower1_current_country
+           , history_table.ttr_borrower1_current_postal_code
+           , history_table.ttr_borrower1_current_state
+           , history_table.ttr_borrower1_current_street1
+           , history_table.ttr_borrower1_current_street2
+           , history_table.ttr_borrower1_prior_city
+           , history_table.ttr_borrower1_prior_country
+           , history_table.ttr_borrower1_prior_postal_code
+           , history_table.ttr_borrower1_prior_state
+           , history_table.ttr_borrower1_prior_street1
+           , history_table.ttr_borrower1_prior_street2
+           , history_table.ttr_borrower1_monthly_income_amount
+           , history_table.ttr_borrower2_pid
+           , history_table.ttr_borrower2_first_name
+           , history_table.ttr_borrower2_middle_name
+           , history_table.ttr_borrower2_last_name
+           , history_table.ttr_borrower2_name_suffix
+           , history_table.ttr_borrower2_birth_date
+           , history_table.ttr_borrower2_current_city
+           , history_table.ttr_borrower2_current_country
+           , history_table.ttr_borrower2_current_postal_code
+           , history_table.ttr_borrower2_current_state
+           , history_table.ttr_borrower2_current_street1
+           , history_table.ttr_borrower2_current_street2
+           , history_table.ttr_borrower2_prior_city
+           , history_table.ttr_borrower2_prior_country
+           , history_table.ttr_borrower2_prior_postal_code
+           , history_table.ttr_borrower2_prior_state
+           , history_table.ttr_borrower2_prior_street1
+           , history_table.ttr_borrower2_prior_street2
+           , history_table.ttr_borrower2_monthly_income_amount
+           , history_table.ttr_year1
+           , history_table.ttr_year2
+           , history_table.ttr_year3
+           , history_table.ttr_year4
+           , history_table.ttr_include_w_2
+           , history_table.ttr_include_1099
+           , history_table.ttr_include_1040
+           , history_table.ttr_include_1040_return_transcript
+           , history_table.ttr_include_1040_account_transcript
+           , history_table.ttr_include_1040_record_of_account
+           , history_table.ttr_include_1065
+           , history_table.ttr_include_1065_return_transcript
+           , history_table.ttr_include_1065_account_transcript
+           , history_table.ttr_include_1065_record_of_account
+           , history_table.ttr_include_1120
+           , history_table.ttr_include_1120_return_transcript
+           , history_table.ttr_include_1120_account_transcript
+           , history_table.ttr_include_1120_record_of_account
+           , history_table.ttr_archived
+           , history_table.ttr_company_phone
+           , history_table.ttr_company_phone_extension
+           , history_table.ttr_business_ownership_type
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.tax_transcript_request history_table
+      LEFT JOIN staging_octane.tax_transcript_request staging_table
+                ON staging_table.ttr_pid = history_table.ttr_pid
+      WHERE staging_table.ttr_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.tax_transcript_request deleted_records
+          WHERE deleted_records.ttr_pid = history_table.ttr_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

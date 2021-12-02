@@ -1,0 +1,33 @@
+name: trade_fee
+primary_key:
+- tfe_pid
+foreign_keys:
+  fk_trade_fee_1:
+    columns:
+    - tfe_trade_pid
+    references:
+      columns:
+      - t_pid
+      schema: staging_octane
+      table: trade
+  fk_trade_fee_2:
+    columns:
+    - tfe_trade_fee_type_pid
+    references:
+      columns:
+      - tft_pid
+      schema: staging_octane
+      table: trade_fee_type
+columns:
+  tfe_pid:
+    data_type: BIGINT
+  tfe_version:
+    data_type: INTEGER
+  tfe_trade_pid:
+    data_type: BIGINT
+  tfe_trade_fee_type_pid:
+    data_type: BIGINT
+  tfe_amount:
+    data_type: NUMERIC(15,2)
+  tfe_description:
+    data_type: VARCHAR(256)

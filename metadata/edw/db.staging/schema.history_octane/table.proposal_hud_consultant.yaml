@@ -1,0 +1,151 @@
+name: proposal_hud_consultant
+primary_source_table: staging.staging_octane.proposal_hud_consultant
+primary_key:
+- phc_pid
+- phc_version
+foreign_keys:
+  fk_proposal_hud_consultant_1:
+    columns:
+    - phc_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: history_octane
+      table: proposal
+columns:
+  phc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.phc_pid
+  phc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.phc_version
+  phc_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.phc_proposal_pid
+  phc_consultant_id:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.phc_consultant_id
+  phc_company_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.phc_company_name
+  phc_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.phc_first_name
+  phc_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.phc_last_name
+  phc_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.phc_email
+  phc_mobile_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.phc_mobile_phone
+  phc_office_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.phc_office_phone
+  phc_office_phone_extension:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.phc_office_phone_extension
+  phc_fax:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.phc_fax
+  phc_address_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.phc_address_street1
+  phc_address_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.phc_address_street2
+  phc_address_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.phc_address_city
+  phc_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.phc_address_state
+  phc_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.phc_address_postal_code
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100828:
+    input_type: table
+    output_type: insert
+    json_output_field: phc_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.proposal_hud_consultant
+      SELECT staging_table.phc_pid
+           , staging_table.phc_version
+           , staging_table.phc_proposal_pid
+           , staging_table.phc_consultant_id
+           , staging_table.phc_company_name
+           , staging_table.phc_first_name
+           , staging_table.phc_last_name
+           , staging_table.phc_email
+           , staging_table.phc_mobile_phone
+           , staging_table.phc_office_phone
+           , staging_table.phc_office_phone_extension
+           , staging_table.phc_fax
+           , staging_table.phc_address_street1
+           , staging_table.phc_address_street2
+           , staging_table.phc_address_city
+           , staging_table.phc_address_state
+           , staging_table.phc_address_postal_code
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.proposal_hud_consultant staging_table
+      LEFT JOIN history_octane.proposal_hud_consultant history_table
+                ON staging_table.phc_pid = history_table.phc_pid
+                    AND staging_table.phc_version = history_table.phc_version
+      WHERE history_table.phc_pid IS NULL
+      UNION ALL
+      SELECT history_table.phc_pid
+           , history_table.phc_version + 1
+           , history_table.phc_proposal_pid
+           , history_table.phc_consultant_id
+           , history_table.phc_company_name
+           , history_table.phc_first_name
+           , history_table.phc_last_name
+           , history_table.phc_email
+           , history_table.phc_mobile_phone
+           , history_table.phc_office_phone
+           , history_table.phc_office_phone_extension
+           , history_table.phc_fax
+           , history_table.phc_address_street1
+           , history_table.phc_address_street2
+           , history_table.phc_address_city
+           , history_table.phc_address_state
+           , history_table.phc_address_postal_code
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.proposal_hud_consultant history_table
+      LEFT JOIN staging_octane.proposal_hud_consultant staging_table
+                ON staging_table.phc_pid = history_table.phc_pid
+      WHERE staging_table.phc_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.proposal_hud_consultant deleted_records
+          WHERE deleted_records.phc_pid = history_table.phc_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

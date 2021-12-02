@@ -1,0 +1,21 @@
+name: los_loan_id_ticker
+primary_key:
+- ltk_pid
+foreign_keys:
+  fk_los_loan_id_ticker_1:
+    columns:
+    - ltk_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+columns:
+  ltk_pid:
+    data_type: BIGINT
+  ltk_version:
+    data_type: INTEGER
+  ltk_account_pid:
+    data_type: BIGINT
+  ltk_next_los_loan_id:
+    data_type: BIGINT

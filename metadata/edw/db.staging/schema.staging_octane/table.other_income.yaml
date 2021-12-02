@@ -1,0 +1,159 @@
+name: other_income
+primary_key:
+- oi_pid
+foreign_keys:
+  fk_other_income_1:
+    columns:
+    - oi_borrower_income_pid
+    references:
+      columns:
+      - bi_pid
+      schema: staging_octane
+      table: borrower_income
+  fk_other_income_2:
+    columns:
+    - oi_mortgage_credit_certificate_issuer_pid
+    references:
+      columns:
+      - mcci_pid
+      schema: staging_octane
+      table: mortgage_credit_certificate_issuer
+  fkt_oi_calc_method_type:
+    columns:
+    - oi_calc_method_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: income_history_calc_method_type
+  fkt_oi_other_income_type:
+    columns:
+    - oi_other_income_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: other_income_type
+columns:
+  oi_pid:
+    data_type: BIGINT
+  oi_version:
+    data_type: INTEGER
+  oi_other_income_type:
+    data_type: VARCHAR(128)
+  oi_borrower_income_pid:
+    data_type: BIGINT
+  oi_estimated_net_income_amount:
+    data_type: NUMERIC(15,2)
+  oi_estimated_mode:
+    data_type: BOOLEAN
+  oi_worksheet_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+  oi_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+  oi_borrower_income_percent:
+    data_type: NUMERIC(11,9)
+  oi_description:
+    data_type: VARCHAR(128)
+  oi_calc_method_type:
+    data_type: VARCHAR(128)
+  oi_common_year1_year:
+    data_type: INTEGER
+  oi_common_year1_year_include:
+    data_type: BOOLEAN
+  oi_common_year1_from_date:
+    data_type: DATE
+  oi_common_year1_through_date:
+    data_type: DATE
+  oi_common_year1_months:
+    data_type: NUMERIC(4,2)
+  oi_common_year1_annual_total_amount:
+    data_type: NUMERIC(15,2)
+  oi_common_year1_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+  oi_common_year2_year:
+    data_type: INTEGER
+  oi_common_year2_year_include:
+    data_type: BOOLEAN
+  oi_common_year2_from_date:
+    data_type: DATE
+  oi_common_year2_through_date:
+    data_type: DATE
+  oi_common_year2_months:
+    data_type: NUMERIC(4,2)
+  oi_common_year2_annual_total_amount:
+    data_type: NUMERIC(15,2)
+  oi_common_year2_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+  oi_common_year3_year:
+    data_type: INTEGER
+  oi_common_year3_year_include:
+    data_type: BOOLEAN
+  oi_common_year3_from_date:
+    data_type: DATE
+  oi_common_year3_through_date:
+    data_type: DATE
+  oi_common_year3_months:
+    data_type: NUMERIC(4,2)
+  oi_common_year3_annual_total_amount:
+    data_type: NUMERIC(15,2)
+  oi_common_year3_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+  oi_simple_year1_unadjusted_amount:
+    data_type: NUMERIC(15,2)
+  oi_simple_year1_income_federal_tax_exempt:
+    data_type: BOOLEAN
+  oi_simple_year1_tax_exempt_tax_rate_percent:
+    data_type: NUMERIC(11,9)
+  oi_simple_year1_tax_exempt_amount:
+    data_type: NUMERIC(15,2)
+  oi_simple_year2_unadjusted_amount:
+    data_type: NUMERIC(15,2)
+  oi_simple_year2_income_federal_tax_exempt:
+    data_type: BOOLEAN
+  oi_simple_year2_tax_exempt_tax_rate_percent:
+    data_type: NUMERIC(11,9)
+  oi_simple_year2_tax_exempt_amount:
+    data_type: NUMERIC(15,2)
+  oi_simple_year3_unadjusted_amount:
+    data_type: NUMERIC(15,2)
+  oi_simple_year3_income_federal_tax_exempt:
+    data_type: BOOLEAN
+  oi_simple_year3_tax_exempt_tax_rate_percent:
+    data_type: NUMERIC(11,9)
+  oi_simple_year3_tax_exempt_amount:
+    data_type: NUMERIC(15,2)
+  oi_simple_unadjusted_monthly_amount:
+    data_type: NUMERIC(15,2)
+  oi_simple_income_federal_tax_exempt:
+    data_type: BOOLEAN
+  oi_simple_tax_exempt_tax_rate_percent:
+    data_type: NUMERIC(11,9)
+  oi_simple_tax_exempt_amount:
+    data_type: NUMERIC(15,2)
+  oi_simple_calculated_monthly_amount:
+    data_type: NUMERIC(15,2)
+  oi_underwriter_comments:
+    data_type: VARCHAR(1024)
+  oi_mortgage_credit_certificate_issuer_pid:
+    data_type: BIGINT
+  oi_mcc_reservation_number:
+    data_type: VARCHAR(128)
+  oi_mcc_reservation_date:
+    data_type: DATE
+  oi_mcc_reservation_expiration_date:
+    data_type: DATE
+  oi_mcc_commitment_number:
+    data_type: VARCHAR(128)
+  oi_mcc_underwriting_certification_deadline_date:
+    data_type: DATE
+  oi_mcc_delivered_by_date:
+    data_type: DATE
+  oi_unadjusted_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+  oi_simple_year1_unadjusted_monthly_amount:
+    data_type: NUMERIC(15,2)
+  oi_simple_year2_unadjusted_monthly_amount:
+    data_type: NUMERIC(15,2)
+  oi_simple_year3_unadjusted_monthly_amount:
+    data_type: NUMERIC(15,2)

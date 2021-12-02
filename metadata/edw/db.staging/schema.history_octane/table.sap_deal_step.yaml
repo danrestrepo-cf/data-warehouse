@@ -1,0 +1,287 @@
+name: sap_deal_step
+primary_source_table: staging.staging_octane.sap_deal_step
+primary_key:
+- sds_pid
+- sds_version
+foreign_keys:
+  fk_sap_deal_step_1:
+    columns:
+    - sds_borrower_user_pid
+    references:
+      columns:
+      - bu_pid
+      schema: history_octane
+      table: borrower_user
+  fk_sap_deal_step_10:
+    columns:
+    - sds_asset_pid
+    references:
+      columns:
+      - as_pid
+      schema: history_octane
+      table: asset
+  fk_sap_deal_step_11:
+    columns:
+    - sds_liability_pid
+    references:
+      columns:
+      - lia_pid
+      schema: history_octane
+      table: liability
+  fk_sap_deal_step_12:
+    columns:
+    - sds_deal_contact_pid
+    references:
+      columns:
+      - dc_pid
+      schema: history_octane
+      table: deal_contact
+  fk_sap_deal_step_13:
+    columns:
+    - sds_deal_real_estate_agent_pid
+    references:
+      columns:
+      - drea_pid
+      schema: history_octane
+      table: deal_real_estate_agent
+  fk_sap_deal_step_2:
+    columns:
+    - sds_previous_pid
+    references:
+      columns:
+      - sds_pid
+      schema: history_octane
+      table: sap_deal_step
+  fk_sap_deal_step_3:
+    columns:
+    - sds_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: history_octane
+      table: deal
+  fk_sap_deal_step_4:
+    columns:
+    - sds_borrower_pid
+    references:
+      columns:
+      - b_pid
+      schema: history_octane
+      table: borrower
+  fk_sap_deal_step_5:
+    columns:
+    - sds_reo_pid
+    references:
+      columns:
+      - pl_pid
+      schema: history_octane
+      table: place
+  fk_sap_deal_step_6:
+    columns:
+    - sds_application_pid
+    references:
+      columns:
+      - apl_pid
+      schema: history_octane
+      table: application
+  fk_sap_deal_step_7:
+    columns:
+    - sds_job_income_pid
+    references:
+      columns:
+      - ji_pid
+      schema: history_octane
+      table: job_income
+  fk_sap_deal_step_8:
+    columns:
+    - sds_other_income_pid
+    references:
+      columns:
+      - oi_pid
+      schema: history_octane
+      table: other_income
+  fk_sap_deal_step_9:
+    columns:
+    - sds_borrower_residence_pid
+    references:
+      columns:
+      - bres_pid
+      schema: history_octane
+      table: borrower_residence
+  fkt_sds_sap_step_type:
+    columns:
+    - sds_sap_step_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: sap_step_type
+  fkt_sds_yes_no_answer:
+    columns:
+    - sds_yes_no_answer
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+columns:
+  sds_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_pid
+  sds_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sds_version
+  sds_borrower_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_borrower_user_pid
+  sds_previous_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_previous_pid
+  sds_sap_step_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sds_sap_step_type
+  sds_complete_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.sds_complete_datetime
+  sds_yes_no_answer:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sds_yes_no_answer
+  sds_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_deal_pid
+  sds_borrower_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_borrower_pid
+  sds_reo_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_reo_pid
+  sds_application_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_application_pid
+  sds_job_income_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_job_income_pid
+  sds_other_income_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_other_income_pid
+  sds_borrower_residence_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_borrower_residence_pid
+  sds_asset_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_asset_pid
+  sds_liability_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_liability_pid
+  sds_deal_contact_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_deal_contact_pid
+  sds_deal_real_estate_agent_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_deal_real_estate_agent_pid
+  sds_radio_choice_answer:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.sds_radio_choice_answer
+  sds_initial_values:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sds_initial_values
+  sds_business_income_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_business_income_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100345:
+    input_type: table
+    output_type: insert
+    json_output_field: sds_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.sap_deal_step
+      SELECT staging_table.sds_pid
+           , staging_table.sds_version
+           , staging_table.sds_borrower_user_pid
+           , staging_table.sds_previous_pid
+           , staging_table.sds_sap_step_type
+           , staging_table.sds_complete_datetime
+           , staging_table.sds_yes_no_answer
+           , staging_table.sds_deal_pid
+           , staging_table.sds_borrower_pid
+           , staging_table.sds_reo_pid
+           , staging_table.sds_application_pid
+           , staging_table.sds_job_income_pid
+           , staging_table.sds_other_income_pid
+           , staging_table.sds_borrower_residence_pid
+           , staging_table.sds_asset_pid
+           , staging_table.sds_liability_pid
+           , staging_table.sds_deal_contact_pid
+           , staging_table.sds_deal_real_estate_agent_pid
+           , staging_table.sds_radio_choice_answer
+           , staging_table.sds_initial_values
+           , staging_table.sds_business_income_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.sap_deal_step staging_table
+      LEFT JOIN history_octane.sap_deal_step history_table
+                ON staging_table.sds_pid = history_table.sds_pid
+                    AND staging_table.sds_version = history_table.sds_version
+      WHERE history_table.sds_pid IS NULL
+      UNION ALL
+      SELECT history_table.sds_pid
+           , history_table.sds_version + 1
+           , history_table.sds_borrower_user_pid
+           , history_table.sds_previous_pid
+           , history_table.sds_sap_step_type
+           , history_table.sds_complete_datetime
+           , history_table.sds_yes_no_answer
+           , history_table.sds_deal_pid
+           , history_table.sds_borrower_pid
+           , history_table.sds_reo_pid
+           , history_table.sds_application_pid
+           , history_table.sds_job_income_pid
+           , history_table.sds_other_income_pid
+           , history_table.sds_borrower_residence_pid
+           , history_table.sds_asset_pid
+           , history_table.sds_liability_pid
+           , history_table.sds_deal_contact_pid
+           , history_table.sds_deal_real_estate_agent_pid
+           , history_table.sds_radio_choice_answer
+           , history_table.sds_initial_values
+           , history_table.sds_business_income_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.sap_deal_step history_table
+      LEFT JOIN staging_octane.sap_deal_step staging_table
+                ON staging_table.sds_pid = history_table.sds_pid
+      WHERE staging_table.sds_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.sap_deal_step deleted_records
+          WHERE deleted_records.sds_pid = history_table.sds_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

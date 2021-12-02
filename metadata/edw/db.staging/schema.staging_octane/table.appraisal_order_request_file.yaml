@@ -1,0 +1,43 @@
+name: appraisal_order_request_file
+primary_key:
+- aorf_pid
+foreign_keys:
+  fk_appraisal_order_request_file_1:
+    columns:
+    - aorf_appraisal_order_request_pid
+    references:
+      columns:
+      - aprq_pid
+      schema: staging_octane
+      table: appraisal_order_request
+  fk_appraisal_order_request_file_2:
+    columns:
+    - aorf_deal_file_pid
+    references:
+      columns:
+      - df_pid
+      schema: staging_octane
+      table: deal_file
+  fkt_aorf_appraisal_order_request_file_type:
+    columns:
+    - aorf_appraisal_order_request_file_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: appraisal_order_request_file_type
+columns:
+  aorf_pid:
+    data_type: BIGINT
+  aorf_version:
+    data_type: INTEGER
+  aorf_appraisal_order_request_pid:
+    data_type: BIGINT
+  aorf_deal_file_pid:
+    data_type: BIGINT
+  aorf_appraisal_order_request_file_type:
+    data_type: VARCHAR(128)
+  aorf_vendor_document_datetime:
+    data_type: TIMESTAMP
+  aorf_vendor_document_id:
+    data_type: VARCHAR(128)

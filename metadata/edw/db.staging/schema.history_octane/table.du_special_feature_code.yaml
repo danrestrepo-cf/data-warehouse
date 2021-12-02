@@ -1,0 +1,79 @@
+name: du_special_feature_code
+primary_source_table: staging.staging_octane.du_special_feature_code
+primary_key:
+- dusfc_pid
+- dusfc_version
+foreign_keys:
+  fk_du_special_feature_code_1:
+    columns:
+    - dusfc_du_request_pid
+    references:
+      columns:
+      - dur_pid
+      schema: history_octane
+      table: du_request
+columns:
+  dusfc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dusfc_pid
+  dusfc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dusfc_version
+  dusfc_du_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dusfc_du_request_pid
+  dusfc_special_feature_code:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dusfc_special_feature_code
+  dusfc_special_feature_description:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dusfc_special_feature_description
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100121:
+    input_type: table
+    output_type: insert
+    json_output_field: dusfc_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.du_special_feature_code
+      SELECT staging_table.dusfc_pid
+           , staging_table.dusfc_version
+           , staging_table.dusfc_du_request_pid
+           , staging_table.dusfc_special_feature_code
+           , staging_table.dusfc_special_feature_description
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.du_special_feature_code staging_table
+      LEFT JOIN history_octane.du_special_feature_code history_table
+                ON staging_table.dusfc_pid = history_table.dusfc_pid
+                    AND staging_table.dusfc_version = history_table.dusfc_version
+      WHERE history_table.dusfc_pid IS NULL
+      UNION ALL
+      SELECT history_table.dusfc_pid
+           , history_table.dusfc_version + 1
+           , history_table.dusfc_du_request_pid
+           , history_table.dusfc_special_feature_code
+           , history_table.dusfc_special_feature_description
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.du_special_feature_code history_table
+      LEFT JOIN staging_octane.du_special_feature_code staging_table
+                ON staging_table.dusfc_pid = history_table.dusfc_pid
+      WHERE staging_table.dusfc_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.du_special_feature_code deleted_records
+          WHERE deleted_records.dusfc_pid = history_table.dusfc_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

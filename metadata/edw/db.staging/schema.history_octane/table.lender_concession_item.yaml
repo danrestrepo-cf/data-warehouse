@@ -1,0 +1,93 @@
+name: lender_concession_item
+primary_source_table: staging.staging_octane.lender_concession_item
+primary_key:
+- lci_pid
+- lci_version
+foreign_keys:
+  fk_lender_concession_item_1:
+    columns:
+    - lci_lender_concession_request_pid
+    references:
+      columns:
+      - lcr_pid
+      schema: history_octane
+      table: lender_concession_request
+  fk_lender_concession_item_2:
+    columns:
+    - lci_loan_charge_pid
+    references:
+      columns:
+      - lc_pid
+      schema: history_octane
+      table: loan_charge
+columns:
+  lci_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lci_pid
+  lci_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lci_version
+  lci_lender_concession_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lci_lender_concession_request_pid
+  lci_loan_charge_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lci_loan_charge_pid
+  lci_allocation_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lci_allocation_amount
+  lci_absorb_cost:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lci_absorb_cost
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100844:
+    input_type: table
+    output_type: insert
+    json_output_field: lci_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.lender_concession_item
+      SELECT staging_table.lci_pid
+           , staging_table.lci_version
+           , staging_table.lci_lender_concession_request_pid
+           , staging_table.lci_loan_charge_pid
+           , staging_table.lci_allocation_amount
+           , staging_table.lci_absorb_cost
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.lender_concession_item staging_table
+      LEFT JOIN history_octane.lender_concession_item history_table
+                ON staging_table.lci_pid = history_table.lci_pid
+                    AND staging_table.lci_version = history_table.lci_version
+      WHERE history_table.lci_pid IS NULL
+      UNION ALL
+      SELECT history_table.lci_pid
+           , history_table.lci_version + 1
+           , history_table.lci_lender_concession_request_pid
+           , history_table.lci_loan_charge_pid
+           , history_table.lci_allocation_amount
+           , history_table.lci_absorb_cost
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.lender_concession_item history_table
+      LEFT JOIN staging_octane.lender_concession_item staging_table
+                ON staging_table.lci_pid = history_table.lci_pid
+      WHERE staging_table.lci_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.lender_concession_item deleted_records
+          WHERE deleted_records.lci_pid = history_table.lci_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

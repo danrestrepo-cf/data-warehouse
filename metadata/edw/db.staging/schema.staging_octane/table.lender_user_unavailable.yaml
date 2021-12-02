@@ -1,0 +1,23 @@
+name: lender_user_unavailable
+primary_key:
+- luu_pid
+foreign_keys:
+  fk_lender_user_unavailable_1:
+    columns:
+    - luu_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+columns:
+  luu_pid:
+    data_type: BIGINT
+  luu_version:
+    data_type: INTEGER
+  luu_lender_user_pid:
+    data_type: BIGINT
+  luu_from_date:
+    data_type: DATE
+  luu_through_date:
+    data_type: DATE

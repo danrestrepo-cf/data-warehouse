@@ -1,0 +1,111 @@
+name: lender_user_allowed_ip
+primary_source_table: staging.staging_octane.lender_user_allowed_ip
+primary_key:
+- luip_pid
+- luip_version
+foreign_keys:
+  fk_lender_user_allowed_ip_1:
+    columns:
+    - luip_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+  fkt_luip_status:
+    columns:
+    - luip_status
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: lender_user_allowed_ip_status_type
+columns:
+  luip_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.luip_pid
+  luip_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.luip_version
+  luip_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.luip_lender_user_pid
+  luip_status:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.luip_status
+  luip_ip_address:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.luip_ip_address
+  luip_request_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.luip_request_id
+  luip_request_expiration_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.luip_request_expiration_datetime
+  luip_last_used_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.luip_last_used_datetime
+  luip_first_used_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.luip_first_used_datetime
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100096:
+    input_type: table
+    output_type: insert
+    json_output_field: luip_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.lender_user_allowed_ip
+      SELECT staging_table.luip_pid
+           , staging_table.luip_version
+           , staging_table.luip_lender_user_pid
+           , staging_table.luip_status
+           , staging_table.luip_ip_address
+           , staging_table.luip_request_id
+           , staging_table.luip_request_expiration_datetime
+           , staging_table.luip_last_used_datetime
+           , staging_table.luip_first_used_datetime
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.lender_user_allowed_ip staging_table
+      LEFT JOIN history_octane.lender_user_allowed_ip history_table
+                ON staging_table.luip_pid = history_table.luip_pid
+                    AND staging_table.luip_version = history_table.luip_version
+      WHERE history_table.luip_pid IS NULL
+      UNION ALL
+      SELECT history_table.luip_pid
+           , history_table.luip_version + 1
+           , history_table.luip_lender_user_pid
+           , history_table.luip_status
+           , history_table.luip_ip_address
+           , history_table.luip_request_id
+           , history_table.luip_request_expiration_datetime
+           , history_table.luip_last_used_datetime
+           , history_table.luip_first_used_datetime
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.lender_user_allowed_ip history_table
+      LEFT JOIN staging_octane.lender_user_allowed_ip staging_table
+                ON staging_table.luip_pid = history_table.luip_pid
+      WHERE staging_table.luip_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.lender_user_allowed_ip deleted_records
+          WHERE deleted_records.luip_pid = history_table.luip_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

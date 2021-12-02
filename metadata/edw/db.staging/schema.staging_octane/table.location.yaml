@@ -1,0 +1,49 @@
+name: location
+primary_key:
+- loc_pid
+foreign_keys:
+  fk_location_1:
+    columns:
+    - loc_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fkt_loc_location_status_type:
+    columns:
+    - loc_location_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: location_status_type
+columns:
+  loc_pid:
+    data_type: BIGINT
+  loc_version:
+    data_type: INTEGER
+  loc_account_pid:
+    data_type: BIGINT
+  loc_address_street1:
+    data_type: VARCHAR(128)
+  loc_address_street2:
+    data_type: VARCHAR(128)
+  loc_address_city:
+    data_type: VARCHAR(128)
+  loc_address_state:
+    data_type: VARCHAR(128)
+  loc_address_postal_code:
+    data_type: VARCHAR(128)
+  loc_location_name:
+    data_type: VARCHAR(256)
+  loc_location_id:
+    data_type: INTEGER
+  loc_location_remote:
+    data_type: BOOLEAN
+  loc_location_status_type:
+    data_type: VARCHAR(128)
+  loc_fha_field_office_code:
+    data_type: VARCHAR(8)
+  loc_documents_url:
+    data_type: VARCHAR(256)

@@ -1,0 +1,93 @@
+name: org_lineage_tracker
+primary_source_table: staging.staging_octane.org_lineage_tracker
+primary_key:
+- olt_pid
+- olt_version
+foreign_keys:
+  fk_org_lineage_tracker_1:
+    columns:
+    - olt_org_node_pid
+    references:
+      columns:
+      - on_pid
+      schema: history_octane
+      table: org_node
+  fk_org_lineage_tracker_2:
+    columns:
+    - olt_org_lineage_pid
+    references:
+      columns:
+      - ol_pid
+      schema: history_octane
+      table: org_lineage
+columns:
+  olt_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.olt_pid
+  olt_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.olt_version
+  olt_org_node_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.olt_org_node_pid
+  olt_org_lineage_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.olt_org_lineage_pid
+  olt_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.olt_from_date
+  olt_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.olt_through_date
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100372:
+    input_type: table
+    output_type: insert
+    json_output_field: olt_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.org_lineage_tracker
+      SELECT staging_table.olt_pid
+           , staging_table.olt_version
+           , staging_table.olt_org_node_pid
+           , staging_table.olt_org_lineage_pid
+           , staging_table.olt_from_date
+           , staging_table.olt_through_date
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.org_lineage_tracker staging_table
+      LEFT JOIN history_octane.org_lineage_tracker history_table
+                ON staging_table.olt_pid = history_table.olt_pid
+                    AND staging_table.olt_version = history_table.olt_version
+      WHERE history_table.olt_pid IS NULL
+      UNION ALL
+      SELECT history_table.olt_pid
+           , history_table.olt_version + 1
+           , history_table.olt_org_node_pid
+           , history_table.olt_org_lineage_pid
+           , history_table.olt_from_date
+           , history_table.olt_through_date
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.org_lineage_tracker history_table
+      LEFT JOIN staging_octane.org_lineage_tracker staging_table
+                ON staging_table.olt_pid = history_table.olt_pid
+      WHERE staging_table.olt_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.org_lineage_tracker deleted_records
+          WHERE deleted_records.olt_pid = history_table.olt_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

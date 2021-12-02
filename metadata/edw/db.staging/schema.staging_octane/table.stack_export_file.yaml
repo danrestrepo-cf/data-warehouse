@@ -1,0 +1,39 @@
+name: stack_export_file
+primary_key:
+- sef_pid
+foreign_keys:
+  fk_stack_export_file_1:
+    columns:
+    - sef_stack_export_request_pid
+    references:
+      columns:
+      - ser_pid
+      schema: staging_octane
+      table: stack_export_request
+  fk_stack_export_file_2:
+    columns:
+    - sef_repository_file_pid
+    references:
+      columns:
+      - rf_pid
+      schema: staging_octane
+      table: repository_file
+  fkt_sef_stack_export_file_type:
+    columns:
+    - sef_stack_export_file_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: stack_export_file_type
+columns:
+  sef_pid:
+    data_type: BIGINT
+  sef_version:
+    data_type: INTEGER
+  sef_stack_export_request_pid:
+    data_type: BIGINT
+  sef_repository_file_pid:
+    data_type: BIGINT
+  sef_stack_export_file_type:
+    data_type: VARCHAR(128)

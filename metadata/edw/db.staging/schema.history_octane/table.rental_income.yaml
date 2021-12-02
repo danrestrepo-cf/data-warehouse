@@ -1,0 +1,761 @@
+name: rental_income
+primary_source_table: staging.staging_octane.rental_income
+primary_key:
+- ri_pid
+- ri_version
+foreign_keys:
+  fk_rental_income_1:
+    columns:
+    - ri_borrower_income_pid
+    references:
+      columns:
+      - bi_pid
+      schema: history_octane
+      table: borrower_income
+  fk_rental_income_2:
+    columns:
+    - ri_place_pid
+    references:
+      columns:
+      - pl_pid
+      schema: history_octane
+      table: place
+  fkt_ri_rental_income_calc_method:
+    columns:
+    - ri_rental_income_calc_method
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: income_history_calc_method_type
+columns:
+  ri_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ri_pid
+  ri_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ri_version
+  ri_borrower_income_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ri_borrower_income_pid
+  ri_place_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ri_place_pid
+  ri_schedule_e_input:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ri_schedule_e_input
+  ri_rental_income_estimated_mode:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ri_rental_income_estimated_mode
+  ri_rental_income_estimated_gross_monthly_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_rental_income_estimated_gross_monthly_amount
+  ri_simple_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_simple_monthly_total_amount
+  ri_schedule_e_calculated_gross_monthly_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_calculated_gross_monthly_amount
+  ri_schedule_e_proposed_monthly_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_proposed_monthly_expense_amount
+  ri_schedule_e_net_monthly_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_net_monthly_amount
+  ri_rental_income_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_rental_income_monthly_total_amount
+  ri_schedule_e_non_recurring_expense_1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_non_recurring_expense_1
+  ri_schedule_e_non_recurring_expense_2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_non_recurring_expense_2
+  ri_schedule_e_non_recurring_expense_3:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_non_recurring_expense_3
+  ri_rental_income_calc_method:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ri_rental_income_calc_method
+  ri_common_year1_year:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ri_common_year1_year
+  ri_common_year1_year_include:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ri_common_year1_year_include
+  ri_common_year1_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ri_common_year1_from_date
+  ri_common_year1_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ri_common_year1_through_date
+  ri_common_year1_months:
+    data_type: NUMERIC(4,2)
+    source:
+      field: primary_source_table.columns.ri_common_year1_months
+  ri_common_year1_annual_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_common_year1_annual_total_amount
+  ri_common_year1_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_common_year1_monthly_total_amount
+  ri_common_year2_year:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ri_common_year2_year
+  ri_common_year2_year_include:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ri_common_year2_year_include
+  ri_common_year2_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ri_common_year2_from_date
+  ri_common_year2_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ri_common_year2_through_date
+  ri_common_year2_months:
+    data_type: NUMERIC(4,2)
+    source:
+      field: primary_source_table.columns.ri_common_year2_months
+  ri_common_year2_annual_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_common_year2_annual_total_amount
+  ri_common_year2_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_common_year2_monthly_total_amount
+  ri_common_year3_year:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ri_common_year3_year
+  ri_common_year3_year_include:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ri_common_year3_year_include
+  ri_common_year3_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ri_common_year3_from_date
+  ri_common_year3_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ri_common_year3_through_date
+  ri_common_year3_months:
+    data_type: NUMERIC(4,2)
+    source:
+      field: primary_source_table.columns.ri_common_year3_months
+  ri_common_year3_annual_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_common_year3_annual_total_amount
+  ri_common_year3_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_common_year3_monthly_total_amount
+  ri_schedule_e_year1_rent_received_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_rent_received_amount
+  ri_schedule_e_year1_advertising_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_advertising_expense_amount
+  ri_schedule_e_year1_auto_travel_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_auto_travel_expense_amount
+  ri_schedule_e_year1_cleaning_maintenance_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_cleaning_maintenance_expense_amount
+  ri_schedule_e_year1_commissions_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_commissions_expense_amount
+  ri_schedule_e_year1_insurance_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_insurance_expense_amount
+  ri_schedule_e_year1_legal_professional_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_legal_professional_expense_amount
+  ri_schedule_e_year1_management_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_management_expense_amount
+  ri_schedule_e_year1_mortgage_interest_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_mortgage_interest_expense_amount
+  ri_schedule_e_year1_other_interest_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_other_interest_expense_amount
+  ri_schedule_e_year1_repairs_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_repairs_expense_amount
+  ri_schedule_e_year1_supplies_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_supplies_expense_amount
+  ri_schedule_e_year1_taxes_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_taxes_expense_amount
+  ri_schedule_e_year1_utilities_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_utilities_expense_amount
+  ri_schedule_e_year1_depreciation_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_depreciation_expense_amount
+  ri_schedule_e_year1_other_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_other_expense_amount
+  ri_schedule_e_year1_total_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_total_expense_amount
+  ri_schedule_e_year1_non_recurring_expense_amount_1:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_non_recurring_expense_amount_1
+  ri_schedule_e_year1_non_recurring_expense_amount_2:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_non_recurring_expense_amount_2
+  ri_schedule_e_year1_non_recurring_expense_amount_3:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_non_recurring_expense_amount_3
+  ri_schedule_e_year1_insurance_credit_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_insurance_credit_amount
+  ri_schedule_e_year1_taxes_credit_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_taxes_credit_amount
+  ri_schedule_e_year1_annual_subtotal:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_annual_subtotal
+  ri_schedule_e_year1_ownership_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year1_ownership_percent
+  ri_schedule_e_year2_rent_received_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_rent_received_amount
+  ri_schedule_e_year2_advertising_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_advertising_expense_amount
+  ri_schedule_e_year2_auto_travel_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_auto_travel_expense_amount
+  ri_schedule_e_year2_cleaning_maintenance_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_cleaning_maintenance_expense_amount
+  ri_schedule_e_year2_commissions_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_commissions_expense_amount
+  ri_schedule_e_year2_insurance_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_insurance_expense_amount
+  ri_schedule_e_year2_legal_professional_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_legal_professional_expense_amount
+  ri_schedule_e_year2_management_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_management_expense_amount
+  ri_schedule_e_year2_mortgage_interest_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_mortgage_interest_expense_amount
+  ri_schedule_e_year2_other_interest_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_other_interest_expense_amount
+  ri_schedule_e_year2_repairs_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_repairs_expense_amount
+  ri_schedule_e_year2_supplies_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_supplies_expense_amount
+  ri_schedule_e_year2_taxes_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_taxes_expense_amount
+  ri_schedule_e_year2_utilities_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_utilities_expense_amount
+  ri_schedule_e_year2_depreciation_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_depreciation_expense_amount
+  ri_schedule_e_year2_other_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_other_expense_amount
+  ri_schedule_e_year2_total_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_total_expense_amount
+  ri_schedule_e_year2_non_recurring_expense_amount_1:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_non_recurring_expense_amount_1
+  ri_schedule_e_year2_non_recurring_expense_amount_2:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_non_recurring_expense_amount_2
+  ri_schedule_e_year2_non_recurring_expense_amount_3:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_non_recurring_expense_amount_3
+  ri_schedule_e_year2_insurance_credit_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_insurance_credit_amount
+  ri_schedule_e_year2_taxes_credit_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_taxes_credit_amount
+  ri_schedule_e_year2_annual_subtotal:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_annual_subtotal
+  ri_schedule_e_year2_ownership_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year2_ownership_percent
+  ri_schedule_e_year3_rent_received_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_rent_received_amount
+  ri_schedule_e_year3_advertising_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_advertising_expense_amount
+  ri_schedule_e_year3_auto_travel_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_auto_travel_expense_amount
+  ri_schedule_e_year3_cleaning_maintenance_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_cleaning_maintenance_expense_amount
+  ri_schedule_e_year3_commissions_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_commissions_expense_amount
+  ri_schedule_e_year3_insurance_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_insurance_expense_amount
+  ri_schedule_e_year3_legal_professional_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_legal_professional_expense_amount
+  ri_schedule_e_year3_management_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_management_expense_amount
+  ri_schedule_e_year3_mortgage_interest_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_mortgage_interest_expense_amount
+  ri_schedule_e_year3_other_interest_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_other_interest_expense_amount
+  ri_schedule_e_year3_repairs_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_repairs_expense_amount
+  ri_schedule_e_year3_supplies_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_supplies_expense_amount
+  ri_schedule_e_year3_taxes_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_taxes_expense_amount
+  ri_schedule_e_year3_utilities_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_utilities_expense_amount
+  ri_schedule_e_year3_depreciation_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_depreciation_expense_amount
+  ri_schedule_e_year3_other_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_other_expense_amount
+  ri_schedule_e_year3_total_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_total_expense_amount
+  ri_schedule_e_year3_non_recurring_expense_amount_1:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_non_recurring_expense_amount_1
+  ri_schedule_e_year3_non_recurring_expense_amount_2:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_non_recurring_expense_amount_2
+  ri_schedule_e_year3_non_recurring_expense_amount_3:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_non_recurring_expense_amount_3
+  ri_schedule_e_year3_insurance_credit_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_insurance_credit_amount
+  ri_schedule_e_year3_taxes_credit_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_taxes_credit_amount
+  ri_schedule_e_year3_annual_subtotal:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_annual_subtotal
+  ri_schedule_e_year3_ownership_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ri_schedule_e_year3_ownership_percent
+  ri_simple_monthly_rent_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_simple_monthly_rent_amount
+  ri_simple_vacancy_maintenance_adjustment_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ri_simple_vacancy_maintenance_adjustment_percent
+  ri_simple_monthly_net_rent_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_simple_monthly_net_rent_amount
+  ri_simple_monthly_expense_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_simple_monthly_expense_amount
+  ri_simple_monthly_pre_ownership_income_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_simple_monthly_pre_ownership_income_amount
+  ri_simple_ownership_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ri_simple_ownership_percent
+  ri_simple_calculated_monthly_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ri_simple_calculated_monthly_amount
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100171:
+    input_type: table
+    output_type: insert
+    json_output_field: ri_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.rental_income
+      SELECT staging_table.ri_pid
+           , staging_table.ri_version
+           , staging_table.ri_borrower_income_pid
+           , staging_table.ri_place_pid
+           , staging_table.ri_schedule_e_input
+           , staging_table.ri_rental_income_estimated_mode
+           , staging_table.ri_rental_income_estimated_gross_monthly_amount
+           , staging_table.ri_simple_monthly_total_amount
+           , staging_table.ri_schedule_e_calculated_gross_monthly_amount
+           , staging_table.ri_schedule_e_proposed_monthly_expense_amount
+           , staging_table.ri_schedule_e_net_monthly_amount
+           , staging_table.ri_rental_income_monthly_total_amount
+           , staging_table.ri_schedule_e_non_recurring_expense_1
+           , staging_table.ri_schedule_e_non_recurring_expense_2
+           , staging_table.ri_schedule_e_non_recurring_expense_3
+           , staging_table.ri_rental_income_calc_method
+           , staging_table.ri_common_year1_year
+           , staging_table.ri_common_year1_year_include
+           , staging_table.ri_common_year1_from_date
+           , staging_table.ri_common_year1_through_date
+           , staging_table.ri_common_year1_months
+           , staging_table.ri_common_year1_annual_total_amount
+           , staging_table.ri_common_year1_monthly_total_amount
+           , staging_table.ri_common_year2_year
+           , staging_table.ri_common_year2_year_include
+           , staging_table.ri_common_year2_from_date
+           , staging_table.ri_common_year2_through_date
+           , staging_table.ri_common_year2_months
+           , staging_table.ri_common_year2_annual_total_amount
+           , staging_table.ri_common_year2_monthly_total_amount
+           , staging_table.ri_common_year3_year
+           , staging_table.ri_common_year3_year_include
+           , staging_table.ri_common_year3_from_date
+           , staging_table.ri_common_year3_through_date
+           , staging_table.ri_common_year3_months
+           , staging_table.ri_common_year3_annual_total_amount
+           , staging_table.ri_common_year3_monthly_total_amount
+           , staging_table.ri_schedule_e_year1_rent_received_amount
+           , staging_table.ri_schedule_e_year1_advertising_expense_amount
+           , staging_table.ri_schedule_e_year1_auto_travel_expense_amount
+           , staging_table.ri_schedule_e_year1_cleaning_maintenance_expense_amount
+           , staging_table.ri_schedule_e_year1_commissions_expense_amount
+           , staging_table.ri_schedule_e_year1_insurance_expense_amount
+           , staging_table.ri_schedule_e_year1_legal_professional_expense_amount
+           , staging_table.ri_schedule_e_year1_management_expense_amount
+           , staging_table.ri_schedule_e_year1_mortgage_interest_expense_amount
+           , staging_table.ri_schedule_e_year1_other_interest_expense_amount
+           , staging_table.ri_schedule_e_year1_repairs_expense_amount
+           , staging_table.ri_schedule_e_year1_supplies_expense_amount
+           , staging_table.ri_schedule_e_year1_taxes_expense_amount
+           , staging_table.ri_schedule_e_year1_utilities_expense_amount
+           , staging_table.ri_schedule_e_year1_depreciation_expense_amount
+           , staging_table.ri_schedule_e_year1_other_expense_amount
+           , staging_table.ri_schedule_e_year1_total_expense_amount
+           , staging_table.ri_schedule_e_year1_non_recurring_expense_amount_1
+           , staging_table.ri_schedule_e_year1_non_recurring_expense_amount_2
+           , staging_table.ri_schedule_e_year1_non_recurring_expense_amount_3
+           , staging_table.ri_schedule_e_year1_insurance_credit_amount
+           , staging_table.ri_schedule_e_year1_taxes_credit_amount
+           , staging_table.ri_schedule_e_year1_annual_subtotal
+           , staging_table.ri_schedule_e_year1_ownership_percent
+           , staging_table.ri_schedule_e_year2_rent_received_amount
+           , staging_table.ri_schedule_e_year2_advertising_expense_amount
+           , staging_table.ri_schedule_e_year2_auto_travel_expense_amount
+           , staging_table.ri_schedule_e_year2_cleaning_maintenance_expense_amount
+           , staging_table.ri_schedule_e_year2_commissions_expense_amount
+           , staging_table.ri_schedule_e_year2_insurance_expense_amount
+           , staging_table.ri_schedule_e_year2_legal_professional_expense_amount
+           , staging_table.ri_schedule_e_year2_management_expense_amount
+           , staging_table.ri_schedule_e_year2_mortgage_interest_expense_amount
+           , staging_table.ri_schedule_e_year2_other_interest_expense_amount
+           , staging_table.ri_schedule_e_year2_repairs_expense_amount
+           , staging_table.ri_schedule_e_year2_supplies_expense_amount
+           , staging_table.ri_schedule_e_year2_taxes_expense_amount
+           , staging_table.ri_schedule_e_year2_utilities_expense_amount
+           , staging_table.ri_schedule_e_year2_depreciation_expense_amount
+           , staging_table.ri_schedule_e_year2_other_expense_amount
+           , staging_table.ri_schedule_e_year2_total_expense_amount
+           , staging_table.ri_schedule_e_year2_non_recurring_expense_amount_1
+           , staging_table.ri_schedule_e_year2_non_recurring_expense_amount_2
+           , staging_table.ri_schedule_e_year2_non_recurring_expense_amount_3
+           , staging_table.ri_schedule_e_year2_insurance_credit_amount
+           , staging_table.ri_schedule_e_year2_taxes_credit_amount
+           , staging_table.ri_schedule_e_year2_annual_subtotal
+           , staging_table.ri_schedule_e_year2_ownership_percent
+           , staging_table.ri_schedule_e_year3_rent_received_amount
+           , staging_table.ri_schedule_e_year3_advertising_expense_amount
+           , staging_table.ri_schedule_e_year3_auto_travel_expense_amount
+           , staging_table.ri_schedule_e_year3_cleaning_maintenance_expense_amount
+           , staging_table.ri_schedule_e_year3_commissions_expense_amount
+           , staging_table.ri_schedule_e_year3_insurance_expense_amount
+           , staging_table.ri_schedule_e_year3_legal_professional_expense_amount
+           , staging_table.ri_schedule_e_year3_management_expense_amount
+           , staging_table.ri_schedule_e_year3_mortgage_interest_expense_amount
+           , staging_table.ri_schedule_e_year3_other_interest_expense_amount
+           , staging_table.ri_schedule_e_year3_repairs_expense_amount
+           , staging_table.ri_schedule_e_year3_supplies_expense_amount
+           , staging_table.ri_schedule_e_year3_taxes_expense_amount
+           , staging_table.ri_schedule_e_year3_utilities_expense_amount
+           , staging_table.ri_schedule_e_year3_depreciation_expense_amount
+           , staging_table.ri_schedule_e_year3_other_expense_amount
+           , staging_table.ri_schedule_e_year3_total_expense_amount
+           , staging_table.ri_schedule_e_year3_non_recurring_expense_amount_1
+           , staging_table.ri_schedule_e_year3_non_recurring_expense_amount_2
+           , staging_table.ri_schedule_e_year3_non_recurring_expense_amount_3
+           , staging_table.ri_schedule_e_year3_insurance_credit_amount
+           , staging_table.ri_schedule_e_year3_taxes_credit_amount
+           , staging_table.ri_schedule_e_year3_annual_subtotal
+           , staging_table.ri_schedule_e_year3_ownership_percent
+           , staging_table.ri_simple_monthly_rent_amount
+           , staging_table.ri_simple_vacancy_maintenance_adjustment_percent
+           , staging_table.ri_simple_monthly_net_rent_amount
+           , staging_table.ri_simple_monthly_expense_amount
+           , staging_table.ri_simple_monthly_pre_ownership_income_amount
+           , staging_table.ri_simple_ownership_percent
+           , staging_table.ri_simple_calculated_monthly_amount
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.rental_income staging_table
+      LEFT JOIN history_octane.rental_income history_table
+                ON staging_table.ri_pid = history_table.ri_pid
+                    AND staging_table.ri_version = history_table.ri_version
+      WHERE history_table.ri_pid IS NULL
+      UNION ALL
+      SELECT history_table.ri_pid
+           , history_table.ri_version + 1
+           , history_table.ri_borrower_income_pid
+           , history_table.ri_place_pid
+           , history_table.ri_schedule_e_input
+           , history_table.ri_rental_income_estimated_mode
+           , history_table.ri_rental_income_estimated_gross_monthly_amount
+           , history_table.ri_simple_monthly_total_amount
+           , history_table.ri_schedule_e_calculated_gross_monthly_amount
+           , history_table.ri_schedule_e_proposed_monthly_expense_amount
+           , history_table.ri_schedule_e_net_monthly_amount
+           , history_table.ri_rental_income_monthly_total_amount
+           , history_table.ri_schedule_e_non_recurring_expense_1
+           , history_table.ri_schedule_e_non_recurring_expense_2
+           , history_table.ri_schedule_e_non_recurring_expense_3
+           , history_table.ri_rental_income_calc_method
+           , history_table.ri_common_year1_year
+           , history_table.ri_common_year1_year_include
+           , history_table.ri_common_year1_from_date
+           , history_table.ri_common_year1_through_date
+           , history_table.ri_common_year1_months
+           , history_table.ri_common_year1_annual_total_amount
+           , history_table.ri_common_year1_monthly_total_amount
+           , history_table.ri_common_year2_year
+           , history_table.ri_common_year2_year_include
+           , history_table.ri_common_year2_from_date
+           , history_table.ri_common_year2_through_date
+           , history_table.ri_common_year2_months
+           , history_table.ri_common_year2_annual_total_amount
+           , history_table.ri_common_year2_monthly_total_amount
+           , history_table.ri_common_year3_year
+           , history_table.ri_common_year3_year_include
+           , history_table.ri_common_year3_from_date
+           , history_table.ri_common_year3_through_date
+           , history_table.ri_common_year3_months
+           , history_table.ri_common_year3_annual_total_amount
+           , history_table.ri_common_year3_monthly_total_amount
+           , history_table.ri_schedule_e_year1_rent_received_amount
+           , history_table.ri_schedule_e_year1_advertising_expense_amount
+           , history_table.ri_schedule_e_year1_auto_travel_expense_amount
+           , history_table.ri_schedule_e_year1_cleaning_maintenance_expense_amount
+           , history_table.ri_schedule_e_year1_commissions_expense_amount
+           , history_table.ri_schedule_e_year1_insurance_expense_amount
+           , history_table.ri_schedule_e_year1_legal_professional_expense_amount
+           , history_table.ri_schedule_e_year1_management_expense_amount
+           , history_table.ri_schedule_e_year1_mortgage_interest_expense_amount
+           , history_table.ri_schedule_e_year1_other_interest_expense_amount
+           , history_table.ri_schedule_e_year1_repairs_expense_amount
+           , history_table.ri_schedule_e_year1_supplies_expense_amount
+           , history_table.ri_schedule_e_year1_taxes_expense_amount
+           , history_table.ri_schedule_e_year1_utilities_expense_amount
+           , history_table.ri_schedule_e_year1_depreciation_expense_amount
+           , history_table.ri_schedule_e_year1_other_expense_amount
+           , history_table.ri_schedule_e_year1_total_expense_amount
+           , history_table.ri_schedule_e_year1_non_recurring_expense_amount_1
+           , history_table.ri_schedule_e_year1_non_recurring_expense_amount_2
+           , history_table.ri_schedule_e_year1_non_recurring_expense_amount_3
+           , history_table.ri_schedule_e_year1_insurance_credit_amount
+           , history_table.ri_schedule_e_year1_taxes_credit_amount
+           , history_table.ri_schedule_e_year1_annual_subtotal
+           , history_table.ri_schedule_e_year1_ownership_percent
+           , history_table.ri_schedule_e_year2_rent_received_amount
+           , history_table.ri_schedule_e_year2_advertising_expense_amount
+           , history_table.ri_schedule_e_year2_auto_travel_expense_amount
+           , history_table.ri_schedule_e_year2_cleaning_maintenance_expense_amount
+           , history_table.ri_schedule_e_year2_commissions_expense_amount
+           , history_table.ri_schedule_e_year2_insurance_expense_amount
+           , history_table.ri_schedule_e_year2_legal_professional_expense_amount
+           , history_table.ri_schedule_e_year2_management_expense_amount
+           , history_table.ri_schedule_e_year2_mortgage_interest_expense_amount
+           , history_table.ri_schedule_e_year2_other_interest_expense_amount
+           , history_table.ri_schedule_e_year2_repairs_expense_amount
+           , history_table.ri_schedule_e_year2_supplies_expense_amount
+           , history_table.ri_schedule_e_year2_taxes_expense_amount
+           , history_table.ri_schedule_e_year2_utilities_expense_amount
+           , history_table.ri_schedule_e_year2_depreciation_expense_amount
+           , history_table.ri_schedule_e_year2_other_expense_amount
+           , history_table.ri_schedule_e_year2_total_expense_amount
+           , history_table.ri_schedule_e_year2_non_recurring_expense_amount_1
+           , history_table.ri_schedule_e_year2_non_recurring_expense_amount_2
+           , history_table.ri_schedule_e_year2_non_recurring_expense_amount_3
+           , history_table.ri_schedule_e_year2_insurance_credit_amount
+           , history_table.ri_schedule_e_year2_taxes_credit_amount
+           , history_table.ri_schedule_e_year2_annual_subtotal
+           , history_table.ri_schedule_e_year2_ownership_percent
+           , history_table.ri_schedule_e_year3_rent_received_amount
+           , history_table.ri_schedule_e_year3_advertising_expense_amount
+           , history_table.ri_schedule_e_year3_auto_travel_expense_amount
+           , history_table.ri_schedule_e_year3_cleaning_maintenance_expense_amount
+           , history_table.ri_schedule_e_year3_commissions_expense_amount
+           , history_table.ri_schedule_e_year3_insurance_expense_amount
+           , history_table.ri_schedule_e_year3_legal_professional_expense_amount
+           , history_table.ri_schedule_e_year3_management_expense_amount
+           , history_table.ri_schedule_e_year3_mortgage_interest_expense_amount
+           , history_table.ri_schedule_e_year3_other_interest_expense_amount
+           , history_table.ri_schedule_e_year3_repairs_expense_amount
+           , history_table.ri_schedule_e_year3_supplies_expense_amount
+           , history_table.ri_schedule_e_year3_taxes_expense_amount
+           , history_table.ri_schedule_e_year3_utilities_expense_amount
+           , history_table.ri_schedule_e_year3_depreciation_expense_amount
+           , history_table.ri_schedule_e_year3_other_expense_amount
+           , history_table.ri_schedule_e_year3_total_expense_amount
+           , history_table.ri_schedule_e_year3_non_recurring_expense_amount_1
+           , history_table.ri_schedule_e_year3_non_recurring_expense_amount_2
+           , history_table.ri_schedule_e_year3_non_recurring_expense_amount_3
+           , history_table.ri_schedule_e_year3_insurance_credit_amount
+           , history_table.ri_schedule_e_year3_taxes_credit_amount
+           , history_table.ri_schedule_e_year3_annual_subtotal
+           , history_table.ri_schedule_e_year3_ownership_percent
+           , history_table.ri_simple_monthly_rent_amount
+           , history_table.ri_simple_vacancy_maintenance_adjustment_percent
+           , history_table.ri_simple_monthly_net_rent_amount
+           , history_table.ri_simple_monthly_expense_amount
+           , history_table.ri_simple_monthly_pre_ownership_income_amount
+           , history_table.ri_simple_ownership_percent
+           , history_table.ri_simple_calculated_monthly_amount
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.rental_income history_table
+      LEFT JOIN staging_octane.rental_income staging_table
+                ON staging_table.ri_pid = history_table.ri_pid
+      WHERE staging_table.ri_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.rental_income deleted_records
+          WHERE deleted_records.ri_pid = history_table.ri_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

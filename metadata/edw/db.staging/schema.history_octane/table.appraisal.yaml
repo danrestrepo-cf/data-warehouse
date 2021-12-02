@@ -1,0 +1,789 @@
+name: appraisal
+primary_source_table: staging.staging_octane.appraisal
+primary_key:
+- apr_pid
+- apr_version
+foreign_keys:
+  fk_appraisal_1:
+    columns:
+    - apr_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: history_octane
+      table: deal
+  fk_apr_hve_confidence_level_type:
+    columns:
+    - apr_hve_confidence_level_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: hve_confidence_level_type
+  fkt_apr_appraisal_condition_type:
+    columns:
+    - apr_appraisal_condition_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: appraisal_condition_type
+  fkt_apr_appraisal_order_status_type:
+    columns:
+    - apr_appraisal_order_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: appraisal_order_status_type
+  fkt_apr_appraisal_purpose_type:
+    columns:
+    - apr_appraisal_purpose_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: appraisal_purpose_type
+  fkt_apr_appraisal_source_type:
+    columns:
+    - apr_appraisal_source_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: appraisal_source_type
+  fkt_apr_appraisal_underwriter_type:
+    columns:
+    - apr_appraisal_underwriter_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: appraisal_underwriter_type
+  fkt_apr_appraiser_address_country:
+    columns:
+    - apr_appraiser_address_country
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: country_type
+  fkt_apr_mortgage_type:
+    columns:
+    - apr_mortgage_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: mortgage_type
+  fkt_apr_neighborhood_location_type:
+    columns:
+    - apr_neighborhood_location_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: neighborhood_location_type
+  fkt_apr_order_appraisal:
+    columns:
+    - apr_order_appraisal
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_apr_payment_type:
+    columns:
+    - apr_payment_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: payment_type
+  fkt_apr_property_address_country:
+    columns:
+    - apr_property_address_country
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: country_type
+  fkt_apr_property_category_type:
+    columns:
+    - apr_property_category_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: property_category_type
+  fkt_apr_road_type:
+    columns:
+    - apr_road_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: road_type
+  fkt_apr_sanitation_type:
+    columns:
+    - apr_sanitation_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: sanitation_type
+  fkt_apr_water_type:
+    columns:
+    - apr_water_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: water_type
+columns:
+  apr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.apr_pid
+  apr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_version
+  apr_appraised_value_amount:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.apr_appraised_value_amount
+  apr_effective_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.apr_effective_date
+  apr_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.apr_deal_pid
+  apr_decision_appraisal:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.apr_decision_appraisal
+  apr_appraisal_condition_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraisal_condition_type
+  apr_appraiser_address_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraiser_address_city
+  apr_appraiser_address_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraiser_address_country
+  apr_appraiser_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraiser_address_postal_code
+  apr_appraiser_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraiser_address_state
+  apr_appraiser_address_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraiser_address_street1
+  apr_appraiser_address_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraiser_address_street2
+  apr_appraiser_company_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraiser_company_name
+  apr_appraiser_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.apr_appraiser_email
+  apr_appraiser_fax:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.apr_appraiser_fax
+  apr_appraiser_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.apr_appraiser_first_name
+  apr_appraiser_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.apr_appraiser_last_name
+  apr_appraiser_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.apr_appraiser_middle_name
+  apr_appraiser_mobile_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.apr_appraiser_mobile_phone
+  apr_appraiser_name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.apr_appraiser_name_suffix
+  apr_appraiser_office_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.apr_appraiser_office_phone
+  apr_appraiser_office_phone_extension:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.apr_appraiser_office_phone_extension
+  apr_appraiser_title:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraiser_title
+  apr_appraiser_license_number:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraiser_license_number
+  apr_appraiser_supervisory_license_number:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraiser_supervisory_license_number
+  apr_appraiser_license_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraiser_license_state
+  apr_appraisal_order_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraisal_order_status_type
+  apr_appraisal_order_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.apr_appraisal_order_id
+  apr_appraisal_order_instructions:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.apr_appraisal_order_instructions
+  apr_property_address_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_property_address_city
+  apr_property_address_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_property_address_country
+  apr_property_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_property_address_postal_code
+  apr_property_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_property_address_state
+  apr_property_address_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_property_address_street1
+  apr_property_address_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_property_address_street2
+  apr_property_county_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_property_county_name
+  apr_obtained_from_transfer:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.apr_obtained_from_transfer
+  apr_hud_provided:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.apr_hud_provided
+  apr_bedroom_count_unit_1:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_bedroom_count_unit_1
+  apr_bedroom_count_unit_2:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_bedroom_count_unit_2
+  apr_bedroom_count_unit_3:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_bedroom_count_unit_3
+  apr_bedroom_count_unit_4:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_bedroom_count_unit_4
+  apr_bathroom_count_unit_1:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_bathroom_count_unit_1
+  apr_bathroom_count_unit_2:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_bathroom_count_unit_2
+  apr_bathroom_count_unit_3:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_bathroom_count_unit_3
+  apr_bathroom_count_unit_4:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_bathroom_count_unit_4
+  apr_total_room_count_unit_1:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_total_room_count_unit_1
+  apr_total_room_count_unit_2:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_total_room_count_unit_2
+  apr_total_room_count_unit_3:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_total_room_count_unit_3
+  apr_total_room_count_unit_4:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_total_room_count_unit_4
+  apr_gross_living_area_square_feet_unit_1:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_gross_living_area_square_feet_unit_1
+  apr_gross_living_area_square_feet_unit_2:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_gross_living_area_square_feet_unit_2
+  apr_gross_living_area_square_feet_unit_3:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_gross_living_area_square_feet_unit_3
+  apr_gross_living_area_square_feet_unit_4:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_gross_living_area_square_feet_unit_4
+  apr_appraisal_underwriter_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraisal_underwriter_type
+  apr_ucdp_doc_file_id:
+    data_type: VARCHAR(10)
+    source:
+      field: primary_source_table.columns.apr_ucdp_doc_file_id
+  apr_inspection_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.apr_inspection_date
+  apr_appraisal_reference_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.apr_appraisal_reference_id
+  apr_ucdp_ssr_id:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.apr_ucdp_ssr_id
+  apr_sale_price_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.apr_sale_price_amount
+  apr_property_tax_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_property_tax_id
+  apr_property_category_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_property_category_type
+  apr_cost_to_build_new:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.apr_cost_to_build_new
+  apr_monthly_hoa_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.apr_monthly_hoa_amount
+  apr_structure_built_year:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_structure_built_year
+  apr_structure_built_month:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_structure_built_month
+  apr_project_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_project_name
+  apr_road_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_road_type
+  apr_water_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_water_type
+  apr_sanitation_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_sanitation_type
+  apr_neighborhood_location_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_neighborhood_location_type
+  apr_site_area:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.apr_site_area
+  apr_due_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.apr_due_date
+  apr_order_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.apr_order_date
+  apr_payment_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_payment_type
+  apr_payment_received_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.apr_payment_received_date
+  apr_appraisal_source_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraisal_source_type
+  apr_appraisal_purpose_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraisal_purpose_type
+  apr_exclude:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.apr_exclude
+  apr_order_appraisal:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_order_appraisal
+  apr_appraisal_id:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_appraisal_id
+  apr_mortgage_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_mortgage_type
+  apr_remaining_economic_life_years:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_remaining_economic_life_years
+  apr_deficient_economic_life_explanation:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.apr_deficient_economic_life_explanation
+  apr_hve_point_value_estimate_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.apr_hve_point_value_estimate_amount
+  apr_hve_forecast_standard_deviation_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.apr_hve_forecast_standard_deviation_percent
+  apr_hve_confidence_level_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_hve_confidence_level_type
+  apr_hve_variance_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.apr_hve_variance_percent
+  apr_hve_excessive_value_message:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.apr_hve_excessive_value_message
+  apr_cu_risk_score:
+    data_type: NUMERIC(10,2)
+    source:
+      field: primary_source_table.columns.apr_cu_risk_score
+  apr_license_expiration_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.apr_license_expiration_date
+  apr_supervisor_required:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.apr_supervisor_required
+  apr_supervisory_appraiser_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.apr_supervisory_appraiser_first_name
+  apr_supervisory_appraiser_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.apr_supervisory_appraiser_middle_name
+  apr_supervisory_appraiser_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.apr_supervisory_appraiser_last_name
+  apr_supervisory_appraiser_name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.apr_supervisory_appraiser_name_suffix
+  apr_supervisory_license_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_supervisory_license_state
+  apr_supervisory_license_expiration_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.apr_supervisory_license_expiration_date
+  apr_synthetic_unique:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.apr_synthetic_unique
+  apr_appraisal_invoice_amount:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.apr_appraisal_invoice_amount
+  apr_second_decision_appraisal:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.apr_second_decision_appraisal
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100005:
+    input_type: table
+    output_type: insert
+    json_output_field: apr_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.appraisal
+      SELECT staging_table.apr_pid
+           , staging_table.apr_version
+           , staging_table.apr_appraised_value_amount
+           , staging_table.apr_effective_date
+           , staging_table.apr_deal_pid
+           , staging_table.apr_decision_appraisal
+           , staging_table.apr_appraisal_condition_type
+           , staging_table.apr_appraiser_address_city
+           , staging_table.apr_appraiser_address_country
+           , staging_table.apr_appraiser_address_postal_code
+           , staging_table.apr_appraiser_address_state
+           , staging_table.apr_appraiser_address_street1
+           , staging_table.apr_appraiser_address_street2
+           , staging_table.apr_appraiser_company_name
+           , staging_table.apr_appraiser_email
+           , staging_table.apr_appraiser_fax
+           , staging_table.apr_appraiser_first_name
+           , staging_table.apr_appraiser_last_name
+           , staging_table.apr_appraiser_middle_name
+           , staging_table.apr_appraiser_mobile_phone
+           , staging_table.apr_appraiser_name_suffix
+           , staging_table.apr_appraiser_office_phone
+           , staging_table.apr_appraiser_office_phone_extension
+           , staging_table.apr_appraiser_title
+           , staging_table.apr_appraiser_license_number
+           , staging_table.apr_appraiser_supervisory_license_number
+           , staging_table.apr_appraiser_license_state
+           , staging_table.apr_appraisal_order_status_type
+           , staging_table.apr_appraisal_order_id
+           , staging_table.apr_appraisal_order_instructions
+           , staging_table.apr_property_address_city
+           , staging_table.apr_property_address_country
+           , staging_table.apr_property_address_postal_code
+           , staging_table.apr_property_address_state
+           , staging_table.apr_property_address_street1
+           , staging_table.apr_property_address_street2
+           , staging_table.apr_property_county_name
+           , staging_table.apr_obtained_from_transfer
+           , staging_table.apr_hud_provided
+           , staging_table.apr_bedroom_count_unit_1
+           , staging_table.apr_bedroom_count_unit_2
+           , staging_table.apr_bedroom_count_unit_3
+           , staging_table.apr_bedroom_count_unit_4
+           , staging_table.apr_bathroom_count_unit_1
+           , staging_table.apr_bathroom_count_unit_2
+           , staging_table.apr_bathroom_count_unit_3
+           , staging_table.apr_bathroom_count_unit_4
+           , staging_table.apr_total_room_count_unit_1
+           , staging_table.apr_total_room_count_unit_2
+           , staging_table.apr_total_room_count_unit_3
+           , staging_table.apr_total_room_count_unit_4
+           , staging_table.apr_gross_living_area_square_feet_unit_1
+           , staging_table.apr_gross_living_area_square_feet_unit_2
+           , staging_table.apr_gross_living_area_square_feet_unit_3
+           , staging_table.apr_gross_living_area_square_feet_unit_4
+           , staging_table.apr_appraisal_underwriter_type
+           , staging_table.apr_ucdp_doc_file_id
+           , staging_table.apr_inspection_date
+           , staging_table.apr_appraisal_reference_id
+           , staging_table.apr_ucdp_ssr_id
+           , staging_table.apr_sale_price_amount
+           , staging_table.apr_property_tax_id
+           , staging_table.apr_property_category_type
+           , staging_table.apr_cost_to_build_new
+           , staging_table.apr_monthly_hoa_amount
+           , staging_table.apr_structure_built_year
+           , staging_table.apr_structure_built_month
+           , staging_table.apr_project_name
+           , staging_table.apr_road_type
+           , staging_table.apr_water_type
+           , staging_table.apr_sanitation_type
+           , staging_table.apr_neighborhood_location_type
+           , staging_table.apr_site_area
+           , staging_table.apr_due_date
+           , staging_table.apr_order_date
+           , staging_table.apr_payment_type
+           , staging_table.apr_payment_received_date
+           , staging_table.apr_appraisal_source_type
+           , staging_table.apr_appraisal_purpose_type
+           , staging_table.apr_exclude
+           , staging_table.apr_order_appraisal
+           , staging_table.apr_appraisal_id
+           , staging_table.apr_mortgage_type
+           , staging_table.apr_remaining_economic_life_years
+           , staging_table.apr_deficient_economic_life_explanation
+           , staging_table.apr_hve_point_value_estimate_amount
+           , staging_table.apr_hve_forecast_standard_deviation_percent
+           , staging_table.apr_hve_confidence_level_type
+           , staging_table.apr_hve_variance_percent
+           , staging_table.apr_hve_excessive_value_message
+           , staging_table.apr_cu_risk_score
+           , staging_table.apr_license_expiration_date
+           , staging_table.apr_supervisor_required
+           , staging_table.apr_supervisory_appraiser_first_name
+           , staging_table.apr_supervisory_appraiser_middle_name
+           , staging_table.apr_supervisory_appraiser_last_name
+           , staging_table.apr_supervisory_appraiser_name_suffix
+           , staging_table.apr_supervisory_license_state
+           , staging_table.apr_supervisory_license_expiration_date
+           , staging_table.apr_synthetic_unique
+           , staging_table.apr_appraisal_invoice_amount
+           , staging_table.apr_second_decision_appraisal
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.appraisal staging_table
+      LEFT JOIN history_octane.appraisal history_table
+                ON staging_table.apr_pid = history_table.apr_pid
+                    AND staging_table.apr_version = history_table.apr_version
+      WHERE history_table.apr_pid IS NULL
+      UNION ALL
+      SELECT history_table.apr_pid
+           , history_table.apr_version + 1
+           , history_table.apr_appraised_value_amount
+           , history_table.apr_effective_date
+           , history_table.apr_deal_pid
+           , history_table.apr_decision_appraisal
+           , history_table.apr_appraisal_condition_type
+           , history_table.apr_appraiser_address_city
+           , history_table.apr_appraiser_address_country
+           , history_table.apr_appraiser_address_postal_code
+           , history_table.apr_appraiser_address_state
+           , history_table.apr_appraiser_address_street1
+           , history_table.apr_appraiser_address_street2
+           , history_table.apr_appraiser_company_name
+           , history_table.apr_appraiser_email
+           , history_table.apr_appraiser_fax
+           , history_table.apr_appraiser_first_name
+           , history_table.apr_appraiser_last_name
+           , history_table.apr_appraiser_middle_name
+           , history_table.apr_appraiser_mobile_phone
+           , history_table.apr_appraiser_name_suffix
+           , history_table.apr_appraiser_office_phone
+           , history_table.apr_appraiser_office_phone_extension
+           , history_table.apr_appraiser_title
+           , history_table.apr_appraiser_license_number
+           , history_table.apr_appraiser_supervisory_license_number
+           , history_table.apr_appraiser_license_state
+           , history_table.apr_appraisal_order_status_type
+           , history_table.apr_appraisal_order_id
+           , history_table.apr_appraisal_order_instructions
+           , history_table.apr_property_address_city
+           , history_table.apr_property_address_country
+           , history_table.apr_property_address_postal_code
+           , history_table.apr_property_address_state
+           , history_table.apr_property_address_street1
+           , history_table.apr_property_address_street2
+           , history_table.apr_property_county_name
+           , history_table.apr_obtained_from_transfer
+           , history_table.apr_hud_provided
+           , history_table.apr_bedroom_count_unit_1
+           , history_table.apr_bedroom_count_unit_2
+           , history_table.apr_bedroom_count_unit_3
+           , history_table.apr_bedroom_count_unit_4
+           , history_table.apr_bathroom_count_unit_1
+           , history_table.apr_bathroom_count_unit_2
+           , history_table.apr_bathroom_count_unit_3
+           , history_table.apr_bathroom_count_unit_4
+           , history_table.apr_total_room_count_unit_1
+           , history_table.apr_total_room_count_unit_2
+           , history_table.apr_total_room_count_unit_3
+           , history_table.apr_total_room_count_unit_4
+           , history_table.apr_gross_living_area_square_feet_unit_1
+           , history_table.apr_gross_living_area_square_feet_unit_2
+           , history_table.apr_gross_living_area_square_feet_unit_3
+           , history_table.apr_gross_living_area_square_feet_unit_4
+           , history_table.apr_appraisal_underwriter_type
+           , history_table.apr_ucdp_doc_file_id
+           , history_table.apr_inspection_date
+           , history_table.apr_appraisal_reference_id
+           , history_table.apr_ucdp_ssr_id
+           , history_table.apr_sale_price_amount
+           , history_table.apr_property_tax_id
+           , history_table.apr_property_category_type
+           , history_table.apr_cost_to_build_new
+           , history_table.apr_monthly_hoa_amount
+           , history_table.apr_structure_built_year
+           , history_table.apr_structure_built_month
+           , history_table.apr_project_name
+           , history_table.apr_road_type
+           , history_table.apr_water_type
+           , history_table.apr_sanitation_type
+           , history_table.apr_neighborhood_location_type
+           , history_table.apr_site_area
+           , history_table.apr_due_date
+           , history_table.apr_order_date
+           , history_table.apr_payment_type
+           , history_table.apr_payment_received_date
+           , history_table.apr_appraisal_source_type
+           , history_table.apr_appraisal_purpose_type
+           , history_table.apr_exclude
+           , history_table.apr_order_appraisal
+           , history_table.apr_appraisal_id
+           , history_table.apr_mortgage_type
+           , history_table.apr_remaining_economic_life_years
+           , history_table.apr_deficient_economic_life_explanation
+           , history_table.apr_hve_point_value_estimate_amount
+           , history_table.apr_hve_forecast_standard_deviation_percent
+           , history_table.apr_hve_confidence_level_type
+           , history_table.apr_hve_variance_percent
+           , history_table.apr_hve_excessive_value_message
+           , history_table.apr_cu_risk_score
+           , history_table.apr_license_expiration_date
+           , history_table.apr_supervisor_required
+           , history_table.apr_supervisory_appraiser_first_name
+           , history_table.apr_supervisory_appraiser_middle_name
+           , history_table.apr_supervisory_appraiser_last_name
+           , history_table.apr_supervisory_appraiser_name_suffix
+           , history_table.apr_supervisory_license_state
+           , history_table.apr_supervisory_license_expiration_date
+           , history_table.apr_synthetic_unique
+           , history_table.apr_appraisal_invoice_amount
+           , history_table.apr_second_decision_appraisal
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.appraisal history_table
+      LEFT JOIN staging_octane.appraisal staging_table
+                ON staging_table.apr_pid = history_table.apr_pid
+      WHERE staging_table.apr_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.appraisal deleted_records
+          WHERE deleted_records.apr_pid = history_table.apr_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

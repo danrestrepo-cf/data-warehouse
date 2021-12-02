@@ -1,0 +1,73 @@
+name: product
+primary_key:
+- p_pid
+foreign_keys:
+  fk_product_1:
+    columns:
+    - p_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+  fk_product_2:
+    columns:
+    - p_investor_pid
+    references:
+      columns:
+      - i_pid
+      schema: staging_octane
+      table: investor
+  fk_product_3:
+    columns:
+    - p_parent_product_pid
+    references:
+      columns:
+      - p_pid
+      schema: staging_octane
+      table: product
+  fkt_p_fund_source_type:
+    columns:
+    - p_fund_source_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: fund_source_type
+  fkt_p_product_side_type:
+    columns:
+    - p_product_side_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: product_side_type
+columns:
+  p_pid:
+    data_type: BIGINT
+  p_version:
+    data_type: INTEGER
+  p_account_pid:
+    data_type: BIGINT
+  p_investor_pid:
+    data_type: BIGINT
+  p_fund_source_type:
+    data_type: VARCHAR(128)
+  p_investor_product_id:
+    data_type: VARCHAR(32)
+  p_investor_product_name:
+    data_type: VARCHAR(128)
+  p_from_date:
+    data_type: DATE
+  p_through_date:
+    data_type: DATE
+  p_fnm_product_name:
+    data_type: VARCHAR(15)
+  p_lock_auto_confirm:
+    data_type: BOOLEAN
+  p_description:
+    data_type: VARCHAR(1024)
+  p_product_side_type:
+    data_type: VARCHAR(128)
+  p_parent_product_pid:
+    data_type: BIGINT

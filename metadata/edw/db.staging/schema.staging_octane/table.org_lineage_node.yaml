@@ -1,0 +1,31 @@
+name: org_lineage_node
+primary_key:
+- oln_pid
+foreign_keys:
+  fk_org_lineage_node_1:
+    columns:
+    - oln_org_lineage_pid
+    references:
+      columns:
+      - ol_pid
+      schema: staging_octane
+      table: org_lineage
+  fk_org_lineage_node_2:
+    columns:
+    - oln_org_node_pid
+    references:
+      columns:
+      - on_pid
+      schema: staging_octane
+      table: org_node
+columns:
+  oln_pid:
+    data_type: BIGINT
+  oln_version:
+    data_type: INTEGER
+  oln_org_lineage_pid:
+    data_type: BIGINT
+  oln_org_node_pid:
+    data_type: BIGINT
+  oln_org_node_ordinal:
+    data_type: INTEGER

@@ -1,0 +1,29 @@
+name: deal_system_file
+primary_key:
+- dsf_pid
+foreign_keys:
+  fk_deal_system_file_1:
+    columns:
+    - dsf_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: staging_octane
+      table: deal
+  fk_deal_system_file_2:
+    columns:
+    - dsf_repository_file_pid
+    references:
+      columns:
+      - rf_pid
+      schema: staging_octane
+      table: repository_file
+columns:
+  dsf_pid:
+    data_type: BIGINT
+  dsf_version:
+    data_type: INTEGER
+  dsf_deal_pid:
+    data_type: BIGINT
+  dsf_repository_file_pid:
+    data_type: BIGINT

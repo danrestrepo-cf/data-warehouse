@@ -1,0 +1,31 @@
+name: performer_assignment
+primary_key:
+- pa_pid
+foreign_keys:
+  fk_performer_assignment_1:
+    columns:
+    - pa_role_pid
+    references:
+      columns:
+      - r_pid
+      schema: staging_octane
+      table: role
+  fk_performer_assignment_2:
+    columns:
+    - pa_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+columns:
+  pa_pid:
+    data_type: BIGINT
+  pa_version:
+    data_type: INTEGER
+  pa_role_pid:
+    data_type: BIGINT
+  pa_lender_user_pid:
+    data_type: BIGINT
+  pa_last_assign_datetime:
+    data_type: TIMESTAMP

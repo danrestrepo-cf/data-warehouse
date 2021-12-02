@@ -1,0 +1,29 @@
+name: settlement_agent
+primary_key:
+- sa_pid
+foreign_keys:
+  fk_settlement_agent_1:
+    columns:
+    - sa_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: staging_octane
+      table: account
+columns:
+  sa_pid:
+    data_type: BIGINT
+  sa_version:
+    data_type: INTEGER
+  sa_account_pid:
+    data_type: BIGINT
+  sa_active:
+    data_type: BOOLEAN
+  sa_admin_lock:
+    data_type: BOOLEAN
+  sa_license_id:
+    data_type: VARCHAR(128)
+  sa_company_name:
+    data_type: VARCHAR(128)
+  sa_preferred_vendor:
+    data_type: BOOLEAN

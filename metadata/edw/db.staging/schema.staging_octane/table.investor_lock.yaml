@@ -1,0 +1,179 @@
+name: investor_lock
+primary_key:
+- il_pid
+foreign_keys:
+  fk_investor_lock_2:
+    columns:
+    - il_cancel_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_investor_lock_3:
+    columns:
+    - il_confirm_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_investor_lock_4:
+    columns:
+    - il_requester_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_investor_lock_5:
+    columns:
+    - il_lender_lock_major_pid
+    references:
+      columns:
+      - llmj_pid
+      schema: staging_octane
+      table: lender_lock_major
+  fk_investor_lock_6:
+    columns:
+    - il_product_terms_pid
+    references:
+      columns:
+      - pt_pid
+      schema: staging_octane
+      table: product_terms
+  fk_investor_lock_7:
+    columns:
+    - il_trade_pid
+    references:
+      columns:
+      - t_pid
+      schema: staging_octane
+      table: trade
+  fkt_il_buydown_schedule_type:
+    columns:
+    - il_buydown_schedule_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: buydown_schedule_type
+  fkt_il_interest_only_type:
+    columns:
+    - il_interest_only_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: interest_only_type
+  fkt_il_investor_lock_status_type:
+    columns:
+    - il_investor_lock_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: investor_lock_status_type
+  fkt_il_lock_commitment_type:
+    columns:
+    - il_lock_commitment_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: lock_commitment_type
+  fkt_il_mortgage_type:
+    columns:
+    - il_mortgage_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: mortgage_type
+  fkt_il_prepay_penalty_schedule_type:
+    columns:
+    - il_prepay_penalty_schedule_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: prepay_penalty_schedule_type
+columns:
+  il_pid:
+    data_type: BIGINT
+  il_version:
+    data_type: INTEGER
+  il_lender_lock_major_pid:
+    data_type: BIGINT
+  il_product_terms_pid:
+    data_type: BIGINT
+  il_mortgage_type:
+    data_type: VARCHAR(128)
+  il_interest_only_type:
+    data_type: VARCHAR(128)
+  il_buydown_schedule_type:
+    data_type: VARCHAR(128)
+  il_prepay_penalty_schedule_type:
+    data_type: VARCHAR(128)
+  il_lock_commitment_type:
+    data_type: VARCHAR(128)
+  il_initial_duration_days:
+    data_type: INTEGER
+  il_commitment_datetime:
+    data_type: TIMESTAMP
+  il_initial_commitment_expiration_datetime:
+    data_type: TIMESTAMP
+  il_effective_commitment_expiration_datetime:
+    data_type: TIMESTAMP
+  il_effective_duration_days:
+    data_type: INTEGER
+  il_cancel_datetime:
+    data_type: TIMESTAMP
+  il_cancel_lender_user_pid:
+    data_type: BIGINT
+  il_cancel_unparsed_name:
+    data_type: VARCHAR(128)
+  il_confirm_datetime:
+    data_type: TIMESTAMP
+  il_confirm_lender_user_pid:
+    data_type: BIGINT
+  il_confirm_unparsed_name:
+    data_type: VARCHAR(128)
+  il_requester_lender_user_pid:
+    data_type: BIGINT
+  il_requester_unparsed_name:
+    data_type: VARCHAR(128)
+  il_request_datetime:
+    data_type: TIMESTAMP
+  il_notes:
+    data_type: VARCHAR(16000)
+  il_investor_base_note_rate_percent:
+    data_type: NUMERIC(11,9)
+  il_investor_base_arm_margin_percent:
+    data_type: NUMERIC(11,9)
+  il_investor_base_price_percent:
+    data_type: NUMERIC(11,9)
+  il_lock_note_rate_percent:
+    data_type: NUMERIC(11,9)
+  il_lock_initial_note_rate_percent:
+    data_type: NUMERIC(11,9)
+  il_lock_arm_margin_percent:
+    data_type: NUMERIC(11,9)
+  il_lock_price_percent:
+    data_type: NUMERIC(11,9)
+  il_lock_price_raw_percent:
+    data_type: NUMERIC(11,9)
+  il_maximum_rebate_percent:
+    data_type: NUMERIC(11,9)
+  il_trade_pid:
+    data_type: BIGINT
+  il_hedging:
+    data_type: BOOLEAN
+  il_investor_lock_status_type:
+    data_type: VARCHAR(128)
+  il_investor_loan_id:
+    data_type: VARCHAR(32)
+  il_required_delivery_datetime:
+    data_type: TIMESTAMP
+  il_investor_commitment_id:
+    data_type: VARCHAR(32)
