@@ -1121,7 +1121,6 @@ WHERE edw_table_definition.database_name = delete_keys.database_name
 --edw_join_definition
 WITH delete_keys (primary_database_name, primary_schema_name, primary_table_name, target_database_name, target_schema_name, target_table_name, join_condition) AS (
     VALUES ('staging', 'history_octane', 'loan_closing_doc', 'staging', 'history_octane', 'closing_document_status_type', 'primary_table.lcd_dsi_closing_document_status_type = target_table.code')
-         , ('staging', 'history_octane', 'lender_user', 'staging', 'history_octane', 'country_type', 'primary_table.lu_country = target_table.code')
          , ('staging', 'history_octane', 'loan_closing_doc', 'staging', 'history_octane', 'loan', 'primary_table.lcd_loan_pid = target_table.l_pid')
          , ('staging', 'history_octane', 'loan_closing_doc', 'staging', 'history_octane', 'deal_file', 'primary_table.lcd_unsigned_closing_doc_deal_file_pid = target_table.df_pid')
 )
