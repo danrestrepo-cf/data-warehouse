@@ -10,7 +10,7 @@ import os
 #    3. The Step Function to call is the concatenation of ARN Prefix and ProcessID
 #
 def execute(event, context):
-    valid_etl_type_suffixes = ['', '-insert', 'insert-update', '-delete']
+    valid_etl_type_suffixes = ['', '-insert', '-insert-update', '-delete']
 
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
