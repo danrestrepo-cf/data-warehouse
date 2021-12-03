@@ -113,10 +113,6 @@ columns:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.br_lp_lender_branch_id
-  br_dsi_customer_id:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.br_dsi_customer_id
   br_clg_flood_cert_internal_account_id:
     data_type: VARCHAR(16)
     source:
@@ -147,6 +143,8 @@ columns:
     data_type: BOOLEAN
   etl_batch_id:
     data_type: TEXT
+  br_dsi_customer_id:
+    data_type: VARCHAR(16)
 etls:
   SP-100075:
     input_type: table
@@ -174,7 +172,6 @@ etls:
            , staging_table.br_office_phone_extension
            , staging_table.br_fax
            , staging_table.br_lp_lender_branch_id
-           , staging_table.br_dsi_customer_id
            , staging_table.br_clg_flood_cert_internal_account_id
            , staging_table.br_street_links_branch_id
            , staging_table.br_fha_branch_id
@@ -208,7 +205,6 @@ etls:
            , history_table.br_office_phone_extension
            , history_table.br_fax
            , history_table.br_lp_lender_branch_id
-           , history_table.br_dsi_customer_id
            , history_table.br_clg_flood_cert_internal_account_id
            , history_table.br_street_links_branch_id
            , history_table.br_fha_branch_id
