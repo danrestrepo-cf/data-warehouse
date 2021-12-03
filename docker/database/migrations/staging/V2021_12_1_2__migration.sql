@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS staging_octane.loan_closing_doc;
 
 DROP TABLE IF EXISTS staging_octane.closing_document_status_type;
 
-ALTER TABLE staging_octane.branch.br_dsi_customer_id
+ALTER TABLE staging_octane
     DROP COLUMN br_dsi_customer_id;
 
 ALTER TABLE staging_octane.account
@@ -39,11 +39,11 @@ CREATE TABLE staging_octane.custom_field_setting (
                                                      cfs_pid bigint,
                                                      cfs_version integer,
                                                      constraint pk_custom_field_setting primary key (cfs_pid),
-                                                     cfs_account_pid
-                                                         cfs_custom_field_scope_type
-                                                         cfs_custom_field_setting_name
-                                                         cfs_custom_field_value_type
-                                                         cfs_custom_field_setting_description
+                                                     cfs_account_pid bigint,
+                                                     cfs_custom_field_scope_type varchar(128),
+                                                     cfs_custom_field_setting_name varchar(1024),
+                                                     cfs_custom_field_value_type varchar(128),
+                                                     cfs_custom_field_setting_description varchar(1024)
 );
 
 CREATE INDEX idx_custom_field_setting__pid_version ON staging_octane.custom_field_setting (cfs_pid, cfs_version);
