@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS staging_octane.loan_closing_doc;
 
 DROP TABLE IF EXISTS staging_octane.closing_document_status_type;
 
-ALTER TABLE staging_octane
+ALTER TABLE staging_octane.branch
     DROP COLUMN br_dsi_customer_id;
 
 ALTER TABLE staging_octane.account
