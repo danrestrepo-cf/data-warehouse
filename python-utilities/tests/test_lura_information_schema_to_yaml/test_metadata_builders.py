@@ -4,8 +4,7 @@ from lib.lura_information_schema_to_yaml.metadata_builders import (build_staging
                                                                    map_msql_data_type,
                                                                    generate_history_octane_metadata,
                                                                    add_deleted_tables_and_columns_to_history_octane_metadata,
-                                                                   generate_history_octane_table_input_sql,
-                                                                   ProcesslessTableRecorder)
+                                                                   generate_history_octane_table_input_sql)
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
 from lib.metadata_core.metadata_object_path import TablePath
 
@@ -229,6 +228,31 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                                             'data_type': 'TEXT'
                                         }
                                     }
+                                },
+                                # these two new type tables do not SP numbers assigned to them yet
+                                {
+                                    'name': 'a_new_type',
+                                    'primary_key': ['code'],
+                                    'columns': {
+                                        'code': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'value': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                },
+                                {
+                                    'name': 'another_new_type',
+                                    'primary_key': ['code'],
+                                    'columns': {
+                                        'code': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'value': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
                                 }
                             ]
                         }
@@ -242,6 +266,8 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
             'account': {'process': 'SP-1', 'next_processes': ['SP-10', 'SP-11']},
             'account_type': {'process': 'SP-2', 'next_processes': ['SP-20', 'SP-21']}
         }
+
+        self.current_max_process_number = 2
 
         # noinspection PyTypeChecker
         self.metadata_dict['databases'][0]['schemas'].append({
@@ -390,22 +416,111 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                         }
                     },
                     'next_etls': ['SP-20', 'SP-21']
+                },
+                {
+                    'name': 'a_new_type',
+                    'primary_source_table': 'staging.staging_octane.a_new_type',
+                    'primary_key': ['code'],
+                    'columns': {
+                        'code': {
+                            'data_type': 'TEXT',
+                            'source': {
+                                'field': 'primary_source_table.columns.code'
+                            }
+                        },
+                        'value': {
+                            'data_type': 'TEXT',
+                            'source': {
+                                'field': 'primary_source_table.columns.value'
+                            }
+                        },
+                        'data_source_updated_datetime': {
+                            'data_type': 'TIMESTAMPTZ'
+                        },
+                        'data_source_deleted_flag': {
+                            'data_type': 'BOOLEAN'
+                        },
+                        'etl_batch_id': {
+                            'data_type': 'TEXT'
+                        }
+                    },
+                    'etls': {
+                        'SP-3': {
+                            'input_type': 'table',
+                            'output_type': 'insert',
+                            'json_output_field': 'code',
+                            'truncate_table': False,
+                            'input_sql': "--finding records to insert into history_octane.a_new_type\n" +
+                                         "SELECT staging_table.code\n" +
+                                         "     , staging_table.value\n" +
+                                         "     , FALSE AS data_source_deleted_flag\n" +
+                                         "     , NOW( ) AS data_source_updated_datetime\n" +
+                                         "FROM staging_octane.a_new_type staging_table\n" +
+                                         "LEFT JOIN history_octane.a_new_type history_table\n" +
+                                         "          ON staging_table.code = history_table.code\n" +
+                                         "              AND staging_table.value = history_table.value\n" +
+                                         "WHERE history_table.code IS NULL;"
+                        }
+                    }
+                },
+                {
+                    'name': 'another_new_type',
+                    'primary_source_table': 'staging.staging_octane.another_new_type',
+                    'primary_key': ['code'],
+                    'columns': {
+                        'code': {
+                            'data_type': 'TEXT',
+                            'source': {
+                                'field': 'primary_source_table.columns.code'
+                            }
+                        },
+                        'value': {
+                            'data_type': 'TEXT',
+                            'source': {
+                                'field': 'primary_source_table.columns.value'
+                            }
+                        },
+                        'data_source_updated_datetime': {
+                            'data_type': 'TIMESTAMPTZ'
+                        },
+                        'data_source_deleted_flag': {
+                            'data_type': 'BOOLEAN'
+                        },
+                        'etl_batch_id': {
+                            'data_type': 'TEXT'
+                        }
+                    },
+                    'etls': {
+                        'SP-4': {
+                            'input_type': 'table',
+                            'output_type': 'insert',
+                            'json_output_field': 'code',
+                            'truncate_table': False,
+                            'input_sql': "--finding records to insert into history_octane.another_new_type\n" +
+                                         "SELECT staging_table.code\n" +
+                                         "     , staging_table.value\n" +
+                                         "     , FALSE AS data_source_deleted_flag\n" +
+                                         "     , NOW( ) AS data_source_updated_datetime\n" +
+                                         "FROM staging_octane.another_new_type staging_table\n" +
+                                         "LEFT JOIN history_octane.another_new_type history_table\n" +
+                                         "          ON staging_table.code = history_table.code\n" +
+                                         "              AND staging_table.value = history_table.value\n" +
+                                         "WHERE history_table.code IS NULL;"
+                        }
+                    }
                 }
             ]
         })
 
     def test_throws_value_error_if_given_metadata_doesnt_contain_staging_octane_schema(self):
         with self.assertRaises(ValueError):
-            generate_history_octane_metadata(construct_data_warehouse_metadata_from_dict({'name': 'edw'}), {})
+            generate_history_octane_metadata(construct_data_warehouse_metadata_from_dict({'name': 'edw'}), {},
+                                             self.current_max_process_number)
 
     def test_generates_history_octane_metadata_that_mirrors_existing_staging_octane_metadata_while_adding_history_specific_etl_data(self):
         expected = construct_data_warehouse_metadata_from_dict(self.metadata_dict)
-        self.assertEqual(expected, generate_history_octane_metadata(self.staging_metadata, self.table_to_process_map))
-
-    def test_records_all_tables_without_processes_in_the_given_recorder(self):
-        recorder = ProcesslessTableRecorder()
-        generate_history_octane_metadata(self.staging_metadata, {}, recorder)
-        self.assertEqual(['account', 'account_type'], recorder.tables)
+        self.assertEqual(expected, generate_history_octane_metadata(self.staging_metadata, self.table_to_process_map,
+                                                                    self.current_max_process_number))
 
 
 class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):

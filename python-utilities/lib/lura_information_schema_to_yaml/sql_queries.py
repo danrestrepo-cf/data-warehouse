@@ -99,6 +99,16 @@ def get_history_octane_etl_process_metadata(edw_connection: DBConnection) -> dic
         return table_etl_processes
 
 
+def get_max_staging_to_history_server_process_number(edw_connection: DBConnection) -> int:
+    """Get numeric component of the largest SP number currently assigned to a staging_octane -> history_octane ETL."""
+    with edw_connection as cursor:
+        return cursor.execute_and_fetch_all_results("""
+            SELECT SUBSTRING( MAX( process.name ), 4 )::INT AS max_process_number
+            FROM mdi.process
+            WHERE process.name LIKE 'SP-1_____';
+        """)[0]['max_process_number']
+
+
 def get_history_octane_metadata_for_deleted_columns(edw_connection: DBConnection) -> List[dict]:
     """Get metadata about all history_octane columns (and their tables) from EDW's staging database information_schema.
 
