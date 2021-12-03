@@ -229,7 +229,7 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                                         }
                                     }
                                 },
-                                # these two new type tables do not SP numbers assigned to them yet
+                                # these two new type tables do not have SP numbers assigned to them yet
                                 {
                                     'name': 'a_new_type',
                                     'primary_key': ['code'],
