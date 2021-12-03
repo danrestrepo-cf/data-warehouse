@@ -1,4 +1,13 @@
-DROP TABLE IF EXISTS staging_octane.loan_closing_doc;DROP TABLE IF EXISTS staging_octane.closing_document_status_type;ALTER TABLE staging_octane.branch.br_dsi_customer_id
+--
+-- MAIN | Octane schemas from prod-release to v2021.12.1.1  -  https://app.asana.com/0/0/1201452884282751
+--
+
+/* staging */
+DROP TABLE IF EXISTS staging_octane.loan_closing_doc;
+
+DROP TABLE IF EXISTS staging_octane.closing_document_status_type;
+
+ALTER TABLE staging_octane.branch.br_dsi_customer_id
     DROP COLUMN br_dsi_customer_id;
 
 ALTER TABLE staging_octane.account
@@ -80,21 +89,17 @@ CREATE INDEX idx_org_lineage_tracker_custom_field_update__pid_version ON staging
 
 
 
-
-
-
-
-
-
-
-
+/* history */
 
 CREATE TABLE history_octane.custom_field_value_type (
                                                         code varchar(128),
                                                         value varchar(1024),
                                                         data_source_updated_datetime timestamptz,
-                                                        data_source_deleted_flag boolean
+                                                        data_source_deleted_flag boolean,
+                                                        etl_batch_id text
 );
+
+CREATE INDEX idx_custom_field_value_type__etl_batch_id ON history_octane.custom_field_value_type (etl_batch_id);
 
 CREATE INDEX idx_custom_field_value_type__data_source_updated_datetime ON history_octane.custom_field_value_type (data_source_updated_datetime);
 
@@ -104,8 +109,11 @@ CREATE TABLE history_octane.custom_field_scope_type (
                                                         code varchar(128),
                                                         value varchar(1024),
                                                         data_source_updated_datetime timestamptz,
-                                                        data_source_deleted_flag boolean
+                                                        data_source_deleted_flag boolean,
+                                                        etl_batch_id text
 );
+
+CREATE INDEX idx_custom_field_scope_type__etl_batch_id ON history_octane.custom_field_scope_type (etl_batch_id);
 
 CREATE INDEX idx_custom_field_scope_type__data_source_updated_datetime ON history_octane.custom_field_scope_type (data_source_updated_datetime);
 
@@ -115,8 +123,11 @@ CREATE TABLE history_octane.org_lineage_tracker_custom_field_update_status_type 
                                                                                     code varchar(128),
                                                                                     value varchar(1024),
                                                                                     data_source_updated_datetime timestamptz,
-                                                                                    data_source_deleted_flag boolean
+                                                                                    data_source_deleted_flag boolean,
+                                                                                    etl_batch_id text
 );
+
+CREATE INDEX idx_6e616e66fc70e0b2d1555d13f9cd9af3 ON history_octane.org_lineage_tracker_custom_field_update_status_type (etl_batch_id);
 
 CREATE INDEX idx_2133330e966e616e6fc70ec0fc21848c ON history_octane.org_lineage_tracker_custom_field_update_status_type (data_source_updated_datetime);
 
@@ -131,10 +142,13 @@ CREATE TABLE history_octane.custom_field_setting (
                                                      cfs_custom_field_value_type varchar(128),
                                                      cfs_custom_field_setting_description varchar(1024),
                                                      data_source_updated_datetime timestamptz,
-                                                     data_source_deleted_flag boolean
+                                                     data_source_deleted_flag boolean,
+                                                     etl_batch_id text
 );
 
 CREATE INDEX idx_custom_field_setting__pid ON history_octane.custom_field_setting (cfs_pid);
+
+CREATE INDEX idx_custom_field_setting__etl_batch_id ON history_octane.custom_field_setting (etl_batch_id);
 
 CREATE INDEX idx_custom_field_setting__data_source_updated_datetime ON history_octane.custom_field_setting (data_source_updated_datetime);
 
@@ -155,8 +169,11 @@ CREATE TABLE history_octane.custom_field_choice (
                                                     cfc_choice_label varchar(1024),
                                                     cfc_disabled boolean,
                                                     data_source_updated_datetime timestamptz,
-                                                    data_source_deleted_flag boolean
+                                                    data_source_deleted_flag boolean,
+                                                    etl_batch_id text
 );
+
+CREATE INDEX idx_custom_field_choice__etl_batch_id ON history_octane.custom_field_choice (etl_batch_id);
 
 CREATE INDEX idx_custom_field_choice__pid ON history_octane.custom_field_choice (cfc_pid);
 
@@ -181,8 +198,11 @@ CREATE TABLE history_octane.org_node_custom_field (
                                                       oncf_propagator_org_node_custom_field_pid bigint,
                                                       oncf_org_lineage_tracker_pid bigint,
                                                       data_source_updated_datetime timestamptz,
-                                                      data_source_deleted_flag boolean
+                                                      data_source_deleted_flag boolean,
+                                                      etl_batch_id text
 );
+
+CREATE INDEX idx_org_node_custom_field__etl_batch_id ON history_octane.org_node_custom_field (etl_batch_id);
 
 CREATE INDEX idx_org_node_custom_field__pid ON history_octane.org_node_custom_field (oncf_pid);
 
@@ -208,8 +228,11 @@ CREATE TABLE history_octane.org_lineage_tracker_custom_field_update (
                                                                         otcfu_org_lineage_tracker_pid bigint,
                                                                         otcfu_org_lineage_tracker_custom_field_update_status_type varchar(128),
                                                                         data_source_updated_datetime timestamptz,
-                                                                        data_source_deleted_flag boolean
+                                                                        data_source_deleted_flag boolean,
+                                                                        etl_batch_id text
 );
+
+CREATE INDEX idx_org_lineage_tracker_custom_field_update__etl_batch_id ON history_octane.org_lineage_tracker_custom_field_update (etl_batch_id);
 
 CREATE INDEX idx_org_lineage_tracker_custom_field_update__pid ON history_octane.org_lineage_tracker_custom_field_update (otcfu_pid);
 

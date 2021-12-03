@@ -1,0 +1,147 @@
+name: org_node_custom_field
+primary_source_table: staging.staging_octane.org_node_custom_field
+primary_key:
+- oncf_pid
+- oncf_version
+foreign_keys:
+  fk_org_node_custom_field_1:
+    columns:
+    - oncf_org_node_pid
+    references:
+      columns:
+      - on_pid
+      schema: history_octane
+      table: org_node
+  fk_org_node_custom_field_2:
+    columns:
+    - oncf_custom_field_setting_pid
+    references:
+      columns:
+      - cfs_pid
+      schema: history_octane
+      table: custom_field_setting
+  fk_org_node_custom_field_3:
+    columns:
+    - oncf_custom_field_choice_pid
+    references:
+      columns:
+      - cfc_pid
+      schema: history_octane
+      table: custom_field_choice
+  fk_org_node_custom_field_4:
+    columns:
+    - oncf_propagator_org_node_custom_field_pid
+    references:
+      columns:
+      - oncf_pid
+      schema: history_octane
+      table: org_node_custom_field
+  fk_org_node_custom_field_5:
+    columns:
+    - oncf_org_lineage_tracker_pid
+    references:
+      columns:
+      - olt_pid
+      schema: history_octane
+      table: org_lineage_tracker
+columns:
+  oncf_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.oncf_pid
+  oncf_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.oncf_version
+  oncf_org_node_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.oncf_org_node_pid
+  oncf_custom_field_setting_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.oncf_custom_field_setting_pid
+  oncf_field_value:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.oncf_field_value
+  oncf_custom_field_choice_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.oncf_custom_field_choice_pid
+  oncf_propagator:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.oncf_propagator
+  oncf_propagated:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.oncf_propagated
+  oncf_excluded:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.oncf_excluded
+  oncf_propagator_org_node_custom_field_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.oncf_propagator_org_node_custom_field_pid
+  oncf_org_lineage_tracker_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.oncf_org_lineage_tracker_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100880:
+    input_type: table
+    output_type: insert
+    json_output_field: oncf_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.org_node_custom_field
+      SELECT staging_table.oncf_pid
+           , staging_table.oncf_version
+           , staging_table.oncf_org_node_pid
+           , staging_table.oncf_custom_field_setting_pid
+           , staging_table.oncf_field_value
+           , staging_table.oncf_custom_field_choice_pid
+           , staging_table.oncf_propagator
+           , staging_table.oncf_propagated
+           , staging_table.oncf_excluded
+           , staging_table.oncf_propagator_org_node_custom_field_pid
+           , staging_table.oncf_org_lineage_tracker_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.org_node_custom_field staging_table
+      LEFT JOIN history_octane.org_node_custom_field history_table
+                ON staging_table.oncf_pid = history_table.oncf_pid
+                    AND staging_table.oncf_version = history_table.oncf_version
+      WHERE history_table.oncf_pid IS NULL
+      UNION ALL
+      SELECT history_table.oncf_pid
+           , history_table.oncf_version + 1
+           , history_table.oncf_org_node_pid
+           , history_table.oncf_custom_field_setting_pid
+           , history_table.oncf_field_value
+           , history_table.oncf_custom_field_choice_pid
+           , history_table.oncf_propagator
+           , history_table.oncf_propagated
+           , history_table.oncf_excluded
+           , history_table.oncf_propagator_org_node_custom_field_pid
+           , history_table.oncf_org_lineage_tracker_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.org_node_custom_field history_table
+      LEFT JOIN staging_octane.org_node_custom_field staging_table
+                ON staging_table.oncf_pid = history_table.oncf_pid
+      WHERE staging_table.oncf_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.org_node_custom_field deleted_records
+          WHERE deleted_records.oncf_pid = history_table.oncf_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );
