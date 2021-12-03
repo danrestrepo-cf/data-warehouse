@@ -379,8 +379,8 @@ def generate_staging_to_history_join_columns_string(columns: List[str], base_ind
     """
     base_indent_str = base_indent * ' '
     join_columns_str = f'{base_indent_str}ON {generate_staging_to_history_join_column_string(columns[0])}'
-    join_columns_str += ''.join(
-        [f'\n{base_indent_str}    AND {generate_staging_to_history_join_column_string(column)}' for column in columns[1:]])
+    join_columns_str += ''.join([f'\n{base_indent_str}    AND {generate_staging_to_history_join_column_string(column)}'
+                                 for column in columns[1:]])
     return join_columns_str
 
 
