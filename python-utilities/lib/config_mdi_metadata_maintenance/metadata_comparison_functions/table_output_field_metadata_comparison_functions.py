@@ -27,7 +27,7 @@ class TableOutputFieldMetadataComparisonFunctions(MetadataComparisonFunctions):
             """)
 
     def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:
-        standard_sourceless_fields = ['data_source_updated_datetime', 'data_source_deleted_flag']
+        standard_sourceless_fields = ['data_source_updated_datetime', 'data_source_deleted_flag', 'etl_batch_id']
         metadata_table = self.construct_empty_metadata_table()
         for database in data_warehouse_metadata.databases:
             for schema in database.schemas:

@@ -100,6 +100,55 @@ class TestTableOutputFieldMetadataComparisonFunctions(unittest.TestCase):
         ])
         self.assertEqual(expected, TableOutputFieldMetadataComparisonFunctions().construct_metadata_table_from_source(dw_metadata))
 
+    def test_construct_metadata_table_from_source_includes_standardized_fields_even_though_they_have_no_source(self):
+        dw_metadata = construct_data_warehouse_metadata_from_dict(
+            {
+                'name': 'edw',
+                'databases': [
+                    {
+                        'name': 'staging',
+                        'schemas': [
+                            {
+                                'name': 'history_octane',
+                                'tables': [
+                                    {
+                                        'name': 'table1',
+                                        'primary_source_table': 'staging.staging_octane.table1',
+                                        'columns': {
+                                            'data_source_updated_datetime': {
+                                                'data_type': 'TIMESTAMPTZ'
+                                            },
+                                            'data_source_deleted_flag': {
+                                                'data_type': 'BOOLEAN'
+                                            },
+                                            'etl_batch_id': {
+                                                'data_type': 'TEXT'
+                                            }
+                                        },
+                                        'etls': {
+                                            'SP-1': {
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'insert'
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        )
+
+        expected = MetadataTable(key_fields=['process_name', 'database_field_name'])
+        expected.add_rows([
+            {'process_name': 'SP-1', 'database_field_name': 'data_source_updated_datetime'},
+            {'process_name': 'SP-1', 'database_field_name': 'data_source_deleted_flag'},
+            {'process_name': 'SP-1', 'database_field_name': 'etl_batch_id'}
+        ])
+        self.assertEqual(expected, TableOutputFieldMetadataComparisonFunctions().construct_metadata_table_from_source(dw_metadata))
+
     def test_construct_insert_row_grouper(self):
         test_data = [
             Row(key={'process_name': 'SP-1', 'database_field_name': 't1_col1'}, attributes={}),
