@@ -156,6 +156,7 @@ def generate_history_octane_metadata(metadata: DataWarehouseMetadata, table_to_p
             history_table.add_column(history_column)
         history_table.add_column(ColumnMetadata(name='data_source_updated_datetime', data_type='TIMESTAMPTZ'))
         history_table.add_column(ColumnMetadata(name='data_source_deleted_flag', data_type='BOOLEAN'))
+        history_table.add_column(ColumnMetadata(name='etl_batch_id', data_type='TEXT'))
         for staging_fk in staging_table.foreign_keys:
             foreign_table_path = staging_fk.table
             foreign_table_path.schema = 'history_octane'

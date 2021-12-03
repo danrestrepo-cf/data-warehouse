@@ -299,6 +299,9 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                         },
                         'data_source_deleted_flag': {
                             'data_type': 'BOOLEAN'
+                        },
+                        'etl_batch_id': {
+                            'data_type': 'TEXT'
                         }
                     },
                     'etls': {
@@ -363,6 +366,9 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                         },
                         'data_source_deleted_flag': {
                             'data_type': 'BOOLEAN'
+                        },
+                        'etl_batch_id': {
+                            'data_type': 'TEXT'
                         }
                     },
                     'etls': {
