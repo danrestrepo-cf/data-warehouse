@@ -1,0 +1,79 @@
+name: custom_field_choice
+primary_source_table: staging.staging_octane.custom_field_choice
+primary_key:
+- cfc_pid
+- cfc_version
+foreign_keys:
+  fk_custom_field_choice_1:
+    columns:
+    - cfc_custom_field_setting_pid
+    references:
+      columns:
+      - cfs_pid
+      schema: history_octane
+      table: custom_field_setting
+columns:
+  cfc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cfc_pid
+  cfc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.cfc_version
+  cfc_custom_field_setting_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cfc_custom_field_setting_pid
+  cfc_choice_label:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.cfc_choice_label
+  cfc_disabled:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.cfc_disabled
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100874:
+    input_type: table
+    output_type: insert
+    json_output_field: cfc_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.custom_field_choice
+      SELECT staging_table.cfc_pid
+           , staging_table.cfc_version
+           , staging_table.cfc_custom_field_setting_pid
+           , staging_table.cfc_choice_label
+           , staging_table.cfc_disabled
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.custom_field_choice staging_table
+      LEFT JOIN history_octane.custom_field_choice history_table
+                ON staging_table.cfc_pid = history_table.cfc_pid
+                    AND staging_table.cfc_version = history_table.cfc_version
+      WHERE history_table.cfc_pid IS NULL
+      UNION ALL
+      SELECT history_table.cfc_pid
+           , history_table.cfc_version + 1
+           , history_table.cfc_custom_field_setting_pid
+           , history_table.cfc_choice_label
+           , history_table.cfc_disabled
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.custom_field_choice history_table
+      LEFT JOIN staging_octane.custom_field_choice staging_table
+                ON staging_table.cfc_pid = history_table.cfc_pid
+      WHERE staging_table.cfc_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.custom_field_choice deleted_records
+          WHERE deleted_records.cfc_pid = history_table.cfc_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

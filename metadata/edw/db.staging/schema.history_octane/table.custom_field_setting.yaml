@@ -1,0 +1,107 @@
+name: custom_field_setting
+primary_source_table: staging.staging_octane.custom_field_setting
+primary_key:
+- cfs_pid
+- cfs_version
+foreign_keys:
+  fk_custom_field_setting_1:
+    columns:
+    - cfs_account_pid
+    references:
+      columns:
+      - a_pid
+      schema: history_octane
+      table: account
+  fkt_cfs_custom_field_scope_type:
+    columns:
+    - cfs_custom_field_scope_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: custom_field_scope_type
+  fkt_cfs_custom_field_value_type:
+    columns:
+    - cfs_custom_field_value_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: custom_field_value_type
+columns:
+  cfs_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cfs_pid
+  cfs_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.cfs_version
+  cfs_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cfs_account_pid
+  cfs_custom_field_scope_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cfs_custom_field_scope_type
+  cfs_custom_field_setting_name:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.cfs_custom_field_setting_name
+  cfs_custom_field_value_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cfs_custom_field_value_type
+  cfs_custom_field_setting_description:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.cfs_custom_field_setting_description
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100876:
+    input_type: table
+    output_type: insert
+    json_output_field: cfs_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.custom_field_setting
+      SELECT staging_table.cfs_pid
+           , staging_table.cfs_version
+           , staging_table.cfs_account_pid
+           , staging_table.cfs_custom_field_scope_type
+           , staging_table.cfs_custom_field_setting_name
+           , staging_table.cfs_custom_field_value_type
+           , staging_table.cfs_custom_field_setting_description
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.custom_field_setting staging_table
+      LEFT JOIN history_octane.custom_field_setting history_table
+                ON staging_table.cfs_pid = history_table.cfs_pid
+                    AND staging_table.cfs_version = history_table.cfs_version
+      WHERE history_table.cfs_pid IS NULL
+      UNION ALL
+      SELECT history_table.cfs_pid
+           , history_table.cfs_version + 1
+           , history_table.cfs_account_pid
+           , history_table.cfs_custom_field_scope_type
+           , history_table.cfs_custom_field_setting_name
+           , history_table.cfs_custom_field_value_type
+           , history_table.cfs_custom_field_setting_description
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.custom_field_setting history_table
+      LEFT JOIN staging_octane.custom_field_setting staging_table
+                ON staging_table.cfs_pid = history_table.cfs_pid
+      WHERE staging_table.cfs_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.custom_field_setting deleted_records
+          WHERE deleted_records.cfs_pid = history_table.cfs_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );
