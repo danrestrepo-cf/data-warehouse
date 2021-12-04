@@ -85,14 +85,6 @@ columns:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.a_uuts_master_office_phone_extension
-  a_allonge_representative_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.a_allonge_representative_name
-  a_allonge_representative_title:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.a_allonge_representative_title
   a_account_borrower_site_id:
     data_type: VARCHAR(128)
     source:
@@ -193,14 +185,18 @@ columns:
     data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+  a_allonge_representative_name:
+    data_type: VARCHAR(128)
+  a_allonge_representative_title:
+    data_type: VARCHAR(128)
   a_lender_user_password_expire_days:
     data_type: INTEGER
   a_lender_user_password_minimum_change_days:
     data_type: INTEGER
   a_lender_user_previous_password_ban:
     data_type: INTEGER
-  etl_batch_id:
-    data_type: TEXT
 etls:
   SP-100019:
     input_type: table
@@ -227,8 +223,6 @@ etls:
            , staging_table.a_uuts_master_contact_title
            , staging_table.a_uuts_master_office_phone
            , staging_table.a_uuts_master_office_phone_extension
-           , staging_table.a_allonge_representative_name
-           , staging_table.a_allonge_representative_title
            , staging_table.a_account_borrower_site_id
            , staging_table.a_originator_borrower_sites_enabled
            , staging_table.a_company_borrower_site_enabled
@@ -279,8 +273,6 @@ etls:
            , history_table.a_uuts_master_contact_title
            , history_table.a_uuts_master_office_phone
            , history_table.a_uuts_master_office_phone_extension
-           , history_table.a_allonge_representative_name
-           , history_table.a_allonge_representative_title
            , history_table.a_account_borrower_site_id
            , history_table.a_originator_borrower_sites_enabled
            , history_table.a_company_borrower_site_enabled

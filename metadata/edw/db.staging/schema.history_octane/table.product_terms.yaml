@@ -681,10 +681,6 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.pt_fnm_arm_plan_type
-  pt_dsi_plan_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_dsi_plan_code
   pt_credit_qualifying:
     data_type: BOOLEAN
     source:
@@ -811,6 +807,8 @@ columns:
     data_type: BOOLEAN
   etl_batch_id:
     data_type: TEXT
+  pt_dsi_plan_code:
+    data_type: VARCHAR(128)
 etls:
   SP-100285:
     input_type: table
@@ -906,7 +904,6 @@ etls:
            , staging_table.pt_buydown_subsidy_calculation_type
            , staging_table.pt_prepaid_interest_rate_type
            , staging_table.pt_fnm_arm_plan_type
-           , staging_table.pt_dsi_plan_code
            , staging_table.pt_credit_qualifying
            , staging_table.pt_product_special_program_type
            , staging_table.pt_section_of_act_coarse_type
@@ -1032,7 +1029,6 @@ etls:
            , history_table.pt_buydown_subsidy_calculation_type
            , history_table.pt_prepaid_interest_rate_type
            , history_table.pt_fnm_arm_plan_type
-           , history_table.pt_dsi_plan_code
            , history_table.pt_credit_qualifying
            , history_table.pt_product_special_program_type
            , history_table.pt_section_of_act_coarse_type
