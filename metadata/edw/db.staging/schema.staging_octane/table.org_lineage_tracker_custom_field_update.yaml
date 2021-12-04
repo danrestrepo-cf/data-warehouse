@@ -1,0 +1,21 @@
+name: org_lineage_tracker_custom_field_update
+primary_key:
+- otcfu_pid
+foreign_keys:
+  fk_org_lineage_tracker_custom_field_update_1:
+    columns:
+    - otcfu_org_lineage_tracker_pid
+    references:
+      columns:
+      - olt_pid
+      schema: staging_octane
+      table: org_lineage_tracker
+columns:
+  otcfu_pid:
+    data_type: BIGINT
+  otcfu_version:
+    data_type: INTEGER
+  otcfu_org_lineage_tracker_pid:
+    data_type: BIGINT
+  otcfu_org_lineage_tracker_custom_field_update_status_type:
+    data_type: VARCHAR(128)

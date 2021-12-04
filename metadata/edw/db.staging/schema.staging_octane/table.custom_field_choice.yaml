@@ -1,0 +1,23 @@
+name: custom_field_choice
+primary_key:
+- cfc_pid
+foreign_keys:
+  fk_custom_field_choice_1:
+    columns:
+    - cfc_custom_field_setting_pid
+    references:
+      columns:
+      - cfs_pid
+      schema: staging_octane
+      table: custom_field_setting
+columns:
+  cfc_pid:
+    data_type: BIGINT
+  cfc_version:
+    data_type: INTEGER
+  cfc_custom_field_setting_pid:
+    data_type: BIGINT
+  cfc_choice_label:
+    data_type: VARCHAR(1024)
+  cfc_disabled:
+    data_type: BOOLEAN
