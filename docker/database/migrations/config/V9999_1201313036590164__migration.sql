@@ -964,14 +964,6 @@ SET sql = 'WITH loan_fact_incl_new_records AS (
               AND history_records.i_pid IS NULL
         ) AS product_investor
                   ON product.p_investor_pid = product_investor.i_pid
-            -- history_octane.hmda_purchaser_of_loan_2017_type
-        LEFT JOIN history_octane.hmda_purchaser_of_loan_2017_type
-                  ON loan.l_hmda_purchaser_of_loan_2017_type = hmda_purchaser_of_loan_2017_type.code
-                      AND hmda_purchaser_of_loan_2017_type.data_source_deleted_flag IS FALSE
-            -- history_octane.hmda_purchaser_of_loan_2018_type
-        LEFT JOIN history_octane.hmda_purchaser_of_loan_2018_type
-                  ON loan.l_hmda_purchaser_of_loan_2018_type = hmda_purchaser_of_loan_2018_type.code
-                      AND hmda_purchaser_of_loan_2018_type.data_source_deleted_flag IS FALSE
             -- star_loan.loan_dim
         JOIN (
             SELECT loan_dim.*
@@ -1897,8 +1889,8 @@ SET sql = 'WITH loan_fact_incl_new_records AS (
             JOIN star_common.etl_log
                  ON hmda_purchaser_of_loan_dim.etl_batch_id = etl_log.etl_batch_id
         ) AS hmda_purchaser_of_loan_dim
-                  ON hmda_purchaser_of_loan_2017_type.code IS NOT DISTINCT FROM hmda_purchaser_of_loan_dim.code_2017
-                      AND hmda_purchaser_of_loan_2018_type.code IS NOT DISTINCT FROM hmda_purchaser_of_loan_dim.code_2018
+                  ON loan.l_hmda_purchaser_of_loan_2017_type IS NOT DISTINCT FROM hmda_purchaser_of_loan_dim.code_2017
+                      AND loan.l_hmda_purchaser_of_loan_2018_type IS NOT DISTINCT FROM hmda_purchaser_of_loan_dim.code_2018
                       AND hmda_purchaser_of_loan_dim.data_source_dwid = 1
             -- star_loan.date_dim joins for date dwids
         LEFT JOIN star_common.date_dim agency_case_id_assigned_date_dim
