@@ -2,6 +2,8 @@
 
 set -e
 
+path_to_script="$(pwd)/$(dirname "$0")"
+
 # set variable defaults
 project_name=edw
 default_db_username=postgres
@@ -25,8 +27,14 @@ case "$#" in
     ;;
 esac
 
+image="postgres:12"
+if [ $jenkins = "true" ]; then
+  image="188213074036.dkr.ecr.us-east-1.amazonaws.com/lura/dev-postgres:12"
+  ${path_to_script}/../aws-ecr-login.sh 188213074036
+fi
+
 # execute psql docker image using db_username, project_name, and database variables
 echo "Logging into PostgreSQL with username: ${db_username} and database: ${database}"
 docker run -it \
   --network ${project_name}_default \
-  --rm postgres:12 psql -U ${db_username} "postgresql://${project_name}_database_1:5432/${database}"
+  --rm ${image} psql -U ${db_username} "postgresql://${project_name}_database_1:5432/${database}"

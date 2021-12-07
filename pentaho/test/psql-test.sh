@@ -2,6 +2,9 @@
 
 export MSYS_NO_PATHCONV=1
 
+# we change directory within this script, so need the absolute path for relative references
+path_to_script="$(pwd)/$(dirname "$0")"
+
 #set the script to fail on any errors
 set -e
 if [ "$#" -lt 3 ]; then
@@ -11,9 +14,10 @@ fi
 
 jenkins=${JENKINS_ENVIRONMENT:-false}
 
-image="postgres:11"
+image="postgres:12"
 if [ $jenkins = "true" ]; then
-  image="188213074036.dkr.ecr.us-east-1.amazonaws.com/lura/dev-postgres:11"
+  image="188213074036.dkr.ecr.us-east-1.amazonaws.com/lura/dev-postgres:12"
+  ${path_to_script}/../../aws-ecr-login.sh 188213074036
 fi
 
 database=$1
