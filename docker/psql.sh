@@ -2,7 +2,7 @@
 
 set -e
 
-path_to_script="$(pwd)/$(dirname "$0")"
+path_to_script="$(dirname "$0")"
 
 # set variable defaults
 project_name=edw

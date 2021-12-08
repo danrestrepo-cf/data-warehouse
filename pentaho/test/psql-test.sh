@@ -3,7 +3,7 @@
 export MSYS_NO_PATHCONV=1
 
 # we change directory within this script, so need the absolute path for relative references
-path_to_script="$(pwd)/$(dirname "$0")"
+path_to_script="$(dirname "$0")"
 
 #set the script to fail on any errors
 set -e
@@ -12,7 +12,7 @@ if [ "$#" -lt 3 ]; then
   exit 1
 fi
 
-image="${POSTGRES_IMAGE:-postgres:-12}"
+image="${POSTGRES_IMAGE:-postgres:12}"
 
 jenkins=${JENKINS_ENVIRONMENT:-false}
 if [ $jenkins = "true" ]; then
