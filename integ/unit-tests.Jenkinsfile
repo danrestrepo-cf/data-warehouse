@@ -11,6 +11,9 @@ pipeline {
     }
     environment {
         JENKINS_ENVIRONMENT = 'true'
+
+        FLYWAY_IMAGE='188213074036.dkr.ecr.us-east-1.amazonaws.com/lura/dev-flyway:6'
+        POSTGRES_IMAGE='188213074036.dkr.ecr.us-east-1.amazonaws.com/lura/dev-postgres:12'
     }
     stages {
         stage("Prepare Docker") {

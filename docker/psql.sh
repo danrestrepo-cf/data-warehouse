@@ -27,9 +27,10 @@ case "$#" in
     ;;
 esac
 
-image="postgres:12"
+image="${POSTGRES_IMAGE:-postgres-12}"
+
+jenkins=${JENKINS_ENVIRONMENT:-false}
 if [ $jenkins = "true" ]; then
-  image="188213074036.dkr.ecr.us-east-1.amazonaws.com/lura/dev-postgres:12"
   ${path_to_script}/../aws-ecr-login.sh 188213074036
 fi
 

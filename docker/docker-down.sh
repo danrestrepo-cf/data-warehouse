@@ -10,12 +10,7 @@ function run_compose_file {
   migration_category=$1
   project_name=$2
 
-  override=""
-  if [ $jenkins = "true" ]; then
-    override="-f ${path_to_script}/docker-compose-${migration_category}-ci.yml"
-  fi
-
-  docker-compose --project-name ${project_name} -f ${path_to_script}/docker-compose-${migration_category}.yml ${override} down
+  docker-compose --project-name ${project_name} -f ${path_to_script}/docker-compose-${migration_category}.yml down
 }
 
 # take down the application in the opposite way we created it
