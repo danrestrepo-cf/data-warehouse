@@ -9,6 +9,12 @@ pipeline {
         ansiColor("xterm")
         timeout(time: 2, unit: "HOURS")
     }
+    environment {
+        JENKINS_ENVIRONMENT = 'true'
+
+        FLYWAY_IMAGE='188213074036.dkr.ecr.us-east-1.amazonaws.com/lura/dev-flyway:6'
+        POSTGRES_IMAGE='188213074036.dkr.ecr.us-east-1.amazonaws.com/lura/dev-postgres:12'
+    }
     stages {
         stage("Prepare Docker") {
             steps {
@@ -20,6 +26,8 @@ pipeline {
             steps {
                 sh "./integ/scripts/s3-artifact-download.sh './docker/pentaho/install' 'pdi-ce-9.0.0.0-423.zip' 'data-warehouse/pdi-ce-9.0.0.0-423.zip'"
                 dir("./docker") {
+                    // login to ECR in the jenkins account
+                    sh "./aws-ecr-login.sh 188213074036"
                     sh "./docker-rebuild.sh"
                 }
             }
