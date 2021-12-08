@@ -31,7 +31,7 @@ image="${POSTGRES_IMAGE:-postgres-12}"
 
 jenkins=${JENKINS_ENVIRONMENT:-false}
 if [ $jenkins = "true" ]; then
-  ${path_to_script}/../aws-ecr-login.sh 188213074036
+  ${path_to_script}/aws-ecr-login.sh 188213074036
 fi
 
 # execute psql docker image using db_username, project_name, and database variables
