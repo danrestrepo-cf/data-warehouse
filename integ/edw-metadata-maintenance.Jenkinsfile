@@ -23,6 +23,10 @@ pipeline {
     environment {
         DB_ENV_LOADER = 'DashboardAccountEnvironmentLoader'
         JENKINS_ENVIRONMENT = 'true'
+
+        FLYWAY_IMAGE='188213074036.dkr.ecr.us-east-1.amazonaws.com/lura/dev-flyway:6'
+        POSTGRES_IMAGE='188213074036.dkr.ecr.us-east-1.amazonaws.com/lura/dev-postgres:12'
+
         // Zoom notifications:
         ZOOM_TOKEN_STATUS = credentials('zoom-token-bi-jenkins')
         ZOOM_WEBHOOK_STATUS = credentials('zoom-webhook-bi-jenkins')
@@ -50,6 +54,8 @@ pipeline {
             steps {
                 sh "./integ/scripts/s3-artifact-download.sh './docker/pentaho/install' 'pdi-ce-9.0.0.0-423.zip' 'data-warehouse/pdi-ce-9.0.0.0-423.zip'"
                 dir('./docker') {
+                    // login to ECR in the jenkins account
+                    sh "./aws-ecr-login.sh 188213074036"
                     sh './docker-rebuild.sh'
                 }
             }

@@ -3,7 +3,7 @@ services:
   database:
     # we build the image so we may copy an init script in.
     # trying to copy the init script as a volume leads to errors reading it.  this works.
-    image: postgres:12
+    image: ${POSTGRES_IMAGE:-postgres:12}
     environment:
       - POSTGRES_PASSWORD=testonly
     volumes:
@@ -13,7 +13,7 @@ services:
     shm_size: 2gb
   flyway-roles:
     # this creates users/roles, etc that are normally created in terraform
-    image: flyway/flyway:6
+    image: ${FLYWAY_IMAGE:-flyway/flyway:6}
     command: -url=jdbc:postgresql://database:5432/postgres -schemas=flyway-baseline -user=postgres -password=testonly -connectRetries=60 migrate
     volumes:
       - ./database/baseline/roles:/flyway/sql
