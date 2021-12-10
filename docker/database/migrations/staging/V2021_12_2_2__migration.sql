@@ -68,8 +68,11 @@ rsg_rate_sheet_group_name varchar(128),
 rsg_investor_pid bigint,
 rsg_loan_amortization_type varchar(128),
 data_source_updated_datetime timestamptz,
-data_source_deleted_flag boolean
+data_source_deleted_flag boolean,
+etl_batch_id TEXT
 );
+
+CREATE INDEX idx_rate_sheet_group__etl_batch_id ON history_octane.rate_sheet_group (etl_batch_id);
 
 CREATE INDEX idx_rate_sheet_group__pid ON history_octane.rate_sheet_group (rsg_pid);
 
@@ -93,8 +96,11 @@ rsgm_product_pid bigint,
 rsgm_from_date date,
 rsgm_through_date date,
 data_source_updated_datetime timestamptz,
-data_source_deleted_flag boolean
+data_source_deleted_flag boolean,
+etl_batch_id TEXT
 );
+
+CREATE INDEX idx_rate_sheet_group_member__etl_batch_id ON history_octane.rate_sheet_group_member (etl_batch_id);
 
 CREATE INDEX idx_rate_sheet_group_member__pid ON history_octane.rate_sheet_group_member (rsgm_pid);
 
