@@ -20,14 +20,14 @@ pipeline {
             steps {
                 sh '''docker stop $(docker ps -a -q) || true'''
                 sh '''docker rm $(docker ps -a -q) || true'''
+                // login to ECR in the jenkins account
+                sh "docker/aws-ecr-login.sh 188213074036"
             }
         }
         stage("Build Docker images") {
             steps {
                 sh "./integ/scripts/s3-artifact-download.sh './docker/pentaho/install' 'pdi-ce-9.0.0.0-423.zip' 'data-warehouse/pdi-ce-9.0.0.0-423.zip'"
                 dir("./docker") {
-                    // login to ECR in the jenkins account
-                    sh "./aws-ecr-login.sh 188213074036"
                     sh "./docker-rebuild.sh"
                 }
             }
