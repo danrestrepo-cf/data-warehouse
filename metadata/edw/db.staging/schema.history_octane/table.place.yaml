@@ -1177,10 +1177,16 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.pl_seller_original_cost_amount_verified
+  pl_snapshotted_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pl_snapshotted_pid
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
   pl_construction_improvement_costs_amount:
     data_type: NUMERIC(15,0)
   pl_refinance_total_improvement_costs_amount:
@@ -1203,8 +1209,6 @@ columns:
     data_type: NUMERIC(15,2)
   pl_refinance_general_improvements_amount:
     data_type: NUMERIC(15,0)
-  etl_batch_id:
-    data_type: TEXT
 etls:
   SP-100012:
     input_type: table
@@ -1426,6 +1430,7 @@ etls:
            , staging_table.pl_property_tax_id_verified
            , staging_table.pl_seller_acquired_date_verified
            , staging_table.pl_seller_original_cost_amount_verified
+           , staging_table.pl_snapshotted_pid
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.place staging_table
@@ -1647,6 +1652,7 @@ etls:
            , history_table.pl_property_tax_id_verified
            , history_table.pl_seller_acquired_date_verified
            , history_table.pl_seller_original_cost_amount_verified
+           , history_table.pl_snapshotted_pid
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.place history_table
