@@ -24,3 +24,6 @@ CREATE INDEX idx_loan_fact__etl_batch_id ON star_loan.loan_fact (etl_batch_id);
 CREATE INDEX idx_loan_beneficiary_dim__etl_batch_id ON star_loan.loan_beneficiary_dim (etl_batch_id);
 CREATE INDEX idx_transaction_dim__etl_batch_id ON star_loan.transaction_dim (etl_batch_id);
 CREATE INDEX idx_interim_funder_dim__etl_batch_id ON star_loan.interim_funder_dim (etl_batch_id);
+
+-- add index to star_common.date_dim value column
+CREATE INDEX idx_date_dim__value ON star_common.date_dim (value);
