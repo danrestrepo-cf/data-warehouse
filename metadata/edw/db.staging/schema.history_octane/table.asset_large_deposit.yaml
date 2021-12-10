@@ -33,6 +33,10 @@ columns:
     data_type: DATE
     source:
       field: primary_source_table.columns.ald_deposit_date
+  ald_snapshotted_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ald_snapshotted_pid
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
   data_source_deleted_flag:
@@ -52,6 +56,7 @@ etls:
            , staging_table.ald_asset_pid
            , staging_table.ald_deposit_amount
            , staging_table.ald_deposit_date
+           , staging_table.ald_snapshotted_pid
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.asset_large_deposit staging_table
@@ -65,6 +70,7 @@ etls:
            , history_table.ald_asset_pid
            , history_table.ald_deposit_amount
            , history_table.ald_deposit_date
+           , history_table.ald_snapshotted_pid
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.asset_large_deposit history_table
