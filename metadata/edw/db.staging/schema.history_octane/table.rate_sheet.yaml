@@ -12,6 +12,14 @@ foreign_keys:
       - p_pid
       schema: history_octane
       table: product
+  fk_rate_sheet_2:
+    columns:
+    - rs_rate_sheet_group_pid
+    references:
+      columns:
+      - rsg_pid
+      schema: history_octane
+      table: rate_sheet_group
 columns:
   rs_pid:
     data_type: BIGINT
@@ -29,6 +37,10 @@ columns:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.rs_from_datetime
+  rs_rate_sheet_group_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rs_rate_sheet_group_pid
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
   data_source_deleted_flag:
@@ -47,6 +59,7 @@ etls:
            , staging_table.rs_version
            , staging_table.rs_product_pid
            , staging_table.rs_from_datetime
+           , staging_table.rs_rate_sheet_group_pid
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.rate_sheet staging_table
@@ -59,6 +72,7 @@ etls:
            , history_table.rs_version + 1
            , history_table.rs_product_pid
            , history_table.rs_from_datetime
+           , history_table.rs_rate_sheet_group_pid
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.rate_sheet history_table

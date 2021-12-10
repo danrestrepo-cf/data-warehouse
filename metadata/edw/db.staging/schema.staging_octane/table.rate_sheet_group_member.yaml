@@ -1,0 +1,33 @@
+name: rate_sheet_group_member
+primary_key:
+- rsgm_pid
+foreign_keys:
+  fk_rate_sheet_group_member_1:
+    columns:
+    - rsgm_rate_sheet_group_pid
+    references:
+      columns:
+      - rsg_pid
+      schema: staging_octane
+      table: rate_sheet_group
+  fk_rate_sheet_group_member_2:
+    columns:
+    - rsgm_product_pid
+    references:
+      columns:
+      - p_pid
+      schema: staging_octane
+      table: product
+columns:
+  rsgm_pid:
+    data_type: BIGINT
+  rsgm_version:
+    data_type: INTEGER
+  rsgm_rate_sheet_group_pid:
+    data_type: BIGINT
+  rsgm_product_pid:
+    data_type: BIGINT
+  rsgm_from_date:
+    data_type: DATE
+  rsgm_through_date:
+    data_type: DATE

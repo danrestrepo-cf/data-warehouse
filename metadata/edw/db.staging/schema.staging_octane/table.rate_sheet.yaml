@@ -10,6 +10,14 @@ foreign_keys:
       - p_pid
       schema: staging_octane
       table: product
+  fk_rate_sheet_2:
+    columns:
+    - rs_rate_sheet_group_pid
+    references:
+      columns:
+      - rsg_pid
+      schema: staging_octane
+      table: rate_sheet_group
 columns:
   rs_pid:
     data_type: BIGINT
@@ -19,3 +27,5 @@ columns:
     data_type: BIGINT
   rs_from_datetime:
     data_type: TIMESTAMP
+  rs_rate_sheet_group_pid:
+    data_type: BIGINT
