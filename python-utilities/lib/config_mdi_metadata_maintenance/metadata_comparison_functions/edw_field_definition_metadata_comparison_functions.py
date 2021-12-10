@@ -39,9 +39,8 @@ class EDWFieldDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions)
                           ON edw_field_definition.source_edw_field_definition_dwid = source_field_definition.dwid
                 LEFT JOIN mdi.edw_table_definition source_table_definition
                           ON source_field_definition.edw_table_definition_dwid = source_table_definition.dwid
-                -- hardcoded to only check staging/history_octane until this script is updated to handle other schemas' table metadata
-                WHERE edw_table_definition.schema_name IN ('staging_octane', 'history_octane')
-                  AND (source_table_definition.schema_name IN ('staging_octane', 'history_octane')
+                WHERE edw_table_definition.schema_name IN ('staging_octane', 'history_octane', 'star_loan', 'star_common')
+                  AND (source_table_definition.schema_name IN ('staging_octane', 'history_octane', 'star_loan', 'star_common')
                     OR source_table_definition.schema_name IS NULL);
             """)
 

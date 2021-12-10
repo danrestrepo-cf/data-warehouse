@@ -49,7 +49,6 @@ from lib.config_mdi_metadata_maintenance.metadata_comparison_functions import (P
                                                                                TableInputStepMetadataComparisonFunctions,
                                                                                TableOutputStepMetadataComparisonFunctions,
                                                                                TableOutputFieldMetadataComparisonFunctions,
-                                                                               EDWJoinDefinitionMetadataComparisonFunctions,
                                                                                EDWTableDefinitionMetadataComparisonFunctions,
                                                                                EDWFieldDefinitionMetadataComparisonFunctions)
 
@@ -86,7 +85,6 @@ def main():
     # the order in which MetadataComparisonFunctions are added below defines the table SQL statement order in the final script output
     # this order matters because of inter-table dependencies (e.g. json_output_step depends on process)
     sql_generator.add_metadata_comparison_functions('edw_table_definition', EDWTableDefinitionMetadataComparisonFunctions())
-    sql_generator.add_metadata_comparison_functions('edw_join_definition', EDWJoinDefinitionMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('edw_field_definition', EDWFieldDefinitionMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('process', ProcessMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('table_input_step', TableInputStepMetadataComparisonFunctions())

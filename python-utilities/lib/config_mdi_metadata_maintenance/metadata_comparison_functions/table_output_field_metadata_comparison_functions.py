@@ -23,7 +23,7 @@ class TableOutputFieldMetadataComparisonFunctions(MetadataComparisonFunctions):
                 JOIN mdi.process
                      ON table_output_step.process_dwid = process.dwid
                 -- hardcoded to only check history_octane until this script is updated to handle other schemas' ETLs
-                WHERE table_output_step.target_schema = 'history_octane';
+                WHERE table_output_step.target_schema IN ('history_octane', 'star_loan');
             """)
 
     def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:

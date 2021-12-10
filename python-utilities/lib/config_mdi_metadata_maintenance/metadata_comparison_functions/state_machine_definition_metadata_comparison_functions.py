@@ -19,12 +19,31 @@ class StateMachineDefinitionMetadataComparisonFunctions(MetadataComparisonFuncti
                      , state_machine_definition.name AS state_machine_name
                      , state_machine_definition.comment AS state_machine_comment
                 FROM mdi.state_machine_definition
-                JOIN mdi.process
-                     ON state_machine_definition.process_dwid = process.dwid
-                JOIN mdi.table_output_step
-                     ON process.dwid = table_output_step.process_dwid
-                -- hardcoded to only check history_octane until this script is updated to handle other schemas' ETLs
-                WHERE table_output_step.target_schema = 'history_octane';
+                         JOIN mdi.process
+                              ON state_machine_definition.process_dwid = process.dwid
+                         JOIN mdi.table_output_step
+                              ON process.dwid = table_output_step.process_dwid
+                WHERE table_output_step.target_schema IN ('history_octane', 'star_loan')
+                UNION ALL
+                SELECT process.name AS process_name
+                     , state_machine_definition.name AS state_machine_name
+                     , state_machine_definition.comment AS state_machine_comment
+                FROM mdi.state_machine_definition
+                         JOIN mdi.process
+                              ON state_machine_definition.process_dwid = process.dwid
+                         JOIN mdi.insert_update_step
+                              ON process.dwid = insert_update_step.process_dwid
+                WHERE insert_update_step.schema_name = 'star_loan'
+                UNION ALL
+                SELECT process.name AS process_name
+                     , state_machine_definition.name AS state_machine_name
+                     , state_machine_definition.comment AS state_machine_comment
+                FROM mdi.state_machine_definition
+                         JOIN mdi.process
+                              ON state_machine_definition.process_dwid = process.dwid
+                         JOIN mdi.delete_step
+                              ON process.dwid = delete_step.process_dwid
+                WHERE delete_step.schema_name = 'star_loan';
             """)
 
     def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:
