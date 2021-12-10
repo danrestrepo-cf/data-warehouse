@@ -1,3 +1,9 @@
+--
+-- MAIN | EDW - Octane schemas from prod-release to v2021.12.2.0 on uat - https://app.asana.com/0/0/1201473422514474
+--
+
+-- STAGING TABLES
+
 CREATE TABLE staging_octane.rate_sheet_group (
                                                  rsg_pid bigint,
                                                  rsg_version integer,
@@ -51,18 +57,7 @@ ALTER TABLE staging_octane.asset_large_deposit
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+-- HISTORY TABLES
 
 CREATE TABLE history_octane.rate_sheet_group (
 rsg_pid bigint,

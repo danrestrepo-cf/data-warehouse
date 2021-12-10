@@ -1,3 +1,7 @@
+--
+-- MAIN | EDW - Octane schemas from prod-release to v2021.12.2.0 on uat - https://app.asana.com/0/0/1201473422514474
+--
+
 /*
 INSERTIONS
 */
@@ -1191,24 +1195,3 @@ FROM update_rows
     JOIN mdi.process
         ON process.name = update_rows.process_name
 WHERE process.dwid = table_input_step.process_dwid;
-
-/*
-DELETIONS
-*/
-
---edw_join_definition
-WITH delete_keys (primary_database_name, primary_schema_name, primary_table_name, target_database_name, target_schema_name, target_table_name, join_condition) AS (
-    VALUES ('staging', 'history_octane', 'lender_user', 'staging', 'history_octane', 'country_type', 'primary_table.lu_country = target_table.code')
-)
-DELETE
-FROM mdi.edw_join_definition
-    USING delete_keys, mdi.edw_table_definition primary_table, mdi.edw_table_definition target_table
-WHERE delete_keys.primary_database_name = primary_table.database_name
-    AND delete_keys.primary_schema_name = primary_table.schema_name
-    AND delete_keys.primary_table_name = primary_table.table_name
-    AND delete_keys.target_database_name = target_table.database_name
-    AND delete_keys.target_schema_name = target_table.schema_name
-    AND delete_keys.target_table_name = target_table.table_name
-    AND primary_table.dwid = edw_join_definition.primary_edw_table_definition_dwid
-    AND target_table.dwid = edw_join_definition.target_edw_table_definition_dwid
-    AND delete_keys.join_condition = REGEXP_REPLACE( edw_join_definition.join_condition, 't[0-9]+\.', 'target_table.' );
