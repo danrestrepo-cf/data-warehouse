@@ -265,6 +265,10 @@ columns:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.as_gift_funds_ein
+  as_snapshotted_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.as_snapshotted_pid
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
   data_source_deleted_flag:
@@ -324,6 +328,7 @@ etls:
            , staging_table.as_earnest_money_deposit_is_gift
            , staging_table.as_deposit_date
            , staging_table.as_gift_funds_ein
+           , staging_table.as_snapshotted_pid
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.asset staging_table
@@ -377,6 +382,7 @@ etls:
            , history_table.as_earnest_money_deposit_is_gift
            , history_table.as_deposit_date
            , history_table.as_gift_funds_ein
+           , history_table.as_snapshotted_pid
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.asset history_table

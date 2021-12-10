@@ -41,6 +41,10 @@ columns:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.pgp_grant_amount
+  pgp_snapshotted_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pgp_snapshotted_pid
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
   data_source_deleted_flag:
@@ -60,6 +64,7 @@ etls:
            , staging_table.pgp_proposal_pid
            , staging_table.pgp_account_grant_program_pid
            , staging_table.pgp_grant_amount
+           , staging_table.pgp_snapshotted_pid
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.proposal_grant_program staging_table
@@ -73,6 +78,7 @@ etls:
            , history_table.pgp_proposal_pid
            , history_table.pgp_account_grant_program_pid
            , history_table.pgp_grant_amount
+           , history_table.pgp_snapshotted_pid
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.proposal_grant_program history_table

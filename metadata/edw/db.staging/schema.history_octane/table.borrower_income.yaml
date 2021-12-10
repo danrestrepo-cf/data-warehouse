@@ -129,6 +129,10 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.bi_synthetic_unique
+  bi_snapshotted_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bi_snapshotted_pid
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
   data_source_deleted_flag:
@@ -164,6 +168,7 @@ etls:
            , staging_table.bi_source_phone
            , staging_table.bi_source_phone_extension
            , staging_table.bi_synthetic_unique
+           , staging_table.bi_snapshotted_pid
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.borrower_income staging_table
@@ -193,6 +198,7 @@ etls:
            , history_table.bi_source_phone
            , history_table.bi_source_phone_extension
            , history_table.bi_synthetic_unique
+           , history_table.bi_snapshotted_pid
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.borrower_income history_table
