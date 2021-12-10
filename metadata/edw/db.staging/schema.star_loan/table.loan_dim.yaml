@@ -1,0 +1,258 @@
+name: loan_dim
+primary_source_table: staging.history_octane.loan
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+  data_source_dwid:
+    data_type: BIGINT
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  data_source_integration_columns:
+    data_type: TEXT
+  data_source_integration_id:
+    data_type: TEXT
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+  loan_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.l_pid
+  proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.l_proposal_pid
+  product_terms_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.l_product_terms_pid
+  los_loan_number:
+    data_type: BIGINT
+    source:
+      calculation:
+        string: |-
+          CASE
+            WHEN $1 IS NULL OR $2 IS NULL THEN NULL
+            WHEN $1 = 'FIRST' OR $2 = 'STANDALONE_2ND' THEN $3
+            ELSE $4
+          END
+        using:
+          $1: primary_source_table.l_lien_priority_type
+          $2: primary_source_table.foreign_keys.fk_loan_1.columns.prp_structure_type
+          $3: primary_source_table.foreign_keys.fk_loan_1.foreign_keys.fk_proposal_1.columns.d_los_loan_id_main
+          $4: primary_source_table.foreign_keys.fk_loan_1.foreign_keys.fk_proposal_1.columns.d_los_loan_id_piggyback
+  arm_index_current_value_percent:
+    data_type: NUMERIC(15,9)
+    source:
+      field: primary_source_table.columns.l_arm_index_current_value_percent
+  arm_index_datetime:
+    data_type: TIMESTAMPTZ
+    source:
+      field: primary_source_table.columns.l_arm_index_datetime
+  base_guaranty_fee_percent:
+    data_type: NUMERIC(15,9)
+    source:
+      field: primary_source_table.columns.l_base_guaranty_fee_basis_points
+  base_loan_amount_ltv_ratio_percent:
+    data_type: NUMERIC(15,9)
+    source:
+      field: primary_source_table.columns.l_base_loan_amount_ltv_ratio_percent
+  effective_undiscounted_rate_percent:
+    data_type: NUMERIC(15,9)
+    source:
+      field: primary_source_table.columns.l_effective_undiscounted_rate_percent
+  fhac_case_assignment_messages:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.l_fhac_case_assignment_messages
+  fnm_investor_product_plan_id:
+    data_type: VARCHAR(5)
+    source:
+      field: primary_source_table.columns.l_fnm_investor_product_plan_id
+  fnm_mbs_investor_contract_id:
+    data_type: VARCHAR(6)
+    source:
+      field: primary_source_table.columns.l_fnm_mbs_investor_contract_id
+  guaranty_fee_after_alternate_payment_method_percent:
+    data_type: NUMERIC(15,9)
+    source:
+      field: primary_source_table.columns.l_guaranty_fee_after_alternate_payment_method_basis_points
+  guaranty_fee_percent:
+    data_type: NUMERIC(15,9)
+    source:
+      field: primary_source_table.columns.l_guaranty_fee_basis_points
+  hmda_rate_spread_percent:
+    data_type: NUMERIC(15,9)
+    source:
+      field: primary_source_table.columns.l_hmda_rate_spread_percent
+  hoepa_apr:
+    data_type: NUMERIC(15,9)
+    source:
+      field: primary_source_table.columns.l_hoepa_apr
+  hoepa_rate_spread:
+    data_type: NUMERIC(15,9)
+    source:
+      field: primary_source_table.columns.l_hoepa_rate_spread
+  last_unprocessed_changes_datetime:
+    data_type: TIMESTAMPTZ
+    source:
+      field: primary_source_table.columns.l_last_unprocessed_changes_datetime
+  locked_price_change_percent:
+    data_type: NUMERIC(15,9)
+    source:
+      field: primary_source_table.columns.l_locked_price_change_percent
+  mi_requirement_ltv_ratio_percent:
+    data_type: NUMERIC(15,9)
+    source:
+      field: primary_source_table.columns.l_mi_requirement_ltv_ratio_percent
+  product_choice_datetime:
+    data_type: TIMESTAMPTZ
+    source:
+      field: primary_source_table.columns.l_product_choice_datetime
+  rate_sheet_undiscounted_rate_percent:
+    data_type: NUMERIC(15,9)
+    source:
+      field: primary_source_table.columns.l_rate_sheet_undiscounted_rate_percent
+  uldd_loan_comment:
+    data_type: VARCHAR(60)
+    source:
+      field: primary_source_table.columns.l_uldd_loan_comment
+etls:
+  SP-200012:
+    input_type: table
+    output_type: insert_update
+    json_output_field: data_source_integration_id
+    insert_update_keys:
+      - data_source_integration_id
+    input_sql: |-
+      SELECT loan_dim_incl_new_records.data_source_integration_columns
+           , loan_dim_incl_new_records.data_source_integration_id
+           , loan_dim_incl_new_records.edw_created_datetime
+           , loan_dim_incl_new_records.edw_modified_datetime
+           , loan_dim_incl_new_records.data_source_modified_datetime
+           , loan_dim_incl_new_records.last_unprocessed_changes_datetime
+           , loan_dim_incl_new_records.locked_price_change_percent
+           , loan_dim_incl_new_records.mi_requirement_ltv_ratio_percent
+           , loan_dim_incl_new_records.base_loan_amount_ltv_ratio_percent
+           , loan_dim_incl_new_records.arm_index_current_value_percent
+           , loan_dim_incl_new_records.arm_index_datetime
+           , loan_dim_incl_new_records.product_terms_pid
+           , loan_dim_incl_new_records.proposal_pid
+           , loan_dim_incl_new_records.loan_pid
+           , loan_dim_incl_new_records.fhac_case_assignment_messages
+           , loan_dim_incl_new_records.product_choice_datetime
+           , loan_dim_incl_new_records.fnm_mbs_investor_contract_id
+           , loan_dim_incl_new_records.base_guaranty_fee_percent
+           , loan_dim_incl_new_records.guaranty_fee_percent
+           , loan_dim_incl_new_records.guaranty_fee_after_alternate_payment_method_percent
+           , loan_dim_incl_new_records.fnm_investor_product_plan_id
+           , loan_dim_incl_new_records.uldd_loan_comment
+           , loan_dim_incl_new_records.hmda_rate_spread_percent
+           , loan_dim_incl_new_records.hoepa_apr
+           , loan_dim_incl_new_records.hoepa_rate_spread
+           , loan_dim_incl_new_records.rate_sheet_undiscounted_rate_percent
+           , loan_dim_incl_new_records.effective_undiscounted_rate_percent
+           , loan_dim_incl_new_records.los_loan_number
+      FROM (
+          SELECT 'loan_pid' || '~' || 'data_source_dwid' as data_source_integration_columns,
+          COALESCE(CAST(primary_table.l_pid as text), '<NULL>')  || '~' || COALESCE(CAST(1 as text), '<NULL>')  as data_source_integration_id,
+          now() as edw_created_datetime,
+          now() as edw_modified_datetime,
+          primary_table.data_source_updated_datetime as data_source_modified_datetime,
+          primary_table.l_last_unprocessed_changes_datetime as last_unprocessed_changes_datetime,
+          primary_table.l_locked_price_change_percent as locked_price_change_percent,
+          primary_table.l_mi_requirement_ltv_ratio_percent as mi_requirement_ltv_ratio_percent,
+          primary_table.l_base_loan_amount_ltv_ratio_percent as base_loan_amount_ltv_ratio_percent,
+          primary_table.l_arm_index_current_value_percent as arm_index_current_value_percent,
+          primary_table.l_arm_index_datetime as arm_index_datetime,
+          primary_table.l_product_terms_pid as product_terms_pid,
+          primary_table.l_proposal_pid as proposal_pid,
+          primary_table.l_pid as loan_pid,
+          primary_table.l_fhac_case_assignment_messages as fhac_case_assignment_messages,
+          primary_table.l_product_choice_datetime as product_choice_datetime,
+          primary_table.l_fnm_mbs_investor_contract_id as fnm_mbs_investor_contract_id,
+          primary_table.l_base_guaranty_fee_basis_points as base_guaranty_fee_percent,
+          primary_table.l_guaranty_fee_basis_points as guaranty_fee_percent,
+          primary_table.l_guaranty_fee_after_alternate_payment_method_basis_points as guaranty_fee_after_alternate_payment_method_percent,
+          primary_table.l_fnm_investor_product_plan_id as fnm_investor_product_plan_id,
+          primary_table.l_uldd_loan_comment as uldd_loan_comment,
+          primary_table.l_hmda_rate_spread_percent as hmda_rate_spread_percent,
+          primary_table.l_hoepa_apr as hoepa_apr,
+          primary_table.l_hoepa_rate_spread as hoepa_rate_spread,
+          primary_table.l_rate_sheet_undiscounted_rate_percent as rate_sheet_undiscounted_rate_percent,
+          primary_table.l_effective_undiscounted_rate_percent as effective_undiscounted_rate_percent,
+          CASE WHEN primary_table.l_lien_priority_type IS NULL OR t1317.prp_structure_type IS NULL THEN NULL WHEN primary_table.l_lien_priority_type = 'FIRST' OR t1317.prp_structure_type = 'STANDALONE_2ND' THEN t1317.d_los_loan_id_main ELSE t1317.d_los_loan_id_piggyback END as los_loan_number
+      FROM (
+          SELECT
+              <<loan_partial_load_condition>> as include_record,
+              loan.*
+          FROM history_octane.loan
+          LEFT JOIN history_octane.loan AS history_records ON loan.l_pid = history_records.l_pid
+              AND loan.data_source_updated_datetime < history_records.data_source_updated_datetime
+          WHERE history_records.l_pid IS NULL
+      ) AS primary_table
+
+      INNER JOIN (
+          SELECT * FROM (
+              SELECT
+                  proposal.*
+              FROM history_octane.proposal
+              LEFT JOIN history_octane.proposal AS history_records ON proposal.prp_pid = history_records.prp_pid
+                  AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.prp_pid IS NULL
+          ) as primary_table
+
+              -- child join start
+          INNER JOIN
+          (
+              SELECT
+                  <<deal_partial_load_condition>> as include_record,
+                  deal.*
+              FROM
+                  history_octane.deal
+                  LEFT JOIN history_octane.deal AS history_records ON deal.d_pid = history_records.d_pid
+                      AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE
+                  history_records.d_pid IS NULL
+          ) AS t1441 ON primary_table.prp_deal_pid = t1441.d_pid
+          -- child join end
+
+      ) AS t1317 ON primary_table.l_proposal_pid = t1317.prp_pid
+      WHERE
+          GREATEST(primary_table.include_record, t1317.include_record) IS TRUE
+      ORDER BY
+          primary_table.data_source_updated_datetime ASC
+      ) AS loan_dim_incl_new_records
+          LEFT JOIN star_loan.loan_dim ON loan_dim_incl_new_records.data_source_integration_id =
+                                          loan_dim.data_source_integration_id
+              AND loan_dim_incl_new_records.proposal_pid IS NOT DISTINCT FROM loan_dim.proposal_pid
+              AND loan_dim_incl_new_records.product_terms_pid IS NOT DISTINCT FROM loan_dim.product_terms_pid
+              AND loan_dim_incl_new_records.los_loan_number IS NOT DISTINCT FROM loan_dim.los_loan_number
+              AND loan_dim_incl_new_records.arm_index_current_value_percent IS NOT DISTINCT FROM loan_dim.arm_index_current_value_percent
+              AND loan_dim_incl_new_records.arm_index_datetime IS NOT DISTINCT FROM loan_dim.arm_index_datetime
+              AND loan_dim_incl_new_records.base_guaranty_fee_percent IS NOT DISTINCT FROM loan_dim.base_guaranty_fee_percent
+              AND loan_dim_incl_new_records.base_loan_amount_ltv_ratio_percent IS NOT DISTINCT FROM loan_dim.base_loan_amount_ltv_ratio_percent
+              AND loan_dim_incl_new_records.effective_undiscounted_rate_percent IS NOT DISTINCT FROM loan_dim.effective_undiscounted_rate_percent
+              AND loan_dim_incl_new_records.fhac_case_assignment_messages IS NOT DISTINCT FROM loan_dim.fhac_case_assignment_messages
+              AND loan_dim_incl_new_records.fnm_investor_product_plan_id IS NOT DISTINCT FROM loan_dim.fnm_investor_product_plan_id
+              AND loan_dim_incl_new_records.fnm_mbs_investor_contract_id IS NOT DISTINCT FROM loan_dim.fnm_mbs_investor_contract_id
+              AND loan_dim_incl_new_records.guaranty_fee_after_alternate_payment_method_percent IS NOT DISTINCT FROM loan_dim.guaranty_fee_after_alternate_payment_method_percent
+              AND loan_dim_incl_new_records.guaranty_fee_percent IS NOT DISTINCT FROM loan_dim.guaranty_fee_percent
+              AND loan_dim_incl_new_records.hmda_rate_spread_percent IS NOT DISTINCT FROM loan_dim.hmda_rate_spread_percent
+              AND loan_dim_incl_new_records.hoepa_apr IS NOT DISTINCT FROM loan_dim.hoepa_apr
+              AND loan_dim_incl_new_records.hoepa_rate_spread IS NOT DISTINCT FROM loan_dim.hoepa_rate_spread
+              AND loan_dim_incl_new_records.last_unprocessed_changes_datetime IS NOT DISTINCT FROM loan_dim.last_unprocessed_changes_datetime
+              AND loan_dim_incl_new_records.locked_price_change_percent IS NOT DISTINCT FROM loan_dim.locked_price_change_percent
+              AND loan_dim_incl_new_records.mi_requirement_ltv_ratio_percent IS NOT DISTINCT FROM loan_dim.mi_requirement_ltv_ratio_percent
+              AND loan_dim_incl_new_records.product_choice_datetime IS NOT DISTINCT FROM loan_dim.product_choice_datetime
+              AND loan_dim_incl_new_records.rate_sheet_undiscounted_rate_percent IS NOT DISTINCT FROM loan_dim.rate_sheet_undiscounted_rate_percent
+              AND loan_dim_incl_new_records.uldd_loan_comment IS NOT DISTINCT FROM loan_dim.uldd_loan_comment
+      WHERE loan_dim.dwid IS NULL;
+next_etls:
+  - SP-200015
+  - SP-300001-insert-update

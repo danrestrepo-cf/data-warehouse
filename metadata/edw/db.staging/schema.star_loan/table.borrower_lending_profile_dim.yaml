@@ -1,0 +1,720 @@
+name: borrower_lending_profile_dim
+primary_source_table: staging.history_octane.borrower
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+  data_source_dwid:
+    data_type: BIGINT
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  data_source_integration_columns:
+    data_type: TEXT
+  data_source_integration_id:
+    data_type: TEXT
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+  alimony_child_support:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_alimony_child_support.columns.value
+  alimony_child_support_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_alimony_child_support
+  bankruptcy:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_bankruptcy.columns.value
+  bankruptcy_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_bankruptcy
+  borrowed_down_payment:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_borrowed_down_payment.columns.value
+  borrowed_down_payment_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_borrowed_down_payment
+  citizenship_residency:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_citizenship_residency_type.columns.value
+  citizenship_residency_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_citizenship_residency_type
+  disabled:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_disabled.columns.value
+  disabled_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_disabled
+  domestic_relationship_state:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_domestic_relationship_state_type.columns.value
+  domestic_relationship_state_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_domestic_relationship_state_type
+  dependents:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_has_dependents.columns.value
+  dependents_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_has_dependents
+  homeowner_past_three_years:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_homeowner_past_three_years.columns.value
+  homeowner_past_three_years_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_homeowner_past_three_years
+  homeownership_education:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_homeownership_education_type.columns.value
+  homeownership_education_agency:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_homeownership_education_agency_type.columns.value
+  homeownership_education_agency_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_homeownership_education_agency_type
+  homeownership_education_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_homeownership_education_type
+  intend_to_occupy:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_intend_to_occupy.columns.value
+  intend_to_occupy_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_intend_to_occupy
+  first_time_homebuyer_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_first_time_homebuyer
+  first_time_homebuyer_auto_compute_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_first_time_home_buyer_auto_compute
+  hud_employee_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_hud_employee
+  lender_employee_status_confirmed_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_lender_employee_status_confirmed
+  lender_employee:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_lender_employee.columns.value
+  lender_employee_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_lender_employee
+  note_endorser:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_note_endorser.columns.value
+  note_endorser_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_note_endorser
+  obligated_loan_foreclosure:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_obligated_loan_foreclosure.columns.value
+  obligated_loan_foreclosure_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_obligated_loan_foreclosure
+  on_gsa_list:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_on_gsa_list.columns.value
+  on_gsa_list_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_on_gsa_list
+  on_ldp_list:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_on_ldp_list.columns.value
+  on_ldp_list_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_on_ldp_list
+  outstanding_judgements:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_outstanding_judgements.columns.value
+  outstanding_judgements_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_outstanding_judgements
+  party_to_lawsuit:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_party_to_lawsuit.columns.value
+  party_to_lawsuit_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_party_to_lawsuit
+  presently_delinquent:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_presently_delinquent.columns.value
+  presently_delinquent_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_presently_delinquent
+  property_foreclosure:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_property_foreclosure.columns.value
+  property_foreclosure_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_property_foreclosure
+  spousal_homestead:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_spousal_homestead.columns.value
+  spousal_homestead_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_spousal_homestead
+  titleholder:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_titleholder.columns.value
+  titleholder_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_titleholder
+etls:
+  SP-200006:
+    input_type: table
+    output_type: insert_update
+    json_output_field: data_source_integration_id
+    insert_update_keys:
+      - data_source_integration_id
+    input_sql: |-
+      SELECT borrower_lending_profile_dim_new_records.data_source_integration_columns
+           , borrower_lending_profile_dim_new_records.data_source_integration_id
+           , borrower_lending_profile_dim_new_records.edw_created_datetime
+           , borrower_lending_profile_dim_new_records.edw_modified_datetime
+           , borrower_lending_profile_dim_new_records.data_source_modified_datetime
+           , borrower_lending_profile_dim_new_records.alimony_child_support_code
+           , borrower_lending_profile_dim_new_records.bankruptcy_code
+           , borrower_lending_profile_dim_new_records.borrowed_down_payment_code
+           , borrower_lending_profile_dim_new_records.spousal_homestead_code
+           , borrower_lending_profile_dim_new_records.citizenship_residency_code
+           , borrower_lending_profile_dim_new_records.dependents_code
+           , borrower_lending_profile_dim_new_records.first_time_homebuyer_flag
+           , borrower_lending_profile_dim_new_records.lender_employee_code
+           , borrower_lending_profile_dim_new_records.lender_employee_status_confirmed_flag
+           , borrower_lending_profile_dim_new_records.homeowner_past_three_years_code
+           , borrower_lending_profile_dim_new_records.intend_to_occupy_code
+           , borrower_lending_profile_dim_new_records.note_endorser_code
+           , borrower_lending_profile_dim_new_records.obligated_loan_foreclosure_code
+           , borrower_lending_profile_dim_new_records.outstanding_judgements_code
+           , borrower_lending_profile_dim_new_records.party_to_lawsuit_code
+           , borrower_lending_profile_dim_new_records.presently_delinquent_code
+           , borrower_lending_profile_dim_new_records.property_foreclosure_code
+           , borrower_lending_profile_dim_new_records.titleholder_code
+           , borrower_lending_profile_dim_new_records.first_time_homebuyer_auto_compute_flag
+           , borrower_lending_profile_dim_new_records.on_ldp_list_code
+           , borrower_lending_profile_dim_new_records.on_gsa_list_code
+           , borrower_lending_profile_dim_new_records.homeownership_education_code
+           , borrower_lending_profile_dim_new_records.homeownership_education_agency_code
+           , borrower_lending_profile_dim_new_records.disabled_code
+           , borrower_lending_profile_dim_new_records.hud_employee_flag
+           , borrower_lending_profile_dim_new_records.domestic_relationship_state_code
+           , borrower_lending_profile_dim_new_records.citizenship_residency
+           , borrower_lending_profile_dim_new_records.homeownership_education
+           , borrower_lending_profile_dim_new_records.homeownership_education_agency
+           , borrower_lending_profile_dim_new_records.domestic_relationship_state
+           , borrower_lending_profile_dim_new_records.alimony_child_support
+           , borrower_lending_profile_dim_new_records.bankruptcy
+           , borrower_lending_profile_dim_new_records.borrowed_down_payment
+           , borrower_lending_profile_dim_new_records.disabled
+           , borrower_lending_profile_dim_new_records.dependents
+           , borrower_lending_profile_dim_new_records.homeowner_past_three_years
+           , borrower_lending_profile_dim_new_records.intend_to_occupy
+           , borrower_lending_profile_dim_new_records.lender_employee
+           , borrower_lending_profile_dim_new_records.note_endorser
+           , borrower_lending_profile_dim_new_records.obligated_loan_foreclosure
+           , borrower_lending_profile_dim_new_records.on_gsa_list
+           , borrower_lending_profile_dim_new_records.on_ldp_list
+           , borrower_lending_profile_dim_new_records.outstanding_judgements
+           , borrower_lending_profile_dim_new_records.party_to_lawsuit
+           , borrower_lending_profile_dim_new_records.presently_delinquent
+           , borrower_lending_profile_dim_new_records.property_foreclosure
+           , borrower_lending_profile_dim_new_records.spousal_homestead
+           , borrower_lending_profile_dim_new_records.titleholder
+      FROM (
+          SELECT 'alimony_child_support_code' || '~' || 'bankruptcy_code' || '~' || 'borrowed_down_payment_code' || '~' ||
+                 'spousal_homestead_code' || '~' || 'citizenship_residency_code' || '~' || 'dependents_code' || '~' ||
+                 'first_time_homebuyer_flag' || '~' || 'lender_employee_code' || '~' || 'lender_employee_status_confirmed_flag' || '~' ||
+                 'homeowner_past_three_years_code' || '~' || 'intend_to_occupy_code' || '~' || 'note_endorser_code' || '~' ||
+                 'obligated_loan_foreclosure_code' || '~' || 'outstanding_judgements_code' || '~' || 'party_to_lawsuit_code' || '~' ||
+                 'presently_delinquent_code' || '~' || 'property_foreclosure_code' || '~' || 'titleholder_code' || '~' ||
+                 'first_time_homebuyer_auto_compute_flag' || '~' || 'on_ldp_list_code' || '~' || 'on_gsa_list_code' || '~' ||
+                 'homeownership_education_code' || '~' || 'homeownership_education_agency_code' || '~' ||
+                 'disabled_code' || '~' || 'hud_employee_flag' || '~' ||
+                 'domestic_relationship_state_code' || '~' || 'citizenship_residency' || '~' || 'alimony_child_support' || '~' || 'bankruptcy' ||
+                 '~' || 'borrowed_down_payment' || '~' || 'disabled' || '~' || 'dependents' || '~' || 'homeowner_past_three_years' || '~' ||
+                 'intend_to_occupy' || '~' || 'lender_employee' || '~' || 'note_endorser' || '~' || 'obligated_loan_foreclosure' || '~' ||
+                 'on_gsa_list' || '~' || 'on_ldp_list' || '~' || 'outstanding_judgements' || '~' || 'party_to_lawsuit' || '~' ||
+                 'presently_delinquent' || '~' || 'property_foreclosure' || '~' || 'spousal_homestead' || '~' || 'titleholder' || '~' ||
+                 'data_source_dwid' AS data_source_integration_columns
+               , COALESCE( CAST( primary_table.b_alimony_child_support AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_bankruptcy AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_borrowed_down_payment AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_spousal_homestead AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_citizenship_residency_type AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_has_dependents AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_first_time_homebuyer AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_lender_employee AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_lender_employee_status_confirmed AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_homeowner_past_three_years AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_intend_to_occupy AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_note_endorser AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_obligated_loan_foreclosure AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_outstanding_judgements AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_party_to_lawsuit AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_presently_delinquent AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_property_foreclosure AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_titleholder AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_first_time_home_buyer_auto_compute AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_on_ldp_list AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_on_gsa_list AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_homeownership_education_type AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_homeownership_education_agency_type AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_disabled AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_hud_employee AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_domestic_relationship_state_type AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( t119.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t127.value AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( t126.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t122.value AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( t113.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t116.value AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( t117.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t121.value AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( t125.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t128.value AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( t131.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t133.value AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( t135.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t136.value AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( t137.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t138.value AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( t139.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t140.value AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( t143.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t146.value AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( t153.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t154.value AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) AS data_source_integration_id
+               , NOW( ) AS edw_created_datetime
+               , NOW( ) AS edw_modified_datetime
+               , MAX( primary_table.data_source_updated_datetime ) AS data_source_modified_datetime
+               , primary_table.b_alimony_child_support AS alimony_child_support_code
+               , primary_table.b_bankruptcy AS bankruptcy_code
+               , primary_table.b_borrowed_down_payment AS borrowed_down_payment_code
+               , primary_table.b_spousal_homestead AS spousal_homestead_code
+               , primary_table.b_citizenship_residency_type AS citizenship_residency_code
+               , primary_table.b_has_dependents AS dependents_code
+               , primary_table.b_first_time_homebuyer AS first_time_homebuyer_flag
+               , primary_table.b_lender_employee AS lender_employee_code
+               , primary_table.b_lender_employee_status_confirmed AS lender_employee_status_confirmed_flag
+               , primary_table.b_homeowner_past_three_years AS homeowner_past_three_years_code
+               , primary_table.b_intend_to_occupy AS intend_to_occupy_code
+               , primary_table.b_note_endorser AS note_endorser_code
+               , primary_table.b_obligated_loan_foreclosure AS obligated_loan_foreclosure_code
+               , primary_table.b_outstanding_judgements AS outstanding_judgements_code
+               , primary_table.b_party_to_lawsuit AS party_to_lawsuit_code
+               , primary_table.b_presently_delinquent AS presently_delinquent_code
+               , primary_table.b_property_foreclosure AS property_foreclosure_code
+               , primary_table.b_titleholder AS titleholder_code
+               , primary_table.b_first_time_home_buyer_auto_compute AS first_time_homebuyer_auto_compute_flag
+               , primary_table.b_on_ldp_list AS on_ldp_list_code
+               , primary_table.b_on_gsa_list AS on_gsa_list_code
+               , primary_table.b_homeownership_education_type AS homeownership_education_code
+               , primary_table.b_homeownership_education_agency_type AS homeownership_education_agency_code
+               , primary_table.b_disabled AS disabled_code
+               , primary_table.b_hud_employee AS hud_employee_flag
+               , primary_table.b_domestic_relationship_state_type AS domestic_relationship_state_code
+               , t119.value AS citizenship_residency
+               , t127.value AS homeownership_education
+               , t126.value AS homeownership_education_agency
+               , t122.value AS domestic_relationship_state
+               , t113.value AS alimony_child_support
+               , t116.value AS bankruptcy
+               , t117.value AS borrowed_down_payment
+               , t121.value AS disabled
+               , t125.value AS dependents
+               , t128.value AS homeowner_past_three_years
+               , t131.value AS intend_to_occupy
+               , t133.value AS lender_employee
+               , t135.value AS note_endorser
+               , t136.value AS obligated_loan_foreclosure
+               , t137.value AS on_gsa_list
+               , t138.value AS on_ldp_list
+               , t139.value AS outstanding_judgements
+               , t140.value AS party_to_lawsuit
+               , t143.value AS presently_delinquent
+               , t146.value AS property_foreclosure
+               , t153.value AS spousal_homestead
+               , t154.value AS titleholder
+          FROM (
+              SELECT <<borrower_partial_load_condition>> AS include_record
+                   , borrower.*
+              FROM history_octane.borrower
+              LEFT JOIN history_octane.borrower AS history_records
+                        ON borrower.b_pid = history_records.b_pid
+                            AND borrower.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.b_pid IS NULL
+          ) AS primary_table
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<citizenship_residency_type_partial_load_condition>> AS include_record
+                       , citizenship_residency_type.*
+                  FROM history_octane.citizenship_residency_type
+                  LEFT JOIN history_octane.citizenship_residency_type AS history_records
+                            ON citizenship_residency_type.code = history_records.code
+                                AND citizenship_residency_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t119
+                     ON primary_table.b_citizenship_residency_type = t119.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<homeownership_education_type_partial_load_condition>> AS include_record
+                       , homeownership_education_type.*
+                  FROM history_octane.homeownership_education_type
+                  LEFT JOIN history_octane.homeownership_education_type AS history_records
+                            ON homeownership_education_type.code = history_records.code
+                                AND homeownership_education_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t127
+                     ON primary_table.b_homeownership_education_type = t127.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<housing_counseling_agency_type_partial_load_condition>> AS include_record
+                       , housing_counseling_agency_type.*
+                  FROM history_octane.housing_counseling_agency_type
+                  LEFT JOIN history_octane.housing_counseling_agency_type AS history_records
+                            ON housing_counseling_agency_type.code = history_records.code
+                                AND housing_counseling_agency_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t126
+                     ON primary_table.b_homeownership_education_agency_type = t126.code
+
+          LEFT JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<state_type_partial_load_condition>> AS include_record
+                       , state_type.*
+                  FROM history_octane.state_type
+                  LEFT JOIN history_octane.state_type AS history_records
+                            ON state_type.code = history_records.code
+                                AND state_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t122
+                    ON primary_table.b_domestic_relationship_state_type = t122.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t113
+                     ON primary_table.b_alimony_child_support = t113.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t116
+                     ON primary_table.b_bankruptcy = t116.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t117
+                     ON primary_table.b_borrowed_down_payment = t117.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t121
+                     ON primary_table.b_disabled = t121.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t125
+                     ON primary_table.b_has_dependents = t125.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t128
+                     ON primary_table.b_homeowner_past_three_years = t128.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t131
+                     ON primary_table.b_intend_to_occupy = t131.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t133
+                     ON primary_table.b_lender_employee = t133.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t135
+                     ON primary_table.b_note_endorser = t135.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t136
+                     ON primary_table.b_obligated_loan_foreclosure = t136.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t137
+                     ON primary_table.b_on_gsa_list = t137.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t138
+                     ON primary_table.b_on_ldp_list = t138.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t139
+                     ON primary_table.b_outstanding_judgements = t139.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t140
+                     ON primary_table.b_party_to_lawsuit = t140.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t143
+                     ON primary_table.b_presently_delinquent = t143.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t146
+                     ON primary_table.b_property_foreclosure = t146.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t153
+                     ON primary_table.b_spousal_homestead = t153.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t154
+                     ON primary_table.b_titleholder = t154.code
+          WHERE GREATEST( primary_table.include_record, t119.include_record, t127.include_record, t126.include_record, t122.include_record,
+                          t113.include_record, t116.include_record, t117.include_record, t121.include_record, t125.include_record,
+                          t128.include_record, t131.include_record, t133.include_record, t135.include_record, t136.include_record,
+                          t137.include_record, t138.include_record, t139.include_record, t140.include_record, t143.include_record,
+                          t146.include_record, t153.include_record, t154.include_record ) IS TRUE
+          GROUP BY t119.value, primary_table.b_alimony_child_support, primary_table.b_bankruptcy, primary_table.b_borrowed_down_payment
+                 , primary_table.b_spousal_homestead, primary_table.b_citizenship_residency_type, primary_table.b_has_dependents
+                 , primary_table.b_first_time_homebuyer, primary_table.b_lender_employee, primary_table.b_lender_employee_status_confirmed
+                 , primary_table.b_homeowner_past_three_years, primary_table.b_intend_to_occupy, primary_table.b_note_endorser
+                 , primary_table.b_obligated_loan_foreclosure, primary_table.b_outstanding_judgements, primary_table.b_party_to_lawsuit
+                 , primary_table.b_presently_delinquent, primary_table.b_property_foreclosure, primary_table.b_titleholder
+                 , primary_table.b_first_time_home_buyer_auto_compute, primary_table.b_on_ldp_list, primary_table.b_on_gsa_list
+                 , primary_table.b_homeownership_education_type, primary_table.b_homeownership_education_agency_type
+                 , primary_table.b_disabled, primary_table.b_hud_employee
+                 , primary_table.b_domestic_relationship_state_type, t127.value, t126.value, t122.value, t113.value, t116.value, t117.value
+                 , t121.value, t125.value, t128.value, t131.value, t133.value, t135.value, t136.value, t137.value, t138.value, t139.value
+                 , t140.value, t143.value, t146.value, t153.value, t154.value
+      ) AS borrower_lending_profile_dim_new_records
+      LEFT JOIN star_loan.borrower_lending_profile_dim
+                ON borrower_lending_profile_dim.data_source_integration_id = borrower_lending_profile_dim_new_records.data_source_integration_id
+      WHERE borrower_lending_profile_dim.dwid IS NULL
+      ;
+next_etls:
+  - SP-300001-insert-update

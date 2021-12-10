@@ -1,0 +1,574 @@
+name: borrower_demographics_dim
+primary_source_table: staging.history_octane.borrower
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+  data_source_dwid:
+    data_type: BIGINT
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  data_source_integration_columns:
+    data_type: TEXT
+  data_source_integration_id:
+    data_type: TEXT
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+  ethnicity_collected_visual_or_surname:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_ethnicity_collected_visual_or_surname.columns.value
+  ethnicity_collected_visual_or_surname_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_ethnicity_collected_visual_or_surname
+  ethnicity_refused:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_ethnicity_refused.columns.value
+  ethnicity_refused_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_ethnicity_refused
+  ethnicity_other_hispanic_or_latino_description_flag:
+    data_type: BOOLEAN
+    source:
+      calculation:
+        string: $1 <> '' AND $1 IS NOT NULL
+        using:
+          $1: primary_source_table.columns.b_ethnicity_other_hispanic_or_latino_description
+  other_race_national_origin_description_flag:
+    data_type: BOOLEAN
+    source:
+      calculation:
+        string: $1 <> '' AND $1 IS NOT NULL
+        using:
+          $1: primary_source_table.columns.b_other_race_national_origin_description
+  race_other_american_indian_or_alaska_native_description_flag:
+    data_type: BOOLEAN
+    source:
+      calculation:
+        string: $1 <> '' AND $1 IS NOT NULL
+        using:
+          $1: primary_source_table.columns.b_race_other_american_indian_or_alaska_native_description
+  race_other_asian_description_flag:
+    data_type: BOOLEAN
+    source:
+      calculation:
+        string: $1 <> '' AND $1 IS NOT NULL
+        using:
+          $1: primary_source_table.columns.b_race_other_asian_description
+  race_other_pacific_islander_description_flag:
+    data_type: BOOLEAN
+    source:
+      calculation:
+        string: $1 <> '' AND $1 IS NOT NULL
+        using:
+          $1: primary_source_table.columns.b_race_other_pacific_islander_description
+  ethnicity_cuban_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_ethnicity_cuban
+  ethnicity_hispanic_or_latino_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_ethnicity_hispanic_or_latino
+  ethnicity_mexican_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_ethnicity_mexican
+  ethnicity_not_hispanic_or_latino_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_ethnicity_not_hispanic_or_latino
+  ethnicity_not_obtainable_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_ethnicity_not_obtainable
+  ethnicity_other_hispanic_or_latino_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_ethnicity_other_hispanic_or_latino
+  ethnicity_puerto_rican_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_ethnicity_puerto_rican
+  race_american_indian_or_alaska_native_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_american_indian_or_alaska_native
+  race_asian_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_asian
+  race_asian_indian_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_asian_indian
+  race_black_or_african_american_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_black_or_african_american
+  race_chinese_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_chinese
+  race_filipino_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_filipino
+  race_guamanian_or_chamorro_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_guamanian_or_chamorro
+  race_information_not_provided_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_information_not_provided
+  race_japanese_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_japanese
+  race_korean_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_korean
+  race_national_origin_refusal_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_national_origin_refusal
+  race_native_hawaiian_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_native_hawaiian
+  race_native_hawaiian_or_other_pacific_islander_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_native_hawaiian_or_other_pacific_islander
+  race_not_applicable_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_not_applicable
+  race_not_obtainable_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_not_obtainable
+  race_other_asian_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_other_asian
+  race_other_pacific_islander_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_other_pacific_islander
+  race_samoan_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_samoan
+  race_vietnamese_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_vietnamese
+  race_white_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_white
+  sex_female_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_sex_female
+  sex_male_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_sex_male
+  sex_not_obtainable_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_sex_not_obtainable
+  marital_status:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_marital_status_type.columns.value
+  marital_status_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_marital_status_type
+  race_collected_visual_or_surname:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_race_collected_visual_or_surname.columns.value
+  race_collected_visual_or_surname_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_race_collected_visual_or_surname
+  race_refused:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_race_refused.columns.value
+  race_refused_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_race_refused
+  schooling_years:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.b_schooling_years
+  sex_collected_visual_or_surname:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_sex_collected_visual_or_surname.columns.value
+  sex_collected_visual_or_surname_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_sex_collected_visual_or_surname
+  sex_refused:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_sex_refused.columns.value
+  sex_refused_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_sex_refused
+etls:
+  SP-200004:
+    input_type: table
+    output_type: insert_update
+    json_output_field: data_source_integration_id
+    insert_update_keys:
+      - data_source_integration_id
+    input_sql: |-
+      SELECT borrower_demographics_dim_new_records.data_source_integration_columns
+           , borrower_demographics_dim_new_records.data_source_integration_id
+           , borrower_demographics_dim_new_records.edw_created_datetime
+           , borrower_demographics_dim_new_records.edw_modified_datetime
+           , borrower_demographics_dim_new_records.data_source_modified_datetime
+           , borrower_demographics_dim_new_records.sex_refused_code
+           , borrower_demographics_dim_new_records.sex_collected_visual_or_surname_code
+           , borrower_demographics_dim_new_records.sex_male_flag
+           , borrower_demographics_dim_new_records.sex_female_flag
+           , borrower_demographics_dim_new_records.sex_not_obtainable_flag
+           , borrower_demographics_dim_new_records.ethnicity_refused_code
+           , borrower_demographics_dim_new_records.ethnicity_collected_visual_or_surname_code
+           , borrower_demographics_dim_new_records.ethnicity_hispanic_or_latino_flag
+           , borrower_demographics_dim_new_records.ethnicity_mexican_flag
+           , borrower_demographics_dim_new_records.ethnicity_puerto_rican_flag
+           , borrower_demographics_dim_new_records.ethnicity_cuban_flag
+           , borrower_demographics_dim_new_records.ethnicity_other_hispanic_or_latino_flag
+           , borrower_demographics_dim_new_records.ethnicity_not_hispanic_or_latino_flag
+           , borrower_demographics_dim_new_records.ethnicity_not_obtainable_flag
+           , borrower_demographics_dim_new_records.marital_status_code
+           , borrower_demographics_dim_new_records.race_refused_code
+           , borrower_demographics_dim_new_records.race_collected_visual_or_surname_code
+           , borrower_demographics_dim_new_records.race_american_indian_or_alaska_native_flag
+           , borrower_demographics_dim_new_records.race_asian_flag
+           , borrower_demographics_dim_new_records.race_asian_indian_flag
+           , borrower_demographics_dim_new_records.race_chinese_flag
+           , borrower_demographics_dim_new_records.race_filipino_flag
+           , borrower_demographics_dim_new_records.race_japanese_flag
+           , borrower_demographics_dim_new_records.race_korean_flag
+           , borrower_demographics_dim_new_records.race_vietnamese_flag
+           , borrower_demographics_dim_new_records.race_other_asian_flag
+           , borrower_demographics_dim_new_records.race_black_or_african_american_flag
+           , borrower_demographics_dim_new_records.race_information_not_provided_flag
+           , borrower_demographics_dim_new_records.race_national_origin_refusal_flag
+           , borrower_demographics_dim_new_records.race_native_hawaiian_or_other_pacific_islander_flag
+           , borrower_demographics_dim_new_records.race_native_hawaiian_flag
+           , borrower_demographics_dim_new_records.race_guamanian_or_chamorro_flag
+           , borrower_demographics_dim_new_records.race_samoan_flag
+           , borrower_demographics_dim_new_records.race_other_pacific_islander_flag
+           , borrower_demographics_dim_new_records.race_not_obtainable_flag
+           , borrower_demographics_dim_new_records.race_not_applicable_flag
+           , borrower_demographics_dim_new_records.race_white_flag
+           , borrower_demographics_dim_new_records.schooling_years
+           , borrower_demographics_dim_new_records.marital_status
+           , borrower_demographics_dim_new_records.ethnicity_collected_visual_or_surname
+           , borrower_demographics_dim_new_records.sex_collected_visual_or_surname
+           , borrower_demographics_dim_new_records.sex_refused
+           , borrower_demographics_dim_new_records.race_refused
+           , borrower_demographics_dim_new_records.ethnicity_refused
+           , borrower_demographics_dim_new_records.race_collected_visual_or_surname
+           , borrower_demographics_dim_new_records.race_other_pacific_islander_description_flag
+           , borrower_demographics_dim_new_records.ethnicity_other_hispanic_or_latino_description_flag
+           , borrower_demographics_dim_new_records.other_race_national_origin_description_flag
+           , borrower_demographics_dim_new_records.race_other_american_indian_or_alaska_native_description_flag
+           , borrower_demographics_dim_new_records.race_other_asian_description_flag
+      FROM (
+          SELECT 'sex_refused_code' || '~' || 'sex_collected_visual_or_surname_code' || '~' || 'sex_male_flag' || '~' || 'sex_female_flag' ||
+                 '~' || 'sex_not_obtainable_flag' || '~' || 'ethnicity_refused_code' || '~' || 'ethnicity_collected_visual_or_surname_code' ||
+                 '~' || 'ethnicity_hispanic_or_latino_flag' || '~' || 'ethnicity_mexican_flag' || '~' || 'ethnicity_puerto_rican_flag' || '~' ||
+                 'ethnicity_cuban_flag' || '~' || 'ethnicity_other_hispanic_or_latino_flag' || '~' || 'ethnicity_not_hispanic_or_latino_flag' ||
+                 '~' || 'ethnicity_not_obtainable_flag' || '~' || 'marital_status_code' || '~' || 'race_refused_code' || '~' ||
+                 'race_collected_visual_or_surname_code' || '~' || 'race_american_indian_or_alaska_native_flag' || '~' || 'race_asian_flag' ||
+                 '~' || 'race_asian_indian_flag' || '~' || 'race_chinese_flag' || '~' || 'race_filipino_flag' || '~' || 'race_japanese_flag' ||
+                 '~' || 'race_korean_flag' || '~' || 'race_vietnamese_flag' || '~' || 'race_other_asian_flag' || '~' ||
+                 'race_black_or_african_american_flag' || '~' || 'race_information_not_provided_flag' || '~' ||
+                 'race_national_origin_refusal_flag' || '~' || 'race_native_hawaiian_or_other_pacific_islander_flag' || '~' ||
+                 'race_native_hawaiian_flag' || '~' || 'race_guamanian_or_chamorro_flag' || '~' || 'race_samoan_flag' || '~' ||
+                 'race_other_pacific_islander_flag' || '~' || 'race_not_obtainable_flag' || '~' || 'race_not_applicable_flag' || '~' ||
+                 'race_white_flag' || '~' || 'schooling_years' || '~' || 'marital_status' || '~' || 'ethnicity_collected_visual_or_surname' ||
+                 '~' || 'sex_collected_visual_or_surname' || '~' || 'sex_refused' || '~' || 'race_refused' || '~' || 'ethnicity_refused' || '~' ||
+                 'race_collected_visual_or_surname' || '~' || 'race_other_pacific_islander_description_flag' || '~' || 'data_source_dwid' ||
+                 '~' || 'ethnicity_other_hispanic_or_latino_description_flag' || '~' || 'other_race_national_origin_description_flag' || '~' ||
+                 'race_other_american_indian_or_alaska_native_description_flag' || '~' ||
+                 'race_other_asian_description_flag' AS data_source_integration_columns
+               , COALESCE( CAST( primary_table.b_sex_refused AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_sex_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_sex_male AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_sex_female AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_sex_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_ethnicity_refused AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_ethnicity_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_ethnicity_hispanic_or_latino AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_ethnicity_mexican AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_ethnicity_puerto_rican AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_ethnicity_cuban AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_ethnicity_other_hispanic_or_latino AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_ethnicity_not_hispanic_or_latino AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_ethnicity_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_marital_status_type AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_refused AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_american_indian_or_alaska_native AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_asian AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_asian_indian AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_chinese AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_filipino AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_japanese AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_korean AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_vietnamese AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_other_asian AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_black_or_african_american AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_information_not_provided AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_national_origin_refusal AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_native_hawaiian_or_other_pacific_islander AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_native_hawaiian AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_guamanian_or_chamorro AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_samoan AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_other_pacific_islander AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_not_applicable AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_white AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_schooling_years AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( t134.value AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( t123.value AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( t151.value AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( t152.value AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( t148.value AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( t124.value AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( t147.value AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_other_pacific_islander_description <> '' AND
+                                 primary_table.b_race_other_pacific_islander_description IS NOT NULL AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_ethnicity_other_hispanic_or_latino_description <> '' AND
+                                 primary_table.b_ethnicity_other_hispanic_or_latino_description IS NOT NULL AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_other_race_national_origin_description <> '' AND
+                                 primary_table.b_other_race_national_origin_description IS NOT NULL AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( primary_table.b_race_other_american_indian_or_alaska_native_description <> '' AND
+                                 primary_table.b_race_other_american_indian_or_alaska_native_description IS NOT NULL AS TEXT ), '<NULL>' ) ||
+                 '~' ||
+                 COALESCE( CAST( primary_table.b_race_other_asian_description <> '' AND
+                                 primary_table.b_race_other_asian_description IS NOT NULL AS TEXT ), '<NULL>' ) AS data_source_integration_id
+               , NOW( ) AS edw_created_datetime
+               , NOW( ) AS edw_modified_datetime
+               , MAX( primary_table.data_source_updated_datetime ) AS data_source_modified_datetime
+               , primary_table.b_sex_refused AS sex_refused_code
+               , primary_table.b_sex_collected_visual_or_surname AS sex_collected_visual_or_surname_code
+               , primary_table.b_sex_male AS sex_male_flag
+               , primary_table.b_sex_female AS sex_female_flag
+               , primary_table.b_sex_not_obtainable AS sex_not_obtainable_flag
+               , primary_table.b_ethnicity_refused AS ethnicity_refused_code
+               , primary_table.b_ethnicity_collected_visual_or_surname AS ethnicity_collected_visual_or_surname_code
+               , primary_table.b_ethnicity_hispanic_or_latino AS ethnicity_hispanic_or_latino_flag
+               , primary_table.b_ethnicity_mexican AS ethnicity_mexican_flag
+               , primary_table.b_ethnicity_puerto_rican AS ethnicity_puerto_rican_flag
+               , primary_table.b_ethnicity_cuban AS ethnicity_cuban_flag
+               , primary_table.b_ethnicity_other_hispanic_or_latino AS ethnicity_other_hispanic_or_latino_flag
+               , primary_table.b_ethnicity_not_hispanic_or_latino AS ethnicity_not_hispanic_or_latino_flag
+               , primary_table.b_ethnicity_not_obtainable AS ethnicity_not_obtainable_flag
+               , primary_table.b_marital_status_type AS marital_status_code
+               , primary_table.b_race_refused AS race_refused_code
+               , primary_table.b_race_collected_visual_or_surname AS race_collected_visual_or_surname_code
+               , primary_table.b_race_american_indian_or_alaska_native AS race_american_indian_or_alaska_native_flag
+               , primary_table.b_race_asian AS race_asian_flag
+               , primary_table.b_race_asian_indian AS race_asian_indian_flag
+               , primary_table.b_race_chinese AS race_chinese_flag
+               , primary_table.b_race_filipino AS race_filipino_flag
+               , primary_table.b_race_japanese AS race_japanese_flag
+               , primary_table.b_race_korean AS race_korean_flag
+               , primary_table.b_race_vietnamese AS race_vietnamese_flag
+               , primary_table.b_race_other_asian AS race_other_asian_flag
+               , primary_table.b_race_black_or_african_american AS race_black_or_african_american_flag
+               , primary_table.b_race_information_not_provided AS race_information_not_provided_flag
+               , primary_table.b_race_national_origin_refusal AS race_national_origin_refusal_flag
+               , primary_table.b_race_native_hawaiian_or_other_pacific_islander AS race_native_hawaiian_or_other_pacific_islander_flag
+               , primary_table.b_race_native_hawaiian AS race_native_hawaiian_flag
+               , primary_table.b_race_guamanian_or_chamorro AS race_guamanian_or_chamorro_flag
+               , primary_table.b_race_samoan AS race_samoan_flag
+               , primary_table.b_race_other_pacific_islander AS race_other_pacific_islander_flag
+               , primary_table.b_race_not_obtainable AS race_not_obtainable_flag
+               , primary_table.b_race_not_applicable AS race_not_applicable_flag
+               , primary_table.b_race_white AS race_white_flag
+               , primary_table.b_schooling_years AS schooling_years
+               , t134.value AS marital_status
+               , t123.value AS ethnicity_collected_visual_or_surname
+               , t151.value AS sex_collected_visual_or_surname
+               , t152.value AS sex_refused
+               , t148.value AS race_refused
+               , t124.value AS ethnicity_refused
+               , t147.value AS race_collected_visual_or_surname
+               , primary_table.b_race_other_pacific_islander_description <> '' AND
+                 primary_table.b_race_other_pacific_islander_description IS NOT NULL AS race_other_pacific_islander_description_flag
+               , primary_table.b_ethnicity_other_hispanic_or_latino_description <> '' AND
+                 primary_table.b_ethnicity_other_hispanic_or_latino_description IS NOT NULL AS ethnicity_other_hispanic_or_latino_description_flag
+               , primary_table.b_other_race_national_origin_description <> '' AND
+                 primary_table.b_other_race_national_origin_description IS NOT NULL AS other_race_national_origin_description_flag
+               , primary_table.b_race_other_american_indian_or_alaska_native_description <> '' AND
+                 primary_table.b_race_other_american_indian_or_alaska_native_description IS NOT NULL AS race_other_american_indian_or_alaska_native_description_flag
+               , primary_table.b_race_other_asian_description <> '' AND
+                 primary_table.b_race_other_asian_description IS NOT NULL AS race_other_asian_description_flag
+          FROM (
+              SELECT <<borrower_partial_load_condition>> AS include_record
+                   , borrower.*
+              FROM history_octane.borrower
+              LEFT JOIN history_octane.borrower AS history_records
+                        ON borrower.b_pid = history_records.b_pid
+                            AND borrower.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.b_pid IS NULL
+          ) AS primary_table
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<marital_status_type_partial_load_condition>> AS include_record
+                       , marital_status_type.*
+                  FROM history_octane.marital_status_type
+                  LEFT JOIN history_octane.marital_status_type AS history_records
+                            ON marital_status_type.code = history_records.code
+                                AND marital_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t134
+                     ON primary_table.b_marital_status_type = t134.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t123
+                     ON primary_table.b_ethnicity_collected_visual_or_surname = t123.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t151
+                     ON primary_table.b_sex_collected_visual_or_surname = t151.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t152
+                     ON primary_table.b_sex_refused = t152.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t148
+                     ON primary_table.b_race_refused = t148.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t124
+                     ON primary_table.b_ethnicity_refused = t124.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                       , yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                  LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                            ON yes_no_unknown_type.code = history_records.code
+                                AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t147
+                     ON primary_table.b_race_collected_visual_or_surname = t147.code
+          WHERE GREATEST( primary_table.include_record, t134.include_record, t123.include_record, t151.include_record, t152.include_record,
+                          t148.include_record, t124.include_record, t147.include_record ) IS TRUE
+          GROUP BY primary_table.b_sex_refused, primary_table.b_sex_collected_visual_or_surname, primary_table.b_sex_male
+                 , primary_table.b_sex_female, primary_table.b_sex_not_obtainable, primary_table.b_ethnicity_refused
+                 , primary_table.b_ethnicity_collected_visual_or_surname, primary_table.b_ethnicity_hispanic_or_latino
+                 , primary_table.b_ethnicity_mexican, primary_table.b_ethnicity_puerto_rican, primary_table.b_ethnicity_cuban
+                 , primary_table.b_ethnicity_other_hispanic_or_latino, primary_table.b_ethnicity_not_hispanic_or_latino
+                 , primary_table.b_ethnicity_not_obtainable, primary_table.b_marital_status_type, primary_table.b_race_refused
+                 , primary_table.b_race_collected_visual_or_surname, primary_table.b_race_american_indian_or_alaska_native
+                 , primary_table.b_race_asian, primary_table.b_race_asian_indian, primary_table.b_race_chinese, primary_table.b_race_filipino
+                 , primary_table.b_race_japanese, primary_table.b_race_korean, primary_table.b_race_vietnamese, primary_table.b_race_other_asian
+                 , primary_table.b_race_black_or_african_american, primary_table.b_race_information_not_provided
+                 , primary_table.b_race_national_origin_refusal, primary_table.b_race_native_hawaiian_or_other_pacific_islander
+                 , primary_table.b_race_native_hawaiian, primary_table.b_race_guamanian_or_chamorro, primary_table.b_race_samoan
+                 , primary_table.b_race_other_pacific_islander, primary_table.b_race_not_obtainable, primary_table.b_race_not_applicable
+                 , primary_table.b_race_white, primary_table.b_schooling_years, t123.value, t151.value, t152.value, t148.value, t124.value
+                 , t147.value, t134.value
+                 , primary_table.b_race_other_pacific_islander_description <> '' AND
+                   primary_table.b_race_other_pacific_islander_description IS NOT NULL
+                 , primary_table.b_ethnicity_other_hispanic_or_latino_description <> '' AND
+                   primary_table.b_ethnicity_other_hispanic_or_latino_description IS NOT NULL
+                 , primary_table.b_other_race_national_origin_description <> '' AND
+                   primary_table.b_other_race_national_origin_description IS NOT NULL
+                 , primary_table.b_race_other_american_indian_or_alaska_native_description <> '' AND
+                   primary_table.b_race_other_american_indian_or_alaska_native_description IS NOT NULL
+                 , primary_table.b_race_other_asian_description <> '' AND
+                   primary_table.b_race_other_asian_description IS NOT NULL
+      ) AS borrower_demographics_dim_new_records
+      LEFT JOIN star_loan.borrower_demographics_dim
+                ON borrower_demographics_dim.data_source_integration_id = borrower_demographics_dim_new_records.data_source_integration_id
+      WHERE borrower_demographics_dim.dwid IS NULL
+      ;
+next_etls:
+  - SP-300001-insert-update

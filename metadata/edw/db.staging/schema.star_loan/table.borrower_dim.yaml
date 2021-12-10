@@ -1,0 +1,993 @@
+name: borrower_dim
+primary_source_table: staging.history_octane.borrower
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+  data_source_dwid:
+    data_type: BIGINT
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  data_source_integration_columns:
+    data_type: TEXT
+  data_source_integration_id:
+    data_type: TEXT
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+  borrower_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.b_pid
+  application_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.b_application_pid
+  alimony_child_support_explanation:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_alimony_child_support_explanation
+  applicant_role:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_applicant_role_type.columns.value
+  applicant_role_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_applicant_role_type
+  application_taken_method:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_application_taken_method_type.columns.value
+  application_taken_method_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_application_taken_method_type
+  bankruptcy_explanation:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_bankruptcy_explanation
+  birth_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.b_birth_date
+  borrowed_down_payment_explanation:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_borrowed_down_payment_explanation
+  caivrs_id:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.b_caivrs_id
+  caivrs_messages:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.b_caivrs_messages
+  credit_report_authorization_datetime:
+    data_type: TIMESTAMPTZ
+    source:
+      field: primary_source_table.columns.b_credit_report_authorization_datetime
+  credit_report_authorization_method:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_credit_report_authorization_method.columns.value
+  credit_report_authorization_method_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_credit_report_authorization_method
+  credit_report_authorization_obtained_by_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_credit_report_authorization_obtained_by_unparsed_name
+  credit_report_identifier:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_credit_report_identifier
+  decision_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.b_decision_credit_score
+  dependent_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.b_dependent_count
+  dependents_age_years:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_dependents_age_years
+  email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.b_email
+  equifax_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.b_equifax_credit_score
+  ethnicity_other_hispanic_or_latino_description:
+    data_type: VARCHAR(100)
+    source:
+      field: primary_source_table.columns.b_ethnicity_other_hispanic_or_latino_description
+  experian_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.b_experian_credit_score
+  fax:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_fax
+  first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_first_name
+  first_time_homebuyer_explain:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.b_first_time_home_buyer_explain
+  credit_report_authorization_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_credit_report_authorization
+  has_no_ssn_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_has_no_ssn
+  power_of_attorney:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_power_of_attorney.columns.value
+  power_of_attorney_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney
+  home_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_home_phone
+  homeownership_education_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_homeownership_education_id
+  homeownership_education_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_homeownership_education_name
+  housing_counseling:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_housing_counseling_type.columns.value
+  housing_counseling_agency:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_housing_counseling_agency_type.columns.value
+  housing_counseling_agency_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_housing_counseling_agency_type
+  housing_counseling_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_housing_counseling_type
+  housing_counseling_complete_date:
+    source:
+      field: primary_source_table.columns.b_housing_counseling_complete_date
+    data_type: DATE
+  housing_counseling_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_housing_counseling_id
+  housing_counseling_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_housing_counseling_name
+  required_to_sign_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_required_to_sign
+  last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_last_name
+  legal_entity:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_legal_entity_type.columns.value
+  legal_entity_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_legal_entity_type
+  middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_middle_name
+  monthly_job_federal_tax_amount:
+    data_type: NUMERIC(21,3)
+    source:
+      field: primary_source_table.columns.b_monthly_job_federal_tax_amount
+  monthly_job_medicare_tax_amount:
+    data_type: NUMERIC(21,3)
+    source:
+      field: primary_source_table.columns.b_monthly_job_medicare_tax_amount
+  monthly_job_other_tax_1_amount:
+    data_type: NUMERIC(21,3)
+    source:
+      field: primary_source_table.columns.b_monthly_job_other_tax_1_amount
+  monthly_job_other_tax_1_description:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_monthly_job_other_tax_1_description
+  monthly_job_other_tax_2_amount:
+    data_type: NUMERIC(21,3)
+    source:
+      field: primary_source_table.columns.b_monthly_job_other_tax_2_amount
+  monthly_job_other_tax_2_description:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_monthly_job_other_tax_2_description
+  monthly_job_other_tax_3_amount:
+    data_type: NUMERIC(21,3)
+    source:
+      field: primary_source_table.columns.b_monthly_job_other_tax_3_amount
+  monthly_job_other_tax_3_description:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_monthly_job_other_tax_3_description
+  monthly_job_retirement_tax_amount:
+    data_type: NUMERIC(21,3)
+    source:
+      field: primary_source_table.columns.b_monthly_job_retirement_tax_amount
+  monthly_job_state_disability_insurance_amount:
+    data_type: NUMERIC(21,3)
+    source:
+      field: primary_source_table.columns.b_monthly_job_state_disability_insurance_amount
+  monthly_job_state_tax_amount:
+    data_type: NUMERIC(21,3)
+    source:
+      field: primary_source_table.columns.b_monthly_job_state_tax_amount
+  monthly_job_total_tax_amount:
+    data_type: NUMERIC(21,3)
+    source:
+      field: primary_source_table.columns.b_monthly_job_total_tax_amount
+  name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_name_suffix
+  nickname:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_nickname
+  note_endorser_explanation:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_note_endorser_explanation
+  obligated_loan_foreclosure_explanation:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_obligated_loan_foreclosure_explanation
+  office_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_office_phone
+  office_phone_extension:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.b_office_phone_extension
+  other_race_national_origin_description:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_other_race_national_origin_description
+  outstanding_judgments_explanation:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_outstanding_judgments_explanation
+  party_to_lawsuit_explanation:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_party_to_lawsuit_explanation
+  power_of_attorney_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_city
+  power_of_attorney_company_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_company_name
+  power_of_attorney_country:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_power_of_attorney_country.columns.value
+  power_of_attorney_country_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_country
+  power_of_attorney_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_email
+  power_of_attorney_fax:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_fax
+  power_of_attorney_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_first_name
+  power_of_attorney_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_last_name
+  power_of_attorney_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_middle_name
+  power_of_attorney_mobile_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_mobile_phone
+  power_of_attorney_name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_name_suffix
+  power_of_attorney_office_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_office_phone
+  power_of_attorney_office_phone_extension:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_office_phone_extension
+  power_of_attorney_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_postal_code
+  power_of_attorney_signing_capacity:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_signing_capacity
+  power_of_attorney_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_state
+  power_of_attorney_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_street1
+  power_of_attorney_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_street2
+  power_of_attorney_title:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_power_of_attorney_title
+  preferred_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.b_preferred_first_name
+  presently_delinquent_explanation:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_presently_delinquent_explanation
+  prior_property_title:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_prior_property_title_type.columns.value
+  prior_property_title_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_prior_property_title_type
+  prior_property_usage:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_prior_property_usage_type.columns.value
+  prior_property_usage_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_prior_property_usage_type
+  property_foreclosure_explanation:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_property_foreclosure_explanation
+  race_other_american_indian_or_alaska_native_description:
+    data_type: VARCHAR(100)
+    source:
+      field: primary_source_table.columns.b_race_other_american_indian_or_alaska_native_description
+  race_other_asian_description:
+    data_type: VARCHAR(100)
+    source:
+      field: primary_source_table.columns.b_race_other_asian_description
+  race_other_pacific_islander_description:
+    data_type: VARCHAR(100)
+    source:
+      field: primary_source_table.columns.b_race_other_pacific_islander_description
+  relationship_to_primary_borrower:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_relationship_to_primary_borrower_type.columns.value
+  relationship_to_primary_borrower_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_relationship_to_primary_borrower_type
+  relationship_to_seller:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_relationship_to_seller_type.columns.value
+  relationship_to_seller_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_relationship_to_seller_type
+  tiny_id:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_borrower_tiny_id_type.columns.value
+  tiny_id_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_borrower_tiny_id_type
+  trans_union_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.b_trans_union_credit_score
+  usda_annual_child_care_expenses:
+    data_type: NUMERIC(21,3)
+    source:
+      field: primary_source_table.columns.b_usda_annual_child_care_expenses
+  usda_disability_expenses:
+    data_type: NUMERIC(21,3)
+    source:
+      field: primary_source_table.columns.b_usda_disability_expenses
+  usda_income_from_assets:
+    data_type: NUMERIC(21,3)
+    source:
+      field: primary_source_table.columns.b_usda_income_from_assets
+  usda_medical_expenses:
+    data_type: NUMERIC(21,3)
+    source:
+      field: primary_source_table.columns.b_usda_medical_expenses
+  usda_moderate_income_limit:
+    data_type: NUMERIC(21,3)
+    source:
+      field: primary_source_table.columns.b_usda_moderate_income_limit
+etls:
+  SP-200005:
+    input_type: table
+    output_type: insert_update
+    json_output_field: data_source_integration_id
+    insert_update_keys:
+      - data_source_integration_id
+    input_sql: |-
+      SELECT borrower_dim_incl_new_records.data_source_integration_columns
+          , borrower_dim_incl_new_records.data_source_integration_id
+          , borrower_dim_incl_new_records.edw_created_datetime
+          , borrower_dim_incl_new_records.edw_modified_datetime
+          , borrower_dim_incl_new_records.data_source_modified_datetime
+          , borrower_dim_incl_new_records.applicant_role
+          , borrower_dim_incl_new_records.application_taken_method
+          , borrower_dim_incl_new_records.borrower_pid
+          , borrower_dim_incl_new_records.alimony_child_support_explanation
+          , borrower_dim_incl_new_records.application_taken_method_code
+          , borrower_dim_incl_new_records.bankruptcy_explanation
+          , borrower_dim_incl_new_records.birth_date
+          , borrower_dim_incl_new_records.borrowed_down_payment_explanation
+          , borrower_dim_incl_new_records.applicant_role_code
+          , borrower_dim_incl_new_records.required_to_sign_flag
+          , borrower_dim_incl_new_records.has_no_ssn_flag
+          , borrower_dim_incl_new_records.credit_report_identifier
+          , borrower_dim_incl_new_records.credit_report_authorization_flag
+          , borrower_dim_incl_new_records.dependent_count
+          , borrower_dim_incl_new_records.dependents_age_years
+          , borrower_dim_incl_new_records.email
+          , borrower_dim_incl_new_records.fax
+          , borrower_dim_incl_new_records.first_name
+          , borrower_dim_incl_new_records.nickname
+          , borrower_dim_incl_new_records.ethnicity_other_hispanic_or_latino_description
+          , borrower_dim_incl_new_records.home_phone
+          , borrower_dim_incl_new_records.last_name
+          , borrower_dim_incl_new_records.middle_name
+          , borrower_dim_incl_new_records.name_suffix
+          , borrower_dim_incl_new_records.note_endorser_explanation
+          , borrower_dim_incl_new_records.obligated_loan_foreclosure_explanation
+          , borrower_dim_incl_new_records.office_phone
+          , borrower_dim_incl_new_records.office_phone_extension
+          , borrower_dim_incl_new_records.other_race_national_origin_description
+          , borrower_dim_incl_new_records.outstanding_judgments_explanation
+          , borrower_dim_incl_new_records.party_to_lawsuit_explanation
+          , borrower_dim_incl_new_records.power_of_attorney_code
+          , borrower_dim_incl_new_records.power_of_attorney_signing_capacity
+          , borrower_dim_incl_new_records.power_of_attorney_first_name
+          , borrower_dim_incl_new_records.power_of_attorney_last_name
+          , borrower_dim_incl_new_records.power_of_attorney_middle_name
+          , borrower_dim_incl_new_records.power_of_attorney_name_suffix
+          , borrower_dim_incl_new_records.power_of_attorney_company_name
+          , borrower_dim_incl_new_records.power_of_attorney_title
+          , borrower_dim_incl_new_records.power_of_attorney_office_phone
+          , borrower_dim_incl_new_records.power_of_attorney_office_phone_extension
+          , borrower_dim_incl_new_records.power_of_attorney_mobile_phone
+          , borrower_dim_incl_new_records.power_of_attorney_email
+          , borrower_dim_incl_new_records.power_of_attorney_fax
+          , borrower_dim_incl_new_records.power_of_attorney_city
+          , borrower_dim_incl_new_records.power_of_attorney_country_code
+          , borrower_dim_incl_new_records.power_of_attorney_postal_code
+          , borrower_dim_incl_new_records.power_of_attorney_state
+          , borrower_dim_incl_new_records.power_of_attorney_street1
+          , borrower_dim_incl_new_records.power_of_attorney_street2
+          , borrower_dim_incl_new_records.presently_delinquent_explanation
+          , borrower_dim_incl_new_records.prior_property_title_code
+          , borrower_dim_incl_new_records.prior_property_usage_code
+          , borrower_dim_incl_new_records.property_foreclosure_explanation
+          , borrower_dim_incl_new_records.race_other_american_indian_or_alaska_native_description
+          , borrower_dim_incl_new_records.race_other_asian_description
+          , borrower_dim_incl_new_records.race_other_pacific_islander_description
+          , borrower_dim_incl_new_records.experian_credit_score
+          , borrower_dim_incl_new_records.equifax_credit_score
+          , borrower_dim_incl_new_records.trans_union_credit_score
+          , borrower_dim_incl_new_records.decision_credit_score
+          , borrower_dim_incl_new_records.tiny_id_code
+          , borrower_dim_incl_new_records.first_time_homebuyer_explain
+          , borrower_dim_incl_new_records.caivrs_id
+          , borrower_dim_incl_new_records.caivrs_messages
+          , borrower_dim_incl_new_records.monthly_job_federal_tax_amount
+          , borrower_dim_incl_new_records.monthly_job_state_tax_amount
+          , borrower_dim_incl_new_records.monthly_job_retirement_tax_amount
+          , borrower_dim_incl_new_records.monthly_job_medicare_tax_amount
+          , borrower_dim_incl_new_records.monthly_job_state_disability_insurance_amount
+          , borrower_dim_incl_new_records.monthly_job_other_tax_1_amount
+          , borrower_dim_incl_new_records.monthly_job_other_tax_1_description
+          , borrower_dim_incl_new_records.monthly_job_other_tax_2_amount
+          , borrower_dim_incl_new_records.monthly_job_other_tax_2_description
+          , borrower_dim_incl_new_records.monthly_job_other_tax_3_amount
+          , borrower_dim_incl_new_records.monthly_job_other_tax_3_description
+          , borrower_dim_incl_new_records.monthly_job_total_tax_amount
+          , borrower_dim_incl_new_records.homeownership_education_id
+          , borrower_dim_incl_new_records.homeownership_education_name
+          , borrower_dim_incl_new_records.housing_counseling_code
+          , borrower_dim_incl_new_records.housing_counseling_agency_code
+          , borrower_dim_incl_new_records.housing_counseling_id
+          , borrower_dim_incl_new_records.housing_counseling_name
+          , borrower_dim_incl_new_records.housing_counseling_complete_date
+          , borrower_dim_incl_new_records.legal_entity_code
+          , borrower_dim_incl_new_records.credit_report_authorization_datetime
+          , borrower_dim_incl_new_records.credit_report_authorization_method_code
+          , borrower_dim_incl_new_records.credit_report_authorization_obtained_by_unparsed_name
+          , borrower_dim_incl_new_records.usda_annual_child_care_expenses
+          , borrower_dim_incl_new_records.usda_disability_expenses
+          , borrower_dim_incl_new_records.usda_medical_expenses
+          , borrower_dim_incl_new_records.usda_income_from_assets
+          , borrower_dim_incl_new_records.usda_moderate_income_limit
+          , borrower_dim_incl_new_records.relationship_to_primary_borrower_code
+          , borrower_dim_incl_new_records.relationship_to_seller_code
+          , borrower_dim_incl_new_records.preferred_first_name
+          , borrower_dim_incl_new_records.application_pid
+          , borrower_dim_incl_new_records.relationship_to_primary_borrower
+          , borrower_dim_incl_new_records.relationship_to_seller
+          , borrower_dim_incl_new_records.tiny_id
+          , borrower_dim_incl_new_records.power_of_attorney_country
+          , borrower_dim_incl_new_records.credit_report_authorization_method
+          , borrower_dim_incl_new_records.housing_counseling_agency
+          , borrower_dim_incl_new_records.housing_counseling
+          , borrower_dim_incl_new_records.legal_entity
+          , borrower_dim_incl_new_records.prior_property_title
+          , borrower_dim_incl_new_records.prior_property_usage
+          , borrower_dim_incl_new_records.power_of_attorney
+      FROM (
+      SELECT 'borrower_pid' || '~' || 'data_source_dwid' as data_source_integration_columns,
+              COALESCE(CAST(primary_table.b_pid as text), '<NULL>')  || '~' || COALESCE(CAST(1 as text), '<NULL>')  as data_source_integration_id,
+              now() as edw_created_datetime,
+              now() as edw_modified_datetime,
+              primary_table.data_source_updated_datetime as data_source_modified_datetime,
+              t114.value as applicant_role,
+              t115.value as application_taken_method,
+              primary_table.b_pid as borrower_pid,
+              primary_table.b_alimony_child_support_explanation as alimony_child_support_explanation,
+              primary_table.b_application_taken_method_type as application_taken_method_code,
+              primary_table.b_bankruptcy_explanation as bankruptcy_explanation,
+              primary_table.b_birth_date as birth_date,
+              primary_table.b_borrowed_down_payment_explanation as borrowed_down_payment_explanation,
+              primary_table.b_applicant_role_type as applicant_role_code,
+              primary_table.b_required_to_sign as required_to_sign_flag,
+              primary_table.b_has_no_ssn as has_no_ssn_flag,
+              primary_table.b_credit_report_identifier as credit_report_identifier,
+              primary_table.b_credit_report_authorization as credit_report_authorization_flag,
+              primary_table.b_dependent_count as dependent_count,
+              primary_table.b_dependents_age_years as dependents_age_years,
+              primary_table.b_email as email,
+              primary_table.b_fax as fax,
+              primary_table.b_first_name as first_name,
+              primary_table.b_nickname as nickname,
+              primary_table.b_ethnicity_other_hispanic_or_latino_description as ethnicity_other_hispanic_or_latino_description,
+              primary_table.b_home_phone as home_phone,
+              primary_table.b_last_name as last_name,
+              primary_table.b_middle_name as middle_name,
+              primary_table.b_name_suffix as name_suffix,
+              primary_table.b_note_endorser_explanation as note_endorser_explanation,
+              primary_table.b_obligated_loan_foreclosure_explanation as obligated_loan_foreclosure_explanation,
+              primary_table.b_office_phone as office_phone,
+              primary_table.b_office_phone_extension as office_phone_extension,
+              primary_table.b_other_race_national_origin_description as other_race_national_origin_description,
+              primary_table.b_outstanding_judgments_explanation as outstanding_judgments_explanation,
+              primary_table.b_party_to_lawsuit_explanation as party_to_lawsuit_explanation,
+              primary_table.b_power_of_attorney as power_of_attorney_code,
+              primary_table.b_power_of_attorney_signing_capacity as power_of_attorney_signing_capacity,
+              primary_table.b_power_of_attorney_first_name as power_of_attorney_first_name,
+              primary_table.b_power_of_attorney_last_name as power_of_attorney_last_name,
+              primary_table.b_power_of_attorney_middle_name as power_of_attorney_middle_name,
+              primary_table.b_power_of_attorney_name_suffix as power_of_attorney_name_suffix,
+              primary_table.b_power_of_attorney_company_name as power_of_attorney_company_name,
+              primary_table.b_power_of_attorney_title as power_of_attorney_title,
+              primary_table.b_power_of_attorney_office_phone as power_of_attorney_office_phone,
+              primary_table.b_power_of_attorney_office_phone_extension as power_of_attorney_office_phone_extension,
+              primary_table.b_power_of_attorney_mobile_phone as power_of_attorney_mobile_phone,
+              primary_table.b_power_of_attorney_email as power_of_attorney_email,
+              primary_table.b_power_of_attorney_fax as power_of_attorney_fax,
+              primary_table.b_power_of_attorney_city as power_of_attorney_city,
+              primary_table.b_power_of_attorney_country as power_of_attorney_country_code,
+              primary_table.b_power_of_attorney_postal_code as power_of_attorney_postal_code,
+              primary_table.b_power_of_attorney_state as power_of_attorney_state,
+              primary_table.b_power_of_attorney_street1 as power_of_attorney_street1,
+              primary_table.b_power_of_attorney_street2 as power_of_attorney_street2,
+              primary_table.b_presently_delinquent_explanation as presently_delinquent_explanation,
+              primary_table.b_prior_property_title_type as prior_property_title_code,
+              primary_table.b_prior_property_usage_type as prior_property_usage_code,
+              primary_table.b_property_foreclosure_explanation as property_foreclosure_explanation,
+              primary_table.b_race_other_american_indian_or_alaska_native_description as race_other_american_indian_or_alaska_native_description,
+              primary_table.b_race_other_asian_description as race_other_asian_description,
+              primary_table.b_race_other_pacific_islander_description as race_other_pacific_islander_description,
+              primary_table.b_experian_credit_score as experian_credit_score,
+              primary_table.b_equifax_credit_score as equifax_credit_score,
+              primary_table.b_trans_union_credit_score as trans_union_credit_score,
+              primary_table.b_decision_credit_score as decision_credit_score,
+              primary_table.b_borrower_tiny_id_type as tiny_id_code,
+              primary_table.b_first_time_home_buyer_explain as first_time_homebuyer_explain,
+              primary_table.b_caivrs_id as caivrs_id,
+              primary_table.b_caivrs_messages as caivrs_messages,
+              primary_table.b_monthly_job_federal_tax_amount as monthly_job_federal_tax_amount,
+              primary_table.b_monthly_job_state_tax_amount as monthly_job_state_tax_amount,
+              primary_table.b_monthly_job_retirement_tax_amount as monthly_job_retirement_tax_amount,
+              primary_table.b_monthly_job_medicare_tax_amount as monthly_job_medicare_tax_amount,
+              primary_table.b_monthly_job_state_disability_insurance_amount as monthly_job_state_disability_insurance_amount,
+              primary_table.b_monthly_job_other_tax_1_amount as monthly_job_other_tax_1_amount,
+              primary_table.b_monthly_job_other_tax_1_description as monthly_job_other_tax_1_description,
+              primary_table.b_monthly_job_other_tax_2_amount as monthly_job_other_tax_2_amount,
+              primary_table.b_monthly_job_other_tax_2_description as monthly_job_other_tax_2_description,
+              primary_table.b_monthly_job_other_tax_3_amount as monthly_job_other_tax_3_amount,
+              primary_table.b_monthly_job_other_tax_3_description as monthly_job_other_tax_3_description,
+              primary_table.b_monthly_job_total_tax_amount as monthly_job_total_tax_amount,
+              primary_table.b_homeownership_education_id as homeownership_education_id,
+              primary_table.b_homeownership_education_name as homeownership_education_name,
+              primary_table.b_housing_counseling_type as housing_counseling_code,
+              primary_table.b_housing_counseling_agency_type as housing_counseling_agency_code,
+              primary_table.b_housing_counseling_id as housing_counseling_id,
+              primary_table.b_housing_counseling_name as housing_counseling_name,
+              primary_table.b_housing_counseling_complete_date as housing_counseling_complete_date,
+              primary_table.b_legal_entity_type as legal_entity_code,
+              primary_table.b_credit_report_authorization_datetime as credit_report_authorization_datetime,
+              primary_table.b_credit_report_authorization_method as credit_report_authorization_method_code,
+              primary_table.b_credit_report_authorization_obtained_by_unparsed_name as credit_report_authorization_obtained_by_unparsed_name,
+              primary_table.b_usda_annual_child_care_expenses as usda_annual_child_care_expenses,
+              primary_table.b_usda_disability_expenses as usda_disability_expenses,
+              primary_table.b_usda_medical_expenses as usda_medical_expenses,
+              primary_table.b_usda_income_from_assets as usda_income_from_assets,
+              primary_table.b_usda_moderate_income_limit as usda_moderate_income_limit,
+              primary_table.b_relationship_to_primary_borrower_type as relationship_to_primary_borrower_code,
+              primary_table.b_relationship_to_seller_type as relationship_to_seller_code,
+              primary_table.b_preferred_first_name as preferred_first_name,
+              primary_table.b_application_pid as application_pid,
+              t149.value as relationship_to_primary_borrower,
+              t150.value as relationship_to_seller,
+              t118.value as tiny_id,
+              t142.value as power_of_attorney_country,
+              t120.value as credit_report_authorization_method,
+              t129.value as housing_counseling_agency,
+              t130.value as housing_counseling,
+              t132.value as legal_entity,
+              t144.value as prior_property_title,
+              t145.value as prior_property_usage,
+              t141.value as power_of_attorney
+       FROM (
+          SELECT
+              <<borrower_partial_load_condition>> as include_record,
+              borrower.*
+          FROM history_octane.borrower
+              LEFT JOIN history_octane.borrower AS history_records ON borrower.b_pid = history_records.b_pid
+                  AND borrower.data_source_updated_datetime < history_records.data_source_updated_datetime
+          WHERE history_records.b_pid IS NULL
+          ) AS primary_table
+
+          INNER JOIN (
+              SELECT * FROM (
+                  SELECT     <<applicant_role_type_partial_load_condition>> as include_record,
+                  applicant_role_type.*
+                  FROM history_octane.applicant_role_type
+                      LEFT JOIN history_octane.applicant_role_type AS history_records ON applicant_role_type.code = history_records.code
+                      AND applicant_role_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) as primary_table
+
+          ) AS t114 ON primary_table.b_applicant_role_type = t114.code
+
+          INNER JOIN (
+              SELECT * FROM (
+                  SELECT     <<application_taken_method_type_partial_load_condition>> as include_record,
+                  application_taken_method_type.*
+                  FROM history_octane.application_taken_method_type
+                      LEFT JOIN history_octane.application_taken_method_type AS history_records ON application_taken_method_type.code = history_records.code
+                      AND application_taken_method_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) as primary_table
+
+          ) AS t115 ON primary_table.b_application_taken_method_type = t115.code
+
+          INNER JOIN (
+              SELECT * FROM (
+                  SELECT     <<borrower_relationship_type_partial_load_condition>> as include_record,
+                  borrower_relationship_type.*
+                  FROM history_octane.borrower_relationship_type
+                      LEFT JOIN history_octane.borrower_relationship_type AS history_records ON borrower_relationship_type.code = history_records.code
+                      AND borrower_relationship_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) as primary_table
+
+          ) AS t149 ON primary_table.b_relationship_to_primary_borrower_type = t149.code
+
+          INNER JOIN (
+              SELECT * FROM (
+                  SELECT     <<borrower_relationship_type_partial_load_condition>> as include_record,
+                  borrower_relationship_type.*
+                  FROM history_octane.borrower_relationship_type
+                      LEFT JOIN history_octane.borrower_relationship_type AS history_records ON borrower_relationship_type.code = history_records.code
+                      AND borrower_relationship_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) as primary_table
+
+          ) AS t150 ON primary_table.b_relationship_to_seller_type = t150.code
+
+          INNER JOIN (
+              SELECT * FROM (
+                  SELECT     <<borrower_tiny_id_type_partial_load_condition>> as include_record,
+                  borrower_tiny_id_type.*
+                  FROM history_octane.borrower_tiny_id_type
+                      LEFT JOIN history_octane.borrower_tiny_id_type AS history_records ON borrower_tiny_id_type.code = history_records.code
+                      AND borrower_tiny_id_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) as primary_table
+
+          ) AS t118 ON primary_table.b_borrower_tiny_id_type = t118.code
+
+          INNER JOIN (
+              SELECT * FROM (
+                  SELECT     <<country_type_partial_load_condition>> as include_record,
+                  country_type.*
+                  FROM history_octane.country_type
+                      LEFT JOIN history_octane.country_type AS history_records ON country_type.code = history_records.code
+                      AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) as primary_table
+
+          ) AS t142 ON primary_table.b_power_of_attorney_country = t142.code
+
+          INNER JOIN (
+              SELECT * FROM (
+                  SELECT     <<credit_authorization_method_type_partial_load_condition>> as include_record,
+                  credit_authorization_method_type.*
+                  FROM history_octane.credit_authorization_method_type
+                      LEFT JOIN history_octane.credit_authorization_method_type AS history_records ON credit_authorization_method_type.code = history_records.code
+                      AND credit_authorization_method_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) as primary_table
+
+          ) AS t120 ON primary_table.b_credit_report_authorization_method = t120.code
+
+          INNER JOIN (
+              SELECT * FROM (
+                  SELECT     <<housing_counseling_agency_type_partial_load_condition>> as include_record,
+                  housing_counseling_agency_type.*
+                  FROM history_octane.housing_counseling_agency_type
+                      LEFT JOIN history_octane.housing_counseling_agency_type AS history_records ON housing_counseling_agency_type.code = history_records.code
+                      AND housing_counseling_agency_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) as primary_table
+
+          ) AS t129 ON primary_table.b_housing_counseling_agency_type = t129.code
+
+          INNER JOIN (
+              SELECT * FROM (
+                  SELECT     <<housing_counseling_type_partial_load_condition>> as include_record,
+                  housing_counseling_type.*
+                  FROM history_octane.housing_counseling_type
+                      LEFT JOIN history_octane.housing_counseling_type AS history_records ON housing_counseling_type.code = history_records.code
+                      AND housing_counseling_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) as primary_table
+
+          ) AS t130 ON primary_table.b_housing_counseling_type = t130.code
+
+          INNER JOIN (
+              SELECT * FROM (
+                  SELECT     <<legal_entity_type_partial_load_condition>> as include_record,
+                  legal_entity_type.*
+                  FROM history_octane.legal_entity_type
+                      LEFT JOIN history_octane.legal_entity_type AS history_records ON legal_entity_type.code = history_records.code
+                      AND legal_entity_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) as primary_table
+
+          ) AS t132 ON primary_table.b_legal_entity_type = t132.code
+
+          INNER JOIN (
+              SELECT * FROM (
+                  SELECT     <<prior_property_title_type_partial_load_condition>> as include_record,
+                  prior_property_title_type.*
+                  FROM history_octane.prior_property_title_type
+                      LEFT JOIN history_octane.prior_property_title_type AS history_records ON prior_property_title_type.code = history_records.code
+                      AND prior_property_title_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) as primary_table
+
+          ) AS t144 ON primary_table.b_prior_property_title_type = t144.code
+
+          INNER JOIN (
+              SELECT * FROM (
+                  SELECT     <<property_usage_type_partial_load_condition>> as include_record,
+                  property_usage_type.*
+                  FROM history_octane.property_usage_type
+                      LEFT JOIN history_octane.property_usage_type AS history_records ON property_usage_type.code = history_records.code
+                      AND property_usage_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) as primary_table
+
+          ) AS t145 ON primary_table.b_prior_property_usage_type = t145.code
+
+          INNER JOIN (
+              SELECT * FROM (
+                  SELECT     <<yes_no_unknown_type_partial_load_condition>> as include_record,
+                  yes_no_unknown_type.*
+                  FROM history_octane.yes_no_unknown_type
+                      LEFT JOIN history_octane.yes_no_unknown_type AS history_records ON yes_no_unknown_type.code = history_records.code
+                      AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) as primary_table
+
+          ) AS t141 ON primary_table.b_power_of_attorney = t141.code
+       WHERE
+          GREATEST(primary_table.include_record, t114.include_record, t115.include_record, t149.include_record, t150.include_record, t118.include_record, t142.include_record, t120.include_record, t129.include_record, t130.include_record, t132.include_record, t144.include_record, t145.include_record, t141.include_record) IS TRUE
+       ORDER BY
+          primary_table.data_source_updated_datetime ASC
+      ) AS borrower_dim_incl_new_records
+          LEFT JOIN star_loan.borrower_dim ON borrower_dim_incl_new_records.data_source_integration_id = borrower_dim.data_source_integration_id
+              AND borrower_dim_incl_new_records.application_pid IS NOT DISTINCT FROM borrower_dim.application_pid
+              AND borrower_dim_incl_new_records.alimony_child_support_explanation IS NOT DISTINCT FROM borrower_dim.alimony_child_support_explanation
+              AND borrower_dim_incl_new_records.applicant_role IS NOT DISTINCT FROM borrower_dim.applicant_role
+              AND borrower_dim_incl_new_records.applicant_role_code IS NOT DISTINCT FROM borrower_dim.applicant_role_code
+              AND borrower_dim_incl_new_records.application_taken_method IS NOT DISTINCT FROM borrower_dim.application_taken_method
+              AND borrower_dim_incl_new_records.application_taken_method_code IS NOT DISTINCT FROM borrower_dim.application_taken_method_code
+              AND borrower_dim_incl_new_records.bankruptcy_explanation IS NOT DISTINCT FROM borrower_dim.bankruptcy_explanation
+              AND borrower_dim_incl_new_records.birth_date IS NOT DISTINCT FROM borrower_dim.birth_date
+              AND borrower_dim_incl_new_records.borrowed_down_payment_explanation IS NOT DISTINCT FROM borrower_dim.borrowed_down_payment_explanation
+              AND borrower_dim_incl_new_records.caivrs_id IS NOT DISTINCT FROM borrower_dim.caivrs_id
+              AND borrower_dim_incl_new_records.caivrs_messages IS NOT DISTINCT FROM borrower_dim.caivrs_messages
+              AND borrower_dim_incl_new_records.credit_report_authorization_datetime IS NOT DISTINCT FROM borrower_dim
+                  .credit_report_authorization_datetime
+              AND borrower_dim_incl_new_records.credit_report_authorization_method IS NOT DISTINCT FROM borrower_dim
+                  .credit_report_authorization_method
+              AND borrower_dim_incl_new_records.credit_report_authorization_method_code IS NOT DISTINCT FROM borrower_dim
+                  .credit_report_authorization_method_code
+              AND borrower_dim_incl_new_records.credit_report_authorization_obtained_by_unparsed_name IS NOT DISTINCT FROM borrower_dim
+                  .credit_report_authorization_obtained_by_unparsed_name
+              AND borrower_dim_incl_new_records.credit_report_identifier IS NOT DISTINCT FROM borrower_dim.credit_report_identifier
+              AND borrower_dim_incl_new_records.decision_credit_score IS NOT DISTINCT FROM borrower_dim.decision_credit_score
+              AND borrower_dim_incl_new_records.dependent_count IS NOT DISTINCT FROM borrower_dim.dependent_count
+              AND borrower_dim_incl_new_records.dependents_age_years IS NOT DISTINCT FROM borrower_dim.dependents_age_years
+              AND borrower_dim_incl_new_records.email IS NOT DISTINCT FROM borrower_dim.email
+              AND borrower_dim_incl_new_records.equifax_credit_score IS NOT DISTINCT FROM borrower_dim.equifax_credit_score
+              AND borrower_dim_incl_new_records.ethnicity_other_hispanic_or_latino_description IS NOT DISTINCT FROM borrower_dim
+                  .ethnicity_other_hispanic_or_latino_description
+              AND borrower_dim_incl_new_records.experian_credit_score IS NOT DISTINCT FROM borrower_dim.experian_credit_score
+              AND borrower_dim_incl_new_records.fax IS NOT DISTINCT FROM borrower_dim.fax
+              AND borrower_dim_incl_new_records.first_name IS NOT DISTINCT FROM borrower_dim.first_name
+              AND borrower_dim_incl_new_records.first_time_homebuyer_explain IS NOT DISTINCT FROM borrower_dim.first_time_homebuyer_explain
+              AND borrower_dim_incl_new_records.credit_report_authorization_flag IS NOT DISTINCT FROM borrower_dim
+                  .credit_report_authorization_flag
+              AND borrower_dim_incl_new_records.has_no_ssn_flag IS NOT DISTINCT FROM borrower_dim.has_no_ssn_flag
+              AND borrower_dim_incl_new_records.power_of_attorney IS NOT DISTINCT FROM borrower_dim.power_of_attorney
+              AND borrower_dim_incl_new_records.power_of_attorney_code IS NOT DISTINCT FROM borrower_dim.power_of_attorney_code
+              AND borrower_dim_incl_new_records.home_phone IS NOT DISTINCT FROM borrower_dim.home_phone
+              AND borrower_dim_incl_new_records.homeownership_education_id IS NOT DISTINCT FROM borrower_dim.homeownership_education_id
+              AND borrower_dim_incl_new_records.homeownership_education_name IS NOT DISTINCT FROM borrower_dim.homeownership_education_name
+              AND borrower_dim_incl_new_records.housing_counseling IS NOT DISTINCT FROM borrower_dim.housing_counseling
+              AND borrower_dim_incl_new_records.housing_counseling_agency IS NOT DISTINCT FROM borrower_dim.housing_counseling_agency
+              AND borrower_dim_incl_new_records.housing_counseling_agency_code IS NOT DISTINCT FROM borrower_dim.housing_counseling_agency_code
+              AND borrower_dim_incl_new_records.housing_counseling_code IS NOT DISTINCT FROM borrower_dim.housing_counseling_code
+              AND borrower_dim_incl_new_records.housing_counseling_complete_date IS NOT DISTINCT FROM borrower_dim
+                  .housing_counseling_complete_date
+              AND borrower_dim_incl_new_records.housing_counseling_id IS NOT DISTINCT FROM borrower_dim.housing_counseling_id
+              AND borrower_dim_incl_new_records.housing_counseling_name IS NOT DISTINCT FROM borrower_dim.housing_counseling_name
+              AND borrower_dim_incl_new_records.required_to_sign_flag IS NOT DISTINCT FROM borrower_dim.required_to_sign_flag
+              AND borrower_dim_incl_new_records.last_name IS NOT DISTINCT FROM borrower_dim.last_name
+              AND borrower_dim_incl_new_records.legal_entity IS NOT DISTINCT FROM borrower_dim.legal_entity
+              AND borrower_dim_incl_new_records.legal_entity_code IS NOT DISTINCT FROM borrower_dim.legal_entity_code
+              AND borrower_dim_incl_new_records.middle_name IS NOT DISTINCT FROM borrower_dim.middle_name
+              AND borrower_dim_incl_new_records.monthly_job_federal_tax_amount IS NOT DISTINCT FROM borrower_dim.monthly_job_federal_tax_amount
+              AND borrower_dim_incl_new_records.monthly_job_medicare_tax_amount IS NOT DISTINCT FROM borrower_dim
+                  .monthly_job_medicare_tax_amount
+              AND borrower_dim_incl_new_records.monthly_job_other_tax_1_amount IS NOT DISTINCT FROM borrower_dim.monthly_job_other_tax_1_amount
+              AND borrower_dim_incl_new_records.monthly_job_other_tax_1_description IS NOT DISTINCT FROM borrower_dim
+                  .monthly_job_other_tax_1_description
+              AND borrower_dim_incl_new_records.monthly_job_other_tax_2_amount IS NOT DISTINCT FROM borrower_dim.monthly_job_other_tax_2_amount
+              AND borrower_dim_incl_new_records.monthly_job_other_tax_2_description IS NOT DISTINCT FROM borrower_dim
+                  .monthly_job_other_tax_2_description
+              AND borrower_dim_incl_new_records.monthly_job_other_tax_3_amount IS NOT DISTINCT FROM borrower_dim.monthly_job_other_tax_3_amount
+              AND borrower_dim_incl_new_records.monthly_job_other_tax_3_description IS NOT DISTINCT FROM borrower_dim
+                  .monthly_job_other_tax_3_description
+              AND borrower_dim_incl_new_records.monthly_job_retirement_tax_amount IS NOT DISTINCT FROM borrower_dim
+                  .monthly_job_retirement_tax_amount
+              AND borrower_dim_incl_new_records.monthly_job_state_disability_insurance_amount IS NOT DISTINCT FROM borrower_dim
+                  .monthly_job_state_disability_insurance_amount
+              AND borrower_dim_incl_new_records.monthly_job_state_tax_amount IS NOT DISTINCT FROM borrower_dim.monthly_job_state_tax_amount
+              AND borrower_dim_incl_new_records.monthly_job_total_tax_amount IS NOT DISTINCT FROM borrower_dim.monthly_job_total_tax_amount
+              AND borrower_dim_incl_new_records.name_suffix IS NOT DISTINCT FROM borrower_dim.name_suffix
+              AND borrower_dim_incl_new_records.nickname IS NOT DISTINCT FROM borrower_dim.nickname
+              AND borrower_dim_incl_new_records.note_endorser_explanation IS NOT DISTINCT FROM borrower_dim.note_endorser_explanation
+              AND borrower_dim_incl_new_records.obligated_loan_foreclosure_explanation IS NOT DISTINCT FROM borrower_dim
+                  .obligated_loan_foreclosure_explanation
+              AND borrower_dim_incl_new_records.office_phone IS NOT DISTINCT FROM borrower_dim.office_phone
+              AND borrower_dim_incl_new_records.office_phone_extension IS NOT DISTINCT FROM borrower_dim.office_phone_extension
+              AND borrower_dim_incl_new_records.other_race_national_origin_description IS NOT DISTINCT FROM borrower_dim
+                  .other_race_national_origin_description
+              AND borrower_dim_incl_new_records.outstanding_judgments_explanation IS NOT DISTINCT FROM borrower_dim
+                  .outstanding_judgments_explanation
+              AND borrower_dim_incl_new_records.party_to_lawsuit_explanation IS NOT DISTINCT FROM borrower_dim.party_to_lawsuit_explanation
+              AND borrower_dim_incl_new_records.power_of_attorney_city IS NOT DISTINCT FROM borrower_dim.power_of_attorney_city
+              AND borrower_dim_incl_new_records.power_of_attorney_company_name IS NOT DISTINCT FROM borrower_dim.power_of_attorney_company_name
+              AND borrower_dim_incl_new_records.power_of_attorney_country IS NOT DISTINCT FROM borrower_dim.power_of_attorney_country
+              AND borrower_dim_incl_new_records.power_of_attorney_country_code IS NOT DISTINCT FROM borrower_dim.power_of_attorney_country_code
+              AND borrower_dim_incl_new_records.power_of_attorney_email IS NOT DISTINCT FROM borrower_dim.power_of_attorney_email
+              AND borrower_dim_incl_new_records.power_of_attorney_fax IS NOT DISTINCT FROM borrower_dim.power_of_attorney_fax
+              AND borrower_dim_incl_new_records.power_of_attorney_first_name IS NOT DISTINCT FROM borrower_dim.power_of_attorney_first_name
+              AND borrower_dim_incl_new_records.power_of_attorney_last_name IS NOT DISTINCT FROM borrower_dim.power_of_attorney_last_name
+              AND borrower_dim_incl_new_records.power_of_attorney_middle_name IS NOT DISTINCT FROM borrower_dim.power_of_attorney_middle_name
+              AND borrower_dim_incl_new_records.power_of_attorney_mobile_phone IS NOT DISTINCT FROM borrower_dim.power_of_attorney_mobile_phone
+              AND borrower_dim_incl_new_records.power_of_attorney_name_suffix IS NOT DISTINCT FROM borrower_dim.power_of_attorney_name_suffix
+              AND borrower_dim_incl_new_records.power_of_attorney_office_phone IS NOT DISTINCT FROM borrower_dim.power_of_attorney_office_phone
+              AND borrower_dim_incl_new_records.power_of_attorney_office_phone_extension IS NOT DISTINCT FROM borrower_dim
+                  .power_of_attorney_office_phone_extension
+              AND borrower_dim_incl_new_records.power_of_attorney_postal_code IS NOT DISTINCT FROM borrower_dim.power_of_attorney_postal_code
+              AND borrower_dim_incl_new_records.power_of_attorney_signing_capacity IS NOT DISTINCT FROM borrower_dim
+                  .power_of_attorney_signing_capacity
+              AND borrower_dim_incl_new_records.power_of_attorney_state IS NOT DISTINCT FROM borrower_dim.power_of_attorney_state
+              AND borrower_dim_incl_new_records.power_of_attorney_street1 IS NOT DISTINCT FROM borrower_dim.power_of_attorney_street1
+              AND borrower_dim_incl_new_records.power_of_attorney_street2 IS NOT DISTINCT FROM borrower_dim.power_of_attorney_street2
+              AND borrower_dim_incl_new_records.power_of_attorney_title IS NOT DISTINCT FROM borrower_dim.power_of_attorney_title
+              AND borrower_dim_incl_new_records.preferred_first_name IS NOT DISTINCT FROM borrower_dim.preferred_first_name
+              AND borrower_dim_incl_new_records.presently_delinquent_explanation IS NOT DISTINCT FROM borrower_dim
+                  .presently_delinquent_explanation
+              AND borrower_dim_incl_new_records.prior_property_title IS NOT DISTINCT FROM borrower_dim.prior_property_title
+              AND borrower_dim_incl_new_records.prior_property_title_code IS NOT DISTINCT FROM borrower_dim.prior_property_title_code
+              AND borrower_dim_incl_new_records.prior_property_usage IS NOT DISTINCT FROM borrower_dim.prior_property_usage
+              AND borrower_dim_incl_new_records.prior_property_usage_code IS NOT DISTINCT FROM borrower_dim.prior_property_usage_code
+              AND borrower_dim_incl_new_records.property_foreclosure_explanation IS NOT DISTINCT FROM borrower_dim
+                  .property_foreclosure_explanation
+              AND borrower_dim_incl_new_records.race_other_american_indian_or_alaska_native_description IS NOT DISTINCT FROM borrower_dim
+                  .race_other_american_indian_or_alaska_native_description
+              AND borrower_dim_incl_new_records.race_other_asian_description IS NOT DISTINCT FROM borrower_dim.race_other_asian_description
+              AND borrower_dim_incl_new_records.race_other_pacific_islander_description IS NOT DISTINCT FROM borrower_dim
+                  .race_other_pacific_islander_description
+              AND borrower_dim_incl_new_records.relationship_to_primary_borrower IS NOT DISTINCT FROM borrower_dim
+                  .relationship_to_primary_borrower
+              AND borrower_dim_incl_new_records.relationship_to_primary_borrower_code IS NOT DISTINCT FROM borrower_dim
+                  .relationship_to_primary_borrower_code
+              AND borrower_dim_incl_new_records.relationship_to_seller IS NOT DISTINCT FROM borrower_dim.relationship_to_seller
+              AND borrower_dim_incl_new_records.relationship_to_seller_code IS NOT DISTINCT FROM borrower_dim.relationship_to_seller_code
+              AND borrower_dim_incl_new_records.tiny_id IS NOT DISTINCT FROM borrower_dim.tiny_id
+              AND borrower_dim_incl_new_records.tiny_id_code IS NOT DISTINCT FROM borrower_dim.tiny_id_code
+              AND borrower_dim_incl_new_records.trans_union_credit_score IS NOT DISTINCT FROM borrower_dim.trans_union_credit_score
+              AND borrower_dim_incl_new_records.usda_annual_child_care_expenses IS NOT DISTINCT FROM borrower_dim.usda_annual_child_care_expenses
+              AND borrower_dim_incl_new_records.usda_disability_expenses IS NOT DISTINCT FROM borrower_dim.usda_disability_expenses
+              AND borrower_dim_incl_new_records.usda_income_from_assets IS NOT DISTINCT FROM borrower_dim.usda_income_from_assets
+              AND borrower_dim_incl_new_records.usda_medical_expenses IS NOT DISTINCT FROM borrower_dim.usda_medical_expenses
+              AND borrower_dim_incl_new_records.usda_moderate_income_limit IS NOT DISTINCT FROM borrower_dim.usda_moderate_income_limit
+      WHERE borrower_dim.dwid IS NULL;
+next_etls:
+  - SP-300001-insert-update

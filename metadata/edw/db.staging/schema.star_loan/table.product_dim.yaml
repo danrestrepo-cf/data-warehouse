@@ -1,0 +1,173 @@
+name: product_dim
+primary_source_table: staging.history_octane.product
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+  data_source_dwid:
+    data_type: BIGINT
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  data_source_integration_columns:
+    data_type: TEXT
+  data_source_integration_id:
+    data_type: TEXT
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+  product_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.p_pid
+  investor_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.p_investor_pid
+  investor_product_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.p_investor_product_id
+  description:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.p_description
+  fnm_product_name:
+    data_type: VARCHAR(15)
+    source:
+      field: primary_source_table.columns.p_fnm_product_name
+  fund_source:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_p_fund_source_type.columns.value
+  fund_source_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.p_fund_source_type
+  investor_product_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.p_investor_product_name
+  lock_auto_confirm_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.p_lock_auto_confirm
+  product_side:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_p_product_side_type.columns.value
+  product_side_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.p_product_side_type
+  from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.p_from_date
+  through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.p_through_date
+etls:
+  SP-200017:
+    input_type: table
+    output_type: insert_update
+    json_output_field: data_source_integration_id
+    insert_update_keys:
+      - data_source_integration_id
+    input_sql: |-
+      SELECT product_dim_incl_new_records.data_source_integration_columns
+           , product_dim_incl_new_records.data_source_integration_id
+           , product_dim_incl_new_records.edw_created_datetime
+           , product_dim_incl_new_records.edw_modified_datetime
+           , product_dim_incl_new_records.data_source_modified_datetime
+           , product_dim_incl_new_records.fund_source
+           , product_dim_incl_new_records.product_pid
+           , product_dim_incl_new_records.description
+           , product_dim_incl_new_records.lock_auto_confirm_flag
+           , product_dim_incl_new_records.fnm_product_name
+           , product_dim_incl_new_records.through_date
+           , product_dim_incl_new_records.from_date
+           , product_dim_incl_new_records.investor_product_name
+           , product_dim_incl_new_records.investor_product_id
+           , product_dim_incl_new_records.fund_source_code
+           , product_dim_incl_new_records.product_side_code
+           , product_dim_incl_new_records.investor_pid
+           , product_dim_incl_new_records.product_side
+      FROM (
+              SELECT 'product_pid' || '~' || 'data_source_dwid' as data_source_integration_columns,
+              COALESCE(CAST(primary_table.p_pid as text), '<NULL>')  || '~' || COALESCE(CAST(1 as text), '<NULL>')  as data_source_integration_id,
+              now() as edw_created_datetime,
+              now() as edw_modified_datetime,
+              primary_table.data_source_updated_datetime as data_source_modified_datetime,
+              t755.value as fund_source,
+              primary_table.p_pid as product_pid,
+              primary_table.p_description as description,
+              primary_table.p_lock_auto_confirm as lock_auto_confirm_flag,
+              primary_table.p_fnm_product_name as fnm_product_name,
+              primary_table.p_through_date as through_date,
+              primary_table.p_from_date as from_date,
+              primary_table.p_investor_product_name as investor_product_name,
+              primary_table.p_investor_product_id as investor_product_id,
+              primary_table.p_fund_source_type as fund_source_code,
+              primary_table.p_product_side_type as product_side_code,
+              primary_table.p_investor_pid as investor_pid,
+              t756.value as product_side
+       FROM (
+          SELECT
+              <<product_partial_load_condition>> as include_record,
+              product.*
+          FROM history_octane.product
+              LEFT JOIN history_octane.product AS history_records ON product.p_pid = history_records.p_pid
+                  AND product.data_source_updated_datetime < history_records.data_source_updated_datetime
+          WHERE history_records.p_pid IS NULL
+          ) AS primary_table
+
+          INNER JOIN (
+              SELECT * FROM (
+                  SELECT     <<fund_source_type_partial_load_condition>> as include_record,
+                  fund_source_type.*
+                  FROM history_octane.fund_source_type
+                      LEFT JOIN history_octane.fund_source_type AS history_records ON fund_source_type.code = history_records.code
+                      AND fund_source_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) as primary_table
+
+          ) AS t755 ON primary_table.p_fund_source_type = t755.code
+
+          INNER JOIN (
+              SELECT * FROM (
+                  SELECT     <<product_side_type_partial_load_condition>> as include_record,
+                  product_side_type.*
+                  FROM history_octane.product_side_type
+                      LEFT JOIN history_octane.product_side_type AS history_records ON product_side_type.code = history_records.code
+                      AND product_side_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) as primary_table
+
+          ) AS t756 ON primary_table.p_product_side_type = t756.code
+       WHERE
+          GREATEST(primary_table.include_record, t755.include_record, t756.include_record) IS TRUE
+       ORDER BY
+          primary_table.data_source_updated_datetime ASC
+      ) AS product_dim_incl_new_records
+          LEFT JOIN star_loan.product_dim ON product_dim_incl_new_records.data_source_integration_id =
+                                             product_dim.data_source_integration_id
+          AND product_dim_incl_new_records.investor_pid IS NOT DISTINCT FROM product_dim.investor_pid
+          AND product_dim_incl_new_records.investor_product_id IS NOT DISTINCT FROM product_dim.investor_product_id
+          AND product_dim_incl_new_records.description IS NOT DISTINCT FROM product_dim.description
+          AND product_dim_incl_new_records.fnm_product_name IS NOT DISTINCT FROM product_dim.fnm_product_name
+          AND product_dim_incl_new_records.fund_source IS NOT DISTINCT FROM product_dim.fund_source
+          AND product_dim_incl_new_records.fund_source_code IS NOT DISTINCT FROM product_dim.fund_source_code
+          AND product_dim_incl_new_records.investor_product_name IS NOT DISTINCT FROM product_dim.investor_product_name
+          AND product_dim_incl_new_records.lock_auto_confirm_flag IS NOT DISTINCT FROM product_dim.lock_auto_confirm_flag
+          AND product_dim_incl_new_records.product_side IS NOT DISTINCT FROM product_dim.product_side
+          AND product_dim_incl_new_records.product_side_code IS NOT DISTINCT FROM product_dim.product_side_code
+          AND product_dim_incl_new_records.from_date IS NOT DISTINCT FROM product_dim.from_date
+          AND product_dim_incl_new_records.through_date IS NOT DISTINCT FROM product_dim.through_date
+      WHERE product_dim.dwid IS NULL;
+next_etls:
+  - SP-300001-insert-update
