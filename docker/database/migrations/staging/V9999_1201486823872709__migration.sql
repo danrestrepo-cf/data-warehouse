@@ -42,6 +42,7 @@ FROM star_loan.application_dim
 LEFT JOIN star_common.etl_log
           ON etl_log.etl_batch_id = application_dim.etl_batch_id
 WHERE etl_log.dwid IS NULL
+  AND application_dim.etl_batch_id IS NOT NULL
 GROUP BY application_dim.etl_batch_id;
 
 --star_loan.borrower_demographics_dim
@@ -52,6 +53,7 @@ FROM star_loan.borrower_demographics_dim
 LEFT JOIN star_common.etl_log
           ON etl_log.etl_batch_id = borrower_demographics_dim.etl_batch_id
 WHERE etl_log.dwid IS NULL
+  AND borrower_demographics_dim.etl_batch_id IS NOT NULL
 GROUP BY borrower_demographics_dim.etl_batch_id;
 
 --star_loan.borrower_dim
@@ -62,6 +64,7 @@ FROM star_loan.borrower_dim
 LEFT JOIN star_common.etl_log
           ON etl_log.etl_batch_id = borrower_dim.etl_batch_id
 WHERE etl_log.dwid IS NULL
+  AND borrower_dim.etl_batch_id IS NOT NULL
 GROUP BY borrower_dim.etl_batch_id;
 
 --star_loan.borrower_lending_profile_dim
@@ -72,6 +75,7 @@ FROM star_loan.borrower_lending_profile_dim
 LEFT JOIN star_common.etl_log
           ON etl_log.etl_batch_id = borrower_lending_profile_dim.etl_batch_id
 WHERE etl_log.dwid IS NULL
+  AND borrower_lending_profile_dim.etl_batch_id IS NOT NULL
 GROUP BY borrower_lending_profile_dim.etl_batch_id;
 
 --star_loan.hmda_purchaser_of_loan_dim
@@ -82,6 +86,7 @@ FROM star_loan.hmda_purchaser_of_loan_dim
 LEFT JOIN star_common.etl_log
           ON etl_log.etl_batch_id = hmda_purchaser_of_loan_dim.etl_batch_id
 WHERE etl_log.dwid IS NULL
+  AND hmda_purchaser_of_loan_dim.etl_batch_id IS NOT NULL
 GROUP BY hmda_purchaser_of_loan_dim.etl_batch_id;
 
 --star_loan.interim_funder_dim
@@ -92,6 +97,7 @@ FROM star_loan.interim_funder_dim
 LEFT JOIN star_common.etl_log
           ON etl_log.etl_batch_id = interim_funder_dim.etl_batch_id
 WHERE etl_log.dwid IS NULL
+  AND interim_funder_dim.etl_batch_id IS NOT NULL
 GROUP BY interim_funder_dim.etl_batch_id;
 
 --star_loan.investor_dim
@@ -102,6 +108,7 @@ FROM star_loan.investor_dim
 LEFT JOIN star_common.etl_log
           ON etl_log.etl_batch_id = investor_dim.etl_batch_id
 WHERE etl_log.dwid IS NULL
+  AND investor_dim.etl_batch_id IS NOT NULL
 GROUP BY investor_dim.etl_batch_id;
 
 --star_loan.lender_user_dim
@@ -112,6 +119,7 @@ FROM star_loan.lender_user_dim
 LEFT JOIN star_common.etl_log
           ON etl_log.etl_batch_id = lender_user_dim.etl_batch_id
 WHERE etl_log.dwid IS NULL
+  AND lender_user_dim.etl_batch_id IS NOT NULL
 GROUP BY lender_user_dim.etl_batch_id;
 
 --star_loan.loan_beneficiary_dim
@@ -122,6 +130,7 @@ FROM star_loan.loan_beneficiary_dim
 LEFT JOIN star_common.etl_log
           ON etl_log.etl_batch_id = loan_beneficiary_dim.etl_batch_id
 WHERE etl_log.dwid IS NULL
+  AND loan_beneficiary_dim.etl_batch_id IS NOT NULL
 GROUP BY loan_beneficiary_dim.etl_batch_id;
 
 --star_loan.loan_dim
@@ -132,6 +141,7 @@ FROM star_loan.loan_dim
 LEFT JOIN star_common.etl_log
           ON etl_log.etl_batch_id = loan_dim.etl_batch_id
 WHERE etl_log.dwid IS NULL
+  AND loan_dim.etl_batch_id IS NOT NULL
 GROUP BY loan_dim.etl_batch_id;
 
 --star_loan.loan_fact
@@ -142,6 +152,7 @@ FROM star_loan.loan_fact
 LEFT JOIN star_common.etl_log
           ON etl_log.etl_batch_id = loan_fact.etl_batch_id
 WHERE etl_log.dwid IS NULL
+  AND loan_fact.etl_batch_id IS NOT NULL
 GROUP BY loan_fact.etl_batch_id;
 
 --star_loan.loan_funding_dim
@@ -152,6 +163,7 @@ FROM star_loan.loan_funding_dim
 LEFT JOIN star_common.etl_log
           ON etl_log.etl_batch_id = loan_funding_dim.etl_batch_id
 WHERE etl_log.dwid IS NULL
+  AND loan_funding_dim.etl_batch_id IS NOT NULL
 GROUP BY loan_funding_dim.etl_batch_id;
 
 --star_loan.loan_junk_dim
@@ -162,6 +174,7 @@ FROM star_loan.loan_junk_dim
 LEFT JOIN star_common.etl_log
           ON etl_log.etl_batch_id = loan_junk_dim.etl_batch_id
 WHERE etl_log.dwid IS NULL
+  AND loan_junk_dim.etl_batch_id IS NOT NULL
 GROUP BY loan_junk_dim.etl_batch_id;
 
 --star_loan.loan_lender_user_access
@@ -172,6 +185,7 @@ FROM star_loan.loan_lender_user_access
 LEFT JOIN star_common.etl_log
           ON etl_log.etl_batch_id = loan_lender_user_access.etl_batch_id
 WHERE etl_log.dwid IS NULL
+  AND loan_lender_user_access.etl_batch_id IS NOT NULL
 GROUP BY loan_lender_user_access.etl_batch_id;
 
 --star_loan.mortgage_insurance_dim
@@ -182,6 +196,7 @@ FROM star_loan.mortgage_insurance_dim
 LEFT JOIN star_common.etl_log
           ON etl_log.etl_batch_id = mortgage_insurance_dim.etl_batch_id
 WHERE etl_log.dwid IS NULL
+  AND mortgage_insurance_dim.etl_batch_id IS NOT NULL
 GROUP BY mortgage_insurance_dim.etl_batch_id;
 
 --star_loan.product_choice_dim
@@ -192,6 +207,7 @@ FROM star_loan.product_choice_dim
 LEFT JOIN star_common.etl_log
           ON etl_log.etl_batch_id = product_choice_dim.etl_batch_id
 WHERE etl_log.dwid IS NULL
+  AND product_choice_dim.etl_batch_id IS NOT NULL
 GROUP BY product_choice_dim.etl_batch_id;
 
 --star_loan.product_dim
@@ -202,6 +218,7 @@ FROM star_loan.product_dim
 LEFT JOIN star_common.etl_log
           ON etl_log.etl_batch_id = product_dim.etl_batch_id
 WHERE etl_log.dwid IS NULL
+  AND product_dim.etl_batch_id IS NOT NULL
 GROUP BY product_dim.etl_batch_id;
 
 --star_loan.product_terms_dim
@@ -212,6 +229,7 @@ FROM star_loan.product_terms_dim
 LEFT JOIN star_common.etl_log
           ON etl_log.etl_batch_id = product_terms_dim.etl_batch_id
 WHERE etl_log.dwid IS NULL
+  AND product_terms_dim.etl_batch_id IS NOT NULL
 GROUP BY product_terms_dim.etl_batch_id;
 
 --star_loan.transaction_dim
@@ -222,6 +240,7 @@ FROM star_loan.transaction_dim
 LEFT JOIN star_common.etl_log
           ON etl_log.etl_batch_id = transaction_dim.etl_batch_id
 WHERE etl_log.dwid IS NULL
+  AND transaction_dim.etl_batch_id IS NOT NULL
 GROUP BY transaction_dim.etl_batch_id;
 
 --star_loan.transaction_junk_dim
@@ -232,4 +251,5 @@ FROM star_loan.transaction_junk_dim
 LEFT JOIN star_common.etl_log
           ON etl_log.etl_batch_id = transaction_junk_dim.etl_batch_id
 WHERE etl_log.dwid IS NULL
+  AND transaction_junk_dim.etl_batch_id IS NOT NULL
 GROUP BY transaction_junk_dim.etl_batch_id;
