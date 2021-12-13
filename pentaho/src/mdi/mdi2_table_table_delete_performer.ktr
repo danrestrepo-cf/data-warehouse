@@ -1085,27 +1085,6 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>stream_fieldname_1</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Select key field rows</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Set add_quotes_to_key_values</source_step>
-        <source_field>fieldname</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Select key field rows</target_step_name>
-        <target_attribute_key>FIELD_RENAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Set add_quotes_to_key_values</source_step>
-        <source_field>rename_to</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Set key_field_name</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>key_field_name</source_field>
-      </mapping>
-      <mapping>
         <target_step_name>[template_table_to_table_delete_json] Delete</target_step_name>
         <target_attribute_key>STREAM_FIELDNAME_1</target_attribute_key>
         <target_detail>Y</target_detail>
@@ -1127,34 +1106,6 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>table_name_field</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Set key_field_name</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Set add_quotes_to_key_values</source_step>
-        <source_field>qualified_fieldname</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Set environment</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>environment</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Set token_id</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Replace Table input step SQL placeholder</source_step>
-        <source_field>token_id</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Set add_quotes_to_key_values</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Set add_quotes_to_key_values</source_step>
-        <source_field>add_quotes_to_key_values</source_field>
-      </mapping>
-      <mapping>
         <target_step_name>[template_table_to_table_delete_json] Table input</target_step_name>
         <target_attribute_key>LIMIT</target_attribute_key>
         <target_detail>N</target_detail>
@@ -1169,32 +1120,11 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>connectionname</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Set add_quotes_to_key_values</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>add_quotes_to_key_values</source_field>
-      </mapping>
-      <mapping>
         <target_step_name>[template_table_to_table_delete_json] Table input</target_step_name>
         <target_attribute_key>EXECUTE_FOR_EACH_ROW</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_table_to_table_delete_json] Replace Table input step SQL placeholder</source_step>
         <source_field>execute_for_each_row</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Set environment</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>${environment}</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Set token_id</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>token_id</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_delete_json] Table input</target_step_name>
@@ -1211,25 +1141,11 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>table_name</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Set etl_batch_id</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>${etl_batch_id}</source_field>
-      </mapping>
-      <mapping>
         <target_step_name>[template_table_to_table_delete_json] Delete</target_step_name>
         <target_attribute_key>TARGET_SCHEMA</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_table_to_table_delete_json] Load delete step settings</source_step>
         <source_field>schema_name</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Set etl_batch_id</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>etl_batch_id</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_delete_json] Delete</target_step_name>
@@ -1244,13 +1160,6 @@ WHERE process.dwid = ${process_dwid}</sql>
         <target_detail>N</target_detail>
         <source_step>[performer_table_to_table_delete_json] Replace Table input step SQL placeholder</source_step>
         <source_field>replace_variables</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_delete_json] Set input_load_type</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_delete_json] Replace Table input step SQL placeholder</source_step>
-        <source_field>load_type</source_field>
       </mapping>
     </mappings>
     <attributes/>
