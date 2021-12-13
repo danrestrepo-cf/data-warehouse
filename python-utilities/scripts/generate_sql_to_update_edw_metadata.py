@@ -50,6 +50,7 @@ from lib.config_mdi_metadata_maintenance.metadata_comparison_functions import (P
                                                                                TableOutputStepMetadataComparisonFunctions,
                                                                                TableOutputFieldMetadataComparisonFunctions,
                                                                                InsertUpdateStepMetadataComparisonFunctions,
+                                                                               DeleteStepMetadataComparisonFunctions,
                                                                                EDWTableDefinitionMetadataComparisonFunctions,
                                                                                EDWFieldDefinitionMetadataComparisonFunctions)
 
@@ -94,6 +95,7 @@ def main():
     sql_generator.add_metadata_comparison_functions('table_output_step', TableOutputStepMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('table_output_field', TableOutputFieldMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('insert_update_step', InsertUpdateStepMetadataComparisonFunctions())
+    sql_generator.add_metadata_comparison_functions('delete_step', DeleteStepMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('json_output_field', JSONOutputFieldMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('state_machine_definition', StateMachineDefinitionMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('state_machine_step', StateMachineStepMetadataComparisonFunctions())
