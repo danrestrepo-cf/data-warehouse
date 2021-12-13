@@ -50,7 +50,7 @@ class DeleteStepMetadataComparisonFunctions(MetadataComparisonFunctions):
         return "WITH insert_rows (process_name, connectionname, schema_name, table_name) AS (\n" + \
                "    VALUES " + self.construct_values_string_from_full_rows(rows, base_indent=4) + "\n" + \
                ")\n" + \
-               "INSERT INTO mdi.insert_update_step (process_dwid, connectionname, schema_name, table_name, commit_size)\n" + \
+               "INSERT INTO mdi.delete_step (process_dwid, connectionname, schema_name, table_name, commit_size)\n" + \
                "SELECT process.dwid, insert_rows.connectionname, insert_rows.schema_name, insert_rows.table_name, 1000\n" + \
                "FROM insert_rows\n" + \
                "JOIN mdi.process\n" + \
@@ -60,7 +60,7 @@ class DeleteStepMetadataComparisonFunctions(MetadataComparisonFunctions):
         return "WITH update_rows (process_name, connectionname, schema_name, table_name) AS (\n" + \
                "    VALUES " + self.construct_values_string_from_full_rows(rows, base_indent=4) + "\n" + \
                ")\n" + \
-               "UPDATE mdi.insert_update_step\n" + \
+               "UPDATE mdi.delete_step\n" + \
                "SET connectionname = update_rows.connectionname\n" + \
                "  , schema_name = update_rows.schema_name\n" + \
                "  , table_name = update_rows.table_name\n" + \
@@ -68,14 +68,14 @@ class DeleteStepMetadataComparisonFunctions(MetadataComparisonFunctions):
                "FROM update_rows\n" + \
                "JOIN mdi.process\n" + \
                "     ON process.name = update_rows.process_name\n" + \
-               "WHERE process.dwid = insert_update_step.process_dwid;"
+               "WHERE process.dwid = delete_step.process_dwid;"
 
     def generate_delete_sql(self, rows: List[Row]) -> str:
         return "WITH delete_keys (process_name) AS (\n" + \
                "    VALUES " + self.construct_values_string_from_row_keys(rows, base_indent=4) + "\n" + \
                ")\n" + \
                "DELETE\n" + \
-               "FROM mdi.insert_update_step\n" + \
+               "FROM mdi.delete_step\n" + \
                "    USING delete_keys, mdi.process\n" + \
-               "WHERE insert_update_step.process_dwid = process.dwid\n" + \
+               "WHERE delete_step.process_dwid = process.dwid\n" + \
                "  AND process.name = delete_keys.process_name;"
