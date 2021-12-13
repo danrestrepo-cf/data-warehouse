@@ -455,7 +455,7 @@
   </info>
   <notepads>
     <notepad>
-      <note>Determine type of output to create					     			     	
+      <note>Determine type of output to create
 
 
 
@@ -472,7 +472,7 @@
 
 
 
-</note>
+      </note>
       <xloc>416</xloc>
       <yloc>32</yloc>
       <width>874</width>
@@ -493,8 +493,7 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Generate failure output                                                                                                                                                                                                                          
-                                
+      <note>Generate failure output
 
 
 
@@ -509,7 +508,8 @@
 
 
 
-</note>
+
+      </note>
       <xloc>416</xloc>
       <yloc>480</yloc>
       <width>1048</width>
@@ -530,7 +530,7 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Save JSON to S3					     
+      <note>Save JSON to S3
 
 
 
@@ -541,7 +541,7 @@
 
 
 
-</note>
+      </note>
       <xloc>896</xloc>
       <yloc>960</yloc>
       <width>463</width>
@@ -562,7 +562,7 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Write JSON to log (for debugging)		
+      <note>Write JSON to log (for debugging)
 
 
 
@@ -573,7 +573,7 @@
 
 
 
-</note>
+      </note>
       <xloc>432</xloc>
       <yloc>960</yloc>
       <width>370</width>
@@ -708,25 +708,25 @@
         <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
         <jsScript_script>
-// Build S3 file output path
-var bucket_prefix = getVariable("environment", "undefined");
-var bucket_postfix = "-data-warehouse-ingress";
-var file_string1 = "s3://";
-var file_string2 = "/step-function-response/pending/failure/";
-var etl_batch_id = getVariable("etl_batch_id", "undefined");
+          // Build S3 file output path
+          var bucket_prefix = getVariable("environment", "undefined");
+          var bucket_postfix = "-data-warehouse-ingress";
+          var file_string1 = "s3://";
+          var file_string2 = "/step-function-response/pending/failure/";
+          var etl_batch_id = getVariable("etl_batch_id", "undefined");
 
-// Build output JSON
-var file_contents = {};
+          // Build output JSON
+          var file_contents = {};
 
-file_contents.token_id = token_id;
-file_contents.output = "A Pentaho step failed!";
+          file_contents.token_id = token_id;
+          file_contents.output = "A Pentaho step failed!";
 
 
-var mdi_output_json = JSON.stringify(file_contents);
+          var mdi_output_json = JSON.stringify(file_contents);
 
-var bucket = bucket_prefix.concat(bucket_postfix);
-var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id);
-</jsScript_script>
+          var bucket = bucket_prefix.concat(bucket_postfix);
+          var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id);
+        </jsScript_script>
       </jsScript>
     </jsScripts>
     <fields>
@@ -843,7 +843,7 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     <limitRowsNumber>0</limitRowsNumber>
     <logmessage/>
     <fields>
-      </fields>
+    </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1003,7 +1003,7 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     <limitRowsNumber>0</limitRowsNumber>
     <logmessage/>
     <fields>
-      </fields>
+    </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1035,7 +1035,7 @@ var s3_output_filepath = file_string1.concat(bucket, file_string2, etl_batch_id)
     <limitRowsNumber>0</limitRowsNumber>
     <logmessage/>
     <fields>
-      </fields>
+    </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>

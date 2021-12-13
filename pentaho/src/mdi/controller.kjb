@@ -8,7 +8,7 @@
   <created_user>-</created_user>
   <created_date>2020/10/10 07:31:50.634</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2021/11/12 09:18:13.898</modified_date>
+  <modified_date>2021/12/10 12:51:38.542</modified_date>
   <parameters>
     <parameter>
       <name>database_hostname</name>
@@ -920,7 +920,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>224</xloc>
-      <yloc>1344</yloc>
+      <yloc>1152</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -1193,7 +1193,29 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>224</xloc>
-      <yloc>1152</yloc>
+      <yloc>1344</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>[controller] No Operation 7</name>
+      <description/>
+      <type>SPECIAL</type>
+      <attributes/>
+      <start>N</start>
+      <dummy>Y</dummy>
+      <repeat>N</repeat>
+      <schedulerType>0</schedulerType>
+      <intervalSeconds>0</intervalSeconds>
+      <intervalMinutes>60</intervalMinutes>
+      <hour>12</hour>
+      <minutes>0</minutes>
+      <weekDay>1</weekDay>
+      <DayOfMonth>1</DayOfMonth>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1216</xloc>
+      <yloc>1200</yloc>
       <attributes_kjc/>
     </entry>
   </entries>
@@ -1287,15 +1309,6 @@
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>[controller] Process input JSON</from>
-      <to>[controller] Process MDI-2 Table Insert JSON?</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
     </hop>
     <hop>
       <from>[controller] Process MDI-2 Table Insert JSON?</from>
@@ -1523,15 +1536,6 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>[controller] Process input JSON</from>
-      <to>[controller] No Operation 6</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
       <from>[controller] No Operation 6</from>
       <to>[controller] Process FAILURE output JSON - JOB</to>
       <from_nr>0</from_nr>
@@ -1550,7 +1554,25 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
+      <from>[controller] No Operation 7</from>
+      <to>[controller] Process FAILURE output JSON - JOB</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
       <from>[controller] Write initial etl_log output</from>
+      <to>[controller] Process MDI-2 Table Insert JSON?</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] No Operation 2</from>
       <to>[controller] Process input JSON</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -1559,13 +1581,31 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>[controller] No Operation 2</from>
+      <from>[controller] Process input JSON</from>
       <to>[controller] Write initial etl_log output</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Process input JSON</from>
+      <to>[controller] No Operation 7</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>[controller] Write initial etl_log output</from>
+      <to>[controller] No Operation 6</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
     </hop>
   </hops>
   <notepads>

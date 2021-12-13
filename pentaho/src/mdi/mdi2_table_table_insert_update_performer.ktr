@@ -1066,13 +1066,6 @@ WHERE process.dwid = ${process_dwid}</sql>
     <stream_target_step/>
     <mappings>
       <mapping>
-        <target_step_name>[template_table_to_table_insert_update_json] Set token_id</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>token_id</source_field>
-      </mapping>
-      <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Insert / update</target_step_name>
         <target_attribute_key>COMMIT_SIZE</target_attribute_key>
         <target_detail>N</target_detail>
@@ -1101,13 +1094,6 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>key_condition</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_table_to_table_insert_update_json] Set token_id</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update_json] Replace Table input step SQL placeholder</source_step>
-        <source_field>token_id</source_field>
-      </mapping>
-      <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Insert / update</target_step_name>
         <target_attribute_key>KEY_STREAM2</target_attribute_key>
         <target_detail>Y</target_detail>
@@ -1115,25 +1101,11 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>key_stream2</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_table_to_table_insert_update_json] Set key_field_name</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>key_field_name</source_field>
-      </mapping>
-      <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Table input</target_step_name>
         <target_attribute_key>CACHED_ROW_META</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>[performer_table_to_table_insert_update_json] Replace Table input step SQL placeholder</source_step>
         <source_field>cached_row_meta</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update_json] Set input_load_type</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update_json] Replace Table input step SQL placeholder</source_step>
-        <source_field>load_type</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Set etl_batch_id field value to parameter etl_batch_id</target_step_name>
@@ -1157,13 +1129,6 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>connectionname</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_table_to_table_insert_update_json] Set etl_batch_id</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>${etl_batch_id}</source_field>
-      </mapping>
-      <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Insert / update</target_step_name>
         <target_attribute_key>CONNECTIONNAME</target_attribute_key>
         <target_detail>N</target_detail>
@@ -1178,32 +1143,11 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>${etl_batch_id}</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_table_to_table_insert_update_json] Set etl_batch_id</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>etl_batch_id</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update_json] Set key_field_name</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update_json] Set add_quotes_to_key_values</source_step>
-        <source_field>qualified_fieldname</source_field>
-      </mapping>
-      <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Insert / update</target_step_name>
         <target_attribute_key>KEY_LOOKUP</target_attribute_key>
         <target_detail>Y</target_detail>
         <source_step>[performer_table_to_table_insert_update_json] Load Insert / update key settings</source_step>
         <source_field>key_lookup</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update_json] Select key field rows</target_step_name>
-        <target_attribute_key>FIELD_RENAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update_json] Set add_quotes_to_key_values</source_step>
-        <source_field>rename_to</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Table input</target_step_name>
@@ -1213,25 +1157,11 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>enable_lazy_conversion</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_table_to_table_insert_update_json] Set add_quotes_to_key_values</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>add_quotes_to_key_values</source_field>
-      </mapping>
-      <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Set data_source_dwid field value to parameter data_source_dwid</target_step_name>
         <target_attribute_key>REPLACE_VALUE</target_attribute_key>
         <target_detail>Y</target_detail>
         <source_step/>
         <source_field>${data_source_dwid}</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update_json] Set environment</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>${environment}</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Insert / update</target_step_name>
@@ -1255,13 +1185,6 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>data_source_dwid</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_table_to_table_insert_update_json] Set environment</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step/>
-        <source_field>environment</source_field>
-      </mapping>
-      <mapping>
         <target_step_name>[template_table_to_table_insert_update_json]  Specify logging fields (non-sensitive)</target_step_name>
         <target_attribute_key>FIELD_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
@@ -1283,13 +1206,6 @@ WHERE process.dwid = ${process_dwid}</sql>
         <source_field>key_stream1</source_field>
       </mapping>
       <mapping>
-        <target_step_name>[template_table_to_table_insert_update_json] Set add_quotes_to_key_values</target_step_name>
-        <target_attribute_key>REPLACE_VALUE</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update_json] Set add_quotes_to_key_values</source_step>
-        <source_field>add_quotes_to_key_values</source_field>
-      </mapping>
-      <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Table input</target_step_name>
         <target_attribute_key>LIMIT</target_attribute_key>
         <target_detail>N</target_detail>
@@ -1309,13 +1225,6 @@ WHERE process.dwid = ${process_dwid}</sql>
         <target_detail>N</target_detail>
         <source_step>[performer_table_to_table_insert_update_json] Load Insert / update step settings</source_step>
         <source_field>table_name</source_field>
-      </mapping>
-      <mapping>
-        <target_step_name>[template_table_to_table_insert_update_json] Select key field rows</target_step_name>
-        <target_attribute_key>FIELD_NAME</target_attribute_key>
-        <target_detail>Y</target_detail>
-        <source_step>[performer_table_to_table_insert_update_json] Set add_quotes_to_key_values</source_step>
-        <source_field>fieldname</source_field>
       </mapping>
       <mapping>
         <target_step_name>[template_table_to_table_insert_update_json] Table input</target_step_name>
