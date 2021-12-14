@@ -5,36 +5,48 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    update_flag: false
   data_source_dwid:
     data_type: BIGINT
+    update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    update_flag: true
   etl_batch_id:
     data_type: TEXT
+    update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    update_flag: false
   data_source_integration_id:
     data_type: TEXT
+    update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    update_flag: true
   ethnicity_collected_visual_or_surname:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_b_ethnicity_collected_visual_or_surname.columns.value
+    update_flag: true
   ethnicity_collected_visual_or_surname_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_ethnicity_collected_visual_or_surname
+    update_flag: true
   ethnicity_refused:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_b_ethnicity_refused.columns.value
+    update_flag: true
   ethnicity_refused_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_ethnicity_refused
+    update_flag: true
   ethnicity_other_hispanic_or_latino_description_flag:
     data_type: BOOLEAN
     source:
@@ -42,6 +54,7 @@ columns:
         string: $1 <> '' AND $1 IS NOT NULL
         using:
           $1: primary_source_table.columns.b_ethnicity_other_hispanic_or_latino_description
+    update_flag: true
   other_race_national_origin_description_flag:
     data_type: BOOLEAN
     source:
@@ -49,6 +62,7 @@ columns:
         string: $1 <> '' AND $1 IS NOT NULL
         using:
           $1: primary_source_table.columns.b_other_race_national_origin_description
+    update_flag: true
   race_other_american_indian_or_alaska_native_description_flag:
     data_type: BOOLEAN
     source:
@@ -56,6 +70,7 @@ columns:
         string: $1 <> '' AND $1 IS NOT NULL
         using:
           $1: primary_source_table.columns.b_race_other_american_indian_or_alaska_native_description
+    update_flag: true
   race_other_asian_description_flag:
     data_type: BOOLEAN
     source:
@@ -63,6 +78,7 @@ columns:
         string: $1 <> '' AND $1 IS NOT NULL
         using:
           $1: primary_source_table.columns.b_race_other_asian_description
+    update_flag: true
   race_other_pacific_islander_description_flag:
     data_type: BOOLEAN
     source:
@@ -70,170 +86,212 @@ columns:
         string: $1 <> '' AND $1 IS NOT NULL
         using:
           $1: primary_source_table.columns.b_race_other_pacific_islander_description
+    update_flag: true
   ethnicity_cuban_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_ethnicity_cuban
+    update_flag: true
   ethnicity_hispanic_or_latino_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_ethnicity_hispanic_or_latino
+    update_flag: true
   ethnicity_mexican_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_ethnicity_mexican
+    update_flag: true
   ethnicity_not_hispanic_or_latino_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_ethnicity_not_hispanic_or_latino
+    update_flag: true
   ethnicity_not_obtainable_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_ethnicity_not_obtainable
+    update_flag: true
   ethnicity_other_hispanic_or_latino_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_ethnicity_other_hispanic_or_latino
+    update_flag: true
   ethnicity_puerto_rican_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_ethnicity_puerto_rican
+    update_flag: true
   race_american_indian_or_alaska_native_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_race_american_indian_or_alaska_native
+    update_flag: true
   race_asian_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_race_asian
+    update_flag: true
   race_asian_indian_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_race_asian_indian
+    update_flag: true
   race_black_or_african_american_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_race_black_or_african_american
+    update_flag: true
   race_chinese_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_race_chinese
+    update_flag: true
   race_filipino_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_race_filipino
+    update_flag: true
   race_guamanian_or_chamorro_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_race_guamanian_or_chamorro
+    update_flag: true
   race_information_not_provided_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_race_information_not_provided
+    update_flag: true
   race_japanese_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_race_japanese
+    update_flag: true
   race_korean_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_race_korean
+    update_flag: true
   race_national_origin_refusal_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_race_national_origin_refusal
+    update_flag: true
   race_native_hawaiian_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_race_native_hawaiian
+    update_flag: true
   race_native_hawaiian_or_other_pacific_islander_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_race_native_hawaiian_or_other_pacific_islander
+    update_flag: true
   race_not_applicable_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_race_not_applicable
+    update_flag: true
   race_not_obtainable_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_race_not_obtainable
+    update_flag: true
   race_other_asian_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_race_other_asian
+    update_flag: true
   race_other_pacific_islander_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_race_other_pacific_islander
+    update_flag: true
   race_samoan_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_race_samoan
+    update_flag: true
   race_vietnamese_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_race_vietnamese
+    update_flag: true
   race_white_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_race_white
+    update_flag: true
   sex_female_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_sex_female
+    update_flag: true
   sex_male_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_sex_male
+    update_flag: true
   sex_not_obtainable_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_sex_not_obtainable
+    update_flag: true
   marital_status:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_b_marital_status_type.columns.value
+    update_flag: true
   marital_status_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_marital_status_type
+    update_flag: true
   race_collected_visual_or_surname:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_b_race_collected_visual_or_surname.columns.value
+    update_flag: true
   race_collected_visual_or_surname_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_race_collected_visual_or_surname
+    update_flag: true
   race_refused:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_b_race_refused.columns.value
+    update_flag: true
   race_refused_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_race_refused
+    update_flag: true
   schooling_years:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.b_schooling_years
+    update_flag: true
   sex_collected_visual_or_surname:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_b_sex_collected_visual_or_surname.columns.value
+    update_flag: true
   sex_collected_visual_or_surname_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_sex_collected_visual_or_surname
+    update_flag: true
   sex_refused:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_b_sex_refused.columns.value
+    update_flag: true
   sex_refused_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_sex_refused
+    update_flag: true
 etls:
   SP-200004:
     input_type: table

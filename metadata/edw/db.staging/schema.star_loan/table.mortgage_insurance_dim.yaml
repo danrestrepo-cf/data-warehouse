@@ -5,184 +5,233 @@ primary_key:
 columns:
   loan_dwid:
     data_type: BIGINT
+    update_flag: false
   data_source_dwid:
     data_type: BIGINT
+    update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    update_flag: true
   etl_batch_id:
     data_type: TEXT
+    update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    update_flag: false
   data_source_integration_id:
     data_type: TEXT
+    update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    update_flag: true
   loan_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.l_pid
+    update_flag: false
   mi_auto_compute_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.l_mi_auto_compute
+    update_flag: true
   mi_midpoint_cutoff_required_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.l_mi_midpoint_cutoff_required
+    update_flag: true
   no_mi_product_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.l_mi_no_mi_product
+    update_flag: true
   mi_actual_monthly_payment_count:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.l_mi_actual_monthly_payment_count
+    update_flag: true
   mi_base_monthly_payment_amount:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.l_mi_base_monthly_payment_amount
+    update_flag: true
   mi_base_monthly_payment_annual_percent:
     data_type: NUMERIC(15,9)
     source:
       field: primary_source_table.columns.l_mi_base_monthly_payment_annual_percent
+    update_flag: true
   mi_base_rate_label:
     data_type: VARCHAR(16000)
     source:
       field: primary_source_table.columns.l_mi_base_rate_label
+    update_flag: true
   mi_base_upfront_payment_amount:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.l_mi_base_upfront_payment_amount
+    update_flag: true
   mi_base_upfront_percent:
     data_type: NUMERIC(15,9)
     source:
       field: primary_source_table.columns.l_mi_base_upfront_percent
+    update_flag: true
   mi_certificate_id:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.l_mi_certificate_id
+    update_flag: true
   mi_company:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_l_mi_company_name_type.columns.value
+    update_flag: true
   mi_company_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_mi_company_name_type
+    update_flag: true
   mi_coverage_percent:
     data_type: NUMERIC(15,9)
     source:
       field: primary_source_table.columns.l_mi_coverage_percent
+    update_flag: true
   mi_initial_calculated_rate:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_l_mi_initial_calculated_rate_type.columns.value
+    update_flag: true
   mi_initial_calculated_rate_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_mi_initial_calculated_rate_type
+    update_flag: true
   mi_initial_calculation:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_l_mi_initial_calculation_type.columns.value
+    update_flag: true
   mi_initial_calculation_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_mi_initial_calculation_type
+    update_flag: true
   mi_initial_duration_months:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.l_mi_initial_duration_months
+    update_flag: true
   mi_initial_monthly_payment_amount:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.l_mi_initial_monthly_payment_amount
+    update_flag: true
   mi_initial_monthly_payment_annual_percent:
     data_type: NUMERIC(15,9)
     source:
       field: primary_source_table.columns.l_mi_initial_monthly_payment_annual_percent
+    update_flag: true
   mi_input:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_l_mi_input_type.columns.value
+    update_flag: true
   mi_input_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_mi_input_type
+    update_flag: true
   mi_lender_paid_rate_adjustment_percent:
     data_type: NUMERIC(15,9)
     source:
       field: primary_source_table.columns.l_mi_lender_paid_rate_adjustment_percent
+    update_flag: true
   mi_ltv_cutoff_percent:
     data_type: NUMERIC(15,9)
     source:
       field: primary_source_table.columns.l_mi_ltv_cutoff_percent
+    update_flag: true
   mi_payer:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_l_mi_payer_type.columns.value
+    update_flag: true
   mi_payer_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_mi_payer_type
+    update_flag: true
   mi_payment:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_l_mi_payment_type.columns.value
+    update_flag: true
   mi_payment_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_mi_payment_type
+    update_flag: true
   mi_premium_refundable:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_l_mi_premium_refundable_type.columns.value
+    update_flag: true
   mi_premium_refundable_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_mi_premium_refundable_type
+    update_flag: true
   mi_rate_quote_id:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_mi_rate_quote_id
+    update_flag: true
   mi_renewal_calcuated_rate:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_l_mi_renewal_calculated_rate_type.columns.value
+    update_flag: true
   mi_renewal_calculated_rate_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_mi_renewal_calculated_rate_type
+    update_flag: true
   mi_renewal_calculation:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_l_mi_renewal_calculation_type.columns.value
+    update_flag: true
   mi_renewal_calculation_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_mi_renewal_calculation_type
+    update_flag: true
   mi_renewal_monthly_payment_amount:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.l_mi_renewal_monthly_payment_amount
+    update_flag: true
   mi_renewal_monthly_payment_annual_percent:
     data_type: NUMERIC(15,9)
     source:
       field: primary_source_table.columns.l_mi_renewal_monthly_payment_annual_percent
+    update_flag: true
   mi_required_monthly_payment_count:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.l_mi_required_monthly_payment_count
+    update_flag: true
   mi_upfront_amount:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.l_mi_upfront_amount
+    update_flag: true
   mi_upront_percent:
     data_type: NUMERIC(15,9)
     source:
       field: primary_source_table.columns.l_mi_upfront_percent
+    update_flag: true
 etls:
   SP-200015:
     input_type: table

@@ -22,7 +22,6 @@ class TableOutputFieldMetadataComparisonFunctions(MetadataComparisonFunctions):
                      ON table_output_field.table_output_step_dwid = table_output_step.dwid
                 JOIN mdi.process
                      ON table_output_step.process_dwid = process.dwid
-                -- hardcoded to only check history_octane until this script is updated to handle other schemas' ETLs
                 WHERE table_output_step.target_schema IN ('history_octane', 'star_loan');
             """)
 

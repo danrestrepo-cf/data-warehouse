@@ -5,452 +5,568 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    update_flag: false
   data_source_dwid:
     data_type: BIGINT
+    update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    update_flag: true
   etl_batch_id:
     data_type: TEXT
+    update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    update_flag: false
   data_source_integration_id:
     data_type: TEXT
+    update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    update_flag: true
   borrower_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.b_pid
+    update_flag: false
   application_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.b_application_pid
+    update_flag: true
   alimony_child_support_explanation:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_alimony_child_support_explanation
+    update_flag: true
   applicant_role:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_b_applicant_role_type.columns.value
+    update_flag: true
   applicant_role_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_applicant_role_type
+    update_flag: true
   application_taken_method:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_b_application_taken_method_type.columns.value
+    update_flag: true
   application_taken_method_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_application_taken_method_type
+    update_flag: true
   bankruptcy_explanation:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_bankruptcy_explanation
+    update_flag: true
   birth_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.b_birth_date
+    update_flag: true
   borrowed_down_payment_explanation:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_borrowed_down_payment_explanation
+    update_flag: true
   caivrs_id:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.b_caivrs_id
+    update_flag: true
   caivrs_messages:
     data_type: TEXT
     source:
       field: primary_source_table.columns.b_caivrs_messages
+    update_flag: true
   credit_report_authorization_datetime:
     data_type: TIMESTAMPTZ
     source:
       field: primary_source_table.columns.b_credit_report_authorization_datetime
+    update_flag: true
   credit_report_authorization_method:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_b_credit_report_authorization_method.columns.value
+    update_flag: true
   credit_report_authorization_method_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_credit_report_authorization_method
+    update_flag: true
   credit_report_authorization_obtained_by_unparsed_name:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_credit_report_authorization_obtained_by_unparsed_name
+    update_flag: true
   credit_report_identifier:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.b_credit_report_identifier
+    update_flag: true
   decision_credit_score:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.b_decision_credit_score
+    update_flag: true
   dependent_count:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.b_dependent_count
+    update_flag: true
   dependents_age_years:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.b_dependents_age_years
+    update_flag: true
   email:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.b_email
+    update_flag: true
   equifax_credit_score:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.b_equifax_credit_score
+    update_flag: true
   ethnicity_other_hispanic_or_latino_description:
     data_type: VARCHAR(100)
     source:
       field: primary_source_table.columns.b_ethnicity_other_hispanic_or_latino_description
+    update_flag: true
   experian_credit_score:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.b_experian_credit_score
+    update_flag: true
   fax:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.b_fax
+    update_flag: true
   first_name:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.b_first_name
+    update_flag: true
   first_time_homebuyer_explain:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.columns.b_first_time_home_buyer_explain
+    update_flag: true
   credit_report_authorization_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_credit_report_authorization
+    update_flag: true
   has_no_ssn_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_has_no_ssn
+    update_flag: true
   power_of_attorney:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_b_power_of_attorney.columns.value
+    update_flag: true
   power_of_attorney_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_power_of_attorney
+    update_flag: true
   home_phone:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.b_home_phone
+    update_flag: true
   homeownership_education_id:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_homeownership_education_id
+    update_flag: true
   homeownership_education_name:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_homeownership_education_name
+    update_flag: true
   housing_counseling:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_b_housing_counseling_type.columns.value
+    update_flag: true
   housing_counseling_agency:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_b_housing_counseling_agency_type.columns.value
+    update_flag: true
   housing_counseling_agency_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_housing_counseling_agency_type
+    update_flag: true
   housing_counseling_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_housing_counseling_type
+    update_flag: true
   housing_counseling_complete_date:
     source:
       field: primary_source_table.columns.b_housing_counseling_complete_date
+    update_flag: true
     data_type: DATE
   housing_counseling_id:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_housing_counseling_id
+    update_flag: true
   housing_counseling_name:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_housing_counseling_name
+    update_flag: true
   required_to_sign_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_required_to_sign
+    update_flag: true
   last_name:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.b_last_name
+    update_flag: true
   legal_entity:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_b_legal_entity_type.columns.value
+    update_flag: true
   legal_entity_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_legal_entity_type
+    update_flag: true
   middle_name:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.b_middle_name
+    update_flag: true
   monthly_job_federal_tax_amount:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.b_monthly_job_federal_tax_amount
+    update_flag: true
   monthly_job_medicare_tax_amount:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.b_monthly_job_medicare_tax_amount
+    update_flag: true
   monthly_job_other_tax_1_amount:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.b_monthly_job_other_tax_1_amount
+    update_flag: true
   monthly_job_other_tax_1_description:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_monthly_job_other_tax_1_description
+    update_flag: true
   monthly_job_other_tax_2_amount:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.b_monthly_job_other_tax_2_amount
+    update_flag: true
   monthly_job_other_tax_2_description:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_monthly_job_other_tax_2_description
+    update_flag: true
   monthly_job_other_tax_3_amount:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.b_monthly_job_other_tax_3_amount
+    update_flag: true
   monthly_job_other_tax_3_description:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_monthly_job_other_tax_3_description
+    update_flag: true
   monthly_job_retirement_tax_amount:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.b_monthly_job_retirement_tax_amount
+    update_flag: true
   monthly_job_state_disability_insurance_amount:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.b_monthly_job_state_disability_insurance_amount
+    update_flag: true
   monthly_job_state_tax_amount:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.b_monthly_job_state_tax_amount
+    update_flag: true
   monthly_job_total_tax_amount:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.b_monthly_job_total_tax_amount
+    update_flag: true
   name_suffix:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.b_name_suffix
+    update_flag: true
   nickname:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.b_nickname
+    update_flag: true
   note_endorser_explanation:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_note_endorser_explanation
+    update_flag: true
   obligated_loan_foreclosure_explanation:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_obligated_loan_foreclosure_explanation
+    update_flag: true
   office_phone:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.b_office_phone
+    update_flag: true
   office_phone_extension:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.b_office_phone_extension
+    update_flag: true
   other_race_national_origin_description:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.b_other_race_national_origin_description
+    update_flag: true
   outstanding_judgments_explanation:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_outstanding_judgments_explanation
+    update_flag: true
   party_to_lawsuit_explanation:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_party_to_lawsuit_explanation
+    update_flag: true
   power_of_attorney_city:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_power_of_attorney_city
+    update_flag: true
   power_of_attorney_company_name:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_power_of_attorney_company_name
+    update_flag: true
   power_of_attorney_country:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_b_power_of_attorney_country.columns.value
+    update_flag: true
   power_of_attorney_country_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_power_of_attorney_country
+    update_flag: true
   power_of_attorney_email:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.b_power_of_attorney_email
+    update_flag: true
   power_of_attorney_fax:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.b_power_of_attorney_fax
+    update_flag: true
   power_of_attorney_first_name:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.b_power_of_attorney_first_name
+    update_flag: true
   power_of_attorney_last_name:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.b_power_of_attorney_last_name
+    update_flag: true
   power_of_attorney_middle_name:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.b_power_of_attorney_middle_name
+    update_flag: true
   power_of_attorney_mobile_phone:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.b_power_of_attorney_mobile_phone
+    update_flag: true
   power_of_attorney_name_suffix:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.b_power_of_attorney_name_suffix
+    update_flag: true
   power_of_attorney_office_phone:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.b_power_of_attorney_office_phone
+    update_flag: true
   power_of_attorney_office_phone_extension:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.b_power_of_attorney_office_phone_extension
+    update_flag: true
   power_of_attorney_postal_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_power_of_attorney_postal_code
+    update_flag: true
   power_of_attorney_signing_capacity:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.columns.b_power_of_attorney_signing_capacity
+    update_flag: true
   power_of_attorney_state:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_power_of_attorney_state
+    update_flag: true
   power_of_attorney_street1:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_power_of_attorney_street1
+    update_flag: true
   power_of_attorney_street2:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_power_of_attorney_street2
+    update_flag: true
   power_of_attorney_title:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_power_of_attorney_title
+    update_flag: true
   preferred_first_name:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.b_preferred_first_name
+    update_flag: true
   presently_delinquent_explanation:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_presently_delinquent_explanation
+    update_flag: true
   prior_property_title:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_b_prior_property_title_type.columns.value
+    update_flag: true
   prior_property_title_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_prior_property_title_type
+    update_flag: true
   prior_property_usage:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_b_prior_property_usage_type.columns.value
+    update_flag: true
   prior_property_usage_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_prior_property_usage_type
+    update_flag: true
   property_foreclosure_explanation:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_property_foreclosure_explanation
+    update_flag: true
   race_other_american_indian_or_alaska_native_description:
     data_type: VARCHAR(100)
     source:
       field: primary_source_table.columns.b_race_other_american_indian_or_alaska_native_description
+    update_flag: true
   race_other_asian_description:
     data_type: VARCHAR(100)
     source:
       field: primary_source_table.columns.b_race_other_asian_description
+    update_flag: true
   race_other_pacific_islander_description:
     data_type: VARCHAR(100)
     source:
       field: primary_source_table.columns.b_race_other_pacific_islander_description
+    update_flag: true
   relationship_to_primary_borrower:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_b_relationship_to_primary_borrower_type.columns.value
+    update_flag: true
   relationship_to_primary_borrower_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_relationship_to_primary_borrower_type
+    update_flag: true
   relationship_to_seller:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_b_relationship_to_seller_type.columns.value
+    update_flag: true
   relationship_to_seller_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_relationship_to_seller_type
+    update_flag: true
   tiny_id:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_b_borrower_tiny_id_type.columns.value
+    update_flag: true
   tiny_id_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_borrower_tiny_id_type
+    update_flag: true
   trans_union_credit_score:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.b_trans_union_credit_score
+    update_flag: true
   usda_annual_child_care_expenses:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.b_usda_annual_child_care_expenses
+    update_flag: true
   usda_disability_expenses:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.b_usda_disability_expenses
+    update_flag: true
   usda_income_from_assets:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.b_usda_income_from_assets
+    update_flag: true
   usda_medical_expenses:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.b_usda_medical_expenses
+    update_flag: true
   usda_moderate_income_limit:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.b_usda_moderate_income_limit
+    update_flag: true
 etls:
   SP-200005:
     input_type: table

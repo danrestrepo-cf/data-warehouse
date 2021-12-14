@@ -148,12 +148,15 @@ class ColumnMetadata:
     name: str
     data_type: Optional[str] = None
     source_field: Optional[ForeignColumnPath] = None
+    update_flag: Optional[bool] = None
 
-    def __init__(self, name: str, data_type: Optional[str] = None, source_field: Optional[ForeignColumnPath] = None):
+    def __init__(self, name: str, data_type: Optional[str] = None, source_field: Optional[ForeignColumnPath] = None,
+                 update_flag: Optional[bool] = None):
         self.name = name
         self.path = ColumnPath(database=None, schema=None, table=None, column=name)
         self.data_type = data_type
         self.source_field = source_field
+        self.update_flag = update_flag
 
 
 class TableMetadata:

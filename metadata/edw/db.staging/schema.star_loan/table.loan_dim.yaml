@@ -5,32 +5,43 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    update_flag: false
   data_source_dwid:
     data_type: BIGINT
+    update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    update_flag: true
   etl_batch_id:
     data_type: TEXT
+    update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    update_flag: false
   data_source_integration_id:
     data_type: TEXT
+    update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    update_flag: true
   loan_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.l_pid
+    update_flag: false
   proposal_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.l_proposal_pid
+    update_flag: true
   product_terms_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.l_product_terms_pid
+    update_flag: true
   los_loan_number:
     data_type: BIGINT
     source:
@@ -46,82 +57,102 @@ columns:
           $2: primary_source_table.foreign_keys.fk_loan_1.columns.prp_structure_type
           $3: primary_source_table.foreign_keys.fk_loan_1.foreign_keys.fk_proposal_1.columns.d_los_loan_id_main
           $4: primary_source_table.foreign_keys.fk_loan_1.foreign_keys.fk_proposal_1.columns.d_los_loan_id_piggyback
+    update_flag: true
   arm_index_current_value_percent:
     data_type: NUMERIC(15,9)
     source:
       field: primary_source_table.columns.l_arm_index_current_value_percent
+    update_flag: true
   arm_index_datetime:
     data_type: TIMESTAMPTZ
     source:
       field: primary_source_table.columns.l_arm_index_datetime
+    update_flag: true
   base_guaranty_fee_percent:
     data_type: NUMERIC(15,9)
     source:
       field: primary_source_table.columns.l_base_guaranty_fee_basis_points
+    update_flag: true
   base_loan_amount_ltv_ratio_percent:
     data_type: NUMERIC(15,9)
     source:
       field: primary_source_table.columns.l_base_loan_amount_ltv_ratio_percent
+    update_flag: true
   effective_undiscounted_rate_percent:
     data_type: NUMERIC(15,9)
     source:
       field: primary_source_table.columns.l_effective_undiscounted_rate_percent
+    update_flag: true
   fhac_case_assignment_messages:
     data_type: TEXT
     source:
       field: primary_source_table.columns.l_fhac_case_assignment_messages
+    update_flag: true
   fnm_investor_product_plan_id:
     data_type: VARCHAR(5)
     source:
       field: primary_source_table.columns.l_fnm_investor_product_plan_id
+    update_flag: true
   fnm_mbs_investor_contract_id:
     data_type: VARCHAR(6)
     source:
       field: primary_source_table.columns.l_fnm_mbs_investor_contract_id
+    update_flag: true
   guaranty_fee_after_alternate_payment_method_percent:
     data_type: NUMERIC(15,9)
     source:
       field: primary_source_table.columns.l_guaranty_fee_after_alternate_payment_method_basis_points
+    update_flag: true
   guaranty_fee_percent:
     data_type: NUMERIC(15,9)
     source:
       field: primary_source_table.columns.l_guaranty_fee_basis_points
+    update_flag: true
   hmda_rate_spread_percent:
     data_type: NUMERIC(15,9)
     source:
       field: primary_source_table.columns.l_hmda_rate_spread_percent
+    update_flag: true
   hoepa_apr:
     data_type: NUMERIC(15,9)
     source:
       field: primary_source_table.columns.l_hoepa_apr
+    update_flag: true
   hoepa_rate_spread:
     data_type: NUMERIC(15,9)
     source:
       field: primary_source_table.columns.l_hoepa_rate_spread
+    update_flag: true
   last_unprocessed_changes_datetime:
     data_type: TIMESTAMPTZ
     source:
       field: primary_source_table.columns.l_last_unprocessed_changes_datetime
+    update_flag: true
   locked_price_change_percent:
     data_type: NUMERIC(15,9)
     source:
       field: primary_source_table.columns.l_locked_price_change_percent
+    update_flag: true
   mi_requirement_ltv_ratio_percent:
     data_type: NUMERIC(15,9)
     source:
       field: primary_source_table.columns.l_mi_requirement_ltv_ratio_percent
+    update_flag: true
   product_choice_datetime:
     data_type: TIMESTAMPTZ
     source:
       field: primary_source_table.columns.l_product_choice_datetime
+    update_flag: true
   rate_sheet_undiscounted_rate_percent:
     data_type: NUMERIC(15,9)
     source:
       field: primary_source_table.columns.l_rate_sheet_undiscounted_rate_percent
+    update_flag: true
   uldd_loan_comment:
     data_type: VARCHAR(60)
     source:
       field: primary_source_table.columns.l_uldd_loan_comment
+    update_flag: true
 etls:
   SP-200012:
     input_type: table

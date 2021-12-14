@@ -314,10 +314,14 @@ class DictToMetadataBuilder:
             for column_name, column_data in table_dict['columns'].items():
                 column_metadata = ColumnMetadata(
                     name=column_name,
-                    data_type=column_data.get('data_type')
+                    data_type=column_data.get('data_type'),
+                    update_flag=column_data.get('update_flag')
                 )
-                if 'source' in column_data and 'field' in column_data['source']:
-                    column_metadata.source_field = self.parse_foreign_column_path(column_data['source']['field'])
+                if 'source' in column_data:
+                    if 'field' in column_data['source']:
+                        column_metadata.source_field = self.parse_foreign_column_path(column_data['source']['field'])
+                    if 'calculation' in column_data['source']:
+                        column_metadata.calculated_field = self.parse_calculated_column_path(column_data['source']['calculation'])
                 table.add_column(column_metadata)
         if 'etls' in table_dict:
             for etl_process_name, etl_data in table_dict['etls'].items():
@@ -393,6 +397,10 @@ class DictToMetadataBuilder:
         """Parse the given string into an ETLOutputType Enum value."""
         if raw_output_type.lower() == 'insert':
             return ETLOutputType.INSERT
+        if raw_output_type.lower() == 'insert_update':
+            return ETLOutputType.INSERT_UPDATE
+        if raw_output_type.lower() == 'delete':
+            return ETLOutputType.DELETE
         else:
             raise self.InvalidTableMetadataException(f'Invalid ETL output type: {raw_output_type}')
 

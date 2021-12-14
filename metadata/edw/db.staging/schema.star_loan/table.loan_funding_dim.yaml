@@ -5,108 +5,138 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    update_flag: false
   data_source_dwid:
     data_type: BIGINT
+    update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    update_flag: true
   etl_batch_id:
     data_type: TEXT
+    update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    update_flag: false
   data_source_integration_id:
     data_type: TEXT
+    update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    update_flag: true
   loan_funding_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lf_pid
+    update_flag: false
   loan_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lf_loan_pid
+    update_flag: true
   interim_funder_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lf_interim_funder_pid
+    update_flag: true
   collateral_courier:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_lf_collateral_courier_type.columns.value
+    update_flag: true
   collateral_courier_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lf_collateral_courier_type
+    update_flag: true
   early_wire_charge_day_count:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.lf_early_wire_charge_day_count
+    update_flag: true
   early_wire_daily_charge_amount:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.lf_early_wire_daily_charge_amount
+    update_flag: true
   early_wire_total_charge_amount:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.lf_early_wire_total_charge_amount
+    update_flag: true
   funding_confirmed_release_datetime:
     data_type: TIMESTAMPTZ
     source:
       field: primary_source_table.columns.lf_confirmed_release_datetime
+    update_flag: true
   funding_status:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_lf_funding_status_type.columns.value
+    update_flag: true
   funding_status_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lf_funding_status_type
+    update_flag: true
   funds_authorization_code:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.lf_funds_authorization_code
+    update_flag: true
   funds_authorized_datetime:
     data_type: TIMESTAMPTZ
     source:
       field: primary_source_table.columns.lf_funds_authorized_datetime
+    update_flag: true
   interim_funder_fee_amount:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.lf_interim_funder_fee_amount
+    update_flag: true
   interim_funder_loan_id:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.lf_interim_funder_loan_id
+    update_flag: true
   early_wire_request_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.lf_early_wire_request
+    update_flag: true
   scheduled_release_date_auto_compute_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.lf_scheduled_release_date_auto_compute
+    update_flag: true
   net_wire_amount:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.lf_net_wire_amount
+    update_flag: true
   post_wire_adjustment_amount:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.lf_post_wire_adjustment_amount
+    update_flag: true
   release_wire_federal_reference_number:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.lf_release_wire_federal_reference_number
+    update_flag: true
   wire_amount:
     data_type: NUMERIC(21,3)
     source:
       field: primary_source_table.columns.lf_wire_amount
+    update_flag: true
   collateral_tracking_number:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.lf_collateral_tracking_number
+    update_flag: true
 etls:
   SP-200013:
     input_type: table

@@ -5,60 +5,78 @@ primary_key:
 columns:
   dwid:
     data_type: BIGINT
+    update_flag: false
   data_source_dwid:
     data_type: BIGINT
+    update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
+    update_flag: false
   edw_modified_datetime:
     data_type: TIMESTAMPTZ
+    update_flag: true
   etl_batch_id:
     data_type: TEXT
+    update_flag: true
   data_source_integration_columns:
     data_type: TEXT
+    update_flag: false
   data_source_integration_id:
     data_type: TEXT
+    update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
+    update_flag: true
   aus:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_l_aus_type.columns.value
+    update_flag: true
   aus_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_aus_type
+    update_flag: true
   buydown_schedule:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_l_buydown_schedule_type.columns.value
+    update_flag: true
   buydown_schedule_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_buydown_schedule_type
+    update_flag: true
   interest_only:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_l_interest_only_type.columns.value
+    update_flag: true
   interest_only_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_interest_only_type
+    update_flag: true
   mortgage_type:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_l_mortgage_type.columns.value
+    update_flag: true
   mortgage_type_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_mortgage_type
+    update_flag: true
   prepay_penalty_schedule:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.foreign_keys.fkt_l_prepay_penalty_schedule_type.columns.value
+    update_flag: true
   prepay_penalty_schedule_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_prepay_penalty_schedule_type
+    update_flag: true
 etls:
   SP-200016:
     input_type: table
