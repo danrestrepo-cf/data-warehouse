@@ -549,6 +549,10 @@ class MetadataWriter:
             column_dict['source'] = {
                 'field': source_field_string
             }
+        if column_metadata.update_flag is not None:
+            column_dict['update_flag'] = {
+                'update_flag': column_metadata.update_flag
+            }
         return column_dict
 
     @staticmethod
