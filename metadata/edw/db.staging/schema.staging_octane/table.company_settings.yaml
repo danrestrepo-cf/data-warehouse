@@ -1,0 +1,97 @@
+name: company_settings
+primary_key:
+- cs_pid
+foreign_keys:
+  fk_company_settings_1:
+    columns:
+    - cs_company_pid
+    references:
+      columns:
+      - cm_pid
+      schema: staging_octane
+      table: company
+  fk_company_settings_2:
+    columns:
+    - cs_fha_home_office_location_pid
+    references:
+      columns:
+      - loc_pid
+      schema: staging_octane
+      table: location
+  fkt_cs_fha_settings_present:
+    columns:
+    - cs_fha_settings_present
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_cs_fha_sponsor_address_country:
+    columns:
+    - cs_fha_sponsor_address_country
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: country_type
+  fkt_cs_usda_settings_present:
+    columns:
+    - cs_usda_settings_present
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+  fkt_cs_va_settings_present:
+    columns:
+    - cs_va_settings_present
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: yes_no_unknown_type
+columns:
+  cs_pid:
+    data_type: BIGINT
+  cs_version:
+    data_type: INTEGER
+  cs_company_pid:
+    data_type: BIGINT
+  cs_equifax_mortgage_services_internal_account_id:
+    data_type: VARCHAR(256)
+  cs_factual_data_internal_account_id:
+    data_type: VARCHAR(256)
+  cs_sharper_lending_internal_account_id:
+    data_type: VARCHAR(256)
+  cs_va_lender_id:
+    data_type: VARCHAR(16)
+  cs_usda_lender_id:
+    data_type: VARCHAR(16)
+  cs_fha_sponsor_address_country:
+    data_type: VARCHAR(128)
+  cs_fha_sponsor_id:
+    data_type: VARCHAR(16)
+  cs_fha_sponsor_company_name:
+    data_type: VARCHAR(32)
+  cs_fha_non_supervised_mortgagee:
+    data_type: BOOLEAN
+  cs_fha_sponsor_address_city:
+    data_type: VARCHAR(128)
+  cs_fha_lender_id:
+    data_type: VARCHAR(16)
+  cs_fha_sponsor_address_street2:
+    data_type: VARCHAR(128)
+  cs_fha_sponsor_address_street1:
+    data_type: VARCHAR(128)
+  cs_fha_sponsor_address_state:
+    data_type: VARCHAR(128)
+  cs_fha_home_office_location_pid:
+    data_type: BIGINT
+  cs_fha_sponsor_address_postal_code:
+    data_type: VARCHAR(128)
+  cs_fha_settings_present:
+    data_type: VARCHAR(128)
+  cs_va_settings_present:
+    data_type: VARCHAR(128)
+  cs_usda_settings_present:
+    data_type: VARCHAR(128)

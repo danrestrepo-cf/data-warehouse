@@ -1,0 +1,221 @@
+name: company_settings
+primary_source_table: staging.staging_octane.company_settings
+primary_key:
+- cs_pid
+- cs_version
+foreign_keys:
+  fk_company_settings_1:
+    columns:
+    - cs_company_pid
+    references:
+      columns:
+      - cm_pid
+      schema: history_octane
+      table: company
+  fk_company_settings_2:
+    columns:
+    - cs_fha_home_office_location_pid
+    references:
+      columns:
+      - loc_pid
+      schema: history_octane
+      table: location
+  fkt_cs_fha_settings_present:
+    columns:
+    - cs_fha_settings_present
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_cs_fha_sponsor_address_country:
+    columns:
+    - cs_fha_sponsor_address_country
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: country_type
+  fkt_cs_usda_settings_present:
+    columns:
+    - cs_usda_settings_present
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+  fkt_cs_va_settings_present:
+    columns:
+    - cs_va_settings_present
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
+columns:
+  cs_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cs_pid
+  cs_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.cs_version
+  cs_company_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cs_company_pid
+  cs_equifax_mortgage_services_internal_account_id:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.cs_equifax_mortgage_services_internal_account_id
+  cs_factual_data_internal_account_id:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.cs_factual_data_internal_account_id
+  cs_sharper_lending_internal_account_id:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.cs_sharper_lending_internal_account_id
+  cs_va_lender_id:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.cs_va_lender_id
+  cs_usda_lender_id:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.cs_usda_lender_id
+  cs_fha_sponsor_address_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cs_fha_sponsor_address_country
+  cs_fha_sponsor_id:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.cs_fha_sponsor_id
+  cs_fha_sponsor_company_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.cs_fha_sponsor_company_name
+  cs_fha_non_supervised_mortgagee:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.cs_fha_non_supervised_mortgagee
+  cs_fha_sponsor_address_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cs_fha_sponsor_address_city
+  cs_fha_lender_id:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.cs_fha_lender_id
+  cs_fha_sponsor_address_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cs_fha_sponsor_address_street2
+  cs_fha_sponsor_address_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cs_fha_sponsor_address_street1
+  cs_fha_sponsor_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cs_fha_sponsor_address_state
+  cs_fha_home_office_location_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cs_fha_home_office_location_pid
+  cs_fha_sponsor_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cs_fha_sponsor_address_postal_code
+  cs_fha_settings_present:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cs_fha_settings_present
+  cs_va_settings_present:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cs_va_settings_present
+  cs_usda_settings_present:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cs_usda_settings_present
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100884:
+    input_type: table
+    output_type: insert
+    json_output_field: cs_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.company_settings
+      SELECT staging_table.cs_pid
+           , staging_table.cs_version
+           , staging_table.cs_company_pid
+           , staging_table.cs_equifax_mortgage_services_internal_account_id
+           , staging_table.cs_factual_data_internal_account_id
+           , staging_table.cs_sharper_lending_internal_account_id
+           , staging_table.cs_va_lender_id
+           , staging_table.cs_usda_lender_id
+           , staging_table.cs_fha_sponsor_address_country
+           , staging_table.cs_fha_sponsor_id
+           , staging_table.cs_fha_sponsor_company_name
+           , staging_table.cs_fha_non_supervised_mortgagee
+           , staging_table.cs_fha_sponsor_address_city
+           , staging_table.cs_fha_lender_id
+           , staging_table.cs_fha_sponsor_address_street2
+           , staging_table.cs_fha_sponsor_address_street1
+           , staging_table.cs_fha_sponsor_address_state
+           , staging_table.cs_fha_home_office_location_pid
+           , staging_table.cs_fha_sponsor_address_postal_code
+           , staging_table.cs_fha_settings_present
+           , staging_table.cs_va_settings_present
+           , staging_table.cs_usda_settings_present
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.company_settings staging_table
+      LEFT JOIN history_octane.company_settings history_table
+                ON staging_table.cs_pid = history_table.cs_pid
+                    AND staging_table.cs_version = history_table.cs_version
+      WHERE history_table.cs_pid IS NULL
+      UNION ALL
+      SELECT history_table.cs_pid
+           , history_table.cs_version + 1
+           , history_table.cs_company_pid
+           , history_table.cs_equifax_mortgage_services_internal_account_id
+           , history_table.cs_factual_data_internal_account_id
+           , history_table.cs_sharper_lending_internal_account_id
+           , history_table.cs_va_lender_id
+           , history_table.cs_usda_lender_id
+           , history_table.cs_fha_sponsor_address_country
+           , history_table.cs_fha_sponsor_id
+           , history_table.cs_fha_sponsor_company_name
+           , history_table.cs_fha_non_supervised_mortgagee
+           , history_table.cs_fha_sponsor_address_city
+           , history_table.cs_fha_lender_id
+           , history_table.cs_fha_sponsor_address_street2
+           , history_table.cs_fha_sponsor_address_street1
+           , history_table.cs_fha_sponsor_address_state
+           , history_table.cs_fha_home_office_location_pid
+           , history_table.cs_fha_sponsor_address_postal_code
+           , history_table.cs_fha_settings_present
+           , history_table.cs_va_settings_present
+           , history_table.cs_usda_settings_present
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.company_settings history_table
+      LEFT JOIN staging_octane.company_settings staging_table
+                ON staging_table.cs_pid = history_table.cs_pid
+      WHERE staging_table.cs_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.company_settings deleted_records
+          WHERE deleted_records.cs_pid = history_table.cs_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );
