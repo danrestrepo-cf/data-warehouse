@@ -133,6 +133,8 @@ CREATE TABLE history_octane.company_settings (
                                                  etl_batch_id TEXT
 );
 
+CREATE INDEX idx_company_settings__etl_batch_id ON history_octane.company_settings (etl_batch_id);
+
 CREATE INDEX idx_company_settings__pid ON history_octane.company_settings (cs_pid);
 
 CREATE INDEX idx_company_settings__data_source_updated_datetime ON history_octane.company_settings (data_source_updated_datetime);
