@@ -53,10 +53,10 @@ columns:
             ELSE $4
           END
         using:
-          $1: primary_source_table.l_lien_priority_type
-          $2: primary_source_table.foreign_keys.fk_loan_1.columns.prp_structure_type
-          $3: primary_source_table.foreign_keys.fk_loan_1.foreign_keys.fk_proposal_1.columns.d_los_loan_id_main
-          $4: primary_source_table.foreign_keys.fk_loan_1.foreign_keys.fk_proposal_1.columns.d_los_loan_id_piggyback
+          - primary_source_table.columns.l_lien_priority_type
+          - primary_source_table.foreign_keys.fk_loan_1.columns.prp_structure_type
+          - primary_source_table.foreign_keys.fk_loan_1.foreign_keys.fk_proposal_1.columns.d_los_loan_id_main
+          - primary_source_table.foreign_keys.fk_loan_1.foreign_keys.fk_proposal_1.columns.d_los_loan_id_piggyback
     update_flag: true
   arm_index_current_value_percent:
     data_type: NUMERIC(15,9)
@@ -157,6 +157,7 @@ etls:
   SP-200012:
     input_type: table
     output_type: insert_update
+    hardcoded_data_source: Octane
     json_output_field: data_source_integration_id
     insert_update_keys:
       - data_source_integration_id

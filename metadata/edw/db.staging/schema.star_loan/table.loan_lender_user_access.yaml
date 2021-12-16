@@ -31,6 +31,7 @@ etls:
   SP-200001-insert:
     input_type: table
     output_type: insert
+    hardcoded_data_source: Octane
     json_output_field: loan_dwid
     truncate_table: false
     input_sql: |-
@@ -133,6 +134,7 @@ etls:
   SP-200001-delete:
     input_type: table
     output_type: delete
+    hardcoded_data_source: Octane
     json_output_field: dwid
     delete_keys:
       - octane_username

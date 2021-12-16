@@ -53,7 +53,7 @@ columns:
       calculation:
         string: $1 <> '' AND $1 IS NOT NULL
         using:
-          $1: primary_source_table.columns.b_ethnicity_other_hispanic_or_latino_description
+          - primary_source_table.columns.b_ethnicity_other_hispanic_or_latino_description
     update_flag: true
   other_race_national_origin_description_flag:
     data_type: BOOLEAN
@@ -61,7 +61,7 @@ columns:
       calculation:
         string: $1 <> '' AND $1 IS NOT NULL
         using:
-          $1: primary_source_table.columns.b_other_race_national_origin_description
+          - primary_source_table.columns.b_other_race_national_origin_description
     update_flag: true
   race_other_american_indian_or_alaska_native_description_flag:
     data_type: BOOLEAN
@@ -69,7 +69,7 @@ columns:
       calculation:
         string: $1 <> '' AND $1 IS NOT NULL
         using:
-          $1: primary_source_table.columns.b_race_other_american_indian_or_alaska_native_description
+          - primary_source_table.columns.b_race_other_american_indian_or_alaska_native_description
     update_flag: true
   race_other_asian_description_flag:
     data_type: BOOLEAN
@@ -77,7 +77,7 @@ columns:
       calculation:
         string: $1 <> '' AND $1 IS NOT NULL
         using:
-          $1: primary_source_table.columns.b_race_other_asian_description
+          - primary_source_table.columns.b_race_other_asian_description
     update_flag: true
   race_other_pacific_islander_description_flag:
     data_type: BOOLEAN
@@ -85,7 +85,7 @@ columns:
       calculation:
         string: $1 <> '' AND $1 IS NOT NULL
         using:
-          $1: primary_source_table.columns.b_race_other_pacific_islander_description
+          - primary_source_table.columns.b_race_other_pacific_islander_description
     update_flag: true
   ethnicity_cuban_flag:
     data_type: BOOLEAN
@@ -296,6 +296,7 @@ etls:
   SP-200004:
     input_type: table
     output_type: insert_update
+    hardcoded_data_source: Octane
     json_output_field: data_source_integration_id
     insert_update_keys:
       - data_source_integration_id

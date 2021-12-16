@@ -40,7 +40,7 @@ class EDWFieldDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions)
                 LEFT JOIN mdi.edw_table_definition source_table_definition
                           ON source_field_definition.edw_table_definition_dwid = source_table_definition.dwid
                 WHERE edw_table_definition.schema_name IN ('staging_octane', 'history_octane', 'star_loan', 'star_common')
-                  AND (source_table_definition.schema_name IN ('staging_octane', 'history_octane', 'star_loan', 'star_common')
+                  AND (source_table_definition.schema_name IN ('staging_octane', 'history_octane')
                     OR source_table_definition.schema_name IS NULL);
             """)
 
@@ -57,17 +57,17 @@ class EDWFieldDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions)
                             'field_name': column.name,
                             'data_type': column.data_type
                         }
-                        if column.source_field is None:
+                        if column.source is None or len(column.source.foreign_key_paths) > 1:
                             row['source_database_name'] = None
                             row['source_schema_name'] = None
                             row['source_table_name'] = None
                             row['source_field_name'] = None
                         else:
-                            source_table = table.get_column_source_table(column.name, data_warehouse_metadata)
-                            row['source_database_name'] = source_table.path.database
-                            row['source_schema_name'] = source_table.path.schema
-                            row['source_table_name'] = source_table.name
-                            row['source_field_name'] = column.source_field.column_name
+                            source_column_path = table.get_source_column_paths(column.name, data_warehouse_metadata)[0]
+                            row['source_database_name'] = source_column_path.database
+                            row['source_schema_name'] = source_column_path.schema
+                            row['source_table_name'] = source_column_path.table
+                            row['source_field_name'] = source_column_path.column
                         metadata_table.add_row(row)
         return metadata_table
 

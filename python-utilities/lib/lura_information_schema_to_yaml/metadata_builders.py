@@ -20,7 +20,7 @@ from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        ColumnMetadata,
                                                        ForeignKeyMetadata,
                                                        ETLMetadata,
-                                                       ForeignColumnPath,
+                                                       SourceForeignKeyPath,
                                                        InvalidMetadataKeyException,
                                                        ETLInputType,
                                                        ETLOutputType)
@@ -153,7 +153,7 @@ def generate_history_octane_metadata(metadata: DataWarehouseMetadata, table_to_p
             history_table.primary_key.append(version_column_name)
         for staging_column in staging_table.columns:
             history_column = ColumnMetadata(name=staging_column.name, data_type=staging_column.data_type)
-            history_column.source_field = ForeignColumnPath(fk_steps=[], column_name=staging_column.name)
+            history_column.source = SourceForeignKeyPath(fk_steps=[], column_name=staging_column.name)
             history_table.add_column(history_column)
         history_table.add_column(ColumnMetadata(name='data_source_updated_datetime', data_type='TIMESTAMPTZ'))
         history_table.add_column(ColumnMetadata(name='data_source_deleted_flag', data_type='BOOLEAN'))

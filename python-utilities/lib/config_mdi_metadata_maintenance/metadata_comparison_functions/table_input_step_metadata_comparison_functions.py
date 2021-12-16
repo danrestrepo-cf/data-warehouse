@@ -21,7 +21,7 @@ class TableInputStepMetadataComparisonFunctions(MetadataComparisonFunctions):
                      standardize line endings for easier comparison AND replace single quotes instances sql queries 
                      with doubled-up single quotes
                      */
-                     , REPLACE(TRANSLATE(table_input_step.sql, E'\r', ''), '''', '''''') AS sql
+                     , TRANSLATE(table_input_step.sql, E'\r', '') AS sql
                      , table_input_step.connectionname
                 FROM mdi.table_input_step
                 JOIN mdi.process
@@ -36,7 +36,7 @@ class TableInputStepMetadataComparisonFunctions(MetadataComparisonFunctions):
                      standardize line endings for easier comparison AND replace single quotes instances sql queries 
                      with doubled-up single quotes
                      */
-                     , REPLACE(TRANSLATE(table_input_step.sql, E'\r', ''), '''', '''''') AS sql
+                     , TRANSLATE(table_input_step.sql, E'\r', '') AS sql
                      , table_input_step.connectionname
                 FROM mdi.table_input_step
                 JOIN mdi.process
@@ -51,7 +51,7 @@ class TableInputStepMetadataComparisonFunctions(MetadataComparisonFunctions):
                      standardize line endings for easier comparison AND replace single quotes instances sql queries 
                      with doubled-up single quotes
                      */
-                     , REPLACE(TRANSLATE(table_input_step.sql, E'\r', ''), '''', '''''') AS sql
+                     , TRANSLATE(table_input_step.sql, E'\r', '') AS sql
                      , table_input_step.connectionname
                 FROM mdi.table_input_step
                 JOIN mdi.process
@@ -72,7 +72,7 @@ class TableInputStepMetadataComparisonFunctions(MetadataComparisonFunctions):
                             metadata_table.add_row({
                                 'process_name': etl.process_name,
                                 'data_source_dwid': data_source_dwid,
-                                'sql': etl.input_sql.replace("'", "''"),
+                                'sql': etl.input_sql,
                                 'connectionname': self.get_connection_name(database.name)
                             })
         return metadata_table
