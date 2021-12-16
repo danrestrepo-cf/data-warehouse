@@ -81,6 +81,10 @@ columns:
     data_type: VARCHAR(16000)
     source:
       field: primary_source_table.columns.leils_raw_row
+  leils_row_number:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.leils_row_number
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
   data_source_deleted_flag:
@@ -108,6 +112,7 @@ etls:
            , staging_table.leils_ledger_entry_import_status_type
            , staging_table.leils_failure_info
            , staging_table.leils_raw_row
+           , staging_table.leils_row_number
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.ledger_entry_import_loan_status staging_table
@@ -129,6 +134,7 @@ etls:
            , history_table.leils_ledger_entry_import_status_type
            , history_table.leils_failure_info
            , history_table.leils_raw_row
+           , history_table.leils_row_number
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.ledger_entry_import_loan_status history_table
