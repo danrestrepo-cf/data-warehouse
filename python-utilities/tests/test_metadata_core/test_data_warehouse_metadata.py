@@ -427,24 +427,28 @@ class TestTableMetadataCanGetColumnSourceTable(unittest.TestCase):
             }
         )
 
-    def test_none_if_column_has_no_source(self):
+    def test_empty_source_column_paths_list_if_column_has_no_source(self):
         table_address = TablePath('staging', 'staging_octane', 'source_table')
         table = self.dw_metadata.get_table_by_path(table_address)
-        self.assertEqual(None, table.get_column_source_table('source_column', self.dw_metadata))
+        self.assertEqual([], table.get_source_column_paths('source_column', self.dw_metadata))
 
-    def test_retrieves_primary_source_table_metadata_if_there_are_no_fk_steps(self):
+    def test_retrieves_source_column_metadata_if_there_are_no_fk_steps(self):
         table_address = TablePath('staging', 'history_octane', 'table_with_source')
         table = self.dw_metadata.get_table_by_path(table_address)
-        source_table_address = TablePath('staging', 'staging_octane', 'source_table')
-        source_table = self.dw_metadata.get_table_by_path(source_table_address)
-        self.assertEqual(source_table, table.get_column_source_table('column_with_source', self.dw_metadata))
+        source_column_address = ColumnPath('staging', 'staging_octane', 'source_table', 'source_column')
+        source_column = self.dw_metadata.get_column_by_path(source_column_address)
+        fetched_source_column_path = table.get_source_column_paths('column_with_source', self.dw_metadata)[0]
+        fetched_source_column_metadata = self.dw_metadata.get_column_by_path(fetched_source_column_path)
+        self.assertEqual(source_column, fetched_source_column_metadata)
 
-    def test_follows_fk_steps_to_retrieve_distant_source_table_metadata(self):
+    def test_follows_fk_steps_to_retrieve_distant_source_column_metadata(self):
         table_address = TablePath('staging', 'history_octane', 'table_with_source')
         table = self.dw_metadata.get_table_by_path(table_address)
-        source_table_address = TablePath('staging', 'other_schema', 'distant_source_table')
-        source_table = self.dw_metadata.get_table_by_path(source_table_address)
-        self.assertEqual(source_table, table.get_column_source_table('column_with_distant_source', self.dw_metadata))
+        source_column_address = ColumnPath('staging', 'other_schema', 'distant_source_table', 'distant_source_column')
+        source_column = self.dw_metadata.get_column_by_path(source_column_address)
+        fetched_source_column_path = table.get_source_column_paths('column_with_distant_source', self.dw_metadata)[0]
+        fetched_source_column_metadata = self.dw_metadata.get_column_by_path(fetched_source_column_path)
+        self.assertEqual(source_column, fetched_source_column_metadata)
 
 
 if __name__ == '__main__':

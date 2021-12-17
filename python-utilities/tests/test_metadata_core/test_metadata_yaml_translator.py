@@ -16,7 +16,8 @@ from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        ColumnMetadata,
                                                        ETLMetadata,
                                                        ForeignKeyMetadata,
-                                                       ForeignColumnPath,
+                                                       ColumnSourceComponents,
+                                                       SourceForeignKeyPath,
                                                        ETLDataSource,
                                                        ETLInputType,
                                                        ETLOutputType)
@@ -200,6 +201,15 @@ class TestGenerateDataWarehouseWithFullYAMLFile(MetadataDirectoryTestCase):
                         'field': 'primary_source_table.foreign_keys.fk_1.foreign_keys.fk_3.columns.distant_col1'
                     }
                 }
+                # ,'col4': {
+                #     'data_type': 'BOOLEAN',
+                #     'source': {
+                #         'calculation': {
+                #             'string': '$1 IS NOT NULL',
+                #             'using': ['primary_source_table.t01_col3']
+                #         }
+                #     }
+                # }
             },
             'etls': {
                 'SP-101': {
@@ -257,7 +267,7 @@ class TestGenerateDataWarehouseWithFullYAMLFile(MetadataDirectoryTestCase):
         self.table2_metadata = self.metadata.get_database('db1').get_schema('sch1').get_table('table2')
 
     def test_translates_missing_keys_into_null_values(self):
-        expected_cols = [ColumnMetadata(name='col0', data_type=None, source_field=None)]
+        expected_cols = [ColumnMetadata(name='col0', data_type=None, source=None)]
         expected_etls = [ETLMetadata(
             process_name='SP-100',
             hardcoded_data_source=None,
@@ -288,9 +298,11 @@ class TestGenerateDataWarehouseWithFullYAMLFile(MetadataDirectoryTestCase):
 
     def test_parses_columns_into_ColumnMetadata_objects(self):
         expected = [
-            ColumnMetadata('col1', 'BIGINT', ForeignColumnPath([], 't01_col1')),
-            ColumnMetadata('col2', 'BIGINT', ForeignColumnPath([], 't01_col2')),
-            ColumnMetadata('col3', 'VARCHAR(16)', ForeignColumnPath(['fk_1', 'fk_3'], 'distant_col1'))
+            ColumnMetadata('col1', 'BIGINT', ColumnSourceComponents(None, [SourceForeignKeyPath([], 't01_col1')])),
+            ColumnMetadata('col2', 'BIGINT', ColumnSourceComponents(None, [SourceForeignKeyPath([], 't01_col2')])),
+            ColumnMetadata('col3', 'VARCHAR(16)', ColumnSourceComponents(None, [SourceForeignKeyPath(['fk_1', 'fk_3'], 'distant_col1')])),
+            # ColumnMetadata('col4', 'BOOLEAN', ColumnSourceComponents(calculation_string='$1 IS NOT NULL', foreign_key_paths=
+            #     [SourceForeignKeyPath([], 't01_col3')]))
         ]
         self.assertEqual(expected, self.table1_metadata.columns)
 
@@ -407,7 +419,7 @@ class TestParseForeignColumnPath(unittest.TestCase):
             DictToMetadataBuilder().parse_foreign_column_path('primary_source_table.foreign_keys.fk_2')
 
     def test_correctly_parses_valid_path(self):
-        expected = ForeignColumnPath(['fk_1', 'fk_2', 'fk_3'], 'col')
+        expected = SourceForeignKeyPath(['fk_1', 'fk_2', 'fk_3'], 'col')
         test_path = 'primary_source_table.foreign_keys.fk_1.foreign_keys.fk_2.foreign_keys.fk_3.columns.col'
         self.assertEqual(expected, DictToMetadataBuilder().parse_foreign_column_path(test_path))
 

@@ -109,7 +109,7 @@ class ColumnSourceComponents:
                 ]
             )
     """
-    calculation_string: str
+    calculation_string: Optional[str]
     foreign_key_paths: List[SourceForeignKeyPath]
 
 
@@ -200,8 +200,10 @@ class ColumnMetadata:
     Attributes:
         name: the column name
         data_type: the column's data type
-        source_field: a SourceForeignKeyPath describing the location of the column's
-        source field, starting from the table's primary_source_table
+        source: a ColumnSourceComponents object that indicates whether the column is sourced from another column,
+        or is sourced from a calculation involving one or more columns
+        update_flag: an indicator as to whether the field is updatable; only used for columns that are maintained by
+        insert/update ETLs
     """
     name: str
     data_type: Optional[str] = None
