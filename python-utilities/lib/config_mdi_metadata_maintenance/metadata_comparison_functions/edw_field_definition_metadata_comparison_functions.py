@@ -97,8 +97,8 @@ class EDWFieldDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions)
                "    VALUES " + self.construct_values_string_from_full_rows(rows, base_indent=4) + "\n" + \
                ")\n" + \
                "INSERT\n" + \
-               "INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)\n" + \
-               "SELECT edw_table_definition.dwid, insert_rows.field_name, FALSE, source_field_definition.dwid, NULL, NULL, insert_rows.data_type, NULL, NULL, NULL, NULL\n" + \
+               "INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)\n" + \
+               "SELECT edw_table_definition.dwid, insert_rows.field_name, FALSE, source_field_definition.dwid, NULL, insert_rows.data_type, NULL, NULL, NULL, NULL\n" + \
                "FROM insert_rows\n" + \
                "JOIN mdi.edw_table_definition\n" + \
                "     ON insert_rows.database_name = edw_table_definition.database_name\n" + \
