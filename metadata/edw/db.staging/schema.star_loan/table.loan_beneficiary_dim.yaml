@@ -8,7 +8,7 @@ columns:
     update_flag: false
   data_source_dwid:
     data_type: BIGINT
-    update_flag: false
+    update_flag: true
   edw_created_datetime:
     data_type: TIMESTAMPTZ
     update_flag: false
@@ -20,18 +20,18 @@ columns:
     update_flag: true
   data_source_integration_columns:
     data_type: TEXT
-    update_flag: false
+    update_flag: true
   data_source_integration_id:
     data_type: TEXT
     update_flag: false
   data_source_modified_datetime:
     data_type: TIMESTAMPTZ
-    update_flag: true
+    update_flag: false
   loan_beneficiary_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lb_pid
-    update_flag: false
+    update_flag: true
   loan_pid:
     data_type: BIGINT
     source:
