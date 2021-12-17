@@ -34,14 +34,6 @@ foreign_keys:
       - lts_pid
       schema: staging_octane
       table: lock_term_setting
-  fk_lender_settings_6:
-    columns:
-    - lss_fha_home_office_location_pid
-    references:
-      columns:
-      - loc_pid
-      schema: staging_octane
-      table: location
   fkt_lss_borrower_quote_filter_pivot_type:
     columns:
     - lss_borrower_quote_filter_pivot_type
@@ -66,14 +58,6 @@ foreign_keys:
       - code
       schema: staging_octane
       table: credit_bureau_type
-  fkt_lss_fha_sponsor_address_country:
-    columns:
-    - lss_fha_sponsor_address_country
-    references:
-      columns:
-      - code
-      schema: staging_octane
-      table: country_type
   fkt_lss_hmda_agency_id_type:
     columns:
     - lss_hmda_agency_id_type
@@ -107,32 +91,8 @@ columns:
     data_type: BIGINT
   lss_company_time_zone_type:
     data_type: VARCHAR(128)
-  lss_va_lender_id:
-    data_type: VARCHAR(16)
-  lss_usda_lender_id:
-    data_type: VARCHAR(16)
-  lss_fha_lender_id:
-    data_type: VARCHAR(16)
   lss_fha_home_office_branch_pid:
     data_type: BIGINT
-  lss_fha_sponsor_id:
-    data_type: VARCHAR(16)
-  lss_fha_sponsor_company_name:
-    data_type: VARCHAR(32)
-  lss_fha_sponsor_address_street1:
-    data_type: VARCHAR(128)
-  lss_fha_sponsor_address_street2:
-    data_type: VARCHAR(128)
-  lss_fha_sponsor_address_city:
-    data_type: VARCHAR(128)
-  lss_fha_sponsor_address_state:
-    data_type: VARCHAR(128)
-  lss_fha_sponsor_address_postal_code:
-    data_type: VARCHAR(128)
-  lss_fha_sponsor_address_country:
-    data_type: VARCHAR(128)
-  lss_fha_non_supervised_mortgagee:
-    data_type: BOOLEAN
   lss_fnma_seller_id:
     data_type: VARCHAR(16)
   lss_fre_seller_id:
@@ -189,5 +149,11 @@ columns:
     data_type: INTEGER
   lss_borrower_quote_filter_pivot_higher_count:
     data_type: INTEGER
-  lss_fha_home_office_location_pid:
-    data_type: BIGINT
+  lss_equifax_submitting_party_name:
+    data_type: VARCHAR(256)
+  lss_factual_data_submitting_party_name:
+    data_type: VARCHAR(256)
+  lss_factual_data_submitting_party_id:
+    data_type: VARCHAR(256)
+  lss_meridian_link_submitting_party_id:
+    data_type: VARCHAR(256)

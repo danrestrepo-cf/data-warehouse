@@ -1,0 +1,33 @@
+name: branch_license_contact
+primary_key:
+- brlc_pid
+foreign_keys:
+  fk_branch_license_contact_1:
+    columns:
+    - brlc_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+  fk_branch_license_contact_2:
+    columns:
+    - brlc_branch_license_pid
+    references:
+      columns:
+      - brml_pid
+      schema: staging_octane
+      table: branch_license
+columns:
+  brlc_pid:
+    data_type: BIGINT
+  brlc_version:
+    data_type: INTEGER
+  brlc_lender_user_pid:
+    data_type: BIGINT
+  brlc_branch_license_pid:
+    data_type: BIGINT
+  brlc_from_date:
+    data_type: DATE
+  brlc_through_date:
+    data_type: DATE
