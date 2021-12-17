@@ -200,16 +200,26 @@ class TestGenerateDataWarehouseWithFullYAMLFile(MetadataDirectoryTestCase):
                     'source': {
                         'field': 'primary_source_table.foreign_keys.fk_1.foreign_keys.fk_3.columns.distant_col1'
                     }
+                },
+                'col4': {
+                    'data_type': 'BOOLEAN',
+                    'source': {
+                        'calculation': {
+                            'string': '$1 IS NOT NULL',
+                            'using': ['primary_source_table.columns.t01_col3']
+                        }
+                    }
+                },
+                'col5': {
+                    'data_type': 'BOOLEAN',
+                    'source': {
+                        'calculation': {
+                            'string': '$1 IS NOT NULL AND $2 IS NOT NULL',
+                            'using': ['primary_source_table.columns.t01_col3',
+                                      'primary_source_table.foreign_keys.fk_1.foreign_keys.fk_3.columns.distant_col1']
+                        }
+                    }
                 }
-                # ,'col4': {
-                #     'data_type': 'BOOLEAN',
-                #     'source': {
-                #         'calculation': {
-                #             'string': '$1 IS NOT NULL',
-                #             'using': ['primary_source_table.t01_col3']
-                #         }
-                #     }
-                # }
             },
             'etls': {
                 'SP-101': {
@@ -301,8 +311,10 @@ class TestGenerateDataWarehouseWithFullYAMLFile(MetadataDirectoryTestCase):
             ColumnMetadata('col1', 'BIGINT', ColumnSourceComponents(None, [SourceForeignKeyPath([], 't01_col1')])),
             ColumnMetadata('col2', 'BIGINT', ColumnSourceComponents(None, [SourceForeignKeyPath([], 't01_col2')])),
             ColumnMetadata('col3', 'VARCHAR(16)', ColumnSourceComponents(None, [SourceForeignKeyPath(['fk_1', 'fk_3'], 'distant_col1')])),
-            # ColumnMetadata('col4', 'BOOLEAN', ColumnSourceComponents(calculation_string='$1 IS NOT NULL', foreign_key_paths=
-            #     [SourceForeignKeyPath([], 't01_col3')]))
+            ColumnMetadata('col4', 'BOOLEAN', ColumnSourceComponents(calculation_string='$1 IS NOT NULL',
+                foreign_key_paths= [SourceForeignKeyPath([], 't01_col3')])),
+            ColumnMetadata('col5', 'BOOLEAN', ColumnSourceComponents(calculation_string='$1 IS NOT NULL AND $2 IS NOT NULL',
+                foreign_key_paths=[SourceForeignKeyPath([], 't01_col3'), SourceForeignKeyPath(['fk_1', 'fk_3'], 'distant_col1')]))
         ]
         self.assertEqual(expected, self.table1_metadata.columns)
 
