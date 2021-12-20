@@ -137,6 +137,7 @@ WHERE update_rows.database_name = edw_table_definition.database_name
 --edw_field_definition
 WITH update_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name, source_table_name, source_field_name) AS (
     VALUES ('staging', 'star_loan', 'application_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'star_loan', 'borrower_demographics_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'borrower_demographics_dim', 'ethnicity_other_hispanic_or_latino_description_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'borrower_demographics_dim', 'other_race_national_origin_description_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'borrower_demographics_dim', 'race_other_american_indian_or_alaska_native_description_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
