@@ -1669,6 +1669,66 @@ JOIN (
         mortgage_insurance_dim_etl_start_times.data_source_integration_id
          AND
         mortgage_insurance_dim_incl_new_records.max_source_etl_end_date_time >= mortgage_insurance_dim_etl_start_times.etl_start_date_time;')
+/*
+ transaction_dim
+ */
+         , ('transaction_dim', 'WITH transaction_dim_incl_new_records AS (
+    SELECT ''deal_pid'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
+         , COALESCE( CAST( t1441.d_pid AS TEXT ), ''<NULL>'' ) || ''~'' || COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
+         , NOW( ) AS edw_created_datetime
+         , NOW( ) AS edw_modified_datetime
+         , primary_table.data_source_updated_datetime AS data_source_modified_datetime
+         , t1441.d_pid AS deal_pid
+         , primary_table.prp_pid AS active_proposal_pid
+         , GREATEST( primary_table.etl_end_date_time, t1441.etl_end_date_time ) AS max_source_etl_end_date_time
+    FROM (
+        SELECT <<proposal_partial_load_condition>> AS include_record
+             , proposal.*
+             , etl_log.etl_end_date_time
+        FROM history_octane.proposal
+        LEFT JOIN history_octane.proposal AS history_records
+                  ON proposal.prp_pid = history_records.prp_pid
+                      AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
+        JOIN star_common.etl_log
+             ON proposal.etl_batch_id = etl_log.etl_batch_id
+        WHERE history_records.prp_pid IS NULL
+    ) AS primary_table
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<deal_partial_load_condition>> AS include_record
+                 , deal.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.deal
+            LEFT JOIN history_octane.deal AS history_records
+                      ON deal.d_pid = history_records.d_pid
+                          AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON deal.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.d_pid IS NULL
+        ) AS primary_table
+    ) AS t1441
+               ON primary_table.prp_pid = t1441.d_active_proposal_pid
+    WHERE GREATEST( primary_table.include_record, t1441.include_record ) IS TRUE
+)
+--new records that should be inserted
+SELECT transaction_dim_incl_new_records.*
+FROM transaction_dim_incl_new_records
+LEFT JOIN star_loan.transaction_dim
+          ON transaction_dim_incl_new_records.data_source_integration_id = transaction_dim.data_source_integration_id
+WHERE transaction_dim.dwid IS NULL
+UNION ALL
+--existing records that need to be updated
+SELECT transaction_dim_incl_new_records.*
+FROM transaction_dim_incl_new_records
+JOIN (
+    SELECT transaction_dim.data_source_integration_id, etl_log.etl_start_date_time
+    FROM star_loan.transaction_dim
+    JOIN star_common.etl_log
+         ON transaction_dim.etl_batch_id = etl_log.etl_batch_id
+) AS transaction_dim_etl_start_times
+     ON transaction_dim_incl_new_records.data_source_integration_id = transaction_dim_etl_start_times.data_source_integration_id
+         AND transaction_dim_incl_new_records.max_source_etl_end_date_time >= transaction_dim_etl_start_times.etl_start_date_time;')
 )
 UPDATE mdi.table_input_step
 SET sql = updated_dim_sql.sql
