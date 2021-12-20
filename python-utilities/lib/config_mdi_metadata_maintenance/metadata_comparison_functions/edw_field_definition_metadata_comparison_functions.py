@@ -57,7 +57,7 @@ class EDWFieldDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions)
                             'field_name': column.name,
                             'data_type': column.data_type
                         }
-                        if column.source is None or len(column.source.foreign_key_paths) > 1:
+                        if column.source is None or column.source.calculation_string is not None:
                             row['source_database_name'] = None
                             row['source_schema_name'] = None
                             row['source_table_name'] = None
