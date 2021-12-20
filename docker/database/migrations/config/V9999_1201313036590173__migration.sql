@@ -414,6 +414,9 @@ JOIN (
 ) AS borrower_dim_etl_start_times
      ON borrower_dim_incl_new_records.data_source_integration_id = borrower_dim_etl_start_times.data_source_integration_id
          AND borrower_dim_incl_new_records.max_source_etl_end_date_time >= borrower_dim_etl_start_times.etl_start_date_time;')
+/*
+ interim_funder_dim
+*/
          , ('interim_funder_dim', 'WITH interim_funder_dim_incl_new_records AS (
     SELECT ''interim_funder_pid'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
          , COALESCE( CAST( primary_table.if_pid AS TEXT ), ''<NULL>'' ) || ''~'' ||
@@ -464,7 +467,6 @@ JOIN (
              ON interim_funder.etl_batch_id = etl_log.etl_batch_id
         WHERE history_records.if_pid IS NULL
     ) AS primary_table
-
     INNER JOIN (
         SELECT *
         FROM (
@@ -481,7 +483,6 @@ JOIN (
         ) AS primary_table
     ) AS t309
                ON primary_table.if_company_address_country = t309.code
-
     INNER JOIN (
         SELECT *
         FROM (
@@ -519,6 +520,716 @@ JOIN (
 ) AS interim_funder_dim_etl_start_times
      ON interim_funder_dim_incl_new_records.data_source_integration_id = interim_funder_dim_etl_start_times.data_source_integration_id
          AND interim_funder_dim_incl_new_records.max_source_etl_end_date_time >= interim_funder_dim_etl_start_times.etl_start_date_time;')
+/*
+ investor_dim
+*/
+         , ('investor_dim', 'WITH investor_dim_incl_new_records AS (
+    SELECT ''investor_pid'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
+         , COALESCE( CAST( primary_table.i_pid AS TEXT ), ''<NULL>'' ) || ''~'' ||
+           COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
+         , NOW( ) AS edw_created_datetime
+         , NOW( ) AS edw_modified_datetime
+         , primary_table.data_source_updated_datetime AS data_source_modified_datetime
+         , t318.value AS beneficiary_country
+         , t319.value AS file_delivery_address_country
+         , t323.value AS investor_country
+         , t326.value AS loss_payee_country
+         , t330.value AS servicer_address_country
+         , t331.value AS sub_servicer_address_country
+         , t332.value AS when_recorded_mail_to_country
+         , t320.value AS fnm_investor_remittance
+         , t321.value AS fnm_mbs_loan_default_loss_party
+         , t322.value AS fnm_mbs_reo_marketing_party
+         , t329.value AS secondary_financing_source
+         , primary_table.i_investor_country AS investor_country_code
+         , primary_table.i_investor_postal_code AS investor_postal_code
+         , primary_table.i_investor_state AS investor_state
+         , primary_table.i_investor_street1 AS investor_street1
+         , primary_table.i_investor_street2 AS investor_street2
+         , primary_table.i_secondary_financing_source_type AS secondary_financing_source_code
+         , primary_table.i_ein AS ein
+         , primary_table.i_loss_payee_state AS loss_payee_state
+         , primary_table.i_loss_payee_postal_code AS loss_payee_postal_code
+         , primary_table.i_when_recorded_mail_to_country AS when_recorded_mail_to_country_code
+         , primary_table.i_when_recorded_mail_to_postal_code AS when_recorded_mail_to_postal_code
+         , primary_table.i_when_recorded_mail_to_state AS when_recorded_mail_to_state
+         , primary_table.i_when_recorded_mail_to_street1 AS when_recorded_mail_to_street1
+         , primary_table.i_when_recorded_mail_to_street2 AS when_recorded_mail_to_street2
+         , primary_table.i_servicer_name AS servicer_name
+         , primary_table.i_servicer_address_street1 AS servicer_address_street1
+         , primary_table.i_servicer_address_street2 AS servicer_address_street2
+         , primary_table.i_servicer_address_city AS servicer_address_city
+         , primary_table.i_servicer_address_state AS servicer_address_state
+         , primary_table.i_servicer_address_postal_code AS servicer_address_postal_code
+         , primary_table.i_servicer_address_country AS servicer_address_country_code
+         , primary_table.i_sub_servicer_name AS sub_servicer_name
+         , primary_table.i_sub_servicer_address_street1 AS sub_servicer_address_street1
+         , primary_table.i_sub_servicer_address_street2 AS sub_servicer_address_street2
+         , primary_table.i_sub_servicer_address_city AS sub_servicer_address_city
+         , primary_table.i_sub_servicer_address_state AS sub_servicer_address_state
+         , primary_table.i_sub_servicer_address_postal_code AS sub_servicer_address_postal_code
+         , primary_table.i_sub_servicer_address_country AS sub_servicer_address_country_code
+         , primary_table.i_sub_servicer_mers_org_id AS sub_servicer_mers_org_id
+         , primary_table.i_file_delivery_name AS file_delivery_name
+         , primary_table.i_file_delivery_address_street1 AS file_delivery_address_street1
+         , primary_table.i_file_delivery_address_street2 AS file_delivery_address_street2
+         , primary_table.i_file_delivery_address_city AS file_delivery_address_city
+         , primary_table.i_file_delivery_address_state AS file_delivery_address_state
+         , primary_table.i_file_delivery_address_postal_code AS file_delivery_address_postal_code
+         , primary_table.i_file_delivery_address_country AS file_delivery_address_country_code
+         , primary_table.i_initial_beneficiary_candidate AS initial_beneficiary_candidate_flag
+         , primary_table.i_initial_servicer_candidate AS initial_servicer_candidate_flag
+         , primary_table.i_mers_org_member AS mers_org_member
+         , primary_table.i_mers_org_id AS mers_org_id
+         , primary_table.i_allonge_transfer_to_name AS allonge_transfer_to_name
+         , primary_table.i_lock_expiration_delivery_subtrahend_days AS lock_expiration_delivery_subtrahend_days
+         , primary_table.i_loss_payee_country AS loss_payee_country_code
+         , primary_table.i_loss_payee_city AS loss_payee_city
+         , primary_table.i_loss_payee_name AS loss_payee_name
+         , primary_table.i_pid AS investor_pid
+         , primary_table.i_investor_id AS investor_id
+         , primary_table.i_website_url AS website_url
+         , primary_table.i_investor_name AS investor_name
+         , primary_table.i_investor_city AS investor_city
+         , primary_table.i_when_recorded_mail_to_city AS when_recorded_mail_to_city
+         , primary_table.i_maximum_lock_extensions_allowed AS maximum_lock_extensions_allowed
+         , primary_table.i_maximum_lock_extension_days_allowed AS maximum_lock_extension_days_allowed
+         , primary_table.i_mortech_investor_id AS mortech_investor_id
+         , primary_table.i_fnma_servicer_id AS fnma_servicer_id
+         , primary_table.i_loan_file_delivery_method_type AS loan_file_delivery_method_code
+         , primary_table.i_mbs_investor AS mbs_investor_flag
+         , primary_table.i_investor_hmda_purchaser_of_loan_type AS investor_hmda_purchaser_of_loan_code
+         , primary_table.i_lock_disable_time AS investor_lock_disable_time
+         , primary_table.i_allow_weekend_holiday_locks AS allows_weekend_holiday_locks_flag
+         , primary_table.i_nmls_id AS nmls_id
+         , primary_table.i_nmls_id_applicable AS nmls_id_applicable
+         , primary_table.i_fnm_investor_remittance_type AS fnm_investor_remittance_code
+         , primary_table.i_fnm_mbs_investor_remittance_day_of_month AS fnm_mbs_investor_remittance_day_of_month
+         , primary_table.i_fnm_mbs_loan_default_loss_party_type AS fnm_mbs_loan_default_loss_party_code
+         , primary_table.i_fnm_mbs_reo_marketing_party_type AS fnm_mbs_reo_marketing_party_code
+         , primary_table.i_offers_secondary_financing AS offers_secondary_financing_flag
+         , primary_table.i_beneficiary_street2 AS beneficiary_street2
+         , primary_table.i_beneficiary_street1 AS beneficiary_street1
+         , primary_table.i_beneficiary_state AS beneficiary_state
+         , primary_table.i_beneficiary_postal_code AS beneficiary_postal_code
+         , primary_table.i_beneficiary_country AS beneficiary_country_code
+         , primary_table.i_beneficiary_city AS beneficiary_city
+         , primary_table.i_loss_payee_street1 AS loss_payee_street1
+         , primary_table.i_loss_payee_street2 AS loss_payee_street2
+         , primary_table.i_beneficiary_name AS beneficiary_name
+         , primary_table.i_loss_payee_assignee_name AS loss_payee_assignee_name
+         , primary_table.i_when_recorded_mail_to_name AS when_recorded_mail_to_name
+         , t324.value AS investor_hmda_purchaser_of_loan
+         , t325.value AS loan_file_delivery_method
+         , GREATEST( primary_table.etl_end_date_time, t318.etl_end_date_time, t319.etl_end_date_time, t323.etl_end_date_time,
+                     t326.etl_end_date_time, t330.etl_end_date_time, t331.etl_end_date_time, t332.etl_end_date_time, t320.etl_end_date_time,
+                     t321.etl_end_date_time, t322.etl_end_date_time, t329.etl_end_date_time, t324.etl_end_date_time,
+                     t325.etl_end_date_time ) AS max_source_etl_end_date_time
+    FROM (
+        SELECT <<investor_partial_load_condition>> AS include_record
+             , investor.*
+             , etl_log.etl_end_date_time
+        FROM history_octane.investor
+        LEFT JOIN history_octane.investor AS history_records
+                  ON investor.i_pid = history_records.i_pid
+                      AND investor.data_source_updated_datetime < history_records.data_source_updated_datetime
+        JOIN star_common.etl_log
+             ON investor.etl_batch_id = etl_log.etl_batch_id
+        WHERE history_records.i_pid IS NULL
+    ) AS primary_table
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<country_type_partial_load_condition>> AS include_record
+                 , country_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.country_type
+            LEFT JOIN history_octane.country_type AS history_records
+                      ON country_type.code = history_records.code
+                          AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON country_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t318
+               ON primary_table.i_beneficiary_country = t318.code
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<country_type_partial_load_condition>> AS include_record
+                 , country_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.country_type
+            LEFT JOIN history_octane.country_type AS history_records
+                      ON country_type.code = history_records.code
+                          AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON country_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t319
+               ON primary_table.i_file_delivery_address_country = t319.code
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<country_type_partial_load_condition>> AS include_record
+                 , country_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.country_type
+            LEFT JOIN history_octane.country_type AS history_records
+                      ON country_type.code = history_records.code
+                          AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON country_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t323
+               ON primary_table.i_investor_country = t323.code
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<country_type_partial_load_condition>> AS include_record
+                 , country_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.country_type
+            LEFT JOIN history_octane.country_type AS history_records
+                      ON country_type.code = history_records.code
+                          AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON country_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t326
+               ON primary_table.i_loss_payee_country = t326.code
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<country_type_partial_load_condition>> AS include_record
+                 , country_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.country_type
+            LEFT JOIN history_octane.country_type AS history_records
+                      ON country_type.code = history_records.code
+                          AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON country_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t330
+               ON primary_table.i_servicer_address_country = t330.code
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<country_type_partial_load_condition>> AS include_record
+                 , country_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.country_type
+            LEFT JOIN history_octane.country_type AS history_records
+                      ON country_type.code = history_records.code
+                          AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON country_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t331
+               ON primary_table.i_sub_servicer_address_country = t331.code
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<country_type_partial_load_condition>> AS include_record
+                 , country_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.country_type
+            LEFT JOIN history_octane.country_type AS history_records
+                      ON country_type.code = history_records.code
+                          AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON country_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t332
+               ON primary_table.i_when_recorded_mail_to_country = t332.code
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<fnm_investor_remittance_type_partial_load_condition>> AS include_record
+                 , fnm_investor_remittance_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.fnm_investor_remittance_type
+            LEFT JOIN history_octane.fnm_investor_remittance_type AS history_records
+                      ON fnm_investor_remittance_type.code = history_records.code
+                          AND fnm_investor_remittance_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON fnm_investor_remittance_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t320
+               ON primary_table.i_fnm_investor_remittance_type = t320.code
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<fnm_mbs_loan_default_loss_party_type_partial_load_condition>> AS include_record
+                 , fnm_mbs_loan_default_loss_party_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.fnm_mbs_loan_default_loss_party_type
+            LEFT JOIN history_octane.fnm_mbs_loan_default_loss_party_type AS history_records
+                      ON fnm_mbs_loan_default_loss_party_type.code = history_records.code
+                          AND
+                         fnm_mbs_loan_default_loss_party_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON fnm_mbs_loan_default_loss_party_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t321
+               ON primary_table.i_fnm_mbs_loan_default_loss_party_type = t321.code
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<fnm_mbs_reo_marketing_party_type_partial_load_condition>> AS include_record
+                 , fnm_mbs_reo_marketing_party_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.fnm_mbs_reo_marketing_party_type
+            LEFT JOIN history_octane.fnm_mbs_reo_marketing_party_type AS history_records
+                      ON fnm_mbs_reo_marketing_party_type.code = history_records.code
+                          AND fnm_mbs_reo_marketing_party_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON fnm_mbs_reo_marketing_party_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t322
+               ON primary_table.i_fnm_mbs_reo_marketing_party_type = t322.code
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<gift_funds_type_partial_load_condition>> AS include_record
+                 , gift_funds_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.gift_funds_type
+            LEFT JOIN history_octane.gift_funds_type AS history_records
+                      ON gift_funds_type.code = history_records.code
+                          AND gift_funds_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON gift_funds_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t329
+               ON primary_table.i_secondary_financing_source_type = t329.code
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<investor_hmda_purchaser_of_loan_type_partial_load_condition>> AS include_record
+                 , investor_hmda_purchaser_of_loan_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.investor_hmda_purchaser_of_loan_type
+            LEFT JOIN history_octane.investor_hmda_purchaser_of_loan_type AS history_records
+                      ON investor_hmda_purchaser_of_loan_type.code = history_records.code
+                          AND
+                         investor_hmda_purchaser_of_loan_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON investor_hmda_purchaser_of_loan_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t324
+               ON primary_table.i_investor_hmda_purchaser_of_loan_type = t324.code
+    LEFT JOIN (
+        SELECT *
+        FROM (
+            SELECT <<loan_file_delivery_method_type_partial_load_condition>> AS include_record
+                 , loan_file_delivery_method_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.loan_file_delivery_method_type
+            LEFT JOIN history_octane.loan_file_delivery_method_type AS history_records
+                      ON loan_file_delivery_method_type.code = history_records.code
+                          AND loan_file_delivery_method_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON loan_file_delivery_method_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t325
+              ON primary_table.i_loan_file_delivery_method_type = t325.code
+    WHERE GREATEST( primary_table.include_record, t318.include_record, t319.include_record, t323.include_record, t326.include_record,
+                    t330.include_record, t331.include_record, t332.include_record, t320.include_record, t321.include_record,
+                    t322.include_record, t329.include_record, t324.include_record, t325.include_record ) IS TRUE
+)
+--new records that should be inserted
+SELECT investor_dim_incl_new_records.*
+FROM investor_dim_incl_new_records
+LEFT JOIN star_loan.investor_dim
+          ON investor_dim_incl_new_records.data_source_integration_id = investor_dim.data_source_integration_id
+WHERE investor_dim.dwid IS NULL
+UNION ALL
+--existing records that need to be updated
+SELECT investor_dim_incl_new_records.*
+FROM investor_dim_incl_new_records
+JOIN (
+    SELECT investor_dim.data_source_integration_id, etl_log.etl_start_date_time
+    FROM star_loan.investor_dim
+    JOIN star_common.etl_log
+         ON investor_dim.etl_batch_id = etl_log.etl_batch_id
+) AS investor_dim_etl_start_times
+     ON investor_dim_incl_new_records.data_source_integration_id = investor_dim_etl_start_times.data_source_integration_id
+         AND investor_dim_incl_new_records.max_source_etl_end_date_time >= investor_dim_etl_start_times.etl_start_date_time;')
+/*
+ lender_user_dim
+ */
+         , ('lender_user_dim', 'WITH lender_user_dim_incl_new_records AS (
+    SELECT ''lender_user_pid'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
+         , COALESCE( CAST( primary_table.lu_pid AS TEXT ), ''<NULL>'' ) || ''~'' ||
+           COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
+         , NOW( ) AS edw_created_datetime
+         , NOW( ) AS edw_modified_datetime
+         , primary_table.data_source_updated_datetime AS data_source_modified_datetime
+         , t454.value AS country
+         , t455.value AS default_credit_bureau
+         , primary_table.lu_username AS username
+         , primary_table.lu_nmls_loan_originator_id AS nmls_loan_originator_id
+         , primary_table.lu_fha_chums_id AS fha_chums_id
+         , primary_table.lu_va_agent_id AS va_agent_id
+         , primary_table.lu_search_text AS search_text
+         , primary_table.lu_company_user_id AS company_user_id
+         , primary_table.lu_force_password_change AS force_password_change_flag
+         , primary_table.lu_last_password_change_date AS last_password_change_datetime
+         , primary_table.lu_allow_external_ip AS allow_external_ip_flag
+         , primary_table.lu_total_workload_cap AS total_workload_cap
+         , primary_table.lu_schedule_once_booking_page_id AS schedule_once_booking_page_id
+         , primary_table.lu_esign_only AS esign_only_flag
+         , primary_table.lu_work_step_start_notices_enabled AS work_step_start_notices_enabled_flag
+         , primary_table.lu_smart_app_enabled AS smart_app_enabled_flag
+         , primary_table.lu_default_credit_bureau_type AS default_credit_bureau_code
+         , primary_table.lu_originator_id AS originator_id
+         , primary_table.lu_name_qualifier AS name_qualifier
+         , primary_table.lu_training_mode AS training_mode_flag
+         , primary_table.lu_about_me AS about_me
+         , primary_table.lu_lender_user_type AS type_code
+         , primary_table.lu_hire_date AS hire_date
+         , primary_table.lu_nickname AS nickname
+         , primary_table.lu_preferred_first_name AS preferred_first_name
+         , primary_table.lu_hub_directory AS hub_directory_flag
+         , primary_table.lu_pid AS lender_user_pid
+         , primary_table.lu_account_owner AS account_owner_flag
+         , primary_table.lu_create_date AS create_date
+         , primary_table.lu_first_name AS first_name
+         , primary_table.lu_last_name AS last_name
+         , primary_table.lu_middle_name AS middle_name
+         , primary_table.lu_name_suffix AS name_suffix
+         , primary_table.lu_company_name AS company_name
+         , primary_table.lu_title AS title
+         , primary_table.lu_office_phone AS office_phone
+         , primary_table.lu_office_phone_extension AS office_phone_extension
+         , primary_table.lu_email AS email
+         , primary_table.lu_fax AS fax
+         , primary_table.lu_city AS city
+         , primary_table.lu_country AS country_code
+         , primary_table.lu_postal_code AS postal_code
+         , primary_table.lu_state AS state
+         , primary_table.lu_street1 AS street1
+         , primary_table.lu_street2 AS street2
+         , primary_table.lu_office_phone_use_branch AS office_phone_use_branch_flag
+         , primary_table.lu_fax_use_branch AS fax_use_branch_flag
+         , primary_table.lu_address_use_branch AS address_use_branch_flag
+         , primary_table.lu_start_date AS start_date
+         , primary_table.lu_through_date AS through_date
+         , primary_table.lu_time_zone AS time_zone_code
+         , primary_table.lu_unparsed_name AS unparsed_name
+         , primary_table.lu_lender_user_status_type AS status_code
+         , t456.value AS status
+         , t457.value AS type
+         , t458.value AS time_zone
+         , GREATEST( primary_table.etl_end_date_time, t454.etl_end_date_time, t455.etl_end_date_time, t456.etl_end_date_time,
+                     t457.etl_end_date_time, t458.etl_end_date_time ) AS max_source_etl_end_date_time
+    FROM (
+        SELECT <<lender_user_partial_load_condition>> AS include_record
+             , lender_user.*
+             , etl_log.etl_end_date_time
+        FROM history_octane.lender_user
+        LEFT JOIN history_octane.lender_user AS history_records
+                  ON lender_user.lu_pid = history_records.lu_pid
+                      AND lender_user.data_source_updated_datetime < history_records.data_source_updated_datetime
+        JOIN star_common.etl_log
+             ON lender_user.etl_batch_id = etl_log.etl_batch_id
+        WHERE history_records.lu_pid IS NULL
+    ) AS primary_table
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<country_type_partial_load_condition>> AS include_record
+                 , country_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.country_type
+            LEFT JOIN history_octane.country_type AS history_records
+                      ON country_type.code = history_records.code
+                          AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON country_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t454
+               ON primary_table.lu_country = t454.code
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<credit_bureau_type_partial_load_condition>> AS include_record
+                 , credit_bureau_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.credit_bureau_type
+            LEFT JOIN history_octane.credit_bureau_type AS history_records
+                      ON credit_bureau_type.code = history_records.code
+                          AND credit_bureau_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON credit_bureau_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t455
+               ON primary_table.lu_default_credit_bureau_type = t455.code
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<lender_user_status_type_partial_load_condition>> AS include_record
+                 , lender_user_status_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.lender_user_status_type
+            LEFT JOIN history_octane.lender_user_status_type AS history_records
+                      ON lender_user_status_type.code = history_records.code
+                          AND lender_user_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON lender_user_status_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t456
+               ON primary_table.lu_lender_user_status_type = t456.code
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<lender_user_type_partial_load_condition>> AS include_record
+                 , lender_user_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.lender_user_type
+            LEFT JOIN history_octane.lender_user_type AS history_records
+                      ON lender_user_type.code = history_records.code
+                          AND lender_user_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON lender_user_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t457
+               ON primary_table.lu_lender_user_type = t457.code
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<time_zone_type_partial_load_condition>> AS include_record
+                 , time_zone_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.time_zone_type
+            LEFT JOIN history_octane.time_zone_type AS history_records
+                      ON time_zone_type.code = history_records.code
+                          AND time_zone_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON time_zone_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t458
+               ON primary_table.lu_time_zone = t458.code
+    WHERE GREATEST( primary_table.include_record, t454.include_record, t455.include_record, t456.include_record, t457.include_record,
+                    t458.include_record ) IS TRUE
+)
+--new records that should be inserted
+SELECT lender_user_dim_incl_new_records.*
+FROM lender_user_dim_incl_new_records
+LEFT JOIN star_loan.lender_user_dim
+          ON lender_user_dim_incl_new_records.data_source_integration_id = lender_user_dim.data_source_integration_id
+WHERE lender_user_dim.dwid IS NULL
+UNION ALL
+--existing records that need to be updated
+SELECT lender_user_dim_incl_new_records.*
+FROM lender_user_dim_incl_new_records
+JOIN (
+    SELECT lender_user_dim.data_source_integration_id, etl_log.etl_start_date_time
+    FROM star_loan.lender_user_dim
+    JOIN star_common.etl_log
+         ON lender_user_dim.etl_batch_id = etl_log.etl_batch_id
+) AS lender_user_dim_etl_start_times
+     ON lender_user_dim_incl_new_records.data_source_integration_id = lender_user_dim_etl_start_times.data_source_integration_id
+         AND lender_user_dim_incl_new_records.max_source_etl_end_date_time >= lender_user_dim_etl_start_times.etl_start_date_time;')
+/*
+ loan_beneficiary_dim
+*/
+         , ('loan_beneficiary_dim', 'WITH loan_beneficiary_dim_incl_new_records AS (
+    SELECT ''loan_beneficiary_pid'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
+         , COALESCE( CAST( primary_table.lb_pid AS TEXT ), ''<NULL>'' ) || ''~'' ||
+           COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
+         , NOW( ) AS edw_created_datetime
+         , NOW( ) AS edw_modified_datetime
+         , primary_table.data_source_updated_datetime AS data_source_modified_datetime
+         , t347.value AS collateral_courier
+         , t351.value AS loan_file_courier
+         , t348.value AS delivery_aus
+         , primary_table.lb_mers_mom AS mers_mom_flag
+         , primary_table.lb_pid AS loan_beneficiary_pid
+         , primary_table.lb_mers_transfer_status_type AS mers_transfer_status_code
+         , primary_table.lb_mers_transfer_override AS mers_transfer_override_flag
+         , primary_table.lb_loan_file_courier_type AS loan_file_courier_code
+         , primary_table.lb_collateral_courier_type AS collateral_courier_code
+         , primary_table.lb_loan_pid AS loan_pid
+         , primary_table.lb_delivery_aus_type AS delivery_aus_code
+         , primary_table.lb_early_funding AS early_funding_code
+         , primary_table.lb_pool_id AS pool_id
+         , primary_table.lb_loan_file_delivery_method_type AS loan_file_delivery_method_code
+         , primary_table.lb_loan_benef_transfer_status_type AS transfer_status_code
+         , primary_table.lb_initial AS initial_flag
+         , primary_table.lb_current AS current_flag
+         , primary_table.lb_investor_loan_id AS investor_loan_id
+         , t350.value AS transfer_status
+         , t352.value AS loan_file_delivery_method
+         , t353.value AS mers_transfer_status
+         , t349.value AS early_funding
+         , GREATEST( primary_table.etl_end_date_time, t347.etl_end_date_time, t351.etl_end_date_time, t348.etl_end_date_time,
+                     t350.etl_end_date_time, t352.etl_end_date_time, t353.etl_end_date_time,
+                     t349.etl_end_date_time ) AS max_source_etl_end_date_time
+    FROM (
+        SELECT <<loan_beneficiary_partial_load_condition>> AS include_record
+             , loan_beneficiary.*
+             , etl_log.etl_end_date_time
+        FROM history_octane.loan_beneficiary
+        LEFT JOIN history_octane.loan_beneficiary AS history_records
+                  ON loan_beneficiary.lb_pid = history_records.lb_pid
+                      AND loan_beneficiary.data_source_updated_datetime < history_records.data_source_updated_datetime
+        JOIN star_common.etl_log
+             ON loan_beneficiary.etl_batch_id = etl_log.etl_batch_id
+        WHERE history_records.lb_pid IS NULL
+    ) AS primary_table
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<courier_type_partial_load_condition>> AS include_record
+                 , courier_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.courier_type
+            LEFT JOIN history_octane.courier_type AS history_records
+                      ON courier_type.code = history_records.code
+                          AND courier_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON courier_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t347
+               ON primary_table.lb_collateral_courier_type = t347.code
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<courier_type_partial_load_condition>> AS include_record
+                 , courier_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.courier_type
+            LEFT JOIN history_octane.courier_type AS history_records
+                      ON courier_type.code = history_records.code
+                          AND courier_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON courier_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t351
+               ON primary_table.lb_loan_file_courier_type = t351.code
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<delivery_aus_type_partial_load_condition>> AS include_record
+                 , delivery_aus_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.delivery_aus_type
+            LEFT JOIN history_octane.delivery_aus_type AS history_records
+                      ON delivery_aus_type.code = history_records.code
+                          AND delivery_aus_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON delivery_aus_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t348
+               ON primary_table.lb_delivery_aus_type = t348.code
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<loan_benef_transfer_status_type_partial_load_condition>> AS include_record
+                 , loan_benef_transfer_status_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.loan_benef_transfer_status_type
+            LEFT JOIN history_octane.loan_benef_transfer_status_type AS history_records
+                      ON loan_benef_transfer_status_type.code = history_records.code
+                          AND loan_benef_transfer_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON loan_benef_transfer_status_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t350
+               ON primary_table.lb_loan_benef_transfer_status_type = t350.code
+    LEFT JOIN (
+        SELECT *
+        FROM (
+            SELECT <<loan_file_delivery_method_type_partial_load_condition>> AS include_record
+                 , loan_file_delivery_method_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.loan_file_delivery_method_type
+            LEFT JOIN history_octane.loan_file_delivery_method_type AS history_records
+                      ON loan_file_delivery_method_type.code = history_records.code
+                          AND loan_file_delivery_method_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON loan_file_delivery_method_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t352
+              ON primary_table.lb_loan_file_delivery_method_type = t352.code
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<mers_transfer_status_type_partial_load_condition>> AS include_record
+                 , mers_transfer_status_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.mers_transfer_status_type
+            LEFT JOIN history_octane.mers_transfer_status_type AS history_records
+                      ON mers_transfer_status_type.code = history_records.code
+                          AND mers_transfer_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON mers_transfer_status_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t353
+               ON primary_table.lb_mers_transfer_status_type = t353.code
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
+                 , yes_no_unknown_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.yes_no_unknown_type
+            LEFT JOIN history_octane.yes_no_unknown_type AS history_records
+                      ON yes_no_unknown_type.code = history_records.code
+                          AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t349
+               ON primary_table.lb_early_funding = t349.code
+    WHERE GREATEST( primary_table.include_record, t347.include_record, t351.include_record, t348.include_record, t350.include_record,
+                    t352.include_record, t353.include_record, t349.include_record ) IS TRUE
+)
+--new records that should be inserted
+SELECT loan_beneficiary_dim_incl_new_records.*
+FROM loan_beneficiary_dim_incl_new_records
+LEFT JOIN star_loan.loan_beneficiary_dim
+          ON loan_beneficiary_dim_incl_new_records.data_source_integration_id = loan_beneficiary_dim.data_source_integration_id
+WHERE loan_beneficiary_dim.dwid IS NULL
+UNION ALL
+--existing records that need to be updated
+SELECT loan_beneficiary_dim_incl_new_records.*
+FROM loan_beneficiary_dim_incl_new_records
+JOIN (
+    SELECT loan_beneficiary_dim.data_source_integration_id, etl_log.etl_start_date_time
+    FROM star_loan.loan_beneficiary_dim
+    JOIN star_common.etl_log
+         ON loan_beneficiary_dim.etl_batch_id = etl_log.etl_batch_id
+) AS loan_beneficiary_dim_etl_start_times
+     ON loan_beneficiary_dim_incl_new_records.data_source_integration_id = loan_beneficiary_dim_etl_start_times.data_source_integration_id
+         AND loan_beneficiary_dim_incl_new_records.max_source_etl_end_date_time >= loan_beneficiary_dim_etl_start_times.etl_start_date_time;')
 )
 UPDATE mdi.table_input_step
 SET sql = updated_dim_sql.sql
