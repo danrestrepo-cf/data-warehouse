@@ -1428,7 +1428,7 @@ JOIN (
 /*
  mortgage_insurance_dim
  */
-         , ('mortage_insurance_dim', 'WITH mortgage_insurance_dim_incl_new_records AS (
+         , ('mortgage_insurance_dim', 'WITH mortgage_insurance_dim_incl_new_records AS (
     SELECT ''loan_pid'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
          , COALESCE( CAST( primary_table.l_pid AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
