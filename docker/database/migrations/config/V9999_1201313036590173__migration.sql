@@ -414,6 +414,111 @@ JOIN (
 ) AS borrower_dim_etl_start_times
      ON borrower_dim_incl_new_records.data_source_integration_id = borrower_dim_etl_start_times.data_source_integration_id
          AND borrower_dim_incl_new_records.max_source_etl_end_date_time >= borrower_dim_etl_start_times.etl_start_date_time;')
+         , ('interim_funder_dim', 'WITH interim_funder_dim_incl_new_records AS (
+    SELECT ''interim_funder_pid'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
+         , COALESCE( CAST( primary_table.if_pid AS TEXT ), ''<NULL>'' ) || ''~'' ||
+           COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
+         , NOW( ) AS edw_created_datetime
+         , NOW( ) AS edw_modified_datetime
+         , primary_table.data_source_updated_datetime AS data_source_modified_datetime
+         , t309.value AS address_country
+         , primary_table.if_pid AS interim_funder_pid
+         , primary_table.if_company_name AS name
+         , primary_table.if_company_contact_unparsed_name AS contact_unparsed_name
+         , primary_table.if_company_address_street1 AS address_street1
+         , primary_table.if_company_address_street2 AS address_street2
+         , primary_table.if_company_address_city AS address_city
+         , primary_table.if_company_address_state AS address_state
+         , primary_table.if_company_address_postal_code AS address_postal_code
+         , primary_table.if_company_address_country AS address_country_code
+         , primary_table.if_company_office_phone AS office_phone
+         , primary_table.if_company_office_phone_extension AS office_phone_extension
+         , primary_table.if_company_email AS email
+         , primary_table.if_company_fax AS fax
+         , primary_table.if_company_mers_org_id AS mers_org_id
+         , primary_table.if_remarks AS remarks
+         , primary_table.if_from_date AS from_date
+         , primary_table.if_through_date AS through_date
+         , primary_table.if_reimbursement_wire_credit_to_name AS remibursement_wire_credit_to_name
+         , primary_table.if_reimbursement_wire_attention_unparsed_name AS reimbursement_wire_attention_unparsed_name
+         , primary_table.if_reimbursement_wire_authorized_signer_unparsed_name AS reimbursement_wire_authorized_signer_unparsed_name
+         , primary_table.if_return_wire_credit_to_name AS return_wire_credit_to_name
+         , primary_table.if_return_wire_authorized_signer_unparsed_name AS return_wire_authorized_signer_unparsed_name
+         , primary_table.if_fnm_payee_id AS fnm_payee_id
+         , primary_table.if_interim_funder_mers_registration_type AS mers_registration_code
+         , primary_table.if_fnm_warehouse_lender_id AS fnm_warehouse_lender_id
+         , primary_table.if_fre_warehouse_lender_id AS fre_warehouse_lender_id
+         , primary_table.if_funder_id AS id
+         , primary_table.if_return_wire_attention_unparsed_name AS return_wire_attention_unparsed_name
+         , t310.value AS mers_registration
+         , GREATEST( primary_table.etl_end_date_time, t309.etl_end_date_time, t310.etl_end_date_time ) AS max_source_etl_end_date_time
+    FROM (
+        SELECT <<interim_funder_partial_load_condition>> AS include_record
+             , interim_funder.*
+             , etl_log.etl_end_date_time
+        FROM history_octane.interim_funder
+        LEFT JOIN history_octane.interim_funder AS history_records
+                  ON interim_funder.if_pid = history_records.if_pid
+                      AND interim_funder.data_source_updated_datetime < history_records.data_source_updated_datetime
+        JOIN star_common.etl_log
+             ON interim_funder.etl_batch_id = etl_log.etl_batch_id
+        WHERE history_records.if_pid IS NULL
+    ) AS primary_table
+
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<country_type_partial_load_condition>> AS include_record
+                 , country_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.country_type
+            LEFT JOIN history_octane.country_type AS history_records
+                      ON country_type.code = history_records.code
+                          AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON country_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t309
+               ON primary_table.if_company_address_country = t309.code
+
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<interim_funder_mers_registration_type_partial_load_condition>> AS include_record
+                 , interim_funder_mers_registration_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.interim_funder_mers_registration_type
+            LEFT JOIN history_octane.interim_funder_mers_registration_type AS history_records
+                      ON interim_funder_mers_registration_type.code = history_records.code
+                          AND
+                         interim_funder_mers_registration_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON interim_funder_mers_registration_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t310
+               ON primary_table.if_interim_funder_mers_registration_type = t310.code
+    WHERE GREATEST( primary_table.include_record, t309.include_record, t310.include_record ) IS TRUE
+)
+--new records that should be inserted
+SELECT interim_funder_dim_incl_new_records.*
+FROM interim_funder_dim_incl_new_records
+LEFT JOIN star_loan.interim_funder_dim
+          ON interim_funder_dim_incl_new_records.data_source_integration_id = interim_funder_dim.data_source_integration_id
+WHERE interim_funder_dim.dwid IS NULL
+UNION ALL
+--existing records that need to be updated
+SELECT interim_funder_dim_incl_new_records.*
+FROM interim_funder_dim_incl_new_records
+JOIN (
+    SELECT interim_funder_dim.data_source_integration_id, etl_log.etl_start_date_time
+    FROM star_loan.interim_funder_dim
+    JOIN star_common.etl_log
+         ON interim_funder_dim.etl_batch_id = etl_log.etl_batch_id
+) AS interim_funder_dim_etl_start_times
+     ON interim_funder_dim_incl_new_records.data_source_integration_id = interim_funder_dim_etl_start_times.data_source_integration_id
+         AND interim_funder_dim_incl_new_records.max_source_etl_end_date_time >= interim_funder_dim_etl_start_times.etl_start_date_time;')
 )
 UPDATE mdi.table_input_step
 SET sql = updated_dim_sql.sql
