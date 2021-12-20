@@ -137,12 +137,11 @@ WHERE update_rows.database_name = edw_table_definition.database_name
 --edw_field_definition
 WITH update_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name, source_table_name, source_field_name) AS (
     VALUES ('staging', 'star_loan', 'application_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'star_loan', 'borrower_demographics_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'star_loan', 'borrower_demographics_dim', 'ethnicity_other_hispanic_or_latino_description_flag', 'BOOLEAN', 'staging', 'history_octane', 'borrower', 'b_ethnicity_other_hispanic_or_latino_description')
-         , ('staging', 'star_loan', 'borrower_demographics_dim', 'other_race_national_origin_description_flag', 'BOOLEAN', 'staging', 'history_octane', 'borrower', 'b_other_race_national_origin_description')
-         , ('staging', 'star_loan', 'borrower_demographics_dim', 'race_other_american_indian_or_alaska_native_description_flag', 'BOOLEAN', 'staging', 'history_octane', 'borrower', 'b_race_other_american_indian_or_alaska_native_description')
-         , ('staging', 'star_loan', 'borrower_demographics_dim', 'race_other_asian_description_flag', 'BOOLEAN', 'staging', 'history_octane', 'borrower', 'b_race_other_asian_description')
-         , ('staging', 'star_loan', 'borrower_demographics_dim', 'race_other_pacific_islander_description_flag', 'BOOLEAN', 'staging', 'history_octane', 'borrower', 'b_race_other_pacific_islander_description')
+         , ('staging', 'star_loan', 'borrower_demographics_dim', 'ethnicity_other_hispanic_or_latino_description_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
+         , ('staging', 'star_loan', 'borrower_demographics_dim', 'other_race_national_origin_description_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
+         , ('staging', 'star_loan', 'borrower_demographics_dim', 'race_other_american_indian_or_alaska_native_description_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
+         , ('staging', 'star_loan', 'borrower_demographics_dim', 'race_other_asian_description_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
+         , ('staging', 'star_loan', 'borrower_demographics_dim', 'race_other_pacific_islander_description_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'borrower_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'borrower_lending_profile_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'hmda_purchaser_of_loan_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
@@ -176,7 +175,7 @@ WITH update_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'star_loan', 'transaction_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'transaction_dim', 'active_proposal_pid', 'BIGINT', 'staging', 'history_octane', 'deal', 'd_active_proposal_pid')
          , ('staging', 'star_loan', 'transaction_junk_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'star_loan', 'transaction_junk_dim', 'piggyback_flag', 'BOOLEAN', 'staging', 'history_octane', 'proposal', 'prp_structure_type')
+         , ('staging', 'star_loan', 'transaction_junk_dim', 'piggyback_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
 )
 UPDATE mdi.edw_field_definition
 SET data_type = update_rows.data_type
