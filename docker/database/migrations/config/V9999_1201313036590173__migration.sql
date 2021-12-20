@@ -1670,6 +1670,94 @@ JOIN (
          AND
         mortgage_insurance_dim_incl_new_records.max_source_etl_end_date_time >= mortgage_insurance_dim_etl_start_times.etl_start_date_time;')
 /*
+ product_dim
+ */
+         , ('product_dim', 'WITH product_dim_incl_new_records AS (
+    SELECT ''product_pid'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
+         , COALESCE( CAST( primary_table.p_pid AS TEXT ), ''<NULL>'' ) || ''~'' ||
+           COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
+         , NOW( ) AS edw_created_datetime
+         , NOW( ) AS edw_modified_datetime
+         , primary_table.data_source_updated_datetime AS data_source_modified_datetime
+         , t755.value AS fund_source
+         , primary_table.p_pid AS product_pid
+         , primary_table.p_description AS description
+         , primary_table.p_lock_auto_confirm AS lock_auto_confirm_flag
+         , primary_table.p_fnm_product_name AS fnm_product_name
+         , primary_table.p_through_date AS through_date
+         , primary_table.p_from_date AS from_date
+         , primary_table.p_investor_product_name AS investor_product_name
+         , primary_table.p_investor_product_id AS investor_product_id
+         , primary_table.p_fund_source_type AS fund_source_code
+         , primary_table.p_product_side_type AS product_side_code
+         , primary_table.p_investor_pid AS investor_pid
+         , t756.value AS product_side
+         , GREATEST( primary_table.etl_end_date_time, t755.etl_end_date_time, t756.etl_end_date_time ) AS max_source_etl_end_date_time
+    FROM (
+        SELECT <<product_partial_load_condition>> AS include_record
+             , product.*
+             , etl_log.etl_end_date_time
+        FROM history_octane.product
+        LEFT JOIN history_octane.product AS history_records
+                  ON product.p_pid = history_records.p_pid
+                      AND product.data_source_updated_datetime < history_records.data_source_updated_datetime
+        JOIN star_common.etl_log
+             ON product.etl_batch_id = etl_log.etl_batch_id
+        WHERE history_records.p_pid IS NULL
+    ) AS primary_table
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<fund_source_type_partial_load_condition>> AS include_record
+                 , fund_source_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.fund_source_type
+            LEFT JOIN history_octane.fund_source_type AS history_records
+                      ON fund_source_type.code = history_records.code
+                          AND fund_source_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON fund_source_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t755
+               ON primary_table.p_fund_source_type = t755.code
+    INNER JOIN (
+        SELECT *
+        FROM (
+            SELECT <<product_side_type_partial_load_condition>> AS include_record
+                 , product_side_type.*
+                 , etl_log.etl_end_date_time
+            FROM history_octane.product_side_type
+            LEFT JOIN history_octane.product_side_type AS history_records
+                      ON product_side_type.code = history_records.code
+                          AND product_side_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            JOIN star_common.etl_log
+                 ON product_side_type.etl_batch_id = etl_log.etl_batch_id
+            WHERE history_records.code IS NULL
+        ) AS primary_table
+    ) AS t756
+               ON primary_table.p_product_side_type = t756.code
+    WHERE GREATEST( primary_table.include_record, t755.include_record, t756.include_record ) IS TRUE
+)
+--new records that should be inserted
+SELECT product_dim_incl_new_records.*
+FROM product_dim_incl_new_records
+LEFT JOIN star_loan.product_dim
+          ON product_dim_incl_new_records.data_source_integration_id = product_dim.data_source_integration_id
+WHERE product_dim.dwid IS NULL
+UNION ALL
+--existing records that need to be updated
+SELECT product_dim_incl_new_records.*
+FROM product_dim_incl_new_records
+JOIN (
+    SELECT product_dim.data_source_integration_id, etl_log.etl_start_date_time
+    FROM star_loan.product_dim
+    JOIN star_common.etl_log
+         ON product_dim.etl_batch_id = etl_log.etl_batch_id
+) AS product_dim_etl_start_times
+     ON product_dim_incl_new_records.data_source_integration_id = product_dim_etl_start_times.data_source_integration_id
+         AND product_dim_incl_new_records.max_source_etl_end_date_time >= product_dim_etl_start_times.etl_start_date_time;')
+/*
  transaction_dim
  */
          , ('transaction_dim', 'WITH transaction_dim_incl_new_records AS (
