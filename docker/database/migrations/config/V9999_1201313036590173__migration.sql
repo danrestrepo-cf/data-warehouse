@@ -2586,7 +2586,6 @@ JOIN (
         ) AS primary_table
     ) AS t728
                ON primary_table.pt_high_balance = t728.code
-        -- ignoring this because the table alias t753 has already been added: INNER JOIN history_octane.yes_no_unknown_type t753 ON primary_table.pt_texas_veterans_land_board = t753.code
     WHERE GREATEST( primary_table.include_record, t715.include_record, t717.include_record, t718.include_record, t719.include_record,
                     t720.include_record, t721.include_record, t722.include_record, t723.include_record, t724.include_record,
                     t725.include_record, t726.include_record, t727.include_record, t729.include_record, t732.include_record,
