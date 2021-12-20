@@ -408,32 +408,32 @@ class TestParseForeignColumnPath(unittest.TestCase):
 
     def test_throws_error_if_path_is_none(self):
         with self.assertRaises(DictToMetadataBuilder.InvalidTableMetadataException):
-            DictToMetadataBuilder().parse_foreign_column_path(None)
+            DictToMetadataBuilder().parse_source_foreign_key_path(None)
 
     def test_throws_error_if_path_doesnt_start_with_primary_source_table(self):
         with self.assertRaises(DictToMetadataBuilder.InvalidTableMetadataException):
-            DictToMetadataBuilder().parse_foreign_column_path('')
+            DictToMetadataBuilder().parse_source_foreign_key_path('')
 
     def test_throws_error_if_path_has_odd_number_of_periods(self):
         with self.assertRaises(DictToMetadataBuilder.InvalidTableMetadataException):
-            DictToMetadataBuilder().parse_foreign_column_path('primary_source_table.foreign_keys.fk_1.foreign_keys')
+            DictToMetadataBuilder().parse_source_foreign_key_path('primary_source_table.foreign_keys.fk_1.foreign_keys')
 
     def test_throws_error_if_path_contains_an_invalid_keyword(self):
         with self.assertRaises(DictToMetadataBuilder.InvalidTableMetadataException):
-            DictToMetadataBuilder().parse_foreign_column_path('primary_source_table.strange_keys.fk_1')
+            DictToMetadataBuilder().parse_source_foreign_key_path('primary_source_table.strange_keys.fk_1')
 
     def test_throws_error_if_the_destination_column_appears_in_the_path_before_its_end(self):
         with self.assertRaises(DictToMetadataBuilder.InvalidTableMetadataException):
-            DictToMetadataBuilder().parse_foreign_column_path('primary_source_table.columns.col1.foreign_keys.fk_2')
+            DictToMetadataBuilder().parse_source_foreign_key_path('primary_source_table.columns.col1.foreign_keys.fk_2')
 
     def test_throws_error_if_the_path_contains_no_destination_column(self):
         with self.assertRaises(DictToMetadataBuilder.InvalidTableMetadataException):
-            DictToMetadataBuilder().parse_foreign_column_path('primary_source_table.foreign_keys.fk_2')
+            DictToMetadataBuilder().parse_source_foreign_key_path('primary_source_table.foreign_keys.fk_2')
 
     def test_correctly_parses_valid_path(self):
         expected = SourceForeignKeyPath(['fk_1', 'fk_2', 'fk_3'], 'col')
         test_path = 'primary_source_table.foreign_keys.fk_1.foreign_keys.fk_2.foreign_keys.fk_3.columns.col'
-        self.assertEqual(expected, DictToMetadataBuilder().parse_foreign_column_path(test_path))
+        self.assertEqual(expected, DictToMetadataBuilder().parse_source_foreign_key_path(test_path))
 
 
 class TestParseETLEnumParsers(unittest.TestCase):

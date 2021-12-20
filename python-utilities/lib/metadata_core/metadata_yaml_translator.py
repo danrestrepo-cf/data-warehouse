@@ -355,7 +355,7 @@ class DictToMetadataBuilder:
                 table.next_etls.append(process_name)
         return table
 
-    def parse_foreign_column_path(self, path: str) -> SourceForeignKeyPath:
+    def parse_source_foreign_key_path(self, path: str) -> SourceForeignKeyPath:
         """Construct a SourceForeignKeyPath object from the given foreign path string.
 
         A valid string is in the format:
@@ -463,12 +463,12 @@ class DictToMetadataBuilder:
         calculation_string = None
         column_paths = []
         if 'field' in source_dict:
-            column_paths = [self.parse_foreign_column_path(source_dict['field'])]
+            column_paths = [self.parse_source_foreign_key_path(source_dict['field'])]
         if 'calculation' in source_dict:
             calculation_string = source_dict['calculation']['string']
             column_path_list = source_dict['calculation']['using']
             for column_path in column_path_list:
-                column_paths.append(self.parse_foreign_column_path(column_path))
+                column_paths.append(self.parse_source_foreign_key_path(column_path))
         return ColumnSourceComponents(calculation_string, column_paths)
 
     def parse_etl_data_source(self, raw_data_source: Optional[str]) -> Optional[ETLDataSource]:
@@ -630,26 +630,27 @@ class MetadataWriter:
 
     @staticmethod
     def column_source_metadata_to_source_dict(column_source_components: ColumnSourceComponents) -> dict:
+        """Convert a ColumnSourceComponents object into a dict."""
         if column_source_components.calculation_string is None:
             # empty calculation string indicates only one child SourceForeignKeyPath
             source_foreign_key_path = column_source_components.foreign_key_paths[0]
-            source_field_string = 'primary_source_table'
+            source_path_string = 'primary_source_table'
             foreign_key_steps_string = '.'.join([f'foreign_keys.{fk_step}' for fk_step in source_foreign_key_path.fk_steps])
             if foreign_key_steps_string != '':
-                source_field_string += f'.{foreign_key_steps_string}'
-            source_field_string += f'.columns.{source_foreign_key_path.column_name}'
+                source_path_string += f'.{foreign_key_steps_string}'
+            source_path_string += f'.columns.{source_foreign_key_path.column_name}'
             column_source_dict = {
-                'field': source_field_string
+                'field': source_path_string
             }
         else:
             source_foreign_key_paths_list = []
             for source_foreign_key_path in column_source_components.foreign_key_paths:
-                source_field_string = 'primary_source_table'
+                source_path_string = 'primary_source_table'
                 foreign_key_steps_string = '.'.join([f'foreign_keys.{fk_step}' for fk_step in source_foreign_key_path.fk_steps])
                 if foreign_key_steps_string != '':
-                    source_field_string += f'.{foreign_key_steps_string}'
-                source_field_string += f'.columns.{source_foreign_key_path.column_name}'
-                source_foreign_key_paths_list.append(source_field_string)
+                    source_path_string += f'.{foreign_key_steps_string}'
+                source_path_string += f'.columns.{source_foreign_key_path.column_name}'
+                source_foreign_key_paths_list.append(source_path_string)
             column_source_dict = {
                 'calculation': {
                     'string': column_source_components.calculation_string,

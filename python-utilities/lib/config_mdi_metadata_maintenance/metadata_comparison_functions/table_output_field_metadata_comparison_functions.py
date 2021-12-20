@@ -26,11 +26,10 @@ class TableOutputFieldMetadataComparisonFunctions(MetadataComparisonFunctions):
             """)
 
     def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:
-        """
-        The inclusion of star_* schema specific 'standard' fields in the below list is a temporary workaround.
-        Such fields should be removed when star_* standard fields source information is parseable by python-utilities;
-        see task https://app.asana.com/0/0/1201468659414065 for more information.
-        """
+        # The inclusion of star_* schema specific 'standard' fields and loan_lender_user_access fields in the below
+        # list is a temporary workaround.
+        # Such fields should be removed from this script once they are parseable by python-utilities;
+        # see task https://app.asana.com/0/0/1201468659414065 for more information.
         standard_sourceless_fields = ['data_source_updated_datetime', 'data_source_deleted_flag', 'etl_batch_id',
                                       'data_source_dwid', 'edw_created_datetime', 'edw_modified_datetime',
                                       'data_source_integration_columns', 'data_source_integration_id',
