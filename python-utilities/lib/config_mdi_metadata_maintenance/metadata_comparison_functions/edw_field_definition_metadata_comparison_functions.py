@@ -40,7 +40,7 @@ class EDWFieldDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions)
                 LEFT JOIN mdi.edw_table_definition source_table_definition
                           ON source_field_definition.edw_table_definition_dwid = source_table_definition.dwid
                 WHERE edw_table_definition.schema_name IN ('staging_octane', 'history_octane', 'star_loan', 'star_common')
-                  AND (source_table_definition.schema_name IN ('staging_octane', 'history_octane', 'star_loan')
+                  AND (source_table_definition.schema_name IN ('staging_octane', 'history_octane', 'star_loan', 'star_common')
                     OR source_table_definition.schema_name IS NULL);
             """)
 

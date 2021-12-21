@@ -6,7 +6,8 @@ The class structure is as follows:
         - has zero to many SchemaMetadata
             - has zero to many TableMetadata
                 - has zero to many ColumnMetadata
-                    - has zero to one SourceForeignKeyPath
+                    - has zero to one ColumnSourceComponents
+                        - has one to many SourceForeignKeyPath
                 - has zero to many ForeignKeyMetadata
                 - has zero to many ETLMetadata
 
