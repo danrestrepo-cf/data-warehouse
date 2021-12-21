@@ -68,6 +68,8 @@ class ColumnSourceComponents:
     The following examples illustrate the different permutations of valid ColumnSourceComponents objects:
 
         [Example 1] loan_junk_dim.buydown_contributor_code:
+        An example of a ColumnSourceComponents object representing source information for a column that is native to its
+        corresponding table.
 
             ColumnSourceComponents(
                 calculation_string = None,
@@ -79,19 +81,9 @@ class ColumnSourceComponents:
                 ]
             )
 
-        [Example 2] loan_junk_dim.buydown_contributor
-
-            ColumnSourceComponents(
-                calculation_string = None,
-                foreign_key_paths = [
-                    SourceForeignKeyPath(
-                        fk_steps = [fkt_l_buydown_contributor_type],
-                        column_name = 'value'
-                    )
-                ]
-            )
-
-        [Example 3] loan_junk_dim.piggyback_flag:
+        [Example 2] loan_junk_dim.piggyback_flag:
+        An example of a ColumnSourceComponents object representing source information for a column that is the result
+        of a calculation which utilizes two columns; one native to the corresponding table and the other foreign.
 
             ColumnSourceComponents(
                 calculation_string = 'CASE

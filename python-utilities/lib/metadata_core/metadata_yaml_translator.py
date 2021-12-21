@@ -231,10 +231,7 @@ def construct_data_warehouse_metadata_from_dict(data_warehouse_dict: dict) -> Da
                                                 'string': 'CASE WHEN $1 IS NULL OR $2 IS NULL THEN NULL
                                                             WHEN $1 = 'FIRST' OR $2 = 'STANDALONE_2ND' THEN FALSE
                                                             ELSE TRUE END',
-                                                'using': {
-                                                    '$1': 'col3',
-                                                    '$2': 'col4'
-                                                }
+                                                'using': ['col3', 'col4']
                                             }
                                         }
                                     }
@@ -438,8 +435,8 @@ class DictToMetadataBuilder:
                         WHEN $1 = 'FIRST' OR $2 = 'STANDALONE_2ND' THEN FALSE
                         ELSE TRUE END
                     using:
-                      $1: primary_source_table.l_lien_priority_type
-                      $2: primary_source_table.foreign_keys.fk_loan_1.columns.prp_structure_type
+                      - primary_source_table.l_lien_priority_type
+                      - primary_source_table.foreign_keys.fk_loan_1.columns.prp_structure_type
 
             Would be parsed into the following ColumnSourceComponents object:
 
