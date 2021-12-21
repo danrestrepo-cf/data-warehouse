@@ -2573,15 +2573,15 @@ JOIN (
     INNER JOIN (
         SELECT *
         FROM (
-            SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
-                 , yes_no_unknown_type.*
+            SELECT <<yes_no_na_unknown_type_partial_load_condition>> AS include_record
+                 , yes_no_na_unknown_type.*
                  , etl_log.etl_end_date_time
-            FROM history_octane.yes_no_unknown_type
-            LEFT JOIN history_octane.yes_no_unknown_type AS history_records
-                      ON yes_no_unknown_type.code = history_records.code
-                          AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+            FROM history_octane.yes_no_na_unknown_type
+            LEFT JOIN history_octane.yes_no_na_unknown_type AS history_records
+                      ON yes_no_na_unknown_type.code = history_records.code
+                          AND yes_no_na_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
             JOIN star_common.etl_log
-                 ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
+                 ON yes_no_na_unknown_type.etl_batch_id = etl_log.etl_batch_id
             WHERE history_records.code IS NULL
         ) AS primary_table
     ) AS t728
