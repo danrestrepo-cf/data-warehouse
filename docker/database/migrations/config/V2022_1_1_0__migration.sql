@@ -28,8 +28,8 @@ WITH insert_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'star_common', 'data_source', 'name', 'TEXT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_common', 'date_dim', 'dwid', 'INTEGER', NULL, NULL, NULL, NULL)
          , ('staging', 'star_common', 'date_dim', 'value', 'DATE', NULL, NULL, NULL, NULL)
-         , ('staging', 'star_common', 'date_dim', 'date_format_iso_8601', 'CHARACTER', NULL, NULL, NULL, NULL)
-         , ('staging', 'star_common', 'date_dim', 'date_format_us', 'CHARACTER', NULL, NULL, NULL, NULL)
+         , ('staging', 'star_common', 'date_dim', 'date_format_iso_8601', 'CHAR(10)', NULL, NULL, NULL, NULL)
+         , ('staging', 'star_common', 'date_dim', 'date_format_us', 'CHAR(10)', NULL, NULL, NULL, NULL)
          , ('staging', 'star_common', 'date_dim', 'day_of_month_suffix', 'VARCHAR(4)', NULL, NULL, NULL, NULL)
          , ('staging', 'star_common', 'date_dim', 'day_chronological', 'INTEGER', NULL, NULL, NULL, NULL)
          , ('staging', 'star_common', 'date_dim', 'weekday_chronological', 'INTEGER', NULL, NULL, NULL, NULL)
@@ -48,14 +48,14 @@ WITH insert_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'star_common', 'date_dim', 'is_weekday', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'star_common', 'date_dim', 'is_weekend', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'star_common', 'date_dim', 'day_of_week_name', 'VARCHAR(9)', NULL, NULL, NULL, NULL)
-         , ('staging', 'star_common', 'date_dim', 'day_of_week_name_short', 'CHARACTER', NULL, NULL, NULL, NULL)
-         , ('staging', 'star_common', 'date_dim', 'day_of_week_name_letter', 'CHARACTER', NULL, NULL, NULL, NULL)
+         , ('staging', 'star_common', 'date_dim', 'day_of_week_name_short', 'CHAR(3)', NULL, NULL, NULL, NULL)
+         , ('staging', 'star_common', 'date_dim', 'day_of_week_name_letter', 'CHAR', NULL, NULL, NULL, NULL)
          , ('staging', 'star_common', 'date_dim', 'is_leap_year', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'star_common', 'date_dim', 'is_leap_day', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'star_common', 'date_dim', 'week_of_year', 'SMALLINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_common', 'date_dim', 'quarter_of_year', 'SMALLINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_common', 'date_dim', 'quarter_chronological', 'INTEGER', NULL, NULL, NULL, NULL)
-         , ('staging', 'star_common', 'date_dim', 'quarter_name', 'CHARACTER', NULL, NULL, NULL, NULL)
+         , ('staging', 'star_common', 'date_dim', 'quarter_name', 'CHAR(6)', NULL, NULL, NULL, NULL)
          , ('staging', 'star_common', 'date_dim', 'year', 'SMALLINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_common', 'date_dim', 'month_of_year', 'SMALLINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_common', 'date_dim', 'days_in_month', 'SMALLINT', NULL, NULL, NULL, NULL)
@@ -84,23 +84,22 @@ WITH insert_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'star_common', 'etl_log', 'output_total_rows', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_common', 'etl_log', 'output_step_duration_ms', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_common', 'etl_log', 'output_step_duration', 'INTERVAL', NULL, NULL, NULL, NULL)
-         , ('staging', 'star_loan', 'mortgage_insurance_dim', 'loan_dwid', 'BIGINT', NULL, NULL, NULL, NULL)
 )
 INSERT
 INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
 SELECT edw_table_definition.dwid, insert_rows.field_name, FALSE, source_field_definition.dwid, NULL, insert_rows.data_type, NULL, NULL, NULL, NULL
 FROM insert_rows
-         JOIN mdi.edw_table_definition
-              ON insert_rows.database_name = edw_table_definition.database_name
-                  AND insert_rows.schema_name = edw_table_definition.schema_name
-                  AND insert_rows.table_name = edw_table_definition.table_name
-         LEFT JOIN mdi.edw_table_definition source_table_definition
-                   ON insert_rows.source_database_name = source_table_definition.database_name
-                       AND insert_rows.source_schema_name = source_table_definition.schema_name
-                       AND insert_rows.source_table_name = source_table_definition.table_name
-         LEFT JOIN mdi.edw_field_definition source_field_definition
-                   ON source_table_definition.dwid = source_field_definition.edw_table_definition_dwid
-                       AND insert_rows.source_field_name = source_field_definition.field_name;
+JOIN mdi.edw_table_definition
+     ON insert_rows.database_name = edw_table_definition.database_name
+         AND insert_rows.schema_name = edw_table_definition.schema_name
+         AND insert_rows.table_name = edw_table_definition.table_name
+LEFT JOIN mdi.edw_table_definition source_table_definition
+          ON insert_rows.source_database_name = source_table_definition.database_name
+              AND insert_rows.source_schema_name = source_table_definition.schema_name
+              AND insert_rows.source_table_name = source_table_definition.table_name
+LEFT JOIN mdi.edw_field_definition source_field_definition
+          ON source_table_definition.dwid = source_field_definition.edw_table_definition_dwid
+              AND insert_rows.source_field_name = source_field_definition.field_name;
 
 --state_machine_step
 WITH insert_rows (process_name, next_process_name) AS (
@@ -110,10 +109,10 @@ INSERT
 INTO mdi.state_machine_step (process_dwid, next_process_dwid)
 SELECT process.dwid, next_process.dwid
 FROM insert_rows
-         JOIN mdi.process
-              ON process.name = insert_rows.process_name
-         JOIN mdi.process next_process
-              ON next_process.name = insert_rows.next_process_name;
+JOIN mdi.process
+     ON process.name = insert_rows.process_name
+JOIN mdi.process next_process
+     ON next_process.name = insert_rows.next_process_name;
 
 /*
 UPDATES
@@ -126,10 +125,10 @@ WITH update_rows (database_name, schema_name, table_name, source_database_name, 
 UPDATE mdi.edw_table_definition
 SET primary_source_edw_table_definition_dwid = source_table_definition.dwid
 FROM update_rows
-         LEFT JOIN mdi.edw_table_definition source_table_definition
-                   ON update_rows.source_database_name = source_table_definition.database_name
-                       AND update_rows.source_schema_name = source_table_definition.schema_name
-                       AND update_rows.source_table_name = source_table_definition.table_name
+LEFT JOIN mdi.edw_table_definition source_table_definition
+          ON update_rows.source_database_name = source_table_definition.database_name
+              AND update_rows.source_schema_name = source_table_definition.schema_name
+              AND update_rows.source_table_name = source_table_definition.table_name
 WHERE update_rows.database_name = edw_table_definition.database_name
   AND update_rows.schema_name = edw_table_definition.schema_name
   AND update_rows.table_name = edw_table_definition.table_name;
@@ -138,16 +137,9 @@ WHERE update_rows.database_name = edw_table_definition.database_name
 WITH update_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name, source_table_name, source_field_name) AS (
     VALUES ('staging', 'star_loan', 'application_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'borrower_demographics_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'star_loan', 'borrower_demographics_dim', 'ethnicity_other_hispanic_or_latino_description_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
-         , ('staging', 'star_loan', 'borrower_demographics_dim', 'other_race_national_origin_description_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
-         , ('staging', 'star_loan', 'borrower_demographics_dim', 'race_other_american_indian_or_alaska_native_description_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
-         , ('staging', 'star_loan', 'borrower_demographics_dim', 'race_other_asian_description_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
-         , ('staging', 'star_loan', 'borrower_demographics_dim', 'race_other_pacific_islander_description_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'borrower_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'borrower_lending_profile_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'hmda_purchaser_of_loan_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'star_loan', 'hmda_purchaser_of_loan_dim', 'code_2017', 'VARCHAR(128)', 'staging', 'history_octane', 'loan', 'l_hmda_purchaser_of_loan_2017_type')
-         , ('staging', 'star_loan', 'hmda_purchaser_of_loan_dim', 'code_2018', 'VARCHAR(128)', 'staging', 'history_octane', 'loan', 'l_hmda_purchaser_of_loan_2018_type')
          , ('staging', 'star_loan', 'interim_funder_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'investor_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'lender_user_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
@@ -169,30 +161,29 @@ WITH update_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'star_loan', 'loan_funding_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'loan_junk_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'loan_lender_user_access', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'star_loan', 'mortgage_insurance_dim', 'loan_dwid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'product_choice_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'product_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'product_terms_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'star_loan', 'product_terms_dim', 'high_balance', 'VARCHAR(1024)', 'staging', 'history_octane', 'yes_no_na_unknown_type', 'value')
          , ('staging', 'star_loan', 'transaction_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'star_loan', 'transaction_dim', 'active_proposal_pid', 'BIGINT', 'staging', 'history_octane', 'deal', 'd_active_proposal_pid')
          , ('staging', 'star_loan', 'transaction_junk_dim', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'star_loan', 'transaction_junk_dim', 'piggyback_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
 )
 UPDATE mdi.edw_field_definition
 SET data_type = update_rows.data_type
   , source_edw_field_definition_dwid = source_field_definition.dwid
 FROM update_rows
-         JOIN mdi.edw_table_definition
-              ON update_rows.database_name = edw_table_definition.database_name
-                  AND update_rows.schema_name = edw_table_definition.schema_name
-                  AND update_rows.table_name = edw_table_definition.table_name
-         LEFT JOIN mdi.edw_table_definition source_table_definition
-                   ON update_rows.source_database_name = source_table_definition.database_name
-                       AND update_rows.source_schema_name = source_table_definition.schema_name
-                       AND update_rows.source_table_name = source_table_definition.table_name
-         LEFT JOIN mdi.edw_field_definition source_field_definition
-                   ON source_table_definition.dwid = source_field_definition.edw_table_definition_dwid
-                       AND update_rows.source_field_name = source_field_definition.field_name
+JOIN mdi.edw_table_definition
+     ON update_rows.database_name = edw_table_definition.database_name
+         AND update_rows.schema_name = edw_table_definition.schema_name
+         AND update_rows.table_name = edw_table_definition.table_name
+LEFT JOIN mdi.edw_table_definition source_table_definition
+          ON update_rows.source_database_name = source_table_definition.database_name
+              AND update_rows.source_schema_name = source_table_definition.schema_name
+              AND update_rows.source_table_name = source_table_definition.table_name
+LEFT JOIN mdi.edw_field_definition source_field_definition
+          ON source_table_definition.dwid = source_field_definition.edw_table_definition_dwid
+              AND update_rows.source_field_name = source_field_definition.field_name
 WHERE edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
   AND edw_field_definition.field_name = update_rows.field_name;
 
@@ -226,21 +217,6 @@ SET description = update_rows.process_description
 FROM update_rows
 WHERE update_rows.process_name = process.name;
 
---insert_update_field
-WITH update_rows (process_name, update_lookup, update_flag) AS (
-    VALUES ('SP-300001-insert-update', 'finance_charge_amount', 'N')
-)
-UPDATE mdi.insert_update_field
-SET update_flag = update_rows.update_flag::mdi.pentaho_y_or_n
-FROM update_rows
-         JOIN mdi.process
-              ON process.name = update_rows.process_name
-         JOIN mdi.insert_update_step
-              ON process.dwid = insert_update_step.process_dwid
-WHERE insert_update_step.dwid = insert_update_field.insert_update_step_dwid
-  AND update_rows.update_lookup = insert_update_field.update_lookup;
-
-
 --state_machine_definition
 WITH update_rows (process_name, state_machine_name, state_machine_comment) AS (
     VALUES ('SP-200003', 'SP-200003', 'table -> table-insert_update ETL from staging.history_octane.application to staging.star_loan.application_dim')
@@ -270,6 +246,6 @@ UPDATE mdi.state_machine_definition
 SET name = update_rows.state_machine_name
   , comment = update_rows.state_machine_comment
 FROM update_rows
-         JOIN mdi.process
-              ON process.name = update_rows.process_name
+JOIN mdi.process
+     ON process.name = update_rows.process_name
 WHERE process.dwid = state_machine_definition.process_dwid;

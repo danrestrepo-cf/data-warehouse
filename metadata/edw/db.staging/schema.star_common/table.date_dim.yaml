@@ -7,9 +7,9 @@ columns:
   value:
     data_type: DATE
   date_format_iso_8601:
-    data_type: CHARACTER
+    data_type: CHAR(10)
   date_format_us:
-    data_type: CHARACTER
+    data_type: CHAR(10)
   day_of_month_suffix:
     data_type: VARCHAR(4)
   day_chronological:
@@ -47,9 +47,9 @@ columns:
   day_of_week_name:
     data_type: VARCHAR(9)
   day_of_week_name_short:
-    data_type: CHARACTER
+    data_type: CHAR(3)
   day_of_week_name_letter:
-    data_type: CHARACTER
+    data_type: CHAR
   is_leap_year:
     data_type: BOOLEAN
   is_leap_day:
@@ -61,7 +61,7 @@ columns:
   quarter_chronological:
     data_type: INTEGER
   quarter_name:
-    data_type: CHARACTER
+    data_type: CHAR(6)
   year:
     data_type: SMALLINT
   month_of_year:

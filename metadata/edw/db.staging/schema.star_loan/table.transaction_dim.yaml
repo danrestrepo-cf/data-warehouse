@@ -35,7 +35,7 @@ columns:
   active_proposal_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_active_proposal_pid
+      field: primary_source_table.columns.prp_pid
     update_flag: true
 etls:
   SP-200019:

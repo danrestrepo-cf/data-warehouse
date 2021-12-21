@@ -60,7 +60,8 @@ class TestDeleteKeyMetadataComparisonFunctions(unittest.TestCase):
                                                 'input_type': 'table',
                                                 'output_type': 'delete',
                                                 'delete_keys': [
-                                                    'column2'
+                                                    'column2',
+                                                    'column3'
                                                 ]
                                             }
                                         }
@@ -84,7 +85,7 @@ class TestDeleteKeyMetadataComparisonFunctions(unittest.TestCase):
                                                 'input_type': 'table',
                                                 'output_type': 'delete',
                                                 'delete_keys': [
-                                                    'column3'
+                                                    'column4'
                                                 ]
                                             }
                                         }
@@ -101,7 +102,8 @@ class TestDeleteKeyMetadataComparisonFunctions(unittest.TestCase):
         expected.add_rows([
             {'process_name': 'SP-1', 'table_name_field': 'column1'},
             {'process_name': 'SP-2', 'table_name_field': 'column2'},
-            {'process_name': 'SP-3', 'table_name_field': 'column3'}
+            {'process_name': 'SP-2', 'table_name_field': 'column3'},
+            {'process_name': 'SP-3', 'table_name_field': 'column4'}
         ])
         self.assertEqual(expected, DeleteKeyMetadataComparisonFunctions().construct_metadata_table_from_source(dw_metadata))
 

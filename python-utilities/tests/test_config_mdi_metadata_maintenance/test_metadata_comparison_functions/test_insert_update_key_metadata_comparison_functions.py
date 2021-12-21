@@ -60,7 +60,8 @@ class TestInsertUpdateKeyMetadataComparisonFunctions(unittest.TestCase):
                                                 'input_type': 'table',
                                                 'output_type': 'insert_update',
                                                 'insert_update_keys': [
-                                                    'column2'
+                                                    'column2',
+                                                    'column3'
                                                 ]
                                             }
                                         }
@@ -84,7 +85,7 @@ class TestInsertUpdateKeyMetadataComparisonFunctions(unittest.TestCase):
                                                 'input_type': 'table',
                                                 'output_type': 'insert_update',
                                                 'insert_update_keys': [
-                                                    'column3'
+                                                    'column4'
                                                 ]
                                             }
                                         }
@@ -101,7 +102,8 @@ class TestInsertUpdateKeyMetadataComparisonFunctions(unittest.TestCase):
         expected.add_rows([
             {'process_name': 'SP-1', 'key_lookup': 'column1'},
             {'process_name': 'SP-2', 'key_lookup': 'column2'},
-            {'process_name': 'SP-3', 'key_lookup': 'column3'}
+            {'process_name': 'SP-2', 'key_lookup': 'column3'},
+            {'process_name': 'SP-3', 'key_lookup': 'column4'},
         ])
         self.assertEqual(expected, InsertUpdateKeyMetadataComparisonFunctions().construct_metadata_table_from_source(dw_metadata))
 

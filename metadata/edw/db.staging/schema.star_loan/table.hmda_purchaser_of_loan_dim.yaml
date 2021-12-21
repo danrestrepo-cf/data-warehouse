@@ -30,7 +30,7 @@ columns:
   code_2017:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.l_hmda_purchaser_of_loan_2017_type
+      field: primary_source_table.foreign_keys.fkt_l_hmda_purchaser_of_loan_type.columns.code
     update_flag: true
   value_2017:
     data_type: VARCHAR(1024)
@@ -40,7 +40,7 @@ columns:
   code_2018:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.l_hmda_purchaser_of_loan_2018_type
+      field: primary_source_table.foreign_keys.fkt_l_hmda_purchaser_of_loan_2018_type.columns.code
     update_flag: true
   value_2018:
     data_type: VARCHAR(1024)
