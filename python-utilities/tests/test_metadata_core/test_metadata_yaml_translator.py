@@ -453,144 +453,124 @@ class TestParseETLEnumParsers(unittest.TestCase):
 
 class TestWriteDataWarehouseMetadataToYAML_NoExistingDirectoryStructure(MetadataDirectoryTestCase):
 
-    metadata = construct_data_warehouse_metadata_from_dict(
-        {
-            'name': 'dw',
-            'databases': [
-                {
-                    'name': 'db1',
-                    'schemas': [
-                        {
-                            'name': 'sch1',
-                            'tables': [
-                                {
-                                    'name': 't1',
-                                    'primary_source_table': 'db2.sch2.t2',
-                                    'primary_key': [
-                                        'col1', 'col2'
-                                    ],
-                                    'foreign_keys': {
-                                        'fk1': {
-                                            'columns': ['col3'],
-                                            'references': {
-                                                'columns': ['col3'],
-                                                'schema': 'sch2',
-                                                'table': 't2'
-                                            }
-                                        },
-                                        'fk2': {
-                                            'columns': ['col2', 'col4'],
-                                            'references': {
-                                                'columns': ['col7', 'col4'],
-                                                'schema': 'sch3',
-                                                'table': 't3'
-                                            }
-                                        }
-                                    },
-                                    'columns': {
-                                        'col1': {
-                                            'data_type': 'TEXT',
-                                            'source': {
-                                                'field': 'primary_source_table.foreign_keys.fk3.foreign_keys.fk67.columns.col1'
-                                            }
-                                        },
-                                        'col2': {
-                                            'data_type': 'INT',
-                                            'source': {
-                                                'field': 'primary_source_table.columns.col2'
-                                            }
-                                        },
-                                        'col3': {
-                                            'data_type': 'INT'
-                                        },
-                                        'col4': {
-                                            'data_type': 'INT'
-                                        },
-                                        'col5': {
-                                            'data_type': 'BOOLEAN',
-                                            'source': {
-                                                'calculation': {
-                                                    'string': '$1 IS NOT NULL',
-                                                    'using': ['primary_source_table.columns.col2']
-                                                }
-                                            }
-                                        },
-                                        'col6': {
-                                            'data_type': 'BOOLEAN',
-                                            'source': {
-                                                'calculation': {
-                                                    'string': '$1 IS NOT NULL AND $2 IS NOT NULL',
-                                                    'using': ['primary_source_table.foreign_keys.fk3.foreign_keys.fk67.columns.col1',
-                                                              'primary_source_table.columns.col2']
-                                                }
-                                            }
-                                        }
-                                    },
-                                    'etls': {
-                                        'SP-1': {
-                                            'hardcoded_data_source': 'Octane',
-                                            'input_type': 'table',
-                                            'output_type': 'insert',
-                                            'json_output_field': 'col1',
-                                            'truncate_table': False,
-                                            'insert_update_keys': ['col1', 'col2'],
-                                            'delete_keys': ['col2', 'col3'],
-                                            'input_sql': 'SQL for SP-1'
-                                        }
-                                    },
-                                    'next_etls': [
-                                        'SP-4', 'SP-5'
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    'name': 'db2',
-                    'schemas': [
-                        {
-                            'name': 'sch2',
-                            'tables': [
-                                {
-                                    'name': 't2'
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-    )
-
     def setUp(self) -> None:
         # intentionally don't call super().setUp() so root dir is not created yet
         self.root_filepath = os.path.join(test_dir, 'dw')
 
     def test_creates_full_directory_structure_if_one_doesnt_exist_at_the_specified_output_location(self):
-        write_data_warehouse_metadata_to_yaml(test_dir, self.metadata)
+        metadata = construct_data_warehouse_metadata_from_dict(
+            {
+                'name': 'dw',
+                'databases': [
+                    {
+                        'name': 'db1',
+                        'schemas': [
+                            {
+                                'name': 'sch1',
+                                'tables': [
+                                    {
+                                        'name': 't1',
+                                        'primary_source_table': 'db2.sch2.t2',
+                                        'primary_key': [
+                                            'col1', 'col2'
+                                        ],
+                                        'foreign_keys': {
+                                            'fk1': {
+                                                'columns': ['col3'],
+                                                'references': {
+                                                    'columns': ['col3'],
+                                                    'schema': 'sch2',
+                                                    'table': 't2'
+                                                }
+                                            },
+                                            'fk2': {
+                                                'columns': ['col2', 'col4'],
+                                                'references': {
+                                                    'columns': ['col7', 'col4'],
+                                                    'schema': 'sch3',
+                                                    'table': 't3'
+                                                }
+                                            }
+                                        },
+                                        'columns': {
+                                            'col1': {
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.foreign_keys.fk3.foreign_keys.fk67.columns.col1'
+                                                }
+                                            },
+                                            'col2': {
+                                                'data_type': 'INT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.col2'
+                                                }
+                                            },
+                                            'col3': {
+                                                'data_type': 'INT'
+                                            },
+                                            'col4': {
+                                                'data_type': 'INT'
+                                            },
+                                            'col5': {
+                                                'data_type': 'BOOLEAN',
+                                                'source': {
+                                                    'calculation': {
+                                                        'string': '$1 IS NOT NULL',
+                                                        'using': ['primary_source_table.columns.col2']
+                                                    }
+                                                }
+                                            },
+                                            'col6': {
+                                                'data_type': 'BOOLEAN',
+                                                'source': {
+                                                    'calculation': {
+                                                        'string': '$1 IS NOT NULL AND $2 IS NOT NULL',
+                                                        'using': ['primary_source_table.foreign_keys.fk3.foreign_keys.fk67.columns.col1',
+                                                                  'primary_source_table.columns.col2']
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        'etls': {
+                                            'SP-1': {
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'insert',
+                                                'json_output_field': 'col1',
+                                                'truncate_table': False,
+                                                'insert_update_keys': ['col1', 'col2'],
+                                                'delete_keys': ['col2', 'col3'],
+                                                'input_sql': 'SQL for SP-1'
+                                            }
+                                        },
+                                        'next_etls': [
+                                            'SP-4', 'SP-5'
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        'name': 'db2',
+                        'schemas': [
+                            {
+                                'name': 'sch2',
+                                'tables': [
+                                    {
+                                        'name': 't2'
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        )
+        write_data_warehouse_metadata_to_yaml(test_dir, metadata)
         result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
-        self.assertEqual(self.metadata, result)
+        self.assertEqual(metadata, result)
 
-    def test_builds_column_source_components_objects_from_yaml(self):
-        result_column_source_components_list = []
-        write_data_warehouse_metadata_to_yaml(test_dir, self.metadata)
-        data_warehouse_metadata = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
-        for database in data_warehouse_metadata.databases:
-            for schema in database.schemas:
-                for table in schema.tables:
-                    for column in table.columns:
-                        result_column_source_components_list.append(column.source)
-        expected = [
-            ColumnSourceComponents(None, [SourceForeignKeyPath(['fk3', 'fk67'], 'col1')]),
-            ColumnSourceComponents(None, [SourceForeignKeyPath([], 'col2')]),
-            None,
-            None,
-            ColumnSourceComponents('$1 IS NOT NULL', [SourceForeignKeyPath([], 'col2')]),
-            ColumnSourceComponents('$1 IS NOT NULL AND $2 IS NOT NULL', [SourceForeignKeyPath(['fk3', 'fk67'], 'col1'),
-                                                                         SourceForeignKeyPath([], 'col2')])
-        ]
-        self.assertEqual(expected, result_column_source_components_list)
 
 class TestWriteDataWarehouseMetadataToYAML_ExistingDirectoriesAndFiles(MetadataDirectoryTestCase):
 
