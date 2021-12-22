@@ -55,6 +55,13 @@ class SourceForeignKeyPath:
     fk_steps: List[str]
     column_name: str
 
+    def __str__(self) -> str:
+        source_path_string = 'primary_source_table'
+        foreign_key_steps_string = '.'.join([f'foreign_keys.{fk_step}' for fk_step in self.fk_steps])
+        if foreign_key_steps_string != '':
+            source_path_string += f'.{foreign_key_steps_string}'
+        source_path_string += f'.columns.{self.column_name}'
+        return source_path_string
 
 @dataclass
 class ColumnSourceComponents:

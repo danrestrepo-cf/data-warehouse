@@ -630,40 +630,25 @@ class MetadataWriter:
         """Convert a ColumnSourceComponents object into a dict."""
         if column_source_components.calculation_string is None:
             # empty calculation string indicates only one child SourceForeignKeyPath
-            source_foreign_key_path = column_source_components.foreign_key_paths[0]
-            source_path_string = 'primary_source_table'
-            foreign_key_steps_string = '.'.join([f'foreign_keys.{fk_step}' for fk_step in source_foreign_key_path.fk_steps])
-            if foreign_key_steps_string != '':
-                source_path_string += f'.{foreign_key_steps_string}'
-            source_path_string += f'.columns.{source_foreign_key_path.column_name}'
             column_source_dict = {
-                'field': source_path_string
+                'field': str(column_source_components.foreign_key_paths[0])
             }
         else:
-            source_foreign_key_paths_list = []
-            for source_foreign_key_path in column_source_components.foreign_key_paths:
-                source_path_string = 'primary_source_table'
-                foreign_key_steps_string = '.'.join([f'foreign_keys.{fk_step}' for fk_step in source_foreign_key_path.fk_steps])
-                if foreign_key_steps_string != '':
-                    source_path_string += f'.{foreign_key_steps_string}'
-                source_path_string += f'.columns.{source_foreign_key_path.column_name}'
-                source_foreign_key_paths_list.append(source_path_string)
             column_source_dict = {
                 'calculation': {
                     'string': column_source_components.calculation_string,
-                    'using': source_foreign_key_paths_list
+                    'using': [str(source_foreign_key_path) for source_foreign_key_path in column_source_components.foreign_key_paths]
                 }
             }
         return column_source_dict
 
-    @staticmethod
-    def column_metadata_to_dict(column_metadata: ColumnMetadata) -> dict:
+    def column_metadata_to_dict(self, column_metadata: ColumnMetadata) -> dict:
         """Convert a ColumnMetadata object to a dict in preparation for writing it to YAML."""
         column_dict = {
             'data_type': column_metadata.data_type
         }
         if column_metadata.source is not None:
-            column_dict['source'] = MetadataWriter.column_source_metadata_to_source_dict(column_metadata.source)
+            column_dict['source'] = self.column_source_metadata_to_source_dict(column_metadata.source)
         if column_metadata.update_flag is not None:
             column_dict['update_flag'] = {
                 'update_flag': column_metadata.update_flag

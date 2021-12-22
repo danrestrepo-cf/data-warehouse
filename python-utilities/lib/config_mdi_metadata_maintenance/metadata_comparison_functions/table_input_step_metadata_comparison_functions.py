@@ -15,38 +15,35 @@ class TableInputStepMetadataComparisonFunctions(MetadataComparisonFunctions):
 
     def construct_metadata_table_from_config_db(self, local_edw_connection: DBConnection) -> MetadataTable:
         return self.construct_metadata_table_from_sql_query_results(local_edw_connection, """
+                WITH filtered_process AS (
+                    SELECT process.dwid
+                         , process.name
+                    FROM mdi.process
+                    JOIN mdi.table_output_step
+                         ON process.dwid = table_output_step.process_dwid
+                    WHERE table_output_step.target_schema IN ('history_octane', 'star_loan')
+                    UNION ALL
+                    SELECT process.dwid
+                         , process.name
+                    FROM mdi.process
+                    JOIN mdi.insert_update_step
+                         ON process.dwid = insert_update_step.process_dwid
+                    WHERE insert_update_step.schema_name = 'star_loan'
+                    UNION ALL
+                    SELECT process.dwid
+                         , process.name
+                    FROM mdi.process
+                    JOIN mdi.delete_step
+                         ON process.dwid = delete_step.process_dwid
+                    WHERE delete_step.schema_name = 'star_loan'
+                )
                 SELECT process.name AS process_name
-                     , table_input_step.data_source_dwid
-                     , TRANSLATE(table_input_step.sql, E'\r', '') AS sql --standardize line endings for easier comparison
-                     , table_input_step.connectionname
+                    , table_input_step.data_source_dwid
+                    , TRANSLATE(table_input_step.sql, E'\r', '') AS sql --standardize line endings for easier comparison
+                    , table_input_step.connectionname
                 FROM mdi.table_input_step
-                JOIN mdi.process
-                     ON table_input_step.process_dwid = process.dwid
-                JOIN mdi.table_output_step
-                     ON process.dwid = table_output_step.process_dwid
-                WHERE table_output_step.target_schema IN ('history_octane', 'star_loan')
-                UNION ALL
-                SELECT process.name AS process_name
-                     , table_input_step.data_source_dwid
-                     , TRANSLATE(table_input_step.sql, E'\r', '') AS sql --standardize line endings for easier comparison
-                     , table_input_step.connectionname
-                FROM mdi.table_input_step
-                JOIN mdi.process
-                     ON table_input_step.process_dwid = process.dwid
-                JOIN mdi.insert_update_step
-                     ON process.dwid = insert_update_step.process_dwid
-                WHERE insert_update_step.schema_name = 'star_loan'
-                UNION ALL
-                SELECT process.name AS process_name
-                     , table_input_step.data_source_dwid 
-                     , TRANSLATE(table_input_step.sql, E'\r', '') AS sql --standardize line endings for easier comparison
-                     , table_input_step.connectionname
-                FROM mdi.table_input_step
-                JOIN mdi.process
-                     ON table_input_step.process_dwid = process.dwid
-                JOIN mdi.delete_step
-                     ON process.dwid = delete_step.process_dwid
-                WHERE delete_step.schema_name = 'star_loan';
+                JOIN filtered_process process
+                     ON table_input_step.process_dwid = process.dwid;
             """)
 
     def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:

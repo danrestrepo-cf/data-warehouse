@@ -177,7 +177,6 @@ class TestDeleteStepMetadataComparisonFunctions(unittest.TestCase):
                    "SET connectionname = update_rows.connectionname\n" + \
                    "  , schema_name = update_rows.schema_name\n" + \
                    "  , table_name = update_rows.table_name\n" + \
-                   "  , commit_size = 1000\n" + \
                    "FROM update_rows\n" + \
                    "JOIN mdi.process\n" + \
                    "     ON process.name = update_rows.process_name\n" + \

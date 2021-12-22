@@ -178,8 +178,6 @@ class TestInsertUpdateStepMetadataComparisonFunctions(unittest.TestCase):
                    "SET connectionname = update_rows.connectionname\n" + \
                    "  , schema_name = update_rows.schema_name\n" + \
                    "  , table_name = update_rows.table_name\n" + \
-                   "  , commit_size = 1000\n" + \
-                   "  , do_not = 'N'::mdi.pentaho_y_or_n\n" + \
                    "FROM update_rows\n" + \
                    "JOIN mdi.process\n" + \
                    "     ON process.name = update_rows.process_name\n" + \
