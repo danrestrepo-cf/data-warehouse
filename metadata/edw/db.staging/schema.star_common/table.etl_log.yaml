@@ -1,0 +1,44 @@
+name: etl_log
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+  etl_batch_id:
+    data_type: TEXT
+  etl_start_date_time:
+    data_type: TIMESTAMPTZ
+  etl_end_date_time:
+    data_type: TIMESTAMPTZ
+  etl_duration:
+    data_type: INTERVAL
+  status:
+    data_type: TEXT
+  process_name:
+    data_type: TEXT
+  controller_job_batch_id:
+    data_type: INTEGER
+  input_json:
+    data_type: TEXT
+  output_json:
+    data_type: TEXT
+  input_rows_read:
+    data_type: BIGINT
+  input_step_duration_ms:
+    data_type: BIGINT
+  input_step_duration:
+    data_type: INTERVAL
+  output_rows_inserted:
+    data_type: BIGINT
+  output_rows_updated:
+    data_type: BIGINT
+  output_rows_deleted:
+    data_type: BIGINT
+  output_rows_rejected:
+    data_type: BIGINT
+  output_total_rows:
+    data_type: BIGINT
+  output_step_duration_ms:
+    data_type: BIGINT
+  output_step_duration:
+    data_type: INTERVAL

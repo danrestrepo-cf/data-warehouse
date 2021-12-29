@@ -7,8 +7,8 @@ from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper, SingleGr
 from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, ETLOutputType
 
 
-class TableOutputStepMetadataComparisonFunctions(MetadataComparisonFunctions):
-    """The set of metadata comparison functions used to maintain config.mdi.table_output_step."""
+class InsertUpdateStepMetadataComparisonFunctions(MetadataComparisonFunctions):
+    """The set of metadata comparison functions used to maintain config.mdi.insert_update_step."""
 
     def __init__(self):
         super().__init__(key_fields=['process_name'])
@@ -16,14 +16,13 @@ class TableOutputStepMetadataComparisonFunctions(MetadataComparisonFunctions):
     def construct_metadata_table_from_config_db(self, local_edw_connection: DBConnection) -> MetadataTable:
         return self.construct_metadata_table_from_sql_query_results(local_edw_connection, """
                 SELECT process.name AS process_name
-                     , table_output_step.target_schema
-                     , table_output_step.target_table
-                     , table_output_step.truncate_table
-                     , table_output_step.connectionname
-                FROM mdi.table_output_step
+                     , insert_update_step.connectionname
+                     , insert_update_step.schema_name
+                     , insert_update_step.table_name
+                FROM mdi.insert_update_step
                 JOIN mdi.process
-                     ON table_output_step.process_dwid = process.dwid
-                WHERE table_output_step.target_schema IN ('history_octane', 'star_loan');
+                     ON insert_update_step.process_dwid = process.dwid
+                WHERE insert_update_step.schema_name = 'star_loan';
             """)
 
     def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:
@@ -32,14 +31,12 @@ class TableOutputStepMetadataComparisonFunctions(MetadataComparisonFunctions):
             for schema in database.schemas:
                 for table in schema.tables:
                     for etl in table.etls:
-                        if etl.output_type == ETLOutputType.INSERT:
-                            truncate_table = 'Y' if etl.truncate_table else 'N'
+                        if etl.output_type == ETLOutputType.INSERT_UPDATE:
                             metadata_table.add_row({
                                 'process_name': etl.process_name,
-                                'target_schema': schema.name,
-                                'target_table': table.name,
-                                'truncate_table': truncate_table,
-                                'connectionname': self.get_connection_name(database.name)
+                                'connectionname': self.get_connection_name(database.name),
+                                'schema_name': schema.name,
+                                'table_name': table.name
                             })
         return metadata_table
 
@@ -50,35 +47,34 @@ class TableOutputStepMetadataComparisonFunctions(MetadataComparisonFunctions):
         return SingleGroupRowGrouper()
 
     def generate_insert_sql(self, rows: List[Row]) -> str:
-        return "WITH insert_rows (process_name, target_schema, target_table, truncate_table, connectionname) AS (\n" + \
+        return "WITH insert_rows (process_name, connectionname, schema_name, table_name) AS (\n" + \
                "    VALUES " + self.construct_values_string_from_full_rows(rows, base_indent=4) + "\n" + \
                ")\n" + \
-               "INSERT INTO mdi.table_output_step (process_dwid, target_schema, target_table, commit_size, partitioning_field, table_name_field, auto_generated_key_field, partition_data_per, table_name_defined_in_field, return_auto_generated_key_field, truncate_table, connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors, use_batch_update)\n" + \
-               "SELECT process.dwid, insert_rows.target_schema, insert_rows.target_table, 1000, NULL, NULL, NULL, NULL, 'N', NULL, insert_rows.truncate_table::mdi.pentaho_y_or_n, insert_rows.connectionname, 'N', 'Y', 'N', 'N'\n" + \
+               "INSERT INTO mdi.insert_update_step (process_dwid, connectionname, schema_name, table_name, commit_size, do_not)\n" + \
+               "SELECT process.dwid, insert_rows.connectionname, insert_rows.schema_name, insert_rows.table_name, 1000, 'N'::mdi.pentaho_y_or_n\n" + \
                "FROM insert_rows\n" + \
                "JOIN mdi.process\n" + \
                "ON process.name = insert_rows.process_name;"
 
     def generate_update_sql(self, rows: List[Row]) -> str:
-        return "WITH update_rows (process_name, target_schema, target_table, truncate_table, connectionname) AS (\n" + \
+        return "WITH update_rows (process_name, connectionname, schema_name, table_name) AS (\n" + \
                "    VALUES " + self.construct_values_string_from_full_rows(rows, base_indent=4) + "\n" + \
                ")\n" + \
-               "UPDATE mdi.table_output_step\n" + \
-               "SET target_schema = update_rows.target_schema\n" + \
-               "  , target_table = update_rows.target_table\n" + \
-               "  , truncate_table = update_rows.truncate_table::mdi.pentaho_y_or_n\n" + \
-               "  , connectionname = update_rows.connectionname\n" + \
+               "UPDATE mdi.insert_update_step\n" + \
+               "SET connectionname = update_rows.connectionname\n" + \
+               "  , schema_name = update_rows.schema_name\n" + \
+               "  , table_name = update_rows.table_name\n" + \
                "FROM update_rows\n" + \
                "JOIN mdi.process\n" + \
                "     ON process.name = update_rows.process_name\n" + \
-               "WHERE process.dwid = table_output_step.process_dwid;"
+               "WHERE process.dwid = insert_update_step.process_dwid;"
 
     def generate_delete_sql(self, rows: List[Row]) -> str:
         return "WITH delete_keys (process_name) AS (\n" + \
                "    VALUES " + self.construct_values_string_from_row_keys(rows, base_indent=4) + "\n" + \
                ")\n" + \
                "DELETE\n" + \
-               "FROM mdi.table_output_step\n" + \
+               "FROM mdi.insert_update_step\n" + \
                "    USING delete_keys, mdi.process\n" + \
-               "WHERE table_output_step.process_dwid = process.dwid\n" + \
+               "WHERE insert_update_step.process_dwid = process.dwid\n" + \
                "  AND process.name = delete_keys.process_name;"

@@ -86,7 +86,8 @@ from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        ColumnMetadata,
                                                        ETLMetadata,
                                                        ForeignKeyMetadata,
-                                                       ForeignColumnPath,
+                                                       SourceForeignKeyPath,
+                                                       ColumnSourceComponents,
                                                        ETLDataSource,
                                                        ETLInputType,
                                                        ETLOutputType)
@@ -222,6 +223,17 @@ def construct_data_warehouse_metadata_from_dict(data_warehouse_dict: dict) -> Da
                                         'source': {
                                             'field': 'primary_source_table.foreign_keys.fk3.foreign_keys.fk67.columns.col1'
                                         }
+                                    },
+                                    'col2': {
+                                        'data_type': 'BOOLEAN'
+                                        'source': {
+                                            'calculation': {
+                                                'string': 'CASE WHEN $1 IS NULL OR $2 IS NULL THEN NULL
+                                                            WHEN $1 = 'FIRST' OR $2 = 'STANDALONE_2ND' THEN FALSE
+                                                            ELSE TRUE END',
+                                                'using': ['col3', 'col4']
+                                            }
+                                        }
                                     }
                                 },
                                 'etls': {
@@ -314,10 +326,11 @@ class DictToMetadataBuilder:
             for column_name, column_data in table_dict['columns'].items():
                 column_metadata = ColumnMetadata(
                     name=column_name,
-                    data_type=column_data.get('data_type')
+                    data_type=column_data.get('data_type'),
+                    update_flag=column_data.get('update_flag')
                 )
-                if 'source' in column_data and 'field' in column_data['source']:
-                    column_metadata.source_field = self.parse_foreign_column_path(column_data['source']['field'])
+                if 'source' in column_data:
+                    column_metadata.source = self.parse_column_source_components(column_data['source'])
                 table.add_column(column_metadata)
         if 'etls' in table_dict:
             for etl_process_name, etl_data in table_dict['etls'].items():
@@ -339,8 +352,8 @@ class DictToMetadataBuilder:
                 table.next_etls.append(process_name)
         return table
 
-    def parse_foreign_column_path(self, path: str) -> ForeignColumnPath:
-        """Construct a ForeignColumnPath object from the given foreign path string.
+    def parse_source_foreign_key_path(self, path: str) -> SourceForeignKeyPath:
+        """Construct a SourceForeignKeyPath object from the given foreign path string.
 
         A valid string is in the format:
 
@@ -352,7 +365,7 @@ class DictToMetadataBuilder:
 
         Would be parsed into the following object:
 
-            ForeignColumnPath(
+            SourceForeignKeyPath(
                 fk_steps = ['fk1', 'fk2'],
                 column_name = 'col1'
             )
@@ -369,9 +382,91 @@ class DictToMetadataBuilder:
             elif split_path[i] == 'columns':
                 if i != len(split_path) - 2:  # "columns" is not the last thing in the path
                     raise self.InvalidTableMetadataException(f'Source field path "{path}" could not be parsed')
-                return ForeignColumnPath(fk_path, split_path[i + 1])
+                return SourceForeignKeyPath(fk_path, split_path[i + 1])
             else:
                 raise self.InvalidTableMetadataException(f'Source field path "{path}" could not be parsed')
+
+    def parse_column_source_components(self, source_dict: dict) -> ColumnSourceComponents:
+        """Construct a ColumnSourceComponents object from the given source dict.
+
+        The following examples illustrate the different formats of a valid source dict and their corresponding
+        ColumnSourceComponents objects:
+
+        [Example 1] loan_junk_dim.buydown_contributor_code:
+            source:
+                field:
+                    primary_source_table.columns.l_buydown_contributor_type
+
+            Would be parsed into the following ColumnSourceComponents object:
+
+                ColumnSourceComponents(
+                    calculation_string = None,
+                    foreign_key_paths = [
+                        SourceForeignKeyPath(
+                            fk_steps = [],
+                            column_name = 'l_buydown_contributor_type'
+                        )
+                    ]
+                )
+
+        [Example 2] loan_junk_dim.buydown_contributor
+            source:
+                field:
+                    primary_source_table.foreign_keys.fkt_l_buydown_contributor_type.columns.value
+
+            Would be parsed into the following ColumnSourceComponents object:
+
+                ColumnSourceComponents(
+                    calculation_string = None,
+                    foreign_key_paths = [
+                        SourceForeignKeyPath(
+                            fk_steps = [fkt_l_buydown_contributor_type],
+                            column_name = 'value'
+                        )
+                    ]
+                )
+
+        [Example 3] loan_junk_dim.piggyback_flag:
+            source:
+                calculation:
+                    string: |-
+                      CASE
+                        WHEN $1 IS NULL OR $2 IS NULL THEN NULL
+                        WHEN $1 = 'FIRST' OR $2 = 'STANDALONE_2ND' THEN FALSE
+                        ELSE TRUE END
+                    using:
+                      - primary_source_table.l_lien_priority_type
+                      - primary_source_table.foreign_keys.fk_loan_1.columns.prp_structure_type
+
+            Would be parsed into the following ColumnSourceComponents object:
+
+                ColumnSourceComponents(
+                    calculation_string = 'CASE
+                        WHEN $1 IS NULL OR $2 IS NULL THEN NULL
+                        WHEN $1 = 'FIRST' OR $2 = 'STANDALONE_2ND' THEN FALSE
+                        ELSE TRUE END',
+                    foreign_key_paths = [
+                        SourceForeignKeyPath(
+                            fk_steps = [],
+                            column_name = 'l_lien_priority_type'
+                        ),
+                        SourceForeignKeyPath(
+                            fk_steps = ['fk_loan_1'],
+                            column_name = 'prp_structure_type'
+                        )
+                    ]
+                )
+        """
+        calculation_string = None
+        column_paths = []
+        if 'field' in source_dict:
+            column_paths = [self.parse_source_foreign_key_path(source_dict['field'])]
+        if 'calculation' in source_dict:
+            calculation_string = source_dict['calculation']['string']
+            column_path_list = source_dict['calculation']['using']
+            for column_path in column_path_list:
+                column_paths.append(self.parse_source_foreign_key_path(column_path))
+        return ColumnSourceComponents(calculation_string, column_paths)
 
     def parse_etl_data_source(self, raw_data_source: Optional[str]) -> Optional[ETLDataSource]:
         """Parse the given string into an ETLDataSource Enum value."""
@@ -393,6 +488,10 @@ class DictToMetadataBuilder:
         """Parse the given string into an ETLOutputType Enum value."""
         if raw_output_type.lower() == 'insert':
             return ETLOutputType.INSERT
+        if raw_output_type.lower() == 'insert_update':
+            return ETLOutputType.INSERT_UPDATE
+        if raw_output_type.lower() == 'delete':
+            return ETLOutputType.DELETE
         else:
             raise self.InvalidTableMetadataException(f'Invalid ETL output type: {raw_output_type}')
 
@@ -527,19 +626,32 @@ class MetadataWriter:
             return f'{table_path.database}.{table_path.schema}.{table_path.table}'
 
     @staticmethod
-    def column_metadata_to_dict(column_metadata: ColumnMetadata) -> dict:
+    def column_source_metadata_to_source_dict(column_source_components: ColumnSourceComponents) -> dict:
+        """Convert a ColumnSourceComponents object into a dict."""
+        if column_source_components.calculation_string is None:
+            # empty calculation string indicates only one child SourceForeignKeyPath
+            column_source_dict = {
+                'field': str(column_source_components.foreign_key_paths[0])
+            }
+        else:
+            column_source_dict = {
+                'calculation': {
+                    'string': column_source_components.calculation_string,
+                    'using': [str(source_foreign_key_path) for source_foreign_key_path in column_source_components.foreign_key_paths]
+                }
+            }
+        return column_source_dict
+
+    def column_metadata_to_dict(self, column_metadata: ColumnMetadata) -> dict:
         """Convert a ColumnMetadata object to a dict in preparation for writing it to YAML."""
         column_dict = {
             'data_type': column_metadata.data_type
         }
-        if column_metadata.source_field is not None:
-            source_field_string = 'primary_source_table'
-            foreign_key_steps_string = '.'.join([f'foreign_keys.{fk_step}' for fk_step in column_metadata.source_field.fk_steps])
-            if foreign_key_steps_string != '':
-                source_field_string += f'.{foreign_key_steps_string}'
-            source_field_string += f'.columns.{column_metadata.source_field.column_name}'
-            column_dict['source'] = {
-                'field': source_field_string
+        if column_metadata.source is not None:
+            column_dict['source'] = self.column_source_metadata_to_source_dict(column_metadata.source)
+        if column_metadata.update_flag is not None:
+            column_dict['update_flag'] = {
+                'update_flag': column_metadata.update_flag
             }
         return column_dict
 

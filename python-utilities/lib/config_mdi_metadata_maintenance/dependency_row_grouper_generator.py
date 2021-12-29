@@ -138,20 +138,15 @@ class FieldInsertNodeLineageTracer(NodeLineageTracer):
         self._metadata = data_warehouse_metadata
 
     def determine_node_parents(self, node_key: dict) -> List[dict]:
-        table_address = TablePath(database=node_key['database_name'], schema=node_key['schema_name'], table=node_key['table_name'])
+        table_path = TablePath(database=node_key['database_name'], schema=node_key['schema_name'], table=node_key['table_name'])
         try:
-            table_metadata = self._metadata.get_table_by_path(table_address)
-            source_table_metadata = table_metadata.get_column_source_table(node_key['field_name'], self._metadata)
-            column_metadata = table_metadata.get_column(node_key['field_name'])
-            if column_metadata.source_field is not None:
-                return [{
-                    'database_name': source_table_metadata.path.database,
-                    'schema_name': source_table_metadata.path.schema,
-                    'table_name': source_table_metadata.name,
-                    'field_name': column_metadata.source_field.column_name
-                }]
-            else:
-                return []
+            table_metadata = self._metadata.get_table_by_path(table_path)
+            return [{
+                'database_name': column_path.database,
+                'schema_name': column_path.schema,
+                'table_name': column_path.table,
+                'field_name': column_path.column
+            } for column_path in table_metadata.get_source_column_paths(node_key['field_name'], self._metadata)]
         except InvalidMetadataKeyException:
             full_col_name = f'{node_key["database_name"]}.{node_key["schema_name"]}.{node_key["table_name"]}.{node_key["field_name"]}'
             raise self.InvalidNodeException(f'Could not determine parents of column "{full_col_name}". Column doesn\'t exist in metadata.')

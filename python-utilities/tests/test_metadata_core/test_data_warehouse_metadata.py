@@ -312,7 +312,7 @@ class TestTableMetadata(unittest.TestCase):
         self.assertFalse(table_metadata.contains_foreign_key('fk2'))
 
 
-class TestTableMetadataCanGetColumnSourceTable(unittest.TestCase):
+class TestTableMetadataCanGetColumnSourcePaths(unittest.TestCase):
 
     def setUp(self) -> None:
         self.dw_metadata = construct_data_warehouse_metadata_from_dict(
@@ -330,18 +330,37 @@ class TestTableMetadataCanGetColumnSourceTable(unittest.TestCase):
                                         'primary_source_table': 'staging.staging_octane.source_table',
                                         'columns': {
                                             'column_with_source': {
-                                                'data_source': 'TEXT',
+                                                'data_type': 'TEXT',
                                                 'source': {
                                                     'field': 'primary_source_table.columns.source_column'
                                                 }
                                             },
                                             'column_with_distant_source': {
-                                                'data_source': 'TEXT',
+                                                'data_type': 'TEXT',
                                                 'source': {
                                                     'field': 'primary_source_table.foreign_keys.fk_1.foreign_keys.fk_2.foreign_keys.fk_3.columns.distant_source_column'
                                                 }
+                                            },
+                                            'column_with_single_column_calculated_source': {
+                                                'data_type': 'BOOLEAN',
+                                                'source': {
+                                                    'calculation': {
+                                                        'string': '$1 IS NOT NULL',
+                                                        'using': [
+                                                            'primary_source_table.foreign_keys.fk_1.foreign_keys.fk_2.foreign_keys.fk_3.columns.distant_source_column']
+                                                    }
+                                                }
+                                            },
+                                            'column_with_multi_column_calculated_source': {
+                                                'data_type': 'BOOLEAN',
+                                                'source': {
+                                                    'calculation': {
+                                                        'string': '$1 IS NOT NULL AND $2 IS NOT NULL',
+                                                        'using': ['primary_source_table.columns.source_column',
+                                                                  'primary_source_table.foreign_keys.fk_1.foreign_keys.fk_2.foreign_keys.fk_3.columns.distant_source_column']
+                                                    }
+                                                }
                                             }
-
                                         }
                                     }
                                 ]
@@ -353,10 +372,10 @@ class TestTableMetadataCanGetColumnSourceTable(unittest.TestCase):
                                         'name': 'source_table',
                                         'columns': {
                                             'source_column': {
-                                                'data_source': 'TEXT'
+                                                'data_type': 'TEXT'
                                             },
                                             'fk_col': {
-                                                'data_source': 'TEXT'
+                                                'data_type': 'TEXT'
                                             }
                                         },
                                         'foreign_keys': {
@@ -379,7 +398,7 @@ class TestTableMetadataCanGetColumnSourceTable(unittest.TestCase):
                                         'name': 'other_table_1',
                                         'columns': {
                                             'fk_col': {
-                                                'data_source': 'TEXT'
+                                                'data_type': 'TEXT'
                                             }
                                         },
                                         'foreign_keys': {
@@ -397,7 +416,7 @@ class TestTableMetadataCanGetColumnSourceTable(unittest.TestCase):
                                         'name': 'other_table_2',
                                         'columns': {
                                             'fk_col': {
-                                                'data_source': 'TEXT'
+                                                'data_type': 'TEXT'
                                             }
                                         },
                                         'foreign_keys': {
@@ -415,7 +434,7 @@ class TestTableMetadataCanGetColumnSourceTable(unittest.TestCase):
                                         'name': 'distant_source_table',
                                         'columns': {
                                             'distant_source_column': {
-                                                'data_source': 'TEXT'
+                                                'data_type': 'TEXT'
                                             }
                                         }
                                     }
@@ -427,24 +446,39 @@ class TestTableMetadataCanGetColumnSourceTable(unittest.TestCase):
             }
         )
 
-    def test_none_if_column_has_no_source(self):
+    def test_empty_source_column_paths_list_if_column_has_no_source(self):
         table_address = TablePath('staging', 'staging_octane', 'source_table')
         table = self.dw_metadata.get_table_by_path(table_address)
-        self.assertEqual(None, table.get_column_source_table('source_column', self.dw_metadata))
+        self.assertEqual([], table.get_source_column_paths('source_column', self.dw_metadata))
 
-    def test_retrieves_primary_source_table_metadata_if_there_are_no_fk_steps(self):
+    def test_retrieves_source_column_metadata_if_there_are_no_fk_steps(self):
         table_address = TablePath('staging', 'history_octane', 'table_with_source')
         table = self.dw_metadata.get_table_by_path(table_address)
-        source_table_address = TablePath('staging', 'staging_octane', 'source_table')
-        source_table = self.dw_metadata.get_table_by_path(source_table_address)
-        self.assertEqual(source_table, table.get_column_source_table('column_with_source', self.dw_metadata))
+        source_column_addresses = [ColumnPath('staging', 'staging_octane', 'source_table', 'source_column')]
+        fetched_source_column_paths = table.get_source_column_paths('column_with_source', self.dw_metadata)
+        self.assertEqual(source_column_addresses, fetched_source_column_paths)
 
-    def test_follows_fk_steps_to_retrieve_distant_source_table_metadata(self):
+    def test_follows_fk_steps_to_retrieve_distant_source_column_metadata(self):
         table_address = TablePath('staging', 'history_octane', 'table_with_source')
         table = self.dw_metadata.get_table_by_path(table_address)
-        source_table_address = TablePath('staging', 'other_schema', 'distant_source_table')
-        source_table = self.dw_metadata.get_table_by_path(source_table_address)
-        self.assertEqual(source_table, table.get_column_source_table('column_with_distant_source', self.dw_metadata))
+        source_column_addresses = [ColumnPath('staging', 'other_schema', 'distant_source_table', 'distant_source_column')]
+        fetched_source_column_paths = table.get_source_column_paths('column_with_distant_source', self.dw_metadata)
+        self.assertEqual(source_column_addresses, fetched_source_column_paths)
+
+    def test_follows_calculation_fk_steps_to_retrieve_distant_source_column_metadata(self):
+        table_address = TablePath('staging', 'history_octane', 'table_with_source')
+        table = self.dw_metadata.get_table_by_path(table_address)
+        source_column_addresses = [ColumnPath('staging', 'other_schema', 'distant_source_table', 'distant_source_column')]
+        fetched_source_column_paths = table.get_source_column_paths('column_with_single_column_calculated_source', self.dw_metadata)
+        self.assertEqual(source_column_addresses, fetched_source_column_paths)
+
+    def test_follows_calculation_fk_steps_to_retrieve_multi_source_column_metadata(self):
+        table_address = TablePath('staging', 'history_octane', 'table_with_source')
+        table = self.dw_metadata.get_table_by_path(table_address)
+        source_column_addresses = [ColumnPath('staging', 'staging_octane', 'source_table', 'source_column'),
+                                   ColumnPath('staging', 'other_schema', 'distant_source_table', 'distant_source_column')]
+        fetched_source_column_paths = table.get_source_column_paths('column_with_multi_column_calculated_source', self.dw_metadata)
+        self.assertEqual(source_column_addresses, fetched_source_column_paths)
 
 
 if __name__ == '__main__':

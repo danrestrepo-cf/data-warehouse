@@ -1,0 +1,96 @@
+name: transaction_dim
+primary_source_table: staging.history_octane.proposal
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+    update_flag: false
+  data_source_dwid:
+    data_type: BIGINT
+    update_flag: true
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  etl_batch_id:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_columns:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_id:
+    data_type: TEXT
+    update_flag: false
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_pid
+    update_flag: true
+  active_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prp_pid
+    update_flag: true
+etls:
+  SP-200019:
+    input_type: table
+    output_type: insert_update
+    hardcoded_data_source: Octane
+    json_output_field: data_source_integration_id
+    insert_update_keys:
+      - data_source_integration_id
+    input_sql: |-
+      SELECT transaction_dim_incl_new_records.data_source_integration_columns
+           , transaction_dim_incl_new_records.data_source_integration_id
+           , transaction_dim_incl_new_records.edw_created_datetime
+           , transaction_dim_incl_new_records.edw_modified_datetime
+           , transaction_dim_incl_new_records.data_source_modified_datetime
+           , transaction_dim_incl_new_records.deal_pid
+           , transaction_dim_incl_new_records.active_proposal_pid
+      FROM (
+      SELECT  'deal_pid' || '~' || 'data_source_dwid' as data_source_integration_columns,
+              COALESCE(CAST(t1441.d_pid as text), '<NULL>')  || '~' || COALESCE(CAST(1 as text), '<NULL>')  as data_source_integration_id,
+              now() as edw_created_datetime,
+              now() as edw_modified_datetime,
+              primary_table.data_source_updated_datetime as data_source_modified_datetime,
+              t1441.d_pid as deal_pid,
+              primary_table.prp_pid as active_proposal_pid
+      FROM (
+               SELECT
+                   <<proposal_partial_load_condition>> as include_record,
+                   proposal.*
+               FROM history_octane.proposal
+                        LEFT JOIN history_octane.proposal AS history_records ON proposal.prp_pid = history_records.prp_pid
+                   AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
+               WHERE history_records.prp_pid IS NULL
+           ) AS primary_table
+
+               INNER JOIN (
+          SELECT * FROM (
+                            SELECT     <<deal_partial_load_condition>> as include_record,
+                                       deal.*
+                            FROM history_octane.deal
+                                     LEFT JOIN history_octane.deal AS history_records ON deal.d_pid = history_records.d_pid
+                                AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
+                            WHERE history_records.d_pid IS NULL
+                        ) as primary_table
+
+      ) AS t1441 ON primary_table.prp_pid = t1441.d_active_proposal_pid
+      WHERE
+          GREATEST(primary_table.include_record, t1441.include_record) IS TRUE
+      ORDER BY
+          primary_table.data_source_updated_datetime ASC
+      ) AS transaction_dim_incl_new_records
+          LEFT JOIN star_loan.transaction_dim ON transaction_dim_incl_new_records.data_source_integration_id =
+                                                 transaction_dim.data_source_integration_id
+              AND transaction_dim_incl_new_records.deal_pid IS NOT DISTINCT FROM transaction_dim.deal_pid
+              AND transaction_dim_incl_new_records.active_proposal_pid IS NOT DISTINCT FROM transaction_dim.active_proposal_pid
+      WHERE transaction_dim.dwid IS NULL;
+next_etls:
+  - SP-300001-insert-update

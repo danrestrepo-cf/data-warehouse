@@ -49,7 +49,11 @@ from lib.config_mdi_metadata_maintenance.metadata_comparison_functions import (P
                                                                                TableInputStepMetadataComparisonFunctions,
                                                                                TableOutputStepMetadataComparisonFunctions,
                                                                                TableOutputFieldMetadataComparisonFunctions,
-                                                                               EDWJoinDefinitionMetadataComparisonFunctions,
+                                                                               InsertUpdateStepMetadataComparisonFunctions,
+                                                                               InsertUpdateKeyMetadataComparisonFunctions,
+                                                                               InsertUpdateFieldMetadataComparisonFunctions,
+                                                                               DeleteStepMetadataComparisonFunctions,
+                                                                               DeleteKeyMetadataComparisonFunctions,
                                                                                EDWTableDefinitionMetadataComparisonFunctions,
                                                                                EDWFieldDefinitionMetadataComparisonFunctions)
 
@@ -75,10 +79,12 @@ def main():
     edw_connection = DBConnectionFactory().get_connection('edw-local-config')
     data_warehouse_metadata = generate_data_warehouse_metadata_from_yaml(args.metadata_dir)
 
-    # filter metadata to only staging_octane and history_octane schemas, since only those are being maintained with YAML for now
+    # filter metadata to staging_octane, history_octane, star_loan, and star_common
     filterer = InclusiveMetadataFilterer()
     filterer.add_schema_criteria(SchemaPath('staging', 'staging_octane'))
     filterer.add_schema_criteria(SchemaPath('staging', 'history_octane'))
+    filterer.add_schema_criteria(SchemaPath('staging', 'star_loan'))
+    filterer.add_schema_criteria(SchemaPath('staging', 'star_common'))
     data_warehouse_metadata = filterer.filter(data_warehouse_metadata)
 
     # set up SQL generator object
@@ -86,12 +92,16 @@ def main():
     # the order in which MetadataComparisonFunctions are added below defines the table SQL statement order in the final script output
     # this order matters because of inter-table dependencies (e.g. json_output_step depends on process)
     sql_generator.add_metadata_comparison_functions('edw_table_definition', EDWTableDefinitionMetadataComparisonFunctions())
-    sql_generator.add_metadata_comparison_functions('edw_join_definition', EDWJoinDefinitionMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('edw_field_definition', EDWFieldDefinitionMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('process', ProcessMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('table_input_step', TableInputStepMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('table_output_step', TableOutputStepMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('table_output_field', TableOutputFieldMetadataComparisonFunctions())
+    sql_generator.add_metadata_comparison_functions('insert_update_step', InsertUpdateStepMetadataComparisonFunctions())
+    sql_generator.add_metadata_comparison_functions('insert_update_key', InsertUpdateKeyMetadataComparisonFunctions())
+    sql_generator.add_metadata_comparison_functions('insert_update_field', InsertUpdateFieldMetadataComparisonFunctions())
+    sql_generator.add_metadata_comparison_functions('delete_step', DeleteStepMetadataComparisonFunctions())
+    sql_generator.add_metadata_comparison_functions('delete_key', DeleteKeyMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('json_output_field', JSONOutputFieldMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('state_machine_definition', StateMachineDefinitionMetadataComparisonFunctions())
     sql_generator.add_metadata_comparison_functions('state_machine_step', StateMachineStepMetadataComparisonFunctions())

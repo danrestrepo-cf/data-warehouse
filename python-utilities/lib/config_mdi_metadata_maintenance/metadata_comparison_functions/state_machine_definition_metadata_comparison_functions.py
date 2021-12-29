@@ -15,16 +15,34 @@ class StateMachineDefinitionMetadataComparisonFunctions(MetadataComparisonFuncti
 
     def construct_metadata_table_from_config_db(self, local_edw_connection: DBConnection) -> MetadataTable:
         return self.construct_metadata_table_from_sql_query_results(local_edw_connection, """
+                WITH filtered_process AS (
+                    SELECT process.dwid
+                         , process.name
+                    FROM mdi.process
+                    JOIN mdi.table_output_step
+                         ON process.dwid = table_output_step.process_dwid
+                    WHERE table_output_step.target_schema IN ('history_octane', 'star_loan')
+                    UNION ALL
+                    SELECT process.dwid
+                         , process.name
+                    FROM mdi.process
+                    JOIN mdi.insert_update_step
+                         ON process.dwid = insert_update_step.process_dwid
+                    WHERE insert_update_step.schema_name = 'star_loan'
+                    UNION ALL
+                    SELECT process.dwid
+                         , process.name
+                    FROM mdi.process
+                    JOIN mdi.delete_step
+                         ON process.dwid = delete_step.process_dwid
+                    WHERE delete_step.schema_name = 'star_loan'
+                )
                 SELECT process.name AS process_name
-                     , state_machine_definition.name AS state_machine_name
-                     , state_machine_definition.comment AS state_machine_comment
+                    , state_machine_definition.name AS state_machine_name
+                    , state_machine_definition.comment AS state_machine_comment
                 FROM mdi.state_machine_definition
-                JOIN mdi.process
-                     ON state_machine_definition.process_dwid = process.dwid
-                JOIN mdi.table_output_step
-                     ON process.dwid = table_output_step.process_dwid
-                -- hardcoded to only check history_octane until this script is updated to handle other schemas' ETLs
-                WHERE table_output_step.target_schema = 'history_octane';
+                JOIN filtered_process process
+                     ON state_machine_definition.process_dwid = process.dwid;
             """)
 
     def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:
