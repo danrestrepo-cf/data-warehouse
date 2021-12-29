@@ -13,7 +13,7 @@ services:
     shm_size: 2gb
   flyway-roles:
     # this creates users/roles, etc that are normally created in terraform
-    image: ${FLYWAY_IMAGE:-flyway/flyway:6}
+    image: ${FLYWAY_IMAGE:-flyway/flyway:8}
     command: -url=jdbc:postgresql://database:5432/postgres -schemas=flyway-baseline -user=postgres -password=testonly -connectRetries=60 migrate
     volumes:
       - ./database/baseline/roles:/flyway/sql

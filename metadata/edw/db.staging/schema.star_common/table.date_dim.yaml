@@ -1,0 +1,80 @@
+name: date_dim
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: INTEGER
+  value:
+    data_type: DATE
+  date_format_iso_8601:
+    data_type: CHAR(10)
+  date_format_us:
+    data_type: CHAR(10)
+  day_of_month_suffix:
+    data_type: VARCHAR(4)
+  day_chronological:
+    data_type: INTEGER
+  weekday_chronological:
+    data_type: INTEGER
+  day_of_year:
+    data_type: SMALLINT
+  day_of_quarter:
+    data_type: SMALLINT
+  day_of_month:
+    data_type: SMALLINT
+  day_of_week:
+    data_type: SMALLINT
+  is_first_day_of_year:
+    data_type: BOOLEAN
+  is_last_day_of_year:
+    data_type: BOOLEAN
+  is_first_day_of_quarter:
+    data_type: BOOLEAN
+  is_last_day_of_quarter:
+    data_type: BOOLEAN
+  is_first_day_of_month:
+    data_type: BOOLEAN
+  is_last_day_of_month:
+    data_type: BOOLEAN
+  is_first_day_of_week:
+    data_type: BOOLEAN
+  is_last_day_of_week:
+    data_type: BOOLEAN
+  is_weekday:
+    data_type: BOOLEAN
+  is_weekend:
+    data_type: BOOLEAN
+  day_of_week_name:
+    data_type: VARCHAR(9)
+  day_of_week_name_short:
+    data_type: CHAR(3)
+  day_of_week_name_letter:
+    data_type: CHAR
+  is_leap_year:
+    data_type: BOOLEAN
+  is_leap_day:
+    data_type: BOOLEAN
+  week_of_year:
+    data_type: SMALLINT
+  quarter_of_year:
+    data_type: SMALLINT
+  quarter_chronological:
+    data_type: INTEGER
+  quarter_name:
+    data_type: CHAR(6)
+  year:
+    data_type: SMALLINT
+  month_of_year:
+    data_type: SMALLINT
+  days_in_month:
+    data_type: SMALLINT
+  first_day_of_month:
+    data_type: DATE
+  last_day_of_month:
+    data_type: DATE
+  first_day_of_week:
+    data_type: DATE
+  week_name:
+    data_type: TEXT
+  week_format_iso_8601:
+    data_type: VARCHAR(3)

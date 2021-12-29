@@ -1,0 +1,84 @@
+name: application_dim
+primary_source_table: staging.history_octane.application
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+    update_flag: false
+  data_source_dwid:
+    data_type: BIGINT
+    update_flag: true
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  etl_batch_id:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_columns:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_id:
+    data_type: TEXT
+    update_flag: false
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  application_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.apl_pid
+    update_flag: true
+  proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.apl_proposal_pid
+    update_flag: true
+etls:
+  SP-200003:
+    input_type: table
+    output_type: insert_update
+    hardcoded_data_source: Octane
+    json_output_field: data_source_integration_id
+    insert_update_keys:
+      - data_source_integration_id
+    input_sql: |-
+      SELECT application_dim_incl_new_records.data_source_integration_columns
+           , application_dim_incl_new_records.data_source_integration_id
+           , application_dim_incl_new_records.edw_created_datetime
+           , application_dim_incl_new_records.edw_modified_datetime
+           , application_dim_incl_new_records.data_source_modified_datetime
+           , application_dim_incl_new_records.application_pid
+           , application_dim_incl_new_records.proposal_pid
+      FROM (
+               SELECT
+                           'application_pid' || '~' || 'data_source_dwid' as data_source_integration_columns,
+                           COALESCE(CAST(primary_table.apl_pid as text), '<NULL>')  || '~' || COALESCE(CAST(1 as text), '<NULL>')  as data_source_integration_id,
+                           now() as edw_created_datetime,
+                           now() as edw_modified_datetime,
+                           primary_table.data_source_updated_datetime as data_source_modified_datetime,
+                           primary_table.apl_pid as application_pid,
+                           primary_table.apl_proposal_pid as proposal_pid
+               FROM (
+                        SELECT
+                            <<application_partial_load_condition>> as include_record,
+                            application.*
+                        FROM history_octane.application
+                          LEFT JOIN history_octane.application AS history_records ON application.apl_pid = history_records.apl_pid
+                              AND application.data_source_updated_datetime < history_records.data_source_updated_datetime
+                        WHERE history_records.apl_pid IS NULL
+                    ) AS primary_table
+               WHERE
+                   GREATEST(primary_table.include_record) IS TRUE
+               ORDER BY
+                   primary_table.data_source_updated_datetime ASC
+           ) AS application_dim_incl_new_records
+          LEFT JOIN star_loan.application_dim ON application_dim_incl_new_records.data_source_integration_id =
+                                           application_dim.data_source_integration_id
+              AND application_dim_incl_new_records.proposal_pid IS NOT DISTINCT FROM application_dim.proposal_pid
+      WHERE application_dim.dwid IS NULL;
+next_etls:
+- SP-300001-insert-update

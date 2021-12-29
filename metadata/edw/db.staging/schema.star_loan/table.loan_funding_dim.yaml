@@ -1,0 +1,267 @@
+name: loan_funding_dim
+primary_source_table: staging.history_octane.loan_funding
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+    update_flag: false
+  data_source_dwid:
+    data_type: BIGINT
+    update_flag: true
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  etl_batch_id:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_columns:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_id:
+    data_type: TEXT
+    update_flag: false
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  loan_funding_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lf_pid
+    update_flag: true
+  loan_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lf_loan_pid
+    update_flag: true
+  interim_funder_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lf_interim_funder_pid
+    update_flag: true
+  collateral_courier:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_lf_collateral_courier_type.columns.value
+    update_flag: true
+  collateral_courier_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lf_collateral_courier_type
+    update_flag: true
+  early_wire_charge_day_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lf_early_wire_charge_day_count
+    update_flag: true
+  early_wire_daily_charge_amount:
+    data_type: NUMERIC(21,3)
+    source:
+      field: primary_source_table.columns.lf_early_wire_daily_charge_amount
+    update_flag: true
+  early_wire_total_charge_amount:
+    data_type: NUMERIC(21,3)
+    source:
+      field: primary_source_table.columns.lf_early_wire_total_charge_amount
+    update_flag: true
+  funding_confirmed_release_datetime:
+    data_type: TIMESTAMPTZ
+    source:
+      field: primary_source_table.columns.lf_confirmed_release_datetime
+    update_flag: true
+  funding_status:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_lf_funding_status_type.columns.value
+    update_flag: true
+  funding_status_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lf_funding_status_type
+    update_flag: true
+  funds_authorization_code:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lf_funds_authorization_code
+    update_flag: true
+  funds_authorized_datetime:
+    data_type: TIMESTAMPTZ
+    source:
+      field: primary_source_table.columns.lf_funds_authorized_datetime
+    update_flag: true
+  interim_funder_fee_amount:
+    data_type: NUMERIC(21,3)
+    source:
+      field: primary_source_table.columns.lf_interim_funder_fee_amount
+    update_flag: true
+  interim_funder_loan_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lf_interim_funder_loan_id
+    update_flag: true
+  early_wire_request_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lf_early_wire_request
+    update_flag: true
+  scheduled_release_date_auto_compute_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lf_scheduled_release_date_auto_compute
+    update_flag: true
+  net_wire_amount:
+    data_type: NUMERIC(21,3)
+    source:
+      field: primary_source_table.columns.lf_net_wire_amount
+    update_flag: true
+  post_wire_adjustment_amount:
+    data_type: NUMERIC(21,3)
+    source:
+      field: primary_source_table.columns.lf_post_wire_adjustment_amount
+    update_flag: true
+  release_wire_federal_reference_number:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lf_release_wire_federal_reference_number
+    update_flag: true
+  wire_amount:
+    data_type: NUMERIC(21,3)
+    source:
+      field: primary_source_table.columns.lf_wire_amount
+    update_flag: true
+  collateral_tracking_number:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lf_collateral_tracking_number
+    update_flag: true
+etls:
+  SP-200013:
+    input_type: table
+    output_type: insert_update
+    hardcoded_data_source: Octane
+    json_output_field: data_source_integration_id
+    insert_update_keys:
+      - data_source_integration_id
+    input_sql: |-
+      SELECT loan_funding_dim_incl_new_records.data_source_integration_columns
+           , loan_funding_dim_incl_new_records.data_source_integration_id
+           , loan_funding_dim_incl_new_records.edw_created_datetime
+           , loan_funding_dim_incl_new_records.edw_modified_datetime
+           , loan_funding_dim_incl_new_records.data_source_modified_datetime
+           , loan_funding_dim_incl_new_records.collateral_courier
+           , loan_funding_dim_incl_new_records.funding_status
+           , loan_funding_dim_incl_new_records.release_wire_federal_reference_number
+           , loan_funding_dim_incl_new_records.interim_funder_fee_amount
+           , loan_funding_dim_incl_new_records.wire_amount
+           , loan_funding_dim_incl_new_records.funding_confirmed_release_datetime
+           , loan_funding_dim_incl_new_records.funding_status_code
+           , loan_funding_dim_incl_new_records.interim_funder_loan_id
+           , loan_funding_dim_incl_new_records.loan_funding_pid
+           , loan_funding_dim_incl_new_records.loan_pid
+           , loan_funding_dim_incl_new_records.interim_funder_pid
+           , loan_funding_dim_incl_new_records.early_wire_request_flag
+           , loan_funding_dim_incl_new_records.scheduled_release_date_auto_compute_flag
+           , loan_funding_dim_incl_new_records.early_wire_total_charge_amount
+           , loan_funding_dim_incl_new_records.early_wire_daily_charge_amount
+           , loan_funding_dim_incl_new_records.early_wire_charge_day_count
+           , loan_funding_dim_incl_new_records.net_wire_amount
+           , loan_funding_dim_incl_new_records.post_wire_adjustment_amount
+           , loan_funding_dim_incl_new_records.collateral_courier_code
+           , loan_funding_dim_incl_new_records.funds_authorized_datetime
+           , loan_funding_dim_incl_new_records.funds_authorization_code
+           , loan_funding_dim_incl_new_records.collateral_tracking_number
+      FROM (
+              SELECT 'loan_funding_pid' || '~' || 'data_source_dwid' as data_source_integration_columns,
+              COALESCE(CAST(primary_table.lf_pid as text), '<NULL>')  || '~' || COALESCE(CAST(1 as text), '<NULL>')  as data_source_integration_id,
+              now() as edw_created_datetime,
+              now() as edw_modified_datetime,
+              primary_table.data_source_updated_datetime as data_source_modified_datetime,
+              t380.value as collateral_courier,
+              t381.value as funding_status,
+              primary_table.lf_release_wire_federal_reference_number as release_wire_federal_reference_number,
+              primary_table.lf_interim_funder_fee_amount as interim_funder_fee_amount,
+              primary_table.lf_wire_amount as wire_amount,
+              primary_table.lf_confirmed_release_datetime as funding_confirmed_release_datetime,
+              primary_table.lf_funding_status_type as funding_status_code,
+              primary_table.lf_interim_funder_loan_id as interim_funder_loan_id,
+              primary_table.lf_pid as loan_funding_pid,
+              primary_table.lf_loan_pid as loan_pid,
+              primary_table.lf_interim_funder_pid as interim_funder_pid,
+              primary_table.lf_early_wire_request as early_wire_request_flag,
+              primary_table.lf_scheduled_release_date_auto_compute as scheduled_release_date_auto_compute_flag,
+              primary_table.lf_early_wire_total_charge_amount as early_wire_total_charge_amount,
+              primary_table.lf_early_wire_daily_charge_amount as early_wire_daily_charge_amount,
+              primary_table.lf_early_wire_charge_day_count as early_wire_charge_day_count,
+              primary_table.lf_net_wire_amount as net_wire_amount,
+              primary_table.lf_post_wire_adjustment_amount as post_wire_adjustment_amount,
+              primary_table.lf_collateral_courier_type as collateral_courier_code,
+              primary_table.lf_funds_authorized_datetime as funds_authorized_datetime,
+              primary_table.lf_funds_authorization_code as funds_authorization_code,
+              primary_table.lf_collateral_tracking_number as collateral_tracking_number
+       FROM (
+          SELECT
+              <<loan_funding_partial_load_condition>> as include_record,
+              loan_funding.*
+          FROM history_octane.loan_funding
+              LEFT JOIN history_octane.loan_funding AS history_records ON loan_funding.lf_pid = history_records.lf_pid
+                  AND loan_funding.data_source_updated_datetime < history_records.data_source_updated_datetime
+          WHERE history_records.lf_pid IS NULL
+          ) AS primary_table
+
+          INNER JOIN (
+              SELECT * FROM (
+                  SELECT     <<courier_type_partial_load_condition>> as include_record,
+                  courier_type.*
+                  FROM history_octane.courier_type
+                      LEFT JOIN history_octane.courier_type AS history_records ON courier_type.code = history_records.code
+                      AND courier_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) as primary_table
+
+          ) AS t380 ON primary_table.lf_collateral_courier_type = t380.code
+
+          INNER JOIN (
+              SELECT * FROM (
+                  SELECT     <<funding_status_type_partial_load_condition>> as include_record,
+                  funding_status_type.*
+                  FROM history_octane.funding_status_type
+                      LEFT JOIN history_octane.funding_status_type AS history_records ON funding_status_type.code = history_records.code
+                      AND funding_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) as primary_table
+
+          ) AS t381 ON primary_table.lf_funding_status_type = t381.code
+       WHERE
+          GREATEST(primary_table.include_record, t380.include_record, t381.include_record) IS TRUE
+       ORDER BY
+          primary_table.data_source_updated_datetime ASC
+      ) AS loan_funding_dim_incl_new_records
+          LEFT JOIN star_loan.loan_funding_dim ON loan_funding_dim_incl_new_records.data_source_integration_id =
+                                                  loan_funding_dim.data_source_integration_id
+              AND loan_funding_dim_incl_new_records.loan_pid IS NOT DISTINCT FROM loan_funding_dim.loan_pid
+              AND loan_funding_dim_incl_new_records.interim_funder_pid IS NOT DISTINCT FROM loan_funding_dim.interim_funder_pid
+              AND loan_funding_dim_incl_new_records.collateral_courier IS NOT DISTINCT FROM loan_funding_dim.collateral_courier
+              AND loan_funding_dim_incl_new_records.collateral_courier_code IS NOT DISTINCT FROM loan_funding_dim.collateral_courier_code
+              AND loan_funding_dim_incl_new_records.early_wire_charge_day_count IS NOT DISTINCT FROM loan_funding_dim.early_wire_charge_day_count
+              AND loan_funding_dim_incl_new_records.early_wire_daily_charge_amount IS NOT DISTINCT FROM loan_funding_dim.early_wire_daily_charge_amount
+              AND loan_funding_dim_incl_new_records.early_wire_total_charge_amount IS NOT DISTINCT FROM loan_funding_dim.early_wire_total_charge_amount
+              AND loan_funding_dim_incl_new_records.funding_confirmed_release_datetime IS NOT DISTINCT FROM loan_funding_dim.funding_confirmed_release_datetime
+              AND loan_funding_dim_incl_new_records.funding_status IS NOT DISTINCT FROM loan_funding_dim.funding_status
+              AND loan_funding_dim_incl_new_records.funding_status_code IS NOT DISTINCT FROM loan_funding_dim.funding_status_code
+              AND loan_funding_dim_incl_new_records.funds_authorization_code IS NOT DISTINCT FROM loan_funding_dim.funds_authorization_code
+              AND loan_funding_dim_incl_new_records.funds_authorized_datetime IS NOT DISTINCT FROM loan_funding_dim.funds_authorized_datetime
+              AND loan_funding_dim_incl_new_records.interim_funder_fee_amount IS NOT DISTINCT FROM loan_funding_dim.interim_funder_fee_amount
+              AND loan_funding_dim_incl_new_records.interim_funder_loan_id IS NOT DISTINCT FROM loan_funding_dim.interim_funder_loan_id
+              AND loan_funding_dim_incl_new_records.early_wire_request_flag IS NOT DISTINCT FROM loan_funding_dim.early_wire_request_flag
+              AND loan_funding_dim_incl_new_records.scheduled_release_date_auto_compute_flag IS NOT DISTINCT FROM loan_funding_dim.scheduled_release_date_auto_compute_flag
+              AND loan_funding_dim_incl_new_records.net_wire_amount IS NOT DISTINCT FROM loan_funding_dim.net_wire_amount
+              AND loan_funding_dim_incl_new_records.post_wire_adjustment_amount IS NOT DISTINCT FROM loan_funding_dim.post_wire_adjustment_amount
+              AND loan_funding_dim_incl_new_records.release_wire_federal_reference_number IS NOT DISTINCT FROM loan_funding_dim.release_wire_federal_reference_number
+              AND loan_funding_dim_incl_new_records.wire_amount IS NOT DISTINCT FROM loan_funding_dim.wire_amount
+              AND loan_funding_dim_incl_new_records.collateral_tracking_number IS NOT DISTINCT FROM loan_funding_dim.collateral_tracking_number
+      WHERE loan_funding_dim.dwid IS NULL;
+next_etls:
+  - SP-300001-insert-update

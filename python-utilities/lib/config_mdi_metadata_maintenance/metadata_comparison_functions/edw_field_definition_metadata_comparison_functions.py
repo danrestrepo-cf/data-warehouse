@@ -39,9 +39,8 @@ class EDWFieldDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions)
                           ON edw_field_definition.source_edw_field_definition_dwid = source_field_definition.dwid
                 LEFT JOIN mdi.edw_table_definition source_table_definition
                           ON source_field_definition.edw_table_definition_dwid = source_table_definition.dwid
-                -- hardcoded to only check staging/history_octane until this script is updated to handle other schemas' table metadata
-                WHERE edw_table_definition.schema_name IN ('staging_octane', 'history_octane')
-                  AND (source_table_definition.schema_name IN ('staging_octane', 'history_octane')
+                WHERE edw_table_definition.schema_name IN ('staging_octane', 'history_octane', 'star_loan', 'star_common')
+                  AND (source_table_definition.schema_name IN ('staging_octane', 'history_octane', 'star_loan', 'star_common')
                     OR source_table_definition.schema_name IS NULL);
             """)
 
@@ -58,17 +57,17 @@ class EDWFieldDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions)
                             'field_name': column.name,
                             'data_type': column.data_type
                         }
-                        if column.source_field is None:
+                        if column.source is None or column.source.calculation_string is not None:
                             row['source_database_name'] = None
                             row['source_schema_name'] = None
                             row['source_table_name'] = None
                             row['source_field_name'] = None
                         else:
-                            source_table = table.get_column_source_table(column.name, data_warehouse_metadata)
-                            row['source_database_name'] = source_table.path.database
-                            row['source_schema_name'] = source_table.path.schema
-                            row['source_table_name'] = source_table.name
-                            row['source_field_name'] = column.source_field.column_name
+                            source_column_path = table.get_source_column_paths(column.name, data_warehouse_metadata)[0]
+                            row['source_database_name'] = source_column_path.database
+                            row['source_schema_name'] = source_column_path.schema
+                            row['source_table_name'] = source_column_path.table
+                            row['source_field_name'] = source_column_path.column
                         metadata_table.add_row(row)
         return metadata_table
 
@@ -98,8 +97,8 @@ class EDWFieldDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions)
                "    VALUES " + self.construct_values_string_from_full_rows(rows, base_indent=4) + "\n" + \
                ")\n" + \
                "INSERT\n" + \
-               "INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, source_edw_join_tree_definition_dwid, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)\n" + \
-               "SELECT edw_table_definition.dwid, insert_rows.field_name, FALSE, source_field_definition.dwid, NULL, NULL, insert_rows.data_type, NULL, NULL, NULL, NULL\n" + \
+               "INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)\n" + \
+               "SELECT edw_table_definition.dwid, insert_rows.field_name, FALSE, source_field_definition.dwid, NULL, insert_rows.data_type, NULL, NULL, NULL, NULL\n" + \
                "FROM insert_rows\n" + \
                "JOIN mdi.edw_table_definition\n" + \
                "     ON insert_rows.database_name = edw_table_definition.database_name\n" + \
