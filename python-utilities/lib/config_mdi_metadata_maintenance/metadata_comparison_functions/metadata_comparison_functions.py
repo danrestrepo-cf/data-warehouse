@@ -146,7 +146,8 @@ class MetadataComparisonFunctions(ABC):
     def format_value_for_sql(value) -> str:
         """Format the given value for inclusion in a SQL statement based on its type."""
         if type(value) == str:
-            return f"'{value}'"
+            quote_replaced_value = value.replace("'", "''")
+            return f"'{quote_replaced_value}'"
         elif type(value) == int:
             return str(value)
         elif value is None:

@@ -39,7 +39,7 @@ for database in ingress staging config; do
   AUTH_TOKEN=$(aws rds generate-db-auth-token --hostname ${RDS_ENDPOINT} --port 5432 --region ${AWS_REGION} --username ${DEPLOY_USER} --output text)
   docker run -i \
     -v ${absolute_path}/database/migrations/${database}:/flyway/sql \
-    --rm 188213074036.dkr.ecr.us-east-1.amazonaws.com/lura/dev-flyway:6 \
+    --rm 188213074036.dkr.ecr.us-east-1.amazonaws.com/lura/dev-flyway:8 \
     -url=jdbc:postgresql://${RDS_ENDPOINT}:5432/${database}?requiressl=true \
     -schemas=flyway \
     -user=${DEPLOY_USER} \
@@ -56,7 +56,7 @@ for database in ingress staging config; do
   AUTH_TOKEN=$(aws rds generate-db-auth-token --hostname ${RDS_ENDPOINT} --port 5432 --region ${AWS_REGION} --username ${ADMIN_USER} --output text)
   docker run -i \
     -v ${absolute_path}/database/migrations/${database}-permissions:/flyway/sql \
-    --rm 188213074036.dkr.ecr.us-east-1.amazonaws.com/lura/dev-flyway:6 \
+    --rm 188213074036.dkr.ecr.us-east-1.amazonaws.com/lura/dev-flyway:8 \
     -url=jdbc:postgresql://${RDS_ENDPOINT}:5432/${database}?requiressl=true \
     -schemas=flyway-permissions \
     -user=${ADMIN_USER} \

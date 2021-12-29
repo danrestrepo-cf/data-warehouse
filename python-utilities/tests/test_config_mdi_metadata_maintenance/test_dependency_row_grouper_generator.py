@@ -255,15 +255,34 @@ class TestFieldInsertNodeLineageTracer(unittest.TestCase):
                                         'primary_source_table': 'staging.staging_octane.source_table',
                                         'columns': {
                                             'column_with_source': {
-                                                'data_source': 'TEXT',
+                                                'data_type': 'TEXT',
                                                 'source': {
                                                     'field': 'primary_source_table.columns.source_field'
                                                 }
                                             },
                                             'column_with_distant_source': {
-                                                'data_source': 'TEXT',
+                                                'data_type': 'TEXT',
                                                 'source': {
                                                     'field': 'primary_source_table.foreign_keys.fk_1.columns.distant_source_field'
+                                                }
+                                            },
+                                            'column_with_single_column_calculated_source': {
+                                                'data_type': 'BOOLEAN',
+                                                'source': {
+                                                    'calculation': {
+                                                        'string': '$1 IS NOT NULL',
+                                                        'using': ['primary_source_table.foreign_keys.fk_1.columns.distant_source_field']
+                                                    }
+                                                }
+                                            },
+                                            'column_with_multi_column_calculated_source': {
+                                                'data_type': 'BOOLEAN',
+                                                'source': {
+                                                    'calculation': {
+                                                        'string': '$1 IS NOT NULL AND $2 IS NOT NULL',
+                                                        'using': ['primary_source_table.columns.source_field',
+                                                                  'primary_source_table.foreign_keys.fk_1.columns.distant_source_field']
+                                                    }
                                                 }
                                             }
 
@@ -278,10 +297,10 @@ class TestFieldInsertNodeLineageTracer(unittest.TestCase):
                                         'name': 'source_table',
                                         'columns': {
                                             'source_field': {
-                                                'data_source': 'TEXT'
+                                                'data_type': 'TEXT'
                                             },
                                             'fk_col': {
-                                                'data_source': 'TEXT'
+                                                'data_type': 'TEXT'
                                             }
                                         },
                                         'foreign_keys': {
@@ -304,10 +323,10 @@ class TestFieldInsertNodeLineageTracer(unittest.TestCase):
                                         'name': 'distant_source_table',
                                         'columns': {
                                             'fk_col': {
-                                                'data_source': 'TEXT'
+                                                'data_type': 'TEXT'
                                             },
                                             'distant_source_field': {
-                                                'data_source': 'TEXT'
+                                                'data_type': 'TEXT'
                                             }
                                         }
                                     }
@@ -369,6 +388,43 @@ class TestFieldInsertNodeLineageTracer(unittest.TestCase):
             'field_name': 'column_with_distant_source'
         }))
 
+    def test_returns_single_item_list_containing_source_field_key_if_field_source_is_single_column_calculated(self):
+        node_lineage_tracer = FieldInsertNodeLineageTracer(self.dw_metadata)
+        expected = [{
+            'database_name': 'staging',
+            'schema_name': 'other_schema',
+            'table_name': 'distant_source_table',
+            'field_name': 'distant_source_field'
+        }]
+        self.assertEqual(expected, node_lineage_tracer.determine_node_parents({
+            'database_name': 'staging',
+            'schema_name': 'history_octane',
+            'table_name': 'table_with_source',
+            'field_name': 'column_with_single_column_calculated_source'
+        }))
+
+    def test_returns_multi_item_list_containing_source_field_keys_if_field_source_is_multi_column_calculated(self):
+        node_lineage_tracer = FieldInsertNodeLineageTracer(self.dw_metadata)
+        expected = [
+            {
+                'database_name': 'staging',
+                'schema_name': 'staging_octane',
+                'table_name': 'source_table',
+                'field_name': 'source_field'
+            },
+            {
+                'database_name': 'staging',
+                'schema_name': 'other_schema',
+                'table_name': 'distant_source_table',
+                'field_name': 'distant_source_field'
+            }
+        ]
+        self.assertEqual(expected, node_lineage_tracer.determine_node_parents({
+            'database_name': 'staging',
+            'schema_name': 'history_octane',
+            'table_name': 'table_with_source',
+            'field_name': 'column_with_multi_column_calculated_source'
+        }))
 
 class TestFieldDeleteNodeLineageTracer(unittest.TestCase):
 

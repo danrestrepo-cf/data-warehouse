@@ -1,0 +1,128 @@
+name: hmda_purchaser_of_loan_dim
+primary_source_table: staging.history_octane.loan
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+    update_flag: false
+  data_source_dwid:
+    data_type: BIGINT
+    update_flag: true
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  etl_batch_id:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_columns:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_id:
+    data_type: TEXT
+    update_flag: false
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  code_2017:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.foreign_keys.fkt_l_hmda_purchaser_of_loan_type.columns.code
+    update_flag: true
+  value_2017:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_l_hmda_purchaser_of_loan_type.columns.value
+    update_flag: true
+  code_2018:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.foreign_keys.fkt_l_hmda_purchaser_of_loan_2018_type.columns.code
+    update_flag: true
+  value_2018:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_l_hmda_purchaser_of_loan_2018_type.columns.value
+    update_flag: true
+etls:
+  SP-200007:
+    input_type: table
+    output_type: insert_update
+    hardcoded_data_source: Octane
+    json_output_field: data_source_integration_id
+    insert_update_keys:
+      - data_source_integration_id
+    input_sql: |-
+      SELECT hmda_purchaser_of_loan_dim_new_records.data_source_integration_columns
+           , hmda_purchaser_of_loan_dim_new_records.data_source_integration_id
+           , hmda_purchaser_of_loan_dim_new_records.edw_created_datetime
+           , hmda_purchaser_of_loan_dim_new_records.edw_modified_datetime
+           , hmda_purchaser_of_loan_dim_new_records.data_source_modified_datetime
+           , hmda_purchaser_of_loan_dim_new_records.value_2017
+           , hmda_purchaser_of_loan_dim_new_records.code_2017
+           , hmda_purchaser_of_loan_dim_new_records.code_2018
+           , hmda_purchaser_of_loan_dim_new_records.value_2018
+      FROM (
+          SELECT 'value_2017' || '~' || 'code_2017' || '~' || 'code_2018' || '~' || 'value_2018' || '~' ||
+                 'data_source_dwid' AS data_source_integration_columns
+               , COALESCE( CAST( t465.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t465.code AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( t464.code AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t464.value AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) AS data_source_integration_id
+               , NOW( ) AS edw_created_datetime
+               , NOW( ) AS edw_modified_datetime
+               , MAX( primary_table.data_source_updated_datetime ) AS data_source_modified_datetime
+               , t465.value AS value_2017
+               , t465.code AS code_2017
+               , t464.code AS code_2018
+               , t464.value AS value_2018
+          FROM (
+              SELECT <<loan_partial_load_condition>> AS include_record
+                   , loan.*
+              FROM history_octane.loan
+              LEFT JOIN history_octane.loan AS history_records
+                        ON loan.l_pid = history_records.l_pid
+                            AND loan.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.l_pid IS NULL
+          ) AS primary_table
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<hmda_purchaser_of_loan_2017_type_partial_load_condition>> AS include_record
+                       , hmda_purchaser_of_loan_2017_type.*
+                  FROM history_octane.hmda_purchaser_of_loan_2017_type
+                  LEFT JOIN history_octane.hmda_purchaser_of_loan_2017_type AS history_records
+                            ON hmda_purchaser_of_loan_2017_type.code = history_records.code
+                                AND hmda_purchaser_of_loan_2017_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t465
+                     ON primary_table.l_hmda_purchaser_of_loan_2017_type = t465.code
+              -- ignoring this because the table alias t465 has already been added: INNER JOIN history_octane.hmda_purchaser_of_loan_2017_type t465 ON primary_table.l_hmda_purchaser_of_loan_2017_type = t465.code
+
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<hmda_purchaser_of_loan_2018_type_partial_load_condition>> AS include_record
+                       , hmda_purchaser_of_loan_2018_type.*
+                  FROM history_octane.hmda_purchaser_of_loan_2018_type
+                  LEFT JOIN history_octane.hmda_purchaser_of_loan_2018_type AS history_records
+                            ON hmda_purchaser_of_loan_2018_type.code = history_records.code
+                                AND hmda_purchaser_of_loan_2018_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.code IS NULL
+              ) AS primary_table
+          ) AS t464
+                     ON primary_table.l_hmda_purchaser_of_loan_2018_type = t464.code
+              -- ignoring this because the table alias t464 has already been added: INNER JOIN history_octane.hmda_purchaser_of_loan_2018_type t464 ON primary_table.l_hmda_purchaser_of_loan_2018_type = t464.code
+          WHERE GREATEST( primary_table.include_record, t465.include_record, t464.include_record ) IS TRUE
+          GROUP BY t465.value, t465.code, t464.code, t464.value
+      ) AS hmda_purchaser_of_loan_dim_new_records
+      LEFT JOIN star_loan.hmda_purchaser_of_loan_dim
+                ON hmda_purchaser_of_loan_dim.data_source_integration_id = hmda_purchaser_of_loan_dim_new_records.data_source_integration_id
+      WHERE hmda_purchaser_of_loan_dim.dwid IS NULL
+      ;
+next_etls:
+  - SP-300001-insert-update

@@ -6,7 +6,8 @@ The class structure is as follows:
         - has zero to many SchemaMetadata
             - has zero to many TableMetadata
                 - has zero to many ColumnMetadata
-                    - has zero to one ForeignColumnPath
+                    - has zero to one ColumnSourceComponents
+                        - has one to many SourceForeignKeyPath
                 - has zero to many ForeignKeyMetadata
                 - has zero to many ETLMetadata
 
@@ -31,7 +32,7 @@ from lib.metadata_core.metadata_object_path import DatabasePath, SchemaPath, Tab
 
 
 @dataclass
-class ForeignColumnPath:
+class SourceForeignKeyPath:
     """A data structure describing the "path" to a column in another table.
 
     column_name is the name of the foreign column. fk_steps is a list of foreign
@@ -53,6 +54,63 @@ class ForeignColumnPath:
     """
     fk_steps: List[str]
     column_name: str
+
+    def __str__(self) -> str:
+        source_path_string = 'primary_source_table'
+        foreign_key_steps_string = '.'.join([f'foreign_keys.{fk_step}' for fk_step in self.fk_steps])
+        if foreign_key_steps_string != '':
+            source_path_string += f'.{foreign_key_steps_string}'
+        source_path_string += f'.columns.{self.column_name}'
+        return source_path_string
+
+@dataclass
+class ColumnSourceComponents:
+    """A data structure describing the components of a column's source, which may utilize foreign columns or a
+    calculation that utilizes native and/or foreign columns.
+
+    calculation_string contains a parameterized version of SQL logic used for obtaining the column's value.
+    column paths is a list of SourceForeignKeyPath objects, the order of which corresponds to the order of parameters in
+    the calculation_string attribute.
+
+    The following examples illustrate the different permutations of valid ColumnSourceComponents objects:
+
+        [Example 1] loan_junk_dim.buydown_contributor_code:
+        An example of a ColumnSourceComponents object representing source information for a column that is native to its
+        corresponding table.
+
+            ColumnSourceComponents(
+                calculation_string = None,
+                foreign_key_paths = [
+                    SourceForeignKeyPath(
+                        fk_steps = [],
+                        column_name = 'l_buydown_contributor_type'
+                    )
+                ]
+            )
+
+        [Example 2] loan_junk_dim.piggyback_flag:
+        An example of a ColumnSourceComponents object representing source information for a column that is the result
+        of a calculation which utilizes two columns; one native to the corresponding table and the other foreign.
+
+            ColumnSourceComponents(
+                calculation_string = 'CASE
+                    WHEN $1 IS NULL OR $2 IS NULL THEN NULL
+                    WHEN $1 = 'FIRST' OR $2 = 'STANDALONE_2ND' THEN FALSE
+                    ELSE TRUE END',
+                foreign_key_paths = [
+                    SourceForeignKeyPath(
+                        fk_steps = [],
+                        column_name = 'l_lien_priority_type'
+                    ),
+                    SourceForeignKeyPath(
+                        fk_steps = ['fk_loan_1'],
+                        column_name = 'prp_structure_type'
+                    )
+                ]
+            )
+    """
+    calculation_string: Optional[str]
+    foreign_key_paths: List[SourceForeignKeyPath]
 
 
 @dataclass
@@ -142,18 +200,23 @@ class ColumnMetadata:
     Attributes:
         name: the column name
         data_type: the column's data type
-        source_field: a ForeignColumnPath describing the location of the column's
-        source field, starting from the table's primary_source_table
+        source: a ColumnSourceComponents object that indicates whether the column is sourced from another column,
+        or is sourced from a calculation involving one or more columns
+        update_flag: an indicator as to whether the field is updatable; only used for columns that are maintained by
+        insert/update ETLs
     """
     name: str
     data_type: Optional[str] = None
-    source_field: Optional[ForeignColumnPath] = None
+    source: Optional[ColumnSourceComponents] = None
+    update_flag: Optional[bool] = None
 
-    def __init__(self, name: str, data_type: Optional[str] = None, source_field: Optional[ForeignColumnPath] = None):
+    def __init__(self, name: str, data_type: Optional[str] = None, source: Optional[ColumnSourceComponents] = None,
+                 update_flag: Optional[bool] = None):
         self.name = name
         self.path = ColumnPath(database=None, schema=None, table=None, column=name)
         self.data_type = data_type
-        self.source_field = source_field
+        self.source = source
+        self.update_flag = update_flag
 
 
 class TableMetadata:
@@ -231,16 +294,19 @@ class TableMetadata:
     def contains_foreign_key(self, foreign_key_name: str) -> bool:
         return foreign_key_name in self._foreign_keys
 
-    def get_column_source_table(self, column_name: str, data_warehouse_metadata: 'DataWarehouseMetadata') -> Optional['TableMetadata']:
-        """Get the TableMetadata object for a given column's source table from within the given DataWarehouseMetadata structure."""
-        source_field = self.get_column(column_name).source_field
-        if source_field is not None:
-            source_table = data_warehouse_metadata.get_table_by_path(self.primary_source_table)
-            for foreign_key in source_field.fk_steps:
-                source_table = data_warehouse_metadata.get_table_by_path(source_table.get_foreign_key(foreign_key).table)
-            return source_table
-        else:
-            return None
+    def get_source_column_paths(self, column_name: str, data_warehouse_metadata: 'DataWarehouseMetadata') -> List[ColumnPath]:
+        """Get the ColumnPaths for the given column's source columns from within the given DataWarehouseMetadata structure."""
+        source_column_paths = []
+        source = self.get_column(column_name).source
+        if source is not None:
+            for path in source.foreign_key_paths:
+                if path is not None:
+                    source_table = data_warehouse_metadata.get_table_by_path(self.primary_source_table)
+                    for foreign_key in path.fk_steps:
+                        source_table = data_warehouse_metadata.get_table_by_path(
+                            source_table.get_foreign_key(foreign_key).table)
+                    source_column_paths.append(source_table.get_column(path.column_name).path)
+        return source_column_paths
 
     @property
     def columns(self) -> List[ColumnMetadata]:

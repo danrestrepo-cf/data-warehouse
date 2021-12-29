@@ -1,21 +1,21 @@
 version: '3.8'
 services:
     flyway-ingress:
-        image: ${FLYWAY_IMAGE:-flyway/flyway:6}
+        image: ${FLYWAY_IMAGE:-flyway/flyway:8}
         command: -url=jdbc:postgresql://database:5432/ingress -schemas=flyway -user=deployer -password=testonly -connectRetries=60 migrate
         volumes:
             - ./database/migrations/ingress:/flyway/sql
         networks:
             - edw_default
     flyway-staging:
-        image: ${FLYWAY_IMAGE:-flyway/flyway:6}
+        image: ${FLYWAY_IMAGE:-flyway/flyway:8}
         command: -url=jdbc:postgresql://database:5432/staging -schemas=flyway -user=deployer -password=testonly -connectRetries=60 migrate
         volumes:
             - ./database/migrations/staging:/flyway/sql
         networks:
             - edw_default
     flyway-config:
-        image: ${FLYWAY_IMAGE:-flyway/flyway:6}
+        image: ${FLYWAY_IMAGE:-flyway/flyway:8}
         command: -url=jdbc:postgresql://database:5432/config -schemas=flyway -user=deployer -password=testonly -connectRetries=60 migrate
         volumes:
             - ./database/migrations/config:/flyway/sql
