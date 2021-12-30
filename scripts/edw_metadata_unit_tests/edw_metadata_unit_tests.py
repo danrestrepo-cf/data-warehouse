@@ -471,7 +471,8 @@ def test_21():
 
 
 def test_22():
-    """table_output_field: field_order numbers must be unique within any given table_output_step_dwid"""
+    """NOTE: TEST 22 IS DEPRECATED. IT IS NO LONGER CALLED BY THE unit-test-runner.sh SHELL SCRIPT; see https://app.asana.com/0/0/1201461907662856
+    table_output_field: field_order numbers must be unique within any given table_output_step_dwid"""
     query_tester("""
         SELECT table_output_field.table_output_step_dwid
             , table_output_field.field_order
