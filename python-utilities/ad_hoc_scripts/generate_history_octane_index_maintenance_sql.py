@@ -1,14 +1,12 @@
-"""EDW | Create indexes in history_octane to match indexes/foreign keys that exist in Octane
-https://app.asana.com/0/0/1201595592239229
+"""Create indexes in history_octane to match Octane foreign and primary keys
 
-This one-off script compares foreign key metadata in the history_octane schema
-with history_octane index metadata from pg_catalog and generates SQL statements
-that:
-    1. create indexes on any foreign key columns in history_octane that are not
-       already indexed
-    2. rename existing indexes on foreign key columns to match the name of the
-       corresponding foreign key in the metadata YAML (if the names do not already
-       match)
+This one-off script compares primary- and foreign-key metadata in the history_octane
+schema with history_octane index metadata from pg_catalog and generates SQL statements
+that create indexes on any columns in history_octane that correspond to either:
+    1. primary key columns in Octane
+    2. foreign key columns in Octane
+
+1/3/2022 - CEdwards - Script created https://app.asana.com/0/0/1201595592239229
 """
 
 import sys
