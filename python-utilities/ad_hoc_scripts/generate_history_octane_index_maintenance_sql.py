@@ -14,7 +14,7 @@ import os
 import argparse
 import hashlib
 
-# this line allows the script to import directly from lib when run from the command line
+# this line allows the script to import directly from python-utilities/lib when run from the command line
 PROJECT_DIR_PATH = os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
 sys.path.append(PROJECT_DIR_PATH)
 
