@@ -57,15 +57,15 @@ def execute(event, context):
             any_step_function_with_base_has_running_execution = False
             exact_step_function_exists = False
             exact_step_function_latest_execution_was_successful = False
-            latest_successful_execution_datetime = None
+            step_function_started_datetime = None
 
             for suffix in valid_etl_type_suffixes:
-                step_function_exists, has_running_execution, latest_successful_execution_datetime = fetch_execution(state_machine_arn_base, suffix)
+                step_function_exists, has_running_execution, step_function_started_datetime = fetch_execution(state_machine_arn_base, suffix)
                 any_step_function_with_base_has_running_execution = has_running_execution or any_step_function_with_base_has_running_execution
-                any_step_function_with_base_exists = any_step_function_with_base_exists or step_function_exists
+                any_step_function_with_base_exists = step_function_exists or any_step_function_with_base_exists
                 if process_id_base + suffix == process_id:
                     exact_step_function_exists = step_function_exists
-                    exact_step_function_latest_execution_was_successful = latest_successful_execution_datetime is not None
+                    exact_step_function_latest_execution_was_successful = step_function_started_datetime is not None
 
             if not any_step_function_with_base_exists:
                 # Do not raise an exception because we do not want this message to go back onto the queue and cause
@@ -73,8 +73,10 @@ def execute(event, context):
                 logger.error("No state machine with base process name {} exists".format(process_id_base))
             elif not exact_step_function_exists:
                 logger.error("State machine not found: {}".format(state_machine_arn))
-            elif exact_step_function_latest_execution_was_successful and latest_successful_execution_datetime > message_sent_timestamp:
-                logger.info("Detected unneeded execution for state machine {}, dropping message.".format(state_machine_arn))
+            elif exact_step_function_latest_execution_was_successful and step_function_started_datetime > message_sent_timestamp:
+                logger.info("State machine {} last executed successfully with a start time of {}. Message was sent "
+                            "before the successful execution began at {}, so this message's execution is unnecessary. "
+                            "Dropping message.".format(state_machine_arn, step_function_started_datetime, message_sent_timestamp))
             elif any_step_function_with_base_has_running_execution:
                 # Do raise an exception to send this message back to the queue, as the included step function could
                 # result in changes to data within its target table when executed
@@ -101,12 +103,17 @@ def fetch_execution(state_machine_arn_base: str, etl_type_suffix: str = '') -> t
             stateMachineArn=(state_machine_arn_base + etl_type_suffix),
             maxResults=1
         )
-        step_function_exists = True
-        latest_execution_status = response["executions"]["status"]
-        has_running_execution = latest_execution_status == "RUNNING"
-        latest_successful_execution_datetime = response["executions"]["startDate"] if latest_execution_status == "SUCCEEDED" else None
+        if len(response["executions"]) > 0:
+            step_function_exists = True
+            latest_execution_status = response["executions"][0]["status"]
+            has_running_execution = latest_execution_status == "RUNNING"
+            step_function_started_datetime = response["executions"][0]["startDate"] if latest_execution_status == "SUCCEEDED" else None
+        else:
+            step_function_exists = True
+            has_running_execution = False
+            step_function_started_datetime = None
     except sfn.exceptions.StateMachineDoesNotExist:
         step_function_exists = False
         has_running_execution = False
-        latest_successful_execution_datetime = None
-    return step_function_exists, has_running_execution, latest_successful_execution_datetime
+        step_function_started_datetime = None
+    return step_function_exists, has_running_execution, step_function_started_datetime
