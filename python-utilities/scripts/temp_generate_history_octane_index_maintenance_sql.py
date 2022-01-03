@@ -1,37 +1,19 @@
-"""Generate SQL statements to update metadata stored in the EDW config.mdi schema so that it matches EDW YAML metadata files' contents.
+"""EDW | Create indexes in history_octane to match indexes/foreign keys that exist in Octane
+https://app.asana.com/0/0/1201595592239229
 
-This script reads EDW metadata from the following tables in the config.mdi schema:
-- edw_table_definition
-- edw_join_definition
-- edw_field_definition
-- process
-- table_input_step
-- table_output_step
-- table_output_field
-- json_output_field
-- state_machine_definition
-- state_machine_step
-
-It then compares that data with the corresponding metadata in the EDW YAML metadata
-records, and generates INSERT, UPDATE, and DELETE SQL statements based on the
-following logic:
-- Any metadata present in the YAML files but not in the mdi schema should
-  be INSERTED into the appropriate mdi schema table
-- Any metadata not present in the YAML files but present in the mdi schema should
-  be DELETED from the appropriate mdi schema table
-- Any metadata entity in the mdi schema whose attributes differ from the same
-  entity in the YAML metadata should be UPDATED in the appropriate mdi schema table
-
-After performing the comparison and analyzing any differences, the script outputs
-a SQL file (either to "./config_mdi_metadata_maintenance.sql" or a user-specified
-location, if one is given) containing DML queries that, when executed, update
-the contents of the config.mdi metadata tables to match the contents of the EDW
-metadata YAML files.
+This one-off script compares foreign key metadata in the history_octane schema
+with history_octane index metadata from pg_catalog and generates SQL statements
+that:
+    1. create indexes on any foreign key columns in history_octane that are not
+       already indexed
+    2. rename existing indexes on foreign key columns to match the name of the
+       corresponding foreign key in the metadata YAML (if the names do not already
+       match)
 """
+
 import sys
 import os
 import argparse
-from typing import List
 
 import constants
 
@@ -43,21 +25,6 @@ from lib.metadata_core.metadata_object_path import SchemaPath
 from lib.metadata_core.metadata_yaml_translator import generate_data_warehouse_metadata_from_yaml
 from lib.metadata_core.metadata_filter import InclusiveMetadataFilterer
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable
-from lib.config_mdi_metadata_maintenance.metadata_maintenance_sql_generator import MetadataMaintenanceSQLGenerator
-from lib.config_mdi_metadata_maintenance.metadata_comparison_functions import (ProcessMetadataComparisonFunctions,
-                                                                               JSONOutputFieldMetadataComparisonFunctions,
-                                                                               StateMachineDefinitionMetadataComparisonFunctions,
-                                                                               StateMachineStepMetadataComparisonFunctions,
-                                                                               TableInputStepMetadataComparisonFunctions,
-                                                                               TableOutputStepMetadataComparisonFunctions,
-                                                                               TableOutputFieldMetadataComparisonFunctions,
-                                                                               InsertUpdateStepMetadataComparisonFunctions,
-                                                                               InsertUpdateKeyMetadataComparisonFunctions,
-                                                                               InsertUpdateFieldMetadataComparisonFunctions,
-                                                                               DeleteStepMetadataComparisonFunctions,
-                                                                               DeleteKeyMetadataComparisonFunctions,
-                                                                               EDWTableDefinitionMetadataComparisonFunctions,
-                                                                               EDWFieldDefinitionMetadataComparisonFunctions)
 
 
 def main():
