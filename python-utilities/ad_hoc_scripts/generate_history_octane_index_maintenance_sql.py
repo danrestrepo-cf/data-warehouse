@@ -14,6 +14,7 @@ that:
 import sys
 import os
 import argparse
+import hashlib
 
 # this line allows the script to import directly from lib when run from the command line
 PROJECT_DIR_PATH = os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
@@ -22,7 +23,6 @@ sys.path.append(PROJECT_DIR_PATH)
 from lib.db_connections import DBConnectionFactory, DBConnection
 from lib.metadata_core.metadata_object_path import SchemaPath
 from lib.metadata_core.metadata_yaml_translator import generate_data_warehouse_metadata_from_yaml
-from lib.metadata_core.metadata_filter import InclusiveMetadataFilterer
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable
 
 
@@ -47,10 +47,15 @@ def main():
     index_metadata = get_existing_index_metadata(DBConnectionFactory().get_connection('edw-local-staging'))
     data_warehouse_metadata = generate_data_warehouse_metadata_from_yaml(args.metadata_dir)
 
-    # build metadata table from YAML foreign key data
-    # indexname is an *attribute* (not part of the key) in order to identify columns that *are* indexed but with an unexpected name
+    # build metadata tables from YAML primary key and foreign key data
     foreign_key_metadata = MetadataTable(['tablename', 'columnname'])
+    primary_key_metadata = MetadataTable(['tablename', 'columnname'])
     for table in data_warehouse_metadata.get_schema_by_path(SchemaPath('staging', 'history_octane')).tables:
+        primary_key_metadata.add_row({
+            'tablename': table.name,
+            'indexname': make_index_name(table.name, table.primary_key[0]),
+            'columnname': table.primary_key[0]
+        })
         for foreign_key in table.foreign_keys:
             foreign_key_metadata.add_row({
                 'tablename': table.name,
@@ -59,13 +64,15 @@ def main():
             })
 
     # generate maintenance SQL string
-    maintenance_sql = ''
+    maintenance_sql = '/*\nPRIMARY KEY INDEXES\n*/\n\n'
+    for row in primary_key_metadata.rows:
+        if not index_metadata.row_exists_with_key(row.key):
+            maintenance_sql += make_create_index_statement(row.attributes["indexname"], row.key["tablename"], row.key["columnname"])
+
+    maintenance_sql += '\n/*\nFOREIGN KEY INDEXES\n*/\n\n'
     for row in foreign_key_metadata.rows:
         if not index_metadata.row_exists_with_key(row.key):
-            maintenance_sql += f'CREATE INDEX {row.attributes["indexname"]} ON history_octane.{row.key["tablename"]} ({row.key["columnname"]});\n'
-        elif not row.attributes == index_metadata.get_attributes_by_key(row.key):
-            current_idx_name = index_metadata.get_attributes_by_key(row.key)['indexname']
-            maintenance_sql += f'ALTER INDEX history_octane.{current_idx_name} RENAME TO {row.attributes["indexname"]};\n'
+            maintenance_sql += make_create_index_statement(row.attributes["indexname"], row.key["tablename"], row.key["columnname"])
 
     # output results
     if maintenance_sql == '':
@@ -90,6 +97,18 @@ def get_existing_index_metadata(edw_connection: DBConnection) -> MetadataTable:
         for row in raw_metadata:
             metadata_table.add_row(row)
         return metadata_table
+
+
+def make_index_name(table: str, column: str) -> str:
+    default_name = f'idx_{table}__{column}'
+    if len(default_name) > 63:
+        return f'idx_{hashlib.md5(default_name).hexdigest()}'
+    else:
+        return default_name
+
+
+def make_create_index_statement(index: str, table: str, column: str) -> str:
+    return f'CREATE INDEX {index} ON history_octane.{table} ({column});\n'
 
 
 if __name__ == '__main__':
