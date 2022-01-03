@@ -15,10 +15,9 @@ import sys
 import os
 import argparse
 
-import constants
-
 # this line allows the script to import directly from lib when run from the command line
-sys.path.append(constants.PROJECT_DIR_PATH)
+PROJECT_DIR_PATH = os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
+sys.path.append(PROJECT_DIR_PATH)
 
 from lib.db_connections import DBConnectionFactory, DBConnection
 from lib.metadata_core.metadata_object_path import SchemaPath
@@ -33,13 +32,13 @@ def main():
     argparser.add_argument(
         '--metadata_dir',
         type=str,
-        default=os.path.join(constants.PROJECT_DIR_PATH, '..', 'metadata', 'edw'),
+        default=os.path.join(PROJECT_DIR_PATH, '..', 'metadata', 'edw'),
         help='the source directory for metadata files. Defaults to data-warehouse/metadata.'
     )
     argparser.add_argument(
         '--output_file',
         type=str,
-        default=os.path.realpath('./history_octane_index_maintenance.sql'),
+        default=os.path.realpath(os.path.join(PROJECT_DIR_PATH, 'ad_hoc_scripts', 'history_octane_index_maintenance.sql')),
         help='the file in which to output the generated SQL statements. Defaults to ./history_octane_index_maintenance.sql'
     )
     args = argparser.parse_args()
