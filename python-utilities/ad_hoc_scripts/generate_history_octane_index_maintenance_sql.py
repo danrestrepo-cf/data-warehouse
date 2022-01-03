@@ -47,11 +47,6 @@ def main():
     index_metadata = get_existing_index_metadata(DBConnectionFactory().get_connection('edw-local-staging'))
     data_warehouse_metadata = generate_data_warehouse_metadata_from_yaml(args.metadata_dir)
 
-    # filter metadata to staging_octane, history_octane, star_loan, and star_common
-    filterer = InclusiveMetadataFilterer()
-    filterer.add_schema_criteria(SchemaPath('staging', 'history_octane'))
-    data_warehouse_metadata = filterer.filter(data_warehouse_metadata)
-
     # build metadata table from YAML foreign key data
     # indexname is an *attribute* (not part of the key) in order to identify columns that *are* indexed but with an unexpected name
     foreign_key_metadata = MetadataTable(['tablename', 'columnname'])
