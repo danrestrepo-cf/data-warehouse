@@ -3,7 +3,7 @@ services:
   database:
     # we build the image so we may copy an init script in.
     # trying to copy the init script as a volume leads to errors reading it.  this works.
-    image: ${POSTGRES_IMAGE:-postgres:12}
+    image: ${POSTGRES_IMAGE:-postgres:13.4}
     environment:
       - POSTGRES_PASSWORD=testonly
     volumes:

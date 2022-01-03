@@ -25,7 +25,7 @@ pipeline {
         JENKINS_ENVIRONMENT = 'true'
 
         FLYWAY_IMAGE='188213074036.dkr.ecr.us-east-1.amazonaws.com/lura/dev-flyway:8'
-        POSTGRES_IMAGE='188213074036.dkr.ecr.us-east-1.amazonaws.com/lura/dev-postgres:12'
+        POSTGRES_IMAGE='188213074036.dkr.ecr.us-east-1.amazonaws.com/lura/dev-postgres:13.4'
 
         // Zoom notifications:
         ZOOM_TOKEN_STATUS = credentials('zoom-token-bi-jenkins')
