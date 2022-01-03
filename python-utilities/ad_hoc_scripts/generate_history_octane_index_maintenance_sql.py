@@ -6,7 +6,7 @@ that create indexes on any columns in history_octane that correspond to either:
     1. primary key columns in Octane
     2. foreign key columns in Octane
 
-1/3/2022 - CEdwards - Script created https://app.asana.com/0/0/1201595592239229
+1/3/2022 - CEdwards - Script created        https://app.asana.com/0/0/1201595592239229
 """
 
 import sys
