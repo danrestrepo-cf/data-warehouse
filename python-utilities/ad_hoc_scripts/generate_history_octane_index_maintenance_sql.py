@@ -75,12 +75,9 @@ def main():
             maintenance_sql += make_create_index_statement(row.attributes["indexname"], row.key["tablename"], row.key["columnname"])
 
     # output results
-    if maintenance_sql == '':
-        print('No new indexes are necessary at this time')
-    else:
-        with open(args.output_file, 'w') as file:
-            file.write(maintenance_sql)
-        print(f'history_octane index maintenance SQL successfully written to {args.output_file}')
+    with open(args.output_file, 'w') as file:
+        file.write(maintenance_sql)
+    print(f'history_octane index maintenance SQL successfully written to {args.output_file}')
 
 
 def get_existing_index_metadata(edw_connection: DBConnection) -> MetadataTable:
