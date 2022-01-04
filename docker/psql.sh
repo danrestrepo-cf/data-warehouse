@@ -27,7 +27,7 @@ case "$#" in
     ;;
 esac
 
-image="${POSTGRES_IMAGE:-postgres-13}"
+image="${POSTGRES_IMAGE:-postgres:13}"
 
 jenkins=${JENKINS_ENVIRONMENT:-false}
 if [ $jenkins = "true" ]; then
