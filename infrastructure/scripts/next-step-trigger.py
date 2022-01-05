@@ -39,7 +39,7 @@ def execute(event, context):
 
     process_id = "Not Yet Set"
     for record in event['Records']:
-        message_sent_timestamp = datetime.datetime.fromtimestamp(record['attributes']['SentTimestamp'])
+        message_sent_timestamp = datetime.datetime.fromtimestamp(int(record['attributes']['SentTimestamp']) / 1e3)
         next_step_input = record["body"]
         logger.info("Next Step Input: {}".format(next_step_input))
 
