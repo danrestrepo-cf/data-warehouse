@@ -57,8 +57,8 @@ def execute(event, context):
             any_step_function_with_base_has_running_execution = False
             exact_step_function_exists = False
             exact_step_function_latest_execution_was_successful = False
-            step_function_started_datetime = None
-            
+            exact_step_function_started_datetime = None
+
             for suffix in valid_etl_type_suffixes:
                 step_function_exists, has_running_execution, step_function_started_datetime = fetch_execution(state_machine_arn_base, suffix)
 
