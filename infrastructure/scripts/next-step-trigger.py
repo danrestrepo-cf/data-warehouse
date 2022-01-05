@@ -58,14 +58,16 @@ def execute(event, context):
             exact_step_function_exists = False
             exact_step_function_latest_execution_was_successful = False
             step_function_started_datetime = None
-
+            
             for suffix in valid_etl_type_suffixes:
                 step_function_exists, has_running_execution, step_function_started_datetime = fetch_execution(state_machine_arn_base, suffix)
+
                 any_step_function_with_base_has_running_execution = has_running_execution or any_step_function_with_base_has_running_execution
                 any_step_function_with_base_exists = step_function_exists or any_step_function_with_base_exists
                 if process_id_base + suffix == process_id:
                     exact_step_function_exists = step_function_exists
                     exact_step_function_latest_execution_was_successful = step_function_started_datetime is not None
+                    exact_step_function_started_datetime = step_function_started_datetime
 
             if not any_step_function_with_base_exists:
                 # Do not raise an exception because we do not want this message to go back onto the queue and cause
@@ -73,10 +75,10 @@ def execute(event, context):
                 logger.error("No state machine with base process name {} exists".format(process_id_base))
             elif not exact_step_function_exists:
                 logger.error("State machine not found: {}".format(state_machine_arn))
-            elif exact_step_function_latest_execution_was_successful and step_function_started_datetime > message_sent_timestamp:
+            elif exact_step_function_latest_execution_was_successful and exact_step_function_started_datetime > message_sent_timestamp:
                 logger.info("State machine {} last executed successfully with a start time of {}. Message was sent "
                             "before the successful execution began at {}, so this message's execution is unnecessary. "
-                            "Dropping message.".format(state_machine_arn, step_function_started_datetime, message_sent_timestamp))
+                            "Dropping message.".format(state_machine_arn, exact_step_function_started_datetime, message_sent_timestamp))
             elif any_step_function_with_base_has_running_execution:
                 # Do raise an exception to send this message back to the queue, as the included step function could
                 # result in changes to data within its target table when executed
