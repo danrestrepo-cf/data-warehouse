@@ -3,11 +3,13 @@
 -- https://app.asana.com/0/0/1201313036590173
 --
 
-WITH updated_dim_sql (table_name, sql) AS (
 /*
- application_dim
- */
-    VALUES ('application_dim', 'WITH application_dim_incl_new_records AS (
+UPDATES
+*/
+
+--table_input_step
+WITH update_rows (process_name, data_source_dwid, sql, connectionname) AS (
+    VALUES ('SP-200003', 1, 'WITH application_dim_incl_new_records AS (
     SELECT ''application_pid'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
          , COALESCE( CAST( primary_table.apl_pid AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
@@ -49,11 +51,8 @@ JOIN (
          ON application_dim.etl_batch_id = etl_log.etl_batch_id
 ) AS application_dim_etl_start_times
      ON application_dim_incl_new_records.data_source_integration_id = application_dim_etl_start_times.data_source_integration_id
-         AND application_dim_incl_new_records.max_source_etl_end_date_time >= application_dim_etl_start_times.etl_start_date_time;')
-/*
- borrower_dim
- */
-         , ('borrower_dim', 'WITH borrower_dim_incl_new_records AS (
+         AND application_dim_incl_new_records.max_source_etl_end_date_time >= application_dim_etl_start_times.etl_start_date_time;', 'Staging DB Connection')
+         , ('SP-200005', 1, 'WITH borrower_dim_incl_new_records AS (
     SELECT ''borrower_pid'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
          , COALESCE( CAST( primary_table.b_pid AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
@@ -413,11 +412,8 @@ JOIN (
          ON borrower_dim.etl_batch_id = etl_log.etl_batch_id
 ) AS borrower_dim_etl_start_times
      ON borrower_dim_incl_new_records.data_source_integration_id = borrower_dim_etl_start_times.data_source_integration_id
-         AND borrower_dim_incl_new_records.max_source_etl_end_date_time >= borrower_dim_etl_start_times.etl_start_date_time;')
-/*
- interim_funder_dim
-*/
-         , ('interim_funder_dim', 'WITH interim_funder_dim_incl_new_records AS (
+         AND borrower_dim_incl_new_records.max_source_etl_end_date_time >= borrower_dim_etl_start_times.etl_start_date_time;', 'Staging DB Connection')
+         , ('SP-200008', 1, 'WITH interim_funder_dim_incl_new_records AS (
     SELECT ''interim_funder_pid'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
          , COALESCE( CAST( primary_table.if_pid AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
@@ -519,11 +515,8 @@ JOIN (
          ON interim_funder_dim.etl_batch_id = etl_log.etl_batch_id
 ) AS interim_funder_dim_etl_start_times
      ON interim_funder_dim_incl_new_records.data_source_integration_id = interim_funder_dim_etl_start_times.data_source_integration_id
-         AND interim_funder_dim_incl_new_records.max_source_etl_end_date_time >= interim_funder_dim_etl_start_times.etl_start_date_time;')
-/*
- investor_dim
-*/
-         , ('investor_dim', 'WITH investor_dim_incl_new_records AS (
+         AND interim_funder_dim_incl_new_records.max_source_etl_end_date_time >= interim_funder_dim_etl_start_times.etl_start_date_time;', 'Staging DB Connection')
+         , ('SP-200009', 1, 'WITH investor_dim_incl_new_records AS (
     SELECT ''investor_pid'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
          , COALESCE( CAST( primary_table.i_pid AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
@@ -868,18 +861,14 @@ JOIN (
          ON investor_dim.etl_batch_id = etl_log.etl_batch_id
 ) AS investor_dim_etl_start_times
      ON investor_dim_incl_new_records.data_source_integration_id = investor_dim_etl_start_times.data_source_integration_id
-         AND investor_dim_incl_new_records.max_source_etl_end_date_time >= investor_dim_etl_start_times.etl_start_date_time;')
-/*
- lender_user_dim
- */
-         , ('lender_user_dim', 'WITH lender_user_dim_incl_new_records AS (
+         AND investor_dim_incl_new_records.max_source_etl_end_date_time >= investor_dim_etl_start_times.etl_start_date_time;', 'Staging DB Connection')
+         , ('SP-200010', 1, 'WITH lender_user_dim_incl_new_records AS (
     SELECT ''lender_user_pid'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
          , COALESCE( CAST( primary_table.lu_pid AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
          , NOW( ) AS edw_created_datetime
          , NOW( ) AS edw_modified_datetime
          , primary_table.data_source_updated_datetime AS data_source_modified_datetime
-         , t454.value AS country
          , t455.value AS default_credit_bureau
          , primary_table.lu_username AS username
          , primary_table.lu_nmls_loan_originator_id AS nmls_loan_originator_id
@@ -919,7 +908,6 @@ JOIN (
          , primary_table.lu_email AS email
          , primary_table.lu_fax AS fax
          , primary_table.lu_city AS city
-         , primary_table.lu_country AS country_code
          , primary_table.lu_postal_code AS postal_code
          , primary_table.lu_state AS state
          , primary_table.lu_street1 AS street1
@@ -935,7 +923,7 @@ JOIN (
          , t456.value AS status
          , t457.value AS type
          , t458.value AS time_zone
-         , GREATEST( primary_table.etl_end_date_time, t454.etl_end_date_time, t455.etl_end_date_time, t456.etl_end_date_time,
+         , GREATEST( primary_table.etl_end_date_time, t455.etl_end_date_time, t456.etl_end_date_time,
                      t457.etl_end_date_time, t458.etl_end_date_time ) AS max_source_etl_end_date_time
     FROM (
         SELECT <<lender_user_partial_load_condition>> AS include_record
@@ -949,22 +937,6 @@ JOIN (
              ON lender_user.etl_batch_id = etl_log.etl_batch_id
         WHERE history_records.lu_pid IS NULL
     ) AS primary_table
-    INNER JOIN (
-        SELECT *
-        FROM (
-            SELECT <<country_type_partial_load_condition>> AS include_record
-                 , country_type.*
-                 , etl_log.etl_end_date_time
-            FROM history_octane.country_type
-            LEFT JOIN history_octane.country_type AS history_records
-                      ON country_type.code = history_records.code
-                          AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-            JOIN star_common.etl_log
-                 ON country_type.etl_batch_id = etl_log.etl_batch_id
-            WHERE history_records.code IS NULL
-        ) AS primary_table
-    ) AS t454
-               ON primary_table.lu_country = t454.code
     INNER JOIN (
         SELECT *
         FROM (
@@ -1029,7 +1001,7 @@ JOIN (
         ) AS primary_table
     ) AS t458
                ON primary_table.lu_time_zone = t458.code
-    WHERE GREATEST( primary_table.include_record, t454.include_record, t455.include_record, t456.include_record, t457.include_record,
+    WHERE GREATEST( primary_table.include_record, t455.include_record, t456.include_record, t457.include_record,
                     t458.include_record ) IS TRUE
 )
 --new records that should be inserted
@@ -1049,11 +1021,8 @@ JOIN (
          ON lender_user_dim.etl_batch_id = etl_log.etl_batch_id
 ) AS lender_user_dim_etl_start_times
      ON lender_user_dim_incl_new_records.data_source_integration_id = lender_user_dim_etl_start_times.data_source_integration_id
-         AND lender_user_dim_incl_new_records.max_source_etl_end_date_time >= lender_user_dim_etl_start_times.etl_start_date_time;')
-/*
- loan_beneficiary_dim
-*/
-         , ('loan_beneficiary_dim', 'WITH loan_beneficiary_dim_incl_new_records AS (
+         AND lender_user_dim_incl_new_records.max_source_etl_end_date_time >= lender_user_dim_etl_start_times.etl_start_date_time;', 'Staging DB Connection')
+         , ('SP-200011', 1, 'WITH loan_beneficiary_dim_incl_new_records AS (
     SELECT ''loan_beneficiary_pid'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
          , COALESCE( CAST( primary_table.lb_pid AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
@@ -1229,11 +1198,8 @@ JOIN (
          ON loan_beneficiary_dim.etl_batch_id = etl_log.etl_batch_id
 ) AS loan_beneficiary_dim_etl_start_times
      ON loan_beneficiary_dim_incl_new_records.data_source_integration_id = loan_beneficiary_dim_etl_start_times.data_source_integration_id
-         AND loan_beneficiary_dim_incl_new_records.max_source_etl_end_date_time >= loan_beneficiary_dim_etl_start_times.etl_start_date_time;')
-/*
- loan_dim
- */
-         , ('loan_dim', 'WITH loan_dim_incl_new_records AS (
+         AND loan_beneficiary_dim_incl_new_records.max_source_etl_end_date_time >= loan_beneficiary_dim_etl_start_times.etl_start_date_time;', 'Staging DB Connection')
+         , ('SP-200012', 1, 'WITH loan_dim_incl_new_records AS (
     SELECT ''loan_pid'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
          , COALESCE( CAST( primary_table.l_pid AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
@@ -1327,11 +1293,8 @@ JOIN (
          ON loan_dim.etl_batch_id = etl_log.etl_batch_id
 ) AS loan_dim_etl_start_times
      ON loan_dim_incl_new_records.data_source_integration_id = loan_dim_etl_start_times.data_source_integration_id
-         AND loan_dim_incl_new_records.max_source_etl_end_date_time >= loan_dim_etl_start_times.etl_start_date_time;')
-/*
- loan_funding_dim
- */
-         , ('loan_funding_dim', 'WITH loan_funding_dim_incl_new_records AS (
+         AND loan_dim_incl_new_records.max_source_etl_end_date_time >= loan_dim_etl_start_times.etl_start_date_time;', 'Staging DB Connection')
+         , ('SP-200013', 1, 'WITH loan_funding_dim_incl_new_records AS (
     SELECT ''loan_funding_pid'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
          , COALESCE( CAST( primary_table.lf_pid AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
@@ -1424,11 +1387,8 @@ JOIN (
          ON loan_funding_dim.etl_batch_id = etl_log.etl_batch_id
 ) AS loan_funding_dim_etl_start_times
      ON loan_funding_dim_incl_new_records.data_source_integration_id = loan_funding_dim_etl_start_times.data_source_integration_id
-         AND loan_funding_dim_incl_new_records.max_source_etl_end_date_time >= loan_funding_dim_etl_start_times.etl_start_date_time;')
-/*
- mortgage_insurance_dim
- */
-         , ('mortgage_insurance_dim', 'WITH mortgage_insurance_dim_incl_new_records AS (
+         AND loan_funding_dim_incl_new_records.max_source_etl_end_date_time >= loan_funding_dim_etl_start_times.etl_start_date_time;', 'Staging DB Connection')
+         , ('SP-200015', 1, 'WITH mortgage_insurance_dim_incl_new_records AS (
     SELECT ''loan_pid'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
          , COALESCE( CAST( primary_table.l_pid AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
@@ -1667,12 +1627,8 @@ JOIN (
 ) AS mortgage_insurance_dim_etl_start_times
      ON mortgage_insurance_dim_incl_new_records.data_source_integration_id =
         mortgage_insurance_dim_etl_start_times.data_source_integration_id
-         AND
-        mortgage_insurance_dim_incl_new_records.max_source_etl_end_date_time >= mortgage_insurance_dim_etl_start_times.etl_start_date_time;')
-/*
- product_dim
- */
-         , ('product_dim', 'WITH product_dim_incl_new_records AS (
+         AND mortgage_insurance_dim_incl_new_records.max_source_etl_end_date_time >= mortgage_insurance_dim_etl_start_times.etl_start_date_time;', 'Staging DB Connection')
+         , ('SP-200017', 1, 'WITH product_dim_incl_new_records AS (
     SELECT ''product_pid'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
          , COALESCE( CAST( primary_table.p_pid AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
@@ -1756,11 +1712,8 @@ JOIN (
          ON product_dim.etl_batch_id = etl_log.etl_batch_id
 ) AS product_dim_etl_start_times
      ON product_dim_incl_new_records.data_source_integration_id = product_dim_etl_start_times.data_source_integration_id
-         AND product_dim_incl_new_records.max_source_etl_end_date_time >= product_dim_etl_start_times.etl_start_date_time;')
-/*
- product_terms_dim
- */
-         , ('product_terms_dim', 'WITH product_terms_dim_incl_new_records AS (
+         AND product_dim_incl_new_records.max_source_etl_end_date_time >= product_dim_etl_start_times.etl_start_date_time;', 'Staging DB Connection')
+         , ('SP-200018', 1, 'WITH product_terms_dim_incl_new_records AS (
     SELECT ''product_terms_pid'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
          , COALESCE( CAST( primary_table.pt_pid AS TEXT ), ''<NULL>'' ) || ''~'' ||
            COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
@@ -2613,11 +2566,8 @@ JOIN (
          ON product_terms_dim.etl_batch_id = etl_log.etl_batch_id
 ) AS product_terms_dim_etl_start_times
      ON product_terms_dim_incl_new_records.data_source_integration_id = product_terms_dim_etl_start_times.data_source_integration_id
-         AND product_terms_dim_incl_new_records.max_source_etl_end_date_time >= product_terms_dim_etl_start_times.etl_start_date_time;')
-/*
- transaction_dim
- */
-         , ('transaction_dim', 'WITH transaction_dim_incl_new_records AS (
+         AND product_terms_dim_incl_new_records.max_source_etl_end_date_time >= product_terms_dim_etl_start_times.etl_start_date_time;', 'Staging DB Connection')
+         , ('SP-200019', 1, 'WITH transaction_dim_incl_new_records AS (
     SELECT ''deal_pid'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
          , COALESCE( CAST( t1441.d_pid AS TEXT ), ''<NULL>'' ) || ''~'' || COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
          , NOW( ) AS edw_created_datetime
@@ -2673,12 +2623,13 @@ JOIN (
          ON transaction_dim.etl_batch_id = etl_log.etl_batch_id
 ) AS transaction_dim_etl_start_times
      ON transaction_dim_incl_new_records.data_source_integration_id = transaction_dim_etl_start_times.data_source_integration_id
-         AND transaction_dim_incl_new_records.max_source_etl_end_date_time >= transaction_dim_etl_start_times.etl_start_date_time;')
+         AND transaction_dim_incl_new_records.max_source_etl_end_date_time >= transaction_dim_etl_start_times.etl_start_date_time;', 'Staging DB Connection')
 )
 UPDATE mdi.table_input_step
-SET sql = updated_dim_sql.sql
-FROM updated_dim_sql
-JOIN mdi.insert_update_step
-     ON insert_update_step.schema_name = 'star_loan'
-         AND insert_update_step.table_name = updated_dim_sql.table_name
-WHERE table_input_step.process_dwid = insert_update_step.process_dwid;
+SET data_source_dwid = update_rows.data_source_dwid
+  , sql = update_rows.sql
+  , connectionname = update_rows.connectionname::mdi.pentaho_db_connection_name
+FROM update_rows
+JOIN mdi.process
+     ON process.name = update_rows.process_name
+WHERE process.dwid = table_input_step.process_dwid;
