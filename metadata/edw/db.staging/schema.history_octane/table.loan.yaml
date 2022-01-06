@@ -60,6 +60,14 @@ foreign_keys:
       - code
       schema: history_octane
       table: buydown_schedule_type
+  fkt_l_fha_case_type:
+    columns:
+    - l_fha_case_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: fha_case_type
   fkt_l_fha_program_code_type:
     columns:
     - l_fha_program_code_type
@@ -236,6 +244,14 @@ foreign_keys:
       - code
       schema: history_octane
       table: qualifying_rate_type
+  fkt_l_section_of_act_type:
+    columns:
+    - l_section_of_act_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: section_of_act_type
   fkt_l_texas_equity:
     columns:
     - l_texas_equity
@@ -729,18 +745,26 @@ columns:
     data_type: DATE
     source:
       field: primary_source_table.columns.l_post_interest_only_first_payment_date
+  l_fha_case_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_fha_case_type
+  l_section_of_act_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.l_section_of_act_type
   data_source_updated_datetime:
     data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  etl_batch_id:
+    data_type: TEXT
   l_agency_case_id:
     data_type: VARCHAR(32)
   l_base_loan_amount_ltv_ratio_percent:
     data_type: NUMERIC(11,9)
   l_agency_case_id_assigned_date:
     data_type: DATE
-  etl_batch_id:
-    data_type: TEXT
 etls:
   SP-100320:
     input_type: table
@@ -868,6 +892,8 @@ etls:
            , staging_table.l_fha_agency_case_id_assigned_date
            , staging_table.l_usda_agency_case_id_assigned_date
            , staging_table.l_post_interest_only_first_payment_date
+           , staging_table.l_fha_case_type
+           , staging_table.l_section_of_act_type
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.loan staging_table
@@ -995,6 +1021,8 @@ etls:
            , history_table.l_fha_agency_case_id_assigned_date
            , history_table.l_usda_agency_case_id_assigned_date
            , history_table.l_post_interest_only_first_payment_date
+           , history_table.l_fha_case_type
+           , history_table.l_section_of_act_type
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.loan history_table
