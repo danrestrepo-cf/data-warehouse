@@ -491,461 +491,351 @@ etls:
     insert_update_keys:
       - data_source_integration_id
     input_sql: |-
-      SELECT investor_dim_incl_new_records.data_source_integration_columns
-          , investor_dim_incl_new_records.data_source_integration_id
-          , investor_dim_incl_new_records.edw_created_datetime
-          , investor_dim_incl_new_records.edw_modified_datetime
-          , investor_dim_incl_new_records.data_source_modified_datetime
-          , investor_dim_incl_new_records.beneficiary_country
-          , investor_dim_incl_new_records.file_delivery_address_country
-          , investor_dim_incl_new_records.investor_country
-          , investor_dim_incl_new_records.loss_payee_country
-          , investor_dim_incl_new_records.servicer_address_country
-          , investor_dim_incl_new_records.sub_servicer_address_country
-          , investor_dim_incl_new_records.when_recorded_mail_to_country
-          , investor_dim_incl_new_records.fnm_investor_remittance
-          , investor_dim_incl_new_records.fnm_mbs_loan_default_loss_party
-          , investor_dim_incl_new_records.fnm_mbs_reo_marketing_party
-          , investor_dim_incl_new_records.secondary_financing_source
-          , investor_dim_incl_new_records.investor_country_code
-          , investor_dim_incl_new_records.investor_postal_code
-          , investor_dim_incl_new_records.investor_state
-          , investor_dim_incl_new_records.investor_street1
-          , investor_dim_incl_new_records.investor_street2
-          , investor_dim_incl_new_records.secondary_financing_source_code
-          , investor_dim_incl_new_records.ein
-          , investor_dim_incl_new_records.loss_payee_state
-          , investor_dim_incl_new_records.loss_payee_postal_code
-          , investor_dim_incl_new_records.when_recorded_mail_to_country_code
-          , investor_dim_incl_new_records.when_recorded_mail_to_postal_code
-          , investor_dim_incl_new_records.when_recorded_mail_to_state
-          , investor_dim_incl_new_records.when_recorded_mail_to_street1
-          , investor_dim_incl_new_records.when_recorded_mail_to_street2
-          , investor_dim_incl_new_records.servicer_name
-          , investor_dim_incl_new_records.servicer_address_street1
-          , investor_dim_incl_new_records.servicer_address_street2
-          , investor_dim_incl_new_records.servicer_address_city
-          , investor_dim_incl_new_records.servicer_address_state
-          , investor_dim_incl_new_records.servicer_address_postal_code
-          , investor_dim_incl_new_records.servicer_address_country_code
-          , investor_dim_incl_new_records.sub_servicer_name
-          , investor_dim_incl_new_records.sub_servicer_address_street1
-          , investor_dim_incl_new_records.sub_servicer_address_street2
-          , investor_dim_incl_new_records.sub_servicer_address_city
-          , investor_dim_incl_new_records.sub_servicer_address_state
-          , investor_dim_incl_new_records.sub_servicer_address_postal_code
-          , investor_dim_incl_new_records.sub_servicer_address_country_code
-          , investor_dim_incl_new_records.sub_servicer_mers_org_id
-          , investor_dim_incl_new_records.file_delivery_name
-          , investor_dim_incl_new_records.file_delivery_address_street1
-          , investor_dim_incl_new_records.file_delivery_address_street2
-          , investor_dim_incl_new_records.file_delivery_address_city
-          , investor_dim_incl_new_records.file_delivery_address_state
-          , investor_dim_incl_new_records.file_delivery_address_postal_code
-          , investor_dim_incl_new_records.file_delivery_address_country_code
-          , investor_dim_incl_new_records.initial_beneficiary_candidate_flag
-          , investor_dim_incl_new_records.initial_servicer_candidate_flag
-          , investor_dim_incl_new_records.mers_org_member
-          , investor_dim_incl_new_records.mers_org_id
-          , investor_dim_incl_new_records.allonge_transfer_to_name
-          , investor_dim_incl_new_records.lock_expiration_delivery_subtrahend_days
-          , investor_dim_incl_new_records.loss_payee_country_code
-          , investor_dim_incl_new_records.loss_payee_city
-          , investor_dim_incl_new_records.loss_payee_name
-          , investor_dim_incl_new_records.investor_pid
-          , investor_dim_incl_new_records.investor_id
-          , investor_dim_incl_new_records.website_url
-          , investor_dim_incl_new_records.investor_name
-          , investor_dim_incl_new_records.investor_city
-          , investor_dim_incl_new_records.when_recorded_mail_to_city
-          , investor_dim_incl_new_records.maximum_lock_extensions_allowed
-          , investor_dim_incl_new_records.maximum_lock_extension_days_allowed
-          , investor_dim_incl_new_records.mortech_investor_id
-          , investor_dim_incl_new_records.fnma_servicer_id
-          , investor_dim_incl_new_records.loan_file_delivery_method_code
-          , investor_dim_incl_new_records.mbs_investor_flag
-          , investor_dim_incl_new_records.investor_hmda_purchaser_of_loan_code
-          , investor_dim_incl_new_records.investor_lock_disable_time
-          , investor_dim_incl_new_records.allows_weekend_holiday_locks_flag
-          , investor_dim_incl_new_records.nmls_id
-          , investor_dim_incl_new_records.nmls_id_applicable
-          , investor_dim_incl_new_records.fnm_investor_remittance_code
-          , investor_dim_incl_new_records.fnm_mbs_investor_remittance_day_of_month
-          , investor_dim_incl_new_records.fnm_mbs_loan_default_loss_party_code
-          , investor_dim_incl_new_records.fnm_mbs_reo_marketing_party_code
-          , investor_dim_incl_new_records.offers_secondary_financing_flag
-          , investor_dim_incl_new_records.beneficiary_street2
-          , investor_dim_incl_new_records.beneficiary_street1
-          , investor_dim_incl_new_records.beneficiary_state
-          , investor_dim_incl_new_records.beneficiary_postal_code
-          , investor_dim_incl_new_records.beneficiary_country_code
-          , investor_dim_incl_new_records.beneficiary_city
-          , investor_dim_incl_new_records.loss_payee_street1
-          , investor_dim_incl_new_records.loss_payee_street2
-          , investor_dim_incl_new_records.beneficiary_name
-          , investor_dim_incl_new_records.loss_payee_assignee_name
-          , investor_dim_incl_new_records.when_recorded_mail_to_name
-          , investor_dim_incl_new_records.investor_hmda_purchaser_of_loan
-          , investor_dim_incl_new_records.loan_file_delivery_method
-      FROM (
-      SELECT 'investor_pid' || '~' || 'data_source_dwid' as data_source_integration_columns,
-              COALESCE(CAST(primary_table.i_pid as text), '<NULL>')  || '~' || COALESCE(CAST(1 as text), '<NULL>')  as data_source_integration_id,
-              now() as edw_created_datetime,
-              now() as edw_modified_datetime,
-              primary_table.data_source_updated_datetime as data_source_modified_datetime,
-              t318.value as beneficiary_country,
-              t319.value as file_delivery_address_country,
-              t323.value as investor_country,
-              t326.value as loss_payee_country,
-              t330.value as servicer_address_country,
-              t331.value as sub_servicer_address_country,
-              t332.value as when_recorded_mail_to_country,
-              t320.value as fnm_investor_remittance,
-              t321.value as fnm_mbs_loan_default_loss_party,
-              t322.value as fnm_mbs_reo_marketing_party,
-              t329.value as secondary_financing_source,
-              primary_table.i_investor_country as investor_country_code,
-              primary_table.i_investor_postal_code as investor_postal_code,
-              primary_table.i_investor_state as investor_state,
-              primary_table.i_investor_street1 as investor_street1,
-              primary_table.i_investor_street2 as investor_street2,
-              primary_table.i_secondary_financing_source_type as secondary_financing_source_code,
-              primary_table.i_ein as ein,
-              primary_table.i_loss_payee_state as loss_payee_state,
-              primary_table.i_loss_payee_postal_code as loss_payee_postal_code,
-              primary_table.i_when_recorded_mail_to_country as when_recorded_mail_to_country_code,
-              primary_table.i_when_recorded_mail_to_postal_code as when_recorded_mail_to_postal_code,
-              primary_table.i_when_recorded_mail_to_state as when_recorded_mail_to_state,
-              primary_table.i_when_recorded_mail_to_street1 as when_recorded_mail_to_street1,
-              primary_table.i_when_recorded_mail_to_street2 as when_recorded_mail_to_street2,
-              primary_table.i_servicer_name as servicer_name,
-              primary_table.i_servicer_address_street1 as servicer_address_street1,
-              primary_table.i_servicer_address_street2 as servicer_address_street2,
-              primary_table.i_servicer_address_city as servicer_address_city,
-              primary_table.i_servicer_address_state as servicer_address_state,
-              primary_table.i_servicer_address_postal_code as servicer_address_postal_code,
-              primary_table.i_servicer_address_country as servicer_address_country_code,
-              primary_table.i_sub_servicer_name as sub_servicer_name,
-              primary_table.i_sub_servicer_address_street1 as sub_servicer_address_street1,
-              primary_table.i_sub_servicer_address_street2 as sub_servicer_address_street2,
-              primary_table.i_sub_servicer_address_city as sub_servicer_address_city,
-              primary_table.i_sub_servicer_address_state as sub_servicer_address_state,
-              primary_table.i_sub_servicer_address_postal_code as sub_servicer_address_postal_code,
-              primary_table.i_sub_servicer_address_country as sub_servicer_address_country_code,
-              primary_table.i_sub_servicer_mers_org_id as sub_servicer_mers_org_id,
-              primary_table.i_file_delivery_name as file_delivery_name,
-              primary_table.i_file_delivery_address_street1 as file_delivery_address_street1,
-              primary_table.i_file_delivery_address_street2 as file_delivery_address_street2,
-              primary_table.i_file_delivery_address_city as file_delivery_address_city,
-              primary_table.i_file_delivery_address_state as file_delivery_address_state,
-              primary_table.i_file_delivery_address_postal_code as file_delivery_address_postal_code,
-              primary_table.i_file_delivery_address_country as file_delivery_address_country_code,
-              primary_table.i_initial_beneficiary_candidate as initial_beneficiary_candidate_flag,
-              primary_table.i_initial_servicer_candidate as initial_servicer_candidate_flag,
-              primary_table.i_mers_org_member as mers_org_member,
-              primary_table.i_mers_org_id as mers_org_id,
-              primary_table.i_allonge_transfer_to_name as allonge_transfer_to_name,
-              primary_table.i_lock_expiration_delivery_subtrahend_days as lock_expiration_delivery_subtrahend_days,
-              primary_table.i_loss_payee_country as loss_payee_country_code,
-              primary_table.i_loss_payee_city as loss_payee_city,
-              primary_table.i_loss_payee_name as loss_payee_name,
-              primary_table.i_pid as investor_pid,
-              primary_table.i_investor_id as investor_id,
-              primary_table.i_website_url as website_url,
-              primary_table.i_investor_name as investor_name,
-              primary_table.i_investor_city as investor_city,
-              primary_table.i_when_recorded_mail_to_city as when_recorded_mail_to_city,
-              primary_table.i_maximum_lock_extensions_allowed as maximum_lock_extensions_allowed,
-              primary_table.i_maximum_lock_extension_days_allowed as maximum_lock_extension_days_allowed,
-              primary_table.i_mortech_investor_id as mortech_investor_id,
-              primary_table.i_fnma_servicer_id as fnma_servicer_id,
-              primary_table.i_loan_file_delivery_method_type as loan_file_delivery_method_code,
-              primary_table.i_mbs_investor as mbs_investor_flag,
-              primary_table.i_investor_hmda_purchaser_of_loan_type as investor_hmda_purchaser_of_loan_code,
-              primary_table.i_lock_disable_time as investor_lock_disable_time,
-              primary_table.i_allow_weekend_holiday_locks as allows_weekend_holiday_locks_flag,
-              primary_table.i_nmls_id as nmls_id,
-              primary_table.i_nmls_id_applicable as nmls_id_applicable,
-              primary_table.i_fnm_investor_remittance_type as fnm_investor_remittance_code,
-              primary_table.i_fnm_mbs_investor_remittance_day_of_month as fnm_mbs_investor_remittance_day_of_month,
-              primary_table.i_fnm_mbs_loan_default_loss_party_type as fnm_mbs_loan_default_loss_party_code,
-              primary_table.i_fnm_mbs_reo_marketing_party_type as fnm_mbs_reo_marketing_party_code,
-              primary_table.i_offers_secondary_financing as offers_secondary_financing_flag,
-              primary_table.i_beneficiary_street2 as beneficiary_street2,
-              primary_table.i_beneficiary_street1 as beneficiary_street1,
-              primary_table.i_beneficiary_state as beneficiary_state,
-              primary_table.i_beneficiary_postal_code as beneficiary_postal_code,
-              primary_table.i_beneficiary_country as beneficiary_country_code,
-              primary_table.i_beneficiary_city as beneficiary_city,
-              primary_table.i_loss_payee_street1 as loss_payee_street1,
-              primary_table.i_loss_payee_street2 as loss_payee_street2,
-              primary_table.i_beneficiary_name as beneficiary_name,
-              primary_table.i_loss_payee_assignee_name as loss_payee_assignee_name,
-              primary_table.i_when_recorded_mail_to_name as when_recorded_mail_to_name,
-              t324.value as investor_hmda_purchaser_of_loan,
-              t325.value as loan_file_delivery_method
-       FROM (
-          SELECT
-              <<investor_partial_load_condition>> as include_record,
-              investor.*
-          FROM history_octane.investor
-              LEFT JOIN history_octane.investor AS history_records ON investor.i_pid = history_records.i_pid
-                  AND investor.data_source_updated_datetime < history_records.data_source_updated_datetime
-          WHERE history_records.i_pid IS NULL
+      WITH investor_dim_incl_new_records AS (
+          SELECT 'investor_pid' || '~' || 'data_source_dwid' AS data_source_integration_columns
+               , COALESCE( CAST( primary_table.i_pid AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) AS data_source_integration_id
+               , NOW( ) AS edw_created_datetime
+               , NOW( ) AS edw_modified_datetime
+               , primary_table.data_source_updated_datetime AS data_source_modified_datetime
+               , t318.value AS beneficiary_country
+               , t319.value AS file_delivery_address_country
+               , t323.value AS investor_country
+               , t326.value AS loss_payee_country
+               , t330.value AS servicer_address_country
+               , t331.value AS sub_servicer_address_country
+               , t332.value AS when_recorded_mail_to_country
+               , t320.value AS fnm_investor_remittance
+               , t321.value AS fnm_mbs_loan_default_loss_party
+               , t322.value AS fnm_mbs_reo_marketing_party
+               , t329.value AS secondary_financing_source
+               , primary_table.i_investor_country AS investor_country_code
+               , primary_table.i_investor_postal_code AS investor_postal_code
+               , primary_table.i_investor_state AS investor_state
+               , primary_table.i_investor_street1 AS investor_street1
+               , primary_table.i_investor_street2 AS investor_street2
+               , primary_table.i_secondary_financing_source_type AS secondary_financing_source_code
+               , primary_table.i_ein AS ein
+               , primary_table.i_loss_payee_state AS loss_payee_state
+               , primary_table.i_loss_payee_postal_code AS loss_payee_postal_code
+               , primary_table.i_when_recorded_mail_to_country AS when_recorded_mail_to_country_code
+               , primary_table.i_when_recorded_mail_to_postal_code AS when_recorded_mail_to_postal_code
+               , primary_table.i_when_recorded_mail_to_state AS when_recorded_mail_to_state
+               , primary_table.i_when_recorded_mail_to_street1 AS when_recorded_mail_to_street1
+               , primary_table.i_when_recorded_mail_to_street2 AS when_recorded_mail_to_street2
+               , primary_table.i_servicer_name AS servicer_name
+               , primary_table.i_servicer_address_street1 AS servicer_address_street1
+               , primary_table.i_servicer_address_street2 AS servicer_address_street2
+               , primary_table.i_servicer_address_city AS servicer_address_city
+               , primary_table.i_servicer_address_state AS servicer_address_state
+               , primary_table.i_servicer_address_postal_code AS servicer_address_postal_code
+               , primary_table.i_servicer_address_country AS servicer_address_country_code
+               , primary_table.i_sub_servicer_name AS sub_servicer_name
+               , primary_table.i_sub_servicer_address_street1 AS sub_servicer_address_street1
+               , primary_table.i_sub_servicer_address_street2 AS sub_servicer_address_street2
+               , primary_table.i_sub_servicer_address_city AS sub_servicer_address_city
+               , primary_table.i_sub_servicer_address_state AS sub_servicer_address_state
+               , primary_table.i_sub_servicer_address_postal_code AS sub_servicer_address_postal_code
+               , primary_table.i_sub_servicer_address_country AS sub_servicer_address_country_code
+               , primary_table.i_sub_servicer_mers_org_id AS sub_servicer_mers_org_id
+               , primary_table.i_file_delivery_name AS file_delivery_name
+               , primary_table.i_file_delivery_address_street1 AS file_delivery_address_street1
+               , primary_table.i_file_delivery_address_street2 AS file_delivery_address_street2
+               , primary_table.i_file_delivery_address_city AS file_delivery_address_city
+               , primary_table.i_file_delivery_address_state AS file_delivery_address_state
+               , primary_table.i_file_delivery_address_postal_code AS file_delivery_address_postal_code
+               , primary_table.i_file_delivery_address_country AS file_delivery_address_country_code
+               , primary_table.i_initial_beneficiary_candidate AS initial_beneficiary_candidate_flag
+               , primary_table.i_initial_servicer_candidate AS initial_servicer_candidate_flag
+               , primary_table.i_mers_org_member AS mers_org_member
+               , primary_table.i_mers_org_id AS mers_org_id
+               , primary_table.i_allonge_transfer_to_name AS allonge_transfer_to_name
+               , primary_table.i_lock_expiration_delivery_subtrahend_days AS lock_expiration_delivery_subtrahend_days
+               , primary_table.i_loss_payee_country AS loss_payee_country_code
+               , primary_table.i_loss_payee_city AS loss_payee_city
+               , primary_table.i_loss_payee_name AS loss_payee_name
+               , primary_table.i_pid AS investor_pid
+               , primary_table.i_investor_id AS investor_id
+               , primary_table.i_website_url AS website_url
+               , primary_table.i_investor_name AS investor_name
+               , primary_table.i_investor_city AS investor_city
+               , primary_table.i_when_recorded_mail_to_city AS when_recorded_mail_to_city
+               , primary_table.i_maximum_lock_extensions_allowed AS maximum_lock_extensions_allowed
+               , primary_table.i_maximum_lock_extension_days_allowed AS maximum_lock_extension_days_allowed
+               , primary_table.i_mortech_investor_id AS mortech_investor_id
+               , primary_table.i_fnma_servicer_id AS fnma_servicer_id
+               , primary_table.i_loan_file_delivery_method_type AS loan_file_delivery_method_code
+               , primary_table.i_mbs_investor AS mbs_investor_flag
+               , primary_table.i_investor_hmda_purchaser_of_loan_type AS investor_hmda_purchaser_of_loan_code
+               , primary_table.i_lock_disable_time AS investor_lock_disable_time
+               , primary_table.i_allow_weekend_holiday_locks AS allows_weekend_holiday_locks_flag
+               , primary_table.i_nmls_id AS nmls_id
+               , primary_table.i_nmls_id_applicable AS nmls_id_applicable
+               , primary_table.i_fnm_investor_remittance_type AS fnm_investor_remittance_code
+               , primary_table.i_fnm_mbs_investor_remittance_day_of_month AS fnm_mbs_investor_remittance_day_of_month
+               , primary_table.i_fnm_mbs_loan_default_loss_party_type AS fnm_mbs_loan_default_loss_party_code
+               , primary_table.i_fnm_mbs_reo_marketing_party_type AS fnm_mbs_reo_marketing_party_code
+               , primary_table.i_offers_secondary_financing AS offers_secondary_financing_flag
+               , primary_table.i_beneficiary_street2 AS beneficiary_street2
+               , primary_table.i_beneficiary_street1 AS beneficiary_street1
+               , primary_table.i_beneficiary_state AS beneficiary_state
+               , primary_table.i_beneficiary_postal_code AS beneficiary_postal_code
+               , primary_table.i_beneficiary_country AS beneficiary_country_code
+               , primary_table.i_beneficiary_city AS beneficiary_city
+               , primary_table.i_loss_payee_street1 AS loss_payee_street1
+               , primary_table.i_loss_payee_street2 AS loss_payee_street2
+               , primary_table.i_beneficiary_name AS beneficiary_name
+               , primary_table.i_loss_payee_assignee_name AS loss_payee_assignee_name
+               , primary_table.i_when_recorded_mail_to_name AS when_recorded_mail_to_name
+               , t324.value AS investor_hmda_purchaser_of_loan
+               , t325.value AS loan_file_delivery_method
+               , GREATEST( primary_table.etl_end_date_time, t318.etl_end_date_time, t319.etl_end_date_time, t323.etl_end_date_time,
+                           t326.etl_end_date_time, t330.etl_end_date_time, t331.etl_end_date_time, t332.etl_end_date_time, t320.etl_end_date_time,
+                           t321.etl_end_date_time, t322.etl_end_date_time, t329.etl_end_date_time, t324.etl_end_date_time,
+                           t325.etl_end_date_time ) AS max_source_etl_end_date_time
+          FROM (
+              SELECT <<investor_partial_load_condition>> AS include_record
+                   , investor.*
+                   , etl_log.etl_end_date_time
+              FROM history_octane.investor
+              LEFT JOIN history_octane.investor AS history_records
+                        ON investor.i_pid = history_records.i_pid
+                            AND investor.data_source_updated_datetime < history_records.data_source_updated_datetime
+              JOIN star_common.etl_log
+                   ON investor.etl_batch_id = etl_log.etl_batch_id
+              WHERE history_records.i_pid IS NULL
           ) AS primary_table
-
           INNER JOIN (
-              SELECT * FROM (
-                  SELECT     <<country_type_partial_load_condition>> as include_record,
-                  country_type.*
+              SELECT *
+              FROM (
+                  SELECT <<country_type_partial_load_condition>> AS include_record
+                       , country_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.country_type
-                      LEFT JOIN history_octane.country_type AS history_records ON country_type.code = history_records.code
-                      AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  LEFT JOIN history_octane.country_type AS history_records
+                            ON country_type.code = history_records.code
+                                AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON country_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
-              ) as primary_table
-
-          ) AS t318 ON primary_table.i_beneficiary_country = t318.code
-
+              ) AS primary_table
+          ) AS t318
+                     ON primary_table.i_beneficiary_country = t318.code
           INNER JOIN (
-              SELECT * FROM (
-                  SELECT     <<country_type_partial_load_condition>> as include_record,
-                  country_type.*
+              SELECT *
+              FROM (
+                  SELECT <<country_type_partial_load_condition>> AS include_record
+                       , country_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.country_type
-                      LEFT JOIN history_octane.country_type AS history_records ON country_type.code = history_records.code
-                      AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  LEFT JOIN history_octane.country_type AS history_records
+                            ON country_type.code = history_records.code
+                                AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON country_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
-              ) as primary_table
-
-          ) AS t319 ON primary_table.i_file_delivery_address_country = t319.code
-
+              ) AS primary_table
+          ) AS t319
+                     ON primary_table.i_file_delivery_address_country = t319.code
           INNER JOIN (
-              SELECT * FROM (
-                  SELECT     <<country_type_partial_load_condition>> as include_record,
-                  country_type.*
+              SELECT *
+              FROM (
+                  SELECT <<country_type_partial_load_condition>> AS include_record
+                       , country_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.country_type
-                      LEFT JOIN history_octane.country_type AS history_records ON country_type.code = history_records.code
-                      AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  LEFT JOIN history_octane.country_type AS history_records
+                            ON country_type.code = history_records.code
+                                AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON country_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
-              ) as primary_table
-
-          ) AS t323 ON primary_table.i_investor_country = t323.code
-
+              ) AS primary_table
+          ) AS t323
+                     ON primary_table.i_investor_country = t323.code
           INNER JOIN (
-              SELECT * FROM (
-                  SELECT     <<country_type_partial_load_condition>> as include_record,
-                  country_type.*
+              SELECT *
+              FROM (
+                  SELECT <<country_type_partial_load_condition>> AS include_record
+                       , country_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.country_type
-                      LEFT JOIN history_octane.country_type AS history_records ON country_type.code = history_records.code
-                      AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  LEFT JOIN history_octane.country_type AS history_records
+                            ON country_type.code = history_records.code
+                                AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON country_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
-              ) as primary_table
-
-          ) AS t326 ON primary_table.i_loss_payee_country = t326.code
-
+              ) AS primary_table
+          ) AS t326
+                     ON primary_table.i_loss_payee_country = t326.code
           INNER JOIN (
-              SELECT * FROM (
-                  SELECT     <<country_type_partial_load_condition>> as include_record,
-                  country_type.*
+              SELECT *
+              FROM (
+                  SELECT <<country_type_partial_load_condition>> AS include_record
+                       , country_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.country_type
-                      LEFT JOIN history_octane.country_type AS history_records ON country_type.code = history_records.code
-                      AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  LEFT JOIN history_octane.country_type AS history_records
+                            ON country_type.code = history_records.code
+                                AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON country_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
-              ) as primary_table
-
-          ) AS t330 ON primary_table.i_servicer_address_country = t330.code
-
+              ) AS primary_table
+          ) AS t330
+                     ON primary_table.i_servicer_address_country = t330.code
           INNER JOIN (
-              SELECT * FROM (
-                  SELECT     <<country_type_partial_load_condition>> as include_record,
-                  country_type.*
+              SELECT *
+              FROM (
+                  SELECT <<country_type_partial_load_condition>> AS include_record
+                       , country_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.country_type
-                      LEFT JOIN history_octane.country_type AS history_records ON country_type.code = history_records.code
-                      AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  LEFT JOIN history_octane.country_type AS history_records
+                            ON country_type.code = history_records.code
+                                AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON country_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
-              ) as primary_table
-
-          ) AS t331 ON primary_table.i_sub_servicer_address_country = t331.code
-
+              ) AS primary_table
+          ) AS t331
+                     ON primary_table.i_sub_servicer_address_country = t331.code
           INNER JOIN (
-              SELECT * FROM (
-                  SELECT     <<country_type_partial_load_condition>> as include_record,
-                  country_type.*
+              SELECT *
+              FROM (
+                  SELECT <<country_type_partial_load_condition>> AS include_record
+                       , country_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.country_type
-                      LEFT JOIN history_octane.country_type AS history_records ON country_type.code = history_records.code
-                      AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  LEFT JOIN history_octane.country_type AS history_records
+                            ON country_type.code = history_records.code
+                                AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON country_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
-              ) as primary_table
-
-          ) AS t332 ON primary_table.i_when_recorded_mail_to_country = t332.code
-
+              ) AS primary_table
+          ) AS t332
+                     ON primary_table.i_when_recorded_mail_to_country = t332.code
           INNER JOIN (
-              SELECT * FROM (
-                  SELECT     <<fnm_investor_remittance_type_partial_load_condition>> as include_record,
-                  fnm_investor_remittance_type.*
+              SELECT *
+              FROM (
+                  SELECT <<fnm_investor_remittance_type_partial_load_condition>> AS include_record
+                       , fnm_investor_remittance_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.fnm_investor_remittance_type
-                      LEFT JOIN history_octane.fnm_investor_remittance_type AS history_records ON fnm_investor_remittance_type.code = history_records.code
-                      AND fnm_investor_remittance_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  LEFT JOIN history_octane.fnm_investor_remittance_type AS history_records
+                            ON fnm_investor_remittance_type.code = history_records.code
+                                AND fnm_investor_remittance_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON fnm_investor_remittance_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
-              ) as primary_table
-
-          ) AS t320 ON primary_table.i_fnm_investor_remittance_type = t320.code
-
+              ) AS primary_table
+          ) AS t320
+                     ON primary_table.i_fnm_investor_remittance_type = t320.code
           INNER JOIN (
-              SELECT * FROM (
-                  SELECT     <<fnm_mbs_loan_default_loss_party_type_partial_load_condition>> as include_record,
-                  fnm_mbs_loan_default_loss_party_type.*
+              SELECT *
+              FROM (
+                  SELECT <<fnm_mbs_loan_default_loss_party_type_partial_load_condition>> AS include_record
+                       , fnm_mbs_loan_default_loss_party_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.fnm_mbs_loan_default_loss_party_type
-                      LEFT JOIN history_octane.fnm_mbs_loan_default_loss_party_type AS history_records ON fnm_mbs_loan_default_loss_party_type.code = history_records.code
-                      AND fnm_mbs_loan_default_loss_party_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  LEFT JOIN history_octane.fnm_mbs_loan_default_loss_party_type AS history_records
+                            ON fnm_mbs_loan_default_loss_party_type.code = history_records.code
+                                AND
+                               fnm_mbs_loan_default_loss_party_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON fnm_mbs_loan_default_loss_party_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
-              ) as primary_table
-
-          ) AS t321 ON primary_table.i_fnm_mbs_loan_default_loss_party_type = t321.code
-
+              ) AS primary_table
+          ) AS t321
+                     ON primary_table.i_fnm_mbs_loan_default_loss_party_type = t321.code
           INNER JOIN (
-              SELECT * FROM (
-                  SELECT     <<fnm_mbs_reo_marketing_party_type_partial_load_condition>> as include_record,
-                  fnm_mbs_reo_marketing_party_type.*
+              SELECT *
+              FROM (
+                  SELECT <<fnm_mbs_reo_marketing_party_type_partial_load_condition>> AS include_record
+                       , fnm_mbs_reo_marketing_party_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.fnm_mbs_reo_marketing_party_type
-                      LEFT JOIN history_octane.fnm_mbs_reo_marketing_party_type AS history_records ON fnm_mbs_reo_marketing_party_type.code = history_records.code
-                      AND fnm_mbs_reo_marketing_party_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  LEFT JOIN history_octane.fnm_mbs_reo_marketing_party_type AS history_records
+                            ON fnm_mbs_reo_marketing_party_type.code = history_records.code
+                                AND fnm_mbs_reo_marketing_party_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON fnm_mbs_reo_marketing_party_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
-              ) as primary_table
-
-          ) AS t322 ON primary_table.i_fnm_mbs_reo_marketing_party_type = t322.code
-
+              ) AS primary_table
+          ) AS t322
+                     ON primary_table.i_fnm_mbs_reo_marketing_party_type = t322.code
           INNER JOIN (
-              SELECT * FROM (
-                  SELECT     <<gift_funds_type_partial_load_condition>> as include_record,
-                  gift_funds_type.*
+              SELECT *
+              FROM (
+                  SELECT <<gift_funds_type_partial_load_condition>> AS include_record
+                       , gift_funds_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.gift_funds_type
-                      LEFT JOIN history_octane.gift_funds_type AS history_records ON gift_funds_type.code = history_records.code
-                      AND gift_funds_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  LEFT JOIN history_octane.gift_funds_type AS history_records
+                            ON gift_funds_type.code = history_records.code
+                                AND gift_funds_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON gift_funds_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
-              ) as primary_table
-
-          ) AS t329 ON primary_table.i_secondary_financing_source_type = t329.code
-
+              ) AS primary_table
+          ) AS t329
+                     ON primary_table.i_secondary_financing_source_type = t329.code
           INNER JOIN (
-              SELECT * FROM (
-                  SELECT     <<investor_hmda_purchaser_of_loan_type_partial_load_condition>> as include_record,
-                  investor_hmda_purchaser_of_loan_type.*
+              SELECT *
+              FROM (
+                  SELECT <<investor_hmda_purchaser_of_loan_type_partial_load_condition>> AS include_record
+                       , investor_hmda_purchaser_of_loan_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.investor_hmda_purchaser_of_loan_type
-                      LEFT JOIN history_octane.investor_hmda_purchaser_of_loan_type AS history_records ON investor_hmda_purchaser_of_loan_type.code = history_records.code
-                      AND investor_hmda_purchaser_of_loan_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  LEFT JOIN history_octane.investor_hmda_purchaser_of_loan_type AS history_records
+                            ON investor_hmda_purchaser_of_loan_type.code = history_records.code
+                                AND
+                               investor_hmda_purchaser_of_loan_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON investor_hmda_purchaser_of_loan_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
-              ) as primary_table
-
-          ) AS t324 ON primary_table.i_investor_hmda_purchaser_of_loan_type = t324.code
-
+              ) AS primary_table
+          ) AS t324
+                     ON primary_table.i_investor_hmda_purchaser_of_loan_type = t324.code
           LEFT JOIN (
-              SELECT * FROM (
-                  SELECT     <<loan_file_delivery_method_type_partial_load_condition>> as include_record,
-                  loan_file_delivery_method_type.*
+              SELECT *
+              FROM (
+                  SELECT <<loan_file_delivery_method_type_partial_load_condition>> AS include_record
+                       , loan_file_delivery_method_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.loan_file_delivery_method_type
-                      LEFT JOIN history_octane.loan_file_delivery_method_type AS history_records ON loan_file_delivery_method_type.code = history_records.code
-                      AND loan_file_delivery_method_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  LEFT JOIN history_octane.loan_file_delivery_method_type AS history_records
+                            ON loan_file_delivery_method_type.code = history_records.code
+                                AND loan_file_delivery_method_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON loan_file_delivery_method_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
-              ) as primary_table
-
-          ) AS t325 ON primary_table.i_loan_file_delivery_method_type = t325.code
-       WHERE
-          GREATEST(primary_table.include_record, t318.include_record, t319.include_record, t323.include_record, t326.include_record, t330.include_record, t331.include_record, t332.include_record, t320.include_record, t321.include_record, t322.include_record, t329.include_record, t324.include_record, t325.include_record) IS TRUE
-       ORDER BY
-          primary_table.data_source_updated_datetime ASC
-      ) AS investor_dim_incl_new_records
-          LEFT JOIN star_loan.investor_dim ON investor_dim_incl_new_records.data_source_integration_id =
-                                    investor_dim.data_source_integration_id
-              AND investor_dim_incl_new_records.allonge_transfer_to_name IS NOT DISTINCT FROM investor_dim.allonge_transfer_to_name
-              AND investor_dim_incl_new_records.allows_weekend_holiday_locks_flag IS NOT DISTINCT FROM investor_dim.allows_weekend_holiday_locks_flag
-              AND investor_dim_incl_new_records.beneficiary_city IS NOT DISTINCT FROM investor_dim.beneficiary_city
-              AND investor_dim_incl_new_records.beneficiary_country IS NOT DISTINCT FROM investor_dim.beneficiary_country
-              AND investor_dim_incl_new_records.beneficiary_country_code IS NOT DISTINCT FROM investor_dim.beneficiary_country_code
-              AND investor_dim_incl_new_records.beneficiary_name IS NOT DISTINCT FROM investor_dim.beneficiary_name
-              AND investor_dim_incl_new_records.beneficiary_postal_code IS NOT DISTINCT FROM investor_dim.beneficiary_postal_code
-              AND investor_dim_incl_new_records.beneficiary_state IS NOT DISTINCT FROM investor_dim.beneficiary_state
-              AND investor_dim_incl_new_records.beneficiary_street1 IS NOT DISTINCT FROM investor_dim.beneficiary_street1
-              AND investor_dim_incl_new_records.beneficiary_street2 IS NOT DISTINCT FROM investor_dim.beneficiary_street2
-              AND investor_dim_incl_new_records.ein IS NOT DISTINCT FROM investor_dim.ein
-              AND investor_dim_incl_new_records.file_delivery_address_city IS NOT DISTINCT FROM investor_dim.file_delivery_address_city
-              AND investor_dim_incl_new_records.file_delivery_address_country IS NOT DISTINCT FROM investor_dim.file_delivery_address_country
-              AND investor_dim_incl_new_records.file_delivery_address_country_code IS NOT DISTINCT FROM investor_dim.file_delivery_address_country_code
-              AND investor_dim_incl_new_records.file_delivery_address_postal_code IS NOT DISTINCT FROM investor_dim.file_delivery_address_postal_code
-              AND investor_dim_incl_new_records.file_delivery_address_state IS NOT DISTINCT FROM investor_dim.file_delivery_address_state
-              AND investor_dim_incl_new_records.file_delivery_address_street1 IS NOT DISTINCT FROM investor_dim.file_delivery_address_street1
-              AND investor_dim_incl_new_records.file_delivery_address_street2 IS NOT DISTINCT FROM investor_dim.file_delivery_address_street2
-              AND investor_dim_incl_new_records.file_delivery_name IS NOT DISTINCT FROM investor_dim.file_delivery_name
-              AND investor_dim_incl_new_records.fnm_investor_remittance IS NOT DISTINCT FROM investor_dim.fnm_investor_remittance
-              AND investor_dim_incl_new_records.fnm_investor_remittance_code IS NOT DISTINCT FROM investor_dim.fnm_investor_remittance_code
-              AND investor_dim_incl_new_records.fnm_mbs_investor_remittance_day_of_month IS NOT DISTINCT FROM investor_dim.fnm_mbs_investor_remittance_day_of_month
-              AND investor_dim_incl_new_records.fnm_mbs_loan_default_loss_party IS NOT DISTINCT FROM investor_dim.fnm_mbs_loan_default_loss_party
-              AND investor_dim_incl_new_records.fnm_mbs_loan_default_loss_party_code IS NOT DISTINCT FROM investor_dim.fnm_mbs_loan_default_loss_party_code
-              AND investor_dim_incl_new_records.fnm_mbs_reo_marketing_party IS NOT DISTINCT FROM investor_dim.fnm_mbs_reo_marketing_party
-              AND investor_dim_incl_new_records.fnm_mbs_reo_marketing_party_code IS NOT DISTINCT FROM investor_dim.fnm_mbs_reo_marketing_party_code
-              AND investor_dim_incl_new_records.fnma_servicer_id IS NOT DISTINCT FROM investor_dim.fnma_servicer_id
-              AND investor_dim_incl_new_records.investor_city IS NOT DISTINCT FROM investor_dim.investor_city
-              AND investor_dim_incl_new_records.investor_country IS NOT DISTINCT FROM investor_dim.investor_country
-              AND investor_dim_incl_new_records.investor_country_code IS NOT DISTINCT FROM investor_dim.investor_country_code
-              AND investor_dim_incl_new_records.investor_hmda_purchaser_of_loan IS NOT DISTINCT FROM investor_dim.investor_hmda_purchaser_of_loan
-              AND investor_dim_incl_new_records.investor_hmda_purchaser_of_loan_code IS NOT DISTINCT FROM investor_dim.investor_hmda_purchaser_of_loan_code
-              AND investor_dim_incl_new_records.investor_id IS NOT DISTINCT FROM investor_dim.investor_id
-              AND investor_dim_incl_new_records.investor_lock_disable_time IS NOT DISTINCT FROM investor_dim.investor_lock_disable_time
-              AND investor_dim_incl_new_records.investor_name IS NOT DISTINCT FROM investor_dim.investor_name
-              AND investor_dim_incl_new_records.investor_postal_code IS NOT DISTINCT FROM investor_dim.investor_postal_code
-              AND investor_dim_incl_new_records.investor_state IS NOT DISTINCT FROM investor_dim.investor_state
-              AND investor_dim_incl_new_records.investor_street1 IS NOT DISTINCT FROM investor_dim.investor_street1
-              AND investor_dim_incl_new_records.investor_street2 IS NOT DISTINCT FROM investor_dim.investor_street2
-              AND investor_dim_incl_new_records.initial_beneficiary_candidate_flag IS NOT DISTINCT FROM investor_dim.initial_beneficiary_candidate_flag
-              AND investor_dim_incl_new_records.initial_servicer_candidate_flag IS NOT DISTINCT FROM investor_dim.initial_servicer_candidate_flag
-              AND investor_dim_incl_new_records.mbs_investor_flag IS NOT DISTINCT FROM investor_dim.mbs_investor_flag
-              AND investor_dim_incl_new_records.loan_file_delivery_method IS NOT DISTINCT FROM investor_dim.loan_file_delivery_method
-              AND investor_dim_incl_new_records.loan_file_delivery_method_code IS NOT DISTINCT FROM investor_dim.loan_file_delivery_method_code
-              AND investor_dim_incl_new_records.lock_expiration_delivery_subtrahend_days IS NOT DISTINCT FROM investor_dim.lock_expiration_delivery_subtrahend_days
-              AND investor_dim_incl_new_records.loss_payee_assignee_name IS NOT DISTINCT FROM investor_dim.loss_payee_assignee_name
-              AND investor_dim_incl_new_records.loss_payee_city IS NOT DISTINCT FROM investor_dim.loss_payee_city
-              AND investor_dim_incl_new_records.loss_payee_country IS NOT DISTINCT FROM investor_dim.loss_payee_country
-              AND investor_dim_incl_new_records.loss_payee_country_code IS NOT DISTINCT FROM investor_dim.loss_payee_country_code
-              AND investor_dim_incl_new_records.loss_payee_name IS NOT DISTINCT FROM investor_dim.loss_payee_name
-              AND investor_dim_incl_new_records.loss_payee_postal_code IS NOT DISTINCT FROM investor_dim.loss_payee_postal_code
-              AND investor_dim_incl_new_records.loss_payee_state IS NOT DISTINCT FROM investor_dim.loss_payee_state
-              AND investor_dim_incl_new_records.loss_payee_street1 IS NOT DISTINCT FROM investor_dim.loss_payee_street1
-              AND investor_dim_incl_new_records.loss_payee_street2 IS NOT DISTINCT FROM investor_dim.loss_payee_street2
-              AND investor_dim_incl_new_records.maximum_lock_extension_days_allowed IS NOT DISTINCT FROM investor_dim.maximum_lock_extension_days_allowed
-              AND investor_dim_incl_new_records.maximum_lock_extensions_allowed IS NOT DISTINCT FROM investor_dim.maximum_lock_extensions_allowed
-              AND investor_dim_incl_new_records.mers_org_id IS NOT DISTINCT FROM investor_dim.mers_org_id
-              AND investor_dim_incl_new_records.mers_org_member IS NOT DISTINCT FROM investor_dim.mers_org_member
-              AND investor_dim_incl_new_records.mortech_investor_id IS NOT DISTINCT FROM investor_dim.mortech_investor_id
-              AND investor_dim_incl_new_records.nmls_id IS NOT DISTINCT FROM investor_dim.nmls_id
-              AND investor_dim_incl_new_records.nmls_id_applicable IS NOT DISTINCT FROM investor_dim.nmls_id_applicable
-              AND investor_dim_incl_new_records.offers_secondary_financing_flag IS NOT DISTINCT FROM investor_dim.offers_secondary_financing_flag
-              AND investor_dim_incl_new_records.secondary_financing_source IS NOT DISTINCT FROM investor_dim.secondary_financing_source
-              AND investor_dim_incl_new_records.secondary_financing_source_code IS NOT DISTINCT FROM investor_dim.secondary_financing_source_code
-              AND investor_dim_incl_new_records.servicer_address_city IS NOT DISTINCT FROM investor_dim.servicer_address_city
-              AND investor_dim_incl_new_records.servicer_address_country IS NOT DISTINCT FROM investor_dim.servicer_address_country
-              AND investor_dim_incl_new_records.servicer_address_country_code IS NOT DISTINCT FROM investor_dim.servicer_address_country_code
-              AND investor_dim_incl_new_records.servicer_address_postal_code IS NOT DISTINCT FROM investor_dim.servicer_address_postal_code
-              AND investor_dim_incl_new_records.servicer_address_state IS NOT DISTINCT FROM investor_dim.servicer_address_state
-              AND investor_dim_incl_new_records.servicer_address_street1 IS NOT DISTINCT FROM investor_dim.servicer_address_street1
-              AND investor_dim_incl_new_records.servicer_address_street2 IS NOT DISTINCT FROM investor_dim.servicer_address_street2
-              AND investor_dim_incl_new_records.servicer_name IS NOT DISTINCT FROM investor_dim.servicer_name
-              AND investor_dim_incl_new_records.sub_servicer_address_city IS NOT DISTINCT FROM investor_dim.sub_servicer_address_city
-              AND investor_dim_incl_new_records.sub_servicer_address_country IS NOT DISTINCT FROM investor_dim.sub_servicer_address_country
-              AND investor_dim_incl_new_records.sub_servicer_address_country_code IS NOT DISTINCT FROM investor_dim.sub_servicer_address_country_code
-              AND investor_dim_incl_new_records.sub_servicer_address_postal_code IS NOT DISTINCT FROM investor_dim.sub_servicer_address_postal_code
-              AND investor_dim_incl_new_records.sub_servicer_address_state IS NOT DISTINCT FROM investor_dim.sub_servicer_address_state
-              AND investor_dim_incl_new_records.sub_servicer_address_street1 IS NOT DISTINCT FROM investor_dim.sub_servicer_address_street1
-              AND investor_dim_incl_new_records.sub_servicer_address_street2 IS NOT DISTINCT FROM investor_dim.sub_servicer_address_street2
-              AND investor_dim_incl_new_records.sub_servicer_mers_org_id IS NOT DISTINCT FROM investor_dim.sub_servicer_mers_org_id
-              AND investor_dim_incl_new_records.sub_servicer_name IS NOT DISTINCT FROM investor_dim.sub_servicer_name
-              AND investor_dim_incl_new_records.website_url IS NOT DISTINCT FROM investor_dim.website_url
-              AND investor_dim_incl_new_records.when_recorded_mail_to_city IS NOT DISTINCT FROM investor_dim.when_recorded_mail_to_city
-              AND investor_dim_incl_new_records.when_recorded_mail_to_country IS NOT DISTINCT FROM investor_dim.when_recorded_mail_to_country
-              AND investor_dim_incl_new_records.when_recorded_mail_to_country_code IS NOT DISTINCT FROM investor_dim.when_recorded_mail_to_country_code
-              AND investor_dim_incl_new_records.when_recorded_mail_to_name IS NOT DISTINCT FROM investor_dim.when_recorded_mail_to_name
-              AND investor_dim_incl_new_records.when_recorded_mail_to_postal_code IS NOT DISTINCT FROM investor_dim.when_recorded_mail_to_postal_code
-              AND investor_dim_incl_new_records.when_recorded_mail_to_state IS NOT DISTINCT FROM investor_dim.when_recorded_mail_to_state
-              AND investor_dim_incl_new_records.when_recorded_mail_to_street1 IS NOT DISTINCT FROM investor_dim.when_recorded_mail_to_street1
-              AND investor_dim_incl_new_records.when_recorded_mail_to_street2 IS NOT DISTINCT FROM investor_dim.when_recorded_mail_to_street2
-      WHERE investor_dim.dwid IS NULL;
+              ) AS primary_table
+          ) AS t325
+                    ON primary_table.i_loan_file_delivery_method_type = t325.code
+          WHERE GREATEST( primary_table.include_record, t318.include_record, t319.include_record, t323.include_record, t326.include_record,
+                          t330.include_record, t331.include_record, t332.include_record, t320.include_record, t321.include_record,
+                          t322.include_record, t329.include_record, t324.include_record, t325.include_record ) IS TRUE
+      )
+      --new records that should be inserted
+      SELECT investor_dim_incl_new_records.*
+      FROM investor_dim_incl_new_records
+      LEFT JOIN star_loan.investor_dim
+                ON investor_dim_incl_new_records.data_source_integration_id = investor_dim.data_source_integration_id
+      WHERE investor_dim.dwid IS NULL
+      UNION ALL
+      --existing records that need to be updated
+      SELECT investor_dim_incl_new_records.*
+      FROM investor_dim_incl_new_records
+      JOIN (
+          SELECT investor_dim.data_source_integration_id, etl_log.etl_start_date_time
+          FROM star_loan.investor_dim
+          JOIN star_common.etl_log
+               ON investor_dim.etl_batch_id = etl_log.etl_batch_id
+      ) AS investor_dim_etl_start_times
+           ON investor_dim_incl_new_records.data_source_integration_id = investor_dim_etl_start_times.data_source_integration_id
+               AND investor_dim_incl_new_records.max_source_etl_end_date_time >= investor_dim_etl_start_times.etl_start_date_time;
 next_etls:
   - SP-300001-insert-update
