@@ -242,9 +242,9 @@ etls:
       - data_source_integration_id
     input_sql: |-
       WITH mortgage_insurance_dim_incl_new_records AS (
-          SELECT ''loan_pid'' || ''~'' || ''data_source_dwid'' AS data_source_integration_columns
-               , COALESCE( CAST( primary_table.l_pid AS TEXT ), ''<NULL>'' ) || ''~'' ||
-                 COALESCE( CAST( 1 AS TEXT ), ''<NULL>'' ) AS data_source_integration_id
+          SELECT 'loan_pid' || '~' || 'data_source_dwid' AS data_source_integration_columns
+               , COALESCE( CAST( primary_table.l_pid AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) AS data_source_integration_id
                , NOW( ) AS edw_created_datetime
                , NOW( ) AS edw_modified_datetime
                , primary_table.data_source_updated_datetime AS data_source_modified_datetime
@@ -480,6 +480,6 @@ etls:
       ) AS mortgage_insurance_dim_etl_start_times
            ON mortgage_insurance_dim_incl_new_records.data_source_integration_id =
               mortgage_insurance_dim_etl_start_times.data_source_integration_id
-               AND mortgage_insurance_dim_incl_new_records.max_source_etl_end_date_time >= mortgage_insurance_dim_etl_start_times.etl_start_date_time;')
+               AND mortgage_insurance_dim_incl_new_records.max_source_etl_end_date_time >= mortgage_insurance_dim_etl_start_times.etl_start_date_time;
 next_etls:
   - SP-300001-insert-update
