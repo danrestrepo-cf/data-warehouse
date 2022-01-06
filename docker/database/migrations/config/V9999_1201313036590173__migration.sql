@@ -32,7 +32,6 @@ WITH update_rows (process_name, data_source_dwid, sql, connectionname) AS (
         WHERE history_records.apl_pid IS NULL
     ) AS primary_table
     WHERE GREATEST( primary_table.include_record ) IS TRUE
-    ORDER BY primary_table.data_source_updated_datetime ASC
 )
 --new records that should be inserted
 SELECT application_dim_incl_new_records.*
