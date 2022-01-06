@@ -483,7 +483,7 @@ etls:
 
           ) AS t458 ON primary_table.lu_time_zone = t458.code
        WHERE
-          GREATEST(primary_table.include_record, t454.include_record, t455.include_record, t456.include_record, t457.include_record, t458.include_record) IS TRUE
+          GREATEST(primary_table.include_record, t455.include_record, t456.include_record, t457.include_record, t458.include_record) IS TRUE
        ORDER BY
           primary_table.data_source_updated_datetime ASC
       ) AS lender_user_dim_incl_new_records
