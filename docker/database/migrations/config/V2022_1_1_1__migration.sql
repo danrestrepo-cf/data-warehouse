@@ -299,3 +299,492 @@ WHERE edw_table_definition.database_name = delete_keys.database_name
   AND edw_table_definition.table_name = delete_keys.table_name
   AND edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
   AND edw_field_definition.field_name = delete_keys.field_name;
+
+--
+-- Main | EDW - Octane schemas from prod-release to uat (2022-01-07)
+-- https://app.asana.com/0/0/1201625431714639
+--
+
+/*
+INSERTIONS
+*/
+
+--edw_table_definition
+WITH insert_rows (database_name, schema_name, table_name, source_database_name, source_schema_name, source_table_name) AS (
+    VALUES ('staging', 'staging_octane', 'fha_case_type', NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'section_of_act_type', NULL, NULL, NULL)
+)
+INSERT
+INTO mdi.edw_table_definition (database_name, schema_name, table_name, primary_source_edw_table_definition_dwid)
+SELECT insert_rows.database_name, insert_rows.schema_name, insert_rows.table_name, source_table_definition.dwid
+FROM insert_rows
+LEFT JOIN mdi.edw_table_definition source_table_definition
+          ON insert_rows.source_database_name = source_table_definition.database_name
+              AND insert_rows.source_schema_name = source_table_definition.schema_name
+              AND insert_rows.source_table_name = source_table_definition.table_name;
+
+WITH insert_rows (database_name, schema_name, table_name, source_database_name, source_schema_name, source_table_name) AS (
+    VALUES ('staging', 'history_octane', 'fha_case_type', 'staging', 'staging_octane', 'fha_case_type')
+         , ('staging', 'history_octane', 'section_of_act_type', 'staging', 'staging_octane', 'section_of_act_type')
+)
+INSERT
+INTO mdi.edw_table_definition (database_name, schema_name, table_name, primary_source_edw_table_definition_dwid)
+SELECT insert_rows.database_name, insert_rows.schema_name, insert_rows.table_name, source_table_definition.dwid
+FROM insert_rows
+LEFT JOIN mdi.edw_table_definition source_table_definition
+          ON insert_rows.source_database_name = source_table_definition.database_name
+              AND insert_rows.source_schema_name = source_table_definition.schema_name
+              AND insert_rows.source_table_name = source_table_definition.table_name;
+
+--edw_field_definition
+WITH insert_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name, source_table_name, source_field_name) AS (
+    VALUES ('staging', 'history_octane', 'fha_case_type', 'data_source_updated_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'fha_case_type', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'fha_case_type', 'etl_batch_id', 'TEXT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'section_of_act_type', 'data_source_updated_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'section_of_act_type', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'section_of_act_type', 'etl_batch_id', 'TEXT', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'fha_case_type', 'code', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'fha_case_type', 'value', 'VARCHAR(1024)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'section_of_act_type', 'code', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'section_of_act_type', 'value', 'VARCHAR(1024)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'loan', 'l_fha_case_type', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'loan', 'l_section_of_act_type', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
+)
+INSERT
+INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
+SELECT edw_table_definition.dwid, insert_rows.field_name, FALSE, source_field_definition.dwid, NULL, insert_rows.data_type, NULL, NULL, NULL, NULL
+FROM insert_rows
+JOIN mdi.edw_table_definition
+     ON insert_rows.database_name = edw_table_definition.database_name
+         AND insert_rows.schema_name = edw_table_definition.schema_name
+         AND insert_rows.table_name = edw_table_definition.table_name
+LEFT JOIN mdi.edw_table_definition source_table_definition
+          ON insert_rows.source_database_name = source_table_definition.database_name
+              AND insert_rows.source_schema_name = source_table_definition.schema_name
+              AND insert_rows.source_table_name = source_table_definition.table_name
+LEFT JOIN mdi.edw_field_definition source_field_definition
+          ON source_table_definition.dwid = source_field_definition.edw_table_definition_dwid
+              AND insert_rows.source_field_name = source_field_definition.field_name;
+
+WITH insert_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name, source_table_name, source_field_name) AS (
+    VALUES ('staging', 'history_octane', 'fha_case_type', 'code', 'VARCHAR(128)', 'staging', 'staging_octane', 'fha_case_type', 'code')
+         , ('staging', 'history_octane', 'fha_case_type', 'value', 'VARCHAR(1024)', 'staging', 'staging_octane', 'fha_case_type', 'value')
+         , ('staging', 'history_octane', 'section_of_act_type', 'code', 'VARCHAR(128)', 'staging', 'staging_octane', 'section_of_act_type', 'code')
+         , ('staging', 'history_octane', 'section_of_act_type', 'value', 'VARCHAR(1024)', 'staging', 'staging_octane', 'section_of_act_type', 'value')
+         , ('staging', 'history_octane', 'loan', 'l_fha_case_type', 'VARCHAR(128)', 'staging', 'staging_octane', 'loan', 'l_fha_case_type')
+         , ('staging', 'history_octane', 'loan', 'l_section_of_act_type', 'VARCHAR(128)', 'staging', 'staging_octane', 'loan', 'l_section_of_act_type')
+)
+INSERT
+INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
+SELECT edw_table_definition.dwid, insert_rows.field_name, FALSE, source_field_definition.dwid, NULL, insert_rows.data_type, NULL, NULL, NULL, NULL
+FROM insert_rows
+JOIN mdi.edw_table_definition
+     ON insert_rows.database_name = edw_table_definition.database_name
+         AND insert_rows.schema_name = edw_table_definition.schema_name
+         AND insert_rows.table_name = edw_table_definition.table_name
+LEFT JOIN mdi.edw_table_definition source_table_definition
+          ON insert_rows.source_database_name = source_table_definition.database_name
+              AND insert_rows.source_schema_name = source_table_definition.schema_name
+              AND insert_rows.source_table_name = source_table_definition.table_name
+LEFT JOIN mdi.edw_field_definition source_field_definition
+          ON source_table_definition.dwid = source_field_definition.edw_table_definition_dwid
+              AND insert_rows.source_field_name = source_field_definition.field_name;
+
+--process
+INSERT
+INTO mdi.process (name, description)
+VALUES ('SP-100885', 'ETL to copy fha_case_type data from staging_octane to history_octane')
+     , ('SP-100886', 'ETL to copy section_of_act_type data from staging_octane to history_octane');
+
+--table_input_step
+WITH insert_rows (process_name, data_source_dwid, sql, connectionname) AS (
+    VALUES ('SP-100885', 0, '--finding records to insert into history_octane.fha_case_type
+SELECT staging_table.code
+     , staging_table.value
+     , FALSE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM staging_octane.fha_case_type staging_table
+LEFT JOIN history_octane.fha_case_type history_table
+          ON staging_table.code = history_table.code
+              AND staging_table.value = history_table.value
+WHERE history_table.code IS NULL;', 'Staging DB Connection')
+         , ('SP-100886', 0, '--finding records to insert into history_octane.section_of_act_type
+SELECT staging_table.code
+     , staging_table.value
+     , FALSE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM staging_octane.section_of_act_type staging_table
+LEFT JOIN history_octane.section_of_act_type history_table
+          ON staging_table.code = history_table.code
+              AND staging_table.value = history_table.value
+WHERE history_table.code IS NULL;', 'Staging DB Connection')
+)
+INSERT
+INTO mdi.table_input_step (process_dwid, data_source_dwid, sql, limit_size, execute_for_each_row, replace_variables, enable_lazy_conversion, cached_row_meta, connectionname)
+SELECT process.dwid, insert_rows.data_source_dwid, insert_rows.sql, 0, 'N', 'N', 'N', 'N', insert_rows.connectionname::mdi.pentaho_db_connection_name
+FROM insert_rows
+JOIN mdi.process
+     ON process.name = insert_rows.process_name;
+
+--table_output_step
+WITH insert_rows (process_name, target_schema, target_table, truncate_table, connectionname) AS (
+    VALUES ('SP-100885', 'history_octane', 'fha_case_type', 'N', 'Staging DB Connection')
+         , ('SP-100886', 'history_octane', 'section_of_act_type', 'N', 'Staging DB Connection')
+)
+INSERT INTO mdi.table_output_step (process_dwid, target_schema, target_table, commit_size, partitioning_field, table_name_field, auto_generated_key_field, partition_data_per, table_name_defined_in_field, return_auto_generated_key_field, truncate_table, connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors, use_batch_update)
+SELECT process.dwid, insert_rows.target_schema, insert_rows.target_table, 1000, NULL, NULL, NULL, NULL, 'N', NULL, insert_rows.truncate_table::mdi.pentaho_y_or_n, insert_rows.connectionname, 'N', 'Y', 'N', 'N'
+FROM insert_rows
+JOIN mdi.process
+     ON process.name = insert_rows.process_name;
+
+--table_output_field
+WITH insert_rows (process_name, database_field_name) AS (
+    VALUES ('SP-100885', 'code')
+         , ('SP-100885', 'value')
+         , ('SP-100885', 'data_source_updated_datetime')
+         , ('SP-100885', 'data_source_deleted_flag')
+         , ('SP-100885', 'etl_batch_id')
+         , ('SP-100886', 'code')
+         , ('SP-100886', 'value')
+         , ('SP-100886', 'data_source_updated_datetime')
+         , ('SP-100886', 'data_source_deleted_flag')
+         , ('SP-100886', 'etl_batch_id')
+         , ('SP-100320', 'l_fha_case_type')
+         , ('SP-100320', 'l_section_of_act_type')
+)
+INSERT
+INTO mdi.table_output_field (table_output_step_dwid, database_field_name, database_stream_name, field_order, is_sensitive)
+SELECT table_output_step.dwid, insert_rows.database_field_name, insert_rows.database_field_name, 0, FALSE
+FROM insert_rows
+JOIN mdi.process
+     ON process.name = insert_rows.process_name
+JOIN mdi.table_output_step
+     ON process.dwid = table_output_step.process_dwid;
+
+
+--json_output_field
+WITH insert_rows (process_name, json_output_field) AS (
+    VALUES ('SP-100885', 'code')
+         , ('SP-100886', 'code')
+)
+INSERT
+INTO mdi.json_output_field (process_dwid, field_name)
+SELECT process.dwid, insert_rows.json_output_field
+FROM insert_rows
+JOIN mdi.process
+     ON insert_rows.process_name = process.name;
+
+--state_machine_definition
+WITH insert_rows (process_name, state_machine_name, state_machine_comment) AS (
+    VALUES ('SP-100885', 'SP-100885', 'ETL to copy fha_case_type data from staging_octane to history_octane')
+         , ('SP-100886', 'SP-100886', 'ETL to copy section_of_act_type data from staging_octane to history_octane')
+)
+INSERT
+INTO mdi.state_machine_definition (process_dwid, name, comment)
+SELECT process.dwid, insert_rows.state_machine_name, insert_rows.state_machine_comment
+FROM insert_rows
+JOIN mdi.process
+     ON process.name = insert_rows.process_name;
+
+/*
+UPDATES
+*/
+
+--edw_field_definition
+WITH update_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name, source_table_name, source_field_name) AS (
+    VALUES ('staging', 'history_octane', 'new_lock_only_add_on', 'nlo_add_on_prefix', 'VARCHAR(128)', 'staging', 'staging_octane', 'new_lock_only_add_on', 'nlo_add_on_prefix')
+         , ('staging', 'staging_octane', 'new_lock_only_add_on', 'nlo_add_on_prefix', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
+)
+UPDATE mdi.edw_field_definition
+SET data_type = update_rows.data_type
+  , source_edw_field_definition_dwid = source_field_definition.dwid
+FROM update_rows
+JOIN mdi.edw_table_definition
+     ON update_rows.database_name = edw_table_definition.database_name
+         AND update_rows.schema_name = edw_table_definition.schema_name
+         AND update_rows.table_name = edw_table_definition.table_name
+LEFT JOIN mdi.edw_table_definition source_table_definition
+          ON update_rows.source_database_name = source_table_definition.database_name
+              AND update_rows.source_schema_name = source_table_definition.schema_name
+              AND update_rows.source_table_name = source_table_definition.table_name
+LEFT JOIN mdi.edw_field_definition source_field_definition
+          ON source_table_definition.dwid = source_field_definition.edw_table_definition_dwid
+              AND update_rows.source_field_name = source_field_definition.field_name
+WHERE edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
+  AND edw_field_definition.field_name = update_rows.field_name;
+
+--table_input_step
+WITH update_rows (process_name, data_source_dwid, sql, connectionname) AS (
+    VALUES ('SP-100320', 0, '--finding records to insert into history_octane.loan
+SELECT staging_table.l_pid
+     , staging_table.l_version
+     , staging_table.l_proposal_pid
+     , staging_table.l_offering_pid
+     , staging_table.l_product_terms_pid
+     , staging_table.l_mortgage_type
+     , staging_table.l_interest_only_type
+     , staging_table.l_buydown_schedule_type
+     , staging_table.l_prepay_penalty_schedule_type
+     , staging_table.l_aus_type
+     , staging_table.l_arm_index_datetime
+     , staging_table.l_arm_index_current_value_percent
+     , staging_table.l_arm_margin_percent
+     , staging_table.l_base_loan_amount
+     , staging_table.l_buydown_contributor_type
+     , staging_table.l_target_cash_out_amount
+     , staging_table.l_heloc_maximum_balance_amount
+     , staging_table.l_note_rate_percent
+     , staging_table.l_initial_note_rate_percent
+     , staging_table.l_lien_priority_type
+     , staging_table.l_loan_amount
+     , staging_table.l_financed_amount
+     , staging_table.l_ltv_ratio_percent
+     , staging_table.l_mi_requirement_ltv_ratio_percent
+     , staging_table.l_mi_auto_compute
+     , staging_table.l_mi_no_mi_product
+     , staging_table.l_mi_input_type
+     , staging_table.l_mi_company_name_type
+     , staging_table.l_mi_certificate_id
+     , staging_table.l_mi_premium_refundable_type
+     , staging_table.l_mi_initial_calculation_type
+     , staging_table.l_mi_renewal_calculation_type
+     , staging_table.l_mi_payer_type
+     , staging_table.l_mi_coverage_percent
+     , staging_table.l_mi_ltv_cutoff_percent
+     , staging_table.l_mi_midpoint_cutoff_required
+     , staging_table.l_mi_required_monthly_payment_count
+     , staging_table.l_mi_actual_monthly_payment_count
+     , staging_table.l_mi_payment_type
+     , staging_table.l_mi_upfront_amount
+     , staging_table.l_mi_upfront_percent
+     , staging_table.l_mi_initial_monthly_payment_amount
+     , staging_table.l_mi_renewal_monthly_payment_annual_percent
+     , staging_table.l_mi_renewal_monthly_payment_amount
+     , staging_table.l_mi_initial_duration_months
+     , staging_table.l_mi_initial_monthly_payment_annual_percent
+     , staging_table.l_mi_initial_calculated_rate_type
+     , staging_table.l_mi_renewal_calculated_rate_type
+     , staging_table.l_mi_base_rate_label
+     , staging_table.l_mi_base_monthly_payment_annual_percent
+     , staging_table.l_mi_base_upfront_percent
+     , staging_table.l_mi_base_monthly_payment_amount
+     , staging_table.l_mi_base_upfront_payment_amount
+     , staging_table.l_qualifying_rate_type
+     , staging_table.l_qualifying_rate_input_percent
+     , staging_table.l_qualifying_rate_percent
+     , staging_table.l_fha_program_code_type
+     , staging_table.l_fha_principal_write_down
+     , staging_table.l_fhac_case_assignment_messages
+     , staging_table.l_initial_pi_amount
+     , staging_table.l_qualifying_pi_amount
+     , staging_table.l_base_note_rate_percent
+     , staging_table.l_base_arm_margin_percent
+     , staging_table.l_base_price_percent
+     , staging_table.l_lock_price_percent
+     , staging_table.l_lock_duration_days
+     , staging_table.l_lock_commitment_type
+     , staging_table.l_product_choice_datetime
+     , staging_table.l_hmda_purchaser_of_loan_2017_type
+     , staging_table.l_hmda_purchaser_of_loan_2018_type
+     , staging_table.l_texas_equity
+     , staging_table.l_texas_equity_auto
+     , staging_table.l_fnm_mbs_investor_contract_id
+     , staging_table.l_base_guaranty_fee_basis_points
+     , staging_table.l_guaranty_fee_basis_points
+     , staging_table.l_guaranty_fee_after_alternate_payment_method_basis_points
+     , staging_table.l_fnm_investor_product_plan_id
+     , staging_table.l_uldd_loan_comment
+     , staging_table.l_principal_curtailment_amount
+     , staging_table.l_mi_lender_paid_rate_adjustment_percent
+     , staging_table.l_apr
+     , staging_table.l_finance_charge_amount
+     , staging_table.l_apor_percent
+     , staging_table.l_apor_date
+     , staging_table.l_hmda_rate_spread_percent
+     , staging_table.l_hoepa_apr
+     , staging_table.l_hoepa_rate_spread
+     , staging_table.l_hoepa_fees_dollar_amount
+     , staging_table.l_hmda_hoepa_status_type
+     , staging_table.l_rate_sheet_undiscounted_rate_percent
+     , staging_table.l_effective_undiscounted_rate_percent
+     , staging_table.l_last_unprocessed_changes_datetime
+     , staging_table.l_locked_price_change_percent
+     , staging_table.l_interest_rate_fee_change_amount
+     , staging_table.l_lender_concession_candidate
+     , staging_table.l_durp_eligibility_opt_out
+     , staging_table.l_qualified_mortgage_status_type
+     , staging_table.l_qualified_mortgage
+     , staging_table.l_lqa_purchase_eligibility_type
+     , staging_table.l_student_loan_cash_out_refinance
+     , staging_table.l_mi_rate_quote_id
+     , staging_table.l_mi_integration_vendor_request_pid
+     , staging_table.l_secondary_clear_to_commit
+     , staging_table.l_qm_eligible
+     , staging_table.l_fha_endorsement_date
+     , staging_table.l_va_guaranty_date
+     , staging_table.l_usda_guarantee_date
+     , staging_table.l_hpml
+     , staging_table.l_qualified_mortgage_rule_version_type
+     , staging_table.l_qualified_mortgage_apr
+     , staging_table.l_qualified_mortgage_max_allowed_rate_spread
+     , staging_table.l_buyup_buydown_basis_points
+     , staging_table.l_va_agency_case_id
+     , staging_table.l_fha_agency_case_id
+     , staging_table.l_usda_agency_case_id
+     , staging_table.l_va_agency_case_id_assigned_date
+     , staging_table.l_fha_agency_case_id_assigned_date
+     , staging_table.l_usda_agency_case_id_assigned_date
+     , staging_table.l_post_interest_only_first_payment_date
+     , staging_table.l_fha_case_type
+     , staging_table.l_section_of_act_type
+     , FALSE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM staging_octane.loan staging_table
+LEFT JOIN history_octane.loan history_table
+          ON staging_table.l_pid = history_table.l_pid
+              AND staging_table.l_version = history_table.l_version
+WHERE history_table.l_pid IS NULL
+UNION ALL
+SELECT history_table.l_pid
+     , history_table.l_version + 1
+     , history_table.l_proposal_pid
+     , history_table.l_offering_pid
+     , history_table.l_product_terms_pid
+     , history_table.l_mortgage_type
+     , history_table.l_interest_only_type
+     , history_table.l_buydown_schedule_type
+     , history_table.l_prepay_penalty_schedule_type
+     , history_table.l_aus_type
+     , history_table.l_arm_index_datetime
+     , history_table.l_arm_index_current_value_percent
+     , history_table.l_arm_margin_percent
+     , history_table.l_base_loan_amount
+     , history_table.l_buydown_contributor_type
+     , history_table.l_target_cash_out_amount
+     , history_table.l_heloc_maximum_balance_amount
+     , history_table.l_note_rate_percent
+     , history_table.l_initial_note_rate_percent
+     , history_table.l_lien_priority_type
+     , history_table.l_loan_amount
+     , history_table.l_financed_amount
+     , history_table.l_ltv_ratio_percent
+     , history_table.l_mi_requirement_ltv_ratio_percent
+     , history_table.l_mi_auto_compute
+     , history_table.l_mi_no_mi_product
+     , history_table.l_mi_input_type
+     , history_table.l_mi_company_name_type
+     , history_table.l_mi_certificate_id
+     , history_table.l_mi_premium_refundable_type
+     , history_table.l_mi_initial_calculation_type
+     , history_table.l_mi_renewal_calculation_type
+     , history_table.l_mi_payer_type
+     , history_table.l_mi_coverage_percent
+     , history_table.l_mi_ltv_cutoff_percent
+     , history_table.l_mi_midpoint_cutoff_required
+     , history_table.l_mi_required_monthly_payment_count
+     , history_table.l_mi_actual_monthly_payment_count
+     , history_table.l_mi_payment_type
+     , history_table.l_mi_upfront_amount
+     , history_table.l_mi_upfront_percent
+     , history_table.l_mi_initial_monthly_payment_amount
+     , history_table.l_mi_renewal_monthly_payment_annual_percent
+     , history_table.l_mi_renewal_monthly_payment_amount
+     , history_table.l_mi_initial_duration_months
+     , history_table.l_mi_initial_monthly_payment_annual_percent
+     , history_table.l_mi_initial_calculated_rate_type
+     , history_table.l_mi_renewal_calculated_rate_type
+     , history_table.l_mi_base_rate_label
+     , history_table.l_mi_base_monthly_payment_annual_percent
+     , history_table.l_mi_base_upfront_percent
+     , history_table.l_mi_base_monthly_payment_amount
+     , history_table.l_mi_base_upfront_payment_amount
+     , history_table.l_qualifying_rate_type
+     , history_table.l_qualifying_rate_input_percent
+     , history_table.l_qualifying_rate_percent
+     , history_table.l_fha_program_code_type
+     , history_table.l_fha_principal_write_down
+     , history_table.l_fhac_case_assignment_messages
+     , history_table.l_initial_pi_amount
+     , history_table.l_qualifying_pi_amount
+     , history_table.l_base_note_rate_percent
+     , history_table.l_base_arm_margin_percent
+     , history_table.l_base_price_percent
+     , history_table.l_lock_price_percent
+     , history_table.l_lock_duration_days
+     , history_table.l_lock_commitment_type
+     , history_table.l_product_choice_datetime
+     , history_table.l_hmda_purchaser_of_loan_2017_type
+     , history_table.l_hmda_purchaser_of_loan_2018_type
+     , history_table.l_texas_equity
+     , history_table.l_texas_equity_auto
+     , history_table.l_fnm_mbs_investor_contract_id
+     , history_table.l_base_guaranty_fee_basis_points
+     , history_table.l_guaranty_fee_basis_points
+     , history_table.l_guaranty_fee_after_alternate_payment_method_basis_points
+     , history_table.l_fnm_investor_product_plan_id
+     , history_table.l_uldd_loan_comment
+     , history_table.l_principal_curtailment_amount
+     , history_table.l_mi_lender_paid_rate_adjustment_percent
+     , history_table.l_apr
+     , history_table.l_finance_charge_amount
+     , history_table.l_apor_percent
+     , history_table.l_apor_date
+     , history_table.l_hmda_rate_spread_percent
+     , history_table.l_hoepa_apr
+     , history_table.l_hoepa_rate_spread
+     , history_table.l_hoepa_fees_dollar_amount
+     , history_table.l_hmda_hoepa_status_type
+     , history_table.l_rate_sheet_undiscounted_rate_percent
+     , history_table.l_effective_undiscounted_rate_percent
+     , history_table.l_last_unprocessed_changes_datetime
+     , history_table.l_locked_price_change_percent
+     , history_table.l_interest_rate_fee_change_amount
+     , history_table.l_lender_concession_candidate
+     , history_table.l_durp_eligibility_opt_out
+     , history_table.l_qualified_mortgage_status_type
+     , history_table.l_qualified_mortgage
+     , history_table.l_lqa_purchase_eligibility_type
+     , history_table.l_student_loan_cash_out_refinance
+     , history_table.l_mi_rate_quote_id
+     , history_table.l_mi_integration_vendor_request_pid
+     , history_table.l_secondary_clear_to_commit
+     , history_table.l_qm_eligible
+     , history_table.l_fha_endorsement_date
+     , history_table.l_va_guaranty_date
+     , history_table.l_usda_guarantee_date
+     , history_table.l_hpml
+     , history_table.l_qualified_mortgage_rule_version_type
+     , history_table.l_qualified_mortgage_apr
+     , history_table.l_qualified_mortgage_max_allowed_rate_spread
+     , history_table.l_buyup_buydown_basis_points
+     , history_table.l_va_agency_case_id
+     , history_table.l_fha_agency_case_id
+     , history_table.l_usda_agency_case_id
+     , history_table.l_va_agency_case_id_assigned_date
+     , history_table.l_fha_agency_case_id_assigned_date
+     , history_table.l_usda_agency_case_id_assigned_date
+     , history_table.l_post_interest_only_first_payment_date
+     , history_table.l_fha_case_type
+     , history_table.l_section_of_act_type
+     , TRUE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM history_octane.loan history_table
+LEFT JOIN staging_octane.loan staging_table
+          ON staging_table.l_pid = history_table.l_pid
+WHERE staging_table.l_pid IS NULL
+  AND NOT EXISTS(
+    SELECT 1
+    FROM history_octane.loan deleted_records
+    WHERE deleted_records.l_pid = history_table.l_pid
+      AND deleted_records.data_source_deleted_flag = TRUE
+    );', 'Staging DB Connection')
+)
+UPDATE mdi.table_input_step
+SET data_source_dwid = update_rows.data_source_dwid
+  , sql = update_rows.sql
+  , connectionname = update_rows.connectionname::mdi.pentaho_db_connection_name
+FROM update_rows
+JOIN mdi.process
+     ON process.name = update_rows.process_name
+WHERE process.dwid = table_input_step.process_dwid;
