@@ -57,16 +57,6 @@ columns:
     source:
       field: primary_source_table.columns.lu_company_user_id
     update_flag: true
-  country:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.foreign_keys.fkt_lu_country_type.columns.value
-    update_flag: true
-  country_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lu_country
-    update_flag: true
   default_credit_bureau:
     data_type: VARCHAR(1024)
     source:
@@ -321,7 +311,6 @@ etls:
            , lender_user_dim_incl_new_records.edw_created_datetime
            , lender_user_dim_incl_new_records.edw_modified_datetime
            , lender_user_dim_incl_new_records.data_source_modified_datetime
-           , lender_user_dim_incl_new_records.country
            , lender_user_dim_incl_new_records.default_credit_bureau
            , lender_user_dim_incl_new_records.username
            , lender_user_dim_incl_new_records.nmls_loan_originator_id
@@ -361,7 +350,6 @@ etls:
            , lender_user_dim_incl_new_records.email
            , lender_user_dim_incl_new_records.fax
            , lender_user_dim_incl_new_records.city
-           , lender_user_dim_incl_new_records.country_code
            , lender_user_dim_incl_new_records.postal_code
            , lender_user_dim_incl_new_records.state
            , lender_user_dim_incl_new_records.street1
@@ -383,7 +371,6 @@ etls:
               now() as edw_created_datetime,
               now() as edw_modified_datetime,
               primary_table.data_source_updated_datetime as data_source_modified_datetime,
-              t454.value as country,
               t455.value as default_credit_bureau,
               primary_table.lu_username as username,
               primary_table.lu_nmls_loan_originator_id as nmls_loan_originator_id,
@@ -423,7 +410,6 @@ etls:
               primary_table.lu_email as email,
               primary_table.lu_fax as fax,
               primary_table.lu_city as city,
-              primary_table.lu_country as country_code,
               primary_table.lu_postal_code as postal_code,
               primary_table.lu_state as state,
               primary_table.lu_street1 as street1,
@@ -448,18 +434,6 @@ etls:
                   AND lender_user.data_source_updated_datetime < history_records.data_source_updated_datetime
           WHERE history_records.lu_pid IS NULL
           ) AS primary_table
-
-          INNER JOIN (
-              SELECT * FROM (
-                  SELECT     <<country_type_partial_load_condition>> as include_record,
-                  country_type.*
-                  FROM history_octane.country_type
-                      LEFT JOIN history_octane.country_type AS history_records ON country_type.code = history_records.code
-                      AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  WHERE history_records.code IS NULL
-              ) as primary_table
-
-          ) AS t454 ON primary_table.lu_country = t454.code
 
           INNER JOIN (
               SELECT * FROM (
@@ -509,7 +483,7 @@ etls:
 
           ) AS t458 ON primary_table.lu_time_zone = t458.code
        WHERE
-          GREATEST(primary_table.include_record, t454.include_record, t455.include_record, t456.include_record, t457.include_record, t458.include_record) IS TRUE
+          GREATEST(primary_table.include_record, t455.include_record, t456.include_record, t457.include_record, t458.include_record) IS TRUE
        ORDER BY
           primary_table.data_source_updated_datetime ASC
       ) AS lender_user_dim_incl_new_records
@@ -520,8 +494,6 @@ etls:
               AND lender_user_dim_incl_new_records.city IS NOT DISTINCT FROM lender_user_dim.city
               AND lender_user_dim_incl_new_records.company_name IS NOT DISTINCT FROM lender_user_dim.company_name
               AND lender_user_dim_incl_new_records.company_user_id IS NOT DISTINCT FROM lender_user_dim.company_user_id
-              AND lender_user_dim_incl_new_records.country IS NOT DISTINCT FROM lender_user_dim.country
-              AND lender_user_dim_incl_new_records.country_code IS NOT DISTINCT FROM lender_user_dim.country_code
               AND lender_user_dim_incl_new_records.default_credit_bureau IS NOT DISTINCT FROM lender_user_dim.default_credit_bureau
               AND lender_user_dim_incl_new_records.default_credit_bureau_code IS NOT DISTINCT FROM lender_user_dim.default_credit_bureau_code
               AND lender_user_dim_incl_new_records.email IS NOT DISTINCT FROM lender_user_dim.email

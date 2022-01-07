@@ -84,14 +84,6 @@ foreign_keys:
       - code
       schema: history_octane
       table: time_zone_type
-  fkt_lu_country_type:
-    columns:
-      - lu_country
-    references:
-      columns:
-        - code
-      schema: history_octane
-      table: country_type
 columns:
   lu_pid:
     data_type: BIGINT
