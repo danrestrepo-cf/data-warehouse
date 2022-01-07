@@ -603,7 +603,8 @@ class MetadataWriter:
                     'table': foreign_key.table.table
                 }
             } for foreign_key in table_metadata.foreign_keys},
-            'columns': {column.name: self.column_metadata_to_dict(column) for column in table_metadata.columns},
+            'columns': {column.name: self.column_metadata_to_dict(column) for column in sorted(
+                table_metadata.columns, key=lambda x: x.name)},
             'etls': {etl.process_name: {
                 'hardcoded_data_source': self.hardcoded_data_source_to_str(etl.hardcoded_data_source),
                 'input_type': etl.input_type.value,
