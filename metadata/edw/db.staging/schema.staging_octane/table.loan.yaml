@@ -58,6 +58,14 @@ foreign_keys:
       - code
       schema: staging_octane
       table: buydown_schedule_type
+  fkt_l_fha_case_type:
+    columns:
+    - l_fha_case_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: fha_case_type
   fkt_l_fha_program_code_type:
     columns:
     - l_fha_program_code_type
@@ -234,6 +242,14 @@ foreign_keys:
       - code
       schema: staging_octane
       table: qualifying_rate_type
+  fkt_l_section_of_act_type:
+    columns:
+    - l_section_of_act_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: section_of_act_type
   fkt_l_texas_equity:
     columns:
     - l_texas_equity
@@ -489,3 +505,7 @@ columns:
     data_type: DATE
   l_post_interest_only_first_payment_date:
     data_type: DATE
+  l_fha_case_type:
+    data_type: VARCHAR(128)
+  l_section_of_act_type:
+    data_type: VARCHAR(128)
