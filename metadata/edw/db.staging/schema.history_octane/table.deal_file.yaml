@@ -21,22 +21,10 @@ foreign_keys:
       schema: history_octane
       table: repository_file
 columns:
-  df_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.df_pid
-  df_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.df_version
-  df_deal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.df_deal_pid
-  df_repository_file_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.df_repository_file_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   df_archive:
     data_type: BOOLEAN
     source:
@@ -45,10 +33,22 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.df_borrower_uploaded
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+  df_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.df_deal_pid
+  df_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.df_pid
+  df_repository_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.df_repository_file_pid
+  df_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.df_version
   etl_batch_id:
     data_type: TEXT
 etls:

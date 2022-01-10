@@ -21,14 +21,16 @@ foreign_keys:
       schema: history_octane
       table: trade
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   tp_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.tp_pid
-  tp_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.tp_version
   tp_product_pid:
     data_type: BIGINT
     source:
@@ -37,12 +39,10 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.tp_trade_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  tp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.tp_version
 etls:
   SP-100354:
     input_type: table

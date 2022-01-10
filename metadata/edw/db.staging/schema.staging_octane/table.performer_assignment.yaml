@@ -19,13 +19,13 @@ foreign_keys:
       schema: staging_octane
       table: lender_user
 columns:
+  pa_last_assign_datetime:
+    data_type: TIMESTAMP
+  pa_lender_user_pid:
+    data_type: BIGINT
   pa_pid:
+    data_type: BIGINT
+  pa_role_pid:
     data_type: BIGINT
   pa_version:
     data_type: INTEGER
-  pa_role_pid:
-    data_type: BIGINT
-  pa_lender_user_pid:
-    data_type: BIGINT
-  pa_last_assign_datetime:
-    data_type: TIMESTAMP

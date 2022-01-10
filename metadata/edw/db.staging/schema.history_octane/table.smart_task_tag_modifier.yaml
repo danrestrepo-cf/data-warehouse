@@ -21,32 +21,32 @@ foreign_keys:
       schema: history_octane
       table: smart_task
 columns:
-  sttm_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sttm_pid
-  sttm_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sttm_version
-  sttm_deal_tag_definition_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sttm_deal_tag_definition_pid
-  sttm_smart_task_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sttm_smart_task_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   sttm_add_tag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.sttm_add_tag
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  sttm_deal_tag_definition_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sttm_deal_tag_definition_pid
+  sttm_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sttm_pid
+  sttm_smart_task_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sttm_smart_task_pid
+  sttm_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sttm_version
 etls:
   SP-100193:
     input_type: table

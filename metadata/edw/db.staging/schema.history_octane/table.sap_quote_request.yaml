@@ -13,18 +13,24 @@ foreign_keys:
       schema: history_octane
       table: deal
 columns:
-  sqr_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sqr_pid
-  sqr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sqr_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   sqr_deal_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.sqr_deal_pid
+  sqr_due_in_term_months_string_list:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.sqr_due_in_term_months_string_list
+  sqr_include_arm:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sqr_include_arm
   sqr_include_conventional:
     data_type: BOOLEAN
     source:
@@ -33,28 +39,22 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.sqr_include_fha
-  sqr_include_va:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.sqr_include_va
   sqr_include_fixed_rate:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.sqr_include_fixed_rate
-  sqr_include_arm:
+  sqr_include_va:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.sqr_include_arm
-  sqr_due_in_term_months_string_list:
-    data_type: TEXT
+      field: primary_source_table.columns.sqr_include_va
+  sqr_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.sqr_due_in_term_months_string_list
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.sqr_pid
+  sqr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sqr_version
 etls:
   SP-100173:
     input_type: table

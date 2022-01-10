@@ -13,6 +13,18 @@ foreign_keys:
       schema: history_octane
       table: custom_field_setting
 columns:
+  cfc_choice_label:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.cfc_choice_label
+  cfc_custom_field_setting_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cfc_custom_field_setting_pid
+  cfc_disabled:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.cfc_disabled
   cfc_pid:
     data_type: BIGINT
     source:
@@ -21,22 +33,10 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.cfc_version
-  cfc_custom_field_setting_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.cfc_custom_field_setting_pid
-  cfc_choice_label:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.cfc_choice_label
-  cfc_disabled:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.cfc_disabled
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

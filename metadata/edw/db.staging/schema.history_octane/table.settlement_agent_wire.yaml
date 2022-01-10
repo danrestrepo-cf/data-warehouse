@@ -37,30 +37,32 @@ foreign_keys:
       schema: history_octane
       table: for_further_credit_type
 columns:
-  saw_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.saw_pid
-  saw_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.saw_version
-  saw_settlement_agent_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.saw_settlement_agent_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   saw_active:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.saw_active
-  saw_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.saw_create_datetime
-  saw_bank_name:
+  saw_address_city:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.saw_bank_name
+      field: primary_source_table.columns.saw_address_city
+  saw_address_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.saw_address_country
+  saw_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.saw_address_postal_code
+  saw_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.saw_address_state
   saw_address_street1:
     data_type: VARCHAR(128)
     source:
@@ -69,58 +71,26 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.saw_address_street2
-  saw_address_city:
+  saw_bank_name:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.saw_address_city
-  saw_address_state:
+      field: primary_source_table.columns.saw_bank_name
+  saw_beneficiary_address_city:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.saw_address_state
-  saw_address_postal_code:
+      field: primary_source_table.columns.saw_beneficiary_address_city
+  saw_beneficiary_address_country:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.saw_address_postal_code
-  saw_address_country:
+      field: primary_source_table.columns.saw_beneficiary_address_country
+  saw_beneficiary_address_postal_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.saw_address_country
-  saw_for_credit_to:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.saw_for_credit_to
-  saw_for_further_credit_fixed_text:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.saw_for_further_credit_fixed_text
-  saw_for_further_credit_prompt_text:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.saw_for_further_credit_prompt_text
-  saw_verified_from_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.saw_verified_from_date
-  saw_verified_through_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.saw_verified_through_date
-  saw_verifier:
+      field: primary_source_table.columns.saw_beneficiary_address_postal_code
+  saw_beneficiary_address_state:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.saw_verifier
-  saw_notes:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.saw_notes
-  saw_for_further_credit_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.saw_for_further_credit_type
-  saw_beneficiary_bank_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.saw_beneficiary_bank_name
+      field: primary_source_table.columns.saw_beneficiary_address_state
   saw_beneficiary_address_street1:
     data_type: VARCHAR(128)
     source:
@@ -129,22 +99,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.saw_beneficiary_address_street2
-  saw_beneficiary_address_city:
+  saw_beneficiary_bank_name:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.saw_beneficiary_address_city
-  saw_beneficiary_address_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.saw_beneficiary_address_state
-  saw_beneficiary_address_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.saw_beneficiary_address_postal_code
-  saw_beneficiary_address_country:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.saw_beneficiary_address_country
+      field: primary_source_table.columns.saw_beneficiary_bank_name
   saw_beneficiary_for_credit_to:
     data_type: VARCHAR(256)
     source:
@@ -165,12 +123,54 @@ columns:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.columns.saw_beneficiary_notes
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  saw_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.saw_create_datetime
+  saw_for_credit_to:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.saw_for_credit_to
+  saw_for_further_credit_fixed_text:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.saw_for_further_credit_fixed_text
+  saw_for_further_credit_prompt_text:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.saw_for_further_credit_prompt_text
+  saw_for_further_credit_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.saw_for_further_credit_type
+  saw_notes:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.saw_notes
+  saw_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.saw_pid
+  saw_settlement_agent_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.saw_settlement_agent_pid
+  saw_verified_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.saw_verified_from_date
+  saw_verified_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.saw_verified_through_date
+  saw_verifier:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.saw_verifier
+  saw_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.saw_version
 etls:
   SP-100242:
     input_type: table

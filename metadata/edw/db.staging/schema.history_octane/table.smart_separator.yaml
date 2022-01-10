@@ -29,36 +29,36 @@ foreign_keys:
       schema: history_octane
       table: criteria
 columns:
-  ssp_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ssp_pid
-  ssp_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ssp_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   ssp_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.ssp_account_pid
-  ssp_custom_form_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ssp_custom_form_pid
   ssp_criteria_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.ssp_criteria_pid
+  ssp_custom_form_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ssp_custom_form_pid
+  ssp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ssp_pid
   ssp_separator_name:
     data_type: VARCHAR(767)
     source:
       field: primary_source_table.columns.ssp_separator_name
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  ssp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ssp_version
 etls:
   SP-100335:
     input_type: table

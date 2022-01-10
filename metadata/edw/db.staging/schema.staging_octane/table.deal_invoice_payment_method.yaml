@@ -83,27 +83,25 @@ foreign_keys:
       schema: staging_octane
       table: agent_type
 columns:
-  dipm_pid:
-    data_type: BIGINT
-  dipm_version:
-    data_type: INTEGER
+  dipm_configured_payer_type:
+    data_type: VARCHAR(128)
   dipm_deal_invoice_pid:
     data_type: BIGINT
   dipm_payer_type:
     data_type: VARCHAR(128)
-  dipm_configured_payer_type:
-    data_type: VARCHAR(128)
   dipm_payer_unparsed_name:
     data_type: VARCHAR(128)
+  dipm_payment_completed_date:
+    data_type: DATE
   dipm_payment_fulfill_type:
+    data_type: VARCHAR(128)
+  dipm_payment_processing_company_type:
+    data_type: VARCHAR(128)
+  dipm_payment_submission_type:
     data_type: VARCHAR(128)
   dipm_payment_transfer_los_loan_id_main:
     data_type: BIGINT
-  dipm_payment_processing_company_type:
-    data_type: VARCHAR(128)
-  dipm_stripe_payment_pid:
-    data_type: BIGINT
-  dipm_stripe_payment_refund_pid:
+  dipm_pid:
     data_type: BIGINT
   dipm_requester_agent_type:
     data_type: VARCHAR(128)
@@ -111,7 +109,9 @@ columns:
     data_type: BIGINT
   dipm_requester_unparsed_name:
     data_type: VARCHAR(128)
-  dipm_payment_submission_type:
-    data_type: VARCHAR(128)
-  dipm_payment_completed_date:
-    data_type: DATE
+  dipm_stripe_payment_pid:
+    data_type: BIGINT
+  dipm_stripe_payment_refund_pid:
+    data_type: BIGINT
+  dipm_version:
+    data_type: INTEGER

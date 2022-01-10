@@ -11,13 +11,13 @@ foreign_keys:
       schema: staging_octane
       table: account
 columns:
+  ig_account_pid:
+    data_type: BIGINT
+  ig_lender_group:
+    data_type: BOOLEAN
+  ig_name:
+    data_type: VARCHAR(128)
   ig_pid:
     data_type: BIGINT
   ig_version:
     data_type: INTEGER
-  ig_account_pid:
-    data_type: BIGINT
-  ig_name:
-    data_type: VARCHAR(128)
-  ig_lender_group:
-    data_type: BOOLEAN

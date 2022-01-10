@@ -27,31 +27,31 @@ foreign_keys:
       schema: staging_octane
       table: report_type
 columns:
-  rp_pid:
-    data_type: BIGINT
-  rp_version:
-    data_type: INTEGER
-  rp_account_pid:
-    data_type: BIGINT
-  rp_name:
-    data_type: VARCHAR(128)
-  rp_description:
-    data_type: VARCHAR(1024)
-  rp_report_type:
-    data_type: VARCHAR(128)
-  rp_report_row_pid:
-    data_type: BIGINT
-  rp_criteria_pid:
-    data_type: BIGINT
   rp_accessible_only:
     data_type: BOOLEAN
-  rp_analysis_report:
-    data_type: BOOLEAN
-  rp_publish:
-    data_type: BOOLEAN
-  rp_test_data_report:
+  rp_account_pid:
+    data_type: BIGINT
+  rp_allow_excel_export:
     data_type: BOOLEAN
   rp_allow_view:
     data_type: BOOLEAN
-  rp_allow_excel_export:
+  rp_analysis_report:
     data_type: BOOLEAN
+  rp_criteria_pid:
+    data_type: BIGINT
+  rp_description:
+    data_type: VARCHAR(1024)
+  rp_name:
+    data_type: VARCHAR(128)
+  rp_pid:
+    data_type: BIGINT
+  rp_publish:
+    data_type: BOOLEAN
+  rp_report_row_pid:
+    data_type: BIGINT
+  rp_report_type:
+    data_type: VARCHAR(128)
+  rp_test_data_report:
+    data_type: BOOLEAN
+  rp_version:
+    data_type: INTEGER

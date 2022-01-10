@@ -13,142 +13,142 @@ foreign_keys:
       schema: history_octane
       table: account
 columns:
-  dcut_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dcut_pid
-  dcut_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dcut_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   dcut_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dcut_account_pid
-  dcut_los_loan_id_main:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dcut_los_loan_id_main
-  dcut_start_time:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.dcut_start_time
-  dcut_start_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.dcut_start_date
-  dcut_overall_duration_ms:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dcut_overall_duration_ms
-  dcut_deal_checks_ms:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dcut_deal_checks_ms
-  dcut_deal_updates_ms:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dcut_deal_updates_ms
-  dcut_proposal_updates_ms:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dcut_proposal_updates_ms
-  dcut_num_proposal_updates:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dcut_num_proposal_updates
   dcut_application_updates_ms:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dcut_application_updates_ms
-  dcut_num_application_updates:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dcut_num_application_updates
   dcut_borrower_updates_ms:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dcut_borrower_updates_ms
-  dcut_num_borrower_updates:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dcut_num_borrower_updates
-  dcut_place_updates_ms:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dcut_place_updates_ms
-  dcut_num_place_updates:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dcut_num_place_updates
-  dcut_loan_updates_ms:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dcut_loan_updates_ms
-  dcut_num_loan_updates:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dcut_num_loan_updates
-  dcut_proposal_updates_after_loan_updates_ms:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dcut_proposal_updates_after_loan_updates_ms
-  dcut_updates_after_proposal_updates_ms:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dcut_updates_after_proposal_updates_ms
-  dcut_proposal_summary_updates_ms:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dcut_proposal_summary_updates_ms
-  dcut_deal_updates_after_all_proposal_updates_ms:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dcut_deal_updates_after_all_proposal_updates_ms
-  dcut_smart_charge_update_ms:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dcut_smart_charge_update_ms
   dcut_circumstance_change_updates_ms:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dcut_circumstance_change_updates_ms
-  dcut_num_circumstance_change_updates:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dcut_num_circumstance_change_updates
-  dcut_tolerance_cure_update_ms:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dcut_tolerance_cure_update_ms
-  dcut_proposal_summary_updates_after_smart_charge_updates_ms:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dcut_proposal_summary_updates_after_smart_charge_updates_ms
-  dcut_update_doc_sets_ms:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dcut_update_doc_sets_ms
   dcut_closing_funds_itemization_ms:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dcut_closing_funds_itemization_ms
-  dcut_update_ribbon_for_deal_ms:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dcut_update_ribbon_for_deal_ms
-  dcut_num_construction_draw_updates:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dcut_num_construction_draw_updates
   dcut_construction_draw_updates_ms:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dcut_construction_draw_updates_ms
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+  dcut_deal_checks_ms:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcut_deal_checks_ms
+  dcut_deal_updates_after_all_proposal_updates_ms:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcut_deal_updates_after_all_proposal_updates_ms
+  dcut_deal_updates_ms:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcut_deal_updates_ms
+  dcut_loan_updates_ms:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcut_loan_updates_ms
+  dcut_los_loan_id_main:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcut_los_loan_id_main
+  dcut_num_application_updates:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dcut_num_application_updates
+  dcut_num_borrower_updates:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dcut_num_borrower_updates
+  dcut_num_circumstance_change_updates:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dcut_num_circumstance_change_updates
+  dcut_num_construction_draw_updates:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dcut_num_construction_draw_updates
+  dcut_num_loan_updates:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dcut_num_loan_updates
+  dcut_num_place_updates:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dcut_num_place_updates
+  dcut_num_proposal_updates:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dcut_num_proposal_updates
+  dcut_overall_duration_ms:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcut_overall_duration_ms
+  dcut_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcut_pid
+  dcut_place_updates_ms:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcut_place_updates_ms
+  dcut_proposal_summary_updates_after_smart_charge_updates_ms:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcut_proposal_summary_updates_after_smart_charge_updates_ms
+  dcut_proposal_summary_updates_ms:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcut_proposal_summary_updates_ms
+  dcut_proposal_updates_after_loan_updates_ms:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcut_proposal_updates_after_loan_updates_ms
+  dcut_proposal_updates_ms:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcut_proposal_updates_ms
+  dcut_smart_charge_update_ms:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcut_smart_charge_update_ms
+  dcut_start_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.dcut_start_date
+  dcut_start_time:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.dcut_start_time
+  dcut_tolerance_cure_update_ms:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcut_tolerance_cure_update_ms
+  dcut_update_doc_sets_ms:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcut_update_doc_sets_ms
+  dcut_update_ribbon_for_deal_ms:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcut_update_ribbon_for_deal_ms
+  dcut_updates_after_proposal_updates_ms:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcut_updates_after_proposal_updates_ms
+  dcut_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dcut_version
   etl_batch_id:
     data_type: TEXT
 etls:

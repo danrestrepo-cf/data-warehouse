@@ -13,44 +13,44 @@ foreign_keys:
       schema: history_octane
       table: product
 columns:
-  pminip_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pminip_pid
-  pminip_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pminip_version
-  pminip_product_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pminip_product_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   pminip_from_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.pminip_from_date
-  pminip_minimum_investor_price_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.pminip_minimum_investor_price_percent
-  pminip_minimum_includes_srp:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pminip_minimum_includes_srp
-  pminip_loan_amount_min:
-    data_type: NUMERIC(15,0)
-    source:
-      field: primary_source_table.columns.pminip_loan_amount_min
   pminip_loan_amount_max:
     data_type: NUMERIC(15,0)
     source:
       field: primary_source_table.columns.pminip_loan_amount_max
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
+  pminip_loan_amount_min:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.pminip_loan_amount_min
+  pminip_minimum_includes_srp:
     data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+    source:
+      field: primary_source_table.columns.pminip_minimum_includes_srp
+  pminip_minimum_investor_price_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pminip_minimum_investor_price_percent
+  pminip_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pminip_pid
+  pminip_product_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pminip_product_pid
+  pminip_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pminip_version
 etls:
   SP-100283:
     input_type: table

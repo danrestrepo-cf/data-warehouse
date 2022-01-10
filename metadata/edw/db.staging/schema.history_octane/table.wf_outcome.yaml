@@ -29,56 +29,56 @@ foreign_keys:
       schema: history_octane
       table: wf_outcome_type
 columns:
-  wo_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.wo_pid
-  wo_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.wo_version
-  wo_wf_step_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.wo_wf_step_pid
-  wo_wf_outcome_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.wo_wf_outcome_type
-  wo_outcome_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.wo_outcome_name
-  wo_ordinal:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.wo_ordinal
-  wo_criteria_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.wo_criteria_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   wo_borrower_message:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.columns.wo_borrower_message
-  wo_lender_description:
-    data_type: VARCHAR(256)
+  wo_criteria_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.wo_lender_description
+      field: primary_source_table.columns.wo_criteria_pid
   wo_incomplete_outcome:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.wo_incomplete_outcome
+  wo_lender_description:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.wo_lender_description
+  wo_ordinal:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.wo_ordinal
+  wo_outcome_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.wo_outcome_name
+  wo_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wo_pid
   wo_transition_wf_step_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.wo_transition_wf_step_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  wo_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.wo_version
+  wo_wf_outcome_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.wo_wf_outcome_type
+  wo_wf_step_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wo_wf_step_pid
 etls:
   SP-100200:
     input_type: table

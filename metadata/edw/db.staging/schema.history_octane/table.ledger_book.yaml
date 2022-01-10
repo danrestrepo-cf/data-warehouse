@@ -45,42 +45,16 @@ foreign_keys:
       schema: history_octane
       table: ledger_book_type
 columns:
-  lbk_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lbk_pid
-  lbk_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lbk_version
-  lbk_ledger_book_id:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.lbk_ledger_book_id
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   lbk_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lbk_account_pid
-  lbk_ledger_book_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lbk_ledger_book_type
-  lbk_period_from_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.lbk_period_from_date
-  lbk_period_through_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.lbk_period_through_date
-  lbk_payroll_pay_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.lbk_payroll_pay_date
-  lbk_ledger_book_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lbk_ledger_book_status_type
   lbk_closed_by_lender_user_pid:
     data_type: BIGINT
     source:
@@ -89,6 +63,34 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lbk_closed_by_unparsed_name
+  lbk_ledger_book_id:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.lbk_ledger_book_id
+  lbk_ledger_book_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lbk_ledger_book_status_type
+  lbk_ledger_book_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lbk_ledger_book_type
+  lbk_payroll_pay_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lbk_payroll_pay_date
+  lbk_period_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lbk_period_from_date
+  lbk_period_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lbk_period_through_date
+  lbk_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lbk_pid
   lbk_processed_by_lender_user_pid:
     data_type: BIGINT
     source:
@@ -97,12 +99,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lbk_processed_by_unparsed_name
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  lbk_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lbk_version
 etls:
   SP-100207:
     input_type: table

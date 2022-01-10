@@ -53,38 +53,16 @@ foreign_keys:
       schema: history_octane
       table: lock_extension_status_type
 columns:
-  ile_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ile_pid
-  ile_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ile_version
-  ile_investor_lock_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ile_investor_lock_pid
-  ile_creator_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ile_creator_lender_user_pid
-  ile_creator_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ile_creator_unparsed_name
-  ile_requester_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ile_requester_lender_user_pid
-  ile_requester_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ile_requester_unparsed_name
-  ile_requested_datetime:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  ile_confirm_datetime:
     data_type: TIMESTAMP
     source:
-      field: primary_source_table.columns.ile_requested_datetime
+      field: primary_source_table.columns.ile_confirm_datetime
   ile_confirm_lender_user_pid:
     data_type: BIGINT
     source:
@@ -93,14 +71,34 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ile_confirm_unparsed_name
-  ile_confirm_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.ile_confirm_datetime
-  ile_reject_lender_user_pid:
+  ile_creator_lender_user_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.ile_reject_lender_user_pid
+      field: primary_source_table.columns.ile_creator_lender_user_pid
+  ile_creator_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ile_creator_unparsed_name
+  ile_extension_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ile_extension_days
+  ile_investor_lock_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ile_investor_lock_pid
+  ile_lock_extension_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ile_lock_extension_status_type
+  ile_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ile_pid
+  ile_price_adjustment_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ile_price_adjustment_percent
   ile_reject_datetime:
     data_type: TIMESTAMP
     source:
@@ -109,24 +107,26 @@ columns:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.columns.ile_reject_explanation
-  ile_lock_extension_status_type:
+  ile_reject_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ile_reject_lender_user_pid
+  ile_requested_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.ile_requested_datetime
+  ile_requester_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ile_requester_lender_user_pid
+  ile_requester_unparsed_name:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.ile_lock_extension_status_type
-  ile_extension_days:
+      field: primary_source_table.columns.ile_requester_unparsed_name
+  ile_version:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.ile_extension_days
-  ile_price_adjustment_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.ile_price_adjustment_percent
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.ile_version
 etls:
   SP-100185:
     input_type: table

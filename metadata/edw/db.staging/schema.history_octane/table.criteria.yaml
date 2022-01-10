@@ -13,30 +13,18 @@ foreign_keys:
       schema: history_octane
       table: account
 columns:
-  cr_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.cr_pid
-  cr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.cr_version
   cr_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.cr_account_pid
-  cr_criteria_source:
-    data_type: VARCHAR(16000)
-    source:
-      field: primary_source_table.columns.cr_criteria_source
-  cr_criteria_sql:
-    data_type: VARCHAR(16000)
-    source:
-      field: primary_source_table.columns.cr_criteria_sql
   cr_criteria_owner_instance_name:
     data_type: VARCHAR(2048)
     source:
       field: primary_source_table.columns.cr_criteria_owner_instance_name
+  cr_criteria_source:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.cr_criteria_source
   cr_criteria_source_html:
     data_type: TEXT
     source:
@@ -45,10 +33,22 @@ columns:
     data_type: TEXT
     source:
       field: primary_source_table.columns.cr_criteria_source_pretty_text
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  cr_criteria_sql:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.cr_criteria_sql
+  cr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cr_pid
+  cr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.cr_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

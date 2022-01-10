@@ -37,44 +37,44 @@ foreign_keys:
       schema: history_octane
       table: smart_ledger_plan_case_group_calculation_type
 columns:
-  slpcg_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.slpcg_pid
-  slpcg_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.slpcg_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   slpcg_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.slpcg_account_pid
-  slpcg_smart_ledger_plan_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.slpcg_smart_ledger_plan_pid
-  slpcg_group_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.slpcg_group_name
   slpcg_group_id:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.slpcg_group_id
+  slpcg_group_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.slpcg_group_name
   slpcg_payer_org_node_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.slpcg_payer_org_node_pid
+  slpcg_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.slpcg_pid
   slpcg_smart_ledger_plan_case_group_calculation_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.slpcg_smart_ledger_plan_case_group_calculation_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  slpcg_smart_ledger_plan_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.slpcg_smart_ledger_plan_pid
+  slpcg_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.slpcg_version
 etls:
   SP-100211:
     input_type: table

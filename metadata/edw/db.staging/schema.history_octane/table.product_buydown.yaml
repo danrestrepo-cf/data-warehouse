@@ -21,28 +21,28 @@ foreign_keys:
       schema: history_octane
       table: buydown_schedule_type
 columns:
-  pbd_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pbd_pid
-  pbd_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pbd_version
-  pbd_product_terms_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pbd_product_terms_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   pbd_buydown_schedule_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.pbd_buydown_schedule_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  pbd_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pbd_pid
+  pbd_product_terms_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pbd_product_terms_pid
+  pbd_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pbd_version
 etls:
   SP-100286:
     input_type: table

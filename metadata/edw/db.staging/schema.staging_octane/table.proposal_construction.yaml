@@ -27,23 +27,29 @@ foreign_keys:
       schema: staging_octane
       table: yes_no_unknown_type
 columns:
-  prpc_pid:
-    data_type: BIGINT
-  prpc_version:
-    data_type: INTEGER
-  prpc_proposal_pid:
-    data_type: BIGINT
+  prpc_any_utilities_inoperable:
+    data_type: VARCHAR(128)
   prpc_architectural_exhibits:
     data_type: BOOLEAN
-  prpc_feasibility_study:
+  prpc_construction_confirmed_start_date:
+    data_type: DATE
+  prpc_contingency_reserve_required:
+    data_type: BOOLEAN
+  prpc_estimated_permit_amount_applicable:
     data_type: BOOLEAN
   prpc_expected_months_to_complete:
     data_type: INTEGER
   prpc_extension_needed:
     data_type: BOOLEAN
+  prpc_extension_period_days:
+    data_type: INTEGER
   prpc_extension_period_months:
     data_type: INTEGER
-  prpc_any_utilities_inoperable:
+  prpc_feasibility_study:
+    data_type: BOOLEAN
+  prpc_loan_in_process_account_closed_date:
+    data_type: DATE
+  prpc_mortgage_payment_reserves_required:
     data_type: VARCHAR(128)
   prpc_non_habitable_months:
     data_type: INTEGER
@@ -51,15 +57,9 @@ columns:
     data_type: INTEGER
   prpc_number_of_draws:
     data_type: INTEGER
-  prpc_construction_confirmed_start_date:
-    data_type: DATE
-  prpc_loan_in_process_account_closed_date:
-    data_type: DATE
-  prpc_mortgage_payment_reserves_required:
-    data_type: VARCHAR(128)
-  prpc_estimated_permit_amount_applicable:
-    data_type: BOOLEAN
-  prpc_contingency_reserve_required:
-    data_type: BOOLEAN
-  prpc_extension_period_days:
+  prpc_pid:
+    data_type: BIGINT
+  prpc_proposal_pid:
+    data_type: BIGINT
+  prpc_version:
     data_type: INTEGER

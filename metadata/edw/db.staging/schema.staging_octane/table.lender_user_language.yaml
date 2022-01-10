@@ -19,11 +19,11 @@ foreign_keys:
       schema: staging_octane
       table: lender_user_language_type
 columns:
+  lul_lender_user_language_type:
+    data_type: VARCHAR(128)
+  lul_lender_user_pid:
+    data_type: BIGINT
   lul_pid:
     data_type: BIGINT
   lul_version:
     data_type: INTEGER
-  lul_lender_user_pid:
-    data_type: BIGINT
-  lul_lender_user_language_type:
-    data_type: VARCHAR(128)

@@ -29,38 +29,38 @@ foreign_keys:
       schema: history_octane
       table: county
 columns:
-  amir_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.amir_pid
-  amir_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.amir_version
-  amir_area_median_income_table_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.amir_area_median_income_table_pid
-  amir_state_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.amir_state_type
-  amir_county_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.amir_county_pid
-  amir_census_tract:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.amir_census_tract
   amir_area_median_income:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.amir_area_median_income
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  amir_area_median_income_table_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.amir_area_median_income_table_pid
+  amir_census_tract:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.amir_census_tract
+  amir_county_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.amir_county_pid
+  amir_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.amir_pid
+  amir_state_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.amir_state_type
+  amir_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.amir_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

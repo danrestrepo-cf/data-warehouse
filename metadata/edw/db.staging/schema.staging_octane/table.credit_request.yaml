@@ -187,60 +187,24 @@ foreign_keys:
       schema: staging_octane
       table: agent_type
 columns:
-  crdr_pid:
-    data_type: BIGINT
-  crdr_version:
+  crdr_borrower1_birth_date:
+    data_type: DATE
+  crdr_borrower1_equifax_credit_score:
     data_type: INTEGER
-  crdr_deal_pid:
-    data_type: BIGINT
-  crdr_credit_report_file_pid:
-    data_type: BIGINT
-  crdr_credit_score_disclosure_file_pid:
-    data_type: BIGINT
-  crdr_create_datetime:
-    data_type: TIMESTAMP
-  crdr_requester_agent_type:
+  crdr_borrower1_equifax_credit_score_model_type:
     data_type: VARCHAR(128)
-  crdr_requester_lender_user_pid:
-    data_type: BIGINT
-  crdr_requester_unparsed_name:
-    data_type: VARCHAR(128)
-  crdr_credit_request_via_type:
-    data_type: VARCHAR(128)
-  crdr_lp_request_pid:
-    data_type: BIGINT
-  crdr_du_request_pid:
-    data_type: BIGINT
-  crdr_mismo_version_type:
-    data_type: VARCHAR(128)
-  crdr_credit_bureau_type:
-    data_type: VARCHAR(128)
-  crdr_credit_report_request_action_type:
-    data_type: VARCHAR(128)
-  crdr_credit_report_type:
-    data_type: VARCHAR(128)
-  crdr_credit_report_product_description:
-    data_type: VARCHAR(32)
-  crdr_credit_request_type:
-    data_type: VARCHAR(128)
-  crdr_credit_repositories_selected_count:
+  crdr_borrower1_experian_credit_score:
     data_type: INTEGER
-  crdr_equifax_included:
-    data_type: BOOLEAN
-  crdr_experian_included:
-    data_type: BOOLEAN
-  crdr_trans_union_included:
-    data_type: BOOLEAN
+  crdr_borrower1_experian_credit_score_model_type:
+    data_type: VARCHAR(128)
   crdr_borrower1_first_name:
-    data_type: VARCHAR(32)
-  crdr_borrower1_middle_name:
     data_type: VARCHAR(32)
   crdr_borrower1_last_name:
     data_type: VARCHAR(32)
+  crdr_borrower1_middle_name:
+    data_type: VARCHAR(32)
   crdr_borrower1_name_suffix:
     data_type: VARCHAR(32)
-  crdr_borrower1_birth_date:
-    data_type: DATE
   crdr_borrower1_residence_city:
     data_type: VARCHAR(128)
   crdr_borrower1_residence_country:
@@ -253,28 +217,28 @@ columns:
     data_type: VARCHAR(128)
   crdr_borrower1_residence_street2:
     data_type: VARCHAR(128)
-  crdr_borrower1_experian_credit_score:
-    data_type: INTEGER
-  crdr_borrower1_equifax_credit_score:
-    data_type: INTEGER
   crdr_borrower1_trans_union_credit_score:
     data_type: INTEGER
-  crdr_borrower1_equifax_credit_score_model_type:
-    data_type: VARCHAR(128)
-  crdr_borrower1_experian_credit_score_model_type:
-    data_type: VARCHAR(128)
   crdr_borrower1_trans_union_credit_score_model_type:
+    data_type: VARCHAR(128)
+  crdr_borrower2_birth_date:
+    data_type: DATE
+  crdr_borrower2_equifax_credit_score:
+    data_type: INTEGER
+  crdr_borrower2_equifax_credit_score_model_type:
+    data_type: VARCHAR(128)
+  crdr_borrower2_experian_credit_score:
+    data_type: INTEGER
+  crdr_borrower2_experian_credit_score_model_type:
     data_type: VARCHAR(128)
   crdr_borrower2_first_name:
     data_type: VARCHAR(32)
-  crdr_borrower2_middle_name:
-    data_type: VARCHAR(32)
   crdr_borrower2_last_name:
+    data_type: VARCHAR(32)
+  crdr_borrower2_middle_name:
     data_type: VARCHAR(32)
   crdr_borrower2_name_suffix:
     data_type: VARCHAR(32)
-  crdr_borrower2_birth_date:
-    data_type: DATE
   crdr_borrower2_residence_city:
     data_type: VARCHAR(128)
   crdr_borrower2_residence_country:
@@ -287,33 +251,69 @@ columns:
     data_type: VARCHAR(128)
   crdr_borrower2_residence_street2:
     data_type: VARCHAR(128)
-  crdr_borrower2_experian_credit_score:
-    data_type: INTEGER
-  crdr_borrower2_equifax_credit_score:
-    data_type: INTEGER
   crdr_borrower2_trans_union_credit_score:
     data_type: INTEGER
-  crdr_borrower2_equifax_credit_score_model_type:
-    data_type: VARCHAR(128)
-  crdr_borrower2_experian_credit_score_model_type:
-    data_type: VARCHAR(128)
   crdr_borrower2_trans_union_credit_score_model_type:
     data_type: VARCHAR(128)
+  crdr_bureau_credit_report_url:
+    data_type: VARCHAR(1024)
+  crdr_bureau_status_messages:
+    data_type: TEXT
   crdr_contains_importable_data:
     data_type: BOOLEAN
+  crdr_create_datetime:
+    data_type: TIMESTAMP
+  crdr_credit_bureau_type:
+    data_type: VARCHAR(128)
+  crdr_credit_report_file_pid:
+    data_type: BIGINT
   crdr_credit_report_identifier:
     data_type: VARCHAR(32)
   crdr_credit_report_price:
     data_type: NUMERIC(15,2)
+  crdr_credit_report_product_description:
+    data_type: VARCHAR(32)
+  crdr_credit_report_request_action_type:
+    data_type: VARCHAR(128)
+  crdr_credit_report_type:
+    data_type: VARCHAR(128)
+  crdr_credit_repositories_selected_count:
+    data_type: INTEGER
   crdr_credit_request_status_type:
     data_type: VARCHAR(128)
-  crdr_request_error_messages:
-    data_type: TEXT
-  crdr_bureau_status_messages:
-    data_type: TEXT
-  crdr_bureau_credit_report_url:
-    data_type: VARCHAR(1024)
+  crdr_credit_request_type:
+    data_type: VARCHAR(128)
+  crdr_credit_request_via_type:
+    data_type: VARCHAR(128)
+  crdr_credit_score_disclosure_file_pid:
+    data_type: BIGINT
+  crdr_deal_pid:
+    data_type: BIGINT
+  crdr_du_request_pid:
+    data_type: BIGINT
+  crdr_equifax_included:
+    data_type: BOOLEAN
+  crdr_experian_included:
+    data_type: BOOLEAN
   crdr_last_status_query_datetime:
     data_type: TIMESTAMP
+  crdr_lp_request_pid:
+    data_type: BIGINT
+  crdr_mismo_version_type:
+    data_type: VARCHAR(128)
+  crdr_pid:
+    data_type: BIGINT
+  crdr_request_error_messages:
+    data_type: TEXT
+  crdr_requester_agent_type:
+    data_type: VARCHAR(128)
+  crdr_requester_lender_user_pid:
+    data_type: BIGINT
+  crdr_requester_unparsed_name:
+    data_type: VARCHAR(128)
+  crdr_trans_union_included:
+    data_type: BOOLEAN
+  crdr_version:
+    data_type: INTEGER
   crdr_xml_response_file_pid:
     data_type: BIGINT

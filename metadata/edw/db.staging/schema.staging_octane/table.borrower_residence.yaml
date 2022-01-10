@@ -27,21 +27,21 @@ foreign_keys:
       schema: staging_octane
       table: borrower_residency_basis_type
 columns:
-  bres_pid:
-    data_type: BIGINT
-  bres_version:
-    data_type: INTEGER
   bres_borrower_pid:
+    data_type: BIGINT
+  bres_borrower_residency_basis_type:
+    data_type: VARCHAR(128)
+  bres_current:
+    data_type: BOOLEAN
+  bres_from_date:
+    data_type: DATE
+  bres_pid:
     data_type: BIGINT
   bres_place_pid:
     data_type: BIGINT
-  bres_current:
-    data_type: BOOLEAN
-  bres_borrower_residency_basis_type:
-    data_type: VARCHAR(128)
-  bres_from_date:
-    data_type: DATE
   bres_through_date:
     data_type: DATE
   bres_verification_required:
     data_type: BOOLEAN
+  bres_version:
+    data_type: INTEGER

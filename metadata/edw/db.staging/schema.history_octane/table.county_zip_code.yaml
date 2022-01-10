@@ -21,6 +21,10 @@ foreign_keys:
       schema: history_octane
       table: zip_code_info
 columns:
+  czc_county_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.czc_county_pid
   czc_pid:
     data_type: BIGINT
     source:
@@ -29,18 +33,14 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.czc_version
-  czc_county_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.czc_county_pid
   czc_zip_code_info_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.czc_zip_code_info_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

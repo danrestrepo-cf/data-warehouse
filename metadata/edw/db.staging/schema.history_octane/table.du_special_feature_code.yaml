@@ -13,18 +13,18 @@ foreign_keys:
       schema: history_octane
       table: du_request
 columns:
-  dusfc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dusfc_pid
-  dusfc_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dusfc_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   dusfc_du_request_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dusfc_du_request_pid
+  dusfc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dusfc_pid
   dusfc_special_feature_code:
     data_type: VARCHAR(32)
     source:
@@ -33,10 +33,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dusfc_special_feature_description
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+  dusfc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dusfc_version
   etl_batch_id:
     data_type: TEXT
 etls:

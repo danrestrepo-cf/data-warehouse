@@ -45,26 +45,24 @@ foreign_keys:
       schema: history_octane
       table: workspace_type
 columns:
-  luloc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.luloc_pid
-  luloc_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.luloc_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   luloc_company_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.luloc_company_pid
-  luloc_lender_user_pid:
-    data_type: BIGINT
+  luloc_current_license_location:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.luloc_lender_user_pid
-  luloc_location_pid:
-    data_type: BIGINT
+      field: primary_source_table.columns.luloc_current_license_location
+  luloc_current_physical_location:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.luloc_location_pid
+      field: primary_source_table.columns.luloc_current_physical_location
   luloc_from_date:
     data_type: DATE
     source:
@@ -73,36 +71,38 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.luloc_lender_user_location_type
-  luloc_workspace_type:
-    data_type: VARCHAR(128)
+  luloc_lender_user_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.luloc_workspace_type
-  luloc_workspace_code:
-    data_type: VARCHAR(16)
+      field: primary_source_table.columns.luloc_lender_user_pid
+  luloc_location_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.luloc_workspace_code
-  luloc_current_physical_location:
-    data_type: BOOLEAN
+      field: primary_source_table.columns.luloc_location_pid
+  luloc_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.luloc_current_physical_location
-  luloc_current_license_location:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.luloc_current_license_location
-  luloc_synthetic_unique_current_physical_location:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.luloc_synthetic_unique_current_physical_location
+      field: primary_source_table.columns.luloc_pid
   luloc_synthetic_unique_current_license_location:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.luloc_synthetic_unique_current_license_location
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
+  luloc_synthetic_unique_current_physical_location:
     data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+    source:
+      field: primary_source_table.columns.luloc_synthetic_unique_current_physical_location
+  luloc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.luloc_version
+  luloc_workspace_code:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.luloc_workspace_code
+  luloc_workspace_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.luloc_workspace_type
 etls:
   SP-100855:
     input_type: table

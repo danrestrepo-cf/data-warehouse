@@ -27,33 +27,33 @@ foreign_keys:
       schema: staging_octane
       table: smart_message_delivery_type
 columns:
-  dmlog_pid:
+  dmlog_bcc_recipients:
+    data_type: VARCHAR(16000)
+  dmlog_cc_recipients:
+    data_type: VARCHAR(16000)
+  dmlog_cover_letter_deal_file_pid:
     data_type: BIGINT
-  dmlog_version:
-    data_type: INTEGER
   dmlog_deal_pid:
     data_type: BIGINT
-  dmlog_sent_datetime:
-    data_type: TIMESTAMP
   dmlog_delivery_type:
     data_type: VARCHAR(128)
-  dmlog_to_recipients:
-    data_type: VARCHAR(16000)
+  dmlog_email_body:
+    data_type: TEXT
   dmlog_email_reply_to:
-    data_type: VARCHAR(256)
-  dmlog_name:
     data_type: VARCHAR(256)
   dmlog_email_subject:
     data_type: VARCHAR(1024)
-  dmlog_email_body:
-    data_type: TEXT
-  dmlog_sent_securely:
-    data_type: BOOLEAN
-  dmlog_cover_letter_deal_file_pid:
+  dmlog_name:
+    data_type: VARCHAR(256)
+  dmlog_pid:
     data_type: BIGINT
-  dmlog_cc_recipients:
-    data_type: VARCHAR(16000)
-  dmlog_bcc_recipients:
-    data_type: VARCHAR(16000)
   dmlog_plain_text:
     data_type: BOOLEAN
+  dmlog_sent_datetime:
+    data_type: TIMESTAMP
+  dmlog_sent_securely:
+    data_type: BOOLEAN
+  dmlog_to_recipients:
+    data_type: VARCHAR(16000)
+  dmlog_version:
+    data_type: INTEGER

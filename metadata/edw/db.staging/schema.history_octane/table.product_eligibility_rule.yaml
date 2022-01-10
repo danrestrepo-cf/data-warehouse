@@ -133,98 +133,136 @@ foreign_keys:
       schema: history_octane
       table: product_rule_domain_input_type
 columns:
-  per_pid:
-    data_type: BIGINT
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  per_amortization_fully:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.per_pid
-  per_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.per_version
-  per_product_eligibility_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.per_product_eligibility_pid
-  per_summary:
-    data_type: VARCHAR(16000)
-    source:
-      field: primary_source_table.columns.per_summary
-  per_note:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.per_note
-  per_group_id:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.per_group_id
-  per_loan_purpose_input_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.per_loan_purpose_input_type
-  per_property_usage_input_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.per_property_usage_input_type
-  per_doc_level_input_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.per_doc_level_input_type
-  per_property_category_input_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.per_property_category_input_type
-  per_first_time_homebuyer_input_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.per_first_time_homebuyer_input_type
-  per_self_employed_input_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.per_self_employed_input_type
+      field: primary_source_table.columns.per_amortization_fully
   per_amortization_input_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.per_amortization_input_type
-  per_non_resident_alien_input_type:
-    data_type: VARCHAR(128)
+  per_amortization_interest_only:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.per_non_resident_alien_input_type
-  per_hazardous_lava_zone_input_type:
-    data_type: VARCHAR(128)
+      field: primary_source_table.columns.per_amortization_interest_only
+  per_arms_length:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.per_hazardous_lava_zone_input_type
-  per_property_rights_input_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.per_property_rights_input_type
-  per_property_acres_input_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.per_property_acres_input_type
+      field: primary_source_table.columns.per_arms_length
   per_arms_length_input_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.per_arms_length_input_type
-  per_underwrite_accepted_input_type:
+  per_doc_level_full:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_doc_level_full
+  per_doc_level_input_type:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.per_underwrite_accepted_input_type
-  per_state_input_type:
-    data_type: VARCHAR(128)
+      field: primary_source_table.columns.per_doc_level_input_type
+  per_doc_level_limited:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.per_state_input_type
+      field: primary_source_table.columns.per_doc_level_limited
+  per_doc_level_lite:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_doc_level_lite
+  per_doc_level_streamline_refinance:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_doc_level_streamline_refinance
+  per_du_risk_assessment_accepted:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_du_risk_assessment_accepted
+  per_escrow_waiver:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_escrow_waiver
   per_escrow_waiver_input_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.per_escrow_waiver_input_type
-  per_minimum_credit_score_input:
+  per_first_time_homebuyer:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.per_minimum_credit_score_input
-  per_minimum_loan_amount_input:
+      field: primary_source_table.columns.per_first_time_homebuyer
+  per_first_time_homebuyer_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_first_time_homebuyer_input_type
+  per_group_id:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.per_group_id
+  per_hazardous_lava_zone:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.per_minimum_loan_amount_input
+      field: primary_source_table.columns.per_hazardous_lava_zone
+  per_hazardous_lava_zone_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_hazardous_lava_zone_input_type
+  per_loan_purpose_cash_out:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_loan_purpose_cash_out
+  per_loan_purpose_change_in_rate_term:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_loan_purpose_change_in_rate_term
+  per_loan_purpose_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_loan_purpose_input_type
+  per_loan_purpose_purchase:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_loan_purpose_purchase
+  per_lp_risk_assessment_accepted:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_lp_risk_assessment_accepted
+  per_manual_risk_assessment_accepted:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_manual_risk_assessment_accepted
+  per_maximum_cltv_ratio_input:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_maximum_cltv_ratio_input
+  per_maximum_cltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.per_maximum_cltv_ratio_percent
+  per_maximum_debt_ratio_input:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_maximum_debt_ratio_input
+  per_maximum_debt_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.per_maximum_debt_ratio_percent
+  per_maximum_housing_ratio_input:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_maximum_housing_ratio_input
+  per_maximum_housing_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.per_maximum_housing_ratio_percent
+  per_maximum_loan_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.per_maximum_loan_amount
   per_maximum_loan_amount_input:
     data_type: BOOLEAN
     source:
@@ -233,102 +271,90 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_maximum_ltv_ratio_input
+  per_maximum_ltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.per_maximum_ltv_ratio_percent
+  per_minimum_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.per_minimum_credit_score
+  per_minimum_credit_score_input:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_minimum_credit_score_input
+  per_minimum_loan_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.per_minimum_loan_amount
+  per_minimum_loan_amount_input:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_minimum_loan_amount_input
   per_newly_built_maximum_ltv_ratio_input:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_newly_built_maximum_ltv_ratio_input
-  per_subordinate_maximum_ltv_ratio_input:
+  per_newly_built_maximum_ltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.per_newly_built_maximum_ltv_ratio_percent
+  per_non_resident_alien:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.per_subordinate_maximum_ltv_ratio_input
-  per_maximum_cltv_ratio_input:
+      field: primary_source_table.columns.per_non_resident_alien
+  per_non_resident_alien_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_non_resident_alien_input_type
+  per_not_arms_length:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.per_maximum_cltv_ratio_input
-  per_maximum_housing_ratio_input:
+      field: primary_source_table.columns.per_not_arms_length
+  per_not_escrow_waiver:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.per_maximum_housing_ratio_input
-  per_maximum_debt_ratio_input:
+      field: primary_source_table.columns.per_not_escrow_waiver
+  per_not_first_time_homebuyer:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.per_maximum_debt_ratio_input
-  per_lp_risk_assessment_accepted:
+      field: primary_source_table.columns.per_not_first_time_homebuyer
+  per_not_hazardous_lava_zone:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.per_lp_risk_assessment_accepted
-  per_du_risk_assessment_accepted:
+      field: primary_source_table.columns.per_not_hazardous_lava_zone
+  per_not_non_resident_alien:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.per_du_risk_assessment_accepted
-  per_manual_risk_assessment_accepted:
+      field: primary_source_table.columns.per_not_non_resident_alien
+  per_not_self_employed:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.per_manual_risk_assessment_accepted
-  per_loan_purpose_purchase:
+      field: primary_source_table.columns.per_not_self_employed
+  per_not_under_10_acres:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.per_loan_purpose_purchase
-  per_loan_purpose_change_in_rate_term:
-    data_type: BOOLEAN
+      field: primary_source_table.columns.per_not_under_10_acres
+  per_note:
+    data_type: VARCHAR(256)
     source:
-      field: primary_source_table.columns.per_loan_purpose_change_in_rate_term
-  per_loan_purpose_cash_out:
-    data_type: BOOLEAN
+      field: primary_source_table.columns.per_note
+  per_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.per_loan_purpose_cash_out
-  per_property_usage_primary_residence:
-    data_type: BOOLEAN
+      field: primary_source_table.columns.per_pid
+  per_product_eligibility_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.per_property_usage_primary_residence
-  per_property_usage_second_home:
-    data_type: BOOLEAN
+      field: primary_source_table.columns.per_product_eligibility_pid
+  per_property_acres_input_type:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.per_property_usage_second_home
-  per_property_usage_investment:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_property_usage_investment
-  per_doc_level_full:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_doc_level_full
-  per_doc_level_lite:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_doc_level_lite
-  per_doc_level_limited:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_doc_level_limited
-  per_doc_level_streamline_refinance:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_doc_level_streamline_refinance
-  per_property_category_detached:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_property_category_detached
+      field: primary_source_table.columns.per_property_acres_input_type
   per_property_category_attached:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_property_category_attached
-  per_property_category_condo_hotel:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_property_category_condo_hotel
-  per_property_category_duplex:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_property_category_duplex
-  per_property_category_triplex:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_property_category_triplex
-  per_property_category_fourplex:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_property_category_fourplex
   per_property_category_commercial_residential:
     data_type: BOOLEAN
     source:
@@ -341,6 +367,34 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_property_category_condo_5_over_story
+  per_property_category_condo_hotel:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_category_condo_hotel
+  per_property_category_detached:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_category_detached
+  per_property_category_duplex:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_category_duplex
+  per_property_category_farm:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_category_farm
+  per_property_category_fourplex:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_category_fourplex
+  per_property_category_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_property_category_input_type
+  per_property_category_land_and_lots:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_property_category_land_and_lots
   per_property_category_manufactured_multi_wide:
     data_type: BOOLEAN
     source:
@@ -353,138 +407,62 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_property_category_townhouse_rowhouse
-  per_property_category_land_and_lots:
+  per_property_category_triplex:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.per_property_category_land_and_lots
-  per_property_category_farm:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_property_category_farm
-  per_first_time_homebuyer:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_first_time_homebuyer
-  per_not_first_time_homebuyer:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_not_first_time_homebuyer
-  per_self_employed:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_self_employed
-  per_not_self_employed:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_not_self_employed
-  per_amortization_fully:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_amortization_fully
-  per_amortization_interest_only:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_amortization_interest_only
-  per_non_resident_alien:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_non_resident_alien
-  per_not_non_resident_alien:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_not_non_resident_alien
-  per_arms_length:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_arms_length
-  per_not_arms_length:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_not_arms_length
-  per_hazardous_lava_zone:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_hazardous_lava_zone
-  per_not_hazardous_lava_zone:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_not_hazardous_lava_zone
+      field: primary_source_table.columns.per_property_category_triplex
   per_property_rights_fee_simple:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_property_rights_fee_simple
+  per_property_rights_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_property_rights_input_type
   per_property_rights_leasehold:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_property_rights_leasehold
-  per_under_10_acres:
+  per_property_usage_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_property_usage_input_type
+  per_property_usage_investment:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.per_under_10_acres
-  per_not_under_10_acres:
+      field: primary_source_table.columns.per_property_usage_investment
+  per_property_usage_primary_residence:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.per_not_under_10_acres
-  per_escrow_waiver:
+      field: primary_source_table.columns.per_property_usage_primary_residence
+  per_property_usage_second_home:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.per_escrow_waiver
-  per_not_escrow_waiver:
+      field: primary_source_table.columns.per_property_usage_second_home
+  per_self_employed:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.per_not_escrow_waiver
-  per_minimum_credit_score:
-    data_type: INTEGER
+      field: primary_source_table.columns.per_self_employed
+  per_self_employed_input_type:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.per_minimum_credit_score
-  per_minimum_loan_amount:
-    data_type: NUMERIC(15,0)
-    source:
-      field: primary_source_table.columns.per_minimum_loan_amount
-  per_maximum_loan_amount:
-    data_type: NUMERIC(15,0)
-    source:
-      field: primary_source_table.columns.per_maximum_loan_amount
-  per_maximum_ltv_ratio_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.per_maximum_ltv_ratio_percent
-  per_newly_built_maximum_ltv_ratio_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.per_newly_built_maximum_ltv_ratio_percent
-  per_subordinate_maximum_ltv_ratio_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.per_subordinate_maximum_ltv_ratio_percent
-  per_maximum_cltv_ratio_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.per_maximum_cltv_ratio_percent
-  per_maximum_housing_ratio_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.per_maximum_housing_ratio_percent
-  per_maximum_debt_ratio_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.per_maximum_debt_ratio_percent
-  per_state_al:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_state_al
+      field: primary_source_table.columns.per_self_employed_input_type
   per_state_ak:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_state_ak
-  per_state_az:
+  per_state_al:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.per_state_az
+      field: primary_source_table.columns.per_state_al
   per_state_ar:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_state_ar
+  per_state_az:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_az
   per_state_ca:
     data_type: BOOLEAN
     source:
@@ -497,14 +475,14 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_state_ct
-  per_state_de:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_state_de
   per_state_dc:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_state_dc
+  per_state_de:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_de
   per_state_fl:
     data_type: BOOLEAN
     source:
@@ -521,6 +499,10 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_state_hi
+  per_state_ia:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_ia
   per_state_id:
     data_type: BOOLEAN
     source:
@@ -533,10 +515,10 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_state_in
-  per_state_ia:
-    data_type: BOOLEAN
+  per_state_input_type:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.per_state_ia
+      field: primary_source_table.columns.per_state_input_type
   per_state_ks:
     data_type: BOOLEAN
     source:
@@ -549,18 +531,18 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_state_la
-  per_state_me:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_state_me
-  per_state_md:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_state_md
   per_state_ma:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_state_ma
+  per_state_md:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_md
+  per_state_me:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_me
   per_state_mi:
     data_type: BOOLEAN
     source:
@@ -569,26 +551,30 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_state_mn
-  per_state_ms:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_state_ms
   per_state_mo:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_state_mo
+  per_state_ms:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_ms
   per_state_mt:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_state_mt
+  per_state_nc:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_nc
+  per_state_nd:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_nd
   per_state_ne:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_state_ne
-  per_state_nv:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_state_nv
   per_state_nh:
     data_type: BOOLEAN
     source:
@@ -601,18 +587,14 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_state_nm
+  per_state_nv:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_nv
   per_state_ny:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_state_ny
-  per_state_nc:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_state_nc
-  per_state_nd:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_state_nd
   per_state_oh:
     data_type: BOOLEAN
     source:
@@ -657,10 +639,6 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_state_ut
-  per_state_vt:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_state_vt
   per_state_va:
     data_type: BOOLEAN
     source:
@@ -669,28 +647,50 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_state_vi
+  per_state_vt:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_vt
   per_state_wa:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_state_wa
-  per_state_wv:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.per_state_wv
   per_state_wi:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_state_wi
+  per_state_wv:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_state_wv
   per_state_wy:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.per_state_wy
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
+  per_subordinate_maximum_ltv_ratio_input:
     data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+    source:
+      field: primary_source_table.columns.per_subordinate_maximum_ltv_ratio_input
+  per_subordinate_maximum_ltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.per_subordinate_maximum_ltv_ratio_percent
+  per_summary:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.per_summary
+  per_under_10_acres:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.per_under_10_acres
+  per_underwrite_accepted_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.per_underwrite_accepted_input_type
+  per_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.per_version
 etls:
   SP-100111:
     input_type: table

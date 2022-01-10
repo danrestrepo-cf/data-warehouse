@@ -53,52 +53,52 @@ foreign_keys:
       schema: history_octane
       table: settlement_agent_wire
 columns:
-  prs_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prs_pid
-  prs_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.prs_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   prs_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.prs_account_pid
-  prs_state:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.prs_state
   prs_from_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.prs_from_date
-  prs_title_company_pid:
+  prs_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.prs_title_company_pid
-  prs_title_company_office_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prs_title_company_office_pid
-  prs_settlement_agent_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prs_settlement_agent_pid
+      field: primary_source_table.columns.prs_pid
   prs_settlement_agent_office_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.prs_settlement_agent_office_pid
+  prs_settlement_agent_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prs_settlement_agent_pid
   prs_settlement_agent_wire_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.prs_settlement_agent_wire_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  prs_state:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.prs_state
+  prs_title_company_office_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prs_title_company_office_pid
+  prs_title_company_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prs_title_company_pid
+  prs_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.prs_version
 etls:
   SP-100068:
     input_type: table

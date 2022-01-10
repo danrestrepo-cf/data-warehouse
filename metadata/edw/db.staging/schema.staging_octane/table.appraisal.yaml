@@ -139,20 +139,28 @@ foreign_keys:
       schema: staging_octane
       table: water_type
 columns:
-  apr_pid:
-    data_type: BIGINT
-  apr_version:
-    data_type: INTEGER
-  apr_appraised_value_amount:
-    data_type: BIGINT
-  apr_effective_date:
-    data_type: DATE
-  apr_deal_pid:
-    data_type: BIGINT
-  apr_decision_appraisal:
-    data_type: BOOLEAN
   apr_appraisal_condition_type:
     data_type: VARCHAR(128)
+  apr_appraisal_id:
+    data_type: INTEGER
+  apr_appraisal_invoice_amount:
+    data_type: NUMERIC(17,2)
+  apr_appraisal_order_id:
+    data_type: VARCHAR(32)
+  apr_appraisal_order_instructions:
+    data_type: VARCHAR(1024)
+  apr_appraisal_order_status_type:
+    data_type: VARCHAR(128)
+  apr_appraisal_purpose_type:
+    data_type: VARCHAR(128)
+  apr_appraisal_reference_id:
+    data_type: VARCHAR(32)
+  apr_appraisal_source_type:
+    data_type: VARCHAR(128)
+  apr_appraisal_underwriter_type:
+    data_type: VARCHAR(128)
+  apr_appraised_value_amount:
+    data_type: BIGINT
   apr_appraiser_address_city:
     data_type: VARCHAR(128)
   apr_appraiser_address_country:
@@ -175,6 +183,10 @@ columns:
     data_type: VARCHAR(32)
   apr_appraiser_last_name:
     data_type: VARCHAR(32)
+  apr_appraiser_license_number:
+    data_type: VARCHAR(128)
+  apr_appraiser_license_state:
+    data_type: VARCHAR(128)
   apr_appraiser_middle_name:
     data_type: VARCHAR(32)
   apr_appraiser_mobile_phone:
@@ -185,20 +197,86 @@ columns:
     data_type: VARCHAR(32)
   apr_appraiser_office_phone_extension:
     data_type: VARCHAR(16)
-  apr_appraiser_title:
-    data_type: VARCHAR(128)
-  apr_appraiser_license_number:
-    data_type: VARCHAR(128)
   apr_appraiser_supervisory_license_number:
     data_type: VARCHAR(128)
-  apr_appraiser_license_state:
+  apr_appraiser_title:
     data_type: VARCHAR(128)
-  apr_appraisal_order_status_type:
-    data_type: VARCHAR(128)
-  apr_appraisal_order_id:
-    data_type: VARCHAR(32)
-  apr_appraisal_order_instructions:
+  apr_bathroom_count_unit_1:
+    data_type: INTEGER
+  apr_bathroom_count_unit_2:
+    data_type: INTEGER
+  apr_bathroom_count_unit_3:
+    data_type: INTEGER
+  apr_bathroom_count_unit_4:
+    data_type: INTEGER
+  apr_bedroom_count_unit_1:
+    data_type: INTEGER
+  apr_bedroom_count_unit_2:
+    data_type: INTEGER
+  apr_bedroom_count_unit_3:
+    data_type: INTEGER
+  apr_bedroom_count_unit_4:
+    data_type: INTEGER
+  apr_cost_to_build_new:
+    data_type: NUMERIC(15,0)
+  apr_cu_risk_score:
+    data_type: NUMERIC(10,2)
+  apr_deal_pid:
+    data_type: BIGINT
+  apr_decision_appraisal:
+    data_type: BOOLEAN
+  apr_deficient_economic_life_explanation:
     data_type: VARCHAR(1024)
+  apr_due_date:
+    data_type: DATE
+  apr_effective_date:
+    data_type: DATE
+  apr_exclude:
+    data_type: BOOLEAN
+  apr_gross_living_area_square_feet_unit_1:
+    data_type: INTEGER
+  apr_gross_living_area_square_feet_unit_2:
+    data_type: INTEGER
+  apr_gross_living_area_square_feet_unit_3:
+    data_type: INTEGER
+  apr_gross_living_area_square_feet_unit_4:
+    data_type: INTEGER
+  apr_hud_provided:
+    data_type: BOOLEAN
+  apr_hve_confidence_level_type:
+    data_type: VARCHAR(128)
+  apr_hve_excessive_value_message:
+    data_type: VARCHAR(1024)
+  apr_hve_forecast_standard_deviation_percent:
+    data_type: NUMERIC(11,9)
+  apr_hve_point_value_estimate_amount:
+    data_type: NUMERIC(15,2)
+  apr_hve_variance_percent:
+    data_type: NUMERIC(11,9)
+  apr_inspection_date:
+    data_type: DATE
+  apr_license_expiration_date:
+    data_type: DATE
+  apr_monthly_hoa_amount:
+    data_type: NUMERIC(15,2)
+  apr_mortgage_type:
+    data_type: VARCHAR(128)
+  apr_neighborhood_location_type:
+    data_type: VARCHAR(128)
+  apr_obtained_from_transfer:
+    data_type: BOOLEAN
+  apr_order_appraisal:
+    data_type: VARCHAR(128)
+  apr_order_date:
+    data_type: DATE
+  apr_payment_received_date:
+    data_type: DATE
+  apr_payment_type:
+    data_type: VARCHAR(128)
+  apr_pid:
+    data_type: BIGINT
+  apr_project_name:
+    data_type: VARCHAR(128)
   apr_property_address_city:
     data_type: VARCHAR(128)
   apr_property_address_country:
@@ -211,28 +289,44 @@ columns:
     data_type: VARCHAR(128)
   apr_property_address_street2:
     data_type: VARCHAR(128)
+  apr_property_category_type:
+    data_type: VARCHAR(128)
   apr_property_county_name:
     data_type: VARCHAR(128)
-  apr_obtained_from_transfer:
+  apr_property_tax_id:
+    data_type: VARCHAR(128)
+  apr_remaining_economic_life_years:
+    data_type: INTEGER
+  apr_road_type:
+    data_type: VARCHAR(128)
+  apr_sale_price_amount:
+    data_type: NUMERIC(15,0)
+  apr_sanitation_type:
+    data_type: VARCHAR(128)
+  apr_second_decision_appraisal:
     data_type: BOOLEAN
-  apr_hud_provided:
+  apr_site_area:
+    data_type: NUMERIC(15,0)
+  apr_structure_built_month:
+    data_type: INTEGER
+  apr_structure_built_year:
+    data_type: INTEGER
+  apr_supervisor_required:
     data_type: BOOLEAN
-  apr_bedroom_count_unit_1:
-    data_type: INTEGER
-  apr_bedroom_count_unit_2:
-    data_type: INTEGER
-  apr_bedroom_count_unit_3:
-    data_type: INTEGER
-  apr_bedroom_count_unit_4:
-    data_type: INTEGER
-  apr_bathroom_count_unit_1:
-    data_type: INTEGER
-  apr_bathroom_count_unit_2:
-    data_type: INTEGER
-  apr_bathroom_count_unit_3:
-    data_type: INTEGER
-  apr_bathroom_count_unit_4:
-    data_type: INTEGER
+  apr_supervisory_appraiser_first_name:
+    data_type: VARCHAR(32)
+  apr_supervisory_appraiser_last_name:
+    data_type: VARCHAR(32)
+  apr_supervisory_appraiser_middle_name:
+    data_type: VARCHAR(32)
+  apr_supervisory_appraiser_name_suffix:
+    data_type: VARCHAR(32)
+  apr_supervisory_license_expiration_date:
+    data_type: DATE
+  apr_supervisory_license_state:
+    data_type: VARCHAR(128)
+  apr_synthetic_unique:
+    data_type: BOOLEAN
   apr_total_room_count_unit_1:
     data_type: INTEGER
   apr_total_room_count_unit_2:
@@ -241,105 +335,11 @@ columns:
     data_type: INTEGER
   apr_total_room_count_unit_4:
     data_type: INTEGER
-  apr_gross_living_area_square_feet_unit_1:
-    data_type: INTEGER
-  apr_gross_living_area_square_feet_unit_2:
-    data_type: INTEGER
-  apr_gross_living_area_square_feet_unit_3:
-    data_type: INTEGER
-  apr_gross_living_area_square_feet_unit_4:
-    data_type: INTEGER
-  apr_appraisal_underwriter_type:
-    data_type: VARCHAR(128)
   apr_ucdp_doc_file_id:
     data_type: VARCHAR(10)
-  apr_inspection_date:
-    data_type: DATE
-  apr_appraisal_reference_id:
-    data_type: VARCHAR(32)
   apr_ucdp_ssr_id:
     data_type: VARCHAR(16)
-  apr_sale_price_amount:
-    data_type: NUMERIC(15,0)
-  apr_property_tax_id:
-    data_type: VARCHAR(128)
-  apr_property_category_type:
-    data_type: VARCHAR(128)
-  apr_cost_to_build_new:
-    data_type: NUMERIC(15,0)
-  apr_monthly_hoa_amount:
-    data_type: NUMERIC(15,2)
-  apr_structure_built_year:
+  apr_version:
     data_type: INTEGER
-  apr_structure_built_month:
-    data_type: INTEGER
-  apr_project_name:
-    data_type: VARCHAR(128)
-  apr_road_type:
-    data_type: VARCHAR(128)
   apr_water_type:
     data_type: VARCHAR(128)
-  apr_sanitation_type:
-    data_type: VARCHAR(128)
-  apr_neighborhood_location_type:
-    data_type: VARCHAR(128)
-  apr_site_area:
-    data_type: NUMERIC(15,0)
-  apr_due_date:
-    data_type: DATE
-  apr_order_date:
-    data_type: DATE
-  apr_payment_type:
-    data_type: VARCHAR(128)
-  apr_payment_received_date:
-    data_type: DATE
-  apr_appraisal_source_type:
-    data_type: VARCHAR(128)
-  apr_appraisal_purpose_type:
-    data_type: VARCHAR(128)
-  apr_exclude:
-    data_type: BOOLEAN
-  apr_order_appraisal:
-    data_type: VARCHAR(128)
-  apr_appraisal_id:
-    data_type: INTEGER
-  apr_mortgage_type:
-    data_type: VARCHAR(128)
-  apr_remaining_economic_life_years:
-    data_type: INTEGER
-  apr_deficient_economic_life_explanation:
-    data_type: VARCHAR(1024)
-  apr_hve_point_value_estimate_amount:
-    data_type: NUMERIC(15,2)
-  apr_hve_forecast_standard_deviation_percent:
-    data_type: NUMERIC(11,9)
-  apr_hve_confidence_level_type:
-    data_type: VARCHAR(128)
-  apr_hve_variance_percent:
-    data_type: NUMERIC(11,9)
-  apr_hve_excessive_value_message:
-    data_type: VARCHAR(1024)
-  apr_cu_risk_score:
-    data_type: NUMERIC(10,2)
-  apr_license_expiration_date:
-    data_type: DATE
-  apr_supervisor_required:
-    data_type: BOOLEAN
-  apr_supervisory_appraiser_first_name:
-    data_type: VARCHAR(32)
-  apr_supervisory_appraiser_middle_name:
-    data_type: VARCHAR(32)
-  apr_supervisory_appraiser_last_name:
-    data_type: VARCHAR(32)
-  apr_supervisory_appraiser_name_suffix:
-    data_type: VARCHAR(32)
-  apr_supervisory_license_state:
-    data_type: VARCHAR(128)
-  apr_supervisory_license_expiration_date:
-    data_type: DATE
-  apr_synthetic_unique:
-    data_type: BOOLEAN
-  apr_appraisal_invoice_amount:
-    data_type: NUMERIC(17,2)
-  apr_second_decision_appraisal:
-    data_type: BOOLEAN

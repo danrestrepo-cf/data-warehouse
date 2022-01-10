@@ -67,45 +67,45 @@ foreign_keys:
       schema: staging_octane
       table: smart_ledger_plan_case_type
 columns:
-  slpcv_pid:
-    data_type: BIGINT
-  slpcv_version:
-    data_type: INTEGER
   slpcv_account_pid:
-    data_type: BIGINT
-  slpcv_smart_ledger_plan_case_pid:
-    data_type: BIGINT
-  slpcv_payer_org_node_pid:
     data_type: BIGINT
   slpcv_active:
     data_type: BOOLEAN
-  slpcv_synthetic_unique:
-    data_type: BIGINT
-  slpcv_case_name:
-    data_type: VARCHAR(128)
-  slpcv_smart_ledger_plan_case_type:
-    data_type: VARCHAR(128)
-  slpcv_smart_ledger_plan_case_level_type:
-    data_type: VARCHAR(128)
-  slpcv_smart_ledger_pay_frequency_type:
-    data_type: VARCHAR(128)
-  slpcv_from_date:
-    data_type: DATE
-  slpcv_through_date:
-    data_type: DATE
   slpcv_base_amount:
     data_type: NUMERIC(15,2)
   slpcv_basis_points:
     data_type: INTEGER
-  slpcv_min_amount:
-    data_type: NUMERIC(15,2)
-  slpcv_max_amount:
-    data_type: NUMERIC(15,2)
-  slpcv_ledger_basis_points_input_type:
+  slpcv_case_name:
     data_type: VARCHAR(128)
   slpcv_criteria_pid:
     data_type: BIGINT
+  slpcv_from_date:
+    data_type: DATE
   slpcv_last_modified_by:
     data_type: VARCHAR(128)
   slpcv_last_modified_datetime:
     data_type: TIMESTAMP
+  slpcv_ledger_basis_points_input_type:
+    data_type: VARCHAR(128)
+  slpcv_max_amount:
+    data_type: NUMERIC(15,2)
+  slpcv_min_amount:
+    data_type: NUMERIC(15,2)
+  slpcv_payer_org_node_pid:
+    data_type: BIGINT
+  slpcv_pid:
+    data_type: BIGINT
+  slpcv_smart_ledger_pay_frequency_type:
+    data_type: VARCHAR(128)
+  slpcv_smart_ledger_plan_case_level_type:
+    data_type: VARCHAR(128)
+  slpcv_smart_ledger_plan_case_pid:
+    data_type: BIGINT
+  slpcv_smart_ledger_plan_case_type:
+    data_type: VARCHAR(128)
+  slpcv_synthetic_unique:
+    data_type: BIGINT
+  slpcv_through_date:
+    data_type: DATE
+  slpcv_version:
+    data_type: INTEGER

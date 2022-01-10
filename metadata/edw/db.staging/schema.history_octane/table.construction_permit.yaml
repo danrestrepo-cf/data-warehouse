@@ -29,18 +29,50 @@ foreign_keys:
       schema: history_octane
       table: construction_permit_type
 columns:
-  cop_pid:
-    data_type: BIGINT
+  cop_address_city:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.cop_pid
-  cop_version:
-    data_type: INTEGER
+      field: primary_source_table.columns.cop_address_city
+  cop_address_postal_code:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.cop_version
-  cop_proposal_pid:
-    data_type: BIGINT
+      field: primary_source_table.columns.cop_address_postal_code
+  cop_address_state:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.cop_proposal_pid
+      field: primary_source_table.columns.cop_address_state
+  cop_address_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cop_address_street1
+  cop_address_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cop_address_street2
+  cop_amount:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.cop_amount
+  cop_application_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.cop_application_date
+  cop_building_department_contact_url:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.cop_building_department_contact_url
+  cop_building_department_name:
+    data_type: VARCHAR(64)
+    source:
+      field: primary_source_table.columns.cop_building_department_name
+  cop_closed_out_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.cop_closed_out_date
+  cop_construction_permit_requested_by_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cop_construction_permit_requested_by_type
   cop_construction_permit_type:
     data_type: VARCHAR(128)
     source:
@@ -49,58 +81,34 @@ columns:
     data_type: VARCHAR(64)
     source:
       field: primary_source_table.columns.cop_construction_permit_type_other_description
-  cop_permit_number:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.cop_permit_number
-  cop_construction_permit_requested_by_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.cop_construction_permit_requested_by_type
-  cop_issued_by:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.cop_issued_by
-  cop_application_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.cop_application_date
-  cop_issued_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.cop_issued_date
-  cop_expiration_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.cop_expiration_date
-  cop_closed_out_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.cop_closed_out_date
-  cop_amount:
-    data_type: NUMERIC(17,2)
-    source:
-      field: primary_source_table.columns.cop_amount
-  cop_building_department_name:
-    data_type: VARCHAR(64)
-    source:
-      field: primary_source_table.columns.cop_building_department_name
-  cop_building_department_contact_url:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.cop_building_department_contact_url
-  cop_first_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.cop_first_name
-  cop_last_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.cop_last_name
   cop_email:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.cop_email
+  cop_expiration_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.cop_expiration_date
+  cop_fax:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.cop_fax
+  cop_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.cop_first_name
+  cop_issued_by:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cop_issued_by
+  cop_issued_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.cop_issued_date
+  cop_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.cop_last_name
   cop_mobile_phone:
     data_type: VARCHAR(32)
     source:
@@ -113,34 +121,26 @@ columns:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.cop_office_phone_extension
-  cop_fax:
+  cop_permit_number:
     data_type: VARCHAR(32)
     source:
-      field: primary_source_table.columns.cop_fax
-  cop_address_street1:
-    data_type: VARCHAR(128)
+      field: primary_source_table.columns.cop_permit_number
+  cop_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.cop_address_street1
-  cop_address_street2:
-    data_type: VARCHAR(128)
+      field: primary_source_table.columns.cop_pid
+  cop_proposal_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.cop_address_street2
-  cop_address_city:
-    data_type: VARCHAR(128)
+      field: primary_source_table.columns.cop_proposal_pid
+  cop_version:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.cop_address_city
-  cop_address_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.cop_address_state
-  cop_address_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.cop_address_postal_code
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+      field: primary_source_table.columns.cop_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

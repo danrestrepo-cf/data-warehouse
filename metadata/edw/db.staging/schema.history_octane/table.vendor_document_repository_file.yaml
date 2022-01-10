@@ -45,26 +45,16 @@ foreign_keys:
       schema: history_octane
       table: vendor_import_document_type
 columns:
-  vdrf_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.vdrf_pid
-  vdrf_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.vdrf_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   vdrf_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.vdrf_account_pid
-  vdrf_deal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.vdrf_deal_pid
-  vdrf_document_import_vendor_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.vdrf_document_import_vendor_type
   vdrf_client_filename:
     data_type: VARCHAR(128)
     source:
@@ -73,28 +63,38 @@ columns:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.vdrf_client_filepath
-  vdrf_file_checksum:
-    data_type: VARCHAR(128)
+  vdrf_deal_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.vdrf_file_checksum
-  vdrf_vendor_import_document_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.vdrf_vendor_import_document_type
+      field: primary_source_table.columns.vdrf_deal_pid
   vdrf_document_import_status_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.vdrf_document_import_status_type
+  vdrf_document_import_vendor_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.vdrf_document_import_vendor_type
+  vdrf_file_checksum:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.vdrf_file_checksum
+  vdrf_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.vdrf_pid
   vdrf_processed_datetime:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.vdrf_processed_datetime
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  vdrf_vendor_import_document_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.vdrf_vendor_import_document_type
+  vdrf_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.vdrf_version
 etls:
   SP-100356:
     input_type: table

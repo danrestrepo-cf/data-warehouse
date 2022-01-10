@@ -21,18 +21,14 @@ foreign_keys:
       schema: history_octane
       table: channel_type
 columns:
-  ch_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ch_pid
-  ch_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ch_version
   ch_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.ch_account_pid
+  ch_channel_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ch_channel_type
   ch_id:
     data_type: VARCHAR(32)
     source:
@@ -41,14 +37,18 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ch_name
-  ch_channel_type:
-    data_type: VARCHAR(128)
+  ch_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.ch_channel_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+      field: primary_source_table.columns.ch_pid
+  ch_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ch_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

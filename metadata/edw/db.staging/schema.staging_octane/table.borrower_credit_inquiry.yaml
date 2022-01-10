@@ -19,11 +19,11 @@ foreign_keys:
       schema: staging_octane
       table: borrower
 columns:
+  bci_borrower_pid:
+    data_type: BIGINT
+  bci_credit_inquiry_pid:
+    data_type: BIGINT
   bci_pid:
     data_type: BIGINT
   bci_version:
     data_type: INTEGER
-  bci_credit_inquiry_pid:
-    data_type: BIGINT
-  bci_borrower_pid:
-    data_type: BIGINT

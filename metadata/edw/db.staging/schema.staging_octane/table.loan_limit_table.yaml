@@ -19,17 +19,17 @@ foreign_keys:
       schema: staging_octane
       table: loan_limit_table_type
 columns:
-  llt_pid:
-    data_type: BIGINT
-  llt_version:
-    data_type: INTEGER
   llt_account_pid:
     data_type: BIGINT
   llt_from_date:
     data_type: DATE
   llt_loan_limit_table_type:
     data_type: VARCHAR(128)
-  llt_uploader_unparsed_name:
-    data_type: VARCHAR(128)
+  llt_pid:
+    data_type: BIGINT
   llt_upload_datetime:
     data_type: TIMESTAMP
+  llt_uploader_unparsed_name:
+    data_type: VARCHAR(128)
+  llt_version:
+    data_type: INTEGER

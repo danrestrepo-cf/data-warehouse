@@ -45,26 +45,36 @@ foreign_keys:
       schema: history_octane
       table: product_side_type
 columns:
-  p_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.p_pid
-  p_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.p_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   p_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.p_account_pid
-  p_investor_pid:
-    data_type: BIGINT
+  p_description:
+    data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.columns.p_investor_pid
+      field: primary_source_table.columns.p_description
+  p_fnm_product_name:
+    data_type: VARCHAR(15)
+    source:
+      field: primary_source_table.columns.p_fnm_product_name
+  p_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.p_from_date
   p_fund_source_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.p_fund_source_type
+  p_investor_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.p_investor_pid
   p_investor_product_id:
     data_type: VARCHAR(32)
     source:
@@ -73,40 +83,30 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.p_investor_product_name
-  p_from_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.p_from_date
-  p_through_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.p_through_date
-  p_fnm_product_name:
-    data_type: VARCHAR(15)
-    source:
-      field: primary_source_table.columns.p_fnm_product_name
   p_lock_auto_confirm:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.p_lock_auto_confirm
-  p_description:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.p_description
-  p_product_side_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.p_product_side_type
   p_parent_product_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.p_parent_product_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  p_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.p_pid
+  p_product_side_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.p_product_side_type
+  p_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.p_through_date
+  p_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.p_version
 etls:
   SP-100105:
     input_type: table

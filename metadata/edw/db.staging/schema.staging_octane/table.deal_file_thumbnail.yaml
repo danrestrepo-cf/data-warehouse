@@ -19,13 +19,13 @@ foreign_keys:
       schema: staging_octane
       table: deal_system_file
 columns:
-  dft_pid:
-    data_type: BIGINT
-  dft_version:
-    data_type: INTEGER
   dft_deal_file_pid:
     data_type: BIGINT
   dft_deal_system_file_pid:
     data_type: BIGINT
   dft_page_number:
+    data_type: INTEGER
+  dft_pid:
+    data_type: BIGINT
+  dft_version:
     data_type: INTEGER

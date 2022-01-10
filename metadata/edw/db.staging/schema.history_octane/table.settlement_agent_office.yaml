@@ -21,22 +21,32 @@ foreign_keys:
       schema: history_octane
       table: country_type
 columns:
-  sao_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sao_pid
-  sao_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sao_version
-  sao_settlement_agent_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sao_settlement_agent_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   sao_active:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.sao_active
+  sao_address_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sao_address_city
+  sao_address_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sao_address_country
+  sao_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sao_address_postal_code
+  sao_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sao_address_state
   sao_address_street1:
     data_type: VARCHAR(128)
     source:
@@ -45,48 +55,38 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.sao_address_street2
-  sao_address_city:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sao_address_city
-  sao_address_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sao_address_state
-  sao_address_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sao_address_postal_code
-  sao_address_country:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sao_address_country
-  sao_phone:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.sao_phone
-  sao_fax:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.sao_fax
   sao_docs_email:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.sao_docs_email
+  sao_fax:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.sao_fax
   sao_fund_email:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.sao_fund_email
+  sao_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.sao_phone
+  sao_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sao_pid
   sao_schedule_email:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.sao_schedule_email
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  sao_settlement_agent_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sao_settlement_agent_pid
+  sao_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sao_version
 etls:
   SP-100051:
     input_type: table

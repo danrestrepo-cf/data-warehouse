@@ -43,69 +43,69 @@ foreign_keys:
       schema: staging_octane
       table: trade_status_type
 columns:
-  t_pid:
-    data_type: BIGINT
-  t_version:
-    data_type: INTEGER
   t_account_pid:
     data_type: BIGINT
-  t_investor_pid:
-    data_type: BIGINT
-  t_create_lender_user_pid:
-    data_type: BIGINT
-  t_create_datetime:
-    data_type: TIMESTAMP
-  t_lender_trade_id:
-    data_type: VARCHAR(11)
-  t_investor_trade_id:
-    data_type: VARCHAR(32)
-  t_investor_commitment_id:
-    data_type: VARCHAR(32)
-  t_trade_name:
-    data_type: VARCHAR(128)
-  t_trade_status_type:
-    data_type: VARCHAR(128)
-  t_commitment_amount_tolerance_percent:
-    data_type: NUMERIC(11,9)
-  t_commitment_amount:
-    data_type: NUMERIC(15,2)
-  t_minimum_note_rate_percent:
-    data_type: NUMERIC(11,9)
-  t_maximum_note_rate_percent:
-    data_type: NUMERIC(11,9)
   t_actual_delivery_datetime:
     data_type: TIMESTAMP
-  t_early_delivery_datetime:
-    data_type: TIMESTAMP
-  t_required_delivery_datetime:
+  t_average_loan_amount:
+    data_type: NUMERIC(15,2)
+  t_buy_down_multiple:
+    data_type: INTEGER
+  t_buy_up_multiple:
+    data_type: INTEGER
+  t_commitment_amount:
+    data_type: NUMERIC(15,2)
+  t_commitment_amount_tolerance_percent:
+    data_type: NUMERIC(11,9)
+  t_commitment_datetime:
     data_type: TIMESTAMP
   t_commitment_expiration_datetime:
     data_type: TIMESTAMP
-  t_commitment_datetime:
+  t_create_datetime:
     data_type: TIMESTAMP
-  t_purchase_datetime:
+  t_create_lender_user_pid:
+    data_type: BIGINT
+  t_early_delivery_datetime:
     data_type: TIMESTAMP
-  t_weighted_average_note_rate_percent:
-    data_type: NUMERIC(11,9)
-  t_weighted_average_lender_price_percent:
-    data_type: NUMERIC(11,9)
-  t_weighted_average_investor_price_percent:
-    data_type: NUMERIC(11,9)
-  t_weighted_average_net_price_percent:
-    data_type: NUMERIC(11,9)
-  t_weighted_average_decision_credit_score:
-    data_type: INTEGER
-  t_average_loan_amount:
-    data_type: NUMERIC(15,2)
-  t_total_loan_amount:
-    data_type: NUMERIC(17,2)
+  t_investor_commitment_id:
+    data_type: VARCHAR(32)
+  t_investor_pid:
+    data_type: BIGINT
+  t_investor_trade_id:
+    data_type: VARCHAR(32)
+  t_lender_trade_id:
+    data_type: VARCHAR(11)
   t_loans_delivered_percent:
     data_type: NUMERIC(11,9)
+  t_maximum_note_rate_percent:
+    data_type: NUMERIC(11,9)
+  t_minimum_note_rate_percent:
+    data_type: NUMERIC(11,9)
+  t_pid:
+    data_type: BIGINT
+  t_purchase_datetime:
+    data_type: TIMESTAMP
+  t_required_delivery_datetime:
+    data_type: TIMESTAMP
+  t_total_loan_amount:
+    data_type: NUMERIC(17,2)
+  t_trade_name:
+    data_type: VARCHAR(128)
   t_trade_pricing_type:
     data_type: VARCHAR(128)
   t_trade_same_price_percent:
     data_type: NUMERIC(11,9)
-  t_buy_up_multiple:
+  t_trade_status_type:
+    data_type: VARCHAR(128)
+  t_version:
     data_type: INTEGER
-  t_buy_down_multiple:
+  t_weighted_average_decision_credit_score:
     data_type: INTEGER
+  t_weighted_average_investor_price_percent:
+    data_type: NUMERIC(11,9)
+  t_weighted_average_lender_price_percent:
+    data_type: NUMERIC(11,9)
+  t_weighted_average_net_price_percent:
+    data_type: NUMERIC(11,9)
+  t_weighted_average_note_rate_percent:
+    data_type: NUMERIC(11,9)

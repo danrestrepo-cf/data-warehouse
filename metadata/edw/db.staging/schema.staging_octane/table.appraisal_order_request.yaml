@@ -83,49 +83,49 @@ foreign_keys:
       schema: staging_octane
       table: agent_type
 columns:
-  aprq_pid:
-    data_type: BIGINT
-  aprq_version:
-    data_type: INTEGER
-  aprq_deal_pid:
-    data_type: BIGINT
-  aprq_appraisal_pid:
-    data_type: BIGINT
-  aprq_mercury_network_status_request_pid:
-    data_type: BIGINT
-  aprq_appraisal_order_coarse_status_type:
+  aprq_address_city:
     data_type: VARCHAR(128)
-  aprq_order_id:
+  aprq_address_postal_code:
     data_type: VARCHAR(128)
-  aprq_order_instructions:
-    data_type: VARCHAR(1024)
+  aprq_address_state:
+    data_type: VARCHAR(128)
   aprq_address_street1:
     data_type: VARCHAR(128)
   aprq_address_street2:
     data_type: VARCHAR(128)
-  aprq_address_city:
+  aprq_appraisal_management_company_type:
     data_type: VARCHAR(128)
-  aprq_address_state:
+  aprq_appraisal_order_coarse_status_type:
     data_type: VARCHAR(128)
-  aprq_address_postal_code:
+  aprq_appraisal_order_request_type:
     data_type: VARCHAR(128)
-  aprq_order_request_date:
-    data_type: DATE
-  aprq_response_xml_deal_system_file_pid:
+  aprq_appraisal_pid:
+    data_type: BIGINT
+  aprq_deal_pid:
+    data_type: BIGINT
+  aprq_mercury_network_status_request_pid:
     data_type: BIGINT
   aprq_mismo_xml_deal_system_file_pid:
     data_type: BIGINT
-  aprq_appraisal_order_request_type:
+  aprq_order_id:
     data_type: VARCHAR(128)
-  aprq_status_check_datetime:
-    data_type: TIMESTAMP
-  aprq_appraisal_management_company_type:
+  aprq_order_instructions:
+    data_type: VARCHAR(1024)
+  aprq_order_request_date:
+    data_type: DATE
+  aprq_pid:
+    data_type: BIGINT
+  aprq_requester_agent_type:
     data_type: VARCHAR(128)
   aprq_requester_lender_user_pid:
     data_type: BIGINT
   aprq_requester_unparsed_name:
     data_type: VARCHAR(128)
-  aprq_requester_agent_type:
-    data_type: VARCHAR(128)
+  aprq_response_xml_deal_system_file_pid:
+    data_type: BIGINT
+  aprq_status_check_datetime:
+    data_type: TIMESTAMP
   aprq_vendor_status_unique_id:
     data_type: VARCHAR(128)
+  aprq_version:
+    data_type: INTEGER

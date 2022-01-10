@@ -19,17 +19,17 @@ foreign_keys:
       schema: staging_octane
       table: lender_user
 columns:
-  lerc_pid:
-    data_type: BIGINT
-  lerc_version:
-    data_type: INTEGER
-  lerc_ledger_entry_review_note_pid:
-    data_type: BIGINT
-  lerc_create_datetime:
-    data_type: TIMESTAMP
-  lerc_content:
-    data_type: VARCHAR(16000)
   lerc_author_lender_user_pid:
     data_type: BIGINT
   lerc_author_unparsed_name:
     data_type: VARCHAR(128)
+  lerc_content:
+    data_type: VARCHAR(16000)
+  lerc_create_datetime:
+    data_type: TIMESTAMP
+  lerc_ledger_entry_review_note_pid:
+    data_type: BIGINT
+  lerc_pid:
+    data_type: BIGINT
+  lerc_version:
+    data_type: INTEGER

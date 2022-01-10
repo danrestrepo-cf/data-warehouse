@@ -11,13 +11,13 @@ foreign_keys:
       schema: staging_octane
       table: custom_field_setting
 columns:
+  cfc_choice_label:
+    data_type: VARCHAR(1024)
+  cfc_custom_field_setting_pid:
+    data_type: BIGINT
+  cfc_disabled:
+    data_type: BOOLEAN
   cfc_pid:
     data_type: BIGINT
   cfc_version:
     data_type: INTEGER
-  cfc_custom_field_setting_pid:
-    data_type: BIGINT
-  cfc_choice_label:
-    data_type: VARCHAR(1024)
-  cfc_disabled:
-    data_type: BOOLEAN

@@ -35,27 +35,27 @@ foreign_keys:
       schema: staging_octane
       table: state_type
 columns:
-  cml_pid:
-    data_type: BIGINT
-  cml_version:
-    data_type: INTEGER
   cml_company_pid:
     data_type: BIGINT
-  cml_license_type:
-    data_type: VARCHAR(128)
-  cml_state_type:
+  cml_company_state_legal_name:
     data_type: VARCHAR(128)
   cml_company_state_license_type:
     data_type: VARCHAR(128)
-  cml_company_state_legal_name:
-    data_type: VARCHAR(128)
-  cml_use_state_specific_company_name:
-    data_type: BOOLEAN
-  cml_license_number:
-    data_type: VARCHAR(128)
   cml_from_date:
     data_type: DATE
-  cml_through_date:
-    data_type: DATE
+  cml_license_number:
+    data_type: VARCHAR(128)
+  cml_license_type:
+    data_type: VARCHAR(128)
   cml_note:
     data_type: VARCHAR(256)
+  cml_pid:
+    data_type: BIGINT
+  cml_state_type:
+    data_type: VARCHAR(128)
+  cml_through_date:
+    data_type: DATE
+  cml_use_state_specific_company_name:
+    data_type: BOOLEAN
+  cml_version:
+    data_type: INTEGER

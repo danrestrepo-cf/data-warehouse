@@ -21,18 +21,6 @@ foreign_keys:
       schema: history_octane
       table: branch_license
 columns:
-  brlc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.brlc_pid
-  brlc_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.brlc_version
-  brlc_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.brlc_lender_user_pid
   brlc_branch_license_pid:
     data_type: BIGINT
     source:
@@ -41,14 +29,26 @@ columns:
     data_type: DATE
     source:
       field: primary_source_table.columns.brlc_from_date
+  brlc_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.brlc_lender_user_pid
+  brlc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.brlc_pid
   brlc_through_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.brlc_through_date
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  brlc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.brlc_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

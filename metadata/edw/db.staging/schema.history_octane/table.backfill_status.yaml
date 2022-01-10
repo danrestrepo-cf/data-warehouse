@@ -29,58 +29,58 @@ foreign_keys:
       schema: history_octane
       table: backfill_status_type
 columns:
-  bfs_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bfs_pid
-  bfs_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.bfs_version
   bfs_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.bfs_account_pid
-  bfs_batch_id:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.bfs_batch_id
-  bfs_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.bfs_name
-  bfs_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bfs_lender_user_pid
-  bfs_submit_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.bfs_submit_datetime
-  bfs_completed_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.bfs_completed_datetime
-  bfs_num_loans:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.bfs_num_loans
   bfs_backfill_status_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.bfs_backfill_status_type
+  bfs_batch_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bfs_batch_id
+  bfs_completed_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.bfs_completed_datetime
   bfs_failure_info:
     data_type: VARCHAR(16000)
     source:
       field: primary_source_table.columns.bfs_failure_info
+  bfs_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bfs_lender_user_pid
+  bfs_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bfs_name
+  bfs_num_loans:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bfs_num_loans
+  bfs_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bfs_pid
   bfs_raw_header_row:
     data_type: VARCHAR(16000)
     source:
       field: primary_source_table.columns.bfs_raw_header_row
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  bfs_submit_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.bfs_submit_datetime
+  bfs_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bfs_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

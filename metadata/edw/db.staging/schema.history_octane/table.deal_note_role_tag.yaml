@@ -21,26 +21,26 @@ foreign_keys:
       schema: history_octane
       table: role
 columns:
-  dnrt_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dnrt_pid
-  dnrt_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dnrt_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   dnrt_deal_note_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dnrt_deal_note_pid
+  dnrt_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dnrt_pid
   dnrt_role_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dnrt_role_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+  dnrt_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dnrt_version
   etl_batch_id:
     data_type: TEXT
 etls:

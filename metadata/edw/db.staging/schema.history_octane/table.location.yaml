@@ -21,18 +21,28 @@ foreign_keys:
       schema: history_octane
       table: location_status_type
 columns:
-  loc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.loc_pid
-  loc_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.loc_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   loc_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.loc_account_pid
+  loc_address_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.loc_address_city
+  loc_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.loc_address_postal_code
+  loc_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.loc_address_state
   loc_address_street1:
     data_type: VARCHAR(128)
     source:
@@ -41,26 +51,22 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.loc_address_street2
-  loc_address_city:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.loc_address_city
-  loc_address_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.loc_address_state
-  loc_address_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.loc_address_postal_code
-  loc_location_name:
+  loc_documents_url:
     data_type: VARCHAR(256)
     source:
-      field: primary_source_table.columns.loc_location_name
+      field: primary_source_table.columns.loc_documents_url
+  loc_fha_field_office_code:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.loc_fha_field_office_code
   loc_location_id:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.loc_location_id
+  loc_location_name:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.loc_location_name
   loc_location_remote:
     data_type: BOOLEAN
     source:
@@ -69,20 +75,14 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.loc_location_status_type
-  loc_fha_field_office_code:
-    data_type: VARCHAR(8)
+  loc_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.loc_fha_field_office_code
-  loc_documents_url:
-    data_type: VARCHAR(256)
+      field: primary_source_table.columns.loc_pid
+  loc_version:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.loc_documents_url
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.loc_version
 etls:
   SP-100849:
     input_type: table

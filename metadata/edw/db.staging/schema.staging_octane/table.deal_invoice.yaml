@@ -19,23 +19,23 @@ foreign_keys:
       schema: staging_octane
       table: deal_invoice_status_type
 columns:
-  di_pid:
-    data_type: BIGINT
-  di_version:
-    data_type: INTEGER
-  di_deal_pid:
-    data_type: BIGINT
   di_create_datetime:
     data_type: TIMESTAMP
-  di_invoice_amount:
-    data_type: NUMERIC(15,2)
-  di_refund_amount:
-    data_type: NUMERIC(15,2)
-  di_smart_invoice:
-    data_type: BOOLEAN
-  di_invoice_status_type:
-    data_type: VARCHAR(128)
+  di_deal_pid:
+    data_type: BIGINT
   di_description:
     data_type: VARCHAR(256)
   di_internal_notes:
     data_type: VARCHAR(1024)
+  di_invoice_amount:
+    data_type: NUMERIC(15,2)
+  di_invoice_status_type:
+    data_type: VARCHAR(128)
+  di_pid:
+    data_type: BIGINT
+  di_refund_amount:
+    data_type: NUMERIC(15,2)
+  di_smart_invoice:
+    data_type: BOOLEAN
+  di_version:
+    data_type: INTEGER

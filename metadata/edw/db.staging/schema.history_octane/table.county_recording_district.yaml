@@ -21,26 +21,26 @@ foreign_keys:
       schema: history_octane
       table: recording_district
 columns:
-  crdi_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.crdi_pid
-  crdi_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.crdi_version
   crdi_county_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.crdi_county_pid
+  crdi_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.crdi_pid
   crdi_recording_district_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.crdi_recording_district_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  crdi_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.crdi_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

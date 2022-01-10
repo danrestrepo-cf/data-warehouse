@@ -21,28 +21,28 @@ foreign_keys:
       schema: history_octane
       table: net_tangible_benefit_type
 columns:
-  ntb_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ntb_pid
-  ntb_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ntb_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   ntb_net_tangible_benefit_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ntb_net_tangible_benefit_type
+  ntb_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ntb_pid
   ntb_proposal_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.ntb_proposal_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  ntb_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ntb_version
 etls:
   SP-100154:
     input_type: table

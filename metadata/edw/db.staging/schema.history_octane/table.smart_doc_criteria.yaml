@@ -29,18 +29,12 @@ foreign_keys:
       schema: history_octane
       table: deal_child_type
 columns:
-  sdc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sdc_pid
-  sdc_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sdc_version
-  sdc_smart_doc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sdc_smart_doc_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   sdc_criteria_pid:
     data_type: BIGINT
     source:
@@ -49,12 +43,18 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.sdc_deal_child_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  sdc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sdc_pid
+  sdc_smart_doc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sdc_smart_doc_pid
+  sdc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sdc_version
 etls:
   SP-100331:
     input_type: table

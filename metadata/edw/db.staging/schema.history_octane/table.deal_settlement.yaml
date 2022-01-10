@@ -69,46 +69,46 @@ foreign_keys:
       schema: history_octane
       table: yes_no_unknown_type
 columns:
-  dsmt_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dsmt_pid
-  dsmt_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dsmt_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   dsmt_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dsmt_account_pid
-  dsmt_deal_pid:
-    data_type: BIGINT
+  dsmt_beneficiary_for_further_credit:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.dsmt_deal_pid
+      field: primary_source_table.columns.dsmt_beneficiary_for_further_credit
   dsmt_borrower_elected_preferred_settlement:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dsmt_borrower_elected_preferred_settlement
+  dsmt_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dsmt_deal_pid
+  dsmt_for_further_credit:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dsmt_for_further_credit
+  dsmt_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dsmt_pid
+  dsmt_settlement_agent_contact_license_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dsmt_settlement_agent_contact_license_id
+  dsmt_settlement_agent_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.dsmt_settlement_agent_email
   dsmt_settlement_agent_escrow_id:
     data_type: VARCHAR(64)
     source:
       field: primary_source_table.columns.dsmt_settlement_agent_escrow_id
-  dsmt_title_company_reference_id:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.dsmt_title_company_reference_id
-  dsmt_settlement_agent_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dsmt_settlement_agent_pid
-  dsmt_settlement_agent_office_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dsmt_settlement_agent_office_pid
-  dsmt_settlement_agent_wire_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dsmt_settlement_agent_wire_pid
   dsmt_settlement_agent_first_name:
     data_type: VARCHAR(128)
     source:
@@ -117,6 +117,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dsmt_settlement_agent_last_name
+  dsmt_settlement_agent_office_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dsmt_settlement_agent_office_pid
   dsmt_settlement_agent_phone:
     data_type: VARCHAR(32)
     source:
@@ -125,34 +129,26 @@ columns:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.dsmt_settlement_agent_phone_extension
-  dsmt_settlement_agent_email:
-    data_type: VARCHAR(256)
+  dsmt_settlement_agent_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.dsmt_settlement_agent_email
-  dsmt_settlement_agent_contact_license_id:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dsmt_settlement_agent_contact_license_id
+      field: primary_source_table.columns.dsmt_settlement_agent_pid
   dsmt_settlement_agent_preferred_vendor:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.dsmt_settlement_agent_preferred_vendor
-  dsmt_for_further_credit:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dsmt_for_further_credit
-  dsmt_beneficiary_for_further_credit:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dsmt_beneficiary_for_further_credit
-  dsmt_title_company_pid:
+  dsmt_settlement_agent_wire_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.dsmt_title_company_pid
-  dsmt_title_company_office_pid:
-    data_type: BIGINT
+      field: primary_source_table.columns.dsmt_settlement_agent_wire_pid
+  dsmt_title_company_contact_license_id:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.dsmt_title_company_office_pid
+      field: primary_source_table.columns.dsmt_title_company_contact_license_id
+  dsmt_title_company_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.dsmt_title_company_email
   dsmt_title_company_first_name:
     data_type: VARCHAR(128)
     source:
@@ -161,6 +157,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dsmt_title_company_last_name
+  dsmt_title_company_office_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dsmt_title_company_office_pid
   dsmt_title_company_phone:
     data_type: VARCHAR(32)
     source:
@@ -169,46 +169,46 @@ columns:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.dsmt_title_company_phone_extension
-  dsmt_title_company_email:
-    data_type: VARCHAR(256)
+  dsmt_title_company_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.dsmt_title_company_email
-  dsmt_title_company_contact_license_id:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dsmt_title_company_contact_license_id
+      field: primary_source_table.columns.dsmt_title_company_pid
   dsmt_title_company_preferred_vendor:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.dsmt_title_company_preferred_vendor
-  dsmt_title_insurance_underwriter_company_name:
-    data_type: VARCHAR(256)
+  dsmt_title_company_reference_id:
+    data_type: VARCHAR(32)
     source:
-      field: primary_source_table.columns.dsmt_title_insurance_underwriter_company_name
+      field: primary_source_table.columns.dsmt_title_company_reference_id
   dsmt_title_insurance_attorney_first_name:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.dsmt_title_insurance_attorney_first_name
-  dsmt_title_insurance_attorney_middle_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.dsmt_title_insurance_attorney_middle_name
   dsmt_title_insurance_attorney_last_name:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.dsmt_title_insurance_attorney_last_name
-  dsmt_title_insurance_attorney_name_suffix:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.dsmt_title_insurance_attorney_name_suffix
   dsmt_title_insurance_attorney_license_number:
     data_type: VARCHAR(64)
     source:
       field: primary_source_table.columns.dsmt_title_insurance_attorney_license_number
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+  dsmt_title_insurance_attorney_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dsmt_title_insurance_attorney_middle_name
+  dsmt_title_insurance_attorney_name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dsmt_title_insurance_attorney_name_suffix
+  dsmt_title_insurance_underwriter_company_name:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.dsmt_title_insurance_underwriter_company_name
+  dsmt_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dsmt_version
   etl_batch_id:
     data_type: TEXT
 etls:

@@ -35,27 +35,27 @@ foreign_keys:
       schema: staging_octane
       table: org_node_type
 columns:
+  on_account_pid:
+    data_type: BIGINT
+  on_amb_codes:
+    data_type: VARCHAR(256)
+  on_description:
+    data_type: VARCHAR(16000)
+  on_lender_user_pid:
+    data_type: BIGINT
+  on_org_node_active:
+    data_type: BOOLEAN
+  on_org_node_id:
+    data_type: BIGINT
+  on_org_node_name_latest:
+    data_type: VARCHAR(256)
+  on_org_node_short_id:
+    data_type: VARCHAR(8)
+  on_org_node_tree_pid:
+    data_type: BIGINT
+  on_org_node_type:
+    data_type: VARCHAR(128)
   on_pid:
     data_type: BIGINT
   on_version:
     data_type: INTEGER
-  on_account_pid:
-    data_type: BIGINT
-  on_org_node_tree_pid:
-    data_type: BIGINT
-  on_lender_user_pid:
-    data_type: BIGINT
-  on_org_node_id:
-    data_type: BIGINT
-  on_org_node_short_id:
-    data_type: VARCHAR(8)
-  on_org_node_name_latest:
-    data_type: VARCHAR(256)
-  on_org_node_type:
-    data_type: VARCHAR(128)
-  on_description:
-    data_type: VARCHAR(16000)
-  on_org_node_active:
-    data_type: BOOLEAN
-  on_amb_codes:
-    data_type: VARCHAR(256)

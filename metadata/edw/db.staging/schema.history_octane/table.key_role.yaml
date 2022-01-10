@@ -29,18 +29,12 @@ foreign_keys:
       schema: history_octane
       table: key_role_type
 columns:
-  kr_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.kr_pid
-  kr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.kr_version
-  kr_role_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.kr_role_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   kr_account_pid:
     data_type: BIGINT
     source:
@@ -49,12 +43,18 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.kr_key_role_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  kr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.kr_pid
+  kr_role_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.kr_role_pid
+  kr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.kr_version
 etls:
   SP-100048:
     input_type: table

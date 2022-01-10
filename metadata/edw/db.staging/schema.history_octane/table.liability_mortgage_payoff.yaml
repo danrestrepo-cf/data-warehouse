@@ -61,66 +61,28 @@ foreign_keys:
       schema: history_octane
       table: yes_no_unknown_type
 columns:
-  lmp_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lmp_pid
-  lmp_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lmp_version
-  lmp_liability_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lmp_liability_pid
-  lmp_interest_rate_on_statement:
+  data_source_deleted_flag:
     data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.lmp_interest_rate_on_statement
-  lmp_interest_rate_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.lmp_interest_rate_percent
-  lmp_loan_amortization_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lmp_loan_amortization_type
-  lmp_interest_only:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lmp_interest_only
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   lmp_agency_case_id:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.lmp_agency_case_id
-  lmp_payoff_statement_date:
+  lmp_closing_date:
     data_type: DATE
     source:
-      field: primary_source_table.columns.lmp_payoff_statement_date
-  lmp_payoff_statement_good_through_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.lmp_payoff_statement_good_through_date
-  lmp_next_payment_due_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.lmp_next_payment_due_date
-  lmp_payoff_statement_interest:
+      field: primary_source_table.columns.lmp_closing_date
+  lmp_current_escrow_balance_amount:
     data_type: NUMERIC(17,2)
     source:
-      field: primary_source_table.columns.lmp_payoff_statement_interest
+      field: primary_source_table.columns.lmp_current_escrow_balance_amount
   lmp_daily_interest_amount:
     data_type: NUMERIC(17,2)
     source:
       field: primary_source_table.columns.lmp_daily_interest_amount
-  lmp_monthly_interest_amount:
-    data_type: NUMERIC(17,2)
-    source:
-      field: primary_source_table.columns.lmp_monthly_interest_amount
-  lmp_payoff_interest_pad_days:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lmp_payoff_interest_pad_days
   lmp_effective_payoff_date:
     data_type: DATE
     source:
@@ -133,56 +95,94 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.lmp_effective_payoff_date_adjustment_days
-  lmp_other_payoff_related_charges_amount:
-    data_type: NUMERIC(17,2)
-    source:
-      field: primary_source_table.columns.lmp_other_payoff_related_charges_amount
-  lmp_unpaid_late_charges_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.lmp_unpaid_late_charges_amount
-  lmp_mortgage_payoff_amount_estimated:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.lmp_mortgage_payoff_amount_estimated
-  lmp_mip_due_amount:
-    data_type: NUMERIC(17,2)
-    source:
-      field: primary_source_table.columns.lmp_mip_due_amount
-  lmp_used_to_acquire_property:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lmp_used_to_acquire_property
-  lmp_heloc_advance_last_12_months_over_thousand:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lmp_heloc_advance_last_12_months_over_thousand
-  lmp_net_escrow:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lmp_net_escrow
-  lmp_current_escrow_balance_amount:
-    data_type: NUMERIC(17,2)
-    source:
-      field: primary_source_table.columns.lmp_current_escrow_balance_amount
   lmp_first_payment_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.lmp_first_payment_date
-  lmp_closing_date:
-    data_type: DATE
+  lmp_heloc_advance_last_12_months_over_thousand:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.lmp_closing_date
+      field: primary_source_table.columns.lmp_heloc_advance_last_12_months_over_thousand
   lmp_include_within_cema:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lmp_include_within_cema
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
+  lmp_interest_only:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lmp_interest_only
+  lmp_interest_rate_on_statement:
     data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+    source:
+      field: primary_source_table.columns.lmp_interest_rate_on_statement
+  lmp_interest_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lmp_interest_rate_percent
+  lmp_liability_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lmp_liability_pid
+  lmp_loan_amortization_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lmp_loan_amortization_type
+  lmp_mip_due_amount:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.lmp_mip_due_amount
+  lmp_monthly_interest_amount:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.lmp_monthly_interest_amount
+  lmp_mortgage_payoff_amount_estimated:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lmp_mortgage_payoff_amount_estimated
+  lmp_net_escrow:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lmp_net_escrow
+  lmp_next_payment_due_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lmp_next_payment_due_date
+  lmp_other_payoff_related_charges_amount:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.lmp_other_payoff_related_charges_amount
+  lmp_payoff_interest_pad_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lmp_payoff_interest_pad_days
+  lmp_payoff_statement_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lmp_payoff_statement_date
+  lmp_payoff_statement_good_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lmp_payoff_statement_good_through_date
+  lmp_payoff_statement_interest:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.lmp_payoff_statement_interest
+  lmp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lmp_pid
+  lmp_unpaid_late_charges_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lmp_unpaid_late_charges_amount
+  lmp_used_to_acquire_property:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lmp_used_to_acquire_property
+  lmp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lmp_version
 etls:
   SP-100824:
     input_type: table

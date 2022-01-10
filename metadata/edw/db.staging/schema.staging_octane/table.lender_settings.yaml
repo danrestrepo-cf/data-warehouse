@@ -83,77 +83,77 @@ foreign_keys:
       schema: staging_octane
       table: aus_type
 columns:
-  lss_pid:
-    data_type: BIGINT
-  lss_version:
-    data_type: INTEGER
   lss_account_pid:
     data_type: BIGINT
+  lss_borrower_quote_filter_pivot_higher_count:
+    data_type: INTEGER
+  lss_borrower_quote_filter_pivot_lower_count:
+    data_type: INTEGER
+  lss_borrower_quote_filter_pivot_type:
+    data_type: VARCHAR(128)
   lss_company_time_zone_type:
     data_type: VARCHAR(128)
+  lss_default_combo_lock_term_setting_pid:
+    data_type: BIGINT
+  lss_default_credit_bureau_type:
+    data_type: VARCHAR(128)
+  lss_default_standalone_lock_term_setting_pid:
+    data_type: BIGINT
+  lss_equifax_submitting_party_name:
+    data_type: VARCHAR(256)
+  lss_factual_data_submitting_party_id:
+    data_type: VARCHAR(256)
+  lss_factual_data_submitting_party_name:
+    data_type: VARCHAR(256)
   lss_fha_home_office_branch_pid:
     data_type: BIGINT
   lss_fnma_seller_id:
     data_type: VARCHAR(16)
   lss_fre_seller_id:
     data_type: VARCHAR(16)
-  lss_lp_submission_type:
+  lss_hmda_agency_id_type:
     data_type: VARCHAR(128)
-  lss_lender_user_email_from:
-    data_type: VARCHAR(256)
   lss_hmda_contact_pid:
     data_type: BIGINT
   lss_hmda_legal_entity_id:
     data_type: VARCHAR(20)
   lss_hmda_respondent_id:
     data_type: VARCHAR(32)
-  lss_hmda_agency_id_type:
+  lss_lender_user_email_from:
+    data_type: VARCHAR(256)
+  lss_lp_submission_type:
     data_type: VARCHAR(128)
-  lss_prequalification_program:
-    data_type: BOOLEAN
-  lss_preapproval_program:
-    data_type: BOOLEAN
+  lss_meridian_link_submitting_party_id:
+    data_type: VARCHAR(256)
+  lss_originator_title:
+    data_type: VARCHAR(128)
+  lss_pest_inspector_address_city:
+    data_type: VARCHAR(128)
+  lss_pest_inspector_address_postal_code:
+    data_type: VARCHAR(128)
+  lss_pest_inspector_address_state:
+    data_type: VARCHAR(128)
+  lss_pest_inspector_address_street1:
+    data_type: VARCHAR(128)
+  lss_pest_inspector_address_street2:
+    data_type: VARCHAR(128)
   lss_pest_inspector_company_name:
     data_type: VARCHAR(128)
   lss_pest_inspector_phone:
     data_type: VARCHAR(32)
   lss_pest_inspector_website_url:
     data_type: VARCHAR(256)
-  lss_pest_inspector_address_street1:
-    data_type: VARCHAR(128)
-  lss_pest_inspector_address_street2:
-    data_type: VARCHAR(128)
-  lss_pest_inspector_address_city:
-    data_type: VARCHAR(128)
-  lss_pest_inspector_address_state:
-    data_type: VARCHAR(128)
-  lss_pest_inspector_address_postal_code:
-    data_type: VARCHAR(128)
-  lss_take_application_hours:
-    data_type: VARCHAR(128)
-  lss_originator_title:
-    data_type: VARCHAR(128)
-  lss_default_credit_bureau_type:
-    data_type: VARCHAR(128)
-  lss_sap_minimum_decision_credit_score:
-    data_type: INTEGER
-  lss_default_standalone_lock_term_setting_pid:
+  lss_pid:
     data_type: BIGINT
-  lss_default_combo_lock_term_setting_pid:
-    data_type: BIGINT
+  lss_preapproval_program:
+    data_type: BOOLEAN
   lss_preferred_aus_type:
     data_type: VARCHAR(128)
-  lss_borrower_quote_filter_pivot_type:
+  lss_prequalification_program:
+    data_type: BOOLEAN
+  lss_sap_minimum_decision_credit_score:
+    data_type: INTEGER
+  lss_take_application_hours:
     data_type: VARCHAR(128)
-  lss_borrower_quote_filter_pivot_lower_count:
+  lss_version:
     data_type: INTEGER
-  lss_borrower_quote_filter_pivot_higher_count:
-    data_type: INTEGER
-  lss_equifax_submitting_party_name:
-    data_type: VARCHAR(256)
-  lss_factual_data_submitting_party_name:
-    data_type: VARCHAR(256)
-  lss_factual_data_submitting_party_id:
-    data_type: VARCHAR(256)
-  lss_meridian_link_submitting_party_id:
-    data_type: VARCHAR(256)

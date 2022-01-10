@@ -21,14 +21,10 @@ foreign_keys:
       schema: history_octane
       table: disaster_declaration
 columns:
-  ddd_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ddd_pid
-  ddd_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ddd_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   ddd_deal_pid:
     data_type: BIGINT
     source:
@@ -37,10 +33,14 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.ddd_disaster_declaration_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+  ddd_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ddd_pid
+  ddd_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ddd_version
   etl_batch_id:
     data_type: TEXT
 etls:

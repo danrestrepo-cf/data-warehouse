@@ -35,23 +35,23 @@ foreign_keys:
       schema: staging_octane
       table: loan_charge_payer_item_source_type
 columns:
-  lcpi_pid:
-    data_type: BIGINT
-  lcpi_version:
-    data_type: INTEGER
+  lcpi_charge_payer_type:
+    data_type: VARCHAR(128)
+  lcpi_charge_wire_action_auto_compute:
+    data_type: BOOLEAN
+  lcpi_charge_wire_action_type:
+    data_type: VARCHAR(128)
   lcpi_item_amount:
     data_type: NUMERIC(15,2)
   lcpi_loan_charge_payer_item_source_type:
     data_type: VARCHAR(128)
   lcpi_loan_charge_pid:
     data_type: BIGINT
-  lcpi_charge_payer_type:
-    data_type: VARCHAR(128)
   lcpi_paid_by:
     data_type: VARCHAR(128)
+  lcpi_pid:
+    data_type: BIGINT
   lcpi_poc:
     data_type: BOOLEAN
-  lcpi_charge_wire_action_auto_compute:
-    data_type: BOOLEAN
-  lcpi_charge_wire_action_type:
-    data_type: VARCHAR(128)
+  lcpi_version:
+    data_type: INTEGER

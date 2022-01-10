@@ -115,17 +115,21 @@ foreign_keys:
       schema: staging_octane
       table: agent_type
 columns:
-  prpds_pid:
-    data_type: BIGINT
-  prpds_version:
-    data_type: INTEGER
-  prpds_proposal_pid:
-    data_type: BIGINT
-  prpds_smart_doc_set_pid:
-    data_type: BIGINT
-  prpds_create_datetime:
+  prpds_affects_earliest_allowed_consummation_date:
+    data_type: BOOLEAN
+  prpds_canceled_datetime:
     data_type: TIMESTAMP
-  prpds_delivered_or_mailed_datetime:
+  prpds_canceled_reason:
+    data_type: VARCHAR(16000)
+  prpds_canceled_reason_type:
+    data_type: VARCHAR(128)
+  prpds_canceler_agent_type:
+    data_type: VARCHAR(128)
+  prpds_canceler_lender_user_pid:
+    data_type: BIGINT
+  prpds_canceler_unparsed_name:
+    data_type: VARCHAR(128)
+  prpds_create_datetime:
     data_type: TIMESTAMP
   prpds_creator_agent_type:
     data_type: VARCHAR(128)
@@ -133,6 +137,28 @@ columns:
     data_type: BIGINT
   prpds_creator_unparsed_name:
     data_type: VARCHAR(128)
+  prpds_delivered_or_mailed_datetime:
+    data_type: TIMESTAMP
+  prpds_delivery_method_type:
+    data_type: VARCHAR(128)
+  prpds_doc_package_status_type:
+    data_type: VARCHAR(128)
+  prpds_docs_last_updated_datetime:
+    data_type: TIMESTAMP
+  prpds_docusign_package_pid:
+    data_type: BIGINT
+  prpds_esign_evidence_deal_file_pid:
+    data_type: BIGINT
+  prpds_esign_vendor_type:
+    data_type: VARCHAR(128)
+  prpds_name:
+    data_type: VARCHAR(128)
+  prpds_pid:
+    data_type: BIGINT
+  prpds_proposal_doc_set_id:
+    data_type: INTEGER
+  prpds_proposal_pid:
+    data_type: BIGINT
   prpds_requested_datetime:
     data_type: TIMESTAMP
   prpds_requester_agent_type:
@@ -143,35 +169,9 @@ columns:
     data_type: VARCHAR(128)
   prpds_signed_date:
     data_type: DATE
-  prpds_delivery_method_type:
-    data_type: VARCHAR(128)
+  prpds_smart_doc_set_pid:
+    data_type: BIGINT
   prpds_tracking_number:
     data_type: VARCHAR(32)
-  prpds_affects_earliest_allowed_consummation_date:
-    data_type: BOOLEAN
-  prpds_name:
-    data_type: VARCHAR(128)
-  prpds_docusign_package_pid:
-    data_type: BIGINT
-  prpds_esign_vendor_type:
-    data_type: VARCHAR(128)
-  prpds_esign_evidence_deal_file_pid:
-    data_type: BIGINT
-  prpds_doc_package_status_type:
-    data_type: VARCHAR(128)
-  prpds_canceled_reason_type:
-    data_type: VARCHAR(128)
-  prpds_canceled_datetime:
-    data_type: TIMESTAMP
-  prpds_canceler_agent_type:
-    data_type: VARCHAR(128)
-  prpds_canceler_lender_user_pid:
-    data_type: BIGINT
-  prpds_canceler_unparsed_name:
-    data_type: VARCHAR(128)
-  prpds_canceled_reason:
-    data_type: VARCHAR(16000)
-  prpds_proposal_doc_set_id:
+  prpds_version:
     data_type: INTEGER
-  prpds_docs_last_updated_datetime:
-    data_type: TIMESTAMP

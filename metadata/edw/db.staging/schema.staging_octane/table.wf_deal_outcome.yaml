@@ -27,7 +27,17 @@ foreign_keys:
       schema: staging_octane
       table: wf_outcome_type
 columns:
+  wdo_borrower_message:
+    data_type: VARCHAR(1024)
+  wdo_incomplete_outcome:
+    data_type: BOOLEAN
+  wdo_lender_description:
+    data_type: VARCHAR(256)
+  wdo_outcome_name:
+    data_type: VARCHAR(128)
   wdo_pid:
+    data_type: BIGINT
+  wdo_transition_wf_deal_step_pid:
     data_type: BIGINT
   wdo_version:
     data_type: INTEGER
@@ -35,13 +45,3 @@ columns:
     data_type: BIGINT
   wdo_wf_outcome_type:
     data_type: VARCHAR(128)
-  wdo_outcome_name:
-    data_type: VARCHAR(128)
-  wdo_borrower_message:
-    data_type: VARCHAR(1024)
-  wdo_lender_description:
-    data_type: VARCHAR(256)
-  wdo_incomplete_outcome:
-    data_type: BOOLEAN
-  wdo_transition_wf_deal_step_pid:
-    data_type: BIGINT

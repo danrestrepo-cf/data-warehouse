@@ -21,6 +21,12 @@ foreign_keys:
       schema: history_octane
       table: wf_step
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   wp_pid:
     data_type: BIGINT
     source:
@@ -37,12 +43,6 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.wp_wf_step_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
 etls:
   SP-100832:
     input_type: table

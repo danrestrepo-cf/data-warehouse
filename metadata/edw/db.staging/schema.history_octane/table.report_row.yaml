@@ -21,26 +21,16 @@ foreign_keys:
       schema: history_octane
       table: report_type
 columns:
-  rprw_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rprw_pid
-  rprw_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.rprw_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   rprw_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.rprw_account_pid
-  rprw_report_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.rprw_report_type
-  rprw_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.rprw_name
   rprw_description:
     data_type: VARCHAR(1024)
     source:
@@ -49,12 +39,22 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.rprw_formula_row
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  rprw_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.rprw_name
+  rprw_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rprw_pid
+  rprw_report_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.rprw_report_type
+  rprw_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.rprw_version
 etls:
   SP-100044:
     input_type: table

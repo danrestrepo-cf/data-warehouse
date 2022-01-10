@@ -195,39 +195,19 @@ foreign_keys:
       schema: staging_octane
       table: country_type
 columns:
-  i_pid:
-    data_type: BIGINT
-  i_version:
-    data_type: INTEGER
   i_account_pid:
     data_type: BIGINT
-  i_investor_id:
-    data_type: VARCHAR(32)
-  i_criteria_pid:
-    data_type: BIGINT
-  i_website_url:
-    data_type: VARCHAR(256)
-  i_investor_name:
+  i_allonge_transfer_to_name:
     data_type: VARCHAR(128)
-  i_investor_city:
-    data_type: VARCHAR(128)
-  i_investor_country:
-    data_type: VARCHAR(128)
-  i_investor_postal_code:
-    data_type: VARCHAR(128)
-  i_investor_state:
-    data_type: VARCHAR(128)
-  i_investor_street1:
-    data_type: VARCHAR(128)
-  i_investor_street2:
-    data_type: VARCHAR(128)
-  i_investor_county_pid:
-    data_type: BIGINT
-  i_beneficiary_name:
-    data_type: VARCHAR(128)
+  i_allow_weekend_holiday_locks:
+    data_type: BOOLEAN
   i_beneficiary_city:
     data_type: VARCHAR(128)
   i_beneficiary_country:
+    data_type: VARCHAR(128)
+  i_beneficiary_county_pid:
+    data_type: BIGINT
+  i_beneficiary_name:
     data_type: VARCHAR(128)
   i_beneficiary_postal_code:
     data_type: VARCHAR(128)
@@ -237,125 +217,25 @@ columns:
     data_type: VARCHAR(128)
   i_beneficiary_street2:
     data_type: VARCHAR(128)
-  i_beneficiary_county_pid:
+  i_criteria_pid:
     data_type: BIGINT
-  i_loss_payee_name:
-    data_type: VARCHAR(128)
-  i_loss_payee_city:
-    data_type: VARCHAR(128)
-  i_loss_payee_country:
-    data_type: VARCHAR(128)
-  i_loss_payee_postal_code:
-    data_type: VARCHAR(128)
-  i_loss_payee_state:
-    data_type: VARCHAR(128)
-  i_loss_payee_street1:
-    data_type: VARCHAR(128)
-  i_loss_payee_street2:
-    data_type: VARCHAR(128)
-  i_loss_payee_county_pid:
-    data_type: BIGINT
-  i_loss_payee_assignee_name:
-    data_type: VARCHAR(128)
-  i_when_recorded_mail_to_name:
-    data_type: VARCHAR(128)
-  i_when_recorded_mail_to_city:
-    data_type: VARCHAR(128)
-  i_when_recorded_mail_to_country:
-    data_type: VARCHAR(128)
-  i_when_recorded_mail_to_postal_code:
-    data_type: VARCHAR(128)
-  i_when_recorded_mail_to_state:
-    data_type: VARCHAR(128)
-  i_when_recorded_mail_to_street1:
-    data_type: VARCHAR(128)
-  i_when_recorded_mail_to_street2:
-    data_type: VARCHAR(128)
-  i_when_recorded_mail_to_county_pid:
-    data_type: BIGINT
-  i_servicer_name:
-    data_type: VARCHAR(128)
-  i_servicer_address_street1:
-    data_type: VARCHAR(128)
-  i_servicer_address_street2:
-    data_type: VARCHAR(128)
-  i_servicer_address_city:
-    data_type: VARCHAR(128)
-  i_servicer_address_state:
-    data_type: VARCHAR(128)
-  i_servicer_address_postal_code:
-    data_type: VARCHAR(128)
-  i_servicer_address_country:
-    data_type: VARCHAR(128)
-  i_servicer_county_pid:
-    data_type: BIGINT
-  i_sub_servicer_name:
-    data_type: VARCHAR(128)
-  i_sub_servicer_address_street1:
-    data_type: VARCHAR(128)
-  i_sub_servicer_address_street2:
-    data_type: VARCHAR(128)
-  i_sub_servicer_address_city:
-    data_type: VARCHAR(128)
-  i_sub_servicer_address_state:
-    data_type: VARCHAR(128)
-  i_sub_servicer_address_postal_code:
-    data_type: VARCHAR(128)
-  i_sub_servicer_address_country:
-    data_type: VARCHAR(128)
-  i_sub_servicer_mers_org_id:
-    data_type: VARCHAR(7)
   i_custodian_pid:
     data_type: BIGINT
-  i_file_delivery_name:
+  i_ein:
+    data_type: VARCHAR(10)
+  i_file_delivery_address_city:
+    data_type: VARCHAR(128)
+  i_file_delivery_address_country:
+    data_type: VARCHAR(128)
+  i_file_delivery_address_postal_code:
+    data_type: VARCHAR(128)
+  i_file_delivery_address_state:
     data_type: VARCHAR(128)
   i_file_delivery_address_street1:
     data_type: VARCHAR(128)
   i_file_delivery_address_street2:
     data_type: VARCHAR(128)
-  i_file_delivery_address_city:
-    data_type: VARCHAR(128)
-  i_file_delivery_address_state:
-    data_type: VARCHAR(128)
-  i_file_delivery_address_postal_code:
-    data_type: VARCHAR(128)
-  i_file_delivery_address_country:
-    data_type: VARCHAR(128)
-  i_initial_beneficiary_candidate:
-    data_type: BOOLEAN
-  i_initial_servicer_candidate:
-    data_type: BOOLEAN
-  i_mers_org_member:
-    data_type: VARCHAR(128)
-  i_mers_org_id:
-    data_type: VARCHAR(7)
-  i_allonge_transfer_to_name:
-    data_type: VARCHAR(128)
-  i_lock_expiration_delivery_subtrahend_days:
-    data_type: INTEGER
-  i_maximum_lock_extensions_allowed:
-    data_type: INTEGER
-  i_maximum_lock_extension_days_allowed:
-    data_type: INTEGER
-  i_mortech_investor_id:
-    data_type: VARCHAR(16)
-  i_fnma_servicer_id:
-    data_type: VARCHAR(16)
-  i_loan_file_delivery_method_type:
-    data_type: VARCHAR(128)
-  i_investor_group_pid:
-    data_type: BIGINT
-  i_mbs_investor:
-    data_type: BOOLEAN
-  i_investor_hmda_purchaser_of_loan_type:
-    data_type: VARCHAR(128)
-  i_lock_disable_time:
-    data_type: TIME
-  i_allow_weekend_holiday_locks:
-    data_type: BOOLEAN
-  i_nmls_id:
-    data_type: VARCHAR(16)
-  i_nmls_id_applicable:
+  i_file_delivery_name:
     data_type: VARCHAR(128)
   i_fnm_investor_remittance_type:
     data_type: VARCHAR(128)
@@ -365,9 +245,129 @@ columns:
     data_type: VARCHAR(128)
   i_fnm_mbs_reo_marketing_party_type:
     data_type: VARCHAR(128)
+  i_fnma_servicer_id:
+    data_type: VARCHAR(16)
+  i_initial_beneficiary_candidate:
+    data_type: BOOLEAN
+  i_initial_servicer_candidate:
+    data_type: BOOLEAN
+  i_investor_city:
+    data_type: VARCHAR(128)
+  i_investor_country:
+    data_type: VARCHAR(128)
+  i_investor_county_pid:
+    data_type: BIGINT
+  i_investor_group_pid:
+    data_type: BIGINT
+  i_investor_hmda_purchaser_of_loan_type:
+    data_type: VARCHAR(128)
+  i_investor_id:
+    data_type: VARCHAR(32)
+  i_investor_name:
+    data_type: VARCHAR(128)
+  i_investor_postal_code:
+    data_type: VARCHAR(128)
+  i_investor_state:
+    data_type: VARCHAR(128)
+  i_investor_street1:
+    data_type: VARCHAR(128)
+  i_investor_street2:
+    data_type: VARCHAR(128)
+  i_loan_file_delivery_method_type:
+    data_type: VARCHAR(128)
+  i_lock_disable_time:
+    data_type: TIME
+  i_lock_expiration_delivery_subtrahend_days:
+    data_type: INTEGER
+  i_loss_payee_assignee_name:
+    data_type: VARCHAR(128)
+  i_loss_payee_city:
+    data_type: VARCHAR(128)
+  i_loss_payee_country:
+    data_type: VARCHAR(128)
+  i_loss_payee_county_pid:
+    data_type: BIGINT
+  i_loss_payee_name:
+    data_type: VARCHAR(128)
+  i_loss_payee_postal_code:
+    data_type: VARCHAR(128)
+  i_loss_payee_state:
+    data_type: VARCHAR(128)
+  i_loss_payee_street1:
+    data_type: VARCHAR(128)
+  i_loss_payee_street2:
+    data_type: VARCHAR(128)
+  i_maximum_lock_extension_days_allowed:
+    data_type: INTEGER
+  i_maximum_lock_extensions_allowed:
+    data_type: INTEGER
+  i_mbs_investor:
+    data_type: BOOLEAN
+  i_mers_org_id:
+    data_type: VARCHAR(7)
+  i_mers_org_member:
+    data_type: VARCHAR(128)
+  i_mortech_investor_id:
+    data_type: VARCHAR(16)
+  i_nmls_id:
+    data_type: VARCHAR(16)
+  i_nmls_id_applicable:
+    data_type: VARCHAR(128)
   i_offers_secondary_financing:
     data_type: BOOLEAN
+  i_pid:
+    data_type: BIGINT
   i_secondary_financing_source_type:
     data_type: VARCHAR(128)
-  i_ein:
-    data_type: VARCHAR(10)
+  i_servicer_address_city:
+    data_type: VARCHAR(128)
+  i_servicer_address_country:
+    data_type: VARCHAR(128)
+  i_servicer_address_postal_code:
+    data_type: VARCHAR(128)
+  i_servicer_address_state:
+    data_type: VARCHAR(128)
+  i_servicer_address_street1:
+    data_type: VARCHAR(128)
+  i_servicer_address_street2:
+    data_type: VARCHAR(128)
+  i_servicer_county_pid:
+    data_type: BIGINT
+  i_servicer_name:
+    data_type: VARCHAR(128)
+  i_sub_servicer_address_city:
+    data_type: VARCHAR(128)
+  i_sub_servicer_address_country:
+    data_type: VARCHAR(128)
+  i_sub_servicer_address_postal_code:
+    data_type: VARCHAR(128)
+  i_sub_servicer_address_state:
+    data_type: VARCHAR(128)
+  i_sub_servicer_address_street1:
+    data_type: VARCHAR(128)
+  i_sub_servicer_address_street2:
+    data_type: VARCHAR(128)
+  i_sub_servicer_mers_org_id:
+    data_type: VARCHAR(7)
+  i_sub_servicer_name:
+    data_type: VARCHAR(128)
+  i_version:
+    data_type: INTEGER
+  i_website_url:
+    data_type: VARCHAR(256)
+  i_when_recorded_mail_to_city:
+    data_type: VARCHAR(128)
+  i_when_recorded_mail_to_country:
+    data_type: VARCHAR(128)
+  i_when_recorded_mail_to_county_pid:
+    data_type: BIGINT
+  i_when_recorded_mail_to_name:
+    data_type: VARCHAR(128)
+  i_when_recorded_mail_to_postal_code:
+    data_type: VARCHAR(128)
+  i_when_recorded_mail_to_state:
+    data_type: VARCHAR(128)
+  i_when_recorded_mail_to_street1:
+    data_type: VARCHAR(128)
+  i_when_recorded_mail_to_street2:
+    data_type: VARCHAR(128)

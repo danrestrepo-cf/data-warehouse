@@ -29,48 +29,48 @@ foreign_keys:
       schema: history_octane
       table: state_type
 columns:
-  luml_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.luml_pid
-  luml_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.luml_version
-  luml_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.luml_lender_user_pid
-  luml_license_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.luml_license_type
-  luml_state_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.luml_state_type
-  luml_license_number:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.luml_license_number
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   luml_from_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.luml_from_date
-  luml_through_date:
-    data_type: DATE
+  luml_lender_user_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.luml_through_date
+      field: primary_source_table.columns.luml_lender_user_pid
+  luml_license_number:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.luml_license_number
+  luml_license_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.luml_license_type
   luml_note:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.luml_note
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  luml_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.luml_pid
+  luml_state_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.luml_state_type
+  luml_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.luml_through_date
+  luml_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.luml_version
 etls:
   SP-100099:
     input_type: table

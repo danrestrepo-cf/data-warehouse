@@ -19,23 +19,23 @@ foreign_keys:
       schema: staging_octane
       table: company_admin_event_entity_type
 columns:
-  cae_pid:
-    data_type: BIGINT
-  cae_version:
-    data_type: INTEGER
   cae_account_pid:
     data_type: BIGINT
   cae_company_admin_event_entity_type:
     data_type: VARCHAR(128)
-  cae_message:
-    data_type: VARCHAR(256)
   cae_diff_list:
     data_type: TEXT
-  cae_unparsed_name:
-    data_type: VARCHAR(128)
   cae_event_date:
     data_type: DATE
   cae_event_datetime:
     data_type: TIMESTAMP
+  cae_message:
+    data_type: VARCHAR(256)
+  cae_pid:
+    data_type: BIGINT
   cae_target_entity_pid:
     data_type: BIGINT
+  cae_unparsed_name:
+    data_type: VARCHAR(128)
+  cae_version:
+    data_type: INTEGER

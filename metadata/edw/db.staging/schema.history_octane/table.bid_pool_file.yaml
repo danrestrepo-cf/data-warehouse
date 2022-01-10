@@ -21,26 +21,26 @@ foreign_keys:
       schema: history_octane
       table: repository_file
 columns:
-  bpf_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bpf_pid
-  bpf_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.bpf_version
   bpf_bid_pool_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.bpf_bid_pool_pid
+  bpf_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bpf_pid
   bpf_repository_file_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.bpf_repository_file_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  bpf_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bpf_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

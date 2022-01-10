@@ -13,6 +13,16 @@ foreign_keys:
       schema: history_octane
       table: account
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  wps_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wps_account_pid
   wps_pid:
     data_type: BIGINT
     source:
@@ -21,20 +31,10 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.wps_version
-  wps_account_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.wps_account_pid
   wps_wf_prereq_set_name:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.wps_wf_prereq_set_name
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
 etls:
   SP-100831:
     input_type: table

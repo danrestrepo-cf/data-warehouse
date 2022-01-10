@@ -27,29 +27,29 @@ foreign_keys:
       schema: staging_octane
       table: company_location_type
 columns:
-  cmloc_pid:
-    data_type: BIGINT
-  cmloc_version:
-    data_type: INTEGER
-  cmloc_company_pid:
-    data_type: BIGINT
-  cmloc_location_pid:
-    data_type: BIGINT
-  cmloc_from_date:
-    data_type: DATE
-  cmloc_through_date:
-    data_type: DATE
   cmloc_company_location_type:
     data_type: VARCHAR(128)
-  cmloc_nmls_id:
-    data_type: VARCHAR(16)
+  cmloc_company_pid:
+    data_type: BIGINT
+  cmloc_fax:
+    data_type: VARCHAR(32)
   cmloc_fha_branch_id:
     data_type: VARCHAR(16)
   cmloc_fha_branch_id_qualified:
+    data_type: VARCHAR(16)
+  cmloc_from_date:
+    data_type: DATE
+  cmloc_location_pid:
+    data_type: BIGINT
+  cmloc_nmls_id:
     data_type: VARCHAR(16)
   cmloc_office_phone:
     data_type: VARCHAR(32)
   cmloc_office_phone_extension:
     data_type: VARCHAR(16)
-  cmloc_fax:
-    data_type: VARCHAR(32)
+  cmloc_pid:
+    data_type: BIGINT
+  cmloc_through_date:
+    data_type: DATE
+  cmloc_version:
+    data_type: INTEGER

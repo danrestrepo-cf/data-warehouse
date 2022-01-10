@@ -21,36 +21,36 @@ foreign_keys:
       schema: history_octane
       table: lock_commitment_type
 columns:
-  rsp_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rsp_pid
-  rsp_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.rsp_version
-  rsp_rate_sheet_rate_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rsp_rate_sheet_rate_pid
-  rsp_lock_duration_days:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.rsp_lock_duration_days
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   rsp_lock_commitment_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.rsp_lock_commitment_type
+  rsp_lock_duration_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.rsp_lock_duration_days
+  rsp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rsp_pid
   rsp_price_percent:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.rsp_price_percent
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  rsp_rate_sheet_rate_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rsp_rate_sheet_rate_pid
+  rsp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.rsp_version
 etls:
   SP-100290:
     input_type: table

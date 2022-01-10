@@ -27,17 +27,9 @@ foreign_keys:
       schema: staging_octane
       table: lock_add_on_type
 columns:
-  lla_pid:
-    data_type: BIGINT
-  lla_version:
-    data_type: INTEGER
-  lla_lender_lock_minor_pid:
-    data_type: BIGINT
-  lla_lock_add_on_type:
-    data_type: VARCHAR(128)
-  lla_investor_price_adjustment_percent:
-    data_type: NUMERIC(11,9)
   lla_account_price_adjustment_percent:
+    data_type: NUMERIC(11,9)
+  lla_arm_margin_adjustment_percent:
     data_type: NUMERIC(11,9)
   lla_create_datetime:
     data_type: TIMESTAMP
@@ -45,11 +37,19 @@ columns:
     data_type: BIGINT
   lla_creator_unparsed_name:
     data_type: VARCHAR(128)
-  lla_summary:
-    data_type: VARCHAR(16000)
-  lla_rate_adjustment_percent:
+  lla_investor_price_adjustment_percent:
     data_type: NUMERIC(11,9)
+  lla_lender_lock_minor_pid:
+    data_type: BIGINT
+  lla_lock_add_on_type:
+    data_type: VARCHAR(128)
+  lla_pid:
+    data_type: BIGINT
   lla_price_adjustment_percent:
     data_type: NUMERIC(11,9)
-  lla_arm_margin_adjustment_percent:
+  lla_rate_adjustment_percent:
     data_type: NUMERIC(11,9)
+  lla_summary:
+    data_type: VARCHAR(16000)
+  lla_version:
+    data_type: INTEGER

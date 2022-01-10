@@ -11,19 +11,19 @@ foreign_keys:
       schema: staging_octane
       table: account
 columns:
-  plbit_pid:
-    data_type: BIGINT
-  plbit_version:
-    data_type: INTEGER
   plbit_account_pid:
     data_type: BIGINT
-  plbit_year:
-    data_type: INTEGER
   plbit_month:
     data_type: INTEGER
   plbit_period_id:
     data_type: INTEGER
+  plbit_pid:
+    data_type: BIGINT
   plbit_revision_id:
     data_type: INTEGER
   plbit_user_friendly_value:
     data_type: VARCHAR(16)
+  plbit_version:
+    data_type: INTEGER
+  plbit_year:
+    data_type: INTEGER

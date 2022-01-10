@@ -11,13 +11,13 @@ foreign_keys:
       schema: staging_octane
       table: lender_user
 columns:
-  luu_pid:
-    data_type: BIGINT
-  luu_version:
-    data_type: INTEGER
-  luu_lender_user_pid:
-    data_type: BIGINT
   luu_from_date:
     data_type: DATE
+  luu_lender_user_pid:
+    data_type: BIGINT
+  luu_pid:
+    data_type: BIGINT
   luu_through_date:
     data_type: DATE
+  luu_version:
+    data_type: INTEGER

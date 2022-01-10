@@ -21,28 +21,28 @@ foreign_keys:
       schema: history_octane
       table: config_export_permission_type
 columns:
-  rcep_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rcep_pid
-  rcep_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.rcep_version
-  rcep_role_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rcep_role_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   rcep_config_export_permission_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.rcep_config_export_permission_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  rcep_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rcep_pid
+  rcep_role_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rcep_role_pid
+  rcep_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.rcep_version
 etls:
   SP-100234:
     input_type: table

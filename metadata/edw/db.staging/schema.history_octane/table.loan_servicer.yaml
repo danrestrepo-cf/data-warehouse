@@ -37,54 +37,48 @@ foreign_keys:
       schema: history_octane
       table: mers_transfer_status_type
 columns:
-  lsv_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lsv_pid
-  lsv_version:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  lsv_delinquent_payments_over_past_twelve_months_count:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.lsv_version
-  lsv_loan_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lsv_loan_pid
-  lsv_investor_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lsv_investor_pid
-  lsv_investor_loan_id:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.lsv_investor_loan_id
-  lsv_initial:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.lsv_initial
+      field: primary_source_table.columns.lsv_delinquent_payments_over_past_twelve_months_count
   lsv_from_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.lsv_from_date
-  lsv_servicing_data_sent_date:
+  lsv_initial:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lsv_initial
+  lsv_investor_loan_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lsv_investor_loan_id
+  lsv_investor_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lsv_investor_pid
+  lsv_last_paid_installment_due_date:
     data_type: DATE
     source:
-      field: primary_source_table.columns.lsv_servicing_data_sent_date
-  lsv_retain_notification_date:
-    data_type: DATE
+      field: primary_source_table.columns.lsv_last_paid_installment_due_date
+  lsv_loan_acquisition_scheduled_upb_amount:
+    data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.lsv_retain_notification_date
-  lsv_release_notification_date:
-    data_type: DATE
+      field: primary_source_table.columns.lsv_loan_acquisition_scheduled_upb_amount
+  lsv_loan_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.lsv_release_notification_date
-  lsv_servicing_docs_sent_date:
-    data_type: DATE
+      field: primary_source_table.columns.lsv_loan_pid
+  lsv_mers_transfer_batch_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.lsv_servicing_docs_sent_date
-  lsv_mers_transfer_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lsv_mers_transfer_status_type
+      field: primary_source_table.columns.lsv_mers_transfer_batch_pid
   lsv_mers_transfer_creation_date:
     data_type: DATE
     source:
@@ -93,32 +87,38 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.lsv_mers_transfer_override
-  lsv_mers_transfer_batch_pid:
+  lsv_mers_transfer_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lsv_mers_transfer_status_type
+  lsv_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.lsv_mers_transfer_batch_pid
-  lsv_loan_acquisition_scheduled_upb_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.lsv_loan_acquisition_scheduled_upb_amount
-  lsv_last_paid_installment_due_date:
+      field: primary_source_table.columns.lsv_pid
+  lsv_release_notification_date:
     data_type: DATE
     source:
-      field: primary_source_table.columns.lsv_last_paid_installment_due_date
+      field: primary_source_table.columns.lsv_release_notification_date
+  lsv_retain_notification_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lsv_retain_notification_date
+  lsv_servicing_data_sent_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lsv_servicing_data_sent_date
+  lsv_servicing_docs_sent_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lsv_servicing_docs_sent_date
   lsv_upb_amount:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.lsv_upb_amount
-  lsv_delinquent_payments_over_past_twelve_months_count:
+  lsv_version:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.lsv_delinquent_payments_over_past_twelve_months_count
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.lsv_version
 etls:
   SP-100150:
     input_type: table

@@ -69,46 +69,22 @@ foreign_keys:
       schema: history_octane
       table: va_borrower_certification_occupancy_type
 columns:
-  apl_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.apl_pid
-  apl_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.apl_version
-  apl_application_name:
+  apl_address_city:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.apl_application_name
-  apl_primary_application:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.apl_primary_application
-  apl_urla:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.apl_urla
-  apl_proposal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.apl_proposal_pid
-  apl_fha_borrower_certification_own_other_property:
+      field: primary_source_table.columns.apl_address_city
+  apl_address_country:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.apl_fha_borrower_certification_own_other_property
-  apl_fha_borrower_certification_property_to_be_sold:
+      field: primary_source_table.columns.apl_address_country
+  apl_address_postal_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.apl_fha_borrower_certification_property_to_be_sold
-  apl_fha_borrower_certification_sales_price_amount:
-    data_type: NUMERIC(15,0)
+      field: primary_source_table.columns.apl_address_postal_code
+  apl_address_state:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.apl_fha_borrower_certification_sales_price_amount
-  apl_fha_borrower_certification_mortgage_amount:
-    data_type: NUMERIC(15,0)
-    source:
-      field: primary_source_table.columns.apl_fha_borrower_certification_mortgage_amount
+      field: primary_source_table.columns.apl_address_state
   apl_address_street1:
     data_type: VARCHAR(128)
     source:
@@ -117,22 +93,26 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.apl_address_street2
-  apl_address_city:
+  apl_application_name:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.apl_address_city
-  apl_address_state:
+      field: primary_source_table.columns.apl_application_name
+  apl_fha_borrower_certification_more_than_four_dwellings:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.apl_address_state
-  apl_address_postal_code:
+      field: primary_source_table.columns.apl_fha_borrower_certification_more_than_four_dwellings
+  apl_fha_borrower_certification_mortgage_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.apl_fha_borrower_certification_mortgage_amount
+  apl_fha_borrower_certification_own_other_property:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.apl_address_postal_code
-  apl_address_country:
+      field: primary_source_table.columns.apl_fha_borrower_certification_own_other_property
+  apl_fha_borrower_certification_property_to_be_sold:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.apl_address_country
+      field: primary_source_table.columns.apl_fha_borrower_certification_property_to_be_sold
   apl_fha_borrower_certification_rental:
     data_type: VARCHAR(128)
     source:
@@ -141,22 +121,42 @@ columns:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.apl_fha_borrower_certification_rental_explain
-  apl_fha_borrower_certification_more_than_four_dwellings:
-    data_type: VARCHAR(128)
+  apl_fha_borrower_certification_sales_price_amount:
+    data_type: NUMERIC(15,0)
     source:
-      field: primary_source_table.columns.apl_fha_borrower_certification_more_than_four_dwellings
-  apl_va_borrower_certification_occupancy_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.apl_va_borrower_certification_occupancy_type
+      field: primary_source_table.columns.apl_fha_borrower_certification_sales_price_amount
   apl_fha_va_bor_cert_sales_price_exceeds_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.apl_fha_va_bor_cert_sales_price_exceeds_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  apl_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.apl_pid
+  apl_primary_application:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.apl_primary_application
+  apl_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.apl_proposal_pid
+  apl_urla:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.apl_urla
+  apl_va_borrower_certification_occupancy_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apl_va_borrower_certification_occupancy_type
+  apl_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apl_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

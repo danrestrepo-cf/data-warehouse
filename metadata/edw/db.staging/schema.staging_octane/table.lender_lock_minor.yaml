@@ -107,95 +107,95 @@ foreign_keys:
       schema: staging_octane
       table: prepay_penalty_schedule_type
 columns:
-  llmn_pid:
-    data_type: BIGINT
-  llmn_version:
-    data_type: INTEGER
-  llmn_lender_lock_major_pid:
-    data_type: BIGINT
-  llmn_minor_version:
-    data_type: INTEGER
-  llmn_latest_version:
-    data_type: BOOLEAN
-  llmn_lender_lock_status_type:
+  llmn_apor_date:
+    data_type: DATE
+  llmn_aus_type:
+    data_type: VARCHAR(128)
+  llmn_base_arm_margin_percent:
+    data_type: NUMERIC(11,9)
+  llmn_base_loan_amount:
+    data_type: NUMERIC(17,2)
+  llmn_base_note_rate_percent:
+    data_type: NUMERIC(11,9)
+  llmn_base_price_percent:
+    data_type: NUMERIC(11,9)
+  llmn_buydown_schedule_type:
     data_type: VARCHAR(128)
   llmn_create_datetime:
     data_type: TIMESTAMP
+  llmn_created_historic_price_delta:
+    data_type: NUMERIC(11,9)
   llmn_creator_agent_type:
     data_type: VARCHAR(128)
   llmn_creator_lender_user_pid:
     data_type: BIGINT
   llmn_creator_unparsed_name:
     data_type: VARCHAR(128)
-  llmn_effective_lock_expiration_datetime:
-    data_type: TIMESTAMP
   llmn_effective_duration_days:
     data_type: INTEGER
-  llmn_num_extensions:
-    data_type: INTEGER
-  llmn_investor_base_note_rate_percent:
+  llmn_effective_lock_expiration_datetime:
+    data_type: TIMESTAMP
+  llmn_effective_rate_sheet_datetime:
+    data_type: TIMESTAMP
+  llmn_high_balance_hit_percent:
     data_type: NUMERIC(11,9)
+  llmn_interest_only_type:
+    data_type: VARCHAR(128)
   llmn_investor_base_arm_margin_percent:
+    data_type: NUMERIC(11,9)
+  llmn_investor_base_note_rate_percent:
     data_type: NUMERIC(11,9)
   llmn_investor_base_price_percent:
     data_type: NUMERIC(11,9)
-  llmn_lock_note_rate_percent:
+  llmn_latest_version:
+    data_type: BOOLEAN
+  llmn_lender_lock_major_pid:
+    data_type: BIGINT
+  llmn_lender_lock_status_type:
+    data_type: VARCHAR(128)
+  llmn_loan_amount:
+    data_type: NUMERIC(17,2)
+  llmn_lock_arm_margin_percent:
     data_type: NUMERIC(11,9)
+  llmn_lock_commitment_type:
+    data_type: VARCHAR(128)
   llmn_lock_initial_note_rate_percent:
     data_type: NUMERIC(11,9)
-  llmn_lock_arm_margin_percent:
+  llmn_lock_note_rate_percent:
     data_type: NUMERIC(11,9)
   llmn_lock_price_percent:
     data_type: NUMERIC(11,9)
   llmn_lock_price_raw_percent:
     data_type: NUMERIC(11,9)
-  llmn_maximum_rebate_percent:
-    data_type: NUMERIC(11,9)
-  llmn_maximum_investor_price_percent:
-    data_type: NUMERIC(11,9)
   llmn_maximum_investor_price_includes_srp:
     data_type: BOOLEAN
-  llmn_created_historic_price_delta:
+  llmn_maximum_investor_price_percent:
     data_type: NUMERIC(11,9)
-  llmn_profit_table_name:
-    data_type: VARCHAR(128)
-  llmn_total_profit_margin_percent:
+  llmn_maximum_rebate_percent:
     data_type: NUMERIC(11,9)
-  llmn_base_note_rate_percent:
-    data_type: NUMERIC(11,9)
-  llmn_base_arm_margin_percent:
-    data_type: NUMERIC(11,9)
-  llmn_base_price_percent:
-    data_type: NUMERIC(11,9)
-  llmn_pricing_datetime:
-    data_type: TIMESTAMP
-  llmn_effective_rate_sheet_datetime:
-    data_type: TIMESTAMP
-  llmn_apor_date:
-    data_type: DATE
-  llmn_proposal_snapshot_pid:
-    data_type: BIGINT
-  llmn_loan_amount:
-    data_type: NUMERIC(17,2)
-  llmn_base_loan_amount:
-    data_type: NUMERIC(17,2)
-  llmn_lock_commitment_type:
-    data_type: VARCHAR(128)
-  llmn_offering_pid:
-    data_type: BIGINT
-  llmn_product_terms_pid:
-    data_type: BIGINT
+  llmn_minor_version:
+    data_type: INTEGER
   llmn_mortgage_type:
     data_type: VARCHAR(128)
-  llmn_interest_only_type:
-    data_type: VARCHAR(128)
-  llmn_buydown_schedule_type:
-    data_type: VARCHAR(128)
-  llmn_prepay_penalty_schedule_type:
-    data_type: VARCHAR(128)
-  llmn_aus_type:
-    data_type: VARCHAR(128)
-  llmn_high_balance_hit_percent:
-    data_type: NUMERIC(11,9)
   llmn_new_york_payup_percent:
     data_type: NUMERIC(11,9)
+  llmn_num_extensions:
+    data_type: INTEGER
+  llmn_offering_pid:
+    data_type: BIGINT
+  llmn_pid:
+    data_type: BIGINT
+  llmn_prepay_penalty_schedule_type:
+    data_type: VARCHAR(128)
+  llmn_pricing_datetime:
+    data_type: TIMESTAMP
+  llmn_product_terms_pid:
+    data_type: BIGINT
+  llmn_profit_table_name:
+    data_type: VARCHAR(128)
+  llmn_proposal_snapshot_pid:
+    data_type: BIGINT
+  llmn_total_profit_margin_percent:
+    data_type: NUMERIC(11,9)
+  llmn_version:
+    data_type: INTEGER

@@ -35,19 +35,19 @@ foreign_keys:
       schema: staging_octane
       table: smart_ledger_plan_case_group_calculation_type
 columns:
-  slpcg_pid:
-    data_type: BIGINT
-  slpcg_version:
-    data_type: INTEGER
   slpcg_account_pid:
     data_type: BIGINT
-  slpcg_smart_ledger_plan_pid:
+  slpcg_group_id:
     data_type: BIGINT
   slpcg_group_name:
     data_type: VARCHAR(128)
-  slpcg_group_id:
-    data_type: BIGINT
   slpcg_payer_org_node_pid:
+    data_type: BIGINT
+  slpcg_pid:
     data_type: BIGINT
   slpcg_smart_ledger_plan_case_group_calculation_type:
     data_type: VARCHAR(128)
+  slpcg_smart_ledger_plan_pid:
+    data_type: BIGINT
+  slpcg_version:
+    data_type: INTEGER

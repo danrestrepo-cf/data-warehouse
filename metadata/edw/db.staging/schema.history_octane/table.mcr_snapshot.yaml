@@ -29,36 +29,36 @@ foreign_keys:
       schema: history_octane
       table: quarter_type
 columns:
-  mcrs_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.mcrs_pid
-  mcrs_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.mcrs_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   mcrs_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.mcrs_account_pid
-  mcrs_year:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.mcrs_year
-  mcrs_quarter_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrs_quarter_type
   mcrs_mcr_request_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.mcrs_mcr_request_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  mcrs_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcrs_pid
+  mcrs_quarter_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrs_quarter_type
+  mcrs_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mcrs_version
+  mcrs_year:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mcrs_year
 etls:
   SP-100233:
     input_type: table

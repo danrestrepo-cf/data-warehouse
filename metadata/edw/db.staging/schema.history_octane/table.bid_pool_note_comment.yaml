@@ -21,26 +21,6 @@ foreign_keys:
       schema: history_octane
       table: lender_user
 columns:
-  bpnc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bpnc_pid
-  bpnc_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.bpnc_version
-  bpnc_bid_pool_note_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bpnc_bid_pool_note_pid
-  bpnc_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.bpnc_create_datetime
-  bpnc_content:
-    data_type: VARCHAR(16000)
-    source:
-      field: primary_source_table.columns.bpnc_content
   bpnc_author_lender_user_pid:
     data_type: BIGINT
     source:
@@ -49,10 +29,30 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.bpnc_author_unparsed_name
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  bpnc_bid_pool_note_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bpnc_bid_pool_note_pid
+  bpnc_content:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.bpnc_content
+  bpnc_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.bpnc_create_datetime
+  bpnc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bpnc_pid
+  bpnc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bpnc_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

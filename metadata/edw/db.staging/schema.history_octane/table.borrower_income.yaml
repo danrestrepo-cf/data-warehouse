@@ -45,54 +45,62 @@ foreign_keys:
       schema: history_octane
       table: country_type
 columns:
-  bi_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bi_pid
-  bi_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.bi_version
-  bi_borrower_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bi_borrower_pid
   bi_borrower_income_category_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.bi_borrower_income_category_type
-  bi_job_gap_reason_type:
-    data_type: VARCHAR(128)
+  bi_borrower_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.bi_job_gap_reason_type
-  bi_job_gap_reason_explanation:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.bi_job_gap_reason_explanation
+      field: primary_source_table.columns.bi_borrower_pid
   bi_business_ownership_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.bi_business_ownership_type
-  bi_from_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.bi_from_date
-  bi_through_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.bi_through_date
   bi_current:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.bi_current
+  bi_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.bi_from_date
+  bi_job_gap_reason_explanation:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.bi_job_gap_reason_explanation
+  bi_job_gap_reason_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bi_job_gap_reason_type
+  bi_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bi_pid
   bi_primary:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.bi_primary
-  bi_source_name:
+  bi_snapshotted_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bi_snapshotted_pid
+  bi_source_address_city:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.bi_source_name
+      field: primary_source_table.columns.bi_source_address_city
+  bi_source_address_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bi_source_address_country
+  bi_source_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bi_source_address_postal_code
+  bi_source_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bi_source_address_state
   bi_source_address_street1:
     data_type: VARCHAR(128)
     source:
@@ -101,22 +109,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.bi_source_address_street2
-  bi_source_address_city:
+  bi_source_name:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.bi_source_address_city
-  bi_source_address_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.bi_source_address_state
-  bi_source_address_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.bi_source_address_postal_code
-  bi_source_address_country:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.bi_source_address_country
+      field: primary_source_table.columns.bi_source_name
   bi_source_phone:
     data_type: VARCHAR(32)
     source:
@@ -129,14 +125,18 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.bi_synthetic_unique
-  bi_snapshotted_pid:
-    data_type: BIGINT
+  bi_through_date:
+    data_type: DATE
     source:
-      field: primary_source_table.columns.bi_snapshotted_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+      field: primary_source_table.columns.bi_through_date
+  bi_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bi_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

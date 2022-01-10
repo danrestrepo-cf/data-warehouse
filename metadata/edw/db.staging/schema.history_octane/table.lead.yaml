@@ -13,178 +13,20 @@ foreign_keys:
       schema: history_octane
       table: deal
 columns:
-  ld_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ld_pid
-  ld_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ld_version
-  ld_deal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ld_deal_pid
-  ld_lead_datetime:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ld_lead_datetime
-  ld_velocify_campaign_id:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ld_velocify_campaign_id
-  ld_velocify_campaign_title:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ld_velocify_campaign_title
-  ld_originator_email:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.ld_originator_email
-  ld_customer_service_rep_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ld_customer_service_rep_name
-  ld_velocify_lead_id:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ld_velocify_lead_id
-  ld_tracking_id:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.ld_tracking_id
-  ld_zillow_zq:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.ld_zillow_zq
-  ld_reference_id:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.ld_reference_id
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   ld_apr_percent:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.ld_apr_percent
-  ld_interest_rate:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.ld_interest_rate
-  ld_rate_type:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ld_rate_type
-  ld_fico_score:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.ld_fico_score
-  ld_loan_type:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ld_loan_type
-  ld_notes:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.ld_notes
-  ld_loan_purpose_type:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ld_loan_purpose_type
-  ld_purchase_price:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ld_purchase_price
-  ld_existing_home_value:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ld_existing_home_value
-  ld_loan_amount:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ld_loan_amount
-  ld_property_use:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ld_property_use
-  ld_subject_property_street:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ld_subject_property_street
-  ld_subject_property_city:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ld_subject_property_city
-  ld_subject_property_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ld_subject_property_state
-  ld_subject_property_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ld_subject_property_postal_code
-  ld_subject_property_type:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ld_subject_property_type
-  ld_borrower_first_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ld_borrower_first_name
-  ld_borrower_last_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ld_borrower_last_name
-  ld_borrower_home_phone:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ld_borrower_home_phone
-  ld_borrower_mobile_phone:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ld_borrower_mobile_phone
-  ld_borrower_email:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.ld_borrower_email
   ld_borrower_birth_date:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.ld_borrower_birth_date
-  ld_borrower_residence_street:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ld_borrower_residence_street
-  ld_borrower_residence_city:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ld_borrower_residence_city
-  ld_borrower_residence_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ld_borrower_residence_state
-  ld_borrower_residence_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ld_borrower_residence_postal_code
-  ld_coborrower_first_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ld_coborrower_first_name
-  ld_coborrower_middle_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ld_coborrower_middle_name
-  ld_coborrower_last_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ld_coborrower_last_name
-  ld_coborrower_email:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.ld_coborrower_email
-  ld_coborrower_birth_date:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ld_coborrower_birth_date
   ld_borrower_current_job_employer_name:
     data_type: VARCHAR(128)
     source:
@@ -193,20 +35,178 @@ columns:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.ld_borrower_current_job_position
-  ld_borrower_years_on_job:
-    data_type: VARCHAR(16)
+  ld_borrower_email:
+    data_type: VARCHAR(256)
     source:
-      field: primary_source_table.columns.ld_borrower_years_on_job
+      field: primary_source_table.columns.ld_borrower_email
+  ld_borrower_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_first_name
   ld_borrower_gross_monthly_income:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.ld_borrower_gross_monthly_income
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  ld_borrower_home_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_home_phone
+  ld_borrower_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_last_name
+  ld_borrower_mobile_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_mobile_phone
+  ld_borrower_residence_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ld_borrower_residence_city
+  ld_borrower_residence_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ld_borrower_residence_postal_code
+  ld_borrower_residence_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ld_borrower_residence_state
+  ld_borrower_residence_street:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ld_borrower_residence_street
+  ld_borrower_years_on_job:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.ld_borrower_years_on_job
+  ld_coborrower_birth_date:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_coborrower_birth_date
+  ld_coborrower_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.ld_coborrower_email
+  ld_coborrower_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_coborrower_first_name
+  ld_coborrower_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_coborrower_last_name
+  ld_coborrower_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_coborrower_middle_name
+  ld_customer_service_rep_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ld_customer_service_rep_name
+  ld_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ld_deal_pid
+  ld_existing_home_value:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_existing_home_value
+  ld_fico_score:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.ld_fico_score
+  ld_interest_rate:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.ld_interest_rate
+  ld_lead_datetime:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_lead_datetime
+  ld_loan_amount:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_loan_amount
+  ld_loan_purpose_type:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_loan_purpose_type
+  ld_loan_type:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_loan_type
+  ld_notes:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.ld_notes
+  ld_originator_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.ld_originator_email
+  ld_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ld_pid
+  ld_property_use:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_property_use
+  ld_purchase_price:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_purchase_price
+  ld_rate_type:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_rate_type
+  ld_reference_id:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.ld_reference_id
+  ld_subject_property_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ld_subject_property_city
+  ld_subject_property_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ld_subject_property_postal_code
+  ld_subject_property_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ld_subject_property_state
+  ld_subject_property_street:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ld_subject_property_street
+  ld_subject_property_type:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_subject_property_type
+  ld_tracking_id:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.ld_tracking_id
+  ld_velocify_campaign_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_velocify_campaign_id
+  ld_velocify_campaign_title:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_velocify_campaign_title
+  ld_velocify_lead_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_velocify_lead_id
+  ld_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ld_version
+  ld_zillow_zq:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.ld_zillow_zq
 etls:
   SP-100089:
     input_type: table

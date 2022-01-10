@@ -7,10 +7,10 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.ais_id
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

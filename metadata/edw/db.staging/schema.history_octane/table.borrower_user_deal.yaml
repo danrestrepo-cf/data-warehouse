@@ -37,22 +37,6 @@ foreign_keys:
       schema: history_octane
       table: borrower_user_deal_access_type
 columns:
-  bud_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bud_pid
-  bud_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.bud_version
-  bud_borrower_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bud_borrower_user_pid
-  bud_deal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bud_deal_pid
   bud_borrower_pid:
     data_type: BIGINT
     source:
@@ -61,6 +45,18 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.bud_borrower_user_deal_access_type
+  bud_borrower_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bud_borrower_user_pid
+  bud_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.bud_create_datetime
+  bud_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bud_deal_pid
   bud_electronic_transaction_consent:
     data_type: BOOLEAN
     source:
@@ -73,20 +69,24 @@ columns:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.bud_electronic_transaction_consent_ip_address
-  bud_create_datetime:
-    data_type: TIMESTAMP
+  bud_loan_key:
+    data_type: VARCHAR(128)
+  bud_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.bud_create_datetime
+      field: primary_source_table.columns.bud_pid
   bud_uuid:
     data_type: VARCHAR(36)
     source:
       field: primary_source_table.columns.bud_uuid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  bud_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bud_version
   data_source_deleted_flag:
     data_type: BOOLEAN
-  bud_loan_key:
-    data_type: VARCHAR(128)
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

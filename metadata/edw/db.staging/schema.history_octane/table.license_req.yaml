@@ -29,32 +29,32 @@ foreign_keys:
       schema: history_octane
       table: state_type
 columns:
-  mlr_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.mlr_pid
-  mlr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.mlr_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   mlr_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.mlr_account_pid
-  mlr_state_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mlr_state_type
   mlr_license_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.mlr_license_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  mlr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mlr_pid
+  mlr_state_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mlr_state_type
+  mlr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mlr_version
 etls:
   SP-100254:
     input_type: table

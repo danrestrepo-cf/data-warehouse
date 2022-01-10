@@ -29,14 +29,10 @@ foreign_keys:
       schema: history_octane
       table: appraisal_source_type
 columns:
-  aprfm_pid:
-    data_type: BIGINT
+  aprfm_appraisal_form_type:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.aprfm_pid
-  aprfm_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.aprfm_version
+      field: primary_source_table.columns.aprfm_appraisal_form_type
   aprfm_appraisal_pid:
     data_type: BIGINT
     source:
@@ -45,14 +41,18 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.aprfm_appraisal_source_type
-  aprfm_appraisal_form_type:
-    data_type: VARCHAR(128)
+  aprfm_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.aprfm_appraisal_form_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+      field: primary_source_table.columns.aprfm_pid
+  aprfm_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.aprfm_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

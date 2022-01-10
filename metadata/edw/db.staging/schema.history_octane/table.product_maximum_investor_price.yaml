@@ -13,44 +13,44 @@ foreign_keys:
       schema: history_octane
       table: product
 columns:
-  pmip_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pmip_pid
-  pmip_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pmip_version
-  pmip_product_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pmip_product_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   pmip_from_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.pmip_from_date
-  pmip_maximum_investor_price_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.pmip_maximum_investor_price_percent
-  pmip_maximum_includes_srp:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pmip_maximum_includes_srp
-  pmip_loan_amount_min:
-    data_type: NUMERIC(15,0)
-    source:
-      field: primary_source_table.columns.pmip_loan_amount_min
   pmip_loan_amount_max:
     data_type: NUMERIC(15,0)
     source:
       field: primary_source_table.columns.pmip_loan_amount_max
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
+  pmip_loan_amount_min:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.pmip_loan_amount_min
+  pmip_maximum_includes_srp:
     data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+    source:
+      field: primary_source_table.columns.pmip_maximum_includes_srp
+  pmip_maximum_investor_price_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pmip_maximum_investor_price_percent
+  pmip_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pmip_pid
+  pmip_product_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pmip_product_pid
+  pmip_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pmip_version
 etls:
   SP-100113:
     input_type: table

@@ -45,44 +45,44 @@ foreign_keys:
       schema: history_octane
       table: state_type
 columns:
-  rerc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rerc_pid
-  rerc_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.rerc_version
-  rerc_ernst_page_rec_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.rerc_ernst_page_rec_type
-  rerc_state_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.rerc_state_type
-  rerc_county_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rerc_county_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   rerc_county_city_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.rerc_county_city_pid
-  rerc_recording_district_pid:
+  rerc_county_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.rerc_recording_district_pid
+      field: primary_source_table.columns.rerc_county_pid
   rerc_ernst_page_rec:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.rerc_ernst_page_rec
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  rerc_ernst_page_rec_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.rerc_ernst_page_rec_type
+  rerc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rerc_pid
+  rerc_recording_district_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rerc_recording_district_pid
+  rerc_state_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.rerc_state_type
+  rerc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.rerc_version
 etls:
   SP-100259:
     input_type: table

@@ -13,28 +13,28 @@ foreign_keys:
       schema: history_octane
       table: smart_charge
 columns:
-  scg_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.scg_pid
-  scg_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.scg_version
-  scg_smart_charge_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.scg_smart_charge_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   scg_group_name:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.scg_group_name
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  scg_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.scg_pid
+  scg_smart_charge_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.scg_smart_charge_pid
+  scg_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.scg_version
 etls:
   SP-100243:
     input_type: table

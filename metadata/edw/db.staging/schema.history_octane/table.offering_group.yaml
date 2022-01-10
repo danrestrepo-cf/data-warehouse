@@ -13,14 +13,12 @@ foreign_keys:
       schema: history_octane
       table: account
 columns:
-  ofg_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ofg_pid
-  ofg_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ofg_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   ofg_account_pid:
     data_type: BIGINT
     source:
@@ -29,12 +27,14 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ofg_name
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  ofg_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ofg_pid
+  ofg_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ofg_version
 etls:
   SP-100003:
     input_type: table

@@ -29,46 +29,26 @@ foreign_keys:
       schema: history_octane
       table: charge_wire_action_type
 columns:
-  agp_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.agp_pid
-  agp_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.agp_version
   agp_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.agp_account_pid
-  agp_from_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.agp_from_date
-  agp_through_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.agp_through_date
-  agp_program_id:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.agp_program_id
-  agp_program_name:
+  agp_address_city:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.agp_program_name
-  agp_program_funds_type:
+      field: primary_source_table.columns.agp_address_city
+  agp_address_country:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.agp_program_funds_type
-  agp_donor_name:
+      field: primary_source_table.columns.agp_address_country
+  agp_address_postal_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.agp_donor_name
-  agp_donor_phone:
-    data_type: VARCHAR(32)
+      field: primary_source_table.columns.agp_address_postal_code
+  agp_address_state:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.agp_donor_phone
+      field: primary_source_table.columns.agp_address_state
   agp_address_street1:
     data_type: VARCHAR(128)
     source:
@@ -77,38 +57,58 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.agp_address_street2
-  agp_address_city:
+  agp_donor_name:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.agp_address_city
-  agp_address_state:
-    data_type: VARCHAR(128)
+      field: primary_source_table.columns.agp_donor_name
+  agp_donor_phone:
+    data_type: VARCHAR(32)
     source:
-      field: primary_source_table.columns.agp_address_state
-  agp_address_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.agp_address_postal_code
-  agp_address_country:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.agp_address_country
+      field: primary_source_table.columns.agp_donor_phone
   agp_ein:
     data_type: VARCHAR(10)
     source:
       field: primary_source_table.columns.agp_ein
-  agp_wire_action_type:
-    data_type: VARCHAR(128)
+  agp_from_date:
+    data_type: DATE
     source:
-      field: primary_source_table.columns.agp_wire_action_type
+      field: primary_source_table.columns.agp_from_date
   agp_notes:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.columns.agp_notes
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  agp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.agp_pid
+  agp_program_funds_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.agp_program_funds_type
+  agp_program_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.agp_program_id
+  agp_program_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.agp_program_name
+  agp_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.agp_through_date
+  agp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.agp_version
+  agp_wire_action_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.agp_wire_action_type
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

@@ -29,22 +29,18 @@ foreign_keys:
       schema: history_octane
       table: yes_no_unknown_type
 columns:
-  duf_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.duf_pid
-  duf_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.duf_version
-  duf_du_request_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.duf_du_request_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   duf_du_finding_message_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.duf_du_finding_message_type
+  duf_du_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.duf_du_request_pid
   duf_finding_result:
     data_type: VARCHAR(128)
     source:
@@ -53,10 +49,14 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.duf_finding_value
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+  duf_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.duf_pid
+  duf_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.duf_version
   etl_batch_id:
     data_type: TEXT
 etls:

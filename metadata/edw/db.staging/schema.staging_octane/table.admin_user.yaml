@@ -19,45 +19,45 @@ foreign_keys:
       schema: staging_octane
       table: time_zone_type
 columns:
-  au_pid:
-    data_type: BIGINT
-  au_version:
-    data_type: INTEGER
+  au_admin_user_administrator:
+    data_type: BOOLEAN
+  au_admin_user_status_type:
+    data_type: VARCHAR(128)
   au_create_date:
     data_type: DATE
+  au_customer_support:
+    data_type: BOOLEAN
   au_email:
     data_type: VARCHAR(256)
+  au_engineering:
+    data_type: BOOLEAN
   au_first_name:
     data_type: VARCHAR(32)
+  au_force_password_change:
+    data_type: BOOLEAN
   au_last_name:
     data_type: VARCHAR(32)
-  au_unparsed_name:
-    data_type: VARCHAR(128)
+  au_last_password_change_date:
+    data_type: TIMESTAMP
+  au_last_sign_on_datetime:
+    data_type: TIMESTAMP
+  au_management:
+    data_type: BOOLEAN
   au_office_phone:
     data_type: VARCHAR(32)
   au_office_phone_extension:
     data_type: VARCHAR(16)
+  au_pid:
+    data_type: BIGINT
   au_through_date:
     data_type: DATE
   au_time_zone:
     data_type: VARCHAR(128)
   au_title:
     data_type: VARCHAR(128)
-  au_admin_user_status_type:
+  au_unparsed_name:
     data_type: VARCHAR(128)
   au_username:
     data_type: VARCHAR(32)
-  au_admin_user_administrator:
-    data_type: BOOLEAN
-  au_customer_support:
-    data_type: BOOLEAN
-  au_engineering:
-    data_type: BOOLEAN
-  au_management:
-    data_type: BOOLEAN
-  au_force_password_change:
-    data_type: BOOLEAN
-  au_last_password_change_date:
-    data_type: TIMESTAMP
-  au_last_sign_on_datetime:
-    data_type: TIMESTAMP
+  au_version:
+    data_type: INTEGER

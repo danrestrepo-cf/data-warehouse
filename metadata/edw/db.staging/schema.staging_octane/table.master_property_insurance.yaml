@@ -43,67 +43,67 @@ foreign_keys:
       schema: staging_octane
       table: master_property_insurance_type
 columns:
-  mpi_pid:
-    data_type: BIGINT
-  mpi_version:
-    data_type: INTEGER
-  mpi_proposal_pid:
-    data_type: BIGINT
-  mpi_master_property_insurance_type:
+  mpi_address_city:
     data_type: VARCHAR(128)
-  mpi_policy_effective_date:
-    data_type: DATE
-  mpi_policy_expiration_date:
-    data_type: DATE
-  mpi_next_payment_date:
-    data_type: DATE
-  mpi_policy_property_coverage_amount:
-    data_type: NUMERIC(15,0)
-  mpi_policy_liability_coverage_amount:
-    data_type: NUMERIC(15,0)
-  mpi_policy_fidelity_coverage_amount:
-    data_type: NUMERIC(15,0)
-  mpi_policy_deductible_amount:
-    data_type: NUMERIC(15,0)
-  mpi_replacement_cost_amount:
-    data_type: NUMERIC(15,0)
-  mpi_coinsurance:
-    data_type: VARCHAR(128)
-  mpi_agreed_amount_endorsement:
-    data_type: VARCHAR(128)
-  mpi_company_name:
-    data_type: VARCHAR(128)
-  mpi_first_name:
-    data_type: VARCHAR(32)
-  mpi_middle_name:
-    data_type: VARCHAR(32)
-  mpi_last_name:
-    data_type: VARCHAR(32)
-  mpi_name_suffix:
-    data_type: VARCHAR(32)
-  mpi_title:
-    data_type: VARCHAR(128)
-  mpi_email:
-    data_type: VARCHAR(256)
-  mpi_mobile_phone:
-    data_type: VARCHAR(32)
-  mpi_office_phone:
-    data_type: VARCHAR(32)
-  mpi_office_phone_extension:
+  mpi_address_country:
     data_type: VARCHAR(16)
-  mpi_fax:
-    data_type: VARCHAR(32)
+  mpi_address_postal_code:
+    data_type: VARCHAR(128)
+  mpi_address_state:
+    data_type: VARCHAR(128)
   mpi_address_street1:
     data_type: VARCHAR(128)
   mpi_address_street2:
     data_type: VARCHAR(128)
-  mpi_address_city:
+  mpi_agreed_amount_endorsement:
     data_type: VARCHAR(128)
-  mpi_address_state:
+  mpi_coinsurance:
     data_type: VARCHAR(128)
-  mpi_address_postal_code:
+  mpi_company_name:
     data_type: VARCHAR(128)
-  mpi_address_country:
+  mpi_email:
+    data_type: VARCHAR(256)
+  mpi_fax:
+    data_type: VARCHAR(32)
+  mpi_first_name:
+    data_type: VARCHAR(32)
+  mpi_last_name:
+    data_type: VARCHAR(32)
+  mpi_master_property_insurance_type:
+    data_type: VARCHAR(128)
+  mpi_middle_name:
+    data_type: VARCHAR(32)
+  mpi_mobile_phone:
+    data_type: VARCHAR(32)
+  mpi_name_suffix:
+    data_type: VARCHAR(32)
+  mpi_next_payment_date:
+    data_type: DATE
+  mpi_office_phone:
+    data_type: VARCHAR(32)
+  mpi_office_phone_extension:
     data_type: VARCHAR(16)
+  mpi_pid:
+    data_type: BIGINT
+  mpi_policy_deductible_amount:
+    data_type: NUMERIC(15,0)
+  mpi_policy_effective_date:
+    data_type: DATE
+  mpi_policy_expiration_date:
+    data_type: DATE
+  mpi_policy_fidelity_coverage_amount:
+    data_type: NUMERIC(15,0)
   mpi_policy_id:
     data_type: VARCHAR(128)
+  mpi_policy_liability_coverage_amount:
+    data_type: NUMERIC(15,0)
+  mpi_policy_property_coverage_amount:
+    data_type: NUMERIC(15,0)
+  mpi_proposal_pid:
+    data_type: BIGINT
+  mpi_replacement_cost_amount:
+    data_type: NUMERIC(15,0)
+  mpi_title:
+    data_type: VARCHAR(128)
+  mpi_version:
+    data_type: INTEGER

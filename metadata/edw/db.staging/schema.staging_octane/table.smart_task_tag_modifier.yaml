@@ -19,13 +19,13 @@ foreign_keys:
       schema: staging_octane
       table: smart_task
 columns:
-  sttm_pid:
-    data_type: BIGINT
-  sttm_version:
-    data_type: INTEGER
+  sttm_add_tag:
+    data_type: BOOLEAN
   sttm_deal_tag_definition_pid:
+    data_type: BIGINT
+  sttm_pid:
     data_type: BIGINT
   sttm_smart_task_pid:
     data_type: BIGINT
-  sttm_add_tag:
-    data_type: BOOLEAN
+  sttm_version:
+    data_type: INTEGER

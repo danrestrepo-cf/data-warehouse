@@ -4,36 +4,36 @@ primary_key:
 - metb_pid
 - metb_version
 columns:
-  metb_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.metb_pid
-  metb_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.metb_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   metb_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.metb_account_pid
-  metb_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.metb_create_datetime
-  metb_sent_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.metb_sent_datetime
   metb_batch_id:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.metb_batch_id
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  metb_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.metb_create_datetime
+  metb_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.metb_pid
+  metb_sent_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.metb_sent_datetime
+  metb_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.metb_version
 etls:
   SP-100036:
     input_type: table

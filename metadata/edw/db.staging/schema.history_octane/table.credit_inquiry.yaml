@@ -61,30 +61,22 @@ foreign_keys:
       schema: history_octane
       table: credit_inquiry_explanation_type
 columns:
-  ci_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ci_pid
-  ci_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ci_version
-  ci_proposal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ci_proposal_pid
-  ci_credit_request_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ci_credit_request_pid
-  ci_inquiry_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.ci_inquiry_date
-  ci_name:
+  ci_address_city:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.ci_name
+      field: primary_source_table.columns.ci_address_city
+  ci_address_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ci_address_country
+  ci_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ci_address_postal_code
+  ci_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ci_address_state
   ci_address_street1:
     data_type: VARCHAR(128)
     source:
@@ -93,38 +85,26 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ci_address_street2
-  ci_address_city:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ci_address_city
-  ci_address_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ci_address_state
-  ci_address_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ci_address_postal_code
-  ci_address_country:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ci_address_country
-  ci_phone:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ci_phone
-  ci_credit_inquiry_result_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ci_credit_inquiry_result_type
   ci_credit_business_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ci_credit_business_type
+  ci_credit_inquiry_result_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ci_credit_inquiry_result_type
   ci_credit_loan_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ci_credit_loan_type
+  ci_credit_report_identifier:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ci_credit_report_identifier
+  ci_credit_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ci_credit_request_pid
   ci_equifax_included:
     data_type: BOOLEAN
     source:
@@ -133,30 +113,50 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.ci_experian_included
-  ci_trans_union_included:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ci_trans_union_included
-  ci_explanation_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ci_explanation_type
   ci_explanation_info:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.columns.ci_explanation_info
-  ci_credit_report_identifier:
-    data_type: VARCHAR(32)
+  ci_explanation_type:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.ci_credit_report_identifier
+      field: primary_source_table.columns.ci_explanation_type
+  ci_inquiry_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ci_inquiry_date
   ci_inquiry_date_provided:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.ci_inquiry_date_provided
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  ci_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ci_name
+  ci_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ci_phone
+  ci_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ci_pid
+  ci_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ci_proposal_pid
+  ci_trans_union_included:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ci_trans_union_included
+  ci_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ci_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

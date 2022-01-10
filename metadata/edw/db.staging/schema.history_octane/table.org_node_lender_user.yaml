@@ -29,40 +29,40 @@ foreign_keys:
       schema: history_octane
       table: org_node_lender_user_type
 columns:
-  onlu_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.onlu_pid
-  onlu_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.onlu_version
-  onlu_org_node_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.onlu_org_node_pid
-  onlu_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.onlu_lender_user_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   onlu_from_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.onlu_from_date
-  onlu_through_date:
-    data_type: DATE
+  onlu_lender_user_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.onlu_through_date
+      field: primary_source_table.columns.onlu_lender_user_pid
   onlu_org_node_lender_user_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.onlu_org_node_lender_user_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  onlu_org_node_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.onlu_org_node_pid
+  onlu_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.onlu_pid
+  onlu_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.onlu_through_date
+  onlu_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.onlu_version
 etls:
   SP-100368:
     input_type: table

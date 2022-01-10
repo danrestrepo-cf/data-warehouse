@@ -21,14 +21,6 @@ foreign_keys:
       schema: history_octane
       table: repository_file
 columns:
-  cf_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.cf_pid
-  cf_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.cf_version
   cf_account_pid:
     data_type: BIGINT
     source:
@@ -37,14 +29,22 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.cf_merge_form
+  cf_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cf_pid
   cf_repository_file_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.cf_repository_file_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  cf_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.cf_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

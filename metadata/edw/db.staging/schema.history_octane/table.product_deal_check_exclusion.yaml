@@ -21,28 +21,28 @@ foreign_keys:
       schema: history_octane
       table: deal_check_type
 columns:
-  pdce_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pdce_pid
-  pdce_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pdce_version
-  pdce_product_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pdce_product_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   pdce_deal_check_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.pdce_deal_check_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  pdce_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pdce_pid
+  pdce_product_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pdce_product_pid
+  pdce_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pdce_version
 etls:
   SP-100110:
     input_type: table

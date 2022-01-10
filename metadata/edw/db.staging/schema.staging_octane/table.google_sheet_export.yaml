@@ -27,25 +27,25 @@ foreign_keys:
       schema: staging_octane
       table: sheet_format_type
 columns:
-  gse_pid:
-    data_type: BIGINT
-  gse_version:
-    data_type: INTEGER
-  gse_name:
-    data_type: VARCHAR(128)
   gse_account_pid:
     data_type: BIGINT
-  gse_export_type:
-    data_type: VARCHAR(128)
-  gse_stored_query_name:
-    data_type: VARCHAR(128)
-  gse_spreadsheet_id:
-    data_type: VARCHAR(128)
   gse_control_sheet_id:
-    data_type: VARCHAR(128)
-  gse_results_sheet_id:
     data_type: VARCHAR(128)
   gse_cron_expression:
     data_type: VARCHAR(32)
+  gse_export_type:
+    data_type: VARCHAR(128)
   gse_format_type:
     data_type: VARCHAR(128)
+  gse_name:
+    data_type: VARCHAR(128)
+  gse_pid:
+    data_type: BIGINT
+  gse_results_sheet_id:
+    data_type: VARCHAR(128)
+  gse_spreadsheet_id:
+    data_type: VARCHAR(128)
+  gse_stored_query_name:
+    data_type: VARCHAR(128)
+  gse_version:
+    data_type: INTEGER

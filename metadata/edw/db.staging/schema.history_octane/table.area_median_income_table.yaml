@@ -13,14 +13,6 @@ foreign_keys:
       schema: history_octane
       table: account
 columns:
-  amit_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.amit_pid
-  amit_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.amit_version
   amit_account_pid:
     data_type: BIGINT
     source:
@@ -29,18 +21,26 @@ columns:
     data_type: DATE
     source:
       field: primary_source_table.columns.amit_from_date
-  amit_uploader_unparsed_name:
-    data_type: VARCHAR(128)
+  amit_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.amit_uploader_unparsed_name
+      field: primary_source_table.columns.amit_pid
   amit_upload_datetime:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.amit_upload_datetime
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  amit_uploader_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.amit_uploader_unparsed_name
+  amit_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.amit_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

@@ -13,18 +13,12 @@ foreign_keys:
       schema: history_octane
       table: product
 columns:
-  pmr_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pmr_pid
-  pmr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pmr_version
-  pmr_product_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pmr_product_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   pmr_from_date:
     data_type: DATE
     source:
@@ -33,12 +27,18 @@ columns:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.pmr_maximum_rebate_percent
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  pmr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pmr_pid
+  pmr_product_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pmr_product_pid
+  pmr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pmr_version
 etls:
   SP-100282:
     input_type: table

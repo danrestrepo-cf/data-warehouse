@@ -29,14 +29,12 @@ foreign_keys:
       schema: history_octane
       table: role
 columns:
-  lura_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lura_pid
-  lura_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lura_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   lura_lender_user_pid:
     data_type: BIGINT
     source:
@@ -45,16 +43,18 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lura_lender_user_role_pid
+  lura_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lura_pid
   lura_role_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lura_role_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  lura_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lura_version
 etls:
   SP-100100:
     input_type: table

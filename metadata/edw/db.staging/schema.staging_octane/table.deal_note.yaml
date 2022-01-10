@@ -59,29 +59,29 @@ foreign_keys:
       schema: staging_octane
       table: deal_note_scope_type
 columns:
-  dn_pid:
-    data_type: BIGINT
-  dn_version:
-    data_type: INTEGER
-  dn_deal_pid:
-    data_type: BIGINT
-  dn_create_datetime:
-    data_type: TIMESTAMP
-  dn_content:
-    data_type: VARCHAR(16000)
-  dn_author_unparsed_name:
-    data_type: VARCHAR(128)
   dn_author_lender_user_pid:
     data_type: BIGINT
-  dn_scope_type:
+  dn_author_unparsed_name:
     data_type: VARCHAR(128)
-  dn_scope_name:
-    data_type: VARCHAR(1024)
-  dn_wf_deal_step_pid:
+  dn_category_type:
+    data_type: VARCHAR(128)
+  dn_content:
+    data_type: VARCHAR(16000)
+  dn_create_datetime:
+    data_type: TIMESTAMP
+  dn_deal_pid:
+    data_type: BIGINT
+  dn_pid:
     data_type: BIGINT
   dn_proposal_doc_pid:
     data_type: BIGINT
   dn_proposal_review_pid:
     data_type: BIGINT
-  dn_category_type:
+  dn_scope_name:
+    data_type: VARCHAR(1024)
+  dn_scope_type:
     data_type: VARCHAR(128)
+  dn_version:
+    data_type: INTEGER
+  dn_wf_deal_step_pid:
+    data_type: BIGINT

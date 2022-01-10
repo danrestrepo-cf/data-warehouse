@@ -93,94 +93,16 @@ foreign_keys:
       schema: history_octane
       table: mers_transfer_status_type
 columns:
-  lb_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lb_pid
-  lb_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lb_version
-  lb_loan_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lb_loan_pid
-  lb_investor_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lb_investor_pid
-  lb_investor_loan_id:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.lb_investor_loan_id
-  lb_from_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.lb_from_date
-  lb_through_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.lb_through_date
-  lb_current:
+  data_source_deleted_flag:
     data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.lb_current
-  lb_initial:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.lb_initial
-  lb_loan_benef_transfer_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lb_loan_benef_transfer_status_type
-  lb_loan_file_ship_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.lb_loan_file_ship_date
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   lb_approved_with_conditions_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.lb_approved_with_conditions_date
-  lb_rejected_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.lb_rejected_date
-  lb_pending_wire_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.lb_pending_wire_date
-  lb_purchase_advice_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.lb_purchase_advice_amount
-  lb_mers_mom:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.lb_mers_mom
-  lb_mers_transfer_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lb_mers_transfer_status_type
-  lb_mers_transfer_creation_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.lb_mers_transfer_creation_date
-  lb_mers_transfer_override:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.lb_mers_transfer_override
-  lb_mers_transfer_batch_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lb_mers_transfer_batch_pid
-  lb_loan_file_courier_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lb_loan_file_courier_type
-  lb_loan_file_tracking_number:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.lb_loan_file_tracking_number
   lb_collateral_courier_type:
     data_type: VARCHAR(128)
     source:
@@ -189,18 +111,14 @@ columns:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.lb_collateral_tracking_number
-  lb_loan_file_delivery_method_type:
+  lb_current:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lb_current
+  lb_delivery_aus_type:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.lb_loan_file_delivery_method_type
-  lb_pool_id:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.lb_pool_id
-  lb_mbs_final_purchaser_investor_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lb_mbs_final_purchaser_investor_pid
+      field: primary_source_table.columns.lb_delivery_aus_type
   lb_early_funding:
     data_type: VARCHAR(128)
     source:
@@ -209,10 +127,90 @@ columns:
     data_type: DATE
     source:
       field: primary_source_table.columns.lb_early_funding_date
-  lb_delivery_aus_type:
+  lb_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lb_from_date
+  lb_initial:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lb_initial
+  lb_investor_loan_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lb_investor_loan_id
+  lb_investor_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lb_investor_pid
+  lb_loan_benef_transfer_status_type:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.lb_delivery_aus_type
+      field: primary_source_table.columns.lb_loan_benef_transfer_status_type
+  lb_loan_file_courier_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lb_loan_file_courier_type
+  lb_loan_file_delivery_method_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lb_loan_file_delivery_method_type
+  lb_loan_file_ship_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lb_loan_file_ship_date
+  lb_loan_file_tracking_number:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lb_loan_file_tracking_number
+  lb_loan_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lb_loan_pid
+  lb_mbs_final_purchaser_investor_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lb_mbs_final_purchaser_investor_pid
+  lb_mers_mom:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lb_mers_mom
+  lb_mers_transfer_batch_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lb_mers_transfer_batch_pid
+  lb_mers_transfer_creation_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lb_mers_transfer_creation_date
+  lb_mers_transfer_override:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lb_mers_transfer_override
+  lb_mers_transfer_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lb_mers_transfer_status_type
+  lb_pending_wire_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lb_pending_wire_date
+  lb_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lb_pid
+  lb_pool_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lb_pool_id
+  lb_purchase_advice_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lb_purchase_advice_amount
+  lb_rejected_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lb_rejected_date
   lb_synthetic_unique_current:
     data_type: BOOLEAN
     source:
@@ -221,12 +219,14 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.lb_synthetic_unique_initial
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  lb_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lb_through_date
+  lb_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lb_version
 etls:
   SP-100144:
     input_type: table

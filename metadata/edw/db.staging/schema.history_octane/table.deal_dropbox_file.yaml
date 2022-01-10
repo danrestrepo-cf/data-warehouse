@@ -13,6 +13,14 @@ foreign_keys:
       schema: history_octane
       table: deal_file
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  ddf_deal_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ddf_deal_file_pid
   ddf_pid:
     data_type: BIGINT
     source:
@@ -21,14 +29,6 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.ddf_version
-  ddf_deal_file_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ddf_deal_file_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
   etl_batch_id:
     data_type: TEXT
 etls:

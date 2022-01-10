@@ -21,54 +21,16 @@ foreign_keys:
       schema: history_octane
       table: mers_registration_status_type
 columns:
-  lr_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lr_pid
-  lr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lr_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   lr_loan_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lr_loan_pid
-  lr_recording_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.lr_recording_date
-  lr_recording_instrument_number:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.lr_recording_instrument_number
-  lr_recording_book_number:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.lr_recording_book_number
-  lr_recording_volume_number:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.lr_recording_volume_number
-  lr_recording_page_number:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.lr_recording_page_number
-  lr_recording_jurisdiction_name:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.lr_recording_jurisdiction_name
-  lr_recording_witness_unparsed_name:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.lr_recording_witness_unparsed_name
-  lr_re_recording:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.lr_re_recording
-  lr_mers_registration_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lr_mers_registration_status_type
   lr_mers_registration_date:
     data_type: DATE
     source:
@@ -77,6 +39,10 @@ columns:
     data_type: TEXT
     source:
       field: primary_source_table.columns.lr_mers_registration_errors
+  lr_mers_registration_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lr_mers_registration_status_type
   lr_mers_registration_warnings:
     data_type: TEXT
     source:
@@ -89,12 +55,46 @@ columns:
     data_type: TEXT
     source:
       field: primary_source_table.columns.lr_mers_transfer_warnings
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
+  lr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lr_pid
+  lr_re_recording:
     data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+    source:
+      field: primary_source_table.columns.lr_re_recording
+  lr_recording_book_number:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.lr_recording_book_number
+  lr_recording_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lr_recording_date
+  lr_recording_instrument_number:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.lr_recording_instrument_number
+  lr_recording_jurisdiction_name:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.lr_recording_jurisdiction_name
+  lr_recording_page_number:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.lr_recording_page_number
+  lr_recording_volume_number:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.lr_recording_volume_number
+  lr_recording_witness_unparsed_name:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.lr_recording_witness_unparsed_name
+  lr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lr_version
 etls:
   SP-100149:
     input_type: table

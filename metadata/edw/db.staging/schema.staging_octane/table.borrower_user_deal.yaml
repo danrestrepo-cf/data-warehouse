@@ -35,25 +35,25 @@ foreign_keys:
       schema: staging_octane
       table: borrower_user_deal_access_type
 columns:
-  bud_pid:
-    data_type: BIGINT
-  bud_version:
-    data_type: INTEGER
-  bud_borrower_user_pid:
-    data_type: BIGINT
-  bud_deal_pid:
-    data_type: BIGINT
   bud_borrower_pid:
     data_type: BIGINT
   bud_borrower_user_deal_access_type:
     data_type: VARCHAR(128)
+  bud_borrower_user_pid:
+    data_type: BIGINT
+  bud_create_datetime:
+    data_type: TIMESTAMP
+  bud_deal_pid:
+    data_type: BIGINT
   bud_electronic_transaction_consent:
     data_type: BOOLEAN
   bud_electronic_transaction_consent_datetime:
     data_type: TIMESTAMP
   bud_electronic_transaction_consent_ip_address:
     data_type: VARCHAR(32)
-  bud_create_datetime:
-    data_type: TIMESTAMP
+  bud_pid:
+    data_type: BIGINT
   bud_uuid:
     data_type: VARCHAR(36)
+  bud_version:
+    data_type: INTEGER

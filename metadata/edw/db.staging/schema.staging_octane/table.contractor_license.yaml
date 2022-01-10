@@ -19,19 +19,19 @@ foreign_keys:
       schema: staging_octane
       table: state_type
 columns:
-  ctrl_pid:
-    data_type: BIGINT
-  ctrl_version:
-    data_type: INTEGER
   ctrl_contractor_pid:
+    data_type: BIGINT
+  ctrl_from_date:
+    data_type: DATE
+  ctrl_license_number:
+    data_type: VARCHAR(128)
+  ctrl_note:
+    data_type: VARCHAR(256)
+  ctrl_pid:
     data_type: BIGINT
   ctrl_state_type:
     data_type: VARCHAR(128)
-  ctrl_license_number:
-    data_type: VARCHAR(128)
-  ctrl_from_date:
-    data_type: DATE
   ctrl_through_date:
     data_type: DATE
-  ctrl_note:
-    data_type: VARCHAR(256)
+  ctrl_version:
+    data_type: INTEGER

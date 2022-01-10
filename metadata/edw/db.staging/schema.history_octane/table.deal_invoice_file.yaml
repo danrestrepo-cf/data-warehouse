@@ -29,6 +29,26 @@ foreign_keys:
       schema: history_octane
       table: deal_invoice_file_type
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  dif_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.dif_create_datetime
+  dif_deal_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dif_deal_file_pid
+  dif_deal_invoice_file_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dif_deal_invoice_file_type
+  dif_deal_invoice_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dif_deal_invoice_pid
   dif_pid:
     data_type: BIGINT
     source:
@@ -37,26 +57,6 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.dif_version
-  dif_deal_invoice_file_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dif_deal_invoice_file_type
-  dif_deal_file_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dif_deal_file_pid
-  dif_deal_invoice_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dif_deal_invoice_pid
-  dif_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.dif_create_datetime
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
   etl_batch_id:
     data_type: TEXT
 etls:

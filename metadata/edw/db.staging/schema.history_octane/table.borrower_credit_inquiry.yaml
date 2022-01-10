@@ -21,6 +21,14 @@ foreign_keys:
       schema: history_octane
       table: borrower
 columns:
+  bci_borrower_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bci_borrower_pid
+  bci_credit_inquiry_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bci_credit_inquiry_pid
   bci_pid:
     data_type: BIGINT
     source:
@@ -29,18 +37,10 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.bci_version
-  bci_credit_inquiry_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bci_credit_inquiry_pid
-  bci_borrower_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bci_borrower_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

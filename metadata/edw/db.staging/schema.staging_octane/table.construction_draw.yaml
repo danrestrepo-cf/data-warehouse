@@ -27,37 +27,37 @@ foreign_keys:
       schema: staging_octane
       table: construction_draw_type
 columns:
-  cd_pid:
-    data_type: BIGINT
-  cd_version:
+  cd_boarded_datetime:
+    data_type: TIMESTAMP
+  cd_borrower_contribution_amount:
+    data_type: NUMERIC(15,2)
+  cd_confirmation_datetime:
+    data_type: TIMESTAMP
+  cd_construction_draw_disbursed_at_closing:
+    data_type: BOOLEAN
+  cd_construction_draw_notes:
+    data_type: VARCHAR(1024)
+  cd_construction_draw_number:
     data_type: INTEGER
-  cd_proposal_pid:
-    data_type: BIGINT
-  cd_construction_draw_type:
-    data_type: VARCHAR(128)
   cd_construction_draw_status_type:
     data_type: VARCHAR(128)
-  cd_scheduled_disbursement_date:
-    data_type: DATE
-  cd_confirmation_datetime:
+  cd_construction_draw_type:
+    data_type: VARCHAR(128)
+  cd_disbursement_datetime:
     data_type: TIMESTAMP
   cd_inspection_datetime:
     data_type: TIMESTAMP
-  cd_disbursement_datetime:
-    data_type: TIMESTAMP
-  cd_boarded_datetime:
-    data_type: TIMESTAMP
-  cd_voided_datetime:
-    data_type: TIMESTAMP
-  cd_construction_draw_notes:
-    data_type: VARCHAR(1024)
-  cd_total_draw_amount:
-    data_type: NUMERIC(15,2)
-  cd_borrower_contribution_amount:
-    data_type: NUMERIC(15,2)
   cd_lender_contribution_amount:
     data_type: NUMERIC(15,2)
-  cd_construction_draw_number:
+  cd_pid:
+    data_type: BIGINT
+  cd_proposal_pid:
+    data_type: BIGINT
+  cd_scheduled_disbursement_date:
+    data_type: DATE
+  cd_total_draw_amount:
+    data_type: NUMERIC(15,2)
+  cd_version:
     data_type: INTEGER
-  cd_construction_draw_disbursed_at_closing:
-    data_type: BOOLEAN
+  cd_voided_datetime:
+    data_type: TIMESTAMP

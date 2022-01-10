@@ -19,13 +19,13 @@ foreign_keys:
       schema: staging_octane
       table: smart_doc_set
 columns:
+  pdstk_next_proposal_doc_set_id:
+    data_type: INTEGER
   pdstk_pid:
     data_type: BIGINT
-  pdstk_version:
-    data_type: INTEGER
   pdstk_proposal_pid:
     data_type: BIGINT
   pdstk_smart_doc_set_pid:
     data_type: BIGINT
-  pdstk_next_proposal_doc_set_id:
+  pdstk_version:
     data_type: INTEGER

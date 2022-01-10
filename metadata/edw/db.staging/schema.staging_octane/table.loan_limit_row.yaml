@@ -35,23 +35,23 @@ foreign_keys:
       schema: staging_octane
       table: county
 columns:
-  llr_pid:
+  llr_county_pid:
     data_type: BIGINT
-  llr_version:
-    data_type: INTEGER
+  llr_four_unit_limit_amount:
+    data_type: NUMERIC(15,2)
   llr_loan_limit_table_pid:
     data_type: BIGINT
   llr_loan_limit_type:
     data_type: VARCHAR(128)
+  llr_one_unit_limit_amount:
+    data_type: NUMERIC(15,2)
+  llr_pid:
+    data_type: BIGINT
   llr_state_type:
     data_type: VARCHAR(128)
-  llr_county_pid:
-    data_type: BIGINT
-  llr_one_unit_limit_amount:
+  llr_three_unit_limit_amount:
     data_type: NUMERIC(15,2)
   llr_two_unit_limit_amount:
     data_type: NUMERIC(15,2)
-  llr_three_unit_limit_amount:
-    data_type: NUMERIC(15,2)
-  llr_four_unit_limit_amount:
-    data_type: NUMERIC(15,2)
+  llr_version:
+    data_type: INTEGER

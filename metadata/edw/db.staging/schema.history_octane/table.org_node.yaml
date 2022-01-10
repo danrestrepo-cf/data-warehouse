@@ -37,6 +37,52 @@ foreign_keys:
       schema: history_octane
       table: org_node_type
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  on_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.on_account_pid
+  on_amb_codes:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.on_amb_codes
+  on_description:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.on_description
+  on_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.on_lender_user_pid
+  on_org_node_active:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.on_org_node_active
+  on_org_node_id:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.on_org_node_id
+  on_org_node_name_latest:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.on_org_node_name_latest
+  on_org_node_short_id:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.on_org_node_short_id
+  on_org_node_tree_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.on_org_node_tree_pid
+  on_org_node_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.on_org_node_type
   on_pid:
     data_type: BIGINT
     source:
@@ -45,52 +91,6 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.on_version
-  on_account_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.on_account_pid
-  on_org_node_tree_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.on_org_node_tree_pid
-  on_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.on_lender_user_pid
-  on_org_node_id:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.on_org_node_id
-  on_org_node_short_id:
-    data_type: VARCHAR(8)
-    source:
-      field: primary_source_table.columns.on_org_node_short_id
-  on_org_node_name_latest:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.on_org_node_name_latest
-  on_org_node_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.on_org_node_type
-  on_description:
-    data_type: VARCHAR(16000)
-    source:
-      field: primary_source_table.columns.on_description
-  on_org_node_active:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.on_org_node_active
-  on_amb_codes:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.on_amb_codes
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
 etls:
   SP-100367:
     input_type: table

@@ -45,42 +45,10 @@ foreign_keys:
       schema: history_octane
       table: credit_bureau_type
 columns:
-  durc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.durc_pid
-  durc_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.durc_version
-  durc_du_request_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.durc_du_request_pid
-  durc_du_casefile_id:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.durc_du_casefile_id
-  durc_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.durc_create_datetime
-  durc_credit_report_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.durc_credit_report_create_datetime
-  durc_credit_bureau_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.durc_credit_bureau_type
-  durc_credit_report_identifier:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.durc_credit_report_identifier
-  durc_credit_report_name:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.durc_credit_report_name
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   durc_aus_credit_service_type:
     data_type: VARCHAR(128)
     source:
@@ -93,10 +61,42 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.durc_borrower_2_borrower_tiny_id_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+  durc_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.durc_create_datetime
+  durc_credit_bureau_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.durc_credit_bureau_type
+  durc_credit_report_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.durc_credit_report_create_datetime
+  durc_credit_report_identifier:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.durc_credit_report_identifier
+  durc_credit_report_name:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.durc_credit_report_name
+  durc_du_casefile_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.durc_du_casefile_id
+  durc_du_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.durc_du_request_pid
+  durc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.durc_pid
+  durc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.durc_version
   etl_batch_id:
     data_type: TEXT
 etls:

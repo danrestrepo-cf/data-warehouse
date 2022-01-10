@@ -29,58 +29,10 @@ foreign_keys:
       schema: history_octane
       table: report_request_status_type
 columns:
-  carr_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.carr_pid
-  carr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.carr_version
   carr_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.carr_account_pid
-  carr_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.carr_create_datetime
-  carr_start_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.carr_start_datetime
-  carr_end_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.carr_end_datetime
-  carr_request_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.carr_request_status_type
-  carr_request_status_messages:
-    data_type: TEXT
-    source:
-      field: primary_source_table.columns.carr_request_status_messages
-  carr_requester_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.carr_requester_unparsed_name
-  carr_exported_deal_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.carr_exported_deal_count
-  carr_total_deal_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.carr_total_deal_count
-  carr_sold_from_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.carr_sold_from_date
-  carr_sold_through_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.carr_sold_through_date
   carr_cancelled_from_date:
     data_type: DATE
     source:
@@ -89,22 +41,70 @@ columns:
     data_type: DATE
     source:
       field: primary_source_table.columns.carr_cancelled_through_date
-  carr_export_csv_repository_file_pid:
-    data_type: BIGINT
+  carr_create_datetime:
+    data_type: TIMESTAMP
     source:
-      field: primary_source_table.columns.carr_export_csv_repository_file_pid
+      field: primary_source_table.columns.carr_create_datetime
+  carr_end_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.carr_end_datetime
   carr_error_file_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.carr_error_file_pid
+  carr_export_csv_repository_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.carr_export_csv_repository_file_pid
+  carr_exported_deal_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.carr_exported_deal_count
+  carr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.carr_pid
+  carr_request_status_messages:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.carr_request_status_messages
+  carr_request_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.carr_request_status_type
+  carr_requester_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.carr_requester_unparsed_name
+  carr_sold_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.carr_sold_from_date
+  carr_sold_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.carr_sold_through_date
+  carr_start_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.carr_start_datetime
+  carr_total_deal_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.carr_total_deal_count
   carr_use_loan_hedge_data:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.carr_use_loan_hedge_data
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  carr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.carr_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

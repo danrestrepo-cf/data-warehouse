@@ -19,11 +19,11 @@ foreign_keys:
       schema: staging_octane
       table: field_type
 columns:
-  cfmf_pid:
-    data_type: BIGINT
-  cfmf_version:
-    data_type: INTEGER
   cfmf_custom_form_pid:
     data_type: BIGINT
   cfmf_field_type:
     data_type: VARCHAR(128)
+  cfmf_pid:
+    data_type: BIGINT
+  cfmf_version:
+    data_type: INTEGER

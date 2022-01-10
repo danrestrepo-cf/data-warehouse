@@ -21,32 +21,32 @@ foreign_keys:
       schema: history_octane
       table: interest_only_type
 columns:
-  pio_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pio_pid
-  pio_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pio_version
-  pio_product_terms_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pio_product_terms_pid
-  pio_interest_only_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pio_interest_only_type
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   pio_balloon_payment:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.pio_balloon_payment
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  pio_interest_only_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pio_interest_only_type
+  pio_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pio_pid
+  pio_product_terms_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pio_product_terms_pid
+  pio_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pio_version
 etls:
   SP-100294:
     input_type: table

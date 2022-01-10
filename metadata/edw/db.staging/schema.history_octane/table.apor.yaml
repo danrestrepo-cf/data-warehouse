@@ -13,14 +13,10 @@ foreign_keys:
       schema: history_octane
       table: loan_amortization_type
 columns:
-  ap_pid:
-    data_type: BIGINT
+  ap_apor_percent:
+    data_type: NUMERIC(11,9)
     source:
-      field: primary_source_table.columns.ap_pid
-  ap_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ap_version
+      field: primary_source_table.columns.ap_apor_percent
   ap_as_of_date:
     data_type: DATE
     source:
@@ -29,18 +25,22 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ap_loan_amortization_type
+  ap_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ap_pid
   ap_term_years:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.ap_term_years
-  ap_apor_percent:
-    data_type: NUMERIC(11,9)
+  ap_version:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.ap_apor_percent
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+      field: primary_source_table.columns.ap_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

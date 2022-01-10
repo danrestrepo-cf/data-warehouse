@@ -21,42 +21,42 @@ foreign_keys:
       schema: history_octane
       table: state_type
 columns:
-  ctrl_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ctrl_pid
-  ctrl_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ctrl_version
   ctrl_contractor_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.ctrl_contractor_pid
-  ctrl_state_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ctrl_state_type
-  ctrl_license_number:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ctrl_license_number
   ctrl_from_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.ctrl_from_date
-  ctrl_through_date:
-    data_type: DATE
+  ctrl_license_number:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.ctrl_through_date
+      field: primary_source_table.columns.ctrl_license_number
   ctrl_note:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.ctrl_note
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  ctrl_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ctrl_pid
+  ctrl_state_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ctrl_state_type
+  ctrl_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ctrl_through_date
+  ctrl_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ctrl_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

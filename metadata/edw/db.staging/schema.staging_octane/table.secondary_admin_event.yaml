@@ -19,23 +19,23 @@ foreign_keys:
       schema: staging_octane
       table: secondary_admin_event_entity_type
 columns:
-  sae_pid:
-    data_type: BIGINT
-  sae_version:
-    data_type: INTEGER
   sae_account_pid:
     data_type: BIGINT
-  sae_secondary_admin_event_entity_type:
-    data_type: VARCHAR(128)
-  sae_message:
-    data_type: VARCHAR(256)
   sae_diff_list:
     data_type: TEXT
-  sae_unparsed_name:
-    data_type: VARCHAR(128)
   sae_event_date:
     data_type: DATE
   sae_event_datetime:
     data_type: TIMESTAMP
+  sae_message:
+    data_type: VARCHAR(256)
+  sae_pid:
+    data_type: BIGINT
+  sae_secondary_admin_event_entity_type:
+    data_type: VARCHAR(128)
   sae_target_entity_pid:
     data_type: BIGINT
+  sae_unparsed_name:
+    data_type: VARCHAR(128)
+  sae_version:
+    data_type: INTEGER

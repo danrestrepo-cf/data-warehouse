@@ -61,46 +61,38 @@ foreign_keys:
       schema: history_octane
       table: deal_note_scope_type
 columns:
-  dn_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dn_pid
-  dn_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dn_version
-  dn_deal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dn_deal_pid
-  dn_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.dn_create_datetime
-  dn_content:
-    data_type: VARCHAR(16000)
-    source:
-      field: primary_source_table.columns.dn_content
-  dn_author_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dn_author_unparsed_name
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   dn_author_lender_user_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dn_author_lender_user_pid
-  dn_scope_type:
+  dn_author_unparsed_name:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.dn_scope_type
-  dn_scope_name:
-    data_type: VARCHAR(1024)
+      field: primary_source_table.columns.dn_author_unparsed_name
+  dn_category_type:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.dn_scope_name
-  dn_wf_deal_step_pid:
+      field: primary_source_table.columns.dn_category_type
+  dn_content:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.dn_content
+  dn_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.dn_create_datetime
+  dn_deal_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.dn_wf_deal_step_pid
+      field: primary_source_table.columns.dn_deal_pid
+  dn_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dn_pid
   dn_proposal_doc_pid:
     data_type: BIGINT
     source:
@@ -109,14 +101,22 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dn_proposal_review_pid
-  dn_category_type:
+  dn_scope_name:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.dn_scope_name
+  dn_scope_type:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.dn_category_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+      field: primary_source_table.columns.dn_scope_type
+  dn_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dn_version
+  dn_wf_deal_step_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dn_wf_deal_step_pid
   etl_batch_id:
     data_type: TEXT
 etls:

@@ -45,46 +45,46 @@ foreign_keys:
       schema: history_octane
       table: loan_access_type
 columns:
-  dlu_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dlu_pid
-  dlu_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dlu_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   dlu_deal_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dlu_deal_pid
-  dlu_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dlu_lender_user_pid
-  dlu_role_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dlu_role_pid
-  dlu_loan_access_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dlu_loan_access_type
-  dlu_legacy_role_assignment_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dlu_legacy_role_assignment_type
   dlu_legacy_role_assignment_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.dlu_legacy_role_assignment_date
+  dlu_legacy_role_assignment_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dlu_legacy_role_assignment_type
+  dlu_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dlu_lender_user_pid
+  dlu_loan_access_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dlu_loan_access_type
+  dlu_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dlu_pid
+  dlu_role_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dlu_role_pid
   dlu_synthetic_unique:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.dlu_synthetic_unique
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+  dlu_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dlu_version
   etl_batch_id:
     data_type: TEXT
 etls:

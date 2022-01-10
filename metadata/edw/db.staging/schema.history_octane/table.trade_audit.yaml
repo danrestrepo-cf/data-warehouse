@@ -29,36 +29,36 @@ foreign_keys:
       schema: history_octane
       table: trade_audit_type
 columns:
-  ta_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ta_pid
-  ta_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ta_version
-  ta_trade_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ta_trade_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   ta_lender_lock_major_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.ta_lender_lock_major_pid
-  ta_trade_audit_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ta_trade_audit_type
   ta_message:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.ta_message
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  ta_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ta_pid
+  ta_trade_audit_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ta_trade_audit_type
+  ta_trade_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ta_trade_pid
+  ta_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ta_version
 etls:
   SP-100186:
     input_type: table

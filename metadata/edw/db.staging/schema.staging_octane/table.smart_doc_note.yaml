@@ -19,17 +19,17 @@ foreign_keys:
       schema: staging_octane
       table: lender_user
 columns:
-  sdn_pid:
-    data_type: BIGINT
-  sdn_version:
-    data_type: INTEGER
-  sdn_smart_doc_pid:
-    data_type: BIGINT
-  sdn_create_datetime:
-    data_type: TIMESTAMP
-  sdn_content:
-    data_type: VARCHAR(16000)
   sdn_author_lender_user_pid:
     data_type: BIGINT
   sdn_author_unparsed_name:
     data_type: VARCHAR(128)
+  sdn_content:
+    data_type: VARCHAR(16000)
+  sdn_create_datetime:
+    data_type: TIMESTAMP
+  sdn_pid:
+    data_type: BIGINT
+  sdn_smart_doc_pid:
+    data_type: BIGINT
+  sdn_version:
+    data_type: INTEGER

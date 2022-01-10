@@ -27,19 +27,19 @@ foreign_keys:
       schema: staging_octane
       table: lender_user_notice_type
 columns:
-  lun_pid:
-    data_type: BIGINT
-  lun_version:
-    data_type: INTEGER
-  lun_lender_user_pid:
-    data_type: BIGINT
-  lun_deal_pid:
-    data_type: BIGINT
   lun_create_datetime:
     data_type: TIMESTAMP
-  lun_lender_user_notice_type:
-    data_type: VARCHAR(128)
+  lun_deal_pid:
+    data_type: BIGINT
   lun_detail:
     data_type: VARCHAR(16000)
+  lun_lender_user_notice_type:
+    data_type: VARCHAR(128)
+  lun_lender_user_pid:
+    data_type: BIGINT
+  lun_pid:
+    data_type: BIGINT
   lun_source_unparsed_name:
     data_type: VARCHAR(128)
+  lun_version:
+    data_type: INTEGER

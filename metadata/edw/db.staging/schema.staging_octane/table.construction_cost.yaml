@@ -99,63 +99,63 @@ foreign_keys:
       schema: staging_octane
       table: construction_cost_status_type
 columns:
-  coc_pid:
+  coc_borrower_pid:
     data_type: BIGINT
-  coc_version:
+  coc_calculated_construction_cost_months:
     data_type: INTEGER
-  coc_proposal_pid:
-    data_type: BIGINT
+  coc_calculated_construction_cost_percent:
+    data_type: NUMERIC(11,9)
+  coc_category_type_label:
+    data_type: VARCHAR(256)
+  coc_charge_type:
+    data_type: VARCHAR(128)
+  coc_construction_cost_amount:
+    data_type: NUMERIC(15,2)
+  coc_construction_cost_calculation_percent_override_reason:
+    data_type: VARCHAR(1024)
+  coc_construction_cost_calculation_type:
+    data_type: VARCHAR(128)
   coc_construction_cost_category_type:
     data_type: VARCHAR(128)
   coc_construction_cost_funding_type:
     data_type: VARCHAR(128)
-  coc_construction_cost_status_type:
-    data_type: VARCHAR(128)
+  coc_construction_cost_months_override_reason:
+    data_type: VARCHAR(1024)
+  coc_construction_cost_notes:
+    data_type: VARCHAR(1024)
   coc_construction_cost_payee_type:
+    data_type: VARCHAR(128)
+  coc_construction_cost_status_type:
     data_type: VARCHAR(128)
   coc_create_datetime:
     data_type: TIMESTAMP
-  coc_construction_cost_amount:
-    data_type: NUMERIC(15,2)
-  coc_construction_cost_notes:
-    data_type: VARCHAR(1024)
-  coc_proposal_contractor_pid:
-    data_type: BIGINT
-  coc_effective_construction_cost_calculation_percent:
-    data_type: NUMERIC(11,9)
-  coc_construction_cost_calculation_type:
-    data_type: VARCHAR(128)
-  coc_permit_pid:
-    data_type: BIGINT
-  coc_category_type_label:
-    data_type: VARCHAR(256)
-  coc_calculated_construction_cost_percent:
-    data_type: NUMERIC(11,9)
-  coc_overridden_construction_cost_percent:
-    data_type: NUMERIC(11,9)
-  coc_construction_cost_calculation_percent_override_reason:
-    data_type: VARCHAR(1024)
-  coc_calculated_construction_cost_months:
-    data_type: INTEGER
-  coc_overridden_construction_cost_months:
-    data_type: INTEGER
-  coc_effective_construction_cost_months:
-    data_type: INTEGER
-  coc_construction_cost_months_override_reason:
-    data_type: VARCHAR(1024)
-  coc_charge_type:
-    data_type: VARCHAR(128)
   coc_draw_discrepancy_text:
     data_type: VARCHAR(1024)
+  coc_effective_construction_cost_calculation_percent:
+    data_type: NUMERIC(11,9)
+  coc_effective_construction_cost_months:
+    data_type: INTEGER
   coc_impeding_draw_discrepancy:
     data_type: BOOLEAN
-  coc_borrower_pid:
+  coc_overridden_construction_cost_months:
+    data_type: INTEGER
+  coc_overridden_construction_cost_percent:
+    data_type: NUMERIC(11,9)
+  coc_payee_other_description:
+    data_type: VARCHAR(128)
+  coc_payee_other_selected:
+    data_type: BOOLEAN
+  coc_permit_pid:
+    data_type: BIGINT
+  coc_pid:
+    data_type: BIGINT
+  coc_proposal_contractor_pid:
     data_type: BIGINT
   coc_proposal_hud_consultant_pid:
     data_type: BIGINT
+  coc_proposal_pid:
+    data_type: BIGINT
   coc_title_company_pid:
     data_type: BIGINT
-  coc_payee_other_selected:
-    data_type: BOOLEAN
-  coc_payee_other_description:
-    data_type: VARCHAR(128)
+  coc_version:
+    data_type: INTEGER

@@ -43,35 +43,35 @@ foreign_keys:
       schema: staging_octane
       table: agent_type
 columns:
-  rf_pid:
-    data_type: BIGINT
-  rf_version:
-    data_type: INTEGER
   rf_account_pid:
     data_type: BIGINT
-  rf_repository_type:
-    data_type: VARCHAR(128)
   rf_client_filename:
     data_type: VARCHAR(128)
-  rf_repository_filename:
-    data_type: VARCHAR(128)
-  rf_upload_datetime:
+  rf_delete_datetime:
     data_type: TIMESTAMP
-  rf_uploader_name:
-    data_type: VARCHAR(128)
-  rf_uploader_agent_type:
-    data_type: VARCHAR(128)
-  rf_uploader_lender_user_pid:
-    data_type: BIGINT
-  rf_uploader_borrower_user_pid:
-    data_type: BIGINT
   rf_description:
     data_type: VARCHAR(256)
+  rf_file_checksum:
+    data_type: VARCHAR(128)
   rf_file_size:
     data_type: BIGINT
   rf_mime_type:
     data_type: VARCHAR(128)
-  rf_delete_datetime:
-    data_type: TIMESTAMP
-  rf_file_checksum:
+  rf_pid:
+    data_type: BIGINT
+  rf_repository_filename:
     data_type: VARCHAR(128)
+  rf_repository_type:
+    data_type: VARCHAR(128)
+  rf_upload_datetime:
+    data_type: TIMESTAMP
+  rf_uploader_agent_type:
+    data_type: VARCHAR(128)
+  rf_uploader_borrower_user_pid:
+    data_type: BIGINT
+  rf_uploader_lender_user_pid:
+    data_type: BIGINT
+  rf_uploader_name:
+    data_type: VARCHAR(128)
+  rf_version:
+    data_type: INTEGER

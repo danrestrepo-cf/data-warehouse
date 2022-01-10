@@ -29,10 +29,36 @@ foreign_keys:
       schema: history_octane
       table: wf_outcome_type
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  wdo_borrower_message:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.wdo_borrower_message
+  wdo_incomplete_outcome:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.wdo_incomplete_outcome
+  wdo_lender_description:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.wdo_lender_description
+  wdo_outcome_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.wdo_outcome_name
   wdo_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.wdo_pid
+  wdo_transition_wf_deal_step_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wdo_transition_wf_deal_step_pid
   wdo_version:
     data_type: INTEGER
     source:
@@ -45,32 +71,6 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.wdo_wf_outcome_type
-  wdo_outcome_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.wdo_outcome_name
-  wdo_borrower_message:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.wdo_borrower_message
-  wdo_lender_description:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.wdo_lender_description
-  wdo_incomplete_outcome:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.wdo_incomplete_outcome
-  wdo_transition_wf_deal_step_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.wdo_transition_wf_deal_step_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
 etls:
   SP-100197:
     input_type: table

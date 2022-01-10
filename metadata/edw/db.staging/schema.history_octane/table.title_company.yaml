@@ -13,40 +13,40 @@ foreign_keys:
       schema: history_octane
       table: account
 columns:
-  tc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.tc_pid
-  tc_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.tc_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   tc_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.tc_account_pid
-  tc_company_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.tc_company_name
-  tc_admin_lock:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.tc_admin_lock
   tc_active:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.tc_active
+  tc_admin_lock:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.tc_admin_lock
+  tc_company_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.tc_company_name
+  tc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.tc_pid
   tc_preferred_vendor:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.tc_preferred_vendor
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  tc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.tc_version
 etls:
   SP-100066:
     input_type: table

@@ -19,17 +19,17 @@ foreign_keys:
       schema: staging_octane
       table: lender_user
 columns:
-  bpnc_pid:
-    data_type: BIGINT
-  bpnc_version:
-    data_type: INTEGER
-  bpnc_bid_pool_note_pid:
-    data_type: BIGINT
-  bpnc_create_datetime:
-    data_type: TIMESTAMP
-  bpnc_content:
-    data_type: VARCHAR(16000)
   bpnc_author_lender_user_pid:
     data_type: BIGINT
   bpnc_author_unparsed_name:
     data_type: VARCHAR(128)
+  bpnc_bid_pool_note_pid:
+    data_type: BIGINT
+  bpnc_content:
+    data_type: VARCHAR(16000)
+  bpnc_create_datetime:
+    data_type: TIMESTAMP
+  bpnc_pid:
+    data_type: BIGINT
+  bpnc_version:
+    data_type: INTEGER

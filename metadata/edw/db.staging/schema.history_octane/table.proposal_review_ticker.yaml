@@ -13,28 +13,28 @@ foreign_keys:
       schema: history_octane
       table: proposal
 columns:
-  prpret_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpret_pid
-  prpret_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.prpret_version
-  prpret_proposal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpret_proposal_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   prpret_next_id:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.prpret_next_id
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  prpret_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpret_pid
+  prpret_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpret_proposal_pid
+  prpret_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.prpret_version
 etls:
   SP-100328:
     input_type: table

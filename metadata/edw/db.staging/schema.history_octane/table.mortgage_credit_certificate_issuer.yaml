@@ -13,46 +13,28 @@ foreign_keys:
       schema: history_octane
       table: account
 columns:
-  mcci_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.mcci_pid
-  mcci_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.mcci_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   mcci_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.mcci_account_pid
-  mcci_from_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.mcci_from_date
-  mcci_through_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.mcci_through_date
-  mcci_issuer_name:
+  mcci_address_city:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.mcci_issuer_name
-  mcci_credit_rate_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.mcci_credit_rate_percent
-  mcci_ein:
-    data_type: VARCHAR(10)
-    source:
-      field: primary_source_table.columns.mcci_ein
-  mcci_contact_name:
+      field: primary_source_table.columns.mcci_address_city
+  mcci_address_postal_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.mcci_contact_name
-  mcci_contact_phone:
+      field: primary_source_table.columns.mcci_address_postal_code
+  mcci_address_state:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.mcci_contact_phone
+      field: primary_source_table.columns.mcci_address_state
   mcci_address_street1:
     data_type: VARCHAR(128)
     source:
@@ -61,36 +43,54 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.mcci_address_street2
-  mcci_address_city:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcci_address_city
-  mcci_address_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcci_address_state
-  mcci_address_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcci_address_postal_code
   mcci_contact_email:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.mcci_contact_email
-  mcci_web_url:
-    data_type: VARCHAR(256)
+  mcci_contact_name:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.mcci_web_url
+      field: primary_source_table.columns.mcci_contact_name
+  mcci_contact_phone:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcci_contact_phone
+  mcci_credit_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.mcci_credit_rate_percent
+  mcci_ein:
+    data_type: VARCHAR(10)
+    source:
+      field: primary_source_table.columns.mcci_ein
+  mcci_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.mcci_from_date
+  mcci_issuer_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcci_issuer_name
   mcci_notes:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.columns.mcci_notes
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  mcci_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcci_pid
+  mcci_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.mcci_through_date
+  mcci_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mcci_version
+  mcci_web_url:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.mcci_web_url
 etls:
   SP-100229:
     input_type: table

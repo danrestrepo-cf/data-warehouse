@@ -37,14 +37,18 @@ foreign_keys:
       schema: history_octane
       table: signature_part_type
 columns:
-  dfs_pid:
-    data_type: BIGINT
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  dfs_charge_amount:
+    data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.dfs_pid
-  dfs_version:
-    data_type: INTEGER
+      field: primary_source_table.columns.dfs_charge_amount
+  dfs_charge_type:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.dfs_version
+      field: primary_source_table.columns.dfs_charge_type
   dfs_deal_file_pid:
     data_type: BIGINT
     source:
@@ -53,6 +57,26 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dfs_deal_signer_pid
+  dfs_page_height:
+    data_type: NUMERIC(15,7)
+    source:
+      field: primary_source_table.columns.dfs_page_height
+  dfs_page_number:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dfs_page_number
+  dfs_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dfs_pid
+  dfs_signature_part_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dfs_signature_part_type
+  dfs_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dfs_version
   dfs_x:
     data_type: NUMERIC(15,7)
     source:
@@ -61,30 +85,6 @@ columns:
     data_type: NUMERIC(15,7)
     source:
       field: primary_source_table.columns.dfs_y
-  dfs_page_number:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dfs_page_number
-  dfs_page_height:
-    data_type: NUMERIC(15,7)
-    source:
-      field: primary_source_table.columns.dfs_page_height
-  dfs_signature_part_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dfs_signature_part_type
-  dfs_charge_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dfs_charge_type
-  dfs_charge_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.dfs_charge_amount
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
   etl_batch_id:
     data_type: TEXT
 etls:

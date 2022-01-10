@@ -21,50 +21,50 @@ foreign_keys:
       schema: history_octane
       table: backfill_status_type
 columns:
-  bfls_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bfls_pid
-  bfls_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.bfls_version
   bfls_backfill_status_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.bfls_backfill_status_pid
-  bfls_los_loan_id:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.bfls_los_loan_id
-  bfls_started_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.bfls_started_datetime
-  bfls_completed_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.bfls_completed_datetime
   bfls_backfill_status_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.bfls_backfill_status_type
+  bfls_completed_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.bfls_completed_datetime
   bfls_failure_info:
     data_type: VARCHAR(16000)
     source:
       field: primary_source_table.columns.bfls_failure_info
+  bfls_los_loan_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.bfls_los_loan_id
+  bfls_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bfls_pid
   bfls_raw_loan_row:
     data_type: VARCHAR(16000)
     source:
       field: primary_source_table.columns.bfls_raw_loan_row
+  bfls_started_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.bfls_started_datetime
+  bfls_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bfls_version
   bfls_warning_info:
     data_type: VARCHAR(16000)
     source:
       field: primary_source_table.columns.bfls_warning_info
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

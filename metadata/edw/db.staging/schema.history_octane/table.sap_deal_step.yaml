@@ -125,96 +125,96 @@ foreign_keys:
       schema: history_octane
       table: yes_no_unknown_type
 columns:
-  sds_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sds_pid
-  sds_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sds_version
-  sds_borrower_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sds_borrower_user_pid
-  sds_previous_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sds_previous_pid
-  sds_sap_step_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sds_sap_step_type
-  sds_complete_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.sds_complete_datetime
-  sds_yes_no_answer:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sds_yes_no_answer
-  sds_deal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sds_deal_pid
-  sds_borrower_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sds_borrower_pid
-  sds_reo_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sds_reo_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   sds_application_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.sds_application_pid
-  sds_job_income_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sds_job_income_pid
-  sds_other_income_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sds_other_income_pid
-  sds_borrower_residence_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sds_borrower_residence_pid
   sds_asset_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.sds_asset_pid
-  sds_liability_pid:
+  sds_borrower_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.sds_liability_pid
-  sds_deal_contact_pid:
+      field: primary_source_table.columns.sds_borrower_pid
+  sds_borrower_residence_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.sds_deal_contact_pid
-  sds_deal_real_estate_agent_pid:
+      field: primary_source_table.columns.sds_borrower_residence_pid
+  sds_borrower_user_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.sds_deal_real_estate_agent_pid
-  sds_radio_choice_answer:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.sds_radio_choice_answer
-  sds_initial_values:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.sds_initial_values
+      field: primary_source_table.columns.sds_borrower_user_pid
   sds_business_income_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.sds_business_income_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
+  sds_complete_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.sds_complete_datetime
+  sds_deal_contact_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_deal_contact_pid
+  sds_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_deal_pid
+  sds_deal_real_estate_agent_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_deal_real_estate_agent_pid
+  sds_initial_values:
     data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+    source:
+      field: primary_source_table.columns.sds_initial_values
+  sds_job_income_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_job_income_pid
+  sds_liability_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_liability_pid
+  sds_other_income_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_other_income_pid
+  sds_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_pid
+  sds_previous_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_previous_pid
+  sds_radio_choice_answer:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.sds_radio_choice_answer
+  sds_reo_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sds_reo_pid
+  sds_sap_step_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sds_sap_step_type
+  sds_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sds_version
+  sds_yes_no_answer:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sds_yes_no_answer
 etls:
   SP-100345:
     input_type: table

@@ -13,14 +13,12 @@ foreign_keys:
       schema: history_octane
       table: account
 columns:
-  wph_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.wph_pid
-  wph_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.wph_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   wph_account_pid:
     data_type: BIGINT
     source:
@@ -33,12 +31,14 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.wph_phase_number
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  wph_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wph_pid
+  wph_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.wph_version
 etls:
   SP-100263:
     input_type: table

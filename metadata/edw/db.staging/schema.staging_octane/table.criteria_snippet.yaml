@@ -27,37 +27,37 @@ foreign_keys:
       schema: staging_octane
       table: deal_child_type
 columns:
-  crs_pid:
-    data_type: BIGINT
-  crs_version:
-    data_type: INTEGER
   crs_account_pid:
     data_type: BIGINT
-  crs_name:
-    data_type: VARCHAR(35)
-  crs_criteria_pid:
-    data_type: BIGINT
-  crs_description:
-    data_type: VARCHAR(16000)
-  crs_deal_child_type:
-    data_type: VARCHAR(128)
-  crs_compatible_with_smart_charge_case:
-    data_type: BOOLEAN
-  crs_compatible_with_smart_req:
-    data_type: BOOLEAN
-  crs_compatible_with_stack_separator:
-    data_type: BOOLEAN
   crs_compatible_with_investor_eligibility:
     data_type: BOOLEAN
-  crs_compatible_with_wf_smart_task:
+  crs_compatible_with_smart_charge_apr:
     data_type: BOOLEAN
-  crs_compatible_with_wf_outcome:
-    data_type: BOOLEAN
-  crs_compatible_with_wf_smart_process:
+  crs_compatible_with_smart_charge_case:
     data_type: BOOLEAN
   crs_compatible_with_smart_doc:
     data_type: BOOLEAN
   crs_compatible_with_smart_doc_validity_date_case:
     data_type: BOOLEAN
-  crs_compatible_with_smart_charge_apr:
+  crs_compatible_with_smart_req:
     data_type: BOOLEAN
+  crs_compatible_with_stack_separator:
+    data_type: BOOLEAN
+  crs_compatible_with_wf_outcome:
+    data_type: BOOLEAN
+  crs_compatible_with_wf_smart_process:
+    data_type: BOOLEAN
+  crs_compatible_with_wf_smart_task:
+    data_type: BOOLEAN
+  crs_criteria_pid:
+    data_type: BIGINT
+  crs_deal_child_type:
+    data_type: VARCHAR(128)
+  crs_description:
+    data_type: VARCHAR(16000)
+  crs_name:
+    data_type: VARCHAR(35)
+  crs_pid:
+    data_type: BIGINT
+  crs_version:
+    data_type: INTEGER

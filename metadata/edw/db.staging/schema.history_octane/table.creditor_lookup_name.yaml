@@ -21,14 +21,6 @@ foreign_keys:
       schema: history_octane
       table: creditor
 columns:
-  cln_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.cln_pid
-  cln_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.cln_version
   cln_account_pid:
     data_type: BIGINT
     source:
@@ -41,10 +33,18 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.cln_name
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  cln_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cln_pid
+  cln_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.cln_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

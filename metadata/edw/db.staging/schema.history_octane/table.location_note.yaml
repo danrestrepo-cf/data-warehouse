@@ -21,26 +21,12 @@ foreign_keys:
       schema: history_octane
       table: lender_user
 columns:
-  locn_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.locn_pid
-  locn_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.locn_version
-  locn_location_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.locn_location_pid
-  locn_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.locn_create_datetime
-  locn_content:
-    data_type: VARCHAR(16000)
-    source:
-      field: primary_source_table.columns.locn_content
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   locn_author_lender_user_pid:
     data_type: BIGINT
     source:
@@ -49,12 +35,26 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.locn_author_unparsed_name
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  locn_content:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.locn_content
+  locn_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.locn_create_datetime
+  locn_location_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.locn_location_pid
+  locn_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.locn_pid
+  locn_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.locn_version
 etls:
   SP-100857:
     input_type: table

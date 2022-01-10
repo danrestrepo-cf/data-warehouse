@@ -27,57 +27,57 @@ foreign_keys:
       schema: staging_octane
       table: construction_permit_type
 columns:
-  cop_pid:
-    data_type: BIGINT
-  cop_version:
-    data_type: INTEGER
-  cop_proposal_pid:
-    data_type: BIGINT
+  cop_address_city:
+    data_type: VARCHAR(128)
+  cop_address_postal_code:
+    data_type: VARCHAR(128)
+  cop_address_state:
+    data_type: VARCHAR(128)
+  cop_address_street1:
+    data_type: VARCHAR(128)
+  cop_address_street2:
+    data_type: VARCHAR(128)
+  cop_amount:
+    data_type: NUMERIC(17,2)
+  cop_application_date:
+    data_type: DATE
+  cop_building_department_contact_url:
+    data_type: VARCHAR(256)
+  cop_building_department_name:
+    data_type: VARCHAR(64)
+  cop_closed_out_date:
+    data_type: DATE
+  cop_construction_permit_requested_by_type:
+    data_type: VARCHAR(128)
   cop_construction_permit_type:
     data_type: VARCHAR(128)
   cop_construction_permit_type_other_description:
     data_type: VARCHAR(64)
-  cop_permit_number:
-    data_type: VARCHAR(32)
-  cop_construction_permit_requested_by_type:
-    data_type: VARCHAR(128)
-  cop_issued_by:
-    data_type: VARCHAR(128)
-  cop_application_date:
-    data_type: DATE
-  cop_issued_date:
-    data_type: DATE
-  cop_expiration_date:
-    data_type: DATE
-  cop_closed_out_date:
-    data_type: DATE
-  cop_amount:
-    data_type: NUMERIC(17,2)
-  cop_building_department_name:
-    data_type: VARCHAR(64)
-  cop_building_department_contact_url:
-    data_type: VARCHAR(256)
-  cop_first_name:
-    data_type: VARCHAR(32)
-  cop_last_name:
-    data_type: VARCHAR(32)
   cop_email:
     data_type: VARCHAR(256)
+  cop_expiration_date:
+    data_type: DATE
+  cop_fax:
+    data_type: VARCHAR(32)
+  cop_first_name:
+    data_type: VARCHAR(32)
+  cop_issued_by:
+    data_type: VARCHAR(128)
+  cop_issued_date:
+    data_type: DATE
+  cop_last_name:
+    data_type: VARCHAR(32)
   cop_mobile_phone:
     data_type: VARCHAR(32)
   cop_office_phone:
     data_type: VARCHAR(32)
   cop_office_phone_extension:
     data_type: VARCHAR(16)
-  cop_fax:
+  cop_permit_number:
     data_type: VARCHAR(32)
-  cop_address_street1:
-    data_type: VARCHAR(128)
-  cop_address_street2:
-    data_type: VARCHAR(128)
-  cop_address_city:
-    data_type: VARCHAR(128)
-  cop_address_state:
-    data_type: VARCHAR(128)
-  cop_address_postal_code:
-    data_type: VARCHAR(128)
+  cop_pid:
+    data_type: BIGINT
+  cop_proposal_pid:
+    data_type: BIGINT
+  cop_version:
+    data_type: INTEGER

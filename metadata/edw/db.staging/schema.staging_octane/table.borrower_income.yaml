@@ -43,41 +43,39 @@ foreign_keys:
       schema: staging_octane
       table: country_type
 columns:
-  bi_pid:
-    data_type: BIGINT
-  bi_version:
-    data_type: INTEGER
-  bi_borrower_pid:
-    data_type: BIGINT
   bi_borrower_income_category_type:
     data_type: VARCHAR(128)
-  bi_job_gap_reason_type:
-    data_type: VARCHAR(128)
-  bi_job_gap_reason_explanation:
-    data_type: VARCHAR(1024)
+  bi_borrower_pid:
+    data_type: BIGINT
   bi_business_ownership_type:
     data_type: VARCHAR(128)
-  bi_from_date:
-    data_type: DATE
-  bi_through_date:
-    data_type: DATE
   bi_current:
     data_type: BOOLEAN
+  bi_from_date:
+    data_type: DATE
+  bi_job_gap_reason_explanation:
+    data_type: VARCHAR(1024)
+  bi_job_gap_reason_type:
+    data_type: VARCHAR(128)
+  bi_pid:
+    data_type: BIGINT
   bi_primary:
     data_type: BOOLEAN
-  bi_source_name:
+  bi_snapshotted_pid:
+    data_type: BIGINT
+  bi_source_address_city:
+    data_type: VARCHAR(128)
+  bi_source_address_country:
+    data_type: VARCHAR(128)
+  bi_source_address_postal_code:
+    data_type: VARCHAR(128)
+  bi_source_address_state:
     data_type: VARCHAR(128)
   bi_source_address_street1:
     data_type: VARCHAR(128)
   bi_source_address_street2:
     data_type: VARCHAR(128)
-  bi_source_address_city:
-    data_type: VARCHAR(128)
-  bi_source_address_state:
-    data_type: VARCHAR(128)
-  bi_source_address_postal_code:
-    data_type: VARCHAR(128)
-  bi_source_address_country:
+  bi_source_name:
     data_type: VARCHAR(128)
   bi_source_phone:
     data_type: VARCHAR(32)
@@ -85,5 +83,7 @@ columns:
     data_type: VARCHAR(16)
   bi_synthetic_unique:
     data_type: BOOLEAN
-  bi_snapshotted_pid:
-    data_type: BIGINT
+  bi_through_date:
+    data_type: DATE
+  bi_version:
+    data_type: INTEGER

@@ -29,48 +29,48 @@ foreign_keys:
       schema: history_octane
       table: vendor_document_event_type
 columns:
-  vde_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.vde_pid
-  vde_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.vde_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   vde_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.vde_account_pid
-  vde_vendor_document_repository_file_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.vde_vendor_document_repository_file_pid
-  vde_vendor_document_event_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.vde_vendor_document_event_type
-  vde_source_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.vde_source_unparsed_name
-  vde_messages:
-    data_type: TEXT
-    source:
-      field: primary_source_table.columns.vde_messages
-  vde_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.vde_create_datetime
   vde_create_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.vde_create_date
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
+  vde_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.vde_create_datetime
+  vde_messages:
     data_type: TEXT
+    source:
+      field: primary_source_table.columns.vde_messages
+  vde_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.vde_pid
+  vde_source_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.vde_source_unparsed_name
+  vde_vendor_document_event_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.vde_vendor_document_event_type
+  vde_vendor_document_repository_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.vde_vendor_document_repository_file_pid
+  vde_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.vde_version
 etls:
   SP-100358:
     input_type: table

@@ -85,14 +85,12 @@ foreign_keys:
       schema: history_octane
       table: loan_position_type
 columns:
-  ler_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ler_pid
-  ler_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ler_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   ler_account_pid:
     data_type: BIGINT
     source:
@@ -101,10 +99,10 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.ler_deal_pid
-  ler_org_node_pid:
-    data_type: BIGINT
+  ler_entry_amount:
+    data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.ler_org_node_pid
+      field: primary_source_table.columns.ler_entry_amount
   ler_ledger_entry_pid:
     data_type: BIGINT
     source:
@@ -117,6 +115,22 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ler_ledger_entry_review_status_type
+  ler_ledger_entry_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ler_ledger_entry_type
+  ler_loan_position_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ler_loan_position_type
+  ler_org_node_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ler_org_node_pid
+  ler_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ler_pid
   ler_request_by_lender_user_pid:
     data_type: BIGINT
     source:
@@ -133,24 +147,10 @@ columns:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.ler_review_datetime
-  ler_ledger_entry_type:
-    data_type: VARCHAR(128)
+  ler_version:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.ler_ledger_entry_type
-  ler_entry_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.ler_entry_amount
-  ler_loan_position_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ler_loan_position_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.ler_version
 etls:
   SP-100373:
     input_type: table

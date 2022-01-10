@@ -21,50 +21,50 @@ foreign_keys:
       schema: history_octane
       table: account_event_type
 columns:
-  ae_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ae_pid
-  ae_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ae_version
-  ae_account_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ae_account_pid
-  ae_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.ae_create_datetime
   ae_account_event_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ae_account_event_type
-  ae_detail:
-    data_type: VARCHAR(16000)
+  ae_account_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.ae_detail
-  ae_source_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ae_source_unparsed_name
-  ae_ip_address:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ae_ip_address
+      field: primary_source_table.columns.ae_account_pid
   ae_client_agent:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.ae_client_agent
+  ae_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.ae_create_datetime
+  ae_detail:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.ae_detail
   ae_event_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.ae_event_date
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  ae_ip_address:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ae_ip_address
+  ae_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ae_pid
+  ae_source_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ae_source_unparsed_name
+  ae_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ae_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

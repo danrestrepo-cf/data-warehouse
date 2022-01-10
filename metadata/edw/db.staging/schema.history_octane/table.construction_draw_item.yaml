@@ -29,26 +29,10 @@ foreign_keys:
       schema: history_octane
       table: construction_draw
 columns:
-  cdi_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.cdi_pid
-  cdi_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.cdi_version
-  cdi_proposal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.cdi_proposal_pid
   cdi_construction_cost_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.cdi_construction_cost_pid
-  cdi_construction_draw_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.cdi_construction_draw_pid
   cdi_construction_draw_item_amount:
     data_type: NUMERIC(15,2)
     source:
@@ -61,10 +45,26 @@ columns:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.cdi_construction_draw_item_lender_contribution_amount
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  cdi_construction_draw_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cdi_construction_draw_pid
+  cdi_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cdi_pid
+  cdi_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cdi_proposal_pid
+  cdi_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.cdi_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:
