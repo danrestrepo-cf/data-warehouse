@@ -39,6 +39,7 @@ def execute(event, context):
 
     process_id = "Not Yet Set"
     for record in event['Records']:
+        # SQS SentTimestamp is a Unix epoch value stored as a string in milliseconds, so convert it to seconds
         message_sent_timestamp = int(record['attributes']['SentTimestamp']) / 1e3
         next_step_input = record["body"]
         logger.info("Next Step Input: {}".format(next_step_input))
@@ -109,6 +110,7 @@ def fetch_execution(state_machine_arn_base: str, etl_type_suffix: str = '') -> t
             step_function_exists = True
             latest_execution_status = response["executions"][0]["status"]
             has_running_execution = latest_execution_status == "RUNNING"
+            # Convert step function start date to Unix epoch so it can be compared to SQS message sent value
             step_function_started_timestamp = response["executions"][0]["startDate"].timestamp() if \
                 latest_execution_status == "SUCCEEDED" else None
         else:
