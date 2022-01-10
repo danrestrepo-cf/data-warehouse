@@ -13,14 +13,12 @@ foreign_keys:
       schema: history_octane
       table: account
 columns:
-  lltk_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lltk_pid
-  lltk_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lltk_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   lltk_account_pid:
     data_type: BIGINT
     source:
@@ -29,12 +27,14 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lltk_next_lender_lock_id
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  lltk_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lltk_pid
+  lltk_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lltk_version
 etls:
   SP-100223:
     input_type: table

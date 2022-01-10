@@ -37,82 +37,66 @@ foreign_keys:
       schema: history_octane
       table: time_zone_type
 columns:
-  bu_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bu_pid
-  bu_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.bu_version
   bu_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.bu_account_pid
-  bu_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.bu_create_datetime
-  bu_email:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.bu_email
-  bu_last_sign_on_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.bu_last_sign_on_datetime
-  bu_time_zone:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.bu_time_zone
-  bu_first_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.bu_first_name
-  bu_middle_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.bu_middle_name
-  bu_last_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.bu_last_name
-  bu_name_suffix:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.bu_name_suffix
-  bu_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.bu_unparsed_name
   bu_borrower_activation_id:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.bu_borrower_activation_id
-  bu_challenge_question_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.bu_challenge_question_type
-  bu_challenge_question_answer:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.bu_challenge_question_answer
   bu_borrower_user_account_status_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.bu_borrower_user_account_status_type
-  bu_public_quote_request_cache_id:
-    data_type: INTEGER
+  bu_challenge_question_answer:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.bu_public_quote_request_cache_id
+      field: primary_source_table.columns.bu_challenge_question_answer
+  bu_challenge_question_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bu_challenge_question_type
+  bu_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.bu_create_datetime
   bu_create_sap_on_activation:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.bu_create_sap_on_activation
+  bu_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.bu_email
+  bu_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.bu_first_name
+  bu_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.bu_last_name
+  bu_last_sign_on_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.bu_last_sign_on_datetime
+  bu_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.bu_middle_name
+  bu_name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.bu_name_suffix
   bu_nickname:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.bu_nickname
+  bu_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bu_pid
   bu_plain_text_email:
     data_type: BOOLEAN
     source:
@@ -121,10 +105,26 @@ columns:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.bu_preferred_first_name
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  bu_public_quote_request_cache_id:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bu_public_quote_request_cache_id
+  bu_time_zone:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bu_time_zone
+  bu_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bu_unparsed_name
+  bu_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bu_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

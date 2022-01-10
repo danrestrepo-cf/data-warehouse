@@ -13,38 +13,38 @@ foreign_keys:
       schema: history_octane
       table: deal
 columns:
-  dlue_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dlue_pid
-  dlue_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dlue_version
-  dlue_deal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dlue_deal_pid
-  dlue_subject_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dlue_subject_lender_user_pid
-  dlue_role_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dlue_role_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   dlue_create_datetime:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.dlue_create_datetime
+  dlue_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dlue_deal_pid
+  dlue_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dlue_pid
+  dlue_role_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dlue_role_pid
+  dlue_subject_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dlue_subject_lender_user_pid
   dlue_unparsed_text:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.columns.dlue_unparsed_text
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+  dlue_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dlue_version
   etl_batch_id:
     data_type: TEXT
 etls:

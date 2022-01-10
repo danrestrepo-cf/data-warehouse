@@ -21,14 +21,12 @@ foreign_keys:
       schema: history_octane
       table: org_node
 columns:
-  slp_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.slp_pid
-  slp_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.slp_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   slp_account_pid:
     data_type: BIGINT
     source:
@@ -37,20 +35,22 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.slp_org_node_pid
-  slp_plan_name:
-    data_type: VARCHAR(128)
+  slp_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.slp_plan_name
+      field: primary_source_table.columns.slp_pid
   slp_plan_id:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.slp_plan_id
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  slp_plan_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.slp_plan_name
+  slp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.slp_version
 etls:
   SP-100210:
     input_type: table

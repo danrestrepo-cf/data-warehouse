@@ -21,40 +21,40 @@ foreign_keys:
       schema: history_octane
       table: lock_term_setting
 columns:
-  plt_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.plt_pid
-  plt_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.plt_version
-  plt_product_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.plt_product_pid
-  plt_lock_term_setting_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.plt_lock_term_setting_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   plt_from_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.plt_from_date
-  plt_through_date:
-    data_type: DATE
+  plt_lock_term_setting_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.plt_through_date
+      field: primary_source_table.columns.plt_lock_term_setting_pid
+  plt_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.plt_pid
   plt_price_adjustment_percent:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.plt_price_adjustment_percent
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  plt_product_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.plt_product_pid
+  plt_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.plt_through_date
+  plt_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.plt_version
 etls:
   SP-100112:
     input_type: table

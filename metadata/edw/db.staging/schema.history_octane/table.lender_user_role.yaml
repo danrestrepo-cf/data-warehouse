@@ -37,38 +37,52 @@ foreign_keys:
       schema: history_octane
       table: lender_user_role_queue_type
 columns:
-  lur_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lur_pid
-  lur_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lur_version
-  lur_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lur_lender_user_pid
-  lur_role_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lur_role_pid
-  lur_criteria_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lur_criteria_pid
-  lur_workload_cap:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lur_workload_cap
-  lur_daily_cap:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lur_daily_cap
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   lur_assignment_gap_minutes:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.lur_assignment_gap_minutes
+  lur_criteria_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lur_criteria_pid
+  lur_daily_cap:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lur_daily_cap
+  lur_for_training_only:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lur_for_training_only
+  lur_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lur_lender_user_pid
+  lur_notes:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.lur_notes
+  lur_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lur_pid
+  lur_queue_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.lur_queue_datetime
+  lur_queue_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lur_queue_type
+  lur_role_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lur_role_pid
   lur_secondary_role:
     data_type: BOOLEAN
     source:
@@ -77,28 +91,14 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.lur_subscribe_smart_messages
-  lur_for_training_only:
-    data_type: BOOLEAN
+  lur_version:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.lur_for_training_only
-  lur_notes:
-    data_type: VARCHAR(16000)
+      field: primary_source_table.columns.lur_version
+  lur_workload_cap:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.lur_notes
-  lur_queue_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lur_queue_type
-  lur_queue_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.lur_queue_datetime
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.lur_workload_cap
 etls:
   SP-100279:
     input_type: table

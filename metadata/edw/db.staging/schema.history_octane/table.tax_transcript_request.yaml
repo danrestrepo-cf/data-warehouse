@@ -125,126 +125,16 @@ foreign_keys:
       schema: history_octane
       table: tax_transcript_request_status_type
 columns:
-  ttr_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ttr_pid
-  ttr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ttr_version
-  ttr_deal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ttr_deal_pid
-  ttr_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.ttr_create_datetime
-  ttr_requester_agent_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ttr_requester_agent_type
-  ttr_requester_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ttr_requester_lender_user_pid
-  ttr_requester_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ttr_requester_unparsed_name
-  ttr_mismo_version_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ttr_mismo_version_type
-  ttr_credit_request_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ttr_credit_request_type
-  ttr_request_error_messages:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
     data_type: TEXT
-    source:
-      field: primary_source_table.columns.ttr_request_error_messages
-  ttr_request_success_messages:
-    data_type: TEXT
-    source:
-      field: primary_source_table.columns.ttr_request_success_messages
-  ttr_tracking_number:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.ttr_tracking_number
-  ttr_tax_transcript_request_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ttr_tax_transcript_request_status_type
-  ttr_update_reason:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.ttr_update_reason
-  ttr_last_status_query_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.ttr_last_status_query_datetime
-  ttr_signed_4506t_deal_file_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ttr_signed_4506t_deal_file_pid
-  ttr_company:
+  ttr_archived:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.ttr_company
-  ttr_company_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ttr_company_name
-  ttr_company_city:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ttr_company_city
-  ttr_company_country:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ttr_company_country
-  ttr_company_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ttr_company_postal_code
-  ttr_company_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ttr_company_state
-  ttr_company_street1:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ttr_company_street1
-  ttr_company_street2:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ttr_company_street2
-  ttr_company_ein:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.ttr_company_ein
-  ttr_borrower1_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ttr_borrower1_pid
-  ttr_borrower1_first_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ttr_borrower1_first_name
-  ttr_borrower1_middle_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ttr_borrower1_middle_name
-  ttr_borrower1_last_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ttr_borrower1_last_name
-  ttr_borrower1_name_suffix:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ttr_borrower1_name_suffix
+      field: primary_source_table.columns.ttr_archived
   ttr_borrower1_birth_date:
     data_type: DATE
     source:
@@ -273,6 +163,30 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ttr_borrower1_current_street2
+  ttr_borrower1_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_first_name
+  ttr_borrower1_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_last_name
+  ttr_borrower1_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_middle_name
+  ttr_borrower1_monthly_income_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_monthly_income_amount
+  ttr_borrower1_name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ttr_borrower1_name_suffix
+  ttr_borrower1_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ttr_borrower1_pid
   ttr_borrower1_prior_city:
     data_type: VARCHAR(128)
     source:
@@ -297,30 +211,6 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ttr_borrower1_prior_street2
-  ttr_borrower1_monthly_income_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.ttr_borrower1_monthly_income_amount
-  ttr_borrower2_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ttr_borrower2_pid
-  ttr_borrower2_first_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ttr_borrower2_first_name
-  ttr_borrower2_middle_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ttr_borrower2_middle_name
-  ttr_borrower2_last_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ttr_borrower2_last_name
-  ttr_borrower2_name_suffix:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ttr_borrower2_name_suffix
   ttr_borrower2_birth_date:
     data_type: DATE
     source:
@@ -349,6 +239,30 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ttr_borrower2_current_street2
+  ttr_borrower2_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_first_name
+  ttr_borrower2_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_last_name
+  ttr_borrower2_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_middle_name
+  ttr_borrower2_monthly_income_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_monthly_income_amount
+  ttr_borrower2_name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ttr_borrower2_name_suffix
+  ttr_borrower2_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ttr_borrower2_pid
   ttr_borrower2_prior_city:
     data_type: VARCHAR(128)
     source:
@@ -373,10 +287,174 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ttr_borrower2_prior_street2
-  ttr_borrower2_monthly_income_amount:
-    data_type: NUMERIC(15,2)
+  ttr_business_ownership_type:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.ttr_borrower2_monthly_income_amount
+      field: primary_source_table.columns.ttr_business_ownership_type
+  ttr_company:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_company
+  ttr_company_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_company_city
+  ttr_company_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_company_country
+  ttr_company_ein:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.ttr_company_ein
+  ttr_company_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_company_name
+  ttr_company_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ttr_company_phone
+  ttr_company_phone_extension:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.ttr_company_phone_extension
+  ttr_company_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_company_postal_code
+  ttr_company_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_company_state
+  ttr_company_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_company_street1
+  ttr_company_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_company_street2
+  ttr_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.ttr_create_datetime
+  ttr_credit_request_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_credit_request_type
+  ttr_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ttr_deal_pid
+  ttr_include_1040:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1040
+  ttr_include_1040_account_transcript:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1040_account_transcript
+  ttr_include_1040_record_of_account:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1040_record_of_account
+  ttr_include_1040_return_transcript:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1040_return_transcript
+  ttr_include_1065:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1065
+  ttr_include_1065_account_transcript:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1065_account_transcript
+  ttr_include_1065_record_of_account:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1065_record_of_account
+  ttr_include_1065_return_transcript:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1065_return_transcript
+  ttr_include_1099:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1099
+  ttr_include_1120:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1120
+  ttr_include_1120_account_transcript:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1120_account_transcript
+  ttr_include_1120_record_of_account:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1120_record_of_account
+  ttr_include_1120_return_transcript:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_1120_return_transcript
+  ttr_include_w_2:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ttr_include_w_2
+  ttr_last_status_query_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.ttr_last_status_query_datetime
+  ttr_mismo_version_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_mismo_version_type
+  ttr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ttr_pid
+  ttr_request_error_messages:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.ttr_request_error_messages
+  ttr_request_success_messages:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.ttr_request_success_messages
+  ttr_requester_agent_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_requester_agent_type
+  ttr_requester_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ttr_requester_lender_user_pid
+  ttr_requester_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_requester_unparsed_name
+  ttr_signed_4506t_deal_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ttr_signed_4506t_deal_file_pid
+  ttr_tax_transcript_request_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ttr_tax_transcript_request_status_type
+  ttr_tracking_number:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.ttr_tracking_number
+  ttr_update_reason:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.ttr_update_reason
+  ttr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ttr_version
   ttr_year1:
     data_type: INTEGER
     source:
@@ -393,84 +471,6 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.ttr_year4
-  ttr_include_w_2:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ttr_include_w_2
-  ttr_include_1099:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ttr_include_1099
-  ttr_include_1040:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ttr_include_1040
-  ttr_include_1040_return_transcript:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ttr_include_1040_return_transcript
-  ttr_include_1040_account_transcript:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ttr_include_1040_account_transcript
-  ttr_include_1040_record_of_account:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ttr_include_1040_record_of_account
-  ttr_include_1065:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ttr_include_1065
-  ttr_include_1065_return_transcript:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ttr_include_1065_return_transcript
-  ttr_include_1065_account_transcript:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ttr_include_1065_account_transcript
-  ttr_include_1065_record_of_account:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ttr_include_1065_record_of_account
-  ttr_include_1120:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ttr_include_1120
-  ttr_include_1120_return_transcript:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ttr_include_1120_return_transcript
-  ttr_include_1120_account_transcript:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ttr_include_1120_account_transcript
-  ttr_include_1120_record_of_account:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ttr_include_1120_record_of_account
-  ttr_archived:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ttr_archived
-  ttr_company_phone:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ttr_company_phone
-  ttr_company_phone_extension:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.ttr_company_phone_extension
-  ttr_business_ownership_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ttr_business_ownership_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
 etls:
   SP-100340:
     input_type: table

@@ -13,14 +13,10 @@ foreign_keys:
       schema: history_octane
       table: deal
 columns:
-  dsi_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dsi_pid
-  dsi_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dsi_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   dsi_deal_pid:
     data_type: BIGINT
     source:
@@ -33,26 +29,30 @@ columns:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.dsi_first_name
-  dsi_middle_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.dsi_middle_name
   dsi_last_name:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.dsi_last_name
+  dsi_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dsi_middle_name
   dsi_name_suffix:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.dsi_name_suffix
+  dsi_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dsi_pid
   dsi_signer_id:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.dsi_signer_id
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+  dsi_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dsi_version
   etl_batch_id:
     data_type: TEXT
 etls:

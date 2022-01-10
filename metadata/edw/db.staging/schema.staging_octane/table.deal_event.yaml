@@ -27,37 +27,37 @@ foreign_keys:
       schema: staging_octane
       table: deal_event_type
 columns:
-  de_pid:
-    data_type: BIGINT
-  de_version:
-    data_type: INTEGER
+  de_borrower_text:
+    data_type: VARCHAR(1024)
+  de_coarse_event_type:
+    data_type: VARCHAR(128)
   de_create_datetime:
     data_type: TIMESTAMP
+  de_create_nanoseconds:
+    data_type: INTEGER
   de_deal_event_type:
     data_type: VARCHAR(128)
+  de_deal_message_log_pid:
+    data_type: BIGINT
+  de_deal_note_pid:
+    data_type: BIGINT
   de_deal_pid:
     data_type: BIGINT
   de_deal_task_pid:
     data_type: BIGINT
-  de_deal_note_pid:
-    data_type: BIGINT
-  de_deal_message_log_pid:
-    data_type: BIGINT
-  de_proposal_doc_pid:
+  de_detail:
+    data_type: VARCHAR(16000)
+  de_pid:
     data_type: BIGINT
   de_proposal_doc_file_pid:
     data_type: BIGINT
-  de_wf_deal_step_pid:
+  de_proposal_doc_pid:
     data_type: BIGINT
   de_proposal_pid:
     data_type: BIGINT
-  de_detail:
-    data_type: VARCHAR(16000)
   de_source_unparsed_name:
     data_type: VARCHAR(128)
-  de_coarse_event_type:
-    data_type: VARCHAR(128)
-  de_borrower_text:
-    data_type: VARCHAR(1024)
-  de_create_nanoseconds:
+  de_version:
     data_type: INTEGER
+  de_wf_deal_step_pid:
+    data_type: BIGINT

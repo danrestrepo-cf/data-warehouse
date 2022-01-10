@@ -3,14 +3,14 @@ primary_source_table: staging.staging_octane.deal_id_sequence
 primary_key:
 - dis_id
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   dis_id:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dis_id
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
   etl_batch_id:
     data_type: TEXT
 etls:

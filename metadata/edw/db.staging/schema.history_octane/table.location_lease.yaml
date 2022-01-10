@@ -13,44 +13,44 @@ foreign_keys:
       schema: history_octane
       table: location
 columns:
-  locl_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.locl_pid
-  locl_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.locl_version
-  locl_location_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.locl_location_pid
-  locl_from_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.locl_from_date
-  locl_through_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.locl_through_date
-  locl_monthly_lease_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.locl_monthly_lease_amount
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   locl_cubicle_count:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.locl_cubicle_count
+  locl_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.locl_from_date
+  locl_location_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.locl_location_pid
+  locl_monthly_lease_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.locl_monthly_lease_amount
   locl_office_count:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.locl_office_count
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  locl_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.locl_pid
+  locl_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.locl_through_date
+  locl_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.locl_version
 etls:
   SP-100850:
     input_type: table

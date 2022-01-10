@@ -3,32 +3,32 @@ primary_source_table: staging.staging_octane.fault_tolerant_event_registration
 primary_key:
 - fter_message_id
 columns:
-  fter_message_id:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.fter_message_id
-  fter_queue_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.fter_queue_name
-  fter_event_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.fter_event_type
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   fter_create_datetime:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.fter_create_datetime
+  fter_event_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.fter_event_type
+  fter_message_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.fter_message_id
   fter_processed_datetime:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.fter_processed_datetime
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  fter_queue_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.fter_queue_name
 etls:
   SP-100838:
     input_type: table

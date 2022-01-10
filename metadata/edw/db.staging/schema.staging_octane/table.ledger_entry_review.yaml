@@ -83,22 +83,26 @@ foreign_keys:
       schema: staging_octane
       table: loan_position_type
 columns:
-  ler_pid:
-    data_type: BIGINT
-  ler_version:
-    data_type: INTEGER
   ler_account_pid:
     data_type: BIGINT
   ler_deal_pid:
     data_type: BIGINT
-  ler_org_node_pid:
-    data_type: BIGINT
+  ler_entry_amount:
+    data_type: NUMERIC(15,2)
   ler_ledger_entry_pid:
     data_type: BIGINT
   ler_ledger_entry_review_reason_type:
     data_type: VARCHAR(128)
   ler_ledger_entry_review_status_type:
     data_type: VARCHAR(128)
+  ler_ledger_entry_type:
+    data_type: VARCHAR(128)
+  ler_loan_position_type:
+    data_type: VARCHAR(128)
+  ler_org_node_pid:
+    data_type: BIGINT
+  ler_pid:
+    data_type: BIGINT
   ler_request_by_lender_user_pid:
     data_type: BIGINT
   ler_request_datetime:
@@ -107,9 +111,5 @@ columns:
     data_type: BIGINT
   ler_review_datetime:
     data_type: TIMESTAMP
-  ler_ledger_entry_type:
-    data_type: VARCHAR(128)
-  ler_entry_amount:
-    data_type: NUMERIC(15,2)
-  ler_loan_position_type:
-    data_type: VARCHAR(128)
+  ler_version:
+    data_type: INTEGER

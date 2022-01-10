@@ -29,52 +29,52 @@ foreign_keys:
       schema: history_octane
       table: mers_daily_report_import_status_type
 columns:
-  medr_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.medr_pid
-  medr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.medr_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   medr_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.medr_account_pid
-  medr_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.medr_create_datetime
-  medr_report_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.medr_report_date
-  medr_import_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.medr_import_status_type
-  medr_import_status_messages:
-    data_type: TEXT
-    source:
-      field: primary_source_table.columns.medr_import_status_messages
-  medr_import_attempt_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.medr_import_attempt_count
-  medr_imported_loan_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.medr_imported_loan_count
   medr_consolidated_report_text_repository_file_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.medr_consolidated_report_text_repository_file_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
+  medr_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.medr_create_datetime
+  medr_import_attempt_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.medr_import_attempt_count
+  medr_import_status_messages:
     data_type: TEXT
+    source:
+      field: primary_source_table.columns.medr_import_status_messages
+  medr_import_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.medr_import_status_type
+  medr_imported_loan_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.medr_imported_loan_count
+  medr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.medr_pid
+  medr_report_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.medr_report_date
+  medr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.medr_version
 etls:
   SP-100132:
     input_type: table

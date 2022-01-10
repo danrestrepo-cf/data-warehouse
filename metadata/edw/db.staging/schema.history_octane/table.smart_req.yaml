@@ -37,48 +37,48 @@ foreign_keys:
       schema: history_octane
       table: deal_child_type
 columns:
-  sr_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sr_pid
-  sr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sr_version
-  sr_smart_doc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sr_smart_doc_pid
-  sr_criteria_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sr_criteria_pid
-  sr_deal_child_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sr_deal_child_type
-  sr_deal_child_relationship_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sr_deal_child_relationship_type
-  sr_req_name:
-    data_type: VARCHAR(767)
-    source:
-      field: primary_source_table.columns.sr_req_name
-  sr_borrower_access:
+  data_source_deleted_flag:
     data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.sr_borrower_access
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   sr_active:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.sr_active
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
+  sr_borrower_access:
     data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+    source:
+      field: primary_source_table.columns.sr_borrower_access
+  sr_criteria_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sr_criteria_pid
+  sr_deal_child_relationship_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sr_deal_child_relationship_type
+  sr_deal_child_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sr_deal_child_type
+  sr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sr_pid
+  sr_req_name:
+    data_type: VARCHAR(767)
+    source:
+      field: primary_source_table.columns.sr_req_name
+  sr_smart_doc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sr_smart_doc_pid
+  sr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sr_version
 etls:
   SP-100334:
     input_type: table

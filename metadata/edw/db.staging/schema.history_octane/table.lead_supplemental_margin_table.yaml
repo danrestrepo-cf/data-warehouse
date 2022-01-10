@@ -13,6 +13,20 @@ foreign_keys:
       schema: history_octane
       table: lead_source
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  lsmt_effective_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.lsmt_effective_datetime
+  lsmt_lead_source_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lsmt_lead_source_pid
   lsmt_pid:
     data_type: BIGINT
     source:
@@ -21,20 +35,6 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.lsmt_version
-  lsmt_lead_source_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lsmt_lead_source_pid
-  lsmt_effective_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.lsmt_effective_datetime
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
 etls:
   SP-100040:
     input_type: table

@@ -29,40 +29,40 @@ foreign_keys:
       schema: history_octane
       table: smart_stack_doc_set_include_option_type
 columns:
-  sdst_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sdst_pid
-  sdst_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sdst_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   sdst_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.sdst_account_pid
-  sdst_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sdst_name
-  sdst_doc_set_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sdst_doc_set_type
   sdst_active:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.sdst_active
+  sdst_doc_set_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sdst_doc_set_type
+  sdst_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sdst_name
+  sdst_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sdst_pid
   sdst_smart_stack_doc_set_include_option_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.sdst_smart_stack_doc_set_include_option_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  sdst_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sdst_version
 etls:
   SP-100251:
     input_type: table

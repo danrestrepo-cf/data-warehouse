@@ -11,11 +11,11 @@ foreign_keys:
       schema: staging_octane
       table: lead_source
 columns:
+  lsmt_effective_datetime:
+    data_type: TIMESTAMP
+  lsmt_lead_source_pid:
+    data_type: BIGINT
   lsmt_pid:
     data_type: BIGINT
   lsmt_version:
     data_type: INTEGER
-  lsmt_lead_source_pid:
-    data_type: BIGINT
-  lsmt_effective_datetime:
-    data_type: TIMESTAMP

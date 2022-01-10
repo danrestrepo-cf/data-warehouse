@@ -101,18 +101,38 @@ foreign_keys:
       schema: history_octane
       table: construction_cost_status_type
 columns:
-  coc_pid:
+  coc_borrower_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.coc_pid
-  coc_version:
+      field: primary_source_table.columns.coc_borrower_pid
+  coc_calculated_construction_cost_months:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.coc_version
-  coc_proposal_pid:
-    data_type: BIGINT
+      field: primary_source_table.columns.coc_calculated_construction_cost_months
+  coc_calculated_construction_cost_percent:
+    data_type: NUMERIC(11,9)
     source:
-      field: primary_source_table.columns.coc_proposal_pid
+      field: primary_source_table.columns.coc_calculated_construction_cost_percent
+  coc_category_type_label:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.coc_category_type_label
+  coc_charge_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.coc_charge_type
+  coc_construction_cost_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.coc_construction_cost_amount
+  coc_construction_cost_calculation_percent_override_reason:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.coc_construction_cost_calculation_percent_override_reason
+  coc_construction_cost_calculation_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.coc_construction_cost_calculation_type
   coc_construction_cost_category_type:
     data_type: VARCHAR(128)
     source:
@@ -121,114 +141,94 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.coc_construction_cost_funding_type
-  coc_construction_cost_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.coc_construction_cost_status_type
-  coc_construction_cost_payee_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.coc_construction_cost_payee_type
-  coc_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.coc_create_datetime
-  coc_construction_cost_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.coc_construction_cost_amount
-  coc_construction_cost_notes:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.coc_construction_cost_notes
-  coc_proposal_contractor_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.coc_proposal_contractor_pid
-  coc_effective_construction_cost_calculation_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.coc_effective_construction_cost_calculation_percent
-  coc_construction_cost_calculation_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.coc_construction_cost_calculation_type
-  coc_permit_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.coc_permit_pid
-  coc_category_type_label:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.coc_category_type_label
-  coc_calculated_construction_cost_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.coc_calculated_construction_cost_percent
-  coc_overridden_construction_cost_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.coc_overridden_construction_cost_percent
-  coc_construction_cost_calculation_percent_override_reason:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.coc_construction_cost_calculation_percent_override_reason
-  coc_calculated_construction_cost_months:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.coc_calculated_construction_cost_months
-  coc_overridden_construction_cost_months:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.coc_overridden_construction_cost_months
-  coc_effective_construction_cost_months:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.coc_effective_construction_cost_months
   coc_construction_cost_months_override_reason:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.columns.coc_construction_cost_months_override_reason
-  coc_charge_type:
+  coc_construction_cost_notes:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.coc_construction_cost_notes
+  coc_construction_cost_payee_type:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.coc_charge_type
+      field: primary_source_table.columns.coc_construction_cost_payee_type
+  coc_construction_cost_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.coc_construction_cost_status_type
+  coc_contractor_pid:
+    data_type: BIGINT
+  coc_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.coc_create_datetime
   coc_draw_discrepancy_text:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.columns.coc_draw_discrepancy_text
+  coc_effective_construction_cost_calculation_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.coc_effective_construction_cost_calculation_percent
+  coc_effective_construction_cost_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.coc_effective_construction_cost_months
   coc_impeding_draw_discrepancy:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.coc_impeding_draw_discrepancy
-  coc_borrower_pid:
-    data_type: BIGINT
+  coc_overridden_construction_cost_months:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.coc_borrower_pid
-  coc_proposal_hud_consultant_pid:
-    data_type: BIGINT
+      field: primary_source_table.columns.coc_overridden_construction_cost_months
+  coc_overridden_construction_cost_percent:
+    data_type: NUMERIC(11,9)
     source:
-      field: primary_source_table.columns.coc_proposal_hud_consultant_pid
-  coc_title_company_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.coc_title_company_pid
-  coc_payee_other_selected:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.coc_payee_other_selected
+      field: primary_source_table.columns.coc_overridden_construction_cost_percent
+  coc_payee:
+    data_type: VARCHAR(128)
   coc_payee_other_description:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.coc_payee_other_description
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  coc_payee_other_selected:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.coc_payee_other_selected
+  coc_permit_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.coc_permit_pid
+  coc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.coc_pid
+  coc_proposal_contractor_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.coc_proposal_contractor_pid
+  coc_proposal_hud_consultant_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.coc_proposal_hud_consultant_pid
+  coc_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.coc_proposal_pid
+  coc_title_company_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.coc_title_company_pid
+  coc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.coc_version
   data_source_deleted_flag:
     data_type: BOOLEAN
-  coc_contractor_pid:
-    data_type: BIGINT
-  coc_payee:
-    data_type: VARCHAR(128)
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

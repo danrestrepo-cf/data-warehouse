@@ -45,14 +45,12 @@ foreign_keys:
       schema: history_octane
       table: report_request_status_type
 columns:
-  mcrr_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.mcrr_pid
-  mcrr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.mcrr_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   mcrr_account_pid:
     data_type: BIGINT
     source:
@@ -61,64 +59,66 @@ columns:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.mcrr_create_datetime
-  mcrr_start_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.mcrr_start_datetime
-  mcrr_end_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.mcrr_end_datetime
-  mcrr_request_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrr_request_status_type
-  mcrr_request_status_messages:
-    data_type: TEXT
-    source:
-      field: primary_source_table.columns.mcrr_request_status_messages
-  mcrr_mcr_error_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrr_mcr_error_status_type
-  mcrr_mcr_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrr_mcr_status_type
-  mcrr_requester_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrr_requester_unparsed_name
-  mcrr_year:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.mcrr_year
-  mcrr_quarter_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrr_quarter_type
-  mcrr_mcr_xml_file_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.mcrr_mcr_xml_file_pid
-  mcrr_error_csv_file_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.mcrr_error_csv_file_pid
-  mcrr_mcr_loan_data_csv_file_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.mcrr_mcr_loan_data_csv_file_pid
   mcrr_csv_input_files_zip_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.mcrr_csv_input_files_zip_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
+  mcrr_end_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.mcrr_end_datetime
+  mcrr_error_csv_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcrr_error_csv_file_pid
+  mcrr_mcr_error_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrr_mcr_error_status_type
+  mcrr_mcr_loan_data_csv_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcrr_mcr_loan_data_csv_file_pid
+  mcrr_mcr_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrr_mcr_status_type
+  mcrr_mcr_xml_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcrr_mcr_xml_file_pid
+  mcrr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcrr_pid
+  mcrr_quarter_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrr_quarter_type
+  mcrr_request_status_messages:
     data_type: TEXT
+    source:
+      field: primary_source_table.columns.mcrr_request_status_messages
+  mcrr_request_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrr_request_status_type
+  mcrr_requester_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrr_requester_unparsed_name
+  mcrr_start_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.mcrr_start_datetime
+  mcrr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mcrr_version
+  mcrr_year:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mcrr_year
 etls:
   SP-100377:
     input_type: table

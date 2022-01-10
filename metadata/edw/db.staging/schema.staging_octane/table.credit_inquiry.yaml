@@ -59,49 +59,49 @@ foreign_keys:
       schema: staging_octane
       table: credit_inquiry_explanation_type
 columns:
-  ci_pid:
-    data_type: BIGINT
-  ci_version:
-    data_type: INTEGER
-  ci_proposal_pid:
-    data_type: BIGINT
-  ci_credit_request_pid:
-    data_type: BIGINT
-  ci_inquiry_date:
-    data_type: DATE
-  ci_name:
+  ci_address_city:
+    data_type: VARCHAR(128)
+  ci_address_country:
+    data_type: VARCHAR(128)
+  ci_address_postal_code:
+    data_type: VARCHAR(128)
+  ci_address_state:
     data_type: VARCHAR(128)
   ci_address_street1:
     data_type: VARCHAR(128)
   ci_address_street2:
     data_type: VARCHAR(128)
-  ci_address_city:
-    data_type: VARCHAR(128)
-  ci_address_state:
-    data_type: VARCHAR(128)
-  ci_address_postal_code:
-    data_type: VARCHAR(128)
-  ci_address_country:
-    data_type: VARCHAR(128)
-  ci_phone:
-    data_type: VARCHAR(32)
-  ci_credit_inquiry_result_type:
-    data_type: VARCHAR(128)
   ci_credit_business_type:
+    data_type: VARCHAR(128)
+  ci_credit_inquiry_result_type:
     data_type: VARCHAR(128)
   ci_credit_loan_type:
     data_type: VARCHAR(128)
+  ci_credit_report_identifier:
+    data_type: VARCHAR(32)
+  ci_credit_request_pid:
+    data_type: BIGINT
   ci_equifax_included:
     data_type: BOOLEAN
   ci_experian_included:
     data_type: BOOLEAN
-  ci_trans_union_included:
-    data_type: BOOLEAN
-  ci_explanation_type:
-    data_type: VARCHAR(128)
   ci_explanation_info:
     data_type: VARCHAR(1024)
-  ci_credit_report_identifier:
-    data_type: VARCHAR(32)
+  ci_explanation_type:
+    data_type: VARCHAR(128)
+  ci_inquiry_date:
+    data_type: DATE
   ci_inquiry_date_provided:
     data_type: BOOLEAN
+  ci_name:
+    data_type: VARCHAR(128)
+  ci_phone:
+    data_type: VARCHAR(32)
+  ci_pid:
+    data_type: BIGINT
+  ci_proposal_pid:
+    data_type: BIGINT
+  ci_trans_union_included:
+    data_type: BOOLEAN
+  ci_version:
+    data_type: INTEGER

@@ -37,56 +37,56 @@ foreign_keys:
       schema: history_octane
       table: proposal_review_status_type
 columns:
-  prpre_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpre_pid
-  prpre_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.prpre_version
-  prpre_proposal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpre_proposal_pid
-  prpre_request_id:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.prpre_request_id
-  prpre_request_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.prpre_request_datetime
-  prpre_request_by_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpre_request_by_lender_user_pid
-  prpre_request_summary:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
     data_type: TEXT
-    source:
-      field: primary_source_table.columns.prpre_request_summary
-  prpre_proposal_review_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.prpre_proposal_review_status_type
-  prpre_decision_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.prpre_decision_datetime
   prpre_decision_by_lender_user_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.prpre_decision_by_lender_user_pid
+  prpre_decision_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.prpre_decision_datetime
   prpre_decision_summary:
     data_type: TEXT
     source:
       field: primary_source_table.columns.prpre_decision_summary
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
+  prpre_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpre_pid
+  prpre_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpre_proposal_pid
+  prpre_proposal_review_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prpre_proposal_review_status_type
+  prpre_request_by_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpre_request_by_lender_user_pid
+  prpre_request_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.prpre_request_datetime
+  prpre_request_id:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.prpre_request_id
+  prpre_request_summary:
     data_type: TEXT
+    source:
+      field: primary_source_table.columns.prpre_request_summary
+  prpre_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.prpre_version
 etls:
   SP-100327:
     input_type: table

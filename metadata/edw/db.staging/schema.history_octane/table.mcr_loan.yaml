@@ -181,174 +181,172 @@ foreign_keys:
       schema: history_octane
       table: servicing_transfer_type
 columns:
-  mcrl_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.mcrl_pid
-  mcrl_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.mcrl_version
-  mcrl_loan_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.mcrl_loan_pid
-  mcrl_mcr_snapshot_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.mcrl_mcr_snapshot_pid
-  mcrl_los_loan_id:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.mcrl_los_loan_id
-  mcrl_originator_nmls_id:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.mcrl_originator_nmls_id
-  mcrl_loan_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.mcrl_loan_amount
-  mcrl_lien_priority_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrl_lien_priority_type
-  mcrl_mortgage_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrl_mortgage_type
-  mcrl_interest_only_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrl_interest_only_type
-  mcrl_prepay_penalty_schedule_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrl_prepay_penalty_schedule_type
-  mcrl_ltv_ratio_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.mcrl_ltv_ratio_percent
-  mcrl_note_rate_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.mcrl_note_rate_percent
-  mcrl_hmda_action_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrl_hmda_action_type
-  mcrl_hmda_action_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.mcrl_hmda_action_date
-  mcrl_disclosure_mode_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.mcrl_disclosure_mode_date
-  mcrl_decision_credit_score:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.mcrl_decision_credit_score
-  mcrl_property_usage_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrl_property_usage_type
-  mcrl_doc_level_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrl_doc_level_type
-  mcrl_loan_purpose_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrl_loan_purpose_type
-  mcrl_mi_required:
+  data_source_deleted_flag:
     data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.mcrl_mi_required
-  mcrl_proposal_structure_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrl_proposal_structure_type
-  mcrl_subject_property_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrl_subject_property_state
-  mcrl_property_category_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrl_property_category_type
-  mcrl_cltv_ratio_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.mcrl_cltv_ratio_percent
-  mcrl_funding_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrl_funding_status_type
-  mcrl_funding_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.mcrl_funding_date
-  mcrl_loan_amortization_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrl_loan_amortization_type
-  mcrl_product_special_program_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrl_product_special_program_type
-  mcrl_non_conforming:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.mcrl_non_conforming
-  mcrl_initial_payment_adjustment_term_months:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.mcrl_initial_payment_adjustment_term_months
-  mcrl_subsequent_payment_adjustment_term_months:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.mcrl_subsequent_payment_adjustment_term_months
-  mcrl_fund_source_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrl_fund_source_type
-  mcrl_channel_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrl_channel_type
-  mcrl_financed_units_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.mcrl_financed_units_count
-  mcrl_cash_out_reason_home_improvement:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.mcrl_cash_out_reason_home_improvement
-  mcrl_hmda_hoepa_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrl_hmda_hoepa_status_type
-  mcrl_qualified_mortgage_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mcrl_qualified_mortgage_status_type
-  mcrl_lender_fee_total_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.mcrl_lender_fee_total_amount
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   mcrl_broker_fee_total_amount:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.mcrl_broker_fee_total_amount
-  mcrl_investor_hmda_purchaser_of_loan_type:
+  mcrl_cash_out_reason_home_improvement:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.mcrl_cash_out_reason_home_improvement
+  mcrl_channel_type:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.mcrl_investor_hmda_purchaser_of_loan_type
+      field: primary_source_table.columns.mcrl_channel_type
+  mcrl_cltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.mcrl_cltv_ratio_percent
   mcrl_confirmed_release_datetime:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.mcrl_confirmed_release_datetime
+  mcrl_decision_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mcrl_decision_credit_score
+  mcrl_disclosure_mode_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.mcrl_disclosure_mode_date
+  mcrl_doc_level_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_doc_level_type
+  mcrl_financed_property_improvements_category_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_financed_property_improvements_category_type
+  mcrl_financed_units_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mcrl_financed_units_count
+  mcrl_fund_source_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_fund_source_type
+  mcrl_funding_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.mcrl_funding_date
+  mcrl_funding_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_funding_status_type
+  mcrl_hmda_action_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.mcrl_hmda_action_date
+  mcrl_hmda_action_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_hmda_action_type
+  mcrl_hmda_hoepa_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_hmda_hoepa_status_type
+  mcrl_initial_payment_adjustment_term_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mcrl_initial_payment_adjustment_term_months
+  mcrl_interest_only_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_interest_only_type
+  mcrl_investor_hmda_purchaser_of_loan_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_investor_hmda_purchaser_of_loan_type
+  mcrl_lender_fee_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.mcrl_lender_fee_total_amount
+  mcrl_lien_priority_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_lien_priority_type
+  mcrl_loan_amortization_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_loan_amortization_type
+  mcrl_loan_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.mcrl_loan_amount
+  mcrl_loan_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcrl_loan_pid
+  mcrl_loan_purpose_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_loan_purpose_type
+  mcrl_los_loan_id:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcrl_los_loan_id
+  mcrl_ltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.mcrl_ltv_ratio_percent
+  mcrl_mcr_loan_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_mcr_loan_status_type
+  mcrl_mcr_snapshot_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcrl_mcr_snapshot_pid
+  mcrl_mi_required:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.mcrl_mi_required
+  mcrl_mortgage_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_mortgage_type
+  mcrl_non_conforming:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.mcrl_non_conforming
+  mcrl_note_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.mcrl_note_rate_percent
+  mcrl_originator_nmls_id:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.mcrl_originator_nmls_id
+  mcrl_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcrl_pid
+  mcrl_prepay_penalty_schedule_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_prepay_penalty_schedule_type
+  mcrl_product_special_program_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_product_special_program_type
+  mcrl_property_category_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_property_category_type
+  mcrl_property_usage_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_property_usage_type
+  mcrl_proposal_structure_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mcrl_proposal_structure_type
   mcrl_purchase_advice_date:
     data_type: DATE
     source:
@@ -357,24 +355,26 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.mcrl_purchasing_beneficiary_investor_pid
-  mcrl_mcr_loan_status_type:
+  mcrl_qualified_mortgage_status_type:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.mcrl_mcr_loan_status_type
+      field: primary_source_table.columns.mcrl_qualified_mortgage_status_type
   mcrl_servicing_transfer_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.mcrl_servicing_transfer_type
-  mcrl_financed_property_improvements_category_type:
+  mcrl_subject_property_state:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.mcrl_financed_property_improvements_category_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.mcrl_subject_property_state
+  mcrl_subsequent_payment_adjustment_term_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mcrl_subsequent_payment_adjustment_term_months
+  mcrl_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mcrl_version
 etls:
   SP-100042:
     input_type: table

@@ -91,25 +91,57 @@ foreign_keys:
       schema: staging_octane
       table: agent_type
 columns:
-  llmj_pid:
-    data_type: BIGINT
-  llmj_version:
-    data_type: INTEGER
-  llmj_major_version:
-    data_type: INTEGER
-  llmj_lender_lock_id:
-    data_type: VARCHAR(11)
-  llmj_loan_pid:
-    data_type: BIGINT
-  llmj_lien_priority_type:
-    data_type: VARCHAR(128)
   llmj_account_pid:
     data_type: BIGINT
-  llmj_lock_datetime:
+  llmj_active:
+    data_type: BOOLEAN
+  llmj_auto_confirmed:
+    data_type: BOOLEAN
+  llmj_cancel_datetime:
     data_type: TIMESTAMP
+  llmj_cancel_lender_user_pid:
+    data_type: BIGINT
+  llmj_cancel_unparsed_name:
+    data_type: VARCHAR(128)
+  llmj_clear_extension_fees_relock:
+    data_type: BOOLEAN
+  llmj_confirm_datetime:
+    data_type: TIMESTAMP
+  llmj_confirm_lender_user_pid:
+    data_type: BIGINT
+  llmj_confirm_unparsed_name:
+    data_type: VARCHAR(128)
+  llmj_expired_lock_successor:
+    data_type: BOOLEAN
   llmj_initial_duration_days:
     data_type: INTEGER
   llmj_initial_lock_expiration_datetime:
+    data_type: TIMESTAMP
+  llmj_lender_concession_approved_amount:
+    data_type: NUMERIC(15,2)
+  llmj_lender_lock_id:
+    data_type: VARCHAR(11)
+  llmj_lien_priority_type:
+    data_type: VARCHAR(128)
+  llmj_loan_pid:
+    data_type: BIGINT
+  llmj_lock_datetime:
+    data_type: TIMESTAMP
+  llmj_lock_series_pid:
+    data_type: BIGINT
+  llmj_major_version:
+    data_type: INTEGER
+  llmj_notes:
+    data_type: VARCHAR(16000)
+  llmj_pid:
+    data_type: BIGINT
+  llmj_pricing_commitment_type:
+    data_type: VARCHAR(128)
+  llmj_pricing_duration_days:
+    data_type: INTEGER
+  llmj_relock_fee_percent:
+    data_type: NUMERIC(11,9)
+  llmj_request_datetime:
     data_type: TIMESTAMP
   llmj_requester_agent_type:
     data_type: VARCHAR(128)
@@ -117,49 +149,17 @@ columns:
     data_type: BIGINT
   llmj_requester_unparsed_name:
     data_type: VARCHAR(128)
-  llmj_request_datetime:
+  llmj_version:
+    data_type: INTEGER
+  llmj_void_datetime:
     data_type: TIMESTAMP
-  llmj_confirm_datetime:
-    data_type: TIMESTAMP
-  llmj_confirm_lender_user_pid:
+  llmj_void_lender_user_pid:
     data_type: BIGINT
-  llmj_confirm_unparsed_name:
-    data_type: VARCHAR(128)
   llmj_void_request_datetime:
     data_type: TIMESTAMP
   llmj_void_request_lender_user_pid:
     data_type: BIGINT
   llmj_void_request_unparsed_name:
     data_type: VARCHAR(128)
-  llmj_void_datetime:
-    data_type: TIMESTAMP
-  llmj_void_lender_user_pid:
-    data_type: BIGINT
   llmj_void_unparsed_name:
     data_type: VARCHAR(128)
-  llmj_cancel_datetime:
-    data_type: TIMESTAMP
-  llmj_cancel_lender_user_pid:
-    data_type: BIGINT
-  llmj_cancel_unparsed_name:
-    data_type: VARCHAR(128)
-  llmj_auto_confirmed:
-    data_type: BOOLEAN
-  llmj_active:
-    data_type: BOOLEAN
-  llmj_relock_fee_percent:
-    data_type: NUMERIC(11,9)
-  llmj_notes:
-    data_type: VARCHAR(16000)
-  llmj_lender_concession_approved_amount:
-    data_type: NUMERIC(15,2)
-  llmj_clear_extension_fees_relock:
-    data_type: BOOLEAN
-  llmj_pricing_duration_days:
-    data_type: INTEGER
-  llmj_pricing_commitment_type:
-    data_type: VARCHAR(128)
-  llmj_expired_lock_successor:
-    data_type: BOOLEAN
-  llmj_lock_series_pid:
-    data_type: BIGINT

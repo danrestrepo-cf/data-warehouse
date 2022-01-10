@@ -29,34 +29,34 @@ foreign_keys:
       schema: history_octane
       table: deal_tag_level_type
 columns:
-  dtd_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dtd_pid
-  dtd_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dtd_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   dtd_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dtd_account_pid
-  dtd_tag_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.dtd_tag_name
-  dtd_deal_tag_level_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dtd_deal_tag_level_type
   dtd_deal_tag_access_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dtd_deal_tag_access_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+  dtd_deal_tag_level_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dtd_deal_tag_level_type
+  dtd_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dtd_pid
+  dtd_tag_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dtd_tag_name
+  dtd_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dtd_version
   etl_batch_id:
     data_type: TEXT
 etls:

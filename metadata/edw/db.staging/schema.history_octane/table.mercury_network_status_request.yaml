@@ -21,14 +21,12 @@ foreign_keys:
       schema: history_octane
       table: mercury_network_status_type
 columns:
-  mnsr_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.mnsr_pid
-  mnsr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.mnsr_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   mnsr_deal_pid:
     data_type: BIGINT
     source:
@@ -41,16 +39,18 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.mnsr_mercury_network_status_type
+  mnsr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mnsr_pid
   mnsr_status_message:
     data_type: VARCHAR(16000)
     source:
       field: primary_source_table.columns.mnsr_status_message
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  mnsr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mnsr_version
 etls:
   SP-100103:
     input_type: table

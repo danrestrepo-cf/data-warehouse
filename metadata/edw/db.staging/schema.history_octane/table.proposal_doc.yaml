@@ -293,178 +293,64 @@ foreign_keys:
       schema: history_octane
       table: doc_status_type
 columns:
-  prpd_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpd_pid
-  prpd_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.prpd_version
-  prpd_doc_name:
-    data_type: VARCHAR(767)
-    source:
-      field: primary_source_table.columns.prpd_doc_name
-  prpd_doc_number:
-    data_type: NUMERIC(15,3)
-    source:
-      field: primary_source_table.columns.prpd_doc_number
-  prpd_borrower_access:
+  data_source_deleted_flag:
     data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.prpd_borrower_access
-  prpd_deal_child_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.prpd_deal_child_type
-  prpd_deal_child_name:
-    data_type: VARCHAR(767)
-    source:
-      field: primary_source_table.columns.prpd_deal_child_name
-  prpd_deal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpd_deal_pid
-  prpd_proposal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpd_proposal_pid
-  prpd_loan_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpd_loan_pid
-  prpd_borrower_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpd_borrower_pid
-  prpd_borrower_income_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpd_borrower_income_pid
-  prpd_job_income_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpd_job_income_pid
-  prpd_borrower_job_gap_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpd_borrower_job_gap_pid
-  prpd_other_income_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpd_other_income_pid
-  prpd_business_income_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpd_business_income_pid
-  prpd_rental_income_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpd_rental_income_pid
-  prpd_asset_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpd_asset_pid
-  prpd_asset_large_deposit_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpd_asset_large_deposit_pid
-  prpd_liability_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpd_liability_pid
-  prpd_reo_place_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpd_reo_place_pid
-  prpd_property_place_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpd_property_place_pid
-  prpd_residence_place_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpd_residence_place_pid
-  prpd_borrower_residence_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpd_borrower_residence_pid
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   prpd_application_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.prpd_application_pid
-  prpd_credit_inquiry_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpd_credit_inquiry_pid
-  prpd_appraisal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpd_appraisal_pid
   prpd_appraisal_form_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.prpd_appraisal_form_pid
-  prpd_tax_transcript_request_pid:
+  prpd_appraisal_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.prpd_tax_transcript_request_pid
-  prpd_trash:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.prpd_trash
-  prpd_smart_doc_pid:
+      field: primary_source_table.columns.prpd_appraisal_pid
+  prpd_asset_large_deposit_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.prpd_smart_doc_pid
-  prpd_proposal_doc_set_pid:
+      field: primary_source_table.columns.prpd_asset_large_deposit_pid
+  prpd_asset_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.prpd_proposal_doc_set_pid
-  prpd_doc_fulfill_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.prpd_doc_fulfill_status_type
-  prpd_status_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.prpd_status_unparsed_name
-  prpd_status_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.prpd_status_datetime
-  prpd_status_reason:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.prpd_status_reason
-  prpd_doc_excluded:
+      field: primary_source_table.columns.prpd_asset_pid
+  prpd_borrower_access:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.prpd_doc_excluded
-  prpd_doc_excluded_reason:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.prpd_doc_excluded_reason
-  prpd_doc_excluded_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.prpd_doc_excluded_unparsed_name
-  prpd_doc_excluded_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.prpd_doc_excluded_datetime
-  prpd_doc_approval_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.prpd_doc_approval_type
-  prpd_borrower_edit:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.prpd_borrower_edit
+      field: primary_source_table.columns.prpd_borrower_access
   prpd_borrower_associated_address_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.prpd_borrower_associated_address_pid
+  prpd_borrower_edit:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prpd_borrower_edit
+  prpd_borrower_income_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_borrower_income_pid
+  prpd_borrower_job_gap_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_borrower_job_gap_pid
+  prpd_borrower_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_borrower_pid
+  prpd_borrower_residence_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_borrower_residence_pid
+  prpd_business_income_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_business_income_pid
   prpd_construction_cost_pid:
     data_type: BIGINT
     source:
@@ -473,44 +359,158 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.prpd_construction_draw_pid
-  prpd_proposal_contractor_pid:
+  prpd_credit_inquiry_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.prpd_proposal_contractor_pid
+      field: primary_source_table.columns.prpd_credit_inquiry_pid
+  prpd_deal_child_name:
+    data_type: VARCHAR(767)
+    source:
+      field: primary_source_table.columns.prpd_deal_child_name
+  prpd_deal_child_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prpd_deal_child_type
+  prpd_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_deal_pid
+  prpd_doc_approval_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prpd_doc_approval_type
+  prpd_doc_excluded:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prpd_doc_excluded
+  prpd_doc_excluded_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.prpd_doc_excluded_datetime
+  prpd_doc_excluded_reason:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.prpd_doc_excluded_reason
+  prpd_doc_excluded_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prpd_doc_excluded_unparsed_name
+  prpd_doc_fulfill_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prpd_doc_fulfill_status_type
+  prpd_doc_name:
+    data_type: VARCHAR(767)
+    source:
+      field: primary_source_table.columns.prpd_doc_name
+  prpd_doc_number:
+    data_type: NUMERIC(15,3)
+    source:
+      field: primary_source_table.columns.prpd_doc_number
   prpd_doc_provider_group_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.prpd_doc_provider_group_type
-  prpd_doc_req_fulfill_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.prpd_doc_req_fulfill_status_type
   prpd_doc_req_decision_status_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.prpd_doc_req_decision_status_type
+  prpd_doc_req_fulfill_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prpd_doc_req_fulfill_status_type
   prpd_doc_status_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.prpd_doc_status_type
-  prpd_proposal_review_pid:
+  prpd_job_income_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.prpd_proposal_review_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  prpd_valid_from_date:
-    data_type: DATE
-  prpd_valid_through_date:
-    data_type: DATE
+      field: primary_source_table.columns.prpd_job_income_pid
   prpd_key_date:
     data_type: DATE
   prpd_last_status_reason:
     data_type: TEXT
-  etl_batch_id:
-    data_type: TEXT
+  prpd_liability_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_liability_pid
+  prpd_loan_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_loan_pid
+  prpd_other_income_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_other_income_pid
+  prpd_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_pid
+  prpd_property_place_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_property_place_pid
+  prpd_proposal_contractor_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_proposal_contractor_pid
+  prpd_proposal_doc_set_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_proposal_doc_set_pid
+  prpd_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_proposal_pid
+  prpd_proposal_review_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_proposal_review_pid
+  prpd_rental_income_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_rental_income_pid
+  prpd_reo_place_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_reo_place_pid
+  prpd_residence_place_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_residence_place_pid
+  prpd_smart_doc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_smart_doc_pid
+  prpd_status_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.prpd_status_datetime
+  prpd_status_reason:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.prpd_status_reason
+  prpd_status_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prpd_status_unparsed_name
+  prpd_tax_transcript_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_tax_transcript_request_pid
+  prpd_trash:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prpd_trash
+  prpd_valid_from_date:
+    data_type: DATE
+  prpd_valid_through_date:
+    data_type: DATE
+  prpd_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.prpd_version
 etls:
   SP-100350:
     input_type: table

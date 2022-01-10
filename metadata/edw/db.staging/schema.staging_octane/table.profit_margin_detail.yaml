@@ -19,19 +19,19 @@ foreign_keys:
       schema: staging_octane
       table: profit_margin_type
 columns:
-  pmd_pid:
-    data_type: BIGINT
-  pmd_version:
-    data_type: INTEGER
+  pmd_adjustment_description:
+    data_type: VARCHAR(16000)
+  pmd_description:
+    data_type: VARCHAR(128)
+  pmd_dollars:
+    data_type: NUMERIC(15,2)
   pmd_lender_lock_minor_pid:
+    data_type: BIGINT
+  pmd_percent:
+    data_type: NUMERIC(11,9)
+  pmd_pid:
     data_type: BIGINT
   pmd_profit_margin_type:
     data_type: VARCHAR(128)
-  pmd_description:
-    data_type: VARCHAR(128)
-  pmd_percent:
-    data_type: NUMERIC(11,9)
-  pmd_dollars:
-    data_type: NUMERIC(15,2)
-  pmd_adjustment_description:
-    data_type: VARCHAR(16000)
+  pmd_version:
+    data_type: INTEGER

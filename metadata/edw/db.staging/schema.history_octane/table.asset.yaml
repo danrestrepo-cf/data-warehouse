@@ -85,14 +85,6 @@ foreign_keys:
       schema: history_octane
       table: yes_no_unknown_type
 columns:
-  as_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.as_pid
-  as_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.as_version
   as_aggregate_description:
     data_type: VARCHAR(256)
     source:
@@ -113,10 +105,22 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.as_automobile_model_year
+  as_available_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.as_available_amount
   as_cash_or_market_value_amount:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.as_cash_or_market_value_amount
+  as_closing_costs_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.as_closing_costs_amount
+  as_deposit_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.as_deposit_date
   as_description:
     data_type: VARCHAR(128)
     source:
@@ -145,6 +149,30 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.as_donor_street2
+  as_down_payment_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.as_down_payment_amount
+  as_earnest_money_deposit_is_gift:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.as_earnest_money_deposit_is_gift
+  as_earnest_money_deposit_source_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.as_earnest_money_deposit_source_pid
+  as_gift_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.as_gift_amount
+  as_gift_funds_account_holder_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.as_gift_funds_account_holder_type
+  as_gift_funds_depository_asset_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.as_gift_funds_depository_asset_pid
   as_gift_funds_donor_phone:
     data_type: VARCHAR(32)
     source:
@@ -157,18 +185,14 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.as_gift_funds_donor_unparsed_name
+  as_gift_funds_ein:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.as_gift_funds_ein
   as_gift_funds_other_type_description:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.as_gift_funds_other_type_description
-  as_gift_funds_depository_asset_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.as_gift_funds_depository_asset_pid
-  as_gift_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.as_gift_amount
   as_gift_funds_source_account_type:
     data_type: VARCHAR(128)
     source:
@@ -181,10 +205,6 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.as_gift_funds_type
-  as_holder_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.as_holder_name
   as_holder_city:
     data_type: VARCHAR(128)
     source:
@@ -193,6 +213,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.as_holder_country
+  as_holder_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.as_holder_name
   as_holder_postal_code:
     data_type: VARCHAR(128)
     source:
@@ -221,6 +245,18 @@ columns:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.as_liquid_percent
+  as_penalty_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.as_penalty_amount
+  as_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.as_pid
+  as_snapshotted_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.as_snapshotted_pid
   as_source_verification_required:
     data_type: VARCHAR(128)
     source:
@@ -229,50 +265,14 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.as_stock_bond_mutual_fund_share_count
-  as_earnest_money_deposit_source_pid:
-    data_type: BIGINT
+  as_version:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.as_earnest_money_deposit_source_pid
-  as_available_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.as_available_amount
-  as_down_payment_amount:
-    data_type: NUMERIC(15,0)
-    source:
-      field: primary_source_table.columns.as_down_payment_amount
-  as_closing_costs_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.as_closing_costs_amount
-  as_gift_funds_account_holder_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.as_gift_funds_account_holder_type
-  as_penalty_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.as_penalty_amount
-  as_earnest_money_deposit_is_gift:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.as_earnest_money_deposit_is_gift
-  as_deposit_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.as_deposit_date
-  as_gift_funds_ein:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.as_gift_funds_ein
-  as_snapshotted_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.as_snapshotted_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+      field: primary_source_table.columns.as_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

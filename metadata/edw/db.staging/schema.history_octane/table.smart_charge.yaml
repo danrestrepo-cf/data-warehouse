@@ -45,18 +45,20 @@ foreign_keys:
       schema: history_octane
       table: smart_charge_apr_type
 columns:
-  sc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sc_pid
-  sc_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sc_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   sc_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.sc_account_pid
+  sc_apr_criteria_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sc_apr_criteria_pid
   sc_charge_type:
     data_type: VARCHAR(128)
     source:
@@ -69,20 +71,18 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.sc_name
+  sc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sc_pid
   sc_smart_charge_apr_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.sc_smart_charge_apr_type
-  sc_apr_criteria_pid:
-    data_type: BIGINT
+  sc_version:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.sc_apr_criteria_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.sc_version
 etls:
   SP-100054:
     input_type: table

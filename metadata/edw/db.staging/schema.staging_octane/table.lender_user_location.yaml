@@ -43,29 +43,29 @@ foreign_keys:
       schema: staging_octane
       table: workspace_type
 columns:
-  luloc_pid:
-    data_type: BIGINT
-  luloc_version:
-    data_type: INTEGER
   luloc_company_pid:
     data_type: BIGINT
-  luloc_lender_user_pid:
-    data_type: BIGINT
-  luloc_location_pid:
-    data_type: BIGINT
+  luloc_current_license_location:
+    data_type: BOOLEAN
+  luloc_current_physical_location:
+    data_type: BOOLEAN
   luloc_from_date:
     data_type: DATE
   luloc_lender_user_location_type:
     data_type: VARCHAR(128)
-  luloc_workspace_type:
-    data_type: VARCHAR(128)
-  luloc_workspace_code:
-    data_type: VARCHAR(16)
-  luloc_current_physical_location:
-    data_type: BOOLEAN
-  luloc_current_license_location:
+  luloc_lender_user_pid:
+    data_type: BIGINT
+  luloc_location_pid:
+    data_type: BIGINT
+  luloc_pid:
+    data_type: BIGINT
+  luloc_synthetic_unique_current_license_location:
     data_type: BOOLEAN
   luloc_synthetic_unique_current_physical_location:
     data_type: BOOLEAN
-  luloc_synthetic_unique_current_license_location:
-    data_type: BOOLEAN
+  luloc_version:
+    data_type: INTEGER
+  luloc_workspace_code:
+    data_type: VARCHAR(16)
+  luloc_workspace_type:
+    data_type: VARCHAR(128)

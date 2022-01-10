@@ -21,14 +21,6 @@ foreign_keys:
       schema: history_octane
       table: field_type
 columns:
-  cfmf_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.cfmf_pid
-  cfmf_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.cfmf_version
   cfmf_custom_form_pid:
     data_type: BIGINT
     source:
@@ -37,10 +29,18 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.cfmf_field_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  cfmf_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cfmf_pid
+  cfmf_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.cfmf_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

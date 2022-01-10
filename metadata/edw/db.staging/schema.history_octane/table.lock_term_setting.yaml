@@ -21,6 +21,28 @@ foreign_keys:
       schema: history_octane
       table: lock_commitment_type
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  lts_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lts_account_pid
+  lts_borrower_app_enabled:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lts_borrower_app_enabled
+  lts_lock_commitment_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lts_lock_commitment_type
+  lts_lock_duration_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lts_lock_duration_days
   lts_pid:
     data_type: BIGINT
     source:
@@ -29,28 +51,6 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.lts_version
-  lts_account_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lts_account_pid
-  lts_lock_duration_days:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lts_lock_duration_days
-  lts_lock_commitment_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lts_lock_commitment_type
-  lts_borrower_app_enabled:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.lts_borrower_app_enabled
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
 etls:
   SP-100225:
     input_type: table

@@ -27,33 +27,33 @@ foreign_keys:
       schema: staging_octane
       table: report_request_status_type
 columns:
-  hrr_pid:
-    data_type: BIGINT
-  hrr_version:
-    data_type: INTEGER
   hrr_account_pid:
     data_type: BIGINT
   hrr_create_datetime:
     data_type: TIMESTAMP
-  hrr_start_datetime:
-    data_type: TIMESTAMP
   hrr_end_datetime:
     data_type: TIMESTAMP
-  hrr_request_status_type:
-    data_type: VARCHAR(128)
+  hrr_error_limit:
+    data_type: INTEGER
+  hrr_error_protection:
+    data_type: BOOLEAN
+  hrr_from_date:
+    data_type: DATE
+  hrr_pid:
+    data_type: BIGINT
+  hrr_repository_file_pid:
+    data_type: BIGINT
   hrr_request_status_messages:
     data_type: TEXT
+  hrr_request_status_type:
+    data_type: VARCHAR(128)
   hrr_requester_unparsed_name:
     data_type: VARCHAR(128)
   hrr_row_count:
     data_type: INTEGER
-  hrr_from_date:
-    data_type: DATE
+  hrr_start_datetime:
+    data_type: TIMESTAMP
   hrr_through_date:
     data_type: DATE
-  hrr_error_protection:
-    data_type: BOOLEAN
-  hrr_error_limit:
+  hrr_version:
     data_type: INTEGER
-  hrr_repository_file_pid:
-    data_type: BIGINT

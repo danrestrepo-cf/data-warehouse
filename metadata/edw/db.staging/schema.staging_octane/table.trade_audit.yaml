@@ -27,15 +27,15 @@ foreign_keys:
       schema: staging_octane
       table: trade_audit_type
 columns:
-  ta_pid:
-    data_type: BIGINT
-  ta_version:
-    data_type: INTEGER
-  ta_trade_pid:
-    data_type: BIGINT
   ta_lender_lock_major_pid:
+    data_type: BIGINT
+  ta_message:
+    data_type: VARCHAR(256)
+  ta_pid:
     data_type: BIGINT
   ta_trade_audit_type:
     data_type: VARCHAR(128)
-  ta_message:
-    data_type: VARCHAR(256)
+  ta_trade_pid:
+    data_type: BIGINT
+  ta_version:
+    data_type: INTEGER

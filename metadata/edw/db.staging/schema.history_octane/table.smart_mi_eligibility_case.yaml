@@ -21,18 +21,12 @@ foreign_keys:
       schema: history_octane
       table: criteria
 columns:
-  smec_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.smec_pid
-  smec_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.smec_version
-  smec_smart_mi_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.smec_smart_mi_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   smec_criteria_pid:
     data_type: BIGINT
     source:
@@ -41,16 +35,22 @@ columns:
     data_type: DATE
     source:
       field: primary_source_table.columns.smec_from_date
+  smec_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smec_pid
+  smec_smart_mi_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smec_smart_mi_pid
   smec_through_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.smec_through_date
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  smec_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.smec_version
 etls:
   SP-100056:
     input_type: table

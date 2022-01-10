@@ -27,23 +27,23 @@ foreign_keys:
       schema: staging_octane
       table: mers_daily_report_import_status_type
 columns:
-  medr_pid:
-    data_type: BIGINT
-  medr_version:
-    data_type: INTEGER
   medr_account_pid:
+    data_type: BIGINT
+  medr_consolidated_report_text_repository_file_pid:
     data_type: BIGINT
   medr_create_datetime:
     data_type: TIMESTAMP
-  medr_report_date:
-    data_type: DATE
-  medr_import_status_type:
-    data_type: VARCHAR(128)
-  medr_import_status_messages:
-    data_type: TEXT
   medr_import_attempt_count:
     data_type: INTEGER
+  medr_import_status_messages:
+    data_type: TEXT
+  medr_import_status_type:
+    data_type: VARCHAR(128)
   medr_imported_loan_count:
     data_type: INTEGER
-  medr_consolidated_report_text_repository_file_pid:
+  medr_pid:
     data_type: BIGINT
+  medr_report_date:
+    data_type: DATE
+  medr_version:
+    data_type: INTEGER

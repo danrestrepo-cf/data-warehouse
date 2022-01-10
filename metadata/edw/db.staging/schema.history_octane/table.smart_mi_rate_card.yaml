@@ -29,44 +29,44 @@ foreign_keys:
       schema: history_octane
       table: mi_payment_type
 columns:
-  smrca_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.smrca_pid
-  smrca_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.smrca_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   smrca_from_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.smrca_from_date
-  smrca_mi_payment_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.smrca_mi_payment_type
-  smrca_mi_payer_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.smrca_mi_payer_type
-  smrca_minimum_rate_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.smrca_minimum_rate_percent
-  smrca_smart_mi_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.smrca_smart_mi_pid
   smrca_maximum_renewal_rate_percent:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.smrca_maximum_renewal_rate_percent
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  smrca_mi_payer_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.smrca_mi_payer_type
+  smrca_mi_payment_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.smrca_mi_payment_type
+  smrca_minimum_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.smrca_minimum_rate_percent
+  smrca_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smrca_pid
+  smrca_smart_mi_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smrca_smart_mi_pid
+  smrca_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.smrca_version
 etls:
   SP-100057:
     input_type: table

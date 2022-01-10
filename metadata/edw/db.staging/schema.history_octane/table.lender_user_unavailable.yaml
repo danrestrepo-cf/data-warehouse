@@ -13,32 +13,32 @@ foreign_keys:
       schema: history_octane
       table: lender_user
 columns:
-  luu_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.luu_pid
-  luu_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.luu_version
-  luu_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.luu_lender_user_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   luu_from_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.luu_from_date
+  luu_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.luu_lender_user_pid
+  luu_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.luu_pid
   luu_through_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.luu_through_date
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  luu_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.luu_version
 etls:
   SP-100102:
     input_type: table

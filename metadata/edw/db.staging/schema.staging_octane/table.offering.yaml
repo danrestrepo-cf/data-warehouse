@@ -19,23 +19,23 @@ foreign_keys:
       schema: staging_octane
       table: offering_group
 columns:
-  of_pid:
-    data_type: BIGINT
-  of_version:
-    data_type: INTEGER
   of_account_pid:
     data_type: BIGINT
-  of_offering_name:
-    data_type: VARCHAR(128)
-  of_offering_id:
-    data_type: VARCHAR(32)
+  of_adverse_action_offering:
+    data_type: BOOLEAN
   of_from_date:
-    data_type: DATE
-  of_through_date:
     data_type: DATE
   of_mortech_product_id:
     data_type: VARCHAR(16)
   of_offering_group_pid:
     data_type: BIGINT
-  of_adverse_action_offering:
-    data_type: BOOLEAN
+  of_offering_id:
+    data_type: VARCHAR(32)
+  of_offering_name:
+    data_type: VARCHAR(128)
+  of_pid:
+    data_type: BIGINT
+  of_through_date:
+    data_type: DATE
+  of_version:
+    data_type: INTEGER

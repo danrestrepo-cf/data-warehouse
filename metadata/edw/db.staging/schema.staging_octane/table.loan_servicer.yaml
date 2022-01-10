@@ -35,41 +35,41 @@ foreign_keys:
       schema: staging_octane
       table: mers_transfer_status_type
 columns:
-  lsv_pid:
-    data_type: BIGINT
-  lsv_version:
+  lsv_delinquent_payments_over_past_twelve_months_count:
     data_type: INTEGER
-  lsv_loan_pid:
-    data_type: BIGINT
-  lsv_investor_pid:
-    data_type: BIGINT
-  lsv_investor_loan_id:
-    data_type: VARCHAR(32)
-  lsv_initial:
-    data_type: BOOLEAN
   lsv_from_date:
     data_type: DATE
-  lsv_servicing_data_sent_date:
+  lsv_initial:
+    data_type: BOOLEAN
+  lsv_investor_loan_id:
+    data_type: VARCHAR(32)
+  lsv_investor_pid:
+    data_type: BIGINT
+  lsv_last_paid_installment_due_date:
     data_type: DATE
-  lsv_retain_notification_date:
-    data_type: DATE
-  lsv_release_notification_date:
-    data_type: DATE
-  lsv_servicing_docs_sent_date:
-    data_type: DATE
-  lsv_mers_transfer_status_type:
-    data_type: VARCHAR(128)
+  lsv_loan_acquisition_scheduled_upb_amount:
+    data_type: NUMERIC(15,2)
+  lsv_loan_pid:
+    data_type: BIGINT
+  lsv_mers_transfer_batch_pid:
+    data_type: BIGINT
   lsv_mers_transfer_creation_date:
     data_type: DATE
   lsv_mers_transfer_override:
     data_type: BOOLEAN
-  lsv_mers_transfer_batch_pid:
+  lsv_mers_transfer_status_type:
+    data_type: VARCHAR(128)
+  lsv_pid:
     data_type: BIGINT
-  lsv_loan_acquisition_scheduled_upb_amount:
-    data_type: NUMERIC(15,2)
-  lsv_last_paid_installment_due_date:
+  lsv_release_notification_date:
+    data_type: DATE
+  lsv_retain_notification_date:
+    data_type: DATE
+  lsv_servicing_data_sent_date:
+    data_type: DATE
+  lsv_servicing_docs_sent_date:
     data_type: DATE
   lsv_upb_amount:
     data_type: NUMERIC(15,2)
-  lsv_delinquent_payments_over_past_twelve_months_count:
+  lsv_version:
     data_type: INTEGER

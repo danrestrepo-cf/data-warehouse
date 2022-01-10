@@ -43,19 +43,19 @@ foreign_keys:
       schema: staging_octane
       table: state_type
 columns:
-  rerc_pid:
-    data_type: BIGINT
-  rerc_version:
-    data_type: INTEGER
-  rerc_ernst_page_rec_type:
-    data_type: VARCHAR(128)
-  rerc_state_type:
-    data_type: VARCHAR(128)
-  rerc_county_pid:
-    data_type: BIGINT
   rerc_county_city_pid:
     data_type: BIGINT
-  rerc_recording_district_pid:
+  rerc_county_pid:
     data_type: BIGINT
   rerc_ernst_page_rec:
     data_type: VARCHAR(16)
+  rerc_ernst_page_rec_type:
+    data_type: VARCHAR(128)
+  rerc_pid:
+    data_type: BIGINT
+  rerc_recording_district_pid:
+    data_type: BIGINT
+  rerc_state_type:
+    data_type: VARCHAR(128)
+  rerc_version:
+    data_type: INTEGER

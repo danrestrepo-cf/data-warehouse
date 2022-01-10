@@ -11,17 +11,17 @@ foreign_keys:
       schema: staging_octane
       table: deal
 columns:
-  dlue_pid:
-    data_type: BIGINT
-  dlue_version:
-    data_type: INTEGER
+  dlue_create_datetime:
+    data_type: TIMESTAMP
   dlue_deal_pid:
     data_type: BIGINT
-  dlue_subject_lender_user_pid:
+  dlue_pid:
     data_type: BIGINT
   dlue_role_pid:
     data_type: BIGINT
-  dlue_create_datetime:
-    data_type: TIMESTAMP
+  dlue_subject_lender_user_pid:
+    data_type: BIGINT
   dlue_unparsed_text:
     data_type: VARCHAR(1024)
+  dlue_version:
+    data_type: INTEGER

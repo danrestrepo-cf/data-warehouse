@@ -29,14 +29,10 @@ foreign_keys:
       schema: history_octane
       table: deal_contact_role_type
 columns:
-  dc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dc_pid
-  dc_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dc_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   dc_address_city:
     data_type: VARCHAR(128)
     source:
@@ -61,6 +57,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dc_address_street2
+  dc_company_license_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dc_company_license_id
   dc_company_name:
     data_type: VARCHAR(128)
     source:
@@ -105,6 +105,10 @@ columns:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.dc_office_phone_extension
+  dc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dc_pid
   dc_role_type:
     data_type: VARCHAR(128)
     source:
@@ -113,14 +117,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dc_title
-  dc_company_license_id:
-    data_type: VARCHAR(128)
+  dc_version:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.dc_company_license_id
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+      field: primary_source_table.columns.dc_version
   etl_batch_id:
     data_type: TEXT
 etls:

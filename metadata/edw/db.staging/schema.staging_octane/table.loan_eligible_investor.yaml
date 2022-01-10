@@ -19,11 +19,11 @@ foreign_keys:
       schema: staging_octane
       table: investor
 columns:
+  lei_investor_pid:
+    data_type: BIGINT
+  lei_loan_pid:
+    data_type: BIGINT
   lei_pid:
     data_type: BIGINT
   lei_version:
     data_type: INTEGER
-  lei_loan_pid:
-    data_type: BIGINT
-  lei_investor_pid:
-    data_type: BIGINT

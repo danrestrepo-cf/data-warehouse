@@ -21,32 +21,32 @@ foreign_keys:
       schema: history_octane
       table: smart_doc
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   sstd_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.sstd_pid
-  sstd_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sstd_version
-  sstd_smart_doc_set_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sstd_smart_doc_set_pid
-  sstd_smart_doc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sstd_smart_doc_pid
   sstd_sequence:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.sstd_sequence
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  sstd_smart_doc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sstd_smart_doc_pid
+  sstd_smart_doc_set_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sstd_smart_doc_set_pid
+  sstd_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sstd_version
 etls:
   SP-100336:
     input_type: table

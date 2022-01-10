@@ -3,29 +3,29 @@ primary_key:
 - lcd_pid
 - lcd_version
 columns:
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  lcd_dsi_closing_document_status_type:
+    data_type: VARCHAR(128)
+  lcd_dsi_doc_code:
+    data_type: VARCHAR(32)
+  lcd_dsi_fatal_messages:
+    data_type: TEXT
+  lcd_dsi_transaction_id:
+    data_type: VARCHAR(128)
+  lcd_dsi_warning_messages:
+    data_type: TEXT
+  lcd_dsi_websheet_number:
+    data_type: VARCHAR(16)
+  lcd_loan_pid:
+    data_type: BIGINT
   lcd_pid:
+    data_type: BIGINT
+  lcd_unsigned_closing_doc_deal_file_pid:
     data_type: BIGINT
   lcd_version:
     data_type: INTEGER
-  lcd_loan_pid:
-    data_type: BIGINT
-  lcd_dsi_websheet_number:
-    data_type: VARCHAR(16)
-  lcd_dsi_doc_code:
-    data_type: VARCHAR(32)
-  lcd_dsi_transaction_id:
-    data_type: VARCHAR(128)
-  lcd_dsi_closing_document_status_type:
-    data_type: VARCHAR(128)
-  lcd_dsi_fatal_messages:
-    data_type: TEXT
-  lcd_dsi_warning_messages:
-    data_type: TEXT
-  lcd_unsigned_closing_doc_deal_file_pid:
-    data_type: BIGINT
-  etl_batch_id:
-    data_type: TEXT

@@ -13,32 +13,32 @@ foreign_keys:
       schema: history_octane
       table: state_type
 columns:
-  rdi_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rdi_pid
-  rdi_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.rdi_version
-  rdi_state_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.rdi_state_type
-  rdi_district_name_with_qualifier:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.rdi_district_name_with_qualifier
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   rdi_district_name:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.rdi_district_name
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  rdi_district_name_with_qualifier:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.rdi_district_name_with_qualifier
+  rdi_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rdi_pid
+  rdi_state_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.rdi_state_type
+  rdi_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.rdi_version
 etls:
   SP-100257:
     input_type: table

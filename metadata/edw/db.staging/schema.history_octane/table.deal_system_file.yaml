@@ -21,26 +21,26 @@ foreign_keys:
       schema: history_octane
       table: repository_file
 columns:
-  dsf_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dsf_pid
-  dsf_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dsf_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   dsf_deal_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dsf_deal_pid
+  dsf_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dsf_pid
   dsf_repository_file_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dsf_repository_file_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+  dsf_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dsf_version
   etl_batch_id:
     data_type: TEXT
 etls:

@@ -13,26 +13,48 @@ foreign_keys:
       schema: history_octane
       table: proposal
 columns:
-  phc_pid:
-    data_type: BIGINT
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  phc_address_city:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.phc_pid
-  phc_version:
-    data_type: INTEGER
+      field: primary_source_table.columns.phc_address_city
+  phc_address_postal_code:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.phc_version
-  phc_proposal_pid:
-    data_type: BIGINT
+      field: primary_source_table.columns.phc_address_postal_code
+  phc_address_state:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.phc_proposal_pid
-  phc_consultant_id:
-    data_type: VARCHAR(8)
+      field: primary_source_table.columns.phc_address_state
+  phc_address_street1:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.phc_consultant_id
+      field: primary_source_table.columns.phc_address_street1
+  phc_address_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.phc_address_street2
   phc_company_name:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.phc_company_name
+  phc_consultant_id:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.phc_consultant_id
+  phc_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.phc_email
+  phc_fax:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.phc_fax
   phc_first_name:
     data_type: VARCHAR(32)
     source:
@@ -41,10 +63,6 @@ columns:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.phc_last_name
-  phc_email:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.phc_email
   phc_mobile_phone:
     data_type: VARCHAR(32)
     source:
@@ -57,36 +75,18 @@ columns:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.phc_office_phone_extension
-  phc_fax:
-    data_type: VARCHAR(32)
+  phc_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.phc_fax
-  phc_address_street1:
-    data_type: VARCHAR(128)
+      field: primary_source_table.columns.phc_pid
+  phc_proposal_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.phc_address_street1
-  phc_address_street2:
-    data_type: VARCHAR(128)
+      field: primary_source_table.columns.phc_proposal_pid
+  phc_version:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.phc_address_street2
-  phc_address_city:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.phc_address_city
-  phc_address_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.phc_address_state
-  phc_address_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.phc_address_postal_code
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.phc_version
 etls:
   SP-100828:
     input_type: table

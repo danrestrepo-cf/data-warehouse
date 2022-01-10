@@ -21,14 +21,20 @@ foreign_keys:
       schema: history_octane
       table: loan_charge
 columns:
-  lci_pid:
-    data_type: BIGINT
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  lci_absorb_cost:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.lci_pid
-  lci_version:
-    data_type: INTEGER
+      field: primary_source_table.columns.lci_absorb_cost
+  lci_allocation_amount:
+    data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.lci_version
+      field: primary_source_table.columns.lci_allocation_amount
   lci_lender_concession_request_pid:
     data_type: BIGINT
     source:
@@ -37,20 +43,14 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lci_loan_charge_pid
-  lci_allocation_amount:
-    data_type: NUMERIC(15,2)
+  lci_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.lci_allocation_amount
-  lci_absorb_cost:
-    data_type: BOOLEAN
+      field: primary_source_table.columns.lci_pid
+  lci_version:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.lci_absorb_cost
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.lci_version
 etls:
   SP-100844:
     input_type: table

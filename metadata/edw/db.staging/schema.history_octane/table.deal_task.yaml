@@ -21,10 +21,38 @@ foreign_keys:
       schema: history_octane
       table: deal_task_status_type
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  dt_complete_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.dt_complete_datetime
+  dt_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.dt_create_datetime
+  dt_create_lender_user_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dt_create_lender_user_name
+  dt_deal_task_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dt_deal_task_status_type
+  dt_description:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.dt_description
   dt_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dt_pid
+  dt_smart_task:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.dt_smart_task
   dt_version:
     data_type: INTEGER
     source:
@@ -33,34 +61,6 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dt_wf_deal_step_pid
-  dt_create_lender_user_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dt_create_lender_user_name
-  dt_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.dt_create_datetime
-  dt_description:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.dt_description
-  dt_complete_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.dt_complete_datetime
-  dt_deal_task_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dt_deal_task_status_type
-  dt_smart_task:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.dt_smart_task
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
   etl_batch_id:
     data_type: TEXT
 etls:

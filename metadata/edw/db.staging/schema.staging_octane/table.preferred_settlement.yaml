@@ -51,23 +51,23 @@ foreign_keys:
       schema: staging_octane
       table: settlement_agent_wire
 columns:
-  prs_pid:
-    data_type: BIGINT
-  prs_version:
-    data_type: INTEGER
   prs_account_pid:
     data_type: BIGINT
-  prs_state:
-    data_type: VARCHAR(16)
   prs_from_date:
     data_type: DATE
-  prs_title_company_pid:
-    data_type: BIGINT
-  prs_title_company_office_pid:
-    data_type: BIGINT
-  prs_settlement_agent_pid:
+  prs_pid:
     data_type: BIGINT
   prs_settlement_agent_office_pid:
     data_type: BIGINT
+  prs_settlement_agent_pid:
+    data_type: BIGINT
   prs_settlement_agent_wire_pid:
     data_type: BIGINT
+  prs_state:
+    data_type: VARCHAR(16)
+  prs_title_company_office_pid:
+    data_type: BIGINT
+  prs_title_company_pid:
+    data_type: BIGINT
+  prs_version:
+    data_type: INTEGER

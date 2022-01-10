@@ -21,14 +21,6 @@ foreign_keys:
       schema: history_octane
       table: credit_request
 columns:
-  ba_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ba_pid
-  ba_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ba_version
   ba_account_number:
     data_type: VARCHAR(32)
     source:
@@ -37,6 +29,10 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.ba_borrower_pid
+  ba_credit_report_identifier:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ba_credit_report_identifier
   ba_credit_request_pid:
     data_type: BIGINT
     source:
@@ -61,14 +57,18 @@ columns:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.ba_name_suffix
-  ba_credit_report_identifier:
-    data_type: VARCHAR(32)
+  ba_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.ba_credit_report_identifier
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+      field: primary_source_table.columns.ba_pid
+  ba_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ba_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

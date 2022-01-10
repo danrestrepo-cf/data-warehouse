@@ -43,25 +43,25 @@ foreign_keys:
       schema: staging_octane
       table: credit_bureau_type
 columns:
-  lprc_pid:
-    data_type: BIGINT
-  lprc_version:
-    data_type: INTEGER
-  lprc_lp_request_pid:
-    data_type: BIGINT
-  lprc_create_datetime:
-    data_type: TIMESTAMP
-  lprc_credit_report_create_datetime:
-    data_type: TIMESTAMP
-  lprc_credit_bureau_type:
-    data_type: VARCHAR(128)
-  lprc_credit_report_identifier:
-    data_type: VARCHAR(32)
-  lprc_credit_report_name:
-    data_type: VARCHAR(256)
   lprc_aus_credit_service_type:
     data_type: VARCHAR(128)
   lprc_borrower_1_borrower_tiny_id_type:
     data_type: VARCHAR(128)
   lprc_borrower_2_borrower_tiny_id_type:
     data_type: VARCHAR(128)
+  lprc_create_datetime:
+    data_type: TIMESTAMP
+  lprc_credit_bureau_type:
+    data_type: VARCHAR(128)
+  lprc_credit_report_create_datetime:
+    data_type: TIMESTAMP
+  lprc_credit_report_identifier:
+    data_type: VARCHAR(32)
+  lprc_credit_report_name:
+    data_type: VARCHAR(256)
+  lprc_lp_request_pid:
+    data_type: BIGINT
+  lprc_pid:
+    data_type: BIGINT
+  lprc_version:
+    data_type: INTEGER

@@ -19,13 +19,13 @@ foreign_keys:
       schema: staging_octane
       table: rate_sheet_group
 columns:
+  rs_from_datetime:
+    data_type: TIMESTAMP
   rs_pid:
+    data_type: BIGINT
+  rs_product_pid:
+    data_type: BIGINT
+  rs_rate_sheet_group_pid:
     data_type: BIGINT
   rs_version:
     data_type: INTEGER
-  rs_product_pid:
-    data_type: BIGINT
-  rs_from_datetime:
-    data_type: TIMESTAMP
-  rs_rate_sheet_group_pid:
-    data_type: BIGINT

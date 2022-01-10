@@ -21,30 +21,30 @@ foreign_keys:
       schema: history_octane
       table: place
 columns:
-  breo_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.breo_pid
-  breo_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.breo_version
   breo_borrower_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.breo_borrower_pid
-  breo_place_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.breo_place_pid
   breo_ownership_percent:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.breo_ownership_percent
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  breo_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.breo_pid
+  breo_place_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.breo_place_pid
+  breo_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.breo_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

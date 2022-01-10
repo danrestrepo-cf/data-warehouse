@@ -19,19 +19,19 @@ foreign_keys:
       schema: staging_octane
       table: criteria
 columns:
-  st_pid:
-    data_type: BIGINT
-  st_version:
-    data_type: INTEGER
-  st_wf_step_pid:
+  st_criteria_pid:
     data_type: BIGINT
   st_description:
     data_type: VARCHAR(1024)
   st_from_date:
     data_type: DATE
+  st_pid:
+    data_type: BIGINT
   st_through_date:
     data_type: DATE
+  st_version:
+    data_type: INTEGER
   st_wf_step_order:
     data_type: INTEGER
-  st_criteria_pid:
+  st_wf_step_pid:
     data_type: BIGINT

@@ -21,28 +21,28 @@ foreign_keys:
       schema: history_octane
       table: repository_file
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   tf_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.tf_pid
-  tf_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.tf_version
-  tf_trade_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.tf_trade_pid
   tf_repository_file_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.tf_repository_file_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  tf_trade_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.tf_trade_pid
+  tf_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.tf_version
 etls:
   SP-100188:
     input_type: table

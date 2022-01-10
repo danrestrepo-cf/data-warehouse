@@ -21,32 +21,32 @@ foreign_keys:
       schema: history_octane
       table: lender_user
 columns:
-  pa_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pa_pid
-  pa_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pa_version
-  pa_role_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pa_role_pid
-  pa_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pa_lender_user_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   pa_last_assign_datetime:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.pa_last_assign_datetime
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  pa_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pa_lender_user_pid
+  pa_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pa_pid
+  pa_role_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pa_role_pid
+  pa_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pa_version
 etls:
   SP-100104:
     input_type: table

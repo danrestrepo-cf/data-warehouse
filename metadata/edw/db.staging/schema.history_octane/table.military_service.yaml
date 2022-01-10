@@ -37,14 +37,12 @@ foreign_keys:
       schema: history_octane
       table: military_status_type
 columns:
-  ms_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ms_pid
-  ms_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ms_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   ms_borrower_pid:
     data_type: BIGINT
     source:
@@ -53,18 +51,6 @@ columns:
     data_type: DATE
     source:
       field: primary_source_table.columns.ms_from_date
-  ms_through_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.ms_through_date
-  ms_name_used_during_service:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ms_name_used_during_service
-  ms_service_number:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ms_service_number
   ms_military_branch_type:
     data_type: VARCHAR(128)
     source:
@@ -77,12 +63,26 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ms_military_status_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  ms_name_used_during_service:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ms_name_used_during_service
+  ms_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ms_pid
+  ms_service_number:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ms_service_number
+  ms_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ms_through_date
+  ms_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ms_version
 etls:
   SP-100134:
     input_type: table

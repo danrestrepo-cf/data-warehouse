@@ -21,18 +21,32 @@ foreign_keys:
       schema: history_octane
       table: country_type
 columns:
-  tco_pid:
-    data_type: BIGINT
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  tco_active:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.tco_pid
-  tco_version:
-    data_type: INTEGER
+      field: primary_source_table.columns.tco_active
+  tco_address_city:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.tco_version
-  tco_title_company_pid:
-    data_type: BIGINT
+      field: primary_source_table.columns.tco_address_city
+  tco_address_country:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.tco_title_company_pid
+      field: primary_source_table.columns.tco_address_country
+  tco_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.tco_address_postal_code
+  tco_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.tco_address_state
   tco_address_street1:
     data_type: VARCHAR(128)
     source:
@@ -41,44 +55,30 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.tco_address_street2
-  tco_address_city:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.tco_address_city
-  tco_address_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.tco_address_state
-  tco_address_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.tco_address_postal_code
-  tco_address_country:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.tco_address_country
-  tco_phone:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.tco_phone
-  tco_fax:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.tco_fax
   tco_email:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.tco_email
-  tco_active:
-    data_type: BOOLEAN
+  tco_fax:
+    data_type: VARCHAR(32)
     source:
-      field: primary_source_table.columns.tco_active
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.tco_fax
+  tco_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.tco_phone
+  tco_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.tco_pid
+  tco_title_company_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.tco_title_company_pid
+  tco_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.tco_version
 etls:
   SP-100067:
     input_type: table

@@ -13,26 +13,26 @@ foreign_keys:
       schema: history_octane
       table: county
 columns:
-  csju_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.csju_pid
-  csju_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.csju_version
   csju_county_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.csju_county_pid
+  csju_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.csju_pid
   csju_sub_jurisdiction_name:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.csju_sub_jurisdiction_name
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  csju_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.csju_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

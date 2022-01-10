@@ -13,14 +13,6 @@ foreign_keys:
       schema: history_octane
       table: arm_index_type
 columns:
-  air_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.air_pid
-  air_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.air_version
   air_arm_index_type:
     data_type: VARCHAR(128)
     source:
@@ -29,14 +21,22 @@ columns:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.air_effective_datetime
+  air_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.air_pid
   air_rate:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.air_rate
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  air_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.air_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

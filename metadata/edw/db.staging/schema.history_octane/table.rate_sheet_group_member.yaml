@@ -21,36 +21,36 @@ foreign_keys:
       schema: history_octane
       table: product
 columns:
-  rsgm_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rsgm_pid
-  rsgm_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.rsgm_version
-  rsgm_rate_sheet_group_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rsgm_rate_sheet_group_pid
-  rsgm_product_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rsgm_product_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   rsgm_from_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.rsgm_from_date
+  rsgm_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rsgm_pid
+  rsgm_product_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rsgm_product_pid
+  rsgm_rate_sheet_group_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rsgm_rate_sheet_group_pid
   rsgm_through_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.rsgm_through_date
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  rsgm_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.rsgm_version
 etls:
   SP-100882:
     input_type: table

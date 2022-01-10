@@ -53,19 +53,19 @@ foreign_keys:
 columns:
   ssd_pid:
     data_type: BIGINT
-  ssd_version:
-    data_type: INTEGER
-  ssd_smart_stack_pid:
+  ssd_sequence:
     data_type: BIGINT
-  ssd_stack_doc_type:
-    data_type: VARCHAR(128)
+  ssd_smart_doc_pid:
+    data_type: BIGINT
   ssd_smart_doc_set_pid:
     data_type: BIGINT
   ssd_smart_separator_pid:
     data_type: BIGINT
-  ssd_smart_doc_pid:
-    data_type: BIGINT
-  ssd_sequence:
-    data_type: BIGINT
   ssd_smart_stack_doc_set_include_type:
     data_type: VARCHAR(128)
+  ssd_smart_stack_pid:
+    data_type: BIGINT
+  ssd_stack_doc_type:
+    data_type: VARCHAR(128)
+  ssd_version:
+    data_type: INTEGER

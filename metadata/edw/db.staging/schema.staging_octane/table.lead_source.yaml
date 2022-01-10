@@ -35,29 +35,29 @@ foreign_keys:
       schema: staging_octane
       table: broker_compensation_type
 columns:
-  lds_pid:
-    data_type: BIGINT
-  lds_version:
-    data_type: INTEGER
   lds_account_pid:
     data_type: BIGINT
-  lds_channel_pid:
-    data_type: BIGINT
-  lds_lead_source_name:
-    data_type: VARCHAR(128)
-  lds_mortech_lead_source_id:
-    data_type: VARCHAR(16)
-  lds_lead_source_id:
-    data_type: VARCHAR(32)
   lds_active:
-    data_type: BOOLEAN
-  lds_lead_id_required:
-    data_type: BOOLEAN
-  lds_zero_margin_allowed:
-    data_type: BOOLEAN
-  lds_mortech_account_pid:
-    data_type: BIGINT
-  lds_training_only:
     data_type: BOOLEAN
   lds_broker_compensation_type:
     data_type: VARCHAR(128)
+  lds_channel_pid:
+    data_type: BIGINT
+  lds_lead_id_required:
+    data_type: BOOLEAN
+  lds_lead_source_id:
+    data_type: VARCHAR(32)
+  lds_lead_source_name:
+    data_type: VARCHAR(128)
+  lds_mortech_account_pid:
+    data_type: BIGINT
+  lds_mortech_lead_source_id:
+    data_type: VARCHAR(16)
+  lds_pid:
+    data_type: BIGINT
+  lds_training_only:
+    data_type: BOOLEAN
+  lds_version:
+    data_type: INTEGER
+  lds_zero_margin_allowed:
+    data_type: BOOLEAN

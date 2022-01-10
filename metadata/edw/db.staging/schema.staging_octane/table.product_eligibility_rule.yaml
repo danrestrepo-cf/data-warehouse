@@ -131,103 +131,113 @@ foreign_keys:
       schema: staging_octane
       table: product_rule_domain_input_type
 columns:
-  per_pid:
-    data_type: BIGINT
-  per_version:
-    data_type: INTEGER
-  per_product_eligibility_pid:
-    data_type: BIGINT
-  per_summary:
-    data_type: VARCHAR(16000)
-  per_note:
-    data_type: VARCHAR(256)
-  per_group_id:
-    data_type: INTEGER
-  per_loan_purpose_input_type:
-    data_type: VARCHAR(128)
-  per_property_usage_input_type:
-    data_type: VARCHAR(128)
-  per_doc_level_input_type:
-    data_type: VARCHAR(128)
-  per_property_category_input_type:
-    data_type: VARCHAR(128)
-  per_first_time_homebuyer_input_type:
-    data_type: VARCHAR(128)
-  per_self_employed_input_type:
-    data_type: VARCHAR(128)
+  per_amortization_fully:
+    data_type: BOOLEAN
   per_amortization_input_type:
     data_type: VARCHAR(128)
-  per_non_resident_alien_input_type:
-    data_type: VARCHAR(128)
-  per_hazardous_lava_zone_input_type:
-    data_type: VARCHAR(128)
-  per_property_rights_input_type:
-    data_type: VARCHAR(128)
-  per_property_acres_input_type:
-    data_type: VARCHAR(128)
+  per_amortization_interest_only:
+    data_type: BOOLEAN
+  per_arms_length:
+    data_type: BOOLEAN
   per_arms_length_input_type:
     data_type: VARCHAR(128)
-  per_underwrite_accepted_input_type:
+  per_doc_level_full:
+    data_type: BOOLEAN
+  per_doc_level_input_type:
     data_type: VARCHAR(128)
-  per_state_input_type:
-    data_type: VARCHAR(128)
+  per_doc_level_limited:
+    data_type: BOOLEAN
+  per_doc_level_lite:
+    data_type: BOOLEAN
+  per_doc_level_streamline_refinance:
+    data_type: BOOLEAN
+  per_du_risk_assessment_accepted:
+    data_type: BOOLEAN
+  per_escrow_waiver:
+    data_type: BOOLEAN
   per_escrow_waiver_input_type:
     data_type: VARCHAR(128)
-  per_minimum_credit_score_input:
+  per_first_time_homebuyer:
     data_type: BOOLEAN
-  per_minimum_loan_amount_input:
+  per_first_time_homebuyer_input_type:
+    data_type: VARCHAR(128)
+  per_group_id:
+    data_type: INTEGER
+  per_hazardous_lava_zone:
     data_type: BOOLEAN
+  per_hazardous_lava_zone_input_type:
+    data_type: VARCHAR(128)
+  per_loan_purpose_cash_out:
+    data_type: BOOLEAN
+  per_loan_purpose_change_in_rate_term:
+    data_type: BOOLEAN
+  per_loan_purpose_input_type:
+    data_type: VARCHAR(128)
+  per_loan_purpose_purchase:
+    data_type: BOOLEAN
+  per_lp_risk_assessment_accepted:
+    data_type: BOOLEAN
+  per_manual_risk_assessment_accepted:
+    data_type: BOOLEAN
+  per_maximum_cltv_ratio_input:
+    data_type: BOOLEAN
+  per_maximum_cltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+  per_maximum_debt_ratio_input:
+    data_type: BOOLEAN
+  per_maximum_debt_ratio_percent:
+    data_type: NUMERIC(11,9)
+  per_maximum_housing_ratio_input:
+    data_type: BOOLEAN
+  per_maximum_housing_ratio_percent:
+    data_type: NUMERIC(11,9)
+  per_maximum_loan_amount:
+    data_type: NUMERIC(15,0)
   per_maximum_loan_amount_input:
     data_type: BOOLEAN
   per_maximum_ltv_ratio_input:
     data_type: BOOLEAN
+  per_maximum_ltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+  per_minimum_credit_score:
+    data_type: INTEGER
+  per_minimum_credit_score_input:
+    data_type: BOOLEAN
+  per_minimum_loan_amount:
+    data_type: NUMERIC(15,0)
+  per_minimum_loan_amount_input:
+    data_type: BOOLEAN
   per_newly_built_maximum_ltv_ratio_input:
     data_type: BOOLEAN
-  per_subordinate_maximum_ltv_ratio_input:
+  per_newly_built_maximum_ltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+  per_non_resident_alien:
     data_type: BOOLEAN
-  per_maximum_cltv_ratio_input:
+  per_non_resident_alien_input_type:
+    data_type: VARCHAR(128)
+  per_not_arms_length:
     data_type: BOOLEAN
-  per_maximum_housing_ratio_input:
+  per_not_escrow_waiver:
     data_type: BOOLEAN
-  per_maximum_debt_ratio_input:
+  per_not_first_time_homebuyer:
     data_type: BOOLEAN
-  per_lp_risk_assessment_accepted:
+  per_not_hazardous_lava_zone:
     data_type: BOOLEAN
-  per_du_risk_assessment_accepted:
+  per_not_non_resident_alien:
     data_type: BOOLEAN
-  per_manual_risk_assessment_accepted:
+  per_not_self_employed:
     data_type: BOOLEAN
-  per_loan_purpose_purchase:
+  per_not_under_10_acres:
     data_type: BOOLEAN
-  per_loan_purpose_change_in_rate_term:
-    data_type: BOOLEAN
-  per_loan_purpose_cash_out:
-    data_type: BOOLEAN
-  per_property_usage_primary_residence:
-    data_type: BOOLEAN
-  per_property_usage_second_home:
-    data_type: BOOLEAN
-  per_property_usage_investment:
-    data_type: BOOLEAN
-  per_doc_level_full:
-    data_type: BOOLEAN
-  per_doc_level_lite:
-    data_type: BOOLEAN
-  per_doc_level_limited:
-    data_type: BOOLEAN
-  per_doc_level_streamline_refinance:
-    data_type: BOOLEAN
-  per_property_category_detached:
-    data_type: BOOLEAN
+  per_note:
+    data_type: VARCHAR(256)
+  per_pid:
+    data_type: BIGINT
+  per_product_eligibility_pid:
+    data_type: BIGINT
+  per_property_acres_input_type:
+    data_type: VARCHAR(128)
   per_property_category_attached:
-    data_type: BOOLEAN
-  per_property_category_condo_hotel:
-    data_type: BOOLEAN
-  per_property_category_duplex:
-    data_type: BOOLEAN
-  per_property_category_triplex:
-    data_type: BOOLEAN
-  per_property_category_fourplex:
     data_type: BOOLEAN
   per_property_category_commercial_residential:
     data_type: BOOLEAN
@@ -235,77 +245,53 @@ columns:
     data_type: BOOLEAN
   per_property_category_condo_5_over_story:
     data_type: BOOLEAN
+  per_property_category_condo_hotel:
+    data_type: BOOLEAN
+  per_property_category_detached:
+    data_type: BOOLEAN
+  per_property_category_duplex:
+    data_type: BOOLEAN
+  per_property_category_farm:
+    data_type: BOOLEAN
+  per_property_category_fourplex:
+    data_type: BOOLEAN
+  per_property_category_input_type:
+    data_type: VARCHAR(128)
+  per_property_category_land_and_lots:
+    data_type: BOOLEAN
   per_property_category_manufactured_multi_wide:
     data_type: BOOLEAN
   per_property_category_manufactured_single_wide:
     data_type: BOOLEAN
   per_property_category_townhouse_rowhouse:
     data_type: BOOLEAN
-  per_property_category_land_and_lots:
-    data_type: BOOLEAN
-  per_property_category_farm:
-    data_type: BOOLEAN
-  per_first_time_homebuyer:
-    data_type: BOOLEAN
-  per_not_first_time_homebuyer:
-    data_type: BOOLEAN
-  per_self_employed:
-    data_type: BOOLEAN
-  per_not_self_employed:
-    data_type: BOOLEAN
-  per_amortization_fully:
-    data_type: BOOLEAN
-  per_amortization_interest_only:
-    data_type: BOOLEAN
-  per_non_resident_alien:
-    data_type: BOOLEAN
-  per_not_non_resident_alien:
-    data_type: BOOLEAN
-  per_arms_length:
-    data_type: BOOLEAN
-  per_not_arms_length:
-    data_type: BOOLEAN
-  per_hazardous_lava_zone:
-    data_type: BOOLEAN
-  per_not_hazardous_lava_zone:
+  per_property_category_triplex:
     data_type: BOOLEAN
   per_property_rights_fee_simple:
     data_type: BOOLEAN
+  per_property_rights_input_type:
+    data_type: VARCHAR(128)
   per_property_rights_leasehold:
     data_type: BOOLEAN
-  per_under_10_acres:
+  per_property_usage_input_type:
+    data_type: VARCHAR(128)
+  per_property_usage_investment:
     data_type: BOOLEAN
-  per_not_under_10_acres:
+  per_property_usage_primary_residence:
     data_type: BOOLEAN
-  per_escrow_waiver:
+  per_property_usage_second_home:
     data_type: BOOLEAN
-  per_not_escrow_waiver:
+  per_self_employed:
     data_type: BOOLEAN
-  per_minimum_credit_score:
-    data_type: INTEGER
-  per_minimum_loan_amount:
-    data_type: NUMERIC(15,0)
-  per_maximum_loan_amount:
-    data_type: NUMERIC(15,0)
-  per_maximum_ltv_ratio_percent:
-    data_type: NUMERIC(11,9)
-  per_newly_built_maximum_ltv_ratio_percent:
-    data_type: NUMERIC(11,9)
-  per_subordinate_maximum_ltv_ratio_percent:
-    data_type: NUMERIC(11,9)
-  per_maximum_cltv_ratio_percent:
-    data_type: NUMERIC(11,9)
-  per_maximum_housing_ratio_percent:
-    data_type: NUMERIC(11,9)
-  per_maximum_debt_ratio_percent:
-    data_type: NUMERIC(11,9)
-  per_state_al:
-    data_type: BOOLEAN
+  per_self_employed_input_type:
+    data_type: VARCHAR(128)
   per_state_ak:
     data_type: BOOLEAN
-  per_state_az:
+  per_state_al:
     data_type: BOOLEAN
   per_state_ar:
+    data_type: BOOLEAN
+  per_state_az:
     data_type: BOOLEAN
   per_state_ca:
     data_type: BOOLEAN
@@ -313,9 +299,9 @@ columns:
     data_type: BOOLEAN
   per_state_ct:
     data_type: BOOLEAN
-  per_state_de:
-    data_type: BOOLEAN
   per_state_dc:
+    data_type: BOOLEAN
+  per_state_de:
     data_type: BOOLEAN
   per_state_fl:
     data_type: BOOLEAN
@@ -325,39 +311,43 @@ columns:
     data_type: BOOLEAN
   per_state_hi:
     data_type: BOOLEAN
+  per_state_ia:
+    data_type: BOOLEAN
   per_state_id:
     data_type: BOOLEAN
   per_state_il:
     data_type: BOOLEAN
   per_state_in:
     data_type: BOOLEAN
-  per_state_ia:
-    data_type: BOOLEAN
+  per_state_input_type:
+    data_type: VARCHAR(128)
   per_state_ks:
     data_type: BOOLEAN
   per_state_ky:
     data_type: BOOLEAN
   per_state_la:
     data_type: BOOLEAN
-  per_state_me:
+  per_state_ma:
     data_type: BOOLEAN
   per_state_md:
     data_type: BOOLEAN
-  per_state_ma:
+  per_state_me:
     data_type: BOOLEAN
   per_state_mi:
     data_type: BOOLEAN
   per_state_mn:
     data_type: BOOLEAN
-  per_state_ms:
-    data_type: BOOLEAN
   per_state_mo:
+    data_type: BOOLEAN
+  per_state_ms:
     data_type: BOOLEAN
   per_state_mt:
     data_type: BOOLEAN
-  per_state_ne:
+  per_state_nc:
     data_type: BOOLEAN
-  per_state_nv:
+  per_state_nd:
+    data_type: BOOLEAN
+  per_state_ne:
     data_type: BOOLEAN
   per_state_nh:
     data_type: BOOLEAN
@@ -365,11 +355,9 @@ columns:
     data_type: BOOLEAN
   per_state_nm:
     data_type: BOOLEAN
+  per_state_nv:
+    data_type: BOOLEAN
   per_state_ny:
-    data_type: BOOLEAN
-  per_state_nc:
-    data_type: BOOLEAN
-  per_state_nd:
     data_type: BOOLEAN
   per_state_oh:
     data_type: BOOLEAN
@@ -393,17 +381,29 @@ columns:
     data_type: BOOLEAN
   per_state_ut:
     data_type: BOOLEAN
-  per_state_vt:
-    data_type: BOOLEAN
   per_state_va:
     data_type: BOOLEAN
   per_state_vi:
     data_type: BOOLEAN
-  per_state_wa:
+  per_state_vt:
     data_type: BOOLEAN
-  per_state_wv:
+  per_state_wa:
     data_type: BOOLEAN
   per_state_wi:
     data_type: BOOLEAN
+  per_state_wv:
+    data_type: BOOLEAN
   per_state_wy:
     data_type: BOOLEAN
+  per_subordinate_maximum_ltv_ratio_input:
+    data_type: BOOLEAN
+  per_subordinate_maximum_ltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+  per_summary:
+    data_type: VARCHAR(16000)
+  per_under_10_acres:
+    data_type: BOOLEAN
+  per_underwrite_accepted_input_type:
+    data_type: VARCHAR(128)
+  per_version:
+    data_type: INTEGER

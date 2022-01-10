@@ -11,15 +11,15 @@ foreign_keys:
       schema: staging_octane
       table: loan
 columns:
+  lms_criteria_html:
+    data_type: VARCHAR(16000)
+  lms_government_surcharge_minimum_amount:
+    data_type: NUMERIC(15,2)
+  lms_government_surcharge_percent:
+    data_type: NUMERIC(11,9)
+  lms_loan_pid:
+    data_type: BIGINT
   lms_pid:
     data_type: BIGINT
   lms_version:
     data_type: INTEGER
-  lms_loan_pid:
-    data_type: BIGINT
-  lms_criteria_html:
-    data_type: VARCHAR(16000)
-  lms_government_surcharge_percent:
-    data_type: NUMERIC(11,9)
-  lms_government_surcharge_minimum_amount:
-    data_type: NUMERIC(15,2)

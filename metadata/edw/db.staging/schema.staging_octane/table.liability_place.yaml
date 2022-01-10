@@ -99,34 +99,34 @@ foreign_keys:
       schema: staging_octane
       table: yes_no_unknown_type
 columns:
-  lip_pid:
-    data_type: BIGINT
-  lip_version:
-    data_type: INTEGER
-  lip_liability_pid:
-    data_type: BIGINT
   lip_creditor_pid:
     data_type: BIGINT
-  lip_place_pid:
-    data_type: BIGINT
-  lip_lien_priority_type:
-    data_type: VARCHAR(128)
   lip_liability_financing_type:
     data_type: VARCHAR(128)
   lip_liability_foreclosure_exception_type:
     data_type: VARCHAR(128)
   lip_liability_mi_type:
     data_type: VARCHAR(128)
+  lip_liability_pid:
+    data_type: BIGINT
+  lip_lien_priority_type:
+    data_type: VARCHAR(128)
+  lip_mortgage_delinquency_exception_type:
+    data_type: VARCHAR(128)
   lip_original_loan_amount:
     data_type: NUMERIC(15,0)
-  lip_property_taxes_escrowed:
-    data_type: BOOLEAN
+  lip_pid:
+    data_type: BIGINT
+  lip_place_pid:
+    data_type: BIGINT
   lip_property_insurance_escrowed:
     data_type: BOOLEAN
-  lip_senior_lien_restriction_type:
-    data_type: VARCHAR(128)
+  lip_property_taxes_escrowed:
+    data_type: BOOLEAN
   lip_senior_lien_restriction_amount:
     data_type: NUMERIC(15,0)
+  lip_senior_lien_restriction_type:
+    data_type: VARCHAR(128)
   lip_texas_equity:
     data_type: VARCHAR(128)
   lip_texas_equity_conversion:
@@ -135,5 +135,5 @@ columns:
     data_type: BOOLEAN
   lip_third_party_community_second_program_pid:
     data_type: BIGINT
-  lip_mortgage_delinquency_exception_type:
-    data_type: VARCHAR(128)
+  lip_version:
+    data_type: INTEGER

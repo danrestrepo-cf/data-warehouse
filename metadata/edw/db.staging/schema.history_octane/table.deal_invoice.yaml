@@ -21,38 +21,18 @@ foreign_keys:
       schema: history_octane
       table: deal_invoice_status_type
 columns:
-  di_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.di_pid
-  di_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.di_version
-  di_deal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.di_deal_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   di_create_datetime:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.di_create_datetime
-  di_invoice_amount:
-    data_type: NUMERIC(15,2)
+  di_deal_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.di_invoice_amount
-  di_refund_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.di_refund_amount
-  di_smart_invoice:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.di_smart_invoice
-  di_invoice_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.di_invoice_status_type
+      field: primary_source_table.columns.di_deal_pid
   di_description:
     data_type: VARCHAR(256)
     source:
@@ -61,10 +41,30 @@ columns:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.columns.di_internal_notes
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
+  di_invoice_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.di_invoice_amount
+  di_invoice_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.di_invoice_status_type
+  di_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.di_pid
+  di_refund_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.di_refund_amount
+  di_smart_invoice:
     data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.di_smart_invoice
+  di_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.di_version
   etl_batch_id:
     data_type: TEXT
 etls:

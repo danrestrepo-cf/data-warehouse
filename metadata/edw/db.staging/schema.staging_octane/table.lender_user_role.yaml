@@ -35,31 +35,31 @@ foreign_keys:
       schema: staging_octane
       table: lender_user_role_queue_type
 columns:
-  lur_pid:
-    data_type: BIGINT
-  lur_version:
-    data_type: INTEGER
-  lur_lender_user_pid:
-    data_type: BIGINT
-  lur_role_pid:
-    data_type: BIGINT
-  lur_criteria_pid:
-    data_type: BIGINT
-  lur_workload_cap:
-    data_type: INTEGER
-  lur_daily_cap:
-    data_type: INTEGER
   lur_assignment_gap_minutes:
     data_type: INTEGER
+  lur_criteria_pid:
+    data_type: BIGINT
+  lur_daily_cap:
+    data_type: INTEGER
+  lur_for_training_only:
+    data_type: BOOLEAN
+  lur_lender_user_pid:
+    data_type: BIGINT
+  lur_notes:
+    data_type: VARCHAR(16000)
+  lur_pid:
+    data_type: BIGINT
+  lur_queue_datetime:
+    data_type: TIMESTAMP
+  lur_queue_type:
+    data_type: VARCHAR(128)
+  lur_role_pid:
+    data_type: BIGINT
   lur_secondary_role:
     data_type: BOOLEAN
   lur_subscribe_smart_messages:
     data_type: BOOLEAN
-  lur_for_training_only:
-    data_type: BOOLEAN
-  lur_notes:
-    data_type: VARCHAR(16000)
-  lur_queue_type:
-    data_type: VARCHAR(128)
-  lur_queue_datetime:
-    data_type: TIMESTAMP
+  lur_version:
+    data_type: INTEGER
+  lur_workload_cap:
+    data_type: INTEGER

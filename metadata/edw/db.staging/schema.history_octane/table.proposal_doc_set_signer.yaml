@@ -21,18 +21,12 @@ foreign_keys:
       schema: history_octane
       table: deal_signer
 columns:
-  prpdss_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpdss_pid
-  prpdss_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.prpdss_version
-  prpdss_proposal_doc_set_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpdss_proposal_doc_set_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   prpdss_deal_signer_pid:
     data_type: BIGINT
     source:
@@ -41,6 +35,14 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.prpdss_esign_complete
+  prpdss_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpdss_pid
+  prpdss_proposal_doc_set_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpdss_proposal_doc_set_pid
   prpdss_received_datetime:
     data_type: TIMESTAMP
     source:
@@ -49,12 +51,10 @@ columns:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.prpdss_signed_datetime
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  prpdss_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.prpdss_version
 etls:
   SP-100165:
     input_type: table

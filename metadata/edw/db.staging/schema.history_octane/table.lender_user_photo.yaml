@@ -21,28 +21,28 @@ foreign_keys:
       schema: history_octane
       table: repository_file
 columns:
-  lup_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lup_pid
-  lup_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lup_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   lup_lender_user_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lup_lender_user_pid
+  lup_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lup_pid
   lup_repository_file_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lup_repository_file_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  lup_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lup_version
 etls:
   SP-100124:
     input_type: table

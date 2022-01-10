@@ -147,54 +147,60 @@ foreign_keys:
       schema: staging_octane
       table: realty_agent_scenario_type
 columns:
-  d_pid:
-    data_type: BIGINT
-  d_version:
-    data_type: INTEGER
   d_account_pid:
-    data_type: BIGINT
-  d_company_pid:
     data_type: BIGINT
   d_active_proposal_pid:
     data_type: BIGINT
+  d_application_type:
+    data_type: VARCHAR(128)
+  d_borrower_esign:
+    data_type: BOOLEAN
   d_branch_pid:
     data_type: BIGINT
+  d_calyx_loan_guid:
+    data_type: VARCHAR(128)
+  d_charges_enabled_date:
+    data_type: DATE
+  d_company_pid:
+    data_type: BIGINT
+  d_copy_source_los_loan_id_main:
+    data_type: BIGINT
+  d_copy_source_los_loan_id_piggyback:
+    data_type: BIGINT
+  d_credit_bureau_type:
+    data_type: VARCHAR(128)
   d_deal_create_date:
+    data_type: DATE
+  d_deal_create_date_time:
+    data_type: TIMESTAMP
+  d_deal_create_type:
+    data_type: VARCHAR(128)
+  d_deal_orphan_earliest_check_date:
+    data_type: DATE
+  d_deal_orphan_status_type:
+    data_type: VARCHAR(128)
+  d_deal_status_date:
     data_type: DATE
   d_deal_status_type:
     data_type: VARCHAR(128)
-  d_velocify_lead_id:
-    data_type: VARCHAR(32)
-  d_lead_zillow_zq:
-    data_type: VARCHAR(256)
-  d_lead_tracking_id:
-    data_type: VARCHAR(256)
-  d_lead_reference_id:
-    data_type: VARCHAR(256)
-  d_los_loan_id_main:
-    data_type: BIGINT
-  d_los_loan_id_piggyback:
-    data_type: BIGINT
-  d_mers_min_main:
-    data_type: VARCHAR(20)
-  d_mers_min_piggyback:
-    data_type: VARCHAR(20)
+  d_disclosure_mode_date:
+    data_type: DATE
+  d_early_wire_request:
+    data_type: BOOLEAN
+  d_effective_hmda_action_date:
+    data_type: DATE
+  d_enable_electronic_transaction:
+    data_type: BOOLEAN
   d_external_loan_id_main:
     data_type: VARCHAR(32)
   d_external_loan_id_piggyback:
     data_type: VARCHAR(32)
-  d_lead_source_pid:
-    data_type: BIGINT
-  d_disclosure_mode_date:
-    data_type: DATE
-  d_deal_status_date:
-    data_type: DATE
-  d_sap_deal:
-    data_type: BOOLEAN
   d_hmda_action_date:
     data_type: DATE
   d_hmda_action_type:
     data_type: VARCHAR(128)
+  d_hmda_denial_reason_other_description:
+    data_type: VARCHAR(255)
   d_hmda_denial_reason_type_1:
     data_type: VARCHAR(128)
   d_hmda_denial_reason_type_2:
@@ -203,57 +209,51 @@ columns:
     data_type: VARCHAR(128)
   d_hmda_denial_reason_type_4:
     data_type: VARCHAR(128)
-  d_borrower_esign:
-    data_type: BOOLEAN
-  d_application_type:
-    data_type: VARCHAR(128)
-  d_welcome_call_datetime:
-    data_type: TIMESTAMP
-  d_realty_agent_scenario_type:
-    data_type: VARCHAR(128)
-  d_test_loan:
-    data_type: BOOLEAN
-  d_charges_enabled_date:
-    data_type: DATE
-  d_credit_bureau_type:
-    data_type: VARCHAR(128)
-  d_performer_team_pid:
-    data_type: BIGINT
-  d_deal_create_type:
-    data_type: VARCHAR(128)
-  d_hmda_denial_reason_other_description:
-    data_type: VARCHAR(255)
-  d_effective_hmda_action_date:
-    data_type: DATE
-  d_copy_source_los_loan_id_main:
-    data_type: BIGINT
-  d_copy_source_los_loan_id_piggyback:
-    data_type: BIGINT
-  d_referred_by_name:
-    data_type: VARCHAR(128)
   d_hmda_universal_loan_id_main:
     data_type: VARCHAR(45)
   d_hmda_universal_loan_id_piggyback:
     data_type: VARCHAR(45)
-  d_calyx_loan_guid:
-    data_type: VARCHAR(128)
-  d_invoices_enabled_date:
+  d_initial_cancel_status_date:
     data_type: DATE
   d_invoices_enabled:
     data_type: BOOLEAN
-  d_training_loan:
-    data_type: BOOLEAN
-  d_deal_orphan_status_type:
-    data_type: VARCHAR(128)
-  d_deal_orphan_earliest_check_date:
+  d_invoices_enabled_date:
     data_type: DATE
-  d_deal_create_date_time:
-    data_type: TIMESTAMP
-  d_early_wire_request:
-    data_type: BOOLEAN
-  d_enable_electronic_transaction:
-    data_type: BOOLEAN
-  d_initial_cancel_status_date:
-    data_type: DATE
+  d_lead_reference_id:
+    data_type: VARCHAR(256)
+  d_lead_source_pid:
+    data_type: BIGINT
+  d_lead_tracking_id:
+    data_type: VARCHAR(256)
+  d_lead_zillow_zq:
+    data_type: VARCHAR(256)
   d_license_location_pid:
     data_type: BIGINT
+  d_los_loan_id_main:
+    data_type: BIGINT
+  d_los_loan_id_piggyback:
+    data_type: BIGINT
+  d_mers_min_main:
+    data_type: VARCHAR(20)
+  d_mers_min_piggyback:
+    data_type: VARCHAR(20)
+  d_performer_team_pid:
+    data_type: BIGINT
+  d_pid:
+    data_type: BIGINT
+  d_realty_agent_scenario_type:
+    data_type: VARCHAR(128)
+  d_referred_by_name:
+    data_type: VARCHAR(128)
+  d_sap_deal:
+    data_type: BOOLEAN
+  d_test_loan:
+    data_type: BOOLEAN
+  d_training_loan:
+    data_type: BOOLEAN
+  d_velocify_lead_id:
+    data_type: VARCHAR(32)
+  d_version:
+    data_type: INTEGER
+  d_welcome_call_datetime:
+    data_type: TIMESTAMP

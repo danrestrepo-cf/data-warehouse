@@ -21,40 +21,40 @@ foreign_keys:
       schema: history_octane
       table: product
 columns:
-  ofp_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ofp_pid
-  ofp_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ofp_version
-  ofp_offering_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ofp_offering_pid
-  ofp_product_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ofp_product_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   ofp_from_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.ofp_from_date
-  ofp_through_date:
-    data_type: DATE
+  ofp_offering_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.ofp_through_date
+      field: primary_source_table.columns.ofp_offering_pid
+  ofp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ofp_pid
   ofp_price_adjustment_percent:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.ofp_price_adjustment_percent
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  ofp_product_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ofp_product_pid
+  ofp_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ofp_through_date
+  ofp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ofp_version
 etls:
   SP-100106:
     input_type: table

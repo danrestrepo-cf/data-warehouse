@@ -11,13 +11,13 @@ foreign_keys:
       schema: staging_octane
       table: account
 columns:
-  wph_pid:
-    data_type: BIGINT
-  wph_version:
-    data_type: INTEGER
   wph_account_pid:
     data_type: BIGINT
   wph_phase_name:
     data_type: VARCHAR(128)
   wph_phase_number:
+    data_type: INTEGER
+  wph_pid:
+    data_type: BIGINT
+  wph_version:
     data_type: INTEGER

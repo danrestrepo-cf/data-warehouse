@@ -21,32 +21,32 @@ foreign_keys:
       schema: history_octane
       table: rate_sheet_group
 columns:
-  rs_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rs_pid
-  rs_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.rs_version
-  rs_product_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rs_product_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   rs_from_datetime:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.rs_from_datetime
+  rs_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rs_pid
+  rs_product_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rs_product_pid
   rs_rate_sheet_group_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.rs_rate_sheet_group_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  rs_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.rs_version
 etls:
   SP-100288:
     input_type: table

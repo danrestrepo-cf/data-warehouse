@@ -45,26 +45,66 @@ foreign_keys:
       schema: history_octane
       table: payoff_request_delivery_type
 columns:
-  crd_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.crd_pid
-  crd_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.crd_version
   crd_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.crd_account_pid
-  crd_payoff_request_delivery_type:
+  crd_address_city:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.crd_payoff_request_delivery_type
+      field: primary_source_table.columns.crd_address_city
+  crd_address_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crd_address_country
+  crd_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crd_address_postal_code
+  crd_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crd_address_state
+  crd_address_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crd_address_street1
+  crd_address_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crd_address_street2
+  crd_key_creditor_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crd_key_creditor_type
+  crd_last_updated:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.crd_last_updated
+  crd_last_updated_by:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crd_last_updated_by
   crd_name:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.crd_name
+  crd_payoff_auto_teller:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crd_payoff_auto_teller
+  crd_payoff_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.crd_payoff_email
+  crd_payoff_fax:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crd_payoff_fax
+  crd_payoff_notes:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.crd_payoff_notes
   crd_payoff_phone_1:
     data_type: VARCHAR(32)
     source:
@@ -81,62 +121,22 @@ columns:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.crd_payoff_phone_2_extension
-  crd_payoff_fax:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.crd_payoff_fax
-  crd_payoff_email:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.crd_payoff_email
-  crd_payoff_auto_teller:
+  crd_payoff_request_delivery_type:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.crd_payoff_auto_teller
-  crd_last_updated:
-    data_type: DATE
+      field: primary_source_table.columns.crd_payoff_request_delivery_type
+  crd_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.crd_last_updated
-  crd_last_updated_by:
-    data_type: VARCHAR(128)
+      field: primary_source_table.columns.crd_pid
+  crd_version:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.crd_last_updated_by
-  crd_payoff_notes:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.crd_payoff_notes
-  crd_address_street1:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.crd_address_street1
-  crd_address_street2:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.crd_address_street2
-  crd_address_city:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.crd_address_city
-  crd_address_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.crd_address_state
-  crd_address_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.crd_address_postal_code
-  crd_address_country:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.crd_address_country
-  crd_key_creditor_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.crd_key_creditor_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+      field: primary_source_table.columns.crd_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

@@ -37,26 +37,32 @@ foreign_keys:
       schema: history_octane
       table: interim_funder_mers_registration_type
 columns:
-  if_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.if_pid
-  if_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.if_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   if_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.if_account_pid
-  if_company_name:
+  if_company_address_city:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.if_company_name
-  if_company_contact_unparsed_name:
+      field: primary_source_table.columns.if_company_address_city
+  if_company_address_country:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.if_company_contact_unparsed_name
+      field: primary_source_table.columns.if_company_address_country
+  if_company_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.if_company_address_postal_code
+  if_company_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.if_company_address_state
   if_company_address_street1:
     data_type: VARCHAR(128)
     source:
@@ -65,30 +71,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.if_company_address_street2
-  if_company_address_city:
+  if_company_contact_unparsed_name:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.if_company_address_city
-  if_company_address_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.if_company_address_state
-  if_company_address_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.if_company_address_postal_code
-  if_company_address_country:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.if_company_address_country
-  if_company_office_phone:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.if_company_office_phone
-  if_company_office_phone_extension:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.if_company_office_phone_extension
+      field: primary_source_table.columns.if_company_contact_unparsed_name
   if_company_email:
     data_type: VARCHAR(256)
     source:
@@ -101,54 +87,26 @@ columns:
     data_type: VARCHAR(7)
     source:
       field: primary_source_table.columns.if_company_mers_org_id
-  if_remarks:
-    data_type: VARCHAR(1024)
+  if_company_name:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.if_remarks
-  if_from_date:
-    data_type: DATE
+      field: primary_source_table.columns.if_company_name
+  if_company_office_phone:
+    data_type: VARCHAR(32)
     source:
-      field: primary_source_table.columns.if_from_date
-  if_through_date:
-    data_type: DATE
+      field: primary_source_table.columns.if_company_office_phone
+  if_company_office_phone_extension:
+    data_type: VARCHAR(16)
     source:
-      field: primary_source_table.columns.if_through_date
+      field: primary_source_table.columns.if_company_office_phone_extension
   if_custodian_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.if_custodian_pid
-  if_reimbursement_wire_credit_to_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.if_reimbursement_wire_credit_to_name
-  if_reimbursement_wire_attention_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.if_reimbursement_wire_attention_unparsed_name
-  if_reimbursement_wire_authorized_signer_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.if_reimbursement_wire_authorized_signer_unparsed_name
-  if_return_wire_credit_to_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.if_return_wire_credit_to_name
-  if_return_wire_attention_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.if_return_wire_attention_unparsed_name
-  if_return_wire_authorized_signer_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.if_return_wire_authorized_signer_unparsed_name
   if_fnm_payee_id:
     data_type: VARCHAR(9)
     source:
       field: primary_source_table.columns.if_fnm_payee_id
-  if_interim_funder_mers_registration_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.if_interim_funder_mers_registration_type
   if_fnm_warehouse_lender_id:
     data_type: VARCHAR(32)
     source:
@@ -157,16 +115,58 @@ columns:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.if_fre_warehouse_lender_id
+  if_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.if_from_date
   if_funder_id:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.if_funder_id
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  if_interim_funder_mers_registration_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.if_interim_funder_mers_registration_type
+  if_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.if_pid
+  if_reimbursement_wire_attention_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.if_reimbursement_wire_attention_unparsed_name
+  if_reimbursement_wire_authorized_signer_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.if_reimbursement_wire_authorized_signer_unparsed_name
+  if_reimbursement_wire_credit_to_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.if_reimbursement_wire_credit_to_name
+  if_remarks:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.if_remarks
+  if_return_wire_attention_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.if_return_wire_attention_unparsed_name
+  if_return_wire_authorized_signer_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.if_return_wire_authorized_signer_unparsed_name
+  if_return_wire_credit_to_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.if_return_wire_credit_to_name
+  if_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.if_through_date
+  if_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.if_version
 etls:
   SP-100030:
     input_type: table

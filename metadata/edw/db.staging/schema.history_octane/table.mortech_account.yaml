@@ -13,6 +13,24 @@ foreign_keys:
       schema: history_octane
       table: account
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  ma_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ma_account_pid
+  ma_mortech_customer_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ma_mortech_customer_id
+  ma_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ma_name
   ma_pid:
     data_type: BIGINT
     source:
@@ -21,24 +39,6 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.ma_version
-  ma_account_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ma_account_pid
-  ma_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ma_name
-  ma_mortech_customer_id:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ma_mortech_customer_id
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
 etls:
   SP-100037:
     input_type: table

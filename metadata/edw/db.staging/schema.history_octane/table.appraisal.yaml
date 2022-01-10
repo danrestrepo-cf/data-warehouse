@@ -141,34 +141,50 @@ foreign_keys:
       schema: history_octane
       table: water_type
 columns:
-  apr_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.apr_pid
-  apr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.apr_version
-  apr_appraised_value_amount:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.apr_appraised_value_amount
-  apr_effective_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.apr_effective_date
-  apr_deal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.apr_deal_pid
-  apr_decision_appraisal:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.apr_decision_appraisal
   apr_appraisal_condition_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.apr_appraisal_condition_type
+  apr_appraisal_id:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_appraisal_id
+  apr_appraisal_invoice_amount:
+    data_type: NUMERIC(17,2)
+    source:
+      field: primary_source_table.columns.apr_appraisal_invoice_amount
+  apr_appraisal_order_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.apr_appraisal_order_id
+  apr_appraisal_order_instructions:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.apr_appraisal_order_instructions
+  apr_appraisal_order_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraisal_order_status_type
+  apr_appraisal_purpose_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraisal_purpose_type
+  apr_appraisal_reference_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.apr_appraisal_reference_id
+  apr_appraisal_source_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraisal_source_type
+  apr_appraisal_underwriter_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraisal_underwriter_type
+  apr_appraised_value_amount:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.apr_appraised_value_amount
   apr_appraiser_address_city:
     data_type: VARCHAR(128)
     source:
@@ -213,6 +229,14 @@ columns:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.apr_appraiser_last_name
+  apr_appraiser_license_number:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraiser_license_number
+  apr_appraiser_license_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_appraiser_license_state
   apr_appraiser_middle_name:
     data_type: VARCHAR(32)
     source:
@@ -233,34 +257,166 @@ columns:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.apr_appraiser_office_phone_extension
-  apr_appraiser_title:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.apr_appraiser_title
-  apr_appraiser_license_number:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.apr_appraiser_license_number
   apr_appraiser_supervisory_license_number:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.apr_appraiser_supervisory_license_number
-  apr_appraiser_license_state:
+  apr_appraiser_title:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.apr_appraiser_license_state
-  apr_appraisal_order_status_type:
-    data_type: VARCHAR(128)
+      field: primary_source_table.columns.apr_appraiser_title
+  apr_bathroom_count_unit_1:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.apr_appraisal_order_status_type
-  apr_appraisal_order_id:
-    data_type: VARCHAR(32)
+      field: primary_source_table.columns.apr_bathroom_count_unit_1
+  apr_bathroom_count_unit_2:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.apr_appraisal_order_id
-  apr_appraisal_order_instructions:
+      field: primary_source_table.columns.apr_bathroom_count_unit_2
+  apr_bathroom_count_unit_3:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_bathroom_count_unit_3
+  apr_bathroom_count_unit_4:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_bathroom_count_unit_4
+  apr_bedroom_count_unit_1:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_bedroom_count_unit_1
+  apr_bedroom_count_unit_2:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_bedroom_count_unit_2
+  apr_bedroom_count_unit_3:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_bedroom_count_unit_3
+  apr_bedroom_count_unit_4:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_bedroom_count_unit_4
+  apr_cost_to_build_new:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.apr_cost_to_build_new
+  apr_cu_risk_score:
+    data_type: NUMERIC(10,2)
+    source:
+      field: primary_source_table.columns.apr_cu_risk_score
+  apr_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.apr_deal_pid
+  apr_decision_appraisal:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.apr_decision_appraisal
+  apr_deficient_economic_life_explanation:
     data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.columns.apr_appraisal_order_instructions
+      field: primary_source_table.columns.apr_deficient_economic_life_explanation
+  apr_due_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.apr_due_date
+  apr_effective_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.apr_effective_date
+  apr_exclude:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.apr_exclude
+  apr_gross_living_area_square_feet_unit_1:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_gross_living_area_square_feet_unit_1
+  apr_gross_living_area_square_feet_unit_2:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_gross_living_area_square_feet_unit_2
+  apr_gross_living_area_square_feet_unit_3:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_gross_living_area_square_feet_unit_3
+  apr_gross_living_area_square_feet_unit_4:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_gross_living_area_square_feet_unit_4
+  apr_hud_provided:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.apr_hud_provided
+  apr_hve_confidence_level_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_hve_confidence_level_type
+  apr_hve_excessive_value_message:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.apr_hve_excessive_value_message
+  apr_hve_forecast_standard_deviation_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.apr_hve_forecast_standard_deviation_percent
+  apr_hve_point_value_estimate_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.apr_hve_point_value_estimate_amount
+  apr_hve_variance_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.apr_hve_variance_percent
+  apr_inspection_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.apr_inspection_date
+  apr_license_expiration_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.apr_license_expiration_date
+  apr_monthly_hoa_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.apr_monthly_hoa_amount
+  apr_mortgage_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_mortgage_type
+  apr_neighborhood_location_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_neighborhood_location_type
+  apr_obtained_from_transfer:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.apr_obtained_from_transfer
+  apr_order_appraisal:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_order_appraisal
+  apr_order_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.apr_order_date
+  apr_payment_received_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.apr_payment_received_date
+  apr_payment_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_payment_type
+  apr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.apr_pid
+  apr_project_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_project_name
   apr_property_address_city:
     data_type: VARCHAR(128)
     source:
@@ -285,50 +441,82 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.apr_property_address_street2
+  apr_property_category_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_property_category_type
   apr_property_county_name:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.apr_property_county_name
-  apr_obtained_from_transfer:
+  apr_property_tax_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_property_tax_id
+  apr_remaining_economic_life_years:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_remaining_economic_life_years
+  apr_road_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_road_type
+  apr_sale_price_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.apr_sale_price_amount
+  apr_sanitation_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.apr_sanitation_type
+  apr_second_decision_appraisal:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.apr_obtained_from_transfer
-  apr_hud_provided:
+      field: primary_source_table.columns.apr_second_decision_appraisal
+  apr_site_area:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.apr_site_area
+  apr_structure_built_month:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_structure_built_month
+  apr_structure_built_year:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.apr_structure_built_year
+  apr_supervisor_required:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.apr_hud_provided
-  apr_bedroom_count_unit_1:
-    data_type: INTEGER
+      field: primary_source_table.columns.apr_supervisor_required
+  apr_supervisory_appraiser_first_name:
+    data_type: VARCHAR(32)
     source:
-      field: primary_source_table.columns.apr_bedroom_count_unit_1
-  apr_bedroom_count_unit_2:
-    data_type: INTEGER
+      field: primary_source_table.columns.apr_supervisory_appraiser_first_name
+  apr_supervisory_appraiser_last_name:
+    data_type: VARCHAR(32)
     source:
-      field: primary_source_table.columns.apr_bedroom_count_unit_2
-  apr_bedroom_count_unit_3:
-    data_type: INTEGER
+      field: primary_source_table.columns.apr_supervisory_appraiser_last_name
+  apr_supervisory_appraiser_middle_name:
+    data_type: VARCHAR(32)
     source:
-      field: primary_source_table.columns.apr_bedroom_count_unit_3
-  apr_bedroom_count_unit_4:
-    data_type: INTEGER
+      field: primary_source_table.columns.apr_supervisory_appraiser_middle_name
+  apr_supervisory_appraiser_name_suffix:
+    data_type: VARCHAR(32)
     source:
-      field: primary_source_table.columns.apr_bedroom_count_unit_4
-  apr_bathroom_count_unit_1:
-    data_type: INTEGER
+      field: primary_source_table.columns.apr_supervisory_appraiser_name_suffix
+  apr_supervisory_license_expiration_date:
+    data_type: DATE
     source:
-      field: primary_source_table.columns.apr_bathroom_count_unit_1
-  apr_bathroom_count_unit_2:
-    data_type: INTEGER
+      field: primary_source_table.columns.apr_supervisory_license_expiration_date
+  apr_supervisory_license_state:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.apr_bathroom_count_unit_2
-  apr_bathroom_count_unit_3:
-    data_type: INTEGER
+      field: primary_source_table.columns.apr_supervisory_license_state
+  apr_synthetic_unique:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.apr_bathroom_count_unit_3
-  apr_bathroom_count_unit_4:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.apr_bathroom_count_unit_4
+      field: primary_source_table.columns.apr_synthetic_unique
   apr_total_room_count_unit_1:
     data_type: INTEGER
     source:
@@ -345,214 +533,26 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.apr_total_room_count_unit_4
-  apr_gross_living_area_square_feet_unit_1:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.apr_gross_living_area_square_feet_unit_1
-  apr_gross_living_area_square_feet_unit_2:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.apr_gross_living_area_square_feet_unit_2
-  apr_gross_living_area_square_feet_unit_3:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.apr_gross_living_area_square_feet_unit_3
-  apr_gross_living_area_square_feet_unit_4:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.apr_gross_living_area_square_feet_unit_4
-  apr_appraisal_underwriter_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.apr_appraisal_underwriter_type
   apr_ucdp_doc_file_id:
     data_type: VARCHAR(10)
     source:
       field: primary_source_table.columns.apr_ucdp_doc_file_id
-  apr_inspection_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.apr_inspection_date
-  apr_appraisal_reference_id:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.apr_appraisal_reference_id
   apr_ucdp_ssr_id:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.apr_ucdp_ssr_id
-  apr_sale_price_amount:
-    data_type: NUMERIC(15,0)
-    source:
-      field: primary_source_table.columns.apr_sale_price_amount
-  apr_property_tax_id:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.apr_property_tax_id
-  apr_property_category_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.apr_property_category_type
-  apr_cost_to_build_new:
-    data_type: NUMERIC(15,0)
-    source:
-      field: primary_source_table.columns.apr_cost_to_build_new
-  apr_monthly_hoa_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.apr_monthly_hoa_amount
-  apr_structure_built_year:
+  apr_version:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.apr_structure_built_year
-  apr_structure_built_month:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.apr_structure_built_month
-  apr_project_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.apr_project_name
-  apr_road_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.apr_road_type
+      field: primary_source_table.columns.apr_version
   apr_water_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.apr_water_type
-  apr_sanitation_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.apr_sanitation_type
-  apr_neighborhood_location_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.apr_neighborhood_location_type
-  apr_site_area:
-    data_type: NUMERIC(15,0)
-    source:
-      field: primary_source_table.columns.apr_site_area
-  apr_due_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.apr_due_date
-  apr_order_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.apr_order_date
-  apr_payment_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.apr_payment_type
-  apr_payment_received_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.apr_payment_received_date
-  apr_appraisal_source_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.apr_appraisal_source_type
-  apr_appraisal_purpose_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.apr_appraisal_purpose_type
-  apr_exclude:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.apr_exclude
-  apr_order_appraisal:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.apr_order_appraisal
-  apr_appraisal_id:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.apr_appraisal_id
-  apr_mortgage_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.apr_mortgage_type
-  apr_remaining_economic_life_years:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.apr_remaining_economic_life_years
-  apr_deficient_economic_life_explanation:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.apr_deficient_economic_life_explanation
-  apr_hve_point_value_estimate_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.apr_hve_point_value_estimate_amount
-  apr_hve_forecast_standard_deviation_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.apr_hve_forecast_standard_deviation_percent
-  apr_hve_confidence_level_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.apr_hve_confidence_level_type
-  apr_hve_variance_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.apr_hve_variance_percent
-  apr_hve_excessive_value_message:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.apr_hve_excessive_value_message
-  apr_cu_risk_score:
-    data_type: NUMERIC(10,2)
-    source:
-      field: primary_source_table.columns.apr_cu_risk_score
-  apr_license_expiration_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.apr_license_expiration_date
-  apr_supervisor_required:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.apr_supervisor_required
-  apr_supervisory_appraiser_first_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.apr_supervisory_appraiser_first_name
-  apr_supervisory_appraiser_middle_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.apr_supervisory_appraiser_middle_name
-  apr_supervisory_appraiser_last_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.apr_supervisory_appraiser_last_name
-  apr_supervisory_appraiser_name_suffix:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.apr_supervisory_appraiser_name_suffix
-  apr_supervisory_license_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.apr_supervisory_license_state
-  apr_supervisory_license_expiration_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.apr_supervisory_license_expiration_date
-  apr_synthetic_unique:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.apr_synthetic_unique
-  apr_appraisal_invoice_amount:
-    data_type: NUMERIC(17,2)
-    source:
-      field: primary_source_table.columns.apr_appraisal_invoice_amount
-  apr_second_decision_appraisal:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.apr_second_decision_appraisal
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

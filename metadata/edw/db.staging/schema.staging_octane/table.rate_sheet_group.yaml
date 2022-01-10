@@ -27,17 +27,17 @@ foreign_keys:
       schema: staging_octane
       table: loan_amortization_type
 columns:
-  rsg_pid:
-    data_type: BIGINT
-  rsg_version:
-    data_type: INTEGER
   rsg_account_pid:
+    data_type: BIGINT
+  rsg_investor_pid:
+    data_type: BIGINT
+  rsg_loan_amortization_type:
+    data_type: VARCHAR(128)
+  rsg_pid:
     data_type: BIGINT
   rsg_rate_sheet_group_id:
     data_type: VARCHAR(32)
   rsg_rate_sheet_group_name:
     data_type: VARCHAR(128)
-  rsg_investor_pid:
-    data_type: BIGINT
-  rsg_loan_amortization_type:
-    data_type: VARCHAR(128)
+  rsg_version:
+    data_type: INTEGER

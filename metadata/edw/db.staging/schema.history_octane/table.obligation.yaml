@@ -45,26 +45,24 @@ foreign_keys:
       schema: history_octane
       table: country_type
 columns:
-  ob_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ob_pid
-  ob_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ob_version
-  ob_proposal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ob_proposal_pid
-  ob_obligation_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ob_obligation_type
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   ob_amount_input_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ob_amount_input_type
+  ob_annual_payment_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ob_annual_payment_amount
+  ob_escrow_waiver:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ob_escrow_waiver
   ob_factor_percent:
     data_type: NUMERIC(11,9)
     source:
@@ -73,30 +71,70 @@ columns:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.ob_factor_percent_base_amount
-  ob_annual_payment_amount:
-    data_type: NUMERIC(15,2)
+  ob_insurance_transferred:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.ob_annual_payment_amount
+      field: primary_source_table.columns.ob_insurance_transferred
   ob_monthly_payment_amount:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.ob_monthly_payment_amount
-  ob_pte_annual_tax_installment_amount:
+  ob_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ob_name
+  ob_obligation_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ob_obligation_type
+  ob_payment_amount_1:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.ob_pte_annual_tax_installment_amount
-  ob_pte_annual_preferred_tax_amount:
+      field: primary_source_table.columns.ob_payment_amount_1
+  ob_payment_amount_1_warning:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.ob_payment_amount_1_warning
+  ob_payment_amount_2:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.ob_pte_annual_preferred_tax_amount
-  ob_pte_annual_homeowner_occupied_estimated_tax_amount:
+      field: primary_source_table.columns.ob_payment_amount_2
+  ob_payment_amount_2_warning:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.ob_payment_amount_2_warning
+  ob_payment_amount_3:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.ob_pte_annual_homeowner_occupied_estimated_tax_amount
-  ob_pte_annual_exemption_free_estimated_tax_amount:
+      field: primary_source_table.columns.ob_payment_amount_3
+  ob_payment_amount_3_warning:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.ob_payment_amount_3_warning
+  ob_payment_amount_4:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.ob_pte_annual_exemption_free_estimated_tax_amount
+      field: primary_source_table.columns.ob_payment_amount_4
+  ob_payment_amount_4_warning:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.ob_payment_amount_4_warning
+  ob_payment_amount_5:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ob_payment_amount_5
+  ob_payment_amount_5_warning:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.ob_payment_amount_5_warning
+  ob_payment_amount_6:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.ob_payment_amount_6
+  ob_payment_amount_6_warning:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.ob_payment_amount_6_warning
   ob_payment_date_1:
     data_type: DATE
     source:
@@ -121,34 +159,78 @@ columns:
     data_type: DATE
     source:
       field: primary_source_table.columns.ob_payment_date_6
-  ob_payment_amount_1:
+  ob_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ob_pid
+  ob_policy_deductible_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.ob_policy_deductible_amount
+  ob_policy_dwelling_coverage_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.ob_policy_dwelling_coverage_amount
+  ob_policy_effective_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ob_policy_effective_date
+  ob_policy_expiration_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ob_policy_expiration_date
+  ob_policy_extended_coverage_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.ob_policy_extended_coverage_amount
+  ob_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ob_proposal_pid
+  ob_pte_annual_exemption_free_estimated_tax_amount:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.ob_payment_amount_1
-  ob_payment_amount_2:
+      field: primary_source_table.columns.ob_pte_annual_exemption_free_estimated_tax_amount
+  ob_pte_annual_homeowner_occupied_estimated_tax_amount:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.ob_payment_amount_2
-  ob_payment_amount_3:
+      field: primary_source_table.columns.ob_pte_annual_homeowner_occupied_estimated_tax_amount
+  ob_pte_annual_preferred_tax_amount:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.ob_payment_amount_3
-  ob_payment_amount_4:
+      field: primary_source_table.columns.ob_pte_annual_preferred_tax_amount
+  ob_pte_annual_tax_installment_amount:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.ob_payment_amount_4
-  ob_payment_amount_5:
-    data_type: NUMERIC(15,2)
+      field: primary_source_table.columns.ob_pte_annual_tax_installment_amount
+  ob_tax_auto_compute:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.ob_payment_amount_5
-  ob_payment_amount_6:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.ob_payment_amount_6
+      field: primary_source_table.columns.ob_tax_auto_compute
   ob_total_dated_payment_amount:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.ob_total_dated_payment_amount
+  ob_vendor_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ob_vendor_city
+  ob_vendor_company_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ob_vendor_company_name
+  ob_vendor_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ob_vendor_country
+  ob_vendor_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.ob_vendor_email
+  ob_vendor_fax:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ob_vendor_fax
   ob_vendor_first_name:
     data_type: VARCHAR(32)
     source:
@@ -161,18 +243,14 @@ columns:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.ob_vendor_middle_name
+  ob_vendor_mobile_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ob_vendor_mobile_phone
   ob_vendor_name_suffix:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.ob_vendor_name_suffix
-  ob_vendor_company_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ob_vendor_company_name
-  ob_vendor_title:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ob_vendor_title
   ob_vendor_office_phone:
     data_type: VARCHAR(32)
     source:
@@ -181,30 +259,14 @@ columns:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.ob_vendor_office_phone_extension
-  ob_vendor_mobile_phone:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ob_vendor_mobile_phone
-  ob_vendor_email:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.ob_vendor_email
-  ob_vendor_fax:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.ob_vendor_fax
-  ob_vendor_city:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ob_vendor_city
-  ob_vendor_country:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ob_vendor_country
   ob_vendor_postal_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ob_vendor_postal_code
+  ob_vendor_reference_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ob_vendor_reference_id
   ob_vendor_state:
     data_type: VARCHAR(128)
     source:
@@ -217,76 +279,14 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ob_vendor_street2
-  ob_vendor_reference_id:
+  ob_vendor_title:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.ob_vendor_reference_id
-  ob_name:
-    data_type: VARCHAR(128)
+      field: primary_source_table.columns.ob_vendor_title
+  ob_version:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.ob_name
-  ob_payment_amount_1_warning:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.ob_payment_amount_1_warning
-  ob_payment_amount_2_warning:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.ob_payment_amount_2_warning
-  ob_payment_amount_3_warning:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.ob_payment_amount_3_warning
-  ob_payment_amount_4_warning:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.ob_payment_amount_4_warning
-  ob_payment_amount_5_warning:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.ob_payment_amount_5_warning
-  ob_payment_amount_6_warning:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.ob_payment_amount_6_warning
-  ob_tax_auto_compute:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ob_tax_auto_compute
-  ob_policy_dwelling_coverage_amount:
-    data_type: NUMERIC(15,0)
-    source:
-      field: primary_source_table.columns.ob_policy_dwelling_coverage_amount
-  ob_policy_extended_coverage_amount:
-    data_type: NUMERIC(15,0)
-    source:
-      field: primary_source_table.columns.ob_policy_extended_coverage_amount
-  ob_policy_deductible_amount:
-    data_type: NUMERIC(15,0)
-    source:
-      field: primary_source_table.columns.ob_policy_deductible_amount
-  ob_policy_effective_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.ob_policy_effective_date
-  ob_policy_expiration_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.ob_policy_expiration_date
-  ob_escrow_waiver:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ob_escrow_waiver
-  ob_insurance_transferred:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ob_insurance_transferred
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.ob_version
 etls:
   SP-100155:
     input_type: table

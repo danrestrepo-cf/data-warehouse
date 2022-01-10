@@ -19,11 +19,11 @@ foreign_keys:
       schema: staging_octane
       table: buydown_schedule_type
 columns:
+  pbd_buydown_schedule_type:
+    data_type: VARCHAR(128)
   pbd_pid:
+    data_type: BIGINT
+  pbd_product_terms_pid:
     data_type: BIGINT
   pbd_version:
     data_type: INTEGER
-  pbd_product_terms_pid:
-    data_type: BIGINT
-  pbd_buydown_schedule_type:
-    data_type: VARCHAR(128)

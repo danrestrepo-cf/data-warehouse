@@ -21,44 +21,44 @@ foreign_keys:
       schema: history_octane
       table: state_type
 columns:
-  mrir_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.mrir_pid
-  mrir_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.mrir_version
-  mrir_minimum_required_residual_income_table_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.mrir_minimum_required_residual_income_table_pid
-  mrir_state_type:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.mrir_state_type
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   mrir_household_size:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.mrir_household_size
-  mrir_loan_amount_min:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.mrir_loan_amount_min
   mrir_loan_amount_max:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.mrir_loan_amount_max
+  mrir_loan_amount_min:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.mrir_loan_amount_min
   mrir_minimum_required_residual_income_amount:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.mrir_minimum_required_residual_income_amount
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  mrir_minimum_required_residual_income_table_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mrir_minimum_required_residual_income_table_pid
+  mrir_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mrir_pid
+  mrir_state_type:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.mrir_state_type
+  mrir_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mrir_version
 etls:
   SP-100014:
     input_type: table

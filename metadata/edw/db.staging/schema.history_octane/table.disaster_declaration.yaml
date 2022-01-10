@@ -29,26 +29,14 @@ foreign_keys:
       schema: history_octane
       table: state_type
 columns:
-  dd_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dd_pid
-  dd_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dd_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   dd_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dd_account_pid
-  dd_fema_incident_id:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.dd_fema_incident_id
-  dd_state_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dd_state_type
   dd_county_pid:
     data_type: BIGINT
     source:
@@ -57,14 +45,26 @@ columns:
     data_type: DATE
     source:
       field: primary_source_table.columns.dd_declared_disaster_date
+  dd_fema_incident_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dd_fema_incident_id
   dd_last_processed_datetime:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.dd_last_processed_datetime
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+  dd_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dd_pid
+  dd_state_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dd_state_type
+  dd_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dd_version
   etl_batch_id:
     data_type: TEXT
 etls:

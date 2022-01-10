@@ -61,54 +61,36 @@ foreign_keys:
       schema: history_octane
       table: smart_message_source_type
 columns:
-  smsg_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.smsg_pid
-  smsg_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.smsg_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   smsg_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.smsg_account_pid
-  smsg_name:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.smsg_name
-  smsg_delivery_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.smsg_delivery_type
-  smsg_reply_to_role_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.smsg_reply_to_role_pid
-  smsg_email_subject:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.smsg_email_subject
-  smsg_message_source_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.smsg_message_source_type
-  smsg_smart_doc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.smsg_smart_doc_pid
-  smsg_smart_stack_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.smsg_smart_stack_pid
   smsg_allow_ad_hoc:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.smsg_allow_ad_hoc
-  smsg_send_securely:
+  smsg_allow_custom_text:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.smsg_send_securely
+      field: primary_source_table.columns.smsg_allow_custom_text
+  smsg_delivery_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.smsg_delivery_type
+  smsg_email_closing_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.smsg_email_closing_type
+  smsg_email_subject:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.smsg_email_subject
   smsg_id_num:
     data_type: INTEGER
     source:
@@ -117,20 +99,38 @@ columns:
     data_type: VARCHAR(16000)
     source:
       field: primary_source_table.columns.smsg_message_body
-  smsg_email_closing_type:
+  smsg_message_source_type:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.smsg_email_closing_type
-  smsg_allow_custom_text:
+      field: primary_source_table.columns.smsg_message_source_type
+  smsg_name:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.smsg_name
+  smsg_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smsg_pid
+  smsg_reply_to_role_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smsg_reply_to_role_pid
+  smsg_send_securely:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.smsg_allow_custom_text
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.smsg_send_securely
+  smsg_smart_doc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smsg_smart_doc_pid
+  smsg_smart_stack_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smsg_smart_stack_pid
+  smsg_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.smsg_version
 etls:
   SP-100179:
     input_type: table

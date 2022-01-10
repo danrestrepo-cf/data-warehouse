@@ -93,98 +93,24 @@ foreign_keys:
       schema: history_octane
       table: agent_type
 columns:
-  llmj_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.llmj_pid
-  llmj_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.llmj_version
-  llmj_major_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.llmj_major_version
-  llmj_lender_lock_id:
-    data_type: VARCHAR(11)
-    source:
-      field: primary_source_table.columns.llmj_lender_lock_id
-  llmj_loan_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.llmj_loan_pid
-  llmj_lien_priority_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.llmj_lien_priority_type
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   llmj_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.llmj_account_pid
-  llmj_lock_datetime:
-    data_type: TIMESTAMP
+  llmj_active:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.llmj_lock_datetime
-  llmj_initial_duration_days:
-    data_type: INTEGER
+      field: primary_source_table.columns.llmj_active
+  llmj_auto_confirmed:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.llmj_initial_duration_days
-  llmj_initial_lock_expiration_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.llmj_initial_lock_expiration_datetime
-  llmj_requester_agent_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.llmj_requester_agent_type
-  llmj_requester_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.llmj_requester_lender_user_pid
-  llmj_requester_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.llmj_requester_unparsed_name
-  llmj_request_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.llmj_request_datetime
-  llmj_confirm_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.llmj_confirm_datetime
-  llmj_confirm_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.llmj_confirm_lender_user_pid
-  llmj_confirm_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.llmj_confirm_unparsed_name
-  llmj_void_request_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.llmj_void_request_datetime
-  llmj_void_request_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.llmj_void_request_lender_user_pid
-  llmj_void_request_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.llmj_void_request_unparsed_name
-  llmj_void_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.llmj_void_datetime
-  llmj_void_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.llmj_void_lender_user_pid
-  llmj_void_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.llmj_void_unparsed_name
+      field: primary_source_table.columns.llmj_auto_confirmed
   llmj_cancel_datetime:
     data_type: TIMESTAMP
     source:
@@ -197,52 +123,126 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.llmj_cancel_unparsed_name
-  llmj_auto_confirmed:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.llmj_auto_confirmed
-  llmj_active:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.llmj_active
-  llmj_relock_fee_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.llmj_relock_fee_percent
-  llmj_notes:
-    data_type: VARCHAR(16000)
-    source:
-      field: primary_source_table.columns.llmj_notes
-  llmj_lender_concession_approved_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.llmj_lender_concession_approved_amount
   llmj_clear_extension_fees_relock:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.llmj_clear_extension_fees_relock
-  llmj_pricing_duration_days:
-    data_type: INTEGER
+  llmj_confirm_datetime:
+    data_type: TIMESTAMP
     source:
-      field: primary_source_table.columns.llmj_pricing_duration_days
-  llmj_pricing_commitment_type:
+      field: primary_source_table.columns.llmj_confirm_datetime
+  llmj_confirm_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.llmj_confirm_lender_user_pid
+  llmj_confirm_unparsed_name:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.llmj_pricing_commitment_type
+      field: primary_source_table.columns.llmj_confirm_unparsed_name
   llmj_expired_lock_successor:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.llmj_expired_lock_successor
+  llmj_initial_duration_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.llmj_initial_duration_days
+  llmj_initial_lock_expiration_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.llmj_initial_lock_expiration_datetime
+  llmj_lender_concession_approved_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.llmj_lender_concession_approved_amount
+  llmj_lender_lock_id:
+    data_type: VARCHAR(11)
+    source:
+      field: primary_source_table.columns.llmj_lender_lock_id
+  llmj_lien_priority_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.llmj_lien_priority_type
+  llmj_loan_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.llmj_loan_pid
+  llmj_lock_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.llmj_lock_datetime
   llmj_lock_series_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.llmj_lock_series_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  llmj_major_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.llmj_major_version
+  llmj_notes:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.llmj_notes
+  llmj_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.llmj_pid
+  llmj_pricing_commitment_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.llmj_pricing_commitment_type
+  llmj_pricing_duration_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.llmj_pricing_duration_days
+  llmj_relock_fee_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.llmj_relock_fee_percent
+  llmj_request_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.llmj_request_datetime
+  llmj_requester_agent_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.llmj_requester_agent_type
+  llmj_requester_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.llmj_requester_lender_user_pid
+  llmj_requester_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.llmj_requester_unparsed_name
+  llmj_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.llmj_version
+  llmj_void_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.llmj_void_datetime
+  llmj_void_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.llmj_void_lender_user_pid
+  llmj_void_request_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.llmj_void_request_datetime
+  llmj_void_request_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.llmj_void_request_lender_user_pid
+  llmj_void_request_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.llmj_void_request_unparsed_name
+  llmj_void_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.llmj_void_unparsed_name
 etls:
   SP-100151:
     input_type: table

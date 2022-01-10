@@ -53,38 +53,20 @@ foreign_keys:
       schema: history_octane
       table: lock_extension_status_type
 columns:
-  lle_pid:
-    data_type: BIGINT
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  lle_auto_confirmed:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.lle_pid
-  lle_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lle_version
-  lle_lender_lock_major_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lle_lender_lock_major_pid
-  lle_creator_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lle_creator_lender_user_pid
-  lle_creator_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lle_creator_unparsed_name
-  lle_requester_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lle_requester_lender_user_pid
-  lle_requester_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lle_requester_unparsed_name
-  lle_requested_datetime:
+      field: primary_source_table.columns.lle_auto_confirmed
+  lle_confirm_datetime:
     data_type: TIMESTAMP
     source:
-      field: primary_source_table.columns.lle_requested_datetime
+      field: primary_source_table.columns.lle_confirm_datetime
   lle_confirm_lender_user_pid:
     data_type: BIGINT
     source:
@@ -93,18 +75,38 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lle_confirm_unparsed_name
-  lle_confirm_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.lle_confirm_datetime
-  lle_auto_confirmed:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.lle_auto_confirmed
-  lle_reject_lender_user_pid:
+  lle_creator_lender_user_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.lle_reject_lender_user_pid
+      field: primary_source_table.columns.lle_creator_lender_user_pid
+  lle_creator_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lle_creator_unparsed_name
+  lle_extension_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lle_extension_days
+  lle_fee_applicable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lle_fee_applicable
+  lle_lender_lock_major_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lle_lender_lock_major_pid
+  lle_lock_extension_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lle_lock_extension_status_type
+  lle_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lle_pid
+  lle_price_adjustment_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lle_price_adjustment_percent
   lle_reject_datetime:
     data_type: TIMESTAMP
     source:
@@ -113,28 +115,26 @@ columns:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.columns.lle_reject_explanation
-  lle_lock_extension_status_type:
+  lle_reject_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lle_reject_lender_user_pid
+  lle_requested_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.lle_requested_datetime
+  lle_requester_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lle_requester_lender_user_pid
+  lle_requester_unparsed_name:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.lle_lock_extension_status_type
-  lle_extension_days:
+      field: primary_source_table.columns.lle_requester_unparsed_name
+  lle_version:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.lle_extension_days
-  lle_price_adjustment_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.lle_price_adjustment_percent
-  lle_fee_applicable:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.lle_fee_applicable
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.lle_version
 etls:
   SP-100323:
     input_type: table

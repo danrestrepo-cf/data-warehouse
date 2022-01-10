@@ -21,6 +21,12 @@ foreign_keys:
       schema: history_octane
       table: wf_deal_process
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   wdfp_pid:
     data_type: BIGINT
     source:
@@ -29,20 +35,14 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.wdfp_version
-  wdfp_wf_deal_step_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.wdfp_wf_deal_step_pid
   wdfp_wf_deal_process_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.wdfp_wf_deal_process_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  wdfp_wf_deal_step_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wdfp_wf_deal_step_pid
 etls:
   SP-100195:
     input_type: table

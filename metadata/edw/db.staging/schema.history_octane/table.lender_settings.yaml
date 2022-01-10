@@ -85,26 +85,82 @@ foreign_keys:
       schema: history_octane
       table: aus_type
 columns:
-  lss_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lss_pid
-  lss_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lss_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   lss_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lss_account_pid
+  lss_borrower_quote_filter_pivot_higher_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lss_borrower_quote_filter_pivot_higher_count
+  lss_borrower_quote_filter_pivot_lower_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lss_borrower_quote_filter_pivot_lower_count
+  lss_borrower_quote_filter_pivot_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lss_borrower_quote_filter_pivot_type
   lss_company_time_zone_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lss_company_time_zone_type
+  lss_default_combo_lock_term_setting_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lss_default_combo_lock_term_setting_pid
+  lss_default_credit_bureau_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lss_default_credit_bureau_type
+  lss_default_standalone_lock_term_setting_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lss_default_standalone_lock_term_setting_pid
+  lss_equifax_submitting_party_name:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.lss_equifax_submitting_party_name
+  lss_factual_data_submitting_party_id:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.lss_factual_data_submitting_party_id
+  lss_factual_data_submitting_party_name:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.lss_factual_data_submitting_party_name
   lss_fha_home_office_branch_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lss_fha_home_office_branch_pid
+  lss_fha_home_office_location_pid:
+    data_type: BIGINT
+  lss_fha_lender_id:
+    data_type: VARCHAR(16)
+  lss_fha_non_supervised_mortgagee:
+    data_type: BOOLEAN
+  lss_fha_sponsor_address_city:
+    data_type: VARCHAR(128)
+  lss_fha_sponsor_address_country:
+    data_type: VARCHAR(128)
+  lss_fha_sponsor_address_postal_code:
+    data_type: VARCHAR(128)
+  lss_fha_sponsor_address_state:
+    data_type: VARCHAR(128)
+  lss_fha_sponsor_address_street1:
+    data_type: VARCHAR(128)
+  lss_fha_sponsor_address_street2:
+    data_type: VARCHAR(128)
+  lss_fha_sponsor_company_name:
+    data_type: VARCHAR(32)
+  lss_fha_sponsor_id:
+    data_type: VARCHAR(16)
   lss_fnma_seller_id:
     data_type: VARCHAR(16)
     source:
@@ -113,14 +169,10 @@ columns:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.lss_fre_seller_id
-  lss_lp_submission_type:
+  lss_hmda_agency_id_type:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.lss_lp_submission_type
-  lss_lender_user_email_from:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.lss_lender_user_email_from
+      field: primary_source_table.columns.lss_hmda_agency_id_type
   lss_hmda_contact_pid:
     data_type: BIGINT
     source:
@@ -133,18 +185,42 @@ columns:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.lss_hmda_respondent_id
-  lss_hmda_agency_id_type:
+  lss_lender_user_email_from:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.lss_lender_user_email_from
+  lss_lp_submission_type:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.lss_hmda_agency_id_type
-  lss_prequalification_program:
-    data_type: BOOLEAN
+      field: primary_source_table.columns.lss_lp_submission_type
+  lss_meridian_link_submitting_party_id:
+    data_type: VARCHAR(256)
     source:
-      field: primary_source_table.columns.lss_prequalification_program
-  lss_preapproval_program:
-    data_type: BOOLEAN
+      field: primary_source_table.columns.lss_meridian_link_submitting_party_id
+  lss_originator_title:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.lss_preapproval_program
+      field: primary_source_table.columns.lss_originator_title
+  lss_pest_inspector_address_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lss_pest_inspector_address_city
+  lss_pest_inspector_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lss_pest_inspector_address_postal_code
+  lss_pest_inspector_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lss_pest_inspector_address_state
+  lss_pest_inspector_address_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lss_pest_inspector_address_street1
+  lss_pest_inspector_address_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lss_pest_inspector_address_street2
   lss_pest_inspector_company_name:
     data_type: VARCHAR(128)
     source:
@@ -157,114 +233,38 @@ columns:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.lss_pest_inspector_website_url
-  lss_pest_inspector_address_street1:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lss_pest_inspector_address_street1
-  lss_pest_inspector_address_street2:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lss_pest_inspector_address_street2
-  lss_pest_inspector_address_city:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lss_pest_inspector_address_city
-  lss_pest_inspector_address_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lss_pest_inspector_address_state
-  lss_pest_inspector_address_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lss_pest_inspector_address_postal_code
-  lss_take_application_hours:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lss_take_application_hours
-  lss_originator_title:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lss_originator_title
-  lss_default_credit_bureau_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lss_default_credit_bureau_type
-  lss_sap_minimum_decision_credit_score:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lss_sap_minimum_decision_credit_score
-  lss_default_standalone_lock_term_setting_pid:
+  lss_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.lss_default_standalone_lock_term_setting_pid
-  lss_default_combo_lock_term_setting_pid:
-    data_type: BIGINT
+      field: primary_source_table.columns.lss_pid
+  lss_preapproval_program:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.lss_default_combo_lock_term_setting_pid
+      field: primary_source_table.columns.lss_preapproval_program
   lss_preferred_aus_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lss_preferred_aus_type
-  lss_borrower_quote_filter_pivot_type:
+  lss_prequalification_program:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lss_prequalification_program
+  lss_sap_minimum_decision_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lss_sap_minimum_decision_credit_score
+  lss_take_application_hours:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.lss_borrower_quote_filter_pivot_type
-  lss_borrower_quote_filter_pivot_lower_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lss_borrower_quote_filter_pivot_lower_count
-  lss_borrower_quote_filter_pivot_higher_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lss_borrower_quote_filter_pivot_higher_count
-  lss_equifax_submitting_party_name:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.lss_equifax_submitting_party_name
-  lss_factual_data_submitting_party_name:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.lss_factual_data_submitting_party_name
-  lss_factual_data_submitting_party_id:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.lss_factual_data_submitting_party_id
-  lss_meridian_link_submitting_party_id:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.lss_meridian_link_submitting_party_id
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
-  lss_va_lender_id:
-    data_type: VARCHAR(16)
+      field: primary_source_table.columns.lss_take_application_hours
   lss_usda_lender_id:
     data_type: VARCHAR(16)
-  lss_fha_lender_id:
+  lss_va_lender_id:
     data_type: VARCHAR(16)
-  lss_fha_sponsor_id:
-    data_type: VARCHAR(16)
-  lss_fha_sponsor_company_name:
-    data_type: VARCHAR(32)
-  lss_fha_sponsor_address_street1:
-    data_type: VARCHAR(128)
-  lss_fha_sponsor_address_street2:
-    data_type: VARCHAR(128)
-  lss_fha_sponsor_address_city:
-    data_type: VARCHAR(128)
-  lss_fha_sponsor_address_state:
-    data_type: VARCHAR(128)
-  lss_fha_sponsor_address_postal_code:
-    data_type: VARCHAR(128)
-  lss_fha_sponsor_address_country:
-    data_type: VARCHAR(128)
-  lss_fha_non_supervised_mortgagee:
-    data_type: BOOLEAN
-  lss_fha_home_office_location_pid:
-    data_type: BIGINT
+  lss_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lss_version
 etls:
   SP-100095:
     input_type: table

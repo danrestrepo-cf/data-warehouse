@@ -21,14 +21,14 @@ foreign_keys:
       schema: history_octane
       table: deal_stage_type
 columns:
-  dst_pid:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  dst_business_hours_duration_seconds:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.dst_pid
-  dst_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dst_version
+      field: primary_source_table.columns.dst_business_hours_duration_seconds
   dst_deal_pid:
     data_type: BIGINT
     source:
@@ -37,6 +37,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dst_deal_stage_type
+  dst_duration_seconds:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dst_duration_seconds
   dst_from_date:
     data_type: DATE
     source:
@@ -45,6 +49,10 @@ columns:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.dst_from_datetime
+  dst_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dst_pid
   dst_through_date:
     data_type: DATE
     source:
@@ -53,18 +61,10 @@ columns:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.dst_through_datetime
-  dst_duration_seconds:
-    data_type: BIGINT
+  dst_version:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.dst_duration_seconds
-  dst_business_hours_duration_seconds:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dst_business_hours_duration_seconds
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+      field: primary_source_table.columns.dst_version
   etl_batch_id:
     data_type: TEXT
 etls:

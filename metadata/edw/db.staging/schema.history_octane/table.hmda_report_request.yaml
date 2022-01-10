@@ -29,14 +29,12 @@ foreign_keys:
       schema: history_octane
       table: report_request_status_type
 columns:
-  hrr_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.hrr_pid
-  hrr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.hrr_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   hrr_account_pid:
     data_type: BIGINT
     source:
@@ -45,22 +43,38 @@ columns:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.hrr_create_datetime
-  hrr_start_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.hrr_start_datetime
   hrr_end_datetime:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.hrr_end_datetime
-  hrr_request_status_type:
-    data_type: VARCHAR(128)
+  hrr_error_limit:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.hrr_request_status_type
+      field: primary_source_table.columns.hrr_error_limit
+  hrr_error_protection:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.hrr_error_protection
+  hrr_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.hrr_from_date
+  hrr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.hrr_pid
+  hrr_repository_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.hrr_repository_file_pid
   hrr_request_status_messages:
     data_type: TEXT
     source:
       field: primary_source_table.columns.hrr_request_status_messages
+  hrr_request_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.hrr_request_status_type
   hrr_requester_unparsed_name:
     data_type: VARCHAR(128)
     source:
@@ -69,32 +83,18 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.hrr_row_count
-  hrr_from_date:
-    data_type: DATE
+  hrr_start_datetime:
+    data_type: TIMESTAMP
     source:
-      field: primary_source_table.columns.hrr_from_date
+      field: primary_source_table.columns.hrr_start_datetime
   hrr_through_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.hrr_through_date
-  hrr_error_protection:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.hrr_error_protection
-  hrr_error_limit:
+  hrr_version:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.hrr_error_limit
-  hrr_repository_file_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.hrr_repository_file_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.hrr_version
 etls:
   SP-100123:
     input_type: table

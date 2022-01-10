@@ -27,27 +27,27 @@ foreign_keys:
       schema: staging_octane
       table: backfill_status_type
 columns:
-  bfs_pid:
-    data_type: BIGINT
-  bfs_version:
-    data_type: INTEGER
   bfs_account_pid:
     data_type: BIGINT
-  bfs_batch_id:
-    data_type: VARCHAR(128)
-  bfs_name:
-    data_type: VARCHAR(128)
-  bfs_lender_user_pid:
-    data_type: BIGINT
-  bfs_submit_datetime:
-    data_type: TIMESTAMP
-  bfs_completed_datetime:
-    data_type: TIMESTAMP
-  bfs_num_loans:
-    data_type: INTEGER
   bfs_backfill_status_type:
     data_type: VARCHAR(128)
+  bfs_batch_id:
+    data_type: VARCHAR(128)
+  bfs_completed_datetime:
+    data_type: TIMESTAMP
   bfs_failure_info:
     data_type: VARCHAR(16000)
+  bfs_lender_user_pid:
+    data_type: BIGINT
+  bfs_name:
+    data_type: VARCHAR(128)
+  bfs_num_loans:
+    data_type: INTEGER
+  bfs_pid:
+    data_type: BIGINT
   bfs_raw_header_row:
     data_type: VARCHAR(16000)
+  bfs_submit_datetime:
+    data_type: TIMESTAMP
+  bfs_version:
+    data_type: INTEGER

@@ -43,25 +43,25 @@ foreign_keys:
       schema: staging_octane
       table: vendor_import_document_type
 columns:
-  vdrf_pid:
-    data_type: BIGINT
-  vdrf_version:
-    data_type: INTEGER
   vdrf_account_pid:
     data_type: BIGINT
-  vdrf_deal_pid:
-    data_type: BIGINT
-  vdrf_document_import_vendor_type:
-    data_type: VARCHAR(128)
   vdrf_client_filename:
     data_type: VARCHAR(128)
   vdrf_client_filepath:
     data_type: VARCHAR(256)
-  vdrf_file_checksum:
-    data_type: VARCHAR(128)
-  vdrf_vendor_import_document_type:
-    data_type: VARCHAR(128)
+  vdrf_deal_pid:
+    data_type: BIGINT
   vdrf_document_import_status_type:
     data_type: VARCHAR(128)
+  vdrf_document_import_vendor_type:
+    data_type: VARCHAR(128)
+  vdrf_file_checksum:
+    data_type: VARCHAR(128)
+  vdrf_pid:
+    data_type: BIGINT
   vdrf_processed_datetime:
     data_type: TIMESTAMP
+  vdrf_vendor_import_document_type:
+    data_type: VARCHAR(128)
+  vdrf_version:
+    data_type: INTEGER

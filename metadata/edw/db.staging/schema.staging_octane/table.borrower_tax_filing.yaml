@@ -27,25 +27,25 @@ foreign_keys:
       schema: staging_octane
       table: tax_filing_status_type
 columns:
-  btf_pid:
-    data_type: BIGINT
-  btf_version:
-    data_type: INTEGER
   btf_borrower_pid:
+    data_type: BIGINT
+  btf_joint_filer_first_name:
+    data_type: VARCHAR(32)
+  btf_joint_filer_last_name:
+    data_type: VARCHAR(32)
+  btf_joint_filer_middle_name:
+    data_type: VARCHAR(32)
+  btf_joint_filer_suffix:
+    data_type: VARCHAR(32)
+  btf_joint_is_coborrower:
+    data_type: BOOLEAN
+  btf_pid:
     data_type: BIGINT
   btf_place_pid:
     data_type: BIGINT
   btf_tax_filing_status_type:
     data_type: VARCHAR(128)
+  btf_version:
+    data_type: INTEGER
   btf_year:
     data_type: INTEGER
-  btf_joint_is_coborrower:
-    data_type: BOOLEAN
-  btf_joint_filer_first_name:
-    data_type: VARCHAR(32)
-  btf_joint_filer_middle_name:
-    data_type: VARCHAR(32)
-  btf_joint_filer_last_name:
-    data_type: VARCHAR(32)
-  btf_joint_filer_suffix:
-    data_type: VARCHAR(32)

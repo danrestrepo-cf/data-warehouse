@@ -109,66 +109,52 @@ foreign_keys:
       schema: history_octane
       table: loan_position_type
 columns:
-  le_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.le_pid
-  le_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.le_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   le_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.le_account_pid
-  le_ledger_entry_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.le_ledger_entry_type
-  le_ledger_entry_source_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.le_ledger_entry_source_type
-  le_estimate:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.le_estimate
-  le_ledger_entry_decision_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.le_ledger_entry_decision_status_type
   le_create_datetime:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.le_create_datetime
-  le_entry_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.le_entry_amount
-  le_source_org_node_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.le_source_org_node_pid
-  le_payee_org_node_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.le_payee_org_node_pid
-  le_payee_org_lineage_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.le_payee_org_lineage_pid
-  le_source_org_lineage_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.le_source_org_lineage_pid
-  le_org_lineage_source_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.le_org_lineage_source_date
   le_deal_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.le_deal_pid
+  le_entry_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.le_entry_amount
+  le_estimate:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.le_estimate
+  le_expense_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.le_expense_date
+  le_ledger_book_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.le_ledger_book_datetime
+  le_ledger_entry_decision_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.le_ledger_entry_decision_status_type
+  le_ledger_entry_source_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.le_ledger_entry_source_type
+  le_ledger_entry_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.le_ledger_entry_type
   le_loan_position_type:
     data_type: VARCHAR(128)
     source:
@@ -177,48 +163,62 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.le_los_loan_id
-  le_notes:
-    data_type: TEXT
-    source:
-      field: primary_source_table.columns.le_notes
   le_monthly_ledger_book_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.le_monthly_ledger_book_pid
-  le_payroll_ledger_book_pid:
-    data_type: BIGINT
+  le_notes:
+    data_type: TEXT
     source:
-      field: primary_source_table.columns.le_payroll_ledger_book_pid
-  le_ledger_book_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.le_ledger_book_datetime
-  le_expense_date:
+      field: primary_source_table.columns.le_notes
+  le_org_lineage_source_date:
     data_type: DATE
     source:
-      field: primary_source_table.columns.le_expense_date
-  le_reversal:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.le_reversal
+      field: primary_source_table.columns.le_org_lineage_source_date
   le_passthrough:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.le_passthrough
+  le_payee_org_lineage_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.le_payee_org_lineage_pid
+  le_payee_org_node_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.le_payee_org_node_pid
+  le_payroll_ledger_book_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.le_payroll_ledger_book_pid
+  le_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.le_pid
+  le_reversal:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.le_reversal
   le_smart_ledger_plan_case_version_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.le_smart_ledger_plan_case_version_pid
+  le_source_org_lineage_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.le_source_org_lineage_pid
+  le_source_org_node_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.le_source_org_node_pid
   le_synthetic_unique:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.le_synthetic_unique
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  le_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.le_version
 etls:
   SP-100214:
     input_type: table

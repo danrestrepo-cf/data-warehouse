@@ -21,18 +21,10 @@ foreign_keys:
       schema: history_octane
       table: esign_package_status_type
 columns:
-  dcsp_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dcsp_pid
-  dcsp_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dcsp_version
-  dcsp_proposal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dcsp_proposal_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   dcsp_envelope_id:
     data_type: VARCHAR(128)
     source:
@@ -41,14 +33,22 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dcsp_esign_package_status_type
+  dcsp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcsp_pid
+  dcsp_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcsp_proposal_pid
   dcsp_status_datetime:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.dcsp_status_datetime
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+  dcsp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dcsp_version
   etl_batch_id:
     data_type: TEXT
 etls:

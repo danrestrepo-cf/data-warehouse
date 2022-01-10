@@ -11,11 +11,11 @@ foreign_keys:
       schema: staging_octane
       table: account
 columns:
-  loctk_pid:
-    data_type: BIGINT
-  loctk_version:
-    data_type: INTEGER
   loctk_account_pid:
     data_type: BIGINT
   loctk_next_location_id:
+    data_type: INTEGER
+  loctk_pid:
+    data_type: BIGINT
+  loctk_version:
     data_type: INTEGER

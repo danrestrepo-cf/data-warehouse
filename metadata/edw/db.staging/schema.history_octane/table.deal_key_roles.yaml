@@ -325,350 +325,350 @@ foreign_keys:
       schema: history_octane
       table: lender_user
 columns:
-  dkrs_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_pid
-  dkrs_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dkrs_version
-  dkrs_deal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_deal_pid
-  dkrs_originator_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_originator_lender_user_pid
-  dkrs_originator_first_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.dkrs_originator_first_name
-  dkrs_originator_last_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.dkrs_originator_last_name
-  dkrs_originator_middle_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.dkrs_originator_middle_name
-  dkrs_originator_fmls_basic:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_originator_fmls_basic
-  dkrs_originator_nmls_id:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.dkrs_originator_nmls_id
-  dkrs_supplemental_originator_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_supplemental_originator_lender_user_pid
-  dkrs_supplemental_originator_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_supplemental_originator_fmls
-  dkrs_account_executive_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_account_executive_lender_user_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   dkrs_account_executive_fmls:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dkrs_account_executive_fmls
-  dkrs_investor_conditions_lender_user_pid:
+  dkrs_account_executive_lender_user_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.dkrs_investor_conditions_lender_user_pid
-  dkrs_investor_conditions_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_investor_conditions_fmls
-  dkrs_investor_stack_to_investor_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_investor_stack_to_investor_lender_user_pid
-  dkrs_investor_stack_to_investor_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_investor_stack_to_investor_fmls
-  dkrs_collateral_to_custodian_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_collateral_to_custodian_lender_user_pid
-  dkrs_collateral_to_custodian_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_collateral_to_custodian_fmls
-  dkrs_collateral_to_investor_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_collateral_to_investor_lender_user_pid
-  dkrs_collateral_to_investor_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_collateral_to_investor_fmls
-  dkrs_transaction_assistant_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_transaction_assistant_lender_user_pid
-  dkrs_transaction_assistant_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_transaction_assistant_fmls
-  dkrs_final_documents_to_investor_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_final_documents_to_investor_lender_user_pid
-  dkrs_final_documents_to_investor_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_final_documents_to_investor_fmls
-  dkrs_government_insurance_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_government_insurance_lender_user_pid
-  dkrs_government_insurance_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_government_insurance_fmls
-  dkrs_funder_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_funder_lender_user_pid
-  dkrs_funder_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_funder_fmls
-  dkrs_processor_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_processor_lender_user_pid
-  dkrs_processor_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_processor_fmls
-  dkrs_underwriter_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_underwriter_lender_user_pid
-  dkrs_underwriter_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_underwriter_fmls
-  dkrs_project_underwriter_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_project_underwriter_lender_user_pid
-  dkrs_project_underwriter_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_project_underwriter_fmls
-  dkrs_closing_doc_specialist_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_closing_doc_specialist_lender_user_pid
+      field: primary_source_table.columns.dkrs_account_executive_lender_user_pid
   dkrs_closing_doc_specialist_fmls:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dkrs_closing_doc_specialist_fmls
-  dkrs_wholesale_client_advocate_lender_user_pid:
+  dkrs_closing_doc_specialist_lender_user_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.dkrs_wholesale_client_advocate_lender_user_pid
-  dkrs_wholesale_client_advocate_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_wholesale_client_advocate_fmls
-  dkrs_closing_scheduler_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_closing_scheduler_lender_user_pid
+      field: primary_source_table.columns.dkrs_closing_doc_specialist_lender_user_pid
   dkrs_closing_scheduler_fmls:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dkrs_closing_scheduler_fmls
-  dkrs_collateral_underwriter_lender_user_pid:
+  dkrs_closing_scheduler_lender_user_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.dkrs_collateral_underwriter_lender_user_pid
+      field: primary_source_table.columns.dkrs_closing_scheduler_lender_user_pid
+  dkrs_collateral_to_custodian_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_collateral_to_custodian_fmls
+  dkrs_collateral_to_custodian_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_collateral_to_custodian_lender_user_pid
+  dkrs_collateral_to_investor_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_collateral_to_investor_fmls
+  dkrs_collateral_to_investor_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_collateral_to_investor_lender_user_pid
   dkrs_collateral_underwriter_fmls:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dkrs_collateral_underwriter_fmls
-  dkrs_correspondent_client_advocate_lender_user_pid:
+  dkrs_collateral_underwriter_lender_user_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.dkrs_correspondent_client_advocate_lender_user_pid
+      field: primary_source_table.columns.dkrs_collateral_underwriter_lender_user_pid
   dkrs_correspondent_client_advocate_fmls:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dkrs_correspondent_client_advocate_fmls
-  dkrs_flood_insurance_specialist_lender_user_pid:
+  dkrs_correspondent_client_advocate_lender_user_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.dkrs_flood_insurance_specialist_lender_user_pid
+      field: primary_source_table.columns.dkrs_correspondent_client_advocate_lender_user_pid
+  dkrs_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_deal_pid
+  dkrs_final_documents_to_investor_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_final_documents_to_investor_fmls
+  dkrs_final_documents_to_investor_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_final_documents_to_investor_lender_user_pid
   dkrs_flood_insurance_specialist_fmls:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dkrs_flood_insurance_specialist_fmls
-  dkrs_hoa_specialist_lender_user_pid:
+  dkrs_flood_insurance_specialist_lender_user_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.dkrs_hoa_specialist_lender_user_pid
-  dkrs_hoa_specialist_fmls:
+      field: primary_source_table.columns.dkrs_flood_insurance_specialist_lender_user_pid
+  dkrs_funder_fmls:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.dkrs_hoa_specialist_fmls
-  dkrs_hoi_specialist_lender_user_pid:
+      field: primary_source_table.columns.dkrs_funder_fmls
+  dkrs_funder_lender_user_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.dkrs_hoi_specialist_lender_user_pid
-  dkrs_hoi_specialist_fmls:
+      field: primary_source_table.columns.dkrs_funder_lender_user_pid
+  dkrs_government_insurance_fmls:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.dkrs_hoi_specialist_fmls
-  dkrs_ho6_specialist_lender_user_pid:
+      field: primary_source_table.columns.dkrs_government_insurance_fmls
+  dkrs_government_insurance_lender_user_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.dkrs_ho6_specialist_lender_user_pid
+      field: primary_source_table.columns.dkrs_government_insurance_lender_user_pid
   dkrs_ho6_specialist_fmls:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dkrs_ho6_specialist_fmls
-  dkrs_hud_va_lender_officer_lender_user_pid:
+  dkrs_ho6_specialist_lender_user_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.dkrs_hud_va_lender_officer_lender_user_pid
+      field: primary_source_table.columns.dkrs_ho6_specialist_lender_user_pid
+  dkrs_hoa_specialist_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_hoa_specialist_fmls
+  dkrs_hoa_specialist_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_hoa_specialist_lender_user_pid
+  dkrs_hoi_specialist_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_hoi_specialist_fmls
+  dkrs_hoi_specialist_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_hoi_specialist_lender_user_pid
   dkrs_hud_va_lender_officer_fmls:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dkrs_hud_va_lender_officer_fmls
-  dkrs_loan_officer_assistant_lender_user_pid:
+  dkrs_hud_va_lender_officer_lender_user_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.dkrs_loan_officer_assistant_lender_user_pid
-  dkrs_loan_officer_assistant_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_loan_officer_assistant_fmls
-  dkrs_loan_payoff_specialist_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_loan_payoff_specialist_lender_user_pid
-  dkrs_loan_payoff_specialist_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_loan_payoff_specialist_fmls
-  dkrs_subordination_specialist_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_subordination_specialist_lender_user_pid
-  dkrs_subordination_specialist_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_subordination_specialist_fmls
-  dkrs_title_specialist_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_title_specialist_lender_user_pid
-  dkrs_title_specialist_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_title_specialist_fmls
-  dkrs_underwriting_manager_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_underwriting_manager_lender_user_pid
-  dkrs_underwriting_manager_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_underwriting_manager_fmls
-  dkrs_va_specialist_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_va_specialist_lender_user_pid
-  dkrs_va_specialist_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_va_specialist_fmls
-  dkrs_verbal_voe_specialist_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_verbal_voe_specialist_lender_user_pid
-  dkrs_verbal_voe_specialist_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_verbal_voe_specialist_fmls
-  dkrs_voe_specialist_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_voe_specialist_lender_user_pid
-  dkrs_voe_specialist_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_voe_specialist_fmls
-  dkrs_wire_specialist_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_wire_specialist_lender_user_pid
-  dkrs_wire_specialist_fmls:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dkrs_wire_specialist_fmls
-  dkrs_internal_construction_manager_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dkrs_internal_construction_manager_lender_user_pid
+      field: primary_source_table.columns.dkrs_hud_va_lender_officer_lender_user_pid
   dkrs_internal_construction_manager_fmls:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dkrs_internal_construction_manager_fmls
-  dkrs_review_requester_1_lender_user_pid:
+  dkrs_internal_construction_manager_lender_user_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.dkrs_review_requester_1_lender_user_pid
+      field: primary_source_table.columns.dkrs_internal_construction_manager_lender_user_pid
+  dkrs_investor_conditions_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_investor_conditions_fmls
+  dkrs_investor_conditions_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_investor_conditions_lender_user_pid
+  dkrs_investor_stack_to_investor_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_investor_stack_to_investor_fmls
+  dkrs_investor_stack_to_investor_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_investor_stack_to_investor_lender_user_pid
+  dkrs_loan_officer_assistant_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_loan_officer_assistant_fmls
+  dkrs_loan_officer_assistant_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_loan_officer_assistant_lender_user_pid
+  dkrs_loan_payoff_specialist_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_loan_payoff_specialist_fmls
+  dkrs_loan_payoff_specialist_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_loan_payoff_specialist_lender_user_pid
+  dkrs_originator_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dkrs_originator_first_name
+  dkrs_originator_fmls_basic:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_originator_fmls_basic
+  dkrs_originator_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dkrs_originator_last_name
+  dkrs_originator_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_originator_lender_user_pid
+  dkrs_originator_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dkrs_originator_middle_name
+  dkrs_originator_nmls_id:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.dkrs_originator_nmls_id
+  dkrs_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_pid
+  dkrs_processor_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_processor_fmls
+  dkrs_processor_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_processor_lender_user_pid
+  dkrs_project_underwriter_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_project_underwriter_fmls
+  dkrs_project_underwriter_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_project_underwriter_lender_user_pid
   dkrs_review_requester_1_fmls:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dkrs_review_requester_1_fmls
-  dkrs_review_requester_2_lender_user_pid:
+  dkrs_review_requester_1_lender_user_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.dkrs_review_requester_2_lender_user_pid
+      field: primary_source_table.columns.dkrs_review_requester_1_lender_user_pid
   dkrs_review_requester_2_fmls:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dkrs_review_requester_2_fmls
-  dkrs_review_requester_3_lender_user_pid:
+  dkrs_review_requester_2_lender_user_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.dkrs_review_requester_3_lender_user_pid
+      field: primary_source_table.columns.dkrs_review_requester_2_lender_user_pid
   dkrs_review_requester_3_fmls:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dkrs_review_requester_3_fmls
-  dkrs_review_requester_4_lender_user_pid:
+  dkrs_review_requester_3_lender_user_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.dkrs_review_requester_4_lender_user_pid
+      field: primary_source_table.columns.dkrs_review_requester_3_lender_user_pid
   dkrs_review_requester_4_fmls:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dkrs_review_requester_4_fmls
-  dkrs_review_requester_5_lender_user_pid:
+  dkrs_review_requester_4_lender_user_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.dkrs_review_requester_5_lender_user_pid
+      field: primary_source_table.columns.dkrs_review_requester_4_lender_user_pid
   dkrs_review_requester_5_fmls:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dkrs_review_requester_5_fmls
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+  dkrs_review_requester_5_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_review_requester_5_lender_user_pid
+  dkrs_subordination_specialist_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_subordination_specialist_fmls
+  dkrs_subordination_specialist_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_subordination_specialist_lender_user_pid
+  dkrs_supplemental_originator_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_supplemental_originator_fmls
+  dkrs_supplemental_originator_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_supplemental_originator_lender_user_pid
+  dkrs_title_specialist_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_title_specialist_fmls
+  dkrs_title_specialist_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_title_specialist_lender_user_pid
+  dkrs_transaction_assistant_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_transaction_assistant_fmls
+  dkrs_transaction_assistant_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_transaction_assistant_lender_user_pid
+  dkrs_underwriter_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_underwriter_fmls
+  dkrs_underwriter_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_underwriter_lender_user_pid
+  dkrs_underwriting_manager_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_underwriting_manager_fmls
+  dkrs_underwriting_manager_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_underwriting_manager_lender_user_pid
+  dkrs_va_specialist_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_va_specialist_fmls
+  dkrs_va_specialist_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_va_specialist_lender_user_pid
+  dkrs_verbal_voe_specialist_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_verbal_voe_specialist_fmls
+  dkrs_verbal_voe_specialist_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_verbal_voe_specialist_lender_user_pid
+  dkrs_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dkrs_version
+  dkrs_voe_specialist_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_voe_specialist_fmls
+  dkrs_voe_specialist_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_voe_specialist_lender_user_pid
+  dkrs_wholesale_client_advocate_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_wholesale_client_advocate_fmls
+  dkrs_wholesale_client_advocate_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_wholesale_client_advocate_lender_user_pid
+  dkrs_wire_specialist_fmls:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dkrs_wire_specialist_fmls
+  dkrs_wire_specialist_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dkrs_wire_specialist_lender_user_pid
   etl_batch_id:
     data_type: TEXT
 etls:

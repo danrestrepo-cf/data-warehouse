@@ -13,6 +13,20 @@ foreign_keys:
       schema: history_octane
       table: lender_user
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  luso_last_sign_on_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.luso_last_sign_on_datetime
+  luso_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.luso_lender_user_pid
   luso_pid:
     data_type: BIGINT
     source:
@@ -21,20 +35,6 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.luso_version
-  luso_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.luso_lender_user_pid
-  luso_last_sign_on_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.luso_last_sign_on_datetime
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
 etls:
   SP-100101:
     input_type: table

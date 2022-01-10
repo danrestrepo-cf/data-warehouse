@@ -51,61 +51,61 @@ foreign_keys:
       schema: staging_octane
       table: public_record_disposition_type
 columns:
-  pr_pid:
-    data_type: BIGINT
-  pr_version:
-    data_type: INTEGER
-  pr_proposal_pid:
-    data_type: BIGINT
-  pr_credit_request_pid:
-    data_type: BIGINT
-  pr_public_record_type:
-    data_type: VARCHAR(128)
-  pr_public_record_type_other_description:
-    data_type: VARCHAR(32)
-  pr_public_record_disposition_type:
-    data_type: VARCHAR(128)
-  pr_report_public_record_disposition_type:
-    data_type: VARCHAR(128)
-  pr_disposition_date:
-    data_type: DATE
-  pr_filed_date:
-    data_type: DATE
-  pr_reported_date:
-    data_type: DATE
-  pr_settled_date:
-    data_type: DATE
-  pr_paid_date:
-    data_type: DATE
-  pr_docket_id:
-    data_type: VARCHAR(32)
-  pr_bankruptcy_exception_type:
+  pr_attorney_name:
     data_type: VARCHAR(128)
   pr_bankruptcy_assets_amount:
     data_type: NUMERIC(15,2)
+  pr_bankruptcy_exception_type:
+    data_type: VARCHAR(128)
   pr_bankruptcy_exempt_amount:
     data_type: NUMERIC(15,2)
   pr_bankruptcy_liabilities_amount:
     data_type: NUMERIC(15,2)
-  pr_legal_obligation_amount:
-    data_type: NUMERIC(15,2)
-  pr_court_name:
-    data_type: VARCHAR(128)
-  pr_plaintiff_name:
-    data_type: VARCHAR(128)
-  pr_defendant_name:
-    data_type: VARCHAR(128)
-  pr_attorney_name:
-    data_type: VARCHAR(128)
   pr_comment:
     data_type: VARCHAR(16000)
-  pr_note:
-    data_type: VARCHAR(1024)
+  pr_court_name:
+    data_type: VARCHAR(128)
+  pr_credit_report_identifier:
+    data_type: VARCHAR(32)
+  pr_credit_request_pid:
+    data_type: BIGINT
+  pr_defendant_name:
+    data_type: VARCHAR(128)
+  pr_disposition_date:
+    data_type: DATE
+  pr_docket_id:
+    data_type: VARCHAR(32)
   pr_equifax_included:
     data_type: BOOLEAN
   pr_experian_included:
     data_type: BOOLEAN
+  pr_filed_date:
+    data_type: DATE
+  pr_legal_obligation_amount:
+    data_type: NUMERIC(15,2)
+  pr_note:
+    data_type: VARCHAR(1024)
+  pr_paid_date:
+    data_type: DATE
+  pr_pid:
+    data_type: BIGINT
+  pr_plaintiff_name:
+    data_type: VARCHAR(128)
+  pr_proposal_pid:
+    data_type: BIGINT
+  pr_public_record_disposition_type:
+    data_type: VARCHAR(128)
+  pr_public_record_type:
+    data_type: VARCHAR(128)
+  pr_public_record_type_other_description:
+    data_type: VARCHAR(32)
+  pr_report_public_record_disposition_type:
+    data_type: VARCHAR(128)
+  pr_reported_date:
+    data_type: DATE
+  pr_settled_date:
+    data_type: DATE
   pr_trans_union_included:
     data_type: BOOLEAN
-  pr_credit_report_identifier:
-    data_type: VARCHAR(32)
+  pr_version:
+    data_type: INTEGER

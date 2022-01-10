@@ -21,26 +21,12 @@ foreign_keys:
       schema: history_octane
       table: lender_user
 columns:
-  locnc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.locnc_pid
-  locnc_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.locnc_version
-  locnc_location_note_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.locnc_location_note_pid
-  locnc_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.locnc_create_datetime
-  locnc_content:
-    data_type: VARCHAR(16000)
-    source:
-      field: primary_source_table.columns.locnc_content
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   locnc_author_lender_user_pid:
     data_type: BIGINT
     source:
@@ -49,12 +35,26 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.locnc_author_unparsed_name
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  locnc_content:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.locnc_content
+  locnc_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.locnc_create_datetime
+  locnc_location_note_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.locnc_location_note_pid
+  locnc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.locnc_pid
+  locnc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.locnc_version
 etls:
   SP-100858:
     input_type: table

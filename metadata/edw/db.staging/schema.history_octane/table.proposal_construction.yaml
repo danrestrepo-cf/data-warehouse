@@ -29,26 +29,32 @@ foreign_keys:
       schema: history_octane
       table: yes_no_unknown_type
 columns:
-  prpc_pid:
-    data_type: BIGINT
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  prpc_any_utilities_inoperable:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.prpc_pid
-  prpc_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.prpc_version
-  prpc_proposal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.prpc_proposal_pid
+      field: primary_source_table.columns.prpc_any_utilities_inoperable
   prpc_architectural_exhibits:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.prpc_architectural_exhibits
-  prpc_feasibility_study:
+  prpc_construction_confirmed_start_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prpc_construction_confirmed_start_date
+  prpc_contingency_reserve_required:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.prpc_feasibility_study
+      field: primary_source_table.columns.prpc_contingency_reserve_required
+  prpc_estimated_permit_amount_applicable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prpc_estimated_permit_amount_applicable
   prpc_expected_months_to_complete:
     data_type: INTEGER
     source:
@@ -57,14 +63,26 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.prpc_extension_needed
+  prpc_extension_period_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.prpc_extension_period_days
   prpc_extension_period_months:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.prpc_extension_period_months
-  prpc_any_utilities_inoperable:
+  prpc_feasibility_study:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.prpc_feasibility_study
+  prpc_loan_in_process_account_closed_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prpc_loan_in_process_account_closed_date
+  prpc_mortgage_payment_reserves_required:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.prpc_any_utilities_inoperable
+      field: primary_source_table.columns.prpc_mortgage_payment_reserves_required
   prpc_non_habitable_months:
     data_type: INTEGER
     source:
@@ -77,36 +95,18 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.prpc_number_of_draws
-  prpc_construction_confirmed_start_date:
-    data_type: DATE
+  prpc_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.prpc_construction_confirmed_start_date
-  prpc_loan_in_process_account_closed_date:
-    data_type: DATE
+      field: primary_source_table.columns.prpc_pid
+  prpc_proposal_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.prpc_loan_in_process_account_closed_date
-  prpc_mortgage_payment_reserves_required:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.prpc_mortgage_payment_reserves_required
-  prpc_estimated_permit_amount_applicable:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.prpc_estimated_permit_amount_applicable
-  prpc_contingency_reserve_required:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.prpc_contingency_reserve_required
-  prpc_extension_period_days:
+      field: primary_source_table.columns.prpc_proposal_pid
+  prpc_version:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.prpc_extension_period_days
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.prpc_version
 etls:
   SP-100826:
     input_type: table

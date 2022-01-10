@@ -27,15 +27,15 @@ foreign_keys:
       schema: staging_octane
       table: quarter_type
 columns:
-  mcrs_pid:
-    data_type: BIGINT
-  mcrs_version:
-    data_type: INTEGER
   mcrs_account_pid:
     data_type: BIGINT
-  mcrs_year:
-    data_type: INTEGER
-  mcrs_quarter_type:
-    data_type: VARCHAR(128)
   mcrs_mcr_request_pid:
     data_type: BIGINT
+  mcrs_pid:
+    data_type: BIGINT
+  mcrs_quarter_type:
+    data_type: VARCHAR(128)
+  mcrs_version:
+    data_type: INTEGER
+  mcrs_year:
+    data_type: INTEGER

@@ -21,28 +21,28 @@ foreign_keys:
       schema: history_octane
       table: contractor
 columns:
-  pctr_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pctr_pid
-  pctr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pctr_version
-  pctr_proposal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pctr_proposal_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   pctr_contractor_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.pctr_contractor_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  pctr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pctr_pid
+  pctr_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pctr_proposal_pid
+  pctr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pctr_version
 etls:
   SP-100160:
     input_type: table

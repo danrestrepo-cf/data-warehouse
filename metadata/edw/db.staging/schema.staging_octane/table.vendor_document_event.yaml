@@ -27,21 +27,21 @@ foreign_keys:
       schema: staging_octane
       table: vendor_document_event_type
 columns:
+  vde_account_pid:
+    data_type: BIGINT
+  vde_create_date:
+    data_type: DATE
+  vde_create_datetime:
+    data_type: TIMESTAMP
+  vde_messages:
+    data_type: TEXT
   vde_pid:
+    data_type: BIGINT
+  vde_source_unparsed_name:
+    data_type: VARCHAR(128)
+  vde_vendor_document_event_type:
+    data_type: VARCHAR(128)
+  vde_vendor_document_repository_file_pid:
     data_type: BIGINT
   vde_version:
     data_type: INTEGER
-  vde_account_pid:
-    data_type: BIGINT
-  vde_vendor_document_repository_file_pid:
-    data_type: BIGINT
-  vde_vendor_document_event_type:
-    data_type: VARCHAR(128)
-  vde_source_unparsed_name:
-    data_type: VARCHAR(128)
-  vde_messages:
-    data_type: TEXT
-  vde_create_datetime:
-    data_type: TIMESTAMP
-  vde_create_date:
-    data_type: DATE

@@ -21,34 +21,10 @@ foreign_keys:
       schema: history_octane
       table: state_type
 columns:
-  c_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.c_pid
-  c_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.c_version
-  c_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.c_name
-  c_state_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.c_state_type
   c_county_fips:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.c_county_fips
-  c_recording_district_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.c_recording_district_type
-  c_torrens_available:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.c_torrens_available
   c_defunct:
     data_type: BOOLEAN
     source:
@@ -57,10 +33,34 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.c_mortech_name
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  c_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.c_name
+  c_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.c_pid
+  c_recording_district_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.c_recording_district_type
+  c_state_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.c_state_type
+  c_torrens_available:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.c_torrens_available
+  c_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.c_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

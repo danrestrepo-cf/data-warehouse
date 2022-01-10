@@ -19,15 +19,15 @@ foreign_keys:
       schema: staging_octane
       table: lock_commitment_type
 columns:
+  lts_account_pid:
+    data_type: BIGINT
+  lts_borrower_app_enabled:
+    data_type: BOOLEAN
+  lts_lock_commitment_type:
+    data_type: VARCHAR(128)
+  lts_lock_duration_days:
+    data_type: INTEGER
   lts_pid:
     data_type: BIGINT
   lts_version:
     data_type: INTEGER
-  lts_account_pid:
-    data_type: BIGINT
-  lts_lock_duration_days:
-    data_type: INTEGER
-  lts_lock_commitment_type:
-    data_type: VARCHAR(128)
-  lts_borrower_app_enabled:
-    data_type: BOOLEAN

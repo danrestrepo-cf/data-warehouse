@@ -27,13 +27,13 @@ foreign_keys:
       schema: staging_octane
       table: smart_message_permission_type
 columns:
+  smp_permission_type:
+    data_type: VARCHAR(128)
   smp_pid:
-    data_type: BIGINT
-  smp_version:
-    data_type: INTEGER
-  smp_smart_message_pid:
     data_type: BIGINT
   smp_role_pid:
     data_type: BIGINT
-  smp_permission_type:
-    data_type: VARCHAR(128)
+  smp_smart_message_pid:
+    data_type: BIGINT
+  smp_version:
+    data_type: INTEGER

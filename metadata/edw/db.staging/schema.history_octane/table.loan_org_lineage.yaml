@@ -29,14 +29,16 @@ foreign_keys:
       schema: history_octane
       table: loan_org_lineage_source_type
 columns:
-  lol_pid:
-    data_type: BIGINT
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  lol_loan_org_lineage_source_type:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.lol_pid
-  lol_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lol_version
+      field: primary_source_table.columns.lol_loan_org_lineage_source_type
   lol_loan_pid:
     data_type: BIGINT
     source:
@@ -45,20 +47,18 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lol_org_lineage_pid
-  lol_loan_org_lineage_source_type:
-    data_type: VARCHAR(128)
+  lol_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.lol_loan_org_lineage_source_type
+      field: primary_source_table.columns.lol_pid
   lol_source_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.lol_source_date
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  lol_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lol_version
 etls:
   SP-100370:
     input_type: table

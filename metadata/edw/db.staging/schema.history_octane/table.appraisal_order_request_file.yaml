@@ -29,14 +29,10 @@ foreign_keys:
       schema: history_octane
       table: appraisal_order_request_file_type
 columns:
-  aorf_pid:
-    data_type: BIGINT
+  aorf_appraisal_order_request_file_type:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.aorf_pid
-  aorf_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.aorf_version
+      field: primary_source_table.columns.aorf_appraisal_order_request_file_type
   aorf_appraisal_order_request_pid:
     data_type: BIGINT
     source:
@@ -45,10 +41,10 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.aorf_deal_file_pid
-  aorf_appraisal_order_request_file_type:
-    data_type: VARCHAR(128)
+  aorf_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.aorf_appraisal_order_request_file_type
+      field: primary_source_table.columns.aorf_pid
   aorf_vendor_document_datetime:
     data_type: TIMESTAMP
     source:
@@ -57,10 +53,14 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.aorf_vendor_document_id
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  aorf_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.aorf_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

@@ -59,12 +59,38 @@ foreign_keys:
       schema: staging_octane
       table: lender_lock_status_type
 columns:
-  ds_pid:
-    data_type: BIGINT
-  ds_version:
-    data_type: INTEGER
+  ds_any_unrequested_packages:
+    data_type: BOOLEAN
   ds_deal_pid:
     data_type: BIGINT
+  ds_deal_stage_from_datetime:
+    data_type: TIMESTAMP
+  ds_deal_stage_type:
+    data_type: VARCHAR(128)
+  ds_decision_appraisal_condition_type:
+    data_type: VARCHAR(128)
+  ds_decision_appraisal_cu_risk_score:
+    data_type: NUMERIC(10,2)
+  ds_eligible_investor_ids_main:
+    data_type: VARCHAR(16000)
+  ds_eligible_investor_ids_piggyback:
+    data_type: VARCHAR(16000)
+  ds_funded_main:
+    data_type: BOOLEAN
+  ds_funded_piggyback:
+    data_type: BOOLEAN
+  ds_funding_status_type_main:
+    data_type: VARCHAR(128)
+  ds_funding_status_type_piggyback:
+    data_type: VARCHAR(128)
+  ds_last_wf_phase_name:
+    data_type: VARCHAR(128)
+  ds_last_wf_phase_number:
+    data_type: INTEGER
+  ds_lender_lock_datetime_main:
+    data_type: TIMESTAMP
+  ds_lender_lock_datetime_piggyback:
+    data_type: TIMESTAMP
   ds_lender_lock_expiration_datetime_main:
     data_type: TIMESTAMP
   ds_lender_lock_expiration_datetime_piggyback:
@@ -73,43 +99,17 @@ columns:
     data_type: VARCHAR(128)
   ds_lender_lock_status_type_piggyback:
     data_type: VARCHAR(128)
-  ds_decision_appraisal_condition_type:
-    data_type: VARCHAR(128)
-  ds_funding_status_type_main:
-    data_type: VARCHAR(128)
-  ds_funding_status_type_piggyback:
-    data_type: VARCHAR(128)
-  ds_purchase_advice_date_main:
-    data_type: DATE
-  ds_purchase_advice_date_piggyback:
-    data_type: DATE
-  ds_last_wf_phase_number:
-    data_type: INTEGER
-  ds_last_wf_phase_name:
-    data_type: VARCHAR(128)
-  ds_eligible_investor_ids_main:
-    data_type: VARCHAR(16000)
-  ds_eligible_investor_ids_piggyback:
-    data_type: VARCHAR(16000)
-  ds_decision_appraisal_cu_risk_score:
-    data_type: NUMERIC(10,2)
-  ds_deal_stage_type:
-    data_type: VARCHAR(128)
-  ds_deal_stage_from_datetime:
-    data_type: TIMESTAMP
-  ds_funded_main:
-    data_type: BOOLEAN
-  ds_funded_piggyback:
-    data_type: BOOLEAN
-  ds_most_recent_user_update_date:
-    data_type: DATE
   ds_lock_vintage_date_main:
     data_type: DATE
   ds_lock_vintage_date_piggyback:
     data_type: DATE
-  ds_lender_lock_datetime_main:
-    data_type: TIMESTAMP
-  ds_lender_lock_datetime_piggyback:
-    data_type: TIMESTAMP
-  ds_any_unrequested_packages:
-    data_type: BOOLEAN
+  ds_most_recent_user_update_date:
+    data_type: DATE
+  ds_pid:
+    data_type: BIGINT
+  ds_purchase_advice_date_main:
+    data_type: DATE
+  ds_purchase_advice_date_piggyback:
+    data_type: DATE
+  ds_version:
+    data_type: INTEGER

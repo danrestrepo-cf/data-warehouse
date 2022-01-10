@@ -37,54 +37,46 @@ foreign_keys:
       schema: history_octane
       table: income_history_calc_method_type
 columns:
-  bui_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bui_pid
-  bui_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.bui_version
-  bui_borrower_income_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bui_borrower_income_pid
-  bui_business_income_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.bui_business_income_type
-  bui_business_disposition_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.bui_business_disposition_type
-  bui_company_ein:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.bui_company_ein
-  bui_estimated_net_income_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_estimated_net_income_amount
-  bui_estimated_mode:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.bui_estimated_mode
-  bui_worksheet_monthly_total_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_worksheet_monthly_total_amount
-  bui_monthly_total_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_monthly_total_amount
   bui_borrower_income_percent:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.bui_borrower_income_percent
+  bui_borrower_income_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bui_borrower_income_pid
+  bui_business_disposition_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bui_business_disposition_type
+  bui_business_income_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bui_business_income_type
   bui_calc_method_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.bui_calc_method_type
+  bui_common_year1_annual_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_common_year1_annual_total_amount
+  bui_common_year1_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.bui_common_year1_from_date
+  bui_common_year1_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_common_year1_monthly_total_amount
+  bui_common_year1_months:
+    data_type: NUMERIC(4,2)
+    source:
+      field: primary_source_table.columns.bui_common_year1_months
+  bui_common_year1_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.bui_common_year1_through_date
   bui_common_year1_year:
     data_type: INTEGER
     source:
@@ -93,26 +85,26 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.bui_common_year1_year_include
-  bui_common_year1_from_date:
+  bui_common_year2_annual_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_common_year2_annual_total_amount
+  bui_common_year2_from_date:
     data_type: DATE
     source:
-      field: primary_source_table.columns.bui_common_year1_from_date
-  bui_common_year1_through_date:
-    data_type: DATE
+      field: primary_source_table.columns.bui_common_year2_from_date
+  bui_common_year2_monthly_total_amount:
+    data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_common_year1_through_date
-  bui_common_year1_months:
+      field: primary_source_table.columns.bui_common_year2_monthly_total_amount
+  bui_common_year2_months:
     data_type: NUMERIC(4,2)
     source:
-      field: primary_source_table.columns.bui_common_year1_months
-  bui_common_year1_annual_total_amount:
-    data_type: NUMERIC(15,2)
+      field: primary_source_table.columns.bui_common_year2_months
+  bui_common_year2_through_date:
+    data_type: DATE
     source:
-      field: primary_source_table.columns.bui_common_year1_annual_total_amount
-  bui_common_year1_monthly_total_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_common_year1_monthly_total_amount
+      field: primary_source_table.columns.bui_common_year2_through_date
   bui_common_year2_year:
     data_type: INTEGER
     source:
@@ -121,26 +113,26 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.bui_common_year2_year_include
-  bui_common_year2_from_date:
+  bui_common_year3_annual_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_common_year3_annual_total_amount
+  bui_common_year3_from_date:
     data_type: DATE
     source:
-      field: primary_source_table.columns.bui_common_year2_from_date
-  bui_common_year2_through_date:
-    data_type: DATE
+      field: primary_source_table.columns.bui_common_year3_from_date
+  bui_common_year3_monthly_total_amount:
+    data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_common_year2_through_date
-  bui_common_year2_months:
+      field: primary_source_table.columns.bui_common_year3_monthly_total_amount
+  bui_common_year3_months:
     data_type: NUMERIC(4,2)
     source:
-      field: primary_source_table.columns.bui_common_year2_months
-  bui_common_year2_annual_total_amount:
-    data_type: NUMERIC(15,2)
+      field: primary_source_table.columns.bui_common_year3_months
+  bui_common_year3_through_date:
+    data_type: DATE
     source:
-      field: primary_source_table.columns.bui_common_year2_annual_total_amount
-  bui_common_year2_monthly_total_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_common_year2_monthly_total_amount
+      field: primary_source_table.columns.bui_common_year3_through_date
   bui_common_year3_year:
     data_type: INTEGER
     source:
@@ -149,146 +141,210 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.bui_common_year3_year_include
-  bui_common_year3_from_date:
-    data_type: DATE
+  bui_company_ein:
+    data_type: VARCHAR(16)
     source:
-      field: primary_source_table.columns.bui_common_year3_from_date
-  bui_common_year3_through_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.bui_common_year3_through_date
-  bui_common_year3_months:
-    data_type: NUMERIC(4,2)
-    source:
-      field: primary_source_table.columns.bui_common_year3_months
-  bui_common_year3_annual_total_amount:
+      field: primary_source_table.columns.bui_company_ein
+  bui_corp_year1_annual_subtotal:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_common_year3_annual_total_amount
-  bui_common_year3_monthly_total_amount:
+      field: primary_source_table.columns.bui_corp_year1_annual_subtotal
+  bui_corp_year1_annual_subtotal_ownership_applied:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_common_year3_monthly_total_amount
-  bui_sole_year1_gross_receipts:
+      field: primary_source_table.columns.bui_corp_year1_annual_subtotal_ownership_applied
+  bui_corp_year1_depletion:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year1_gross_receipts
-  bui_sole_year1_other_income_loss_exp:
+      field: primary_source_table.columns.bui_corp_year1_depletion
+  bui_corp_year1_depreciation:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year1_other_income_loss_exp
-  bui_sole_year1_depletion:
+      field: primary_source_table.columns.bui_corp_year1_depreciation
+  bui_corp_year1_dividends_paid_to_borrower:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year1_depletion
-  bui_sole_year1_depreciation:
+      field: primary_source_table.columns.bui_corp_year1_dividends_paid_to_borrower
+  bui_corp_year1_domestic_production_activities:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year1_depreciation
-  bui_sole_year1_meal_exclusions:
+      field: primary_source_table.columns.bui_corp_year1_domestic_production_activities
+  bui_corp_year1_gain_loss:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year1_meal_exclusions
-  bui_sole_year1_business_use_home:
+      field: primary_source_table.columns.bui_corp_year1_gain_loss
+  bui_corp_year1_meals_exclusion:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year1_business_use_home
-  bui_sole_year1_amortization_loss:
+      field: primary_source_table.columns.bui_corp_year1_meals_exclusion
+  bui_corp_year1_net_operating_loss_special_deductions:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year1_amortization_loss
-  bui_sole_year1_business_miles:
-    data_type: INTEGER
+      field: primary_source_table.columns.bui_corp_year1_net_operating_loss_special_deductions
+  bui_corp_year1_notes_payable_less_one_year:
+    data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year1_business_miles
-  bui_sole_year1_depreciation_mile:
+      field: primary_source_table.columns.bui_corp_year1_notes_payable_less_one_year
+  bui_corp_year1_other_deductions:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_corp_year1_other_deductions
+  bui_corp_year1_other_income_loss:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_corp_year1_other_income_loss
+  bui_corp_year1_ownership_percent:
     data_type: NUMERIC(11,9)
     source:
-      field: primary_source_table.columns.bui_sole_year1_depreciation_mile
-  bui_sole_year1_mileage_depreciation:
+      field: primary_source_table.columns.bui_corp_year1_ownership_percent
+  bui_corp_year1_taxable_income:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year1_mileage_depreciation
-  bui_sole_year2_gross_receipts:
+      field: primary_source_table.columns.bui_corp_year1_taxable_income
+  bui_corp_year1_total_tax:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year2_gross_receipts
-  bui_sole_year2_other_income_loss_exp:
+      field: primary_source_table.columns.bui_corp_year1_total_tax
+  bui_corp_year2_annual_subtotal:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year2_other_income_loss_exp
-  bui_sole_year2_depletion:
+      field: primary_source_table.columns.bui_corp_year2_annual_subtotal
+  bui_corp_year2_annual_subtotal_ownership_applied:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year2_depletion
-  bui_sole_year2_depreciation:
+      field: primary_source_table.columns.bui_corp_year2_annual_subtotal_ownership_applied
+  bui_corp_year2_depletion:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year2_depreciation
-  bui_sole_year2_meal_exclusions:
+      field: primary_source_table.columns.bui_corp_year2_depletion
+  bui_corp_year2_depreciation:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year2_meal_exclusions
-  bui_sole_year2_business_use_home:
+      field: primary_source_table.columns.bui_corp_year2_depreciation
+  bui_corp_year2_dividends_paid_to_borrower:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year2_business_use_home
-  bui_sole_year2_amortization_loss:
+      field: primary_source_table.columns.bui_corp_year2_dividends_paid_to_borrower
+  bui_corp_year2_domestic_production_activities:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year2_amortization_loss
-  bui_sole_year2_business_miles:
-    data_type: INTEGER
+      field: primary_source_table.columns.bui_corp_year2_domestic_production_activities
+  bui_corp_year2_gain_loss:
+    data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year2_business_miles
-  bui_sole_year2_depreciation_mile:
+      field: primary_source_table.columns.bui_corp_year2_gain_loss
+  bui_corp_year2_meals_exclusion:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_corp_year2_meals_exclusion
+  bui_corp_year2_net_operating_loss_special_deductions:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_corp_year2_net_operating_loss_special_deductions
+  bui_corp_year2_notes_payable_less_one_year:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_corp_year2_notes_payable_less_one_year
+  bui_corp_year2_other_deductions:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_corp_year2_other_deductions
+  bui_corp_year2_other_income_loss:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_corp_year2_other_income_loss
+  bui_corp_year2_ownership_percent:
     data_type: NUMERIC(11,9)
     source:
-      field: primary_source_table.columns.bui_sole_year2_depreciation_mile
-  bui_sole_year2_mileage_depreciation:
+      field: primary_source_table.columns.bui_corp_year2_ownership_percent
+  bui_corp_year2_taxable_income:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year2_mileage_depreciation
-  bui_sole_year3_gross_receipts:
+      field: primary_source_table.columns.bui_corp_year2_taxable_income
+  bui_corp_year2_total_tax:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year3_gross_receipts
-  bui_sole_year3_other_income_loss_exp:
+      field: primary_source_table.columns.bui_corp_year2_total_tax
+  bui_corp_year3_annual_subtotal:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year3_other_income_loss_exp
-  bui_sole_year3_depletion:
+      field: primary_source_table.columns.bui_corp_year3_annual_subtotal
+  bui_corp_year3_annual_subtotal_ownership_applied:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year3_depletion
-  bui_sole_year3_depreciation:
+      field: primary_source_table.columns.bui_corp_year3_annual_subtotal_ownership_applied
+  bui_corp_year3_depletion:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year3_depreciation
-  bui_sole_year3_meal_exclusions:
+      field: primary_source_table.columns.bui_corp_year3_depletion
+  bui_corp_year3_depreciation:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year3_meal_exclusions
-  bui_sole_year3_business_use_home:
+      field: primary_source_table.columns.bui_corp_year3_depreciation
+  bui_corp_year3_dividends_paid_to_borrower:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year3_business_use_home
-  bui_sole_year3_amortization_loss:
+      field: primary_source_table.columns.bui_corp_year3_dividends_paid_to_borrower
+  bui_corp_year3_domestic_production_activities:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year3_amortization_loss
-  bui_sole_year3_business_miles:
-    data_type: INTEGER
+      field: primary_source_table.columns.bui_corp_year3_domestic_production_activities
+  bui_corp_year3_gain_loss:
+    data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year3_business_miles
-  bui_sole_year3_depreciation_mile:
+      field: primary_source_table.columns.bui_corp_year3_gain_loss
+  bui_corp_year3_meals_exclusion:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_corp_year3_meals_exclusion
+  bui_corp_year3_net_operating_loss_special_deductions:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_corp_year3_net_operating_loss_special_deductions
+  bui_corp_year3_notes_payable_less_one_year:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_corp_year3_notes_payable_less_one_year
+  bui_corp_year3_other_deductions:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_corp_year3_other_deductions
+  bui_corp_year3_other_income_loss:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_corp_year3_other_income_loss
+  bui_corp_year3_ownership_percent:
     data_type: NUMERIC(11,9)
     source:
-      field: primary_source_table.columns.bui_sole_year3_depreciation_mile
-  bui_sole_year3_mileage_depreciation:
+      field: primary_source_table.columns.bui_corp_year3_ownership_percent
+  bui_corp_year3_taxable_income:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sole_year3_mileage_depreciation
+      field: primary_source_table.columns.bui_corp_year3_taxable_income
+  bui_corp_year3_total_tax:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_corp_year3_total_tax
+  bui_estimated_mode:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.bui_estimated_mode
+  bui_estimated_net_income_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_estimated_net_income_amount
+  bui_form_1065_available:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.bui_form_1065_available
+  bui_form_1120s_available:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.bui_form_1120s_available
+  bui_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_monthly_total_amount
   bui_partner_year1_amortization_loss:
     data_type: NUMERIC(15,2)
     source:
@@ -301,6 +357,18 @@ columns:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.bui_partner_year1_depreciation
+  bui_partner_year1_form_1065_subtotal:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_partner_year1_form_1065_subtotal
+  bui_partner_year1_form_1065_total:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_partner_year1_form_1065_total
+  bui_partner_year1_form_k_1_total:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_partner_year1_form_k_1_total
   bui_partner_year1_guaranteed_payments:
     data_type: NUMERIC(15,2)
     source:
@@ -329,18 +397,6 @@ columns:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.bui_partner_year1_ownership_percent
-  bui_partner_year1_form_k_1_total:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_partner_year1_form_k_1_total
-  bui_partner_year1_form_1065_subtotal:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_partner_year1_form_1065_subtotal
-  bui_partner_year1_form_1065_total:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_partner_year1_form_1065_total
   bui_partner_year2_amortization_loss:
     data_type: NUMERIC(15,2)
     source:
@@ -353,6 +409,18 @@ columns:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.bui_partner_year2_depreciation
+  bui_partner_year2_form_1065_subtotal:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_partner_year2_form_1065_subtotal
+  bui_partner_year2_form_1065_total:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_partner_year2_form_1065_total
+  bui_partner_year2_form_k_1_total:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_partner_year2_form_k_1_total
   bui_partner_year2_guaranteed_payments:
     data_type: NUMERIC(15,2)
     source:
@@ -381,18 +449,6 @@ columns:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.bui_partner_year2_ownership_percent
-  bui_partner_year2_form_k_1_total:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_partner_year2_form_k_1_total
-  bui_partner_year2_form_1065_subtotal:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_partner_year2_form_1065_subtotal
-  bui_partner_year2_form_1065_total:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_partner_year2_form_1065_total
   bui_partner_year3_amortization_loss:
     data_type: NUMERIC(15,2)
     source:
@@ -405,6 +461,18 @@ columns:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.bui_partner_year3_depreciation
+  bui_partner_year3_form_1065_subtotal:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_partner_year3_form_1065_subtotal
+  bui_partner_year3_form_1065_total:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_partner_year3_form_1065_total
+  bui_partner_year3_form_k_1_total:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_partner_year3_form_k_1_total
   bui_partner_year3_guaranteed_payments:
     data_type: NUMERIC(15,2)
     source:
@@ -433,362 +501,10 @@ columns:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.bui_partner_year3_ownership_percent
-  bui_partner_year3_form_k_1_total:
-    data_type: NUMERIC(15,2)
+  bui_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.bui_partner_year3_form_k_1_total
-  bui_partner_year3_form_1065_subtotal:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_partner_year3_form_1065_subtotal
-  bui_partner_year3_form_1065_total:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_partner_year3_form_1065_total
-  bui_form_1065_available:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.bui_form_1065_available
-  bui_scorp_year1_ordinary_income_loss:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year1_ordinary_income_loss
-  bui_scorp_year1_net_rental_income_loss:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year1_net_rental_income_loss
-  bui_scorp_year1_other_income_loss:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year1_other_income_loss
-  bui_scorp_year1_depletion:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year1_depletion
-  bui_scorp_year1_depreciation:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year1_depreciation
-  bui_scorp_year1_amortization_loss:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year1_amortization_loss
-  bui_scorp_year1_notes_payable_less_year:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year1_notes_payable_less_year
-  bui_scorp_year1_meals_exclusion:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year1_meals_exclusion
-  bui_scorp_year1_ownership_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.bui_scorp_year1_ownership_percent
-  bui_scorp_year1_form_k_1_total:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year1_form_k_1_total
-  bui_scorp_year1_form_1120s_subtotal:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year1_form_1120s_subtotal
-  bui_scorp_year1_form_1120s_total:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year1_form_1120s_total
-  bui_scorp_year2_ordinary_income_loss:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year2_ordinary_income_loss
-  bui_scorp_year2_net_rental_income_loss:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year2_net_rental_income_loss
-  bui_scorp_year2_other_income_loss:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year2_other_income_loss
-  bui_scorp_year2_depletion:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year2_depletion
-  bui_scorp_year2_depreciation:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year2_depreciation
-  bui_scorp_year2_amortization_loss:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year2_amortization_loss
-  bui_scorp_year2_notes_payable_less_year:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year2_notes_payable_less_year
-  bui_scorp_year2_meals_exclusion:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year2_meals_exclusion
-  bui_scorp_year2_ownership_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.bui_scorp_year2_ownership_percent
-  bui_scorp_year2_form_k_1_total:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year2_form_k_1_total
-  bui_scorp_year2_form_1120s_subtotal:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year2_form_1120s_subtotal
-  bui_scorp_year2_form_1120s_total:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year2_form_1120s_total
-  bui_scorp_year3_ordinary_income_loss:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year3_ordinary_income_loss
-  bui_scorp_year3_net_rental_income_loss:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year3_net_rental_income_loss
-  bui_scorp_year3_other_income_loss:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year3_other_income_loss
-  bui_scorp_year3_depletion:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year3_depletion
-  bui_scorp_year3_depreciation:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year3_depreciation
-  bui_scorp_year3_amortization_loss:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year3_amortization_loss
-  bui_scorp_year3_notes_payable_less_year:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year3_notes_payable_less_year
-  bui_scorp_year3_meals_exclusion:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year3_meals_exclusion
-  bui_scorp_year3_ownership_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.bui_scorp_year3_ownership_percent
-  bui_scorp_year3_form_k_1_total:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year3_form_k_1_total
-  bui_scorp_year3_form_1120s_subtotal:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year3_form_1120s_subtotal
-  bui_scorp_year3_form_1120s_total:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_scorp_year3_form_1120s_total
-  bui_form_1120s_available:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.bui_form_1120s_available
-  bui_corp_year1_taxable_income:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year1_taxable_income
-  bui_corp_year1_total_tax:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year1_total_tax
-  bui_corp_year1_gain_loss:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year1_gain_loss
-  bui_corp_year1_other_income_loss:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year1_other_income_loss
-  bui_corp_year1_depreciation:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year1_depreciation
-  bui_corp_year1_depletion:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year1_depletion
-  bui_corp_year1_domestic_production_activities:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year1_domestic_production_activities
-  bui_corp_year1_other_deductions:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year1_other_deductions
-  bui_corp_year1_net_operating_loss_special_deductions:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year1_net_operating_loss_special_deductions
-  bui_corp_year1_notes_payable_less_one_year:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year1_notes_payable_less_one_year
-  bui_corp_year1_meals_exclusion:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year1_meals_exclusion
-  bui_corp_year1_dividends_paid_to_borrower:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year1_dividends_paid_to_borrower
-  bui_corp_year1_annual_subtotal:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year1_annual_subtotal
-  bui_corp_year1_ownership_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.bui_corp_year1_ownership_percent
-  bui_corp_year1_annual_subtotal_ownership_applied:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year1_annual_subtotal_ownership_applied
-  bui_corp_year2_taxable_income:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year2_taxable_income
-  bui_corp_year2_total_tax:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year2_total_tax
-  bui_corp_year2_gain_loss:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year2_gain_loss
-  bui_corp_year2_other_income_loss:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year2_other_income_loss
-  bui_corp_year2_depreciation:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year2_depreciation
-  bui_corp_year2_depletion:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year2_depletion
-  bui_corp_year2_domestic_production_activities:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year2_domestic_production_activities
-  bui_corp_year2_other_deductions:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year2_other_deductions
-  bui_corp_year2_net_operating_loss_special_deductions:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year2_net_operating_loss_special_deductions
-  bui_corp_year2_notes_payable_less_one_year:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year2_notes_payable_less_one_year
-  bui_corp_year2_meals_exclusion:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year2_meals_exclusion
-  bui_corp_year2_dividends_paid_to_borrower:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year2_dividends_paid_to_borrower
-  bui_corp_year2_annual_subtotal:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year2_annual_subtotal
-  bui_corp_year2_ownership_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.bui_corp_year2_ownership_percent
-  bui_corp_year2_annual_subtotal_ownership_applied:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year2_annual_subtotal_ownership_applied
-  bui_corp_year3_taxable_income:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year3_taxable_income
-  bui_corp_year3_total_tax:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year3_total_tax
-  bui_corp_year3_gain_loss:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year3_gain_loss
-  bui_corp_year3_other_income_loss:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year3_other_income_loss
-  bui_corp_year3_depreciation:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year3_depreciation
-  bui_corp_year3_depletion:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year3_depletion
-  bui_corp_year3_domestic_production_activities:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year3_domestic_production_activities
-  bui_corp_year3_other_deductions:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year3_other_deductions
-  bui_corp_year3_net_operating_loss_special_deductions:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year3_net_operating_loss_special_deductions
-  bui_corp_year3_notes_payable_less_one_year:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year3_notes_payable_less_one_year
-  bui_corp_year3_meals_exclusion:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year3_meals_exclusion
-  bui_corp_year3_dividends_paid_to_borrower:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year3_dividends_paid_to_borrower
-  bui_corp_year3_annual_subtotal:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year3_annual_subtotal
-  bui_corp_year3_ownership_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.bui_corp_year3_ownership_percent
-  bui_corp_year3_annual_subtotal_ownership_applied:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_corp_year3_annual_subtotal_ownership_applied
-  bui_sch_f_year1_specific_income_loss:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_sch_f_year1_specific_income_loss
-  bui_sch_f_year1_nonrecurring_income_loss:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_sch_f_year1_nonrecurring_income_loss
-  bui_sch_f_year1_depreciation:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.bui_sch_f_year1_depreciation
+      field: primary_source_table.columns.bui_pid
   bui_sch_f_year1_amortization_loss_depletion:
     data_type: NUMERIC(15,2)
     source:
@@ -797,18 +513,18 @@ columns:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.bui_sch_f_year1_business_use_home
-  bui_sch_f_year2_specific_income_loss:
+  bui_sch_f_year1_depreciation:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sch_f_year2_specific_income_loss
-  bui_sch_f_year2_nonrecurring_income_loss:
+      field: primary_source_table.columns.bui_sch_f_year1_depreciation
+  bui_sch_f_year1_nonrecurring_income_loss:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sch_f_year2_nonrecurring_income_loss
-  bui_sch_f_year2_depreciation:
+      field: primary_source_table.columns.bui_sch_f_year1_nonrecurring_income_loss
+  bui_sch_f_year1_specific_income_loss:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sch_f_year2_depreciation
+      field: primary_source_table.columns.bui_sch_f_year1_specific_income_loss
   bui_sch_f_year2_amortization_loss_depletion:
     data_type: NUMERIC(15,2)
     source:
@@ -817,18 +533,18 @@ columns:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.bui_sch_f_year2_business_use_home
-  bui_sch_f_year3_specific_income_loss:
+  bui_sch_f_year2_depreciation:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sch_f_year3_specific_income_loss
-  bui_sch_f_year3_nonrecurring_income_loss:
+      field: primary_source_table.columns.bui_sch_f_year2_depreciation
+  bui_sch_f_year2_nonrecurring_income_loss:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sch_f_year3_nonrecurring_income_loss
-  bui_sch_f_year3_depreciation:
+      field: primary_source_table.columns.bui_sch_f_year2_nonrecurring_income_loss
+  bui_sch_f_year2_specific_income_loss:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.bui_sch_f_year3_depreciation
+      field: primary_source_table.columns.bui_sch_f_year2_specific_income_loss
   bui_sch_f_year3_amortization_loss_depletion:
     data_type: NUMERIC(15,2)
     source:
@@ -837,14 +553,298 @@ columns:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.bui_sch_f_year3_business_use_home
+  bui_sch_f_year3_depreciation:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sch_f_year3_depreciation
+  bui_sch_f_year3_nonrecurring_income_loss:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sch_f_year3_nonrecurring_income_loss
+  bui_sch_f_year3_specific_income_loss:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sch_f_year3_specific_income_loss
+  bui_scorp_year1_amortization_loss:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year1_amortization_loss
+  bui_scorp_year1_depletion:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year1_depletion
+  bui_scorp_year1_depreciation:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year1_depreciation
+  bui_scorp_year1_form_1120s_subtotal:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year1_form_1120s_subtotal
+  bui_scorp_year1_form_1120s_total:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year1_form_1120s_total
+  bui_scorp_year1_form_k_1_total:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year1_form_k_1_total
+  bui_scorp_year1_meals_exclusion:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year1_meals_exclusion
+  bui_scorp_year1_net_rental_income_loss:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year1_net_rental_income_loss
+  bui_scorp_year1_notes_payable_less_year:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year1_notes_payable_less_year
+  bui_scorp_year1_ordinary_income_loss:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year1_ordinary_income_loss
+  bui_scorp_year1_other_income_loss:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year1_other_income_loss
+  bui_scorp_year1_ownership_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.bui_scorp_year1_ownership_percent
+  bui_scorp_year2_amortization_loss:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year2_amortization_loss
+  bui_scorp_year2_depletion:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year2_depletion
+  bui_scorp_year2_depreciation:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year2_depreciation
+  bui_scorp_year2_form_1120s_subtotal:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year2_form_1120s_subtotal
+  bui_scorp_year2_form_1120s_total:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year2_form_1120s_total
+  bui_scorp_year2_form_k_1_total:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year2_form_k_1_total
+  bui_scorp_year2_meals_exclusion:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year2_meals_exclusion
+  bui_scorp_year2_net_rental_income_loss:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year2_net_rental_income_loss
+  bui_scorp_year2_notes_payable_less_year:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year2_notes_payable_less_year
+  bui_scorp_year2_ordinary_income_loss:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year2_ordinary_income_loss
+  bui_scorp_year2_other_income_loss:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year2_other_income_loss
+  bui_scorp_year2_ownership_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.bui_scorp_year2_ownership_percent
+  bui_scorp_year3_amortization_loss:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year3_amortization_loss
+  bui_scorp_year3_depletion:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year3_depletion
+  bui_scorp_year3_depreciation:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year3_depreciation
+  bui_scorp_year3_form_1120s_subtotal:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year3_form_1120s_subtotal
+  bui_scorp_year3_form_1120s_total:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year3_form_1120s_total
+  bui_scorp_year3_form_k_1_total:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year3_form_k_1_total
+  bui_scorp_year3_meals_exclusion:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year3_meals_exclusion
+  bui_scorp_year3_net_rental_income_loss:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year3_net_rental_income_loss
+  bui_scorp_year3_notes_payable_less_year:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year3_notes_payable_less_year
+  bui_scorp_year3_ordinary_income_loss:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year3_ordinary_income_loss
+  bui_scorp_year3_other_income_loss:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_scorp_year3_other_income_loss
+  bui_scorp_year3_ownership_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.bui_scorp_year3_ownership_percent
+  bui_sole_year1_amortization_loss:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year1_amortization_loss
+  bui_sole_year1_business_miles:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bui_sole_year1_business_miles
+  bui_sole_year1_business_use_home:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year1_business_use_home
+  bui_sole_year1_depletion:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year1_depletion
+  bui_sole_year1_depreciation:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year1_depreciation
+  bui_sole_year1_depreciation_mile:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.bui_sole_year1_depreciation_mile
+  bui_sole_year1_gross_receipts:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year1_gross_receipts
+  bui_sole_year1_meal_exclusions:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year1_meal_exclusions
+  bui_sole_year1_mileage_depreciation:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year1_mileage_depreciation
+  bui_sole_year1_other_income_loss_exp:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year1_other_income_loss_exp
+  bui_sole_year2_amortization_loss:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year2_amortization_loss
+  bui_sole_year2_business_miles:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bui_sole_year2_business_miles
+  bui_sole_year2_business_use_home:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year2_business_use_home
+  bui_sole_year2_depletion:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year2_depletion
+  bui_sole_year2_depreciation:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year2_depreciation
+  bui_sole_year2_depreciation_mile:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.bui_sole_year2_depreciation_mile
+  bui_sole_year2_gross_receipts:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year2_gross_receipts
+  bui_sole_year2_meal_exclusions:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year2_meal_exclusions
+  bui_sole_year2_mileage_depreciation:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year2_mileage_depreciation
+  bui_sole_year2_other_income_loss_exp:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year2_other_income_loss_exp
+  bui_sole_year3_amortization_loss:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year3_amortization_loss
+  bui_sole_year3_business_miles:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bui_sole_year3_business_miles
+  bui_sole_year3_business_use_home:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year3_business_use_home
+  bui_sole_year3_depletion:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year3_depletion
+  bui_sole_year3_depreciation:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year3_depreciation
+  bui_sole_year3_depreciation_mile:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.bui_sole_year3_depreciation_mile
+  bui_sole_year3_gross_receipts:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year3_gross_receipts
+  bui_sole_year3_meal_exclusions:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year3_meal_exclusions
+  bui_sole_year3_mileage_depreciation:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year3_mileage_depreciation
+  bui_sole_year3_other_income_loss_exp:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_sole_year3_other_income_loss_exp
   bui_underwriter_comments:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.columns.bui_underwriter_comments
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  bui_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bui_version
+  bui_worksheet_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.bui_worksheet_monthly_total_amount
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

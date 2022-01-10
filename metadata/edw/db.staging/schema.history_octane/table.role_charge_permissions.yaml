@@ -21,60 +21,60 @@ foreign_keys:
       schema: history_octane
       table: charge_type
 columns:
-  rcp_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rcp_pid
-  rcp_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.rcp_version
-  rcp_role_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rcp_role_pid
-  rcp_charge_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.rcp_charge_type
-  rcp_basic_editable:
+  data_source_deleted_flag:
     data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.rcp_basic_editable
-  rcp_financed_editable:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.rcp_financed_editable
-  rcp_payer_non_lender_editable:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.rcp_payer_non_lender_editable
-  rcp_payer_lender_editable:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.rcp_payer_lender_editable
-  rcp_payee_editable:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.rcp_payee_editable
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   rcp_apr_editable:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.rcp_apr_editable
+  rcp_basic_editable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.rcp_basic_editable
+  rcp_charge_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.rcp_charge_type
+  rcp_financed_editable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.rcp_financed_editable
+  rcp_payee_editable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.rcp_payee_editable
+  rcp_payer_lender_editable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.rcp_payer_lender_editable
+  rcp_payer_non_lender_editable:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.rcp_payer_non_lender_editable
+  rcp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rcp_pid
   rcp_poc_editable:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.rcp_poc_editable
+  rcp_role_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rcp_role_pid
+  rcp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.rcp_version
   rcp_wire_editable:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.rcp_wire_editable
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
 etls:
   SP-100049:
     input_type: table

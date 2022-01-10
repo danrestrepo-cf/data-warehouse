@@ -21,14 +21,6 @@ foreign_keys:
       schema: history_octane
       table: bid_pool_status_type
 columns:
-  bp_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bp_pid
-  bp_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.bp_version
   bp_account_pid:
     data_type: BIGINT
     source:
@@ -45,10 +37,18 @@ columns:
     data_type: DATE
     source:
       field: primary_source_table.columns.bp_create_datetime
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  bp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bp_pid
+  bp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bp_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

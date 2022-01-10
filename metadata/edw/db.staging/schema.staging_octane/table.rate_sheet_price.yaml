@@ -19,15 +19,15 @@ foreign_keys:
       schema: staging_octane
       table: lock_commitment_type
 columns:
+  rsp_lock_commitment_type:
+    data_type: VARCHAR(128)
+  rsp_lock_duration_days:
+    data_type: INTEGER
   rsp_pid:
+    data_type: BIGINT
+  rsp_price_percent:
+    data_type: NUMERIC(11,9)
+  rsp_rate_sheet_rate_pid:
     data_type: BIGINT
   rsp_version:
     data_type: INTEGER
-  rsp_rate_sheet_rate_pid:
-    data_type: BIGINT
-  rsp_lock_duration_days:
-    data_type: INTEGER
-  rsp_lock_commitment_type:
-    data_type: VARCHAR(128)
-  rsp_price_percent:
-    data_type: NUMERIC(11,9)

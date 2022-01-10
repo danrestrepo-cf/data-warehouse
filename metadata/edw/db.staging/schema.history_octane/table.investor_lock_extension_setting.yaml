@@ -13,44 +13,44 @@ foreign_keys:
       schema: history_octane
       table: investor
 columns:
-  iles_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.iles_pid
-  iles_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.iles_version
-  iles_investor_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.iles_investor_pid
-  iles_from_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.iles_from_date
-  iles_through_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.iles_through_date
-  iles_extension_days:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.iles_extension_days
-  iles_price_adjustment_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.iles_price_adjustment_percent
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   iles_auto_confirm:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.iles_auto_confirm
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  iles_extension_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.iles_extension_days
+  iles_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.iles_from_date
+  iles_investor_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.iles_investor_pid
+  iles_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.iles_pid
+  iles_price_adjustment_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.iles_price_adjustment_percent
+  iles_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.iles_through_date
+  iles_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.iles_version
 etls:
   SP-100088:
     input_type: table

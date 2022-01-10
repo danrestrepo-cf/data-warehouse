@@ -77,74 +77,16 @@ foreign_keys:
       schema: history_octane
       table: mi_integration_request_type
 columns:
-  mivr_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.mivr_pid
-  mivr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.mivr_version
-  mivr_proposal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.mivr_proposal_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   mivr_create_datetime:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.mivr_create_datetime
-  mivr_mi_company_name_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mivr_mi_company_name_type
-  mivr_request_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mivr_request_type
-  mivr_mi_payment_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mivr_mi_payment_type
-  mivr_mi_payer_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mivr_mi_payer_type
-  mivr_mi_coverage_percentage:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.mivr_mi_coverage_percentage
-  mivr_mi_upfront_percentage:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.mivr_mi_upfront_percentage
-  mivr_mi_initial_monthly_annual_percentage:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.mivr_mi_initial_monthly_annual_percentage
-  mivr_mi_renewal_monthly_annual_percentage:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.mivr_mi_renewal_monthly_annual_percentage
-  mivr_mi_initial_duration_months:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.mivr_mi_initial_duration_months
-  mivr_mi_rate_quote_id:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mivr_mi_rate_quote_id
-  mivr_mi_certificate_id:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mivr_mi_certificate_id
-  mivr_request_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.mivr_request_status_type
-  mivr_request_time_to_completion_ms:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.mivr_request_time_to_completion_ms
   mivr_eligible_mi_products:
     data_type: BOOLEAN
     source:
@@ -153,32 +95,90 @@ columns:
     data_type: TEXT
     source:
       field: primary_source_table.columns.mivr_input_errors
-  mivr_service_errors:
-    data_type: TEXT
-    source:
-      field: primary_source_table.columns.mivr_service_errors
   mivr_internal_errors:
     data_type: TEXT
     source:
       field: primary_source_table.columns.mivr_internal_errors
+  mivr_mi_certificate_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mivr_mi_certificate_id
+  mivr_mi_company_name_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mivr_mi_company_name_type
+  mivr_mi_coverage_percentage:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.mivr_mi_coverage_percentage
+  mivr_mi_initial_duration_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mivr_mi_initial_duration_months
+  mivr_mi_initial_monthly_annual_percentage:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.mivr_mi_initial_monthly_annual_percentage
+  mivr_mi_payer_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mivr_mi_payer_type
+  mivr_mi_payment_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mivr_mi_payment_type
+  mivr_mi_rate_quote_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mivr_mi_rate_quote_id
+  mivr_mi_renewal_monthly_annual_percentage:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.mivr_mi_renewal_monthly_annual_percentage
+  mivr_mi_upfront_percentage:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.mivr_mi_upfront_percentage
+  mivr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mivr_pid
+  mivr_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mivr_proposal_pid
+  mivr_request_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mivr_request_status_type
+  mivr_request_time_to_completion_ms:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mivr_request_time_to_completion_ms
+  mivr_request_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.mivr_request_type
   mivr_request_xml_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.mivr_request_xml_pid
-  mivr_response_xml_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.mivr_response_xml_pid
   mivr_response_pdf_file_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.mivr_response_pdf_file_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
+  mivr_response_xml_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mivr_response_xml_pid
+  mivr_service_errors:
     data_type: TEXT
+    source:
+      field: primary_source_table.columns.mivr_service_errors
+  mivr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mivr_version
 etls:
   SP-100141:
     input_type: table

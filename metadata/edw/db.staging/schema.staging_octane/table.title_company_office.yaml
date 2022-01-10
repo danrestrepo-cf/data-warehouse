@@ -19,29 +19,29 @@ foreign_keys:
       schema: staging_octane
       table: country_type
 columns:
-  tco_pid:
-    data_type: BIGINT
-  tco_version:
-    data_type: INTEGER
-  tco_title_company_pid:
-    data_type: BIGINT
+  tco_active:
+    data_type: BOOLEAN
+  tco_address_city:
+    data_type: VARCHAR(128)
+  tco_address_country:
+    data_type: VARCHAR(128)
+  tco_address_postal_code:
+    data_type: VARCHAR(128)
+  tco_address_state:
+    data_type: VARCHAR(128)
   tco_address_street1:
     data_type: VARCHAR(128)
   tco_address_street2:
     data_type: VARCHAR(128)
-  tco_address_city:
-    data_type: VARCHAR(128)
-  tco_address_state:
-    data_type: VARCHAR(128)
-  tco_address_postal_code:
-    data_type: VARCHAR(128)
-  tco_address_country:
-    data_type: VARCHAR(128)
-  tco_phone:
-    data_type: VARCHAR(32)
-  tco_fax:
-    data_type: VARCHAR(32)
   tco_email:
     data_type: VARCHAR(256)
-  tco_active:
-    data_type: BOOLEAN
+  tco_fax:
+    data_type: VARCHAR(32)
+  tco_phone:
+    data_type: VARCHAR(32)
+  tco_pid:
+    data_type: BIGINT
+  tco_title_company_pid:
+    data_type: BIGINT
+  tco_version:
+    data_type: INTEGER

@@ -27,19 +27,19 @@ foreign_keys:
       schema: staging_octane
       table: wf_deal_process_status_type
 columns:
-  wdpr_pid:
-    data_type: BIGINT
-  wdpr_version:
-    data_type: INTEGER
   wdpr_deal_pid:
     data_type: BIGINT
-  wdpr_wf_process_pid:
-    data_type: BIGINT
-  wdpr_wf_deal_process_status_type:
-    data_type: VARCHAR(128)
-  wdpr_process_start_datetime:
-    data_type: TIMESTAMP
-  wdpr_process_complete_datetime:
-    data_type: TIMESTAMP
   wdpr_name:
     data_type: VARCHAR(128)
+  wdpr_pid:
+    data_type: BIGINT
+  wdpr_process_complete_datetime:
+    data_type: TIMESTAMP
+  wdpr_process_start_datetime:
+    data_type: TIMESTAMP
+  wdpr_version:
+    data_type: INTEGER
+  wdpr_wf_deal_process_status_type:
+    data_type: VARCHAR(128)
+  wdpr_wf_process_pid:
+    data_type: BIGINT

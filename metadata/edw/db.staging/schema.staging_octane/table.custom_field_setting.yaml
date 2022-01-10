@@ -27,17 +27,17 @@ foreign_keys:
       schema: staging_octane
       table: custom_field_value_type
 columns:
-  cfs_pid:
-    data_type: BIGINT
-  cfs_version:
-    data_type: INTEGER
   cfs_account_pid:
     data_type: BIGINT
   cfs_custom_field_scope_type:
     data_type: VARCHAR(128)
+  cfs_custom_field_setting_description:
+    data_type: VARCHAR(1024)
   cfs_custom_field_setting_name:
     data_type: VARCHAR(1024)
   cfs_custom_field_value_type:
     data_type: VARCHAR(128)
-  cfs_custom_field_setting_description:
-    data_type: VARCHAR(1024)
+  cfs_pid:
+    data_type: BIGINT
+  cfs_version:
+    data_type: INTEGER

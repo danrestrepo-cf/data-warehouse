@@ -21,44 +21,44 @@ foreign_keys:
       schema: history_octane
       table: profit_margin_type
 columns:
-  pmd_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pmd_pid
-  pmd_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pmd_version
-  pmd_lender_lock_minor_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pmd_lender_lock_minor_pid
-  pmd_profit_margin_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pmd_profit_margin_type
-  pmd_description:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pmd_description
-  pmd_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.pmd_percent
-  pmd_dollars:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.pmd_dollars
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   pmd_adjustment_description:
     data_type: VARCHAR(16000)
     source:
       field: primary_source_table.columns.pmd_adjustment_description
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  pmd_description:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pmd_description
+  pmd_dollars:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.pmd_dollars
+  pmd_lender_lock_minor_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pmd_lender_lock_minor_pid
+  pmd_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pmd_percent
+  pmd_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pmd_pid
+  pmd_profit_margin_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pmd_profit_margin_type
+  pmd_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pmd_version
 etls:
   SP-100326:
     input_type: table

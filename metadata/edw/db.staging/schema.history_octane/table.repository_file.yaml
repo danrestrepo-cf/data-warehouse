@@ -45,54 +45,32 @@ foreign_keys:
       schema: history_octane
       table: agent_type
 columns:
-  rf_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rf_pid
-  rf_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.rf_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   rf_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.rf_account_pid
-  rf_repository_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.rf_repository_type
   rf_client_filename:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.rf_client_filename
-  rf_repository_filename:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.rf_repository_filename
-  rf_upload_datetime:
+  rf_delete_datetime:
     data_type: TIMESTAMP
     source:
-      field: primary_source_table.columns.rf_upload_datetime
-  rf_uploader_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.rf_uploader_name
-  rf_uploader_agent_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.rf_uploader_agent_type
-  rf_uploader_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rf_uploader_lender_user_pid
-  rf_uploader_borrower_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rf_uploader_borrower_user_pid
+      field: primary_source_table.columns.rf_delete_datetime
   rf_description:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.rf_description
+  rf_file_checksum:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.rf_file_checksum
   rf_file_size:
     data_type: BIGINT
     source:
@@ -101,20 +79,42 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.rf_mime_type
-  rf_delete_datetime:
-    data_type: TIMESTAMP
+  rf_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.rf_delete_datetime
-  rf_file_checksum:
+      field: primary_source_table.columns.rf_pid
+  rf_repository_filename:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.rf_file_checksum
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.rf_repository_filename
+  rf_repository_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.rf_repository_type
+  rf_upload_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.rf_upload_datetime
+  rf_uploader_agent_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.rf_uploader_agent_type
+  rf_uploader_borrower_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rf_uploader_borrower_user_pid
+  rf_uploader_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rf_uploader_lender_user_pid
+  rf_uploader_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.rf_uploader_name
+  rf_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.rf_version
 etls:
   SP-100291:
     input_type: table

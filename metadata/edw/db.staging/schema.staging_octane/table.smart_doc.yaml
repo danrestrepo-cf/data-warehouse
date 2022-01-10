@@ -115,77 +115,77 @@ foreign_keys:
       schema: staging_octane
       table: prior_to_type
 columns:
-  sd_pid:
-    data_type: BIGINT
-  sd_version:
-    data_type: INTEGER
   sd_account_pid:
     data_type: BIGINT
-  sd_doc_set_type:
-    data_type: VARCHAR(128)
-  sd_custom_form_pid:
-    data_type: BIGINT
-  sd_doc_name:
-    data_type: VARCHAR(767)
-  sd_doc_number:
-    data_type: NUMERIC(15,3)
-  sd_doc_category_type:
-    data_type: VARCHAR(128)
-  sd_doc_file_source_type:
-    data_type: VARCHAR(128)
-  sd_doc_external_provider_type:
-    data_type: VARCHAR(128)
-  sd_broker_applicable_provider:
-    data_type: BOOLEAN
   sd_action_entities_from_merge_field:
     data_type: BOOLEAN
   sd_action_entity_applicant:
     data_type: BOOLEAN
-  sd_action_entity_non_applicant:
+  sd_action_entity_collateral_underwriter:
     data_type: BOOLEAN
-  sd_action_entity_underwriter:
+  sd_action_entity_correspondent_client_advocate:
+    data_type: BOOLEAN
+  sd_action_entity_effective_collateral_underwriter:
+    data_type: BOOLEAN
+  sd_action_entity_government_insurance:
+    data_type: BOOLEAN
+  sd_action_entity_hud_va_lender_officer:
+    data_type: BOOLEAN
+  sd_action_entity_non_applicant:
     data_type: BOOLEAN
   sd_action_entity_originator:
     data_type: BOOLEAN
-  sd_doc_borrower_access_mode_type:
-    data_type: VARCHAR(128)
-  sd_borrower_explanation:
-    data_type: VARCHAR(1024)
-  sd_deal_child_type:
-    data_type: VARCHAR(128)
-  sd_doc_fulfill_status_type_default:
-    data_type: VARCHAR(128)
-  sd_prior_to_type:
-    data_type: VARCHAR(128)
-  sd_doc_action_type:
-    data_type: VARCHAR(128)
-  sd_e_delivery:
+  sd_action_entity_underwriter:
+    data_type: BOOLEAN
+  sd_action_entity_underwriting_manager:
+    data_type: BOOLEAN
+  sd_action_entity_wholesale_client_advocate:
     data_type: BOOLEAN
   sd_active:
     data_type: BOOLEAN
-  sd_key_doc_type:
-    data_type: VARCHAR(128)
-  sd_key_doc_include_file:
-    data_type: VARCHAR(128)
-  sd_doc_approval_type:
-    data_type: VARCHAR(128)
   sd_auto_approve:
     data_type: BOOLEAN
   sd_auto_include_on_request:
     data_type: BOOLEAN
+  sd_borrower_explanation:
+    data_type: VARCHAR(1024)
+  sd_broker_applicable_provider:
+    data_type: BOOLEAN
+  sd_custom_form_pid:
+    data_type: BIGINT
+  sd_deal_child_type:
+    data_type: VARCHAR(128)
+  sd_doc_action_type:
+    data_type: VARCHAR(128)
+  sd_doc_approval_type:
+    data_type: VARCHAR(128)
+  sd_doc_borrower_access_mode_type:
+    data_type: VARCHAR(128)
+  sd_doc_category_type:
+    data_type: VARCHAR(128)
+  sd_doc_external_provider_type:
+    data_type: VARCHAR(128)
+  sd_doc_file_source_type:
+    data_type: VARCHAR(128)
+  sd_doc_fulfill_status_type_default:
+    data_type: VARCHAR(128)
+  sd_doc_name:
+    data_type: VARCHAR(767)
+  sd_doc_number:
+    data_type: NUMERIC(15,3)
+  sd_doc_set_type:
+    data_type: VARCHAR(128)
+  sd_e_delivery:
+    data_type: BOOLEAN
+  sd_key_doc_include_file:
+    data_type: VARCHAR(128)
+  sd_key_doc_type:
+    data_type: VARCHAR(128)
+  sd_pid:
+    data_type: BIGINT
   sd_poa_applicable:
     data_type: BOOLEAN
-  sd_action_entity_hud_va_lender_officer:
-    data_type: BOOLEAN
-  sd_action_entity_collateral_underwriter:
-    data_type: BOOLEAN
-  sd_action_entity_wholesale_client_advocate:
-    data_type: BOOLEAN
-  sd_action_entity_correspondent_client_advocate:
-    data_type: BOOLEAN
-  sd_action_entity_government_insurance:
-    data_type: BOOLEAN
-  sd_action_entity_underwriting_manager:
-    data_type: BOOLEAN
-  sd_action_entity_effective_collateral_underwriter:
-    data_type: BOOLEAN
+  sd_prior_to_type:
+    data_type: VARCHAR(128)
+  sd_version:
+    data_type: INTEGER

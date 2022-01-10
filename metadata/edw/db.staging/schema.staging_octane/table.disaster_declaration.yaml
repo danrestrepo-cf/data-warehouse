@@ -27,19 +27,19 @@ foreign_keys:
       schema: staging_octane
       table: state_type
 columns:
-  dd_pid:
-    data_type: BIGINT
-  dd_version:
-    data_type: INTEGER
   dd_account_pid:
     data_type: BIGINT
-  dd_fema_incident_id:
-    data_type: VARCHAR(32)
-  dd_state_type:
-    data_type: VARCHAR(128)
   dd_county_pid:
     data_type: BIGINT
   dd_declared_disaster_date:
     data_type: DATE
+  dd_fema_incident_id:
+    data_type: VARCHAR(32)
   dd_last_processed_datetime:
     data_type: TIMESTAMP
+  dd_pid:
+    data_type: BIGINT
+  dd_state_type:
+    data_type: VARCHAR(128)
+  dd_version:
+    data_type: INTEGER

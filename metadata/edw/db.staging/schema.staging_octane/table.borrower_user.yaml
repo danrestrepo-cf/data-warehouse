@@ -35,45 +35,45 @@ foreign_keys:
       schema: staging_octane
       table: time_zone_type
 columns:
-  bu_pid:
-    data_type: BIGINT
-  bu_version:
-    data_type: INTEGER
   bu_account_pid:
     data_type: BIGINT
-  bu_create_datetime:
-    data_type: TIMESTAMP
-  bu_email:
-    data_type: VARCHAR(256)
-  bu_last_sign_on_datetime:
-    data_type: TIMESTAMP
-  bu_time_zone:
-    data_type: VARCHAR(128)
-  bu_first_name:
-    data_type: VARCHAR(32)
-  bu_middle_name:
-    data_type: VARCHAR(32)
-  bu_last_name:
-    data_type: VARCHAR(32)
-  bu_name_suffix:
-    data_type: VARCHAR(32)
-  bu_unparsed_name:
-    data_type: VARCHAR(128)
   bu_borrower_activation_id:
-    data_type: VARCHAR(128)
-  bu_challenge_question_type:
-    data_type: VARCHAR(128)
-  bu_challenge_question_answer:
     data_type: VARCHAR(128)
   bu_borrower_user_account_status_type:
     data_type: VARCHAR(128)
-  bu_public_quote_request_cache_id:
-    data_type: INTEGER
+  bu_challenge_question_answer:
+    data_type: VARCHAR(128)
+  bu_challenge_question_type:
+    data_type: VARCHAR(128)
+  bu_create_datetime:
+    data_type: TIMESTAMP
   bu_create_sap_on_activation:
     data_type: BOOLEAN
+  bu_email:
+    data_type: VARCHAR(256)
+  bu_first_name:
+    data_type: VARCHAR(32)
+  bu_last_name:
+    data_type: VARCHAR(32)
+  bu_last_sign_on_datetime:
+    data_type: TIMESTAMP
+  bu_middle_name:
+    data_type: VARCHAR(32)
+  bu_name_suffix:
+    data_type: VARCHAR(32)
   bu_nickname:
     data_type: VARCHAR(32)
+  bu_pid:
+    data_type: BIGINT
   bu_plain_text_email:
     data_type: BOOLEAN
   bu_preferred_first_name:
     data_type: VARCHAR(32)
+  bu_public_quote_request_cache_id:
+    data_type: INTEGER
+  bu_time_zone:
+    data_type: VARCHAR(128)
+  bu_unparsed_name:
+    data_type: VARCHAR(128)
+  bu_version:
+    data_type: INTEGER

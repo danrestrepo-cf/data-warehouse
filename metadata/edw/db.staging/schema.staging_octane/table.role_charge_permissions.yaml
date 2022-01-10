@@ -19,27 +19,27 @@ foreign_keys:
       schema: staging_octane
       table: charge_type
 columns:
-  rcp_pid:
-    data_type: BIGINT
-  rcp_version:
-    data_type: INTEGER
-  rcp_role_pid:
-    data_type: BIGINT
-  rcp_charge_type:
-    data_type: VARCHAR(128)
+  rcp_apr_editable:
+    data_type: BOOLEAN
   rcp_basic_editable:
     data_type: BOOLEAN
+  rcp_charge_type:
+    data_type: VARCHAR(128)
   rcp_financed_editable:
-    data_type: BOOLEAN
-  rcp_payer_non_lender_editable:
-    data_type: BOOLEAN
-  rcp_payer_lender_editable:
     data_type: BOOLEAN
   rcp_payee_editable:
     data_type: BOOLEAN
-  rcp_apr_editable:
+  rcp_payer_lender_editable:
     data_type: BOOLEAN
+  rcp_payer_non_lender_editable:
+    data_type: BOOLEAN
+  rcp_pid:
+    data_type: BIGINT
   rcp_poc_editable:
     data_type: BOOLEAN
+  rcp_role_pid:
+    data_type: BIGINT
+  rcp_version:
+    data_type: INTEGER
   rcp_wire_editable:
     data_type: BOOLEAN
