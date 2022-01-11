@@ -46,39 +46,47 @@ etls:
     insert_update_keys:
       - data_source_integration_id
     input_sql: |-
-      SELECT application_dim_incl_new_records.data_source_integration_columns
-           , application_dim_incl_new_records.data_source_integration_id
-           , application_dim_incl_new_records.edw_created_datetime
-           , application_dim_incl_new_records.edw_modified_datetime
-           , application_dim_incl_new_records.data_source_modified_datetime
-           , application_dim_incl_new_records.application_pid
-           , application_dim_incl_new_records.proposal_pid
-      FROM (
-               SELECT
-                           'application_pid' || '~' || 'data_source_dwid' as data_source_integration_columns,
-                           COALESCE(CAST(primary_table.apl_pid as text), '<NULL>')  || '~' || COALESCE(CAST(1 as text), '<NULL>')  as data_source_integration_id,
-                           now() as edw_created_datetime,
-                           now() as edw_modified_datetime,
-                           primary_table.data_source_updated_datetime as data_source_modified_datetime,
-                           primary_table.apl_pid as application_pid,
-                           primary_table.apl_proposal_pid as proposal_pid
-               FROM (
-                        SELECT
-                            <<application_partial_load_condition>> as include_record,
-                            application.*
-                        FROM history_octane.application
-                          LEFT JOIN history_octane.application AS history_records ON application.apl_pid = history_records.apl_pid
-                              AND application.data_source_updated_datetime < history_records.data_source_updated_datetime
-                        WHERE history_records.apl_pid IS NULL
-                    ) AS primary_table
-               WHERE
-                   GREATEST(primary_table.include_record) IS TRUE
-               ORDER BY
-                   primary_table.data_source_updated_datetime ASC
-           ) AS application_dim_incl_new_records
-          LEFT JOIN star_loan.application_dim ON application_dim_incl_new_records.data_source_integration_id =
-                                           application_dim.data_source_integration_id
-              AND application_dim_incl_new_records.proposal_pid IS NOT DISTINCT FROM application_dim.proposal_pid
-      WHERE application_dim.dwid IS NULL;
+      WITH application_dim_incl_new_records AS (
+          SELECT 'application_pid' || '~' || 'data_source_dwid' AS data_source_integration_columns
+               , COALESCE( CAST( primary_table.apl_pid AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) AS data_source_integration_id
+               , NOW( ) AS edw_created_datetime
+               , NOW( ) AS edw_modified_datetime
+               , primary_table.data_source_updated_datetime AS data_source_modified_datetime
+               , primary_table.apl_pid AS application_pid
+               , primary_table.apl_proposal_pid AS proposal_pid
+               , GREATEST( primary_table.etl_end_date_time ) AS max_source_etl_end_date_time
+          FROM (
+              SELECT <<application_partial_load_condition>> AS include_record
+                   , application.*
+                   , etl_log.etl_end_date_time
+              FROM history_octane.application
+              LEFT JOIN history_octane.application AS history_records
+                        ON application.apl_pid = history_records.apl_pid
+                            AND application.data_source_updated_datetime < history_records.data_source_updated_datetime
+              JOIN star_common.etl_log
+                   ON application.etl_batch_id = etl_log.etl_batch_id
+              WHERE history_records.apl_pid IS NULL
+          ) AS primary_table
+          WHERE GREATEST( primary_table.include_record ) IS TRUE
+      )
+      --new records that should be inserted
+      SELECT application_dim_incl_new_records.*
+      FROM application_dim_incl_new_records
+      LEFT JOIN star_loan.application_dim
+                ON application_dim_incl_new_records.data_source_integration_id = application_dim.data_source_integration_id
+      WHERE application_dim.dwid IS NULL
+      UNION ALL
+      --existing records that need to be updated
+      SELECT application_dim_incl_new_records.*
+      FROM application_dim_incl_new_records
+      JOIN (
+          SELECT application_dim.data_source_integration_id, etl_log.etl_start_date_time
+          FROM star_loan.application_dim
+          JOIN star_common.etl_log
+               ON application_dim.etl_batch_id = etl_log.etl_batch_id
+      ) AS application_dim_etl_start_times
+           ON application_dim_incl_new_records.data_source_integration_id = application_dim_etl_start_times.data_source_integration_id
+               AND application_dim_incl_new_records.max_source_etl_end_date_time >= application_dim_etl_start_times.etl_start_date_time;
 next_etls:
 - SP-300001-insert-update
