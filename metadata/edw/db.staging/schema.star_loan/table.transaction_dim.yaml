@@ -51,6 +51,7 @@ etls:
     json_output_field: data_source_integration_id
     insert_update_keys:
       - data_source_integration_id
+    container_memory: 2048
     input_sql: |-
       WITH transaction_dim_incl_new_records AS (
           SELECT 'deal_pid' || '~' || 'data_source_dwid' AS data_source_integration_columns
