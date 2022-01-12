@@ -336,6 +336,7 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                             'output_type': 'insert',
                             'json_output_field': 'a_pid',
                             'truncate_table': False,
+                            'container_memory': 2048,
                             'input_sql': "--finding records to insert into history_octane.account\n" +
                                          "SELECT staging_table.a_pid\n" +
                                          "     , staging_table.a_fk_col_1\n" +
@@ -403,6 +404,7 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                             'output_type': 'insert',
                             'json_output_field': 'code',
                             'truncate_table': False,
+                            'container_memory': 2048,
                             'input_sql': "--finding records to insert into history_octane.account_type\n" +
                                          "SELECT staging_table.code\n" +
                                          "     , staging_table.value\n" +
@@ -450,6 +452,7 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                             'output_type': 'insert',
                             'json_output_field': 'code',
                             'truncate_table': False,
+                            'container_memory': 2048,
                             'input_sql': "--finding records to insert into history_octane.a_new_type\n" +
                                          "SELECT staging_table.code\n" +
                                          "     , staging_table.value\n" +
@@ -496,6 +499,7 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                             'output_type': 'insert',
                             'json_output_field': 'code',
                             'truncate_table': False,
+                            'container_memory': 2048,
                             'input_sql': "--finding records to insert into history_octane.another_new_type\n" +
                                          "SELECT staging_table.code\n" +
                                          "     , staging_table.value\n" +

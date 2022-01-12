@@ -179,6 +179,7 @@ class ETLMetadata:
         Only used for ETLs with output_type INSERT_UPDATE
         delete_keys: a list of table columns to be used as a delete key. Only used
         for ETLs with output_type DELETE
+        container_memory: the amount of RAM (in MB) allocated to an ECS container to execute this ETL
         input_sql: the SQL statement used as input to the ETL. Only used for ETLs
         with input_type TABLE
     """
@@ -190,6 +191,7 @@ class ETLMetadata:
     truncate_table: Optional[bool] = None
     insert_update_keys: Optional[List[str]] = None
     delete_keys: Optional[List[str]] = None
+    container_memory: Optional[int] = None
     input_sql: Optional[str] = None
 
 
