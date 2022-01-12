@@ -19,19 +19,19 @@ foreign_keys:
       schema: staging_octane
       table: state_type
 columns:
-  mrir_pid:
-    data_type: BIGINT
-  mrir_version:
-    data_type: INTEGER
-  mrir_minimum_required_residual_income_table_pid:
-    data_type: BIGINT
-  mrir_state_type:
-    data_type: VARCHAR(16)
   mrir_household_size:
     data_type: INTEGER
-  mrir_loan_amount_min:
-    data_type: NUMERIC(15,2)
   mrir_loan_amount_max:
+    data_type: NUMERIC(15,2)
+  mrir_loan_amount_min:
     data_type: NUMERIC(15,2)
   mrir_minimum_required_residual_income_amount:
     data_type: NUMERIC(15,2)
+  mrir_minimum_required_residual_income_table_pid:
+    data_type: BIGINT
+  mrir_pid:
+    data_type: BIGINT
+  mrir_state_type:
+    data_type: VARCHAR(16)
+  mrir_version:
+    data_type: INTEGER

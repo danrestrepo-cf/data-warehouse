@@ -251,91 +251,91 @@ foreign_keys:
       schema: staging_octane
       table: req_fulfill_status_type
 columns:
-  prpr_pid:
-    data_type: BIGINT
-  prpr_version:
-    data_type: INTEGER
-  prpr_proposal_doc_pid:
-    data_type: BIGINT
-  prpr_req_name:
-    data_type: VARCHAR(767)
-  prpr_borrower_access:
-    data_type: BOOLEAN
-  prpr_req_id:
-    data_type: INTEGER
-  prpr_req_fulfill_status_type:
-    data_type: VARCHAR(128)
-  prpr_fulfill_status_unparsed_name:
-    data_type: VARCHAR(128)
-  prpr_fulfill_status_datetime:
-    data_type: TIMESTAMP
-  prpr_req_decision_status_type:
-    data_type: VARCHAR(128)
-  prpr_decision_status_unparsed_name:
-    data_type: VARCHAR(128)
-  prpr_decision_status_datetime:
-    data_type: TIMESTAMP
-  prpr_deal_pid:
-    data_type: BIGINT
-  prpr_proposal_pid:
-    data_type: BIGINT
-  prpr_loan_pid:
-    data_type: BIGINT
-  prpr_borrower_pid:
-    data_type: BIGINT
-  prpr_borrower_income_pid:
-    data_type: BIGINT
-  prpr_job_income_pid:
-    data_type: BIGINT
-  prpr_borrower_job_gap_pid:
-    data_type: BIGINT
-  prpr_other_income_pid:
-    data_type: BIGINT
-  prpr_business_income_pid:
-    data_type: BIGINT
-  prpr_rental_income_pid:
-    data_type: BIGINT
-  prpr_asset_pid:
-    data_type: BIGINT
-  prpr_asset_large_deposit_pid:
-    data_type: BIGINT
-  prpr_liability_pid:
-    data_type: BIGINT
-  prpr_reo_place_pid:
-    data_type: BIGINT
-  prpr_property_place_pid:
-    data_type: BIGINT
-  prpr_residence_place_pid:
-    data_type: BIGINT
-  prpr_borrower_residence_pid:
-    data_type: BIGINT
   prpr_application_pid:
-    data_type: BIGINT
-  prpr_credit_inquiry_pid:
-    data_type: BIGINT
-  prpr_appraisal_pid:
     data_type: BIGINT
   prpr_appraisal_form_pid:
     data_type: BIGINT
-  prpr_tax_transcript_request_pid:
+  prpr_appraisal_pid:
     data_type: BIGINT
-  prpr_deal_child_type:
-    data_type: VARCHAR(128)
-  prpr_deal_child_name:
-    data_type: VARCHAR(767)
-  prpr_smart_req:
-    data_type: BOOLEAN
-  prpr_smart_req_criteria_html:
-    data_type: TEXT
-  prpr_trash:
+  prpr_asset_large_deposit_pid:
+    data_type: BIGINT
+  prpr_asset_pid:
+    data_type: BIGINT
+  prpr_borrower_access:
     data_type: BOOLEAN
   prpr_borrower_associated_address_pid:
+    data_type: BIGINT
+  prpr_borrower_income_pid:
+    data_type: BIGINT
+  prpr_borrower_job_gap_pid:
+    data_type: BIGINT
+  prpr_borrower_pid:
+    data_type: BIGINT
+  prpr_borrower_residence_pid:
+    data_type: BIGINT
+  prpr_business_income_pid:
     data_type: BIGINT
   prpr_construction_cost_pid:
     data_type: BIGINT
   prpr_construction_draw_pid:
     data_type: BIGINT
+  prpr_credit_inquiry_pid:
+    data_type: BIGINT
+  prpr_deal_child_name:
+    data_type: VARCHAR(767)
+  prpr_deal_child_type:
+    data_type: VARCHAR(128)
+  prpr_deal_pid:
+    data_type: BIGINT
+  prpr_decision_status_datetime:
+    data_type: TIMESTAMP
+  prpr_decision_status_unparsed_name:
+    data_type: VARCHAR(128)
+  prpr_fulfill_status_datetime:
+    data_type: TIMESTAMP
+  prpr_fulfill_status_unparsed_name:
+    data_type: VARCHAR(128)
+  prpr_job_income_pid:
+    data_type: BIGINT
+  prpr_liability_pid:
+    data_type: BIGINT
+  prpr_loan_pid:
+    data_type: BIGINT
+  prpr_other_income_pid:
+    data_type: BIGINT
+  prpr_pid:
+    data_type: BIGINT
+  prpr_property_place_pid:
+    data_type: BIGINT
   prpr_proposal_contractor_pid:
+    data_type: BIGINT
+  prpr_proposal_doc_pid:
+    data_type: BIGINT
+  prpr_proposal_pid:
     data_type: BIGINT
   prpr_proposal_review_pid:
     data_type: BIGINT
+  prpr_rental_income_pid:
+    data_type: BIGINT
+  prpr_reo_place_pid:
+    data_type: BIGINT
+  prpr_req_decision_status_type:
+    data_type: VARCHAR(128)
+  prpr_req_fulfill_status_type:
+    data_type: VARCHAR(128)
+  prpr_req_id:
+    data_type: INTEGER
+  prpr_req_name:
+    data_type: VARCHAR(767)
+  prpr_residence_place_pid:
+    data_type: BIGINT
+  prpr_smart_req:
+    data_type: BOOLEAN
+  prpr_smart_req_criteria_html:
+    data_type: TEXT
+  prpr_tax_transcript_request_pid:
+    data_type: BIGINT
+  prpr_trash:
+    data_type: BOOLEAN
+  prpr_version:
+    data_type: INTEGER

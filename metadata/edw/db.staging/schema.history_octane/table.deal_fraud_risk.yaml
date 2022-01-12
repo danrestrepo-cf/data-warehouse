@@ -37,6 +37,42 @@ foreign_keys:
       schema: history_octane
       table: loan_safe_product_type
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  dfr_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dfr_deal_pid
+  dfr_loan_safe_collateral_risk_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dfr_loan_safe_collateral_risk_score
+  dfr_loan_safe_fraud_risk_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dfr_loan_safe_fraud_risk_score
+  dfr_loan_safe_product_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dfr_loan_safe_product_type
+  dfr_loan_safe_risk_manager_html_deal_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dfr_loan_safe_risk_manager_html_deal_file_pid
+  dfr_loan_safe_risk_manager_order_number:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dfr_loan_safe_risk_manager_order_number
+  dfr_loan_safe_risk_manager_pdf_deal_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dfr_loan_safe_risk_manager_pdf_deal_file_pid
+  dfr_loan_safe_risk_manager_status_messages:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.dfr_loan_safe_risk_manager_status_messages
   dfr_pid:
     data_type: BIGINT
     source:
@@ -45,42 +81,6 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.dfr_version
-  dfr_deal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dfr_deal_pid
-  dfr_loan_safe_risk_manager_status_messages:
-    data_type: TEXT
-    source:
-      field: primary_source_table.columns.dfr_loan_safe_risk_manager_status_messages
-  dfr_loan_safe_risk_manager_order_number:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dfr_loan_safe_risk_manager_order_number
-  dfr_loan_safe_risk_manager_html_deal_file_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dfr_loan_safe_risk_manager_html_deal_file_pid
-  dfr_loan_safe_risk_manager_pdf_deal_file_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dfr_loan_safe_risk_manager_pdf_deal_file_pid
-  dfr_loan_safe_fraud_risk_score:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dfr_loan_safe_fraud_risk_score
-  dfr_loan_safe_collateral_risk_score:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dfr_loan_safe_collateral_risk_score
-  dfr_loan_safe_product_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dfr_loan_safe_product_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
   etl_batch_id:
     data_type: TEXT
 etls:

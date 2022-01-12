@@ -123,45 +123,45 @@ foreign_keys:
       schema: staging_octane
       table: yes_no_unknown_type
 columns:
-  sds_pid:
-    data_type: BIGINT
-  sds_version:
-    data_type: INTEGER
-  sds_borrower_user_pid:
-    data_type: BIGINT
-  sds_previous_pid:
-    data_type: BIGINT
-  sds_sap_step_type:
-    data_type: VARCHAR(128)
-  sds_complete_datetime:
-    data_type: TIMESTAMP
-  sds_yes_no_answer:
-    data_type: VARCHAR(128)
-  sds_deal_pid:
-    data_type: BIGINT
-  sds_borrower_pid:
-    data_type: BIGINT
-  sds_reo_pid:
-    data_type: BIGINT
   sds_application_pid:
-    data_type: BIGINT
-  sds_job_income_pid:
-    data_type: BIGINT
-  sds_other_income_pid:
-    data_type: BIGINT
-  sds_borrower_residence_pid:
     data_type: BIGINT
   sds_asset_pid:
     data_type: BIGINT
-  sds_liability_pid:
+  sds_borrower_pid:
     data_type: BIGINT
+  sds_borrower_residence_pid:
+    data_type: BIGINT
+  sds_borrower_user_pid:
+    data_type: BIGINT
+  sds_business_income_pid:
+    data_type: BIGINT
+  sds_complete_datetime:
+    data_type: TIMESTAMP
   sds_deal_contact_pid:
+    data_type: BIGINT
+  sds_deal_pid:
     data_type: BIGINT
   sds_deal_real_estate_agent_pid:
     data_type: BIGINT
-  sds_radio_choice_answer:
-    data_type: VARCHAR(32)
   sds_initial_values:
     data_type: BOOLEAN
-  sds_business_income_pid:
+  sds_job_income_pid:
     data_type: BIGINT
+  sds_liability_pid:
+    data_type: BIGINT
+  sds_other_income_pid:
+    data_type: BIGINT
+  sds_pid:
+    data_type: BIGINT
+  sds_previous_pid:
+    data_type: BIGINT
+  sds_radio_choice_answer:
+    data_type: VARCHAR(32)
+  sds_reo_pid:
+    data_type: BIGINT
+  sds_sap_step_type:
+    data_type: VARCHAR(128)
+  sds_version:
+    data_type: INTEGER
+  sds_yes_no_answer:
+    data_type: VARCHAR(128)

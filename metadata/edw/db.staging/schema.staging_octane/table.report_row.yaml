@@ -19,17 +19,17 @@ foreign_keys:
       schema: staging_octane
       table: report_type
 columns:
-  rprw_pid:
-    data_type: BIGINT
-  rprw_version:
-    data_type: INTEGER
   rprw_account_pid:
     data_type: BIGINT
-  rprw_report_type:
-    data_type: VARCHAR(128)
-  rprw_name:
-    data_type: VARCHAR(128)
   rprw_description:
     data_type: VARCHAR(1024)
   rprw_formula_row:
     data_type: BOOLEAN
+  rprw_name:
+    data_type: VARCHAR(128)
+  rprw_pid:
+    data_type: BIGINT
+  rprw_report_type:
+    data_type: VARCHAR(128)
+  rprw_version:
+    data_type: INTEGER

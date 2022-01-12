@@ -19,13 +19,13 @@ foreign_keys:
       schema: staging_octane
       table: interest_only_type
 columns:
+  pio_balloon_payment:
+    data_type: BOOLEAN
+  pio_interest_only_type:
+    data_type: VARCHAR(128)
   pio_pid:
+    data_type: BIGINT
+  pio_product_terms_pid:
     data_type: BIGINT
   pio_version:
     data_type: INTEGER
-  pio_product_terms_pid:
-    data_type: BIGINT
-  pio_interest_only_type:
-    data_type: VARCHAR(128)
-  pio_balloon_payment:
-    data_type: BOOLEAN

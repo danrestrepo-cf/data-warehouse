@@ -37,14 +37,18 @@ foreign_keys:
       schema: history_octane
       table: sap_status_type
 columns:
-  dsap_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dsap_pid
-  dsap_version:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  dsap_borrower_step_type:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.dsap_version
+      field: primary_source_table.columns.dsap_borrower_step_type
+  dsap_credit_pull_attempts:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dsap_credit_pull_attempts
   dsap_deal_pid:
     data_type: BIGINT
     source:
@@ -57,26 +61,22 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dsap_last_sap_step_type
-  dsap_credit_pull_attempts:
-    data_type: INTEGER
+  dsap_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.dsap_credit_pull_attempts
+      field: primary_source_table.columns.dsap_pid
   dsap_retry_credit_pull:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.dsap_retry_credit_pull
-  dsap_borrower_step_type:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.dsap_borrower_step_type
   dsap_sap_status_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dsap_sap_status_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+  dsap_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dsap_version
   etl_batch_id:
     data_type: TEXT
 etls:

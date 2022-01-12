@@ -4,18 +4,6 @@ primary_key:
 - ann_pid
 - ann_version
 columns:
-  ann_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ann_pid
-  ann_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ann_version
-  ann_lender_text:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.ann_lender_text
   ann_borrower_text:
     data_type: VARCHAR(1024)
     source:
@@ -24,14 +12,26 @@ columns:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.ann_from_datetime
+  ann_lender_text:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.ann_lender_text
+  ann_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ann_pid
   ann_to_datetime:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.ann_to_datetime
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  ann_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ann_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

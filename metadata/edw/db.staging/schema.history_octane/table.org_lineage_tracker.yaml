@@ -21,36 +21,36 @@ foreign_keys:
       schema: history_octane
       table: org_lineage
 columns:
-  olt_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.olt_pid
-  olt_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.olt_version
-  olt_org_node_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.olt_org_node_pid
-  olt_org_lineage_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.olt_org_lineage_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   olt_from_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.olt_from_date
+  olt_org_lineage_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.olt_org_lineage_pid
+  olt_org_node_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.olt_org_node_pid
+  olt_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.olt_pid
   olt_through_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.olt_through_date
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  olt_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.olt_version
 etls:
   SP-100372:
     input_type: table

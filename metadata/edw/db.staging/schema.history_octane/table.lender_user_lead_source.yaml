@@ -21,6 +21,20 @@ foreign_keys:
       schema: history_octane
       table: lead_source
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  lulds_lead_source_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lulds_lead_source_pid
+  lulds_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lulds_lender_user_pid
   lulds_pid:
     data_type: BIGINT
     source:
@@ -29,20 +43,6 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.lulds_version
-  lulds_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lulds_lender_user_pid
-  lulds_lead_source_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lulds_lead_source_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
 etls:
   SP-100098:
     input_type: table

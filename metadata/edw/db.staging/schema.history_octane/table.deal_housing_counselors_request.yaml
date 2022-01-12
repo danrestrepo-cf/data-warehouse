@@ -21,18 +21,26 @@ foreign_keys:
       schema: history_octane
       table: country_type
 columns:
-  dhcr_pid:
-    data_type: BIGINT
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  dhcr_centroid_address_city:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.dhcr_pid
-  dhcr_version:
-    data_type: INTEGER
+      field: primary_source_table.columns.dhcr_centroid_address_city
+  dhcr_centroid_address_country:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.dhcr_version
-  dhcr_deal_pid:
-    data_type: BIGINT
+      field: primary_source_table.columns.dhcr_centroid_address_country
+  dhcr_centroid_address_postal_code:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.dhcr_deal_pid
+      field: primary_source_table.columns.dhcr_centroid_address_postal_code
+  dhcr_centroid_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dhcr_centroid_address_state
   dhcr_centroid_address_street1:
     data_type: VARCHAR(128)
     source:
@@ -41,30 +49,22 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.dhcr_centroid_address_street2
-  dhcr_centroid_address_city:
-    data_type: VARCHAR(128)
+  dhcr_deal_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.dhcr_centroid_address_city
-  dhcr_centroid_address_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dhcr_centroid_address_state
-  dhcr_centroid_address_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dhcr_centroid_address_postal_code
-  dhcr_centroid_address_country:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dhcr_centroid_address_country
+      field: primary_source_table.columns.dhcr_deal_pid
   dhcr_error_messages:
     data_type: TEXT
     source:
       field: primary_source_table.columns.dhcr_error_messages
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+  dhcr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dhcr_pid
+  dhcr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dhcr_version
   etl_batch_id:
     data_type: TEXT
 etls:

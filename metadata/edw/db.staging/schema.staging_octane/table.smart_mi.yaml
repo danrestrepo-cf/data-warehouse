@@ -19,11 +19,11 @@ foreign_keys:
       schema: staging_octane
       table: mi_company_name_type
 columns:
-  sm_pid:
-    data_type: BIGINT
-  sm_version:
-    data_type: INTEGER
   sm_account_pid:
     data_type: BIGINT
   sm_mi_company_name_type:
     data_type: VARCHAR(128)
+  sm_pid:
+    data_type: BIGINT
+  sm_version:
+    data_type: INTEGER

@@ -59,25 +59,25 @@ foreign_keys:
       schema: staging_octane
       table: stack_export_request_status_type
 columns:
-  ser_pid:
-    data_type: BIGINT
-  ser_version:
-    data_type: INTEGER
   ser_account_pid:
     data_type: BIGINT
   ser_create_datetime:
     data_type: TIMESTAMP
-  ser_start_datetime:
-    data_type: TIMESTAMP
+  ser_description:
+    data_type: VARCHAR(32)
   ser_end_datetime:
     data_type: TIMESTAMP
-  ser_request_status_type:
+  ser_exported_deal_count:
+    data_type: INTEGER
+  ser_file_name_format_type:
     data_type: VARCHAR(128)
   ser_loan_export_type:
     data_type: VARCHAR(128)
   ser_loan_name_format_type:
     data_type: VARCHAR(128)
-  ser_file_name_format_type:
+  ser_pid:
+    data_type: BIGINT
+  ser_request_status_type:
     data_type: VARCHAR(128)
   ser_requester_lender_user_pid:
     data_type: BIGINT
@@ -85,9 +85,9 @@ columns:
     data_type: VARCHAR(128)
   ser_smart_stack_pid:
     data_type: BIGINT
+  ser_start_datetime:
+    data_type: TIMESTAMP
   ser_total_deal_count:
     data_type: INTEGER
-  ser_exported_deal_count:
+  ser_version:
     data_type: INTEGER
-  ser_description:
-    data_type: VARCHAR(32)

@@ -21,34 +21,34 @@ foreign_keys:
       schema: history_octane
       table: criteria
 columns:
-  smrac_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.smrac_pid
-  smrac_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.smrac_version
-  smrac_smart_mi_rate_card_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.smrac_smart_mi_rate_card_pid
-  smrac_rate_adjustment_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.smrac_rate_adjustment_percent
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  smrac_criteria_html:
+    data_type: VARCHAR(16000)
   smrac_criteria_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.smrac_criteria_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  smrac_criteria_html:
-    data_type: VARCHAR(16000)
-  etl_batch_id:
-    data_type: TEXT
+  smrac_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smrac_pid
+  smrac_rate_adjustment_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.smrac_rate_adjustment_percent
+  smrac_smart_mi_rate_card_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smrac_smart_mi_rate_card_pid
+  smrac_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.smrac_version
 etls:
   SP-100246:
     input_type: table

@@ -19,17 +19,17 @@ foreign_keys:
       schema: staging_octane
       table: lender_user
 columns:
-  tn_pid:
-    data_type: BIGINT
-  tn_version:
-    data_type: INTEGER
-  tn_trade_pid:
-    data_type: BIGINT
-  tn_create_datetime:
-    data_type: TIMESTAMP
-  tn_content:
-    data_type: VARCHAR(16000)
   tn_author_lender_user_pid:
     data_type: BIGINT
   tn_author_unparsed_name:
     data_type: VARCHAR(128)
+  tn_content:
+    data_type: VARCHAR(16000)
+  tn_create_datetime:
+    data_type: TIMESTAMP
+  tn_pid:
+    data_type: BIGINT
+  tn_trade_pid:
+    data_type: BIGINT
+  tn_version:
+    data_type: INTEGER

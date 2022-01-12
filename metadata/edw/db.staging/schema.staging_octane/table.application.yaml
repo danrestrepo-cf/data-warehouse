@@ -67,45 +67,45 @@ foreign_keys:
       schema: staging_octane
       table: va_borrower_certification_occupancy_type
 columns:
-  apl_pid:
-    data_type: BIGINT
-  apl_version:
-    data_type: INTEGER
-  apl_application_name:
+  apl_address_city:
     data_type: VARCHAR(128)
-  apl_primary_application:
-    data_type: BOOLEAN
-  apl_urla:
-    data_type: BOOLEAN
-  apl_proposal_pid:
-    data_type: BIGINT
-  apl_fha_borrower_certification_own_other_property:
+  apl_address_country:
     data_type: VARCHAR(128)
-  apl_fha_borrower_certification_property_to_be_sold:
+  apl_address_postal_code:
     data_type: VARCHAR(128)
-  apl_fha_borrower_certification_sales_price_amount:
-    data_type: NUMERIC(15,0)
-  apl_fha_borrower_certification_mortgage_amount:
-    data_type: NUMERIC(15,0)
+  apl_address_state:
+    data_type: VARCHAR(128)
   apl_address_street1:
     data_type: VARCHAR(128)
   apl_address_street2:
     data_type: VARCHAR(128)
-  apl_address_city:
+  apl_application_name:
     data_type: VARCHAR(128)
-  apl_address_state:
+  apl_fha_borrower_certification_more_than_four_dwellings:
     data_type: VARCHAR(128)
-  apl_address_postal_code:
+  apl_fha_borrower_certification_mortgage_amount:
+    data_type: NUMERIC(15,0)
+  apl_fha_borrower_certification_own_other_property:
     data_type: VARCHAR(128)
-  apl_address_country:
+  apl_fha_borrower_certification_property_to_be_sold:
     data_type: VARCHAR(128)
   apl_fha_borrower_certification_rental:
     data_type: VARCHAR(128)
   apl_fha_borrower_certification_rental_explain:
     data_type: VARCHAR(256)
-  apl_fha_borrower_certification_more_than_four_dwellings:
-    data_type: VARCHAR(128)
-  apl_va_borrower_certification_occupancy_type:
-    data_type: VARCHAR(128)
+  apl_fha_borrower_certification_sales_price_amount:
+    data_type: NUMERIC(15,0)
   apl_fha_va_bor_cert_sales_price_exceeds_type:
     data_type: VARCHAR(128)
+  apl_pid:
+    data_type: BIGINT
+  apl_primary_application:
+    data_type: BOOLEAN
+  apl_proposal_pid:
+    data_type: BIGINT
+  apl_urla:
+    data_type: BOOLEAN
+  apl_va_borrower_certification_occupancy_type:
+    data_type: VARCHAR(128)
+  apl_version:
+    data_type: INTEGER

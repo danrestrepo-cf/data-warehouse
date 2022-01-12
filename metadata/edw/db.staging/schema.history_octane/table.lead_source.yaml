@@ -37,64 +37,64 @@ foreign_keys:
       schema: history_octane
       table: broker_compensation_type
 columns:
-  lds_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lds_pid
-  lds_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lds_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   lds_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lds_account_pid
-  lds_channel_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lds_channel_pid
-  lds_lead_source_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lds_lead_source_name
-  lds_mortech_lead_source_id:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.lds_mortech_lead_source_id
-  lds_lead_source_id:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.lds_lead_source_id
   lds_active:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.lds_active
-  lds_lead_id_required:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.lds_lead_id_required
-  lds_zero_margin_allowed:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.lds_zero_margin_allowed
-  lds_mortech_account_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lds_mortech_account_pid
-  lds_training_only:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.lds_training_only
   lds_broker_compensation_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lds_broker_compensation_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
+  lds_channel_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lds_channel_pid
+  lds_lead_id_required:
     data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+    source:
+      field: primary_source_table.columns.lds_lead_id_required
+  lds_lead_source_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lds_lead_source_id
+  lds_lead_source_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lds_lead_source_name
+  lds_mortech_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lds_mortech_account_pid
+  lds_mortech_lead_source_id:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.lds_mortech_lead_source_id
+  lds_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lds_pid
+  lds_training_only:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lds_training_only
+  lds_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lds_version
+  lds_zero_margin_allowed:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lds_zero_margin_allowed
 etls:
   SP-100038:
     input_type: table

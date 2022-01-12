@@ -13,14 +13,12 @@ foreign_keys:
       schema: history_octane
       table: account
 columns:
-  sms_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sms_pid
-  sms_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sms_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   sms_account_pid:
     data_type: BIGINT
     source:
@@ -29,12 +27,14 @@ columns:
     data_type: DATE
     source:
       field: primary_source_table.columns.sms_from_date
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  sms_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sms_pid
+  sms_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sms_version
 etls:
   SP-100248:
     input_type: table

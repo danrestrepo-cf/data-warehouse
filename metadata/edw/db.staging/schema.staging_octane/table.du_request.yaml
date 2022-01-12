@@ -107,81 +107,81 @@ foreign_keys:
       schema: staging_octane
       table: agent_type
 columns:
+  dur_aus_cash_from_borrower_amount:
+    data_type: NUMERIC(15,2)
+  dur_aus_request_number:
+    data_type: INTEGER
+  dur_cash_from_borrower_amount:
+    data_type: NUMERIC(15,2)
+  dur_cltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+  dur_create_datetime:
+    data_type: TIMESTAMP
+  dur_credit_bureau_type:
+    data_type: VARCHAR(128)
+  dur_debt_ratio_percent:
+    data_type: NUMERIC(11,9)
+  dur_du_casefile_id:
+    data_type: VARCHAR(32)
+  dur_du_cltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+  dur_du_debt_ratio_percent:
+    data_type: NUMERIC(11,9)
+  dur_du_housing_ratio_percent:
+    data_type: NUMERIC(11,9)
+  dur_du_ltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+  dur_du_recommendation_type:
+    data_type: VARCHAR(128)
+  dur_du_request_status_type:
+    data_type: VARCHAR(128)
+  dur_du_submission_number:
+    data_type: INTEGER
+  dur_du_version:
+    data_type: VARCHAR(16)
+  dur_globally_unique_id:
+    data_type: VARCHAR(128)
+  dur_gse_version_type:
+    data_type: VARCHAR(128)
+  dur_housing_ratio_percent:
+    data_type: NUMERIC(11,9)
+  dur_initial_note_rate_percent:
+    data_type: NUMERIC(11,9)
+  dur_initial_pi_amount:
+    data_type: NUMERIC(15,2)
+  dur_loan_amount:
+    data_type: NUMERIC(17,2)
+  dur_ltv_ratio_percent:
+    data_type: NUMERIC(11,9)
+  dur_mismo_version_type:
+    data_type: VARCHAR(128)
+  dur_mp_status_log:
+    data_type: VARCHAR(16000)
+  dur_note_rate_percent:
+    data_type: NUMERIC(11,9)
   dur_pid:
     data_type: BIGINT
-  dur_version:
-    data_type: INTEGER
   dur_proposal_pid:
     data_type: BIGINT
   dur_proposal_snapshot_pid:
     data_type: BIGINT
-  dur_uw_findings_html_deal_file_pid:
-    data_type: BIGINT
-  dur_uw_analysis_html_deal_file_pid:
-    data_type: BIGINT
-  dur_uw_findings_pdf_deal_file_pid:
-    data_type: BIGINT
-  dur_uw_findings_xml_provided:
-    data_type: BOOLEAN
   dur_requester_agent_type:
     data_type: VARCHAR(128)
   dur_requester_lender_user_pid:
     data_type: BIGINT
   dur_requester_unparsed_name:
     data_type: VARCHAR(128)
-  dur_create_datetime:
-    data_type: TIMESTAMP
-  dur_mismo_version_type:
-    data_type: VARCHAR(128)
-  dur_credit_bureau_type:
-    data_type: VARCHAR(128)
-  dur_globally_unique_id:
-    data_type: VARCHAR(128)
   dur_response_deal_system_file_pid:
     data_type: BIGINT
-  dur_du_casefile_id:
-    data_type: VARCHAR(32)
-  dur_du_request_status_type:
-    data_type: VARCHAR(128)
   dur_status_message:
     data_type: VARCHAR(1024)
-  dur_mp_status_log:
-    data_type: VARCHAR(16000)
-  dur_du_recommendation_type:
-    data_type: VARCHAR(128)
-  dur_du_version:
-    data_type: VARCHAR(16)
-  dur_du_submission_number:
+  dur_uw_analysis_html_deal_file_pid:
+    data_type: BIGINT
+  dur_uw_findings_html_deal_file_pid:
+    data_type: BIGINT
+  dur_uw_findings_pdf_deal_file_pid:
+    data_type: BIGINT
+  dur_uw_findings_xml_provided:
+    data_type: BOOLEAN
+  dur_version:
     data_type: INTEGER
-  dur_loan_amount:
-    data_type: NUMERIC(17,2)
-  dur_initial_pi_amount:
-    data_type: NUMERIC(15,2)
-  dur_note_rate_percent:
-    data_type: NUMERIC(11,9)
-  dur_initial_note_rate_percent:
-    data_type: NUMERIC(11,9)
-  dur_ltv_ratio_percent:
-    data_type: NUMERIC(11,9)
-  dur_cltv_ratio_percent:
-    data_type: NUMERIC(11,9)
-  dur_housing_ratio_percent:
-    data_type: NUMERIC(11,9)
-  dur_debt_ratio_percent:
-    data_type: NUMERIC(11,9)
-  dur_du_ltv_ratio_percent:
-    data_type: NUMERIC(11,9)
-  dur_du_cltv_ratio_percent:
-    data_type: NUMERIC(11,9)
-  dur_du_housing_ratio_percent:
-    data_type: NUMERIC(11,9)
-  dur_du_debt_ratio_percent:
-    data_type: NUMERIC(11,9)
-  dur_aus_request_number:
-    data_type: INTEGER
-  dur_cash_from_borrower_amount:
-    data_type: NUMERIC(15,2)
-  dur_aus_cash_from_borrower_amount:
-    data_type: NUMERIC(15,2)
-  dur_gse_version_type:
-    data_type: VARCHAR(128)

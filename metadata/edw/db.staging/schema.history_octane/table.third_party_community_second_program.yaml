@@ -53,30 +53,20 @@ foreign_keys:
       schema: history_octane
       table: charge_wire_action_type
 columns:
-  tpcsp_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.tpcsp_pid
-  tpcsp_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.tpcsp_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   tpcsp_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.tpcsp_account_pid
-  tpcsp_program_id:
-    data_type: VARCHAR(32)
+  tpcsp_deed_page_count:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.tpcsp_program_id
-  tpcsp_program_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.tpcsp_program_name
-  tpcsp_fre_community_program_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.tpcsp_fre_community_program_type
+      field: primary_source_table.columns.tpcsp_deed_page_count
   tpcsp_fnm_community_lending_product_type:
     data_type: VARCHAR(128)
     source:
@@ -85,40 +75,50 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.tpcsp_fnm_community_seconds_repayment_structure_type
-  tpcsp_wire_action_type:
+  tpcsp_fre_community_program_type:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.tpcsp_wire_action_type
-  tpcsp_security_instrument_page_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.tpcsp_security_instrument_page_count
-  tpcsp_deed_page_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.tpcsp_deed_page_count
-  tpcsp_notes:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.tpcsp_notes
+      field: primary_source_table.columns.tpcsp_fre_community_program_type
   tpcsp_from_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.tpcsp_from_date
-  tpcsp_through_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.tpcsp_through_date
   tpcsp_investor_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.tpcsp_investor_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  tpcsp_notes:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.tpcsp_notes
+  tpcsp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.tpcsp_pid
+  tpcsp_program_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.tpcsp_program_id
+  tpcsp_program_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.tpcsp_program_name
+  tpcsp_security_instrument_page_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.tpcsp_security_instrument_page_count
+  tpcsp_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.tpcsp_through_date
+  tpcsp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.tpcsp_version
+  tpcsp_wire_action_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.tpcsp_wire_action_type
 etls:
   SP-100181:
     input_type: table

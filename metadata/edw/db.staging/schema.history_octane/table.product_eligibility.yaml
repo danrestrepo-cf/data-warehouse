@@ -13,28 +13,28 @@ foreign_keys:
       schema: history_octane
       table: product
 columns:
-  pe_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pe_pid
-  pe_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pe_version
-  pe_product_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pe_product_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   pe_from_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.pe_from_date
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  pe_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pe_pid
+  pe_product_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pe_product_pid
+  pe_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pe_version
 etls:
   SP-100281:
     input_type: table

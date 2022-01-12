@@ -13,14 +13,6 @@ foreign_keys:
       schema: history_octane
       table: borrower
 columns:
-  bjg_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bjg_pid
-  bjg_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.bjg_version
   bjg_borrower_pid:
     data_type: BIGINT
     source:
@@ -29,18 +21,26 @@ columns:
     data_type: DATE
     source:
       field: primary_source_table.columns.bjg_from_date
-  bjg_through_date:
-    data_type: DATE
+  bjg_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.bjg_through_date
+      field: primary_source_table.columns.bjg_pid
   bjg_primary_job:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.bjg_primary_job
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  bjg_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.bjg_through_date
+  bjg_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bjg_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

@@ -61,62 +61,20 @@ foreign_keys:
       schema: history_octane
       table: lender_concession_request_type
 columns:
-  lcr_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lcr_pid
-  lcr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lcr_version
-  lcr_loan_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lcr_loan_pid
-  lcr_lender_lock_major_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lcr_lender_lock_major_pid
-  lcr_requested_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.lcr_requested_amount
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   lcr_approved_amount:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.lcr_approved_amount
-  lcr_requested_reason:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lcr_requested_reason
   lcr_approved_reason:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lcr_approved_reason
-  lcr_requested_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.lcr_requested_datetime
-  lcr_decision_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.lcr_decision_datetime
-  lcr_decision_notes:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.lcr_decision_notes
-  lcr_request_notes:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.lcr_request_notes
-  lcr_requester_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lcr_requester_lender_user_pid
-  lcr_requester_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lcr_requester_unparsed_name
   lcr_approver_lender_user_pid:
     data_type: BIGINT
     source:
@@ -125,28 +83,70 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lcr_approver_unparsed_name
-  lcr_lender_concession_request_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lcr_lender_concession_request_status_type
   lcr_corporate_amount:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.lcr_corporate_amount
-  lcr_unallocated_amount:
-    data_type: NUMERIC(15,2)
+  lcr_decision_datetime:
+    data_type: TIMESTAMP
     source:
-      field: primary_source_table.columns.lcr_unallocated_amount
+      field: primary_source_table.columns.lcr_decision_datetime
+  lcr_decision_notes:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.lcr_decision_notes
   lcr_lender_concession_request_number:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.lcr_lender_concession_request_number
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  lcr_lender_concession_request_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lcr_lender_concession_request_status_type
+  lcr_lender_lock_major_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lcr_lender_lock_major_pid
+  lcr_loan_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lcr_loan_pid
+  lcr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lcr_pid
+  lcr_request_notes:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.lcr_request_notes
+  lcr_requested_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lcr_requested_amount
+  lcr_requested_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.lcr_requested_datetime
+  lcr_requested_reason:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lcr_requested_reason
+  lcr_requester_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lcr_requester_lender_user_pid
+  lcr_requester_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lcr_requester_unparsed_name
+  lcr_unallocated_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lcr_unallocated_amount
+  lcr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lcr_version
 etls:
   SP-100322:
     input_type: table

@@ -29,18 +29,36 @@ foreign_keys:
       schema: history_octane
       table: ledger_entry_import_status_type
 columns:
-  leils_pid:
-    data_type: BIGINT
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  leils_complete_datetime:
+    data_type: TIMESTAMP
     source:
-      field: primary_source_table.columns.leils_pid
-  leils_version:
-    data_type: INTEGER
+      field: primary_source_table.columns.leils_complete_datetime
+  leils_entry_amount:
+    data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.leils_version
+      field: primary_source_table.columns.leils_entry_amount
+  leils_entry_description:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.leils_entry_description
+  leils_failure_info:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.leils_failure_info
   leils_ledger_entry_import_status_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.leils_ledger_entry_import_status_pid
+  leils_ledger_entry_import_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.leils_ledger_entry_import_status_type
   leils_ledger_entry_pid:
     data_type: BIGINT
     source:
@@ -53,30 +71,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.leils_payee_unparsed_name
-  leils_entry_amount:
-    data_type: NUMERIC(15,2)
+  leils_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.leils_entry_amount
-  leils_entry_description:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.leils_entry_description
-  leils_start_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.leils_start_datetime
-  leils_complete_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.leils_complete_datetime
-  leils_ledger_entry_import_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.leils_ledger_entry_import_status_type
-  leils_failure_info:
-    data_type: VARCHAR(16000)
-    source:
-      field: primary_source_table.columns.leils_failure_info
+      field: primary_source_table.columns.leils_pid
   leils_raw_row:
     data_type: VARCHAR(16000)
     source:
@@ -85,12 +83,14 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.leils_row_number
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  leils_start_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.leils_start_datetime
+  leils_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.leils_version
 etls:
   SP-100216:
     input_type: table

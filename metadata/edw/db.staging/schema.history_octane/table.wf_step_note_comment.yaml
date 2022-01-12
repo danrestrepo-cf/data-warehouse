@@ -21,6 +21,28 @@ foreign_keys:
       schema: history_octane
       table: lender_user
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  wfsnc_author_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wfsnc_author_lender_user_pid
+  wfsnc_author_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.wfsnc_author_unparsed_name
+  wfsnc_content:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.wfsnc_content
+  wfsnc_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.wfsnc_create_datetime
   wfsnc_pid:
     data_type: BIGINT
     source:
@@ -33,28 +55,6 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.wfsnc_wf_step_note_pid
-  wfsnc_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.wfsnc_create_datetime
-  wfsnc_content:
-    data_type: VARCHAR(16000)
-    source:
-      field: primary_source_table.columns.wfsnc_content
-  wfsnc_author_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.wfsnc_author_lender_user_pid
-  wfsnc_author_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.wfsnc_author_unparsed_name
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
 etls:
   SP-100864:
     input_type: table

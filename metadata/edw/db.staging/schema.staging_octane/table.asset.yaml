@@ -83,10 +83,6 @@ foreign_keys:
       schema: staging_octane
       table: yes_no_unknown_type
 columns:
-  as_pid:
-    data_type: BIGINT
-  as_version:
-    data_type: INTEGER
   as_aggregate_description:
     data_type: VARCHAR(256)
   as_application_pid:
@@ -97,8 +93,14 @@ columns:
     data_type: VARCHAR(32)
   as_automobile_model_year:
     data_type: INTEGER
+  as_available_amount:
+    data_type: NUMERIC(15,2)
   as_cash_or_market_value_amount:
     data_type: NUMERIC(15,2)
+  as_closing_costs_amount:
+    data_type: NUMERIC(15,2)
+  as_deposit_date:
+    data_type: DATE
   as_description:
     data_type: VARCHAR(128)
   as_donor_city:
@@ -113,29 +115,39 @@ columns:
     data_type: VARCHAR(128)
   as_donor_street2:
     data_type: VARCHAR(128)
+  as_down_payment_amount:
+    data_type: NUMERIC(15,0)
+  as_earnest_money_deposit_is_gift:
+    data_type: VARCHAR(128)
+  as_earnest_money_deposit_source_pid:
+    data_type: BIGINT
+  as_gift_amount:
+    data_type: NUMERIC(15,2)
+  as_gift_funds_account_holder_type:
+    data_type: VARCHAR(128)
+  as_gift_funds_depository_asset_pid:
+    data_type: BIGINT
   as_gift_funds_donor_phone:
     data_type: VARCHAR(32)
   as_gift_funds_donor_relationship:
     data_type: VARCHAR(128)
   as_gift_funds_donor_unparsed_name:
     data_type: VARCHAR(128)
+  as_gift_funds_ein:
+    data_type: VARCHAR(16)
   as_gift_funds_other_type_description:
     data_type: VARCHAR(32)
-  as_gift_funds_depository_asset_pid:
-    data_type: BIGINT
-  as_gift_amount:
-    data_type: NUMERIC(15,2)
   as_gift_funds_source_account_type:
     data_type: VARCHAR(128)
   as_gift_funds_source_holder_name:
     data_type: VARCHAR(128)
   as_gift_funds_type:
     data_type: VARCHAR(128)
-  as_holder_name:
-    data_type: VARCHAR(128)
   as_holder_city:
     data_type: VARCHAR(128)
   as_holder_country:
+    data_type: VARCHAR(128)
+  as_holder_name:
     data_type: VARCHAR(128)
   as_holder_postal_code:
     data_type: VARCHAR(128)
@@ -151,27 +163,15 @@ columns:
     data_type: NUMERIC(15,2)
   as_liquid_percent:
     data_type: NUMERIC(11,9)
+  as_penalty_amount:
+    data_type: NUMERIC(15,2)
+  as_pid:
+    data_type: BIGINT
+  as_snapshotted_pid:
+    data_type: BIGINT
   as_source_verification_required:
     data_type: VARCHAR(128)
   as_stock_bond_mutual_fund_share_count:
     data_type: INTEGER
-  as_earnest_money_deposit_source_pid:
-    data_type: BIGINT
-  as_available_amount:
-    data_type: NUMERIC(15,2)
-  as_down_payment_amount:
-    data_type: NUMERIC(15,0)
-  as_closing_costs_amount:
-    data_type: NUMERIC(15,2)
-  as_gift_funds_account_holder_type:
-    data_type: VARCHAR(128)
-  as_penalty_amount:
-    data_type: NUMERIC(15,2)
-  as_earnest_money_deposit_is_gift:
-    data_type: VARCHAR(128)
-  as_deposit_date:
-    data_type: DATE
-  as_gift_funds_ein:
-    data_type: VARCHAR(16)
-  as_snapshotted_pid:
-    data_type: BIGINT
+  as_version:
+    data_type: INTEGER

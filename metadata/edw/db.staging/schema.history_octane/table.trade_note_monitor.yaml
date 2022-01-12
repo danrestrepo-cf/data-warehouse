@@ -21,28 +21,28 @@ foreign_keys:
       schema: history_octane
       table: lender_user
 columns:
-  tnm_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.tnm_pid
-  tnm_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.tnm_version
-  tnm_trade_note_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.tnm_trade_note_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   tnm_lender_user_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.tnm_lender_user_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  tnm_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.tnm_pid
+  tnm_trade_note_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.tnm_trade_note_pid
+  tnm_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.tnm_version
 etls:
   SP-100353:
     input_type: table

@@ -11,13 +11,13 @@ foreign_keys:
       schema: staging_octane
       table: account
 columns:
-  rfs_pid:
-    data_type: BIGINT
-  rfs_version:
-    data_type: INTEGER
   rfs_account_pid:
     data_type: BIGINT
   rfs_from_date:
     data_type: DATE
+  rfs_pid:
+    data_type: BIGINT
   rfs_relock_fee_percent:
     data_type: NUMERIC(11,9)
+  rfs_version:
+    data_type: INTEGER

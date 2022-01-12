@@ -117,62 +117,104 @@ foreign_keys:
       schema: history_octane
       table: yes_no_unknown_type
 columns:
-  fc_pid:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  fc_clg_flood_cert_messages:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.fc_clg_flood_cert_messages
+  fc_clg_flood_cert_request_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.fc_clg_flood_cert_request_datetime
+  fc_clg_flood_cert_requester_agent_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.fc_clg_flood_cert_requester_agent_type
+  fc_clg_flood_cert_requester_lender_user_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.fc_pid
-  fc_version:
-    data_type: INTEGER
+      field: primary_source_table.columns.fc_clg_flood_cert_requester_lender_user_pid
+  fc_clg_flood_cert_requester_unparsed_name:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.fc_version
+      field: primary_source_table.columns.fc_clg_flood_cert_requester_unparsed_name
+  fc_clg_flood_cert_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.fc_clg_flood_cert_status_type
   fc_deal_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.fc_deal_pid
-  fc_flood_certificate_type:
+  fc_fema_flood_zone_designation_type:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.fc_flood_certificate_type
-  fc_flood_cert_vendor_type:
-    data_type: VARCHAR(128)
+      field: primary_source_table.columns.fc_fema_flood_zone_designation_type
+  fc_flood_cert_deal_file_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.fc_flood_cert_vendor_type
-  fc_flood_certification_reference_number:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.fc_flood_certification_reference_number
+      field: primary_source_table.columns.fc_flood_cert_deal_file_pid
   fc_flood_cert_effective_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.fc_flood_cert_effective_date
-  fc_nfip_community_name:
-    data_type: VARCHAR(256)
+  fc_flood_cert_vendor_type:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.fc_nfip_community_name
-  fc_nfip_counties:
-    data_type: VARCHAR(256)
+      field: primary_source_table.columns.fc_flood_cert_vendor_type
+  fc_flood_certificate_type:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.fc_nfip_counties
-  fc_nfip_state:
-    data_type: VARCHAR(2)
+      field: primary_source_table.columns.fc_flood_certificate_type
+  fc_flood_certification_reference_number:
+    data_type: VARCHAR(32)
     source:
-      field: primary_source_table.columns.fc_nfip_state
-  fc_nfip_community_number:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.fc_nfip_community_number
-  fc_nfip_community_firm_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.fc_nfip_community_firm_date
-  fc_nfip_community_participation_start_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.fc_nfip_community_participation_start_date
+      field: primary_source_table.columns.fc_flood_certification_reference_number
   fc_flood_partial:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.fc_flood_partial
+  fc_nfip_community_firm_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.fc_nfip_community_firm_date
+  fc_nfip_community_name:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.fc_nfip_community_name
+  fc_nfip_community_number:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.fc_nfip_community_number
+  fc_nfip_community_participation_start_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.fc_nfip_community_participation_start_date
+  fc_nfip_community_participation_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.fc_nfip_community_participation_status_type
+  fc_nfip_counties:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.fc_nfip_counties
+  fc_nfip_letter_of_map_case_number:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.fc_nfip_letter_of_map_case_number
+  fc_nfip_letter_of_map_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.fc_nfip_letter_of_map_date
+  fc_nfip_map_exists:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.fc_nfip_map_exists
   fc_nfip_map_number:
     data_type: VARCHAR(8)
     source:
@@ -181,58 +223,22 @@ columns:
     data_type: VARCHAR(8)
     source:
       field: primary_source_table.columns.fc_nfip_map_panel
-  fc_nfip_map_panel_suffix:
-    data_type: VARCHAR(8)
-    source:
-      field: primary_source_table.columns.fc_nfip_map_panel_suffix
   fc_nfip_map_panel_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.fc_nfip_map_panel_date
-  fc_nfip_map_exists:
-    data_type: VARCHAR(128)
+  fc_nfip_map_panel_suffix:
+    data_type: VARCHAR(8)
     source:
-      field: primary_source_table.columns.fc_nfip_map_exists
-  fc_nfip_letter_of_map_date:
-    data_type: DATE
+      field: primary_source_table.columns.fc_nfip_map_panel_suffix
+  fc_nfip_state:
+    data_type: VARCHAR(2)
     source:
-      field: primary_source_table.columns.fc_nfip_letter_of_map_date
-  fc_nfip_letter_of_map_case_number:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.fc_nfip_letter_of_map_case_number
-  fc_fema_flood_zone_designation_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.fc_fema_flood_zone_designation_type
-  fc_nfip_community_participation_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.fc_nfip_community_participation_status_type
-  fc_protected_area:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.fc_protected_area
-  fc_protected_area_designation_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.fc_protected_area_designation_date
-  fc_special_flood_hazard_area:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.fc_special_flood_hazard_area
-  fc_property_county_fips:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.fc_property_county_fips
-  fc_property_state_fips:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.fc_property_state_fips
-  fc_flood_cert_deal_file_pid:
+      field: primary_source_table.columns.fc_nfip_state
+  fc_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.fc_flood_cert_deal_file_pid
+      field: primary_source_table.columns.fc_pid
   fc_property_address_city:
     data_type: VARCHAR(128)
     source:
@@ -257,40 +263,34 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.fc_property_address_street2
+  fc_property_county_fips:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.fc_property_county_fips
   fc_property_county_name:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.fc_property_county_name
-  fc_clg_flood_cert_messages:
-    data_type: TEXT
+  fc_property_state_fips:
+    data_type: VARCHAR(32)
     source:
-      field: primary_source_table.columns.fc_clg_flood_cert_messages
-  fc_clg_flood_cert_status_type:
+      field: primary_source_table.columns.fc_property_state_fips
+  fc_protected_area:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.fc_clg_flood_cert_status_type
-  fc_clg_flood_cert_request_datetime:
-    data_type: TIMESTAMP
+      field: primary_source_table.columns.fc_protected_area
+  fc_protected_area_designation_date:
+    data_type: DATE
     source:
-      field: primary_source_table.columns.fc_clg_flood_cert_request_datetime
-  fc_clg_flood_cert_requester_agent_type:
+      field: primary_source_table.columns.fc_protected_area_designation_date
+  fc_special_flood_hazard_area:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.fc_clg_flood_cert_requester_agent_type
-  fc_clg_flood_cert_requester_lender_user_pid:
-    data_type: BIGINT
+      field: primary_source_table.columns.fc_special_flood_hazard_area
+  fc_version:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.fc_clg_flood_cert_requester_lender_user_pid
-  fc_clg_flood_cert_requester_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.fc_clg_flood_cert_requester_unparsed_name
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.fc_version
 etls:
   SP-100122:
     input_type: table

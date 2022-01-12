@@ -69,54 +69,64 @@ foreign_keys:
       schema: history_octane
       table: wf_step_type
 columns:
-  wds_pid:
-    data_type: BIGINT
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  wds_allow_check_override:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.wds_pid
-  wds_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.wds_version
-  wds_wf_step_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.wds_wf_step_pid
-  wds_wf_deal_process_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.wds_wf_deal_process_pid
-  wds_performer_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.wds_performer_user_pid
-  wds_visit_number:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.wds_visit_number
-  wds_start_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.wds_start_datetime
+      field: primary_source_table.columns.wds_allow_check_override
   wds_complete_datetime:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.wds_complete_datetime
-  wds_timeout_datetime:
-    data_type: TIMESTAMP
+  wds_completing_user_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.wds_timeout_datetime
-  wds_wf_deal_step_status_type:
-    data_type: VARCHAR(128)
+      field: primary_source_table.columns.wds_completing_user_pid
+  wds_deal_stage_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.wds_wf_deal_step_status_type
-  wds_wf_step_type:
-    data_type: VARCHAR(128)
+      field: primary_source_table.columns.wds_deal_stage_pid
+  wds_description:
+    data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.columns.wds_wf_step_type
+      field: primary_source_table.columns.wds_description
+  wds_expected_complete_minutes:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.wds_expected_complete_minutes
   wds_function_error_list:
     data_type: TEXT
     source:
       field: primary_source_table.columns.wds_function_error_list
+  wds_performer_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wds_performer_user_pid
+  wds_phase_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.wds_phase_name
+  wds_phase_number:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.wds_phase_number
+  wds_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wds_pid
+  wds_polling_interval_offset:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.wds_polling_interval_offset
+  wds_start_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.wds_start_datetime
   wds_step_name:
     data_type: VARCHAR(128)
     source:
@@ -133,48 +143,38 @@ columns:
     data_type: VARCHAR(145)
     source:
       field: primary_source_table.columns.wds_step_number_name_formatted
-  wds_expected_complete_minutes:
+  wds_timeout_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.wds_timeout_datetime
+  wds_version:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.wds_expected_complete_minutes
-  wds_description:
-    data_type: VARCHAR(1024)
+      field: primary_source_table.columns.wds_version
+  wds_visit_number:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.wds_description
+      field: primary_source_table.columns.wds_visit_number
+  wds_wf_deal_process_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wds_wf_deal_process_pid
+  wds_wf_deal_step_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.wds_wf_deal_step_status_type
   wds_wf_step_function_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.wds_wf_step_function_type
-  wds_phase_name:
+  wds_wf_step_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wds_wf_step_pid
+  wds_wf_step_type:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.wds_phase_name
-  wds_phase_number:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.wds_phase_number
-  wds_allow_check_override:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.wds_allow_check_override
-  wds_deal_stage_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.wds_deal_stage_pid
-  wds_completing_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.wds_completing_user_pid
-  wds_polling_interval_offset:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.wds_polling_interval_offset
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.wds_wf_step_type
 etls:
   SP-100359:
     input_type: table

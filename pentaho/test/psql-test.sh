@@ -12,7 +12,7 @@ if [ "$#" -lt 3 ]; then
   exit 1
 fi
 
-image="${POSTGRES_IMAGE:-postgres:12}"
+image="${POSTGRES_IMAGE:-postgres:13}"
 
 jenkins=${JENKINS_ENVIRONMENT:-false}
 if [ $jenkins = "true" ]; then

@@ -19,13 +19,13 @@ foreign_keys:
       schema: staging_octane
       table: org_node
 columns:
-  ol_pid:
-    data_type: BIGINT
-  ol_version:
-    data_type: INTEGER
   ol_lender_user_pid:
     data_type: BIGINT
   ol_org_lineage_pretty_text:
     data_type: VARCHAR(16000)
   ol_org_node_pid:
     data_type: BIGINT
+  ol_pid:
+    data_type: BIGINT
+  ol_version:
+    data_type: INTEGER

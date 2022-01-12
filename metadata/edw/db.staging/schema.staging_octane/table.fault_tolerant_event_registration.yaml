@@ -2,13 +2,13 @@ name: fault_tolerant_event_registration
 primary_key:
 - fter_message_id
 columns:
-  fter_message_id:
-    data_type: VARCHAR(128)
-  fter_queue_name:
-    data_type: VARCHAR(128)
-  fter_event_type:
-    data_type: VARCHAR(128)
   fter_create_datetime:
     data_type: TIMESTAMP
+  fter_event_type:
+    data_type: VARCHAR(128)
+  fter_message_id:
+    data_type: VARCHAR(128)
   fter_processed_datetime:
     data_type: TIMESTAMP
+  fter_queue_name:
+    data_type: VARCHAR(128)

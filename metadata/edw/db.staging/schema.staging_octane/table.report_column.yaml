@@ -19,13 +19,13 @@ foreign_keys:
       schema: staging_octane
       table: field_type
 columns:
-  rpc_pid:
-    data_type: BIGINT
-  rpc_version:
+  rpc_ordinal:
     data_type: INTEGER
-  rpc_report_row_pid:
+  rpc_pid:
     data_type: BIGINT
   rpc_report_column_type:
     data_type: VARCHAR(128)
-  rpc_ordinal:
+  rpc_report_row_pid:
+    data_type: BIGINT
+  rpc_version:
     data_type: INTEGER

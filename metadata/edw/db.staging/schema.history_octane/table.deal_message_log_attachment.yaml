@@ -21,6 +21,18 @@ foreign_keys:
       schema: history_octane
       table: deal_file
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  dmloga_deal_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dmloga_deal_file_pid
+  dmloga_deal_message_log_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dmloga_deal_message_log_pid
   dmloga_pid:
     data_type: BIGINT
     source:
@@ -29,18 +41,6 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.dmloga_version
-  dmloga_deal_message_log_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dmloga_deal_message_log_pid
-  dmloga_deal_file_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dmloga_deal_file_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
   etl_batch_id:
     data_type: TEXT
 etls:

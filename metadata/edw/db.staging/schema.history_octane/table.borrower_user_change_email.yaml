@@ -21,6 +21,26 @@ foreign_keys:
       schema: history_octane
       table: borrower_user_deal
 columns:
+  buce_borrower_user_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.buce_borrower_user_deal_pid
+  buce_borrower_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.buce_borrower_user_pid
+  buce_change_email_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.buce_change_email_id
+  buce_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.buce_create_datetime
+  buce_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.buce_email
   buce_pid:
     data_type: BIGINT
     source:
@@ -29,30 +49,10 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.buce_version
-  buce_borrower_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.buce_borrower_user_pid
-  buce_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.buce_create_datetime
-  buce_change_email_id:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.buce_change_email_id
-  buce_email:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.buce_email
-  buce_borrower_user_deal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.buce_borrower_user_deal_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

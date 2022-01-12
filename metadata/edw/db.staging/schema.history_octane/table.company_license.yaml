@@ -37,58 +37,58 @@ foreign_keys:
       schema: history_octane
       table: state_type
 columns:
-  cml_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.cml_pid
-  cml_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.cml_version
   cml_company_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.cml_company_pid
-  cml_license_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.cml_license_type
-  cml_state_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.cml_state_type
-  cml_company_state_license_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.cml_company_state_license_type
   cml_company_state_legal_name:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.cml_company_state_legal_name
-  cml_use_state_specific_company_name:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.cml_use_state_specific_company_name
-  cml_license_number:
+  cml_company_state_license_type:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.cml_license_number
+      field: primary_source_table.columns.cml_company_state_license_type
   cml_from_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.cml_from_date
-  cml_through_date:
-    data_type: DATE
+  cml_license_number:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.cml_through_date
+      field: primary_source_table.columns.cml_license_number
+  cml_license_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cml_license_type
   cml_note:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.cml_note
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  cml_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cml_pid
+  cml_state_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cml_state_type
+  cml_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.cml_through_date
+  cml_use_state_specific_company_name:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.cml_use_state_specific_company_name
+  cml_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.cml_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

@@ -59,35 +59,35 @@ foreign_keys:
       schema: staging_octane
       table: smart_message_source_type
 columns:
-  smsg_pid:
-    data_type: BIGINT
-  smsg_version:
-    data_type: INTEGER
   smsg_account_pid:
-    data_type: BIGINT
-  smsg_name:
-    data_type: VARCHAR(256)
-  smsg_delivery_type:
-    data_type: VARCHAR(128)
-  smsg_reply_to_role_pid:
-    data_type: BIGINT
-  smsg_email_subject:
-    data_type: VARCHAR(1024)
-  smsg_message_source_type:
-    data_type: VARCHAR(128)
-  smsg_smart_doc_pid:
-    data_type: BIGINT
-  smsg_smart_stack_pid:
     data_type: BIGINT
   smsg_allow_ad_hoc:
     data_type: BOOLEAN
-  smsg_send_securely:
+  smsg_allow_custom_text:
     data_type: BOOLEAN
+  smsg_delivery_type:
+    data_type: VARCHAR(128)
+  smsg_email_closing_type:
+    data_type: VARCHAR(128)
+  smsg_email_subject:
+    data_type: VARCHAR(1024)
   smsg_id_num:
     data_type: INTEGER
   smsg_message_body:
     data_type: VARCHAR(16000)
-  smsg_email_closing_type:
+  smsg_message_source_type:
     data_type: VARCHAR(128)
-  smsg_allow_custom_text:
+  smsg_name:
+    data_type: VARCHAR(256)
+  smsg_pid:
+    data_type: BIGINT
+  smsg_reply_to_role_pid:
+    data_type: BIGINT
+  smsg_send_securely:
     data_type: BOOLEAN
+  smsg_smart_doc_pid:
+    data_type: BIGINT
+  smsg_smart_stack_pid:
+    data_type: BIGINT
+  smsg_version:
+    data_type: INTEGER

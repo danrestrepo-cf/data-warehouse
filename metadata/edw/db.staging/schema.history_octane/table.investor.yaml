@@ -197,66 +197,24 @@ foreign_keys:
       schema: history_octane
       table: country_type
 columns:
-  i_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.i_pid
-  i_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.i_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   i_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.i_account_pid
-  i_investor_id:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.i_investor_id
-  i_criteria_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.i_criteria_pid
-  i_website_url:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.i_website_url
-  i_investor_name:
+  i_allonge_transfer_to_name:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.i_investor_name
-  i_investor_city:
-    data_type: VARCHAR(128)
+      field: primary_source_table.columns.i_allonge_transfer_to_name
+  i_allow_weekend_holiday_locks:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.i_investor_city
-  i_investor_country:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_investor_country
-  i_investor_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_investor_postal_code
-  i_investor_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_investor_state
-  i_investor_street1:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_investor_street1
-  i_investor_street2:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_investor_street2
-  i_investor_county_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.i_investor_county_pid
-  i_beneficiary_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_beneficiary_name
+      field: primary_source_table.columns.i_allow_weekend_holiday_locks
   i_beneficiary_city:
     data_type: VARCHAR(128)
     source:
@@ -265,6 +223,14 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.i_beneficiary_country
+  i_beneficiary_county_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.i_beneficiary_county_pid
+  i_beneficiary_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_beneficiary_name
   i_beneficiary_postal_code:
     data_type: VARCHAR(128)
     source:
@@ -281,150 +247,34 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.i_beneficiary_street2
-  i_beneficiary_county_pid:
+  i_criteria_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.i_beneficiary_county_pid
-  i_loss_payee_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_loss_payee_name
-  i_loss_payee_city:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_loss_payee_city
-  i_loss_payee_country:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_loss_payee_country
-  i_loss_payee_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_loss_payee_postal_code
-  i_loss_payee_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_loss_payee_state
-  i_loss_payee_street1:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_loss_payee_street1
-  i_loss_payee_street2:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_loss_payee_street2
-  i_loss_payee_county_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.i_loss_payee_county_pid
-  i_loss_payee_assignee_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_loss_payee_assignee_name
-  i_when_recorded_mail_to_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_when_recorded_mail_to_name
-  i_when_recorded_mail_to_city:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_when_recorded_mail_to_city
-  i_when_recorded_mail_to_country:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_when_recorded_mail_to_country
-  i_when_recorded_mail_to_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_when_recorded_mail_to_postal_code
-  i_when_recorded_mail_to_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_when_recorded_mail_to_state
-  i_when_recorded_mail_to_street1:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_when_recorded_mail_to_street1
-  i_when_recorded_mail_to_street2:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_when_recorded_mail_to_street2
-  i_when_recorded_mail_to_county_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.i_when_recorded_mail_to_county_pid
-  i_servicer_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_servicer_name
-  i_servicer_address_street1:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_servicer_address_street1
-  i_servicer_address_street2:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_servicer_address_street2
-  i_servicer_address_city:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_servicer_address_city
-  i_servicer_address_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_servicer_address_state
-  i_servicer_address_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_servicer_address_postal_code
-  i_servicer_address_country:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_servicer_address_country
-  i_servicer_county_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.i_servicer_county_pid
-  i_sub_servicer_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_sub_servicer_name
-  i_sub_servicer_address_street1:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_sub_servicer_address_street1
-  i_sub_servicer_address_street2:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_sub_servicer_address_street2
-  i_sub_servicer_address_city:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_sub_servicer_address_city
-  i_sub_servicer_address_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_sub_servicer_address_state
-  i_sub_servicer_address_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_sub_servicer_address_postal_code
-  i_sub_servicer_address_country:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_sub_servicer_address_country
-  i_sub_servicer_mers_org_id:
-    data_type: VARCHAR(7)
-    source:
-      field: primary_source_table.columns.i_sub_servicer_mers_org_id
+      field: primary_source_table.columns.i_criteria_pid
   i_custodian_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.i_custodian_pid
-  i_file_delivery_name:
+  i_ein:
+    data_type: VARCHAR(10)
+    source:
+      field: primary_source_table.columns.i_ein
+  i_file_delivery_address_city:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.i_file_delivery_name
+      field: primary_source_table.columns.i_file_delivery_address_city
+  i_file_delivery_address_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_file_delivery_address_country
+  i_file_delivery_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_file_delivery_address_postal_code
+  i_file_delivery_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_file_delivery_address_state
   i_file_delivery_address_street1:
     data_type: VARCHAR(128)
     source:
@@ -433,94 +283,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.i_file_delivery_address_street2
-  i_file_delivery_address_city:
+  i_file_delivery_name:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.i_file_delivery_address_city
-  i_file_delivery_address_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_file_delivery_address_state
-  i_file_delivery_address_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_file_delivery_address_postal_code
-  i_file_delivery_address_country:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_file_delivery_address_country
-  i_initial_beneficiary_candidate:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.i_initial_beneficiary_candidate
-  i_initial_servicer_candidate:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.i_initial_servicer_candidate
-  i_mers_org_member:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_mers_org_member
-  i_mers_org_id:
-    data_type: VARCHAR(7)
-    source:
-      field: primary_source_table.columns.i_mers_org_id
-  i_allonge_transfer_to_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_allonge_transfer_to_name
-  i_lock_expiration_delivery_subtrahend_days:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.i_lock_expiration_delivery_subtrahend_days
-  i_maximum_lock_extensions_allowed:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.i_maximum_lock_extensions_allowed
-  i_maximum_lock_extension_days_allowed:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.i_maximum_lock_extension_days_allowed
-  i_mortech_investor_id:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.i_mortech_investor_id
-  i_fnma_servicer_id:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.i_fnma_servicer_id
-  i_loan_file_delivery_method_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_loan_file_delivery_method_type
-  i_investor_group_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.i_investor_group_pid
-  i_mbs_investor:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.i_mbs_investor
-  i_investor_hmda_purchaser_of_loan_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_investor_hmda_purchaser_of_loan_type
-  i_lock_disable_time:
-    data_type: TIME
-    source:
-      field: primary_source_table.columns.i_lock_disable_time
-  i_allow_weekend_holiday_locks:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.i_allow_weekend_holiday_locks
-  i_nmls_id:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.i_nmls_id
-  i_nmls_id_applicable:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.i_nmls_id_applicable
+      field: primary_source_table.columns.i_file_delivery_name
   i_fnm_investor_remittance_type:
     data_type: VARCHAR(128)
     source:
@@ -537,24 +303,258 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.i_fnm_mbs_reo_marketing_party_type
+  i_fnma_servicer_id:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.i_fnma_servicer_id
+  i_initial_beneficiary_candidate:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.i_initial_beneficiary_candidate
+  i_initial_servicer_candidate:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.i_initial_servicer_candidate
+  i_investor_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_investor_city
+  i_investor_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_investor_country
+  i_investor_county_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.i_investor_county_pid
+  i_investor_group_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.i_investor_group_pid
+  i_investor_hmda_purchaser_of_loan_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_investor_hmda_purchaser_of_loan_type
+  i_investor_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.i_investor_id
+  i_investor_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_investor_name
+  i_investor_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_investor_postal_code
+  i_investor_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_investor_state
+  i_investor_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_investor_street1
+  i_investor_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_investor_street2
+  i_loan_file_delivery_method_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_loan_file_delivery_method_type
+  i_lock_disable_time:
+    data_type: TIME
+    source:
+      field: primary_source_table.columns.i_lock_disable_time
+  i_lock_expiration_delivery_subtrahend_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.i_lock_expiration_delivery_subtrahend_days
+  i_loss_payee_assignee_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_loss_payee_assignee_name
+  i_loss_payee_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_loss_payee_city
+  i_loss_payee_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_loss_payee_country
+  i_loss_payee_county_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.i_loss_payee_county_pid
+  i_loss_payee_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_loss_payee_name
+  i_loss_payee_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_loss_payee_postal_code
+  i_loss_payee_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_loss_payee_state
+  i_loss_payee_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_loss_payee_street1
+  i_loss_payee_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_loss_payee_street2
+  i_maximum_lock_extension_days_allowed:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.i_maximum_lock_extension_days_allowed
+  i_maximum_lock_extensions_allowed:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.i_maximum_lock_extensions_allowed
+  i_mbs_investor:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.i_mbs_investor
+  i_mers_org_id:
+    data_type: VARCHAR(7)
+    source:
+      field: primary_source_table.columns.i_mers_org_id
+  i_mers_org_member:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_mers_org_member
+  i_mortech_investor_id:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.i_mortech_investor_id
+  i_nmls_id:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.i_nmls_id
+  i_nmls_id_applicable:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_nmls_id_applicable
   i_offers_secondary_financing:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.i_offers_secondary_financing
+  i_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.i_pid
   i_secondary_financing_source_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.i_secondary_financing_source_type
-  i_ein:
-    data_type: VARCHAR(10)
+  i_servicer_address_city:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.i_ein
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.i_servicer_address_city
+  i_servicer_address_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_servicer_address_country
+  i_servicer_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_servicer_address_postal_code
+  i_servicer_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_servicer_address_state
+  i_servicer_address_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_servicer_address_street1
+  i_servicer_address_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_servicer_address_street2
+  i_servicer_county_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.i_servicer_county_pid
+  i_servicer_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_servicer_name
+  i_sub_servicer_address_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_sub_servicer_address_city
+  i_sub_servicer_address_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_sub_servicer_address_country
+  i_sub_servicer_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_sub_servicer_address_postal_code
+  i_sub_servicer_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_sub_servicer_address_state
+  i_sub_servicer_address_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_sub_servicer_address_street1
+  i_sub_servicer_address_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_sub_servicer_address_street2
+  i_sub_servicer_mers_org_id:
+    data_type: VARCHAR(7)
+    source:
+      field: primary_source_table.columns.i_sub_servicer_mers_org_id
+  i_sub_servicer_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_sub_servicer_name
+  i_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.i_version
+  i_website_url:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.i_website_url
+  i_when_recorded_mail_to_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_when_recorded_mail_to_city
+  i_when_recorded_mail_to_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_when_recorded_mail_to_country
+  i_when_recorded_mail_to_county_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.i_when_recorded_mail_to_county_pid
+  i_when_recorded_mail_to_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_when_recorded_mail_to_name
+  i_when_recorded_mail_to_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_when_recorded_mail_to_postal_code
+  i_when_recorded_mail_to_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_when_recorded_mail_to_state
+  i_when_recorded_mail_to_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_when_recorded_mail_to_street1
+  i_when_recorded_mail_to_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.i_when_recorded_mail_to_street2
 etls:
   SP-100268:
     input_type: table

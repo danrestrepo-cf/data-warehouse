@@ -13,22 +13,16 @@ foreign_keys:
       schema: history_octane
       table: account
 columns:
-  plbit_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.plbit_pid
-  plbit_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.plbit_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   plbit_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.plbit_account_pid
-  plbit_year:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.plbit_year
   plbit_month:
     data_type: INTEGER
     source:
@@ -37,6 +31,10 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.plbit_period_id
+  plbit_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.plbit_pid
   plbit_revision_id:
     data_type: INTEGER
     source:
@@ -45,12 +43,14 @@ columns:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.plbit_user_friendly_value
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  plbit_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.plbit_version
+  plbit_year:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.plbit_year
 etls:
   SP-100217:
     input_type: table

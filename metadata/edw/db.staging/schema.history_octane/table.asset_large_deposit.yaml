@@ -13,14 +13,6 @@ foreign_keys:
       schema: history_octane
       table: asset
 columns:
-  ald_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ald_pid
-  ald_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ald_version
   ald_asset_pid:
     data_type: BIGINT
     source:
@@ -33,14 +25,22 @@ columns:
     data_type: DATE
     source:
       field: primary_source_table.columns.ald_deposit_date
+  ald_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ald_pid
   ald_snapshotted_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.ald_snapshotted_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  ald_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ald_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

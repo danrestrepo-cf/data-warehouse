@@ -333,154 +333,24 @@ foreign_keys:
       schema: history_octane
       table: third_party_community_second_program_eligibility_type
 columns:
-  pt_pid:
-    data_type: BIGINT
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  pt_allow_loan_amount_cents:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.pt_pid
-  pt_version:
-    data_type: INTEGER
+      field: primary_source_table.columns.pt_allow_loan_amount_cents
+  pt_always_current_market_price:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.pt_version
+      field: primary_source_table.columns.pt_always_current_market_price
   pt_amortization_term_months:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.pt_amortization_term_months
-  pt_arm_index_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_arm_index_type
-  pt_arm_payment_adjustment_calculation_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_arm_payment_adjustment_calculation_type
-  pt_assumable:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pt_assumable
-  pt_product_category:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_product_category
-  pt_conditions_to_assumability:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pt_conditions_to_assumability
-  pt_demand_feature:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pt_demand_feature
-  pt_due_in_term_months:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pt_due_in_term_months
-  pt_escrow_cushion_months:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pt_escrow_cushion_months
-  pt_from_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.pt_from_date
-  pt_initial_payment_adjustment_term_months:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pt_initial_payment_adjustment_term_months
-  pt_initial_rate_adjustment_cap_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.pt_initial_rate_adjustment_cap_percent
-  pt_initial_rate_adjustment_term_months:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pt_initial_rate_adjustment_term_months
-  pt_lien_priority_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_lien_priority_type
-  pt_loan_amortization_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_loan_amortization_type
-  pt_minimum_payment_rate_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.pt_minimum_payment_rate_percent
-  pt_minimum_rate_term_months:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pt_minimum_rate_term_months
-  pt_mortgage_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_mortgage_type
-  pt_negative_amortization_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_negative_amortization_type
-  pt_negative_amortization_limit_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.pt_negative_amortization_limit_percent
-  pt_negative_amortization_recast_period_months:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pt_negative_amortization_recast_period_months
-  pt_payment_adjustment_lifetime_cap_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.pt_payment_adjustment_lifetime_cap_percent
-  pt_payment_adjustment_periodic_cap:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.pt_payment_adjustment_periodic_cap
-  pt_payment_frequency_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_payment_frequency_type
-  pt_prepayment_finance_charge_refund:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pt_prepayment_finance_charge_refund
-  pt_product_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pt_product_pid
-  pt_rate_adjustment_lifetime_cap_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.pt_rate_adjustment_lifetime_cap_percent
-  pt_subsequent_payment_adjustment_term_months:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pt_subsequent_payment_adjustment_term_months
-  pt_subsequent_rate_adjustment_cap_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.pt_subsequent_rate_adjustment_cap_percent
-  pt_subsequent_rate_adjustment_term_months:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pt_subsequent_rate_adjustment_term_months
-  pt_prepay_penalty_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_prepay_penalty_type
-  pt_lender_hazard_insurance_available:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pt_lender_hazard_insurance_available
-  pt_lender_hazard_insurance_premium_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.pt_lender_hazard_insurance_premium_amount
-  pt_lender_hazard_insurance_term_months:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pt_lender_hazard_insurance_term_months
-  pt_loan_requires_hazard_insurance:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pt_loan_requires_hazard_insurance
   pt_arm_convertible:
     data_type: BOOLEAN
     source:
@@ -497,50 +367,136 @@ columns:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.pt_arm_floor_rate_percent
+  pt_arm_index_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_arm_index_type
   pt_arm_lookback_period_days:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.pt_arm_lookback_period_days
-  pt_escrow_waiver_allowed:
+  pt_arm_payment_adjustment_calculation_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_arm_payment_adjustment_calculation_type
+  pt_assumable:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.pt_escrow_waiver_allowed
+      field: primary_source_table.columns.pt_assumable
+  pt_buydown_base_date_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_buydown_base_date_type
+  pt_buydown_subsidy_calculation_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_buydown_subsidy_calculation_type
+  pt_community_lending_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_community_lending_type
+  pt_conditions_to_assumability:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pt_conditions_to_assumability
+  pt_credit_qualifying:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pt_credit_qualifying
   pt_days_per_year_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.pt_days_per_year_type
-  pt_lp_risk_assessment_accepted:
+  pt_decision_credit_score_calc_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_decision_credit_score_calc_type
+  pt_deed_page_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pt_deed_page_count
+  pt_deferred_payment_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pt_deferred_payment_months
+  pt_demand_feature:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.pt_lp_risk_assessment_accepted
+      field: primary_source_table.columns.pt_demand_feature
+  pt_dsi_plan_code:
+    data_type: VARCHAR(128)
   pt_du_risk_assessment_accepted:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.pt_du_risk_assessment_accepted
-  pt_manual_risk_assessment_accepted:
+  pt_due_in_term_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pt_due_in_term_months
+  pt_escrow_cushion_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pt_escrow_cushion_months
+  pt_escrow_waiver_allowed:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.pt_manual_risk_assessment_accepted
-  pt_internal_underwrite_accepted:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pt_internal_underwrite_accepted
+      field: primary_source_table.columns.pt_escrow_waiver_allowed
   pt_external_fha_underwrite_accepted:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.pt_external_fha_underwrite_accepted
-  pt_external_va_underwrite_accepted:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pt_external_va_underwrite_accepted
-  pt_external_usda_underwrite_accepted:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pt_external_usda_underwrite_accepted
   pt_external_investor_underwrite_accepted:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.pt_external_investor_underwrite_accepted
+  pt_external_usda_underwrite_accepted:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pt_external_usda_underwrite_accepted
+  pt_external_va_underwrite_accepted:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pt_external_va_underwrite_accepted
+  pt_family_advantage:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pt_family_advantage
+  pt_fha_rehab_program_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_fha_rehab_program_type
+  pt_fha_special_program_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_fha_special_program_type
+  pt_fnm_arm_plan_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_fnm_arm_plan_type
+  pt_fnm_community_lending_product_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_fnm_community_lending_product_type
+  pt_fre_community_program_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_fre_community_program_type
+  pt_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.pt_from_date
+  pt_gpm_adjustment_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pt_gpm_adjustment_percent
+  pt_gpm_adjustment_years:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pt_gpm_adjustment_years
+  pt_heloc_cancel_fee_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.pt_heloc_cancel_fee_amount
   pt_heloc_cancel_fee_applicable_type:
     data_type: VARCHAR(128)
     source:
@@ -549,18 +505,10 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.pt_heloc_cancel_fee_period_months
-  pt_heloc_cancel_fee_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.pt_heloc_cancel_fee_amount
   pt_heloc_draw_period_months:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.pt_heloc_draw_period_months
-  pt_heloc_repayment_period_duration_months:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pt_heloc_repayment_period_duration_months
   pt_heloc_maximum_initial_draw:
     data_type: BOOLEAN
     source:
@@ -577,238 +525,290 @@ columns:
     data_type: NUMERIC(15,0)
     source:
       field: primary_source_table.columns.pt_heloc_minimum_draw_amount
-  pt_gpm_adjustment_years:
+  pt_heloc_repayment_period_duration_months:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.pt_gpm_adjustment_years
-  pt_gpm_adjustment_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.pt_gpm_adjustment_percent
-  pt_qualifying_monthly_payment_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_qualifying_monthly_payment_type
-  pt_qualifying_rate_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_qualifying_rate_type
-  pt_qualifying_rate_input_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.pt_qualifying_rate_input_percent
-  pt_ipc_calc_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_ipc_calc_type
-  pt_ipc_limit_percent1:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.pt_ipc_limit_percent1
-  pt_ipc_property_usage_type1:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_ipc_property_usage_type1
-  pt_ipc_comparison_operator_type1:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_ipc_comparison_operator_type1
-  pt_ipc_cltv_ratio_percent1:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.pt_ipc_cltv_ratio_percent1
-  pt_ipc_limit_percent2:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.pt_ipc_limit_percent2
-  pt_ipc_property_usage_type2:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_ipc_property_usage_type2
-  pt_ipc_comparison_operator_type2:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_ipc_comparison_operator_type2
-  pt_ipc_cltv_ratio_percent2:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.pt_ipc_cltv_ratio_percent2
-  pt_ipc_limit_percent3:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.pt_ipc_limit_percent3
-  pt_ipc_property_usage_type3:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_ipc_property_usage_type3
-  pt_ipc_comparison_operator_type3:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_ipc_comparison_operator_type3
-  pt_ipc_cltv_ratio_percent3:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.pt_ipc_cltv_ratio_percent3
-  pt_ipc_limit_percent4:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.pt_ipc_limit_percent4
-  pt_ipc_property_usage_type4:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_ipc_property_usage_type4
-  pt_ipc_comparison_operator_type4:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_ipc_comparison_operator_type4
-  pt_ipc_cltv_ratio_percent4:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.pt_ipc_cltv_ratio_percent4
-  pt_buydown_base_date_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_buydown_base_date_type
-  pt_buydown_subsidy_calculation_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_buydown_subsidy_calculation_type
-  pt_prepaid_interest_rate_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_prepaid_interest_rate_type
-  pt_fnm_arm_plan_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_fnm_arm_plan_type
-  pt_credit_qualifying:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pt_credit_qualifying
-  pt_product_special_program_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_product_special_program_type
-  pt_section_of_act_coarse_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_section_of_act_coarse_type
-  pt_fha_rehab_program_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_fha_rehab_program_type
-  pt_fha_special_program_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_fha_special_program_type
-  pt_third_party_grant_eligible:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pt_third_party_grant_eligible
-  pt_servicing_transfer_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_servicing_transfer_type
-  pt_no_mi_product:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pt_no_mi_product
-  pt_mortgage_credit_certificate_eligible:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pt_mortgage_credit_certificate_eligible
-  pt_fre_community_program_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_fre_community_program_type
-  pt_fnm_community_lending_product_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_fnm_community_lending_product_type
-  pt_zero_note_rate:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pt_zero_note_rate
-  pt_third_party_community_second_program_eligibility_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_third_party_community_second_program_eligibility_type
-  pt_texas_veterans_land_board:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_texas_veterans_land_board
-  pt_security_instrument_page_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pt_security_instrument_page_count
-  pt_deed_page_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pt_deed_page_count
-  pt_partial_payment_policy_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_partial_payment_policy_type
-  pt_payment_structure_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_payment_structure_type
-  pt_deferred_payment_months:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pt_deferred_payment_months
-  pt_always_current_market_price:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pt_always_current_market_price
-  pt_rate_protect:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pt_rate_protect
-  pt_non_conforming:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pt_non_conforming
-  pt_allow_loan_amount_cents:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pt_allow_loan_amount_cents
-  pt_product_appraisal_requirement_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_product_appraisal_requirement_type
-  pt_family_advantage:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pt_family_advantage
-  pt_community_lending_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pt_community_lending_type
+      field: primary_source_table.columns.pt_heloc_repayment_period_duration_months
   pt_high_balance:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.pt_high_balance
-  pt_decision_credit_score_calc_type:
-    data_type: VARCHAR(128)
+  pt_initial_payment_adjustment_term_months:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.pt_decision_credit_score_calc_type
-  pt_new_york:
+      field: primary_source_table.columns.pt_initial_payment_adjustment_term_months
+  pt_initial_rate_adjustment_cap_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pt_initial_rate_adjustment_cap_percent
+  pt_initial_rate_adjustment_term_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pt_initial_rate_adjustment_term_months
+  pt_internal_underwrite_accepted:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.pt_new_york
+      field: primary_source_table.columns.pt_internal_underwrite_accepted
+  pt_ipc_calc_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_ipc_calc_type
+  pt_ipc_cltv_ratio_percent1:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pt_ipc_cltv_ratio_percent1
+  pt_ipc_cltv_ratio_percent2:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pt_ipc_cltv_ratio_percent2
+  pt_ipc_cltv_ratio_percent3:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pt_ipc_cltv_ratio_percent3
+  pt_ipc_cltv_ratio_percent4:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pt_ipc_cltv_ratio_percent4
+  pt_ipc_comparison_operator_type1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_ipc_comparison_operator_type1
+  pt_ipc_comparison_operator_type2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_ipc_comparison_operator_type2
+  pt_ipc_comparison_operator_type3:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_ipc_comparison_operator_type3
+  pt_ipc_comparison_operator_type4:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_ipc_comparison_operator_type4
+  pt_ipc_limit_percent1:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pt_ipc_limit_percent1
+  pt_ipc_limit_percent2:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pt_ipc_limit_percent2
+  pt_ipc_limit_percent3:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pt_ipc_limit_percent3
+  pt_ipc_limit_percent4:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pt_ipc_limit_percent4
+  pt_ipc_property_usage_type1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_ipc_property_usage_type1
+  pt_ipc_property_usage_type2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_ipc_property_usage_type2
+  pt_ipc_property_usage_type3:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_ipc_property_usage_type3
+  pt_ipc_property_usage_type4:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_ipc_property_usage_type4
+  pt_lender_hazard_insurance_available:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pt_lender_hazard_insurance_available
+  pt_lender_hazard_insurance_premium_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.pt_lender_hazard_insurance_premium_amount
+  pt_lender_hazard_insurance_term_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pt_lender_hazard_insurance_term_months
+  pt_lien_priority_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_lien_priority_type
+  pt_loan_amortization_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_loan_amortization_type
+  pt_loan_requires_hazard_insurance:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pt_loan_requires_hazard_insurance
+  pt_lp_risk_assessment_accepted:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pt_lp_risk_assessment_accepted
+  pt_manual_risk_assessment_accepted:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pt_manual_risk_assessment_accepted
   pt_maximum_number_of_construction_draws:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.pt_maximum_number_of_construction_draws
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
+  pt_minimum_payment_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pt_minimum_payment_rate_percent
+  pt_minimum_rate_term_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pt_minimum_rate_term_months
+  pt_mortgage_credit_certificate_eligible:
     data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
-  pt_dsi_plan_code:
+    source:
+      field: primary_source_table.columns.pt_mortgage_credit_certificate_eligible
+  pt_mortgage_type:
     data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_mortgage_type
+  pt_negative_amortization_limit_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pt_negative_amortization_limit_percent
+  pt_negative_amortization_recast_period_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pt_negative_amortization_recast_period_months
+  pt_negative_amortization_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_negative_amortization_type
+  pt_new_york:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pt_new_york
+  pt_no_mi_product:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pt_no_mi_product
+  pt_non_conforming:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pt_non_conforming
+  pt_partial_payment_policy_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_partial_payment_policy_type
+  pt_payment_adjustment_lifetime_cap_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pt_payment_adjustment_lifetime_cap_percent
+  pt_payment_adjustment_periodic_cap:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pt_payment_adjustment_periodic_cap
+  pt_payment_frequency_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_payment_frequency_type
+  pt_payment_structure_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_payment_structure_type
+  pt_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pt_pid
+  pt_prepaid_interest_rate_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_prepaid_interest_rate_type
+  pt_prepay_penalty_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_prepay_penalty_type
+  pt_prepayment_finance_charge_refund:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pt_prepayment_finance_charge_refund
+  pt_product_appraisal_requirement_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_product_appraisal_requirement_type
+  pt_product_category:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_product_category
+  pt_product_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pt_product_pid
+  pt_product_special_program_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_product_special_program_type
+  pt_qualifying_monthly_payment_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_qualifying_monthly_payment_type
+  pt_qualifying_rate_input_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pt_qualifying_rate_input_percent
+  pt_qualifying_rate_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_qualifying_rate_type
+  pt_rate_adjustment_lifetime_cap_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pt_rate_adjustment_lifetime_cap_percent
+  pt_rate_protect:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pt_rate_protect
+  pt_section_of_act_coarse_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_section_of_act_coarse_type
+  pt_security_instrument_page_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pt_security_instrument_page_count
+  pt_servicing_transfer_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_servicing_transfer_type
+  pt_subsequent_payment_adjustment_term_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pt_subsequent_payment_adjustment_term_months
+  pt_subsequent_rate_adjustment_cap_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.pt_subsequent_rate_adjustment_cap_percent
+  pt_subsequent_rate_adjustment_term_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pt_subsequent_rate_adjustment_term_months
+  pt_texas_veterans_land_board:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_texas_veterans_land_board
+  pt_third_party_community_second_program_eligibility_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pt_third_party_community_second_program_eligibility_type
+  pt_third_party_grant_eligible:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pt_third_party_grant_eligible
+  pt_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pt_version
+  pt_zero_note_rate:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pt_zero_note_rate
 etls:
   SP-100285:
     input_type: table

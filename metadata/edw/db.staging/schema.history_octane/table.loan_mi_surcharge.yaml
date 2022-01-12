@@ -13,6 +13,28 @@ foreign_keys:
       schema: history_octane
       table: loan
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  lms_criteria_html:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.lms_criteria_html
+  lms_government_surcharge_minimum_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lms_government_surcharge_minimum_amount
+  lms_government_surcharge_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lms_government_surcharge_percent
+  lms_loan_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lms_loan_pid
   lms_pid:
     data_type: BIGINT
     source:
@@ -21,28 +43,6 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.lms_version
-  lms_loan_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lms_loan_pid
-  lms_criteria_html:
-    data_type: VARCHAR(16000)
-    source:
-      field: primary_source_table.columns.lms_criteria_html
-  lms_government_surcharge_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.lms_government_surcharge_percent
-  lms_government_surcharge_minimum_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.lms_government_surcharge_minimum_amount
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
 etls:
   SP-100147:
     input_type: table

@@ -43,37 +43,37 @@ foreign_keys:
       schema: staging_octane
       table: yes_no_unknown_type
 columns:
-  dappr_pid:
-    data_type: BIGINT
-  dappr_version:
-    data_type: INTEGER
+  dappr_appraisal_entry_contact_type:
+    data_type: VARCHAR(128)
+  dappr_appraisal_hold_reason_type:
+    data_type: VARCHAR(128)
+  dappr_appraisal_hold_type:
+    data_type: VARCHAR(128)
+  dappr_appraisal_required:
+    data_type: BOOLEAN
+  dappr_borrower_requires_appraisal:
+    data_type: VARCHAR(128)
+  dappr_calculated_appraisal_required:
+    data_type: BOOLEAN
   dappr_deal_pid:
     data_type: BIGINT
   dappr_door_lock_combination:
     data_type: BOOLEAN
-  dappr_appraisal_entry_contact_type:
-    data_type: VARCHAR(128)
-  dappr_appraisal_hold_type:
-    data_type: VARCHAR(128)
-  dappr_appraisal_hold_reason_type:
-    data_type: VARCHAR(128)
   dappr_hold_release_date:
     data_type: DATE
-  dappr_rush_request:
-    data_type: BOOLEAN
-  dappr_transfer_specified:
-    data_type: BOOLEAN
-  dappr_calculated_appraisal_required:
+  dappr_lender_requires_appraisal:
     data_type: BOOLEAN
   dappr_override_calculated_appraisal_required:
     data_type: BOOLEAN
   dappr_override_calculated_appraisal_required_reason:
     data_type: VARCHAR(16000)
-  dappr_borrower_requires_appraisal:
-    data_type: VARCHAR(128)
-  dappr_lender_requires_appraisal:
-    data_type: BOOLEAN
+  dappr_pid:
+    data_type: BIGINT
   dappr_product_requires_appraisal:
     data_type: BOOLEAN
-  dappr_appraisal_required:
+  dappr_rush_request:
     data_type: BOOLEAN
+  dappr_transfer_specified:
+    data_type: BOOLEAN
+  dappr_version:
+    data_type: INTEGER

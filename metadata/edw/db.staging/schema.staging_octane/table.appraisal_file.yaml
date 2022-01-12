@@ -27,13 +27,13 @@ foreign_keys:
       schema: staging_octane
       table: appraisal_file_type
 columns:
-  aprf_pid:
-    data_type: BIGINT
-  aprf_version:
-    data_type: INTEGER
+  aprf_appraisal_file_type:
+    data_type: VARCHAR(128)
   aprf_appraisal_pid:
     data_type: BIGINT
   aprf_deal_file_pid:
     data_type: BIGINT
-  aprf_appraisal_file_type:
-    data_type: VARCHAR(128)
+  aprf_pid:
+    data_type: BIGINT
+  aprf_version:
+    data_type: INTEGER

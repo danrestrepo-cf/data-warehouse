@@ -11,17 +11,17 @@ foreign_keys:
       schema: staging_octane
       table: account
 columns:
-  tc_pid:
-    data_type: BIGINT
-  tc_version:
-    data_type: INTEGER
   tc_account_pid:
     data_type: BIGINT
-  tc_company_name:
-    data_type: VARCHAR(128)
-  tc_admin_lock:
-    data_type: BOOLEAN
   tc_active:
     data_type: BOOLEAN
+  tc_admin_lock:
+    data_type: BOOLEAN
+  tc_company_name:
+    data_type: VARCHAR(128)
+  tc_pid:
+    data_type: BIGINT
   tc_preferred_vendor:
     data_type: BOOLEAN
+  tc_version:
+    data_type: INTEGER

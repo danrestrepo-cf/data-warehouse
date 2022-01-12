@@ -29,30 +29,20 @@ foreign_keys:
       schema: history_octane
       table: lock_add_on_type
 columns:
-  lla_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lla_pid
-  lla_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lla_version
-  lla_lender_lock_minor_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lla_lender_lock_minor_pid
-  lla_lock_add_on_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lla_lock_add_on_type
-  lla_investor_price_adjustment_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.lla_investor_price_adjustment_percent
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   lla_account_price_adjustment_percent:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.lla_account_price_adjustment_percent
+  lla_arm_margin_adjustment_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.lla_arm_margin_adjustment_percent
   lla_create_datetime:
     data_type: TIMESTAMP
     source:
@@ -65,28 +55,38 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lla_creator_unparsed_name
-  lla_summary:
-    data_type: VARCHAR(16000)
-    source:
-      field: primary_source_table.columns.lla_summary
-  lla_rate_adjustment_percent:
+  lla_investor_price_adjustment_percent:
     data_type: NUMERIC(11,9)
     source:
-      field: primary_source_table.columns.lla_rate_adjustment_percent
+      field: primary_source_table.columns.lla_investor_price_adjustment_percent
+  lla_lender_lock_minor_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lla_lender_lock_minor_pid
+  lla_lock_add_on_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lla_lock_add_on_type
+  lla_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lla_pid
   lla_price_adjustment_percent:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.lla_price_adjustment_percent
-  lla_arm_margin_adjustment_percent:
+  lla_rate_adjustment_percent:
     data_type: NUMERIC(11,9)
     source:
-      field: primary_source_table.columns.lla_arm_margin_adjustment_percent
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.lla_rate_adjustment_percent
+  lla_summary:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.lla_summary
+  lla_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lla_version
 etls:
   SP-100153:
     input_type: table

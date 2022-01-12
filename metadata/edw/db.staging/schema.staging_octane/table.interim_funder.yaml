@@ -35,65 +35,65 @@ foreign_keys:
       schema: staging_octane
       table: interim_funder_mers_registration_type
 columns:
-  if_pid:
-    data_type: BIGINT
-  if_version:
-    data_type: INTEGER
   if_account_pid:
     data_type: BIGINT
-  if_company_name:
+  if_company_address_city:
     data_type: VARCHAR(128)
-  if_company_contact_unparsed_name:
+  if_company_address_country:
+    data_type: VARCHAR(128)
+  if_company_address_postal_code:
+    data_type: VARCHAR(128)
+  if_company_address_state:
     data_type: VARCHAR(128)
   if_company_address_street1:
     data_type: VARCHAR(128)
   if_company_address_street2:
     data_type: VARCHAR(128)
-  if_company_address_city:
+  if_company_contact_unparsed_name:
     data_type: VARCHAR(128)
-  if_company_address_state:
-    data_type: VARCHAR(128)
-  if_company_address_postal_code:
-    data_type: VARCHAR(128)
-  if_company_address_country:
-    data_type: VARCHAR(128)
-  if_company_office_phone:
-    data_type: VARCHAR(32)
-  if_company_office_phone_extension:
-    data_type: VARCHAR(16)
   if_company_email:
     data_type: VARCHAR(256)
   if_company_fax:
     data_type: VARCHAR(32)
   if_company_mers_org_id:
     data_type: VARCHAR(7)
-  if_remarks:
-    data_type: VARCHAR(1024)
-  if_from_date:
-    data_type: DATE
-  if_through_date:
-    data_type: DATE
+  if_company_name:
+    data_type: VARCHAR(128)
+  if_company_office_phone:
+    data_type: VARCHAR(32)
+  if_company_office_phone_extension:
+    data_type: VARCHAR(16)
   if_custodian_pid:
     data_type: BIGINT
-  if_reimbursement_wire_credit_to_name:
-    data_type: VARCHAR(128)
-  if_reimbursement_wire_attention_unparsed_name:
-    data_type: VARCHAR(128)
-  if_reimbursement_wire_authorized_signer_unparsed_name:
-    data_type: VARCHAR(128)
-  if_return_wire_credit_to_name:
-    data_type: VARCHAR(128)
-  if_return_wire_attention_unparsed_name:
-    data_type: VARCHAR(128)
-  if_return_wire_authorized_signer_unparsed_name:
-    data_type: VARCHAR(128)
   if_fnm_payee_id:
     data_type: VARCHAR(9)
-  if_interim_funder_mers_registration_type:
-    data_type: VARCHAR(128)
   if_fnm_warehouse_lender_id:
     data_type: VARCHAR(32)
   if_fre_warehouse_lender_id:
     data_type: VARCHAR(32)
+  if_from_date:
+    data_type: DATE
   if_funder_id:
     data_type: VARCHAR(32)
+  if_interim_funder_mers_registration_type:
+    data_type: VARCHAR(128)
+  if_pid:
+    data_type: BIGINT
+  if_reimbursement_wire_attention_unparsed_name:
+    data_type: VARCHAR(128)
+  if_reimbursement_wire_authorized_signer_unparsed_name:
+    data_type: VARCHAR(128)
+  if_reimbursement_wire_credit_to_name:
+    data_type: VARCHAR(128)
+  if_remarks:
+    data_type: VARCHAR(1024)
+  if_return_wire_attention_unparsed_name:
+    data_type: VARCHAR(128)
+  if_return_wire_authorized_signer_unparsed_name:
+    data_type: VARCHAR(128)
+  if_return_wire_credit_to_name:
+    data_type: VARCHAR(128)
+  if_through_date:
+    data_type: DATE
+  if_version:
+    data_type: INTEGER

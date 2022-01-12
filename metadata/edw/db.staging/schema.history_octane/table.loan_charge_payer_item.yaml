@@ -37,14 +37,24 @@ foreign_keys:
       schema: history_octane
       table: loan_charge_payer_item_source_type
 columns:
-  lcpi_pid:
-    data_type: BIGINT
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  lcpi_charge_payer_type:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.lcpi_pid
-  lcpi_version:
-    data_type: INTEGER
+      field: primary_source_table.columns.lcpi_charge_payer_type
+  lcpi_charge_wire_action_auto_compute:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.lcpi_version
+      field: primary_source_table.columns.lcpi_charge_wire_action_auto_compute
+  lcpi_charge_wire_action_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lcpi_charge_wire_action_type
   lcpi_item_amount:
     data_type: NUMERIC(15,2)
     source:
@@ -57,32 +67,22 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lcpi_loan_charge_pid
-  lcpi_charge_payer_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lcpi_charge_payer_type
   lcpi_paid_by:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lcpi_paid_by
+  lcpi_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lcpi_pid
   lcpi_poc:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.lcpi_poc
-  lcpi_charge_wire_action_auto_compute:
-    data_type: BOOLEAN
+  lcpi_version:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.lcpi_charge_wire_action_auto_compute
-  lcpi_charge_wire_action_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lcpi_charge_wire_action_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.lcpi_version
 etls:
   SP-100830:
     input_type: table

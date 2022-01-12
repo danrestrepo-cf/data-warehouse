@@ -29,32 +29,32 @@ foreign_keys:
       schema: history_octane
       table: smart_message_permission_type
 columns:
-  smp_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.smp_pid
-  smp_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.smp_version
-  smp_smart_message_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.smp_smart_message_pid
-  smp_role_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.smp_role_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   smp_permission_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.smp_permission_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  smp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smp_pid
+  smp_role_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smp_role_pid
+  smp_smart_message_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smp_smart_message_pid
+  smp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.smp_version
 etls:
   SP-100860:
     input_type: table

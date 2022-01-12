@@ -61,70 +61,70 @@ foreign_keys:
       schema: history_octane
       table: calendar_rule_type
 columns:
-  sdvdc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sdvdc_pid
-  sdvdc_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sdvdc_version
-  sdvdc_smart_doc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sdvdc_smart_doc_pid
-  sdvdc_criteria_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sdvdc_criteria_pid
-  sdvdc_deal_child_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sdvdc_deal_child_type
-  sdvdc_deal_child_relationship_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sdvdc_deal_child_relationship_type
-  sdvdc_doc_validity_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sdvdc_doc_validity_type
-  sdvdc_doc_key_date_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sdvdc_doc_key_date_type
-  sdvdc_expiration_calendar_rule_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sdvdc_expiration_calendar_rule_type
-  sdvdc_days_before_key_date:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sdvdc_days_before_key_date
-  sdvdc_warning_days:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sdvdc_warning_days
-  sdvdc_ordinal:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sdvdc_ordinal
-  sdvdc_else_case:
+  data_source_deleted_flag:
     data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.sdvdc_else_case
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   sdvdc_active:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.sdvdc_active
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
   sdvdc_criteria_html:
     data_type: VARCHAR(16000)
-  etl_batch_id:
-    data_type: TEXT
+  sdvdc_criteria_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sdvdc_criteria_pid
+  sdvdc_days_before_key_date:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sdvdc_days_before_key_date
+  sdvdc_deal_child_relationship_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sdvdc_deal_child_relationship_type
+  sdvdc_deal_child_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sdvdc_deal_child_type
+  sdvdc_doc_key_date_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sdvdc_doc_key_date_type
+  sdvdc_doc_validity_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sdvdc_doc_validity_type
+  sdvdc_else_case:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sdvdc_else_case
+  sdvdc_expiration_calendar_rule_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sdvdc_expiration_calendar_rule_type
+  sdvdc_ordinal:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sdvdc_ordinal
+  sdvdc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sdvdc_pid
+  sdvdc_smart_doc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sdvdc_smart_doc_pid
+  sdvdc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sdvdc_version
+  sdvdc_warning_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sdvdc_warning_days
 etls:
   SP-100842:
     input_type: table

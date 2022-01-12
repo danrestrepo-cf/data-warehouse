@@ -19,17 +19,17 @@ foreign_keys:
       schema: staging_octane
       table: lender_user
 columns:
-  locn_pid:
-    data_type: BIGINT
-  locn_version:
-    data_type: INTEGER
-  locn_location_pid:
-    data_type: BIGINT
-  locn_create_datetime:
-    data_type: TIMESTAMP
-  locn_content:
-    data_type: VARCHAR(16000)
   locn_author_lender_user_pid:
     data_type: BIGINT
   locn_author_unparsed_name:
     data_type: VARCHAR(128)
+  locn_content:
+    data_type: VARCHAR(16000)
+  locn_create_datetime:
+    data_type: TIMESTAMP
+  locn_location_pid:
+    data_type: BIGINT
+  locn_pid:
+    data_type: BIGINT
+  locn_version:
+    data_type: INTEGER

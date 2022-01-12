@@ -21,34 +21,34 @@ foreign_keys:
       schema: history_octane
       table: criteria
 columns:
-  ea_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ea_pid
-  ea_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ea_version
-  ea_lender_user_role_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ea_lender_user_role_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   ea_criteria_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.ea_criteria_pid
-  ea_priority:
-    data_type: INTEGER
+  ea_lender_user_role_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.ea_priority
+      field: primary_source_table.columns.ea_lender_user_role_pid
   ea_name:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ea_name
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+  ea_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ea_pid
+  ea_priority:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ea_priority
+  ea_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ea_version
   etl_batch_id:
     data_type: TEXT
 etls:

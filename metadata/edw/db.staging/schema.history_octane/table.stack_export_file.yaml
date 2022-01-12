@@ -29,18 +29,16 @@ foreign_keys:
       schema: history_octane
       table: stack_export_file_type
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   sef_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.sef_pid
-  sef_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sef_version
-  sef_stack_export_request_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sef_stack_export_request_pid
   sef_repository_file_pid:
     data_type: BIGINT
     source:
@@ -49,12 +47,14 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.sef_stack_export_file_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  sef_stack_export_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sef_stack_export_request_pid
+  sef_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sef_version
 etls:
   SP-100339:
     input_type: table

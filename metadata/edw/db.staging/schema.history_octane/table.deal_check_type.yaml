@@ -7,20 +7,20 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.code
-  value:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.value
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   dct_id_num:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.dct_id_num
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
   etl_batch_id:
     data_type: TEXT
+  value:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.value
 etls:
   SP-100467:
     input_type: table

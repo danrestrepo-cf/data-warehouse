@@ -21,22 +21,22 @@ foreign_keys:
       schema: history_octane
       table: criteria
 columns:
-  smrc_pid:
-    data_type: BIGINT
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  smrc_amount_description:
+    data_type: VARCHAR(256)
     source:
-      field: primary_source_table.columns.smrc_pid
-  smrc_version:
-    data_type: INTEGER
+      field: primary_source_table.columns.smrc_amount_description
+  smrc_coverage_percent:
+    data_type: NUMERIC(11,9)
     source:
-      field: primary_source_table.columns.smrc_version
-  smrc_smart_mi_rate_card_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.smrc_smart_mi_rate_card_pid
-  smrc_ordinal:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.smrc_ordinal
+      field: primary_source_table.columns.smrc_coverage_percent
+  smrc_criteria_html:
+    data_type: VARCHAR(16000)
   smrc_criteria_pid:
     data_type: BIGINT
     source:
@@ -45,22 +45,14 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.smrc_else_case
-  smrc_amount_description:
-    data_type: VARCHAR(256)
+  smrc_initial_duration_months:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.smrc_amount_description
-  smrc_upfront_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.smrc_upfront_percent
+      field: primary_source_table.columns.smrc_initial_duration_months
   smrc_initial_monthly_payment_annual_percent:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.smrc_initial_monthly_payment_annual_percent
-  smrc_coverage_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.smrc_coverage_percent
   smrc_ltv_cutoff_percent:
     data_type: NUMERIC(11,9)
     source:
@@ -69,22 +61,30 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.smrc_midpoint_cutoff_required
+  smrc_ordinal:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.smrc_ordinal
+  smrc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smrc_pid
   smrc_required_monthly_payment_count:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.smrc_required_monthly_payment_count
-  smrc_initial_duration_months:
+  smrc_smart_mi_rate_card_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smrc_smart_mi_rate_card_pid
+  smrc_upfront_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.smrc_upfront_percent
+  smrc_version:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.smrc_initial_duration_months
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  smrc_criteria_html:
-    data_type: VARCHAR(16000)
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.smrc_version
 etls:
   SP-100247:
     input_type: table

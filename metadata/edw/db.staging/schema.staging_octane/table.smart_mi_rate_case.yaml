@@ -19,31 +19,31 @@ foreign_keys:
       schema: staging_octane
       table: criteria
 columns:
-  smrc_pid:
-    data_type: BIGINT
-  smrc_version:
-    data_type: INTEGER
-  smrc_smart_mi_rate_card_pid:
-    data_type: BIGINT
-  smrc_ordinal:
-    data_type: INTEGER
+  smrc_amount_description:
+    data_type: VARCHAR(256)
+  smrc_coverage_percent:
+    data_type: NUMERIC(11,9)
   smrc_criteria_pid:
     data_type: BIGINT
   smrc_else_case:
     data_type: BOOLEAN
-  smrc_amount_description:
-    data_type: VARCHAR(256)
-  smrc_upfront_percent:
-    data_type: NUMERIC(11,9)
+  smrc_initial_duration_months:
+    data_type: INTEGER
   smrc_initial_monthly_payment_annual_percent:
-    data_type: NUMERIC(11,9)
-  smrc_coverage_percent:
     data_type: NUMERIC(11,9)
   smrc_ltv_cutoff_percent:
     data_type: NUMERIC(11,9)
   smrc_midpoint_cutoff_required:
     data_type: BOOLEAN
+  smrc_ordinal:
+    data_type: INTEGER
+  smrc_pid:
+    data_type: BIGINT
   smrc_required_monthly_payment_count:
     data_type: INTEGER
-  smrc_initial_duration_months:
+  smrc_smart_mi_rate_card_pid:
+    data_type: BIGINT
+  smrc_upfront_percent:
+    data_type: NUMERIC(11,9)
+  smrc_version:
     data_type: INTEGER

@@ -21,34 +21,20 @@ foreign_keys:
       schema: history_octane
       table: secondary_admin_event_entity_type
 columns:
-  sae_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sae_pid
-  sae_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sae_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   sae_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.sae_account_pid
-  sae_secondary_admin_event_entity_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sae_secondary_admin_event_entity_type
-  sae_message:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.sae_message
   sae_diff_list:
     data_type: TEXT
     source:
       field: primary_source_table.columns.sae_diff_list
-  sae_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sae_unparsed_name
   sae_event_date:
     data_type: DATE
     source:
@@ -57,16 +43,30 @@ columns:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.sae_event_datetime
+  sae_message:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.sae_message
+  sae_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sae_pid
+  sae_secondary_admin_event_entity_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sae_secondary_admin_event_entity_type
   sae_target_entity_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.sae_target_entity_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  sae_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sae_unparsed_name
+  sae_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sae_version
 etls:
   SP-100241:
     input_type: table

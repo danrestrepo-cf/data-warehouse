@@ -4,6 +4,20 @@ primary_key:
 - zci_pid
 - zci_version
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  zci_latitude:
+    data_type: NUMERIC(9,6)
+    source:
+      field: primary_source_table.columns.zci_latitude
+  zci_longitude:
+    data_type: NUMERIC(9,6)
+    source:
+      field: primary_source_table.columns.zci_longitude
   zci_pid:
     data_type: BIGINT
     source:
@@ -16,20 +30,6 @@ columns:
     data_type: VARCHAR(5)
     source:
       field: primary_source_table.columns.zci_zip_code
-  zci_latitude:
-    data_type: NUMERIC(9,6)
-    source:
-      field: primary_source_table.columns.zci_latitude
-  zci_longitude:
-    data_type: NUMERIC(9,6)
-    source:
-      field: primary_source_table.columns.zci_longitude
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
 etls:
   SP-100205:
     input_type: table

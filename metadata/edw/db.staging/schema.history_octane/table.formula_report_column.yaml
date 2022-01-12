@@ -61,26 +61,12 @@ foreign_keys:
       schema: history_octane
       table: field_type
 columns:
-  frc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.frc_pid
-  frc_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.frc_version
-  frc_report_row_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.frc_report_row_pid
-  frc_header:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.frc_header
-  frc_formula:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.frc_formula
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   frc_field_type_1:
     data_type: VARCHAR(128)
     source:
@@ -105,16 +91,30 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.frc_field_type_6
+  frc_formula:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.frc_formula
+  frc_header:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.frc_header
   frc_ordinal:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.frc_ordinal
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  frc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.frc_pid
+  frc_report_row_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.frc_report_row_pid
+  frc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.frc_version
 etls:
   SP-100045:
     input_type: table

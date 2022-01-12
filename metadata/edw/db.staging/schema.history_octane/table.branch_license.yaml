@@ -37,54 +37,54 @@ foreign_keys:
       schema: history_octane
       table: state_type
 columns:
-  brml_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.brml_pid
-  brml_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.brml_version
   brml_branch_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.brml_branch_pid
-  brml_license_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.brml_license_type
-  brml_state_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.brml_state_type
-  brml_license_number:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.brml_license_number
-  brml_from_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.brml_from_date
-  brml_through_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.brml_through_date
-  brml_note:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.brml_note
   brml_company_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.brml_company_pid
+  brml_from_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.brml_from_date
+  brml_license_number:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.brml_license_number
+  brml_license_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.brml_license_type
   brml_location_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.brml_location_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  brml_note:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.brml_note
+  brml_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.brml_pid
+  brml_state_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.brml_state_type
+  brml_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.brml_through_date
+  brml_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.brml_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

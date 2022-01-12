@@ -13,22 +13,12 @@ foreign_keys:
       schema: history_octane
       table: rate_sheet
 columns:
-  rsr_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rsr_pid
-  rsr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.rsr_version
-  rsr_rate_sheet_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rsr_rate_sheet_pid
-  rsr_rate_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.rsr_rate_percent
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   rsr_arm_margin_percent:
     data_type: NUMERIC(11,9)
     source:
@@ -37,12 +27,22 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.rsr_available
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  rsr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rsr_pid
+  rsr_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.rsr_rate_percent
+  rsr_rate_sheet_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rsr_rate_sheet_pid
+  rsr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.rsr_version
 etls:
   SP-100289:
     input_type: table

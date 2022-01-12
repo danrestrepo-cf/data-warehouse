@@ -27,39 +27,39 @@ foreign_keys:
       schema: staging_octane
       table: report_request_status_type
 columns:
-  carr_pid:
-    data_type: BIGINT
-  carr_version:
-    data_type: INTEGER
   carr_account_pid:
     data_type: BIGINT
-  carr_create_datetime:
-    data_type: TIMESTAMP
-  carr_start_datetime:
-    data_type: TIMESTAMP
-  carr_end_datetime:
-    data_type: TIMESTAMP
-  carr_request_status_type:
-    data_type: VARCHAR(128)
-  carr_request_status_messages:
-    data_type: TEXT
-  carr_requester_unparsed_name:
-    data_type: VARCHAR(128)
-  carr_exported_deal_count:
-    data_type: INTEGER
-  carr_total_deal_count:
-    data_type: INTEGER
-  carr_sold_from_date:
-    data_type: DATE
-  carr_sold_through_date:
-    data_type: DATE
   carr_cancelled_from_date:
     data_type: DATE
   carr_cancelled_through_date:
     data_type: DATE
-  carr_export_csv_repository_file_pid:
-    data_type: BIGINT
+  carr_create_datetime:
+    data_type: TIMESTAMP
+  carr_end_datetime:
+    data_type: TIMESTAMP
   carr_error_file_pid:
     data_type: BIGINT
+  carr_export_csv_repository_file_pid:
+    data_type: BIGINT
+  carr_exported_deal_count:
+    data_type: INTEGER
+  carr_pid:
+    data_type: BIGINT
+  carr_request_status_messages:
+    data_type: TEXT
+  carr_request_status_type:
+    data_type: VARCHAR(128)
+  carr_requester_unparsed_name:
+    data_type: VARCHAR(128)
+  carr_sold_from_date:
+    data_type: DATE
+  carr_sold_through_date:
+    data_type: DATE
+  carr_start_datetime:
+    data_type: TIMESTAMP
+  carr_total_deal_count:
+    data_type: INTEGER
   carr_use_loan_hedge_data:
     data_type: BOOLEAN
+  carr_version:
+    data_type: INTEGER

@@ -21,28 +21,28 @@ foreign_keys:
       schema: history_octane
       table: loans_toolbox_permission_type
 columns:
-  rlot_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rlot_pid
-  rlot_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.rlot_version
-  rlot_role_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rlot_role_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   rlot_loans_toolbox_permission_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.rlot_loans_toolbox_permission_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  rlot_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rlot_pid
+  rlot_role_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rlot_role_pid
+  rlot_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.rlot_version
 etls:
   SP-100238:
     input_type: table

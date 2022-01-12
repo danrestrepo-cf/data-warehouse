@@ -21,36 +21,36 @@ foreign_keys:
       schema: history_octane
       table: org_lineage
 columns:
-  lsr_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lsr_pid
-  lsr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lsr_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   lsr_loan_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lsr_loan_pid
-  lsr_vintage_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.lsr_vintage_date
-  lsr_series_id:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lsr_series_id
   lsr_org_lineage_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lsr_org_lineage_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  lsr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lsr_pid
+  lsr_series_id:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lsr_series_id
+  lsr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lsr_version
+  lsr_vintage_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lsr_vintage_date
 etls:
   SP-100324:
     input_type: table

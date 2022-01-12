@@ -13,26 +13,26 @@ foreign_keys:
       schema: history_octane
       table: country_type
 columns:
-  cu_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.cu_pid
-  cu_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.cu_version
   cu_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.cu_account_pid
-  cu_custodian_id:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.cu_custodian_id
-  cu_custodian_name:
+  cu_address_city:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.cu_custodian_name
+      field: primary_source_table.columns.cu_address_city
+  cu_address_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cu_address_country
+  cu_address_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cu_address_postal_code
+  cu_address_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cu_address_state
   cu_address_street1:
     data_type: VARCHAR(128)
     source:
@@ -41,46 +41,46 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.cu_address_street2
-  cu_address_city:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.cu_address_city
-  cu_address_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.cu_address_state
-  cu_address_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.cu_address_postal_code
-  cu_address_country:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.cu_address_country
-  cu_custodian_phone:
+  cu_custodian_id:
     data_type: VARCHAR(32)
     source:
-      field: primary_source_table.columns.cu_custodian_phone
+      field: primary_source_table.columns.cu_custodian_id
   cu_custodian_mers_org_id:
     data_type: VARCHAR(7)
     source:
       field: primary_source_table.columns.cu_custodian_mers_org_id
-  cu_whole_loan_fin:
-    data_type: VARCHAR(11)
+  cu_custodian_name:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.cu_whole_loan_fin
+      field: primary_source_table.columns.cu_custodian_name
+  cu_custodian_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.cu_custodian_phone
   cu_mbs_loan_fin:
     data_type: VARCHAR(11)
     source:
       field: primary_source_table.columns.cu_mbs_loan_fin
+  cu_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cu_pid
   cu_register_with_mers:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.cu_register_with_mers
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  cu_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.cu_version
+  cu_whole_loan_fin:
+    data_type: VARCHAR(11)
+    source:
+      field: primary_source_table.columns.cu_whole_loan_fin
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

@@ -11,15 +11,15 @@ foreign_keys:
       schema: staging_octane
       table: borrower
 columns:
-  bjg_pid:
-    data_type: BIGINT
-  bjg_version:
-    data_type: INTEGER
   bjg_borrower_pid:
     data_type: BIGINT
   bjg_from_date:
     data_type: DATE
-  bjg_through_date:
-    data_type: DATE
+  bjg_pid:
+    data_type: BIGINT
   bjg_primary_job:
     data_type: BOOLEAN
+  bjg_through_date:
+    data_type: DATE
+  bjg_version:
+    data_type: INTEGER

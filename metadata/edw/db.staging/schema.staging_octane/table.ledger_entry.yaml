@@ -107,55 +107,55 @@ foreign_keys:
       schema: staging_octane
       table: loan_position_type
 columns:
-  le_pid:
-    data_type: BIGINT
-  le_version:
-    data_type: INTEGER
   le_account_pid:
     data_type: BIGINT
-  le_ledger_entry_type:
+  le_create_datetime:
+    data_type: TIMESTAMP
+  le_deal_pid:
+    data_type: BIGINT
+  le_entry_amount:
+    data_type: NUMERIC(15,2)
+  le_estimate:
+    data_type: BOOLEAN
+  le_expense_date:
+    data_type: DATE
+  le_ledger_book_datetime:
+    data_type: TIMESTAMP
+  le_ledger_entry_decision_status_type:
     data_type: VARCHAR(128)
   le_ledger_entry_source_type:
     data_type: VARCHAR(128)
-  le_estimate:
-    data_type: BOOLEAN
-  le_ledger_entry_decision_status_type:
+  le_ledger_entry_type:
     data_type: VARCHAR(128)
-  le_create_datetime:
-    data_type: TIMESTAMP
-  le_entry_amount:
-    data_type: NUMERIC(15,2)
-  le_source_org_node_pid:
-    data_type: BIGINT
-  le_payee_org_node_pid:
-    data_type: BIGINT
-  le_payee_org_lineage_pid:
-    data_type: BIGINT
-  le_source_org_lineage_pid:
-    data_type: BIGINT
-  le_org_lineage_source_date:
-    data_type: DATE
-  le_deal_pid:
-    data_type: BIGINT
   le_loan_position_type:
     data_type: VARCHAR(128)
   le_los_loan_id:
     data_type: BIGINT
+  le_monthly_ledger_book_pid:
+    data_type: BIGINT
   le_notes:
     data_type: TEXT
-  le_monthly_ledger_book_pid:
+  le_org_lineage_source_date:
+    data_type: DATE
+  le_passthrough:
+    data_type: BOOLEAN
+  le_payee_org_lineage_pid:
+    data_type: BIGINT
+  le_payee_org_node_pid:
     data_type: BIGINT
   le_payroll_ledger_book_pid:
     data_type: BIGINT
-  le_ledger_book_datetime:
-    data_type: TIMESTAMP
-  le_expense_date:
-    data_type: DATE
+  le_pid:
+    data_type: BIGINT
   le_reversal:
-    data_type: BOOLEAN
-  le_passthrough:
     data_type: BOOLEAN
   le_smart_ledger_plan_case_version_pid:
     data_type: BIGINT
+  le_source_org_lineage_pid:
+    data_type: BIGINT
+  le_source_org_node_pid:
+    data_type: BIGINT
   le_synthetic_unique:
     data_type: VARCHAR(32)
+  le_version:
+    data_type: INTEGER

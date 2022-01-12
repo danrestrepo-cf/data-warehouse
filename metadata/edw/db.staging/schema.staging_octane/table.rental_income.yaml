@@ -27,29 +27,67 @@ foreign_keys:
       schema: staging_octane
       table: income_history_calc_method_type
 columns:
-  ri_pid:
-    data_type: BIGINT
-  ri_version:
-    data_type: INTEGER
   ri_borrower_income_pid:
+    data_type: BIGINT
+  ri_common_year1_annual_total_amount:
+    data_type: NUMERIC(15,2)
+  ri_common_year1_from_date:
+    data_type: DATE
+  ri_common_year1_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+  ri_common_year1_months:
+    data_type: NUMERIC(4,2)
+  ri_common_year1_through_date:
+    data_type: DATE
+  ri_common_year1_year:
+    data_type: INTEGER
+  ri_common_year1_year_include:
+    data_type: BOOLEAN
+  ri_common_year2_annual_total_amount:
+    data_type: NUMERIC(15,2)
+  ri_common_year2_from_date:
+    data_type: DATE
+  ri_common_year2_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+  ri_common_year2_months:
+    data_type: NUMERIC(4,2)
+  ri_common_year2_through_date:
+    data_type: DATE
+  ri_common_year2_year:
+    data_type: INTEGER
+  ri_common_year2_year_include:
+    data_type: BOOLEAN
+  ri_common_year3_annual_total_amount:
+    data_type: NUMERIC(15,2)
+  ri_common_year3_from_date:
+    data_type: DATE
+  ri_common_year3_monthly_total_amount:
+    data_type: NUMERIC(15,2)
+  ri_common_year3_months:
+    data_type: NUMERIC(4,2)
+  ri_common_year3_through_date:
+    data_type: DATE
+  ri_common_year3_year:
+    data_type: INTEGER
+  ri_common_year3_year_include:
+    data_type: BOOLEAN
+  ri_pid:
     data_type: BIGINT
   ri_place_pid:
     data_type: BIGINT
-  ri_schedule_e_input:
-    data_type: BOOLEAN
-  ri_rental_income_estimated_mode:
-    data_type: BOOLEAN
+  ri_rental_income_calc_method:
+    data_type: VARCHAR(128)
   ri_rental_income_estimated_gross_monthly_amount:
     data_type: NUMERIC(15,2)
-  ri_simple_monthly_total_amount:
+  ri_rental_income_estimated_mode:
+    data_type: BOOLEAN
+  ri_rental_income_monthly_total_amount:
     data_type: NUMERIC(15,2)
   ri_schedule_e_calculated_gross_monthly_amount:
     data_type: NUMERIC(15,2)
-  ri_schedule_e_proposed_monthly_expense_amount:
-    data_type: NUMERIC(15,2)
+  ri_schedule_e_input:
+    data_type: BOOLEAN
   ri_schedule_e_net_monthly_amount:
-    data_type: NUMERIC(15,2)
-  ri_rental_income_monthly_total_amount:
     data_type: NUMERIC(15,2)
   ri_schedule_e_non_recurring_expense_1:
     data_type: VARCHAR(128)
@@ -57,59 +95,21 @@ columns:
     data_type: VARCHAR(128)
   ri_schedule_e_non_recurring_expense_3:
     data_type: VARCHAR(128)
-  ri_rental_income_calc_method:
-    data_type: VARCHAR(128)
-  ri_common_year1_year:
-    data_type: INTEGER
-  ri_common_year1_year_include:
-    data_type: BOOLEAN
-  ri_common_year1_from_date:
-    data_type: DATE
-  ri_common_year1_through_date:
-    data_type: DATE
-  ri_common_year1_months:
-    data_type: NUMERIC(4,2)
-  ri_common_year1_annual_total_amount:
-    data_type: NUMERIC(15,2)
-  ri_common_year1_monthly_total_amount:
-    data_type: NUMERIC(15,2)
-  ri_common_year2_year:
-    data_type: INTEGER
-  ri_common_year2_year_include:
-    data_type: BOOLEAN
-  ri_common_year2_from_date:
-    data_type: DATE
-  ri_common_year2_through_date:
-    data_type: DATE
-  ri_common_year2_months:
-    data_type: NUMERIC(4,2)
-  ri_common_year2_annual_total_amount:
-    data_type: NUMERIC(15,2)
-  ri_common_year2_monthly_total_amount:
-    data_type: NUMERIC(15,2)
-  ri_common_year3_year:
-    data_type: INTEGER
-  ri_common_year3_year_include:
-    data_type: BOOLEAN
-  ri_common_year3_from_date:
-    data_type: DATE
-  ri_common_year3_through_date:
-    data_type: DATE
-  ri_common_year3_months:
-    data_type: NUMERIC(4,2)
-  ri_common_year3_annual_total_amount:
-    data_type: NUMERIC(15,2)
-  ri_common_year3_monthly_total_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year1_rent_received_amount:
+  ri_schedule_e_proposed_monthly_expense_amount:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year1_advertising_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year1_annual_subtotal:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year1_auto_travel_expense_amount:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year1_cleaning_maintenance_expense_amount:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year1_commissions_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year1_depreciation_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year1_insurance_credit_amount:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year1_insurance_expense_amount:
     data_type: NUMERIC(15,2)
@@ -119,45 +119,45 @@ columns:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year1_mortgage_interest_expense_amount:
     data_type: NUMERIC(15,2)
-  ri_schedule_e_year1_other_interest_expense_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year1_repairs_expense_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year1_supplies_expense_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year1_taxes_expense_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year1_utilities_expense_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year1_depreciation_expense_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year1_other_expense_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year1_total_expense_amount:
-    data_type: NUMERIC(15,2)
   ri_schedule_e_year1_non_recurring_expense_amount_1:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year1_non_recurring_expense_amount_2:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year1_non_recurring_expense_amount_3:
     data_type: NUMERIC(15,2)
-  ri_schedule_e_year1_insurance_credit_amount:
+  ri_schedule_e_year1_other_expense_amount:
     data_type: NUMERIC(15,2)
-  ri_schedule_e_year1_taxes_credit_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year1_annual_subtotal:
+  ri_schedule_e_year1_other_interest_expense_amount:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year1_ownership_percent:
     data_type: NUMERIC(11,9)
-  ri_schedule_e_year2_rent_received_amount:
+  ri_schedule_e_year1_rent_received_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year1_repairs_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year1_supplies_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year1_taxes_credit_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year1_taxes_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year1_total_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year1_utilities_expense_amount:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year2_advertising_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year2_annual_subtotal:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year2_auto_travel_expense_amount:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year2_cleaning_maintenance_expense_amount:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year2_commissions_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year2_depreciation_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year2_insurance_credit_amount:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year2_insurance_expense_amount:
     data_type: NUMERIC(15,2)
@@ -167,45 +167,45 @@ columns:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year2_mortgage_interest_expense_amount:
     data_type: NUMERIC(15,2)
-  ri_schedule_e_year2_other_interest_expense_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year2_repairs_expense_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year2_supplies_expense_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year2_taxes_expense_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year2_utilities_expense_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year2_depreciation_expense_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year2_other_expense_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year2_total_expense_amount:
-    data_type: NUMERIC(15,2)
   ri_schedule_e_year2_non_recurring_expense_amount_1:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year2_non_recurring_expense_amount_2:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year2_non_recurring_expense_amount_3:
     data_type: NUMERIC(15,2)
-  ri_schedule_e_year2_insurance_credit_amount:
+  ri_schedule_e_year2_other_expense_amount:
     data_type: NUMERIC(15,2)
-  ri_schedule_e_year2_taxes_credit_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year2_annual_subtotal:
+  ri_schedule_e_year2_other_interest_expense_amount:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year2_ownership_percent:
     data_type: NUMERIC(11,9)
-  ri_schedule_e_year3_rent_received_amount:
+  ri_schedule_e_year2_rent_received_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year2_repairs_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year2_supplies_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year2_taxes_credit_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year2_taxes_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year2_total_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year2_utilities_expense_amount:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year3_advertising_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year3_annual_subtotal:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year3_auto_travel_expense_amount:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year3_cleaning_maintenance_expense_amount:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year3_commissions_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year3_depreciation_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year3_insurance_credit_amount:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year3_insurance_expense_amount:
     data_type: NUMERIC(15,2)
@@ -215,47 +215,47 @@ columns:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year3_mortgage_interest_expense_amount:
     data_type: NUMERIC(15,2)
-  ri_schedule_e_year3_other_interest_expense_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year3_repairs_expense_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year3_supplies_expense_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year3_taxes_expense_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year3_utilities_expense_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year3_depreciation_expense_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year3_other_expense_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year3_total_expense_amount:
-    data_type: NUMERIC(15,2)
   ri_schedule_e_year3_non_recurring_expense_amount_1:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year3_non_recurring_expense_amount_2:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year3_non_recurring_expense_amount_3:
     data_type: NUMERIC(15,2)
-  ri_schedule_e_year3_insurance_credit_amount:
+  ri_schedule_e_year3_other_expense_amount:
     data_type: NUMERIC(15,2)
-  ri_schedule_e_year3_taxes_credit_amount:
-    data_type: NUMERIC(15,2)
-  ri_schedule_e_year3_annual_subtotal:
+  ri_schedule_e_year3_other_interest_expense_amount:
     data_type: NUMERIC(15,2)
   ri_schedule_e_year3_ownership_percent:
     data_type: NUMERIC(11,9)
-  ri_simple_monthly_rent_amount:
+  ri_schedule_e_year3_rent_received_amount:
     data_type: NUMERIC(15,2)
-  ri_simple_vacancy_maintenance_adjustment_percent:
-    data_type: NUMERIC(11,9)
-  ri_simple_monthly_net_rent_amount:
+  ri_schedule_e_year3_repairs_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year3_supplies_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year3_taxes_credit_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year3_taxes_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year3_total_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_schedule_e_year3_utilities_expense_amount:
+    data_type: NUMERIC(15,2)
+  ri_simple_calculated_monthly_amount:
     data_type: NUMERIC(15,2)
   ri_simple_monthly_expense_amount:
     data_type: NUMERIC(15,2)
+  ri_simple_monthly_net_rent_amount:
+    data_type: NUMERIC(15,2)
   ri_simple_monthly_pre_ownership_income_amount:
+    data_type: NUMERIC(15,2)
+  ri_simple_monthly_rent_amount:
+    data_type: NUMERIC(15,2)
+  ri_simple_monthly_total_amount:
     data_type: NUMERIC(15,2)
   ri_simple_ownership_percent:
     data_type: NUMERIC(11,9)
-  ri_simple_calculated_monthly_amount:
-    data_type: NUMERIC(15,2)
+  ri_simple_vacancy_maintenance_adjustment_percent:
+    data_type: NUMERIC(11,9)
+  ri_version:
+    data_type: INTEGER

@@ -117,50 +117,16 @@ foreign_keys:
       schema: history_octane
       table: prior_to_type
 columns:
-  sd_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sd_pid
-  sd_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sd_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   sd_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.sd_account_pid
-  sd_doc_set_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sd_doc_set_type
-  sd_custom_form_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sd_custom_form_pid
-  sd_doc_name:
-    data_type: VARCHAR(767)
-    source:
-      field: primary_source_table.columns.sd_doc_name
-  sd_doc_number:
-    data_type: NUMERIC(15,3)
-    source:
-      field: primary_source_table.columns.sd_doc_number
-  sd_doc_category_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sd_doc_category_type
-  sd_doc_file_source_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sd_doc_file_source_type
-  sd_doc_external_provider_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sd_doc_external_provider_type
-  sd_broker_applicable_provider:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.sd_broker_applicable_provider
   sd_action_entities_from_merge_field:
     data_type: BOOLEAN
     source:
@@ -169,62 +135,50 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.sd_action_entity_applicant
+  sd_action_entity_collateral_underwriter:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_action_entity_collateral_underwriter
+  sd_action_entity_correspondent_client_advocate:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_action_entity_correspondent_client_advocate
+  sd_action_entity_effective_collateral_underwriter:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_action_entity_effective_collateral_underwriter
+  sd_action_entity_government_insurance:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_action_entity_government_insurance
+  sd_action_entity_hud_va_lender_officer:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_action_entity_hud_va_lender_officer
   sd_action_entity_non_applicant:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.sd_action_entity_non_applicant
-  sd_action_entity_underwriter:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.sd_action_entity_underwriter
   sd_action_entity_originator:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.sd_action_entity_originator
-  sd_doc_borrower_access_mode_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sd_doc_borrower_access_mode_type
-  sd_borrower_explanation:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.sd_borrower_explanation
-  sd_deal_child_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sd_deal_child_type
-  sd_doc_fulfill_status_type_default:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sd_doc_fulfill_status_type_default
-  sd_prior_to_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sd_prior_to_type
-  sd_doc_action_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sd_doc_action_type
-  sd_e_delivery:
+  sd_action_entity_underwriter:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.sd_e_delivery
+      field: primary_source_table.columns.sd_action_entity_underwriter
+  sd_action_entity_underwriting_manager:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_action_entity_underwriting_manager
+  sd_action_entity_wholesale_client_advocate:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_action_entity_wholesale_client_advocate
   sd_active:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.sd_active
-  sd_key_doc_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sd_key_doc_type
-  sd_key_doc_include_file:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sd_key_doc_include_file
-  sd_doc_approval_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sd_doc_approval_type
   sd_auto_approve:
     data_type: BOOLEAN
     source:
@@ -233,54 +187,100 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.sd_auto_include_on_request
+  sd_borrower_explanation:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.sd_borrower_explanation
+  sd_broker_applicable_provider:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_broker_applicable_provider
+  sd_custom_form_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sd_custom_form_pid
+  sd_days_before_key_date:
+    data_type: INTEGER
+  sd_deal_child_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_deal_child_type
+  sd_doc_action_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_doc_action_type
+  sd_doc_approval_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_doc_approval_type
+  sd_doc_borrower_access_mode_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_doc_borrower_access_mode_type
+  sd_doc_category_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_doc_category_type
+  sd_doc_external_provider_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_doc_external_provider_type
+  sd_doc_file_source_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_doc_file_source_type
+  sd_doc_fulfill_status_type_default:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_doc_fulfill_status_type_default
+  sd_doc_key_date_type:
+    data_type: VARCHAR(128)
+  sd_doc_name:
+    data_type: VARCHAR(767)
+    source:
+      field: primary_source_table.columns.sd_doc_name
+  sd_doc_number:
+    data_type: NUMERIC(15,3)
+    source:
+      field: primary_source_table.columns.sd_doc_number
+  sd_doc_set_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_doc_set_type
+  sd_doc_validity_type:
+    data_type: VARCHAR(128)
+  sd_e_delivery:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_e_delivery
+  sd_expiration_rule_type:
+    data_type: VARCHAR(128)
+  sd_key_doc_include_file:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_key_doc_include_file
+  sd_key_doc_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sd_key_doc_type
+  sd_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sd_pid
   sd_poa_applicable:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.sd_poa_applicable
-  sd_action_entity_hud_va_lender_officer:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.sd_action_entity_hud_va_lender_officer
-  sd_action_entity_collateral_underwriter:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.sd_action_entity_collateral_underwriter
-  sd_action_entity_wholesale_client_advocate:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.sd_action_entity_wholesale_client_advocate
-  sd_action_entity_correspondent_client_advocate:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.sd_action_entity_correspondent_client_advocate
-  sd_action_entity_government_insurance:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.sd_action_entity_government_insurance
-  sd_action_entity_underwriting_manager:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.sd_action_entity_underwriting_manager
-  sd_action_entity_effective_collateral_underwriter:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.sd_action_entity_effective_collateral_underwriter
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  sd_doc_validity_type:
+  sd_prior_to_type:
     data_type: VARCHAR(128)
-  sd_doc_key_date_type:
-    data_type: VARCHAR(128)
-  sd_expiration_rule_type:
-    data_type: VARCHAR(128)
-  sd_days_before_key_date:
+    source:
+      field: primary_source_table.columns.sd_prior_to_type
+  sd_version:
     data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sd_version
   sd_warning_days:
     data_type: INTEGER
-  etl_batch_id:
-    data_type: TEXT
 etls:
   SP-100333:
     input_type: table

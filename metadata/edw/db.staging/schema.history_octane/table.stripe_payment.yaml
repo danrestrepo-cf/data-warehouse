@@ -29,72 +29,72 @@ foreign_keys:
       schema: history_octane
       table: stripe_payment_status_type
 columns:
-  stpm_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.stpm_pid
-  stpm_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.stpm_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   stpm_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.stpm_account_pid
-  stpm_submit_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.stpm_submit_datetime
-  stpm_payer_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.stpm_payer_unparsed_name
   stpm_invoice_amount:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.stpm_invoice_amount
+  stpm_payer_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.stpm_payer_unparsed_name
   stpm_payment_request_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.stpm_payment_request_type
-  stpm_stripe_payment_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.stpm_stripe_payment_status_type
   stpm_payment_status_messages:
     data_type: TEXT
     source:
       field: primary_source_table.columns.stpm_payment_status_messages
-  stpm_status_datetime:
-    data_type: TIMESTAMP
+  stpm_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.stpm_status_datetime
-  stpm_token:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.stpm_token
+      field: primary_source_table.columns.stpm_pid
   stpm_receipt_email:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.stpm_receipt_email
-  stpm_stripe_id:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.stpm_stripe_id
-  stpm_refund_stripe_id:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.stpm_refund_stripe_id
   stpm_receipt_url:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.stpm_receipt_url
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  stpm_refund_stripe_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.stpm_refund_stripe_id
+  stpm_status_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.stpm_status_datetime
+  stpm_stripe_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.stpm_stripe_id
+  stpm_stripe_payment_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.stpm_stripe_payment_status_type
+  stpm_submit_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.stpm_submit_datetime
+  stpm_token:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.stpm_token
+  stpm_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.stpm_version
 etls:
   SP-100260:
     input_type: table

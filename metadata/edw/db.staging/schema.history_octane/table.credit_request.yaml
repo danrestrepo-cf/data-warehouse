@@ -189,114 +189,42 @@ foreign_keys:
       schema: history_octane
       table: agent_type
 columns:
-  crdr_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.crdr_pid
-  crdr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.crdr_version
-  crdr_deal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.crdr_deal_pid
-  crdr_credit_report_file_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.crdr_credit_report_file_pid
-  crdr_credit_score_disclosure_file_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.crdr_credit_score_disclosure_file_pid
-  crdr_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.crdr_create_datetime
-  crdr_requester_agent_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.crdr_requester_agent_type
-  crdr_requester_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.crdr_requester_lender_user_pid
-  crdr_requester_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.crdr_requester_unparsed_name
-  crdr_credit_request_via_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.crdr_credit_request_via_type
-  crdr_lp_request_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.crdr_lp_request_pid
-  crdr_du_request_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.crdr_du_request_pid
-  crdr_mismo_version_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.crdr_mismo_version_type
-  crdr_credit_bureau_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.crdr_credit_bureau_type
-  crdr_credit_report_request_action_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.crdr_credit_report_request_action_type
-  crdr_credit_report_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.crdr_credit_report_type
-  crdr_credit_report_product_description:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.crdr_credit_report_product_description
-  crdr_credit_request_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.crdr_credit_request_type
-  crdr_credit_repositories_selected_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.crdr_credit_repositories_selected_count
-  crdr_equifax_included:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.crdr_equifax_included
-  crdr_experian_included:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.crdr_experian_included
-  crdr_trans_union_included:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.crdr_trans_union_included
-  crdr_borrower1_first_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.crdr_borrower1_first_name
-  crdr_borrower1_middle_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.crdr_borrower1_middle_name
-  crdr_borrower1_last_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.crdr_borrower1_last_name
-  crdr_borrower1_name_suffix:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.crdr_borrower1_name_suffix
   crdr_borrower1_birth_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.crdr_borrower1_birth_date
+  crdr_borrower1_equifax_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.crdr_borrower1_equifax_credit_score
+  crdr_borrower1_equifax_credit_score_model_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower1_equifax_credit_score_model_type
+  crdr_borrower1_experian_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.crdr_borrower1_experian_credit_score
+  crdr_borrower1_experian_credit_score_model_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower1_experian_credit_score_model_type
+  crdr_borrower1_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crdr_borrower1_first_name
+  crdr_borrower1_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crdr_borrower1_last_name
+  crdr_borrower1_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crdr_borrower1_middle_name
+  crdr_borrower1_name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crdr_borrower1_name_suffix
   crdr_borrower1_residence_city:
     data_type: VARCHAR(128)
     source:
@@ -321,50 +249,50 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.crdr_borrower1_residence_street2
-  crdr_borrower1_experian_credit_score:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.crdr_borrower1_experian_credit_score
-  crdr_borrower1_equifax_credit_score:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.crdr_borrower1_equifax_credit_score
   crdr_borrower1_trans_union_credit_score:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.crdr_borrower1_trans_union_credit_score
-  crdr_borrower1_equifax_credit_score_model_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.crdr_borrower1_equifax_credit_score_model_type
-  crdr_borrower1_experian_credit_score_model_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.crdr_borrower1_experian_credit_score_model_type
   crdr_borrower1_trans_union_credit_score_model_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.crdr_borrower1_trans_union_credit_score_model_type
-  crdr_borrower2_first_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.crdr_borrower2_first_name
-  crdr_borrower2_middle_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.crdr_borrower2_middle_name
-  crdr_borrower2_last_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.crdr_borrower2_last_name
-  crdr_borrower2_name_suffix:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.crdr_borrower2_name_suffix
   crdr_borrower2_birth_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.crdr_borrower2_birth_date
+  crdr_borrower2_equifax_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.crdr_borrower2_equifax_credit_score
+  crdr_borrower2_equifax_credit_score_model_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower2_equifax_credit_score_model_type
+  crdr_borrower2_experian_credit_score:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.crdr_borrower2_experian_credit_score
+  crdr_borrower2_experian_credit_score_model_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_borrower2_experian_credit_score_model_type
+  crdr_borrower2_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crdr_borrower2_first_name
+  crdr_borrower2_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crdr_borrower2_last_name
+  crdr_borrower2_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crdr_borrower2_middle_name
+  crdr_borrower2_name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crdr_borrower2_name_suffix
   crdr_borrower2_residence_city:
     data_type: VARCHAR(128)
     source:
@@ -389,34 +317,38 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.crdr_borrower2_residence_street2
-  crdr_borrower2_experian_credit_score:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.crdr_borrower2_experian_credit_score
-  crdr_borrower2_equifax_credit_score:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.crdr_borrower2_equifax_credit_score
   crdr_borrower2_trans_union_credit_score:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.crdr_borrower2_trans_union_credit_score
-  crdr_borrower2_equifax_credit_score_model_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.crdr_borrower2_equifax_credit_score_model_type
-  crdr_borrower2_experian_credit_score_model_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.crdr_borrower2_experian_credit_score_model_type
   crdr_borrower2_trans_union_credit_score_model_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.crdr_borrower2_trans_union_credit_score_model_type
+  crdr_bureau_credit_report_url:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.crdr_bureau_credit_report_url
+  crdr_bureau_status_messages:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.crdr_bureau_status_messages
   crdr_contains_importable_data:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.crdr_contains_importable_data
+  crdr_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.crdr_create_datetime
+  crdr_credit_bureau_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_credit_bureau_type
+  crdr_credit_report_file_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.crdr_credit_report_file_pid
   crdr_credit_report_identifier:
     data_type: VARCHAR(32)
     source:
@@ -425,34 +357,102 @@ columns:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.crdr_credit_report_price
+  crdr_credit_report_product_description:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.crdr_credit_report_product_description
+  crdr_credit_report_request_action_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_credit_report_request_action_type
+  crdr_credit_report_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_credit_report_type
+  crdr_credit_repositories_selected_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.crdr_credit_repositories_selected_count
   crdr_credit_request_status_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.crdr_credit_request_status_type
-  crdr_request_error_messages:
-    data_type: TEXT
+  crdr_credit_request_type:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.crdr_request_error_messages
-  crdr_bureau_status_messages:
-    data_type: TEXT
+      field: primary_source_table.columns.crdr_credit_request_type
+  crdr_credit_request_via_type:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.crdr_bureau_status_messages
-  crdr_bureau_credit_report_url:
-    data_type: VARCHAR(1024)
+      field: primary_source_table.columns.crdr_credit_request_via_type
+  crdr_credit_score_disclosure_file_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.crdr_bureau_credit_report_url
+      field: primary_source_table.columns.crdr_credit_score_disclosure_file_pid
+  crdr_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.crdr_deal_pid
+  crdr_du_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.crdr_du_request_pid
+  crdr_equifax_included:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.crdr_equifax_included
+  crdr_experian_included:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.crdr_experian_included
   crdr_last_status_query_datetime:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.crdr_last_status_query_datetime
+  crdr_lp_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.crdr_lp_request_pid
+  crdr_mismo_version_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_mismo_version_type
+  crdr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.crdr_pid
+  crdr_request_error_messages:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.crdr_request_error_messages
+  crdr_requester_agent_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_requester_agent_type
+  crdr_requester_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.crdr_requester_lender_user_pid
+  crdr_requester_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.crdr_requester_unparsed_name
+  crdr_trans_union_included:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.crdr_trans_union_included
+  crdr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.crdr_version
   crdr_xml_response_file_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.crdr_xml_response_file_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

@@ -35,19 +35,19 @@ foreign_keys:
       schema: staging_octane
       table: servicer_loan_id_assign_type
 columns:
-  slia_pid:
-    data_type: BIGINT
-  slia_version:
-    data_type: INTEGER
   slia_account_pid:
     data_type: BIGINT
-  slia_servicer_loan_id_import_request_pid:
-    data_type: BIGINT
+  slia_assigned_datetime:
+    data_type: TIMESTAMP
   slia_loan_servicer_pid:
+    data_type: BIGINT
+  slia_pid:
     data_type: BIGINT
   slia_servicer_loan_id:
     data_type: VARCHAR(32)
   slia_servicer_loan_id_assign_type:
     data_type: VARCHAR(128)
-  slia_assigned_datetime:
-    data_type: TIMESTAMP
+  slia_servicer_loan_id_import_request_pid:
+    data_type: BIGINT
+  slia_version:
+    data_type: INTEGER

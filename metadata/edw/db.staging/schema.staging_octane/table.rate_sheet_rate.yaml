@@ -11,15 +11,15 @@ foreign_keys:
       schema: staging_octane
       table: rate_sheet
 columns:
-  rsr_pid:
-    data_type: BIGINT
-  rsr_version:
-    data_type: INTEGER
-  rsr_rate_sheet_pid:
-    data_type: BIGINT
-  rsr_rate_percent:
-    data_type: NUMERIC(11,9)
   rsr_arm_margin_percent:
     data_type: NUMERIC(11,9)
   rsr_available:
     data_type: BOOLEAN
+  rsr_pid:
+    data_type: BIGINT
+  rsr_rate_percent:
+    data_type: NUMERIC(11,9)
+  rsr_rate_sheet_pid:
+    data_type: BIGINT
+  rsr_version:
+    data_type: INTEGER

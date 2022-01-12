@@ -19,17 +19,17 @@ foreign_keys:
       schema: staging_octane
       table: lender_user
 columns:
-  po_pid:
-    data_type: BIGINT
-  po_version:
-    data_type: INTEGER
-  po_product_pid:
-    data_type: BIGINT
-  po_lender_user_pid:
-    data_type: BIGINT
   po_from_date:
     data_type: DATE
-  po_through_date:
-    data_type: DATE
+  po_lender_user_pid:
+    data_type: BIGINT
+  po_pid:
+    data_type: BIGINT
   po_price_adjustment_percent:
     data_type: NUMERIC(11,9)
+  po_product_pid:
+    data_type: BIGINT
+  po_through_date:
+    data_type: DATE
+  po_version:
+    data_type: INTEGER

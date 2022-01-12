@@ -13,6 +13,16 @@ foreign_keys:
       schema: history_octane
       table: account
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  ont_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ont_account_pid
   ont_pid:
     data_type: BIGINT
     source:
@@ -21,16 +31,6 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.ont_version
-  ont_account_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ont_account_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
 etls:
   SP-100366:
     input_type: table

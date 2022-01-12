@@ -19,17 +19,17 @@ foreign_keys:
       schema: staging_octane
       table: lender_user
 columns:
+  wfpn_author_lender_user_pid:
+    data_type: BIGINT
+  wfpn_author_unparsed_name:
+    data_type: VARCHAR(128)
+  wfpn_content:
+    data_type: VARCHAR(16000)
+  wfpn_create_datetime:
+    data_type: TIMESTAMP
   wfpn_pid:
     data_type: BIGINT
   wfpn_version:
     data_type: INTEGER
   wfpn_wf_process_pid:
     data_type: BIGINT
-  wfpn_create_datetime:
-    data_type: TIMESTAMP
-  wfpn_content:
-    data_type: VARCHAR(16000)
-  wfpn_author_lender_user_pid:
-    data_type: BIGINT
-  wfpn_author_unparsed_name:
-    data_type: VARCHAR(128)

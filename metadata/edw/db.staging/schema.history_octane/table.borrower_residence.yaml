@@ -29,34 +29,30 @@ foreign_keys:
       schema: history_octane
       table: borrower_residency_basis_type
 columns:
-  bres_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bres_pid
-  bres_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.bres_version
   bres_borrower_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.bres_borrower_pid
-  bres_place_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bres_place_pid
-  bres_current:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.bres_current
   bres_borrower_residency_basis_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.bres_borrower_residency_basis_type
+  bres_current:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.bres_current
   bres_from_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.bres_from_date
+  bres_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bres_pid
+  bres_place_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bres_place_pid
   bres_through_date:
     data_type: DATE
     source:
@@ -65,10 +61,14 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.bres_verification_required
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  bres_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bres_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

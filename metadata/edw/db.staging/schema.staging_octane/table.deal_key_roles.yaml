@@ -323,173 +323,173 @@ foreign_keys:
       schema: staging_octane
       table: lender_user
 columns:
-  dkrs_pid:
-    data_type: BIGINT
-  dkrs_version:
-    data_type: INTEGER
-  dkrs_deal_pid:
-    data_type: BIGINT
-  dkrs_originator_lender_user_pid:
-    data_type: BIGINT
-  dkrs_originator_first_name:
-    data_type: VARCHAR(32)
-  dkrs_originator_last_name:
-    data_type: VARCHAR(32)
-  dkrs_originator_middle_name:
-    data_type: VARCHAR(32)
-  dkrs_originator_fmls_basic:
-    data_type: VARCHAR(128)
-  dkrs_originator_nmls_id:
-    data_type: VARCHAR(16)
-  dkrs_supplemental_originator_lender_user_pid:
-    data_type: BIGINT
-  dkrs_supplemental_originator_fmls:
+  dkrs_account_executive_fmls:
     data_type: VARCHAR(128)
   dkrs_account_executive_lender_user_pid:
     data_type: BIGINT
-  dkrs_account_executive_fmls:
-    data_type: VARCHAR(128)
-  dkrs_investor_conditions_lender_user_pid:
-    data_type: BIGINT
-  dkrs_investor_conditions_fmls:
-    data_type: VARCHAR(128)
-  dkrs_investor_stack_to_investor_lender_user_pid:
-    data_type: BIGINT
-  dkrs_investor_stack_to_investor_fmls:
-    data_type: VARCHAR(128)
-  dkrs_collateral_to_custodian_lender_user_pid:
-    data_type: BIGINT
-  dkrs_collateral_to_custodian_fmls:
-    data_type: VARCHAR(128)
-  dkrs_collateral_to_investor_lender_user_pid:
-    data_type: BIGINT
-  dkrs_collateral_to_investor_fmls:
-    data_type: VARCHAR(128)
-  dkrs_transaction_assistant_lender_user_pid:
-    data_type: BIGINT
-  dkrs_transaction_assistant_fmls:
-    data_type: VARCHAR(128)
-  dkrs_final_documents_to_investor_lender_user_pid:
-    data_type: BIGINT
-  dkrs_final_documents_to_investor_fmls:
-    data_type: VARCHAR(128)
-  dkrs_government_insurance_lender_user_pid:
-    data_type: BIGINT
-  dkrs_government_insurance_fmls:
-    data_type: VARCHAR(128)
-  dkrs_funder_lender_user_pid:
-    data_type: BIGINT
-  dkrs_funder_fmls:
-    data_type: VARCHAR(128)
-  dkrs_processor_lender_user_pid:
-    data_type: BIGINT
-  dkrs_processor_fmls:
-    data_type: VARCHAR(128)
-  dkrs_underwriter_lender_user_pid:
-    data_type: BIGINT
-  dkrs_underwriter_fmls:
-    data_type: VARCHAR(128)
-  dkrs_project_underwriter_lender_user_pid:
-    data_type: BIGINT
-  dkrs_project_underwriter_fmls:
+  dkrs_closing_doc_specialist_fmls:
     data_type: VARCHAR(128)
   dkrs_closing_doc_specialist_lender_user_pid:
     data_type: BIGINT
-  dkrs_closing_doc_specialist_fmls:
-    data_type: VARCHAR(128)
-  dkrs_wholesale_client_advocate_lender_user_pid:
-    data_type: BIGINT
-  dkrs_wholesale_client_advocate_fmls:
+  dkrs_closing_scheduler_fmls:
     data_type: VARCHAR(128)
   dkrs_closing_scheduler_lender_user_pid:
     data_type: BIGINT
-  dkrs_closing_scheduler_fmls:
+  dkrs_collateral_to_custodian_fmls:
     data_type: VARCHAR(128)
-  dkrs_collateral_underwriter_lender_user_pid:
+  dkrs_collateral_to_custodian_lender_user_pid:
+    data_type: BIGINT
+  dkrs_collateral_to_investor_fmls:
+    data_type: VARCHAR(128)
+  dkrs_collateral_to_investor_lender_user_pid:
     data_type: BIGINT
   dkrs_collateral_underwriter_fmls:
     data_type: VARCHAR(128)
-  dkrs_correspondent_client_advocate_lender_user_pid:
+  dkrs_collateral_underwriter_lender_user_pid:
     data_type: BIGINT
   dkrs_correspondent_client_advocate_fmls:
     data_type: VARCHAR(128)
-  dkrs_flood_insurance_specialist_lender_user_pid:
+  dkrs_correspondent_client_advocate_lender_user_pid:
+    data_type: BIGINT
+  dkrs_deal_pid:
+    data_type: BIGINT
+  dkrs_final_documents_to_investor_fmls:
+    data_type: VARCHAR(128)
+  dkrs_final_documents_to_investor_lender_user_pid:
     data_type: BIGINT
   dkrs_flood_insurance_specialist_fmls:
     data_type: VARCHAR(128)
-  dkrs_hoa_specialist_lender_user_pid:
+  dkrs_flood_insurance_specialist_lender_user_pid:
     data_type: BIGINT
-  dkrs_hoa_specialist_fmls:
+  dkrs_funder_fmls:
     data_type: VARCHAR(128)
-  dkrs_hoi_specialist_lender_user_pid:
+  dkrs_funder_lender_user_pid:
     data_type: BIGINT
-  dkrs_hoi_specialist_fmls:
+  dkrs_government_insurance_fmls:
     data_type: VARCHAR(128)
-  dkrs_ho6_specialist_lender_user_pid:
+  dkrs_government_insurance_lender_user_pid:
     data_type: BIGINT
   dkrs_ho6_specialist_fmls:
     data_type: VARCHAR(128)
-  dkrs_hud_va_lender_officer_lender_user_pid:
+  dkrs_ho6_specialist_lender_user_pid:
+    data_type: BIGINT
+  dkrs_hoa_specialist_fmls:
+    data_type: VARCHAR(128)
+  dkrs_hoa_specialist_lender_user_pid:
+    data_type: BIGINT
+  dkrs_hoi_specialist_fmls:
+    data_type: VARCHAR(128)
+  dkrs_hoi_specialist_lender_user_pid:
     data_type: BIGINT
   dkrs_hud_va_lender_officer_fmls:
     data_type: VARCHAR(128)
-  dkrs_loan_officer_assistant_lender_user_pid:
-    data_type: BIGINT
-  dkrs_loan_officer_assistant_fmls:
-    data_type: VARCHAR(128)
-  dkrs_loan_payoff_specialist_lender_user_pid:
-    data_type: BIGINT
-  dkrs_loan_payoff_specialist_fmls:
-    data_type: VARCHAR(128)
-  dkrs_subordination_specialist_lender_user_pid:
-    data_type: BIGINT
-  dkrs_subordination_specialist_fmls:
-    data_type: VARCHAR(128)
-  dkrs_title_specialist_lender_user_pid:
-    data_type: BIGINT
-  dkrs_title_specialist_fmls:
-    data_type: VARCHAR(128)
-  dkrs_underwriting_manager_lender_user_pid:
-    data_type: BIGINT
-  dkrs_underwriting_manager_fmls:
-    data_type: VARCHAR(128)
-  dkrs_va_specialist_lender_user_pid:
-    data_type: BIGINT
-  dkrs_va_specialist_fmls:
-    data_type: VARCHAR(128)
-  dkrs_verbal_voe_specialist_lender_user_pid:
-    data_type: BIGINT
-  dkrs_verbal_voe_specialist_fmls:
-    data_type: VARCHAR(128)
-  dkrs_voe_specialist_lender_user_pid:
-    data_type: BIGINT
-  dkrs_voe_specialist_fmls:
-    data_type: VARCHAR(128)
-  dkrs_wire_specialist_lender_user_pid:
-    data_type: BIGINT
-  dkrs_wire_specialist_fmls:
-    data_type: VARCHAR(128)
-  dkrs_internal_construction_manager_lender_user_pid:
+  dkrs_hud_va_lender_officer_lender_user_pid:
     data_type: BIGINT
   dkrs_internal_construction_manager_fmls:
     data_type: VARCHAR(128)
-  dkrs_review_requester_1_lender_user_pid:
+  dkrs_internal_construction_manager_lender_user_pid:
+    data_type: BIGINT
+  dkrs_investor_conditions_fmls:
+    data_type: VARCHAR(128)
+  dkrs_investor_conditions_lender_user_pid:
+    data_type: BIGINT
+  dkrs_investor_stack_to_investor_fmls:
+    data_type: VARCHAR(128)
+  dkrs_investor_stack_to_investor_lender_user_pid:
+    data_type: BIGINT
+  dkrs_loan_officer_assistant_fmls:
+    data_type: VARCHAR(128)
+  dkrs_loan_officer_assistant_lender_user_pid:
+    data_type: BIGINT
+  dkrs_loan_payoff_specialist_fmls:
+    data_type: VARCHAR(128)
+  dkrs_loan_payoff_specialist_lender_user_pid:
+    data_type: BIGINT
+  dkrs_originator_first_name:
+    data_type: VARCHAR(32)
+  dkrs_originator_fmls_basic:
+    data_type: VARCHAR(128)
+  dkrs_originator_last_name:
+    data_type: VARCHAR(32)
+  dkrs_originator_lender_user_pid:
+    data_type: BIGINT
+  dkrs_originator_middle_name:
+    data_type: VARCHAR(32)
+  dkrs_originator_nmls_id:
+    data_type: VARCHAR(16)
+  dkrs_pid:
+    data_type: BIGINT
+  dkrs_processor_fmls:
+    data_type: VARCHAR(128)
+  dkrs_processor_lender_user_pid:
+    data_type: BIGINT
+  dkrs_project_underwriter_fmls:
+    data_type: VARCHAR(128)
+  dkrs_project_underwriter_lender_user_pid:
     data_type: BIGINT
   dkrs_review_requester_1_fmls:
     data_type: VARCHAR(128)
-  dkrs_review_requester_2_lender_user_pid:
+  dkrs_review_requester_1_lender_user_pid:
     data_type: BIGINT
   dkrs_review_requester_2_fmls:
     data_type: VARCHAR(128)
-  dkrs_review_requester_3_lender_user_pid:
+  dkrs_review_requester_2_lender_user_pid:
     data_type: BIGINT
   dkrs_review_requester_3_fmls:
     data_type: VARCHAR(128)
-  dkrs_review_requester_4_lender_user_pid:
+  dkrs_review_requester_3_lender_user_pid:
     data_type: BIGINT
   dkrs_review_requester_4_fmls:
     data_type: VARCHAR(128)
-  dkrs_review_requester_5_lender_user_pid:
+  dkrs_review_requester_4_lender_user_pid:
     data_type: BIGINT
   dkrs_review_requester_5_fmls:
     data_type: VARCHAR(128)
+  dkrs_review_requester_5_lender_user_pid:
+    data_type: BIGINT
+  dkrs_subordination_specialist_fmls:
+    data_type: VARCHAR(128)
+  dkrs_subordination_specialist_lender_user_pid:
+    data_type: BIGINT
+  dkrs_supplemental_originator_fmls:
+    data_type: VARCHAR(128)
+  dkrs_supplemental_originator_lender_user_pid:
+    data_type: BIGINT
+  dkrs_title_specialist_fmls:
+    data_type: VARCHAR(128)
+  dkrs_title_specialist_lender_user_pid:
+    data_type: BIGINT
+  dkrs_transaction_assistant_fmls:
+    data_type: VARCHAR(128)
+  dkrs_transaction_assistant_lender_user_pid:
+    data_type: BIGINT
+  dkrs_underwriter_fmls:
+    data_type: VARCHAR(128)
+  dkrs_underwriter_lender_user_pid:
+    data_type: BIGINT
+  dkrs_underwriting_manager_fmls:
+    data_type: VARCHAR(128)
+  dkrs_underwriting_manager_lender_user_pid:
+    data_type: BIGINT
+  dkrs_va_specialist_fmls:
+    data_type: VARCHAR(128)
+  dkrs_va_specialist_lender_user_pid:
+    data_type: BIGINT
+  dkrs_verbal_voe_specialist_fmls:
+    data_type: VARCHAR(128)
+  dkrs_verbal_voe_specialist_lender_user_pid:
+    data_type: BIGINT
+  dkrs_version:
+    data_type: INTEGER
+  dkrs_voe_specialist_fmls:
+    data_type: VARCHAR(128)
+  dkrs_voe_specialist_lender_user_pid:
+    data_type: BIGINT
+  dkrs_wholesale_client_advocate_fmls:
+    data_type: VARCHAR(128)
+  dkrs_wholesale_client_advocate_lender_user_pid:
+    data_type: BIGINT
+  dkrs_wire_specialist_fmls:
+    data_type: VARCHAR(128)
+  dkrs_wire_specialist_lender_user_pid:
+    data_type: BIGINT

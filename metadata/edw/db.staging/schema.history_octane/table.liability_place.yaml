@@ -101,30 +101,16 @@ foreign_keys:
       schema: history_octane
       table: yes_no_unknown_type
 columns:
-  lip_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lip_pid
-  lip_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lip_version
-  lip_liability_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lip_liability_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   lip_creditor_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lip_creditor_pid
-  lip_place_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lip_place_pid
-  lip_lien_priority_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lip_lien_priority_type
   lip_liability_financing_type:
     data_type: VARCHAR(128)
     source:
@@ -137,26 +123,46 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lip_liability_mi_type
+  lip_liability_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lip_liability_pid
+  lip_lien_priority_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lip_lien_priority_type
+  lip_mortgage_delinquency_exception_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lip_mortgage_delinquency_exception_type
   lip_original_loan_amount:
     data_type: NUMERIC(15,0)
     source:
       field: primary_source_table.columns.lip_original_loan_amount
-  lip_property_taxes_escrowed:
-    data_type: BOOLEAN
+  lip_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.lip_property_taxes_escrowed
+      field: primary_source_table.columns.lip_pid
+  lip_place_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lip_place_pid
   lip_property_insurance_escrowed:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.lip_property_insurance_escrowed
-  lip_senior_lien_restriction_type:
-    data_type: VARCHAR(128)
+  lip_property_taxes_escrowed:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.lip_senior_lien_restriction_type
+      field: primary_source_table.columns.lip_property_taxes_escrowed
   lip_senior_lien_restriction_amount:
     data_type: NUMERIC(15,0)
     source:
       field: primary_source_table.columns.lip_senior_lien_restriction_amount
+  lip_senior_lien_restriction_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lip_senior_lien_restriction_type
   lip_texas_equity:
     data_type: VARCHAR(128)
     source:
@@ -173,16 +179,10 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lip_third_party_community_second_program_pid
-  lip_mortgage_delinquency_exception_type:
-    data_type: VARCHAR(128)
+  lip_version:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.lip_mortgage_delinquency_exception_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.lip_version
 etls:
   SP-100823:
     input_type: table

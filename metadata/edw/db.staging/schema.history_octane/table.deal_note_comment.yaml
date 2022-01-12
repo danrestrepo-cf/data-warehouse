@@ -21,6 +21,30 @@ foreign_keys:
       schema: history_octane
       table: lender_user
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  dnc_author_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dnc_author_lender_user_pid
+  dnc_author_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dnc_author_unparsed_name
+  dnc_content:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.dnc_content
+  dnc_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.dnc_create_datetime
+  dnc_deal_note_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dnc_deal_note_pid
   dnc_pid:
     data_type: BIGINT
     source:
@@ -29,30 +53,6 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.dnc_version
-  dnc_deal_note_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dnc_deal_note_pid
-  dnc_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.dnc_create_datetime
-  dnc_content:
-    data_type: VARCHAR(16000)
-    source:
-      field: primary_source_table.columns.dnc_content
-  dnc_author_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.dnc_author_unparsed_name
-  dnc_author_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dnc_author_lender_user_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
   etl_batch_id:
     data_type: TEXT
 etls:

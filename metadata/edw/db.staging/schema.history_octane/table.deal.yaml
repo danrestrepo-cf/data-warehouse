@@ -149,70 +149,94 @@ foreign_keys:
       schema: history_octane
       table: realty_agent_scenario_type
 columns:
-  d_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.d_pid
-  d_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.d_version
   d_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.d_account_pid
-  d_company_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.d_company_pid
   d_active_proposal_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.d_active_proposal_pid
+  d_application_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.d_application_type
+  d_borrower_esign:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.d_borrower_esign
   d_branch_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.d_branch_pid
+  d_calyx_loan_guid:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.d_calyx_loan_guid
+  d_charges_enabled_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.d_charges_enabled_date
+  d_company_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.d_company_pid
+  d_copy_source_los_loan_id_main:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.d_copy_source_los_loan_id_main
+  d_copy_source_los_loan_id_piggyback:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.d_copy_source_los_loan_id_piggyback
+  d_credit_bureau_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.d_credit_bureau_type
   d_deal_create_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.d_deal_create_date
+  d_deal_create_date_time:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.d_deal_create_date_time
+  d_deal_create_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.d_deal_create_type
+  d_deal_orphan_earliest_check_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.d_deal_orphan_earliest_check_date
+  d_deal_orphan_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.d_deal_orphan_status_type
+  d_deal_status_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.d_deal_status_date
   d_deal_status_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.d_deal_status_type
-  d_velocify_lead_id:
-    data_type: VARCHAR(32)
+  d_disclosure_mode_date:
+    data_type: DATE
     source:
-      field: primary_source_table.columns.d_velocify_lead_id
-  d_lead_zillow_zq:
-    data_type: VARCHAR(256)
+      field: primary_source_table.columns.d_disclosure_mode_date
+  d_early_wire_request:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.d_lead_zillow_zq
-  d_lead_tracking_id:
-    data_type: VARCHAR(256)
+      field: primary_source_table.columns.d_early_wire_request
+  d_effective_hmda_action_date:
+    data_type: DATE
     source:
-      field: primary_source_table.columns.d_lead_tracking_id
-  d_lead_reference_id:
-    data_type: VARCHAR(256)
+      field: primary_source_table.columns.d_effective_hmda_action_date
+  d_enable_electronic_transaction:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.d_lead_reference_id
-  d_los_loan_id_main:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.d_los_loan_id_main
-  d_los_loan_id_piggyback:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.d_los_loan_id_piggyback
-  d_mers_min_main:
-    data_type: VARCHAR(20)
-    source:
-      field: primary_source_table.columns.d_mers_min_main
-  d_mers_min_piggyback:
-    data_type: VARCHAR(20)
-    source:
-      field: primary_source_table.columns.d_mers_min_piggyback
+      field: primary_source_table.columns.d_enable_electronic_transaction
   d_external_loan_id_main:
     data_type: VARCHAR(32)
     source:
@@ -221,22 +245,6 @@ columns:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.d_external_loan_id_piggyback
-  d_lead_source_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.d_lead_source_pid
-  d_disclosure_mode_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.d_disclosure_mode_date
-  d_deal_status_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.d_deal_status_date
-  d_sap_deal:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.d_sap_deal
   d_hmda_action_date:
     data_type: DATE
     source:
@@ -245,6 +253,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.d_hmda_action_type
+  d_hmda_denial_reason_other_description:
+    data_type: VARCHAR(255)
+    source:
+      field: primary_source_table.columns.d_hmda_denial_reason_other_description
   d_hmda_denial_reason_type_1:
     data_type: VARCHAR(128)
     source:
@@ -261,62 +273,6 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.d_hmda_denial_reason_type_4
-  d_borrower_esign:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.d_borrower_esign
-  d_application_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.d_application_type
-  d_welcome_call_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.d_welcome_call_datetime
-  d_realty_agent_scenario_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.d_realty_agent_scenario_type
-  d_test_loan:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.d_test_loan
-  d_charges_enabled_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.d_charges_enabled_date
-  d_credit_bureau_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.d_credit_bureau_type
-  d_performer_team_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.d_performer_team_pid
-  d_deal_create_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.d_deal_create_type
-  d_hmda_denial_reason_other_description:
-    data_type: VARCHAR(255)
-    source:
-      field: primary_source_table.columns.d_hmda_denial_reason_other_description
-  d_effective_hmda_action_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.d_effective_hmda_action_date
-  d_copy_source_los_loan_id_main:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.d_copy_source_los_loan_id_main
-  d_copy_source_los_loan_id_piggyback:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.d_copy_source_los_loan_id_piggyback
-  d_referred_by_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.d_referred_by_name
   d_hmda_universal_loan_id_main:
     data_type: VARCHAR(45)
     source:
@@ -325,54 +281,98 @@ columns:
     data_type: VARCHAR(45)
     source:
       field: primary_source_table.columns.d_hmda_universal_loan_id_piggyback
-  d_calyx_loan_guid:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.d_calyx_loan_guid
-  d_invoices_enabled_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.d_invoices_enabled_date
-  d_invoices_enabled:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.d_invoices_enabled
-  d_training_loan:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.d_training_loan
-  d_deal_orphan_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.d_deal_orphan_status_type
-  d_deal_orphan_earliest_check_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.d_deal_orphan_earliest_check_date
-  d_deal_create_date_time:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.d_deal_create_date_time
-  d_early_wire_request:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.d_early_wire_request
-  d_enable_electronic_transaction:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.d_enable_electronic_transaction
   d_initial_cancel_status_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.d_initial_cancel_status_date
+  d_invoices_enabled:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.d_invoices_enabled
+  d_invoices_enabled_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.d_invoices_enabled_date
+  d_lead_reference_id:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.d_lead_reference_id
+  d_lead_source_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.d_lead_source_pid
+  d_lead_tracking_id:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.d_lead_tracking_id
+  d_lead_zillow_zq:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.d_lead_zillow_zq
   d_license_location_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.d_license_location_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  d_los_loan_id_main:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.d_los_loan_id_main
+  d_los_loan_id_piggyback:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.d_los_loan_id_piggyback
+  d_mers_min_main:
+    data_type: VARCHAR(20)
+    source:
+      field: primary_source_table.columns.d_mers_min_main
+  d_mers_min_piggyback:
+    data_type: VARCHAR(20)
+    source:
+      field: primary_source_table.columns.d_mers_min_piggyback
+  d_performer_team_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.d_performer_team_pid
+  d_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.d_pid
+  d_realty_agent_scenario_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.d_realty_agent_scenario_type
+  d_referred_by_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.d_referred_by_name
+  d_sap_deal:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.d_sap_deal
+  d_test_loan:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.d_test_loan
+  d_training_loan:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.d_training_loan
+  d_velocify_lead_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.d_velocify_lead_id
+  d_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.d_version
+  d_welcome_call_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.d_welcome_call_datetime
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

@@ -45,18 +45,24 @@ foreign_keys:
       schema: history_octane
       table: investor
 columns:
-  sset_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sset_pid
-  sset_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sset_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   sset_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.sset_account_pid
+  sset_day_ami_uses_subsequent_year:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sset_day_ami_uses_subsequent_year
+  sset_default_beneficiary_investor_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sset_default_beneficiary_investor_pid
   sset_default_lead_source_pid:
     data_type: BIGINT
     source:
@@ -65,14 +71,18 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.sset_default_mortech_account_pid
-  sset_default_beneficiary_investor_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sset_default_beneficiary_investor_pid
   sset_default_servicer_investor_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.sset_default_servicer_investor_pid
+  sset_disable_all_locking:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sset_disable_all_locking
+  sset_expired_lock_update_allowed_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sset_expired_lock_update_allowed_days
   sset_initial_lender_lock_id:
     data_type: BIGINT
     source:
@@ -85,62 +95,50 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.sset_lock_expiration_warning_days
-  sset_expired_lock_update_allowed_days:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sset_expired_lock_update_allowed_days
-  sset_disable_all_locking:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.sset_disable_all_locking
-  sset_pricing_engine_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sset_pricing_engine_type
-  sset_price_match_check_suspend_through_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.sset_price_match_check_suspend_through_date
-  sset_mortech_disable_eligibility:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.sset_mortech_disable_eligibility
-  sset_mortech_strict_eligibility:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.sset_mortech_strict_eligibility
-  sset_zillow_appraisal_fee:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.sset_zillow_appraisal_fee
-  sset_zillow_title_fee:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.sset_zillow_title_fee
-  sset_zillow_recording_fee:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.sset_zillow_recording_fee
-  sset_mortech_floating_adjuster_prefixes:
-    data_type: VARCHAR(16000)
-    source:
-      field: primary_source_table.columns.sset_mortech_floating_adjuster_prefixes
-  sset_rate_lock_acknowledgement_due_days:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sset_rate_lock_acknowledgement_due_days
-  sset_rate_lock_supporting_documentation_due_days:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sset_rate_lock_supporting_documentation_due_days
-  sset_rate_lock_appraisal_inspection_due_days:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sset_rate_lock_appraisal_inspection_due_days
   sset_min_subordinate_financing_lock_term_days:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.sset_min_subordinate_financing_lock_term_days
+  sset_month_ami_uses_subsequent_year:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sset_month_ami_uses_subsequent_year
+  sset_mortech_disable_eligibility:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sset_mortech_disable_eligibility
+  sset_mortech_floating_adjuster_prefixes:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.sset_mortech_floating_adjuster_prefixes
+  sset_mortech_strict_eligibility:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sset_mortech_strict_eligibility
+  sset_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sset_pid
+  sset_price_match_check_suspend_through_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.sset_price_match_check_suspend_through_date
+  sset_pricing_engine_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sset_pricing_engine_type
+  sset_rate_lock_acknowledgement_due_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sset_rate_lock_acknowledgement_due_days
+  sset_rate_lock_appraisal_inspection_due_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sset_rate_lock_appraisal_inspection_due_days
+  sset_rate_lock_supporting_documentation_due_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sset_rate_lock_supporting_documentation_due_days
   sset_servicer_loan_id_minimum_available_threshold:
     data_type: INTEGER
     source:
@@ -157,20 +155,22 @@ columns:
     data_type: VARCHAR(16000)
     source:
       field: primary_source_table.columns.sset_third_party_floating_margin_prefixes
-  sset_month_ami_uses_subsequent_year:
+  sset_version:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.sset_month_ami_uses_subsequent_year
-  sset_day_ami_uses_subsequent_year:
-    data_type: INTEGER
+      field: primary_source_table.columns.sset_version
+  sset_zillow_appraisal_fee:
+    data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.sset_day_ami_uses_subsequent_year
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.sset_zillow_appraisal_fee
+  sset_zillow_recording_fee:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.sset_zillow_recording_fee
+  sset_zillow_title_fee:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.sset_zillow_title_fee
 etls:
   SP-100174:
     input_type: table

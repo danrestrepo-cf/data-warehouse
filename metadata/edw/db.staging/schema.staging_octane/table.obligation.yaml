@@ -43,32 +43,48 @@ foreign_keys:
       schema: staging_octane
       table: country_type
 columns:
-  ob_pid:
-    data_type: BIGINT
-  ob_version:
-    data_type: INTEGER
-  ob_proposal_pid:
-    data_type: BIGINT
-  ob_obligation_type:
-    data_type: VARCHAR(128)
   ob_amount_input_type:
+    data_type: VARCHAR(128)
+  ob_annual_payment_amount:
+    data_type: NUMERIC(15,2)
+  ob_escrow_waiver:
     data_type: VARCHAR(128)
   ob_factor_percent:
     data_type: NUMERIC(11,9)
   ob_factor_percent_base_amount:
     data_type: NUMERIC(15,2)
-  ob_annual_payment_amount:
-    data_type: NUMERIC(15,2)
+  ob_insurance_transferred:
+    data_type: BOOLEAN
   ob_monthly_payment_amount:
     data_type: NUMERIC(15,2)
-  ob_pte_annual_tax_installment_amount:
+  ob_name:
+    data_type: VARCHAR(128)
+  ob_obligation_type:
+    data_type: VARCHAR(128)
+  ob_payment_amount_1:
     data_type: NUMERIC(15,2)
-  ob_pte_annual_preferred_tax_amount:
+  ob_payment_amount_1_warning:
+    data_type: VARCHAR(1024)
+  ob_payment_amount_2:
     data_type: NUMERIC(15,2)
-  ob_pte_annual_homeowner_occupied_estimated_tax_amount:
+  ob_payment_amount_2_warning:
+    data_type: VARCHAR(1024)
+  ob_payment_amount_3:
     data_type: NUMERIC(15,2)
-  ob_pte_annual_exemption_free_estimated_tax_amount:
+  ob_payment_amount_3_warning:
+    data_type: VARCHAR(1024)
+  ob_payment_amount_4:
     data_type: NUMERIC(15,2)
+  ob_payment_amount_4_warning:
+    data_type: VARCHAR(1024)
+  ob_payment_amount_5:
+    data_type: NUMERIC(15,2)
+  ob_payment_amount_5_warning:
+    data_type: VARCHAR(1024)
+  ob_payment_amount_6:
+    data_type: NUMERIC(15,2)
+  ob_payment_amount_6_warning:
+    data_type: VARCHAR(1024)
   ob_payment_date_1:
     data_type: DATE
   ob_payment_date_2:
@@ -81,47 +97,59 @@ columns:
     data_type: DATE
   ob_payment_date_6:
     data_type: DATE
-  ob_payment_amount_1:
+  ob_pid:
+    data_type: BIGINT
+  ob_policy_deductible_amount:
+    data_type: NUMERIC(15,0)
+  ob_policy_dwelling_coverage_amount:
+    data_type: NUMERIC(15,0)
+  ob_policy_effective_date:
+    data_type: DATE
+  ob_policy_expiration_date:
+    data_type: DATE
+  ob_policy_extended_coverage_amount:
+    data_type: NUMERIC(15,0)
+  ob_proposal_pid:
+    data_type: BIGINT
+  ob_pte_annual_exemption_free_estimated_tax_amount:
     data_type: NUMERIC(15,2)
-  ob_payment_amount_2:
+  ob_pte_annual_homeowner_occupied_estimated_tax_amount:
     data_type: NUMERIC(15,2)
-  ob_payment_amount_3:
+  ob_pte_annual_preferred_tax_amount:
     data_type: NUMERIC(15,2)
-  ob_payment_amount_4:
+  ob_pte_annual_tax_installment_amount:
     data_type: NUMERIC(15,2)
-  ob_payment_amount_5:
-    data_type: NUMERIC(15,2)
-  ob_payment_amount_6:
-    data_type: NUMERIC(15,2)
+  ob_tax_auto_compute:
+    data_type: BOOLEAN
   ob_total_dated_payment_amount:
     data_type: NUMERIC(15,2)
+  ob_vendor_city:
+    data_type: VARCHAR(128)
+  ob_vendor_company_name:
+    data_type: VARCHAR(128)
+  ob_vendor_country:
+    data_type: VARCHAR(128)
+  ob_vendor_email:
+    data_type: VARCHAR(256)
+  ob_vendor_fax:
+    data_type: VARCHAR(32)
   ob_vendor_first_name:
     data_type: VARCHAR(32)
   ob_vendor_last_name:
     data_type: VARCHAR(32)
   ob_vendor_middle_name:
     data_type: VARCHAR(32)
+  ob_vendor_mobile_phone:
+    data_type: VARCHAR(32)
   ob_vendor_name_suffix:
     data_type: VARCHAR(32)
-  ob_vendor_company_name:
-    data_type: VARCHAR(128)
-  ob_vendor_title:
-    data_type: VARCHAR(128)
   ob_vendor_office_phone:
     data_type: VARCHAR(32)
   ob_vendor_office_phone_extension:
     data_type: VARCHAR(16)
-  ob_vendor_mobile_phone:
-    data_type: VARCHAR(32)
-  ob_vendor_email:
-    data_type: VARCHAR(256)
-  ob_vendor_fax:
-    data_type: VARCHAR(32)
-  ob_vendor_city:
-    data_type: VARCHAR(128)
-  ob_vendor_country:
-    data_type: VARCHAR(128)
   ob_vendor_postal_code:
+    data_type: VARCHAR(128)
+  ob_vendor_reference_id:
     data_type: VARCHAR(128)
   ob_vendor_state:
     data_type: VARCHAR(128)
@@ -129,35 +157,7 @@ columns:
     data_type: VARCHAR(128)
   ob_vendor_street2:
     data_type: VARCHAR(128)
-  ob_vendor_reference_id:
+  ob_vendor_title:
     data_type: VARCHAR(128)
-  ob_name:
-    data_type: VARCHAR(128)
-  ob_payment_amount_1_warning:
-    data_type: VARCHAR(1024)
-  ob_payment_amount_2_warning:
-    data_type: VARCHAR(1024)
-  ob_payment_amount_3_warning:
-    data_type: VARCHAR(1024)
-  ob_payment_amount_4_warning:
-    data_type: VARCHAR(1024)
-  ob_payment_amount_5_warning:
-    data_type: VARCHAR(1024)
-  ob_payment_amount_6_warning:
-    data_type: VARCHAR(1024)
-  ob_tax_auto_compute:
-    data_type: BOOLEAN
-  ob_policy_dwelling_coverage_amount:
-    data_type: NUMERIC(15,0)
-  ob_policy_extended_coverage_amount:
-    data_type: NUMERIC(15,0)
-  ob_policy_deductible_amount:
-    data_type: NUMERIC(15,0)
-  ob_policy_effective_date:
-    data_type: DATE
-  ob_policy_expiration_date:
-    data_type: DATE
-  ob_escrow_waiver:
-    data_type: VARCHAR(128)
-  ob_insurance_transferred:
-    data_type: BOOLEAN
+  ob_version:
+    data_type: INTEGER

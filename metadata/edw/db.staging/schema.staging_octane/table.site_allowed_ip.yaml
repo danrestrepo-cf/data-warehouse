@@ -11,13 +11,13 @@ foreign_keys:
       schema: staging_octane
       table: account
 columns:
+  saip_account_pid:
+    data_type: BIGINT
+  saip_ip_address:
+    data_type: VARCHAR(32)
+  saip_name:
+    data_type: VARCHAR(128)
   saip_pid:
     data_type: BIGINT
   saip_version:
     data_type: INTEGER
-  saip_account_pid:
-    data_type: BIGINT
-  saip_name:
-    data_type: VARCHAR(128)
-  saip_ip_address:
-    data_type: VARCHAR(32)

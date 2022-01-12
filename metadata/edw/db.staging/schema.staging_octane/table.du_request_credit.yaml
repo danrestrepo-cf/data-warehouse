@@ -43,27 +43,27 @@ foreign_keys:
       schema: staging_octane
       table: credit_bureau_type
 columns:
-  durc_pid:
-    data_type: BIGINT
-  durc_version:
-    data_type: INTEGER
-  durc_du_request_pid:
-    data_type: BIGINT
-  durc_du_casefile_id:
-    data_type: VARCHAR(32)
-  durc_create_datetime:
-    data_type: TIMESTAMP
-  durc_credit_report_create_datetime:
-    data_type: TIMESTAMP
-  durc_credit_bureau_type:
-    data_type: VARCHAR(128)
-  durc_credit_report_identifier:
-    data_type: VARCHAR(32)
-  durc_credit_report_name:
-    data_type: VARCHAR(256)
   durc_aus_credit_service_type:
     data_type: VARCHAR(128)
   durc_borrower_1_borrower_tiny_id_type:
     data_type: VARCHAR(128)
   durc_borrower_2_borrower_tiny_id_type:
     data_type: VARCHAR(128)
+  durc_create_datetime:
+    data_type: TIMESTAMP
+  durc_credit_bureau_type:
+    data_type: VARCHAR(128)
+  durc_credit_report_create_datetime:
+    data_type: TIMESTAMP
+  durc_credit_report_identifier:
+    data_type: VARCHAR(32)
+  durc_credit_report_name:
+    data_type: VARCHAR(256)
+  durc_du_casefile_id:
+    data_type: VARCHAR(32)
+  durc_du_request_pid:
+    data_type: BIGINT
+  durc_pid:
+    data_type: BIGINT
+  durc_version:
+    data_type: INTEGER

@@ -19,61 +19,61 @@ foreign_keys:
       schema: staging_octane
       table: country_type
 columns:
-  ac_pid:
-    data_type: BIGINT
-  ac_version:
-    data_type: INTEGER
   ac_account_pid:
     data_type: BIGINT
-  ac_unparsed_name:
+  ac_address_city:
     data_type: VARCHAR(128)
-  ac_note:
-    data_type: VARCHAR(256)
-  ac_search_text:
-    data_type: VARCHAR(256)
-  ac_tags:
-    data_type: VARCHAR(256)
-  ac_first_name:
-    data_type: VARCHAR(32)
-  ac_middle_name:
-    data_type: VARCHAR(32)
-  ac_last_name:
-    data_type: VARCHAR(32)
-  ac_name_suffix:
-    data_type: VARCHAR(32)
-  ac_company_name:
+  ac_address_country:
     data_type: VARCHAR(128)
-  ac_title:
+  ac_address_postal_code:
     data_type: VARCHAR(128)
-  ac_office_phone:
-    data_type: VARCHAR(32)
-  ac_office_phone_extension:
-    data_type: VARCHAR(16)
-  ac_mobile_phone:
-    data_type: VARCHAR(32)
-  ac_email:
-    data_type: VARCHAR(256)
-  ac_fax:
-    data_type: VARCHAR(32)
+  ac_address_state:
+    data_type: VARCHAR(128)
   ac_address_street1:
     data_type: VARCHAR(128)
   ac_address_street2:
     data_type: VARCHAR(128)
-  ac_address_city:
-    data_type: VARCHAR(128)
-  ac_address_state:
-    data_type: VARCHAR(128)
-  ac_address_postal_code:
-    data_type: VARCHAR(128)
-  ac_address_country:
-    data_type: VARCHAR(128)
-  ac_home_phone:
-    data_type: VARCHAR(32)
   ac_closing_document_email:
     data_type: VARCHAR(256)
-  ac_license_number:
+  ac_company_name:
     data_type: VARCHAR(128)
-  ac_supervisory_license_number:
+  ac_email:
+    data_type: VARCHAR(256)
+  ac_fax:
+    data_type: VARCHAR(32)
+  ac_first_name:
+    data_type: VARCHAR(32)
+  ac_home_phone:
+    data_type: VARCHAR(32)
+  ac_last_name:
+    data_type: VARCHAR(32)
+  ac_license_number:
     data_type: VARCHAR(128)
   ac_license_state:
     data_type: VARCHAR(128)
+  ac_middle_name:
+    data_type: VARCHAR(32)
+  ac_mobile_phone:
+    data_type: VARCHAR(32)
+  ac_name_suffix:
+    data_type: VARCHAR(32)
+  ac_note:
+    data_type: VARCHAR(256)
+  ac_office_phone:
+    data_type: VARCHAR(32)
+  ac_office_phone_extension:
+    data_type: VARCHAR(16)
+  ac_pid:
+    data_type: BIGINT
+  ac_search_text:
+    data_type: VARCHAR(256)
+  ac_supervisory_license_number:
+    data_type: VARCHAR(128)
+  ac_tags:
+    data_type: VARCHAR(256)
+  ac_title:
+    data_type: VARCHAR(128)
+  ac_unparsed_name:
+    data_type: VARCHAR(128)
+  ac_version:
+    data_type: INTEGER

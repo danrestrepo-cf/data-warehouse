@@ -19,15 +19,15 @@ foreign_keys:
       schema: staging_octane
       table: org_lineage
 columns:
-  olt_pid:
-    data_type: BIGINT
-  olt_version:
-    data_type: INTEGER
-  olt_org_node_pid:
-    data_type: BIGINT
-  olt_org_lineage_pid:
-    data_type: BIGINT
   olt_from_date:
     data_type: DATE
+  olt_org_lineage_pid:
+    data_type: BIGINT
+  olt_org_node_pid:
+    data_type: BIGINT
+  olt_pid:
+    data_type: BIGINT
   olt_through_date:
     data_type: DATE
+  olt_version:
+    data_type: INTEGER

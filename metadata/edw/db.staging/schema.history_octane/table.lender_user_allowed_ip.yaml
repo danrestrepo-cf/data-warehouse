@@ -21,48 +21,48 @@ foreign_keys:
       schema: history_octane
       table: lender_user_allowed_ip_status_type
 columns:
-  luip_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.luip_pid
-  luip_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.luip_version
-  luip_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.luip_lender_user_pid
-  luip_status:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.luip_status
-  luip_ip_address:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.luip_ip_address
-  luip_request_id:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.luip_request_id
-  luip_request_expiration_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.luip_request_expiration_datetime
-  luip_last_used_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.luip_last_used_datetime
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   luip_first_used_datetime:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.luip_first_used_datetime
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  luip_ip_address:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.luip_ip_address
+  luip_last_used_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.luip_last_used_datetime
+  luip_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.luip_lender_user_pid
+  luip_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.luip_pid
+  luip_request_expiration_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.luip_request_expiration_datetime
+  luip_request_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.luip_request_id
+  luip_status:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.luip_status
+  luip_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.luip_version
 etls:
   SP-100096:
     input_type: table

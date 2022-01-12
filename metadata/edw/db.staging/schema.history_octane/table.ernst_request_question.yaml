@@ -13,38 +13,38 @@ foreign_keys:
       schema: history_octane
       table: ernst_request
 columns:
-  enstq_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.enstq_pid
-  enstq_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.enstq_version
-  enstq_ernst_request_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.enstq_ernst_request_pid
-  enstq_ernst_question_id:
-    data_type: VARCHAR(8)
-    source:
-      field: primary_source_table.columns.enstq_ernst_question_id
-  enstq_question:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.enstq_question
-  enstq_yes_no_answer:
+  data_source_deleted_flag:
     data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.enstq_yes_no_answer
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   enstq_answer:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.enstq_answer
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
+  enstq_ernst_question_id:
+    data_type: VARCHAR(8)
+    source:
+      field: primary_source_table.columns.enstq_ernst_question_id
+  enstq_ernst_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.enstq_ernst_request_pid
+  enstq_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.enstq_pid
+  enstq_question:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.enstq_question
+  enstq_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enstq_version
+  enstq_yes_no_answer:
     data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.enstq_yes_no_answer
   etl_batch_id:
     data_type: TEXT
 etls:

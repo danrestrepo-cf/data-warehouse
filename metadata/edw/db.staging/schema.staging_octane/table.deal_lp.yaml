@@ -11,13 +11,13 @@ foreign_keys:
       schema: staging_octane
       table: deal
 columns:
+  dlp_deal_pid:
+    data_type: BIGINT
+  dlp_lp_key_id:
+    data_type: VARCHAR(32)
+  dlp_lp_loan_id:
+    data_type: VARCHAR(32)
   dlp_pid:
     data_type: BIGINT
   dlp_version:
     data_type: INTEGER
-  dlp_deal_pid:
-    data_type: BIGINT
-  dlp_lp_loan_id:
-    data_type: VARCHAR(32)
-  dlp_lp_key_id:
-    data_type: VARCHAR(32)

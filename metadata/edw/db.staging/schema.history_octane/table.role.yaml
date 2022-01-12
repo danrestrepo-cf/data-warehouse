@@ -21,44 +21,44 @@ foreign_keys:
       schema: history_octane
       table: loan_access_type
 columns:
-  r_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.r_pid
-  r_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.r_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   r_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.r_account_pid
-  r_role_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.r_role_name
   r_borrower_viewable:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.r_borrower_viewable
-  r_loan_access_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.r_loan_access_type
   r_internal:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.r_internal
+  r_loan_access_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.r_loan_access_type
+  r_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.r_pid
+  r_role_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.r_role_name
   r_training_applicable:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.r_training_applicable
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  r_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.r_version
 etls:
   SP-100047:
     input_type: table

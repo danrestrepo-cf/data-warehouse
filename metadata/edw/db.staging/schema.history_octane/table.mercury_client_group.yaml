@@ -13,6 +13,28 @@ foreign_keys:
       schema: history_octane
       table: account
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  mcg_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.mcg_account_pid
+  mcg_active:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.mcg_active
+  mcg_mercury_client_group_id:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.mcg_mercury_client_group_id
+  mcg_mercury_client_group_name:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.mcg_mercury_client_group_name
   mcg_pid:
     data_type: BIGINT
     source:
@@ -21,28 +43,6 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.mcg_version
-  mcg_account_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.mcg_account_pid
-  mcg_mercury_client_group_name:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.mcg_mercury_client_group_name
-  mcg_mercury_client_group_id:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.mcg_mercury_client_group_id
-  mcg_active:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.mcg_active
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
 etls:
   SP-100227:
     input_type: table

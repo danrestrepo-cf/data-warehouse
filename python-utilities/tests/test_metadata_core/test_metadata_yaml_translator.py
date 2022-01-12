@@ -571,6 +571,108 @@ class TestWriteDataWarehouseMetadataToYAML_NoExistingDirectoryStructure(Metadata
         result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
         self.assertEqual(metadata, result)
 
+    def test_yaml_is_written_with_alphabetized_column_list(self):
+        supplied_metadata = construct_data_warehouse_metadata_from_dict(
+            {
+                'name': 'dw',
+                'databases': [
+                    {
+                        'name': 'db1',
+                        'schemas': [
+                            {
+                                'name': 'sch1',
+                                'tables': [
+                                    {
+                                        'name': 't1',
+                                        'primary_source_table': 'db2.sch2.t2',
+                                        'primary_key': ['col1'],
+                                        'columns': {
+                                            'col2': {
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.col2'
+                                                }
+                                            },
+                                            'col1': {
+                                                'data_type': 'INT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.col1'
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        'name': 'db2',
+                        'schemas': [
+                            {
+                                'name': 'sch2',
+                                'tables': [
+                                    {
+                                        'name': 't2'
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        )
+        expected_metadata = construct_data_warehouse_metadata_from_dict(
+            {
+                'name': 'dw',
+                'databases': [
+                    {
+                        'name': 'db1',
+                        'schemas': [
+                            {
+                                'name': 'sch1',
+                                'tables': [
+                                    {
+                                        'name': 't1',
+                                        'primary_source_table': 'db2.sch2.t2',
+                                        'primary_key': ['col1'],
+                                        'columns': {
+                                            'col1': {
+                                                'data_type': 'INT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.col1'
+                                                }
+                                            },
+                                            'col2': {
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.col2'
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        'name': 'db2',
+                        'schemas': [
+                            {
+                                'name': 'sch2',
+                                'tables': [
+                                    {
+                                        'name': 't2'
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        )
+        write_data_warehouse_metadata_to_yaml(test_dir, supplied_metadata)
+        result = generate_data_warehouse_metadata_from_yaml(self.root_filepath)
+        self.assertEqual(expected_metadata, result)
 
 class TestWriteDataWarehouseMetadataToYAML_ExistingDirectoriesAndFiles(MetadataDirectoryTestCase):
 

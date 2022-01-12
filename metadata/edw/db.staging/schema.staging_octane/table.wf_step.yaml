@@ -131,11 +131,37 @@ foreign_keys:
       schema: staging_octane
       table: wf_step_type
 columns:
+  ws_active_only:
+    data_type: BOOLEAN
+  ws_deal_stage_type:
+    data_type: VARCHAR(128)
+  ws_description:
+    data_type: VARCHAR(1024)
+  ws_expected_complete_minutes:
+    data_type: INTEGER
+  ws_from_role_pid:
+    data_type: BIGINT
+  ws_internal:
+    data_type: BOOLEAN
+  ws_lien_priority_type:
+    data_type: VARCHAR(128)
   ws_pid:
     data_type: BIGINT
-  ws_version:
+  ws_polling_interval_type:
+    data_type: VARCHAR(128)
+  ws_prompt_user_defined_time:
+    data_type: BOOLEAN
+  ws_role_pid:
+    data_type: BIGINT
+  ws_sap_expire_minutes:
     data_type: INTEGER
-  ws_wf_process_pid:
+  ws_sap_expire_warning_minutes:
+    data_type: INTEGER
+  ws_second_of_day_timeout:
+    data_type: INTEGER
+  ws_smart_doc_set_pid:
+    data_type: BIGINT
+  ws_smart_message_pid:
     data_type: BIGINT
   ws_step_name:
     data_type: VARCHAR(128)
@@ -147,53 +173,27 @@ columns:
     data_type: VARCHAR(145)
   ws_step_start_borrower_text:
     data_type: VARCHAR(1024)
-  ws_expected_complete_minutes:
-    data_type: INTEGER
-  ws_wf_step_timeout_type:
-    data_type: VARCHAR(128)
-  ws_second_of_day_timeout:
-    data_type: INTEGER
-  ws_timeout_time_zone_type:
-    data_type: VARCHAR(128)
-  ws_description:
-    data_type: VARCHAR(1024)
-  ws_wf_step_type:
-    data_type: VARCHAR(128)
-  ws_wf_phase_pid:
-    data_type: BIGINT
-  ws_wf_step_performer_assign_type:
-    data_type: VARCHAR(128)
-  ws_role_pid:
-    data_type: BIGINT
-  ws_from_role_pid:
-    data_type: BIGINT
-  ws_wf_step_reassign_type:
-    data_type: VARCHAR(128)
-  ws_wf_step_function_type:
-    data_type: VARCHAR(128)
-  ws_sap_expire_minutes:
-    data_type: INTEGER
-  ws_sap_expire_warning_minutes:
-    data_type: INTEGER
-  ws_prompt_user_defined_time:
-    data_type: BOOLEAN
-  ws_smart_message_pid:
-    data_type: BIGINT
-  ws_smart_doc_set_pid:
-    data_type: BIGINT
-  ws_lien_priority_type:
-    data_type: VARCHAR(128)
-  ws_active_only:
-    data_type: BOOLEAN
-  ws_internal:
-    data_type: BOOLEAN
-  ws_deal_stage_type:
-    data_type: VARCHAR(128)
-  ws_polling_interval_type:
-    data_type: VARCHAR(128)
   ws_swappable:
     data_type: BOOLEAN
+  ws_timeout_time_zone_type:
+    data_type: VARCHAR(128)
+  ws_user_step_name:
+    data_type: VARCHAR(128)
+  ws_version:
+    data_type: INTEGER
+  ws_wf_phase_pid:
+    data_type: BIGINT
   ws_wf_prereq_set_pid:
     data_type: BIGINT
-  ws_user_step_name:
+  ws_wf_process_pid:
+    data_type: BIGINT
+  ws_wf_step_function_type:
+    data_type: VARCHAR(128)
+  ws_wf_step_performer_assign_type:
+    data_type: VARCHAR(128)
+  ws_wf_step_reassign_type:
+    data_type: VARCHAR(128)
+  ws_wf_step_timeout_type:
+    data_type: VARCHAR(128)
+  ws_wf_step_type:
     data_type: VARCHAR(128)

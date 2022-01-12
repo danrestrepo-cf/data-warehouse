@@ -2,15 +2,15 @@ name: announcement
 primary_key:
 - ann_pid
 columns:
-  ann_pid:
-    data_type: BIGINT
-  ann_version:
-    data_type: INTEGER
-  ann_lender_text:
-    data_type: VARCHAR(1024)
   ann_borrower_text:
     data_type: VARCHAR(1024)
   ann_from_datetime:
     data_type: TIMESTAMP
+  ann_lender_text:
+    data_type: VARCHAR(1024)
+  ann_pid:
+    data_type: BIGINT
   ann_to_datetime:
     data_type: TIMESTAMP
+  ann_version:
+    data_type: INTEGER

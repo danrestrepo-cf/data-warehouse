@@ -21,14 +21,16 @@ foreign_keys:
       schema: history_octane
       table: criteria
 columns:
-  tlf_pid:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  tlf_criteria_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.tlf_pid
-  tlf_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.tlf_version
+      field: primary_source_table.columns.tlf_criteria_pid
   tlf_lender_user_pid:
     data_type: BIGINT
     source:
@@ -37,16 +39,14 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.tlf_name
-  tlf_criteria_pid:
+  tlf_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.tlf_criteria_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.tlf_pid
+  tlf_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.tlf_version
 etls:
   SP-100189:
     input_type: table

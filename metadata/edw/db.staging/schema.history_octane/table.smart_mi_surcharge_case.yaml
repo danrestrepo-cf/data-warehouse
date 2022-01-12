@@ -21,18 +21,14 @@ foreign_keys:
       schema: history_octane
       table: criteria
 columns:
-  smsc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.smsc_pid
-  smsc_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.smsc_version
-  smsc_smart_mi_surcharge_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.smsc_smart_mi_surcharge_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  smsc_criteria_html:
+    data_type: VARCHAR(16000)
   smsc_criteria_pid:
     data_type: BIGINT
     source:
@@ -45,14 +41,18 @@ columns:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.smsc_minimum_surcharge_amount
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  smsc_criteria_html:
-    data_type: VARCHAR(16000)
-  etl_batch_id:
-    data_type: TEXT
+  smsc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smsc_pid
+  smsc_smart_mi_surcharge_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.smsc_smart_mi_surcharge_pid
+  smsc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.smsc_version
 etls:
   SP-100249:
     input_type: table

@@ -19,15 +19,15 @@ foreign_keys:
       schema: staging_octane
       table: repository_file
 columns:
-  df_pid:
-    data_type: BIGINT
-  df_version:
-    data_type: INTEGER
-  df_deal_pid:
-    data_type: BIGINT
-  df_repository_file_pid:
-    data_type: BIGINT
   df_archive:
     data_type: BOOLEAN
   df_borrower_uploaded:
     data_type: BOOLEAN
+  df_deal_pid:
+    data_type: BIGINT
+  df_pid:
+    data_type: BIGINT
+  df_repository_file_pid:
+    data_type: BIGINT
+  df_version:
+    data_type: INTEGER

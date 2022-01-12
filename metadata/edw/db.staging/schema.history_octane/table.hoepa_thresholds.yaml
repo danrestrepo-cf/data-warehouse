@@ -4,34 +4,20 @@ primary_key:
 - ht_pid
 - ht_version
 columns:
-  ht_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ht_pid
-  ht_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ht_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   ht_effective_date:
     data_type: DATE
     source:
       field: primary_source_table.columns.ht_effective_date
-  ht_total_loan_amount_threshold:
-    data_type: NUMERIC(15,0)
-    source:
-      field: primary_source_table.columns.ht_total_loan_amount_threshold
-  ht_points_and_fees_threshold_amount:
-    data_type: NUMERIC(15,0)
-    source:
-      field: primary_source_table.columns.ht_points_and_fees_threshold_amount
   ht_first_lien_rate_spread_threshold:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.ht_first_lien_rate_spread_threshold
-  ht_subordinate_lien_rate_spread_threshold:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.ht_subordinate_lien_rate_spread_threshold
   ht_max_points_and_fees_percent_over_threshold:
     data_type: NUMERIC(11,9)
     source:
@@ -40,12 +26,26 @@ columns:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.ht_max_points_and_fees_percent_under_threshold
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  ht_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ht_pid
+  ht_points_and_fees_threshold_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.ht_points_and_fees_threshold_amount
+  ht_subordinate_lien_rate_spread_threshold:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.ht_subordinate_lien_rate_spread_threshold
+  ht_total_loan_amount_threshold:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.ht_total_loan_amount_threshold
+  ht_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ht_version
 etls:
   SP-100029:
     input_type: table

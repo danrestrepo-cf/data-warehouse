@@ -29,14 +29,12 @@ foreign_keys:
       schema: history_octane
       table: servicer_loan_id_import_request_status_type
 columns:
-  slir_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.slir_pid
-  slir_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.slir_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   slir_account_pid:
     data_type: BIGINT
     source:
@@ -45,6 +43,10 @@ columns:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.slir_create_datetime
+  slir_error_loan_id_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.slir_error_loan_id_count
   slir_import_lender_user_pid:
     data_type: BIGINT
     source:
@@ -53,20 +55,18 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.slir_imported_loan_id_count
-  slir_error_loan_id_count:
-    data_type: INTEGER
+  slir_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.slir_error_loan_id_count
+      field: primary_source_table.columns.slir_pid
   slir_servicer_loan_id_import_request_status_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.slir_servicer_loan_id_import_request_status_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  slir_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.slir_version
 etls:
   SP-100175:
     input_type: table

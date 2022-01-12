@@ -45,66 +45,52 @@ foreign_keys:
       schema: history_octane
       table: charge_payer_type
 columns:
-  scc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.scc_pid
-  scc_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.scc_version
-  scc_smart_charge_group_case_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.scc_smart_charge_group_case_pid
-  scc_case_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.scc_case_name
-  scc_ordinal:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.scc_ordinal
-  scc_criteria_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.scc_criteria_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   scc_amount_description:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.scc_amount_description
-  scc_charge_payer_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.scc_charge_payer_type
-  scc_charge_payee_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.scc_charge_payee_type
-  scc_paid_by:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.scc_paid_by
-  scc_paid_to:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.scc_paid_to
   scc_base_amount:
     data_type: NUMERIC(16,3)
     source:
       field: primary_source_table.columns.scc_base_amount
+  scc_case_label:
+    data_type: VARCHAR(108)
+    source:
+      field: primary_source_table.columns.scc_case_label
+  scc_case_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.scc_case_name
   scc_charge_input_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.scc_charge_input_type
-  scc_charge_input_type_percent:
-    data_type: NUMERIC(11,9)
-    source:
-      field: primary_source_table.columns.scc_charge_input_type_percent
   scc_charge_input_type_currency:
     data_type: NUMERIC(16,3)
     source:
       field: primary_source_table.columns.scc_charge_input_type_currency
+  scc_charge_input_type_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.scc_charge_input_type_percent
+  scc_charge_payee_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.scc_charge_payee_type
+  scc_charge_payer_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.scc_charge_payer_type
+  scc_criteria_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.scc_criteria_pid
   scc_financed:
     data_type: BOOLEAN
     source:
@@ -113,6 +99,22 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.scc_financed_auto_compute
+  scc_ordinal:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.scc_ordinal
+  scc_paid_by:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.scc_paid_by
+  scc_paid_to:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.scc_paid_to
+  scc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.scc_pid
   scc_poc:
     data_type: BOOLEAN
     source:
@@ -121,20 +123,18 @@ columns:
     data_type: NUMERIC(15,0)
     source:
       field: primary_source_table.columns.scc_reduction_amount
+  scc_smart_charge_group_case_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.scc_smart_charge_group_case_pid
   scc_subtract_lenders_title_insurance_amount:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.scc_subtract_lenders_title_insurance_amount
-  scc_case_label:
-    data_type: VARCHAR(108)
+  scc_version:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.scc_case_label
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.scc_version
 etls:
   SP-100245:
     input_type: table

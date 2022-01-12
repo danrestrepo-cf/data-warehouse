@@ -107,61 +107,61 @@ foreign_keys:
       schema: staging_octane
       table: yes_no_unknown_type
 columns:
-  baa_pid:
-    data_type: BIGINT
-  baa_version:
-    data_type: INTEGER
-  baa_borrower_pid:
-    data_type: BIGINT
-  baa_credit_request_pid:
-    data_type: BIGINT
-  baa_credit_report_identifier:
-    data_type: VARCHAR(32)
-  baa_borrower_associated_address_source_type:
-    data_type: VARCHAR(128)
-  baa_reported_month:
-    data_type: INTEGER
-  baa_reported_year:
-    data_type: INTEGER
-  baa_reported_date_verified:
-    data_type: BOOLEAN
-  baa_reported_address_street1:
-    data_type: VARCHAR(128)
-  baa_reported_address_street2:
-    data_type: VARCHAR(128)
-  baa_reported_address_city:
-    data_type: VARCHAR(128)
-  baa_reported_address_state:
-    data_type: VARCHAR(128)
-  baa_reported_address_postal_code:
-    data_type: VARCHAR(128)
-  baa_reported_address_country:
-    data_type: VARCHAR(16)
-  baa_current:
-    data_type: VARCHAR(128)
-  baa_internal_note:
-    data_type: VARCHAR(1024)
-  baa_requires_explanation:
-    data_type: BOOLEAN
-  baa_force_requires_explanation:
-    data_type: BOOLEAN
   baa_borrower_associated_address_explanation_type:
     data_type: VARCHAR(128)
-  baa_explanation_type_other_explanation:
+  baa_borrower_associated_address_source_type:
     data_type: VARCHAR(128)
-  baa_typo_of_loan_app_address:
+  baa_borrower_pid:
+    data_type: BIGINT
+  baa_borrower_resided_at_address_after_date:
     data_type: VARCHAR(128)
-  baa_known_to_borrower:
-    data_type: VARCHAR(128)
-  baa_owned_by_borrower:
-    data_type: VARCHAR(128)
-  baa_resided_at_address:
-    data_type: VARCHAR(128)
-  baa_used_as_mailing_address:
+  baa_credit_report_identifier:
+    data_type: VARCHAR(32)
+  baa_credit_request_pid:
+    data_type: BIGINT
+  baa_current:
     data_type: VARCHAR(128)
   baa_current_mailing_address:
     data_type: VARCHAR(128)
   baa_current_residence:
     data_type: VARCHAR(128)
-  baa_borrower_resided_at_address_after_date:
+  baa_explanation_type_other_explanation:
     data_type: VARCHAR(128)
+  baa_force_requires_explanation:
+    data_type: BOOLEAN
+  baa_internal_note:
+    data_type: VARCHAR(1024)
+  baa_known_to_borrower:
+    data_type: VARCHAR(128)
+  baa_owned_by_borrower:
+    data_type: VARCHAR(128)
+  baa_pid:
+    data_type: BIGINT
+  baa_reported_address_city:
+    data_type: VARCHAR(128)
+  baa_reported_address_country:
+    data_type: VARCHAR(16)
+  baa_reported_address_postal_code:
+    data_type: VARCHAR(128)
+  baa_reported_address_state:
+    data_type: VARCHAR(128)
+  baa_reported_address_street1:
+    data_type: VARCHAR(128)
+  baa_reported_address_street2:
+    data_type: VARCHAR(128)
+  baa_reported_date_verified:
+    data_type: BOOLEAN
+  baa_reported_month:
+    data_type: INTEGER
+  baa_reported_year:
+    data_type: INTEGER
+  baa_requires_explanation:
+    data_type: BOOLEAN
+  baa_resided_at_address:
+    data_type: VARCHAR(128)
+  baa_typo_of_loan_app_address:
+    data_type: VARCHAR(128)
+  baa_used_as_mailing_address:
+    data_type: VARCHAR(128)
+  baa_version:
+    data_type: INTEGER

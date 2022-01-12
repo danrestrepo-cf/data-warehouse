@@ -61,18 +61,74 @@ foreign_keys:
       schema: history_octane
       table: lender_lock_status_type
 columns:
-  ds_pid:
-    data_type: BIGINT
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  ds_any_unrequested_packages:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.ds_pid
-  ds_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ds_version
+      field: primary_source_table.columns.ds_any_unrequested_packages
   ds_deal_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.ds_deal_pid
+  ds_deal_stage_from_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.ds_deal_stage_from_datetime
+  ds_deal_stage_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ds_deal_stage_type
+  ds_decision_appraisal_condition_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ds_decision_appraisal_condition_type
+  ds_decision_appraisal_cu_risk_score:
+    data_type: NUMERIC(10,2)
+    source:
+      field: primary_source_table.columns.ds_decision_appraisal_cu_risk_score
+  ds_eligible_investor_ids_main:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.ds_eligible_investor_ids_main
+  ds_eligible_investor_ids_piggyback:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.ds_eligible_investor_ids_piggyback
+  ds_funded_main:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ds_funded_main
+  ds_funded_piggyback:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ds_funded_piggyback
+  ds_funding_status_type_main:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ds_funding_status_type_main
+  ds_funding_status_type_piggyback:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ds_funding_status_type_piggyback
+  ds_last_wf_phase_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ds_last_wf_phase_name
+  ds_last_wf_phase_number:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ds_last_wf_phase_number
+  ds_lender_lock_datetime_main:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.ds_lender_lock_datetime_main
+  ds_lender_lock_datetime_piggyback:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.ds_lender_lock_datetime_piggyback
   ds_lender_lock_expiration_datetime_main:
     data_type: TIMESTAMP
     source:
@@ -89,66 +145,6 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ds_lender_lock_status_type_piggyback
-  ds_decision_appraisal_condition_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ds_decision_appraisal_condition_type
-  ds_funding_status_type_main:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ds_funding_status_type_main
-  ds_funding_status_type_piggyback:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ds_funding_status_type_piggyback
-  ds_purchase_advice_date_main:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.ds_purchase_advice_date_main
-  ds_purchase_advice_date_piggyback:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.ds_purchase_advice_date_piggyback
-  ds_last_wf_phase_number:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ds_last_wf_phase_number
-  ds_last_wf_phase_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ds_last_wf_phase_name
-  ds_eligible_investor_ids_main:
-    data_type: VARCHAR(16000)
-    source:
-      field: primary_source_table.columns.ds_eligible_investor_ids_main
-  ds_eligible_investor_ids_piggyback:
-    data_type: VARCHAR(16000)
-    source:
-      field: primary_source_table.columns.ds_eligible_investor_ids_piggyback
-  ds_decision_appraisal_cu_risk_score:
-    data_type: NUMERIC(10,2)
-    source:
-      field: primary_source_table.columns.ds_decision_appraisal_cu_risk_score
-  ds_deal_stage_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ds_deal_stage_type
-  ds_deal_stage_from_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.ds_deal_stage_from_datetime
-  ds_funded_main:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ds_funded_main
-  ds_funded_piggyback:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ds_funded_piggyback
-  ds_most_recent_user_update_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.ds_most_recent_user_update_date
   ds_lock_vintage_date_main:
     data_type: DATE
     source:
@@ -157,22 +153,26 @@ columns:
     data_type: DATE
     source:
       field: primary_source_table.columns.ds_lock_vintage_date_piggyback
-  ds_lender_lock_datetime_main:
-    data_type: TIMESTAMP
+  ds_most_recent_user_update_date:
+    data_type: DATE
     source:
-      field: primary_source_table.columns.ds_lender_lock_datetime_main
-  ds_lender_lock_datetime_piggyback:
-    data_type: TIMESTAMP
+      field: primary_source_table.columns.ds_most_recent_user_update_date
+  ds_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.ds_lender_lock_datetime_piggyback
-  ds_any_unrequested_packages:
-    data_type: BOOLEAN
+      field: primary_source_table.columns.ds_pid
+  ds_purchase_advice_date_main:
+    data_type: DATE
     source:
-      field: primary_source_table.columns.ds_any_unrequested_packages
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
+      field: primary_source_table.columns.ds_purchase_advice_date_main
+  ds_purchase_advice_date_piggyback:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.ds_purchase_advice_date_piggyback
+  ds_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ds_version
   etl_batch_id:
     data_type: TEXT
 etls:

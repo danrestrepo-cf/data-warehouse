@@ -13,54 +13,54 @@ foreign_keys:
       schema: history_octane
       table: borrower
 columns:
-  bd_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bd_pid
-  bd_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.bd_version
-  bd_borrower_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bd_borrower_pid
-  bd_first_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.bd_first_name
-  bd_last_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.bd_last_name
   bd_age:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.bd_age
+  bd_borrower_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bd_borrower_pid
   bd_disabled:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.bd_disabled
+  bd_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.bd_first_name
   bd_full_time_student:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.bd_full_time_student
-  bd_receives_income:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.bd_receives_income
-  bd_income_source:
-    data_type: TEXT
-    source:
-      field: primary_source_table.columns.bd_income_source
   bd_income_amount:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.bd_income_amount
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  bd_income_source:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.bd_income_source
+  bd_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.bd_last_name
+  bd_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bd_pid
+  bd_receives_income:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.bd_receives_income
+  bd_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bd_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

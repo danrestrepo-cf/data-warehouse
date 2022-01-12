@@ -21,14 +21,6 @@ foreign_keys:
       schema: history_octane
       table: lender_user
 columns:
-  bpnm_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.bpnm_pid
-  bpnm_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.bpnm_version
   bpnm_bid_pool_note_pid:
     data_type: BIGINT
     source:
@@ -37,10 +29,18 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.bpnm_lender_user_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+  bpnm_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.bpnm_pid
+  bpnm_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.bpnm_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

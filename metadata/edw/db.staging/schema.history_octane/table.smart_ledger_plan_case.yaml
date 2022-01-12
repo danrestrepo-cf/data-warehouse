@@ -21,22 +21,16 @@ foreign_keys:
       schema: history_octane
       table: smart_ledger_plan_case_group
 columns:
-  slpc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.slpc_pid
-  slpc_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.slpc_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   slpc_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.slpc_account_pid
-  slpc_smart_ledger_plan_case_group_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.slpc_smart_ledger_plan_case_group_pid
   slpc_case_id:
     data_type: BIGINT
     source:
@@ -45,12 +39,18 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.slpc_ordinal
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  slpc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.slpc_pid
+  slpc_smart_ledger_plan_case_group_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.slpc_smart_ledger_plan_case_group_pid
+  slpc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.slpc_version
 etls:
   SP-100212:
     input_type: table

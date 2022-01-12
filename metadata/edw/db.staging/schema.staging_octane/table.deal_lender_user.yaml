@@ -43,21 +43,21 @@ foreign_keys:
       schema: staging_octane
       table: loan_access_type
 columns:
-  dlu_pid:
-    data_type: BIGINT
-  dlu_version:
-    data_type: INTEGER
   dlu_deal_pid:
     data_type: BIGINT
+  dlu_legacy_role_assignment_date:
+    data_type: DATE
+  dlu_legacy_role_assignment_type:
+    data_type: VARCHAR(128)
   dlu_lender_user_pid:
-    data_type: BIGINT
-  dlu_role_pid:
     data_type: BIGINT
   dlu_loan_access_type:
     data_type: VARCHAR(128)
-  dlu_legacy_role_assignment_type:
-    data_type: VARCHAR(128)
-  dlu_legacy_role_assignment_date:
-    data_type: DATE
+  dlu_pid:
+    data_type: BIGINT
+  dlu_role_pid:
+    data_type: BIGINT
   dlu_synthetic_unique:
     data_type: VARCHAR(32)
+  dlu_version:
+    data_type: INTEGER

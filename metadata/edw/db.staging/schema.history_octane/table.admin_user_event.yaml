@@ -13,14 +13,14 @@ foreign_keys:
       schema: history_octane
       table: admin_user_event_type
 columns:
-  aue_pid:
-    data_type: BIGINT
+  aue_admin_user_event_type:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.aue_pid
-  aue_version:
-    data_type: INTEGER
+      field: primary_source_table.columns.aue_admin_user_event_type
+  aue_client_agent:
+    data_type: VARCHAR(256)
     source:
-      field: primary_source_table.columns.aue_version
+      field: primary_source_table.columns.aue_client_agent
   aue_create_datetime:
     data_type: TIMESTAMP
     source:
@@ -29,26 +29,26 @@ columns:
     data_type: VARCHAR(16000)
     source:
       field: primary_source_table.columns.aue_detail
-  aue_source_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.aue_source_unparsed_name
-  aue_admin_user_event_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.aue_admin_user_event_type
   aue_ip_address:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.aue_ip_address
-  aue_client_agent:
-    data_type: VARCHAR(256)
+  aue_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.aue_client_agent
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
+      field: primary_source_table.columns.aue_pid
+  aue_source_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.aue_source_unparsed_name
+  aue_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.aue_version
   data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
 etls:

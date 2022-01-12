@@ -325,326 +325,36 @@ foreign_keys:
       schema: history_octane
       table: water_type
 columns:
-  pl_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pl_pid
-  pl_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pl_version
-  pl_proposal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pl_proposal_pid
-  pl_subject_property:
+  data_source_deleted_flag:
     data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  pl_abbreviated_legal_description:
+    data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.columns.pl_subject_property
-  pl_acquisition_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.pl_acquisition_date
-  pl_financed_units_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pl_financed_units_count
-  pl_unit_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pl_unit_count
-  pl_land_estimated_value_amount:
-    data_type: NUMERIC(15,0)
-    source:
-      field: primary_source_table.columns.pl_land_estimated_value_amount
-  pl_land_original_cost_amount:
-    data_type: NUMERIC(15,0)
-    source:
-      field: primary_source_table.columns.pl_land_original_cost_amount
-  pl_leasehold_expiration_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.pl_leasehold_expiration_date
-  pl_legal_description_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_legal_description_type
-  pl_legal_description:
-    data_type: VARCHAR(32000)
-    source:
-      field: primary_source_table.columns.pl_legal_description
-  pl_property_tax_id:
-    data_type: VARCHAR(64)
-    source:
-      field: primary_source_table.columns.pl_property_tax_id
-  pl_legal_lot:
-    data_type: VARCHAR(64)
-    source:
-      field: primary_source_table.columns.pl_legal_lot
-  pl_legal_block:
-    data_type: VARCHAR(64)
-    source:
-      field: primary_source_table.columns.pl_legal_block
-  pl_legal_section:
-    data_type: VARCHAR(64)
-    source:
-      field: primary_source_table.columns.pl_legal_section
-  pl_project_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_project_name
-  pl_cpm_project_id:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_cpm_project_id
+      field: primary_source_table.columns.pl_abbreviated_legal_description
   pl_acquisition_cost_amount:
     data_type: NUMERIC(15,0)
     source:
       field: primary_source_table.columns.pl_acquisition_cost_amount
-  pl_county_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.pl_county_pid
-  pl_sub_jurisdiction_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_sub_jurisdiction_name
-  pl_recording_district_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_recording_district_name
-  pl_project_classification_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_project_classification_type
-  pl_property_category_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_property_category_type
-  pl_property_rights_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_property_rights_type
-  pl_structure_built_year:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pl_structure_built_year
-  pl_structure_built_month:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pl_structure_built_month
-  pl_title_manner_held_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_title_manner_held_type
-  pl_title_manner_held_description:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.pl_title_manner_held_description
-  pl_building_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_building_status_type
-  pl_construction_conversion:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_construction_conversion
-  pl_native_american_lands_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_native_american_lands_type
-  pl_community_land_trust:
+  pl_acquisition_cost_amount_verified:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.pl_community_land_trust
-  pl_inclusionary_zoning:
+      field: primary_source_table.columns.pl_acquisition_cost_amount_verified
+  pl_acquisition_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.pl_acquisition_date
+  pl_acquisition_date_verified:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.pl_inclusionary_zoning
-  pl_unique_dwelling_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_unique_dwelling_type
-  pl_living_unit_count:
+      field: primary_source_table.columns.pl_acquisition_date_verified
+  pl_additional_building_area_square_feet:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.pl_living_unit_count
-  pl_project_design_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_project_design_type
-  pl_city:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_city
-  pl_country:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_country
-  pl_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_postal_code
-  pl_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_state
-  pl_street1:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_street1
-  pl_street2:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_street2
-  pl_street_tbd:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pl_street_tbd
-  pl_landlord_first_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_landlord_first_name
-  pl_landlord_last_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_landlord_last_name
-  pl_landlord_middle_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_landlord_middle_name
-  pl_landlord_name_suffix:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_landlord_name_suffix
-  pl_landlord_company_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_landlord_company_name
-  pl_landlord_title:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_landlord_title
-  pl_landlord_office_phone:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_landlord_office_phone
-  pl_landlord_office_phone_extension:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.pl_landlord_office_phone_extension
-  pl_landlord_mobile_phone:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_landlord_mobile_phone
-  pl_landlord_email:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.pl_landlord_email
-  pl_landlord_fax:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_landlord_fax
-  pl_landlord_city:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_landlord_city
-  pl_landlord_country:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_landlord_country
-  pl_landlord_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_landlord_postal_code
-  pl_landlord_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_landlord_state
-  pl_landlord_street1:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_landlord_street1
-  pl_landlord_street2:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_landlord_street2
-  pl_management_first_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_management_first_name
-  pl_management_last_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_management_last_name
-  pl_management_middle_name:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_management_middle_name
-  pl_management_name_suffix:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_management_name_suffix
-  pl_management_company_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_management_company_name
-  pl_management_title:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_management_title
-  pl_management_office_phone:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_management_office_phone
-  pl_management_office_phone_extension:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.pl_management_office_phone_extension
-  pl_management_mobile_phone:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_management_mobile_phone
-  pl_management_email:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.pl_management_email
-  pl_management_fax:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_management_fax
-  pl_management_city:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_management_city
-  pl_management_country:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_management_country
-  pl_management_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_management_postal_code
-  pl_management_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_management_state
-  pl_management_street1:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_management_street1
-  pl_management_street2:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_management_street2
-  pl_property_insurance_amount_input_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_property_insurance_amount_input_type
-  pl_property_tax_amount_input_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_property_tax_amount_input_type
+      field: primary_source_table.columns.pl_additional_building_area_square_feet
   pl_annual_property_insurance_amount:
     data_type: NUMERIC(15,2)
     source:
@@ -653,50 +363,6 @@ columns:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.pl_annual_property_tax_amount
-  pl_monthly_property_insurance_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.pl_monthly_property_insurance_amount
-  pl_monthly_hoa_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.pl_monthly_hoa_amount
-  pl_monthly_mi_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.pl_monthly_mi_amount
-  pl_monthly_property_tax_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.pl_monthly_property_tax_amount
-  pl_monthly_lease_ground_rent_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.pl_monthly_lease_ground_rent_amount
-  pl_monthly_rent_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.pl_monthly_rent_amount
-  pl_monthly_obligation_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.pl_monthly_obligation_amount
-  pl_use_proposed_property_usage:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pl_use_proposed_property_usage
-  pl_property_usage_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_property_usage_type
-  pl_property_value_amount:
-    data_type: NUMERIC(15,0)
-    source:
-      field: primary_source_table.columns.pl_property_value_amount
-  pl_reo_disposition_status_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_reo_disposition_status_type
   pl_auto_geocode:
     data_type: BOOLEAN
     source:
@@ -705,254 +371,6 @@ columns:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.columns.pl_auto_geocode_exception
-  pl_msa_code:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_msa_code
-  pl_state_fips:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_state_fips
-  pl_county_fips:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_county_fips
-  pl_census_tract:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_census_tract
-  pl_mh_make:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_mh_make
-  pl_mh_model:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_mh_model
-  pl_mh_length:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pl_mh_length
-  pl_mh_width:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pl_mh_width
-  pl_mh_manufacturer:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_mh_manufacturer
-  pl_mh_serial_number:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_mh_serial_number
-  pl_mh_hud_label_number:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_mh_hud_label_number
-  pl_mh_certificate_of_title_issued:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_mh_certificate_of_title_issued
-  pl_mh_certificate_of_title_number:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_mh_certificate_of_title_number
-  pl_mh_certificate_of_title_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_mh_certificate_of_title_type
-  pl_mh_loan_purpose_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_mh_loan_purpose_type
-  pl_mh_anchored:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pl_mh_anchored
-  pl_coop_company_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_coop_company_name
-  pl_coop_building_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_coop_building_name
-  pl_coop_vacant_units:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pl_coop_vacant_units
-  pl_coop_proprietary_lease_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.pl_coop_proprietary_lease_date
-  pl_coop_assignment_lease_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.pl_coop_assignment_lease_date
-  pl_coop_existing_company_laws_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_coop_existing_company_laws_state
-  pl_coop_shares_being_purchased:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pl_coop_shares_being_purchased
-  pl_coop_attorney_in_fact:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_coop_attorney_in_fact
-  pl_coop_stock_certificate_number:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_coop_stock_certificate_number
-  pl_coop_apartment_unit:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.pl_coop_apartment_unit
-  pl_rental:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pl_rental
-  pl_underwriter_comments:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.pl_underwriter_comments
-  pl_lava_zone_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_lava_zone_type
-  pl_neighborhood_location_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_neighborhood_location_type
-  pl_site_area:
-    data_type: NUMERIC(15,0)
-    source:
-      field: primary_source_table.columns.pl_site_area
-  pl_hud_reo:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_hud_reo
-  pl_va_guaranteed_reo:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_va_guaranteed_reo
-  pl_va_loan_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.pl_va_loan_date
-  pl_gross_building_area_square_feet:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pl_gross_building_area_square_feet
-  pl_project_dwelling_units_sold_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pl_project_dwelling_units_sold_count
-  pl_prior_owners_title:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pl_prior_owners_title
-  pl_prior_owners_title_policy_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.pl_prior_owners_title_policy_amount
-  pl_prior_owners_title_policy_effective_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.pl_prior_owners_title_policy_effective_date
-  pl_prior_lenders_title:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pl_prior_lenders_title
-  pl_prior_lenders_title_policy_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.pl_prior_lenders_title_policy_amount
-  pl_prior_lenders_title_policy_effective_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.pl_prior_lenders_title_policy_effective_date
-  pl_bedroom_count_unit_1:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pl_bedroom_count_unit_1
-  pl_bedroom_count_unit_2:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pl_bedroom_count_unit_2
-  pl_bedroom_count_unit_3:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pl_bedroom_count_unit_3
-  pl_bedroom_count_unit_4:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pl_bedroom_count_unit_4
-  pl_rent_amount_unit_1:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.pl_rent_amount_unit_1
-  pl_rent_amount_unit_2:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.pl_rent_amount_unit_2
-  pl_rent_amount_unit_3:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.pl_rent_amount_unit_3
-  pl_rent_amount_unit_4:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.pl_rent_amount_unit_4
-  pl_listed_for_sale_in_last_6_months:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_listed_for_sale_in_last_6_months
-  pl_property_in_borrower_trust:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_property_in_borrower_trust
-  pl_road_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_road_type
-  pl_water_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_water_type
-  pl_sanitation_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_sanitation_type
-  pl_survey_required:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_survey_required
-  pl_solar_panels_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_solar_panels_type
-  pl_power_purchase_agreement:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_power_purchase_agreement
-  pl_solar_panel_provider_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_solar_panel_provider_name
-  pl_seller_acquired_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.pl_seller_acquired_date
-  pl_seller_original_cost_amount:
-    data_type: NUMERIC(15,0)
-    source:
-      field: primary_source_table.columns.pl_seller_original_cost_amount
-  pl_remaining_economic_life_years:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pl_remaining_economic_life_years
   pl_bathroom_count_unit_1:
     data_type: INTEGER
     source:
@@ -969,22 +387,132 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.pl_bathroom_count_unit_4
-  pl_total_room_count_unit_1:
+  pl_bedroom_count_unit_1:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.pl_total_room_count_unit_1
-  pl_total_room_count_unit_2:
+      field: primary_source_table.columns.pl_bedroom_count_unit_1
+  pl_bedroom_count_unit_2:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.pl_total_room_count_unit_2
-  pl_total_room_count_unit_3:
+      field: primary_source_table.columns.pl_bedroom_count_unit_2
+  pl_bedroom_count_unit_3:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.pl_total_room_count_unit_3
-  pl_total_room_count_unit_4:
+      field: primary_source_table.columns.pl_bedroom_count_unit_3
+  pl_bedroom_count_unit_4:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.pl_total_room_count_unit_4
+      field: primary_source_table.columns.pl_bedroom_count_unit_4
+  pl_building_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_building_status_type
+  pl_calculated_lead_inspection_required:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_calculated_lead_inspection_required
+  pl_census_tract:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_census_tract
+  pl_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_city
+  pl_community_land_trust:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pl_community_land_trust
+  pl_construction_conversion:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_construction_conversion
+  pl_construction_improvement_costs_amount:
+    data_type: NUMERIC(15,0)
+  pl_coop_apartment_unit:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_coop_apartment_unit
+  pl_coop_assignment_lease_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.pl_coop_assignment_lease_date
+  pl_coop_attorney_in_fact:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_coop_attorney_in_fact
+  pl_coop_building_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_coop_building_name
+  pl_coop_company_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_coop_company_name
+  pl_coop_existing_company_laws_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_coop_existing_company_laws_state
+  pl_coop_proprietary_lease_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.pl_coop_proprietary_lease_date
+  pl_coop_shares_being_purchased:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pl_coop_shares_being_purchased
+  pl_coop_stock_certificate_number:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_coop_stock_certificate_number
+  pl_coop_vacant_units:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pl_coop_vacant_units
+  pl_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_country
+  pl_county_fips:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_county_fips
+  pl_county_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pl_county_pid
+  pl_cpm_project_id:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_cpm_project_id
+  pl_energy_improvement_addition_new_feature:
+    data_type: BOOLEAN
+  pl_energy_improvement_installation_solar:
+    data_type: BOOLEAN
+  pl_energy_improvement_insulation_sealant:
+    data_type: BOOLEAN
+  pl_energy_improvement_other:
+    data_type: BOOLEAN
+  pl_energy_improvement_replacement_major_system:
+    data_type: BOOLEAN
+  pl_energy_related_repairs_or_improvements_amount:
+    data_type: NUMERIC(15,2)
+  pl_financed_units_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pl_financed_units_count
+  pl_geocode_service_disabled:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pl_geocode_service_disabled
+  pl_geocode_system_error:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pl_geocode_system_error
+  pl_gross_building_area_square_feet:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pl_gross_building_area_square_feet
   pl_gross_living_area_square_feet_unit_1:
     data_type: INTEGER
     source:
@@ -1001,78 +529,274 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.pl_gross_living_area_square_feet_unit_4
-  pl_mh_leasehold__property_interest_type:
+  pl_hud_reo:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.pl_mh_leasehold__property_interest_type
-  pl_tribe_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_tribe_name
-  pl_leasehold_begin_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.pl_leasehold_begin_date
-  pl_lease_number:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_lease_number
-  pl_property_inspection_required:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pl_property_inspection_required
+      field: primary_source_table.columns.pl_hud_reo
   pl_hvac_inspection_required:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.pl_hvac_inspection_required
-  pl_pest_inspection_required:
+  pl_inclusionary_zoning:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.pl_pest_inspection_required
-  pl_radon_inspection_required:
+      field: primary_source_table.columns.pl_inclusionary_zoning
+  pl_land_estimated_value_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.pl_land_estimated_value_amount
+  pl_land_original_cost_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.pl_land_original_cost_amount
+  pl_landlord_city:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_landlord_city
+  pl_landlord_company_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_landlord_company_name
+  pl_landlord_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_landlord_country
+  pl_landlord_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.pl_landlord_email
+  pl_landlord_fax:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_landlord_fax
+  pl_landlord_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_landlord_first_name
+  pl_landlord_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_landlord_last_name
+  pl_landlord_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_landlord_middle_name
+  pl_landlord_mobile_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_landlord_mobile_phone
+  pl_landlord_name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_landlord_name_suffix
+  pl_landlord_office_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_landlord_office_phone
+  pl_landlord_office_phone_extension:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.pl_landlord_office_phone_extension
+  pl_landlord_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_landlord_postal_code
+  pl_landlord_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_landlord_state
+  pl_landlord_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_landlord_street1
+  pl_landlord_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_landlord_street2
+  pl_landlord_title:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_landlord_title
+  pl_lava_zone_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_lava_zone_type
+  pl_lead_inspection_required:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_lead_inspection_required
+  pl_lease_number:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_lease_number
+  pl_leasehold_begin_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.pl_leasehold_begin_date
+  pl_leasehold_expiration_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.pl_leasehold_expiration_date
+  pl_legal_block:
+    data_type: VARCHAR(64)
+    source:
+      field: primary_source_table.columns.pl_legal_block
+  pl_legal_block_na:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.pl_radon_inspection_required
-  pl_septic_inspection_required:
+      field: primary_source_table.columns.pl_legal_block_na
+  pl_legal_description:
+    data_type: VARCHAR(32000)
+    source:
+      field: primary_source_table.columns.pl_legal_description
+  pl_legal_description_confirmed:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.pl_septic_inspection_required
-  pl_water_well_inspection_required:
+      field: primary_source_table.columns.pl_legal_description_confirmed
+  pl_legal_description_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_legal_description_type
+  pl_legal_lot:
+    data_type: VARCHAR(64)
+    source:
+      field: primary_source_table.columns.pl_legal_lot
+  pl_legal_lot_na:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.pl_water_well_inspection_required
-  pl_structural_inspection_required:
+      field: primary_source_table.columns.pl_legal_lot_na
+  pl_legal_section:
+    data_type: VARCHAR(64)
+    source:
+      field: primary_source_table.columns.pl_legal_section
+  pl_legal_section_na:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.pl_structural_inspection_required
-  pl_pest_inspection_required_auto_compute:
-    data_type: BOOLEAN
+      field: primary_source_table.columns.pl_legal_section_na
+  pl_listed_for_sale_in_last_6_months:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.pl_pest_inspection_required_auto_compute
+      field: primary_source_table.columns.pl_listed_for_sale_in_last_6_months
+  pl_living_unit_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pl_living_unit_count
   pl_management_agent_federal_tax_id:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.pl_management_agent_federal_tax_id
-  pl_mh_manufacturer_street_1:
+  pl_management_city:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.pl_mh_manufacturer_street_1
-  pl_mh_manufacturer_street_2:
+      field: primary_source_table.columns.pl_management_city
+  pl_management_company_name:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.pl_mh_manufacturer_street_2
+      field: primary_source_table.columns.pl_management_company_name
+  pl_management_country:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_management_country
+  pl_management_email:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.pl_management_email
+  pl_management_fax:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_management_fax
+  pl_management_first_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_management_first_name
+  pl_management_last_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_management_last_name
+  pl_management_middle_name:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_management_middle_name
+  pl_management_mobile_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_management_mobile_phone
+  pl_management_name_suffix:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_management_name_suffix
+  pl_management_office_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_management_office_phone
+  pl_management_office_phone_extension:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.pl_management_office_phone_extension
+  pl_management_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_management_postal_code
+  pl_management_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_management_state
+  pl_management_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_management_street1
+  pl_management_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_management_street2
+  pl_management_title:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_management_title
+  pl_mh_anchored:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pl_mh_anchored
+  pl_mh_certificate_of_title_issued:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_mh_certificate_of_title_issued
+  pl_mh_certificate_of_title_number:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_mh_certificate_of_title_number
+  pl_mh_certificate_of_title_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_mh_certificate_of_title_type
+  pl_mh_hud_label_number:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_mh_hud_label_number
+  pl_mh_leasehold__property_interest_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_mh_leasehold__property_interest_type
+  pl_mh_length:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pl_mh_length
+  pl_mh_loan_purpose_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_mh_loan_purpose_type
+  pl_mh_make:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_mh_make
+  pl_mh_manufacturer:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_mh_manufacturer
   pl_mh_manufacturer_city:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.pl_mh_manufacturer_city
-  pl_mh_manufacturer_state:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_mh_manufacturer_state
-  pl_mh_manufacturer_postal_code:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.pl_mh_manufacturer_postal_code
   pl_mh_manufacturer_phone:
     data_type: VARCHAR(32)
     source:
@@ -1081,62 +805,42 @@ columns:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.pl_mh_manufacturer_phone_extension
-  pl_recording_city_name:
+  pl_mh_manufacturer_postal_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.pl_recording_city_name
-  pl_abbreviated_legal_description:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.pl_abbreviated_legal_description
-  pl_geocode_service_disabled:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pl_geocode_service_disabled
-  pl_vesting_confirmed:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pl_vesting_confirmed
-  pl_previous_title_manner_held_description:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.pl_previous_title_manner_held_description
-  pl_legal_lot_na:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pl_legal_lot_na
-  pl_legal_block_na:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pl_legal_block_na
-  pl_legal_section_na:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pl_legal_section_na
-  pl_legal_description_confirmed:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.pl_legal_description_confirmed
-  pl_lead_inspection_required:
+      field: primary_source_table.columns.pl_mh_manufacturer_postal_code
+  pl_mh_manufacturer_state:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.pl_lead_inspection_required
-  pl_calculated_lead_inspection_required:
+      field: primary_source_table.columns.pl_mh_manufacturer_state
+  pl_mh_manufacturer_street_1:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.pl_calculated_lead_inspection_required
-  pl_geocode_system_error:
-    data_type: BOOLEAN
+      field: primary_source_table.columns.pl_mh_manufacturer_street_1
+  pl_mh_manufacturer_street_2:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.pl_geocode_system_error
+      field: primary_source_table.columns.pl_mh_manufacturer_street_2
+  pl_mh_model:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_mh_model
+  pl_mh_serial_number:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_mh_serial_number
+  pl_mh_width:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pl_mh_width
   pl_mixed_use:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.pl_mixed_use
-  pl_mixed_use_verified:
-    data_type: BOOLEAN
+  pl_mixed_use_area_percent:
+    data_type: NUMERIC(11,9)
     source:
-      field: primary_source_table.columns.pl_mixed_use_verified
+      field: primary_source_table.columns.pl_mixed_use_area_percent
   pl_mixed_use_area_square_feet:
     data_type: INTEGER
     source:
@@ -1145,70 +849,366 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.pl_mixed_use_area_square_feet_verified
-  pl_mixed_use_area_percent:
-    data_type: NUMERIC(11,9)
+  pl_mixed_use_verified:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.pl_mixed_use_area_percent
-  pl_trust_classification_type:
+      field: primary_source_table.columns.pl_mixed_use_verified
+  pl_monthly_hoa_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.pl_monthly_hoa_amount
+  pl_monthly_lease_ground_rent_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.pl_monthly_lease_ground_rent_amount
+  pl_monthly_mi_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.pl_monthly_mi_amount
+  pl_monthly_obligation_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.pl_monthly_obligation_amount
+  pl_monthly_property_insurance_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.pl_monthly_property_insurance_amount
+  pl_monthly_property_tax_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.pl_monthly_property_tax_amount
+  pl_monthly_rent_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.pl_monthly_rent_amount
+  pl_msa_code:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_msa_code
+  pl_native_american_lands_type:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.pl_trust_classification_type
-  pl_additional_building_area_square_feet:
+      field: primary_source_table.columns.pl_native_american_lands_type
+  pl_neighborhood_location_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_neighborhood_location_type
+  pl_pest_inspection_required:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pl_pest_inspection_required
+  pl_pest_inspection_required_auto_compute:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pl_pest_inspection_required_auto_compute
+  pl_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pl_pid
+  pl_postal_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_postal_code
+  pl_power_purchase_agreement:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_power_purchase_agreement
+  pl_previous_title_manner_held_description:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.pl_previous_title_manner_held_description
+  pl_prior_lenders_title:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pl_prior_lenders_title
+  pl_prior_lenders_title_policy_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.pl_prior_lenders_title_policy_amount
+  pl_prior_lenders_title_policy_effective_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.pl_prior_lenders_title_policy_effective_date
+  pl_prior_owners_title:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pl_prior_owners_title
+  pl_prior_owners_title_policy_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.pl_prior_owners_title_policy_amount
+  pl_prior_owners_title_policy_effective_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.pl_prior_owners_title_policy_effective_date
+  pl_project_classification_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_project_classification_type
+  pl_project_design_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_project_design_type
+  pl_project_dwelling_units_sold_count:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.pl_additional_building_area_square_feet
-  pl_acquisition_date_verified:
+      field: primary_source_table.columns.pl_project_dwelling_units_sold_count
+  pl_project_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_project_name
+  pl_property_category_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_property_category_type
+  pl_property_in_borrower_trust:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_property_in_borrower_trust
+  pl_property_inspection_required:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.pl_acquisition_date_verified
-  pl_acquisition_cost_amount_verified:
-    data_type: BOOLEAN
+      field: primary_source_table.columns.pl_property_inspection_required
+  pl_property_insurance_amount_input_type:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.pl_acquisition_cost_amount_verified
+      field: primary_source_table.columns.pl_property_insurance_amount_input_type
+  pl_property_rights_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_property_rights_type
+  pl_property_tax_amount_input_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_property_tax_amount_input_type
+  pl_property_tax_id:
+    data_type: VARCHAR(64)
+    source:
+      field: primary_source_table.columns.pl_property_tax_id
   pl_property_tax_id_verified:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.pl_property_tax_id_verified
-  pl_seller_acquired_date_verified:
-    data_type: BOOLEAN
+  pl_property_usage_type:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.pl_seller_acquired_date_verified
-  pl_seller_original_cost_amount_verified:
-    data_type: BOOLEAN
+      field: primary_source_table.columns.pl_property_usage_type
+  pl_property_value_amount:
+    data_type: NUMERIC(15,0)
     source:
-      field: primary_source_table.columns.pl_seller_original_cost_amount_verified
-  pl_snapshotted_pid:
+      field: primary_source_table.columns.pl_property_value_amount
+  pl_proposal_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.pl_snapshotted_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
+      field: primary_source_table.columns.pl_proposal_pid
+  pl_radon_inspection_required:
     data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
-  pl_construction_improvement_costs_amount:
-    data_type: NUMERIC(15,0)
-  pl_refinance_total_improvement_costs_amount:
+    source:
+      field: primary_source_table.columns.pl_radon_inspection_required
+  pl_recording_city_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_recording_city_name
+  pl_recording_district_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_recording_district_name
+  pl_refinance_general_improvements_amount:
     data_type: NUMERIC(15,0)
   pl_refinance_improvements_type:
     data_type: VARCHAR(128)
   pl_refinance_proposed_improvements_description:
     data_type: VARCHAR(32)
-  pl_energy_improvement_replacement_major_system:
-    data_type: BOOLEAN
-  pl_energy_improvement_insulation_sealant:
-    data_type: BOOLEAN
-  pl_energy_improvement_installation_solar:
-    data_type: BOOLEAN
-  pl_energy_improvement_addition_new_feature:
-    data_type: BOOLEAN
-  pl_energy_improvement_other:
-    data_type: BOOLEAN
-  pl_energy_related_repairs_or_improvements_amount:
-    data_type: NUMERIC(15,2)
-  pl_refinance_general_improvements_amount:
+  pl_refinance_total_improvement_costs_amount:
     data_type: NUMERIC(15,0)
+  pl_remaining_economic_life_years:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pl_remaining_economic_life_years
+  pl_rent_amount_unit_1:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.pl_rent_amount_unit_1
+  pl_rent_amount_unit_2:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.pl_rent_amount_unit_2
+  pl_rent_amount_unit_3:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.pl_rent_amount_unit_3
+  pl_rent_amount_unit_4:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.pl_rent_amount_unit_4
+  pl_rental:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pl_rental
+  pl_reo_disposition_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_reo_disposition_status_type
+  pl_road_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_road_type
+  pl_sanitation_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_sanitation_type
+  pl_seller_acquired_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.pl_seller_acquired_date
+  pl_seller_acquired_date_verified:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pl_seller_acquired_date_verified
+  pl_seller_original_cost_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.pl_seller_original_cost_amount
+  pl_seller_original_cost_amount_verified:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pl_seller_original_cost_amount_verified
+  pl_septic_inspection_required:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pl_septic_inspection_required
+  pl_site_area:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.pl_site_area
+  pl_snapshotted_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.pl_snapshotted_pid
+  pl_solar_panel_provider_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_solar_panel_provider_name
+  pl_solar_panels_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_solar_panels_type
+  pl_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_state
+  pl_state_fips:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.pl_state_fips
+  pl_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_street1
+  pl_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_street2
+  pl_street_tbd:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pl_street_tbd
+  pl_structural_inspection_required:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pl_structural_inspection_required
+  pl_structure_built_month:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pl_structure_built_month
+  pl_structure_built_year:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pl_structure_built_year
+  pl_sub_jurisdiction_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_sub_jurisdiction_name
+  pl_subject_property:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pl_subject_property
+  pl_survey_required:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_survey_required
+  pl_title_manner_held_description:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.pl_title_manner_held_description
+  pl_title_manner_held_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_title_manner_held_type
+  pl_total_room_count_unit_1:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pl_total_room_count_unit_1
+  pl_total_room_count_unit_2:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pl_total_room_count_unit_2
+  pl_total_room_count_unit_3:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pl_total_room_count_unit_3
+  pl_total_room_count_unit_4:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pl_total_room_count_unit_4
+  pl_tribe_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_tribe_name
+  pl_trust_classification_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_trust_classification_type
+  pl_underwriter_comments:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.pl_underwriter_comments
+  pl_unique_dwelling_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_unique_dwelling_type
+  pl_unit_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pl_unit_count
+  pl_use_proposed_property_usage:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pl_use_proposed_property_usage
+  pl_va_guaranteed_reo:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_va_guaranteed_reo
+  pl_va_loan_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.pl_va_loan_date
+  pl_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pl_version
+  pl_vesting_confirmed:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pl_vesting_confirmed
+  pl_water_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.pl_water_type
+  pl_water_well_inspection_required:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pl_water_well_inspection_required
 etls:
   SP-100012:
     input_type: table

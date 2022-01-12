@@ -29,32 +29,32 @@ foreign_keys:
       schema: history_octane
       table: key_package_type
 columns:
-  kp_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.kp_pid
-  kp_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.kp_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   kp_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.kp_account_pid
-  kp_smart_doc_set_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.kp_smart_doc_set_pid
   kp_key_package_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.kp_key_package_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  kp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.kp_pid
+  kp_smart_doc_set_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.kp_smart_doc_set_pid
+  kp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.kp_version
 etls:
   SP-100252:
     input_type: table

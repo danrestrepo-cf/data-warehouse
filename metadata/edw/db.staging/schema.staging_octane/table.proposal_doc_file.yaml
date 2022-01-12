@@ -35,17 +35,17 @@ foreign_keys:
       schema: staging_octane
       table: proposal_doc_file_type
 columns:
-  prpdf_pid:
-    data_type: BIGINT
-  prpdf_version:
-    data_type: INTEGER
-  prpdf_proposal_doc_pid:
-    data_type: BIGINT
   prpdf_deal_file_pid:
     data_type: BIGINT
-  prpdf_proposal_doc_file_type:
-    data_type: VARCHAR(128)
   prpdf_included_file:
     data_type: VARCHAR(128)
   prpdf_key_doc:
     data_type: BOOLEAN
+  prpdf_pid:
+    data_type: BIGINT
+  prpdf_proposal_doc_file_type:
+    data_type: VARCHAR(128)
+  prpdf_proposal_doc_pid:
+    data_type: BIGINT
+  prpdf_version:
+    data_type: INTEGER

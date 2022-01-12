@@ -21,6 +21,16 @@ foreign_keys:
       schema: history_octane
       table: lender_user
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  wfsnm_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wfsnm_lender_user_pid
   wfsnm_pid:
     data_type: BIGINT
     source:
@@ -33,16 +43,6 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.wfsnm_wf_step_note_pid
-  wfsnm_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.wfsnm_lender_user_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
 etls:
   SP-100865:
     input_type: table

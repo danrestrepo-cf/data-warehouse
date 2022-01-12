@@ -37,14 +37,20 @@ foreign_keys:
       schema: history_octane
       table: county
 columns:
-  llr_pid:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  llr_county_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.llr_pid
-  llr_version:
-    data_type: INTEGER
+      field: primary_source_table.columns.llr_county_pid
+  llr_four_unit_limit_amount:
+    data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.llr_version
+      field: primary_source_table.columns.llr_four_unit_limit_amount
   llr_loan_limit_table_pid:
     data_type: BIGINT
     source:
@@ -53,36 +59,30 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.llr_loan_limit_type
-  llr_state_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.llr_state_type
-  llr_county_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.llr_county_pid
   llr_one_unit_limit_amount:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.llr_one_unit_limit_amount
-  llr_two_unit_limit_amount:
-    data_type: NUMERIC(15,2)
+  llr_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.llr_two_unit_limit_amount
+      field: primary_source_table.columns.llr_pid
+  llr_state_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.llr_state_type
   llr_three_unit_limit_amount:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.llr_three_unit_limit_amount
-  llr_four_unit_limit_amount:
+  llr_two_unit_limit_amount:
     data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.llr_four_unit_limit_amount
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.llr_two_unit_limit_amount
+  llr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.llr_version
 etls:
   SP-100255:
     input_type: table

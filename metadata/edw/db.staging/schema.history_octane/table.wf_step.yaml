@@ -133,18 +133,76 @@ foreign_keys:
       schema: history_octane
       table: wf_step_type
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  ws_active_only:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ws_active_only
+  ws_deal_stage_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ws_deal_stage_type
+  ws_description:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.ws_description
+  ws_expected_complete_minutes:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ws_expected_complete_minutes
+  ws_from_role_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ws_from_role_pid
+  ws_internal:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ws_internal
+  ws_lien_priority_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ws_lien_priority_type
   ws_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.ws_pid
-  ws_version:
-    data_type: INTEGER
+  ws_polling_interval_type:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.ws_version
-  ws_wf_process_pid:
+      field: primary_source_table.columns.ws_polling_interval_type
+  ws_prompt_user_defined_time:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.ws_prompt_user_defined_time
+  ws_role_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.ws_wf_process_pid
+      field: primary_source_table.columns.ws_role_pid
+  ws_sap_expire_minutes:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ws_sap_expire_minutes
+  ws_sap_expire_warning_minutes:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ws_sap_expire_warning_minutes
+  ws_second_of_day_timeout:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ws_second_of_day_timeout
+  ws_smart_doc_set_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ws_smart_doc_set_pid
+  ws_smart_message_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ws_smart_message_pid
   ws_step_name:
     data_type: VARCHAR(128)
     source:
@@ -165,112 +223,54 @@ columns:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.columns.ws_step_start_borrower_text
-  ws_expected_complete_minutes:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ws_expected_complete_minutes
-  ws_wf_step_timeout_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ws_wf_step_timeout_type
-  ws_second_of_day_timeout:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ws_second_of_day_timeout
-  ws_timeout_time_zone_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ws_timeout_time_zone_type
-  ws_description:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.ws_description
-  ws_wf_step_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ws_wf_step_type
-  ws_wf_phase_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ws_wf_phase_pid
-  ws_wf_step_performer_assign_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ws_wf_step_performer_assign_type
-  ws_role_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ws_role_pid
-  ws_from_role_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ws_from_role_pid
-  ws_wf_step_reassign_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ws_wf_step_reassign_type
-  ws_wf_step_function_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ws_wf_step_function_type
-  ws_sap_expire_minutes:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ws_sap_expire_minutes
-  ws_sap_expire_warning_minutes:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.ws_sap_expire_warning_minutes
-  ws_prompt_user_defined_time:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ws_prompt_user_defined_time
-  ws_smart_message_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ws_smart_message_pid
-  ws_smart_doc_set_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.ws_smart_doc_set_pid
-  ws_lien_priority_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ws_lien_priority_type
-  ws_active_only:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ws_active_only
-  ws_internal:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.ws_internal
-  ws_deal_stage_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ws_deal_stage_type
-  ws_polling_interval_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.ws_polling_interval_type
   ws_swappable:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.ws_swappable
-  ws_wf_prereq_set_pid:
-    data_type: BIGINT
+  ws_timeout_time_zone_type:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.ws_wf_prereq_set_pid
+      field: primary_source_table.columns.ws_timeout_time_zone_type
   ws_user_step_name:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ws_user_step_name
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  ws_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ws_version
+  ws_wf_phase_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ws_wf_phase_pid
+  ws_wf_prereq_set_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ws_wf_prereq_set_pid
+  ws_wf_process_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ws_wf_process_pid
+  ws_wf_step_function_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ws_wf_step_function_type
+  ws_wf_step_performer_assign_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ws_wf_step_performer_assign_type
+  ws_wf_step_reassign_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ws_wf_step_reassign_type
+  ws_wf_step_timeout_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ws_wf_step_timeout_type
+  ws_wf_step_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ws_wf_step_type
 etls:
   SP-100191:
     input_type: table

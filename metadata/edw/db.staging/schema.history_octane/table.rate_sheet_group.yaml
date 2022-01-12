@@ -29,26 +29,16 @@ foreign_keys:
       schema: history_octane
       table: loan_amortization_type
 columns:
-  rsg_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.rsg_pid
-  rsg_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.rsg_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   rsg_account_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.rsg_account_pid
-  rsg_rate_sheet_group_id:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.rsg_rate_sheet_group_id
-  rsg_rate_sheet_group_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.rsg_rate_sheet_group_name
   rsg_investor_pid:
     data_type: BIGINT
     source:
@@ -57,12 +47,22 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.rsg_loan_amortization_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  rsg_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.rsg_pid
+  rsg_rate_sheet_group_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.rsg_rate_sheet_group_id
+  rsg_rate_sheet_group_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.rsg_rate_sheet_group_name
+  rsg_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.rsg_version
 etls:
   SP-100881:
     input_type: table

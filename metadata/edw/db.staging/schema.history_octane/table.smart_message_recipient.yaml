@@ -37,18 +37,20 @@ foreign_keys:
       schema: history_octane
       table: smart_message_recipient_type
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  smr_email_recipient_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.smr_email_recipient_type
   smr_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.smr_pid
-  smr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.smr_version
-  smr_smart_message_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.smr_smart_message_pid
   smr_recipient_type:
     data_type: VARCHAR(128)
     source:
@@ -57,16 +59,14 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.smr_role_pid
-  smr_email_recipient_type:
-    data_type: VARCHAR(128)
+  smr_smart_message_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.smr_email_recipient_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.smr_smart_message_pid
+  smr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.smr_version
 etls:
   SP-100180:
     input_type: table

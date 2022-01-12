@@ -27,21 +27,21 @@ foreign_keys:
       schema: staging_octane
       table: state_type
 columns:
-  luml_pid:
-    data_type: BIGINT
-  luml_version:
-    data_type: INTEGER
-  luml_lender_user_pid:
-    data_type: BIGINT
-  luml_license_type:
-    data_type: VARCHAR(128)
-  luml_state_type:
-    data_type: VARCHAR(128)
-  luml_license_number:
-    data_type: VARCHAR(128)
   luml_from_date:
     data_type: DATE
-  luml_through_date:
-    data_type: DATE
+  luml_lender_user_pid:
+    data_type: BIGINT
+  luml_license_number:
+    data_type: VARCHAR(128)
+  luml_license_type:
+    data_type: VARCHAR(128)
   luml_note:
     data_type: VARCHAR(256)
+  luml_pid:
+    data_type: BIGINT
+  luml_state_type:
+    data_type: VARCHAR(128)
+  luml_through_date:
+    data_type: DATE
+  luml_version:
+    data_type: INTEGER

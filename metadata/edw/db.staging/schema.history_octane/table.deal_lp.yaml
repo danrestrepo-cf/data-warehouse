@@ -13,6 +13,22 @@ foreign_keys:
       schema: history_octane
       table: deal
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  dlp_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dlp_deal_pid
+  dlp_lp_key_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dlp_lp_key_id
+  dlp_lp_loan_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.dlp_lp_loan_id
   dlp_pid:
     data_type: BIGINT
     source:
@@ -21,22 +37,6 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.dlp_version
-  dlp_deal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.dlp_deal_pid
-  dlp_lp_loan_id:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.dlp_lp_loan_id
-  dlp_lp_key_id:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.dlp_lp_key_id
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
   etl_batch_id:
     data_type: TEXT
 etls:

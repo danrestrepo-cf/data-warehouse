@@ -27,13 +27,13 @@ foreign_keys:
       schema: staging_octane
       table: role
 columns:
-  lura_pid:
-    data_type: BIGINT
-  lura_version:
-    data_type: INTEGER
   lura_lender_user_pid:
     data_type: BIGINT
   lura_lender_user_role_pid:
     data_type: BIGINT
+  lura_pid:
+    data_type: BIGINT
   lura_role_pid:
     data_type: BIGINT
+  lura_version:
+    data_type: INTEGER

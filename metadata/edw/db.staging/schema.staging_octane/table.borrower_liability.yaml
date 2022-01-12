@@ -19,11 +19,11 @@ foreign_keys:
       schema: staging_octane
       table: liability
 columns:
-  bl_pid:
-    data_type: BIGINT
-  bl_version:
-    data_type: INTEGER
   bl_borrower_pid:
     data_type: BIGINT
   bl_liability_pid:
     data_type: BIGINT
+  bl_pid:
+    data_type: BIGINT
+  bl_version:
+    data_type: INTEGER

@@ -53,22 +53,38 @@ foreign_keys:
       schema: history_octane
       table: ernst_security_instrument_request_type
 columns:
-  enst_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.enst_pid
-  enst_version:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  enst_assign_index_fee_grantees_count:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.enst_version
-  enst_loan_pid:
-    data_type: BIGINT
+      field: primary_source_table.columns.enst_assign_index_fee_grantees_count
+  enst_assign_index_fee_grantor_count:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.enst_loan_pid
-  enst_response_deal_system_file_pid:
-    data_type: BIGINT
+      field: primary_source_table.columns.enst_assign_index_fee_grantor_count
+  enst_assign_index_fee_requested:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.enst_response_deal_system_file_pid
+      field: primary_source_table.columns.enst_assign_index_fee_requested
+  enst_assign_index_fee_signatures_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_assign_index_fee_signatures_count
+  enst_assign_index_fee_surnames_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_assign_index_fee_surnames_count
+  enst_assignment_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_assignment_count
+  enst_assignment_page_count_per_doc:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_assignment_page_count_per_doc
   enst_auto_compute:
     data_type: BOOLEAN
     source:
@@ -77,6 +93,50 @@ columns:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.enst_create_datetime
+  enst_deed_amendment_page_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_deed_amendment_page_count
+  enst_deed_consideration_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.enst_deed_consideration_amount
+  enst_deed_index_fee_grantees_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_deed_index_fee_grantees_count
+  enst_deed_index_fee_grantor_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_deed_index_fee_grantor_count
+  enst_deed_index_fee_requested:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.enst_deed_index_fee_requested
+  enst_deed_index_fee_signatures_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_deed_index_fee_signatures_count
+  enst_deed_index_fee_surnames_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_deed_index_fee_surnames_count
+  enst_deed_page_breakdown:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.enst_deed_page_breakdown
+  enst_deed_page_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_deed_page_count
+  enst_deed_request_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.enst_deed_request_type
+  enst_ernst_page_rec:
+    data_type: VARCHAR(16)
+    source:
+      field: primary_source_table.columns.enst_ernst_page_rec
   enst_ernst_request_status_type:
     data_type: VARCHAR(128)
     source:
@@ -85,58 +145,26 @@ columns:
     data_type: TEXT
     source:
       field: primary_source_table.columns.enst_error_messages
-  enst_state:
-    data_type: VARCHAR(2)
-    source:
-      field: primary_source_table.columns.enst_state
-  enst_ernst_page_rec:
-    data_type: VARCHAR(16)
-    source:
-      field: primary_source_table.columns.enst_ernst_page_rec
-  enst_sub_jurisdiction_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.enst_sub_jurisdiction_name
-  enst_torrens:
+  enst_include_assignment:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.enst_torrens
-  enst_security_instrument_request_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.enst_security_instrument_request_type
-  enst_security_instrument_index_fee_requested:
+      field: primary_source_table.columns.enst_include_assignment
+  enst_include_poa:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.enst_security_instrument_index_fee_requested
-  enst_security_instrument_index_fee_grantor_count:
-    data_type: INTEGER
+      field: primary_source_table.columns.enst_include_poa
+  enst_include_subordination:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.enst_security_instrument_index_fee_grantor_count
-  enst_security_instrument_index_fee_grantees_count:
-    data_type: INTEGER
+      field: primary_source_table.columns.enst_include_subordination
+  enst_loan_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.enst_security_instrument_index_fee_grantees_count
-  enst_security_instrument_index_fee_surnames_count:
-    data_type: INTEGER
+      field: primary_source_table.columns.enst_loan_pid
+  enst_loan_position_type:
+    data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.enst_security_instrument_index_fee_surnames_count
-  enst_security_instrument_index_fee_signatures_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.enst_security_instrument_index_fee_signatures_count
-  enst_security_instrument_page_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.enst_security_instrument_page_count
-  enst_security_instrument_modification_amendment_page_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.enst_security_instrument_modification_amendment_page_count
-  enst_security_instrument_page_breakdown:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.enst_security_instrument_page_breakdown
+      field: primary_source_table.columns.enst_loan_position_type
   enst_mortgage_new_debt_amount:
     data_type: NUMERIC(15,0)
     source:
@@ -149,126 +177,98 @@ columns:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.enst_mortgage_unpaid_balance_amount
-  enst_deed_request_type:
-    data_type: VARCHAR(128)
+  enst_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.enst_deed_request_type
-  enst_deed_index_fee_requested:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.enst_deed_index_fee_requested
-  enst_deed_index_fee_grantor_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.enst_deed_index_fee_grantor_count
-  enst_deed_index_fee_grantees_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.enst_deed_index_fee_grantees_count
-  enst_deed_index_fee_surnames_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.enst_deed_index_fee_surnames_count
-  enst_deed_index_fee_signatures_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.enst_deed_index_fee_signatures_count
-  enst_deed_page_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.enst_deed_page_count
-  enst_deed_page_breakdown:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.enst_deed_page_breakdown
-  enst_deed_consideration_amount:
-    data_type: NUMERIC(15,0)
-    source:
-      field: primary_source_table.columns.enst_deed_consideration_amount
-  enst_deed_amendment_page_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.enst_deed_amendment_page_count
-  enst_include_assignment:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.enst_include_assignment
-  enst_assign_index_fee_requested:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.enst_assign_index_fee_requested
-  enst_assign_index_fee_grantor_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.enst_assign_index_fee_grantor_count
-  enst_assign_index_fee_grantees_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.enst_assign_index_fee_grantees_count
-  enst_assign_index_fee_surnames_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.enst_assign_index_fee_surnames_count
-  enst_assign_index_fee_signatures_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.enst_assign_index_fee_signatures_count
-  enst_assignment_page_count_per_doc:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.enst_assignment_page_count_per_doc
-  enst_assignment_count:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.enst_assignment_count
-  enst_include_poa:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.enst_include_poa
+      field: primary_source_table.columns.enst_pid
   enst_poa_page_count:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.enst_poa_page_count
-  enst_include_subordination:
-    data_type: BOOLEAN
+  enst_response_deal_system_file_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.enst_include_subordination
-  enst_subord_index_fee_requested:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.enst_subord_index_fee_requested
-  enst_subord_index_fee_grantor_count:
+      field: primary_source_table.columns.enst_response_deal_system_file_pid
+  enst_security_instrument_index_fee_grantees_count:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.enst_subord_index_fee_grantor_count
+      field: primary_source_table.columns.enst_security_instrument_index_fee_grantees_count
+  enst_security_instrument_index_fee_grantor_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_security_instrument_index_fee_grantor_count
+  enst_security_instrument_index_fee_requested:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.enst_security_instrument_index_fee_requested
+  enst_security_instrument_index_fee_signatures_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_security_instrument_index_fee_signatures_count
+  enst_security_instrument_index_fee_surnames_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_security_instrument_index_fee_surnames_count
+  enst_security_instrument_modification_amendment_page_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_security_instrument_modification_amendment_page_count
+  enst_security_instrument_page_breakdown:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.enst_security_instrument_page_breakdown
+  enst_security_instrument_page_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_security_instrument_page_count
+  enst_security_instrument_request_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.enst_security_instrument_request_type
+  enst_state:
+    data_type: VARCHAR(2)
+    source:
+      field: primary_source_table.columns.enst_state
+  enst_sub_jurisdiction_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.enst_sub_jurisdiction_name
   enst_subord_index_fee_grantees_count:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.enst_subord_index_fee_grantees_count
-  enst_subord_index_fee_surnames_count:
+  enst_subord_index_fee_grantor_count:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.enst_subord_index_fee_surnames_count
+      field: primary_source_table.columns.enst_subord_index_fee_grantor_count
+  enst_subord_index_fee_requested:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.enst_subord_index_fee_requested
   enst_subord_index_fee_signatures_count:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.enst_subord_index_fee_signatures_count
-  enst_subordination_page_count_per_doc:
+  enst_subord_index_fee_surnames_count:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.enst_subordination_page_count_per_doc
+      field: primary_source_table.columns.enst_subord_index_fee_surnames_count
   enst_subordination_count:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.enst_subordination_count
-  enst_loan_position_type:
-    data_type: VARCHAR(128)
+  enst_subordination_page_count_per_doc:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.enst_loan_position_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
+      field: primary_source_table.columns.enst_subordination_page_count_per_doc
+  enst_torrens:
     data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.enst_torrens
+  enst_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.enst_version
   etl_batch_id:
     data_type: TEXT
 etls:

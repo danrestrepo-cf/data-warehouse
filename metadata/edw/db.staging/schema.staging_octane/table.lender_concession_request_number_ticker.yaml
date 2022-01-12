@@ -11,11 +11,11 @@ foreign_keys:
       schema: staging_octane
       table: proposal
 columns:
+  lcrnt_next_lender_concession_request_number:
+    data_type: BIGINT
   lcrnt_pid:
+    data_type: BIGINT
+  lcrnt_proposal_pid:
     data_type: BIGINT
   lcrnt_version:
     data_type: INTEGER
-  lcrnt_proposal_pid:
-    data_type: BIGINT
-  lcrnt_next_lender_concession_request_number:
-    data_type: BIGINT

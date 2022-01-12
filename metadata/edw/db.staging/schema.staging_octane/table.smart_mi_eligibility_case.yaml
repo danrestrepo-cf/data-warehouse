@@ -19,15 +19,15 @@ foreign_keys:
       schema: staging_octane
       table: criteria
 columns:
-  smec_pid:
-    data_type: BIGINT
-  smec_version:
-    data_type: INTEGER
-  smec_smart_mi_pid:
-    data_type: BIGINT
   smec_criteria_pid:
     data_type: BIGINT
   smec_from_date:
     data_type: DATE
+  smec_pid:
+    data_type: BIGINT
+  smec_smart_mi_pid:
+    data_type: BIGINT
   smec_through_date:
     data_type: DATE
+  smec_version:
+    data_type: INTEGER

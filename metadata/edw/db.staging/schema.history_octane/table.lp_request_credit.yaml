@@ -45,38 +45,12 @@ foreign_keys:
       schema: history_octane
       table: credit_bureau_type
 columns:
-  lprc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lprc_pid
-  lprc_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lprc_version
-  lprc_lp_request_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lprc_lp_request_pid
-  lprc_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.lprc_create_datetime
-  lprc_credit_report_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.lprc_credit_report_create_datetime
-  lprc_credit_bureau_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lprc_credit_bureau_type
-  lprc_credit_report_identifier:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.lprc_credit_report_identifier
-  lprc_credit_report_name:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.lprc_credit_report_name
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   lprc_aus_credit_service_type:
     data_type: VARCHAR(128)
     source:
@@ -89,12 +63,38 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lprc_borrower_2_borrower_tiny_id_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  lprc_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.lprc_create_datetime
+  lprc_credit_bureau_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lprc_credit_bureau_type
+  lprc_credit_report_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.lprc_credit_report_create_datetime
+  lprc_credit_report_identifier:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lprc_credit_report_identifier
+  lprc_credit_report_name:
+    data_type: VARCHAR(256)
+    source:
+      field: primary_source_table.columns.lprc_credit_report_name
+  lprc_lp_request_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lprc_lp_request_pid
+  lprc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lprc_pid
+  lprc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lprc_version
 etls:
   SP-100311:
     input_type: table

@@ -29,44 +29,44 @@ foreign_keys:
       schema: history_octane
       table: lender_user_notice_type
 columns:
-  lun_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lun_pid
-  lun_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lun_version
-  lun_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lun_lender_user_pid
-  lun_deal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lun_deal_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   lun_create_datetime:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.lun_create_datetime
-  lun_lender_user_notice_type:
-    data_type: VARCHAR(128)
+  lun_deal_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.lun_lender_user_notice_type
+      field: primary_source_table.columns.lun_deal_pid
   lun_detail:
     data_type: VARCHAR(16000)
     source:
       field: primary_source_table.columns.lun_detail
+  lun_lender_user_notice_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lun_lender_user_notice_type
+  lun_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lun_lender_user_pid
+  lun_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lun_pid
   lun_source_unparsed_name:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lun_source_unparsed_name
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  lun_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lun_version
 etls:
   SP-100278:
     input_type: table

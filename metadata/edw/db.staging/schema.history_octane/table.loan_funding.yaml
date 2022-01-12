@@ -45,82 +45,16 @@ foreign_keys:
       schema: history_octane
       table: funding_status_type
 columns:
-  lf_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lf_pid
-  lf_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lf_version
-  lf_loan_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lf_loan_pid
-  lf_interim_funder_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lf_interim_funder_pid
-  lf_proposal_snapshot_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lf_proposal_snapshot_pid
-  lf_interim_funder_loan_id:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.lf_interim_funder_loan_id
-  lf_funding_status_type:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  lf_collateral_courier_type:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.lf_funding_status_type
-  lf_requested_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.lf_requested_date
-  lf_confirmed_release_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.lf_confirmed_release_datetime
-  lf_wire_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.lf_wire_amount
-  lf_interim_funder_fee_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.lf_interim_funder_fee_amount
-  lf_release_wire_federal_reference_number:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.lf_release_wire_federal_reference_number
-  lf_disbursement_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.lf_disbursement_date
-  lf_return_request_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.lf_return_request_date
-  lf_return_confirmed_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.lf_return_confirmed_date
-  lf_funds_authorization_code:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.lf_funds_authorization_code
-  lf_scheduled_release_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.lf_scheduled_release_date
-  lf_funds_authorized_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.lf_funds_authorized_datetime
-  lf_funding_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.lf_funding_date
+      field: primary_source_table.columns.lf_collateral_courier_type
   lf_collateral_sent_date:
     data_type: DATE
     source:
@@ -129,18 +63,14 @@ columns:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.lf_collateral_tracking_number
-  lf_collateral_courier_type:
-    data_type: VARCHAR(128)
+  lf_confirmed_release_datetime:
+    data_type: TIMESTAMP
     source:
-      field: primary_source_table.columns.lf_collateral_courier_type
-  lf_post_wire_adjustment_amount:
-    data_type: NUMERIC(15,2)
+      field: primary_source_table.columns.lf_confirmed_release_datetime
+  lf_disbursement_date:
+    data_type: DATE
     source:
-      field: primary_source_table.columns.lf_post_wire_adjustment_amount
-  lf_net_wire_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.lf_net_wire_amount
+      field: primary_source_table.columns.lf_disbursement_date
   lf_early_wire_charge_day_count:
     data_type: INTEGER
     source:
@@ -149,28 +79,98 @@ columns:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.lf_early_wire_daily_charge_amount
-  lf_early_wire_total_charge_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.lf_early_wire_total_charge_amount
-  lf_scheduled_release_date_auto_compute:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.lf_scheduled_release_date_auto_compute
   lf_early_wire_request:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.lf_early_wire_request
+  lf_early_wire_total_charge_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lf_early_wire_total_charge_amount
+  lf_funding_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lf_funding_date
+  lf_funding_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lf_funding_status_type
+  lf_funds_authorization_code:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lf_funds_authorization_code
+  lf_funds_authorized_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.lf_funds_authorized_datetime
+  lf_interim_funder_fee_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lf_interim_funder_fee_amount
+  lf_interim_funder_loan_id:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lf_interim_funder_loan_id
+  lf_interim_funder_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lf_interim_funder_pid
+  lf_loan_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lf_loan_pid
+  lf_net_wire_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lf_net_wire_amount
+  lf_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lf_pid
+  lf_post_wire_adjustment_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lf_post_wire_adjustment_amount
+  lf_proposal_snapshot_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lf_proposal_snapshot_pid
+  lf_release_wire_federal_reference_number:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lf_release_wire_federal_reference_number
+  lf_requested_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lf_requested_date
+  lf_return_confirmed_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lf_return_confirmed_date
+  lf_return_request_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lf_return_request_date
+  lf_scheduled_release_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.lf_scheduled_release_date
+  lf_scheduled_release_date_auto_compute:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lf_scheduled_release_date_auto_compute
   lf_synthetic_unique_active:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.lf_synthetic_unique_active
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  lf_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lf_version
+  lf_wire_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lf_wire_amount
 etls:
   SP-100319:
     input_type: table

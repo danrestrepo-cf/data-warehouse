@@ -67,30 +67,32 @@ foreign_keys:
       schema: staging_octane
       table: wf_step_type
 columns:
-  wds_pid:
+  wds_allow_check_override:
+    data_type: BOOLEAN
+  wds_complete_datetime:
+    data_type: TIMESTAMP
+  wds_completing_user_pid:
     data_type: BIGINT
-  wds_version:
+  wds_deal_stage_pid:
+    data_type: BIGINT
+  wds_description:
+    data_type: VARCHAR(1024)
+  wds_expected_complete_minutes:
     data_type: INTEGER
-  wds_wf_step_pid:
-    data_type: BIGINT
-  wds_wf_deal_process_pid:
-    data_type: BIGINT
+  wds_function_error_list:
+    data_type: TEXT
   wds_performer_user_pid:
     data_type: BIGINT
-  wds_visit_number:
+  wds_phase_name:
+    data_type: VARCHAR(128)
+  wds_phase_number:
+    data_type: INTEGER
+  wds_pid:
+    data_type: BIGINT
+  wds_polling_interval_offset:
     data_type: INTEGER
   wds_start_datetime:
     data_type: TIMESTAMP
-  wds_complete_datetime:
-    data_type: TIMESTAMP
-  wds_timeout_datetime:
-    data_type: TIMESTAMP
-  wds_wf_deal_step_status_type:
-    data_type: VARCHAR(128)
-  wds_wf_step_type:
-    data_type: VARCHAR(128)
-  wds_function_error_list:
-    data_type: TEXT
   wds_step_name:
     data_type: VARCHAR(128)
   wds_step_number:
@@ -99,21 +101,19 @@ columns:
     data_type: VARCHAR(16)
   wds_step_number_name_formatted:
     data_type: VARCHAR(145)
-  wds_expected_complete_minutes:
+  wds_timeout_datetime:
+    data_type: TIMESTAMP
+  wds_version:
     data_type: INTEGER
-  wds_description:
-    data_type: VARCHAR(1024)
+  wds_visit_number:
+    data_type: INTEGER
+  wds_wf_deal_process_pid:
+    data_type: BIGINT
+  wds_wf_deal_step_status_type:
+    data_type: VARCHAR(128)
   wds_wf_step_function_type:
     data_type: VARCHAR(128)
-  wds_phase_name:
+  wds_wf_step_pid:
+    data_type: BIGINT
+  wds_wf_step_type:
     data_type: VARCHAR(128)
-  wds_phase_number:
-    data_type: INTEGER
-  wds_allow_check_override:
-    data_type: BOOLEAN
-  wds_deal_stage_pid:
-    data_type: BIGINT
-  wds_completing_user_pid:
-    data_type: BIGINT
-  wds_polling_interval_offset:
-    data_type: INTEGER

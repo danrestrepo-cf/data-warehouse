@@ -101,62 +101,16 @@ foreign_keys:
       schema: history_octane
       table: prepay_penalty_schedule_type
 columns:
-  il_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.il_pid
-  il_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.il_version
-  il_lender_lock_major_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.il_lender_lock_major_pid
-  il_product_terms_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.il_product_terms_pid
-  il_mortgage_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.il_mortgage_type
-  il_interest_only_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.il_interest_only_type
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   il_buydown_schedule_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.il_buydown_schedule_type
-  il_prepay_penalty_schedule_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.il_prepay_penalty_schedule_type
-  il_lock_commitment_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.il_lock_commitment_type
-  il_initial_duration_days:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.il_initial_duration_days
-  il_commitment_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.il_commitment_datetime
-  il_initial_commitment_expiration_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.il_initial_commitment_expiration_datetime
-  il_effective_commitment_expiration_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.il_effective_commitment_expiration_datetime
-  il_effective_duration_days:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.il_effective_duration_days
   il_cancel_datetime:
     data_type: TIMESTAMP
     source:
@@ -169,6 +123,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.il_cancel_unparsed_name
+  il_commitment_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.il_commitment_datetime
   il_confirm_datetime:
     data_type: TIMESTAMP
     source:
@@ -181,46 +139,74 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.il_confirm_unparsed_name
-  il_requester_lender_user_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.il_requester_lender_user_pid
-  il_requester_unparsed_name:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.il_requester_unparsed_name
-  il_request_datetime:
+  il_effective_commitment_expiration_datetime:
     data_type: TIMESTAMP
     source:
-      field: primary_source_table.columns.il_request_datetime
-  il_notes:
-    data_type: VARCHAR(16000)
+      field: primary_source_table.columns.il_effective_commitment_expiration_datetime
+  il_effective_duration_days:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.il_notes
-  il_investor_base_note_rate_percent:
-    data_type: NUMERIC(11,9)
+      field: primary_source_table.columns.il_effective_duration_days
+  il_hedging:
+    data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.il_investor_base_note_rate_percent
+      field: primary_source_table.columns.il_hedging
+  il_initial_commitment_expiration_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.il_initial_commitment_expiration_datetime
+  il_initial_duration_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.il_initial_duration_days
+  il_interest_only_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.il_interest_only_type
   il_investor_base_arm_margin_percent:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.il_investor_base_arm_margin_percent
+  il_investor_base_note_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.il_investor_base_note_rate_percent
   il_investor_base_price_percent:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.il_investor_base_price_percent
-  il_lock_note_rate_percent:
-    data_type: NUMERIC(11,9)
+  il_investor_commitment_id:
+    data_type: VARCHAR(32)
     source:
-      field: primary_source_table.columns.il_lock_note_rate_percent
-  il_lock_initial_note_rate_percent:
-    data_type: NUMERIC(11,9)
+      field: primary_source_table.columns.il_investor_commitment_id
+  il_investor_loan_id:
+    data_type: VARCHAR(32)
     source:
-      field: primary_source_table.columns.il_lock_initial_note_rate_percent
+      field: primary_source_table.columns.il_investor_loan_id
+  il_investor_lock_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.il_investor_lock_status_type
+  il_lender_lock_major_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.il_lender_lock_major_pid
   il_lock_arm_margin_percent:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.il_lock_arm_margin_percent
+  il_lock_commitment_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.il_lock_commitment_type
+  il_lock_initial_note_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.il_lock_initial_note_rate_percent
+  il_lock_note_rate_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.il_lock_note_rate_percent
   il_lock_price_percent:
     data_type: NUMERIC(11,9)
     source:
@@ -233,36 +219,50 @@ columns:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.il_maximum_rebate_percent
-  il_trade_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.il_trade_pid
-  il_hedging:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.il_hedging
-  il_investor_lock_status_type:
+  il_mortgage_type:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.il_investor_lock_status_type
-  il_investor_loan_id:
-    data_type: VARCHAR(32)
+      field: primary_source_table.columns.il_mortgage_type
+  il_notes:
+    data_type: VARCHAR(16000)
     source:
-      field: primary_source_table.columns.il_investor_loan_id
+      field: primary_source_table.columns.il_notes
+  il_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.il_pid
+  il_prepay_penalty_schedule_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.il_prepay_penalty_schedule_type
+  il_product_terms_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.il_product_terms_pid
+  il_request_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.il_request_datetime
+  il_requester_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.il_requester_lender_user_pid
+  il_requester_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.il_requester_unparsed_name
   il_required_delivery_datetime:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.il_required_delivery_datetime
-  il_investor_commitment_id:
-    data_type: VARCHAR(32)
+  il_trade_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.il_investor_commitment_id
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.il_trade_pid
+  il_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.il_version
 etls:
   SP-100348:
     input_type: table

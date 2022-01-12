@@ -59,16 +59,6 @@ foreign_keys:
       schema: staging_octane
       table: field_type
 columns:
-  frc_pid:
-    data_type: BIGINT
-  frc_version:
-    data_type: INTEGER
-  frc_report_row_pid:
-    data_type: BIGINT
-  frc_header:
-    data_type: VARCHAR(128)
-  frc_formula:
-    data_type: VARCHAR(1024)
   frc_field_type_1:
     data_type: VARCHAR(128)
   frc_field_type_2:
@@ -81,5 +71,15 @@ columns:
     data_type: VARCHAR(128)
   frc_field_type_6:
     data_type: VARCHAR(128)
+  frc_formula:
+    data_type: VARCHAR(1024)
+  frc_header:
+    data_type: VARCHAR(128)
   frc_ordinal:
+    data_type: INTEGER
+  frc_pid:
+    data_type: BIGINT
+  frc_report_row_pid:
+    data_type: BIGINT
+  frc_version:
     data_type: INTEGER

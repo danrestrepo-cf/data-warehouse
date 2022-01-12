@@ -29,32 +29,32 @@ foreign_keys:
       schema: history_octane
       table: doc_permission_type
 columns:
-  sdr_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sdr_pid
-  sdr_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sdr_version
-  sdr_smart_doc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sdr_smart_doc_pid
-  sdr_role_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sdr_role_pid
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   sdr_doc_permission_type:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.sdr_doc_permission_type
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  sdr_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sdr_pid
+  sdr_role_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sdr_role_pid
+  sdr_smart_doc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sdr_smart_doc_pid
+  sdr_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sdr_version
 etls:
   SP-100178:
     input_type: table

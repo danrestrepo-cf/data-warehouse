@@ -11,19 +11,19 @@ foreign_keys:
       schema: staging_octane
       table: location
 columns:
-  locl_pid:
-    data_type: BIGINT
-  locl_version:
-    data_type: INTEGER
-  locl_location_pid:
-    data_type: BIGINT
-  locl_from_date:
-    data_type: DATE
-  locl_through_date:
-    data_type: DATE
-  locl_monthly_lease_amount:
-    data_type: NUMERIC(15,2)
   locl_cubicle_count:
     data_type: INTEGER
+  locl_from_date:
+    data_type: DATE
+  locl_location_pid:
+    data_type: BIGINT
+  locl_monthly_lease_amount:
+    data_type: NUMERIC(15,2)
   locl_office_count:
+    data_type: INTEGER
+  locl_pid:
+    data_type: BIGINT
+  locl_through_date:
+    data_type: DATE
+  locl_version:
     data_type: INTEGER

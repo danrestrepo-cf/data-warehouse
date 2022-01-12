@@ -11,25 +11,25 @@ foreign_keys:
       schema: staging_octane
       table: borrower
 columns:
-  bd_pid:
-    data_type: BIGINT
-  bd_version:
+  bd_age:
     data_type: INTEGER
   bd_borrower_pid:
     data_type: BIGINT
-  bd_first_name:
-    data_type: VARCHAR(32)
-  bd_last_name:
-    data_type: VARCHAR(32)
-  bd_age:
-    data_type: INTEGER
   bd_disabled:
     data_type: VARCHAR(128)
+  bd_first_name:
+    data_type: VARCHAR(32)
   bd_full_time_student:
     data_type: VARCHAR(128)
-  bd_receives_income:
-    data_type: VARCHAR(128)
-  bd_income_source:
-    data_type: TEXT
   bd_income_amount:
     data_type: NUMERIC(15,2)
+  bd_income_source:
+    data_type: TEXT
+  bd_last_name:
+    data_type: VARCHAR(32)
+  bd_pid:
+    data_type: BIGINT
+  bd_receives_income:
+    data_type: VARCHAR(128)
+  bd_version:
+    data_type: INTEGER

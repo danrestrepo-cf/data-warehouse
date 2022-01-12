@@ -11,15 +11,15 @@ foreign_keys:
       schema: staging_octane
       table: asset
 columns:
-  ald_pid:
-    data_type: BIGINT
-  ald_version:
-    data_type: INTEGER
   ald_asset_pid:
     data_type: BIGINT
   ald_deposit_amount:
     data_type: NUMERIC(15,2)
   ald_deposit_date:
     data_type: DATE
+  ald_pid:
+    data_type: BIGINT
   ald_snapshotted_pid:
     data_type: BIGINT
+  ald_version:
+    data_type: INTEGER

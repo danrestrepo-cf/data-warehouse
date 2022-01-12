@@ -21,14 +21,20 @@ foreign_keys:
       schema: history_octane
       table: smart_doc_set
 columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  pdstk_next_proposal_doc_set_id:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.pdstk_next_proposal_doc_set_id
   pdstk_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.pdstk_pid
-  pdstk_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.pdstk_version
   pdstk_proposal_pid:
     data_type: BIGINT
     source:
@@ -37,16 +43,10 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.pdstk_smart_doc_set_pid
-  pdstk_next_proposal_doc_set_id:
+  pdstk_version:
     data_type: INTEGER
     source:
-      field: primary_source_table.columns.pdstk_next_proposal_doc_set_id
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.pdstk_version
 etls:
   SP-100164:
     input_type: table

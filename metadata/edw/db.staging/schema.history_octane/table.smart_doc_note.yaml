@@ -21,26 +21,12 @@ foreign_keys:
       schema: history_octane
       table: lender_user
 columns:
-  sdn_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sdn_pid
-  sdn_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sdn_version
-  sdn_smart_doc_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sdn_smart_doc_pid
-  sdn_create_datetime:
-    data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.sdn_create_datetime
-  sdn_content:
-    data_type: VARCHAR(16000)
-    source:
-      field: primary_source_table.columns.sdn_content
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
   sdn_author_lender_user_pid:
     data_type: BIGINT
     source:
@@ -49,12 +35,26 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.sdn_author_unparsed_name
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  sdn_content:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.sdn_content
+  sdn_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.sdn_create_datetime
+  sdn_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sdn_pid
+  sdn_smart_doc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sdn_smart_doc_pid
+  sdn_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sdn_version
 etls:
   SP-100332:
     input_type: table

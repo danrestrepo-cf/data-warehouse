@@ -13,14 +13,20 @@ foreign_keys:
       schema: history_octane
       table: lead_supplemental_margin_table
 columns:
-  lsmr_pid:
-    data_type: BIGINT
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  lsmr_branch_supplemental_margin_percent:
+    data_type: NUMERIC(11,9)
     source:
-      field: primary_source_table.columns.lsmr_pid
-  lsmr_version:
-    data_type: INTEGER
+      field: primary_source_table.columns.lsmr_branch_supplemental_margin_percent
+  lsmr_company_supplemental_margin_percent:
+    data_type: NUMERIC(11,9)
     source:
-      field: primary_source_table.columns.lsmr_version
+      field: primary_source_table.columns.lsmr_company_supplemental_margin_percent
   lsmr_lead_supplemental_margin_table_pid:
     data_type: BIGINT
     source:
@@ -29,20 +35,14 @@ columns:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.lsmr_over_anchor_rate_percent
-  lsmr_company_supplemental_margin_percent:
-    data_type: NUMERIC(11,9)
+  lsmr_pid:
+    data_type: BIGINT
     source:
-      field: primary_source_table.columns.lsmr_company_supplemental_margin_percent
-  lsmr_branch_supplemental_margin_percent:
-    data_type: NUMERIC(11,9)
+      field: primary_source_table.columns.lsmr_pid
+  lsmr_version:
+    data_type: INTEGER
     source:
-      field: primary_source_table.columns.lsmr_branch_supplemental_margin_percent
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+      field: primary_source_table.columns.lsmr_version
 etls:
   SP-100228:
     input_type: table

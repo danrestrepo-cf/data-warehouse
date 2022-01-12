@@ -61,30 +61,24 @@ foreign_keys:
       schema: history_octane
       table: liability_type
 columns:
-  lia_pid:
-    data_type: BIGINT
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  lia_account_opened_date:
+    data_type: DATE
     source:
-      field: primary_source_table.columns.lia_pid
-  lia_version:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lia_version
-  lia_proposal_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lia_proposal_pid
+      field: primary_source_table.columns.lia_account_opened_date
   lia_aggregate_description:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lia_aggregate_description
-  lia_credit_request_liability_pid:
-    data_type: BIGINT
-    source:
-      field: primary_source_table.columns.lia_credit_request_liability_pid
-  lia_description:
+  lia_bankruptcy_exception_type:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.lia_description
+      field: primary_source_table.columns.lia_bankruptcy_exception_type
   lia_city:
     data_type: VARCHAR(128)
     source:
@@ -93,22 +87,34 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lia_country
-  lia_postal_code:
+  lia_credit_limit_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.lia_credit_limit_amount
+  lia_credit_request_liability_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lia_credit_request_liability_pid
+  lia_description:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.lia_postal_code
-  lia_state:
+      field: primary_source_table.columns.lia_description
+  lia_energy_related_type:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.lia_state
-  lia_street1:
-    data_type: VARCHAR(128)
+      field: primary_source_table.columns.lia_energy_related_type
+  lia_high_balance_amount:
+    data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.lia_street1
-  lia_street2:
-    data_type: VARCHAR(128)
+      field: primary_source_table.columns.lia_high_balance_amount
+  lia_holder_email:
+    data_type: VARCHAR(256)
     source:
-      field: primary_source_table.columns.lia_street2
+      field: primary_source_table.columns.lia_holder_email
+  lia_holder_fax:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.lia_holder_fax
   lia_holder_name:
     data_type: VARCHAR(128)
     source:
@@ -121,18 +127,6 @@ columns:
     data_type: VARCHAR(16)
     source:
       field: primary_source_table.columns.lia_holder_phone_extension
-  lia_holder_fax:
-    data_type: VARCHAR(32)
-    source:
-      field: primary_source_table.columns.lia_holder_fax
-  lia_holder_email:
-    data_type: VARCHAR(256)
-    source:
-      field: primary_source_table.columns.lia_holder_email
-  lia_account_opened_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.lia_account_opened_date
   lia_liability_disposition_type:
     data_type: VARCHAR(128)
     source:
@@ -145,60 +139,66 @@ columns:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.lia_monthly_payment_amount
-  lia_remaining_term_months:
-    data_type: INTEGER
-    source:
-      field: primary_source_table.columns.lia_remaining_term_months
-  lia_high_balance_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.lia_high_balance_amount
-  lia_credit_limit_amount:
-    data_type: NUMERIC(15,0)
-    source:
-      field: primary_source_table.columns.lia_credit_limit_amount
-  lia_past_due_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.lia_past_due_amount
-  lia_unpaid_balance_amount:
-    data_type: NUMERIC(15,2)
-    source:
-      field: primary_source_table.columns.lia_unpaid_balance_amount
-  lia_report_value_overridden:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.lia_report_value_overridden
-  lia_bankruptcy_exception_type:
-    data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.lia_bankruptcy_exception_type
   lia_note:
     data_type: VARCHAR(1024)
     source:
       field: primary_source_table.columns.lia_note
-  lia_terms_months_count:
-    data_type: INTEGER
+  lia_past_due_amount:
+    data_type: NUMERIC(15,2)
     source:
-      field: primary_source_table.columns.lia_terms_months_count
+      field: primary_source_table.columns.lia_past_due_amount
   lia_payoff_amount:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.lia_payoff_amount
-  lia_energy_related_type:
+  lia_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lia_pid
+  lia_postal_code:
     data_type: VARCHAR(128)
     source:
-      field: primary_source_table.columns.lia_energy_related_type
+      field: primary_source_table.columns.lia_postal_code
+  lia_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.lia_proposal_pid
+  lia_remaining_term_months:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lia_remaining_term_months
+  lia_report_value_overridden:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lia_report_value_overridden
   lia_snapshotted_pid:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lia_snapshotted_pid
-  data_source_updated_datetime:
-    data_type: TIMESTAMPTZ
-  data_source_deleted_flag:
-    data_type: BOOLEAN
-  etl_batch_id:
-    data_type: TEXT
+  lia_state:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lia_state
+  lia_street1:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lia_street1
+  lia_street2:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lia_street2
+  lia_terms_months_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lia_terms_months_count
+  lia_unpaid_balance_amount:
+    data_type: NUMERIC(15,2)
+    source:
+      field: primary_source_table.columns.lia_unpaid_balance_amount
+  lia_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.lia_version
 etls:
   SP-100182:
     input_type: table
