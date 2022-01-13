@@ -4,6 +4,18 @@
 --
 
 --staging_octane changes
+CREATE TABLE staging_octane.ignored_mortech_add_on (
+    ima_pid BIGINT,
+    ima_version INTEGER,
+    CONSTRAINT pk_ignored_mortech_add_on
+        PRIMARY KEY (ima_pid),
+    ima_account_pid BIGINT,
+    ima_add_on_name VARCHAR(16000),
+    ima_notes VARCHAR(16000)
+);
+
+CREATE INDEX idx_ignored_mortech_add_on__pid_version ON staging_octane.ignored_mortech_add_on (ima_pid, ima_version);
+
 ALTER TABLE staging_octane.proposal_doc
     ADD COLUMN prpd_prior_to_type VARCHAR(128),
     ADD COLUMN prpd_prior_to_type_unparsed_name VARCHAR(128),
@@ -25,6 +37,24 @@ ALTER TABLE staging_octane.deal
     RENAME COLUMN d_license_location_pid TO d_location_pid;
 
 --history_octane changes
+CREATE TABLE history_octane.ignored_mortech_add_on (
+    ima_pid BIGINT,
+    ima_version INTEGER,
+    ima_account_pid BIGINT,
+    ima_add_on_name VARCHAR(16000),
+    ima_notes VARCHAR(16000),
+    data_source_updated_datetime timestamptz,
+    data_source_deleted_flag BOOLEAN
+);
+
+CREATE INDEX idx_ignored_mortech_add_on__pid ON history_octane.ignored_mortech_add_on (ima_pid);
+
+CREATE INDEX idx_ignored_mortech_add_on__data_source_updated_datetime ON history_octane.ignored_mortech_add_on (data_source_updated_datetime);
+
+CREATE INDEX idx_ignored_mortech_add_on__data_source_deleted_flag ON history_octane.ignored_mortech_add_on (data_source_deleted_flag);
+
+CREATE INDEX idx_ignored_mortech_add_on__pid_version ON history_octane.ignored_mortech_add_on (ima_pid, ima_version);
+
 ALTER TABLE history_octane.proposal_doc
     ADD COLUMN prpd_prior_to_type VARCHAR(128),
     ADD COLUMN prpd_prior_to_type_unparsed_name VARCHAR(128),
