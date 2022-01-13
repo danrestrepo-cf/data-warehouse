@@ -44,7 +44,8 @@ CREATE TABLE history_octane.ignored_mortech_add_on (
     ima_add_on_name VARCHAR(16000),
     ima_notes VARCHAR(16000),
     data_source_updated_datetime timestamptz,
-    data_source_deleted_flag BOOLEAN
+    data_source_deleted_flag BOOLEAN,
+    etl_batch_id TEXT
 );
 
 CREATE INDEX idx_ignored_mortech_add_on__pid ON history_octane.ignored_mortech_add_on (ima_pid);
@@ -55,6 +56,8 @@ CREATE INDEX idx_ignored_mortech_add_on__data_source_deleted_flag ON history_oct
 
 CREATE INDEX idx_ignored_mortech_add_on__pid_version ON history_octane.ignored_mortech_add_on (ima_pid, ima_version);
 
+CREATE INDEX idx_ignored_mortech_add_on__etl_batch_id ON history_octane.ignored_mortech_add_on (etl_batch_id);
+
 ALTER TABLE history_octane.proposal_doc
     ADD COLUMN prpd_prior_to_type VARCHAR(128),
     ADD COLUMN prpd_prior_to_type_unparsed_name VARCHAR(128),
@@ -64,8 +67,7 @@ ALTER TABLE history_octane.proposal_doc
     ADD COLUMN prpd_provider_type_unparsed_name VARCHAR(128),
     ADD COLUMN prpd_provider_type_datetime TIMESTAMP,
     ADD COLUMN prpd_smart_doc_provider_type_case_pid BIGINT,
-    ADD COLUMN prpd_smart_doc_provider_type_case_criteria_html VARCHAR(16000)
-;
+    ADD COLUMN prpd_smart_doc_provider_type_case_criteria_html VARCHAR(16000);
 
 CREATE INDEX fkt_prpd_prior_to_type ON history_octane.proposal_doc (prpd_prior_to_type);
 
