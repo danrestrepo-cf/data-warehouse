@@ -101,6 +101,7 @@ locals {
     "SP-100785.json" = "rate(30 days)"
     "SP-100786.json" = "rate(30 days)"
     "SP-100800.json" = "rate(30 days)"
+    "SP-100813.json" = "rate(30 days)"
     "SP-100814.json" = "rate(30 days)"
   }
 }
