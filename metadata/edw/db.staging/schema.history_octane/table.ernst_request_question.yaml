@@ -53,6 +53,7 @@ etls:
     output_type: insert
     json_output_field: enstq_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.ernst_request_question
       SELECT staging_table.enstq_pid

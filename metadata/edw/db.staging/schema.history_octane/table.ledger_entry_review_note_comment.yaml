@@ -61,6 +61,7 @@ etls:
     output_type: insert
     json_output_field: lerc_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.ledger_entry_review_note_comment
       SELECT staging_table.lerc_pid

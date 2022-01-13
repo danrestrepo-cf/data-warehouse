@@ -97,6 +97,7 @@ etls:
     output_type: insert
     json_output_field: mcci_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.mortgage_credit_certificate_issuer
       SELECT staging_table.mcci_pid

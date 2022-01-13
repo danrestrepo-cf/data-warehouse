@@ -41,6 +41,7 @@ etls:
     output_type: insert
     json_output_field: ltk_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.los_loan_id_ticker
       SELECT staging_table.ltk_pid

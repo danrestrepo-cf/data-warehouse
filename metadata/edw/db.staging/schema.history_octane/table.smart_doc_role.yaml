@@ -61,6 +61,7 @@ etls:
     output_type: insert
     json_output_field: sdr_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.smart_doc_role
       SELECT staging_table.sdr_pid

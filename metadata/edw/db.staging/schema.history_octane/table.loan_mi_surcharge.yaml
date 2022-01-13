@@ -49,6 +49,7 @@ etls:
     output_type: insert
     json_output_field: lms_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.loan_mi_surcharge
       SELECT staging_table.lms_pid

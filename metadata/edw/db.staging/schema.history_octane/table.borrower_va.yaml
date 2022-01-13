@@ -449,6 +449,7 @@ etls:
     output_type: insert
     json_output_field: bva_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.borrower_va
       SELECT staging_table.bva_pid

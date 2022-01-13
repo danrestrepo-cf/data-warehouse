@@ -61,6 +61,7 @@ etls:
     output_type: insert
     json_output_field: smp_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.smart_message_permission
       SELECT staging_table.smp_pid

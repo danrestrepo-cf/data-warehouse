@@ -89,6 +89,7 @@ etls:
     output_type: insert
     json_output_field: llr_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.loan_limit_row
       SELECT staging_table.llr_pid

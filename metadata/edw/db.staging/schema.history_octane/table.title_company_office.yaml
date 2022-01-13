@@ -85,6 +85,7 @@ etls:
     output_type: insert
     json_output_field: tco_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.title_company_office
       SELECT staging_table.tco_pid

@@ -49,6 +49,7 @@ etls:
     output_type: insert
     json_output_field: pdce_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.product_deal_check_exclusion
       SELECT staging_table.pdce_pid

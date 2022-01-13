@@ -41,6 +41,7 @@ etls:
     output_type: insert
     json_output_field: cdnt_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.construction_draw_number_ticker
       SELECT staging_table.cdnt_pid

@@ -249,6 +249,7 @@ etls:
     output_type: insert
     json_output_field: prpds_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.proposal_doc_set
       SELECT staging_table.prpds_pid

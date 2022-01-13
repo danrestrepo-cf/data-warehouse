@@ -41,6 +41,7 @@ etls:
     output_type: insert
     json_output_field: lsmt_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.lead_supplemental_margin_table
       SELECT staging_table.lsmt_pid

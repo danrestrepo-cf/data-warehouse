@@ -97,6 +97,7 @@ etls:
     output_type: insert
     json_output_field: ddvdi_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.deal_data_vendor_document_import
       SELECT staging_table.ddvdi_pid

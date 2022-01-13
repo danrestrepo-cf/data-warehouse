@@ -95,6 +95,7 @@ etls:
     output_type: insert
     json_output_field: bud_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.borrower_user_deal
       SELECT staging_table.bud_pid

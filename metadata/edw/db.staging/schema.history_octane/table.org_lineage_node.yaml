@@ -53,6 +53,7 @@ etls:
     output_type: insert
     json_output_field: oln_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.org_lineage_node
       SELECT staging_table.oln_pid

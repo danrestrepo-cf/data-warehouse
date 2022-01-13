@@ -73,6 +73,7 @@ etls:
     output_type: insert
     json_output_field: ila_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.investor_lock_add_on
       SELECT staging_table.ila_pid
