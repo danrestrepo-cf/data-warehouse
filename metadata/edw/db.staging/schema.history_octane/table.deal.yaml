@@ -30,7 +30,7 @@ foreign_keys:
       table: proposal
   fk_deal_3:
     columns:
-    - d_license_location_pid
+    - d_location_pid
     references:
       columns:
       - loc_pid
@@ -309,10 +309,10 @@ columns:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.d_lead_zillow_zq
-  d_license_location_pid:
+  d_location_pid:
     data_type: BIGINT
     source:
-      field: primary_source_table.columns.d_license_location_pid
+      field: primary_source_table.columns.d_location_pid
   d_los_loan_id_main:
     data_type: BIGINT
     source:
@@ -437,7 +437,7 @@ etls:
            , staging_table.d_early_wire_request
            , staging_table.d_enable_electronic_transaction
            , staging_table.d_initial_cancel_status_date
-           , staging_table.d_license_location_pid
+           , staging_table.d_location_pid
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.deal staging_table
@@ -500,7 +500,7 @@ etls:
            , history_table.d_early_wire_request
            , history_table.d_enable_electronic_transaction
            , history_table.d_initial_cancel_status_date
-           , history_table.d_license_location_pid
+           , history_table.d_location_pid
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.deal history_table
