@@ -95,6 +95,7 @@ def build_octane_metadata_filterer() -> ExclusiveMetadataFilterer:
     metadata_filterer.add_table_criteria(TablePath('staging', 'staging_octane', 'company_service_credentials'))
     metadata_filterer.add_table_criteria(TablePath('staging', 'staging_octane', 'lender_user_service_credentials'))
     metadata_filterer.add_table_criteria(TablePath('staging', 'staging_octane', 'restricted_password'))
+    metadata_filterer.add_table_criteria(TablePath('staging', 'staging_octane', 'ignored_mortech_add_on'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'admin_user', 'au_password'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'admin_user', 'au_previous_password_1'))
     metadata_filterer.add_column_criteria(ColumnPath('staging', 'staging_octane', 'admin_user', 'au_previous_password_2'))
