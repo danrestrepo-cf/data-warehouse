@@ -1,0 +1,2381 @@
+{
+    "Comment": "Trigger history_octane ETLs that have one or more dependent ETLs - This should process all staging_octane data that feeds any star_* tables",
+    "StartAt": "SP-GROUP-2",
+    "States": {
+        "SP-GROUP-2": {
+            "Type": "Parallel",
+            "End": true,
+            "Branches": [
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100403",
+                    "StartAt": "SP-100403_message",
+                    "States": {
+                        "SP-100403_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "applicant_role_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100403"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100265",
+                    "StartAt": "SP-100265_message",
+                    "States": {
+                        "SP-100265_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "application",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100265"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100404",
+                    "StartAt": "SP-100404_message",
+                    "States": {
+                        "SP-100404_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "application_taken_method_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100404"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100412",
+                    "StartAt": "SP-100412_message",
+                    "States": {
+                        "SP-100412_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "arm_index_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100412"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100415",
+                    "StartAt": "SP-100415_message",
+                    "States": {
+                        "SP-100415_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "aus_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100415"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100308",
+                    "StartAt": "SP-100308_message",
+                    "States": {
+                        "SP-100308_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "borrower",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100308"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100419",
+                    "StartAt": "SP-100419_message",
+                    "States": {
+                        "SP-100419_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "borrower_relationship_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100419"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100421",
+                    "StartAt": "SP-100421_message",
+                    "States": {
+                        "SP-100421_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "borrower_tiny_id_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100421"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100427",
+                    "StartAt": "SP-100427_message",
+                    "States": {
+                        "SP-100427_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "buydown_base_date_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100427"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100428",
+                    "StartAt": "SP-100428_message",
+                    "States": {
+                        "SP-100428_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "buydown_contributor_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100428"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100429",
+                    "StartAt": "SP-100429_message",
+                    "States": {
+                        "SP-100429_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "buydown_schedule_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100429"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100430",
+                    "StartAt": "SP-100430_message",
+                    "States": {
+                        "SP-100430_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "buydown_subsidy_calculation_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100430"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100439",
+                    "StartAt": "SP-100439_message",
+                    "States": {
+                        "SP-100439_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "citizenship_residency_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100439"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100441",
+                    "StartAt": "SP-100441_message",
+                    "States": {
+                        "SP-100441_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "community_lending_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100441"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100450",
+                    "StartAt": "SP-100450_message",
+                    "States": {
+                        "SP-100450_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "country_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100450"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100451",
+                    "StartAt": "SP-100451_message",
+                    "States": {
+                        "SP-100451_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "courier_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100451"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100452",
+                    "StartAt": "SP-100452_message",
+                    "States": {
+                        "SP-100452_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "credit_authorization_method_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100452"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100453",
+                    "StartAt": "SP-100453_message",
+                    "States": {
+                        "SP-100453_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "credit_bureau_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100453"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100724",
+                    "StartAt": "SP-100724_message",
+                    "States": {
+                        "SP-100724_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "days_per_year_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100724"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100267",
+                    "StartAt": "SP-100267_message",
+                    "States": {
+                        "SP-100267_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "deal",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100267"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100017",
+                    "StartAt": "SP-100017_message",
+                    "States": {
+                        "SP-100017_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "deal_key_roles",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100017"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100092",
+                    "StartAt": "SP-100092_message",
+                    "States": {
+                        "SP-100092_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "deal_lender_user",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100092"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100478",
+                    "StartAt": "SP-100478_message",
+                    "States": {
+                        "SP-100478_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "decision_credit_score_calc_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100478"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100479",
+                    "StartAt": "SP-100479_message",
+                    "States": {
+                        "SP-100479_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "delivery_aus_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100479"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100738",
+                    "StartAt": "SP-100738_message",
+                    "States": {
+                        "SP-100738_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "fha_program_code_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100738"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100739",
+                    "StartAt": "SP-100739_message",
+                    "States": {
+                        "SP-100739_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "fha_rehab_program_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100739"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100740",
+                    "StartAt": "SP-100740_message",
+                    "States": {
+                        "SP-100740_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "fha_special_program_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100740"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100513",
+                    "StartAt": "SP-100513_message",
+                    "States": {
+                        "SP-100513_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "fnm_arm_plan_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100513"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100514",
+                    "StartAt": "SP-100514_message",
+                    "States": {
+                        "SP-100514_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "fnm_community_lending_product_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100514"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100741",
+                    "StartAt": "SP-100741_message",
+                    "States": {
+                        "SP-100741_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "fnm_investor_remittance_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100741"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100742",
+                    "StartAt": "SP-100742_message",
+                    "States": {
+                        "SP-100742_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "fnm_mbs_loan_default_loss_party_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100742"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100516",
+                    "StartAt": "SP-100516_message",
+                    "States": {
+                        "SP-100516_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "fnm_mbs_reo_marketing_party_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100516"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100518",
+                    "StartAt": "SP-100518_message",
+                    "States": {
+                        "SP-100518_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "fre_community_program_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100518"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100744",
+                    "StartAt": "SP-100744_message",
+                    "States": {
+                        "SP-100744_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "funding_status_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100744"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100743",
+                    "StartAt": "SP-100743_message",
+                    "States": {
+                        "SP-100743_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "fund_source_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100743"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100524",
+                    "StartAt": "SP-100524_message",
+                    "States": {
+                        "SP-100524_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "gift_funds_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100524"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100526",
+                    "StartAt": "SP-100526_message",
+                    "States": {
+                        "SP-100526_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "heloc_cancel_fee_applicable_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100526"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100529",
+                    "StartAt": "SP-100529_message",
+                    "States": {
+                        "SP-100529_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "hmda_hoepa_status_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100529"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100530",
+                    "StartAt": "SP-100530_message",
+                    "States": {
+                        "SP-100530_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "hmda_purchaser_of_loan_2017_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100530"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100531",
+                    "StartAt": "SP-100531_message",
+                    "States": {
+                        "SP-100531_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "hmda_purchaser_of_loan_2018_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100531"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100533",
+                    "StartAt": "SP-100533_message",
+                    "States": {
+                        "SP-100533_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "homeownership_education_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100533"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100747",
+                    "StartAt": "SP-100747_message",
+                    "States": {
+                        "SP-100747_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "housing_counseling_agency_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100747"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100748",
+                    "StartAt": "SP-100748_message",
+                    "States": {
+                        "SP-100748_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "housing_counseling_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100748"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100536",
+                    "StartAt": "SP-100536_message",
+                    "States": {
+                        "SP-100536_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "interest_only_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100536"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100030",
+                    "StartAt": "SP-100030_message",
+                    "States": {
+                        "SP-100030_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "interim_funder",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100030"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100537",
+                    "StartAt": "SP-100537_message",
+                    "States": {
+                        "SP-100537_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "interim_funder_mers_registration_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100537"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100268",
+                    "StartAt": "SP-100268_message",
+                    "States": {
+                        "SP-100268_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "investor",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100268"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100751",
+                    "StartAt": "SP-100751_message",
+                    "States": {
+                        "SP-100751_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "investor_hmda_purchaser_of_loan_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100751"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100540",
+                    "StartAt": "SP-100540_message",
+                    "States": {
+                        "SP-100540_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "ipc_calc_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100540"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100541",
+                    "StartAt": "SP-100541_message",
+                    "States": {
+                        "SP-100541_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "ipc_comparison_operator_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100541"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100542",
+                    "StartAt": "SP-100542_message",
+                    "States": {
+                        "SP-100542_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "ipc_property_usage_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100542"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100549",
+                    "StartAt": "SP-100549_message",
+                    "States": {
+                        "SP-100549_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "legal_entity_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100549"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100090",
+                    "StartAt": "SP-100090_message",
+                    "States": {
+                        "SP-100090_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "lender_user",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100090"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100761",
+                    "StartAt": "SP-100761_message",
+                    "States": {
+                        "SP-100761_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "lender_user_status_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100761"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100555",
+                    "StartAt": "SP-100555_message",
+                    "States": {
+                        "SP-100555_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "lender_user_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100555"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100564",
+                    "StartAt": "SP-100564_message",
+                    "States": {
+                        "SP-100564_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "lien_priority_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100564"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100320",
+                    "StartAt": "SP-100320_message",
+                    "States": {
+                        "SP-100320_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "loan",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100320"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100566",
+                    "StartAt": "SP-100566_message",
+                    "States": {
+                        "SP-100566_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "loan_amortization_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100566"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100144",
+                    "StartAt": "SP-100144_message",
+                    "States": {
+                        "SP-100144_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "loan_beneficiary",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100144"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100567",
+                    "StartAt": "SP-100567_message",
+                    "States": {
+                        "SP-100567_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "loan_benef_transfer_status_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100567"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100764",
+                    "StartAt": "SP-100764_message",
+                    "States": {
+                        "SP-100764_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "loan_file_delivery_method_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100764"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100319",
+                    "StartAt": "SP-100319_message",
+                    "States": {
+                        "SP-100319_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "loan_funding",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100319"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100570",
+                    "StartAt": "SP-100570_message",
+                    "States": {
+                        "SP-100570_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "loan_purpose_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100570"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100769",
+                    "StartAt": "SP-100769_message",
+                    "States": {
+                        "SP-100769_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "lqa_purchase_eligibility_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100769"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100586",
+                    "StartAt": "SP-100586_message",
+                    "States": {
+                        "SP-100586_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "marital_status_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100586"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100591",
+                    "StartAt": "SP-100591_message",
+                    "States": {
+                        "SP-100591_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "mers_transfer_status_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100591"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100592",
+                    "StartAt": "SP-100592_message",
+                    "States": {
+                        "SP-100592_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "mi_calculated_rate_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100592"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100593",
+                    "StartAt": "SP-100593_message",
+                    "States": {
+                        "SP-100593_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "mi_company_name_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100593"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100771",
+                    "StartAt": "SP-100771_message",
+                    "States": {
+                        "SP-100771_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "mi_initial_calculation_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100771"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100772",
+                    "StartAt": "SP-100772_message",
+                    "States": {
+                        "SP-100772_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "mi_input_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100772"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100595",
+                    "StartAt": "SP-100595_message",
+                    "States": {
+                        "SP-100595_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "mi_payer_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100595"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100596",
+                    "StartAt": "SP-100596_message",
+                    "States": {
+                        "SP-100596_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "mi_payment_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100596"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100597",
+                    "StartAt": "SP-100597_message",
+                    "States": {
+                        "SP-100597_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "mi_premium_refundable_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100597"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100598",
+                    "StartAt": "SP-100598_message",
+                    "States": {
+                        "SP-100598_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "mi_renewal_calculation_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100598"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100776",
+                    "StartAt": "SP-100776_message",
+                    "States": {
+                        "SP-100776_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "mortgage_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100776"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100778",
+                    "StartAt": "SP-100778_message",
+                    "States": {
+                        "SP-100778_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "negative_amortization_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100778"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100603",
+                    "StartAt": "SP-100603_message",
+                    "States": {
+                        "SP-100603_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "partial_payment_policy_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100603"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100604",
+                    "StartAt": "SP-100604_message",
+                    "States": {
+                        "SP-100604_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "payment_adjustment_calculation_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100604"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100605",
+                    "StartAt": "SP-100605_message",
+                    "States": {
+                        "SP-100605_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "payment_frequency_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100605"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100609",
+                    "StartAt": "SP-100609_message",
+                    "States": {
+                        "SP-100609_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "payment_structure_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100609"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100613",
+                    "StartAt": "SP-100613_message",
+                    "States": {
+                        "SP-100613_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "prepaid_interest_rate_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100613"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100614",
+                    "StartAt": "SP-100614_message",
+                    "States": {
+                        "SP-100614_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "prepay_penalty_schedule_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100614"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100615",
+                    "StartAt": "SP-100615_message",
+                    "States": {
+                        "SP-100615_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "prepay_penalty_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100615"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100617",
+                    "StartAt": "SP-100617_message",
+                    "States": {
+                        "SP-100617_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "prior_property_title_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100617"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100105",
+                    "StartAt": "SP-100105_message",
+                    "States": {
+                        "SP-100105_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "product",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100105"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100619",
+                    "StartAt": "SP-100619_message",
+                    "States": {
+                        "SP-100619_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "product_appraisal_requirement_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100619"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100621",
+                    "StartAt": "SP-100621_message",
+                    "States": {
+                        "SP-100621_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "product_side_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100621"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100622",
+                    "StartAt": "SP-100622_message",
+                    "States": {
+                        "SP-100622_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "product_special_program_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100622"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100285",
+                    "StartAt": "SP-100285_message",
+                    "States": {
+                        "SP-100285_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "product_terms",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100285"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100629",
+                    "StartAt": "SP-100629_message",
+                    "States": {
+                        "SP-100629_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "property_usage_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100629"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100317",
+                    "StartAt": "SP-100317_message",
+                    "States": {
+                        "SP-100317_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "proposal",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100317"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100630",
+                    "StartAt": "SP-100630_message",
+                    "States": {
+                        "SP-100630_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "proposal_structure_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100630"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100636",
+                    "StartAt": "SP-100636_message",
+                    "States": {
+                        "SP-100636_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "qualified_mortgage_status_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100636"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100785",
+                    "StartAt": "SP-100785_message",
+                    "States": {
+                        "SP-100785_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "qualifying_monthly_payment_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100785"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100786",
+                    "StartAt": "SP-100786_message",
+                    "States": {
+                        "SP-100786_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "qualifying_rate_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100786"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100645",
+                    "StartAt": "SP-100645_message",
+                    "States": {
+                        "SP-100645_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "section_of_act_coarse_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100645"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100650",
+                    "StartAt": "SP-100650_message",
+                    "States": {
+                        "SP-100650_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "servicing_transfer_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100650"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100800",
+                    "StartAt": "SP-100800_message",
+                    "States": {
+                        "SP-100800_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "state_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100800"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100665",
+                    "StartAt": "SP-100665_message",
+                    "States": {
+                        "SP-100665_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "third_party_community_second_program_eligibility_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100665"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100666",
+                    "StartAt": "SP-100666_message",
+                    "States": {
+                        "SP-100666_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "time_zone_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100666"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100695",
+                    "StartAt": "SP-100695_message",
+                    "States": {
+                        "SP-100695_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "yes_no_na_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100695"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100813",
+                    "StartAt": "SP-100813_message",
+                    "States": {
+                        "SP-100813_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "yes_no_na_unknown_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100813"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100814",
+                    "StartAt": "SP-100814_message",
+                    "States": {
+                        "SP-100814_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "MessageGroupId": "yes_no_unknown_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100814"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}
