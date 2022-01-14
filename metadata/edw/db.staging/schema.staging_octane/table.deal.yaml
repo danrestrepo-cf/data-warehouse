@@ -28,7 +28,7 @@ foreign_keys:
       table: proposal
   fk_deal_3:
     columns:
-    - d_license_location_pid
+    - d_location_pid
     references:
       columns:
       - loc_pid
@@ -227,7 +227,7 @@ columns:
     data_type: VARCHAR(256)
   d_lead_zillow_zq:
     data_type: VARCHAR(256)
-  d_license_location_pid:
+  d_location_pid:
     data_type: BIGINT
   d_los_loan_id_main:
     data_type: BIGINT
