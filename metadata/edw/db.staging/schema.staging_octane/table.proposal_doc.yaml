@@ -290,6 +290,14 @@ foreign_keys:
       - code
       schema: staging_octane
       table: doc_status_type
+  fkt_prpd_prior_to_type:
+    columns:
+    - prpd_prior_to_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: prior_to_type
 columns:
   prpd_application_pid:
     data_type: BIGINT
@@ -363,6 +371,12 @@ columns:
     data_type: BIGINT
   prpd_pid:
     data_type: BIGINT
+  prpd_prior_to_type:
+    data_type: VARCHAR(128)
+  prpd_prior_to_type_datetime:
+    data_type: TIMESTAMP
+  prpd_prior_to_type_unparsed_name:
+    data_type: VARCHAR(128)
   prpd_property_place_pid:
     data_type: BIGINT
   prpd_proposal_contractor_pid:
@@ -373,6 +387,10 @@ columns:
     data_type: BIGINT
   prpd_proposal_review_pid:
     data_type: BIGINT
+  prpd_provider_type_datetime:
+    data_type: TIMESTAMP
+  prpd_provider_type_unparsed_name:
+    data_type: VARCHAR(128)
   prpd_rental_income_pid:
     data_type: BIGINT
   prpd_reo_place_pid:
@@ -380,6 +398,14 @@ columns:
   prpd_residence_place_pid:
     data_type: BIGINT
   prpd_smart_doc_pid:
+    data_type: BIGINT
+  prpd_smart_doc_prior_to_type_case_criteria_html:
+    data_type: VARCHAR(16000)
+  prpd_smart_doc_prior_to_type_case_pid:
+    data_type: BIGINT
+  prpd_smart_doc_provider_type_case_criteria_html:
+    data_type: VARCHAR(16000)
+  prpd_smart_doc_provider_type_case_pid:
     data_type: BIGINT
   prpd_status_datetime:
     data_type: TIMESTAMP
