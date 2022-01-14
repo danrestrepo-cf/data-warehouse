@@ -292,6 +292,14 @@ foreign_keys:
       - code
       schema: history_octane
       table: doc_status_type
+  fkt_prpd_prior_to_type:
+    columns:
+    - prpd_prior_to_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: prior_to_type
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
@@ -447,6 +455,18 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.prpd_pid
+  prpd_prior_to_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prpd_prior_to_type
+  prpd_prior_to_type_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.prpd_prior_to_type_datetime
+  prpd_prior_to_type_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prpd_prior_to_type_unparsed_name
   prpd_property_place_pid:
     data_type: BIGINT
     source:
@@ -467,6 +487,14 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.prpd_proposal_review_pid
+  prpd_provider_type_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.prpd_provider_type_datetime
+  prpd_provider_type_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prpd_provider_type_unparsed_name
   prpd_rental_income_pid:
     data_type: BIGINT
     source:
@@ -483,6 +511,22 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.prpd_smart_doc_pid
+  prpd_smart_doc_prior_to_type_case_criteria_html:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.prpd_smart_doc_prior_to_type_case_criteria_html
+  prpd_smart_doc_prior_to_type_case_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_smart_doc_prior_to_type_case_pid
+  prpd_smart_doc_provider_type_case_criteria_html:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.prpd_smart_doc_provider_type_case_criteria_html
+  prpd_smart_doc_provider_type_case_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpd_smart_doc_provider_type_case_pid
   prpd_status_datetime:
     data_type: TIMESTAMP
     source:
@@ -570,6 +614,15 @@ etls:
            , staging_table.prpd_doc_req_decision_status_type
            , staging_table.prpd_doc_status_type
            , staging_table.prpd_proposal_review_pid
+           , staging_table.prpd_prior_to_type
+           , staging_table.prpd_prior_to_type_unparsed_name
+           , staging_table.prpd_prior_to_type_datetime
+           , staging_table.prpd_smart_doc_prior_to_type_case_pid
+           , staging_table.prpd_smart_doc_prior_to_type_case_criteria_html
+           , staging_table.prpd_provider_type_unparsed_name
+           , staging_table.prpd_provider_type_datetime
+           , staging_table.prpd_smart_doc_provider_type_case_pid
+           , staging_table.prpd_smart_doc_provider_type_case_criteria_html
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.proposal_doc staging_table
@@ -629,6 +682,15 @@ etls:
            , history_table.prpd_doc_req_decision_status_type
            , history_table.prpd_doc_status_type
            , history_table.prpd_proposal_review_pid
+           , history_table.prpd_prior_to_type
+           , history_table.prpd_prior_to_type_unparsed_name
+           , history_table.prpd_prior_to_type_datetime
+           , history_table.prpd_smart_doc_prior_to_type_case_pid
+           , history_table.prpd_smart_doc_prior_to_type_case_criteria_html
+           , history_table.prpd_provider_type_unparsed_name
+           , history_table.prpd_provider_type_datetime
+           , history_table.prpd_smart_doc_provider_type_case_pid
+           , history_table.prpd_smart_doc_provider_type_case_criteria_html
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.proposal_doc history_table

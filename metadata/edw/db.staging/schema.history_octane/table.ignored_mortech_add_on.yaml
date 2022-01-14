@@ -1,0 +1,70 @@
+name: ignored_mortech_add_on
+primary_source_table: staging.staging_octane.ignored_mortech_add_on
+primary_key:
+- ima_pid
+- ima_version
+columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  ima_account_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ima_account_pid
+  ima_add_on_name:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.ima_add_on_name
+  ima_notes:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.ima_notes
+  ima_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.ima_pid
+  ima_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ima_version
+etls:
+  SP-100887:
+    input_type: table
+    output_type: insert
+    json_output_field: ima_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.ignored_mortech_add_on
+      SELECT staging_table.ima_pid
+           , staging_table.ima_version
+           , staging_table.ima_account_pid
+           , staging_table.ima_add_on_name
+           , staging_table.ima_notes
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.ignored_mortech_add_on staging_table
+      LEFT JOIN history_octane.ignored_mortech_add_on history_table
+                ON staging_table.ima_pid = history_table.ima_pid
+                    AND staging_table.ima_version = history_table.ima_version
+      WHERE history_table.ima_pid IS NULL
+      UNION ALL
+      SELECT history_table.ima_pid
+           , history_table.ima_version + 1
+           , history_table.ima_account_pid
+           , history_table.ima_add_on_name
+           , history_table.ima_notes
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.ignored_mortech_add_on history_table
+      LEFT JOIN staging_octane.ignored_mortech_add_on staging_table
+                ON staging_table.ima_pid = history_table.ima_pid
+      WHERE staging_table.ima_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.ignored_mortech_add_on deleted_records
+          WHERE deleted_records.ima_pid = history_table.ima_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

@@ -55,10 +55,10 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.luloc_company_pid
-  luloc_current_license_location:
+  luloc_current_licensed_location:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.luloc_current_license_location
+      field: primary_source_table.columns.luloc_current_licensed_location
   luloc_current_physical_location:
     data_type: BOOLEAN
     source:
@@ -83,10 +83,10 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.luloc_pid
-  luloc_synthetic_unique_current_license_location:
+  luloc_synthetic_unique_current_licensed_location:
     data_type: BOOLEAN
     source:
-      field: primary_source_table.columns.luloc_synthetic_unique_current_license_location
+      field: primary_source_table.columns.luloc_synthetic_unique_current_licensed_location
   luloc_synthetic_unique_current_physical_location:
     data_type: BOOLEAN
     source:
@@ -121,9 +121,9 @@ etls:
            , staging_table.luloc_workspace_type
            , staging_table.luloc_workspace_code
            , staging_table.luloc_current_physical_location
-           , staging_table.luloc_current_license_location
+           , staging_table.luloc_current_licensed_location
            , staging_table.luloc_synthetic_unique_current_physical_location
-           , staging_table.luloc_synthetic_unique_current_license_location
+           , staging_table.luloc_synthetic_unique_current_licensed_location
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.lender_user_location staging_table
@@ -142,9 +142,9 @@ etls:
            , history_table.luloc_workspace_type
            , history_table.luloc_workspace_code
            , history_table.luloc_current_physical_location
-           , history_table.luloc_current_license_location
+           , history_table.luloc_current_licensed_location
            , history_table.luloc_synthetic_unique_current_physical_location
-           , history_table.luloc_synthetic_unique_current_license_location
+           , history_table.luloc_synthetic_unique_current_licensed_location
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.lender_user_location history_table
