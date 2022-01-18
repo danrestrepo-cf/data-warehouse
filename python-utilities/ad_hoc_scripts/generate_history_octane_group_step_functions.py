@@ -1,6 +1,9 @@
 """Generate two step functions that will add a number of messages to the bi-managed-mdi-2-full-check.fifo SQS queue:
     1. SP-GROUP-1: adds a message for each ETL that operates on a history_octane table
-    2. SP-GROUP-2 adds a message for each ETL that operates on a history_octane table AND has one or more dependent ETLs"""
+    2. SP-GROUP-2 adds a message for each ETL that operates on a history_octane table AND has one or more dependent ETLs
+
+1/18/2022 - CBoulé - Script created - https://app.asana.com/0/0/1200518782862171
+"""
 
 import sys
 import os
