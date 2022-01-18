@@ -1,11 +1,16 @@
+"""Generate two step functions that will add a number of messages to the bi-managed-mdi-2-full-check.fifo SQS queue:
+    1. SP-GROUP-1: adds a message for each ETL that operates on a history_octane table
+    2. SP-GROUP-2 adds a message for each ETL that operates on a history_octane table AND has one or more dependent ETLs"""
+
 import sys
 import os
 import json
+import fnmatch
 
-import constants
+PROJECT_DIR_PATH = os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
 
 # this line allows the script to import directly from lib when run from the command line
-sys.path.append(constants.PROJECT_DIR_PATH)
+sys.path.append(PROJECT_DIR_PATH)
 
 from lib.metadata_core.metadata_object_path import SchemaPath
 from lib.metadata_core.metadata_filter import InclusiveMetadataFilterer
@@ -14,13 +19,13 @@ from lib.metadata_core.metadata_yaml_translator import generate_data_warehouse_m
 
 def main():
     # load yaml metadata into DataWarehouseMetadata structure
-    metadata_dir = os.path.join(constants.PROJECT_DIR_PATH, '..', 'metadata', 'edw')
+    metadata_dir = os.path.join(PROJECT_DIR_PATH, '..', 'metadata', 'edw')
     data_warehouse_metadata = generate_data_warehouse_metadata_from_yaml(metadata_dir)
 
     step_function_file_extension = 'json'
     infrastructure_dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', 'infrastructure')
     pipelines_dir_path = os.path.join(infrastructure_dir_path, 'pipelines')
-    delete_prior_history_octane_etl_trigger_step_functions(pipelines_dir_path)
+    delete_existing_group_step_functions(pipelines_dir_path)
 
     # filter DataWarehouseMetadata object to history_octane schema objects
     filterer = InclusiveMetadataFilterer()
@@ -32,14 +37,14 @@ def main():
     for database in data_warehouse_metadata.databases:
         for schema in database.schemas:
             for table in schema.tables:
-                etl_metadata = {
-                    "process_name": None,
-                    "target_table": table.name,
-                    "next_processes": table.next_etls
-                }
                 for etl in table.etls:
-                    etl_metadata["process_name"] = etl.process_name
+                    etl_metadata = {
+                        "process_name": etl.process_name,
+                        "target_table": table.name,
+                        "next_processes": table.next_etls
+                    }
                     history_octane_etl_metadata.append(etl_metadata)
+    history_octane_etl_metadata = sorted(history_octane_etl_metadata, key=lambda x: x["process_name"])
 
     # generate step function dicts
     sp_group_1 = generate_parallel_state('SP-GROUP-1', 'Trigger every history_octane ETL - This should process all staging_octane data into history_octane and will trigger any downstream processes')
@@ -96,18 +101,18 @@ def generate_parallel_state(state_name: str, comment: str) -> dict:
     return parallel_state_dict
 
 
-def delete_prior_history_octane_etl_trigger_step_functions(directory: str):
-    step_function_file_names = ['SP-GROUP-1.json', 'SP-GROUP-2.json']
+def delete_existing_group_step_functions(directory: str):
     deleted_files_count = 0
-    for file in step_function_file_names:
-        filepath = os.path.join(directory, file)
-        try:
-            os.remove(filepath)
-            deleted_files_count += 1
-        except Exception as e:
-            print(f"Could not remove file '{filepath}'! Now exiting.")
-            raise e
-    print(f'Deleted {deleted_files_count} history_octane ETL trigger step function files from {directory}.')
+    for file in os.listdir(directory):
+        if fnmatch.fnmatch(file, "SP-GROUP-*"):
+            filepath = os.path.join(directory, file)
+            try:
+                os.remove(filepath)
+                deleted_files_count += 1
+            except Exception as e:
+                print(f"Could not remove file '{filepath}'! Now exiting.")
+                raise e
+    print(f'Deleted {deleted_files_count} history_octane group step function files from {directory}.')
 
 
 def write_to_file(file_contents: str, file_path: str):
