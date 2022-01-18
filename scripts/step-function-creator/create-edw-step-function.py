@@ -47,7 +47,7 @@ def delete_prior_state_machine_configurations(directory: str, state_machine_file
         raise RuntimeError(f'Output directory contains unexpected non-{state_machine_file_extension} files, and may be invalid. Now exiting.')
     deleted_files_count = 0
     for file in os.listdir(directory):
-        if fnmatch.fnmatch(file, "SP-[0-9]*"):
+        if not fnmatch.fnmatch(file, "SP-GROUP-*"):
             filepath = os.path.join(directory, file)
             try:
                 os.remove(filepath)
