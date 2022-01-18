@@ -45,19 +45,13 @@ def main():
     sp_group_1 = generate_parallel_state('SP-GROUP-1', 'Trigger every history_octane ETL - This should process all staging_octane data into history_octane and will trigger any downstream processes')
     sp_group_2 = generate_parallel_state('SP-GROUP-2', 'Trigger history_octane ETLs that have one or more dependent ETLs - This should process all staging_octane data that feeds any star_* tables')
 
-    sp_group_1_branches = sp_group_1["States"]["SP-GROUP-1"]["Branches"]
-    sp_group_2_branches = sp_group_2["States"]["SP-GROUP-2"]["Branches"]
-
     for etl_metadata in history_octane_etl_metadata:
-        sp_group_1_branches.append(generate_message_state(etl_metadata["process_name"], etl_metadata["target_table"]))
+        sp_group_1["States"]["SP-GROUP-1"]["Branches"].append(generate_message_state(etl_metadata["process_name"], etl_metadata["target_table"]))
         if len(etl_metadata["next_processes"]) > 0:
-            sp_group_2_branches.append(generate_message_state(etl_metadata["process_name"], etl_metadata["target_table"]))
+            sp_group_2["States"]["SP-GROUP-2"]["Branches"].append(generate_message_state(etl_metadata["process_name"], etl_metadata["target_table"]))
 
-    formatted_sp_group_1 = json.dumps(sp_group_1, indent=4)
-    formatted_sp_group_2 = json.dumps(sp_group_2, indent=4)
-
-    write_to_file(formatted_sp_group_1, os.path.join(pipelines_dir_path, f'SP-GROUP-1.{step_function_file_extension}'))
-    write_to_file(formatted_sp_group_2, os.path.join(pipelines_dir_path, f'SP-GROUP-2.{step_function_file_extension}'))
+    write_to_file(json.dumps(sp_group_1, indent=4), os.path.join(pipelines_dir_path, f'SP-GROUP-1.{step_function_file_extension}'))
+    write_to_file(json.dumps(sp_group_2, indent=4), os.path.join(pipelines_dir_path, f'SP-GROUP-2.{step_function_file_extension}'))
 
 
 def generate_message_state(process_name: str, target_table: str) -> dict:
@@ -113,7 +107,7 @@ def delete_prior_history_octane_etl_trigger_step_functions(directory: str):
         except Exception as e:
             print(f"Could not remove file '{filepath}'! Now exiting.")
             raise e
-    print(f'Deleted {deleted_files_count} files from {directory}.')
+    print(f'Deleted {deleted_files_count} history_octane ETL trigger step function files from {directory}.')
 
 
 def write_to_file(file_contents: str, file_path: str):

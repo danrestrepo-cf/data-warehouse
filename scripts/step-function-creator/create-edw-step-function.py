@@ -1,5 +1,6 @@
 import os
 import json
+import fnmatch
 
 from EDW import EDW
 from StateMachinesCreator import StateMachinesCreator
@@ -46,13 +47,14 @@ def delete_prior_state_machine_configurations(directory: str, state_machine_file
         raise RuntimeError(f'Output directory contains unexpected non-{state_machine_file_extension} files, and may be invalid. Now exiting.')
     deleted_files_count = 0
     for file in os.listdir(directory):
-        filepath = os.path.join(directory, file)
-        try:
-            os.remove(filepath)
-            deleted_files_count += 1
-        except Exception as e:
-            print(f"Could not remove file '{filepath}'! Now exiting.")
-            raise e
+        if fnmatch.fnmatch(file, "SP-[0-9]*"):
+            filepath = os.path.join(directory, file)
+            try:
+                os.remove(filepath)
+                deleted_files_count += 1
+            except Exception as e:
+                print(f"Could not remove file '{filepath}'! Now exiting.")
+                raise e
     print(f'Deleted {deleted_files_count} {state_machine_file_extension} files from {directory}.')
 
 
