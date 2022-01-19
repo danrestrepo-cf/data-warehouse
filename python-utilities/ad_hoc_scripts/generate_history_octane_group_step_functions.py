@@ -71,7 +71,7 @@ def generate_message_state(process_name: str, target_table: str) -> dict:
                 "Type": "Task",
                 "Resource": "arn:aws:states:::sqs:sendMessage",
                 "Parameters": {
-                    "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                    "QueueUrl": '${fullCheckQueueUrl}',
                     "MessageGroupId": target_table,
                     "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                     "MessageAttributes": {

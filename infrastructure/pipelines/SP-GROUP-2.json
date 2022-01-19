@@ -14,7 +14,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "deal_key_roles",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -37,7 +37,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "interim_funder",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -60,7 +60,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "lender_user",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -83,7 +83,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "deal_lender_user",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -106,7 +106,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "product",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -129,7 +129,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "loan_beneficiary",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -152,7 +152,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "application",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -175,7 +175,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "deal",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -198,7 +198,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "investor",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -221,7 +221,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "product_terms",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -244,7 +244,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "borrower",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -267,7 +267,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "proposal",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -290,7 +290,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "loan_funding",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -313,7 +313,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "loan",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -336,7 +336,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "applicant_role_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -359,7 +359,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "application_taken_method_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -382,7 +382,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "arm_index_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -405,7 +405,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "aus_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -428,7 +428,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "borrower_relationship_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -451,7 +451,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "borrower_tiny_id_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -474,7 +474,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "buydown_base_date_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -497,7 +497,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "buydown_contributor_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -520,7 +520,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "buydown_schedule_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -543,7 +543,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "buydown_subsidy_calculation_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -566,7 +566,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "citizenship_residency_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -589,7 +589,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "community_lending_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -612,7 +612,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "country_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -635,7 +635,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "courier_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -658,7 +658,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "credit_authorization_method_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -681,7 +681,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "credit_bureau_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -704,7 +704,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "decision_credit_score_calc_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -727,7 +727,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "delivery_aus_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -750,7 +750,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fnm_arm_plan_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -773,7 +773,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fnm_community_lending_product_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -796,7 +796,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fnm_mbs_reo_marketing_party_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -819,7 +819,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fre_community_program_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -842,7 +842,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "gift_funds_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -865,7 +865,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "heloc_cancel_fee_applicable_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -888,7 +888,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "hmda_hoepa_status_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -911,7 +911,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "hmda_purchaser_of_loan_2017_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -934,7 +934,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "hmda_purchaser_of_loan_2018_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -957,7 +957,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "homeownership_education_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -980,7 +980,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "interest_only_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1003,7 +1003,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "interim_funder_mers_registration_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1026,7 +1026,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "ipc_calc_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1049,7 +1049,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "ipc_comparison_operator_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1072,7 +1072,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "ipc_property_usage_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1095,7 +1095,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "legal_entity_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1118,7 +1118,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "lender_user_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1141,7 +1141,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "lien_priority_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1164,7 +1164,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "loan_amortization_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1187,7 +1187,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "loan_benef_transfer_status_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1210,7 +1210,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "loan_purpose_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1233,7 +1233,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "marital_status_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1256,7 +1256,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "mers_transfer_status_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1279,7 +1279,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "mi_calculated_rate_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1302,7 +1302,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "mi_company_name_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1325,7 +1325,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "mi_payer_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1348,7 +1348,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "mi_payment_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1371,7 +1371,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "mi_premium_refundable_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1394,7 +1394,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "mi_renewal_calculation_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1417,7 +1417,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "partial_payment_policy_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1440,7 +1440,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "payment_adjustment_calculation_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1463,7 +1463,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "payment_frequency_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1486,7 +1486,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "payment_structure_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1509,7 +1509,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "prepaid_interest_rate_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1532,7 +1532,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "prepay_penalty_schedule_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1555,7 +1555,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "prepay_penalty_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1578,7 +1578,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "prior_property_title_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1601,7 +1601,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "product_appraisal_requirement_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1624,7 +1624,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "product_side_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1647,7 +1647,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "product_special_program_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1670,7 +1670,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "property_usage_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1693,7 +1693,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "proposal_structure_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1716,7 +1716,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "qualified_mortgage_status_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1739,7 +1739,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "section_of_act_coarse_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1762,7 +1762,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "servicing_transfer_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1785,7 +1785,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "third_party_community_second_program_eligibility_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1808,7 +1808,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "time_zone_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1831,7 +1831,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "yes_no_na_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1854,7 +1854,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "days_per_year_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1877,7 +1877,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fha_program_code_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1900,7 +1900,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fha_rehab_program_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1923,7 +1923,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fha_special_program_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1946,7 +1946,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fnm_investor_remittance_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1969,7 +1969,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fnm_mbs_loan_default_loss_party_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -1992,7 +1992,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "fund_source_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -2015,7 +2015,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "funding_status_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -2038,7 +2038,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "housing_counseling_agency_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -2061,7 +2061,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "housing_counseling_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -2084,7 +2084,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "investor_hmda_purchaser_of_loan_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -2107,7 +2107,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "lender_user_status_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -2130,7 +2130,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "loan_file_delivery_method_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -2153,7 +2153,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "lqa_purchase_eligibility_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -2176,7 +2176,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "mi_initial_calculation_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -2199,7 +2199,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "mi_input_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -2222,7 +2222,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "mortgage_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -2245,7 +2245,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "negative_amortization_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -2268,7 +2268,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "qualifying_monthly_payment_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -2291,7 +2291,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "qualifying_rate_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -2314,7 +2314,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "state_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -2337,7 +2337,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "yes_no_na_unknown_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
@@ -2360,7 +2360,7 @@
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
-                                "QueueUrl": "https://sqs.us-east-1.amazonaws.com/185672194546/qa-bi-managed-mdi-2-full-check.fifo",
+                                "QueueUrl": "${fullCheckQueueUrl}",
                                 "MessageGroupId": "yes_no_unknown_type",
                                 "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
                                 "MessageAttributes": {
