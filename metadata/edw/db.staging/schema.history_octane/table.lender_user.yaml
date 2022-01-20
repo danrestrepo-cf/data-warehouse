@@ -68,6 +68,14 @@ foreign_keys:
       - code
       schema: history_octane
       table: lender_user_status_type
+  fkt_lu_lender_user_suspend_reason_type:
+    columns:
+    - lu_lender_user_suspend_reason_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: lender_user_suspend_reason_type
   fkt_lu_lender_user_type:
     columns:
     - lu_lender_user_type
@@ -199,6 +207,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lu_lender_user_status_type
+  lu_lender_user_suspend_reason_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lu_lender_user_suspend_reason_type
   lu_lender_user_type:
     data_type: VARCHAR(128)
     source:
@@ -295,6 +307,18 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lu_street2
+  lu_suspend_date_time:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.lu_suspend_date_time
+  lu_suspend_reason_other_description:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.lu_suspend_reason_other_description
+  lu_suspended:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.lu_suspended
   lu_termination_date:
     data_type: DATE
     source:
@@ -409,6 +433,10 @@ etls:
            , staging_table.lu_termination_date
            , staging_table.lu_marketing_details_enabled
            , staging_table.lu_marketing_details_featured_review
+           , staging_table.lu_suspended
+           , staging_table.lu_lender_user_suspend_reason_type
+           , staging_table.lu_suspend_reason_other_description
+           , staging_table.lu_suspend_date_time
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.lender_user staging_table
@@ -479,6 +507,10 @@ etls:
            , history_table.lu_termination_date
            , history_table.lu_marketing_details_enabled
            , history_table.lu_marketing_details_featured_review
+           , history_table.lu_suspended
+           , history_table.lu_lender_user_suspend_reason_type
+           , history_table.lu_suspend_reason_other_description
+           , history_table.lu_suspend_date_time
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.lender_user history_table
