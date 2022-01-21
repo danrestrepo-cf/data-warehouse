@@ -850,3 +850,29 @@ FROM mdi.edw_table_definition
 WHERE edw_table_definition.database_name = delete_keys.database_name
   AND edw_table_definition.schema_name = delete_keys.schema_name
   AND edw_table_definition.table_name = delete_keys.table_name;
+
+--
+-- EDW | prevent SP-100092 and SP-200001-delete from being triggered
+-- https://app.asana.com/0/0/1201700392177716
+--
+
+/*
+DELETIONS
+*/
+
+--state_machine_step
+WITH delete_keys (process_name, next_process_name) AS (
+    VALUES ('SP-100090', 'SP-200001-delete')
+         , ('SP-100090', 'SP-200001-insert')
+         , ('SP-100092', 'SP-200001-delete')
+         , ('SP-100092', 'SP-200001-insert')
+         , ('SP-300001-insert-update', 'SP-200001-insert')
+         , ('SP-300001-delete', 'SP-200001-insert')
+)
+DELETE
+FROM mdi.state_machine_step
+    USING delete_keys, mdi.process, mdi.process next_process
+WHERE state_machine_step.process_dwid = process.dwid
+  AND state_machine_step.next_process_dwid = next_process.dwid
+  AND delete_keys.process_name = process.name
+  AND delete_keys.next_process_name = next_process.name;

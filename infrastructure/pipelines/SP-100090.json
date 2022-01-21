@@ -53,85 +53,27 @@
                     "Next": "Success"
                 }
             ],
-            "Default": "Parallel"
+            "Default": "SP-200010_message"
         },
         "Success": {
             "Type": "Succeed"
         },
-        "Parallel": {
-            "Type": "Parallel",
-            "End": true,
-            "Branches": [
-                {
-                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200001-delete",
-                    "StartAt": "SP-200001-delete_message",
-                    "States": {
-                        "SP-200001-delete_message": {
-                            "Type": "Task",
-                            "Resource": "arn:aws:states:::sqs:sendMessage",
-                            "Parameters": {
-                                "QueueUrl": "${fullCheckQueueUrl}",
-                                "MessageGroupId": "loan_lender_user_access",
-                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
-                                "MessageAttributes": {
-                                    "ProcessId": {
-                                        "DataType": "String",
-                                        "StringValue": "SP-200001-delete"
-                                    }
-                                },
-                                "MessageBody.$": "States.JsonToString($)"
-                            },
-                            "End": true
-                        }
+        "SP-200010_message": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::sqs:sendMessage",
+            "Parameters": {
+                "QueueUrl": "${fullCheckQueueUrl}",
+                "MessageGroupId": "lender_user_dim",
+                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                "MessageAttributes": {
+                    "ProcessId": {
+                        "DataType": "String",
+                        "StringValue": "SP-200010"
                     }
                 },
-                {
-                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200001-insert",
-                    "StartAt": "SP-200001-insert_message",
-                    "States": {
-                        "SP-200001-insert_message": {
-                            "Type": "Task",
-                            "Resource": "arn:aws:states:::sqs:sendMessage",
-                            "Parameters": {
-                                "QueueUrl": "${fullCheckQueueUrl}",
-                                "MessageGroupId": "loan_lender_user_access",
-                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
-                                "MessageAttributes": {
-                                    "ProcessId": {
-                                        "DataType": "String",
-                                        "StringValue": "SP-200001-insert"
-                                    }
-                                },
-                                "MessageBody.$": "States.JsonToString($)"
-                            },
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200010",
-                    "StartAt": "SP-200010_message",
-                    "States": {
-                        "SP-200010_message": {
-                            "Type": "Task",
-                            "Resource": "arn:aws:states:::sqs:sendMessage",
-                            "Parameters": {
-                                "QueueUrl": "${fullCheckQueueUrl}",
-                                "MessageGroupId": "lender_user_dim",
-                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
-                                "MessageAttributes": {
-                                    "ProcessId": {
-                                        "DataType": "String",
-                                        "StringValue": "SP-200010"
-                                    }
-                                },
-                                "MessageBody.$": "States.JsonToString($)"
-                            },
-                            "End": true
-                        }
-                    }
-                }
-            ]
+                "MessageBody.$": "States.JsonToString($)"
+            },
+            "End": true
         }
     }
 }
