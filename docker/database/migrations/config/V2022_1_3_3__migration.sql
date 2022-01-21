@@ -41,7 +41,8 @@ LEFT JOIN mdi.edw_table_definition source_table_definition
               AND insert_rows.source_table_name = source_table_definition.table_name;
 
 --edw_field_definition
-WITH insert_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name, source_table_name, source_field_name) AS (
+WITH insert_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name,
+                  source_table_name, source_field_name) AS (
     VALUES ('staging', 'history_octane', 'lender_user_suspend_reason_type', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'lender_user_suspend_reason_type', 'data_source_updated_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'lender_user_suspend_reason_type', 'etl_batch_id', 'TEXT', NULL, NULL, NULL, NULL)
@@ -81,7 +82,16 @@ WITH insert_rows (database_name, schema_name, table_name, field_name, data_type,
 )
 INSERT
 INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-SELECT edw_table_definition.dwid, insert_rows.field_name, FALSE, source_field_definition.dwid, NULL, insert_rows.data_type, NULL, NULL, NULL, NULL
+SELECT edw_table_definition.dwid
+     , insert_rows.field_name
+     , FALSE
+     , source_field_definition.dwid
+     , NULL
+     , insert_rows.data_type
+     , NULL
+     , NULL
+     , NULL
+     , NULL
 FROM insert_rows
 JOIN mdi.edw_table_definition
      ON insert_rows.database_name = edw_table_definition.database_name
@@ -95,7 +105,8 @@ LEFT JOIN mdi.edw_field_definition source_field_definition
           ON source_table_definition.dwid = source_field_definition.edw_table_definition_dwid
               AND insert_rows.source_field_name = source_field_definition.field_name;
 
-WITH insert_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name, source_table_name, source_field_name) AS (
+WITH insert_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name,
+                  source_table_name, source_field_name) AS (
     VALUES ('staging', 'history_octane', 'ledger_entry', 'le_smart_adjustment', 'BOOLEAN', 'staging', 'staging_octane', 'ledger_entry', 'le_smart_adjustment')
          , ('staging', 'history_octane', 'lender_user', 'lu_lender_user_suspend_reason_type', 'VARCHAR(128)', 'staging', 'staging_octane', 'lender_user', 'lu_lender_user_suspend_reason_type')
          , ('staging', 'history_octane', 'lender_user', 'lu_suspend_date_time', 'TIMESTAMP', 'staging', 'staging_octane', 'lender_user', 'lu_suspend_date_time')
@@ -120,7 +131,16 @@ WITH insert_rows (database_name, schema_name, table_name, field_name, data_type,
 )
 INSERT
 INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
-SELECT edw_table_definition.dwid, insert_rows.field_name, FALSE, source_field_definition.dwid, NULL, insert_rows.data_type, NULL, NULL, NULL, NULL
+SELECT edw_table_definition.dwid
+     , insert_rows.field_name
+     , FALSE
+     , source_field_definition.dwid
+     , NULL
+     , insert_rows.data_type
+     , NULL
+     , NULL
+     , NULL
+     , NULL
 FROM insert_rows
 JOIN mdi.edw_table_definition
      ON insert_rows.database_name = edw_table_definition.database_name
@@ -198,7 +218,15 @@ WHERE history_table.code IS NULL;', 'Staging DB Connection')
 )
 INSERT
 INTO mdi.table_input_step (process_dwid, data_source_dwid, sql, limit_size, execute_for_each_row, replace_variables, enable_lazy_conversion, cached_row_meta, connectionname)
-SELECT process.dwid, insert_rows.data_source_dwid, insert_rows.sql, 0, 'N', 'N', 'N', 'N', insert_rows.connectionname::mdi.pentaho_db_connection_name
+SELECT process.dwid
+     , insert_rows.data_source_dwid
+     , insert_rows.sql
+     , 0
+     , 'N'
+     , 'N'
+     , 'N'
+     , 'N'
+     , insert_rows.connectionname::mdi.pentaho_db_connection_name
 FROM insert_rows
 JOIN mdi.process
      ON process.name = insert_rows.process_name;
@@ -211,8 +239,24 @@ WITH insert_rows (process_name, target_schema, target_table, truncate_table, con
          , ('SP-100891', 'history_octane', 'smart_ledger_plan_case_measure_type', 'N', 'Staging DB Connection')
          , ('SP-100892', 'history_octane', 'smart_ledger_plan_case_population_period_type', 'N', 'Staging DB Connection')
 )
-INSERT INTO mdi.table_output_step (process_dwid, target_schema, target_table, commit_size, partitioning_field, table_name_field, auto_generated_key_field, partition_data_per, table_name_defined_in_field, return_auto_generated_key_field, truncate_table, connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors, use_batch_update)
-SELECT process.dwid, insert_rows.target_schema, insert_rows.target_table, 1000, NULL, NULL, NULL, NULL, 'N', NULL, insert_rows.truncate_table::mdi.pentaho_y_or_n, insert_rows.connectionname, 'N', 'Y', 'N', 'N'
+INSERT
+INTO mdi.table_output_step (process_dwid, target_schema, target_table, commit_size, partitioning_field, table_name_field, auto_generated_key_field, partition_data_per, table_name_defined_in_field, return_auto_generated_key_field, truncate_table, connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors, use_batch_update)
+SELECT process.dwid
+     , insert_rows.target_schema
+     , insert_rows.target_table
+     , 1000
+     , NULL
+     , NULL
+     , NULL
+     , NULL
+     , 'N'
+     , NULL
+     , insert_rows.truncate_table::mdi.pentaho_y_or_n
+     , insert_rows.connectionname
+     , 'N'
+     , 'Y'
+     , 'N'
+     , 'N'
 FROM insert_rows
 JOIN mdi.process
      ON process.name = insert_rows.process_name;
@@ -301,7 +345,8 @@ UPDATES
 */
 
 --edw_field_definition
-WITH update_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name, source_table_name, source_field_name) AS (
+WITH update_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name,
+                  source_table_name, source_field_name) AS (
     VALUES ('staging', 'history_octane', 'ledger_entry', 'le_synthetic_unique', 'VARCHAR(128)', 'staging', 'staging_octane', 'ledger_entry', 'le_synthetic_unique')
          , ('staging', 'history_octane', 'smart_ledger_plan_case_version', 'slpcv_smart_ledger_plan_case_type', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'ledger_entry', 'le_synthetic_unique', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
@@ -774,6 +819,16 @@ WHERE edw_table_definition.database_name = delete_keys.database_name
   AND edw_table_definition.table_name = delete_keys.table_name
   AND edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
   AND edw_field_definition.field_name = delete_keys.field_name;
+
+--edw_join_definition (MANUALLY ADDED to prevent referential integrity error in auto-generated script)
+DELETE
+FROM mdi.edw_join_definition
+    USING mdi.edw_table_definition primary_table, mdi.edw_table_definition target_table
+WHERE edw_join_definition.primary_edw_table_definition_dwid = primary_table.dwid
+  AND edw_join_definition.target_edw_table_definition_dwid = target_table.dwid
+  AND (primary_table.table_name = 'smart_ledger_plan_case_type'
+    OR target_table.table_name = 'smart_ledger_plan_case_type');
+
 
 --edw_table_definition
 WITH delete_keys (database_name, schema_name, table_name) AS (
