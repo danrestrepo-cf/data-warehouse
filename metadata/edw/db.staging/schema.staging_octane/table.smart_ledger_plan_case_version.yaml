@@ -58,14 +58,30 @@ foreign_keys:
       - code
       schema: staging_octane
       table: smart_ledger_plan_case_level_type
-  fkt_slpcv_smart_ledger_plan_case_type:
+  fkt_slpcv_smart_ledger_plan_case_measure_source_date_type:
     columns:
-    - slpcv_smart_ledger_plan_case_type
+    - slpcv_smart_ledger_plan_case_measure_source_date_type
     references:
       columns:
       - code
       schema: staging_octane
-      table: smart_ledger_plan_case_type
+      table: smart_ledger_plan_case_measure_source_date_type
+  fkt_slpcv_smart_ledger_plan_case_measure_type:
+    columns:
+    - slpcv_smart_ledger_plan_case_measure_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: smart_ledger_plan_case_measure_type
+  fkt_slpcv_smart_ledger_plan_case_population_period_type:
+    columns:
+    - slpcv_smart_ledger_plan_case_population_period_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: smart_ledger_plan_case_population_period_type
 columns:
   slpcv_account_pid:
     data_type: BIGINT
@@ -89,6 +105,10 @@ columns:
     data_type: VARCHAR(128)
   slpcv_max_amount:
     data_type: NUMERIC(15,2)
+  slpcv_measure_criteria_from_date:
+    data_type: DATE
+  slpcv_measure_criteria_through_date:
+    data_type: DATE
   slpcv_min_amount:
     data_type: NUMERIC(15,2)
   slpcv_payer_org_node_pid:
@@ -99,9 +119,13 @@ columns:
     data_type: VARCHAR(128)
   slpcv_smart_ledger_plan_case_level_type:
     data_type: VARCHAR(128)
+  slpcv_smart_ledger_plan_case_measure_source_date_type:
+    data_type: VARCHAR(128)
+  slpcv_smart_ledger_plan_case_measure_type:
+    data_type: VARCHAR(128)
   slpcv_smart_ledger_plan_case_pid:
     data_type: BIGINT
-  slpcv_smart_ledger_plan_case_type:
+  slpcv_smart_ledger_plan_case_population_period_type:
     data_type: VARCHAR(128)
   slpcv_synthetic_unique:
     data_type: BIGINT
