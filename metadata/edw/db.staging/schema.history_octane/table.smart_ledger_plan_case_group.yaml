@@ -36,6 +36,14 @@ foreign_keys:
       - code
       schema: history_octane
       table: smart_ledger_plan_case_group_calculation_type
+  fkt_slpcg_smart_ledger_plan_case_group_type:
+    columns:
+    - slpcg_smart_ledger_plan_case_group_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: smart_ledger_plan_case_group_type
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
@@ -67,6 +75,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.slpcg_smart_ledger_plan_case_group_calculation_type
+  slpcg_smart_ledger_plan_case_group_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.slpcg_smart_ledger_plan_case_group_type
   slpcg_smart_ledger_plan_pid:
     data_type: BIGINT
     source:
@@ -91,6 +103,7 @@ etls:
            , staging_table.slpcg_group_id
            , staging_table.slpcg_payer_org_node_pid
            , staging_table.slpcg_smart_ledger_plan_case_group_calculation_type
+           , staging_table.slpcg_smart_ledger_plan_case_group_type
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.smart_ledger_plan_case_group staging_table
@@ -107,6 +120,7 @@ etls:
            , history_table.slpcg_group_id
            , history_table.slpcg_payer_org_node_pid
            , history_table.slpcg_smart_ledger_plan_case_group_calculation_type
+           , history_table.slpcg_smart_ledger_plan_case_group_type
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.smart_ledger_plan_case_group history_table

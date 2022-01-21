@@ -199,6 +199,10 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.le_reversal
+  le_smart_adjustment:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.le_smart_adjustment
   le_smart_ledger_plan_case_version_pid:
     data_type: BIGINT
     source:
@@ -212,7 +216,7 @@ columns:
     source:
       field: primary_source_table.columns.le_source_org_node_pid
   le_synthetic_unique:
-    data_type: VARCHAR(32)
+    data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.le_synthetic_unique
   le_version:
@@ -253,6 +257,7 @@ etls:
            , staging_table.le_passthrough
            , staging_table.le_smart_ledger_plan_case_version_pid
            , staging_table.le_synthetic_unique
+           , staging_table.le_smart_adjustment
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.ledger_entry staging_table
@@ -287,6 +292,7 @@ etls:
            , history_table.le_passthrough
            , history_table.le_smart_ledger_plan_case_version_pid
            , history_table.le_synthetic_unique
+           , history_table.le_smart_adjustment
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.ledger_entry history_table

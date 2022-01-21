@@ -66,6 +66,14 @@ foreign_keys:
       - code
       schema: staging_octane
       table: lender_user_status_type
+  fkt_lu_lender_user_suspend_reason_type:
+    columns:
+    - lu_lender_user_suspend_reason_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: lender_user_suspend_reason_type
   fkt_lu_lender_user_type:
     columns:
     - lu_lender_user_type
@@ -137,6 +145,8 @@ columns:
     data_type: TIMESTAMP
   lu_lender_user_status_type:
     data_type: VARCHAR(128)
+  lu_lender_user_suspend_reason_type:
+    data_type: VARCHAR(128)
   lu_lender_user_type:
     data_type: VARCHAR(128)
   lu_marketing_details_enabled:
@@ -185,6 +195,12 @@ columns:
     data_type: VARCHAR(128)
   lu_street2:
     data_type: VARCHAR(128)
+  lu_suspend_date_time:
+    data_type: TIMESTAMP
+  lu_suspend_reason_other_description:
+    data_type: VARCHAR(1024)
+  lu_suspended:
+    data_type: BOOLEAN
   lu_termination_date:
     data_type: DATE
   lu_through_date:
