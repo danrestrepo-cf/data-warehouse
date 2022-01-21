@@ -55,6 +55,9 @@ ALTER TABLE staging_octane.smart_ledger_plan_case_version
     ADD COLUMN slpcv_measure_criteria_from_date DATE,
     ADD COLUMN slpcv_measure_criteria_through_date DATE;
 
+ALTER TABLE staging_octane.smart_ledger_plan_case_type
+    RENAME TO smart_ledger_plan_case_group_type;
+
 --history_octane changes
 CREATE TABLE history_octane.lender_user_suspend_reason_type (
     code VARCHAR(128),
@@ -149,3 +152,6 @@ CREATE INDEX fkt_slpcv_smart_ledger_plan_case_measure_type ON history_octane.sma
 CREATE INDEX fkt_slpcv_smart_ledger_plan_case_measure_source_date_type ON history_octane.smart_ledger_plan_case_version (slpcv_smart_ledger_plan_case_measure_source_date_type);
 
 CREATE INDEX fkt_slpcv_smart_ledger_plan_case_population_period_type ON history_octane.smart_ledger_plan_case_version (slpcv_smart_ledger_plan_case_population_period_type);
+
+ALTER TABLE history_octane.smart_ledger_plan_case_type
+    RENAME TO smart_ledger_plan_case_group_type;
