@@ -76,29 +76,6 @@
                     }
                 },
                 {
-                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100092",
-                    "StartAt": "SP-100092_message",
-                    "States": {
-                        "SP-100092_message": {
-                            "Type": "Task",
-                            "Resource": "arn:aws:states:::sqs:sendMessage",
-                            "Parameters": {
-                                "QueueUrl": "${fullCheckQueueUrl}",
-                                "MessageGroupId": "deal_lender_user",
-                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
-                                "MessageAttributes": {
-                                    "ProcessId": {
-                                        "DataType": "String",
-                                        "StringValue": "SP-100092"
-                                    }
-                                },
-                                "MessageBody.$": "States.JsonToString($)"
-                            },
-                            "End": true
-                        }
-                    }
-                },
-                {
                     "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100105",
                     "StartAt": "SP-100105_message",
                     "States": {

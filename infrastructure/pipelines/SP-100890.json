@@ -1,8 +1,8 @@
 {
-    "Comment": "SP-300001-insert-update - table -> table-insert_update ETL from staging.history_octane.loan to staging.star_loan.loan_fact",
-    "StartAt": "SP-300001-insert-update",
+    "Comment": "SP-100890 - ETL to copy smart_ledger_plan_case_measure_source_date_type data from staging_octane to history_octane",
+    "StartAt": "SP-100890",
     "States": {
-        "SP-300001-insert-update": {
+        "SP-100890": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -19,14 +19,14 @@
                     }
                 },
                 "Overrides": {
-                    "Memory": "4096",
+                    "Memory": "2048",
                     "ContainerOverrides": [
                         {
-                            "Memory": 4096,
+                            "Memory": 2048,
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-300001-insert-update"
+                                    "Value": "SP-100890"
                                 },
                                 {
                                     "Name": "INPUT_DATA",
