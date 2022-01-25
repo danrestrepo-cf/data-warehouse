@@ -48,20 +48,29 @@ def main():
                     }
                     etl_dict_list.append(etl_dict)
     history_octane_etl_dict_list = sorted(etl_dict_list, key=lambda x: x["process_name"])
+    sp_group_2_etl_dict_list = [etl for etl in history_octane_etl_dict_list if len(etl["next_processes"]) > 0]
 
     # delete existing group step functions and re-generate
     delete_existing_group_step_functions(pipelines_dir_path)
     generate_grouped_step_functions('SP-GROUP-1', 'Trigger every history_octane ETL - This should process all '
                                     'staging_octane data into history_octane and will trigger any downstream processes',
                                     history_octane_etl_dict_list, 500, pipelines_dir_path)
+    generate_grouped_step_functions('SP-GROUP-2', 'Trigger history_octane ETLs that have one or more dependent ETLs - '
+                                    'This should process all staging_octane data that feeds any star_* tables',
+                                    sp_group_2_etl_dict_list, 500, pipelines_dir_path)
 
 
 def generate_grouped_step_functions(step_function_base_name: str, step_function_comment: str, etl_dict_list: list[dict],
                                     step_function_state_limit: int, output_dir: str):
+    etl_dict_list_length = len(etl_dict_list)
     for i in range(0, math.ceil(len(etl_dict_list) / step_function_state_limit)):
-        step_function_subgroup_suffix = i+1
-        step_function_name = f"{step_function_base_name}-{step_function_subgroup_suffix}"
-        parallel_state = generate_parallel_state(step_function_name, f"{step_function_comment} - group {step_function_subgroup_suffix}")
+        if etl_dict_list_length > step_function_state_limit:
+            step_function_subgroup_suffix = i+1
+            step_function_name = f"{step_function_base_name}-{step_function_subgroup_suffix}"
+            parallel_state = generate_parallel_state(step_function_name, f"{step_function_comment} - group {step_function_subgroup_suffix}")
+        else:
+            step_function_name = f"{step_function_base_name}"
+            parallel_state = generate_parallel_state(step_function_name, f"{step_function_comment}")
         parallel_branches = parallel_state["States"][step_function_name]["Branches"]
         for j in range(0, len(etl_dict_list)):
             while len(parallel_branches) <= step_function_state_limit and len(etl_dict_list) > 0:
