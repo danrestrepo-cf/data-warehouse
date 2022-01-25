@@ -62,9 +62,9 @@ def main():
 
 def generate_grouped_step_functions(step_function_base_name: str, step_function_comment: str, etl_dict_list: list[dict],
                                     step_function_state_limit: int, output_dir: str):
-    etl_dict_list_length = len(etl_dict_list)
-    for i in range(0, math.ceil(len(etl_dict_list) / step_function_state_limit)):
-        if etl_dict_list_length > step_function_state_limit:
+    unprocessed_etl_dict_list_length = len(etl_dict_list)
+    for i in range(0, math.ceil(unprocessed_etl_dict_list_length / step_function_state_limit)):
+        if unprocessed_etl_dict_list_length > step_function_state_limit:
             step_function_subgroup_suffix = i+1
             step_function_name = f"{step_function_base_name}-{step_function_subgroup_suffix}"
             parallel_state = generate_parallel_state(step_function_name, f"{step_function_comment} - group {step_function_subgroup_suffix}")
