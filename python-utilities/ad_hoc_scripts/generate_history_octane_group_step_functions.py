@@ -9,6 +9,7 @@ import sys
 import os
 import json
 import fnmatch
+import math
 
 PROJECT_DIR_PATH = os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
 
@@ -25,10 +26,9 @@ def main():
     metadata_dir = os.path.join(PROJECT_DIR_PATH, '..', 'metadata', 'edw')
     data_warehouse_metadata = generate_data_warehouse_metadata_from_yaml(metadata_dir)
 
-    step_function_file_extension = 'json'
+    # initialize variable for write-to directory
     infrastructure_dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', 'infrastructure')
     pipelines_dir_path = os.path.join(infrastructure_dir_path, 'pipelines')
-    delete_existing_group_step_functions(pipelines_dir_path)
 
     # filter DataWarehouseMetadata object to history_octane schema objects
     filterer = InclusiveMetadataFilterer()
@@ -36,30 +36,38 @@ def main():
     data_warehouse_metadata = filterer.filter(data_warehouse_metadata)
 
     # parse relevant metadata into a list of dicts
-    history_octane_etl_metadata = []
+    etl_dict_list = []
     for database in data_warehouse_metadata.databases:
         for schema in database.schemas:
             for table in schema.tables:
                 for etl in table.etls:
-                    etl_metadata = {
+                    etl_dict = {
                         "process_name": etl.process_name,
                         "target_table": table.name,
                         "next_processes": table.next_etls
                     }
-                    history_octane_etl_metadata.append(etl_metadata)
-    history_octane_etl_metadata = sorted(history_octane_etl_metadata, key=lambda x: x["process_name"])
+                    etl_dict_list.append(etl_dict)
+    history_octane_etl_dict_list = sorted(etl_dict_list, key=lambda x: x["process_name"])
 
-    # generate step function dicts
-    sp_group_1 = generate_parallel_state('SP-GROUP-1', 'Trigger every history_octane ETL - This should process all staging_octane data into history_octane and will trigger any downstream processes')
-    sp_group_2 = generate_parallel_state('SP-GROUP-2', 'Trigger history_octane ETLs that have one or more dependent ETLs - This should process all staging_octane data that feeds any star_* tables')
+    # delete existing group step functions and re-generate
+    delete_existing_group_step_functions(pipelines_dir_path)
+    generate_grouped_step_functions('SP-GROUP-1', 'Trigger every history_octane ETL - This should process all '
+                                    'staging_octane data into history_octane and will trigger any downstream processes',
+                                    history_octane_etl_dict_list, 500, pipelines_dir_path)
 
-    for etl_metadata in history_octane_etl_metadata:
-        sp_group_1["States"]["SP-GROUP-1"]["Branches"].append(generate_message_state(etl_metadata["process_name"], etl_metadata["target_table"]))
-        if len(etl_metadata["next_processes"]) > 0:
-            sp_group_2["States"]["SP-GROUP-2"]["Branches"].append(generate_message_state(etl_metadata["process_name"], etl_metadata["target_table"]))
 
-    write_to_file(json.dumps(sp_group_1, indent=4), os.path.join(pipelines_dir_path, f'SP-GROUP-1.{step_function_file_extension}'))
-    write_to_file(json.dumps(sp_group_2, indent=4), os.path.join(pipelines_dir_path, f'SP-GROUP-2.{step_function_file_extension}'))
+def generate_grouped_step_functions(step_function_base_name: str, step_function_comment: str, etl_dict_list: list[dict],
+                                    step_function_state_limit: int, output_dir: str):
+    for i in range(0, math.ceil(len(etl_dict_list) / step_function_state_limit)):
+        step_function_subgroup_suffix = i+1
+        step_function_name = f"{step_function_base_name}-{step_function_subgroup_suffix}"
+        parallel_state = generate_parallel_state(step_function_name, f"{step_function_comment} - group {step_function_subgroup_suffix}")
+        parallel_branches = parallel_state["States"][step_function_name]["Branches"]
+        for j in range(0, len(etl_dict_list)):
+            while len(parallel_branches) <= step_function_state_limit and len(etl_dict_list) > 0:
+                etl_dict = etl_dict_list.pop(j)
+                parallel_branches.append(generate_message_state(etl_dict["process_name"], etl_dict["target_table"]))
+        write_to_file(json.dumps(parallel_state, indent=4), os.path.join(output_dir, f'{step_function_name}.json'))
 
 
 def generate_message_state(process_name: str, target_table: str) -> dict:
