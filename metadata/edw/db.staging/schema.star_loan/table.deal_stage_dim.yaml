@@ -1,0 +1,107 @@
+name: deal_stage_dim
+primary_source_table: staging.history_octane.deal_stage
+primary_key:
+  - dwid
+columns:
+  dwid:
+    data_type: BIGINT
+    update_flag: false
+  data_source_dwid:
+    data_type: BIGINT
+    update_flag: true
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  etl_batch_id:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_columns:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_id:
+    data_type: TEXT
+    update_flag: false
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_pid
+    update_flag: true
+  active_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prp_pid
+    update_flag: true
+etls:
+  SP-200021:
+    input_type: table
+    output_type: insert_update
+    hardcoded_data_source: Octane
+    json_output_field: data_source_integration_id
+    insert_update_keys:
+      - data_source_integration_id
+    input_sql: |-
+      WITH transaction_dim_incl_new_records AS (
+          SELECT 'deal_pid' || '~' || 'data_source_dwid' AS data_source_integration_columns
+               , COALESCE( CAST( t1441.d_pid AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) AS data_source_integration_id
+               , NOW( ) AS edw_created_datetime
+               , NOW( ) AS edw_modified_datetime
+               , primary_table.data_source_updated_datetime AS data_source_modified_datetime
+               , t1441.d_pid AS deal_pid
+               , primary_table.prp_pid AS active_proposal_pid
+               , GREATEST( primary_table.etl_end_date_time, t1441.etl_end_date_time ) AS max_source_etl_end_date_time
+          FROM (
+              SELECT <<proposal_partial_load_condition>> AS include_record
+                   , proposal.*
+                   , etl_log.etl_end_date_time
+              FROM history_octane.proposal
+              LEFT JOIN history_octane.proposal AS history_records
+                        ON proposal.prp_pid = history_records.prp_pid
+                            AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
+              JOIN star_common.etl_log
+                   ON proposal.etl_batch_id = etl_log.etl_batch_id
+              WHERE history_records.prp_pid IS NULL
+          ) AS primary_table
+          INNER JOIN (
+              SELECT *
+              FROM (
+                  SELECT <<deal_partial_load_condition>> AS include_record
+                       , deal.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.deal
+                  LEFT JOIN history_octane.deal AS history_records
+                            ON deal.d_pid = history_records.d_pid
+                                AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON deal.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.d_pid IS NULL
+              ) AS primary_table
+          ) AS t1441
+                     ON primary_table.prp_pid = t1441.d_active_proposal_pid
+          WHERE GREATEST( primary_table.include_record, t1441.include_record ) IS TRUE
+      )
+      --new records that should be inserted
+      SELECT transaction_dim_incl_new_records.*
+      FROM transaction_dim_incl_new_records
+      LEFT JOIN star_loan.transaction_dim
+                ON transaction_dim_incl_new_records.data_source_integration_id = transaction_dim.data_source_integration_id
+      WHERE transaction_dim.dwid IS NULL
+      UNION ALL
+      --existing records that need to be updated
+      SELECT transaction_dim_incl_new_records.*
+      FROM transaction_dim_incl_new_records
+      JOIN (
+          SELECT transaction_dim.data_source_integration_id, etl_log.etl_start_date_time
+          FROM star_loan.transaction_dim
+          JOIN star_common.etl_log
+               ON transaction_dim.etl_batch_id = etl_log.etl_batch_id
+      ) AS transaction_dim_etl_start_times
+           ON transaction_dim_incl_new_records.data_source_integration_id = transaction_dim_etl_start_times.data_source_integration_id
+               AND transaction_dim_incl_new_records.max_source_etl_end_date_time >= transaction_dim_etl_start_times.etl_start_date_time;
+next_etls:
+  - SP-300001-insert-update
