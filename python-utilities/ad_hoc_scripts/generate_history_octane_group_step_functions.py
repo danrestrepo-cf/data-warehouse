@@ -36,7 +36,7 @@ def main():
     history_octane_metadata = filterer.filter(data_warehouse_metadata)
 
     # parse relevant metadata into a list of dicts
-    etl_metadata_list = []
+    history_octane_etl_metadata_list = []
     for database in history_octane_metadata.databases:
         for schema in database.schemas:
             for table in schema.tables:
@@ -46,8 +46,8 @@ def main():
                         "target_table": table.name,
                         "next_processes": table.next_etls
                     }
-                    etl_metadata_list.append(etl_metadata)
-    history_octane_etl_metadata_list = sorted(etl_metadata_list, key=lambda x: x["process_name"])
+                    history_octane_etl_metadata_list.append(etl_metadata)
+    history_octane_etl_metadata_list = sorted(history_octane_etl_metadata_list, key=lambda x: x["process_name"])
     sp_group_2_etl_metadata_list = [etl for etl in history_octane_etl_metadata_list if len(etl["next_processes"]) > 0]
 
     # delete existing group step functions and re-generate
