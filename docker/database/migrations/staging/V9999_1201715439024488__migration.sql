@@ -68,10 +68,13 @@ CREATE TABLE history_octane.smart_doc_prior_to_type_case (
     sdpttc_ordinal VARCHAR(128),
     sdpttc_active BOOLEAN,
     data_source_updated_datetime timestamptz,
-    data_source_deleted_flag BOOLEAN
+    data_source_deleted_flag BOOLEAN,
+    etl_batch_id TEXT
 );
 
 CREATE INDEX idx_smart_doc_prior_to_type_case__pid ON history_octane.smart_doc_prior_to_type_case (sdpttc_pid);
+
+CREATE INDEX idx_smart_doc_prior_to_type_case__etl_batch_id ON history_octane.smart_doc_prior_to_type_case (etl_batch_id);
 
 CREATE INDEX idx_smart_doc_prior_to_type_case__data_source_updated_datetime ON history_octane.smart_doc_prior_to_type_case (data_source_updated_datetime);
 
@@ -97,10 +100,13 @@ CREATE TABLE history_octane.smart_doc_provider_type_case (
     sdptc_version INTEGER,
     sdptc_smart_doc_pid BIGINT,
     data_source_updated_datetime timestamptz,
-    data_source_deleted_flag BOOLEAN
+    data_source_deleted_flag BOOLEAN,
+    etl_batch_id TEXT
 );
 
 CREATE INDEX idx_smart_doc_provider_type_case__pid ON history_octane.smart_doc_provider_type_case (sdptc_pid);
+
+CREATE INDEX idx_smart_doc_provider_type_case__etl_batch_id ON history_octane.smart_doc_provider_type_case (etl_batch_id);
 
 CREATE INDEX idx_smart_doc_provider_type_case__data_source_updated_datetime ON history_octane.smart_doc_provider_type_case (data_source_updated_datetime);
 
