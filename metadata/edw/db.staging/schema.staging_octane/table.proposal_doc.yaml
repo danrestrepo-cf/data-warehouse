@@ -186,6 +186,22 @@ foreign_keys:
       - l_pid
       schema: staging_octane
       table: loan
+  fk_proposal_doc_30:
+    columns:
+    - prpd_smart_doc_prior_to_type_case_pid
+    references:
+      columns:
+      - sdpttc_pid
+      schema: staging_octane
+      table: smart_doc_prior_to_type_case
+  fk_proposal_doc_31:
+    columns:
+    - prpd_smart_doc_provider_type_case_pid
+    references:
+      columns:
+      - sdptc_pid
+      schema: staging_octane
+      table: smart_doc_provider_type_case
   fk_proposal_doc_4:
     columns:
     - prpd_borrower_pid

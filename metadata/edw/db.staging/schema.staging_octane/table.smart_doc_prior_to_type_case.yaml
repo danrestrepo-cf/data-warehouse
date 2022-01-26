@@ -1,0 +1,63 @@
+name: smart_doc_prior_to_type_case
+primary_key:
+- sdpttc_pid
+foreign_keys:
+  fk_smart_doc_prior_to_type_case_1:
+    columns:
+    - sdpttc_smart_doc_pid
+    references:
+      columns:
+      - sd_pid
+      schema: staging_octane
+      table: smart_doc
+  fk_smart_doc_prior_to_type_case_2:
+    columns:
+    - sdpttc_criteria_pid
+    references:
+      columns:
+      - cr_pid
+      schema: staging_octane
+      table: criteria
+  fkt_sdpttc_deal_child_relationship_type:
+    columns:
+    - sdpttc_deal_child_relationship_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: deal_child_relationship_type
+  fkt_sdpttc_deal_child_type:
+    columns:
+    - sdpttc_deal_child_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: deal_child_type
+  fkt_sdpttc_prior_to_type:
+    columns:
+    - sdpttc_prior_to_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: prior_to_type
+columns:
+  sdpttc_active:
+    data_type: BOOLEAN
+  sdpttc_criteria_pid:
+    data_type: BIGINT
+  sdpttc_deal_child_relationship_type:
+    data_type: VARCHAR(128)
+  sdpttc_deal_child_type:
+    data_type: VARCHAR(128)
+  sdpttc_ordinal:
+    data_type: VARCHAR(128)
+  sdpttc_pid:
+    data_type: BIGINT
+  sdpttc_prior_to_type:
+    data_type: VARCHAR(128)
+  sdpttc_smart_doc_pid:
+    data_type: BIGINT
+  sdpttc_version:
+    data_type: INTEGER
