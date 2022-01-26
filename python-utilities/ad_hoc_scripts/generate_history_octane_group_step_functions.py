@@ -33,11 +33,11 @@ def main():
     # filter DataWarehouseMetadata object to history_octane schema objects
     filterer = InclusiveMetadataFilterer()
     filterer.add_schema_criteria(SchemaPath('staging', 'history_octane'))
-    data_warehouse_metadata = filterer.filter(data_warehouse_metadata)
+    history_octane_metadata = filterer.filter(data_warehouse_metadata)
 
     # parse relevant metadata into a list of dicts
     etl_metadata_list = []
-    for database in data_warehouse_metadata.databases:
+    for database in history_octane_metadata.databases:
         for schema in database.schemas:
             for table in schema.tables:
                 for etl in table.etls:
