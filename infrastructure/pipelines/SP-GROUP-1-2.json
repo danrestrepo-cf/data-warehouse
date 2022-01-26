@@ -7,6 +7,29 @@
             "End": true,
             "Branches": [
                 {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100505",
+                    "StartAt": "SP-100505_message",
+                    "States": {
+                        "SP-100505_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "export_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100505"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
                     "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100506",
                     "StartAt": "SP-100506_message",
                     "States": {

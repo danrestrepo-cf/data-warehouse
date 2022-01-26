@@ -73,7 +73,7 @@ def generate_grouped_step_functions(step_function_base_name: str, step_function_
             parallel_state = generate_parallel_state(step_function_name, f"{step_function_comment}")
         parallel_branches = parallel_state["States"][step_function_name]["Branches"]
         for j in range(0, len(etl_dict_list)):
-            while len(parallel_branches) <= step_function_state_limit and len(etl_dict_list) > 0:
+            while len(parallel_branches) < step_function_state_limit and len(etl_dict_list) > 0:
                 etl_dict = etl_dict_list.pop(j)
                 parallel_branches.append(generate_message_state(etl_dict["process_name"], etl_dict["target_table"]))
         write_to_file(json.dumps(parallel_state, indent=4), os.path.join(output_dir, f'{step_function_name}.json'))
