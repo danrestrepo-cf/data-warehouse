@@ -1276,6 +1276,7 @@ etls:
           , loan_fact_incl_new_records.first_beneficiary_after_initial_investor_dwid
           , loan_fact_incl_new_records.most_recent_purchasing_beneficiary_investor_dwid
           , loan_fact_incl_new_records.current_beneficiary_investor_dwid
+          , loan_fact_incl_new_records.current_transaction_stage_from_date_dwid
       FROM (
       SELECT COALESCE(loan_fact.edw_created_datetime, NOW()) AS edw_created_datetime
           , NOW() AS edw_modified_datetime
@@ -1394,6 +1395,7 @@ etls:
               first_beneficiary_after_initial_investor_dwid
           , COALESCE(most_recent_purchasing_beneficiary_investor_dim.dwid, 0) AS
               most_recent_purchasing_beneficiary_investor_dwid
+          , COALESCE(current_deal_stage_date_dim.dwid, 0) AS current_transaction_stage_from_date_dwid
       FROM
           -- history_octane deal
           (
@@ -1404,7 +1406,17 @@ etls:
                   AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
               WHERE deal.data_source_deleted_flag IS FALSE
                 AND history_records.d_pid IS NULL) AS deal
-          -- history_octane proposal
+      -- history_octane deal_stage
+      JOIN (
+      SELECT deal_stage.*
+      , true AS include_record
+      FROM history_octane.deal_stage
+      LEFT JOIN history_octane.deal_stage AS history_records ON deal_stage.dst_pid = history_records.dst_pid
+      AND deal_stage.data_source_updated_datetime < history_records.data_source_updated_datetime
+      WHERE deal_stage.data_source_deleted_flag IS FALSE
+      AND deal_stage.dst_through_date IS NULL
+      AND history_records.dst_pid IS NULL) AS deal_stage ON deal.d_pid = deal_stage.dst_deal_pid
+      -- history_octane proposal
           JOIN (
               SELECT proposal.*
                    , <<proposal_partial_load_condition>> AS include_record
@@ -2645,6 +2657,7 @@ etls:
               AND hmda_purchaser_of_loan_2018_type.code IS NOT DISTINCT FROM hmda_purchaser_of_loan_dim.code_2018
               AND hmda_purchaser_of_loan_dim.data_source_dwid = 1
           -- star_loan.date_dim joins for date dwids
+          LEFT JOIN star_common.date_dim current_deal_stage_date_dim ON deal_stage.dst_from_date = current_deal_stage_date_dim.value
           LEFT JOIN star_common.date_dim agency_case_id_assigned_date_dim ON loan.l_agency_case_id_assigned_date =
                                                                              agency_case_id_assigned_date_dim.value
           LEFT JOIN star_common.date_dim apor_date_dim ON loan.l_apor_date = apor_date_dim.value
