@@ -4,4 +4,5 @@
 --
 
 GRANT SELECT ON ALL TABLES IN SCHEMA octane_dms_control TO readonly;
+ALTER DEFAULT PRIVILEGES FOR ROLE deployer IN SCHEMA octane_dms_control GRANT SELECT ON TABLES TO readonly;
 ALTER DEFAULT PRIVILEGES FOR ROLE dms_octane_writer IN SCHEMA octane_dms_control GRANT SELECT ON TABLES TO readonly;
