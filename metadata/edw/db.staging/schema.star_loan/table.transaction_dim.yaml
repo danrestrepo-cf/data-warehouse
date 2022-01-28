@@ -37,6 +37,12 @@ columns:
     source:
       field: primary_source_table.columns.prp_pid
     update_flag: true
+  current_transaction_stage:
+    data_type: VARCHAR(1024)
+    update_flag: true
+  current_transaction_stage_code:
+    data_type: VARCHAR(128)
+    update_flag: true
 etls:
   SP-200019:
     input_type: table
