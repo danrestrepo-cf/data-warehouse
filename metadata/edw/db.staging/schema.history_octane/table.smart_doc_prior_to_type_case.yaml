@@ -1,0 +1,135 @@
+name: smart_doc_prior_to_type_case
+primary_source_table: staging.staging_octane.smart_doc_prior_to_type_case
+primary_key:
+- sdpttc_pid
+- sdpttc_version
+foreign_keys:
+  fk_smart_doc_prior_to_type_case_1:
+    columns:
+    - sdpttc_smart_doc_pid
+    references:
+      columns:
+      - sd_pid
+      schema: history_octane
+      table: smart_doc
+  fk_smart_doc_prior_to_type_case_2:
+    columns:
+    - sdpttc_criteria_pid
+    references:
+      columns:
+      - cr_pid
+      schema: history_octane
+      table: criteria
+  fkt_sdpttc_deal_child_relationship_type:
+    columns:
+    - sdpttc_deal_child_relationship_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: deal_child_relationship_type
+  fkt_sdpttc_deal_child_type:
+    columns:
+    - sdpttc_deal_child_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: deal_child_type
+  fkt_sdpttc_prior_to_type:
+    columns:
+    - sdpttc_prior_to_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: prior_to_type
+columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  sdpttc_active:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sdpttc_active
+  sdpttc_criteria_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sdpttc_criteria_pid
+  sdpttc_deal_child_relationship_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sdpttc_deal_child_relationship_type
+  sdpttc_deal_child_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sdpttc_deal_child_type
+  sdpttc_ordinal:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sdpttc_ordinal
+  sdpttc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sdpttc_pid
+  sdpttc_prior_to_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.sdpttc_prior_to_type
+  sdpttc_smart_doc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.sdpttc_smart_doc_pid
+  sdpttc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.sdpttc_version
+etls:
+  SP-100893:
+    input_type: table
+    output_type: insert
+    json_output_field: sdpttc_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.smart_doc_prior_to_type_case
+      SELECT staging_table.sdpttc_pid
+           , staging_table.sdpttc_version
+           , staging_table.sdpttc_smart_doc_pid
+           , staging_table.sdpttc_criteria_pid
+           , staging_table.sdpttc_deal_child_type
+           , staging_table.sdpttc_deal_child_relationship_type
+           , staging_table.sdpttc_prior_to_type
+           , staging_table.sdpttc_ordinal
+           , staging_table.sdpttc_active
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.smart_doc_prior_to_type_case staging_table
+      LEFT JOIN history_octane.smart_doc_prior_to_type_case history_table
+                ON staging_table.sdpttc_pid = history_table.sdpttc_pid
+                    AND staging_table.sdpttc_version = history_table.sdpttc_version
+      WHERE history_table.sdpttc_pid IS NULL
+      UNION ALL
+      SELECT history_table.sdpttc_pid
+           , history_table.sdpttc_version + 1
+           , history_table.sdpttc_smart_doc_pid
+           , history_table.sdpttc_criteria_pid
+           , history_table.sdpttc_deal_child_type
+           , history_table.sdpttc_deal_child_relationship_type
+           , history_table.sdpttc_prior_to_type
+           , history_table.sdpttc_ordinal
+           , history_table.sdpttc_active
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.smart_doc_prior_to_type_case history_table
+      LEFT JOIN staging_octane.smart_doc_prior_to_type_case staging_table
+                ON staging_table.sdpttc_pid = history_table.sdpttc_pid
+      WHERE staging_table.sdpttc_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.smart_doc_prior_to_type_case deleted_records
+          WHERE deleted_records.sdpttc_pid = history_table.sdpttc_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );
