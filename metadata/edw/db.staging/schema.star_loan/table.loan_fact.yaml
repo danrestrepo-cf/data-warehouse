@@ -763,6 +763,14 @@ foreign_keys:
         - dwid
       schema: star_loan
       table: investor_dim
+  fk_loan_fact__current_transaction_stage_from_date_dwid:
+    columns:
+      - current_transaction_stage_from_date_dwid
+    references:
+      columns:
+        - dwid
+      schema: star_common
+      table: date_dim
 columns:
   data_source_dwid:
     data_type: BIGINT
@@ -1139,6 +1147,9 @@ columns:
     data_type: BIGINT
     update_flag: true
   current_beneficiary_investor_dwid:
+    data_type: BIGINT
+    update_flag: true
+  current_transaction_stage_from_date_dwid:
     data_type: BIGINT
     update_flag: true
 etls:
