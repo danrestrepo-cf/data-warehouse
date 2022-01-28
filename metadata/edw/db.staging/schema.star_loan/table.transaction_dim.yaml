@@ -53,43 +53,66 @@ etls:
       - data_source_integration_id
     input_sql: |-
       WITH transaction_dim_incl_new_records AS (
-          SELECT 'deal_pid' || '~' || 'data_source_dwid' AS data_source_integration_columns
-               , COALESCE( CAST( t1441.d_pid AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) AS data_source_integration_id
-               , NOW( ) AS edw_created_datetime
-               , NOW( ) AS edw_modified_datetime
-               , primary_table.data_source_updated_datetime AS data_source_modified_datetime
-               , t1441.d_pid AS deal_pid
-               , primary_table.prp_pid AS active_proposal_pid
-               , GREATEST( primary_table.etl_end_date_time, t1441.etl_end_date_time ) AS max_source_etl_end_date_time
-          FROM (
-              SELECT <<proposal_partial_load_condition>> AS include_record
-                   , proposal.*
-                   , etl_log.etl_end_date_time
-              FROM history_octane.proposal
+      SELECT 'deal_pid' || '~' || 'data_source_dwid' AS data_source_integration_columns
+          , COALESCE( CAST( t1441.d_pid AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) AS data_source_integration_id
+          , NOW( ) AS edw_created_datetime
+          , NOW( ) AS edw_modified_datetime
+          , primary_table.data_source_updated_datetime AS data_source_modified_datetime
+          , t1441.d_pid AS deal_pid
+          , primary_table.prp_pid AS active_proposal_pid
+          , current_deal_stage_records.dst_deal_stage_type as current_transaction_stage_code
+          , current_deal_stage_records.dst_deal_stage as current_transaction_stage
+          , GREATEST( primary_table.etl_end_date_time, t1441.etl_end_date_time ) AS max_source_etl_end_date_time
+      FROM (
+          SELECT <<proposal_partial_load_condition>> AS include_record
+              , proposal.*
+              , etl_log.etl_end_date_time
+          FROM history_octane.proposal
               LEFT JOIN history_octane.proposal AS history_records
-                        ON proposal.prp_pid = history_records.prp_pid
-                            AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  ON proposal.prp_pid = history_records.prp_pid
+                      AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
               JOIN star_common.etl_log
-                   ON proposal.etl_batch_id = etl_log.etl_batch_id
-              WHERE history_records.prp_pid IS NULL
-          ) AS primary_table
+                  ON proposal.etl_batch_id = etl_log.etl_batch_id
+          WHERE history_records.prp_pid IS NULL
+      ) AS primary_table
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<deal_partial_load_condition>> AS include_record
-                       , deal.*
-                       , etl_log.etl_end_date_time
+                      , deal.*
+                      , etl_log.etl_end_date_time
                   FROM history_octane.deal
-                  LEFT JOIN history_octane.deal AS history_records
-                            ON deal.d_pid = history_records.d_pid
-                                AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON deal.etl_batch_id = etl_log.etl_batch_id
+                      LEFT JOIN history_octane.deal AS history_records
+                          ON deal.d_pid = history_records.d_pid
+                              AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                          ON deal.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.d_pid IS NULL
               ) AS primary_table
           ) AS t1441
-                     ON primary_table.prp_pid = t1441.d_active_proposal_pid
-          WHERE GREATEST( primary_table.include_record, t1441.include_record ) IS TRUE
+              ON primary_table.prp_pid = t1441.d_active_proposal_pid
+      JOIN (
+              SELECT <<deal_partial_load_condition>> AS include_record
+                  , deal_stage.*
+                  , current_deal_stage_type_records.value as dst_deal_stage
+                  , etl_log.etl_end_date_time
+              FROM history_octane.deal_stage
+                  LEFT JOIN history_octane.deal_stage AS history_records
+                      ON deal_stage.dst_pid = history_records.dst_pid
+                          AND deal_stage.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                      ON deal_stage.etl_batch_id = etl_log.etl_batch_id
+              JOIN (        SELECT
+                                deal_stage_type.code
+                                , deal_stage_type.value
+                            FROM history_octane.deal_stage_type
+                                LEFT JOIN history_octane.deal_stage_type AS history_records
+                                    ON deal_stage_type.code = history_records.code
+                                        AND deal_stage_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                            WHERE history_records.code IS NULL) AS current_deal_stage_type_records ON deal_stage.dst_deal_stage_type = current_deal_stage_type_records.code
+              WHERE history_records.dst_pid IS NULL
+                  AND deal_stage.dst_through_date IS NULL
+              ) as current_deal_stage_records ON t1441.d_pid = current_deal_stage_records.dst_deal_pid
       )
       --new records that should be inserted
       SELECT transaction_dim_incl_new_records.*
