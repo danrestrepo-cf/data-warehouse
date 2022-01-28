@@ -35,7 +35,3 @@ be able to grant USAGE on the flyway schemas
  */
 GRANT USAGE ON SCHEMA flyway TO readonly;
 GRANT USAGE ON SCHEMA "flyway-permissions" TO readonly;
-
---dms_octane_writer previously owned these tables, and admin was unable to affect permissions on them
-GRANT ALL ON ALL TABLES IN SCHEMA octane_dms_control TO admin WITH GRANT OPTION;
-ALTER DEFAULT PRIVILEGES FOR ROLE dms_octane_writer IN SCHEMA octane_dms_control GRANT ALL ON TABLES TO admin WITH GRANT OPTION;
