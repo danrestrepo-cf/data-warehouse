@@ -1,0 +1,19 @@
+name: smart_doc_provider_type_case
+primary_key:
+- sdptc_pid
+foreign_keys:
+  fk_smart_doc_provider_type_case_1:
+    columns:
+    - sdptc_smart_doc_pid
+    references:
+      columns:
+      - sd_pid
+      schema: staging_octane
+      table: smart_doc
+columns:
+  sdptc_pid:
+    data_type: BIGINT
+  sdptc_smart_doc_pid:
+    data_type: BIGINT
+  sdptc_version:
+    data_type: INTEGER

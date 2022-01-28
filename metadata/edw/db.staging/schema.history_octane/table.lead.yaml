@@ -51,6 +51,78 @@ columns:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.ld_borrower_home_phone
+  ld_borrower_job_2_bonus_monthly_income:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_job_2_bonus_monthly_income
+  ld_borrower_job_2_employer_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ld_borrower_job_2_employer_name
+  ld_borrower_job_2_employer_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_job_2_employer_phone
+  ld_borrower_job_2_gross_monthly_income:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_job_2_gross_monthly_income
+  ld_borrower_job_2_income_end_date:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_job_2_income_end_date
+  ld_borrower_job_2_income_start_date:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_job_2_income_start_date
+  ld_borrower_job_2_position:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_job_2_position
+  ld_borrower_job_3_bonus_monthly_income:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_job_3_bonus_monthly_income
+  ld_borrower_job_3_employer_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.ld_borrower_job_3_employer_name
+  ld_borrower_job_3_employer_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_job_3_employer_phone
+  ld_borrower_job_3_gross_monthly_income:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_job_3_gross_monthly_income
+  ld_borrower_job_3_income_end_date:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_job_3_income_end_date
+  ld_borrower_job_3_income_start_date:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_job_3_income_start_date
+  ld_borrower_job_3_position:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_job_3_position
+  ld_borrower_job_bonus_monthly_income:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_job_bonus_monthly_income
+  ld_borrower_job_employer_phone:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_job_employer_phone
+  ld_borrower_job_income_end_date:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_job_income_end_date
+  ld_borrower_job_income_start_date:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_job_income_start_date
   ld_borrower_last_name:
     data_type: VARCHAR(32)
     source:
@@ -63,6 +135,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ld_borrower_residence_city
+  ld_borrower_residence_from_date:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_residence_from_date
   ld_borrower_residence_postal_code:
     data_type: VARCHAR(128)
     source:
@@ -75,6 +151,14 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.ld_borrower_residence_street
+  ld_borrower_residence_through_date:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_residence_through_date
+  ld_borrower_residency_basis_type:
+    data_type: VARCHAR(32)
+    source:
+      field: primary_source_table.columns.ld_borrower_residency_basis_type
   ld_borrower_years_on_job:
     data_type: VARCHAR(16)
     source:
@@ -262,6 +346,27 @@ etls:
            , staging_table.ld_borrower_current_job_position
            , staging_table.ld_borrower_years_on_job
            , staging_table.ld_borrower_gross_monthly_income
+           , staging_table.ld_borrower_job_employer_phone
+           , staging_table.ld_borrower_job_income_start_date
+           , staging_table.ld_borrower_job_income_end_date
+           , staging_table.ld_borrower_job_bonus_monthly_income
+           , staging_table.ld_borrower_job_2_employer_name
+           , staging_table.ld_borrower_job_2_position
+           , staging_table.ld_borrower_job_2_employer_phone
+           , staging_table.ld_borrower_job_2_income_start_date
+           , staging_table.ld_borrower_job_2_income_end_date
+           , staging_table.ld_borrower_job_2_gross_monthly_income
+           , staging_table.ld_borrower_job_2_bonus_monthly_income
+           , staging_table.ld_borrower_job_3_employer_name
+           , staging_table.ld_borrower_job_3_position
+           , staging_table.ld_borrower_job_3_employer_phone
+           , staging_table.ld_borrower_job_3_income_start_date
+           , staging_table.ld_borrower_job_3_income_end_date
+           , staging_table.ld_borrower_job_3_gross_monthly_income
+           , staging_table.ld_borrower_job_3_bonus_monthly_income
+           , staging_table.ld_borrower_residency_basis_type
+           , staging_table.ld_borrower_residence_from_date
+           , staging_table.ld_borrower_residence_through_date
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.lead staging_table
@@ -317,6 +422,27 @@ etls:
            , history_table.ld_borrower_current_job_position
            , history_table.ld_borrower_years_on_job
            , history_table.ld_borrower_gross_monthly_income
+           , history_table.ld_borrower_job_employer_phone
+           , history_table.ld_borrower_job_income_start_date
+           , history_table.ld_borrower_job_income_end_date
+           , history_table.ld_borrower_job_bonus_monthly_income
+           , history_table.ld_borrower_job_2_employer_name
+           , history_table.ld_borrower_job_2_position
+           , history_table.ld_borrower_job_2_employer_phone
+           , history_table.ld_borrower_job_2_income_start_date
+           , history_table.ld_borrower_job_2_income_end_date
+           , history_table.ld_borrower_job_2_gross_monthly_income
+           , history_table.ld_borrower_job_2_bonus_monthly_income
+           , history_table.ld_borrower_job_3_employer_name
+           , history_table.ld_borrower_job_3_position
+           , history_table.ld_borrower_job_3_employer_phone
+           , history_table.ld_borrower_job_3_income_start_date
+           , history_table.ld_borrower_job_3_income_end_date
+           , history_table.ld_borrower_job_3_gross_monthly_income
+           , history_table.ld_borrower_job_3_bonus_monthly_income
+           , history_table.ld_borrower_residency_basis_type
+           , history_table.ld_borrower_residence_from_date
+           , history_table.ld_borrower_residence_through_date
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.lead history_table
