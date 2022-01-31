@@ -102,7 +102,7 @@ def generate_message_state(process_name: str, target_table: str) -> dict:
                 },
                 "ResultSelector": {
                     "StateName": message_state_name,
-                    "HttpHeaderDate.$": "$.output.SdkHttpMetadata.HttpHeaders.Date"
+                    "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
                 },
                 "End": True
             }
