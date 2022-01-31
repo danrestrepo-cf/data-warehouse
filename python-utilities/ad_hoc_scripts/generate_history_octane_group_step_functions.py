@@ -99,6 +99,13 @@ def generate_message_state(process_name: str, target_table: str) -> dict:
                     },
                     "MessageBody.$": "States.JsonToString($)"
                 },
+                "ResultSelector": {
+                    "modifiedPayload": {
+                        "name.$": "$.name",
+                        "HttpHeaderDate.$": "$.output.SdkHttpMetadata.HttpHeaders.Date"
+                    }
+                },
+                "OutputPath": "$.TaskResult.modifiedPayload",
                 "End": True
             }
         }
