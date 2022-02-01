@@ -13,8 +13,8 @@ SET data_source_integration_columns = 'code_2017~code_2018~data_source_dwid'
   , data_source_integration_id = COALESCE( hmda_purchaser_of_loan_dim.code_2017, '<NULL>' ) || '~' ||
                                  COALESCE( hmda_purchaser_of_loan_dim.code_2018, '<NULL>' ) || '~' ||
                                  CAST( hmda_purchaser_of_loan_dim.data_source_dwid AS TEXT )
-WHERE TRUE;
 --where condition added to silence warnings about condition-less updates
+WHERE TRUE;
 
 /*
  Delete duplicate rows from unique dims and update any loan_fact records that pointed to deleted unique dim rows
