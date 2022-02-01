@@ -1409,7 +1409,7 @@ etls:
       -- history_octane deal_stage
       JOIN (
       SELECT deal_stage.*
-      , true AS include_record
+      , <<deal_stage_partial_load_condition>> AS include_record
       FROM history_octane.deal_stage
       LEFT JOIN history_octane.deal_stage AS history_records ON deal_stage.dst_pid = history_records.dst_pid
       AND deal_stage.data_source_updated_datetime < history_records.data_source_updated_datetime
