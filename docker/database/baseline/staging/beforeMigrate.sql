@@ -35,3 +35,17 @@ be able to grant USAGE on the flyway schemas
  */
 GRANT USAGE ON SCHEMA flyway TO readonly;
 GRANT USAGE ON SCHEMA "flyway-permissions" TO readonly;
+
+/*
+dms_octane_writer has this permission in QA/Prod but not locally, despite it
+being granted in V2021.3.2.2. The admin user doesn't have permission to perform
+this grant statement at the time that migration V2021.3.2.2 is executed locally.
+This results in a *warning* that no permissions were actually granted, not an error,
+which is why V2021.3.2.2 still technically executes successfully.
+ */
+GRANT CREATE ON SCHEMA octane_dms_control TO dms_octane_writer;
+/*
+ This allows admin to update permissions on tables in the octane_dms_control schema,
+ all of which dms_octane_writer created in QA/Prod.
+ */
+GRANT dms_octane_writer TO admin WITH ADMIN OPTION;
