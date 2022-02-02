@@ -8,7 +8,7 @@ columns:
     update_flag: false
   data_source_dwid:
     data_type: BIGINT
-    update_flag: true
+    update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
     update_flag: false
@@ -36,7 +36,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_alimony_child_support
-    update_flag: true
+    update_flag: false
   bankruptcy:
     data_type: VARCHAR(1024)
     source:
@@ -46,7 +46,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_bankruptcy
-    update_flag: true
+    update_flag: false
   borrowed_down_payment:
     data_type: VARCHAR(1024)
     source:
@@ -56,7 +56,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_borrowed_down_payment
-    update_flag: true
+    update_flag: false
   citizenship_residency:
     data_type: VARCHAR(1024)
     source:
@@ -66,7 +66,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_citizenship_residency_type
-    update_flag: true
+    update_flag: false
   disabled:
     data_type: VARCHAR(1024)
     source:
@@ -76,7 +76,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_disabled
-    update_flag: true
+    update_flag: false
   domestic_relationship_state:
     data_type: VARCHAR(1024)
     source:
@@ -86,7 +86,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_domestic_relationship_state_type
-    update_flag: true
+    update_flag: false
   dependents:
     data_type: VARCHAR(1024)
     source:
@@ -96,7 +96,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_has_dependents
-    update_flag: true
+    update_flag: false
   homeowner_past_three_years:
     data_type: VARCHAR(1024)
     source:
@@ -106,7 +106,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_homeowner_past_three_years
-    update_flag: true
+    update_flag: false
   homeownership_education:
     data_type: VARCHAR(1024)
     source:
@@ -121,12 +121,12 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_homeownership_education_agency_type
-    update_flag: true
+    update_flag: false
   homeownership_education_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_homeownership_education_type
-    update_flag: true
+    update_flag: false
   intend_to_occupy:
     data_type: VARCHAR(1024)
     source:
@@ -136,27 +136,27 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_intend_to_occupy
-    update_flag: true
+    update_flag: false
   first_time_homebuyer_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_first_time_homebuyer
-    update_flag: true
+    update_flag: false
   first_time_homebuyer_auto_compute_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_first_time_home_buyer_auto_compute
-    update_flag: true
+    update_flag: false
   hud_employee_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_hud_employee
-    update_flag: true
+    update_flag: false
   lender_employee_status_confirmed_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.b_lender_employee_status_confirmed
-    update_flag: true
+    update_flag: false
   lender_employee:
     data_type: VARCHAR(1024)
     source:
@@ -166,7 +166,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_lender_employee
-    update_flag: true
+    update_flag: false
   note_endorser:
     data_type: VARCHAR(1024)
     source:
@@ -176,7 +176,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_note_endorser
-    update_flag: true
+    update_flag: false
   obligated_loan_foreclosure:
     data_type: VARCHAR(1024)
     source:
@@ -186,7 +186,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_obligated_loan_foreclosure
-    update_flag: true
+    update_flag: false
   on_gsa_list:
     data_type: VARCHAR(1024)
     source:
@@ -196,7 +196,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_on_gsa_list
-    update_flag: true
+    update_flag: false
   on_ldp_list:
     data_type: VARCHAR(1024)
     source:
@@ -206,7 +206,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_on_ldp_list
-    update_flag: true
+    update_flag: false
   outstanding_judgements:
     data_type: VARCHAR(1024)
     source:
@@ -216,7 +216,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_outstanding_judgements
-    update_flag: true
+    update_flag: false
   party_to_lawsuit:
     data_type: VARCHAR(1024)
     source:
@@ -226,7 +226,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_party_to_lawsuit
-    update_flag: true
+    update_flag: false
   presently_delinquent:
     data_type: VARCHAR(1024)
     source:
@@ -236,7 +236,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_presently_delinquent
-    update_flag: true
+    update_flag: false
   property_foreclosure:
     data_type: VARCHAR(1024)
     source:
@@ -246,7 +246,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_property_foreclosure
-    update_flag: true
+    update_flag: false
   spousal_homestead:
     data_type: VARCHAR(1024)
     source:
@@ -256,7 +256,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_spousal_homestead
-    update_flag: true
+    update_flag: false
   titleholder:
     data_type: VARCHAR(1024)
     source:
@@ -266,7 +266,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.b_titleholder
-    update_flag: true
+    update_flag: false
 etls:
   SP-200006:
     input_type: table

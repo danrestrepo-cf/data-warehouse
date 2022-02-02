@@ -8,7 +8,7 @@ columns:
     update_flag: false
   data_source_dwid:
     data_type: BIGINT
-    update_flag: true
+    update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
     update_flag: false
@@ -36,7 +36,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_aus_type
-    update_flag: true
+    update_flag: false
   buydown_schedule:
     data_type: VARCHAR(1024)
     source:
@@ -46,7 +46,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_buydown_schedule_type
-    update_flag: true
+    update_flag: false
   interest_only:
     data_type: VARCHAR(1024)
     source:
@@ -56,7 +56,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_interest_only_type
-    update_flag: true
+    update_flag: false
   mortgage_type:
     data_type: VARCHAR(1024)
     source:
@@ -66,7 +66,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_mortgage_type
-    update_flag: true
+    update_flag: false
   prepay_penalty_schedule:
     data_type: VARCHAR(1024)
     source:
@@ -76,7 +76,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_prepay_penalty_schedule_type
-    update_flag: true
+    update_flag: false
 etls:
   SP-200016:
     input_type: table

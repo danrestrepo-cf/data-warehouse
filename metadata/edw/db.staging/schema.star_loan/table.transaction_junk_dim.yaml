@@ -8,7 +8,7 @@ columns:
     update_flag: false
   data_source_dwid:
     data_type: BIGINT
-    update_flag: true
+    update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
     update_flag: false
@@ -34,17 +34,17 @@ columns:
         string: $1 = 'COMBO'
         using:
           - primary_source_table.columns.prp_structure_type
-    update_flag: true
+    update_flag: false
   mi_required_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.prp_mi_required
-    update_flag: true
+    update_flag: false
   is_test_loan_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.foreign_keys.fk_proposal_1.columns.d_test_loan
-    update_flag: true
+    update_flag: false
   structure:
     data_type: VARCHAR(1024)
     source:
@@ -59,12 +59,12 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.prp_structure_type
-    update_flag: true
+    update_flag: false
   loan_purpose_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.prp_loan_purpose_type
-    update_flag: true
+    update_flag: false
 etls:
   SP-200020:
     input_type: table
