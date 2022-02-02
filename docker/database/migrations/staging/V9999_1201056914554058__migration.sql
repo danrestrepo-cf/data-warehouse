@@ -20,6 +20,54 @@ WHERE TRUE;
  Delete duplicate rows from unique dims and update any loan_fact records that pointed to deleted unique dim rows
  */
 
+--borrower_demographics_dim
+WITH delete_query AS (
+    DELETE
+        FROM star_loan.borrower_demographics_dim
+            USING (
+                SELECT MAX( all_rows.dwid ) AS current_dwid
+                     , duplicates.dwid AS duplicate_dwid
+                FROM star_loan.borrower_demographics_dim all_rows
+                JOIN star_loan.borrower_demographics_dim duplicates
+                     ON all_rows.data_source_integration_id = duplicates.data_source_integration_id
+                         AND all_rows.dwid <> duplicates.dwid
+                         AND ((all_rows.edw_modified_datetime > duplicates.edw_modified_datetime)
+                             OR (all_rows.edw_modified_datetime = duplicates.edw_modified_datetime
+                                 AND all_rows.dwid > duplicates.dwid))
+                GROUP BY duplicates.dwid
+            ) AS duplicates
+            WHERE borrower_demographics_dim.dwid = duplicates.duplicate_dwid
+            RETURNING duplicates.current_dwid, duplicates.duplicate_dwid
+)
+UPDATE star_loan.loan_fact
+SET b1_borrower_demographics_dwid = delete_query.current_dwid
+FROM delete_query
+WHERE loan_fact.b1_borrower_demographics_dwid = delete_query.duplicate_dwid;
+
+--borrower_lending_profile_dim
+WITH delete_query AS (
+    DELETE
+        FROM star_loan.borrower_lending_profile_dim
+            USING (
+                SELECT MAX( all_rows.dwid ) AS current_dwid
+                     , duplicates.dwid AS duplicate_dwid
+                FROM star_loan.borrower_lending_profile_dim all_rows
+                JOIN star_loan.borrower_lending_profile_dim duplicates
+                     ON all_rows.data_source_integration_id = duplicates.data_source_integration_id
+                         AND all_rows.dwid <> duplicates.dwid
+                         AND ((all_rows.edw_modified_datetime > duplicates.edw_modified_datetime)
+                             OR (all_rows.edw_modified_datetime = duplicates.edw_modified_datetime
+                                 AND all_rows.dwid > duplicates.dwid))
+                GROUP BY duplicates.dwid
+            ) AS duplicates
+            WHERE borrower_lending_profile_dim.dwid = duplicates.duplicate_dwid
+            RETURNING duplicates.current_dwid, duplicates.duplicate_dwid
+)
+UPDATE star_loan.loan_fact
+SET b1_borrower_lending_profile_dwid = delete_query.current_dwid
+FROM delete_query
+WHERE loan_fact.b1_borrower_lending_profile_dwid = delete_query.duplicate_dwid;
+
 --hmda_purchaser_of_loan_dim
 WITH delete_query AS (
     DELETE
@@ -39,11 +87,79 @@ WITH delete_query AS (
             WHERE hmda_purchaser_of_loan_dim.dwid = duplicates.duplicate_dwid
             RETURNING duplicates.current_dwid, duplicates.duplicate_dwid
 )
-   , update_loan_fact AS (
-    UPDATE star_loan.loan_fact
-        SET hmda_purchaser_of_loan_dwid = delete_query.current_dwid
-        FROM delete_query
-        WHERE loan_fact.hmda_purchaser_of_loan_dwid = delete_query.duplicate_dwid
+UPDATE star_loan.loan_fact
+SET hmda_purchaser_of_loan_dwid = delete_query.current_dwid
+FROM delete_query
+WHERE loan_fact.hmda_purchaser_of_loan_dwid = delete_query.duplicate_dwid;
+
+--loan_junk_dim
+WITH delete_query AS (
+    DELETE
+        FROM star_loan.loan_junk_dim
+            USING (
+                SELECT MAX( all_rows.dwid ) AS current_dwid
+                     , duplicates.dwid AS duplicate_dwid
+                FROM star_loan.loan_junk_dim all_rows
+                JOIN star_loan.loan_junk_dim duplicates
+                     ON all_rows.data_source_integration_id = duplicates.data_source_integration_id
+                         AND all_rows.dwid <> duplicates.dwid
+                         AND ((all_rows.edw_modified_datetime > duplicates.edw_modified_datetime)
+                             OR (all_rows.edw_modified_datetime = duplicates.edw_modified_datetime
+                                 AND all_rows.dwid > duplicates.dwid))
+                GROUP BY duplicates.dwid
+            ) AS duplicates
+            WHERE loan_junk_dim.dwid = duplicates.duplicate_dwid
+            RETURNING duplicates.current_dwid, duplicates.duplicate_dwid
 )
-SELECT 'Finished processing changes to hmda_purchaser_of_loan_dim''s integration ID';
-;
+UPDATE star_loan.loan_fact
+SET loan_junk_dwid = delete_query.current_dwid
+FROM delete_query
+WHERE loan_fact.loan_junk_dwid = delete_query.duplicate_dwid;
+
+--product_choice_dim
+WITH delete_query AS (
+    DELETE
+        FROM star_loan.product_choice_dim
+            USING (
+                SELECT MAX( all_rows.dwid ) AS current_dwid
+                     , duplicates.dwid AS duplicate_dwid
+                FROM star_loan.product_choice_dim all_rows
+                JOIN star_loan.product_choice_dim duplicates
+                     ON all_rows.data_source_integration_id = duplicates.data_source_integration_id
+                         AND all_rows.dwid <> duplicates.dwid
+                         AND ((all_rows.edw_modified_datetime > duplicates.edw_modified_datetime)
+                             OR (all_rows.edw_modified_datetime = duplicates.edw_modified_datetime
+                                 AND all_rows.dwid > duplicates.dwid))
+                GROUP BY duplicates.dwid
+            ) AS duplicates
+            WHERE product_choice_dim.dwid = duplicates.duplicate_dwid
+            RETURNING duplicates.current_dwid, duplicates.duplicate_dwid
+)
+UPDATE star_loan.loan_fact
+SET product_choice_dwid = delete_query.current_dwid
+FROM delete_query
+WHERE loan_fact.product_choice_dwid = delete_query.duplicate_dwid;
+
+--transaction_junk_dim
+WITH delete_query AS (
+    DELETE
+        FROM star_loan.transaction_junk_dim
+            USING (
+                SELECT MAX( all_rows.dwid ) AS current_dwid
+                     , duplicates.dwid AS duplicate_dwid
+                FROM star_loan.transaction_junk_dim all_rows
+                JOIN star_loan.transaction_junk_dim duplicates
+                     ON all_rows.data_source_integration_id = duplicates.data_source_integration_id
+                         AND all_rows.dwid <> duplicates.dwid
+                         AND ((all_rows.edw_modified_datetime > duplicates.edw_modified_datetime)
+                             OR (all_rows.edw_modified_datetime = duplicates.edw_modified_datetime
+                                 AND all_rows.dwid > duplicates.dwid))
+                GROUP BY duplicates.dwid
+            ) AS duplicates
+            WHERE transaction_junk_dim.dwid = duplicates.duplicate_dwid
+            RETURNING duplicates.current_dwid, duplicates.duplicate_dwid
+)
+UPDATE star_loan.loan_fact
+SET transaction_junk_dwid = delete_query.current_dwid
+FROM delete_query
+WHERE loan_fact.transaction_junk_dwid = delete_query.duplicate_dwid;
