@@ -1406,16 +1406,16 @@ etls:
                   AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
               WHERE deal.data_source_deleted_flag IS FALSE
                 AND history_records.d_pid IS NULL) AS deal
-      -- history_octane deal_stage
-      JOIN (
-      SELECT deal_stage.*
-      , <<deal_stage_partial_load_condition>> AS include_record
-      FROM history_octane.deal_stage
-      LEFT JOIN history_octane.deal_stage AS history_records ON deal_stage.dst_pid = history_records.dst_pid
-      AND deal_stage.data_source_updated_datetime < history_records.data_source_updated_datetime
-      WHERE deal_stage.data_source_deleted_flag IS FALSE
-      AND deal_stage.dst_through_date IS NULL
-      AND history_records.dst_pid IS NULL) AS deal_stage ON deal.d_pid = deal_stage.dst_deal_pid
+        -- history_octane deal_stage
+          JOIN (
+            SELECT deal_stage.*
+                   , <<deal_stage_partial_load_condition>> AS include_record
+            FROM history_octane.deal_stage
+            LEFT JOIN history_octane.deal_stage AS history_records ON deal_stage.dst_pid = history_records.dst_pid
+                  AND deal_stage.data_source_updated_datetime < history_records.data_source_updated_datetime
+            WHERE deal_stage.data_source_deleted_flag IS FALSE
+                  AND deal_stage.dst_through_date IS NULL
+                  AND history_records.dst_pid IS NULL) AS deal_stage ON deal.d_pid = deal_stage.dst_deal_pid
       -- history_octane proposal
           JOIN (
               SELECT proposal.*
