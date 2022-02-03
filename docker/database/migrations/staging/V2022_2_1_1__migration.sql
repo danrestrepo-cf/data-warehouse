@@ -97,7 +97,8 @@ qmrst_subordinate_lien_loan_amount_threshold numeric(15,0),
 qmrst_subordinate_lien_max_rate_spread_over_threshold numeric(11,9),
 qmrst_subordinate_lien_max_rate_spread_under_threshold numeric(11,9),
 data_source_updated_datetime timestamptz,
-data_source_deleted_flag boolean
+data_source_deleted_flag boolean,
+etl_batch_id TEXT
 );
 
 CREATE INDEX idx_qm_rate_spread_thresholds__pid ON history_octane.qm_rate_spread_thresholds (qmrst_pid);
@@ -107,6 +108,8 @@ CREATE INDEX idx_qm_rate_spread_thresholds__data_source_updated_datetime ON hist
 CREATE INDEX idx_qm_rate_spread_thresholds__data_source_deleted_flag ON history_octane.qm_rate_spread_thresholds (data_source_deleted_flag);
 
 CREATE INDEX idx_qm_rate_spread_thresholds__pid_version ON history_octane.qm_rate_spread_thresholds (qmrst_pid, qmrst_version);
+
+CREATE INDEX idx_qm_rate_spread_thresholds__etl_batch_id ON history_octane.qm_rate_spread_thresholds (etl_batch_id);
 
 ALTER TABLE history_octane.qualified_mortgage_thresholds RENAME TO qm_points_and_fees_thresholds;
 
