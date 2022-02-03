@@ -34,20 +34,6 @@ CREATE INDEX idx_qm_rate_spread_thresholds__pid_version ON staging_octane.qm_rat
 
 ALTER TABLE staging_octane.qualified_mortgage_thresholds RENAME TO qm_points_and_fees_thresholds;
 
-ALTER TABLE staging_octane.qm_points_and_fees_thresholds
-ALTER COLUMN qmt_pid SET DATA TYPE bigint,
-ALTER COLUMN qmt_version SET DATA TYPE integer,
-ALTER COLUMN qmt_effective_date SET DATA TYPE date,
-ALTER COLUMN qmt_first_total_loan_amount_threshold SET DATA TYPE numeric(15,0),
-ALTER COLUMN qmt_first_points_and_fees_threshold_percent SET DATA TYPE numeric(11,9),
-ALTER COLUMN qmt_second_total_loan_amount_threshold SET DATA TYPE numeric(15,0),
-ALTER COLUMN qmt_second_points_and_fees_threshold_amount SET DATA TYPE numeric(15,0),
-ALTER COLUMN qmt_third_total_loan_amount_threshold SET DATA TYPE numeric(15,0),
-ALTER COLUMN qmt_third_points_and_fees_threshold_percent SET DATA TYPE numeric(11,9),
-ALTER COLUMN qmt_fourth_total_loan_amount_threshold SET DATA TYPE numeric(15,0),
-ALTER COLUMN qmt_fourth_points_and_fees_threshold_amount SET DATA TYPE numeric(15,0),
-ALTER COLUMN qmt_ceiling_points_and_fees_threshold_percent SET DATA TYPE numeric(11,9);
-
 ALTER TABLE staging_octane.qm_points_and_fees_thresholds RENAME COLUMN qmt_pid TO qmpaft_pid;
 
 ALTER TABLE staging_octane.qm_points_and_fees_thresholds RENAME COLUMN qmt_version TO qmpaft_version;
@@ -112,20 +98,6 @@ CREATE INDEX idx_qm_rate_spread_thresholds__pid_version ON history_octane.qm_rat
 CREATE INDEX idx_qm_rate_spread_thresholds__etl_batch_id ON history_octane.qm_rate_spread_thresholds (etl_batch_id);
 
 ALTER TABLE history_octane.qualified_mortgage_thresholds RENAME TO qm_points_and_fees_thresholds;
-
-ALTER TABLE history_octane.qm_points_and_fees_thresholds
-ALTER COLUMN qmt_pid SET DATA TYPE bigint,
-ALTER COLUMN qmt_version SET DATA TYPE integer,
-ALTER COLUMN qmt_effective_date SET DATA TYPE date,
-ALTER COLUMN qmt_first_total_loan_amount_threshold SET DATA TYPE numeric(15,0),
-ALTER COLUMN qmt_first_points_and_fees_threshold_percent SET DATA TYPE numeric(11,9),
-ALTER COLUMN qmt_second_total_loan_amount_threshold SET DATA TYPE numeric(15,0),
-ALTER COLUMN qmt_second_points_and_fees_threshold_amount SET DATA TYPE numeric(15,0),
-ALTER COLUMN qmt_third_total_loan_amount_threshold SET DATA TYPE numeric(15,0),
-ALTER COLUMN qmt_third_points_and_fees_threshold_percent SET DATA TYPE numeric(11,9),
-ALTER COLUMN qmt_fourth_total_loan_amount_threshold SET DATA TYPE numeric(15,0),
-ALTER COLUMN qmt_fourth_points_and_fees_threshold_amount SET DATA TYPE numeric(15,0),
-ALTER COLUMN qmt_ceiling_points_and_fees_threshold_percent SET DATA TYPE numeric(11,9);
 
 ALTER TABLE history_octane.qm_points_and_fees_thresholds RENAME COLUMN qmt_pid TO qmpaft_pid;
 
