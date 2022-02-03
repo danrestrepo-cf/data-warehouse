@@ -1,0 +1,28 @@
+name: qm_points_and_fees_thresholds
+primary_key:
+- qmpaft_pid
+columns:
+  qmpaft_ceiling_points_and_fees_threshold_percent:
+    data_type: NUMERIC(11,9)
+  qmpaft_effective_date:
+    data_type: DATE
+  qmpaft_first_points_and_fees_threshold_percent:
+    data_type: NUMERIC(11,9)
+  qmpaft_first_total_loan_amount_threshold:
+    data_type: NUMERIC(15,0)
+  qmpaft_fourth_points_and_fees_threshold_amount:
+    data_type: NUMERIC(15,0)
+  qmpaft_fourth_total_loan_amount_threshold:
+    data_type: NUMERIC(15,0)
+  qmpaft_pid:
+    data_type: BIGINT
+  qmpaft_second_points_and_fees_threshold_amount:
+    data_type: NUMERIC(15,0)
+  qmpaft_second_total_loan_amount_threshold:
+    data_type: NUMERIC(15,0)
+  qmpaft_third_points_and_fees_threshold_percent:
+    data_type: NUMERIC(11,9)
+  qmpaft_third_total_loan_amount_threshold:
+    data_type: NUMERIC(15,0)
+  qmpaft_version:
+    data_type: INTEGER

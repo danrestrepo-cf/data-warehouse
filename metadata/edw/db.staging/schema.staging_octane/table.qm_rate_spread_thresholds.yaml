@@ -1,0 +1,32 @@
+name: qm_rate_spread_thresholds
+primary_key:
+- qmrst_pid
+columns:
+  qmrst_effective_date:
+    data_type: DATE
+  qmrst_first_lien_high_loan_amount_threshold:
+    data_type: NUMERIC(15,0)
+  qmrst_first_lien_low_loan_amount_threshold:
+    data_type: NUMERIC(15,0)
+  qmrst_first_lien_manufactured_loan_amount_threshold:
+    data_type: NUMERIC(15,0)
+  qmrst_first_lien_manufactured_max_rate_spread_over_threshold:
+    data_type: NUMERIC(11,9)
+  qmrst_first_lien_manufactured_max_rate_spread_under_threshold:
+    data_type: NUMERIC(11,9)
+  qmrst_first_lien_max_rate_spread_over_high_threshold:
+    data_type: NUMERIC(11,9)
+  qmrst_first_lien_max_rate_spread_under_high_over_low_threshold:
+    data_type: NUMERIC(11,9)
+  qmrst_first_lien_max_rate_spread_under_low_threshold:
+    data_type: NUMERIC(11,9)
+  qmrst_pid:
+    data_type: BIGINT
+  qmrst_subordinate_lien_loan_amount_threshold:
+    data_type: NUMERIC(15,0)
+  qmrst_subordinate_lien_max_rate_spread_over_threshold:
+    data_type: NUMERIC(11,9)
+  qmrst_subordinate_lien_max_rate_spread_under_threshold:
+    data_type: NUMERIC(11,9)
+  qmrst_version:
+    data_type: INTEGER
