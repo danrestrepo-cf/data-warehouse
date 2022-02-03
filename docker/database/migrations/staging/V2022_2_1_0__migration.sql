@@ -5,6 +5,10 @@
 ALTER TABLE star_loan.loan_fact
     ADD current_transaction_stage_from_date_dwid BIGINT;
 
+CREATE INDEX idx_loan_fact__current_transaction_stage_from_date_dwid
+    ON star_loan.loan_fact (current_transaction_stage_from_date_dwid);
+
+
 ALTER TABLE star_loan.transaction_dim
     ADD current_transaction_stage VARCHAR(1024)
     , ADD current_transaction_stage_code VARCHAR(128);
