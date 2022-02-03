@@ -142,11 +142,6 @@ columns:
     source:
       field: primary_source_table.columns.lu_training_mode
     update_flag: true
-  work_step_start_notices_enabled_flag:
-    data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.lu_work_step_start_notices_enabled
-    update_flag: true
   last_name:
     data_type: VARCHAR(32)
     source:
@@ -326,7 +321,6 @@ etls:
                , primary_table.lu_total_workload_cap AS total_workload_cap
                , primary_table.lu_schedule_once_booking_page_id AS schedule_once_booking_page_id
                , primary_table.lu_esign_only AS esign_only_flag
-               , primary_table.lu_work_step_start_notices_enabled AS work_step_start_notices_enabled_flag
                , primary_table.lu_smart_app_enabled AS smart_app_enabled_flag
                , primary_table.lu_default_credit_bureau_type AS default_credit_bureau_code
                , primary_table.lu_originator_id AS originator_id
