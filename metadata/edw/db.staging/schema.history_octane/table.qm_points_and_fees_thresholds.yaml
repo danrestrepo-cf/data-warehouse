@@ -1,0 +1,112 @@
+name: qm_points_and_fees_thresholds
+primary_source_table: staging.staging_octane.qm_points_and_fees_thresholds
+primary_key:
+- qmpaft_pid
+- qmpaft_version
+columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  qmpaft_ceiling_points_and_fees_threshold_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.qmpaft_ceiling_points_and_fees_threshold_percent
+  qmpaft_effective_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.qmpaft_effective_date
+  qmpaft_first_points_and_fees_threshold_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.qmpaft_first_points_and_fees_threshold_percent
+  qmpaft_first_total_loan_amount_threshold:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.qmpaft_first_total_loan_amount_threshold
+  qmpaft_fourth_points_and_fees_threshold_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.qmpaft_fourth_points_and_fees_threshold_amount
+  qmpaft_fourth_total_loan_amount_threshold:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.qmpaft_fourth_total_loan_amount_threshold
+  qmpaft_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.qmpaft_pid
+  qmpaft_second_points_and_fees_threshold_amount:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.qmpaft_second_points_and_fees_threshold_amount
+  qmpaft_second_total_loan_amount_threshold:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.qmpaft_second_total_loan_amount_threshold
+  qmpaft_third_points_and_fees_threshold_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.qmpaft_third_points_and_fees_threshold_percent
+  qmpaft_third_total_loan_amount_threshold:
+    data_type: NUMERIC(15,0)
+    source:
+      field: primary_source_table.columns.qmpaft_third_total_loan_amount_threshold
+  qmpaft_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.qmpaft_version
+etls:
+  SP-100895:
+    input_type: table
+    output_type: insert
+    json_output_field: qmpaft_pid
+    truncate_table: false
+    input_sql: |-
+      --finding records to insert into history_octane.qm_points_and_fees_thresholds
+      SELECT staging_table.qmpaft_pid
+           , staging_table.qmpaft_version
+           , staging_table.qmpaft_effective_date
+           , staging_table.qmpaft_first_total_loan_amount_threshold
+           , staging_table.qmpaft_first_points_and_fees_threshold_percent
+           , staging_table.qmpaft_second_total_loan_amount_threshold
+           , staging_table.qmpaft_second_points_and_fees_threshold_amount
+           , staging_table.qmpaft_third_total_loan_amount_threshold
+           , staging_table.qmpaft_third_points_and_fees_threshold_percent
+           , staging_table.qmpaft_fourth_total_loan_amount_threshold
+           , staging_table.qmpaft_fourth_points_and_fees_threshold_amount
+           , staging_table.qmpaft_ceiling_points_and_fees_threshold_percent
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.qm_points_and_fees_thresholds staging_table
+      LEFT JOIN history_octane.qm_points_and_fees_thresholds history_table
+                ON staging_table.qmpaft_pid = history_table.qmpaft_pid
+                    AND staging_table.qmpaft_version = history_table.qmpaft_version
+      WHERE history_table.qmpaft_pid IS NULL
+      UNION ALL
+      SELECT history_table.qmpaft_pid
+           , history_table.qmpaft_version + 1
+           , history_table.qmpaft_effective_date
+           , history_table.qmpaft_first_total_loan_amount_threshold
+           , history_table.qmpaft_first_points_and_fees_threshold_percent
+           , history_table.qmpaft_second_total_loan_amount_threshold
+           , history_table.qmpaft_second_points_and_fees_threshold_amount
+           , history_table.qmpaft_third_total_loan_amount_threshold
+           , history_table.qmpaft_third_points_and_fees_threshold_percent
+           , history_table.qmpaft_fourth_total_loan_amount_threshold
+           , history_table.qmpaft_fourth_points_and_fees_threshold_amount
+           , history_table.qmpaft_ceiling_points_and_fees_threshold_percent
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.qm_points_and_fees_thresholds history_table
+      LEFT JOIN staging_octane.qm_points_and_fees_thresholds staging_table
+                ON staging_table.qmpaft_pid = history_table.qmpaft_pid
+      WHERE staging_table.qmpaft_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.qm_points_and_fees_thresholds deleted_records
+          WHERE deleted_records.qmpaft_pid = history_table.qmpaft_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );
