@@ -11,7 +11,7 @@ relative_docker_dir="$(dirname "$0")/../../docker"
 # absolute path to docker, used to trigger docker itself which isn't so picky
 absolute_test_dir="$(pwd)/../../docker/pentaho"
 # absolute path to metadata unit tests
-absolute_metadata_test_dir="$(pwd)/../../scripts/edw_metadata_unit_tests"
+absolute_metadata_test_dir="${path_to_script}/../../scripts/edw_metadata_unit_tests"
 
 #set the script to fail on any errors
 set -e
