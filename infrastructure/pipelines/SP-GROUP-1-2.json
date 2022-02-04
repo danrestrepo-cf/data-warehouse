@@ -10366,6 +10366,10 @@
                                 },
                                 "MessageBody.$": "States.JsonToString($)"
                             },
+                            "ResultSelector": {
+                                "StateName": "SP-100893_message",
+                                "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
+                            },
                             "End": true
                         }
                     }
@@ -10388,6 +10392,10 @@
                                     }
                                 },
                                 "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "ResultSelector": {
+                                "StateName": "SP-100894_message",
+                                "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
                             },
                             "End": true
                         }
@@ -10412,6 +10420,10 @@
                                 },
                                 "MessageBody.$": "States.JsonToString($)"
                             },
+                            "ResultSelector": {
+                                "StateName": "SP-100895_message",
+                                "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
+                            },
                             "End": true
                         }
                     }
@@ -10434,6 +10446,10 @@
                                     }
                                 },
                                 "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "ResultSelector": {
+                                "StateName": "SP-100896_message",
+                                "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
                             },
                             "End": true
                         }

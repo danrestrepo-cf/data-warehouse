@@ -13498,6 +13498,10 @@
                                 },
                                 "MessageBody.$": "States.JsonToString($)"
                             },
+                            "ResultSelector": {
+                                "StateName": "SP-100505_message",
+                                "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
+                            },
                             "End": true
                         }
                     }
