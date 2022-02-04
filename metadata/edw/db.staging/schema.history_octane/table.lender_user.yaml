@@ -361,8 +361,6 @@ columns:
       field: primary_source_table.columns.lu_version
   lu_work_step_start_notices_enabled:
     data_type: BOOLEAN
-    source:
-      field: primary_source_table.columns.lu_work_step_start_notices_enabled
 etls:
   SP-100090:
     input_type: table
@@ -415,7 +413,6 @@ etls:
            , staging_table.lu_schedule_once_booking_page_id
            , staging_table.lu_performer_team_pid
            , staging_table.lu_esign_only
-           , staging_table.lu_work_step_start_notices_enabled
            , staging_table.lu_smart_app_enabled
            , staging_table.lu_default_lead_source_pid
            , staging_table.lu_default_credit_bureau_type
@@ -489,7 +486,6 @@ etls:
            , history_table.lu_schedule_once_booking_page_id
            , history_table.lu_performer_team_pid
            , history_table.lu_esign_only
-           , history_table.lu_work_step_start_notices_enabled
            , history_table.lu_smart_app_enabled
            , history_table.lu_default_lead_source_pid
            , history_table.lu_default_credit_bureau_type
