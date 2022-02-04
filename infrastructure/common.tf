@@ -38,23 +38,13 @@ data aws_vpc this {
   id = data.aws_security_group.this.vpc_id
 }
 
-data aws_subnet az1 {
-//  vpc_id = data.aws_security_group.this.vpc_id
-  filter {
-    name   = "tag:Name"
-    values = ["${local.vpc-prefix}-bi-private-${local.aws-region}a"]
-  }
+data aws_subnet_ids private {
+  vpc_id = data.aws_security_group.this.vpc_id
 
-}
-
-data aws_subnet az2 {
-//  vpc_id = data.aws_security_group.this.vpc_id
-  filter {
-    name   = "tag:Name"
-    values = ["${local.vpc-prefix}-bi-private-${local.aws-region}a"]
+  tags = {
+    Name = "${local.vpc-prefix}-bi-private-${local.aws-region}*"
   }
 }
-
 // Known ECS tasks
 
 data aws_ecs_task_definition mdi-2 {
