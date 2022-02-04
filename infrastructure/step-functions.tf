@@ -8,7 +8,7 @@ resource aws_sfn_state_machine this {
   definition = templatefile("pipelines/${each.key}", merge(local.task-to-arn, local.task-to-container, {
     ecsClusterARN     = data.aws_ecs_cluster.this.arn
     securityGroupId   = data.aws_security_group.this.id
-    subnetIDs         = "[\"${data.aws_subnet.az1.id}\", \"${data.aws_subnet.az2.id}\"]"
+    subnetIDs         = "[\"${join("\", \"", tolist(data.aws_subnet_ids.private.ids))}\"]"
     fullCheckQueueUrl = aws_sqs_queue.mdi-2-full-check.id
   }))
 
