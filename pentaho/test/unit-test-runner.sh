@@ -5,8 +5,7 @@ export MSYS_NO_PATHCONV=1
 #save the directory the script first started in
 called_from_dir="$(pwd)"
 # we change directory within this script, so need the absolute path for relative references
-path_to_script="$(realpath --relative-to="$called_from_dir" "$(dirname "$0")")"
-absolute_path_to_script=$(realpath $path_to_script)
+absolute_path_to_script=$(realpath $(dirname "$0"))
 # docker-compose does not like absolute paths on windows (git bash), so we reference it with a relative path
 # it is important to never call this in a test directory, just between tests
 relative_docker_dir="$(dirname "$0")/../../docker"
@@ -139,7 +138,7 @@ function execute_mdi_test_cases() {
   for dir in ${process_name}/*; do
     echo "Now resetting Docker..."
     docker_reset # reset docker
-    cd "${dir}"
+    cd ${dir}
     echo "Now testing ${dir}" # indicate which test case is being run
     # run test setup SQL against the source database
     source_setup_results=$($absolute_path_to_script/psql-test.sh "${source_db}" . -f /input/test_case_source_setup.sql)
@@ -159,7 +158,6 @@ function execute_mdi_test_cases() {
 function execute_edw_metadata_unit_test() {
   test_to_run="$1"
   echo "Now running $test_to_run..."
-  cd $absolute_metadata_test_dir
   metadata_unit_test_result=$(python3 edw_metadata_unit_test_runner.py "$test_to_run")
   if [[ -n $metadata_unit_test_result ]]; then
     failed_unit_tests="${failed_unit_tests} $metadata_unit_test_result"$'\n'
