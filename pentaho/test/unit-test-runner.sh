@@ -3,15 +3,15 @@
 export MSYS_NO_PATHCONV=1
 
 # we change directory within this script, so need the absolute path for relative references
-path_to_script="$(pwd)/$(dirname "$0")"
-
+path_to_script="$(realpath --relative-to="$(pwd)" "$(dirname "$0")")"
+absolute_path_to_script=$(realpath "$path_to_script")
 # docker-compose does not like absolute paths on windows (git bash), so we reference it with a relative path
 # it is important to never call this in a test directory, just between tests
 relative_docker_dir="$(dirname "$0")/../../docker"
 # absolute path to docker, used to trigger docker itself which isn't so picky
-absolute_test_dir="$(pwd)/../../docker/pentaho"
+absolute_test_dir="$(realpath "${absolute_path_to_script}"/../../docker/pentaho)"
 # absolute path to metadata unit tests
-absolute_metadata_test_dir="${path_to_script}/../../scripts/edw_metadata_unit_tests"
+absolute_metadata_test_dir="$(realpath "${absolute_path_to_script}"/../../scripts/edw_metadata_unit_tests)"
 
 #set the script to fail on any errors
 set -e
@@ -35,13 +35,13 @@ function execute_test() {
   echo "Command for manual execution:  ${absolute_test_dir}/test.sh test \"$1\" \"$2\" \"$3\" \"$4\" \"$5\"
    | grep \"$grep_statement\""
   set +e
-  results=$(${absolute_test_dir}/test.sh test "$1" "$2" "$3" "$4" "$5")
+  results=$("${absolute_test_dir}"/test.sh test "$1" "$2" "$3" "$4" "$5")
   # store test.sh exit code for evaluation
   unit_test_exit_code=$?
   if [[ $unit_test_exit_code != 0 ]]; then
     # store unit test name and (if applicable) test case that exited with non-zero code
-    failed_unit_tests="${failed_unit_tests}$(realpath --relative-to $path_to_script $(pwd)) Pentaho exit code: $unit_test_exit_code"$'\n'
-    echo $results
+    failed_unit_tests="${failed_unit_tests}$(realpath --relative-to "$absolute_path_to_script" "$(pwd)") Pentaho exit code: $unit_test_exit_code"$'\n'
+    echo "$results"
     echo "test.sh FAILED!!!"
   fi
   echo "$results" | grep -o "$grep_statement" # need to quote $results so work splitting doesn't occur
@@ -90,8 +90,8 @@ fi
 
 # function to reset docker between MDI test case runs
 function docker_reset() {
-  ${relative_docker_dir}/docker-down.sh
-  ${relative_docker_dir}/docker-up.sh
+  "${relative_docker_dir}"/docker-down.sh
+  "${relative_docker_dir}"/docker-up.sh
 }
 
 # function to detect, print, and remove previous diff files
@@ -115,8 +115,8 @@ function output_file_diff() {
   diff_output="$3"
   test_case_diff_results=$(diff --strip-trailing-cr "$expected_output" "$actual_output" || true)
   if [[ $test_case_diff_results =~ .+ ]]; then
-    echo $test_case_diff_results > "$diff_output"
-    failed_unit_tests="${failed_unit_tests}$(realpath --relative-to $path_to_script $(pwd)) generated an unexpected result."$'\n'
+    echo "$test_case_diff_results" > "$diff_output"
+    failed_unit_tests="${failed_unit_tests}$(realpath --relative-to="$absolute_path_to_script" "$(pwd)") generated an unexpected result."$'\n'
   fi
 }
 
@@ -132,19 +132,19 @@ function execute_mdi_test_cases() {
   process_previous_diffs "$process_name"
   echo
   echo "Proceeding with ${process_name} test cases"
-  for dir in ${process_name}/*; do
+  for dir in "${process_name}"/*; do
     echo "Now resetting Docker..."
     docker_reset # reset docker
-    cd ${dir}
+    cd "${dir}"
     echo "Now testing ${dir}" # indicate which test case is being run
     # run test setup SQL against the source database
-    source_setup_results=$(${path_to_script}/psql-test.sh ${source_db} . -f /input/test_case_source_setup.sql)
+    source_setup_results=$("$absolute_path_to_script"/psql-test.sh "${source_db}" . -f /input/test_case_source_setup.sql)
     # run test setup SQL against the target database
-    target_setup_results=$(${path_to_script}/psql-test.sh ${target_db} . -f /input/test_case_target_setup.sql)
+    target_setup_results=$("$absolute_path_to_script"/psql-test.sh "${target_db}" . -f /input/test_case_target_setup.sql)
     # run MDI configuration
     execute_test "$process_name" "$mdi_database_username" "$mdi_controller_path" "$input_type" "$filename"
     # run SQL export from target table to actual output file
-    output_setup_results=$(${path_to_script}/psql-test.sh ${target_db} . -f /input/test_case_output_setup.sql)
+    output_setup_results=$("$absolute_path_to_script"/psql-test.sh "${target_db}" . -f /input/test_case_output_setup.sql)
     # run a diff between actual output and expected output files
     output_file_diff "expected_output.csv" "actual_output.csv" "test_diff_output.diff"
     cd -
@@ -181,10 +181,10 @@ function metadata_unit_test_fail_break() {
   set -e
 }
 
-${relative_docker_dir}/docker-up.sh
+"${relative_docker_dir}"/docker-up.sh
 
 # EDW metadata unit tests ################################################################
-cd ${absolute_metadata_test_dir}
+cd "${absolute_metadata_test_dir}"
 
 echo "Proceeding with EDW metadata unit tests..."
 execute_edw_metadata_unit_test "test_1"
@@ -236,7 +236,7 @@ else
   echo "Proceeding with remaining unit tests..."
 fi
 
-cd "$(pwd)/../../pentaho/test"
+cd "${absolute_path_to_script}"
 
 # Non MDI Tests ##########################################################################
 process_name="SP6"
