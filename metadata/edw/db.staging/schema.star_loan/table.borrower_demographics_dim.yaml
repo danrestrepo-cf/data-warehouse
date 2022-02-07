@@ -302,80 +302,8 @@ etls:
       - data_source_integration_id
     container_memory: 2048
     input_sql: |-
-      SELECT borrower_demographics_dim_new_records.data_source_integration_columns
-           , borrower_demographics_dim_new_records.data_source_integration_id
-           , borrower_demographics_dim_new_records.edw_created_datetime
-           , borrower_demographics_dim_new_records.edw_modified_datetime
-           , borrower_demographics_dim_new_records.data_source_modified_datetime
-           , borrower_demographics_dim_new_records.sex_refused_code
-           , borrower_demographics_dim_new_records.sex_collected_visual_or_surname_code
-           , borrower_demographics_dim_new_records.sex_male_flag
-           , borrower_demographics_dim_new_records.sex_female_flag
-           , borrower_demographics_dim_new_records.sex_not_obtainable_flag
-           , borrower_demographics_dim_new_records.ethnicity_refused_code
-           , borrower_demographics_dim_new_records.ethnicity_collected_visual_or_surname_code
-           , borrower_demographics_dim_new_records.ethnicity_hispanic_or_latino_flag
-           , borrower_demographics_dim_new_records.ethnicity_mexican_flag
-           , borrower_demographics_dim_new_records.ethnicity_puerto_rican_flag
-           , borrower_demographics_dim_new_records.ethnicity_cuban_flag
-           , borrower_demographics_dim_new_records.ethnicity_other_hispanic_or_latino_flag
-           , borrower_demographics_dim_new_records.ethnicity_not_hispanic_or_latino_flag
-           , borrower_demographics_dim_new_records.ethnicity_not_obtainable_flag
-           , borrower_demographics_dim_new_records.marital_status_code
-           , borrower_demographics_dim_new_records.race_refused_code
-           , borrower_demographics_dim_new_records.race_collected_visual_or_surname_code
-           , borrower_demographics_dim_new_records.race_american_indian_or_alaska_native_flag
-           , borrower_demographics_dim_new_records.race_asian_flag
-           , borrower_demographics_dim_new_records.race_asian_indian_flag
-           , borrower_demographics_dim_new_records.race_chinese_flag
-           , borrower_demographics_dim_new_records.race_filipino_flag
-           , borrower_demographics_dim_new_records.race_japanese_flag
-           , borrower_demographics_dim_new_records.race_korean_flag
-           , borrower_demographics_dim_new_records.race_vietnamese_flag
-           , borrower_demographics_dim_new_records.race_other_asian_flag
-           , borrower_demographics_dim_new_records.race_black_or_african_american_flag
-           , borrower_demographics_dim_new_records.race_information_not_provided_flag
-           , borrower_demographics_dim_new_records.race_national_origin_refusal_flag
-           , borrower_demographics_dim_new_records.race_native_hawaiian_or_other_pacific_islander_flag
-           , borrower_demographics_dim_new_records.race_native_hawaiian_flag
-           , borrower_demographics_dim_new_records.race_guamanian_or_chamorro_flag
-           , borrower_demographics_dim_new_records.race_samoan_flag
-           , borrower_demographics_dim_new_records.race_other_pacific_islander_flag
-           , borrower_demographics_dim_new_records.race_not_obtainable_flag
-           , borrower_demographics_dim_new_records.race_not_applicable_flag
-           , borrower_demographics_dim_new_records.race_white_flag
-           , borrower_demographics_dim_new_records.schooling_years
-           , borrower_demographics_dim_new_records.marital_status
-           , borrower_demographics_dim_new_records.ethnicity_collected_visual_or_surname
-           , borrower_demographics_dim_new_records.sex_collected_visual_or_surname
-           , borrower_demographics_dim_new_records.sex_refused
-           , borrower_demographics_dim_new_records.race_refused
-           , borrower_demographics_dim_new_records.ethnicity_refused
-           , borrower_demographics_dim_new_records.race_collected_visual_or_surname
-           , borrower_demographics_dim_new_records.race_other_pacific_islander_description_flag
-           , borrower_demographics_dim_new_records.ethnicity_other_hispanic_or_latino_description_flag
-           , borrower_demographics_dim_new_records.other_race_national_origin_description_flag
-           , borrower_demographics_dim_new_records.race_other_american_indian_or_alaska_native_description_flag
-           , borrower_demographics_dim_new_records.race_other_asian_description_flag
-      FROM (
-          SELECT 'sex_refused_code' || '~' || 'sex_collected_visual_or_surname_code' || '~' || 'sex_male_flag' || '~' || 'sex_female_flag' ||
-                 '~' || 'sex_not_obtainable_flag' || '~' || 'ethnicity_refused_code' || '~' || 'ethnicity_collected_visual_or_surname_code' ||
-                 '~' || 'ethnicity_hispanic_or_latino_flag' || '~' || 'ethnicity_mexican_flag' || '~' || 'ethnicity_puerto_rican_flag' || '~' ||
-                 'ethnicity_cuban_flag' || '~' || 'ethnicity_other_hispanic_or_latino_flag' || '~' || 'ethnicity_not_hispanic_or_latino_flag' ||
-                 '~' || 'ethnicity_not_obtainable_flag' || '~' || 'marital_status_code' || '~' || 'race_refused_code' || '~' ||
-                 'race_collected_visual_or_surname_code' || '~' || 'race_american_indian_or_alaska_native_flag' || '~' || 'race_asian_flag' ||
-                 '~' || 'race_asian_indian_flag' || '~' || 'race_chinese_flag' || '~' || 'race_filipino_flag' || '~' || 'race_japanese_flag' ||
-                 '~' || 'race_korean_flag' || '~' || 'race_vietnamese_flag' || '~' || 'race_other_asian_flag' || '~' ||
-                 'race_black_or_african_american_flag' || '~' || 'race_information_not_provided_flag' || '~' ||
-                 'race_national_origin_refusal_flag' || '~' || 'race_native_hawaiian_or_other_pacific_islander_flag' || '~' ||
-                 'race_native_hawaiian_flag' || '~' || 'race_guamanian_or_chamorro_flag' || '~' || 'race_samoan_flag' || '~' ||
-                 'race_other_pacific_islander_flag' || '~' || 'race_not_obtainable_flag' || '~' || 'race_not_applicable_flag' || '~' ||
-                 'race_white_flag' || '~' || 'schooling_years' || '~' || 'marital_status' || '~' || 'ethnicity_collected_visual_or_surname' ||
-                 '~' || 'sex_collected_visual_or_surname' || '~' || 'sex_refused' || '~' || 'race_refused' || '~' || 'ethnicity_refused' || '~' ||
-                 'race_collected_visual_or_surname' || '~' || 'race_other_pacific_islander_description_flag' || '~' || 'data_source_dwid' ||
-                 '~' || 'ethnicity_other_hispanic_or_latino_description_flag' || '~' || 'other_race_national_origin_description_flag' || '~' ||
-                 'race_other_american_indian_or_alaska_native_description_flag' || '~' ||
-                 'race_other_asian_description_flag' AS data_source_integration_columns
+      WITH borrower_demographics_dim_new_records AS (
+          SELECT 'sex_refused_code~sex_collected_visual_or_surname_code~sex_male_flag~sex_female_flag~sex_not_obtainable_flag~ethnicity_refused_code~ethnicity_collected_visual_or_surname_code~ethnicity_hispanic_or_latino_flag~ethnicity_mexican_flag~ethnicity_puerto_rican_flag~ethnicity_cuban_flag~ethnicity_other_hispanic_or_latino_flag~ethnicity_not_hispanic_or_latino_flag~ethnicity_not_obtainable_flag~marital_status_code~race_refused_code~race_collected_visual_or_surname_code~race_american_indian_or_alaska_native_flag~race_asian_flag~race_asian_indian_flag~race_chinese_flag~race_filipino_flag~race_japanese_flag~race_korean_flag~race_vietnamese_flag~race_other_asian_flag~race_black_or_african_american_flag~race_information_not_provided_flag~race_national_origin_refusal_flag~race_native_hawaiian_or_other_pacific_islander_flag~race_native_hawaiian_flag~race_guamanian_or_chamorro_flag~race_samoan_flag~race_other_pacific_islander_flag~race_not_obtainable_flag~race_not_applicable_flag~race_white_flag~schooling_years~race_other_pacific_islander_description_flag~data_source_dwid~ethnicity_other_hispanic_or_latino_description_flag~other_race_national_origin_description_flag~race_other_american_indian_or_alaska_native_description_flag~race_other_asian_description_flag' AS data_source_integration_columns
                , COALESCE( CAST( primary_table.b_sex_refused AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( primary_table.b_sex_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( primary_table.b_sex_male AS TEXT ), '<NULL>' ) || '~' ||
@@ -414,13 +342,6 @@ etls:
                  COALESCE( CAST( primary_table.b_race_not_applicable AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( primary_table.b_race_white AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( primary_table.b_schooling_years AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t134.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t123.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t151.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t152.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t148.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t124.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t147.value AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( primary_table.b_race_other_pacific_islander_description <> '' AND
                                  primary_table.b_race_other_pacific_islander_description IS NOT NULL AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) || '~' ||
@@ -491,6 +412,8 @@ etls:
                  primary_table.b_race_other_american_indian_or_alaska_native_description IS NOT NULL AS race_other_american_indian_or_alaska_native_description_flag
                , primary_table.b_race_other_asian_description <> '' AND
                  primary_table.b_race_other_asian_description IS NOT NULL AS race_other_asian_description_flag
+               , MAX( GREATEST( t134.etl_end_date_time, t123.etl_end_date_time, t151.etl_end_date_time, t152.etl_end_date_time,
+                                t148.etl_end_date_time, t124.etl_end_date_time, t147.etl_end_date_time ) ) AS max_source_etl_end_date_time
           FROM (
               SELECT <<borrower_partial_load_condition>> AS include_record
                    , borrower.*
@@ -500,100 +423,114 @@ etls:
                             AND borrower.data_source_updated_datetime < history_records.data_source_updated_datetime
               WHERE history_records.b_pid IS NULL
           ) AS primary_table
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<marital_status_type_partial_load_condition>> AS include_record
                        , marital_status_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.marital_status_type
                   LEFT JOIN history_octane.marital_status_type AS history_records
                             ON marital_status_type.code = history_records.code
                                 AND marital_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON marital_status_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t134
                      ON primary_table.b_marital_status_type = t134.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t123
                      ON primary_table.b_ethnicity_collected_visual_or_surname = t123.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t151
                      ON primary_table.b_sex_collected_visual_or_surname = t151.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t152
                      ON primary_table.b_sex_refused = t152.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t148
                      ON primary_table.b_race_refused = t148.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t124
                      ON primary_table.b_ethnicity_refused = t124.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t147
@@ -625,10 +562,26 @@ etls:
                    primary_table.b_race_other_american_indian_or_alaska_native_description IS NOT NULL
                  , primary_table.b_race_other_asian_description <> '' AND
                    primary_table.b_race_other_asian_description IS NOT NULL
-      ) AS borrower_demographics_dim_new_records
+      )
+      --new records that should be inserted
+      SELECT borrower_demographics_dim_new_records.*
+      FROM borrower_demographics_dim_new_records
       LEFT JOIN star_loan.borrower_demographics_dim
-                ON borrower_demographics_dim.data_source_integration_id = borrower_demographics_dim_new_records.data_source_integration_id
+                ON borrower_demographics_dim_new_records.data_source_integration_id = borrower_demographics_dim.data_source_integration_id
       WHERE borrower_demographics_dim.dwid IS NULL
-      ;
+      UNION ALL
+      --existing records that need to be updated
+      SELECT borrower_demographics_dim_new_records.*
+      FROM borrower_demographics_dim_new_records
+      JOIN (
+          SELECT borrower_demographics_dim.data_source_integration_id, etl_log.etl_start_date_time
+          FROM star_loan.borrower_demographics_dim
+          JOIN star_common.etl_log
+               ON borrower_demographics_dim.etl_batch_id = etl_log.etl_batch_id
+      ) AS borrower_demographics_dim_etl_start_times
+           ON borrower_demographics_dim_new_records.data_source_integration_id =
+              borrower_demographics_dim_etl_start_times.data_source_integration_id
+               AND borrower_demographics_dim_new_records.max_source_etl_end_date_time >=
+                   borrower_demographics_dim_etl_start_times.etl_start_date_time;
 next_etls:
   - SP-300001-insert-update
