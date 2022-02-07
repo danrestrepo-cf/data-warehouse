@@ -277,75 +277,8 @@ etls:
       - data_source_integration_id
     container_memory: 2048
     input_sql: |-
-      SELECT borrower_lending_profile_dim_new_records.data_source_integration_columns
-           , borrower_lending_profile_dim_new_records.data_source_integration_id
-           , borrower_lending_profile_dim_new_records.edw_created_datetime
-           , borrower_lending_profile_dim_new_records.edw_modified_datetime
-           , borrower_lending_profile_dim_new_records.data_source_modified_datetime
-           , borrower_lending_profile_dim_new_records.alimony_child_support_code
-           , borrower_lending_profile_dim_new_records.bankruptcy_code
-           , borrower_lending_profile_dim_new_records.borrowed_down_payment_code
-           , borrower_lending_profile_dim_new_records.spousal_homestead_code
-           , borrower_lending_profile_dim_new_records.citizenship_residency_code
-           , borrower_lending_profile_dim_new_records.dependents_code
-           , borrower_lending_profile_dim_new_records.first_time_homebuyer_flag
-           , borrower_lending_profile_dim_new_records.lender_employee_code
-           , borrower_lending_profile_dim_new_records.lender_employee_status_confirmed_flag
-           , borrower_lending_profile_dim_new_records.homeowner_past_three_years_code
-           , borrower_lending_profile_dim_new_records.intend_to_occupy_code
-           , borrower_lending_profile_dim_new_records.note_endorser_code
-           , borrower_lending_profile_dim_new_records.obligated_loan_foreclosure_code
-           , borrower_lending_profile_dim_new_records.outstanding_judgements_code
-           , borrower_lending_profile_dim_new_records.party_to_lawsuit_code
-           , borrower_lending_profile_dim_new_records.presently_delinquent_code
-           , borrower_lending_profile_dim_new_records.property_foreclosure_code
-           , borrower_lending_profile_dim_new_records.titleholder_code
-           , borrower_lending_profile_dim_new_records.first_time_homebuyer_auto_compute_flag
-           , borrower_lending_profile_dim_new_records.on_ldp_list_code
-           , borrower_lending_profile_dim_new_records.on_gsa_list_code
-           , borrower_lending_profile_dim_new_records.homeownership_education_code
-           , borrower_lending_profile_dim_new_records.homeownership_education_agency_code
-           , borrower_lending_profile_dim_new_records.disabled_code
-           , borrower_lending_profile_dim_new_records.hud_employee_flag
-           , borrower_lending_profile_dim_new_records.domestic_relationship_state_code
-           , borrower_lending_profile_dim_new_records.citizenship_residency
-           , borrower_lending_profile_dim_new_records.homeownership_education
-           , borrower_lending_profile_dim_new_records.homeownership_education_agency
-           , borrower_lending_profile_dim_new_records.domestic_relationship_state
-           , borrower_lending_profile_dim_new_records.alimony_child_support
-           , borrower_lending_profile_dim_new_records.bankruptcy
-           , borrower_lending_profile_dim_new_records.borrowed_down_payment
-           , borrower_lending_profile_dim_new_records.disabled
-           , borrower_lending_profile_dim_new_records.dependents
-           , borrower_lending_profile_dim_new_records.homeowner_past_three_years
-           , borrower_lending_profile_dim_new_records.intend_to_occupy
-           , borrower_lending_profile_dim_new_records.lender_employee
-           , borrower_lending_profile_dim_new_records.note_endorser
-           , borrower_lending_profile_dim_new_records.obligated_loan_foreclosure
-           , borrower_lending_profile_dim_new_records.on_gsa_list
-           , borrower_lending_profile_dim_new_records.on_ldp_list
-           , borrower_lending_profile_dim_new_records.outstanding_judgements
-           , borrower_lending_profile_dim_new_records.party_to_lawsuit
-           , borrower_lending_profile_dim_new_records.presently_delinquent
-           , borrower_lending_profile_dim_new_records.property_foreclosure
-           , borrower_lending_profile_dim_new_records.spousal_homestead
-           , borrower_lending_profile_dim_new_records.titleholder
-      FROM (
-          SELECT 'alimony_child_support_code' || '~' || 'bankruptcy_code' || '~' || 'borrowed_down_payment_code' || '~' ||
-                 'spousal_homestead_code' || '~' || 'citizenship_residency_code' || '~' || 'dependents_code' || '~' ||
-                 'first_time_homebuyer_flag' || '~' || 'lender_employee_code' || '~' || 'lender_employee_status_confirmed_flag' || '~' ||
-                 'homeowner_past_three_years_code' || '~' || 'intend_to_occupy_code' || '~' || 'note_endorser_code' || '~' ||
-                 'obligated_loan_foreclosure_code' || '~' || 'outstanding_judgements_code' || '~' || 'party_to_lawsuit_code' || '~' ||
-                 'presently_delinquent_code' || '~' || 'property_foreclosure_code' || '~' || 'titleholder_code' || '~' ||
-                 'first_time_homebuyer_auto_compute_flag' || '~' || 'on_ldp_list_code' || '~' || 'on_gsa_list_code' || '~' ||
-                 'homeownership_education_code' || '~' || 'homeownership_education_agency_code' || '~' ||
-                 'disabled_code' || '~' || 'hud_employee_flag' || '~' ||
-                 'domestic_relationship_state_code' || '~' || 'citizenship_residency' || '~' || 'alimony_child_support' || '~' || 'bankruptcy' ||
-                 '~' || 'borrowed_down_payment' || '~' || 'disabled' || '~' || 'dependents' || '~' || 'homeowner_past_three_years' || '~' ||
-                 'intend_to_occupy' || '~' || 'lender_employee' || '~' || 'note_endorser' || '~' || 'obligated_loan_foreclosure' || '~' ||
-                 'on_gsa_list' || '~' || 'on_ldp_list' || '~' || 'outstanding_judgements' || '~' || 'party_to_lawsuit' || '~' ||
-                 'presently_delinquent' || '~' || 'property_foreclosure' || '~' || 'spousal_homestead' || '~' || 'titleholder' || '~' ||
-                 'data_source_dwid' AS data_source_integration_columns
+      WITH borrower_lending_profile_dim_new_records AS (
+          SELECT 'sex_refused_code~sex_collected_visual_or_surname_code~sex_male_flag~sex_female_flag~sex_not_obtainable_flag~ethnicity_refused_code~ethnicity_collected_visual_or_surname_code~ethnicity_hispanic_or_latino_flag~ethnicity_mexican_flag~ethnicity_puerto_rican_flag~ethnicity_cuban_flag~ethnicity_other_hispanic_or_latino_flag~ethnicity_not_hispanic_or_latino_flag~ethnicity_not_obtainable_flag~marital_status_code~race_refused_code~race_collected_visual_or_surname_code~race_american_indian_or_alaska_native_flag~race_asian_flag~race_asian_indian_flag~race_chinese_flag~race_filipino_flag~race_japanese_flag~race_korean_flag~race_vietnamese_flag~race_other_asian_flag~race_black_or_african_american_flag~race_information_not_provided_flag~race_national_origin_refusal_flag~race_native_hawaiian_or_other_pacific_islander_flag~race_native_hawaiian_flag~race_guamanian_or_chamorro_flag~race_samoan_flag~race_other_pacific_islander_flag~race_not_obtainable_flag~race_not_applicable_flag~race_white_flag~schooling_years~race_other_pacific_islander_description_flag~data_source_dwid~ethnicity_other_hispanic_or_latino_description_flag~other_race_national_origin_description_flag~race_other_american_indian_or_alaska_native_description_flag~race_other_asian_description_flag' AS data_source_integration_columns
                , COALESCE( CAST( primary_table.b_alimony_child_support AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( primary_table.b_bankruptcy AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( primary_table.b_borrowed_down_payment AS TEXT ), '<NULL>' ) || '~' ||
@@ -372,17 +305,6 @@ etls:
                  COALESCE( CAST( primary_table.b_disabled AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( primary_table.b_hud_employee AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( primary_table.b_domestic_relationship_state_type AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t119.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t127.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t126.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t122.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t113.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t116.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t117.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t121.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t125.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t128.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t131.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t133.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t135.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t136.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t137.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t138.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t139.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t140.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t143.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t146.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t153.value AS TEXT ), '<NULL>' ) || '~' || COALESCE( CAST( t154.value AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) AS data_source_integration_id
                , NOW( ) AS edw_created_datetime
                , NOW( ) AS edw_modified_datetime
@@ -435,6 +357,12 @@ etls:
                , t146.value AS property_foreclosure
                , t153.value AS spousal_homestead
                , t154.value AS titleholder
+               , MAX( GREATEST( t119.etl_end_date_time, t127.etl_end_date_time, t126.etl_end_date_time, t122.etl_end_date_time,
+                                t113.etl_end_date_time, t116.etl_end_date_time, t117.etl_end_date_time, t121.etl_end_date_time,
+                                t125.etl_end_date_time, t128.etl_end_date_time, t131.etl_end_date_time, t133.etl_end_date_time,
+                                t135.etl_end_date_time, t136.etl_end_date_time, t137.etl_end_date_time, t138.etl_end_date_time,
+                                t139.etl_end_date_time, t140.etl_end_date_time, t143.etl_end_date_time, t146.etl_end_date_time,
+                                t153.etl_end_date_time, t154.etl_end_date_time ) ) AS max_source_etl_end_date_time
           FROM (
               SELECT <<borrower_partial_load_condition>> AS include_record
                    , borrower.*
@@ -444,310 +372,354 @@ etls:
                             AND borrower.data_source_updated_datetime < history_records.data_source_updated_datetime
               WHERE history_records.b_pid IS NULL
           ) AS primary_table
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<citizenship_residency_type_partial_load_condition>> AS include_record
                        , citizenship_residency_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.citizenship_residency_type
                   LEFT JOIN history_octane.citizenship_residency_type AS history_records
                             ON citizenship_residency_type.code = history_records.code
                                 AND citizenship_residency_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON citizenship_residency_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t119
                      ON primary_table.b_citizenship_residency_type = t119.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<homeownership_education_type_partial_load_condition>> AS include_record
                        , homeownership_education_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.homeownership_education_type
                   LEFT JOIN history_octane.homeownership_education_type AS history_records
                             ON homeownership_education_type.code = history_records.code
                                 AND homeownership_education_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON homeownership_education_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t127
                      ON primary_table.b_homeownership_education_type = t127.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<housing_counseling_agency_type_partial_load_condition>> AS include_record
                        , housing_counseling_agency_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.housing_counseling_agency_type
                   LEFT JOIN history_octane.housing_counseling_agency_type AS history_records
                             ON housing_counseling_agency_type.code = history_records.code
                                 AND housing_counseling_agency_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON housing_counseling_agency_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t126
                      ON primary_table.b_homeownership_education_agency_type = t126.code
-
           LEFT JOIN (
               SELECT *
               FROM (
                   SELECT <<state_type_partial_load_condition>> AS include_record
                        , state_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.state_type
                   LEFT JOIN history_octane.state_type AS history_records
                             ON state_type.code = history_records.code
                                 AND state_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON state_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t122
                     ON primary_table.b_domestic_relationship_state_type = t122.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t113
                      ON primary_table.b_alimony_child_support = t113.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t116
                      ON primary_table.b_bankruptcy = t116.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t117
                      ON primary_table.b_borrowed_down_payment = t117.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t121
                      ON primary_table.b_disabled = t121.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t125
                      ON primary_table.b_has_dependents = t125.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t128
                      ON primary_table.b_homeowner_past_three_years = t128.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t131
                      ON primary_table.b_intend_to_occupy = t131.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t133
                      ON primary_table.b_lender_employee = t133.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t135
                      ON primary_table.b_note_endorser = t135.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t136
                      ON primary_table.b_obligated_loan_foreclosure = t136.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t137
                      ON primary_table.b_on_gsa_list = t137.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t138
                      ON primary_table.b_on_ldp_list = t138.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t139
                      ON primary_table.b_outstanding_judgements = t139.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t140
                      ON primary_table.b_party_to_lawsuit = t140.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t143
                      ON primary_table.b_presently_delinquent = t143.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t146
                      ON primary_table.b_property_foreclosure = t146.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t153
                      ON primary_table.b_spousal_homestead = t153.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t154
@@ -769,10 +741,26 @@ etls:
                  , primary_table.b_domestic_relationship_state_type, t127.value, t126.value, t122.value, t113.value, t116.value, t117.value
                  , t121.value, t125.value, t128.value, t131.value, t133.value, t135.value, t136.value, t137.value, t138.value, t139.value
                  , t140.value, t143.value, t146.value, t153.value, t154.value
-      ) AS borrower_lending_profile_dim_new_records
+      )
+      --new records that should be inserted
+      SELECT borrower_lending_profile_dim_new_records.*
+      FROM borrower_lending_profile_dim_new_records
       LEFT JOIN star_loan.borrower_lending_profile_dim
-                ON borrower_lending_profile_dim.data_source_integration_id = borrower_lending_profile_dim_new_records.data_source_integration_id
+                ON borrower_lending_profile_dim_new_records.data_source_integration_id = borrower_lending_profile_dim.data_source_integration_id
       WHERE borrower_lending_profile_dim.dwid IS NULL
-      ;
+      UNION ALL
+      --existing records that need to be updated
+      SELECT borrower_lending_profile_dim_new_records.*
+      FROM borrower_lending_profile_dim_new_records
+      JOIN (
+          SELECT borrower_lending_profile_dim.data_source_integration_id, etl_log.etl_start_date_time
+          FROM star_loan.borrower_lending_profile_dim
+          JOIN star_common.etl_log
+               ON borrower_lending_profile_dim.etl_batch_id = etl_log.etl_batch_id
+      ) AS borrower_lending_profile_dim_etl_start_times
+           ON borrower_lending_profile_dim_new_records.data_source_integration_id =
+              borrower_lending_profile_dim_etl_start_times.data_source_integration_id
+               AND borrower_lending_profile_dim_new_records.max_source_etl_end_date_time >=
+                   borrower_lending_profile_dim_etl_start_times.etl_start_date_time;
 next_etls:
   - SP-300001-insert-update
