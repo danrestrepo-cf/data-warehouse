@@ -241,6 +241,10 @@
                                 },
                                 "MessageBody.$": "States.JsonToString($)"
                             },
+                            "ResultSelector": {
+                                "StateName": "SP-100271_message",
+                                "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
+                            },
                             "End": true
                         }
                     }
@@ -2207,6 +2211,10 @@
                                     }
                                 },
                                 "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "ResultSelector": {
+                                "StateName": "SP-100727_message",
+                                "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
                             },
                             "End": true
                         }
