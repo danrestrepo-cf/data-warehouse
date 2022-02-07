@@ -242,7 +242,7 @@ else
   echo "Proceeding with remaining unit tests..."
 fi
 
-cd $absolute_metadata_test_dir
+cd $absolute_path_to_script
 
 # Non MDI Tests ##########################################################################
 process_name="SP6"
