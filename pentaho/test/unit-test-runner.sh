@@ -2,8 +2,10 @@
 
 export MSYS_NO_PATHCONV=1
 
+#save the directory the script first started in
+called_from_dir="$(pwd)"
 # we change directory within this script, so need the absolute path for relative references
-path_to_script="$(realpath --relative-to="$(pwd)" "$(dirname "$0")")"
+path_to_script="$(realpath --relative-to="$called_from_dir" "$(dirname "$0")")"
 absolute_path_to_script=$(realpath "$path_to_script")
 # docker-compose does not like absolute paths on windows (git bash), so we reference it with a relative path
 # it is important to never call this in a test directory, just between tests
@@ -14,13 +16,13 @@ absolute_test_dir="$(realpath "${absolute_path_to_script}"/../../docker/pentaho)
 absolute_metadata_test_dir="$(realpath "${absolute_path_to_script}"/../../scripts/edw_metadata_unit_tests)"
 
 #set the script to fail on any errors
-set -e
+set -ex
 
 #
 # regex explanation
 # -----------------------------
 # ' testing'  - looks for lines that the test.sh script output. Example line: "Now testing SP8.2"
-# ' Start='          - looks for the last line output by Kettle/Pan that contains the start and end times of the job.
+# ' Start='   - looks for the last line output by Kettle/Pan that contains the start and end times of the job.
 # ' E=[1-9]'  - looks for steps that contain >0 errors.
 
 # set default grep statement
@@ -90,8 +92,10 @@ fi
 
 # function to reset docker between MDI test case runs
 function docker_reset() {
-  "${relative_docker_dir}"/docker-down.sh
-  "${relative_docker_dir}"/docker-up.sh
+  cd ${called_from_dir}
+  ${relative_docker_dir}/docker-down.sh
+  ${relative_docker_dir}/docker-up.sh
+  cd -
 }
 
 # function to detect, print, and remove previous diff files
@@ -155,10 +159,12 @@ function execute_mdi_test_cases() {
 function execute_edw_metadata_unit_test() {
   test_to_run="$1"
   echo "Now running $test_to_run..."
+  cd "$absolute_metadata_test_dir"
   metadata_unit_test_result=$(python3 edw_metadata_unit_test_runner.py "$test_to_run")
   if [[ -n $metadata_unit_test_result ]]; then
     failed_unit_tests="${failed_unit_tests} $metadata_unit_test_result"$'\n'
   fi
+  cd -
 }
 
 # function to prompt the user whether to continue with unit test runner in the event of EDW metadata unit test failure
@@ -180,7 +186,7 @@ function metadata_unit_test_fail_break() {
   fi
   set -e
 }
-
+echo $(pwd)
 "${relative_docker_dir}"/docker-up.sh
 
 # EDW metadata unit tests ################################################################
