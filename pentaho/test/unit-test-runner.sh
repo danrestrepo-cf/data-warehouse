@@ -42,7 +42,7 @@ function execute_test() {
   if [[ $unit_test_exit_code != 0 ]]; then
     # store unit test name and (if applicable) test case that exited with non-zero code
     failed_unit_tests="${failed_unit_tests}$(realpath --relative-to $absolute_path_to_script $(pwd)) Pentaho exit code: $unit_test_exit_code"$'\n'
-    echo "$results"
+    echo $results
     echo "test.sh FAILED!!!"
   fi
   echo "$results" | grep -o "$grep_statement" # need to quote $results so work splitting doesn't occur
@@ -162,7 +162,6 @@ function execute_edw_metadata_unit_test() {
   if [[ -n $metadata_unit_test_result ]]; then
     failed_unit_tests="${failed_unit_tests} $metadata_unit_test_result"$'\n'
   fi
-  cd -
 }
 
 # function to prompt the user whether to continue with unit test runner in the event of EDW metadata unit test failure
