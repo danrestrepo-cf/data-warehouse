@@ -186,7 +186,7 @@ function metadata_unit_test_fail_break() {
   fi
   set -e
 }
-echo $(pwd)
+
 ${relative_docker_dir}/docker-up.sh
 
 # EDW metadata unit tests ################################################################
