@@ -34,3 +34,5 @@ etls:
                 ON staging_table.code = history_table.code
                     AND staging_table.value = history_table.value
       WHERE history_table.code IS NULL;
+next_etls:
+  - SP-200019
