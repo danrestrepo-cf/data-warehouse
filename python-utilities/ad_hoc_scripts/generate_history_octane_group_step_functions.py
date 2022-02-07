@@ -80,11 +80,12 @@ def generate_grouped_step_functions(step_function_base_name: str, step_function_
 
 
 def generate_message_state(process_name: str, target_table: str) -> dict:
+    message_state_name = "{}_message".format(process_name)
     message_state_dict = {
         "Comment": "Send message to bi-managed-mdi-2-full-check-queue for {}".format(process_name),
-        "StartAt": "{}_message".format(process_name),
+        "StartAt": message_state_name,
         "States": {
-            "{}_message".format(process_name): {
+            message_state_name: {
                 "Type": "Task",
                 "Resource": "arn:aws:states:::sqs:sendMessage",
                 "Parameters": {
@@ -98,6 +99,10 @@ def generate_message_state(process_name: str, target_table: str) -> dict:
                         }
                     },
                     "MessageBody.$": "States.JsonToString($)"
+                },
+                "ResultSelector": {
+                    "StateName": message_state_name,
+                    "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
                 },
                 "End": True
             }
