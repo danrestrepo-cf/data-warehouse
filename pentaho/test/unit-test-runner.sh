@@ -262,14 +262,14 @@ else
   echo "Proceeding with remaining unit tests..."
 fi
 
-## Non MDI Tests ##########################################################################
-#process_name="SP6"
-#database_username="encompass_sp6"
-#sp6_job_path="encompass/import/SP6/full_encompass_etl"
-#echo Now testing ${process_name}
-#cd $path_to_script/${process_name}
-#execute_test ${process_name} ${database_username} ${sp6_job_path} "file" "Encompass.csv"
-#cd -
+# Non MDI Tests ##########################################################################
+process_name="SP6"
+database_username="encompass_sp6"
+sp6_job_path="encompass/import/SP6/full_encompass_etl"
+echo Now testing ${process_name}
+cd $path_to_script/${process_name}
+execute_test ${process_name} ${database_username} ${sp6_job_path} "file" "Encompass.csv"
+cd -
 
 # MDI Test Cases #########################################################################
 database_username="mditest"
