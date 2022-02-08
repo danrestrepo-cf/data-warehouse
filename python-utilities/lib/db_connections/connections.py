@@ -56,7 +56,7 @@ class LocalPostgresConnection(DBConnection):
 
     def __enter__(self):
         try:
-            self.conn = psycopg2.connect(host='localhost', database=self.dbname, user=self.user, password=self.password)
+            self.conn = psycopg2.connect(host='localhost', database=self.dbname, user=self.user, password=self.password, port=5432)
             return DBCursor(self.conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor))
         except Exception as e:
                 raise self.DBConnectionError(f'Database connection failed due to {e}')
