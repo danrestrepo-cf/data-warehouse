@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 export MSYS_NO_PATHCONV=1
-set -x
+
 # calculate the absolute directory to the root of the data-warehouse repository assuming this script is
 # located in the /data-warehouse/pentaho/test directory
 path_to_repo_root=$(realpath "$(dirname "$0")/../../")
@@ -13,7 +13,7 @@ absolute_test_dir="$path_to_repo_root/docker/pentaho"
 absolute_metadata_test_dir="$path_to_repo_root/scripts/edw_metadata_unit_tests"
 
 #set the script to fail on any errors
-set -ex
+set -e
 
 #
 # regex explanation
