@@ -1,18 +1,16 @@
 #!/usr/bin/env bash
 
 export MSYS_NO_PATHCONV=1
-
-#save the directory the script first started in
-called_from_dir="$(pwd)"
+set -x
+# calculate the absolute directory to the root of the data-warehouse repository assuming this script is
+# located in the /data-warehouse/pentaho/test directory
+path_to_repo_root=$(realpath "$(dirname "$0")/../../")
 # we change directory within this script, so need the absolute path for relative references
-absolute_path_to_script=$(realpath $(dirname "$0"))
-# docker-compose does not like absolute paths on windows (git bash), so we reference it with a relative path
-# it is important to never call this in a test directory, just between tests
-relative_docker_dir="$(dirname "$0")/../../docker"
+path_to_script="$path_to_repo_root/pentaho/test/"
 # absolute path to docker, used to trigger docker itself which isn't so picky
-absolute_test_dir="$(realpath $absolute_path_to_script/../../docker/pentaho)"
+absolute_test_dir="$path_to_repo_root/docker/pentaho"
 # absolute path to metadata unit tests
-absolute_metadata_test_dir="$(realpath $absolute_path_to_script/../../scripts/edw_metadata_unit_tests)"
+absolute_metadata_test_dir="$path_to_repo_root/scripts/edw_metadata_unit_tests"
 
 #set the script to fail on any errors
 set -ex
@@ -40,8 +38,11 @@ function execute_test() {
   # store test.sh exit code for evaluation
   unit_test_exit_code=$?
   if [[ $unit_test_exit_code != 0 ]]; then
-    # store unit test name and (if applicable) test case that exited with non-zero code
-    failed_unit_tests="${failed_unit_tests}$(realpath --relative-to $absolute_path_to_script $(pwd)) Pentaho exit code: $unit_test_exit_code"$'\n'
+    # store unit test name and (if applicable) test case that exited with non-zero code.
+    # realpath is calculating the name of the folder the unit test is in so we have a list of the
+    # names of the specific failed unit tests. we 'cd' before this function is called so $(pwd) will
+    # change each invocation.
+    failed_unit_tests="${failed_unit_tests}$(realpath --relative-to=$path_to_script $(pwd)) Pentaho exit code: $unit_test_exit_code"$'\n'
     echo $results
     echo "test.sh FAILED!!!"
   fi
@@ -91,10 +92,16 @@ fi
 
 # function to reset docker between MDI test case runs
 function docker_reset() {
-  cd ${called_from_dir}
+  # docker-compose does not like absolute paths on windows (git bash), so we reference it with a relative path
+  # it is important to never call this in a test directory, just between tests
+  # See posts 3/8/2021 - https://app.asana.com/0/0/1200023570757108
+  # See posts 2/8/2022 - https://app.asana.com/0/0/1200530658540290
+  #
+  # we need to calculate this each time the function is called because it is called from multiple directories and
+  # we cannot 'cd' to the correct directory beforehand then 'cd' back to the original directory
+  relative_docker_dir=$(realpath --relative-to=$(pwd) "$path_to_repo_root/docker/")
   ${relative_docker_dir}/docker-down.sh
   ${relative_docker_dir}/docker-up.sh
-  cd -
 }
 
 # function to detect, print, and remove previous diff files
@@ -119,7 +126,10 @@ function output_file_diff() {
   test_case_diff_results=$(diff --strip-trailing-cr "$expected_output" "$actual_output" || true)
   if [[ $test_case_diff_results =~ .+ ]]; then
     echo $test_case_diff_results > "$diff_output"
-    failed_unit_tests="${failed_unit_tests}$(realpath --relative-to=$absolute_path_to_script $(pwd)) generated an unexpected result."$'\n'
+    # realpath is calculating the name of the folder the unit test is in so we have a list of the
+    # names of the specific failed unit tests. we 'cd' before this function is called so $(pwd) will
+    # change each invocation.
+    failed_unit_tests="${failed_unit_tests}$(realpath --relative-to=$path_to_script $(pwd)) generated an unexpected result."$'\n'
   fi
 }
 
@@ -141,13 +151,13 @@ function execute_mdi_test_cases() {
     cd ${dir}
     echo "Now testing ${dir}" # indicate which test case is being run
     # run test setup SQL against the source database
-    source_setup_results=$($absolute_path_to_script/psql-test.sh ${source_db} . -f /input/test_case_source_setup.sql)
+    source_setup_results=$($path_to_script/psql-test.sh ${source_db} . -f /input/test_case_source_setup.sql)
     # run test setup SQL against the target database
-    target_setup_results=$($absolute_path_to_script/psql-test.sh ${target_db} . -f /input/test_case_target_setup.sql)
+    target_setup_results=$($path_to_script/psql-test.sh ${target_db} . -f /input/test_case_target_setup.sql)
     # run MDI configuration
     execute_test "$process_name" "$mdi_database_username" "$mdi_controller_path" "$input_type" "$filename"
     # run SQL export from target table to actual output file
-    output_setup_results=$($absolute_path_to_script/psql-test.sh ${target_db} . -f /input/test_case_output_setup.sql)
+    output_setup_results=$($path_to_script/psql-test.sh ${target_db} . -f /input/test_case_output_setup.sql)
     # run a diff between actual output and expected output files
     output_file_diff "expected_output.csv" "actual_output.csv" "test_diff_output.diff"
     cd -
@@ -184,7 +194,8 @@ function metadata_unit_test_fail_break() {
   set -e
 }
 
-${relative_docker_dir}/docker-up.sh
+# reset docker to have a clean EDW build for running tests on (in case it was already running)
+docker_reset
 
 # EDW metadata unit tests ################################################################
 cd $absolute_metadata_test_dir
@@ -239,7 +250,7 @@ else
   echo "Proceeding with remaining unit tests..."
 fi
 
-cd $absolute_path_to_script
+cd $path_to_script
 
 # Non MDI Tests ##########################################################################
 process_name="SP6"
