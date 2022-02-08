@@ -172,6 +172,42 @@ class TestMapDataType(unittest.TestCase):
 class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
 
     def setUp(self) -> None:
+        self.wide_table_staging_columns_dict = {}
+        self.wide_table_history_columns_dict = {}
+
+        # add pid and version columns to wide_table staging and history dicts
+        self.wide_table_staging_columns_dict['wt_pid'] = {'data_type': 'INTEGER'}
+        self.wide_table_history_columns_dict['wt_pid'] = {
+            'data_type': 'INTEGER',
+            'source': {
+                'field': 'primary_source_table.columns.wt_pid'
+            }
+        }
+        self.wide_table_staging_columns_dict['wt_version'] = {'data_type': 'INTEGER'}
+        self.wide_table_history_columns_dict['wt_version'] = {
+            'data_type': 'INTEGER',
+            'source': {
+                'field': 'primary_source_table.columns.wt_version'
+            }
+        }
+
+        # add 100 columns to staging and history versions of wide_table
+        wide_table_column_counter = 1
+        while wide_table_column_counter < 101:
+            self.wide_table_staging_columns_dict['wt_column_{}'.format(wide_table_column_counter)] = {'data_type': 'TEXT'}
+            self.wide_table_history_columns_dict['wt_column_{}'.format(wide_table_column_counter)] = {
+                'data_type': 'TEXT',
+                'source': {
+                    'field': 'primary_source_table.columns.wt_column_{}'.format(wide_table_column_counter)
+                    }
+                }
+            wide_table_column_counter += 1
+
+        # add standard history_octane columns to wide_table_history_columns_dict
+        self.wide_table_history_columns_dict['data_source_updated_datetime'] = {'data_type': 'TIMESTAMPTZ'}
+        self.wide_table_history_columns_dict['data_source_deleted_flag'] = {'data_type': 'BOOLEAN'}
+        self.wide_table_history_columns_dict['etl_batch_id'] = {'data_type': 'TEXT'}
+
         self.metadata_dict = {
             'name': 'edw',
             'databases': [
@@ -253,6 +289,12 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                                             'data_type': 'TEXT'
                                         }
                                     }
+                                },
+                                {
+                                    'name': 'wide_table',
+                                    'primary_key': ['wt_pid'],
+                                    'foreign_keys': {},
+                                    'columns': self.wide_table_staging_columns_dict
                                 }
                             ]
                         }
@@ -510,6 +552,247 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
                                          "          ON staging_table.code = history_table.code\n" +
                                          "              AND staging_table.value = history_table.value\n" +
                                          "WHERE history_table.code IS NULL;"
+                        }
+                    }
+                },
+                {
+                    'name': 'wide_table',
+                    'primary_source_table': 'staging.staging_octane.wide_table',
+                    'primary_key': ['wt_pid', 'wt_version'],
+                    'foreign_keys': {},
+                    'columns': self.wide_table_history_columns_dict,
+                    'etls': {
+                        'SP-5': {
+                            'input_type': 'table',
+                            'output_type': 'insert',
+                            'json_output_field': 'wt_pid',
+                            'truncate_table': False,
+                            'container_memory': 4096,
+                            'input_sql': "--finding records to insert into history_octane.wide_table\n" +
+                                         "SELECT staging_table.wt_pid\n" +
+                                         "     , staging_table.wt_version\n" +
+                                         "     , staging_table.wt_column_1\n" +
+                                         "     , staging_table.wt_column_2\n" +
+                                         "     , staging_table.wt_column_3\n" +
+                                         "     , staging_table.wt_column_4\n" +
+                                         "     , staging_table.wt_column_5\n" +
+                                         "     , staging_table.wt_column_6\n" +
+                                         "     , staging_table.wt_column_7\n" +
+                                         "     , staging_table.wt_column_8\n" +
+                                         "     , staging_table.wt_column_9\n" +
+                                         "     , staging_table.wt_column_10\n" +
+                                         "     , staging_table.wt_column_11\n" +
+                                         "     , staging_table.wt_column_12\n" +
+                                         "     , staging_table.wt_column_13\n" +
+                                         "     , staging_table.wt_column_14\n" +
+                                         "     , staging_table.wt_column_15\n" +
+                                         "     , staging_table.wt_column_16\n" +
+                                         "     , staging_table.wt_column_17\n" +
+                                         "     , staging_table.wt_column_18\n" +
+                                         "     , staging_table.wt_column_19\n" +
+                                         "     , staging_table.wt_column_20\n" +
+                                         "     , staging_table.wt_column_21\n" +
+                                         "     , staging_table.wt_column_22\n" +
+                                         "     , staging_table.wt_column_23\n" +
+                                         "     , staging_table.wt_column_24\n" +
+                                         "     , staging_table.wt_column_25\n" +
+                                         "     , staging_table.wt_column_26\n" +
+                                         "     , staging_table.wt_column_27\n" +
+                                         "     , staging_table.wt_column_28\n" +
+                                         "     , staging_table.wt_column_29\n" +
+                                         "     , staging_table.wt_column_30\n" +
+                                         "     , staging_table.wt_column_31\n" +
+                                         "     , staging_table.wt_column_32\n" +
+                                         "     , staging_table.wt_column_33\n" +
+                                         "     , staging_table.wt_column_34\n" +
+                                         "     , staging_table.wt_column_35\n" +
+                                         "     , staging_table.wt_column_36\n" +
+                                         "     , staging_table.wt_column_37\n" +
+                                         "     , staging_table.wt_column_38\n" +
+                                         "     , staging_table.wt_column_39\n" +
+                                         "     , staging_table.wt_column_40\n" +
+                                         "     , staging_table.wt_column_41\n" +
+                                         "     , staging_table.wt_column_42\n" +
+                                         "     , staging_table.wt_column_43\n" +
+                                         "     , staging_table.wt_column_44\n" +
+                                         "     , staging_table.wt_column_45\n" +
+                                         "     , staging_table.wt_column_46\n" +
+                                         "     , staging_table.wt_column_47\n" +
+                                         "     , staging_table.wt_column_48\n" +
+                                         "     , staging_table.wt_column_49\n" +
+                                         "     , staging_table.wt_column_50\n" +
+                                         "     , staging_table.wt_column_51\n" +
+                                         "     , staging_table.wt_column_52\n" +
+                                         "     , staging_table.wt_column_53\n" +
+                                         "     , staging_table.wt_column_54\n" +
+                                         "     , staging_table.wt_column_55\n" +
+                                         "     , staging_table.wt_column_56\n" +
+                                         "     , staging_table.wt_column_57\n" +
+                                         "     , staging_table.wt_column_58\n" +
+                                         "     , staging_table.wt_column_59\n" +
+                                         "     , staging_table.wt_column_60\n" +
+                                         "     , staging_table.wt_column_61\n" +
+                                         "     , staging_table.wt_column_62\n" +
+                                         "     , staging_table.wt_column_63\n" +
+                                         "     , staging_table.wt_column_64\n" +
+                                         "     , staging_table.wt_column_65\n" +
+                                         "     , staging_table.wt_column_66\n" +
+                                         "     , staging_table.wt_column_67\n" +
+                                         "     , staging_table.wt_column_68\n" +
+                                         "     , staging_table.wt_column_69\n" +
+                                         "     , staging_table.wt_column_70\n" +
+                                         "     , staging_table.wt_column_71\n" +
+                                         "     , staging_table.wt_column_72\n" +
+                                         "     , staging_table.wt_column_73\n" +
+                                         "     , staging_table.wt_column_74\n" +
+                                         "     , staging_table.wt_column_75\n" +
+                                         "     , staging_table.wt_column_76\n" +
+                                         "     , staging_table.wt_column_77\n" +
+                                         "     , staging_table.wt_column_78\n" +
+                                         "     , staging_table.wt_column_79\n" +
+                                         "     , staging_table.wt_column_80\n" +
+                                         "     , staging_table.wt_column_81\n" +
+                                         "     , staging_table.wt_column_82\n" +
+                                         "     , staging_table.wt_column_83\n" +
+                                         "     , staging_table.wt_column_84\n" +
+                                         "     , staging_table.wt_column_85\n" +
+                                         "     , staging_table.wt_column_86\n" +
+                                         "     , staging_table.wt_column_87\n" +
+                                         "     , staging_table.wt_column_88\n" +
+                                         "     , staging_table.wt_column_89\n" +
+                                         "     , staging_table.wt_column_90\n" +
+                                         "     , staging_table.wt_column_91\n" +
+                                         "     , staging_table.wt_column_92\n" +
+                                         "     , staging_table.wt_column_93\n" +
+                                         "     , staging_table.wt_column_94\n" +
+                                         "     , staging_table.wt_column_95\n" +
+                                         "     , staging_table.wt_column_96\n" +
+                                         "     , staging_table.wt_column_97\n" +
+                                         "     , staging_table.wt_column_98\n" +
+                                         "     , staging_table.wt_column_99\n" +
+                                         "     , staging_table.wt_column_100\n" +
+                                         "     , FALSE AS data_source_deleted_flag\n" +
+                                         "     , NOW( ) AS data_source_updated_datetime\n" +
+                                         "FROM staging_octane.wide_table staging_table\n" +
+                                         "LEFT JOIN history_octane.wide_table history_table\n" +
+                                         "          ON staging_table.wt_pid = history_table.wt_pid\n" +
+                                         "              AND staging_table.wt_version = history_table.wt_version\n" +
+                                         "WHERE history_table.wt_pid IS NULL\n" +
+                                         "UNION ALL\n" +
+                                         "SELECT history_table.wt_pid\n" +
+                                         "     , history_table.wt_version + 1\n" +
+                                         "     , history_table.wt_column_1\n" +
+                                         "     , history_table.wt_column_2\n" +
+                                         "     , history_table.wt_column_3\n" +
+                                         "     , history_table.wt_column_4\n" +
+                                         "     , history_table.wt_column_5\n" +
+                                         "     , history_table.wt_column_6\n" +
+                                         "     , history_table.wt_column_7\n" +
+                                         "     , history_table.wt_column_8\n" +
+                                         "     , history_table.wt_column_9\n" +
+                                         "     , history_table.wt_column_10\n" +
+                                         "     , history_table.wt_column_11\n" +
+                                         "     , history_table.wt_column_12\n" +
+                                         "     , history_table.wt_column_13\n" +
+                                         "     , history_table.wt_column_14\n" +
+                                         "     , history_table.wt_column_15\n" +
+                                         "     , history_table.wt_column_16\n" +
+                                         "     , history_table.wt_column_17\n" +
+                                         "     , history_table.wt_column_18\n" +
+                                         "     , history_table.wt_column_19\n" +
+                                         "     , history_table.wt_column_20\n" +
+                                         "     , history_table.wt_column_21\n" +
+                                         "     , history_table.wt_column_22\n" +
+                                         "     , history_table.wt_column_23\n" +
+                                         "     , history_table.wt_column_24\n" +
+                                         "     , history_table.wt_column_25\n" +
+                                         "     , history_table.wt_column_26\n" +
+                                         "     , history_table.wt_column_27\n" +
+                                         "     , history_table.wt_column_28\n" +
+                                         "     , history_table.wt_column_29\n" +
+                                         "     , history_table.wt_column_30\n" +
+                                         "     , history_table.wt_column_31\n" +
+                                         "     , history_table.wt_column_32\n" +
+                                         "     , history_table.wt_column_33\n" +
+                                         "     , history_table.wt_column_34\n" +
+                                         "     , history_table.wt_column_35\n" +
+                                         "     , history_table.wt_column_36\n" +
+                                         "     , history_table.wt_column_37\n" +
+                                         "     , history_table.wt_column_38\n" +
+                                         "     , history_table.wt_column_39\n" +
+                                         "     , history_table.wt_column_40\n" +
+                                         "     , history_table.wt_column_41\n" +
+                                         "     , history_table.wt_column_42\n" +
+                                         "     , history_table.wt_column_43\n" +
+                                         "     , history_table.wt_column_44\n" +
+                                         "     , history_table.wt_column_45\n" +
+                                         "     , history_table.wt_column_46\n" +
+                                         "     , history_table.wt_column_47\n" +
+                                         "     , history_table.wt_column_48\n" +
+                                         "     , history_table.wt_column_49\n" +
+                                         "     , history_table.wt_column_50\n" +
+                                         "     , history_table.wt_column_51\n" +
+                                         "     , history_table.wt_column_52\n" +
+                                         "     , history_table.wt_column_53\n" +
+                                         "     , history_table.wt_column_54\n" +
+                                         "     , history_table.wt_column_55\n" +
+                                         "     , history_table.wt_column_56\n" +
+                                         "     , history_table.wt_column_57\n" +
+                                         "     , history_table.wt_column_58\n" +
+                                         "     , history_table.wt_column_59\n" +
+                                         "     , history_table.wt_column_60\n" +
+                                         "     , history_table.wt_column_61\n" +
+                                         "     , history_table.wt_column_62\n" +
+                                         "     , history_table.wt_column_63\n" +
+                                         "     , history_table.wt_column_64\n" +
+                                         "     , history_table.wt_column_65\n" +
+                                         "     , history_table.wt_column_66\n" +
+                                         "     , history_table.wt_column_67\n" +
+                                         "     , history_table.wt_column_68\n" +
+                                         "     , history_table.wt_column_69\n" +
+                                         "     , history_table.wt_column_70\n" +
+                                         "     , history_table.wt_column_71\n" +
+                                         "     , history_table.wt_column_72\n" +
+                                         "     , history_table.wt_column_73\n" +
+                                         "     , history_table.wt_column_74\n" +
+                                         "     , history_table.wt_column_75\n" +
+                                         "     , history_table.wt_column_76\n" +
+                                         "     , history_table.wt_column_77\n" +
+                                         "     , history_table.wt_column_78\n" +
+                                         "     , history_table.wt_column_79\n" +
+                                         "     , history_table.wt_column_80\n" +
+                                         "     , history_table.wt_column_81\n" +
+                                         "     , history_table.wt_column_82\n" +
+                                         "     , history_table.wt_column_83\n" +
+                                         "     , history_table.wt_column_84\n" +
+                                         "     , history_table.wt_column_85\n" +
+                                         "     , history_table.wt_column_86\n" +
+                                         "     , history_table.wt_column_87\n" +
+                                         "     , history_table.wt_column_88\n" +
+                                         "     , history_table.wt_column_89\n" +
+                                         "     , history_table.wt_column_90\n" +
+                                         "     , history_table.wt_column_91\n" +
+                                         "     , history_table.wt_column_92\n" +
+                                         "     , history_table.wt_column_93\n" +
+                                         "     , history_table.wt_column_94\n" +
+                                         "     , history_table.wt_column_95\n" +
+                                         "     , history_table.wt_column_96\n" +
+                                         "     , history_table.wt_column_97\n" +
+                                         "     , history_table.wt_column_98\n" +
+                                         "     , history_table.wt_column_99\n" +
+                                         "     , history_table.wt_column_100\n" +
+                                         "     , TRUE AS data_source_deleted_flag\n" +
+                                         "     , NOW( ) AS data_source_updated_datetime\n" +
+                                         "FROM history_octane.wide_table history_table\n" +
+                                         "LEFT JOIN staging_octane.wide_table staging_table\n" +
+                                         "          ON staging_table.wt_pid = history_table.wt_pid\n" +
+                                         "WHERE staging_table.wt_pid IS NULL\n" +
+                                         "  AND NOT EXISTS(\n" +
+                                         "    SELECT 1\n" +
+                                         "    FROM history_octane.wide_table deleted_records\n" +
+                                         "    WHERE deleted_records.wt_pid = history_table.wt_pid\n" +
+                                         "      AND deleted_records.data_source_deleted_flag = TRUE\n" +
+                                         "    );"
                         }
                     }
                 }

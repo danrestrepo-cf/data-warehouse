@@ -191,7 +191,7 @@ class ETLMetadata:
     truncate_table: Optional[bool] = None
     insert_update_keys: Optional[List[str]] = None
     delete_keys: Optional[List[str]] = None
-    container_memory: Optional[int] = None
+    container_memory: int = None
     input_sql: Optional[str] = None
 
 
