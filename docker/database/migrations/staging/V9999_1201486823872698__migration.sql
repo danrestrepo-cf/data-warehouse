@@ -1,0 +1,4 @@
+--
+-- EDW | star_loan - improve loan_lender_user_access delete query run times
+-- https://app.asana.com/0/0/1201486823872698
+--
