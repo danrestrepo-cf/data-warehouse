@@ -69,6 +69,7 @@ etls:
     output_type: insert
     json_output_field: luip_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.lender_user_allowed_ip
       SELECT staging_table.luip_pid

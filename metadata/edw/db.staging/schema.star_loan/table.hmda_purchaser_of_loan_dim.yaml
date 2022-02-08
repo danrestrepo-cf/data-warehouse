@@ -55,6 +55,7 @@ etls:
     json_output_field: data_source_integration_id
     insert_update_keys:
       - data_source_integration_id
+    container_memory: 2048
     input_sql: |-
       SELECT hmda_purchaser_of_loan_dim_new_records.data_source_integration_columns
            , hmda_purchaser_of_loan_dim_new_records.data_source_integration_id

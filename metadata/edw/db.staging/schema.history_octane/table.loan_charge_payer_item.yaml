@@ -89,6 +89,7 @@ etls:
     output_type: insert
     json_output_field: lcpi_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.loan_charge_payer_item
       SELECT staging_table.lcpi_pid

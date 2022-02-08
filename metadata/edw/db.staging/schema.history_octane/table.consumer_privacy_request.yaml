@@ -149,6 +149,7 @@ etls:
     output_type: insert
     json_output_field: cpr_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.consumer_privacy_request
       SELECT staging_table.cpr_pid

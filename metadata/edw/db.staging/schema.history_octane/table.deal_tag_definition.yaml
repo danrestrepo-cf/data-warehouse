@@ -65,6 +65,7 @@ etls:
     output_type: insert
     json_output_field: dtd_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.deal_tag_definition
       SELECT staging_table.dtd_pid

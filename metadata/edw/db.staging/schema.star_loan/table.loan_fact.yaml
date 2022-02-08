@@ -1160,6 +1160,7 @@ etls:
     json_output_field: data_source_integration_id
     insert_update_keys:
       - data_source_integration_id
+    container_memory: 4096
     input_sql: |-
       SELECT loan_fact_incl_new_records.edw_created_datetime
           , loan_fact_incl_new_records.edw_modified_datetime
@@ -2893,6 +2894,7 @@ etls:
     json_output_field: loan_dwid
     delete_keys:
       - loan_dwid
+    container_memory: 2048
     input_sql: |-
       /*
       First half of UNION ALL query returns the following:

@@ -113,6 +113,7 @@ etls:
     output_type: insert
     json_output_field: carr_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.compass_analytics_report_request
       SELECT staging_table.carr_pid

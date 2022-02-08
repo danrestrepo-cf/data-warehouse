@@ -52,6 +52,7 @@ etls:
     output_type: insert
     json_output_field: ht_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.hoepa_thresholds
       SELECT staging_table.ht_pid

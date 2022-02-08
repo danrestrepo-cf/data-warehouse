@@ -23,6 +23,7 @@ etls:
     output_type: insert
     json_output_field: code
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.loan_purpose_type
       SELECT staging_table.code

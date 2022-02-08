@@ -61,6 +61,7 @@ etls:
     output_type: insert
     json_output_field: wfsnc_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.wf_step_note_comment
       SELECT staging_table.wfsnc_pid

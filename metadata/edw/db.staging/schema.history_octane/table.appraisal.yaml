@@ -561,6 +561,7 @@ etls:
     output_type: insert
     json_output_field: apr_pid
     truncate_table: false
+    container_memory: 4096
     input_sql: |-
       --finding records to insert into history_octane.appraisal
       SELECT staging_table.apr_pid

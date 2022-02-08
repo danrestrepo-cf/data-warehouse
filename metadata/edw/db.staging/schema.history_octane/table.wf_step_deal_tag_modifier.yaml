@@ -53,6 +53,7 @@ etls:
     output_type: insert
     json_output_field: wsdt_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.wf_step_deal_tag_modifier
       SELECT staging_table.wsdt_pid

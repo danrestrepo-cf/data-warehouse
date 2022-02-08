@@ -49,6 +49,7 @@ etls:
     output_type: insert
     json_output_field: dsf_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.deal_system_file
       SELECT staging_table.dsf_pid

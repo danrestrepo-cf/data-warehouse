@@ -477,6 +477,7 @@ etls:
     output_type: insert
     json_output_field: ttr_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.tax_transcript_request
       SELECT staging_table.ttr_pid

@@ -53,6 +53,7 @@ etls:
     output_type: insert
     json_output_field: pa_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.performer_assignment
       SELECT staging_table.pa_pid

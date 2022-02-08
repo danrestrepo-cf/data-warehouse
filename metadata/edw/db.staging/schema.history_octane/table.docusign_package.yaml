@@ -57,6 +57,7 @@ etls:
     output_type: insert
     json_output_field: dcsp_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.docusign_package
       SELECT staging_table.dcsp_pid

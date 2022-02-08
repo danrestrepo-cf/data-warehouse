@@ -53,6 +53,7 @@ etls:
     output_type: insert
     json_output_field: brae_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.branch_account_executive
       SELECT staging_table.brae_pid

@@ -49,6 +49,7 @@ etls:
     output_type: insert
     json_output_field: rlot_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.role_loans_toolbox
       SELECT staging_table.rlot_pid

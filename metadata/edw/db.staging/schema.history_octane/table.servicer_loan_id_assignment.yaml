@@ -81,6 +81,7 @@ etls:
     output_type: insert
     json_output_field: slia_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.servicer_loan_id_assignment
       SELECT staging_table.slia_pid

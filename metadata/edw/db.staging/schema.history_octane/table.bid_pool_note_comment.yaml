@@ -61,6 +61,7 @@ etls:
     output_type: insert
     json_output_field: bpnc_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.bid_pool_note_comment
       SELECT staging_table.bpnc_pid

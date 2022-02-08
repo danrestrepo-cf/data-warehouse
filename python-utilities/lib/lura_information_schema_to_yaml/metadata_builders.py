@@ -180,6 +180,10 @@ def generate_history_octane_metadata(metadata: DataWarehouseMetadata, table_to_p
             process_name = f'SP-{current_max_process_number + 1}'
             next_processes = []
             current_max_process_number += 1
+        if len(history_table.columns) < 100:
+            container_memory = 2048
+        else:
+            container_memory = 4096
         history_etl = ETLMetadata(
             process_name=process_name,
             hardcoded_data_source=None,
@@ -187,6 +191,7 @@ def generate_history_octane_metadata(metadata: DataWarehouseMetadata, table_to_p
             output_type=ETLOutputType.INSERT,
             json_output_field=staging_table.primary_key[0],
             truncate_table=False,
+            container_memory=container_memory,
             input_sql=generate_history_octane_table_input_sql(staging_table)
         )
         history_table.add_etl(history_etl)

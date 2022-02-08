@@ -45,6 +45,7 @@ etls:
     output_type: insert
     json_output_field: scgc_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.smart_charge_group_case
       SELECT staging_table.scgc_pid

@@ -34,6 +34,7 @@ etls:
     hardcoded_data_source: Octane
     json_output_field: loan_dwid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       SELECT NOW( ) AS edw_created_datetime
            , NOW( ) AS edw_modified_datetime
@@ -140,6 +141,7 @@ etls:
       - octane_username
       - loan_dwid
       - account_pid
+    container_memory: 2048
     input_sql: |-
       SELECT loan_lender_user_access.dwid
            , distinct_username_deal_pairs.lu_username AS octane_username

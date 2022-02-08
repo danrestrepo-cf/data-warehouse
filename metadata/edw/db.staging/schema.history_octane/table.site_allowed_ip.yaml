@@ -45,6 +45,7 @@ etls:
     output_type: insert
     json_output_field: saip_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.site_allowed_ip
       SELECT staging_table.saip_pid

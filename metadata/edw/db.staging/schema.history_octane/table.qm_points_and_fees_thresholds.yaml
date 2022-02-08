@@ -64,6 +64,7 @@ etls:
     output_type: insert
     json_output_field: qmpaft_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.qm_points_and_fees_thresholds
       SELECT staging_table.qmpaft_pid
