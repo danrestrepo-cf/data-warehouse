@@ -115,11 +115,11 @@ function docker_reset() {
 function process_previous_diffs() {
   process_name="$1"
   echo "Now checking for diff files from previous runs..."
-  previous_diff_results=$(find ./"$1"/ -name 'test_diff_output.diff' -type f) # print .diff files from previous runs
+  previous_diff_results=$(find ${path_to_script}/"$1"/ -name 'test_diff_output.diff' -type f) # print .diff files from previous runs
   if [[ -n "$previous_diff_results" ]]; then
     echo "Removing previous diff results:"
     echo "$previous_diff_results"
-    find ./"$1"/ -name 'test_diff_output.diff' -type f -delete
+    find ${path_to_script}/"$1"/ -name 'test_diff_output.diff' -type f -delete
   else
     echo "No previous diff files detected"
   fi
@@ -149,15 +149,13 @@ function execute_mdi_test_cases() {
   filename="$4"
   source_db="$5"
   target_db="$6"
-  current_working_directory=$(pwd)
-  cd $path_to_script
   process_previous_diffs "$process_name"
   echo
   echo "Proceeding with ${process_name} test cases"
-  for dir in ${process_name}/*; do
+  for dir in ${path_to_script}/${process_name}/*; do
     echo "Now resetting Docker..."
     docker_reset # reset docker
-    cd ${dir}
+    cd "${dir}"
     echo "Now testing ${dir}" # indicate which test case is being run
     # run test setup SQL against the source database
     source_setup_results=$(${path_to_script}/psql-test.sh ${source_db} . -f /input/test_case_source_setup.sql)
@@ -171,7 +169,6 @@ function execute_mdi_test_cases() {
     output_file_diff "expected_output.csv" "actual_output.csv" "test_diff_output.diff"
     cd -
   done
-  cd $current_working_directory
 }
 
 # function to run an EDW metadata test case
@@ -267,7 +264,6 @@ sp6_job_path="encompass/import/SP6/full_encompass_etl"
 echo Now testing ${process_name}
 cd $path_to_script/${process_name}
 execute_test ${process_name} ${database_username} ${sp6_job_path} "file" "Encompass.csv"
-cd -
 
 # MDI Test Cases #########################################################################
 database_username="mditest"
