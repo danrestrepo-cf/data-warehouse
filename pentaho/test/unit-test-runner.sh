@@ -2,18 +2,21 @@
 
 export MSYS_NO_PATHCONV=1
 
-# calculate the absolute directory to the root of the data-warehouse repository assuming this script is
-# located in the /data-warehouse/pentaho/test directory
-path_to_repo_root=$(realpath "$(dirname "$0")/../../")
-# we change directory within this script, so need the absolute path for relative references
-path_to_script="$path_to_repo_root/pentaho/test/"
-# absolute path to docker, used to trigger docker itself which isn't so picky
-absolute_test_dir="$path_to_repo_root/docker/pentaho"
-# absolute path to metadata unit tests
-absolute_metadata_test_dir="$path_to_repo_root/scripts/edw_metadata_unit_tests"
-
 #set the script to fail on any errors
 set -e
+
+# absolute path to the root of the data-warehouse repository assuming this script is
+# located in the /data-warehouse/pentaho/test directory
+path_to_repo_root=$(realpath "$(dirname "$0")/../../")
+
+# absolute path to the folder the script should be called from
+path_to_script="$path_to_repo_root/pentaho/test/"
+
+# absolute path to the folder to test.sh (launches a pentaho ETL container)
+absolute_test_dir="$path_to_repo_root/docker/pentaho"
+
+# absolute path to metadata unit tests
+absolute_metadata_test_dir="$path_to_repo_root/scripts/edw_metadata_unit_tests"
 
 #
 # regex explanation
@@ -33,6 +36,8 @@ function execute_test() {
   # set current working directory to the folder with test.sh in it
   echo "Command for manual execution:  ${absolute_test_dir}/test.sh test \"$1\" \"$2\" \"$3\" \"$4\" \"$5\"
    | grep \"$grep_statement\""
+
+  # let the script fail so we can capture errors in unit tests
   set +e
   results=$(${absolute_test_dir}/test.sh test "$1" "$2" "$3" "$4" "$5")
   # store test.sh exit code for evaluation
@@ -47,6 +52,8 @@ function execute_test() {
     echo "test.sh FAILED!!!"
   fi
   echo "$results" | grep -o "$grep_statement" # need to quote $results so work splitting doesn't occur
+
+  # set the script to exit on error now that we're done running a unit test
   set -e
   echo " "
 }
