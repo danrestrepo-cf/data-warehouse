@@ -37,7 +37,7 @@ function execute_test() {
   echo "Command for manual execution:  ${absolute_test_dir}/test.sh test \"$1\" \"$2\" \"$3\" \"$4\" \"$5\"
    | grep \"$grep_statement\""
 
-  # let the script fail so we can capture errors in unit tests
+  # let the script fail without exiting so we can capture errors in unit tests
   set +e
   results=$(${absolute_test_dir}/test.sh test "$1" "$2" "$3" "$4" "$5")
   # store test.sh exit code for evaluation
@@ -113,6 +113,7 @@ function docker_reset() {
 
 # function to detect, print, and remove previous diff files
 function process_previous_diffs() {
+  cd $path_to_script
   process_name="$1"
   echo "Now checking for diff files from previous runs..."
   previous_diff_results=$(find ./"$1"/ -name 'test_diff_output.diff' -type f) # print .diff files from previous runs
@@ -123,6 +124,7 @@ function process_previous_diffs() {
   else
     echo "No previous diff files detected"
   fi
+  cd -
 }
 
 # function to output a diff between expected output and actual output for MDI test cases
@@ -149,6 +151,8 @@ function execute_mdi_test_cases() {
   filename="$4"
   source_db="$5"
   target_db="$6"
+  current_working_directory=$(pwd)
+  cd $path_to_script
   process_previous_diffs "$process_name"
   echo
   echo "Proceeding with ${process_name} test cases"
@@ -158,17 +162,18 @@ function execute_mdi_test_cases() {
     cd ${dir}
     echo "Now testing ${dir}" # indicate which test case is being run
     # run test setup SQL against the source database
-    source_setup_results=$($path_to_script/psql-test.sh ${source_db} . -f /input/test_case_source_setup.sql)
+    source_setup_results=$(${path_to_script}/psql-test.sh ${source_db} . -f /input/test_case_source_setup.sql)
     # run test setup SQL against the target database
-    target_setup_results=$($path_to_script/psql-test.sh ${target_db} . -f /input/test_case_target_setup.sql)
+    target_setup_results=$(${path_to_script}/psql-test.sh ${target_db} . -f /input/test_case_target_setup.sql)
     # run MDI configuration
     execute_test "$process_name" "$mdi_database_username" "$mdi_controller_path" "$input_type" "$filename"
     # run SQL export from target table to actual output file
-    output_setup_results=$($path_to_script/psql-test.sh ${target_db} . -f /input/test_case_output_setup.sql)
+    output_setup_results=$(${path_to_script}/psql-test.sh ${target_db} . -f /input/test_case_output_setup.sql)
     # run a diff between actual output and expected output files
     output_file_diff "expected_output.csv" "actual_output.csv" "test_diff_output.diff"
     cd -
   done
+  cd $current_working_directory
 }
 
 # function to run an EDW metadata test case
@@ -257,16 +262,14 @@ else
   echo "Proceeding with remaining unit tests..."
 fi
 
-cd $path_to_script
-
-# Non MDI Tests ##########################################################################
-process_name="SP6"
-database_username="encompass_sp6"
-sp6_job_path="encompass/import/SP6/full_encompass_etl"
-echo Now testing ${process_name}
-cd ${process_name}
-execute_test ${process_name} ${database_username} ${sp6_job_path} "file" "Encompass.csv"
-cd -
+## Non MDI Tests ##########################################################################
+#process_name="SP6"
+#database_username="encompass_sp6"
+#sp6_job_path="encompass/import/SP6/full_encompass_etl"
+#echo Now testing ${process_name}
+#cd $path_to_script/${process_name}
+#execute_test ${process_name} ${database_username} ${sp6_job_path} "file" "Encompass.csv"
+#cd -
 
 # MDI Test Cases #########################################################################
 database_username="mditest"
