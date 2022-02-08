@@ -113,7 +113,6 @@ function docker_reset() {
 
 # function to detect, print, and remove previous diff files
 function process_previous_diffs() {
-  cd $path_to_script
   process_name="$1"
   echo "Now checking for diff files from previous runs..."
   previous_diff_results=$(find ./"$1"/ -name 'test_diff_output.diff' -type f) # print .diff files from previous runs
@@ -124,7 +123,6 @@ function process_previous_diffs() {
   else
     echo "No previous diff files detected"
   fi
-  cd -
 }
 
 # function to output a diff between expected output and actual output for MDI test cases
