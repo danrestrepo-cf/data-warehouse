@@ -164,7 +164,6 @@ function execute_mdi_test_cases() {
     output_setup_results=$(${path_to_test_dir}/psql-test.sh ${target_db} . -f /input/test_case_output_setup.sql)
     # run a diff between actual output and expected output files
     output_file_diff "expected_output.csv" "actual_output.csv" "test_diff_output.diff"
-    cd -
   done
 }
 
