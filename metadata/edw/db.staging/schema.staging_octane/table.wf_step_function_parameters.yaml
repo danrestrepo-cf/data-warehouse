@@ -1,0 +1,31 @@
+name: wf_step_function_parameters
+primary_key:
+- wsfp_pid
+foreign_keys:
+  fk_wf_step_function_parameters_1:
+    columns:
+    - wsfp_wf_step_pid
+    references:
+      columns:
+      - ws_pid
+      schema: staging_octane
+      table: wf_step
+  fkt_wsfp_proposal_review_status_type:
+    columns:
+    - wsfp_proposal_review_status_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: proposal_review_status_type
+columns:
+  wsfp_pid:
+    data_type: BIGINT
+  wsfp_proposal_review_id:
+    data_type: INTEGER
+  wsfp_proposal_review_status_type:
+    data_type: VARCHAR(128)
+  wsfp_version:
+    data_type: INTEGER
+  wsfp_wf_step_pid:
+    data_type: BIGINT

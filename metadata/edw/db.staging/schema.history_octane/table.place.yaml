@@ -1193,6 +1193,10 @@ columns:
     data_type: DATE
     source:
       field: primary_source_table.columns.pl_va_loan_date
+  pl_verified_geocode:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.pl_verified_geocode
   pl_version:
     data_type: INTEGER
     source:
@@ -1432,6 +1436,7 @@ etls:
            , staging_table.pl_seller_acquired_date_verified
            , staging_table.pl_seller_original_cost_amount_verified
            , staging_table.pl_snapshotted_pid
+           , staging_table.pl_verified_geocode
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.place staging_table
@@ -1654,6 +1659,7 @@ etls:
            , history_table.pl_seller_acquired_date_verified
            , history_table.pl_seller_original_cost_amount_verified
            , history_table.pl_snapshotted_pid
+           , history_table.pl_verified_geocode
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.place history_table
