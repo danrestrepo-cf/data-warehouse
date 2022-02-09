@@ -61,6 +61,7 @@ etls:
     output_type: insert
     json_output_field: po_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.product_originator
       SELECT staging_table.po_pid

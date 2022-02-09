@@ -461,6 +461,7 @@ etls:
     output_type: insert
     json_output_field: crdr_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.credit_request
       SELECT staging_table.crdr_pid

@@ -45,6 +45,7 @@ etls:
     output_type: insert
     json_output_field: lmra_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.loan_mi_rate_adjustment
       SELECT staging_table.lmra_pid

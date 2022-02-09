@@ -131,6 +131,7 @@ etls:
     output_type: insert
     json_output_field: sdvdc_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.smart_doc_validity_date_case
       SELECT staging_table.sdvdc_pid

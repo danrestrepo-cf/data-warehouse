@@ -677,6 +677,7 @@ etls:
     output_type: insert
     json_output_field: dkrs_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.deal_key_roles
       SELECT staging_table.dkrs_pid

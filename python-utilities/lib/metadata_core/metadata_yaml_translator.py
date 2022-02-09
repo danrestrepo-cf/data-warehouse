@@ -245,6 +245,7 @@ def construct_data_warehouse_metadata_from_dict(data_warehouse_dict: dict) -> Da
                                         'truncate_table': False,
                                         'insert_update_keys': ['col1', 'col2'],
                                         'delete_keys': ['col2', 'col3'],
+                                        'container_memory': 2048
                                         'input_sql': 'SQL for SP-1'
                                     }
                                 },
@@ -345,6 +346,7 @@ class DictToMetadataBuilder:
                     truncate_table=etl_data.get('truncate_table'),
                     insert_update_keys=etl_data.get('insert_update_keys'),
                     delete_keys=etl_data.get('delete_keys'),
+                    container_memory=etl_data.get('container_memory'),
                     input_sql=etl_data.get('input_sql')
                 ))
         if 'next_etls' in table_dict:
@@ -613,6 +615,7 @@ class MetadataWriter:
                 'truncate_table': etl.truncate_table,
                 'insert_update_keys': etl.insert_update_keys,
                 'delete_keys': etl.delete_keys,
+                'container_memory': etl.container_memory,
                 'input_sql': etl.input_sql
             } for etl in table_metadata.etls},
             'next_etls': table_metadata.next_etls

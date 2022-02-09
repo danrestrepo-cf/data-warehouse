@@ -57,6 +57,7 @@ etls:
     output_type: insert
     json_output_field: brlc_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.branch_license_contact
       SELECT staging_table.brlc_pid

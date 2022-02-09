@@ -49,6 +49,7 @@ etls:
     output_type: insert
     json_output_field: ptpp_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.product_third_party_community_second_program
       SELECT staging_table.ptpp_pid

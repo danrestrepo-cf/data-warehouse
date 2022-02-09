@@ -105,6 +105,7 @@ etls:
     output_type: insert
     json_output_field: durc_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.du_request_credit
       SELECT staging_table.durc_pid

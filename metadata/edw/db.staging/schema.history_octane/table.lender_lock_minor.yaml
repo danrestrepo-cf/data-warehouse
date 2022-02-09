@@ -305,6 +305,7 @@ etls:
     output_type: insert
     json_output_field: llmn_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.lender_lock_minor
       SELECT staging_table.llmn_pid

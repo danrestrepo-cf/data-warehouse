@@ -929,6 +929,7 @@ etls:
     output_type: insert
     json_output_field: ps_pid
     truncate_table: false
+    container_memory: 4096
     input_sql: |-
       --finding records to insert into history_octane.proposal_summary
       SELECT staging_table.ps_pid

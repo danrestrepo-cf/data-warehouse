@@ -45,6 +45,7 @@ etls:
     output_type: insert
     json_output_field: rc_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.recording_city
       SELECT staging_table.rc_pid

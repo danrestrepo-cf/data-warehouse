@@ -1215,6 +1215,7 @@ etls:
     output_type: insert
     json_output_field: pl_pid
     truncate_table: false
+    container_memory: 4096
     input_sql: |-
       --finding records to insert into history_octane.place
       SELECT staging_table.pl_pid

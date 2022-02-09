@@ -81,6 +81,7 @@ etls:
     output_type: insert
     json_output_field: rcp_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.role_charge_permissions
       SELECT staging_table.rcp_pid

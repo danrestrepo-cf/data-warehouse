@@ -65,6 +65,7 @@ etls:
     output_type: insert
     json_output_field: mrir_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.minimum_required_residual_income_row
       SELECT staging_table.mrir_pid

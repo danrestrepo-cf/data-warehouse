@@ -49,6 +49,7 @@ etls:
     output_type: insert
     json_output_field: lolu_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.loan_org_lineage_update
       SELECT staging_table.lolu_pid

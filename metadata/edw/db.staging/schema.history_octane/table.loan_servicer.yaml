@@ -125,6 +125,7 @@ etls:
     output_type: insert
     json_output_field: lsv_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.loan_servicer
       SELECT staging_table.lsv_pid

@@ -145,6 +145,7 @@ etls:
     output_type: insert
     json_output_field: bi_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.borrower_income
       SELECT staging_table.bi_pid

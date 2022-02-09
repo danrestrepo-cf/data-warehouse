@@ -109,6 +109,7 @@ etls:
     output_type: insert
     json_output_field: lbk_pid
     truncate_table: false
+    container_memory: 2048
     input_sql: |-
       --finding records to insert into history_octane.ledger_book
       SELECT staging_table.lbk_pid
