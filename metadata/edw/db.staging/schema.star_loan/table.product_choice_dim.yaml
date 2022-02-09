@@ -8,7 +8,7 @@ columns:
     update_flag: false
   data_source_dwid:
     data_type: BIGINT
-    update_flag: true
+    update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
     update_flag: false
@@ -36,7 +36,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_aus_type
-    update_flag: true
+    update_flag: false
   buydown_schedule:
     data_type: VARCHAR(1024)
     source:
@@ -46,7 +46,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_buydown_schedule_type
-    update_flag: true
+    update_flag: false
   interest_only:
     data_type: VARCHAR(1024)
     source:
@@ -56,7 +56,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_interest_only_type
-    update_flag: true
+    update_flag: false
   mortgage_type:
     data_type: VARCHAR(1024)
     source:
@@ -66,7 +66,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_mortgage_type
-    update_flag: true
+    update_flag: false
   prepay_penalty_schedule:
     data_type: VARCHAR(1024)
     source:
@@ -76,7 +76,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_prepay_penalty_schedule_type
-    update_flag: true
+    update_flag: false
 etls:
   SP-200016:
     input_type: table
@@ -87,35 +87,13 @@ etls:
       - data_source_integration_id
     container_memory: 2048
     input_sql: |-
-      SELECT product_choice_dim_new_records.data_source_integration_columns
-           , product_choice_dim_new_records.data_source_integration_id
-           , product_choice_dim_new_records.edw_created_datetime
-           , product_choice_dim_new_records.edw_modified_datetime
-           , product_choice_dim_new_records.data_source_modified_datetime
-           , product_choice_dim_new_records.aus
-           , product_choice_dim_new_records.buydown_schedule
-           , product_choice_dim_new_records.interest_only
-           , product_choice_dim_new_records.aus_code
-           , product_choice_dim_new_records.prepay_penalty_schedule_code
-           , product_choice_dim_new_records.buydown_schedule_code
-           , product_choice_dim_new_records.interest_only_code
-           , product_choice_dim_new_records.mortgage_type_code
-           , product_choice_dim_new_records.mortgage_type
-           , product_choice_dim_new_records.prepay_penalty_schedule
-      FROM (
-          SELECT 'aus' || '~' || 'buydown_schedule' || '~' || 'interest_only' || '~' || 'aus_code' || '~' || 'prepay_penalty_schedule_code' ||
-                 '~' || 'buydown_schedule_code' || '~' || 'interest_only_code' || '~' || 'mortgage_type_code' || '~' || 'mortgage_type' || '~' ||
-                 'prepay_penalty_schedule' || '~' || 'data_source_dwid' AS data_source_integration_columns
-               , COALESCE( CAST( t459.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t461.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t466.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( primary_table.l_aus_type AS TEXT ), '<NULL>' ) || '~' ||
+      WITH product_choice_dim_new_records AS (
+          SELECT 'aus_code~prepay_penalty_schedule_code~buydown_schedule_code~interest_only_code~mortgage_type_code~data_source_dwid' AS data_source_integration_columns
+               , COALESCE( CAST( primary_table.l_aus_type AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( primary_table.l_prepay_penalty_schedule_type AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( primary_table.l_buydown_schedule_type AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( primary_table.l_interest_only_type AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( primary_table.l_mortgage_type AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t479.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t480.value AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) AS data_source_integration_id
                , NOW( ) AS edw_created_datetime
                , NOW( ) AS edw_modified_datetime
@@ -130,6 +108,8 @@ etls:
                , primary_table.l_mortgage_type AS mortgage_type_code
                , t479.value AS mortgage_type
                , t480.value AS prepay_penalty_schedule
+               , MAX( GREATEST( t459.etl_end_date_time, t461.etl_end_date_time, t466.etl_end_date_time, t479.etl_end_date_time,
+                                t480.etl_end_date_time ) ) AS max_source_etl_end_date_time
           FROM (
               SELECT <<loan_partial_load_condition>> AS include_record
                    , loan.*
@@ -139,72 +119,82 @@ etls:
                             AND loan.data_source_updated_datetime < history_records.data_source_updated_datetime
               WHERE history_records.l_pid IS NULL
           ) AS primary_table
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<aus_type_partial_load_condition>> AS include_record
                        , aus_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.aus_type
                   LEFT JOIN history_octane.aus_type AS history_records
                             ON aus_type.code = history_records.code
                                 AND aus_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON aus_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t459
                      ON primary_table.l_aus_type = t459.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<buydown_schedule_type_partial_load_condition>> AS include_record
                        , buydown_schedule_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.buydown_schedule_type
                   LEFT JOIN history_octane.buydown_schedule_type AS history_records
                             ON buydown_schedule_type.code = history_records.code
                                 AND buydown_schedule_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON buydown_schedule_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t461
                      ON primary_table.l_buydown_schedule_type = t461.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<interest_only_type_partial_load_condition>> AS include_record
                        , interest_only_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.interest_only_type
                   LEFT JOIN history_octane.interest_only_type AS history_records
                             ON interest_only_type.code = history_records.code
                                 AND interest_only_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON interest_only_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t466
                      ON primary_table.l_interest_only_type = t466.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<mortgage_type_partial_load_condition>> AS include_record
                        , mortgage_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.mortgage_type
                   LEFT JOIN history_octane.mortgage_type AS history_records
                             ON mortgage_type.code = history_records.code
                                 AND mortgage_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON mortgage_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t479
                      ON primary_table.l_mortgage_type = t479.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<prepay_penalty_schedule_type_partial_load_condition>> AS include_record
                        , prepay_penalty_schedule_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.prepay_penalty_schedule_type
                   LEFT JOIN history_octane.prepay_penalty_schedule_type AS history_records
                             ON prepay_penalty_schedule_type.code = history_records.code
                                 AND prepay_penalty_schedule_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON prepay_penalty_schedule_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t480
@@ -214,10 +204,24 @@ etls:
           GROUP BY t459.value, t461.value, t466.value, primary_table.l_aus_type, primary_table.l_prepay_penalty_schedule_type
                  , primary_table.l_buydown_schedule_type, primary_table.l_interest_only_type, primary_table.l_mortgage_type, t479.value
                  , t480.value
-      ) AS product_choice_dim_new_records
+      )
+      --new records that should be inserted
+      SELECT product_choice_dim_new_records.*
+      FROM product_choice_dim_new_records
       LEFT JOIN star_loan.product_choice_dim
-                ON product_choice_dim.data_source_integration_id = product_choice_dim_new_records.data_source_integration_id
+                ON product_choice_dim_new_records.data_source_integration_id = product_choice_dim.data_source_integration_id
       WHERE product_choice_dim.dwid IS NULL
-      ;
+      UNION ALL
+      --existing records that need to be updated
+      SELECT product_choice_dim_new_records.*
+      FROM product_choice_dim_new_records
+      JOIN (
+          SELECT product_choice_dim.data_source_integration_id, etl_log.etl_start_date_time
+          FROM star_loan.product_choice_dim
+          JOIN star_common.etl_log
+               ON product_choice_dim.etl_batch_id = etl_log.etl_batch_id
+      ) AS product_choice_dim_etl_start_times
+           ON product_choice_dim_new_records.data_source_integration_id = product_choice_dim_etl_start_times.data_source_integration_id
+               AND product_choice_dim_new_records.max_source_etl_end_date_time >= product_choice_dim_etl_start_times.etl_start_date_time;
 next_etls:
   - SP-300001-insert-update

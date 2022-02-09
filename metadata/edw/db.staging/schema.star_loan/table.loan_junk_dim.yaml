@@ -8,7 +8,7 @@ columns:
     update_flag: false
   data_source_dwid:
     data_type: BIGINT
-    update_flag: true
+    update_flag: false
   edw_created_datetime:
     data_type: TIMESTAMPTZ
     update_flag: false
@@ -36,7 +36,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_buydown_contributor_type
-    update_flag: true
+    update_flag: false
   fha_program:
     data_type: VARCHAR(1024)
     source:
@@ -46,7 +46,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_fha_program_code_type
-    update_flag: true
+    update_flag: false
   hmda_hoepa_status:
     data_type: VARCHAR(1024)
     source:
@@ -56,32 +56,32 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_hmda_hoepa_status_type
-    update_flag: true
+    update_flag: false
   durp_eligibility_opt_out_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.l_durp_eligibility_opt_out
-    update_flag: true
+    update_flag: false
   fha_principal_write_down_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.l_fha_principal_write_down
-    update_flag: true
+    update_flag: false
   hpml_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.l_hpml
-    update_flag: true
+    update_flag: false
   lender_concession_candidate_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.l_lender_concession_candidate
-    update_flag: true
+    update_flag: false
   mi_required_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.foreign_keys.fk_loan_1.columns.prp_mi_required
-    update_flag: true
+    update_flag: false
   piggyback_flag:
     data_type: BOOLEAN
     source:
@@ -94,27 +94,27 @@ columns:
         using:
           - primary_source_table.columns.l_lien_priority_type
           - primary_source_table.foreign_keys.fk_loan_1.columns.prp_structure_type
-    update_flag: true
+    update_flag: false
   qm_eligible_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.l_qm_eligible
-    update_flag: true
+    update_flag: false
   qualified_mortgage_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.l_qualified_mortgage
-    update_flag: true
+    update_flag: false
   secondary_clear_to_commit_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.l_secondary_clear_to_commit
-    update_flag: true
+    update_flag: false
   student_loan_cash_out_refinance_flag:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.l_student_loan_cash_out_refinance
-    update_flag: true
+    update_flag: false
   lien_priority:
     data_type: VARCHAR(1024)
     source:
@@ -124,7 +124,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_lien_priority_type
-    update_flag: true
+    update_flag: false
   lqa_purchase_eligibility:
     data_type: VARCHAR(1024)
     source:
@@ -134,7 +134,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_lqa_purchase_eligibility_type
-    update_flag: true
+    update_flag: false
   qualified_mortgage_status:
     data_type: VARCHAR(1024)
     source:
@@ -144,7 +144,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_qualified_mortgage_status_type
-    update_flag: true
+    update_flag: false
   qualifying_rate:
     data_type: VARCHAR(1024)
     source:
@@ -154,7 +154,7 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_qualifying_rate_type
-    update_flag: true
+    update_flag: false
   texas_equity:
     data_type: VARCHAR(1024)
     source:
@@ -169,12 +169,12 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_texas_equity_auto
-    update_flag: true
+    update_flag: false
   texas_equity_code:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.l_texas_equity
-    update_flag: true
+    update_flag: false
 etls:
   SP-200014:
     input_type: table
@@ -185,56 +185,9 @@ etls:
       - data_source_integration_id
     container_memory: 2048
     input_sql: |-
-      SELECT loan_junk_dim_new_records.data_source_integration_columns
-           , loan_junk_dim_new_records.data_source_integration_id
-           , loan_junk_dim_new_records.edw_created_datetime
-           , loan_junk_dim_new_records.edw_modified_datetime
-           , loan_junk_dim_new_records.data_source_modified_datetime
-           , loan_junk_dim_new_records.buydown_contributor
-           , loan_junk_dim_new_records.fha_program
-           , loan_junk_dim_new_records.hmda_hoepa_status
-           , loan_junk_dim_new_records.lien_priority
-           , loan_junk_dim_new_records.lender_concession_candidate_flag
-           , loan_junk_dim_new_records.durp_eligibility_opt_out_flag
-           , loan_junk_dim_new_records.qualified_mortgage_status_code
-           , loan_junk_dim_new_records.qualified_mortgage_flag
-           , loan_junk_dim_new_records.lqa_purchase_eligibility_code
-           , loan_junk_dim_new_records.student_loan_cash_out_refinance_flag
-           , loan_junk_dim_new_records.secondary_clear_to_commit_flag
-           , loan_junk_dim_new_records.qm_eligible_flag
-           , loan_junk_dim_new_records.hpml_flag
-           , loan_junk_dim_new_records.lien_priority_code
-           , loan_junk_dim_new_records.buydown_contributor_code
-           , loan_junk_dim_new_records.qualifying_rate_code
-           , loan_junk_dim_new_records.fha_program_code
-           , loan_junk_dim_new_records.fha_principal_write_down_flag
-           , loan_junk_dim_new_records.texas_equity_code
-           , loan_junk_dim_new_records.texas_equity_auto_code
-           , loan_junk_dim_new_records.hmda_hoepa_status_code
-           , loan_junk_dim_new_records.lqa_purchase_eligibility
-           , loan_junk_dim_new_records.mi_required_flag
-           , loan_junk_dim_new_records.qualified_mortgage_status
-           , loan_junk_dim_new_records.qualifying_rate
-           , loan_junk_dim_new_records.texas_equity_auto
-           , loan_junk_dim_new_records.texas_equity
-           , loan_junk_dim_new_records.piggyback_flag
-      FROM (
-          SELECT 'buydown_contributor' || '~' || 'fha_program' || '~' || 'hmda_hoepa_status' || '~' || 'lien_priority' || '~' ||
-                 'lender_concession_candidate_flag' || '~' || 'durp_eligibility_opt_out_flag' || '~' || 'qualified_mortgage_status_code' || '~' ||
-                 'qualified_mortgage_flag' || '~' || 'lqa_purchase_eligibility_code' || '~' || 'student_loan_cash_out_refinance_flag' || '~' ||
-                 'secondary_clear_to_commit_flag' || '~' || 'qm_eligible_flag' || '~' || 'hpml_flag' || '~' || 'lien_priority_code' || '~' ||
-                 'buydown_contributor_code' || '~' || 'qualifying_rate_code' || '~' || 'fha_program_code' || '~' ||
-                 'fha_principal_write_down_flag' ||
-                 '~' || 'texas_equity_code' || '~' || 'texas_equity_auto_code' || '~' || 'hmda_hoepa_status_code' || '~' ||
-                 'lqa_purchase_eligibility' || '~' || 'mi_required_flag' || '~' || 'qualified_mortgage_status' || '~' || 'qualifying_rate' ||
-                 '~' ||
-                 'texas_equity_auto' || '~' || 'texas_equity' || '~' || 'piggyback_flag' || '~' ||
-                 'data_source_dwid' AS data_source_integration_columns
-               , COALESCE( CAST( t460.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t462.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t463.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t467.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( primary_table.l_lender_concession_candidate AS TEXT ), '<NULL>' ) || '~' ||
+      WITH loan_junk_dim_new_records AS (
+          SELECT 'lender_concession_candidate_flag~durp_eligibility_opt_out_flag~qualified_mortgage_status_code~qualified_mortgage_flag~lqa_purchase_eligibility_code~student_loan_cash_out_refinance_flag~secondary_clear_to_commit_flag~qm_eligible_flag~hpml_flag~lien_priority_code~buydown_contributor_code~qualifying_rate_code~fha_program_code~fha_principal_write_down_flag~texas_equity_code~texas_equity_auto_code~hmda_hoepa_status_code~mi_required_flag~piggyback_flag~data_source_dwid' AS data_source_integration_columns
+               , COALESCE( CAST( primary_table.l_lender_concession_candidate AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( primary_table.l_durp_eligibility_opt_out AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( primary_table.l_qualified_mortgage_status_type AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( primary_table.l_qualified_mortgage AS TEXT ), '<NULL>' ) || '~' ||
@@ -251,12 +204,7 @@ etls:
                  COALESCE( CAST( primary_table.l_texas_equity AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( primary_table.l_texas_equity_auto AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( primary_table.l_hmda_hoepa_status_type AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t469.value AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( t1317.prp_mi_required AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t481.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t482.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t484.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( t483.value AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( CASE
                                      WHEN primary_table.l_lien_priority_type IS NULL OR t1317.prp_structure_type IS NULL THEN NULL
                                      WHEN primary_table.l_lien_priority_type = 'FIRST' OR t1317.prp_structure_type = 'STANDALONE_2ND' THEN FALSE
@@ -296,6 +244,9 @@ etls:
                      WHEN primary_table.l_lien_priority_type IS NULL OR t1317.prp_structure_type IS NULL THEN NULL
                      WHEN primary_table.l_lien_priority_type = 'FIRST' OR t1317.prp_structure_type = 'STANDALONE_2ND' THEN FALSE
                      ELSE TRUE END AS piggyback_flag
+               , MAX( GREATEST( t460.etl_end_date_time, t462.etl_end_date_time, t463.etl_end_date_time, t467.etl_end_date_time,
+                                t469.etl_end_date_time, t481.etl_end_date_time, t482.etl_end_date_time, t484.etl_end_date_time,
+                                t483.etl_end_date_time ) ) AS max_source_etl_end_date_time
           FROM (
               SELECT <<loan_partial_load_condition>> AS include_record
                    , loan.*
@@ -305,77 +256,86 @@ etls:
                             AND loan.data_source_updated_datetime < history_records.data_source_updated_datetime
               WHERE history_records.l_pid IS NULL
           ) AS primary_table
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<buydown_contributor_type_partial_load_condition>> AS include_record
                        , buydown_contributor_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.buydown_contributor_type
                   LEFT JOIN history_octane.buydown_contributor_type AS history_records
                             ON buydown_contributor_type.code = history_records.code
                                 AND buydown_contributor_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON buydown_contributor_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t460
                      ON primary_table.l_buydown_contributor_type = t460.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<fha_program_code_type_partial_load_condition>> AS include_record
                        , fha_program_code_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.fha_program_code_type
                   LEFT JOIN history_octane.fha_program_code_type AS history_records
                             ON fha_program_code_type.code = history_records.code
                                 AND fha_program_code_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON fha_program_code_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t462
                      ON primary_table.l_fha_program_code_type = t462.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<hmda_hoepa_status_type_partial_load_condition>> AS include_record
                        , hmda_hoepa_status_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.hmda_hoepa_status_type
                   LEFT JOIN history_octane.hmda_hoepa_status_type AS history_records
                             ON hmda_hoepa_status_type.code = history_records.code
                                 AND hmda_hoepa_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON hmda_hoepa_status_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t463
                      ON primary_table.l_hmda_hoepa_status_type = t463.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<lien_priority_type_partial_load_condition>> AS include_record
                        , lien_priority_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.lien_priority_type
                   LEFT JOIN history_octane.lien_priority_type AS history_records
                             ON lien_priority_type.code = history_records.code
                                 AND lien_priority_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON lien_priority_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t467
                      ON primary_table.l_lien_priority_type = t467.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<lqa_purchase_eligibility_type_partial_load_condition>> AS include_record
                        , lqa_purchase_eligibility_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.lqa_purchase_eligibility_type
                   LEFT JOIN history_octane.lqa_purchase_eligibility_type AS history_records
                             ON lqa_purchase_eligibility_type.code = history_records.code
                                 AND lqa_purchase_eligibility_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON lqa_purchase_eligibility_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t469
                      ON primary_table.l_lqa_purchase_eligibility_type = t469.code
-
           INNER JOIN (
               SELECT *
               FROM (
@@ -386,8 +346,6 @@ etls:
                                 AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
                   WHERE history_records.prp_pid IS NULL
               ) AS primary_table
-
-                  -- child join start
               INNER JOIN
               (
                   SELECT <<deal_partial_load_condition>> AS include_record
@@ -399,67 +357,72 @@ etls:
                   WHERE history_records.d_pid IS NULL
               ) AS t1441
               ON primary_table.prp_deal_pid = t1441.d_pid
-              -- child join end
-
           ) AS t1317
                      ON primary_table.l_proposal_pid = t1317.prp_pid
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<qualified_mortgage_status_type_partial_load_condition>> AS include_record
                        , qualified_mortgage_status_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.qualified_mortgage_status_type
                   LEFT JOIN history_octane.qualified_mortgage_status_type AS history_records
                             ON qualified_mortgage_status_type.code = history_records.code
                                 AND qualified_mortgage_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON qualified_mortgage_status_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t481
                      ON primary_table.l_qualified_mortgage_status_type = t481.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<qualifying_rate_type_partial_load_condition>> AS include_record
                        , qualifying_rate_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.qualifying_rate_type
                   LEFT JOIN history_octane.qualifying_rate_type AS history_records
                             ON qualifying_rate_type.code = history_records.code
                                 AND qualifying_rate_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON qualifying_rate_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t482
                      ON primary_table.l_qualifying_rate_type = t482.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_na_type_partial_load_condition>> AS include_record
                        , yes_no_na_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_na_type
                   LEFT JOIN history_octane.yes_no_na_type AS history_records
                             ON yes_no_na_type.code = history_records.code
                                 AND yes_no_na_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_na_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t484
                      ON primary_table.l_texas_equity_auto = t484.code
-
           INNER JOIN (
               SELECT *
               FROM (
                   SELECT <<yes_no_unknown_type_partial_load_condition>> AS include_record
                        , yes_no_unknown_type.*
+                       , etl_log.etl_end_date_time
                   FROM history_octane.yes_no_unknown_type
                   LEFT JOIN history_octane.yes_no_unknown_type AS history_records
                             ON yes_no_unknown_type.code = history_records.code
                                 AND yes_no_unknown_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON yes_no_unknown_type.etl_batch_id = etl_log.etl_batch_id
                   WHERE history_records.code IS NULL
               ) AS primary_table
           ) AS t483
                      ON primary_table.l_texas_equity = t483.code
-              -- ignoring this because the table alias t1317 has already been added: INNER JOIN history_octane.proposal t1317 ON primary_table.l_proposal_pid = t1317.prp_pid
           WHERE GREATEST( primary_table.include_record, t460.include_record, t462.include_record, t463.include_record, t467.include_record,
                           t469.include_record, t1317.include_record, t481.include_record, t482.include_record, t484.include_record,
                           t483.include_record ) IS TRUE
@@ -477,10 +440,24 @@ etls:
                        WHEN primary_table.l_lien_priority_type = 'FIRST' OR
                             t1317.prp_structure_type = 'STANDALONE_2ND' THEN FALSE
                        ELSE TRUE END
-      ) AS loan_junk_dim_new_records
+      )
+      --new records that should be inserted
+      SELECT loan_junk_dim_new_records.*
+      FROM loan_junk_dim_new_records
       LEFT JOIN star_loan.loan_junk_dim
-                ON loan_junk_dim.data_source_integration_id = loan_junk_dim_new_records.data_source_integration_id
+                ON loan_junk_dim_new_records.data_source_integration_id = loan_junk_dim.data_source_integration_id
       WHERE loan_junk_dim.dwid IS NULL
-      ;
+      UNION ALL
+      --existing records that need to be updated
+      SELECT loan_junk_dim_new_records.*
+      FROM loan_junk_dim_new_records
+      JOIN (
+          SELECT loan_junk_dim.data_source_integration_id, etl_log.etl_start_date_time
+          FROM star_loan.loan_junk_dim
+          JOIN star_common.etl_log
+               ON loan_junk_dim.etl_batch_id = etl_log.etl_batch_id
+      ) AS loan_junk_dim_etl_start_times
+           ON loan_junk_dim_new_records.data_source_integration_id = loan_junk_dim_etl_start_times.data_source_integration_id
+               AND loan_junk_dim_new_records.max_source_etl_end_date_time >= loan_junk_dim_etl_start_times.etl_start_date_time;
 next_etls:
   - SP-300001-insert-update
