@@ -153,6 +153,7 @@ function execute_mdi_test_cases() {
     echo "Now resetting Docker..."
     docker_reset # reset docker
     echo "Now testing ${dir}" # indicate which test case is being run
+    cd ${dir}
     # run test setup SQL against the source database
     source_setup_results=$(${path_to_test_dir}/psql-test.sh ${source_db} . -f /input/test_case_source_setup.sql)
     # run test setup SQL against the target database
@@ -163,6 +164,7 @@ function execute_mdi_test_cases() {
     output_setup_results=$(${path_to_test_dir}/psql-test.sh ${target_db} . -f /input/test_case_output_setup.sql)
     # run a diff between actual output and expected output files
     output_file_diff "expected_output.csv" "actual_output.csv" "test_diff_output.diff"
+    cd -
   done
 }
 
