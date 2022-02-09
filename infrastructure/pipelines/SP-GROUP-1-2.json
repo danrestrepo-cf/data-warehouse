@@ -10454,6 +10454,114 @@
                             "End": true
                         }
                     }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100897",
+                    "StartAt": "SP-100897_message",
+                    "States": {
+                        "SP-100897_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "deal_pending_update",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100897"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "ResultSelector": {
+                                "StateName": "SP-100897_message",
+                                "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100898",
+                    "StartAt": "SP-100898_message",
+                    "States": {
+                        "SP-100898_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "deal_update_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100898"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "ResultSelector": {
+                                "StateName": "SP-100898_message",
+                                "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100899",
+                    "StartAt": "SP-100899_message",
+                    "States": {
+                        "SP-100899_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "proposal_review_request_type",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100899"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "ResultSelector": {
+                                "StateName": "SP-100899_message",
+                                "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-100900",
+                    "StartAt": "SP-100900_message",
+                    "States": {
+                        "SP-100900_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "wf_step_function_parameters",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-100900"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "ResultSelector": {
+                                "StateName": "SP-100900_message",
+                                "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
+                            },
+                            "End": true
+                        }
+                    }
                 }
             ]
         }
