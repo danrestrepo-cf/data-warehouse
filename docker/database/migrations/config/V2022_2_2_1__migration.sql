@@ -10,8 +10,8 @@ INSERTIONS
 --edw_table_definition
 WITH insert_rows (database_name, schema_name, table_name, source_database_name, source_schema_name, source_table_name) AS (
     VALUES ('staging', 'staging_octane', 'deal_pending_update', NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'proposal_review_request_type', NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'deal_update_type', NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'proposal_review_request_type', NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'wf_step_function_parameters', NULL, NULL, NULL)
 )
 INSERT
@@ -25,8 +25,8 @@ LEFT JOIN mdi.edw_table_definition source_table_definition
 
 WITH insert_rows (database_name, schema_name, table_name, source_database_name, source_schema_name, source_table_name) AS (
     VALUES ('staging', 'history_octane', 'deal_pending_update', 'staging', 'staging_octane', 'deal_pending_update')
-         , ('staging', 'history_octane', 'proposal_review_request_type', 'staging', 'staging_octane', 'proposal_review_request_type')
          , ('staging', 'history_octane', 'deal_update_type', 'staging', 'staging_octane', 'deal_update_type')
+         , ('staging', 'history_octane', 'proposal_review_request_type', 'staging', 'staging_octane', 'proposal_review_request_type')
          , ('staging', 'history_octane', 'wf_step_function_parameters', 'staging', 'staging_octane', 'wf_step_function_parameters')
 )
 INSERT
@@ -43,12 +43,12 @@ WITH insert_rows (database_name, schema_name, table_name, field_name, data_type,
     VALUES ('staging', 'history_octane', 'deal_pending_update', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'deal_pending_update', 'data_source_updated_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'deal_pending_update', 'etl_batch_id', 'TEXT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'proposal_review_request_type', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'proposal_review_request_type', 'data_source_updated_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'proposal_review_request_type', 'etl_batch_id', 'TEXT', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'deal_update_type', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'deal_update_type', 'data_source_updated_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'deal_update_type', 'etl_batch_id', 'TEXT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'proposal_review_request_type', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'proposal_review_request_type', 'data_source_updated_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'proposal_review_request_type', 'etl_batch_id', 'TEXT', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'wf_step_function_parameters', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'wf_step_function_parameters', 'data_source_updated_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'wf_step_function_parameters', 'etl_batch_id', 'TEXT', NULL, NULL, NULL, NULL)
@@ -62,20 +62,20 @@ WITH insert_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'staging_octane', 'deal_pending_update', 'dpu_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'deal_pending_update', 'dpu_run_count', 'INTEGER', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'deal_pending_update', 'dpu_version', 'INTEGER', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'deal_summary', 'ds_proposal_review_requested_count', 'INTEGER', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'deal_update_type', 'code', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'deal_update_type', 'value', 'VARCHAR(1024)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'place', 'pl_verified_geocode', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'proposal_review', 'prpre_completed_proposal_snapshot_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'proposal_review', 'prpre_create_datetime', 'TIMESTAMP', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'proposal_review', 'prpre_proposal_review_request_type', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'proposal_review', 'prpre_requested_proposal_snapshot_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'proposal_review', 'prpre_scenario_proposal_name', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'proposal_review', 'prpre_scenario_proposal_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'role_charge_permissions', 'rcp_payer_borrower_seller_editable', 'BOOLEAN', NULL, NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'role_charge_permissions', 'rcp_payer_other_editable', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'proposal_review_request_type', 'code', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'proposal_review_request_type', 'value', 'VARCHAR(1024)', NULL, NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'deal_summary', 'ds_proposal_review_requested_count', 'INTEGER', NULL, NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'deal_update_type', 'code', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'deal_update_type', 'value', 'VARCHAR(1024)', NULL, NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'place', 'pl_verified_geocode', 'BOOLEAN', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'role_charge_permissions', 'rcp_payer_borrower_seller_editable', 'BOOLEAN', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'role_charge_permissions', 'rcp_payer_other_editable', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'wf_step_function_parameters', 'wsfp_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'wf_step_function_parameters', 'wsfp_proposal_review_id', 'INTEGER', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'wf_step_function_parameters', 'wsfp_proposal_review_status_type', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
@@ -109,20 +109,20 @@ WITH insert_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'history_octane', 'deal_pending_update', 'dpu_pid', 'BIGINT', 'staging', 'staging_octane', 'deal_pending_update', 'dpu_pid')
          , ('staging', 'history_octane', 'deal_pending_update', 'dpu_run_count', 'INTEGER', 'staging', 'staging_octane', 'deal_pending_update', 'dpu_run_count')
          , ('staging', 'history_octane', 'deal_pending_update', 'dpu_version', 'INTEGER', 'staging', 'staging_octane', 'deal_pending_update', 'dpu_version')
+         , ('staging', 'history_octane', 'deal_summary', 'ds_proposal_review_requested_count', 'INTEGER', 'staging', 'staging_octane', 'deal_summary', 'ds_proposal_review_requested_count')
+         , ('staging', 'history_octane', 'deal_update_type', 'code', 'VARCHAR(128)', 'staging', 'staging_octane', 'deal_update_type', 'code')
+         , ('staging', 'history_octane', 'deal_update_type', 'value', 'VARCHAR(1024)', 'staging', 'staging_octane', 'deal_update_type', 'value')
+         , ('staging', 'history_octane', 'place', 'pl_verified_geocode', 'BOOLEAN', 'staging', 'staging_octane', 'place', 'pl_verified_geocode')
          , ('staging', 'history_octane', 'proposal_review', 'prpre_completed_proposal_snapshot_pid', 'BIGINT', 'staging', 'staging_octane', 'proposal_review', 'prpre_completed_proposal_snapshot_pid')
          , ('staging', 'history_octane', 'proposal_review', 'prpre_create_datetime', 'TIMESTAMP', 'staging', 'staging_octane', 'proposal_review', 'prpre_create_datetime')
          , ('staging', 'history_octane', 'proposal_review', 'prpre_proposal_review_request_type', 'VARCHAR(128)', 'staging', 'staging_octane', 'proposal_review', 'prpre_proposal_review_request_type')
          , ('staging', 'history_octane', 'proposal_review', 'prpre_requested_proposal_snapshot_pid', 'BIGINT', 'staging', 'staging_octane', 'proposal_review', 'prpre_requested_proposal_snapshot_pid')
          , ('staging', 'history_octane', 'proposal_review', 'prpre_scenario_proposal_name', 'VARCHAR(128)', 'staging', 'staging_octane', 'proposal_review', 'prpre_scenario_proposal_name')
          , ('staging', 'history_octane', 'proposal_review', 'prpre_scenario_proposal_pid', 'BIGINT', 'staging', 'staging_octane', 'proposal_review', 'prpre_scenario_proposal_pid')
-         , ('staging', 'history_octane', 'role_charge_permissions', 'rcp_payer_borrower_seller_editable', 'BOOLEAN', 'staging', 'staging_octane', 'role_charge_permissions', 'rcp_payer_borrower_seller_editable')
-         , ('staging', 'history_octane', 'role_charge_permissions', 'rcp_payer_other_editable', 'BOOLEAN', 'staging', 'staging_octane', 'role_charge_permissions', 'rcp_payer_other_editable')
          , ('staging', 'history_octane', 'proposal_review_request_type', 'code', 'VARCHAR(128)', 'staging', 'staging_octane', 'proposal_review_request_type', 'code')
          , ('staging', 'history_octane', 'proposal_review_request_type', 'value', 'VARCHAR(1024)', 'staging', 'staging_octane', 'proposal_review_request_type', 'value')
-         , ('staging', 'history_octane', 'deal_summary', 'ds_proposal_review_requested_count', 'INTEGER', 'staging', 'staging_octane', 'deal_summary', 'ds_proposal_review_requested_count')
-         , ('staging', 'history_octane', 'deal_update_type', 'code', 'VARCHAR(128)', 'staging', 'staging_octane', 'deal_update_type', 'code')
-         , ('staging', 'history_octane', 'deal_update_type', 'value', 'VARCHAR(1024)', 'staging', 'staging_octane', 'deal_update_type', 'value')
-         , ('staging', 'history_octane', 'place', 'pl_verified_geocode', 'BOOLEAN', 'staging', 'staging_octane', 'place', 'pl_verified_geocode')
+         , ('staging', 'history_octane', 'role_charge_permissions', 'rcp_payer_borrower_seller_editable', 'BOOLEAN', 'staging', 'staging_octane', 'role_charge_permissions', 'rcp_payer_borrower_seller_editable')
+         , ('staging', 'history_octane', 'role_charge_permissions', 'rcp_payer_other_editable', 'BOOLEAN', 'staging', 'staging_octane', 'role_charge_permissions', 'rcp_payer_other_editable')
          , ('staging', 'history_octane', 'wf_step_function_parameters', 'wsfp_pid', 'BIGINT', 'staging', 'staging_octane', 'wf_step_function_parameters', 'wsfp_pid')
          , ('staging', 'history_octane', 'wf_step_function_parameters', 'wsfp_proposal_review_id', 'INTEGER', 'staging', 'staging_octane', 'wf_step_function_parameters', 'wsfp_proposal_review_id')
          , ('staging', 'history_octane', 'wf_step_function_parameters', 'wsfp_proposal_review_status_type', 'VARCHAR(128)', 'staging', 'staging_octane', 'wf_step_function_parameters', 'wsfp_proposal_review_status_type')
@@ -149,8 +149,8 @@ LEFT JOIN mdi.edw_field_definition source_field_definition
 INSERT
 INTO mdi.process (name, description)
 VALUES ('SP-100897', 'ETL to copy deal_pending_update data from staging_octane to history_octane')
-     , ('SP-100899', 'ETL to copy proposal_review_request_type data from staging_octane to history_octane')
      , ('SP-100898', 'ETL to copy deal_update_type data from staging_octane to history_octane')
+     , ('SP-100899', 'ETL to copy proposal_review_request_type data from staging_octane to history_octane')
      , ('SP-100900', 'ETL to copy wf_step_function_parameters data from staging_octane to history_octane');
 
 --table_input_step
@@ -196,16 +196,6 @@ WHERE staging_table.dpu_pid IS NULL
     WHERE deleted_records.dpu_pid = history_table.dpu_pid
       AND deleted_records.data_source_deleted_flag = TRUE
     );', 'Staging DB Connection')
-         , ('SP-100899', 0, '--finding records to insert into history_octane.proposal_review_request_type
-SELECT staging_table.code
-     , staging_table.value
-     , FALSE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM staging_octane.proposal_review_request_type staging_table
-LEFT JOIN history_octane.proposal_review_request_type history_table
-          ON staging_table.code = history_table.code
-              AND staging_table.value = history_table.value
-WHERE history_table.code IS NULL;', 'Staging DB Connection')
          , ('SP-100898', 0, '--finding records to insert into history_octane.deal_update_type
 SELECT staging_table.code
      , staging_table.value
@@ -213,6 +203,16 @@ SELECT staging_table.code
      , NOW( ) AS data_source_updated_datetime
 FROM staging_octane.deal_update_type staging_table
 LEFT JOIN history_octane.deal_update_type history_table
+          ON staging_table.code = history_table.code
+              AND staging_table.value = history_table.value
+WHERE history_table.code IS NULL;', 'Staging DB Connection')
+         , ('SP-100899', 0, '--finding records to insert into history_octane.proposal_review_request_type
+SELECT staging_table.code
+     , staging_table.value
+     , FALSE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM staging_octane.proposal_review_request_type staging_table
+LEFT JOIN history_octane.proposal_review_request_type history_table
           ON staging_table.code = history_table.code
               AND staging_table.value = history_table.value
 WHERE history_table.code IS NULL;', 'Staging DB Connection')
@@ -258,8 +258,8 @@ JOIN mdi.process
 --table_output_step
 WITH insert_rows (process_name, target_schema, target_table, truncate_table, connectionname) AS (
     VALUES ('SP-100897', 'history_octane', 'deal_pending_update', 'N', 'Staging DB Connection')
-         , ('SP-100899', 'history_octane', 'proposal_review_request_type', 'N', 'Staging DB Connection')
          , ('SP-100898', 'history_octane', 'deal_update_type', 'N', 'Staging DB Connection')
+         , ('SP-100899', 'history_octane', 'proposal_review_request_type', 'N', 'Staging DB Connection')
          , ('SP-100900', 'history_octane', 'wf_step_function_parameters', 'N', 'Staging DB Connection')
 )
 INSERT INTO mdi.table_output_step (process_dwid, target_schema, target_table, commit_size, partitioning_field, table_name_field, auto_generated_key_field, partition_data_per, table_name_defined_in_field, return_auto_generated_key_field, truncate_table, connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors, use_batch_update)
@@ -283,19 +283,6 @@ WITH insert_rows (process_name, database_field_name) AS (
          , ('SP-100897', 'dpu_run_count')
          , ('SP-100897', 'dpu_version')
          , ('SP-100897', 'etl_batch_id')
-         , ('SP-100327', 'prpre_completed_proposal_snapshot_pid')
-         , ('SP-100327', 'prpre_create_datetime')
-         , ('SP-100327', 'prpre_proposal_review_request_type')
-         , ('SP-100327', 'prpre_requested_proposal_snapshot_pid')
-         , ('SP-100327', 'prpre_scenario_proposal_name')
-         , ('SP-100327', 'prpre_scenario_proposal_pid')
-         , ('SP-100049', 'rcp_payer_borrower_seller_editable')
-         , ('SP-100049', 'rcp_payer_other_editable')
-         , ('SP-100899', 'code')
-         , ('SP-100899', 'data_source_deleted_flag')
-         , ('SP-100899', 'data_source_updated_datetime')
-         , ('SP-100899', 'etl_batch_id')
-         , ('SP-100899', 'value')
          , ('SP-100087', 'ds_proposal_review_requested_count')
          , ('SP-100898', 'code')
          , ('SP-100898', 'data_source_deleted_flag')
@@ -303,6 +290,19 @@ WITH insert_rows (process_name, database_field_name) AS (
          , ('SP-100898', 'etl_batch_id')
          , ('SP-100898', 'value')
          , ('SP-100012', 'pl_verified_geocode')
+         , ('SP-100327', 'prpre_completed_proposal_snapshot_pid')
+         , ('SP-100327', 'prpre_create_datetime')
+         , ('SP-100327', 'prpre_proposal_review_request_type')
+         , ('SP-100327', 'prpre_requested_proposal_snapshot_pid')
+         , ('SP-100327', 'prpre_scenario_proposal_name')
+         , ('SP-100327', 'prpre_scenario_proposal_pid')
+         , ('SP-100899', 'code')
+         , ('SP-100899', 'data_source_deleted_flag')
+         , ('SP-100899', 'data_source_updated_datetime')
+         , ('SP-100899', 'etl_batch_id')
+         , ('SP-100899', 'value')
+         , ('SP-100049', 'rcp_payer_borrower_seller_editable')
+         , ('SP-100049', 'rcp_payer_other_editable')
          , ('SP-100900', 'data_source_deleted_flag')
          , ('SP-100900', 'data_source_updated_datetime')
          , ('SP-100900', 'etl_batch_id')
@@ -325,8 +325,8 @@ JOIN mdi.table_output_step
 --json_output_field
 WITH insert_rows (process_name, json_output_field) AS (
     VALUES ('SP-100897', 'dpu_pid')
-         , ('SP-100899', 'code')
          , ('SP-100898', 'code')
+         , ('SP-100899', 'code')
          , ('SP-100900', 'wsfp_pid')
 )
 INSERT
@@ -339,8 +339,8 @@ JOIN mdi.process
 --state_machine_definition
 WITH insert_rows (process_name, state_machine_name, state_machine_comment) AS (
     VALUES ('SP-100897', 'SP-100897', 'ETL to copy deal_pending_update data from staging_octane to history_octane')
-         , ('SP-100899', 'SP-100899', 'ETL to copy proposal_review_request_type data from staging_octane to history_octane')
          , ('SP-100898', 'SP-100898', 'ETL to copy deal_update_type data from staging_octane to history_octane')
+         , ('SP-100899', 'SP-100899', 'ETL to copy proposal_review_request_type data from staging_octane to history_octane')
          , ('SP-100900', 'SP-100900', 'ETL to copy wf_step_function_parameters data from staging_octane to history_octane')
 )
 INSERT
@@ -354,133 +354,9 @@ JOIN mdi.process
 UPDATES
 */
 
---edw_field_definition
-WITH update_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name, source_table_name, source_field_name) AS (
-    VALUES ('staging', 'history_octane', 'role_charge_permissions', 'rcp_payer_non_lender_editable', 'BOOLEAN', NULL, NULL, NULL, NULL)
-)
-UPDATE mdi.edw_field_definition
-SET data_type = update_rows.data_type
-  , source_edw_field_definition_dwid = source_field_definition.dwid
-FROM update_rows
-JOIN mdi.edw_table_definition
-     ON update_rows.database_name = edw_table_definition.database_name
-         AND update_rows.schema_name = edw_table_definition.schema_name
-         AND update_rows.table_name = edw_table_definition.table_name
-LEFT JOIN mdi.edw_table_definition source_table_definition
-          ON update_rows.source_database_name = source_table_definition.database_name
-              AND update_rows.source_schema_name = source_table_definition.schema_name
-              AND update_rows.source_table_name = source_table_definition.table_name
-LEFT JOIN mdi.edw_field_definition source_field_definition
-          ON source_table_definition.dwid = source_field_definition.edw_table_definition_dwid
-              AND update_rows.source_field_name = source_field_definition.field_name
-WHERE edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
-  AND edw_field_definition.field_name = update_rows.field_name;
-
 --table_input_step
 WITH update_rows (process_name, data_source_dwid, sql, connectionname) AS (
-    VALUES ('SP-100327', 0, '--finding records to insert into history_octane.proposal_review
-SELECT staging_table.prpre_pid
-     , staging_table.prpre_version
-     , staging_table.prpre_proposal_pid
-     , staging_table.prpre_request_id
-     , staging_table.prpre_request_datetime
-     , staging_table.prpre_request_by_lender_user_pid
-     , staging_table.prpre_request_summary
-     , staging_table.prpre_proposal_review_status_type
-     , staging_table.prpre_decision_datetime
-     , staging_table.prpre_decision_by_lender_user_pid
-     , staging_table.prpre_decision_summary
-     , staging_table.prpre_scenario_proposal_pid
-     , staging_table.prpre_scenario_proposal_name
-     , staging_table.prpre_requested_proposal_snapshot_pid
-     , staging_table.prpre_completed_proposal_snapshot_pid
-     , staging_table.prpre_proposal_review_request_type
-     , staging_table.prpre_create_datetime
-     , FALSE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM staging_octane.proposal_review staging_table
-LEFT JOIN history_octane.proposal_review history_table
-          ON staging_table.prpre_pid = history_table.prpre_pid
-              AND staging_table.prpre_version = history_table.prpre_version
-WHERE history_table.prpre_pid IS NULL
-UNION ALL
-SELECT history_table.prpre_pid
-     , history_table.prpre_version + 1
-     , history_table.prpre_proposal_pid
-     , history_table.prpre_request_id
-     , history_table.prpre_request_datetime
-     , history_table.prpre_request_by_lender_user_pid
-     , history_table.prpre_request_summary
-     , history_table.prpre_proposal_review_status_type
-     , history_table.prpre_decision_datetime
-     , history_table.prpre_decision_by_lender_user_pid
-     , history_table.prpre_decision_summary
-     , history_table.prpre_scenario_proposal_pid
-     , history_table.prpre_scenario_proposal_name
-     , history_table.prpre_requested_proposal_snapshot_pid
-     , history_table.prpre_completed_proposal_snapshot_pid
-     , history_table.prpre_proposal_review_request_type
-     , history_table.prpre_create_datetime
-     , TRUE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM history_octane.proposal_review history_table
-LEFT JOIN staging_octane.proposal_review staging_table
-          ON staging_table.prpre_pid = history_table.prpre_pid
-WHERE staging_table.prpre_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.proposal_review deleted_records
-    WHERE deleted_records.prpre_pid = history_table.prpre_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
-         , ('SP-100049', 0, '--finding records to insert into history_octane.role_charge_permissions
-SELECT staging_table.rcp_pid
-     , staging_table.rcp_version
-     , staging_table.rcp_role_pid
-     , staging_table.rcp_charge_type
-     , staging_table.rcp_basic_editable
-     , staging_table.rcp_financed_editable
-     , staging_table.rcp_payer_borrower_seller_editable
-     , staging_table.rcp_payer_lender_editable
-     , staging_table.rcp_payee_editable
-     , staging_table.rcp_apr_editable
-     , staging_table.rcp_poc_editable
-     , staging_table.rcp_wire_editable
-     , staging_table.rcp_payer_other_editable
-     , FALSE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM staging_octane.role_charge_permissions staging_table
-LEFT JOIN history_octane.role_charge_permissions history_table
-          ON staging_table.rcp_pid = history_table.rcp_pid
-              AND staging_table.rcp_version = history_table.rcp_version
-WHERE history_table.rcp_pid IS NULL
-UNION ALL
-SELECT history_table.rcp_pid
-     , history_table.rcp_version + 1
-     , history_table.rcp_role_pid
-     , history_table.rcp_charge_type
-     , history_table.rcp_basic_editable
-     , history_table.rcp_financed_editable
-     , history_table.rcp_payer_borrower_seller_editable
-     , history_table.rcp_payer_lender_editable
-     , history_table.rcp_payee_editable
-     , history_table.rcp_apr_editable
-     , history_table.rcp_poc_editable
-     , history_table.rcp_wire_editable
-     , history_table.rcp_payer_other_editable
-     , TRUE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM history_octane.role_charge_permissions history_table
-LEFT JOIN staging_octane.role_charge_permissions staging_table
-          ON staging_table.rcp_pid = history_table.rcp_pid
-WHERE staging_table.rcp_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.role_charge_permissions deleted_records
-    WHERE deleted_records.rcp_pid = history_table.rcp_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
-         , ('SP-100087', 0, '--finding records to insert into history_octane.deal_summary
+    VALUES ('SP-100087', 0, '--finding records to insert into history_octane.deal_summary
 SELECT staging_table.ds_pid
      , staging_table.ds_version
      , staging_table.ds_deal_pid
@@ -1008,6 +884,108 @@ WHERE staging_table.pl_pid IS NULL
     WHERE deleted_records.pl_pid = history_table.pl_pid
       AND deleted_records.data_source_deleted_flag = TRUE
     );', 'Staging DB Connection')
+         , ('SP-100327', 0, '--finding records to insert into history_octane.proposal_review
+SELECT staging_table.prpre_pid
+     , staging_table.prpre_version
+     , staging_table.prpre_proposal_pid
+     , staging_table.prpre_request_id
+     , staging_table.prpre_request_datetime
+     , staging_table.prpre_request_by_lender_user_pid
+     , staging_table.prpre_request_summary
+     , staging_table.prpre_proposal_review_status_type
+     , staging_table.prpre_decision_datetime
+     , staging_table.prpre_decision_by_lender_user_pid
+     , staging_table.prpre_decision_summary
+     , staging_table.prpre_scenario_proposal_pid
+     , staging_table.prpre_scenario_proposal_name
+     , staging_table.prpre_requested_proposal_snapshot_pid
+     , staging_table.prpre_completed_proposal_snapshot_pid
+     , staging_table.prpre_proposal_review_request_type
+     , staging_table.prpre_create_datetime
+     , FALSE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM staging_octane.proposal_review staging_table
+LEFT JOIN history_octane.proposal_review history_table
+          ON staging_table.prpre_pid = history_table.prpre_pid
+              AND staging_table.prpre_version = history_table.prpre_version
+WHERE history_table.prpre_pid IS NULL
+UNION ALL
+SELECT history_table.prpre_pid
+     , history_table.prpre_version + 1
+     , history_table.prpre_proposal_pid
+     , history_table.prpre_request_id
+     , history_table.prpre_request_datetime
+     , history_table.prpre_request_by_lender_user_pid
+     , history_table.prpre_request_summary
+     , history_table.prpre_proposal_review_status_type
+     , history_table.prpre_decision_datetime
+     , history_table.prpre_decision_by_lender_user_pid
+     , history_table.prpre_decision_summary
+     , history_table.prpre_scenario_proposal_pid
+     , history_table.prpre_scenario_proposal_name
+     , history_table.prpre_requested_proposal_snapshot_pid
+     , history_table.prpre_completed_proposal_snapshot_pid
+     , history_table.prpre_proposal_review_request_type
+     , history_table.prpre_create_datetime
+     , TRUE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM history_octane.proposal_review history_table
+LEFT JOIN staging_octane.proposal_review staging_table
+          ON staging_table.prpre_pid = history_table.prpre_pid
+WHERE staging_table.prpre_pid IS NULL
+  AND NOT EXISTS(
+    SELECT 1
+    FROM history_octane.proposal_review deleted_records
+    WHERE deleted_records.prpre_pid = history_table.prpre_pid
+      AND deleted_records.data_source_deleted_flag = TRUE
+    );', 'Staging DB Connection')
+         , ('SP-100049', 0, '--finding records to insert into history_octane.role_charge_permissions
+SELECT staging_table.rcp_pid
+     , staging_table.rcp_version
+     , staging_table.rcp_role_pid
+     , staging_table.rcp_charge_type
+     , staging_table.rcp_basic_editable
+     , staging_table.rcp_financed_editable
+     , staging_table.rcp_payer_borrower_seller_editable
+     , staging_table.rcp_payer_lender_editable
+     , staging_table.rcp_payee_editable
+     , staging_table.rcp_apr_editable
+     , staging_table.rcp_poc_editable
+     , staging_table.rcp_wire_editable
+     , staging_table.rcp_payer_other_editable
+     , FALSE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM staging_octane.role_charge_permissions staging_table
+LEFT JOIN history_octane.role_charge_permissions history_table
+          ON staging_table.rcp_pid = history_table.rcp_pid
+              AND staging_table.rcp_version = history_table.rcp_version
+WHERE history_table.rcp_pid IS NULL
+UNION ALL
+SELECT history_table.rcp_pid
+     , history_table.rcp_version + 1
+     , history_table.rcp_role_pid
+     , history_table.rcp_charge_type
+     , history_table.rcp_basic_editable
+     , history_table.rcp_financed_editable
+     , history_table.rcp_payer_borrower_seller_editable
+     , history_table.rcp_payer_lender_editable
+     , history_table.rcp_payee_editable
+     , history_table.rcp_apr_editable
+     , history_table.rcp_poc_editable
+     , history_table.rcp_wire_editable
+     , history_table.rcp_payer_other_editable
+     , TRUE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM history_octane.role_charge_permissions history_table
+LEFT JOIN staging_octane.role_charge_permissions staging_table
+          ON staging_table.rcp_pid = history_table.rcp_pid
+WHERE staging_table.rcp_pid IS NULL
+  AND NOT EXISTS(
+    SELECT 1
+    FROM history_octane.role_charge_permissions deleted_records
+    WHERE deleted_records.rcp_pid = history_table.rcp_pid
+      AND deleted_records.data_source_deleted_flag = TRUE
+    );', 'Staging DB Connection')
 )
 UPDATE mdi.table_input_step
 SET data_source_dwid = update_rows.data_source_dwid
@@ -1035,6 +1013,18 @@ WHERE delete_keys.process_name = process.name
   AND delete_keys.database_field_name = table_output_field.database_field_name;
 
 --edw_field_definition
+WITH delete_keys (database_name, schema_name, table_name, field_name) AS (
+    VALUES ('staging', 'history_octane', 'role_charge_permissions', 'rcp_payer_non_lender_editable')
+)
+DELETE
+FROM mdi.edw_field_definition
+    USING delete_keys, mdi.edw_table_definition
+WHERE edw_table_definition.database_name = delete_keys.database_name
+  AND edw_table_definition.schema_name = delete_keys.schema_name
+  AND edw_table_definition.table_name = delete_keys.table_name
+  AND edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
+  AND edw_field_definition.field_name = delete_keys.field_name;
+
 WITH delete_keys (database_name, schema_name, table_name, field_name) AS (
     VALUES ('staging', 'staging_octane', 'role_charge_permissions', 'rcp_payer_non_lender_editable')
 )
