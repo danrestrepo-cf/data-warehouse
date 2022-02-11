@@ -7,6 +7,7 @@ import os
 import random
 import datetime
 import math
+import argparse
 import concurrent.futures
 from typing import Iterator, Optional, List
 import io
@@ -18,16 +19,33 @@ sys.path.append(PROJECT_DIR_PATH)
 from lib.db_connections import DBConnectionFactory
 
 
+# it took 3 min 36 s to load 16.2 million rows with 10 threads running
+# it took 3 min 11 s to load 16.2 million rows with 8 threads running
+# it took 2 min 58 s to load 16.2 million rows with 5 threads running
+# it took 2 min 46 s to load 16.2 million rows with 3 threads running
+# it took 2 min min 57 s to load 16.2 million rows with 2 threads running
+# it took to 3 min 37 s to load 16.2 million rows with only 1 thread running
+
 def main():
     print(f'{datetime.datetime.now()} Starting')
 
+    # parse command line arguments
+    argparser = argparse.ArgumentParser(description='Bulk-load data into loan_lender_user_access table')
+    argparser.add_argument(
+        '--table',
+        type=str,
+        default='loan_lender_user_access',
+        help='the table to load data into. Should be loan_lender_user_access or its (testing purpose) derivatives'
+    )
+    args = argparser.parse_args()
+
     data_loader = MultithreadedDataLoader(
-        loan_count=100000,
-        user_count=12345,
-        avg_users_per_loan=162,
-        thread_count=10,
+        loan_count=192788,
+        user_count=26422,
+        avg_users_per_loan=532,
+        thread_count=3,
         table_schema='star_loan',
-        table_name='loan_lender_user_access',
+        table_name=args.table,
         columns=[
             'data_source_dwid',
             'edw_created_datetime',
