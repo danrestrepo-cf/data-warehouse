@@ -176,3 +176,10 @@ CREATE INDEX fkt_wsfp_proposal_review_status_type ON history_octane.wf_step_func
 
 ALTER TABLE history_octane.deal_summary
 ADD COLUMN ds_proposal_review_requested_count integer;
+
+--
+-- EDW | add index to lender_user columns used in loan_lender_user_access ETL join
+-- https://app.asana.com/0/0/1201824069136219
+--
+
+CREATE INDEX idx_lender_user__lu_username_lu_account_pid ON history_octane.lender_user (lu_username, lu_account_pid);
