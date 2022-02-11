@@ -28,6 +28,38 @@ foreign_keys:
       - lu_pid
       schema: history_octane
       table: lender_user
+  fk_proposal_review_4:
+    columns:
+    - prpre_scenario_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: history_octane
+      table: proposal
+  fk_proposal_review_5:
+    columns:
+    - prpre_requested_proposal_snapshot_pid
+    references:
+      columns:
+      - prp_pid
+      schema: history_octane
+      table: proposal
+  fk_proposal_review_6:
+    columns:
+    - prpre_completed_proposal_snapshot_pid
+    references:
+      columns:
+      - prp_pid
+      schema: history_octane
+      table: proposal
+  fkt_prpre_proposal_review_request_type:
+    columns:
+    - prpre_proposal_review_request_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: proposal_review_request_type
   fkt_prpre_proposal_review_status_type:
     columns:
     - prpre_proposal_review_status_type
@@ -43,6 +75,14 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
+  prpre_completed_proposal_snapshot_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpre_completed_proposal_snapshot_pid
+  prpre_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.prpre_create_datetime
   prpre_decision_by_lender_user_pid:
     data_type: BIGINT
     source:
@@ -63,6 +103,10 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.prpre_proposal_pid
+  prpre_proposal_review_request_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prpre_proposal_review_request_type
   prpre_proposal_review_status_type:
     data_type: VARCHAR(128)
     source:
@@ -83,6 +127,18 @@ columns:
     data_type: TEXT
     source:
       field: primary_source_table.columns.prpre_request_summary
+  prpre_requested_proposal_snapshot_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpre_requested_proposal_snapshot_pid
+  prpre_scenario_proposal_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.prpre_scenario_proposal_name
+  prpre_scenario_proposal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.prpre_scenario_proposal_pid
   prpre_version:
     data_type: INTEGER
     source:
@@ -107,6 +163,12 @@ etls:
            , staging_table.prpre_decision_datetime
            , staging_table.prpre_decision_by_lender_user_pid
            , staging_table.prpre_decision_summary
+           , staging_table.prpre_scenario_proposal_pid
+           , staging_table.prpre_scenario_proposal_name
+           , staging_table.prpre_requested_proposal_snapshot_pid
+           , staging_table.prpre_completed_proposal_snapshot_pid
+           , staging_table.prpre_proposal_review_request_type
+           , staging_table.prpre_create_datetime
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.proposal_review staging_table
@@ -126,6 +188,12 @@ etls:
            , history_table.prpre_decision_datetime
            , history_table.prpre_decision_by_lender_user_pid
            , history_table.prpre_decision_summary
+           , history_table.prpre_scenario_proposal_pid
+           , history_table.prpre_scenario_proposal_name
+           , history_table.prpre_requested_proposal_snapshot_pid
+           , history_table.prpre_completed_proposal_snapshot_pid
+           , history_table.prpre_proposal_review_request_type
+           , history_table.prpre_create_datetime
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.proposal_review history_table

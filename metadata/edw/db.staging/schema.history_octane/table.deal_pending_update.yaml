@@ -1,0 +1,118 @@
+name: deal_pending_update
+primary_source_table: staging.staging_octane.deal_pending_update
+primary_key:
+- dpu_pid
+- dpu_version
+foreign_keys:
+  fk_deal_pending_update_1:
+    columns:
+    - dpu_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: history_octane
+      table: deal
+  fkt_dpu_deal_update_type:
+    columns:
+    - dpu_deal_update_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: deal_update_type
+columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  dpu_args_json:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.dpu_args_json
+  dpu_completed_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.dpu_completed_datetime
+  dpu_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.dpu_create_datetime
+  dpu_deal_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dpu_deal_pid
+  dpu_deal_update_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.dpu_deal_update_type
+  dpu_last_attempt_end_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.dpu_last_attempt_end_datetime
+  dpu_last_attempt_start_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.dpu_last_attempt_start_datetime
+  dpu_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dpu_pid
+  dpu_run_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dpu_run_count
+  dpu_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.dpu_version
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100897:
+    input_type: table
+    output_type: insert
+    json_output_field: dpu_pid
+    truncate_table: false
+    container_memory: 2048
+    input_sql: |-
+      --finding records to insert into history_octane.deal_pending_update
+      SELECT staging_table.dpu_pid
+           , staging_table.dpu_version
+           , staging_table.dpu_deal_pid
+           , staging_table.dpu_deal_update_type
+           , staging_table.dpu_args_json
+           , staging_table.dpu_create_datetime
+           , staging_table.dpu_last_attempt_start_datetime
+           , staging_table.dpu_last_attempt_end_datetime
+           , staging_table.dpu_completed_datetime
+           , staging_table.dpu_run_count
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.deal_pending_update staging_table
+      LEFT JOIN history_octane.deal_pending_update history_table
+                ON staging_table.dpu_pid = history_table.dpu_pid
+                    AND staging_table.dpu_version = history_table.dpu_version
+      WHERE history_table.dpu_pid IS NULL
+      UNION ALL
+      SELECT history_table.dpu_pid
+           , history_table.dpu_version + 1
+           , history_table.dpu_deal_pid
+           , history_table.dpu_deal_update_type
+           , history_table.dpu_args_json
+           , history_table.dpu_create_datetime
+           , history_table.dpu_last_attempt_start_datetime
+           , history_table.dpu_last_attempt_end_datetime
+           , history_table.dpu_completed_datetime
+           , history_table.dpu_run_count
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.deal_pending_update history_table
+      LEFT JOIN staging_octane.deal_pending_update staging_table
+                ON staging_table.dpu_pid = history_table.dpu_pid
+      WHERE staging_table.dpu_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.deal_pending_update deleted_records
+          WHERE deleted_records.dpu_pid = history_table.dpu_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

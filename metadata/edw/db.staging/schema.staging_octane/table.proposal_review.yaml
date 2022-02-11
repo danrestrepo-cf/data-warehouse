@@ -26,6 +26,38 @@ foreign_keys:
       - lu_pid
       schema: staging_octane
       table: lender_user
+  fk_proposal_review_4:
+    columns:
+    - prpre_scenario_proposal_pid
+    references:
+      columns:
+      - prp_pid
+      schema: staging_octane
+      table: proposal
+  fk_proposal_review_5:
+    columns:
+    - prpre_requested_proposal_snapshot_pid
+    references:
+      columns:
+      - prp_pid
+      schema: staging_octane
+      table: proposal
+  fk_proposal_review_6:
+    columns:
+    - prpre_completed_proposal_snapshot_pid
+    references:
+      columns:
+      - prp_pid
+      schema: staging_octane
+      table: proposal
+  fkt_prpre_proposal_review_request_type:
+    columns:
+    - prpre_proposal_review_request_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: proposal_review_request_type
   fkt_prpre_proposal_review_status_type:
     columns:
     - prpre_proposal_review_status_type
@@ -35,6 +67,10 @@ foreign_keys:
       schema: staging_octane
       table: proposal_review_status_type
 columns:
+  prpre_completed_proposal_snapshot_pid:
+    data_type: BIGINT
+  prpre_create_datetime:
+    data_type: TIMESTAMP
   prpre_decision_by_lender_user_pid:
     data_type: BIGINT
   prpre_decision_datetime:
@@ -45,6 +81,8 @@ columns:
     data_type: BIGINT
   prpre_proposal_pid:
     data_type: BIGINT
+  prpre_proposal_review_request_type:
+    data_type: VARCHAR(128)
   prpre_proposal_review_status_type:
     data_type: VARCHAR(128)
   prpre_request_by_lender_user_pid:
@@ -55,5 +93,11 @@ columns:
     data_type: INTEGER
   prpre_request_summary:
     data_type: TEXT
+  prpre_requested_proposal_snapshot_pid:
+    data_type: BIGINT
+  prpre_scenario_proposal_name:
+    data_type: VARCHAR(128)
+  prpre_scenario_proposal_pid:
+    data_type: BIGINT
   prpre_version:
     data_type: INTEGER

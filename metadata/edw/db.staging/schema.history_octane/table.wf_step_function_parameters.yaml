@@ -1,0 +1,88 @@
+name: wf_step_function_parameters
+primary_source_table: staging.staging_octane.wf_step_function_parameters
+primary_key:
+- wsfp_pid
+- wsfp_version
+foreign_keys:
+  fk_wf_step_function_parameters_1:
+    columns:
+    - wsfp_wf_step_pid
+    references:
+      columns:
+      - ws_pid
+      schema: history_octane
+      table: wf_step
+  fkt_wsfp_proposal_review_status_type:
+    columns:
+    - wsfp_proposal_review_status_type
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: proposal_review_status_type
+columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  wsfp_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wsfp_pid
+  wsfp_proposal_review_id:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.wsfp_proposal_review_id
+  wsfp_proposal_review_status_type:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.wsfp_proposal_review_status_type
+  wsfp_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.wsfp_version
+  wsfp_wf_step_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.wsfp_wf_step_pid
+etls:
+  SP-100900:
+    input_type: table
+    output_type: insert
+    json_output_field: wsfp_pid
+    truncate_table: false
+    container_memory: 2048
+    input_sql: |-
+      --finding records to insert into history_octane.wf_step_function_parameters
+      SELECT staging_table.wsfp_pid
+           , staging_table.wsfp_version
+           , staging_table.wsfp_wf_step_pid
+           , staging_table.wsfp_proposal_review_id
+           , staging_table.wsfp_proposal_review_status_type
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.wf_step_function_parameters staging_table
+      LEFT JOIN history_octane.wf_step_function_parameters history_table
+                ON staging_table.wsfp_pid = history_table.wsfp_pid
+                    AND staging_table.wsfp_version = history_table.wsfp_version
+      WHERE history_table.wsfp_pid IS NULL
+      UNION ALL
+      SELECT history_table.wsfp_pid
+           , history_table.wsfp_version + 1
+           , history_table.wsfp_wf_step_pid
+           , history_table.wsfp_proposal_review_id
+           , history_table.wsfp_proposal_review_status_type
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.wf_step_function_parameters history_table
+      LEFT JOIN staging_octane.wf_step_function_parameters staging_table
+                ON staging_table.wsfp_pid = history_table.wsfp_pid
+      WHERE staging_table.wsfp_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.wf_step_function_parameters deleted_records
+          WHERE deleted_records.wsfp_pid = history_table.wsfp_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );
