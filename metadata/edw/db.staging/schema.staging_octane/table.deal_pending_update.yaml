@@ -1,0 +1,41 @@
+name: deal_pending_update
+primary_key:
+- dpu_pid
+foreign_keys:
+  fk_deal_pending_update_1:
+    columns:
+    - dpu_deal_pid
+    references:
+      columns:
+      - d_pid
+      schema: staging_octane
+      table: deal
+  fkt_dpu_deal_update_type:
+    columns:
+    - dpu_deal_update_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: deal_update_type
+columns:
+  dpu_args_json:
+    data_type: TEXT
+  dpu_completed_datetime:
+    data_type: TIMESTAMP
+  dpu_create_datetime:
+    data_type: TIMESTAMP
+  dpu_deal_pid:
+    data_type: BIGINT
+  dpu_deal_update_type:
+    data_type: VARCHAR(128)
+  dpu_last_attempt_end_datetime:
+    data_type: TIMESTAMP
+  dpu_last_attempt_start_datetime:
+    data_type: TIMESTAMP
+  dpu_pid:
+    data_type: BIGINT
+  dpu_run_count:
+    data_type: INTEGER
+  dpu_version:
+    data_type: INTEGER

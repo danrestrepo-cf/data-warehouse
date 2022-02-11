@@ -161,6 +161,10 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.ds_pid
+  ds_proposal_review_requested_count:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.ds_proposal_review_requested_count
   ds_purchase_advice_date_main:
     data_type: DATE
     source:
@@ -211,6 +215,7 @@ etls:
            , staging_table.ds_lender_lock_datetime_main
            , staging_table.ds_lender_lock_datetime_piggyback
            , staging_table.ds_any_unrequested_packages
+           , staging_table.ds_proposal_review_requested_count
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.deal_summary staging_table
@@ -246,6 +251,7 @@ etls:
            , history_table.ds_lender_lock_datetime_main
            , history_table.ds_lender_lock_datetime_piggyback
            , history_table.ds_any_unrequested_packages
+           , history_table.ds_proposal_review_requested_count
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.deal_summary history_table
