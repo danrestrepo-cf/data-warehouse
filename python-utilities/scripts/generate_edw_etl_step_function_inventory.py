@@ -10,7 +10,7 @@ sys.path.append(PROJECT_DIR_PATH)
 
 from lib.metadata_core.metadata_yaml_translator import generate_data_warehouse_metadata_from_yaml
 from lib.config_mdi_metadata_maintenance.metadata_comparison_functions.metadata_comparison_functions import MetadataComparisonFunctions
-from lib.state_machines_generator.etl_state_machines_generator import AllEtlStateMachinesGenerator
+from lib.state_machines_generator.state_machines_generator import AllEtlStateMachinesGenerator
 
 
 def main():
