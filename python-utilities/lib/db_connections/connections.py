@@ -49,14 +49,15 @@ class DBCursor:
 class LocalPostgresConnection(DBConnection):
     """A connection to the local PostgreSQL instance. When used as a context manager, returns a DBCursor"""
 
-    def __init__(self, dbname: str = 'config', user: str = 'postgres', password: str = 'testonly'):
+    def __init__(self, dbname: str = 'config', user: str = 'postgres', password: str = 'testonly', port: int = 5432):
         self.dbname = dbname
         self.user = user
         self.password = password
+        self.port = port
 
     def __enter__(self):
         try:
-            self.conn = psycopg2.connect(host='localhost', database=self.dbname, user=self.user, password=self.password)
+            self.conn = psycopg2.connect(host='localhost', database=self.dbname, user=self.user, password=self.password, port=self.port)
             return DBCursor(self.conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor))
         except Exception as e:
                 raise self.DBConnectionError(f'Database connection failed due to {e}')

@@ -725,7 +725,7 @@ class EDW:
         self.password = password
 
     def __enter__(self):
-        self.conn = psycopg2.connect(host=self.host, database=self.dbname, user=self.user, password=self.password)
+        self.conn = psycopg2.connect(host=self.host, database=self.dbname, user=self.user, password=self.password, port=5432)
         return EDWCursor(self.conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor))
 
     def __exit__(self, exc_type, exc_val, exc_tb):
