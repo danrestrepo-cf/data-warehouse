@@ -12,6 +12,14 @@ foreign_keys:
       - lpr_pid
       schema: history_octane
       table: lp_request
+  fkt_lpf_finding_yes_no_unknown_type:
+    columns:
+    - lpf_finding_result
+    references:
+      columns:
+      - code
+      schema: history_octane
+      table: yes_no_unknown_type
   fkt_lpf_lp_finding_message_type:
     columns:
     - lpf_lp_finding_message_type
@@ -27,6 +35,10 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
+  lpf_finding_result:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.lpf_finding_result
   lpf_finding_value:
     data_type: VARCHAR(128)
     source:
@@ -60,6 +72,7 @@ etls:
            , staging_table.lpf_version
            , staging_table.lpf_lp_request_pid
            , staging_table.lpf_lp_finding_message_type
+           , staging_table.lpf_finding_result
            , staging_table.lpf_finding_value
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
@@ -73,6 +86,7 @@ etls:
            , history_table.lpf_version + 1
            , history_table.lpf_lp_request_pid
            , history_table.lpf_lp_finding_message_type
+           , history_table.lpf_finding_result
            , history_table.lpf_finding_value
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
