@@ -201,7 +201,7 @@ def generate_history_octane_metadata(metadata: DataWarehouseMetadata, table_to_p
 
 # the name of this function is calling the DataWarehouseMetadata variable metadata generated from Octane's DB "history_octane_metadata"
 def add_deleted_tables_and_columns_to_history_octane_metadata(metadata: DataWarehouseMetadata, # this is the Octane db metadata?
-                                                              history_octane_column_metadata: List[dict]) -> DataWarehouseMetadata:  # this is essentially the history_octane metadata from config.mdi
+                                                              history_octane_column_metadata: List[dict]) -> DataWarehouseMetadata:  # this is essentially the history_octane metadata from information schema
     """Generate a new DataWarehouseMetadata object with previously-deleted tables/columns incorporated into history_octane.
 
     The DataWarehouseMetadata object generated from Octane's DB can only contain tables/columns that still exist
