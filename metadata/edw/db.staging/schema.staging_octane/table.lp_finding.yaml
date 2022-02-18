@@ -12,7 +12,7 @@ foreign_keys:
       table: lp_request
   fkt_lpf_finding_yes_no_unknown_type:
     columns:
-    - lpf_finding_yes_no_unknown_type
+    - lpf_finding_result
     references:
       columns:
       - code
@@ -27,9 +27,9 @@ foreign_keys:
       schema: staging_octane
       table: lp_finding_message_type
 columns:
-  lpf_finding_value:
+  lpf_finding_result:
     data_type: VARCHAR(128)
-  lpf_finding_yes_no_unknown_type:
+  lpf_finding_value:
     data_type: VARCHAR(128)
   lpf_lp_finding_message_type:
     data_type: VARCHAR(128)
