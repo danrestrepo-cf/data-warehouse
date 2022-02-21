@@ -213,8 +213,6 @@ columns:
       field: primary_source_table.columns.mcrl_decision_credit_score
   mcrl_disclosure_mode_date:
     data_type: DATE
-    source:
-      field: primary_source_table.columns.mcrl_disclosure_mode_date
   mcrl_doc_level_type:
     data_type: VARCHAR(128)
     source:
@@ -371,6 +369,10 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.mcrl_subsequent_payment_adjustment_term_months
+  mcrl_trid_application_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.mcrl_trid_application_date
   mcrl_version:
     data_type: INTEGER
     source:
@@ -399,7 +401,7 @@ etls:
            , staging_table.mcrl_note_rate_percent
            , staging_table.mcrl_hmda_action_type
            , staging_table.mcrl_hmda_action_date
-           , staging_table.mcrl_disclosure_mode_date
+           , staging_table.mcrl_trid_application_date
            , staging_table.mcrl_decision_credit_score
            , staging_table.mcrl_property_usage_type
            , staging_table.mcrl_doc_level_type
@@ -454,7 +456,7 @@ etls:
            , history_table.mcrl_note_rate_percent
            , history_table.mcrl_hmda_action_type
            , history_table.mcrl_hmda_action_date
-           , history_table.mcrl_disclosure_mode_date
+           , history_table.mcrl_trid_application_date
            , history_table.mcrl_decision_credit_score
            , history_table.mcrl_property_usage_type
            , history_table.mcrl_doc_level_type
