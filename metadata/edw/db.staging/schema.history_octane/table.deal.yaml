@@ -221,14 +221,18 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.d_deal_status_type
-  d_disclosure_mode_date:
-    data_type: DATE
-    source:
-      field: primary_source_table.columns.d_disclosure_mode_date
   d_early_wire_request:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.d_early_wire_request
+  d_ecoa_application_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.d_ecoa_application_date
+  d_ecoa_decision_due_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.d_ecoa_decision_due_date
   d_effective_hmda_action_date:
     data_type: DATE
     source:
@@ -357,6 +361,10 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.d_training_loan
+  d_trid_application_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.d_trid_application_date
   d_velocify_lead_id:
     data_type: VARCHAR(32)
     source:
@@ -403,7 +411,7 @@ etls:
            , staging_table.d_external_loan_id_main
            , staging_table.d_external_loan_id_piggyback
            , staging_table.d_lead_source_pid
-           , staging_table.d_disclosure_mode_date
+           , staging_table.d_trid_application_date
            , staging_table.d_deal_status_date
            , staging_table.d_sap_deal
            , staging_table.d_hmda_action_date
@@ -439,6 +447,8 @@ etls:
            , staging_table.d_enable_electronic_transaction
            , staging_table.d_initial_cancel_status_date
            , staging_table.d_location_pid
+           , staging_table.d_ecoa_application_date
+           , staging_table.d_ecoa_decision_due_date
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.deal staging_table
@@ -466,7 +476,7 @@ etls:
            , history_table.d_external_loan_id_main
            , history_table.d_external_loan_id_piggyback
            , history_table.d_lead_source_pid
-           , history_table.d_disclosure_mode_date
+           , history_table.d_trid_application_date
            , history_table.d_deal_status_date
            , history_table.d_sap_deal
            , history_table.d_hmda_action_date
@@ -502,6 +512,8 @@ etls:
            , history_table.d_enable_electronic_transaction
            , history_table.d_initial_cancel_status_date
            , history_table.d_location_pid
+           , history_table.d_ecoa_application_date
+           , history_table.d_ecoa_decision_due_date
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.deal history_table
