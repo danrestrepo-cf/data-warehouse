@@ -73,29 +73,6 @@ JOIN mdi.table_output_step
 UPDATES
 */
 
---edw_field_definition
-WITH update_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name, source_table_name, source_field_name) AS (
-    VALUES ('staging', 'history_octane', 'deal', 'd_disclosure_mode_date', 'DATE', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'mcr_loan', 'mcrl_disclosure_mode_date', 'DATE', NULL, NULL, NULL, NULL)
-)
-UPDATE mdi.edw_field_definition
-SET data_type = update_rows.data_type
-  , source_edw_field_definition_dwid = source_field_definition.dwid
-FROM update_rows
-JOIN mdi.edw_table_definition
-     ON update_rows.database_name = edw_table_definition.database_name
-         AND update_rows.schema_name = edw_table_definition.schema_name
-         AND update_rows.table_name = edw_table_definition.table_name
-LEFT JOIN mdi.edw_table_definition source_table_definition
-          ON update_rows.source_database_name = source_table_definition.database_name
-              AND update_rows.source_schema_name = source_table_definition.schema_name
-              AND update_rows.source_table_name = source_table_definition.table_name
-LEFT JOIN mdi.edw_field_definition source_field_definition
-          ON source_table_definition.dwid = source_field_definition.edw_table_definition_dwid
-              AND update_rows.source_field_name = source_field_definition.field_name
-WHERE edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
-  AND edw_field_definition.field_name = update_rows.field_name;
-
 --table_input_step
 WITH update_rows (process_name, data_source_dwid, sql, connectionname) AS (
     VALUES ('SP-100267', 0, '--finding records to insert into history_octane.deal
@@ -488,6 +465,19 @@ WHERE delete_keys.process_name = process.name
   AND delete_keys.database_field_name = table_output_field.database_field_name;
 
 --edw_field_definition
+WITH delete_keys (database_name, schema_name, table_name, field_name) AS (
+    VALUES ('staging', 'history_octane', 'deal', 'd_disclosure_mode_date')
+         , ('staging', 'history_octane', 'mcr_loan', 'mcrl_disclosure_mode_date')
+)
+DELETE
+FROM mdi.edw_field_definition
+    USING delete_keys, mdi.edw_table_definition
+WHERE edw_table_definition.database_name = delete_keys.database_name
+  AND edw_table_definition.schema_name = delete_keys.schema_name
+  AND edw_table_definition.table_name = delete_keys.table_name
+  AND edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
+  AND edw_field_definition.field_name = delete_keys.field_name;
+
 WITH delete_keys (database_name, schema_name, table_name, field_name) AS (
     VALUES ('staging', 'staging_octane', 'mcr_loan', 'mcrl_disclosure_mode_date')
          , ('staging', 'staging_octane', 'deal', 'd_disclosure_mode_date')
