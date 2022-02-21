@@ -183,10 +183,12 @@ columns:
     data_type: DATE
   d_deal_status_type:
     data_type: VARCHAR(128)
-  d_disclosure_mode_date:
-    data_type: DATE
   d_early_wire_request:
     data_type: BOOLEAN
+  d_ecoa_application_date:
+    data_type: DATE
+  d_ecoa_decision_due_date:
+    data_type: DATE
   d_effective_hmda_action_date:
     data_type: DATE
   d_enable_electronic_transaction:
@@ -251,6 +253,8 @@ columns:
     data_type: BOOLEAN
   d_training_loan:
     data_type: BOOLEAN
+  d_trid_application_date:
+    data_type: DATE
   d_velocify_lead_id:
     data_type: VARCHAR(32)
   d_version:
