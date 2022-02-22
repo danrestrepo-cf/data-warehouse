@@ -1,0 +1,592 @@
+{
+    "Comment": "SP-200001-delete - ETL to delete from loan_lender_user_access",
+    "StartAt": "SP-200001-delete",
+    "States": {
+        "SP-200001-delete": {
+            "Type": "Parallel",
+            "End": true,
+            "Branches": [
+                {
+                    "Comment": "SP-200001-delete-0 - ETL to delete from loan_lender_user_access_0 partition",
+                    "StartAt": "SP-200001-delete-0",
+                    "States": {
+                        "SP-200001-delete-0": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Parameters": {
+                                "LaunchType": "FARGATE",
+                                "Cluster": "${ecsClusterARN}",
+                                "TaskDefinition": "${mdi_2_arn}",
+                                "NetworkConfiguration": {
+                                    "AwsvpcConfiguration": {
+                                        "AssignPublicIp": "DISABLED",
+                                        "SecurityGroups": [
+                                            "${securityGroupId}"
+                                        ],
+                                        "Subnets": ${subnetIDs}
+                                    }
+                                },
+                                "Overrides": {
+                                    "Memory": "2048",
+                                    "ContainerOverrides": [
+                                        {
+                                            "Memory": 2048,
+                                            "Environment": [
+                                                {
+                                                    "Name": "PROCESS_NAME",
+                                                    "Value": "SP-200001-delete-0"
+                                                },
+                                                {
+                                                    "Name": "INPUT_DATA",
+                                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
+                                                },
+                                                {
+                                                    "Name": "TOKEN_ID",
+                                                    "Value.$": "$$.Task.Token"
+                                                }
+                                            ],
+                                            "Name": "${mdi_2_container}"
+                                        }
+                                    ]
+                                }
+                            },
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.TaskFailed"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "SP-200001-delete-4 - ETL to delete from loan_lender_user_access_4 partition",
+                    "StartAt": "SP-200001-delete-4",
+                    "States": {
+                        "SP-200001-delete-4": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Parameters": {
+                                "LaunchType": "FARGATE",
+                                "Cluster": "${ecsClusterARN}",
+                                "TaskDefinition": "${mdi_2_arn}",
+                                "NetworkConfiguration": {
+                                    "AwsvpcConfiguration": {
+                                        "AssignPublicIp": "DISABLED",
+                                        "SecurityGroups": [
+                                            "${securityGroupId}"
+                                        ],
+                                        "Subnets": ${subnetIDs}
+                                    }
+                                },
+                                "Overrides": {
+                                    "Memory": "2048",
+                                    "ContainerOverrides": [
+                                        {
+                                            "Memory": 2048,
+                                            "Environment": [
+                                                {
+                                                    "Name": "PROCESS_NAME",
+                                                    "Value": "SP-200001-delete-4"
+                                                },
+                                                {
+                                                    "Name": "INPUT_DATA",
+                                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
+                                                },
+                                                {
+                                                    "Name": "TOKEN_ID",
+                                                    "Value.$": "$$.Task.Token"
+                                                }
+                                            ],
+                                            "Name": "${mdi_2_container}"
+                                        }
+                                    ]
+                                }
+                            },
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.TaskFailed"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "SP-200001-delete-25 - ETL to delete from loan_lender_user_access_25 partition",
+                    "StartAt": "SP-200001-delete-25",
+                    "States": {
+                        "SP-200001-delete-25": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Parameters": {
+                                "LaunchType": "FARGATE",
+                                "Cluster": "${ecsClusterARN}",
+                                "TaskDefinition": "${mdi_2_arn}",
+                                "NetworkConfiguration": {
+                                    "AwsvpcConfiguration": {
+                                        "AssignPublicIp": "DISABLED",
+                                        "SecurityGroups": [
+                                            "${securityGroupId}"
+                                        ],
+                                        "Subnets": ${subnetIDs}
+                                    }
+                                },
+                                "Overrides": {
+                                    "Memory": "2048",
+                                    "ContainerOverrides": [
+                                        {
+                                            "Memory": 2048,
+                                            "Environment": [
+                                                {
+                                                    "Name": "PROCESS_NAME",
+                                                    "Value": "SP-200001-delete-25"
+                                                },
+                                                {
+                                                    "Name": "INPUT_DATA",
+                                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
+                                                },
+                                                {
+                                                    "Name": "TOKEN_ID",
+                                                    "Value.$": "$$.Task.Token"
+                                                }
+                                            ],
+                                            "Name": "${mdi_2_container}"
+                                        }
+                                    ]
+                                }
+                            },
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.TaskFailed"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "SP-200001-delete-40 - ETL to delete from loan_lender_user_access_40 partition",
+                    "StartAt": "SP-200001-delete-40",
+                    "States": {
+                        "SP-200001-delete-40": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Parameters": {
+                                "LaunchType": "FARGATE",
+                                "Cluster": "${ecsClusterARN}",
+                                "TaskDefinition": "${mdi_2_arn}",
+                                "NetworkConfiguration": {
+                                    "AwsvpcConfiguration": {
+                                        "AssignPublicIp": "DISABLED",
+                                        "SecurityGroups": [
+                                            "${securityGroupId}"
+                                        ],
+                                        "Subnets": ${subnetIDs}
+                                    }
+                                },
+                                "Overrides": {
+                                    "Memory": "2048",
+                                    "ContainerOverrides": [
+                                        {
+                                            "Memory": 2048,
+                                            "Environment": [
+                                                {
+                                                    "Name": "PROCESS_NAME",
+                                                    "Value": "SP-200001-delete-40"
+                                                },
+                                                {
+                                                    "Name": "INPUT_DATA",
+                                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
+                                                },
+                                                {
+                                                    "Name": "TOKEN_ID",
+                                                    "Value.$": "$$.Task.Token"
+                                                }
+                                            ],
+                                            "Name": "${mdi_2_container}"
+                                        }
+                                    ]
+                                }
+                            },
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.TaskFailed"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "SP-200001-delete-50 - ETL to delete from loan_lender_user_access_50 partition",
+                    "StartAt": "SP-200001-delete-50",
+                    "States": {
+                        "SP-200001-delete-50": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Parameters": {
+                                "LaunchType": "FARGATE",
+                                "Cluster": "${ecsClusterARN}",
+                                "TaskDefinition": "${mdi_2_arn}",
+                                "NetworkConfiguration": {
+                                    "AwsvpcConfiguration": {
+                                        "AssignPublicIp": "DISABLED",
+                                        "SecurityGroups": [
+                                            "${securityGroupId}"
+                                        ],
+                                        "Subnets": ${subnetIDs}
+                                    }
+                                },
+                                "Overrides": {
+                                    "Memory": "2048",
+                                    "ContainerOverrides": [
+                                        {
+                                            "Memory": 2048,
+                                            "Environment": [
+                                                {
+                                                    "Name": "PROCESS_NAME",
+                                                    "Value": "SP-200001-delete-50"
+                                                },
+                                                {
+                                                    "Name": "INPUT_DATA",
+                                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
+                                                },
+                                                {
+                                                    "Name": "TOKEN_ID",
+                                                    "Value.$": "$$.Task.Token"
+                                                }
+                                            ],
+                                            "Name": "${mdi_2_container}"
+                                        }
+                                    ]
+                                }
+                            },
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.TaskFailed"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "SP-200001-delete-54 - ETL to delete from loan_lender_user_access_54 partition",
+                    "StartAt": "SP-200001-delete-54",
+                    "States": {
+                        "SP-200001-delete-54": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Parameters": {
+                                "LaunchType": "FARGATE",
+                                "Cluster": "${ecsClusterARN}",
+                                "TaskDefinition": "${mdi_2_arn}",
+                                "NetworkConfiguration": {
+                                    "AwsvpcConfiguration": {
+                                        "AssignPublicIp": "DISABLED",
+                                        "SecurityGroups": [
+                                            "${securityGroupId}"
+                                        ],
+                                        "Subnets": ${subnetIDs}
+                                    }
+                                },
+                                "Overrides": {
+                                    "Memory": "2048",
+                                    "ContainerOverrides": [
+                                        {
+                                            "Memory": 2048,
+                                            "Environment": [
+                                                {
+                                                    "Name": "PROCESS_NAME",
+                                                    "Value": "SP-200001-delete-54"
+                                                },
+                                                {
+                                                    "Name": "INPUT_DATA",
+                                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
+                                                },
+                                                {
+                                                    "Name": "TOKEN_ID",
+                                                    "Value.$": "$$.Task.Token"
+                                                }
+                                            ],
+                                            "Name": "${mdi_2_container}"
+                                        }
+                                    ]
+                                }
+                            },
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.TaskFailed"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "SP-200001-delete-61 - ETL to delete from loan_lender_user_access_61 partition",
+                    "StartAt": "SP-200001-delete-61",
+                    "States": {
+                        "SP-200001-delete-61": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Parameters": {
+                                "LaunchType": "FARGATE",
+                                "Cluster": "${ecsClusterARN}",
+                                "TaskDefinition": "${mdi_2_arn}",
+                                "NetworkConfiguration": {
+                                    "AwsvpcConfiguration": {
+                                        "AssignPublicIp": "DISABLED",
+                                        "SecurityGroups": [
+                                            "${securityGroupId}"
+                                        ],
+                                        "Subnets": ${subnetIDs}
+                                    }
+                                },
+                                "Overrides": {
+                                    "Memory": "2048",
+                                    "ContainerOverrides": [
+                                        {
+                                            "Memory": 2048,
+                                            "Environment": [
+                                                {
+                                                    "Name": "PROCESS_NAME",
+                                                    "Value": "SP-200001-delete-61"
+                                                },
+                                                {
+                                                    "Name": "INPUT_DATA",
+                                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
+                                                },
+                                                {
+                                                    "Name": "TOKEN_ID",
+                                                    "Value.$": "$$.Task.Token"
+                                                }
+                                            ],
+                                            "Name": "${mdi_2_container}"
+                                        }
+                                    ]
+                                }
+                            },
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.TaskFailed"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "SP-200001-delete-66 - ETL to delete from loan_lender_user_access_66 partition",
+                    "StartAt": "SP-200001-delete-66",
+                    "States": {
+                        "SP-200001-delete-66": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Parameters": {
+                                "LaunchType": "FARGATE",
+                                "Cluster": "${ecsClusterARN}",
+                                "TaskDefinition": "${mdi_2_arn}",
+                                "NetworkConfiguration": {
+                                    "AwsvpcConfiguration": {
+                                        "AssignPublicIp": "DISABLED",
+                                        "SecurityGroups": [
+                                            "${securityGroupId}"
+                                        ],
+                                        "Subnets": ${subnetIDs}
+                                    }
+                                },
+                                "Overrides": {
+                                    "Memory": "2048",
+                                    "ContainerOverrides": [
+                                        {
+                                            "Memory": 2048,
+                                            "Environment": [
+                                                {
+                                                    "Name": "PROCESS_NAME",
+                                                    "Value": "SP-200001-delete-66"
+                                                },
+                                                {
+                                                    "Name": "INPUT_DATA",
+                                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
+                                                },
+                                                {
+                                                    "Name": "TOKEN_ID",
+                                                    "Value.$": "$$.Task.Token"
+                                                }
+                                            ],
+                                            "Name": "${mdi_2_container}"
+                                        }
+                                    ]
+                                }
+                            },
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.TaskFailed"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "SP-200001-delete-70 - ETL to delete from loan_lender_user_access_70 partition",
+                    "StartAt": "SP-200001-delete-70",
+                    "States": {
+                        "SP-200001-delete-70": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Parameters": {
+                                "LaunchType": "FARGATE",
+                                "Cluster": "${ecsClusterARN}",
+                                "TaskDefinition": "${mdi_2_arn}",
+                                "NetworkConfiguration": {
+                                    "AwsvpcConfiguration": {
+                                        "AssignPublicIp": "DISABLED",
+                                        "SecurityGroups": [
+                                            "${securityGroupId}"
+                                        ],
+                                        "Subnets": ${subnetIDs}
+                                    }
+                                },
+                                "Overrides": {
+                                    "Memory": "2048",
+                                    "ContainerOverrides": [
+                                        {
+                                            "Memory": 2048,
+                                            "Environment": [
+                                                {
+                                                    "Name": "PROCESS_NAME",
+                                                    "Value": "SP-200001-delete-70"
+                                                },
+                                                {
+                                                    "Name": "INPUT_DATA",
+                                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
+                                                },
+                                                {
+                                                    "Name": "TOKEN_ID",
+                                                    "Value.$": "$$.Task.Token"
+                                                }
+                                            ],
+                                            "Name": "${mdi_2_container}"
+                                        }
+                                    ]
+                                }
+                            },
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.TaskFailed"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "SP-200001-delete-83 - ETL to delete from loan_lender_user_access_83 partition",
+                    "StartAt": "SP-200001-delete-83",
+                    "States": {
+                        "SP-200001-delete-83": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::ecs:runTask.sync",
+                            "Parameters": {
+                                "LaunchType": "FARGATE",
+                                "Cluster": "${ecsClusterARN}",
+                                "TaskDefinition": "${mdi_2_arn}",
+                                "NetworkConfiguration": {
+                                    "AwsvpcConfiguration": {
+                                        "AssignPublicIp": "DISABLED",
+                                        "SecurityGroups": [
+                                            "${securityGroupId}"
+                                        ],
+                                        "Subnets": ${subnetIDs}
+                                    }
+                                },
+                                "Overrides": {
+                                    "Memory": "2048",
+                                    "ContainerOverrides": [
+                                        {
+                                            "Memory": 2048,
+                                            "Environment": [
+                                                {
+                                                    "Name": "PROCESS_NAME",
+                                                    "Value": "SP-200001-delete-83"
+                                                },
+                                                {
+                                                    "Name": "INPUT_DATA",
+                                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
+                                                },
+                                                {
+                                                    "Name": "TOKEN_ID",
+                                                    "Value.$": "$$.Task.Token"
+                                                }
+                                            ],
+                                            "Name": "${mdi_2_container}"
+                                        }
+                                    ]
+                                }
+                            },
+                            "Retry": [
+                                {
+                                    "ErrorEquals": [
+                                        "States.TaskFailed"
+                                    ],
+                                    "IntervalSeconds": 10,
+                                    "MaxAttempts": 5,
+                                    "BackoffRate": 2.0
+                                }
+                            ],
+                            "End": true
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}
