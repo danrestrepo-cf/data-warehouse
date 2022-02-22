@@ -585,64 +585,6 @@
                             "End": true
                         }
                     }
-                },
-                {
-                    "Comment": "SP-200001-delete-10 - ETL to delete from loan_lender_user_access_10 partition",
-                    "StartAt": "SP-200001-delete-10",
-                    "States": {
-                        "SP-200001-delete-10": {
-                            "Type": "Task",
-                            "Resource": "arn:aws:states:::ecs:runTask.sync",
-                            "Parameters": {
-                                "LaunchType": "FARGATE",
-                                "Cluster": "${ecsClusterARN}",
-                                "TaskDefinition": "${mdi_2_arn}",
-                                "NetworkConfiguration": {
-                                    "AwsvpcConfiguration": {
-                                        "AssignPublicIp": "DISABLED",
-                                        "SecurityGroups": [
-                                            "${securityGroupId}"
-                                        ],
-                                        "Subnets": ${subnetIDs}
-                                    }
-                                },
-                                "Overrides": {
-                                    "Memory": "2048",
-                                    "ContainerOverrides": [
-                                        {
-                                            "Memory": 2048,
-                                            "Environment": [
-                                                {
-                                                    "Name": "PROCESS_NAME",
-                                                    "Value": "SP-200001-delete-10"
-                                                },
-                                                {
-                                                    "Name": "INPUT_DATA",
-                                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
-                                                },
-                                                {
-                                                    "Name": "TOKEN_ID",
-                                                    "Value.$": "$$.Task.Token"
-                                                }
-                                            ],
-                                            "Name": "${mdi_2_container}"
-                                        }
-                                    ]
-                                }
-                            },
-                            "Retry": [
-                                {
-                                    "ErrorEquals": [
-                                        "States.TaskFailed"
-                                    ],
-                                    "IntervalSeconds": 10,
-                                    "MaxAttempts": 5,
-                                    "BackoffRate": 2.0
-                                }
-                            ],
-                            "End": true
-                        }
-                    }
                 }
             ]
         }
