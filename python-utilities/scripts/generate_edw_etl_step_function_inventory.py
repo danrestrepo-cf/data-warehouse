@@ -9,7 +9,7 @@ PROJECT_DIR_PATH = os.path.realpath(os.path.join(os.path.dirname(os.path.realpat
 sys.path.append(PROJECT_DIR_PATH)
 
 from lib.metadata_core.metadata_yaml_translator import generate_data_warehouse_metadata_from_yaml
-from lib.config_mdi_metadata_maintenance.metadata_comparison_functions.metadata_comparison_functions import MetadataComparisonFunctions
+from lib.metadata_core.data_warehouse_metadata import ETLMetadata
 from lib.state_machines_generator.state_machines_generator import AllEtlStateMachinesGenerator
 
 
@@ -33,7 +33,8 @@ def main():
                     state_machine_metadata[etl.process_name] = {
                         "target_table": table.name,
                         "container_memory": etl.container_memory,
-                        "comment": MetadataComparisonFunctions.construct_process_description(table.path, table.primary_source_table, etl),
+                        "comment": ETLMetadata.construct_process_description(table.primary_source_table, table.path,
+                                                                             etl.input_type, etl.output_type),
                         "next_processes": sorted(table.next_etls)
                     }
 

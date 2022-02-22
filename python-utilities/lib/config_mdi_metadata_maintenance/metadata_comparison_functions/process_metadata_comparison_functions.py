@@ -4,7 +4,7 @@ from lib.config_mdi_metadata_maintenance.metadata_comparison_functions.metadata_
 from lib.db_connections import DBConnection
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper, SingleGroupRowGrouper
-from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata
+from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, ETLMetadata
 
 
 class ProcessMetadataComparisonFunctions(MetadataComparisonFunctions):
@@ -43,7 +43,9 @@ class ProcessMetadataComparisonFunctions(MetadataComparisonFunctions):
             for schema in database.schemas:
                 for table in schema.tables:
                     for etl in table.etls:
-                        description = self.construct_process_description(table.path, table.primary_source_table, etl)
+                        description = ETLMetadata.construct_process_description(table.primary_source_table,
+                                                                                table.path, etl.input_type,
+                                                                                etl.output_type)
                         metadata_table.add_row({'process_name': etl.process_name, 'process_description': description})
         return metadata_table
 

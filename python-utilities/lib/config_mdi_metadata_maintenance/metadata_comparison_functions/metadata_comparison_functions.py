@@ -92,20 +92,6 @@ class MetadataComparisonFunctions(ABC):
         """Construct an empty metadata table pre-configured with the appropriate key fields."""
         return MetadataTable(self.key_fields)
 
-    @staticmethod
-    def construct_process_description(table: TablePath, source_table: TablePath, etl: ETLMetadata) -> str:
-        """Construct a description string for a given ETL process.
-
-        This method is currently configured to closely match existing description
-        strings for staging_octane -> history_octane ETLs. For other ETLs, a
-        generic description is produced.
-        """
-        if table.database == 'staging' and table.schema == 'history_octane' and source_table.database == 'staging' and source_table.schema == 'staging_octane':
-            return f'ETL to copy {table.table} data from staging_octane to history_octane'
-        else:
-            return f'{etl.input_type.value} -> table-{etl.output_type.value} ETL from ' \
-                   f'{source_table.database}.{source_table.schema}.{source_table.table} to {table.database}.{table.schema}.{table.table}'
-
     def construct_values_string_from_full_rows(self, rows: List[Row], base_indent: int = 0) -> str:
         """Construct a valid SQL VALUES item containing every field in each of the given rows.
 

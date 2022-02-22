@@ -4,7 +4,7 @@ from lib.config_mdi_metadata_maintenance.metadata_comparison_functions.metadata_
 from lib.db_connections import DBConnection
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper, SingleGroupRowGrouper
-from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata
+from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, ETLMetadata
 
 
 class StateMachineDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions):
@@ -51,7 +51,8 @@ class StateMachineDefinitionMetadataComparisonFunctions(MetadataComparisonFuncti
             for schema in database.schemas:
                 for table in schema.tables:
                     for etl in table.etls:
-                        comment = self.construct_process_description(table.path, table.primary_source_table, etl)
+                        comment = ETLMetadata.construct_process_description(table.primary_source_table, table.path,
+                                                                            etl.input_type, etl.output_type)
                         metadata_table.add_row({'process_name': etl.process_name, 'state_machine_name': etl.process_name,
                                                 'state_machine_comment': comment})
         return metadata_table

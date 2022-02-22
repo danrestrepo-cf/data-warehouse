@@ -194,6 +194,21 @@ class ETLMetadata:
     container_memory: int = None
     input_sql: Optional[str] = None
 
+    @staticmethod
+    def construct_process_description(source_table: TablePath, target_table: TablePath, input_type: ETLInputType,
+                                      output_type: ETLOutputType) -> str:
+        """Construct a description string for a given ETL process.
+
+        This method is currently configured to closely match existing description
+        strings for staging_octane -> history_octane ETLs. For other ETLs, a
+        generic description is produced.
+        """
+        if target_table.database == 'staging' and target_table.schema == 'history_octane' and source_table.database == 'staging' and source_table.schema == 'staging_octane':
+            return f'ETL to copy {target_table.table} data from staging_octane to history_octane'
+        else:
+            return f'{input_type.value} -> table-{output_type.value} ETL from ' \
+                   f'{source_table.database}.{source_table.schema}.{source_table.table} to {target_table.database}.{target_table.schema}.{target_table.table}'
+
 
 @dataclass(init=False)
 class ColumnMetadata:
