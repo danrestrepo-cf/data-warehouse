@@ -1,32 +1,138 @@
 import unittest
 from lib.state_machines_generator.state_machines_generator import AllEtlStateMachinesGenerator
+from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
 
 
 class TestSequentialOutputAndVaryingConfigAttributes(unittest.TestCase):
 
     def setUp(self):
-        self.state_machine_metadata = {
-            'SP-1': {
-                'target_table': 'table_1',
-                'container_memory': 2048,
-                'comment': 'Comment 1',
-                'next_processes': ['SP-2']
-            },
-            'SP-2': {
-                'target_table': 'table_2',
-                'container_memory': 2048,
-                'comment': 'Comment 2',
-                'next_processes': ['SP-3']
-            },
-            'SP-3': {
-                'target_table': 'table_3',
-                'container_memory': 4096,
-                'comment': 'Comment 3',
-                'next_processes': []
+        self.dw_dict = \
+            {
+                'name': 'dw',
+                'databases': [
+                    {
+                        'name': 'database_1',
+                        'schemas': [
+                            {
+                                'name': 'schema_1',
+                                'tables': [
+                                    {
+                                        'name': 'table_0',
+                                        'primary_key': [
+                                            'column_1'
+                                        ],
+                                        'columns': {
+                                            'column_1': {
+                                                'data_type': 'TEXT'
+                                            },
+                                            'column_2': {
+                                                'data_type': 'INT'
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                'name': 'schema_2',
+                                'tables': [
+                                    {
+                                        'name': 'table_1',
+                                        'primary_source_table': 'database_1.schema_1.table_0',
+                                        'primary_key': [
+                                            'column_1'
+                                        ],
+                                        'columns': {
+                                            'column_1': {
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.column_1'
+                                                }
+                                            }
+                                        },
+                                        'etls': {
+                                            'SP-1': {
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'insert',
+                                                'json_output_field': 'column_1',
+                                                'truncate_table': False,
+                                                'container_memory': 2048,
+                                                'input_sql': 'SQL for SP-1'
+                                            }
+                                        },
+                                        'next_etls': [
+                                            'SP-2'
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                'name': 'schema_3',
+                                'tables': [
+                                    {
+                                        'name': 'table_2',
+                                        'primary_source_table': 'database_1.schema_2.table_1',
+                                        'primary_key': [
+                                            'column_1'
+                                        ],
+                                        'columns': {
+                                            'column_1': {
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.column_1'
+                                                }
+                                            }
+                                        },
+                                        'etls': {
+                                            'SP-2': {
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'insert_update',
+                                                'json_output_field': 'column_1',
+                                                'insert_update_keys': ['column_1'],
+                                                'container_memory': 2048,
+                                                'input_sql': 'SQL for SP-2'
+                                            }
+                                        },
+                                        'next_etls': [
+                                            'SP-3'
+                                        ]
+                                    },
+                                    {
+                                        'name': 'table_3',
+                                        'primary_source_table': 'database_1.schema_3.table_2',
+                                        'primary_key': [
+                                            'column_1'
+                                        ],
+                                        'columns': {
+                                            'column_1': {
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.column_1'
+                                                }
+                                            }
+                                        },
+                                        'etls': {
+                                            'SP-3': {
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'insert_update',
+                                                'json_output_field': 'column_1',
+                                                'insert_update_keys': ['column_1'],
+                                                'container_memory': 2048,
+                                                'input_sql': 'SQL for SP-3'
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
             }
-        }
+        self.data_warehouse_metadata = construct_data_warehouse_metadata_from_dict(self.dw_dict)
 
-        self.result = AllEtlStateMachinesGenerator(self.state_machine_metadata).build_etl_state_machines()
+        self.result = AllEtlStateMachinesGenerator(self.data_warehouse_metadata).build_etl_state_machines()
         self.sp_1_config = self.result['SP-1']
         self.sp_2_config = self.result['SP-2']
         self.sp_3_config = self.result['SP-3']
@@ -48,37 +154,140 @@ class TestSequentialOutputAndVaryingConfigAttributes(unittest.TestCase):
         self.assertEqual('arn:aws:states:::ecs:runTask.sync', self.sp_3_config['States']['SP-3']['Resource'])
 
     def test_throws_error_if_next_process_not_included_in_provided_metadata(self):
-        invalid_state_machine_metadata = self.state_machine_metadata
-        invalid_state_machine_metadata['SP-3']['next_processes'] = ['SP-4']
+        local_dw_dict = self.dw_dict
+        local_dw_dict['databases'][0]['schemas'][2]['tables'][1]['next_etls'] = ['SP-4']
+        invalid_data_warehouse_metadata = construct_data_warehouse_metadata_from_dict(local_dw_dict)
         with self.assertRaises(KeyError):
-            AllEtlStateMachinesGenerator(invalid_state_machine_metadata).build_etl_state_machines()
+            AllEtlStateMachinesGenerator(invalid_data_warehouse_metadata).build_etl_state_machines()
 
 
 class TestParallelOutputStructure(unittest.TestCase):
 
     def setUp(self):
-        state_machine_metadata = {
-            'SP-1': {
-                'target_table': 'table_1',
-                'container_memory': 2048,
-                'comment': 'Comment 1',
-                'next_processes': ['SP-2', 'SP-3']
-            },
-            'SP-2': {
-                'target_table': 'table_2',
-                'container_memory': 2048,
-                'comment': 'Comment 2',
-                'next_processes': []
-            },
-            'SP-3': {
-                'target_table': 'table_3',
-                'container_memory': 4096,
-                'comment': 'Comment 3',
-                'next_processes': []
+        self.dw_dict = \
+            {
+                'name': 'dw',
+                'databases': [
+                    {
+                        'name': 'database_1',
+                        'schemas': [
+                            {
+                                'name': 'schema_1',
+                                'tables': [
+                                    {
+                                        'name': 'table_0',
+                                        'primary_key': [
+                                            'column_1'
+                                        ],
+                                        'columns': {
+                                            'column_1': {
+                                                'data_type': 'TEXT'
+                                            },
+                                            'column_2': {
+                                                'data_type': 'INT'
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                'name': 'schema_2',
+                                'tables': [
+                                    {
+                                        'name': 'table_1',
+                                        'primary_source_table': 'database_1.schema_1.table_0',
+                                        'primary_key': [
+                                            'column_1'
+                                        ],
+                                        'columns': {
+                                            'column_1': {
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.column_1'
+                                                }
+                                            }
+                                        },
+                                        'etls': {
+                                            'SP-1': {
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'insert',
+                                                'json_output_field': 'column_1',
+                                                'truncate_table': False,
+                                                'container_memory': 2048,
+                                                'input_sql': 'SQL for SP-1'
+                                            }
+                                        },
+                                        'next_etls': [
+                                            'SP-2', 'SP-3'
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                'name': 'schema_3',
+                                'tables': [
+                                    {
+                                        'name': 'table_2',
+                                        'primary_source_table': 'database_1.schema_2.table_1',
+                                        'primary_key': [
+                                            'column_1'
+                                        ],
+                                        'columns': {
+                                            'column_1': {
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.column_1'
+                                                }
+                                            }
+                                        },
+                                        'etls': {
+                                            'SP-2': {
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'insert_update',
+                                                'json_output_field': 'column_1',
+                                                'insert_update_keys': ['column_1'],
+                                                'container_memory': 2048,
+                                                'input_sql': 'SQL for SP-2'
+                                            }
+                                        }
+                                    },
+                                    {
+                                        'name': 'table_3',
+                                        'primary_source_table': 'database_1.schema_3.table_2',
+                                        'primary_key': [
+                                            'column_1'
+                                        ],
+                                        'columns': {
+                                            'column_1': {
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.column_1'
+                                                }
+                                            }
+                                        },
+                                        'etls': {
+                                            'SP-3': {
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'insert_update',
+                                                'json_output_field': 'column_1',
+                                                'insert_update_keys': ['column_1'],
+                                                'container_memory': 2048,
+                                                'input_sql': 'SQL for SP-3'
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
             }
-        }
+        self.data_warehouse_metadata = construct_data_warehouse_metadata_from_dict(self.dw_dict)
 
-        self.sp_1_config = AllEtlStateMachinesGenerator(state_machine_metadata).build_etl_state_machines()['SP-1']
+        self.sp_1_config = AllEtlStateMachinesGenerator(self.data_warehouse_metadata).build_etl_state_machines()['SP-1']
 
     def test_sets_startat_to_root_process_name(self):
         self.assertEqual('SP-1', self.sp_1_config['StartAt'])
@@ -109,41 +318,181 @@ class TestEntireOutput(unittest.TestCase):
 
     def test_entire_output_dict(self):
         self.maxDiff = None
-        state_machine_metadata = {
-            'SP-1': {
-                'target_table': 'table_1',
-                'container_memory': 2048,
-                'comment': 'Comment 1',
-                'next_processes': []
-            },
-            'SP-2': {
-                'target_table': 'table_2',
-                'container_memory': 2048,
-                'comment': 'Comment 2',
-                'next_processes': ['SP-3']
-            },
-            'SP-3': {
-                'target_table': 'table_3',
-                'container_memory': 4096,
-                'comment': 'Comment 3',
-                'next_processes': ['SP-4', 'SP-5']
-            },
-            'SP-4': {
-                'target_table': 'table_4',
-                'container_memory': 2048,
-                'comment': 'Comment 4',
-                'next_processes': []
-            },
-            'SP-5': {
-                'target_table': 'table_5',
-                'container_memory': 4096,
-                'comment': 'Comment 5',
-                'next_processes': []
+        dw_dict = \
+            {
+                'name': 'dw',
+                'databases': [
+                    {
+                        'name': 'database_1',
+                        'schemas': [
+                            {
+                                'name': 'schema_1',
+                                'tables': [
+                                    {
+                                        'name': 'table_0',
+                                        'primary_key': [
+                                            'column_1'
+                                        ],
+                                        'columns': {
+                                            'column_1': {
+                                                'data_type': 'TEXT'
+                                            },
+                                            'column_2': {
+                                                'data_type': 'INT'
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                'name': 'schema_2',
+                                'tables': [
+                                    {
+                                        'name': 'table_1',
+                                        'primary_source_table': 'database_1.schema_1.table_0',
+                                        'primary_key': [
+                                            'column_1'
+                                        ],
+                                        'columns': {
+                                            'column_1': {
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.column_1'
+                                                }
+                                            }
+                                        },
+                                        'etls': {
+                                            'SP-1': {
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'insert',
+                                                'json_output_field': 'column_1',
+                                                'truncate_table': False,
+                                                'container_memory': 2048,
+                                                'input_sql': 'SQL for SP-1'
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                'name': 'schema_3',
+                                'tables': [
+                                    {
+                                        'name': 'table_2',
+                                        'primary_source_table': 'database_1.schema_2.table_1',
+                                        'primary_key': [
+                                            'column_1'
+                                        ],
+                                        'columns': {
+                                            'column_1': {
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.column_1'
+                                                }
+                                            }
+                                        },
+                                        'etls': {
+                                            'SP-2': {
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'insert_update',
+                                                'json_output_field': 'column_1',
+                                                'insert_update_keys': ['column_1'],
+                                                'container_memory': 2048,
+                                                'input_sql': 'SQL for SP-2'
+                                            }
+                                        },
+                                        'next_etls': ['SP-3']
+                                    },
+                                    {
+                                        'name': 'table_3',
+                                        'primary_source_table': 'database_1.schema_3.table_2',
+                                        'primary_key': [
+                                            'column_1'
+                                        ],
+                                        'columns': {
+                                            'column_1': {
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.column_1'
+                                                }
+                                            }
+                                        },
+                                        'etls': {
+                                            'SP-3': {
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'insert_update',
+                                                'json_output_field': 'column_1',
+                                                'insert_update_keys': ['column_1'],
+                                                'container_memory': 4096,
+                                                'input_sql': 'SQL for SP-3'
+                                            }
+                                        },
+                                        'next_etls': ['SP-4', 'SP-5']
+                                    },
+                                    {
+                                        'name': 'table_4',
+                                        'primary_source_table': 'database_1.schema_3.table_3',
+                                        'primary_key': [
+                                            'column_1'
+                                        ],
+                                        'columns': {
+                                            'column_1': {
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.column_1'
+                                                }
+                                            }
+                                        },
+                                        'etls': {
+                                            'SP-4': {
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'insert_update',
+                                                'json_output_field': 'column_1',
+                                                'insert_update_keys': ['column_1'],
+                                                'container_memory': 2048,
+                                                'input_sql': 'SQL for SP-4'
+                                            }
+                                        }
+                                    },
+                                    {
+                                        'name': 'table_5',
+                                        'primary_source_table': 'database_1.schema_3.table_3',
+                                        'primary_key': [
+                                            'column_1'
+                                        ],
+                                        'columns': {
+                                            'column_1': {
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.column_1'
+                                                }
+                                            }
+                                        },
+                                        'etls': {
+                                            'SP-5': {
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'delete',
+                                                'json_output_field': 'column_1',
+                                                'delete_keys': ['column_1'],
+                                                'container_memory': 2048,
+                                                'input_sql': 'SQL for SP-5'
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
             }
-        }
 
         sp_1_config_expected = {
-            "Comment": "SP-1 - Comment 1",
+            "Comment": "SP-1 - table -> table-insert ETL from database_1.schema_1.table_0 to database_1.schema_2.table_1",
             "StartAt": "SP-1",
             "States": {
                 "SP-1": {
@@ -192,7 +541,7 @@ class TestEntireOutput(unittest.TestCase):
         }
 
         sp_2_config_expected = {
-            "Comment": "SP-2 - Comment 2",
+            "Comment": "SP-2 - table -> table-insert_update ETL from database_1.schema_2.table_1 to database_1.schema_3.table_2",
             "StartAt": "SP-2",
             "States": {
                 "SP-2": {
@@ -272,7 +621,7 @@ class TestEntireOutput(unittest.TestCase):
         }
 
         sp_3_config_expected = {
-            "Comment": "SP-3 - Comment 3",
+            "Comment": "SP-3 - table -> table-insert_update ETL from database_1.schema_3.table_2 to database_1.schema_3.table_3",
             "StartAt": "SP-3",
             "States": {
                 "SP-3": {
@@ -386,7 +735,8 @@ class TestEntireOutput(unittest.TestCase):
             }
         }
 
-        result = AllEtlStateMachinesGenerator(state_machine_metadata).build_etl_state_machines()
+        data_warehouse_metadata = construct_data_warehouse_metadata_from_dict(dw_dict)
+        result = AllEtlStateMachinesGenerator(data_warehouse_metadata).build_etl_state_machines()
         sp_1_config_result = result['SP-1']
         sp_2_config_result = result['SP-2']
         sp_3_config_result = result['SP-3']

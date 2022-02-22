@@ -1,26 +1,43 @@
 from typing import Optional
+from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, ETLMetadata
 
 
 class AllEtlStateMachinesGenerator:
     """Generates a state machine configuration dict for all ETL processes defined in yaml metadata"""
 
-    def __init__(self, etl_state_machine_metadata: dict):
+    def __init__(self, data_warehouse_metadata: DataWarehouseMetadata):
         """
         Initialize SingleEtlStateMachineGenerator with metadata from EDW's yaml inventory
 
-        :param etl_state_machine_metadata: a dictionary of the form:
+        :param data_warehouse_metadata: a DataWarehouseMetadata object.
 
-            {
-                "SP-123456":
-                    {
-                        "target_table": "[name of SP-123456 target table]",
-                        "container_memory": [amount of ECS container memory used to execute SP-123456],
-                        "comment": "[state machine comment text]",
-                        "next_processes: "[list of processes triggered by SP-123456]"
-                    },
-                ... etc
-            }
+            This object is immediately parsed into the following form:
+
+                {
+                    "SP-123456":
+                        {
+                            "target_table": "[name of SP-123456 target table]",
+                            "container_memory": [amount of ECS container memory used to execute SP-123456],
+                            "comment": "[state machine comment text]",
+                            "next_processes: "[list of processes triggered by SP-123456]"
+                        },
+                    ... etc
+                }
         """
+
+        etl_state_machine_metadata = {}
+        for database in data_warehouse_metadata.databases:
+            for schema in database.schemas:
+                for table in schema.tables:
+                    for etl in table.etls:
+                        etl_state_machine_metadata[etl.process_name] = {
+                            "target_table": table.name,
+                            "container_memory": etl.container_memory,
+                            "comment": ETLMetadata.construct_process_description(table.primary_source_table, table.path,
+                                                                                 etl.input_type, etl.output_type),
+                            "next_processes": sorted(table.next_etls)
+                        }
+
         self.etl_state_machine_metadata = etl_state_machine_metadata
         self.etl_state_machine_generator = SingleEtlStateMachineGenerator(self.etl_state_machine_metadata)
 

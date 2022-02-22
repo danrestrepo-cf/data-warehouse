@@ -9,7 +9,6 @@ PROJECT_DIR_PATH = os.path.realpath(os.path.join(os.path.dirname(os.path.realpat
 sys.path.append(PROJECT_DIR_PATH)
 
 from lib.metadata_core.metadata_yaml_translator import generate_data_warehouse_metadata_from_yaml
-from lib.metadata_core.data_warehouse_metadata import ETLMetadata
 from lib.state_machines_generator.state_machines_generator import AllEtlStateMachinesGenerator
 
 
@@ -25,20 +24,8 @@ def main():
     # delete existing inventory of ETL state machines
     delete_prior_state_machine_configurations(pipelines_dir_path, state_machine_file_extension)
 
-    state_machine_metadata = {}
-    for database in data_warehouse_metadata.databases:
-        for schema in database.schemas:
-            for table in schema.tables:
-                for etl in table.etls:
-                    state_machine_metadata[etl.process_name] = {
-                        "target_table": table.name,
-                        "container_memory": etl.container_memory,
-                        "comment": ETLMetadata.construct_process_description(table.primary_source_table, table.path,
-                                                                             etl.input_type, etl.output_type),
-                        "next_processes": sorted(table.next_etls)
-                    }
-
-    etl_state_machine_generator = AllEtlStateMachinesGenerator(state_machine_metadata)
+    # generate ETL state machines
+    etl_state_machine_generator = AllEtlStateMachinesGenerator(data_warehouse_metadata)
     state_machine_configs = etl_state_machine_generator.build_etl_state_machines()
     formatted_config_strings = format_data_for_outputting(state_machine_configs)
     # output config files
