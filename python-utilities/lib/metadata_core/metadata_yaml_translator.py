@@ -262,6 +262,8 @@ def construct_data_warehouse_metadata_from_dict(data_warehouse_dict: dict) -> Da
     """
     return DictToMetadataBuilder().build_metadata(data_warehouse_dict)
 
+def construct_dict_from_data_warehouse_yaml(parent_dir_file_path: str) -> dict:
+    return MetadataReader(root_dir_file_path=parent_dir_file_path).read_data_warehouse_yaml_files_into_dict()
 
 # internal classes/functions
 
@@ -701,3 +703,6 @@ def get_subdir_paths_with_prefix(root_dir: str, prefix: str) -> List[str]:
 def get_yaml_paths_with_prefix(root_dir: str, prefix: str) -> List[str]:
     """Get a list of files paths for all files the given directory that have the given prefix."""
     return [item for item in glob.glob(os.path.join(root_dir, f'{prefix}.*.yaml')) if os.path.isfile(item)]
+
+def read_data_warehouse_yaml_files_into_dict():
+    pass
