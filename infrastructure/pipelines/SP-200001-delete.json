@@ -7,7 +7,7 @@
             "End": true,
             "Branches": [
                 {
-                    "Comment": "SP-200001-delete-0 - ETL to delete from loan_lender_user_access_0 partition",
+                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 0-4",
                     "StartAt": "SP-200001-delete-0",
                     "States": {
                         "SP-200001-delete-0": {
@@ -60,14 +60,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-1 - ETL to delete from loan_lender_user_access_1 partition",
-                    "StartAt": "SP-200001-delete-1",
-                    "States": {
+                            "Next": "SP-200001-delete-1"
+                        },
                         "SP-200001-delete-1": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -118,14 +112,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-2 - ETL to delete from loan_lender_user_access_2 partition",
-                    "StartAt": "SP-200001-delete-2",
-                    "States": {
+                            "Next": "SP-200001-delete-2"
+                        },
                         "SP-200001-delete-2": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -176,14 +164,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-3 - ETL to delete from loan_lender_user_access_3 partition",
-                    "StartAt": "SP-200001-delete-3",
-                    "States": {
+                            "Next": "SP-200001-delete-3"
+                        },
                         "SP-200001-delete-3": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -234,14 +216,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-4 - ETL to delete from loan_lender_user_access_4 partition",
-                    "StartAt": "SP-200001-delete-4",
-                    "States": {
+                            "Next": "SP-200001-delete-4"
+                        },
                         "SP-200001-delete-4": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -297,7 +273,7 @@
                     }
                 },
                 {
-                    "Comment": "SP-200001-delete-5 - ETL to delete from loan_lender_user_access_5 partition",
+                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 5-9",
                     "StartAt": "SP-200001-delete-5",
                     "States": {
                         "SP-200001-delete-5": {
@@ -350,14 +326,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-6 - ETL to delete from loan_lender_user_access_6 partition",
-                    "StartAt": "SP-200001-delete-6",
-                    "States": {
+                            "Next": "SP-200001-delete-6"
+                        },
                         "SP-200001-delete-6": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -408,14 +378,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-7 - ETL to delete from loan_lender_user_access_7 partition",
-                    "StartAt": "SP-200001-delete-7",
-                    "States": {
+                            "Next": "SP-200001-delete-7"
+                        },
                         "SP-200001-delete-7": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -466,14 +430,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-8 - ETL to delete from loan_lender_user_access_8 partition",
-                    "StartAt": "SP-200001-delete-8",
-                    "States": {
+                            "Next": "SP-200001-delete-8"
+                        },
                         "SP-200001-delete-8": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -524,14 +482,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-9 - ETL to delete from loan_lender_user_access_9 partition",
-                    "StartAt": "SP-200001-delete-9",
-                    "States": {
+                            "Next": "SP-200001-delete-9"
+                        },
                         "SP-200001-delete-9": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -587,7 +539,7 @@
                     }
                 },
                 {
-                    "Comment": "SP-200001-delete-10 - ETL to delete from loan_lender_user_access_10 partition",
+                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 10-14",
                     "StartAt": "SP-200001-delete-10",
                     "States": {
                         "SP-200001-delete-10": {
@@ -640,14 +592,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-11 - ETL to delete from loan_lender_user_access_11 partition",
-                    "StartAt": "SP-200001-delete-11",
-                    "States": {
+                            "Next": "SP-200001-delete-11"
+                        },
                         "SP-200001-delete-11": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -698,14 +644,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-12 - ETL to delete from loan_lender_user_access_12 partition",
-                    "StartAt": "SP-200001-delete-12",
-                    "States": {
+                            "Next": "SP-200001-delete-12"
+                        },
                         "SP-200001-delete-12": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -756,14 +696,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-13 - ETL to delete from loan_lender_user_access_13 partition",
-                    "StartAt": "SP-200001-delete-13",
-                    "States": {
+                            "Next": "SP-200001-delete-13"
+                        },
                         "SP-200001-delete-13": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -814,14 +748,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-14 - ETL to delete from loan_lender_user_access_14 partition",
-                    "StartAt": "SP-200001-delete-14",
-                    "States": {
+                            "Next": "SP-200001-delete-14"
+                        },
                         "SP-200001-delete-14": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -877,7 +805,7 @@
                     }
                 },
                 {
-                    "Comment": "SP-200001-delete-15 - ETL to delete from loan_lender_user_access_15 partition",
+                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 15-19",
                     "StartAt": "SP-200001-delete-15",
                     "States": {
                         "SP-200001-delete-15": {
@@ -930,14 +858,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-16 - ETL to delete from loan_lender_user_access_16 partition",
-                    "StartAt": "SP-200001-delete-16",
-                    "States": {
+                            "Next": "SP-200001-delete-16"
+                        },
                         "SP-200001-delete-16": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -988,14 +910,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-17 - ETL to delete from loan_lender_user_access_17 partition",
-                    "StartAt": "SP-200001-delete-17",
-                    "States": {
+                            "Next": "SP-200001-delete-17"
+                        },
                         "SP-200001-delete-17": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -1046,14 +962,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-18 - ETL to delete from loan_lender_user_access_18 partition",
-                    "StartAt": "SP-200001-delete-18",
-                    "States": {
+                            "Next": "SP-200001-delete-18"
+                        },
                         "SP-200001-delete-18": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -1104,14 +1014,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-19 - ETL to delete from loan_lender_user_access_19 partition",
-                    "StartAt": "SP-200001-delete-19",
-                    "States": {
+                            "Next": "SP-200001-delete-19"
+                        },
                         "SP-200001-delete-19": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -1167,7 +1071,7 @@
                     }
                 },
                 {
-                    "Comment": "SP-200001-delete-20 - ETL to delete from loan_lender_user_access_20 partition",
+                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 20-24",
                     "StartAt": "SP-200001-delete-20",
                     "States": {
                         "SP-200001-delete-20": {
@@ -1220,14 +1124,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-21 - ETL to delete from loan_lender_user_access_21 partition",
-                    "StartAt": "SP-200001-delete-21",
-                    "States": {
+                            "Next": "SP-200001-delete-21"
+                        },
                         "SP-200001-delete-21": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -1278,14 +1176,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-22 - ETL to delete from loan_lender_user_access_22 partition",
-                    "StartAt": "SP-200001-delete-22",
-                    "States": {
+                            "Next": "SP-200001-delete-22"
+                        },
                         "SP-200001-delete-22": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -1336,14 +1228,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-23 - ETL to delete from loan_lender_user_access_23 partition",
-                    "StartAt": "SP-200001-delete-23",
-                    "States": {
+                            "Next": "SP-200001-delete-23"
+                        },
                         "SP-200001-delete-23": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -1394,14 +1280,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-24 - ETL to delete from loan_lender_user_access_24 partition",
-                    "StartAt": "SP-200001-delete-24",
-                    "States": {
+                            "Next": "SP-200001-delete-24"
+                        },
                         "SP-200001-delete-24": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -1457,7 +1337,7 @@
                     }
                 },
                 {
-                    "Comment": "SP-200001-delete-25 - ETL to delete from loan_lender_user_access_25 partition",
+                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 25-29",
                     "StartAt": "SP-200001-delete-25",
                     "States": {
                         "SP-200001-delete-25": {
@@ -1510,14 +1390,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-26 - ETL to delete from loan_lender_user_access_26 partition",
-                    "StartAt": "SP-200001-delete-26",
-                    "States": {
+                            "Next": "SP-200001-delete-26"
+                        },
                         "SP-200001-delete-26": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -1568,14 +1442,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-27 - ETL to delete from loan_lender_user_access_27 partition",
-                    "StartAt": "SP-200001-delete-27",
-                    "States": {
+                            "Next": "SP-200001-delete-27"
+                        },
                         "SP-200001-delete-27": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -1626,14 +1494,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-28 - ETL to delete from loan_lender_user_access_28 partition",
-                    "StartAt": "SP-200001-delete-28",
-                    "States": {
+                            "Next": "SP-200001-delete-28"
+                        },
                         "SP-200001-delete-28": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -1684,14 +1546,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-29 - ETL to delete from loan_lender_user_access_29 partition",
-                    "StartAt": "SP-200001-delete-29",
-                    "States": {
+                            "Next": "SP-200001-delete-29"
+                        },
                         "SP-200001-delete-29": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -1747,7 +1603,7 @@
                     }
                 },
                 {
-                    "Comment": "SP-200001-delete-30 - ETL to delete from loan_lender_user_access_30 partition",
+                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 30-34",
                     "StartAt": "SP-200001-delete-30",
                     "States": {
                         "SP-200001-delete-30": {
@@ -1800,14 +1656,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-31 - ETL to delete from loan_lender_user_access_31 partition",
-                    "StartAt": "SP-200001-delete-31",
-                    "States": {
+                            "Next": "SP-200001-delete-31"
+                        },
                         "SP-200001-delete-31": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -1858,14 +1708,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-32 - ETL to delete from loan_lender_user_access_32 partition",
-                    "StartAt": "SP-200001-delete-32",
-                    "States": {
+                            "Next": "SP-200001-delete-32"
+                        },
                         "SP-200001-delete-32": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -1916,14 +1760,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-33 - ETL to delete from loan_lender_user_access_33 partition",
-                    "StartAt": "SP-200001-delete-33",
-                    "States": {
+                            "Next": "SP-200001-delete-33"
+                        },
                         "SP-200001-delete-33": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -1974,14 +1812,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-34 - ETL to delete from loan_lender_user_access_34 partition",
-                    "StartAt": "SP-200001-delete-34",
-                    "States": {
+                            "Next": "SP-200001-delete-34"
+                        },
                         "SP-200001-delete-34": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -2037,7 +1869,7 @@
                     }
                 },
                 {
-                    "Comment": "SP-200001-delete-35 - ETL to delete from loan_lender_user_access_35 partition",
+                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 35-39",
                     "StartAt": "SP-200001-delete-35",
                     "States": {
                         "SP-200001-delete-35": {
@@ -2090,14 +1922,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-36 - ETL to delete from loan_lender_user_access_36 partition",
-                    "StartAt": "SP-200001-delete-36",
-                    "States": {
+                            "Next": "SP-200001-delete-36"
+                        },
                         "SP-200001-delete-36": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -2148,14 +1974,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-37 - ETL to delete from loan_lender_user_access_37 partition",
-                    "StartAt": "SP-200001-delete-37",
-                    "States": {
+                            "Next": "SP-200001-delete-37"
+                        },
                         "SP-200001-delete-37": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -2206,14 +2026,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-38 - ETL to delete from loan_lender_user_access_38 partition",
-                    "StartAt": "SP-200001-delete-38",
-                    "States": {
+                            "Next": "SP-200001-delete-38"
+                        },
                         "SP-200001-delete-38": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -2264,14 +2078,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-39 - ETL to delete from loan_lender_user_access_39 partition",
-                    "StartAt": "SP-200001-delete-39",
-                    "States": {
+                            "Next": "SP-200001-delete-39"
+                        },
                         "SP-200001-delete-39": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -2327,7 +2135,7 @@
                     }
                 },
                 {
-                    "Comment": "SP-200001-delete-40 - ETL to delete from loan_lender_user_access_40 partition",
+                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 40-44",
                     "StartAt": "SP-200001-delete-40",
                     "States": {
                         "SP-200001-delete-40": {
@@ -2380,14 +2188,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-41 - ETL to delete from loan_lender_user_access_41 partition",
-                    "StartAt": "SP-200001-delete-41",
-                    "States": {
+                            "Next": "SP-200001-delete-41"
+                        },
                         "SP-200001-delete-41": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -2438,14 +2240,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-42 - ETL to delete from loan_lender_user_access_42 partition",
-                    "StartAt": "SP-200001-delete-42",
-                    "States": {
+                            "Next": "SP-200001-delete-42"
+                        },
                         "SP-200001-delete-42": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -2496,14 +2292,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-43 - ETL to delete from loan_lender_user_access_43 partition",
-                    "StartAt": "SP-200001-delete-43",
-                    "States": {
+                            "Next": "SP-200001-delete-43"
+                        },
                         "SP-200001-delete-43": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -2554,14 +2344,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-44 - ETL to delete from loan_lender_user_access_44 partition",
-                    "StartAt": "SP-200001-delete-44",
-                    "States": {
+                            "Next": "SP-200001-delete-44"
+                        },
                         "SP-200001-delete-44": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -2617,7 +2401,7 @@
                     }
                 },
                 {
-                    "Comment": "SP-200001-delete-45 - ETL to delete from loan_lender_user_access_45 partition",
+                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 45-49",
                     "StartAt": "SP-200001-delete-45",
                     "States": {
                         "SP-200001-delete-45": {
@@ -2670,14 +2454,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-46 - ETL to delete from loan_lender_user_access_46 partition",
-                    "StartAt": "SP-200001-delete-46",
-                    "States": {
+                            "Next": "SP-200001-delete-46"
+                        },
                         "SP-200001-delete-46": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -2728,14 +2506,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-47 - ETL to delete from loan_lender_user_access_47 partition",
-                    "StartAt": "SP-200001-delete-47",
-                    "States": {
+                            "Next": "SP-200001-delete-47"
+                        },
                         "SP-200001-delete-47": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -2786,14 +2558,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-48 - ETL to delete from loan_lender_user_access_48 partition",
-                    "StartAt": "SP-200001-delete-48",
-                    "States": {
+                            "Next": "SP-200001-delete-48"
+                        },
                         "SP-200001-delete-48": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -2844,14 +2610,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-49 - ETL to delete from loan_lender_user_access_49 partition",
-                    "StartAt": "SP-200001-delete-49",
-                    "States": {
+                            "Next": "SP-200001-delete-49"
+                        },
                         "SP-200001-delete-49": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -2907,7 +2667,7 @@
                     }
                 },
                 {
-                    "Comment": "SP-200001-delete-50 - ETL to delete from loan_lender_user_access_50 partition",
+                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 50-54",
                     "StartAt": "SP-200001-delete-50",
                     "States": {
                         "SP-200001-delete-50": {
@@ -2960,14 +2720,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-51 - ETL to delete from loan_lender_user_access_51 partition",
-                    "StartAt": "SP-200001-delete-51",
-                    "States": {
+                            "Next": "SP-200001-delete-51"
+                        },
                         "SP-200001-delete-51": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -3018,14 +2772,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-52 - ETL to delete from loan_lender_user_access_52 partition",
-                    "StartAt": "SP-200001-delete-52",
-                    "States": {
+                            "Next": "SP-200001-delete-52"
+                        },
                         "SP-200001-delete-52": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -3076,14 +2824,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-53 - ETL to delete from loan_lender_user_access_53 partition",
-                    "StartAt": "SP-200001-delete-53",
-                    "States": {
+                            "Next": "SP-200001-delete-53"
+                        },
                         "SP-200001-delete-53": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -3134,14 +2876,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-54 - ETL to delete from loan_lender_user_access_54 partition",
-                    "StartAt": "SP-200001-delete-54",
-                    "States": {
+                            "Next": "SP-200001-delete-54"
+                        },
                         "SP-200001-delete-54": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -3197,7 +2933,7 @@
                     }
                 },
                 {
-                    "Comment": "SP-200001-delete-55 - ETL to delete from loan_lender_user_access_55 partition",
+                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 55-59",
                     "StartAt": "SP-200001-delete-55",
                     "States": {
                         "SP-200001-delete-55": {
@@ -3250,14 +2986,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-56 - ETL to delete from loan_lender_user_access_56 partition",
-                    "StartAt": "SP-200001-delete-56",
-                    "States": {
+                            "Next": "SP-200001-delete-56"
+                        },
                         "SP-200001-delete-56": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -3308,14 +3038,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-57 - ETL to delete from loan_lender_user_access_57 partition",
-                    "StartAt": "SP-200001-delete-57",
-                    "States": {
+                            "Next": "SP-200001-delete-57"
+                        },
                         "SP-200001-delete-57": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -3366,14 +3090,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-58 - ETL to delete from loan_lender_user_access_58 partition",
-                    "StartAt": "SP-200001-delete-58",
-                    "States": {
+                            "Next": "SP-200001-delete-58"
+                        },
                         "SP-200001-delete-58": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -3424,14 +3142,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-59 - ETL to delete from loan_lender_user_access_59 partition",
-                    "StartAt": "SP-200001-delete-59",
-                    "States": {
+                            "Next": "SP-200001-delete-59"
+                        },
                         "SP-200001-delete-59": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -3487,7 +3199,7 @@
                     }
                 },
                 {
-                    "Comment": "SP-200001-delete-60 - ETL to delete from loan_lender_user_access_60 partition",
+                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 60-64",
                     "StartAt": "SP-200001-delete-60",
                     "States": {
                         "SP-200001-delete-60": {
@@ -3540,14 +3252,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-61 - ETL to delete from loan_lender_user_access_61 partition",
-                    "StartAt": "SP-200001-delete-61",
-                    "States": {
+                            "Next": "SP-200001-delete-61"
+                        },
                         "SP-200001-delete-61": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -3598,14 +3304,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-62 - ETL to delete from loan_lender_user_access_62 partition",
-                    "StartAt": "SP-200001-delete-62",
-                    "States": {
+                            "Next": "SP-200001-delete-62"
+                        },
                         "SP-200001-delete-62": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -3656,14 +3356,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-63 - ETL to delete from loan_lender_user_access_63 partition",
-                    "StartAt": "SP-200001-delete-63",
-                    "States": {
+                            "Next": "SP-200001-delete-63"
+                        },
                         "SP-200001-delete-63": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -3714,14 +3408,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-64 - ETL to delete from loan_lender_user_access_64 partition",
-                    "StartAt": "SP-200001-delete-64",
-                    "States": {
+                            "Next": "SP-200001-delete-64"
+                        },
                         "SP-200001-delete-64": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -3777,7 +3465,7 @@
                     }
                 },
                 {
-                    "Comment": "SP-200001-delete-65 - ETL to delete from loan_lender_user_access_65 partition",
+                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 65-69",
                     "StartAt": "SP-200001-delete-65",
                     "States": {
                         "SP-200001-delete-65": {
@@ -3830,14 +3518,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-66 - ETL to delete from loan_lender_user_access_66 partition",
-                    "StartAt": "SP-200001-delete-66",
-                    "States": {
+                            "Next": "SP-200001-delete-66"
+                        },
                         "SP-200001-delete-66": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -3888,14 +3570,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-67 - ETL to delete from loan_lender_user_access_67 partition",
-                    "StartAt": "SP-200001-delete-67",
-                    "States": {
+                            "Next": "SP-200001-delete-67"
+                        },
                         "SP-200001-delete-67": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -3946,14 +3622,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-68 - ETL to delete from loan_lender_user_access_68 partition",
-                    "StartAt": "SP-200001-delete-68",
-                    "States": {
+                            "Next": "SP-200001-delete-68"
+                        },
                         "SP-200001-delete-68": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -4004,14 +3674,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-69 - ETL to delete from loan_lender_user_access_69 partition",
-                    "StartAt": "SP-200001-delete-69",
-                    "States": {
+                            "Next": "SP-200001-delete-69"
+                        },
                         "SP-200001-delete-69": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -4067,7 +3731,7 @@
                     }
                 },
                 {
-                    "Comment": "SP-200001-delete-70 - ETL to delete from loan_lender_user_access_70 partition",
+                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 70-74",
                     "StartAt": "SP-200001-delete-70",
                     "States": {
                         "SP-200001-delete-70": {
@@ -4120,14 +3784,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-71 - ETL to delete from loan_lender_user_access_71 partition",
-                    "StartAt": "SP-200001-delete-71",
-                    "States": {
+                            "Next": "SP-200001-delete-71"
+                        },
                         "SP-200001-delete-71": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -4178,14 +3836,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-72 - ETL to delete from loan_lender_user_access_72 partition",
-                    "StartAt": "SP-200001-delete-72",
-                    "States": {
+                            "Next": "SP-200001-delete-72"
+                        },
                         "SP-200001-delete-72": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -4236,14 +3888,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-73 - ETL to delete from loan_lender_user_access_73 partition",
-                    "StartAt": "SP-200001-delete-73",
-                    "States": {
+                            "Next": "SP-200001-delete-73"
+                        },
                         "SP-200001-delete-73": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -4294,14 +3940,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-74 - ETL to delete from loan_lender_user_access_74 partition",
-                    "StartAt": "SP-200001-delete-74",
-                    "States": {
+                            "Next": "SP-200001-delete-74"
+                        },
                         "SP-200001-delete-74": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -4357,7 +3997,7 @@
                     }
                 },
                 {
-                    "Comment": "SP-200001-delete-75 - ETL to delete from loan_lender_user_access_75 partition",
+                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 75-79",
                     "StartAt": "SP-200001-delete-75",
                     "States": {
                         "SP-200001-delete-75": {
@@ -4410,14 +4050,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-76 - ETL to delete from loan_lender_user_access_76 partition",
-                    "StartAt": "SP-200001-delete-76",
-                    "States": {
+                            "Next": "SP-200001-delete-76"
+                        },
                         "SP-200001-delete-76": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -4468,14 +4102,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-77 - ETL to delete from loan_lender_user_access_77 partition",
-                    "StartAt": "SP-200001-delete-77",
-                    "States": {
+                            "Next": "SP-200001-delete-77"
+                        },
                         "SP-200001-delete-77": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -4526,14 +4154,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-78 - ETL to delete from loan_lender_user_access_78 partition",
-                    "StartAt": "SP-200001-delete-78",
-                    "States": {
+                            "Next": "SP-200001-delete-78"
+                        },
                         "SP-200001-delete-78": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -4584,14 +4206,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-79 - ETL to delete from loan_lender_user_access_79 partition",
-                    "StartAt": "SP-200001-delete-79",
-                    "States": {
+                            "Next": "SP-200001-delete-79"
+                        },
                         "SP-200001-delete-79": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -4647,7 +4263,7 @@
                     }
                 },
                 {
-                    "Comment": "SP-200001-delete-80 - ETL to delete from loan_lender_user_access_80 partition",
+                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 80-84",
                     "StartAt": "SP-200001-delete-80",
                     "States": {
                         "SP-200001-delete-80": {
@@ -4700,14 +4316,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-81 - ETL to delete from loan_lender_user_access_81 partition",
-                    "StartAt": "SP-200001-delete-81",
-                    "States": {
+                            "Next": "SP-200001-delete-81"
+                        },
                         "SP-200001-delete-81": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -4758,14 +4368,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-82 - ETL to delete from loan_lender_user_access_82 partition",
-                    "StartAt": "SP-200001-delete-82",
-                    "States": {
+                            "Next": "SP-200001-delete-82"
+                        },
                         "SP-200001-delete-82": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -4816,14 +4420,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-83 - ETL to delete from loan_lender_user_access_83 partition",
-                    "StartAt": "SP-200001-delete-83",
-                    "States": {
+                            "Next": "SP-200001-delete-83"
+                        },
                         "SP-200001-delete-83": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -4874,14 +4472,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-84 - ETL to delete from loan_lender_user_access_84 partition",
-                    "StartAt": "SP-200001-delete-84",
-                    "States": {
+                            "Next": "SP-200001-delete-84"
+                        },
                         "SP-200001-delete-84": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -4937,7 +4529,7 @@
                     }
                 },
                 {
-                    "Comment": "SP-200001-delete-85 - ETL to delete from loan_lender_user_access_85 partition",
+                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 85-89",
                     "StartAt": "SP-200001-delete-85",
                     "States": {
                         "SP-200001-delete-85": {
@@ -4990,14 +4582,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-86 - ETL to delete from loan_lender_user_access_86 partition",
-                    "StartAt": "SP-200001-delete-86",
-                    "States": {
+                            "Next": "SP-200001-delete-86"
+                        },
                         "SP-200001-delete-86": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -5048,14 +4634,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-87 - ETL to delete from loan_lender_user_access_87 partition",
-                    "StartAt": "SP-200001-delete-87",
-                    "States": {
+                            "Next": "SP-200001-delete-87"
+                        },
                         "SP-200001-delete-87": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -5106,14 +4686,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-88 - ETL to delete from loan_lender_user_access_88 partition",
-                    "StartAt": "SP-200001-delete-88",
-                    "States": {
+                            "Next": "SP-200001-delete-88"
+                        },
                         "SP-200001-delete-88": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -5164,14 +4738,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-89 - ETL to delete from loan_lender_user_access_89 partition",
-                    "StartAt": "SP-200001-delete-89",
-                    "States": {
+                            "Next": "SP-200001-delete-89"
+                        },
                         "SP-200001-delete-89": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -5227,7 +4795,7 @@
                     }
                 },
                 {
-                    "Comment": "SP-200001-delete-90 - ETL to delete from loan_lender_user_access_90 partition",
+                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 90-94",
                     "StartAt": "SP-200001-delete-90",
                     "States": {
                         "SP-200001-delete-90": {
@@ -5280,14 +4848,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-91 - ETL to delete from loan_lender_user_access_91 partition",
-                    "StartAt": "SP-200001-delete-91",
-                    "States": {
+                            "Next": "SP-200001-delete-91"
+                        },
                         "SP-200001-delete-91": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -5338,14 +4900,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-92 - ETL to delete from loan_lender_user_access_92 partition",
-                    "StartAt": "SP-200001-delete-92",
-                    "States": {
+                            "Next": "SP-200001-delete-92"
+                        },
                         "SP-200001-delete-92": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -5396,14 +4952,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-93 - ETL to delete from loan_lender_user_access_93 partition",
-                    "StartAt": "SP-200001-delete-93",
-                    "States": {
+                            "Next": "SP-200001-delete-93"
+                        },
                         "SP-200001-delete-93": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -5454,14 +5004,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-94 - ETL to delete from loan_lender_user_access_94 partition",
-                    "StartAt": "SP-200001-delete-94",
-                    "States": {
+                            "Next": "SP-200001-delete-94"
+                        },
                         "SP-200001-delete-94": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -5517,7 +5061,7 @@
                     }
                 },
                 {
-                    "Comment": "SP-200001-delete-95 - ETL to delete from loan_lender_user_access_95 partition",
+                    "Comment": "Parallel grouping to delete from loan_lender_user_access partitions 95-99",
                     "StartAt": "SP-200001-delete-95",
                     "States": {
                         "SP-200001-delete-95": {
@@ -5570,14 +5114,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-96 - ETL to delete from loan_lender_user_access_96 partition",
-                    "StartAt": "SP-200001-delete-96",
-                    "States": {
+                            "Next": "SP-200001-delete-96"
+                        },
                         "SP-200001-delete-96": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -5628,14 +5166,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-97 - ETL to delete from loan_lender_user_access_97 partition",
-                    "StartAt": "SP-200001-delete-97",
-                    "States": {
+                            "Next": "SP-200001-delete-97"
+                        },
                         "SP-200001-delete-97": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -5686,14 +5218,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-98 - ETL to delete from loan_lender_user_access_98 partition",
-                    "StartAt": "SP-200001-delete-98",
-                    "States": {
+                            "Next": "SP-200001-delete-98"
+                        },
                         "SP-200001-delete-98": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
@@ -5744,14 +5270,8 @@
                                     "BackoffRate": 2.0
                                 }
                             ],
-                            "End": true
-                        }
-                    }
-                },
-                {
-                    "Comment": "SP-200001-delete-99 - ETL to delete from loan_lender_user_access_99 partition",
-                    "StartAt": "SP-200001-delete-99",
-                    "States": {
+                            "Next": "SP-200001-delete-99"
+                        },
                         "SP-200001-delete-99": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::ecs:runTask.sync",
