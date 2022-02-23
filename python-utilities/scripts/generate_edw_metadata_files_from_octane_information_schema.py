@@ -16,11 +16,12 @@ sys.path.append(constants.PROJECT_DIR_PATH)
 from lib.db_connections import DBConnectionFactory
 from lib.metadata_core.metadata_filter import ExclusiveMetadataFilterer
 from lib.metadata_core.metadata_object_path import TablePath, ColumnPath
-from lib.metadata_core.metadata_yaml_translator import write_data_warehouse_metadata_to_yaml
+from lib.metadata_core.metadata_yaml_translator import (write_data_warehouse_metadata_to_yaml,
+                                                        generate_data_warehouse_metadata_from_yaml,
+                                                        construct_dict_from_data_warehouse_yaml)
 from lib.lura_information_schema_to_yaml.sql_queries import (get_octane_column_metadata,
                                                              get_octane_foreign_key_metadata,
                                                              get_history_octane_etl_process_metadata,
-                                                             get_history_octane_metadata_for_deleted_columns,
                                                              get_max_staging_to_history_server_process_number)
 from lib.lura_information_schema_to_yaml.metadata_builders import (build_staging_octane_metadata,
                                                                    generate_history_octane_metadata,
@@ -50,7 +51,7 @@ def main():
         octane_foreign_key_metadata = get_octane_foreign_key_metadata(octane_db_connection)
         etl_process_metadata = get_history_octane_etl_process_metadata(config_edw_connection)
         current_max_process_number = get_max_staging_to_history_server_process_number(config_edw_connection)
-        deleted_columns_metadata = get_history_octane_metadata_for_deleted_columns(staging_edw_connection) # this isn't deleted columns, this is all columns from history_octane in information_schema
+        current_edw_metadata_dict = construct_dict_from_data_warehouse_yaml(os.path.abspath(os.path.join(constants.PROJECT_DIR_PATH, '..', 'metadata')))
 
         # build metadata filterer
         metadata_filterer = build_octane_metadata_filterer()
@@ -67,7 +68,7 @@ def main():
                 etl_process_metadata,
                 current_max_process_number
             ),
-            deleted_columns_metadata
+            current_edw_metadata_dict
         )
 
         # write metadata to YAML
