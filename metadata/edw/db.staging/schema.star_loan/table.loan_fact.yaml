@@ -2969,3 +2969,6 @@ etls:
                JOIN star_loan.loan_fact ON loan.l_pid = loan_fact.loan_pid
           AND loan_fact.data_source_dwid = 1
       WHERE GREATEST(deal.include_record, proposal.include_record, loan.include_record) IS TRUE;
+next_etls:
+  - SP-200001-delete
+  - SP-200001-insert
