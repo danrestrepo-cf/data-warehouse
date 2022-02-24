@@ -245,7 +245,7 @@ def construct_data_warehouse_metadata_from_dict(data_warehouse_dict: dict) -> Da
                                         'truncate_table': False,
                                         'insert_update_keys': ['col1', 'col2'],
                                         'delete_keys': ['col2', 'col3'],
-                                        'container_memory': 2048
+                                        'container_memory': 2048,
                                         'input_sql': 'SQL for SP-1'
                                     }
                                 },
