@@ -1237,6 +1237,7 @@ etls:
            , staging_table.b_credit_report_required
            , staging_table.b_closing_disclosure_signer
            , staging_table.b_snapshotted_pid
+           , staging_table.b_mobile_phone_na
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.borrower staging_table
@@ -1414,6 +1415,7 @@ etls:
            , history_table.b_credit_report_required
            , history_table.b_closing_disclosure_signer
            , history_table.b_snapshotted_pid
+           , history_table.b_mobile_phone_na
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.borrower history_table

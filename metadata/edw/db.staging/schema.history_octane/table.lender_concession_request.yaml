@@ -166,8 +166,8 @@ etls:
            , staging_table.lcr_approved_reason
            , staging_table.lcr_requested_datetime
            , staging_table.lcr_decision_datetime
-           , staging_table.lcr_decision_notes
-           , staging_table.lcr_request_notes
+           , staging_table.lcr_decision_explanation
+           , staging_table.lcr_requested_reason_explanation
            , staging_table.lcr_requester_lender_user_pid
            , staging_table.lcr_requester_unparsed_name
            , staging_table.lcr_approver_lender_user_pid
@@ -194,8 +194,8 @@ etls:
            , history_table.lcr_approved_reason
            , history_table.lcr_requested_datetime
            , history_table.lcr_decision_datetime
-           , history_table.lcr_decision_notes
-           , history_table.lcr_request_notes
+           , history_table.lcr_decision_explanation
+           , history_table.lcr_requested_reason_explanation
            , history_table.lcr_requester_lender_user_pid
            , history_table.lcr_requester_unparsed_name
            , history_table.lcr_approver_lender_user_pid

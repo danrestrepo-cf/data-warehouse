@@ -52,6 +52,7 @@ etls:
            , staging_table.prpe_version
            , staging_table.prpe_proposal_pid
            , staging_table.prpe_borrower_engagement_percent
+           , staging_table.prpe_lender_engagement_percent
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.proposal_engagement staging_table
@@ -64,6 +65,7 @@ etls:
            , history_table.prpe_version + 1
            , history_table.prpe_proposal_pid
            , history_table.prpe_borrower_engagement_percent
+           , history_table.prpe_lender_engagement_percent
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.proposal_engagement history_table
