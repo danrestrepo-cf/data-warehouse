@@ -23,6 +23,10 @@ columns:
     data_type: NUMERIC(11,9)
     source:
       field: primary_source_table.columns.prpe_borrower_engagement_percent
+  prpe_lender_engagement_percent:
+    data_type: NUMERIC(11,9)
+    source:
+      field: primary_source_table.columns.prpe_lender_engagement_percent
   prpe_pid:
     data_type: BIGINT
     source:

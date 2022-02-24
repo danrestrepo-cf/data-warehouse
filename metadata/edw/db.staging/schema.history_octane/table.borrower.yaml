@@ -653,6 +653,10 @@ columns:
     data_type: VARCHAR(32)
     source:
       field: primary_source_table.columns.b_mobile_phone
+  b_mobile_phone_na:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_mobile_phone_na
   b_monthly_job_federal_tax_amount:
     data_type: NUMERIC(15,2)
     source:
