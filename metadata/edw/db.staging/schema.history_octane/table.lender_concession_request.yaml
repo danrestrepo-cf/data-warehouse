@@ -91,10 +91,10 @@ columns:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.lcr_decision_datetime
-  lcr_decision_notes:
+  lcr_decision_explanation:
     data_type: VARCHAR(1024)
     source:
-      field: primary_source_table.columns.lcr_decision_notes
+      field: primary_source_table.columns.lcr_decision_explanation
   lcr_lender_concession_request_number:
     data_type: INTEGER
     source:
@@ -115,10 +115,6 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.lcr_pid
-  lcr_request_notes:
-    data_type: VARCHAR(1024)
-    source:
-      field: primary_source_table.columns.lcr_request_notes
   lcr_requested_amount:
     data_type: NUMERIC(15,2)
     source:
@@ -131,6 +127,10 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.lcr_requested_reason
+  lcr_requested_reason_explanation:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.columns.lcr_requested_reason_explanation
   lcr_requester_lender_user_pid:
     data_type: BIGINT
     source:
@@ -166,8 +166,8 @@ etls:
            , staging_table.lcr_approved_reason
            , staging_table.lcr_requested_datetime
            , staging_table.lcr_decision_datetime
-           , staging_table.lcr_decision_notes
-           , staging_table.lcr_request_notes
+           , staging_table.lcr_decision_explanation
+           , staging_table.lcr_requested_reason_explanation
            , staging_table.lcr_requester_lender_user_pid
            , staging_table.lcr_requester_unparsed_name
            , staging_table.lcr_approver_lender_user_pid
@@ -194,8 +194,8 @@ etls:
            , history_table.lcr_approved_reason
            , history_table.lcr_requested_datetime
            , history_table.lcr_decision_datetime
-           , history_table.lcr_decision_notes
-           , history_table.lcr_request_notes
+           , history_table.lcr_decision_explanation
+           , history_table.lcr_requested_reason_explanation
            , history_table.lcr_requester_lender_user_pid
            , history_table.lcr_requester_unparsed_name
            , history_table.lcr_approver_lender_user_pid
