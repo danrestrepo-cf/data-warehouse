@@ -19,6 +19,8 @@ foreign_keys:
       schema: staging_octane
       table: proposal_review_status_type
 columns:
+  wsfp_number_business_days:
+    data_type: INTEGER
   wsfp_pid:
     data_type: BIGINT
   wsfp_proposal_review_id:

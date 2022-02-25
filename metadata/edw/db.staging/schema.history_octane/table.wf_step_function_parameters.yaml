@@ -27,6 +27,10 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
+  wsfp_number_business_days:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.wsfp_number_business_days
   wsfp_pid:
     data_type: BIGINT
     source:
