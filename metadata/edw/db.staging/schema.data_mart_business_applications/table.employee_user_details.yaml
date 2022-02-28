@@ -1,0 +1,57 @@
+name: employee_user_details
+primary_source_table: staging.history_octane.lender_user
+primary_key:
+- octane_username
+columns:
+  parent_node_id:
+    data_type: BIGINT
+    update_flag: true
+  parent_node_name:
+    data_type: VARCHAR(256)
+    update_flag: true
+  company_user_id:
+    data_type: VARCHAR(32)
+    update_flag: true
+  octane_username:
+    data_type: VARCHAR(32)
+    update_flag: false
+  first_name:
+    data_type: VARCHAR(32)
+    update_flag: true
+  last_name:
+    data_type: VARCHAR(32)
+    update_flag: true
+  professional_title:
+    data_type: VARCHAR(128)
+    update_flag: true
+  email:
+    data_type: VARCHAR(256)
+    update_flag: true
+  hire_date:
+    data_type: DATE
+    update_flag: true
+  termination_date:
+    data_type: DATE
+    update_flag: true
+  is_active_hub_user:
+    data_type: BOOLEAN
+    update_flag: true
+etls:
+  SP-400001-insert-update:
+    input_type: table
+    output_type: insert_update
+    json_output_field: octane_username
+    insert_update_keys:
+    - octane_username
+    container_memory: 2048
+    input_sql: |-
+      SELECT 1;
+  SP-400001-delete:
+    input_type: table
+    output_type: delete
+    json_output_field: octane_username
+    delete_keys:
+    - octane_username
+    container_memory: 2048
+    input_sql: |-
+      SELECT 1;
