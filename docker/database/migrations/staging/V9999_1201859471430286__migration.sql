@@ -3,7 +3,7 @@
 -- https://app.asana.com/0/0/1201859471430286
 --
 
-CREATE TABLE data_mart_business_applications.business_applications_employee_user_details (
+CREATE TABLE data_mart_business_applications.employee_user_details (
     parent_node_id BIGINT,
     parent_node_name VARCHAR(256),
     company_user_id VARCHAR(32),
@@ -17,7 +17,7 @@ CREATE TABLE data_mart_business_applications.business_applications_employee_user
     is_active_hub_user BOOLEAN
 );
 
-CREATE TABLE data_mart_business_applications.business_applications_current_parent_nodes (
+CREATE TABLE data_mart_business_applications.current_parent_nodes (
     parent_node_id BIGINT,
     parent_node_name VARCHAR(256),
     leader_company_user_id VARCHAR(32),
