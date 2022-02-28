@@ -32,8 +32,8 @@ class EDWTableDefinitionMetadataComparisonFunctions(MetadataComparisonFunctions)
                 LEFT JOIN mdi.edw_table_definition source_table_definition
                           ON edw_table_definition.primary_source_edw_table_definition_dwid = source_table_definition.dwid
                 -- hardcoded to only check staging/history_octane until this script is updated to handle other schemas' table metadata
-                WHERE edw_table_definition.schema_name IN ('staging_octane', 'history_octane', 'star_loan', 'star_common')
-                  AND (source_table_definition.schema_name IN ('staging_octane', 'history_octane', 'star_loan', 'star_common')
+                WHERE edw_table_definition.schema_name IN ('staging_octane', 'history_octane', 'star_loan', 'star_common', 'data_mart_business_applications')
+                  AND (source_table_definition.schema_name IN ('staging_octane', 'history_octane', 'star_loan', 'star_common', 'data_mart_business_applications')
                     OR source_table_definition.schema_name IS NULL);
             """)
 
