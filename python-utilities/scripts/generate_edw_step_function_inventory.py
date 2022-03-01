@@ -1,7 +1,6 @@
 import sys
 import os
 import json
-import fnmatch
 
 PROJECT_DIR_PATH = os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
 
