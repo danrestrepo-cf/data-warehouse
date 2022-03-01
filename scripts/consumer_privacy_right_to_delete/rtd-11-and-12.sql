@@ -702,7 +702,6 @@ WHERE deal.d_los_loan_id_main = 1401318407;
 UPDATE history_octane.deal_invoice
 SET data_source_updated_datetime = NOW()
 	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
-	, di_create_datetime = NULL
 	, di_description = ''
 	, di_internal_notes = ''
 FROM history_octane.deal
@@ -2146,7 +2145,6 @@ WHERE deal.d_los_loan_id_main = 1401487039;
 UPDATE history_octane.deal_invoice
 SET data_source_updated_datetime = NOW()
 	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
-	, di_create_datetime = NULL
 	, di_description = ''
 	, di_internal_notes = ''
 FROM history_octane.deal
