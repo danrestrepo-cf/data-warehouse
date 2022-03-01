@@ -1,37 +1,40 @@
 name: current_parent_nodes
 primary_source_table: staging.history_octane.org_node
 primary_key:
+- leader_company_user_id
 - parent_node_id
+- leader_type
 columns:
   parent_node_id:
     data_type: BIGINT
     update_flag: false
-  parent_node_name:
-    data_type: VARCHAR(256)
-    update_flag: true
-  grandparent_node_id:
-    data_type: BIGINT
-    update_flag: true
-  grandparent_node_name:
-    data_type: VARCHAR(256)
-    update_flag: true
+  leader_company_user_id:
+    data_type: VARCHAR(32)
+    update_flag: false
+  leader_type:
+    data_type: VARCHAR(1024)
+    update_flag: false
 etls:
-  SP-400002-insert-update:
+  SP-400003-insert-update:
     input_type: table
     output_type: insert_update
     hardcoded_data_source: Octane
-    json_output_field: parent_node_id
+    json_output_field: leader_company_user_id
     insert_update_keys:
+    - leader_company_user_id
     - parent_node_id
+    - leader_type
     container_memory: 2048
     input_sql: |-
       SELECT 1;
-  SP-400002-delete:
+  SP-400003-delete:
     input_type: table
     output_type: delete
-    json_output_field: parent_node_id
+    json_output_field: leader_company_user_id
     delete_keys:
+    - leader_company_user_id
     - parent_node_id
+    - leader_type
     container_memory: 2048
     input_sql: |-
       SELECT 1;
