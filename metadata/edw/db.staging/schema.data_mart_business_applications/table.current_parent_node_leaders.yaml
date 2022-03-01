@@ -3,7 +3,6 @@ primary_source_table: staging.history_octane.org_node
 primary_key:
 - leader_company_user_id
 - parent_node_id
-- leader_type
 columns:
   parent_node_id:
     data_type: BIGINT
@@ -23,7 +22,6 @@ etls:
     insert_update_keys:
     - leader_company_user_id
     - parent_node_id
-    - leader_type
     container_memory: 2048
     input_sql: |-
       SELECT 1;
@@ -34,7 +32,6 @@ etls:
     delete_keys:
     - leader_company_user_id
     - parent_node_id
-    - leader_type
     container_memory: 2048
     input_sql: |-
       SELECT 1;
