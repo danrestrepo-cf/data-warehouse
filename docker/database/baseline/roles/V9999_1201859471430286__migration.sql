@@ -3,4 +3,4 @@
 -- https://app.asana.com/0/0/1201859471430286
 --
 
-CREATE USER svc_doc_mgmt PASSWORD 'testonly';
+CREATE USER svc_document_management PASSWORD 'testonly';
