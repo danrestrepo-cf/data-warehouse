@@ -1,5 +1,5 @@
 import unittest
-from lib.state_machines_generator.state_machines_generator import AllEtlStateMachinesGenerator
+from lib.state_machines_generator.state_machines_generator import AllStateMachinesGenerator, GroupStateMachinesGenerator
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
 
 
@@ -132,7 +132,7 @@ class TestSequentialOutputAndVaryingConfigAttributes(unittest.TestCase):
             }
         self.data_warehouse_metadata = construct_data_warehouse_metadata_from_dict(self.dw_dict)
 
-        self.result = AllEtlStateMachinesGenerator(self.data_warehouse_metadata).build_etl_state_machines()
+        self.result = AllStateMachinesGenerator(self.data_warehouse_metadata).build_state_machines()
         self.sp_1_config = self.result['SP-1']
         self.sp_2_config = self.result['SP-2']
         self.sp_3_config = self.result['SP-3']
@@ -158,7 +158,7 @@ class TestSequentialOutputAndVaryingConfigAttributes(unittest.TestCase):
         local_dw_dict['databases'][0]['schemas'][2]['tables'][1]['next_etls'] = ['SP-4']
         invalid_data_warehouse_metadata = construct_data_warehouse_metadata_from_dict(local_dw_dict)
         with self.assertRaises(KeyError):
-            AllEtlStateMachinesGenerator(invalid_data_warehouse_metadata).build_etl_state_machines()
+            AllStateMachinesGenerator(invalid_data_warehouse_metadata).build_state_machines()
 
 
 class TestParallelOutputStructure(unittest.TestCase):
@@ -287,7 +287,7 @@ class TestParallelOutputStructure(unittest.TestCase):
             }
         self.data_warehouse_metadata = construct_data_warehouse_metadata_from_dict(self.dw_dict)
 
-        self.sp_1_config = AllEtlStateMachinesGenerator(self.data_warehouse_metadata).build_etl_state_machines()['SP-1']
+        self.sp_1_config = AllStateMachinesGenerator(self.data_warehouse_metadata).build_state_machines()['SP-1']
 
     def test_sets_startat_to_root_process_name(self):
         self.assertEqual('SP-1', self.sp_1_config['StartAt'])
@@ -314,7 +314,8 @@ class TestParallelOutputStructure(unittest.TestCase):
         self.assertEqual('arn:aws:states:::sqs:sendMessage', sp_1_branches[0]['States']['SP-2_message']['Resource'])
         self.assertEqual('arn:aws:states:::sqs:sendMessage', sp_1_branches[1]['States']['SP-3_message']['Resource'])
 
-class TestEntireOutput(unittest.TestCase):
+
+class TestETLStateMachinesGenerator(unittest.TestCase):
 
     def test_entire_output_dict(self):
         self.maxDiff = None
@@ -736,7 +737,7 @@ class TestEntireOutput(unittest.TestCase):
         }
 
         data_warehouse_metadata = construct_data_warehouse_metadata_from_dict(dw_dict)
-        result = AllEtlStateMachinesGenerator(data_warehouse_metadata).build_etl_state_machines()
+        result = AllStateMachinesGenerator(data_warehouse_metadata).build_state_machines()
         sp_1_config_result = result['SP-1']
         sp_2_config_result = result['SP-2']
         sp_3_config_result = result['SP-3']
@@ -744,6 +745,663 @@ class TestEntireOutput(unittest.TestCase):
         self.assertEqual(sp_1_config_expected, sp_1_config_result)
         self.assertEqual(sp_2_config_expected, sp_2_config_result)
         self.assertEqual(sp_3_config_expected, sp_3_config_result)
+
+
+class TestGroupStateMachinesGenerator(unittest.TestCase):
+
+    def setUp(self):
+        self.maxDiff = None
+        self.dw_dict = \
+            {
+                'name': 'dw',
+                'databases': [
+                    {
+                        'name': 'database_1',
+                        'schemas': [
+                            {
+                                'name': 'schema_1',
+                                'tables': [
+                                    {
+                                        'name': 'table_0',
+                                        'primary_key': [
+                                            'column_1'
+                                        ],
+                                        'columns': {
+                                            'column_1': {
+                                                'data_type': 'TEXT'
+                                            },
+                                            'column_2': {
+                                                'data_type': 'INT'
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                'name': 'schema_2',
+                                'tables': [
+                                    {
+                                        'name': 'table_1',
+                                        'primary_source_table': 'database_1.schema_1.table_0',
+                                        'primary_key': [
+                                            'column_1'
+                                        ],
+                                        'columns': {
+                                            'column_1': {
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.column_1'
+                                                }
+                                            }
+                                        },
+                                        'etls': {
+                                            'SP-1': {
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'insert',
+                                                'json_output_field': 'column_1',
+                                                'truncate_table': False,
+                                                'container_memory': 2048,
+                                                'input_sql': 'SQL for SP-1'
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                'name': 'schema_3',
+                                'tables': [
+                                    {
+                                        'name': 'table_2',
+                                        'primary_source_table': 'database_1.schema_2.table_1',
+                                        'primary_key': [
+                                            'column_1'
+                                        ],
+                                        'columns': {
+                                            'column_1': {
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.column_1'
+                                                }
+                                            }
+                                        },
+                                        'etls': {
+                                            'SP-2': {
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'insert_update',
+                                                'json_output_field': 'column_1',
+                                                'insert_update_keys': ['column_1'],
+                                                'container_memory': 2048,
+                                                'input_sql': 'SQL for SP-2'
+                                            }
+                                        },
+                                        'next_etls': ['SP-3']
+                                    },
+                                    {
+                                        'name': 'table_3',
+                                        'primary_source_table': 'database_1.schema_3.table_2',
+                                        'primary_key': [
+                                            'column_1'
+                                        ],
+                                        'columns': {
+                                            'column_1': {
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.column_1'
+                                                }
+                                            }
+                                        },
+                                        'etls': {
+                                            'SP-3': {
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'insert_update',
+                                                'json_output_field': 'column_1',
+                                                'insert_update_keys': ['column_1'],
+                                                'container_memory': 4096,
+                                                'input_sql': 'SQL for SP-3'
+                                            }
+                                        },
+                                        'next_etls': ['SP-4', 'SP-5']
+                                    },
+                                    {
+                                        'name': 'table_4',
+                                        'primary_source_table': 'database_1.schema_3.table_3',
+                                        'primary_key': [
+                                            'column_1'
+                                        ],
+                                        'columns': {
+                                            'column_1': {
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.column_1'
+                                                }
+                                            }
+                                        },
+                                        'etls': {
+                                            'SP-4': {
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'insert_update',
+                                                'json_output_field': 'column_1',
+                                                'insert_update_keys': ['column_1'],
+                                                'container_memory': 2048,
+                                                'input_sql': 'SQL for SP-4'
+                                            }
+                                        }
+                                    },
+                                    {
+                                        'name': 'table_5',
+                                        'primary_source_table': 'database_1.schema_3.table_3',
+                                        'primary_key': [
+                                            'column_1'
+                                        ],
+                                        'columns': {
+                                            'column_1': {
+                                                'data_type': 'TEXT',
+                                                'source': {
+                                                    'field': 'primary_source_table.columns.column_1'
+                                                }
+                                            }
+                                        },
+                                        'etls': {
+                                            'SP-5': {
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'delete',
+                                                'json_output_field': 'column_1',
+                                                'delete_keys': ['column_1'],
+                                                'container_memory': 2048,
+                                                'input_sql': 'SQL for SP-5'
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        self.data_warehouse_metadata = construct_data_warehouse_metadata_from_dict(self.dw_dict)
+
+    def test_parse_data_warehouse_metadata(self):
+        state_machines_generator = AllStateMachinesGenerator(self.data_warehouse_metadata)
+        state_machines_metadata = state_machines_generator.parse_data_warehouse_metadata()[1]
+        expected = [
+            {
+                "process_name": "SP-1",
+                "target_schema": "schema_2",
+                "target_table": "table_1",
+                "has_dependency": False
+            },
+            {
+                "process_name": "SP-2",
+                "target_schema": "schema_3",
+                "target_table": "table_2",
+                "has_dependency": True
+            },
+            {
+                "process_name": "SP-3",
+                "target_schema": "schema_3",
+                "target_table": "table_3",
+                "has_dependency": True
+            },
+            {
+                "process_name": "SP-4",
+                "target_schema": "schema_3",
+                "target_table": "table_4",
+                "has_dependency": False
+            },
+            {
+                "process_name": "SP-5",
+                "target_schema": "schema_3",
+                "target_table": "table_5",
+                "has_dependency": False
+            }
+        ]
+
+        self.assertEqual(state_machines_metadata, expected)
+
+    def test_generate_various_group_step_function_configurations(self):
+        state_machines_generator = AllStateMachinesGenerator(self.data_warehouse_metadata)
+        group_state_machines_metadata = sorted(state_machines_generator.parse_data_warehouse_metadata()[1], key=lambda x: x['process_name'])
+        standalone_state_machines_metadata = [etl for etl in group_state_machines_metadata if not etl['has_dependency']]
+        schema_3_state_machines_metadata = [etl for etl in group_state_machines_metadata if etl['target_schema'] == 'schema_3']
+
+
+        group_tuples = [
+            (group_state_machines_metadata, 1, 'SP-GROUP-A', 'Trigger all ETLs - group limit 1'),
+            (standalone_state_machines_metadata, 2, 'SP-GROUP-B', 'Trigger all standalone ETLs - group limit 2'),
+            (schema_3_state_machines_metadata, 5, 'SP-GROUP-C', 'Trigger all schema_3 ETLs - group limit 5'),
+        ]
+
+        group_state_machines_generator = GroupStateMachinesGenerator(group_tuples)
+        group_result = group_state_machines_generator.build_group_state_machines()
+        group_expected = {
+            "SP-GROUP-A-1": {
+                "Comment": "Trigger all ETLs - group limit 1 - group 1",
+                "StartAt": "SP-GROUP-A-1",
+                "States": {
+                    "SP-GROUP-A-1": {
+                        "Type": "Parallel",
+                        "End": True,
+                        "Branches": [
+                            {
+                                "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-1",
+                                "StartAt": "SP-1_message",
+                                "States": {
+                                    "SP-1_message": {
+                                        "Type": "Task",
+                                        "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Parameters": {
+                                            "QueueUrl": "${fullCheckQueueUrl}",
+                                            "MessageGroupId": "table_1",
+                                            "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                            "MessageAttributes": {
+                                                "ProcessId": {
+                                                    "DataType": "String",
+                                                    "StringValue": "SP-1"
+                                                }
+                                            },
+                                            "MessageBody.$": "States.JsonToString($)"
+                                        },
+                                        "ResultSelector": {
+                                            "StateName": "SP-1_message",
+                                            "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
+                                        },
+                                        "End": True
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "SP-GROUP-A-2": {
+                "Comment": "Trigger all ETLs - group limit 1 - group 2",
+                "StartAt": "SP-GROUP-A-2",
+                "States": {
+                    "SP-GROUP-A-2": {
+                        "Type": "Parallel",
+                        "End": True,
+                        "Branches": [
+                            {
+                                "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-2",
+                                "StartAt": "SP-2_message",
+                                "States": {
+                                    "SP-2_message": {
+                                        "Type": "Task",
+                                        "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Parameters": {
+                                            "QueueUrl": "${fullCheckQueueUrl}",
+                                            "MessageGroupId": "table_2",
+                                            "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                            "MessageAttributes": {
+                                                "ProcessId": {
+                                                    "DataType": "String",
+                                                    "StringValue": "SP-2"
+                                                }
+                                            },
+                                            "MessageBody.$": "States.JsonToString($)"
+                                        },
+                                        "ResultSelector": {
+                                            "StateName": "SP-2_message",
+                                            "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
+                                        },
+                                        "End": True
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "SP-GROUP-A-3": {
+                "Comment": "Trigger all ETLs - group limit 1 - group 3",
+                "StartAt": "SP-GROUP-A-3",
+                "States": {
+                    "SP-GROUP-A-3": {
+                        "Type": "Parallel",
+                        "End": True,
+                        "Branches": [
+                            {
+                                "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-3",
+                                "StartAt": "SP-3_message",
+                                "States": {
+                                    "SP-3_message": {
+                                        "Type": "Task",
+                                        "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Parameters": {
+                                            "QueueUrl": "${fullCheckQueueUrl}",
+                                            "MessageGroupId": "table_3",
+                                            "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                            "MessageAttributes": {
+                                                "ProcessId": {
+                                                    "DataType": "String",
+                                                    "StringValue": "SP-3"
+                                                }
+                                            },
+                                            "MessageBody.$": "States.JsonToString($)"
+                                        },
+                                        "ResultSelector": {
+                                            "StateName": "SP-3_message",
+                                            "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
+                                        },
+                                        "End": True
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "SP-GROUP-A-4": {
+                "Comment": "Trigger all ETLs - group limit 1 - group 4",
+                "StartAt": "SP-GROUP-A-4",
+                "States": {
+                    "SP-GROUP-A-4": {
+                        "Type": "Parallel",
+                        "End": True,
+                        "Branches": [
+                            {
+                                "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-4",
+                                "StartAt": "SP-4_message",
+                                "States": {
+                                    "SP-4_message": {
+                                        "Type": "Task",
+                                        "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Parameters": {
+                                            "QueueUrl": "${fullCheckQueueUrl}",
+                                            "MessageGroupId": "table_4",
+                                            "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                            "MessageAttributes": {
+                                                "ProcessId": {
+                                                    "DataType": "String",
+                                                    "StringValue": "SP-4"
+                                                }
+                                            },
+                                            "MessageBody.$": "States.JsonToString($)"
+                                        },
+                                        "ResultSelector": {
+                                            "StateName": "SP-4_message",
+                                            "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
+                                        },
+                                        "End": True
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "SP-GROUP-A-5": {
+                "Comment": "Trigger all ETLs - group limit 1 - group 5",
+                "StartAt": "SP-GROUP-A-5",
+                "States": {
+                    "SP-GROUP-A-5": {
+                        "Type": "Parallel",
+                        "End": True,
+                        "Branches": [
+                            {
+                                "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-5",
+                                "StartAt": "SP-5_message",
+                                "States": {
+                                    "SP-5_message": {
+                                        "Type": "Task",
+                                        "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Parameters": {
+                                            "QueueUrl": "${fullCheckQueueUrl}",
+                                            "MessageGroupId": "table_5",
+                                            "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                            "MessageAttributes": {
+                                                "ProcessId": {
+                                                    "DataType": "String",
+                                                    "StringValue": "SP-5"
+                                                }
+                                            },
+                                            "MessageBody.$": "States.JsonToString($)"
+                                        },
+                                        "ResultSelector": {
+                                            "StateName": "SP-5_message",
+                                            "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
+                                        },
+                                        "End": True
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "SP-GROUP-B-1": {
+                "Comment": "Trigger all standalone ETLs - group limit 2 - group 1",
+                "StartAt": "SP-GROUP-B-1",
+                "States": {
+                    "SP-GROUP-B-1": {
+                        "Type": "Parallel",
+                        "End": True,
+                        "Branches": [
+                            {
+                                "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-1",
+                                "StartAt": "SP-1_message",
+                                "States": {
+                                    "SP-1_message": {
+                                        "Type": "Task",
+                                        "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Parameters": {
+                                            "QueueUrl": "${fullCheckQueueUrl}",
+                                            "MessageGroupId": "table_1",
+                                            "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                            "MessageAttributes": {
+                                                "ProcessId": {
+                                                    "DataType": "String",
+                                                    "StringValue": "SP-1"
+                                                }
+                                            },
+                                            "MessageBody.$": "States.JsonToString($)"
+                                        },
+                                        "ResultSelector": {
+                                            "StateName": "SP-1_message",
+                                            "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
+                                        },
+                                        "End": True
+                                    }
+                                }
+                            },
+                            {
+                                "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-4",
+                                "StartAt": "SP-4_message",
+                                "States": {
+                                    "SP-4_message": {
+                                        "Type": "Task",
+                                        "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Parameters": {
+                                            "QueueUrl": "${fullCheckQueueUrl}",
+                                            "MessageGroupId": "table_4",
+                                            "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                            "MessageAttributes": {
+                                                "ProcessId": {
+                                                    "DataType": "String",
+                                                    "StringValue": "SP-4"
+                                                }
+                                            },
+                                            "MessageBody.$": "States.JsonToString($)"
+                                        },
+                                        "ResultSelector": {
+                                            "StateName": "SP-4_message",
+                                            "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
+                                        },
+                                        "End": True
+                                    }
+                                }
+                            }
+                        ]
+                    }
+
+                }
+            },
+            "SP-GROUP-B-2": {
+                "Comment": "Trigger all standalone ETLs - group limit 2 - group 2",
+                "StartAt": "SP-GROUP-B-2",
+                "States": {
+                    "SP-GROUP-B-2": {
+                        "Type": "Parallel",
+                        "End": True,
+                        "Branches": [
+                            {
+                                "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-5",
+                                "StartAt": "SP-5_message",
+                                "States": {
+                                    "SP-5_message": {
+                                        "Type": "Task",
+                                        "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Parameters": {
+                                            "QueueUrl": "${fullCheckQueueUrl}",
+                                            "MessageGroupId": "table_5",
+                                            "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                            "MessageAttributes": {
+                                                "ProcessId": {
+                                                    "DataType": "String",
+                                                    "StringValue": "SP-5"
+                                                }
+                                            },
+                                            "MessageBody.$": "States.JsonToString($)"
+                                        },
+                                        "ResultSelector": {
+                                            "StateName": "SP-5_message",
+                                            "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
+                                        },
+                                        "End": True
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            'SP-GROUP-C': {
+                "Comment": "Trigger all schema_3 ETLs - group limit 5",
+                "StartAt": "SP-GROUP-C",
+                "States": {
+                    "SP-GROUP-C": {
+                        "Type": "Parallel",
+                        "End": True,
+                        "Branches": [
+                            {
+                                "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-2",
+                                "StartAt": "SP-2_message",
+                                "States": {
+                                    "SP-2_message": {
+                                        "Type": "Task",
+                                        "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Parameters": {
+                                            "QueueUrl": "${fullCheckQueueUrl}",
+                                            "MessageGroupId": "table_2",
+                                            "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                            "MessageAttributes": {
+                                                "ProcessId": {
+                                                    "DataType": "String",
+                                                    "StringValue": "SP-2"
+                                                }
+                                            },
+                                            "MessageBody.$": "States.JsonToString($)"
+                                        },
+                                        "ResultSelector": {
+                                            "StateName": "SP-2_message",
+                                            "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
+                                        },
+                                        "End": True
+                                    }
+                                }
+                            },
+                            {
+                                "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-3",
+                                "StartAt": "SP-3_message",
+                                "States": {
+                                    "SP-3_message": {
+                                        "Type": "Task",
+                                        "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Parameters": {
+                                            "QueueUrl": "${fullCheckQueueUrl}",
+                                            "MessageGroupId": "table_3",
+                                            "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                            "MessageAttributes": {
+                                                "ProcessId": {
+                                                    "DataType": "String",
+                                                    "StringValue": "SP-3"
+                                                }
+                                            },
+                                            "MessageBody.$": "States.JsonToString($)"
+                                        },
+                                        "ResultSelector": {
+                                            "StateName": "SP-3_message",
+                                            "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
+                                        },
+                                        "End": True
+                                    }
+                                }
+                            },
+                            {
+                                "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-4",
+                                "StartAt": "SP-4_message",
+                                "States": {
+                                    "SP-4_message": {
+                                        "Type": "Task",
+                                        "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Parameters": {
+                                            "QueueUrl": "${fullCheckQueueUrl}",
+                                            "MessageGroupId": "table_4",
+                                            "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                            "MessageAttributes": {
+                                                "ProcessId": {
+                                                    "DataType": "String",
+                                                    "StringValue": "SP-4"
+                                                }
+                                            },
+                                            "MessageBody.$": "States.JsonToString($)"
+                                        },
+                                        "ResultSelector": {
+                                            "StateName": "SP-4_message",
+                                            "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
+                                        },
+                                        "End": True
+                                    }
+                                }
+                            },
+                            {
+                                "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-5",
+                                "StartAt": "SP-5_message",
+                                "States": {
+                                    "SP-5_message": {
+                                        "Type": "Task",
+                                        "Resource": "arn:aws:states:::sqs:sendMessage",
+                                        "Parameters": {
+                                            "QueueUrl": "${fullCheckQueueUrl}",
+                                            "MessageGroupId": "table_5",
+                                            "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                            "MessageAttributes": {
+                                                "ProcessId": {
+                                                    "DataType": "String",
+                                                    "StringValue": "SP-5"
+                                                }
+                                            },
+                                            "MessageBody.$": "States.JsonToString($)"
+                                        },
+                                        "ResultSelector": {
+                                            "StateName": "SP-5_message",
+                                            "HttpHeadersDate.$": "$.SdkHttpMetadata.HttpHeaders.Date"
+                                        },
+                                        "End": True
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+        self.assertEqual(group_result, group_expected)
 
 
 if __name__ == '__main__':

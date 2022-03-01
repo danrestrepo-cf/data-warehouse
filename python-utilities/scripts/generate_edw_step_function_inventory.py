@@ -9,7 +9,7 @@ PROJECT_DIR_PATH = os.path.realpath(os.path.join(os.path.dirname(os.path.realpat
 sys.path.append(PROJECT_DIR_PATH)
 
 from lib.metadata_core.metadata_yaml_translator import generate_data_warehouse_metadata_from_yaml
-from lib.state_machines_generator.state_machines_generator import AllEtlStateMachinesGenerator
+from lib.state_machines_generator.state_machines_generator import AllStateMachinesGenerator
 
 
 def main():
@@ -19,14 +19,13 @@ def main():
     state_machine_file_extension = 'json'
 
     # initialize variable for write-to directory
-    infrastructure_dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', 'infrastructure')
-    pipelines_dir_path = os.path.join(infrastructure_dir_path, 'pipelines')
+    pipelines_dir_path = os.path.join(PROJECT_DIR_PATH, '..', 'infrastructure', 'pipelines')
     # delete existing inventory of ETL state machines
     delete_prior_state_machine_configurations(pipelines_dir_path, state_machine_file_extension)
 
     # generate ETL state machines
-    etl_state_machine_generator = AllEtlStateMachinesGenerator(data_warehouse_metadata)
-    state_machine_configs = etl_state_machine_generator.build_etl_state_machines()
+    state_machine_generator = AllStateMachinesGenerator(data_warehouse_metadata)
+    state_machine_configs = state_machine_generator.build_state_machines()
     formatted_config_strings = format_data_for_outputting(state_machine_configs)
     # output config files
     for name, config in formatted_config_strings.items():
@@ -40,7 +39,7 @@ def delete_prior_state_machine_configurations(directory: str, state_machine_file
         raise RuntimeError(f'Output directory contains unexpected non-{state_machine_file_extension} files, and may be invalid. Now exiting.')
     deleted_files_count = 0
     for file in os.listdir(directory):
-        if not fnmatch.fnmatch(file, "SP-GROUP-*"):
+        if file.endswith(state_machine_file_extension):
             filepath = os.path.join(directory, file)
             try:
                 os.remove(filepath)
