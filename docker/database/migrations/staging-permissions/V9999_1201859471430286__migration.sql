@@ -7,3 +7,7 @@ GRANT USAGE ON SCHEMA data_mart_business_applications TO svc_document_management
 GRANT SELECT ON TABLE data_mart_business_applications.employee_user_details TO svc_document_management;
 GRANT SELECT ON TABLE data_mart_business_applications.current_parent_nodes TO svc_document_management;
 GRANT SELECT ON TABLE data_mart_business_applications.current_parent_node_leaders TO svc_document_management;
+
+GRANT USAGE ON SCHEMA data_mart_business_applications TO etl_loan;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA data_mart_business_applications TO etl_loan;
+ALTER DEFAULT PRIVILEGES FOR ROLE deployer IN SCHEMA data_mart_business_applications GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO etl_loan;
