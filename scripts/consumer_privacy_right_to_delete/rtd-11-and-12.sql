@@ -11,7 +11,7 @@ RTD 11: loan #1401318407
 -- application
 UPDATE history_octane.application
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, apl_application_name = 'REDACTED_BORROWER_LAST_NAME'
 FROM history_octane.proposal
 	JOIN history_octane.deal ON proposal.prp_deal_pid = deal.d_pid
@@ -22,7 +22,7 @@ WHERE application.apl_proposal_pid = proposal.prp_pid;
 -- asset
 UPDATE history_octane.asset
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, as_aggregate_description = ''
 	, as_automobile_make_description = ''
 	, as_automobile_model_year = 0
@@ -68,7 +68,7 @@ WHERE asset.as_pid = borrower_asset.bas_asset_pid;
 -- borrower
 UPDATE history_octane.borrower
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, b_alimony_child_support = 'UNKNOWN'
 	, b_alimony_child_support_explanation = ''
 	, b_bankruptcy = 'UNKNOWN'
@@ -201,7 +201,7 @@ WHERE borrower.b_application_pid = application.apl_pid;
 -- borrower_alias
 UPDATE history_octane.borrower_alias
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, ba_first_name = ''
 	, ba_last_name = 'REDACTED_BORROWER_LAST_NAME'
 	, ba_middle_name = ''
@@ -218,7 +218,7 @@ WHERE borrower_alias.ba_borrower_pid = borrower.b_pid;
 -- borrower_associated_address
 UPDATE history_octane.borrower_associated_address
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, baa_credit_report_identifier = ''
 	, baa_reported_year = 0
 	, baa_reported_address_street1 = ''
@@ -239,7 +239,7 @@ WHERE borrower_associated_address.baa_borrower_pid = borrower.b_pid;
 -- borrower_declarations
 UPDATE history_octane.borrower_declarations
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, bdec_fha_secondary_residence = 'UNKNOWN'
 	, bdec_relationship_with_seller = 'UNKNOWN'
 	, bdec_borrowed_funds_undisclosed = 'UNKNOWN'
@@ -269,7 +269,7 @@ WHERE borrower_declarations.bdec_borrower_pid = borrower.b_pid;
 -- borrower_dependent
 UPDATE history_octane.borrower_dependent
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, bd_first_name = ''
 	, bd_last_name = ''
 	, bd_age = 0
@@ -289,7 +289,7 @@ WHERE borrower_dependent.bd_borrower_pid = borrower.b_pid;
 -- borrower_income
 UPDATE history_octane.borrower_income
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, bi_job_gap_reason_type = 'NA'
 	, bi_job_gap_reason_explanation = ''
 	, bi_business_ownership_type = 'UNSPECIFIED'
@@ -317,7 +317,7 @@ WHERE borrower_income.bi_borrower_pid = borrower.b_pid;
 -- borrower_job_gap
 UPDATE history_octane.borrower_job_gap
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, bjg_from_date = NULL
 	, bjg_through_date = NULL
 	, bjg_primary_job = FALSE
@@ -377,7 +377,7 @@ WHERE borrower_tax_filing.btf_borrower_pid = borrower.b_pid;
 -- borrower_user
 UPDATE history_octane.borrower_user
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, bu_email = ''
 	, bu_first_name = ''
 	, bu_middle_name = ''
@@ -397,7 +397,7 @@ WHERE borrower_user.bu_pid = borrower_user_deal.bud_borrower_user_pid;
 -- business_income
 UPDATE history_octane.business_income
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, bui_company_ein = ''
 	, bui_estimated_net_income_amount = 0
 	, bui_worksheet_monthly_total_amount = 0
@@ -599,7 +599,7 @@ WHERE business_income.bui_borrower_income_pid = borrower_income.bi_pid;
 -- credit_inquiry
 UPDATE history_octane.credit_inquiry
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, ci_inquiry_date = NULL
 	, ci_name = ''
 	, ci_address_street1 = ''
@@ -622,7 +622,7 @@ WHERE credit_inquiry.ci_pid = borrower_credit_inquiry.bci_credit_inquiry_pid;
 -- credit_request
 UPDATE history_octane.credit_request
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, crdr_requester_unparsed_name = ''
 	, crdr_borrower1_first_name = ''
 	, crdr_borrower1_middle_name = ''
@@ -661,7 +661,7 @@ WHERE credit_request.crdr_deal_pid = deal.d_pid
 -- credit_request_liability
 UPDATE history_octane.credit_request_liability
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, crl_credit_report_identifier = ''
 	, crl_report_holder_name = ''
 	, crl_report_account_opened_date = NULL
@@ -691,7 +691,7 @@ WHERE credit_request_liability.crl_deal_pid = deal.d_pid
 -- deal
 UPDATE history_octane.deal
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, d_deal_status_type = 'CANCELLED'
 	, d_hmda_action_date = CURRENT_DATE
 	, d_hmda_action_type = 'WITHDRAWN'
@@ -701,7 +701,7 @@ WHERE deal.d_los_loan_id_main = 1401318407;
 -- deal_invoice
 UPDATE history_octane.deal_invoice
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, di_create_datetime = NULL
 	, di_description = ''
 	, di_internal_notes = ''
@@ -713,7 +713,7 @@ WHERE deal_invoice.di_deal_pid = deal.d_pid
 -- deal_invoice_payment_method
 UPDATE history_octane.deal_invoice_payment_method
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, dipm_payer_unparsed_name = ''
 FROM history_octane.deal_invoice
 	JOIN history_octane.deal ON deal_invoice.di_deal_pid = deal.d_pid
@@ -724,7 +724,7 @@ WHERE deal_invoice_payment_method.dipm_deal_invoice_pid = deal_invoice.di_pid;
 -- deal_signer
 UPDATE history_octane.deal_signer
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, dsi_email = ''
 	, dsi_first_name = ''
 	, dsi_middle_name = ''
@@ -739,7 +739,7 @@ WHERE deal_signer.dsi_deal_pid = deal.d_pid
 -- deal_tag
 UPDATE history_octane.deal_tag
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, dtg_place_pid = 66955927
 FROM history_octane.deal
 WHERE deal_tag.dtg_deal_pid = deal.d_pid
@@ -749,7 +749,7 @@ WHERE deal_tag.dtg_deal_pid = deal.d_pid
 -- du_request
 UPDATE history_octane.du_request
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, dur_requester_unparsed_name = ''
 	, dur_mp_status_log = ''
 	, dur_loan_amount = 0
@@ -775,7 +775,7 @@ WHERE du_request.dur_proposal_pid = proposal.prp_pid;
 -- job_income
 UPDATE history_octane.job_income
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, ji_line_of_work_years = 0
 	, ji_monthly_base_unadjusted_amount = 0
 	, ji_monthly_base_adjustment_amount = 0
@@ -915,7 +915,7 @@ WHERE job_income.ji_borrower_income_pid = borrower_income.bi_pid;
 -- liability
 UPDATE history_octane.liability
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, lia_aggregate_description = ''
 	, lia_description = ''
 	, lia_city = ''
@@ -951,7 +951,7 @@ WHERE liability.lia_pid = borrower_liability.bl_liability_pid;
 -- loan_hedge
 UPDATE history_octane.loan_hedge
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, lh_effective_credit_score = 0
 	, lh_debt_to_income = 0
 	, lh_note_date = NULL
@@ -988,7 +988,7 @@ WHERE loan_hedge.lh_loan_pid = loan.l_pid;
 -- lp_request
 UPDATE history_octane.lp_request
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, lpr_requester_unparsed_name = ''
 	, lpr_loan_amount = 0
 	, lpr_initial_pi_amount = 0
@@ -1023,7 +1023,7 @@ WHERE lp_request.lpr_proposal_pid = proposal.prp_pid;
 -- military_service
 UPDATE history_octane.military_service
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, ms_from_date = NULL
 	, ms_through_date = NULL
 	, ms_name_used_during_service = ''
@@ -1039,7 +1039,7 @@ WHERE military_service.ms_borrower_pid = borrower.b_pid;
 -- other_income
 UPDATE history_octane.other_income
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, oi_estimated_net_income_amount = 0
 	, oi_worksheet_monthly_total_amount = 0
 	, oi_monthly_total_amount = 0
@@ -1099,7 +1099,7 @@ WHERE other_income.oi_borrower_income_pid = borrower_income.bi_pid;
 -- proposal
 UPDATE history_octane.proposal
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, prp_smart_docs_enabled = FALSE
 	, prp_note_date = NULL
 	, prp_intent_to_proceed_provider_unparsed_name = ''
@@ -1112,7 +1112,7 @@ WHERE proposal.prp_deal_pid = deal.d_pid
 -- proposal_doc
 UPDATE history_octane.proposal_doc
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, prpd_deal_child_name = ''
 	, prpd_reo_place_pid = 66955927
 	, prpd_property_place_pid = 66955927
@@ -1130,7 +1130,7 @@ WHERE proposal_doc.prpd_proposal_pid = proposal.prp_pid;
 -- proposal_doc_set
 UPDATE history_octane.proposal_doc_set
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, prpds_creator_unparsed_name = ''
 	, prpds_requester_unparsed_name = ''
 	, prpds_canceler_unparsed_name = ''
@@ -1143,7 +1143,7 @@ WHERE proposal_doc_set.prpds_proposal_pid = proposal.prp_pid;
 -- proposal_req
 UPDATE history_octane.proposal_req
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, prpr_fulfill_status_unparsed_name = ''
 	, prpr_decision_status_unparsed_name = ''
 	, prpr_reo_place_pid = 66955927
@@ -1159,7 +1159,7 @@ WHERE proposal_req.prpr_proposal_pid = proposal.prp_pid;
 -- proposal_review
 UPDATE history_octane.proposal_review
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, prpre_request_summary = ''
 	, prpre_decision_summary = ''
 FROM history_octane.proposal
@@ -1171,7 +1171,7 @@ WHERE proposal_review.prpre_proposal_pid = proposal.prp_pid;
 -- proposal_summary
 UPDATE history_octane.proposal_summary
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, ps_b1_first_name = ''
 	, ps_c1_first_name = ''
 	, ps_b2_first_name = ''
@@ -1217,7 +1217,7 @@ WHERE proposal_summary.ps_proposal_pid = proposal.prp_pid;
 -- public_record
 UPDATE history_octane.public_record
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, pr_disposition_date = NULL
 	, pr_filed_date = NULL
 	, pr_reported_date = NULL
@@ -1365,7 +1365,7 @@ WHERE rental_income.ri_borrower_income_pid = borrower_income.bi_pid;
 -- repository_file
 UPDATE history_octane.repository_file
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, rf_client_filename = ''
 	, rf_repository_filename = ''
 	, rf_uploader_name = ''
@@ -1379,7 +1379,7 @@ WHERE repository_file.rf_pid = deal_file.df_repository_file_pid;
 -- stripe_payment
 UPDATE history_octane.stripe_payment
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, stpm_payer_unparsed_name = ''
 	, stpm_receipt_email = ''
 FROM history_octane.deal_invoice_payment_method
@@ -1392,7 +1392,7 @@ WHERE stripe_payment.stpm_pid = deal_invoice_payment_method.dipm_stripe_payment_
 -- tax_transcript_request
 UPDATE history_octane.tax_transcript_request
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
 	, ttr_requester_unparsed_name = ''
 	, ttr_company_name = ''
 	, ttr_company_city = ''
@@ -1455,7 +1455,7 @@ RTD 12: loan #1401487039
 -- application
 UPDATE history_octane.application
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, apl_application_name = 'REDACTED_BORROWER_LAST_NAME'
 FROM history_octane.proposal
 	JOIN history_octane.deal ON proposal.prp_deal_pid = deal.d_pid
@@ -1466,7 +1466,7 @@ WHERE application.apl_proposal_pid = proposal.prp_pid;
 -- asset
 UPDATE history_octane.asset
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, as_aggregate_description = ''
 	, as_automobile_make_description = ''
 	, as_automobile_model_year = 0
@@ -1512,7 +1512,7 @@ WHERE asset.as_pid = borrower_asset.bas_asset_pid;
 -- borrower
 UPDATE history_octane.borrower
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, b_alimony_child_support = 'UNKNOWN'
 	, b_alimony_child_support_explanation = ''
 	, b_bankruptcy = 'UNKNOWN'
@@ -1645,7 +1645,7 @@ WHERE borrower.b_application_pid = application.apl_pid;
 -- borrower_alias
 UPDATE history_octane.borrower_alias
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, ba_first_name = ''
 	, ba_last_name = 'REDACTED_BORROWER_LAST_NAME'
 	, ba_middle_name = ''
@@ -1662,7 +1662,7 @@ WHERE borrower_alias.ba_borrower_pid = borrower.b_pid;
 -- borrower_associated_address
 UPDATE history_octane.borrower_associated_address
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, baa_credit_report_identifier = ''
 	, baa_reported_year = 0
 	, baa_reported_address_street1 = ''
@@ -1683,7 +1683,7 @@ WHERE borrower_associated_address.baa_borrower_pid = borrower.b_pid;
 -- borrower_declarations
 UPDATE history_octane.borrower_declarations
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, bdec_fha_secondary_residence = 'UNKNOWN'
 	, bdec_relationship_with_seller = 'UNKNOWN'
 	, bdec_borrowed_funds_undisclosed = 'UNKNOWN'
@@ -1713,7 +1713,7 @@ WHERE borrower_declarations.bdec_borrower_pid = borrower.b_pid;
 -- borrower_dependent
 UPDATE history_octane.borrower_dependent
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, bd_first_name = ''
 	, bd_last_name = ''
 	, bd_age = 0
@@ -1733,7 +1733,7 @@ WHERE borrower_dependent.bd_borrower_pid = borrower.b_pid;
 -- borrower_income
 UPDATE history_octane.borrower_income
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, bi_job_gap_reason_type = 'NA'
 	, bi_job_gap_reason_explanation = ''
 	, bi_business_ownership_type = 'UNSPECIFIED'
@@ -1761,7 +1761,7 @@ WHERE borrower_income.bi_borrower_pid = borrower.b_pid;
 -- borrower_job_gap
 UPDATE history_octane.borrower_job_gap
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, bjg_from_date = NULL
 	, bjg_through_date = NULL
 	, bjg_primary_job = FALSE
@@ -1821,7 +1821,7 @@ WHERE borrower_tax_filing.btf_borrower_pid = borrower.b_pid;
 -- borrower_user
 UPDATE history_octane.borrower_user
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, bu_email = ''
 	, bu_first_name = ''
 	, bu_middle_name = ''
@@ -1841,7 +1841,7 @@ WHERE borrower_user.bu_pid = borrower_user_deal.bud_borrower_user_pid;
 -- business_income
 UPDATE history_octane.business_income
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, bui_company_ein = ''
 	, bui_estimated_net_income_amount = 0
 	, bui_worksheet_monthly_total_amount = 0
@@ -2043,7 +2043,7 @@ WHERE business_income.bui_borrower_income_pid = borrower_income.bi_pid;
 -- credit_inquiry
 UPDATE history_octane.credit_inquiry
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, ci_inquiry_date = NULL
 	, ci_name = ''
 	, ci_address_street1 = ''
@@ -2066,7 +2066,7 @@ WHERE credit_inquiry.ci_pid = borrower_credit_inquiry.bci_credit_inquiry_pid;
 -- credit_request
 UPDATE history_octane.credit_request
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, crdr_requester_unparsed_name = ''
 	, crdr_borrower1_first_name = ''
 	, crdr_borrower1_middle_name = ''
@@ -2105,7 +2105,7 @@ WHERE credit_request.crdr_deal_pid = deal.d_pid
 -- credit_request_liability
 UPDATE history_octane.credit_request_liability
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, crl_credit_report_identifier = ''
 	, crl_report_holder_name = ''
 	, crl_report_account_opened_date = NULL
@@ -2135,7 +2135,7 @@ WHERE credit_request_liability.crl_deal_pid = deal.d_pid
 -- deal
 UPDATE history_octane.deal
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, d_deal_status_type = 'CANCELLED'
 	, d_hmda_action_date = CURRENT_DATE
 	, d_hmda_action_type = 'WITHDRAWN'
@@ -2145,7 +2145,7 @@ WHERE deal.d_los_loan_id_main = 1401487039;
 -- deal_invoice
 UPDATE history_octane.deal_invoice
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, di_create_datetime = NULL
 	, di_description = ''
 	, di_internal_notes = ''
@@ -2157,7 +2157,7 @@ WHERE deal_invoice.di_deal_pid = deal.d_pid
 -- deal_invoice_payment_method
 UPDATE history_octane.deal_invoice_payment_method
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, dipm_payer_unparsed_name = ''
 FROM history_octane.deal_invoice
 	JOIN history_octane.deal ON deal_invoice.di_deal_pid = deal.d_pid
@@ -2168,7 +2168,7 @@ WHERE deal_invoice_payment_method.dipm_deal_invoice_pid = deal_invoice.di_pid;
 -- deal_signer
 UPDATE history_octane.deal_signer
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, dsi_email = ''
 	, dsi_first_name = ''
 	, dsi_middle_name = ''
@@ -2183,7 +2183,7 @@ WHERE deal_signer.dsi_deal_pid = deal.d_pid
 -- deal_tag
 UPDATE history_octane.deal_tag
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, dtg_place_pid = 66955894
 FROM history_octane.deal
 WHERE deal_tag.dtg_deal_pid = deal.d_pid
@@ -2193,7 +2193,7 @@ WHERE deal_tag.dtg_deal_pid = deal.d_pid
 -- du_request
 UPDATE history_octane.du_request
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, dur_requester_unparsed_name = ''
 	, dur_mp_status_log = ''
 	, dur_loan_amount = 0
@@ -2219,7 +2219,7 @@ WHERE du_request.dur_proposal_pid = proposal.prp_pid;
 -- job_income
 UPDATE history_octane.job_income
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, ji_line_of_work_years = 0
 	, ji_monthly_base_unadjusted_amount = 0
 	, ji_monthly_base_adjustment_amount = 0
@@ -2359,7 +2359,7 @@ WHERE job_income.ji_borrower_income_pid = borrower_income.bi_pid;
 -- liability
 UPDATE history_octane.liability
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, lia_aggregate_description = ''
 	, lia_description = ''
 	, lia_city = ''
@@ -2395,7 +2395,7 @@ WHERE liability.lia_pid = borrower_liability.bl_liability_pid;
 -- loan_hedge
 UPDATE history_octane.loan_hedge
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, lh_effective_credit_score = 0
 	, lh_debt_to_income = 0
 	, lh_note_date = NULL
@@ -2432,7 +2432,7 @@ WHERE loan_hedge.lh_loan_pid = loan.l_pid;
 -- lp_request
 UPDATE history_octane.lp_request
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, lpr_requester_unparsed_name = ''
 	, lpr_loan_amount = 0
 	, lpr_initial_pi_amount = 0
@@ -2467,7 +2467,7 @@ WHERE lp_request.lpr_proposal_pid = proposal.prp_pid;
 -- military_service
 UPDATE history_octane.military_service
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, ms_from_date = NULL
 	, ms_through_date = NULL
 	, ms_name_used_during_service = ''
@@ -2483,7 +2483,7 @@ WHERE military_service.ms_borrower_pid = borrower.b_pid;
 -- other_income
 UPDATE history_octane.other_income
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, oi_estimated_net_income_amount = 0
 	, oi_worksheet_monthly_total_amount = 0
 	, oi_monthly_total_amount = 0
@@ -2543,7 +2543,7 @@ WHERE other_income.oi_borrower_income_pid = borrower_income.bi_pid;
 -- proposal
 UPDATE history_octane.proposal
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, prp_smart_docs_enabled = FALSE
 	, prp_note_date = NULL
 	, prp_intent_to_proceed_provider_unparsed_name = ''
@@ -2556,7 +2556,7 @@ WHERE proposal.prp_deal_pid = deal.d_pid
 -- proposal_doc
 UPDATE history_octane.proposal_doc
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, prpd_deal_child_name = ''
 	, prpd_reo_place_pid = 66955894
 	, prpd_property_place_pid = 66955894
@@ -2574,7 +2574,7 @@ WHERE proposal_doc.prpd_proposal_pid = proposal.prp_pid;
 -- proposal_doc_set
 UPDATE history_octane.proposal_doc_set
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, prpds_creator_unparsed_name = ''
 	, prpds_requester_unparsed_name = ''
 	, prpds_canceler_unparsed_name = ''
@@ -2587,7 +2587,7 @@ WHERE proposal_doc_set.prpds_proposal_pid = proposal.prp_pid;
 -- proposal_req
 UPDATE history_octane.proposal_req
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, prpr_fulfill_status_unparsed_name = ''
 	, prpr_decision_status_unparsed_name = ''
 	, prpr_reo_place_pid = 66955894
@@ -2603,7 +2603,7 @@ WHERE proposal_req.prpr_proposal_pid = proposal.prp_pid;
 -- proposal_review
 UPDATE history_octane.proposal_review
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, prpre_request_summary = ''
 	, prpre_decision_summary = ''
 FROM history_octane.proposal
@@ -2615,7 +2615,7 @@ WHERE proposal_review.prpre_proposal_pid = proposal.prp_pid;
 -- proposal_summary
 UPDATE history_octane.proposal_summary
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, ps_b1_first_name = ''
 	, ps_c1_first_name = ''
 	, ps_b2_first_name = ''
@@ -2661,7 +2661,7 @@ WHERE proposal_summary.ps_proposal_pid = proposal.prp_pid;
 -- public_record
 UPDATE history_octane.public_record
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, pr_disposition_date = NULL
 	, pr_filed_date = NULL
 	, pr_reported_date = NULL
@@ -2809,7 +2809,7 @@ WHERE rental_income.ri_borrower_income_pid = borrower_income.bi_pid;
 -- repository_file
 UPDATE history_octane.repository_file
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, rf_client_filename = ''
 	, rf_repository_filename = ''
 	, rf_uploader_name = ''
@@ -2823,7 +2823,7 @@ WHERE repository_file.rf_pid = deal_file.df_repository_file_pid;
 -- stripe_payment
 UPDATE history_octane.stripe_payment
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, stpm_payer_unparsed_name = ''
 	, stpm_receipt_email = ''
 FROM history_octane.deal_invoice_payment_method
@@ -2836,7 +2836,7 @@ WHERE stripe_payment.stpm_pid = deal_invoice_payment_method.dipm_stripe_payment_
 -- tax_transcript_request
 UPDATE history_octane.tax_transcript_request
 SET data_source_updated_datetime = NOW()
-	, etl_batch_id = 'rtd-11-1201696010784016'
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
 	, ttr_requester_unparsed_name = ''
 	, ttr_company_name = ''
 	, ttr_company_city = ''
