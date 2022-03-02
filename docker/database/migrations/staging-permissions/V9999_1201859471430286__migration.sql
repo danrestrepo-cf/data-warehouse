@@ -11,3 +11,7 @@ GRANT SELECT ON TABLE data_mart_business_applications.current_parent_node_leader
 GRANT USAGE ON SCHEMA data_mart_business_applications TO etl_loan;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA data_mart_business_applications TO etl_loan;
 ALTER DEFAULT PRIVILEGES FOR ROLE deployer IN SCHEMA data_mart_business_applications GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO etl_loan;
+
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA data_mart_business_applications TO etl_loan;
+ALTER DEFAULT PRIVILEGES FOR ROLE deployer IN SCHEMA data_mart_business_applications GRANT USAGE, SELECT
+    ON SEQUENCES TO etl_loan;

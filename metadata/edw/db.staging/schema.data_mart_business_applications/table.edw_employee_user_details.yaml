@@ -1,8 +1,32 @@
-name: employee_user_details
+name: edw_employee_user_details
 primary_source_table: staging.history_octane.lender_user
 primary_key:
-- octane_username
+- dwid
 columns:
+  dwid:
+    data_type: BIGINT
+    update_flag: false
+  data_source_dwid:
+    data_type: BIGINT
+    update_flag: true
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  etl_batch_id:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_columns:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_id:
+    data_type: TEXT
+    update_flag: false
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
   parent_node_id:
     data_type: BIGINT
     update_flag: true
@@ -41,13 +65,18 @@ etls:
     input_type: table
     output_type: insert_update
     hardcoded_data_source: Octane
-    json_output_field: octane_username
+    json_output_field: data_source_integration_id
     insert_update_keys:
-    - octane_username
+    - data_source_integration_id
     container_memory: 2048
     input_sql: |-
       --SP-400001-insert-update
-      SELECT parent_org_node.on_org_node_id AS parent_node_id
+      SELECT 'lu_pid~data_source_dwid' AS data_source_integration_columns
+           , COALESCE( CAST( lender_user.lu_pid AS TEXT ), '<NULL>' ) || '~1' AS data_source_integration_id
+           , NOW( ) AS edw_created_datetime
+           , NOW( ) AS edw_modified_datetime
+           , lender_user.data_source_updated_datetime AS data_source_modified_datetime
+           , parent_org_node.on_org_node_id AS parent_node_id
            , parent_org_node.on_org_node_name_latest AS parent_node_name
            , lender_user.lu_company_user_id AS company_user_id
            , lender_user.lu_username AS octane_username
@@ -99,18 +128,32 @@ etls:
           WHERE history_records.on_pid IS NULL
             AND NOT org_node.data_source_deleted_flag
       ) AS parent_org_node
-                ON org_node_version.onv_parent_org_node_pid = parent_org_node.on_pid;
+                ON org_node_version.onv_parent_org_node_pid = parent_org_node.on_pid
+      LEFT JOIN data_mart_business_applications.edw_employee_user_details
+                ON parent_org_node.on_org_node_id = edw_employee_user_details.parent_node_id
+                    AND parent_org_node.on_org_node_name_latest = edw_employee_user_details.parent_node_name
+                    AND lender_user.lu_company_user_id = edw_employee_user_details.company_user_id
+                    AND lender_user.lu_username = edw_employee_user_details.octane_username
+                    AND lender_user.lu_first_name = edw_employee_user_details.first_name
+                    AND lender_user.lu_last_name = edw_employee_user_details.last_name
+                    AND lender_user.lu_title = edw_employee_user_details.professional_title
+                    AND lender_user.lu_email = edw_employee_user_details.email
+                    AND lender_user.lu_hire_date = edw_employee_user_details.hire_date
+                    AND lender_user.lu_termination_date = edw_employee_user_details.termination_date
+                    AND (lender_user.lu_lender_user_status_type <> 'INACTIVE' AND lender_user.lu_hub_directory) =
+                        edw_employee_user_details.is_active_hub_user
+      WHERE edw_employee_user_details.dwid IS NULL;
   SP-400001-delete:
     input_type: table
     output_type: delete
-    json_output_field: octane_username
+    json_output_field: data_source_integration_id
     delete_keys:
-    - octane_username
+    - data_source_integration_id
     container_memory: 2048
     input_sql: |-
       --SP-400001-delete
-      SELECT employee_user_details.octane_username
-      FROM data_mart_business_applications.employee_user_details
+      SELECT edw_employee_user_details.data_source_integration_id
+      FROM data_mart_business_applications.edw_employee_user_details
       LEFT JOIN (
           SELECT *
           FROM (
@@ -134,5 +177,6 @@ etls:
           ) AS child_org_node
                ON child_org_node.on_lender_user_pid = lender_user.lu_pid
       ) AS current_data
-                ON employee_user_details.octane_username = current_data.lu_username
+                ON edw_employee_user_details.data_source_integration_id =
+                   COALESCE( CAST( current_data.lu_pid AS TEXT ), '<NULL>' ) || '~1'
       WHERE current_data.lu_pid IS NULL;
