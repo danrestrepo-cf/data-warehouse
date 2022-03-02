@@ -331,7 +331,9 @@ WHERE borrower_job_gap.bjg_borrower_pid = borrower.b_pid;
 
 -- borrower_reo
 UPDATE history_octane.borrower_reo
-SET breo_place_pid = 66955927
+SET data_source_updated_datetime = NOW()
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
+	, breo_place_pid = 66955927
 	, breo_ownership_percent = 0
 FROM history_octane.borrower
 	JOIN history_octane.application ON borrower.b_application_pid = application.apl_pid
@@ -343,7 +345,9 @@ WHERE borrower_reo.breo_borrower_pid = borrower.b_pid;
 
 -- borrower_residence
 UPDATE history_octane.borrower_residence
-SET bres_place_pid = 66955927
+SET data_source_updated_datetime = NOW()
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
+	, bres_place_pid = 66955927
 	, bres_current = FALSE
 	, bres_borrower_residency_basis_type = 'RENT'
 	, bres_from_date = NULL
@@ -359,7 +363,9 @@ WHERE borrower_residence.bres_borrower_pid = borrower.b_pid;
 
 -- borrower_tax_filing
 UPDATE history_octane.borrower_tax_filing
-SET btf_place_pid = 66955927
+SET data_source_updated_datetime = NOW()
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
+    , btf_place_pid = 66955927
 	, btf_tax_filing_status_type = 'UNSPECIFIED'
 	, btf_year = 0
 	, btf_joint_filer_first_name = ''
@@ -1245,7 +1251,9 @@ WHERE public_record.pr_pid = borrower_public_record.bpr_public_record_pid;
 
 -- rental_income
 UPDATE history_octane.rental_income
-SET ri_place_pid = 66955927
+SET data_source_updated_datetime = NOW()
+	, etl_batch_id = 'ccpa-rtd-11-1201696010784016'
+	, ri_place_pid = 66955927
 	, ri_rental_income_estimated_gross_monthly_amount = 0
 	, ri_simple_monthly_total_amount = 0
 	, ri_schedule_e_calculated_gross_monthly_amount = 0
@@ -1774,7 +1782,9 @@ WHERE borrower_job_gap.bjg_borrower_pid = borrower.b_pid;
 
 -- borrower_reo
 UPDATE history_octane.borrower_reo
-SET breo_place_pid = 66955894
+SET data_source_updated_datetime = NOW()
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
+	, breo_place_pid = 66955894
 	, breo_ownership_percent = 0
 FROM history_octane.borrower
 	JOIN history_octane.application ON borrower.b_application_pid = application.apl_pid
@@ -1786,7 +1796,9 @@ WHERE borrower_reo.breo_borrower_pid = borrower.b_pid;
 
 -- borrower_residence
 UPDATE history_octane.borrower_residence
-SET bres_place_pid = 66955894
+SET data_source_updated_datetime = NOW()
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
+	, bres_place_pid = 66955894
 	, bres_current = FALSE
 	, bres_borrower_residency_basis_type = 'RENT'
 	, bres_from_date = NULL
@@ -1802,7 +1814,9 @@ WHERE borrower_residence.bres_borrower_pid = borrower.b_pid;
 
 -- borrower_tax_filing
 UPDATE history_octane.borrower_tax_filing
-SET btf_place_pid = 66955894
+SET data_source_updated_datetime = NOW()
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
+  	, btf_place_pid = 66955894
 	, btf_tax_filing_status_type = 'UNSPECIFIED'
 	, btf_year = 0
 	, btf_joint_filer_first_name = ''
@@ -2688,7 +2702,9 @@ WHERE public_record.pr_pid = borrower_public_record.bpr_public_record_pid;
 
 -- rental_income
 UPDATE history_octane.rental_income
-SET ri_place_pid = 66955894
+SET data_source_updated_datetime = NOW()
+	, etl_batch_id = 'ccpa-rtd-12-1201689552095074'
+	, ri_place_pid = 66955894
 	, ri_rental_income_estimated_gross_monthly_amount = 0
 	, ri_simple_monthly_total_amount = 0
 	, ri_schedule_e_calculated_gross_monthly_amount = 0
