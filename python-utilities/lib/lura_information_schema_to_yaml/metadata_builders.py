@@ -214,8 +214,10 @@ def add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata: D
     :param octane_metadata: a DataWarehouseMetadata object that already contains history_octane metadata within it.
     :param current_yaml_metadata:  a DataWarehouseMetadata object that already contains history_octane metadata within it.
     """
+    print(f"octane_metadata: {octane_metadata}")
+    print(f"current_yaml_metadata: {current_yaml_metadata}")
 
-    # verify the staging database has a schema named history_octane in the DataWarehouseMetadata object read from the yaml files
+# verify the staging database has a schema named history_octane in the DataWarehouseMetadata object read from the yaml files
     try:
         current_history_octane_metadata = current_yaml_metadata.get_database('staging').get_schema('history_octane')
     except InvalidMetadataKeyException:
