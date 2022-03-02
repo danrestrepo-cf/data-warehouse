@@ -51,8 +51,7 @@ class StateMachineDefinitionMetadataComparisonFunctions(MetadataComparisonFuncti
             for schema in database.schemas:
                 for table in schema.tables:
                     for etl in table.etls:
-                        comment = ETLMetadata.construct_process_description(table.primary_source_table, table.path,
-                                                                            etl.input_type, etl.output_type)
+                        comment = etl.construct_process_description(table.primary_source_table, table.path)
                         metadata_table.add_row({'process_name': etl.process_name, 'state_machine_name': etl.process_name,
                                                 'state_machine_comment': comment})
         return metadata_table
