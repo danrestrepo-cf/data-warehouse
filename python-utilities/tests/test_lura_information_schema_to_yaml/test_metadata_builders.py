@@ -1044,10 +1044,10 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                         'code': {
                                             'data_type': 'TEXT'
                                         },
-                                        'extra_field_1': { # will be deleted
+                                        'extra_field_1': {  # will be deleted
                                             'data_type': 'TEXT'
                                         },
-                                        'extra_field_2': { # will be deleted
+                                        'extra_field_2': {  # will be deleted
                                             'data_type': 'TEXT'
                                         },
                                         'value': {
@@ -1166,7 +1166,7 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     }
                                 },
                                 {
-                                    'name': 'some_id_sequence', # deleted table
+                                    'name': 'some_id_sequence',  # deleted table
                                     'primary_key': ['is_id'],
                                     'columns': {
                                         'is_id': {
@@ -1181,10 +1181,10 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                         'code': {
                                             'data_type': 'TEXT'
                                         },
-                                        'extra_field_1': { # deleted field
+                                        'extra_field_1': {  # deleted field
                                             'data_type': 'TEXT'
                                         },
-                                        'extra_field_2': { # deleted field
+                                        'extra_field_2': {  # deleted field
                                             'data_type': 'TEXT'
                                         },
                                         'value': {
@@ -1315,7 +1315,7 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                     }
                                 },
                                 {
-                                    'name': 'some_id_sequence', # deleted table
+                                    'name': 'some_id_sequence',  # deleted table
                                     'primary_key': ['is_id'],
                                     'columns': {
                                         'is_id': {
@@ -1330,10 +1330,10 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                         'code': {
                                             'data_type': 'TEXT'
                                         },
-                                        'extra_field_1': { # deleted field
+                                        'extra_field_1': {  # deleted field
                                             'data_type': 'TEXT'
                                         },
-                                        'extra_field_2': { # deleted field
+                                        'extra_field_2': {  # deleted field
                                             'data_type': 'TEXT'
                                         },
                                         'value': {
@@ -1347,25 +1347,17 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                 }
             ]
         })
-        history_column_metadata = [
-            {'table_name': 'account', 'column_name': 'a_pid', 'data_type': 'BIGINT'},
-            {'table_name': 'account', 'column_name': 'a_version', 'data_type': 'INTEGER'},
-            {'table_name': 'account', 'column_name': 'a_deleted_column', 'data_type': 'TEXT'},
-            {'table_name': 'deleted_table', 'column_name': 'dt_pid', 'data_type': 'BIGINT'},
-            {'table_name': 'deleted_table', 'column_name': 'dt_version', 'data_type': 'INTEGER'},
-            {'table_name': 'deleted_type_table', 'column_name': 'code', 'data_type': 'TEXT'},
-            {'table_name': 'deleted_type_table', 'column_name': 'value', 'data_type': 'TEXT'}
-        ]
 
     def test_incorporates_given_columns_and_tables_into_the_given_data_warehouse_metadata_structure_if_they_dont_already_exist(self):
         from lib.metadata_core.metadata_yaml_translator import (generate_data_warehouse_metadata_from_yaml)
         import os
+
         current_yaml_metadata = generate_data_warehouse_metadata_from_yaml(os.path.abspath(os.path.join(os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..')), '../..', 'metadata/edw')))
         print(add_deleted_tables_and_columns_to_history_octane_metadata(self.octane_metadata, current_yaml_metadata))
 
-
         # test now fails as a reminder to fix this after implementation
         # self.assertEqual(construct_data_warehouse_metadata_from_dict(self.expected_metadata), add_deleted_tables_and_columns_to_history_octane_metadata(self.octane_metadata, output))
+
 
 if __name__ == '__main__':
     unittest.main()
