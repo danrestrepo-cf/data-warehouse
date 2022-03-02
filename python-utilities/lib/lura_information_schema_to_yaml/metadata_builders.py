@@ -214,6 +214,12 @@ def add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata: D
     :param octane_metadata: a DataWarehouseMetadata object that already contains history_octane metadata within it.
     :param current_yaml_metadata:  a DataWarehouseMetadata object that already contains history_octane metadata within it.
     """
+
+    print("octane_metadata:")
+    print(octane_metadata)
+    print("current_yaml_metadata:")
+    print(current_yaml_metadata)
+
     # verify the staging database has a schema named history_octane in the DataWarehouseMetadata object read from the yaml files
     try:
         current_history_octane_metadata = current_yaml_metadata.get_database('staging').get_schema('history_octane')
@@ -224,10 +230,7 @@ def add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata: D
     # causing side effects.
     import copy
     output_database_metadata = copy.deepcopy(octane_metadata)
-    print("output_database_metadata:")
-    print(output_database_metadata)
-    print("current_yaml_metadata:")
-    print(current_yaml_metadata)
+
     # this SchemaMetadata object contains only history_octane metadata read from yamls.
     # it will be modified to remove anything needed and then added to the DataWarehouseMetadata object to create the
     # full set of data needed to write a new set of yamls.
