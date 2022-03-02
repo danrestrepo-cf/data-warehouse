@@ -200,7 +200,7 @@ def generate_history_octane_metadata(metadata: DataWarehouseMetadata, table_to_p
     return metadata_with_history_octane
 
 def add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata: DataWarehouseMetadata,
-                                                              current_yaml_metadata: List[dict]) -> DataWarehouseMetadata:
+                                                              current_yaml_metadata: DataWarehouseMetadata) -> DataWarehouseMetadata:
     """Generate a new DataWarehouseMetadata object with previously-deleted tables/columns incorporated into history_octane.
 
     This function is used to cross-reference the current history_octane metadata with the metadata pulled from Octane's
@@ -230,41 +230,66 @@ history_octane columns:
                             }
         }
     """
-    # add only history_octane data (including FKs) to a list of columns
-    history_octane_metadata = []
-    for database in current_yaml_metadata["databases"]:
-        if database['name'] != 'staging':  # only operate on the staging database
-            continue
-        for schema in database["schemas"]:
-            if schema['name'] != 'history_octane':  # only operate on the history_octane schema
-                continue
-            for table in schema["tables"]:
-                columns = table['columns'].keys()
-                for column in columns:
-                    if 'foreign_keys' in table:
-                        history_octane_metadata.append({'table_name': table['name'], 'column_name': column, 'data_type': table['columns'][column]['data_type'], 'database_name': database['name'], 'schema_name': schema['name'], 'foreign_keys': table['foreign_keys']})
-                    else:
-                        history_octane_metadata.append({'table_name': table['name'], 'column_name': column, 'data_type': table['columns'][column]['data_type'], 'database_name': database['name'], 'schema_name': schema['name']})
-
-    octane_metadata_copy = copy.deepcopy(octane_metadata)
+    # verify the staging database has a schema named history_octane in the DataWarehouseMetadata object read from the yaml files
     try:
-        history_octane_schema_copy = octane_metadata_copy.get_database('staging').get_schema('history_octane')
-    except InvalidMetadataKeyException:
+        current_history_octane_metadata = current_yaml_metadata.get_database('staging').get_schema('history_octane')
+    except:
         raise ValueError('Schema "history_octane" in database "staging" must be present in order to incorporate deleted tables and columns')
 
-    previously_deleted_tables = []
-    for row in history_octane_metadata:
-        if not history_octane_schema_copy.contains_table(row['table_name']):
-            history_table = TableMetadata(name=row['table_name'])
-            history_octane_schema_copy.add_table(history_table)
-            previously_deleted_tables.append(history_table)
-        else:
-            history_table = history_octane_schema_copy.get_table(row['table_name'])
-        if not history_table.contains_column(row['column_name']):
-            history_table.add_column(ColumnMetadata(name=row['column_name'], data_type=row['data_type']))
-    for table in previously_deleted_tables:
-        table.primary_key = derive_history_table_primary_key_from_scratch(table)
-    return octane_metadata_copy
+    # python passes by reference so use the copy library to create a copy of objects so we can modify them without
+    # causing side effects.
+    import copy
+    output_database_metadata = copy.deepcopy(octane_metadata)
+
+    # this SchemaMetadata object contains only history_octane metadata read from yamls.
+    # it will be modified to remove anything needed and then added to the DataWarehouseMetadata object to create the
+    # full set of data needed to write a new set of yamls.
+    history_octane_metadata = copy.deepcopy(current_history_octane_metadata)
+
+    for current_metadata_table in history_octane_metadata.tables:
+        print(f"Now processing table: history_octane.{current_metadata_table.name}")
+
+        # detect if table is deleted from octane
+        try:
+            octane_metadata.get_database('staging').get_schema('staging_octane').get_table(current_metadata_table.name)
+            # table not deleted, ETLs/primary source needed
+        except InvalidMetadataKeyException:
+            # table deleted (not found in octane's metadata)
+            print(f"    Table not found in Octane's metadata. Removing source table and ETLs.")
+            # remove the table source and next etls
+            current_metadata_table.primary_source_table = None
+            current_metadata_table.next_etls = None
+
+            # remove all ETLs in the current table
+            for etl in current_metadata_table.etls:
+                current_metadata_table.remove_etl(etl.process_name)
+
+        # detect if field is deleted from staging_octane
+        for current_metadata_table_column in current_metadata_table.columns:
+            try:
+                octane_metadata.get_database('staging').get_schema('staging_octane').get_table(current_metadata_table.name).get_column(current_metadata_table_column.name)
+                # column found
+                print(f"        Column {current_metadata_table_column.name} exists.")
+            except InvalidMetadataKeyException:
+                # column deleted (not found on octane's metadata)
+                print(f"        Column {current_metadata_table_column.name} does not exist!")
+                current_metadata_table_column.source = None
+                current_metadata_table_column.update_flag = False
+
+    # add tables from staging octane
+    for octane_metadata_table in octane_metadata.get_database('staging').get_schema('staging_octane').tables:
+        print(f"Now processing staging_octane.{octane_metadata_table.name}")
+        try:
+            history_octane_metadata.get_table(octane_metadata_table.name)
+            print("    Table found!")
+        except InvalidMetadataKeyException:
+            print("    Table not found, adding...")
+
+            history_octane_metadata.add_table(octane_metadata_table)
+
+    output_database_metadata.get_database('staging').add_schema(history_octane_metadata)
+
+    return output_database_metadata
 
 
 def is_type_table(table: TableMetadata) -> str:
