@@ -215,16 +215,17 @@ def add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata: D
     :param current_yaml_metadata:  a DataWarehouseMetadata object that already contains history_octane metadata within it.
     """
 
-    print("octane_metadata:")
-    print(octane_metadata)
-    print("current_yaml_metadata:")
-    print(current_yaml_metadata)
-
     # verify the staging database has a schema named history_octane in the DataWarehouseMetadata object read from the yaml files
     try:
         current_history_octane_metadata = current_yaml_metadata.get_database('staging').get_schema('history_octane')
     except InvalidMetadataKeyException:
-        raise ValueError('Schema "history_octane" in database "staging" must be present in order to incorporate deleted tables and columns')
+        raise ValueError('Schema "history_octane" in database "staging" must be present in parameter "current_history_octane_metadata" in order to incorporate deleted tables and columns')
+
+    # verify the staging database has a schema named history_octane in the DataWarehouse Metadata created from octane's database
+    try:
+        octane_metadata.get_database('staging').get_schema('history_octane')
+    except InvalidMetadataKeyException:
+        raise ValueError('Schema "history_octane" in database "staging" must be present in parameter "octane_metadata" in  order to incorporate deleted tables and columns')
 
     # python passes by reference so use the copy library to create a copy of objects so we can modify them without
     # causing side effects.
@@ -265,33 +266,6 @@ def add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata: D
                 print(f"            Column {current_metadata_table_column.name} does not exist in staging_octane schema! Removing source and update_flag.")
                 current_metadata_table_column.source = None
                 current_metadata_table_column.update_flag = False
-
-    print("Now checking to see if tables/fields need to be added from staging_octane to history_octane data")
-
-    # # add tables from staging octane
-    # for octane_metadata_table in octane_metadata.get_database('staging').get_schema('staging_octane').tables:
-    #     print(f"    Now processing staging_octane.{octane_metadata_table.name}")
-    #     try:
-    #         history_octane_metadata.get_table(octane_metadata_table.name)
-    #         print("    Table found in Octane!")
-    #         # compare fields to add any removed ones
-    #         for octane_metadata_table_column in octane_metadata_table.columns:
-    #             try:
-    #                 # if this succeeds then assume everything is OK with this particular field
-    #                 history_octane_metadata.get_table(octane_metadata_table.name).get_column(octane_metadata_table_column.name)
-    #             except InvalidMetadataKeyException:
-    #                 history_octane_metadata.get_table(octane_metadata_table.name).add_column(octane_metadata_table_column)
-    #     except InvalidMetadataKeyException:
-    #         print("    Table not found in Octane, adding...")
-    #         octane_metadata_table.primary_source_table = None
-    #         print(len(history_octane_metadata.tables))
-    #         print(history_octane_metadata)
-    #         for octane_metadata_table_column in octane_metadata_table.columns:
-    #             print(f"            Removing source and update flag from {octane_metadata_table.name}.{octane_metadata_table_column.name}")
-    #             octane_metadata_table_column.source = None
-    #             octane_metadata_table_column.update_flag = None
-    #
-    # history_octane_metadata.add_table(octane_metadata_table)
 
     output_database_metadata.get_database('staging').add_schema(history_octane_metadata)
 
