@@ -1,12 +1,12 @@
 import math
-from typing import Optional, List
-from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, ETLMetadata
+from typing import Optional, List, Callable
+from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata
 
 
 class AllStateMachinesGenerator:
     """Generates a state machine configuration dict for all ETL processes defined in yaml metadata"""
 
-    def __init__(self, data_warehouse_metadata: DataWarehouseMetadata):
+    def __init__(self, data_warehouse_metadata: DataWarehouseMetadata, group_generators: List['GroupStateMachineGenerator']):
         """
         Initialize SingleEtlStateMachineGenerator and GroupStateMachinesGenerator with a DataWarehouseMetadata object
 
@@ -37,21 +37,12 @@ class AllStateMachinesGenerator:
                     ... etc
                 ]
         """
+
         self.data_warehouse_metadata = data_warehouse_metadata
+        self.group_generators = group_generators
 
-        self.etl_state_machine_metadata = self.parse_data_warehouse_metadata()[0]
-        self.etl_state_machine_generator = SingleEtlStateMachineGenerator(self.etl_state_machine_metadata)
-
-        group_state_machine_metadata = self.parse_data_warehouse_metadata()[1]
-        self.group_state_machine_generator = GroupStateMachinesGenerator(
-            self.define_group_state_machine_components(
-                group_state_machine_metadata
-            )
-        )
-
-    def parse_data_warehouse_metadata(self) -> tuple:
-        etl_state_machine_metadata = {}
-        group_state_machine_metadata = []
+        self.etl_state_machine_metadata = {}
+        self.group_state_machine_metadata = []
         for database in self.data_warehouse_metadata.databases:
             for schema in database.schemas:
                 for table in schema.tables:
@@ -68,117 +59,109 @@ class AllStateMachinesGenerator:
                         else:
                             parsed_process_name = etl.process_name
                         # parse DataWarehouseMetadata into structure needed to generate ETL state machines
-                        etl_state_machine_metadata[parsed_process_name] = {
+                        self.etl_state_machine_metadata[parsed_process_name] = {
                             'target_table': table.name,
                             'container_memory': etl.container_memory,
                             'comment': etl.construct_process_description(table.primary_source_table, table.path),
                             'next_processes': sorted(table.next_etls)
                         }
-                        group_state_machine_metadata.append({
+                        self.group_state_machine_metadata.append({
                             'process_name': parsed_process_name,
                             'target_schema': schema.name,
                             'target_table': table.name,
                             'has_dependency': len(table.next_etls) > 0
                         })
-        return etl_state_machine_metadata, group_state_machine_metadata
+
+        self.data_warehouse_metadata = data_warehouse_metadata
+
+        self.etl_state_machine_generator = SingleEtlStateMachineGenerator(self.etl_state_machine_metadata)
 
     def build_state_machines(self) -> dict:
         """Build ETL and group state machine configuration dicts for given metadata"""
         etl_state_machines = {root: self.etl_state_machine_generator.build_etl_state_machine(root)
                               for root in self.etl_state_machine_metadata.keys()}
 
-        group_state_machines = self.group_state_machine_generator.build_group_state_machines()
+        group_state_machines = {}
+        group_state_machines_list = [group_state_machine_generator.create_grouped_config(
+            self.group_state_machine_metadata) for group_state_machine_generator in self.group_generators]
+        for entry in group_state_machines_list:
+            group_state_machines.update(entry)
+
         return {**etl_state_machines, **group_state_machines}
 
-    @staticmethod
-    def define_group_state_machine_components(group_state_machine_metadata: List[dict]) -> List[tuple]:
-        """Manipulate the provided group state machine metadata and construct a list of tuples that define all group
-        state machines, which will be passed to the GroupStateMachinesGenerator class"""
-        group_state_machines_components = []
 
-        # Group 1: all ETL processes that maintain data in the history_octane schema
-        group_1_state_machine_metadata = sorted([entry for entry in group_state_machine_metadata
-                                                 if entry['target_schema'] == 'history_octane'],
-                                                key=lambda x: x['process_name'])
-        group_state_machines_components.append((group_1_state_machine_metadata, 500, 'SP-GROUP-1',
-                                                'Trigger every history_octane ETL - This should process all staging_octane data '
-                                                'into history_octane and will trigger any downstream processes'))
+class GroupStateMachineGenerator:
+    """Generates a group state machine configuration dict for the provided metadata"""
 
-        # Group 2: ETL processes in that are in Group 1 AND are associated with a dependent ETL process
-        group_2_state_machine_metadata = [etl for etl in group_1_state_machine_metadata if etl['has_dependency']]
-        group_state_machines_components.append((group_2_state_machine_metadata, 500, 'SP-GROUP-2',
-                                                'Trigger history_octane ETLs that have one or more dependent ETLs - This should '
-                                                'process all staging_octane data that feeds any star_* tables'))
+    def __init__(self, group_criteria_function, group_state_limit: int, base_name: str, comment: str):
+        self.group_criteria_function = group_criteria_function
+        self.group_state_limit = group_state_limit
+        self.base_name = base_name
+        self.comment = comment
 
-        return group_state_machines_components
-
-
-class GroupStateMachinesGenerator:
-    """Generates group state machine configuration dicts for all provided groupings"""
-
-    def __init__(self, group_state_machines_components: List[tuple]):
-        self.group_state_machines_components = group_state_machines_components
-
-    def build_group_state_machines(self) -> dict:
-        """Build group state machines according to provided components"""
-        group_state_machines = {}
-        for group_state_machine_component_set in self.group_state_machines_components:
-            group_state_machines.update(self.create_grouped_config(*group_state_machine_component_set))
-        return group_state_machines
-
-    @staticmethod
-    def create_grouped_config(group_state_machine_metadata: List[dict], group_state_limit: int,
-                              group_state_machine_base_name: str, group_state_machine_comment: str) -> dict:
+    def create_grouped_config(self, group_state_machine_metadata: List[dict]) -> dict:
         """Create a grouped state machine configuration dict for sending SQS queue messages in parallel for state
         machines in the provided group metadata"""
         result_config = {}
-        unprocessed_group_state_machine_metadata_length = len(group_state_machine_metadata)
-        for i in range(0, math.ceil(unprocessed_group_state_machine_metadata_length / group_state_limit)):
-            if unprocessed_group_state_machine_metadata_length > group_state_limit:
-                # more than one grouping is needed for the defined state machine
-                state_machine_subgroup_suffix = i + 1
-                state_machine_name = f"{group_state_machine_base_name}-{state_machine_subgroup_suffix}"
-                parallel_state = create_root_config(
-                    f"{group_state_machine_comment} - group {state_machine_subgroup_suffix}",
-                    state_machine_name,
-                    {state_machine_name: create_parallel_config()})
-            else:
-                # only one grouping is needed for the defined state machine
-                state_machine_name = f"{group_state_machine_base_name}"
-                parallel_state = create_root_config(
-                    f"{group_state_machine_comment}",
-                    state_machine_name,
-                    {state_machine_name: create_parallel_config()})
-            parallel_branches = parallel_state['States'][state_machine_name]['Branches']
-            for j in range(0, len(group_state_machine_metadata)):
-                # one-by-one, create a message state config for each entry in the provided group state machine metadata
-                while len(parallel_branches) < group_state_limit and len(group_state_machine_metadata) > 0:
-                    state_machine_metadata = group_state_machine_metadata.pop(j)
-                    process_name = state_machine_metadata['process_name']
-                    target_table = state_machine_metadata['target_table']
-                    message_state_name = f'{process_name}_message'
-                    message_state = create_root_config(
-                        f'Send message to bi-managed-mdi-2-full-check-queue for {process_name}',
-                        message_state_name,
-                        {message_state_name:
-                            create_message_config(
-                                process_name,
-                                target_table)})
+        # filter group state machine metadata according to group_criteria function
+        group_state_machine_metadata = \
+            sorted([entry for entry in group_state_machine_metadata if self.group_criteria_function(entry)],
+                   key=lambda x: x['process_name'])
+        group_state_machine_metadata_length = len(group_state_machine_metadata)
 
-                    # insert ResultSelector attribute into message state's attributes before the 'End' attribute
-                    # this is needed to filter out unnecessary result information from successful message states
-                    message_state_attributes = message_state['States'][message_state_name]
-                    result_selector_position = list(message_state_attributes.keys()).index('End')
-                    message_state_attributes_items = list(message_state_attributes.items())
-                    message_state_attributes_items.insert(result_selector_position, ('ResultSelector',
-                                                                                     create_result_selector_attribute_config(
-                                                                                         message_state_name)))
-                    message_state_attributes = dict(message_state_attributes_items)
-                    message_state['States'][message_state_name] = message_state_attributes
-
-                    parallel_branches.append(message_state)
+        if group_state_machine_metadata_length <= self.group_state_limit:
+            sub_group_number = 0
+            state_machine_name = self.base_name
+            parallel_state = create_root_config(
+                f'{self.comment}',
+                state_machine_name,
+                {state_machine_name: create_parallel_config()}
+            )
+            parallel_state['States'][state_machine_name]['Branches'] = \
+                self.populate_parallel_branches_with_message_states(group_state_machine_metadata, sub_group_number, self.group_state_limit)
             result_config[state_machine_name] = parallel_state
+        else:
+            sub_group_count = math.ceil(group_state_machine_metadata_length / self.group_state_limit)
+            for sub_group_number in range(0, sub_group_count):
+                state_machine_name = f'{self.base_name}-{sub_group_number+1}'
+                parallel_state = create_root_config(
+                    f'{self.comment} - group {sub_group_number+1}',
+                    state_machine_name,
+                    {state_machine_name: create_parallel_config()}
+                )
+                parallel_state['States'][state_machine_name]['Branches'] = \
+                    self.populate_parallel_branches_with_message_states(group_state_machine_metadata, sub_group_number, self.group_state_limit)
+                result_config[state_machine_name] = parallel_state
+
         return result_config
+
+    @staticmethod
+    def populate_parallel_branches_with_message_states(group_state_machine_metadata, sub_group_number,
+                                                       group_state_limit) -> List[dict]:
+        parallel_branches = []
+        for entry in group_state_machine_metadata[sub_group_number * group_state_limit:(sub_group_number + 1) * group_state_limit]:
+            process_name = entry['process_name']
+            target_table = entry['target_table']
+            message_state_name = f'{process_name}_message'
+            message_state = create_root_config(
+                f'Send message to bi-managed-mdi-2-full-check-queue for {process_name}',
+                message_state_name,
+                {message_state_name: create_message_config(process_name, target_table)}
+            )
+
+            # insert ResultSelector attribute into message state's attributes before the 'End' attribute
+            # this is needed to filter out unnecessary result information from successful message states
+            message_state_attributes = message_state['States'][message_state_name]
+            result_selector_position = list(message_state_attributes.keys()).index('End')
+            message_state_attributes_items = list(message_state_attributes.items())
+            message_state_attributes_items.insert(
+                result_selector_position, ('ResultSelector', create_result_selector_attribute_config(message_state_name))
+            )
+            message_state_attributes = dict(message_state_attributes_items)
+            message_state['States'][message_state_name] = message_state_attributes
+
+            parallel_branches.append(message_state)
+        return parallel_branches
 
 
 class SingleEtlStateMachineGenerator:

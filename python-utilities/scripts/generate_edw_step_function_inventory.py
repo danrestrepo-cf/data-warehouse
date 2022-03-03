@@ -8,7 +8,7 @@ PROJECT_DIR_PATH = os.path.realpath(os.path.join(os.path.dirname(os.path.realpat
 sys.path.append(PROJECT_DIR_PATH)
 
 from lib.metadata_core.metadata_yaml_translator import generate_data_warehouse_metadata_from_yaml
-from lib.state_machines_generator.state_machines_generator import AllStateMachinesGenerator
+from lib.state_machines_generator.state_machines_generator import AllStateMachinesGenerator, GroupStateMachineGenerator
 
 
 def main():
@@ -22,8 +22,19 @@ def main():
     # delete existing inventory of ETL state machines
     delete_prior_state_machine_configurations(pipelines_dir_path, state_machine_file_extension)
 
-    # generate ETL state machines
-    state_machine_generator = AllStateMachinesGenerator(data_warehouse_metadata)
+    # define group state machines
+    group_state_machines = [
+        GroupStateMachineGenerator(lambda x: x['target_schema'] == 'history_octane', 500, 'SP-GROUP-1',
+                                   'Trigger every history_octane ETL - This should process all staging_octane data '
+                                   'into history_octane and will trigger any downstream processes'),
+        GroupStateMachineGenerator(lambda x: x['target_schema'] == 'history_octane' and x['has_dependency'], 500,
+                                   'SP-GROUP-2', 'Trigger history_octane ETLs that have one or more dependent ETLs - '
+                                                 'This should process all staging_octane data that feeds any star_* '
+                                                 'tables')
+    ]
+
+    # generate state machines
+    state_machine_generator = AllStateMachinesGenerator(data_warehouse_metadata, group_state_machines)
     state_machine_configs = state_machine_generator.build_state_machines()
     formatted_config_strings = format_data_for_outputting(state_machine_configs)
     # output config files
