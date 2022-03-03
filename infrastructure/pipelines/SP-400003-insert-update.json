@@ -1,0 +1,49 @@
+{
+    "Comment": "SP-400003-insert-update - table -> table-insert_update ETL from staging.history_octane.org_node_lender_user to staging.data_mart_business_applications.edw_current_parent_node_leaders",
+    "StartAt": "SP-400003-insert-update",
+    "States": {
+        "SP-400003-insert-update": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::ecs:runTask.sync",
+            "Parameters": {
+                "LaunchType": "FARGATE",
+                "Cluster": "${ecsClusterARN}",
+                "TaskDefinition": "${mdi_2_arn}",
+                "NetworkConfiguration": {
+                    "AwsvpcConfiguration": {
+                        "AssignPublicIp": "DISABLED",
+                        "SecurityGroups": [
+                            "${securityGroupId}"
+                        ],
+                        "Subnets": ${subnetIDs}
+                    }
+                },
+                "Overrides": {
+                    "Memory": "2048",
+                    "ContainerOverrides": [
+                        {
+                            "Memory": 2048,
+                            "Environment": [
+                                {
+                                    "Name": "PROCESS_NAME",
+                                    "Value": "SP-400003-insert-update"
+                                },
+                                {
+                                    "Name": "INPUT_DATA",
+                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
+                                },
+                                {
+                                    "Name": "TOKEN_ID",
+                                    "Value.$": "$$.Task.Token"
+                                }
+                            ],
+                            "Name": "${mdi_2_container}"
+                        }
+                    ]
+                }
+            },
+            "End": true
+        }
+    }
+}
+
