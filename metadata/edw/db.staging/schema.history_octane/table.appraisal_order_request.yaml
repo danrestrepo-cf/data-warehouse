@@ -107,6 +107,10 @@ columns:
       field: primary_source_table.columns.aprq_address_street2
   aprq_appraisal_fee_amount:
     data_type: NUMERIC(15,2)
+  aprq_appraisal_import_warnings:
+    data_type: TEXT
+    source:
+      field: primary_source_table.columns.aprq_appraisal_import_warnings
   aprq_appraisal_management_company_type:
     data_type: VARCHAR(128)
     source:
@@ -217,6 +221,7 @@ etls:
            , staging_table.aprq_requester_unparsed_name
            , staging_table.aprq_requester_agent_type
            , staging_table.aprq_vendor_status_unique_id
+           , staging_table.aprq_appraisal_import_warnings
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.appraisal_order_request staging_table
@@ -248,6 +253,7 @@ etls:
            , history_table.aprq_requester_unparsed_name
            , history_table.aprq_requester_agent_type
            , history_table.aprq_vendor_status_unique_id
+           , history_table.aprq_appraisal_import_warnings
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.appraisal_order_request history_table
