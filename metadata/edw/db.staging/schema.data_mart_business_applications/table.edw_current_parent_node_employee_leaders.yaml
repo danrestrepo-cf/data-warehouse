@@ -75,6 +75,7 @@ etls:
                         AND lender_user.data_source_updated_datetime < history_records.data_source_updated_datetime
           WHERE history_records.lu_pid IS NULL
             AND NOT lender_user.data_source_deleted_flag
+            AND lender_user.lu_lender_user_type = 'EMPLOYEE'
       ) AS lender_user
            ON org_node_lender_user.onlu_lender_user_pid = lender_user.lu_pid
       JOIN (
@@ -87,6 +88,19 @@ etls:
             AND NOT org_node.data_source_deleted_flag
       ) AS org_node
            ON org_node_lender_user.onlu_org_node_pid = org_node.on_pid
+      --filter down to current org_node_version
+      JOIN (
+          SELECT org_node_version.*
+          FROM history_octane.org_node_version
+          LEFT JOIN history_octane.org_node_version AS history_records
+                    ON org_node_version.onv_pid = history_records.onv_pid
+                        AND org_node_version.data_source_updated_datetime < history_records.data_source_updated_datetime
+          WHERE history_records.onv_pid IS NULL
+            AND NOT org_node_version.data_source_deleted_flag
+            AND CURRENT_DATE BETWEEN org_node_version.onv_from_date
+              AND COALESCE( org_node_version.onv_through_date, CURRENT_DATE ) -- is current version
+      ) AS org_node_version
+           ON org_node.on_pid = org_node_version.onv_org_node_pid
       JOIN (
           SELECT org_node_lender_user_type.*
           FROM history_octane.org_node_lender_user_type
