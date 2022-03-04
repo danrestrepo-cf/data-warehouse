@@ -24,10 +24,10 @@ def main():
 
     # define group state machines
     group_state_machines = [
-        GroupStateMachineGenerator(lambda x: x['target_schema'] == 'history_octane', 500, 'SP-GROUP-1',
+        GroupStateMachineGenerator(lambda x: x.target_schema == 'history_octane', 500, 'SP-GROUP-1',
                                    'Trigger every history_octane ETL - This should process all staging_octane data '
                                    'into history_octane and will trigger any downstream processes'),
-        GroupStateMachineGenerator(lambda x: x['target_schema'] == 'history_octane' and x['has_dependency'], 500,
+        GroupStateMachineGenerator(lambda x: x.target_schema == 'history_octane' and x.has_dependency, 500,
                                    'SP-GROUP-2', 'Trigger history_octane ETLs that have one or more dependent ETLs - '
                                                  'This should process all staging_octane data that feeds any star_* '
                                                  'tables')

@@ -1,6 +1,7 @@
 import math
 from typing import Optional, List, Callable
 from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata
+from lib.state_machines_generator.state_machines_metadata import ETLStateMachineComponentsMetadata, GroupStateMachinesComponentsMetadata
 
 
 class AllStateMachinesGenerator:
@@ -8,7 +9,7 @@ class AllStateMachinesGenerator:
 
     def __init__(self, data_warehouse_metadata: DataWarehouseMetadata, group_generators: List['GroupStateMachineGenerator']):
         """
-        Initialize SingleEtlStateMachineGenerator and GroupStateMachinesGenerator with a DataWarehouseMetadata object
+        Initialize SingleETLStateMachineGenerator and GroupStateMachinesGenerator with a DataWarehouseMetadata object
 
         :param data_warehouse_metadata: a DataWarehouseMetadata object.
 
@@ -59,22 +60,28 @@ class AllStateMachinesGenerator:
                         else:
                             parsed_process_name = etl.process_name
                         # parse DataWarehouseMetadata into structure needed to generate ETL state machines
-                        self.etl_state_machine_metadata[parsed_process_name] = {
-                            'target_table': table.name,
-                            'container_memory': etl.container_memory,
-                            'comment': etl.construct_process_description(table.primary_source_table, table.path),
-                            'next_processes': sorted(table.next_etls)
-                        }
-                        self.group_state_machine_metadata.append({
-                            'process_name': parsed_process_name,
-                            'target_schema': schema.name,
-                            'target_table': table.name,
-                            'has_dependency': len(table.next_etls) > 0
-                        })
+                        self.etl_state_machine_metadata[parsed_process_name] = ETLStateMachineComponentsMetadata(
+                            target_table=table.name,
+                            container_memory=etl.container_memory,
+                            comment=etl.construct_process_description(table),
+                            next_processes=sorted(table.next_etls)
+                        )
+                        self.group_state_machine_metadata.append(GroupStateMachinesComponentsMetadata(
+                            process_name=parsed_process_name,
+                            target_schema=schema.name,
+                            target_table=table.name,
+                            has_dependency=len(table.next_etls) > 0
+                        ))
+                        # self.group_state_machine_metadata.append({
+                        #     'process_name': parsed_process_name,
+                        #     'target_schema': schema.name,
+                        #     'target_table': table.name,
+                        #     'has_dependency': len(table.next_etls) > 0
+                        # })
 
         self.data_warehouse_metadata = data_warehouse_metadata
 
-        self.etl_state_machine_generator = SingleEtlStateMachineGenerator(self.etl_state_machine_metadata)
+        self.etl_state_machine_generator = SingleETLStateMachineGenerator(self.etl_state_machine_metadata)
 
     def build_state_machines(self) -> dict:
         """Build ETL and group state machine configuration dicts for given metadata"""
@@ -93,20 +100,22 @@ class AllStateMachinesGenerator:
 class GroupStateMachineGenerator:
     """Generates a group state machine configuration dict for the provided metadata"""
 
-    def __init__(self, group_criteria_function, group_state_limit: int, base_name: str, comment: str):
+    def __init__(self, group_criteria_function: Callable[[GroupStateMachinesComponentsMetadata], bool],
+                 group_state_limit: int, base_name: str,
+                 comment: str):
         self.group_criteria_function = group_criteria_function
         self.group_state_limit = group_state_limit
         self.base_name = base_name
         self.comment = comment
 
-    def create_grouped_config(self, group_state_machine_metadata: List[dict]) -> dict:
+    def create_grouped_config(self, group_state_machine_metadata: List[GroupStateMachinesComponentsMetadata]) -> dict:
         """Create a grouped state machine configuration dict for sending SQS queue messages in parallel for state
         machines in the provided group metadata"""
         result_config = {}
         # filter group state machine metadata according to group_criteria function
         group_state_machine_metadata = \
             sorted([entry for entry in group_state_machine_metadata if self.group_criteria_function(entry)],
-                   key=lambda x: x['process_name'])
+                   key=lambda x: x.process_name)
         group_state_machine_metadata_length = len(group_state_machine_metadata)
 
         if group_state_machine_metadata_length <= self.group_state_limit:
@@ -140,8 +149,8 @@ class GroupStateMachineGenerator:
                                                        group_state_limit) -> List[dict]:
         parallel_branches = []
         for entry in group_state_machine_metadata[sub_group_number * group_state_limit:(sub_group_number + 1) * group_state_limit]:
-            process_name = entry['process_name']
-            target_table = entry['target_table']
+            process_name = entry.process_name
+            target_table = entry.target_table
             message_state_name = f'{process_name}_message'
             message_state = create_root_config(
                 f'Send message to bi-managed-mdi-2-full-check-queue for {process_name}',
@@ -164,12 +173,13 @@ class GroupStateMachineGenerator:
         return parallel_branches
 
 
-class SingleEtlStateMachineGenerator:
+class SingleETLStateMachineGenerator:
     """Generates a single state machine configuration dict to trigger a given ETL"""
 
     def __init__(self, state_machine_metadata: dict):
         self.all_state_machine_metadata = state_machine_metadata
-        self.parent_state_machine_metadata = {k:v for (k,v) in self.all_state_machine_metadata.items() if len(v['next_processes']) > 0}
+        self.parent_state_machine_metadata = {k:v for (k,v) in self.all_state_machine_metadata.items()
+                                              if len(v.next_processes) > 0}
 
     def build_etl_state_machine(self, root_process: str) -> dict:
         """Build a full ETL state machine configuration dict that can be output to a json file"""
@@ -193,16 +203,16 @@ class SingleEtlStateMachineGenerator:
         comment = self.determine_state_machine_header_comment(root_process, state_name)
         root_config = create_root_config(comment, state_name)
         root_config_states = root_config['States']
-        ecs_memory = self.all_state_machine_metadata[root_process]['container_memory']
+        ecs_memory = self.all_state_machine_metadata[root_process].container_memory
 
         # process has no children
         if root_process not in self.parent_state_machine_metadata:
             root_config_states[state_name] = create_task_config(root_process, None, ecs_memory)
             return root_config
         # process has one sequential child
-        elif len(self.parent_state_machine_metadata[root_process]['next_processes']) == 1:
-            next_process = self.parent_state_machine_metadata[root_process]['next_processes'][0]
-            next_process_target_table = self.all_state_machine_metadata[next_process]['target_table']
+        elif len(self.parent_state_machine_metadata[root_process].next_processes) == 1:
+            next_process = self.parent_state_machine_metadata[root_process].next_processes[0]
+            next_process_target_table = self.all_state_machine_metadata[next_process].target_table
             root_config_states[state_name] = create_task_config(root_process, next_process, ecs_memory)
             root_config_states['Load_type_choice'] = create_choice_config(f'{next_process}_message')
             root_config_states['Success'] = create_success_config()
@@ -210,13 +220,13 @@ class SingleEtlStateMachineGenerator:
             return root_config
         # process has multiple children which should run in parallel
         else:
-            next_processes = self.parent_state_machine_metadata[root_process]['next_processes']
+            next_processes = self.parent_state_machine_metadata[root_process].next_processes
             root_config_states[state_name] = create_task_config(root_process, next_processes, ecs_memory)
             root_config_states['Load_type_choice'] = create_choice_config('Parallel')
             root_config_states['Success'] = create_success_config()
             root_config_states['Parallel'] = create_parallel_config()
             for next_process in next_processes:
-                next_process_target_table = self.all_state_machine_metadata[next_process]['target_table']
+                next_process_target_table = self.all_state_machine_metadata[next_process].target_table
                 next_process_message_state_name = f'{next_process}_message'
                 root_config_states['Parallel']['Branches'].append(
                     create_root_config(
@@ -234,7 +244,7 @@ class SingleEtlStateMachineGenerator:
         """Create a state machine header comment based on whether the root process is a true root or just a sub-root in a parallel step"""
         if process in self.all_state_machine_metadata.keys():  # process is a top-level root
             root_metadata = self.all_state_machine_metadata[process]
-            return process + ' - ' + root_metadata['comment']
+            return process + ' - ' + root_metadata.comment
         else:  # process is a child process being executed in parallel
             return f'Parallel - {state_name}'
 

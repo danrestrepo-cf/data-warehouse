@@ -194,19 +194,20 @@ class ETLMetadata:
     container_memory: int = None
     input_sql: Optional[str] = None
 
-    def construct_process_description(self, source_table: TablePath, target_table: TablePath) -> str:
+    def construct_process_description(self, target_table: 'TableMetadata') -> str:
         """Construct a description string for a given ETL process.
 
         This method is currently configured to closely match existing description
         strings for staging_octane -> history_octane ETLs. For other ETLs, a
         generic description is produced.
         """
-        if target_table.database == 'staging' and target_table.schema == 'history_octane' and source_table.database == 'staging' and source_table.schema == 'staging_octane':
-            return f'ETL to copy {target_table.table} data from staging_octane to history_octane'
+        if target_table.path.database == 'staging' and target_table.path.schema == 'history_octane' and \
+                target_table.primary_source_table.database == 'staging' and target_table.primary_source_table.schema == 'staging_octane':
+            return f'ETL to copy {target_table.path.table} data from staging_octane to history_octane'
         else:
             return f'{self.input_type.value} -> table-{self.output_type.value} ETL from ' \
-                   f'{source_table.database}.{source_table.schema}.{source_table.table} to ' \
-                   f'{target_table.database}.{target_table.schema}.{target_table.table}'
+                   f'{target_table.primary_source_table.database}.{target_table.primary_source_table.schema}.{target_table.primary_source_table.table} to ' \
+                   f'{target_table.path.database}.{target_table.path.schema}.{target_table.path.table}'
 
 
 @dataclass(init=False)

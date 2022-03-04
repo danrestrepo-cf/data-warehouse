@@ -1,5 +1,5 @@
 import unittest
-from lib.state_machines_generator.state_machines_generator import AllStateMachinesGenerator, GroupStateMachinesGenerator
+from lib.state_machines_generator.state_machines_generator import AllStateMachinesGenerator, GroupStateMachineGenerator
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
 
 
@@ -132,7 +132,7 @@ class TestSequentialOutputAndVaryingConfigAttributes(unittest.TestCase):
             }
         self.data_warehouse_metadata = construct_data_warehouse_metadata_from_dict(self.dw_dict)
 
-        self.result = AllStateMachinesGenerator(self.data_warehouse_metadata).build_state_machines()
+        self.result = AllStateMachinesGenerator(self.data_warehouse_metadata, []).build_state_machines()
         self.sp_1_config = self.result['SP-1']
         self.sp_2_config = self.result['SP-2']
         self.sp_3_config = self.result['SP-3']
@@ -158,7 +158,7 @@ class TestSequentialOutputAndVaryingConfigAttributes(unittest.TestCase):
         local_dw_dict['databases'][0]['schemas'][2]['tables'][1]['next_etls'] = ['SP-4']
         invalid_data_warehouse_metadata = construct_data_warehouse_metadata_from_dict(local_dw_dict)
         with self.assertRaises(KeyError):
-            AllStateMachinesGenerator(invalid_data_warehouse_metadata).build_state_machines()
+            AllStateMachinesGenerator(invalid_data_warehouse_metadata, []).build_state_machines()
 
 
 class TestParallelOutputStructure(unittest.TestCase):
@@ -287,7 +287,7 @@ class TestParallelOutputStructure(unittest.TestCase):
             }
         self.data_warehouse_metadata = construct_data_warehouse_metadata_from_dict(self.dw_dict)
 
-        self.sp_1_config = AllStateMachinesGenerator(self.data_warehouse_metadata).build_state_machines()['SP-1']
+        self.sp_1_config = AllStateMachinesGenerator(self.data_warehouse_metadata, []).build_state_machines()['SP-1']
 
     def test_sets_startat_to_root_process_name(self):
         self.assertEqual('SP-1', self.sp_1_config['StartAt'])
@@ -737,7 +737,7 @@ class TestETLStateMachinesGenerator(unittest.TestCase):
         }
 
         data_warehouse_metadata = construct_data_warehouse_metadata_from_dict(dw_dict)
-        result = AllStateMachinesGenerator(data_warehouse_metadata).build_state_machines()
+        result = AllStateMachinesGenerator(data_warehouse_metadata, []).build_state_machines()
         sp_1_config_result = result['SP-1']
         sp_2_config_result = result['SP-2']
         sp_3_config_result = result['SP-3']
@@ -925,60 +925,19 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
             }
         self.data_warehouse_metadata = construct_data_warehouse_metadata_from_dict(self.dw_dict)
 
-    def test_parse_data_warehouse_metadata(self):
-        state_machines_generator = AllStateMachinesGenerator(self.data_warehouse_metadata)
-        state_machines_metadata = state_machines_generator.parse_data_warehouse_metadata()[1]
-        expected = [
-            {
-                "process_name": "SP-1",
-                "target_schema": "schema_2",
-                "target_table": "table_1",
-                "has_dependency": False
-            },
-            {
-                "process_name": "SP-2",
-                "target_schema": "schema_3",
-                "target_table": "table_2",
-                "has_dependency": True
-            },
-            {
-                "process_name": "SP-3",
-                "target_schema": "schema_3",
-                "target_table": "table_3",
-                "has_dependency": True
-            },
-            {
-                "process_name": "SP-4",
-                "target_schema": "schema_3",
-                "target_table": "table_4",
-                "has_dependency": False
-            },
-            {
-                "process_name": "SP-5",
-                "target_schema": "schema_3",
-                "target_table": "table_5",
-                "has_dependency": False
-            }
-        ]
-
-        self.assertEqual(state_machines_metadata, expected)
-
     def test_generate_various_group_step_function_configurations(self):
-        state_machines_generator = AllStateMachinesGenerator(self.data_warehouse_metadata)
-        group_state_machines_metadata = sorted(state_machines_generator.parse_data_warehouse_metadata()[1], key=lambda x: x['process_name'])
-        standalone_state_machines_metadata = [etl for etl in group_state_machines_metadata if not etl['has_dependency']]
-        schema_3_state_machines_metadata = [etl for etl in group_state_machines_metadata if etl['target_schema'] == 'schema_3']
-
-
-        group_tuples = [
-            (group_state_machines_metadata, 1, 'SP-GROUP-A', 'Trigger all ETLs - group limit 1'),
-            (standalone_state_machines_metadata, 2, 'SP-GROUP-B', 'Trigger all standalone ETLs - group limit 2'),
-            (schema_3_state_machines_metadata, 5, 'SP-GROUP-C', 'Trigger all schema_3 ETLs - group limit 5'),
+        group_state_machines = [
+            GroupStateMachineGenerator(lambda x: x, 1, 'SP-GROUP-A', 'Trigger all ETLs - group limit 1'),
+            GroupStateMachineGenerator(lambda x: not x.has_dependency, 2, 'SP-GROUP-B', 'Trigger all standalone ETLs - group limit 2'),
+            GroupStateMachineGenerator(lambda x: x.target_schema == 'schema_3', 5, 'SP-GROUP-C', 'Trigger all schema_3 ETLs - group limit 5')
         ]
 
-        group_state_machines_generator = GroupStateMachinesGenerator(group_tuples)
-        group_result = group_state_machines_generator.build_group_state_machines()
-        group_expected = {
+        state_machines_generator = AllStateMachinesGenerator(self.data_warehouse_metadata, group_state_machines)
+        state_machines_result = state_machines_generator.build_state_machines()
+        unwanted_keys = ['SP-1', 'SP-2', 'SP-3', 'SP-4', 'SP-5']
+        for unwanted_key in unwanted_keys:
+            state_machines_result.pop(unwanted_key)
+        state_machines_expected = {
             "SP-GROUP-A-1": {
                 "Comment": "Trigger all ETLs - group limit 1 - group 1",
                 "StartAt": "SP-GROUP-A-1",
@@ -1401,7 +1360,7 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                 }
             }
         }
-        self.assertEqual(group_result, group_expected)
+        self.assertEqual(state_machines_result, state_machines_expected)
 
 
 if __name__ == '__main__':
