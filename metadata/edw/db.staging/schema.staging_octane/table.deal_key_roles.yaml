@@ -282,6 +282,14 @@ foreign_keys:
       - lu_pid
       schema: staging_octane
       table: lender_user
+  fk_deal_key_roles_41:
+    columns:
+    - dkrs_referring_associate_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
   fk_deal_key_roles_5:
     columns:
     - dkrs_investor_conditions_lender_user_pid
@@ -426,6 +434,10 @@ columns:
   dkrs_project_underwriter_fmls:
     data_type: VARCHAR(128)
   dkrs_project_underwriter_lender_user_pid:
+    data_type: BIGINT
+  dkrs_referring_associate_fmls:
+    data_type: VARCHAR(128)
+  dkrs_referring_associate_lender_user_pid:
     data_type: BIGINT
   dkrs_review_requester_1_fmls:
     data_type: VARCHAR(128)
