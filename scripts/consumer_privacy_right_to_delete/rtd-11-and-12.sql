@@ -1126,10 +1126,9 @@ SET data_source_updated_datetime = NOW()
 	, prpd_doc_excluded_unparsed_name = ''
 	, prpd_prior_to_type_unparsed_name = ''
 	, prpd_provider_type_unparsed_name = ''
-FROM history_octane.proposal
-	JOIN history_octane.deal ON proposal.prp_deal_pid = deal.d_pid
-		AND deal.d_los_loan_id_main = 1401318407
-WHERE proposal_doc.prpd_proposal_pid = proposal.prp_pid;
+FROM history_octane.deal
+WHERE proposal_doc.prpd_deal_pid = deal.d_pid
+	AND deal.d_los_loan_id_main = 1401318407;
 
 
 -- proposal_doc_set
@@ -1155,10 +1154,8 @@ SET data_source_updated_datetime = NOW()
 	, prpr_property_place_pid = 66955927
 	, prpr_residence_place_pid = 66955927
 	, prpr_deal_child_name = ''
-FROM history_octane.proposal
-	JOIN history_octane.deal ON proposal.prp_deal_pid = deal.d_pid
-		AND deal.d_los_loan_id_main = 1401318407
-WHERE proposal_req.prpr_proposal_pid = proposal.prp_pid;
+FROM history_octane.deal
+WHERE proposal_req.prpr_deal_pid = deal.d_pid;
 
 
 -- proposal_review
@@ -1240,13 +1237,10 @@ SET data_source_updated_datetime = NOW()
 	, pr_comment = ''
 	, pr_note = ''
 	, pr_credit_report_identifier = ''
-FROM history_octane.borrower_public_record
-	JOIN history_octane.borrower ON borrower_public_record.bpr_borrower_pid = borrower.b_pid
-	JOIN history_octane.application ON borrower.b_application_pid = application.apl_pid
-	JOIN history_octane.proposal ON application.apl_proposal_pid = proposal.prp_pid
+FROM history_octane.proposal
 	JOIN history_octane.deal ON proposal.prp_deal_pid = deal.d_pid
 		AND deal.d_los_loan_id_main = 1401318407
-WHERE public_record.pr_pid = borrower_public_record.bpr_public_record_pid;
+WHERE public_record.pr_proposal_pid = proposal.prp_pid;
 
 
 -- rental_income
@@ -2577,10 +2571,9 @@ SET data_source_updated_datetime = NOW()
 	, prpd_doc_excluded_unparsed_name = ''
 	, prpd_prior_to_type_unparsed_name = ''
 	, prpd_provider_type_unparsed_name = ''
-FROM history_octane.proposal
-	JOIN history_octane.deal ON proposal.prp_deal_pid = deal.d_pid
-		AND deal.d_los_loan_id_main = 1401487039
-WHERE proposal_doc.prpd_proposal_pid = proposal.prp_pid;
+FROM history_octane.deal
+WHERE proposal_doc.prpd_deal_pid = deal.d_pid
+	AND deal.d_los_loan_id_main = 1401487039;
 
 
 -- proposal_doc_set
@@ -2606,10 +2599,9 @@ SET data_source_updated_datetime = NOW()
 	, prpr_property_place_pid = 66955894
 	, prpr_residence_place_pid = 66955894
 	, prpr_deal_child_name = ''
-FROM history_octane.proposal
-	JOIN history_octane.deal ON proposal.prp_deal_pid = deal.d_pid
-		AND deal.d_los_loan_id_main = 1401487039
-WHERE proposal_req.prpr_proposal_pid = proposal.prp_pid;
+FROM history_octane.deal
+WHERE proposal_req.prpr_deal_pid = deal.d_pid
+	AND deal.d_los_loan_id_main = 1401487039
 
 
 -- proposal_review
@@ -2691,13 +2683,10 @@ SET data_source_updated_datetime = NOW()
 	, pr_comment = ''
 	, pr_note = ''
 	, pr_credit_report_identifier = ''
-FROM history_octane.borrower_public_record
-	JOIN history_octane.borrower ON borrower_public_record.bpr_borrower_pid = borrower.b_pid
-	JOIN history_octane.application ON borrower.b_application_pid = application.apl_pid
-	JOIN history_octane.proposal ON application.apl_proposal_pid = proposal.prp_pid
+FROM history_octane.proposal
 	JOIN history_octane.deal ON proposal.prp_deal_pid = deal.d_pid
-		AND deal.d_los_loan_id_main = 1401487039
-WHERE public_record.pr_pid = borrower_public_record.bpr_public_record_pid;
+WHERE public_record.pr_proposal_pid = proposal.prp_pid
+	AND deal.d_los_loan_id_main = 1401487039;
 
 
 -- rental_income
