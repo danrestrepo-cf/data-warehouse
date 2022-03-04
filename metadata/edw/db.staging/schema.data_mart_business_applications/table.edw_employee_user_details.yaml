@@ -97,7 +97,7 @@ etls:
             AND NOT lender_user.data_source_deleted_flag
             AND lender_user.lu_lender_user_type = 'EMPLOYEE'
       ) AS lender_user
-      JOIN (
+      LEFT JOIN (
           SELECT org_node.*
           FROM history_octane.org_node
           LEFT JOIN history_octane.org_node AS history_records
