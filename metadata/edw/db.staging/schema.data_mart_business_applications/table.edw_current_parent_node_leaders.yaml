@@ -1,4 +1,4 @@
-name: edw_current_parent_node_leaders
+name: edw_current_parent_node_employee_leaders
 primary_source_table: staging.history_octane.org_node_lender_user
 primary_key:
 - dwid
@@ -106,8 +106,8 @@ etls:
     container_memory: 2048
     input_sql: |-
       --SP-400003-delete
-      SELECT edw_current_parent_node_leaders.data_source_integration_id
-      FROM data_mart_business_applications.edw_current_parent_node_leaders
+      SELECT edw_current_parent_node_employee_leaders.data_source_integration_id
+      FROM data_mart_business_applications.edw_current_parent_node_employee_leaders
       LEFT JOIN (
           SELECT org_node_lender_user.*
           FROM history_octane.org_node_lender_user
@@ -120,6 +120,6 @@ etls:
             AND CURRENT_DATE BETWEEN org_node_lender_user.onlu_from_date
               AND COALESCE( org_node_lender_user.onlu_through_date, CURRENT_DATE )
       ) AS current_data
-           ON edw_current_parent_node_leaders.data_source_integration_id =
+           ON edw_current_parent_node_employee_leaders.data_source_integration_id =
               COALESCE( CAST( current_data.onlu_pid AS TEXT ), '<NULL>' ) || '~1'
       WHERE current_data.onlu_pid IS NULL;

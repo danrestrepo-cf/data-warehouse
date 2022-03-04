@@ -10,7 +10,7 @@ INSERTIONS
 --edw_table_definition
 WITH insert_rows (database_name, schema_name, table_name, source_database_name, source_schema_name, source_table_name) AS (
     VALUES ('staging', 'data_mart_business_applications', 'edw_current_parent_nodes', 'staging', 'history_octane', 'org_node')
-         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_leaders', 'staging', 'history_octane', 'org_node_lender_user')
+         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_employee_leaders', 'staging', 'history_octane', 'org_node_lender_user')
          , ('staging', 'data_mart_business_applications', 'edw_employee_user_details', 'staging', 'history_octane', 'lender_user')
 )
 INSERT
@@ -36,17 +36,17 @@ WITH insert_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'data_mart_business_applications', 'edw_current_parent_nodes', 'parent_node_name', 'VARCHAR(256)', NULL, NULL, NULL, NULL)
          , ('staging', 'data_mart_business_applications', 'edw_current_parent_nodes', 'grandparent_node_id', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'data_mart_business_applications', 'edw_current_parent_nodes', 'grandparent_node_name', 'VARCHAR(256)', NULL, NULL, NULL, NULL)
-         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_leaders', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_leaders', 'data_source_dwid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_leaders', 'edw_created_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
-         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_leaders', 'edw_modified_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
-         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_leaders', 'etl_batch_id', 'TEXT', NULL, NULL, NULL, NULL)
-         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_leaders', 'data_source_integration_columns', 'TEXT', NULL, NULL, NULL, NULL)
-         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_leaders', 'data_source_integration_id', 'TEXT', NULL, NULL, NULL, NULL)
-         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_leaders', 'data_source_modified_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
-         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_leaders', 'parent_node_id', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_leaders', 'leader_company_user_id', 'VARCHAR(32)', NULL, NULL, NULL, NULL)
-         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_leaders', 'leader_type', 'VARCHAR(1024)', NULL, NULL, NULL, NULL)
+         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_employee_leaders', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_employee_leaders', 'data_source_dwid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_employee_leaders', 'edw_created_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
+         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_employee_leaders', 'edw_modified_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
+         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_employee_leaders', 'etl_batch_id', 'TEXT', NULL, NULL, NULL, NULL)
+         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_employee_leaders', 'data_source_integration_columns', 'TEXT', NULL, NULL, NULL, NULL)
+         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_employee_leaders', 'data_source_integration_id', 'TEXT', NULL, NULL, NULL, NULL)
+         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_employee_leaders', 'data_source_modified_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
+         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_employee_leaders', 'parent_node_id', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_employee_leaders', 'leader_company_user_id', 'VARCHAR(32)', NULL, NULL, NULL, NULL)
+         , ('staging', 'data_mart_business_applications', 'edw_current_parent_node_employee_leaders', 'leader_type', 'VARCHAR(1024)', NULL, NULL, NULL, NULL)
          , ('staging', 'data_mart_business_applications', 'edw_employee_user_details', 'dwid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'data_mart_business_applications', 'edw_employee_user_details', 'data_source_dwid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'data_mart_business_applications', 'edw_employee_user_details', 'edw_created_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
@@ -88,8 +88,8 @@ INSERT
 INTO mdi.process (name, description)
 VALUES ('SP-400002-insert-update', 'table -> table-insert_update ETL from staging.history_octane.org_node to staging.data_mart_business_applications.edw_current_parent_nodes')
      , ('SP-400002-delete', 'table -> table-delete ETL from staging.history_octane.org_node to staging.data_mart_business_applications.edw_current_parent_nodes')
-     , ('SP-400003-insert-update', 'table -> table-insert_update ETL from staging.history_octane.org_node_lender_user to staging.data_mart_business_applications.edw_current_parent_node_leaders')
-     , ('SP-400003-delete', 'table -> table-delete ETL from staging.history_octane.org_node_lender_user to staging.data_mart_business_applications.edw_current_parent_node_leaders')
+     , ('SP-400003-insert-update', 'table -> table-insert_update ETL from staging.history_octane.org_node_lender_user to staging.data_mart_business_applications.edw_current_parent_node_employee_leaders')
+     , ('SP-400003-delete', 'table -> table-delete ETL from staging.history_octane.org_node_lender_user to staging.data_mart_business_applications.edw_current_parent_node_employee_leaders')
      , ('SP-400001-insert-update', 'table -> table-insert_update ETL from staging.history_octane.lender_user to staging.data_mart_business_applications.edw_employee_user_details')
      , ('SP-400001-delete', 'table -> table-delete ETL from staging.history_octane.lender_user to staging.data_mart_business_applications.edw_employee_user_details');
 
@@ -228,8 +228,8 @@ JOIN (
 ) AS org_node_lender_user_type
      ON org_node_lender_user.onlu_org_node_lender_user_type = org_node_lender_user_type.code;', 'Staging DB Connection')
          , ('SP-400003-delete', 0, '--SP-400003-delete
-SELECT edw_current_parent_node_leaders.data_source_integration_id
-FROM data_mart_business_applications.edw_current_parent_node_leaders
+SELECT edw_current_parent_node_employee_leaders.data_source_integration_id
+FROM data_mart_business_applications.edw_current_parent_node_employee_leaders
 LEFT JOIN (
     SELECT org_node_lender_user.*
     FROM history_octane.org_node_lender_user
@@ -242,7 +242,7 @@ LEFT JOIN (
       AND CURRENT_DATE BETWEEN org_node_lender_user.onlu_from_date
         AND COALESCE( org_node_lender_user.onlu_through_date, CURRENT_DATE )
 ) AS current_data
-     ON edw_current_parent_node_leaders.data_source_integration_id =
+     ON edw_current_parent_node_employee_leaders.data_source_integration_id =
         COALESCE( CAST( current_data.onlu_pid AS TEXT ), ''<NULL>'' ) || ''~1''
 WHERE current_data.onlu_pid IS NULL;', 'Staging DB Connection')
          , ('SP-400001-insert-update', 1, '--SP-400001-insert-update
@@ -358,7 +358,7 @@ JOIN mdi.process
 --insert_update_step
 WITH insert_rows (process_name, connectionname, schema_name, table_name) AS (
     VALUES ('SP-400002-insert-update', 'Staging DB Connection', 'data_mart_business_applications', 'edw_current_parent_nodes')
-         , ('SP-400003-insert-update', 'Staging DB Connection', 'data_mart_business_applications', 'edw_current_parent_node_leaders')
+         , ('SP-400003-insert-update', 'Staging DB Connection', 'data_mart_business_applications', 'edw_current_parent_node_employee_leaders')
          , ('SP-400001-insert-update', 'Staging DB Connection', 'data_mart_business_applications', 'edw_employee_user_details')
 )
 INSERT INTO mdi.insert_update_step (process_dwid, connectionname, schema_name, table_name, commit_size, do_not)
@@ -436,7 +436,7 @@ JOIN mdi.insert_update_step
 --delete_step
 WITH insert_rows (process_name, connectionname, schema_name, table_name) AS (
     VALUES ('SP-400002-delete', 'Staging DB Connection', 'data_mart_business_applications', 'edw_current_parent_nodes')
-         , ('SP-400003-delete', 'Staging DB Connection', 'data_mart_business_applications', 'edw_current_parent_node_leaders')
+         , ('SP-400003-delete', 'Staging DB Connection', 'data_mart_business_applications', 'edw_current_parent_node_employee_leaders')
          , ('SP-400001-delete', 'Staging DB Connection', 'data_mart_business_applications', 'edw_employee_user_details')
 )
 INSERT INTO mdi.delete_step (process_dwid, connectionname, schema_name, table_name, commit_size)
@@ -479,8 +479,8 @@ JOIN mdi.process
 WITH insert_rows (process_name, state_machine_name, state_machine_comment) AS (
     VALUES ('SP-400002-insert-update', 'SP-400002-insert-update', 'table -> table-insert_update ETL from staging.history_octane.org_node to staging.data_mart_business_applications.edw_current_parent_nodes')
          , ('SP-400002-delete', 'SP-400002-delete', 'table -> table-delete ETL from staging.history_octane.org_node to staging.data_mart_business_applications.edw_current_parent_nodes')
-         , ('SP-400003-insert-update', 'SP-400003-insert-update', 'table -> table-insert_update ETL from staging.history_octane.org_node_lender_user to staging.data_mart_business_applications.edw_current_parent_node_leaders')
-         , ('SP-400003-delete', 'SP-400003-delete', 'table -> table-delete ETL from staging.history_octane.org_node_lender_user to staging.data_mart_business_applications.edw_current_parent_node_leaders')
+         , ('SP-400003-insert-update', 'SP-400003-insert-update', 'table -> table-insert_update ETL from staging.history_octane.org_node_lender_user to staging.data_mart_business_applications.edw_current_parent_node_employee_leaders')
+         , ('SP-400003-delete', 'SP-400003-delete', 'table -> table-delete ETL from staging.history_octane.org_node_lender_user to staging.data_mart_business_applications.edw_current_parent_node_employee_leaders')
          , ('SP-400001-insert-update', 'SP-400001-insert-update', 'table -> table-insert_update ETL from staging.history_octane.lender_user to staging.data_mart_business_applications.edw_employee_user_details')
          , ('SP-400001-delete', 'SP-400001-delete', 'table -> table-delete ETL from staging.history_octane.lender_user to staging.data_mart_business_applications.edw_employee_user_details')
 )

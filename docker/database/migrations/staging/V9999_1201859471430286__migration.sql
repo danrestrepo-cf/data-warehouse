@@ -80,7 +80,7 @@ AS
     FROM data_mart_business_applications.edw_current_parent_nodes;
 
 --current_parent_node_leaders
-CREATE TABLE data_mart_business_applications.edw_current_parent_node_leaders (
+CREATE TABLE data_mart_business_applications.edw_current_parent_node_employee_leaders (
     dwid BIGSERIAL
         CONSTRAINT pk_current_parent_node_leaders
             PRIMARY KEY,
@@ -96,13 +96,13 @@ CREATE TABLE data_mart_business_applications.edw_current_parent_node_leaders (
     leader_type VARCHAR(1024)
 );
 
-CREATE INDEX idx_edw_current_parent_node_leaders__parent_node_id ON data_mart_business_applications.edw_current_parent_node_leaders (parent_node_id);
-CREATE INDEX idx_edw_current_parent_node_leaders__leader_company_user_id ON data_mart_business_applications.edw_current_parent_node_leaders (leader_company_user_id);
+CREATE INDEX idx_edw_current_parent_node_employee_leaders__parent_node_id ON data_mart_business_applications.edw_current_parent_node_employee_leaders (parent_node_id);
+CREATE INDEX idx_bc5812ae78bf2c71d265441a32b03430 ON data_mart_business_applications.edw_current_parent_node_employee_leaders (leader_company_user_id);
 
-CREATE VIEW data_mart_business_applications.current_parent_node_leaders
+CREATE VIEW data_mart_business_applications.current_parent_node_employee_leaders
 AS
-    SELECT edw_current_parent_node_leaders.parent_node_id
-         , edw_current_parent_node_leaders.leader_company_user_id
-         , edw_current_parent_node_leaders.leader_type
-         , edw_current_parent_node_leaders.data_source_modified_datetime AS last_updated_datetime
-    FROM data_mart_business_applications.edw_current_parent_node_leaders;
+    SELECT edw_current_parent_node_employee_leaders.parent_node_id
+         , edw_current_parent_node_employee_leaders.leader_company_user_id
+         , edw_current_parent_node_employee_leaders.leader_type
+         , edw_current_parent_node_employee_leaders.data_source_modified_datetime AS last_updated_datetime
+    FROM data_mart_business_applications.edw_current_parent_node_employee_leaders;
