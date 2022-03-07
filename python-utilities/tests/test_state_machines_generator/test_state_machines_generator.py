@@ -493,7 +493,7 @@ class TestETLStateMachinesGenerator(unittest.TestCase):
             }
 
         sp_1_config_expected = {
-            "Comment": "SP-1 - table -> table-insert ETL from database_1.schema_1.table_0 to database_1.schema_2.table_1",
+            "Comment": "SP-1 - ETL to insert records into database_1.schema_2.table_1 using database_1.schema_1.table_0 as the primary source",
             "StartAt": "SP-1",
             "States": {
                 "SP-1": {
@@ -542,7 +542,7 @@ class TestETLStateMachinesGenerator(unittest.TestCase):
         }
 
         sp_2_config_expected = {
-            "Comment": "SP-2 - table -> table-insert_update ETL from database_1.schema_2.table_1 to database_1.schema_3.table_2",
+            "Comment": "SP-2 - ETL to insert_update records into database_1.schema_3.table_2 using database_1.schema_2.table_1 as the primary source",
             "StartAt": "SP-2",
             "States": {
                 "SP-2": {
@@ -622,7 +622,7 @@ class TestETLStateMachinesGenerator(unittest.TestCase):
         }
 
         sp_3_config_expected = {
-            "Comment": "SP-3 - table -> table-insert_update ETL from database_1.schema_3.table_2 to database_1.schema_3.table_3",
+            "Comment": "SP-3 - ETL to insert_update records into database_1.schema_3.table_3 using database_1.schema_3.table_2 as the primary source",
             "StartAt": "SP-3",
             "States": {
                 "SP-3": {
