@@ -9,34 +9,11 @@ class AllStateMachinesGenerator:
 
     def __init__(self, data_warehouse_metadata: DataWarehouseMetadata, group_generators: List['GroupStateMachineGenerator']):
         """
-        Initialize SingleETLStateMachineGenerator and GroupStateMachinesGenerator with a DataWarehouseMetadata object
+        Initialize SingleETLStateMachineGenerator and GroupStateMachinesGenerator with a DataWarehouseMetadata
+        object, which is then parsed into ETLStateMachineComponentsMetadata and GroupStateMachinesComponentsMetadata
+        objects.
 
         :param data_warehouse_metadata: a DataWarehouseMetadata object.
-
-            This object is parsed into two separate structures:
-
-            Structure 1: metadata for creating ETL state machines
-                {
-                    "SP-123456":
-                        {
-                            "target_table": "example_table",
-                            "container_memory": 2048,
-                            "comment": "ETL to copy example_table data from staging_schema to history_schema",
-                            "next_processes: ['SP-234567', 'SP-345678']
-                        },
-                    ... etc
-                }
-
-            Structure 2: metadata for creating group state machines:
-                [
-                    {
-                        "process_name": "SP-123456",
-                        "target_schema": "example_schema"
-                        "target_table": "example_table"
-                        "has_dependency": True
-                    },
-                    ... etc
-                ]
         """
 
         self.data_warehouse_metadata = data_warehouse_metadata

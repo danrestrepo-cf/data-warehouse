@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-200010 - table -> table-insert_update ETL from staging.history_octane.lender_user to staging.star_loan.lender_user_dim",
+    "Comment": "SP-200010 - ETL to insert_update records into staging.star_loan.lender_user_dim using staging.history_octane.lender_user as the primary source",
     "StartAt": "SP-200010",
     "States": {
         "SP-200010": {

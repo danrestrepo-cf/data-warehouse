@@ -195,19 +195,22 @@ class ETLMetadata:
     input_sql: Optional[str] = None
 
     def construct_process_description(self, target_table: 'TableMetadata') -> str:
-        """Construct a description string for a given ETL process.
+        """Construct a description string for a given ETL process, e.g.:
 
-        This method is currently configured to closely match existing description
-        strings for staging_octane -> history_octane ETLs. For other ETLs, a
-        generic description is produced.
+            ETL to insert into history_octane.loan using staging_octane.loan as the primary source
+
         """
-        if target_table.path.database == 'staging' and target_table.path.schema == 'history_octane' and \
-                target_table.primary_source_table.database == 'staging' and target_table.primary_source_table.schema == 'staging_octane':
-            return f'ETL to copy {target_table.path.table} data from staging_octane to history_octane'
+        if self.output_type in (ETLOutputType.INSERT, ETLOutputType.INSERT_UPDATE):
+            preposition = 'into'
+        elif self.output_type == ETLOutputType.DELETE:
+            preposition = 'from'
         else:
-            return f'{self.input_type.value} -> table-{self.output_type.value} ETL from ' \
-                   f'{target_table.primary_source_table.database}.{target_table.primary_source_table.schema}.{target_table.primary_source_table.table} to ' \
-                   f'{target_table.path.database}.{target_table.path.schema}.{target_table.path.table}'
+            preposition = ''
+
+        return f'ETL to {self.output_type.value} records {preposition} {target_table.path.database}' \
+               f'.{target_table.path.schema}.{target_table.path.table} using {target_table.primary_source_table.database}.' \
+               f'{target_table.primary_source_table.schema}.{target_table.primary_source_table.table} as the primary ' \
+               f'source'
 
 
 @dataclass(init=False)

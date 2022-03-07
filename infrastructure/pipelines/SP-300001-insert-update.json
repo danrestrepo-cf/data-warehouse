@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-300001-insert-update - table -> table-insert_update ETL from staging.history_octane.loan to staging.star_loan.loan_fact",
+    "Comment": "SP-300001-insert-update - ETL to insert_update records into staging.star_loan.loan_fact using staging.history_octane.loan as the primary source",
     "StartAt": "SP-300001-insert-update",
     "States": {
         "SP-300001-insert-update": {
