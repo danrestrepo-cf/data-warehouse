@@ -29,10 +29,10 @@ columns:
     update_flag: true
   parent_node_id:
     data_type: BIGINT
-    update_flag: false
+    update_flag: true
   leader_company_user_id:
     data_type: VARCHAR(32)
-    update_flag: false
+    update_flag: true
   leader_type:
     data_type: VARCHAR(1024)
     update_flag: true
@@ -88,7 +88,7 @@ etls:
             AND NOT org_node.data_source_deleted_flag
       ) AS org_node
            ON org_node_lender_user.onlu_org_node_pid = org_node.on_pid
-      --filter down to current org_node_version
+          --filter down to current org_node_version
       JOIN (
           SELECT org_node_version.*
           FROM history_octane.org_node_version
@@ -110,7 +110,12 @@ etls:
           WHERE history_records.code IS NULL
             AND NOT org_node_lender_user_type.data_source_deleted_flag
       ) AS org_node_lender_user_type
-           ON org_node_lender_user.onlu_org_node_lender_user_type = org_node_lender_user_type.code;
+           ON org_node_lender_user.onlu_org_node_lender_user_type = org_node_lender_user_type.code
+      LEFT JOIN data_mart_business_applications.edw_current_parent_node_employee_leaders
+                ON org_node.on_org_node_id = edw_current_parent_node_employee_leaders.parent_node_id
+                    AND lender_user.lu_company_user_id = edw_current_parent_node_employee_leaders.leader_company_user_id
+                    AND org_node_lender_user_type.value = edw_current_parent_node_employee_leaders.leader_type
+      WHERE edw_current_parent_node_employee_leaders.dwid IS NULL;
   SP-400003-delete:
     input_type: table
     output_type: delete
