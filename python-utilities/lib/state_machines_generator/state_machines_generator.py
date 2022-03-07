@@ -72,13 +72,6 @@ class AllStateMachinesGenerator:
                             target_table=table.name,
                             has_dependency=len(table.next_etls) > 0
                         ))
-                        # self.group_state_machine_metadata.append({
-                        #     'process_name': parsed_process_name,
-                        #     'target_schema': schema.name,
-                        #     'target_table': table.name,
-                        #     'has_dependency': len(table.next_etls) > 0
-                        # })
-
         self.data_warehouse_metadata = data_warehouse_metadata
 
         self.etl_state_machine_generator = SingleETLStateMachineGenerator(self.etl_state_machine_metadata)
