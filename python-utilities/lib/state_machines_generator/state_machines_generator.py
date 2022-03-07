@@ -86,33 +86,33 @@ class GroupStateMachineGenerator:
         group_state_machine_metadata = \
             sorted([entry for entry in group_state_machine_metadata if self.group_criteria_function(entry)],
                    key=lambda x: x.process_name)
-        group_state_machine_metadata_length = len(group_state_machine_metadata)
-
-        if group_state_machine_metadata_length <= self.group_state_limit:
-            sub_group_number = 0
-            state_machine_name = self.base_name
+        make_state_machine_name = self.get_state_machine_name_maker(group_state_machine_metadata)
+        make_state_machine_comment = self.get_state_machine_comment_maker(group_state_machine_metadata)
+        sub_group_count = math.ceil(len(group_state_machine_metadata) / self.group_state_limit)
+        for sub_group in range(0, sub_group_count):  # only executes once if # of state machines is within limit
+            state_machine_comment = make_state_machine_comment(sub_group)
+            state_machine_name = make_state_machine_name(sub_group)
             parallel_state = create_root_config(
-                f'{self.comment}',
+                state_machine_comment,
                 state_machine_name,
                 {state_machine_name: create_parallel_config()}
             )
             parallel_state['States'][state_machine_name]['Branches'] = \
-                self.populate_parallel_branches_with_message_states(group_state_machine_metadata, sub_group_number, self.group_state_limit)
+                self.populate_parallel_branches_with_message_states(group_state_machine_metadata, sub_group, self.group_state_limit)
             result_config[state_machine_name] = parallel_state
-        else:
-            sub_group_count = math.ceil(group_state_machine_metadata_length / self.group_state_limit)
-            for sub_group_number in range(0, sub_group_count):
-                state_machine_name = f'{self.base_name}-{sub_group_number+1}'
-                parallel_state = create_root_config(
-                    f'{self.comment} - group {sub_group_number+1}',
-                    state_machine_name,
-                    {state_machine_name: create_parallel_config()}
-                )
-                parallel_state['States'][state_machine_name]['Branches'] = \
-                    self.populate_parallel_branches_with_message_states(group_state_machine_metadata, sub_group_number, self.group_state_limit)
-                result_config[state_machine_name] = parallel_state
-
         return result_config
+
+    def get_state_machine_name_maker(self, group_state_machine_metadata: List[GroupStateMachinesComponentsMetadata]) -> Callable[[int], str]:
+        if len(group_state_machine_metadata) <= self.group_state_limit:
+            return lambda group_number: self.base_name
+        else:
+            return lambda group_number: f'{self.base_name}-{group_number + 1}'
+
+    def get_state_machine_comment_maker(self, group_state_machine_metadata: List[GroupStateMachinesComponentsMetadata]) -> Callable[[int], str]:
+        if len(group_state_machine_metadata) <= self.group_state_limit:
+            return lambda group_number: self.comment
+        else:
+            return lambda group_number: f'{self.comment} - group {group_number+1}'
 
     @staticmethod
     def populate_parallel_branches_with_message_states(group_state_machine_metadata, sub_group_number,
