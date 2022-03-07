@@ -155,27 +155,14 @@ etls:
       SELECT edw_employee_user_details.data_source_integration_id
       FROM data_mart_business_applications.edw_employee_user_details
       LEFT JOIN (
-          SELECT *
-          FROM (
-              SELECT lender_user.*
-              FROM history_octane.lender_user
-              LEFT JOIN history_octane.lender_user AS history_records
-                        ON lender_user.lu_pid = history_records.lu_pid
-                            AND lender_user.data_source_updated_datetime < history_records.data_source_updated_datetime
-              WHERE history_records.lu_pid IS NULL
-                AND NOT lender_user.data_source_deleted_flag
-                AND lender_user.lu_lender_user_type = 'EMPLOYEE'
-          ) AS lender_user
-          JOIN (
-              SELECT org_node.*
-              FROM history_octane.org_node
-              LEFT JOIN history_octane.org_node AS history_records
-                        ON org_node.on_pid = history_records.on_pid
-                            AND org_node.data_source_updated_datetime < history_records.data_source_updated_datetime
-              WHERE history_records.on_pid IS NULL
-                AND NOT org_node.data_source_deleted_flag
-          ) AS child_org_node
-               ON child_org_node.on_lender_user_pid = lender_user.lu_pid
+          SELECT lender_user.*
+          FROM history_octane.lender_user
+          LEFT JOIN history_octane.lender_user AS history_records
+                    ON lender_user.lu_pid = history_records.lu_pid
+                        AND lender_user.data_source_updated_datetime < history_records.data_source_updated_datetime
+          WHERE history_records.lu_pid IS NULL
+            AND NOT lender_user.data_source_deleted_flag
+            AND lender_user.lu_lender_user_type = 'EMPLOYEE'
       ) AS current_data
                 ON edw_employee_user_details.data_source_integration_id =
                    COALESCE( CAST( current_data.lu_pid AS TEXT ), '<NULL>' ) || '~1'
