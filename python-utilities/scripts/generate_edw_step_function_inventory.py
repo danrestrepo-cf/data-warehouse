@@ -22,15 +22,24 @@ def main():
     # delete existing inventory of ETL state machines
     delete_prior_state_machine_configurations(pipelines_dir_path, state_machine_file_extension)
 
+    # set the maximum number of message states allowed per group step function
+    # this limit prevents group step function definition files from exceeding the AWS file size limit (1 MB)
+    max_states = 500
+
     # define group state machines
     group_state_machines = [
-        GroupStateMachineGenerator(lambda x: x.target_schema == 'history_octane', 500, 'SP-GROUP-1',
-                                   'Trigger every history_octane ETL - This should process all staging_octane data '
-                                   'into history_octane and will trigger any downstream processes'),
-        GroupStateMachineGenerator(lambda x: x.target_schema == 'history_octane' and x.has_dependency, 500,
-                                   'SP-GROUP-2', 'Trigger history_octane ETLs that have one or more dependent ETLs - '
-                                                 'This should process all staging_octane data that feeds any star_* '
-                                                 'tables')
+        GroupStateMachineGenerator(
+            group_criteria_function=lambda x: x.target_schema == 'history_octane',
+            group_state_limit=max_states,
+            base_name='SP-GROUP-1',
+            comment='Trigger every history_octane ETL - This should process all staging_octane data into '
+                    'history_octane and will trigger any downstream processes'),
+        GroupStateMachineGenerator(
+            group_criteria_function=lambda x: x.target_schema == 'history_octane' and x.has_dependency,
+            group_state_limit=max_states,
+            base_name='SP-GROUP-2',
+            comment='Trigger history_octane ETLs that have one or more dependent ETLs - This should process all '
+                    'staging_octane data that feeds any star_* tables')
     ]
 
     # generate state machines
@@ -61,7 +70,7 @@ def delete_prior_state_machine_configurations(directory: str, state_machine_file
 
 
 def format_data_for_outputting(state_machine_configs: dict) -> dict:
-    return {name: json.dumps(config, indent=4).replace('"${subnetIDs}"', '${subnetIDs}') + '\n\n'
+    return {name: json.dumps(config, indent=4).replace('"${subnetIDs}"', '${subnetIDs}') + '\n'
             for name, config in state_machine_configs.items()}
 
 

@@ -4,7 +4,7 @@ from lib.config_mdi_metadata_maintenance.metadata_comparison_functions.metadata_
 from lib.db_connections import DBConnection
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 from lib.config_mdi_metadata_maintenance.row_grouper import RowGrouper, SingleGroupRowGrouper
-from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, ETLMetadata
+from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata
 
 
 class ProcessMetadataComparisonFunctions(MetadataComparisonFunctions):

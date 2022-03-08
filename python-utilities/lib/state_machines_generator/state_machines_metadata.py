@@ -6,7 +6,7 @@ from typing import List
 
 @dataclass
 class ETLStateMachineComponentsMetadata:
-    """Metadata describing a state machine that executes a single ETL process
+    """Metadata required for building a state machine that triggers a single ETL process
 
     Attributes:
         target_table: the name of the process' target_table
@@ -23,8 +23,7 @@ class ETLStateMachineComponentsMetadata:
 
 @dataclass
 class GroupStateMachinesComponentsMetadata:
-    """Metadata describing a state machine that sends a number of SQS messages in parallel for triggering ETL state
-    machines
+    """Metadata required for building a state machine that sends SQS messages to trigger a group of ETL state machines
 
     Attributes:
         process_name: the name of the ETL process for which a triggering message is sent

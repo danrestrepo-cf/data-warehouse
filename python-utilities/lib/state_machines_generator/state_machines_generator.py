@@ -73,6 +73,13 @@ class GroupStateMachineGenerator:
     def __init__(self, group_criteria_function: Callable[[GroupStateMachinesComponentsMetadata], bool],
                  group_state_limit: int, base_name: str,
                  comment: str):
+        """
+        :param group_criteria_function: a lambda function for specifying which ETL state machines will be triggered by
+        the group state machine
+        :param group_state_limit: the maximum number of message states allowed within the group state machine
+        :param base_name: the parent identifier of the group state machine, e.g. SP-GROUP-1
+        :param comment: a description of the ETL state machine population that is triggered by the group state machine
+        """
         self.group_criteria_function = group_criteria_function
         self.group_state_limit = group_state_limit
         self.base_name = base_name
@@ -83,22 +90,22 @@ class GroupStateMachineGenerator:
         machines in the provided group metadata"""
         result_config = {}
         # filter group state machine metadata according to group_criteria function
-        group_state_machine_metadata = \
+        filtered_metadata = \
             sorted([entry for entry in group_state_machine_metadata if self.group_criteria_function(entry)],
                    key=lambda x: x.process_name)
-        make_state_machine_name = self.get_state_machine_name_maker(group_state_machine_metadata)
-        make_state_machine_comment = self.get_state_machine_comment_maker(group_state_machine_metadata)
-        sub_group_count = math.ceil(len(group_state_machine_metadata) / self.group_state_limit)
+        make_state_machine_name = self.get_state_machine_name_maker(filtered_metadata)
+        make_state_machine_comment = self.get_state_machine_comment_maker(filtered_metadata)
+        sub_group_count = math.ceil(len(filtered_metadata) / self.group_state_limit)
         for sub_group in range(0, sub_group_count):  # only executes once if # of state machines is within limit
             state_machine_comment = make_state_machine_comment(sub_group)
             state_machine_name = make_state_machine_name(sub_group)
             parallel_state = create_root_config(
-                state_machine_comment,
-                state_machine_name,
-                {state_machine_name: create_parallel_config()}
+                comment=state_machine_comment,
+                start_at=state_machine_name,
+                states={state_machine_name: create_parallel_config()}
             )
             parallel_state['States'][state_machine_name]['Branches'] = \
-                self.populate_parallel_branches_with_message_states(group_state_machine_metadata, sub_group, self.group_state_limit)
+                self.create_parallel_message_state_branches(filtered_metadata, sub_group)
             result_config[state_machine_name] = parallel_state
         return result_config
 
@@ -114,18 +121,21 @@ class GroupStateMachineGenerator:
         else:
             return lambda group_number: f'{self.comment} - group {group_number+1}'
 
-    @staticmethod
-    def populate_parallel_branches_with_message_states(group_state_machine_metadata, sub_group_number,
-                                                       group_state_limit) -> List[dict]:
+    def create_parallel_message_state_branches(self, group_state_machine_metadata: List[GroupStateMachinesComponentsMetadata],
+                                               sub_group_number: int) -> List[dict]:
         parallel_branches = []
-        for entry in group_state_machine_metadata[sub_group_number * group_state_limit:(sub_group_number + 1) * group_state_limit]:
+        metadata_index_start = sub_group_number * self.group_state_limit
+        metadata_index_end = (sub_group_number + 1) * self.group_state_limit
+        for entry in group_state_machine_metadata[metadata_index_start:metadata_index_end]:
             process_name = entry.process_name
             target_table = entry.target_table
             message_state_name = f'{process_name}_message'
             message_state = create_root_config(
-                f'Send message to bi-managed-mdi-2-full-check-queue for {process_name}',
-                message_state_name,
-                {message_state_name: create_message_config(process_name, target_table)}
+                comment=f'Send message to bi-managed-mdi-2-full-check-queue for {process_name}',
+                start_at=message_state_name,
+                states={message_state_name: create_message_config(
+                    process_name=process_name,
+                    target_table=target_table)}
             )
 
             # insert ResultSelector attribute into message state's attributes before the 'End' attribute
@@ -171,27 +181,41 @@ class SingleETLStateMachineGenerator:
 
         state_name = root_process
         comment = self.determine_state_machine_header_comment(root_process, state_name)
-        root_config = create_root_config(comment, state_name)
+        root_config = create_root_config(
+            comment=comment,
+            start_at=state_name
+        )
         root_config_states = root_config['States']
         ecs_memory = self.all_state_machine_metadata[root_process].container_memory
 
         # process has no children
         if root_process not in self.parent_state_machine_metadata:
-            root_config_states[state_name] = create_task_config(root_process, None, ecs_memory)
+            root_config_states[state_name] = create_task_config(
+                process_name=root_process,
+                next_state_name=None,
+                ecs_memory=ecs_memory)
             return root_config
         # process has one sequential child
         elif len(self.parent_state_machine_metadata[root_process].next_processes) == 1:
             next_process = self.parent_state_machine_metadata[root_process].next_processes[0]
             next_process_target_table = self.all_state_machine_metadata[next_process].target_table
-            root_config_states[state_name] = create_task_config(root_process, next_process, ecs_memory)
+            root_config_states[state_name] = create_task_config(
+                process_name=root_process,
+                next_state_name=next_process,
+                ecs_memory=ecs_memory)
             root_config_states['Load_type_choice'] = create_choice_config(f'{next_process}_message')
             root_config_states['Success'] = create_success_config()
-            root_config_states[f'{next_process}_message'] = create_message_config(next_process, next_process_target_table)
+            root_config_states[f'{next_process}_message'] = create_message_config(
+                process_name=next_process,
+                target_table=next_process_target_table)
             return root_config
         # process has multiple children which should run in parallel
         else:
             next_processes = self.parent_state_machine_metadata[root_process].next_processes
-            root_config_states[state_name] = create_task_config(root_process, next_processes, ecs_memory)
+            root_config_states[state_name] = create_task_config(
+                process_name=root_process,
+                next_state_name=next_processes,
+                ecs_memory=ecs_memory)
             root_config_states['Load_type_choice'] = create_choice_config('Parallel')
             root_config_states['Success'] = create_success_config()
             root_config_states['Parallel'] = create_parallel_config()
@@ -200,11 +224,11 @@ class SingleETLStateMachineGenerator:
                 next_process_message_state_name = f'{next_process}_message'
                 root_config_states['Parallel']['Branches'].append(
                     create_root_config(
-                        f'Send message to bi-managed-mdi-2-full-check-queue for {next_process}',
-                        next_process_message_state_name,
-                        {next_process_message_state_name: create_message_config(
-                            next_process,
-                            next_process_target_table
+                        comment=f'Send message to bi-managed-mdi-2-full-check-queue for {next_process}',
+                        start_at=next_process_message_state_name,
+                        states={next_process_message_state_name: create_message_config(
+                            process_name=next_process,
+                            target_table=next_process_target_table
                         )}
                     )
                 )
