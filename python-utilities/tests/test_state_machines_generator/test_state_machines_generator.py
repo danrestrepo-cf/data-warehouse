@@ -933,6 +933,8 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
 
         state_machines_generator = AllStateMachinesGenerator(self.data_warehouse_metadata, group_state_machines)
         state_machines_result = state_machines_generator.build_state_machines()
+        # state_machines_result includes entries for five ETL state machines that we don't care about for this test
+        # so we'll manually remove those entries here
         unwanted_keys = ['SP-1', 'SP-2', 'SP-3', 'SP-4', 'SP-5']
         for unwanted_key in unwanted_keys:
             state_machines_result.pop(unwanted_key)
