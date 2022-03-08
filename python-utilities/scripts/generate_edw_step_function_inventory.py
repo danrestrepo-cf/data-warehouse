@@ -39,7 +39,7 @@ def main():
             group_state_limit=max_states,
             base_name='SP-GROUP-2',
             comment='Trigger history_octane ETLs that have one or more dependent ETLs - This should process all '
-                    'staging_octane data that feeds any star_* tables')
+                    'staging_octane data that feeds any star_* or data_mart_* tables')
     ]
 
     # generate state machines

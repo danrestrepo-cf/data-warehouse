@@ -74,11 +74,13 @@ class GroupStateMachineGenerator:
                  group_state_limit: int, base_name: str,
                  comment: str):
         """
-        :param group_criteria_function: a lambda function for specifying which ETL state machines will be triggered by
-        the group state machine
-        :param group_state_limit: the maximum number of message states allowed within the group state machine
-        :param base_name: the parent identifier of the group state machine, e.g. SP-GROUP-1
-        :param comment: a description of the ETL state machine population that is triggered by the group state machine
+        :param group_criteria_function: A function for specifying which ETL state machines will be triggered by
+        the group state machine.
+        :param group_state_limit: The maximum number of message states allowed within a given subgroup of a group state
+        machine. If the number of message states allocated to the group exceeds this limit, then the overall group
+        will be split into two or more subgroups.
+        :param base_name: The parent identifier of the group state machine, e.g. SP-GROUP-1
+        :param comment: A description of the ETL state machine population that is triggered by the group state machine
         """
         self.group_criteria_function = group_criteria_function
         self.group_state_limit = group_state_limit
