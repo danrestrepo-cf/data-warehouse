@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100315 - ETL to copy deal_snapshot data from staging_octane to history_octane",
+    "Comment": "SP-100315 - ETL to insert records into staging.history_octane.deal_snapshot using staging.staging_octane.deal_snapshot as the primary source",
     "StartAt": "SP-100315",
     "States": {
         "SP-100315": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

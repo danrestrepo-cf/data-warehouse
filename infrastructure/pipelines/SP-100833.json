@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100833 - ETL to copy mortgage_delinquency_exception_type data from staging_octane to history_octane",
+    "Comment": "SP-100833 - ETL to insert records into staging.history_octane.mortgage_delinquency_exception_type using staging.staging_octane.mortgage_delinquency_exception_type as the primary source",
     "StartAt": "SP-100833",
     "States": {
         "SP-100833": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

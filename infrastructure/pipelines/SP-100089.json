@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100089 - ETL to copy lead data from staging_octane to history_octane",
+    "Comment": "SP-100089 - ETL to insert records into staging.history_octane.lead using staging.staging_octane.lead as the primary source",
     "StartAt": "SP-100089",
     "States": {
         "SP-100089": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

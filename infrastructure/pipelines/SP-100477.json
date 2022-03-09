@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100477 - ETL to copy deal_task_status_type data from staging_octane to history_octane",
+    "Comment": "SP-100477 - ETL to insert records into staging.history_octane.deal_task_status_type using staging.staging_octane.deal_task_status_type as the primary source",
     "StartAt": "SP-100477",
     "States": {
         "SP-100477": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

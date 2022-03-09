@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100362 - ETL to copy deal_note_monitor data from staging_octane to history_octane",
+    "Comment": "SP-100362 - ETL to insert records into staging.history_octane.deal_note_monitor using staging.staging_octane.deal_note_monitor as the primary source",
     "StartAt": "SP-100362",
     "States": {
         "SP-100362": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

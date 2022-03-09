@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100003 - ETL to copy offering_group data from staging_octane to history_octane",
+    "Comment": "SP-100003 - ETL to insert records into staging.history_octane.offering_group using staging.staging_octane.offering_group as the primary source",
     "StartAt": "SP-100003",
     "States": {
         "SP-100003": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

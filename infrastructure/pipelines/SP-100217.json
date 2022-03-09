@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100217 - ETL to copy payroll_ledger_book_id_ticker data from staging_octane to history_octane",
+    "Comment": "SP-100217 - ETL to insert records into staging.history_octane.payroll_ledger_book_id_ticker using staging.staging_octane.payroll_ledger_book_id_ticker as the primary source",
     "StartAt": "SP-100217",
     "States": {
         "SP-100217": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

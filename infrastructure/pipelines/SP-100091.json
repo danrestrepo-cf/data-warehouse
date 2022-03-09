@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100091 - ETL to copy backfill_status data from staging_octane to history_octane",
+    "Comment": "SP-100091 - ETL to insert records into staging.history_octane.backfill_status using staging.staging_octane.backfill_status as the primary source",
     "StartAt": "SP-100091",
     "States": {
         "SP-100091": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

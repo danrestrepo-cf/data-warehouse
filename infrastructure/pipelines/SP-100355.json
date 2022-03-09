@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100355 - ETL to copy unpaid_balance_adjustment data from staging_octane to history_octane",
+    "Comment": "SP-100355 - ETL to insert records into staging.history_octane.unpaid_balance_adjustment using staging.staging_octane.unpaid_balance_adjustment as the primary source",
     "StartAt": "SP-100355",
     "States": {
         "SP-100355": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100425 - ETL to copy building_status_type data from staging_octane to history_octane",
+    "Comment": "SP-100425 - ETL to insert records into staging.history_octane.building_status_type using staging.staging_octane.building_status_type as the primary source",
     "StartAt": "SP-100425",
     "States": {
         "SP-100425": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

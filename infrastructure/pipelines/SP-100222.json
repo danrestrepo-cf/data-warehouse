@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100222 - ETL to copy investor_group data from staging_octane to history_octane",
+    "Comment": "SP-100222 - ETL to insert records into staging.history_octane.investor_group using staging.staging_octane.investor_group as the primary source",
     "StartAt": "SP-100222",
     "States": {
         "SP-100222": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

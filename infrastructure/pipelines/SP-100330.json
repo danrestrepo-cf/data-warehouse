@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100330 - ETL to copy servicer_loan_id_assignment data from staging_octane to history_octane",
+    "Comment": "SP-100330 - ETL to insert records into staging.history_octane.servicer_loan_id_assignment using staging.staging_octane.servicer_loan_id_assignment as the primary source",
     "StartAt": "SP-100330",
     "States": {
         "SP-100330": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

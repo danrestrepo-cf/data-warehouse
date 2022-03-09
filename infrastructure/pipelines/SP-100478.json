@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100478 - ETL to copy decision_credit_score_calc_type data from staging_octane to history_octane",
+    "Comment": "SP-100478 - ETL to insert records into staging.history_octane.decision_credit_score_calc_type using staging.staging_octane.decision_credit_score_calc_type as the primary source",
     "StartAt": "SP-100478",
     "States": {
         "SP-100478": {
@@ -77,4 +77,3 @@
         }
     }
 }
-

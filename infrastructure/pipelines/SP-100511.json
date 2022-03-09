@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100511 - ETL to copy flood_cert_vendor_type data from staging_octane to history_octane",
+    "Comment": "SP-100511 - ETL to insert records into staging.history_octane.flood_cert_vendor_type using staging.staging_octane.flood_cert_vendor_type as the primary source",
     "StartAt": "SP-100511",
     "States": {
         "SP-100511": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100526 - ETL to copy heloc_cancel_fee_applicable_type data from staging_octane to history_octane",
+    "Comment": "SP-100526 - ETL to insert records into staging.history_octane.heloc_cancel_fee_applicable_type using staging.staging_octane.heloc_cancel_fee_applicable_type as the primary source",
     "StartAt": "SP-100526",
     "States": {
         "SP-100526": {
@@ -77,4 +77,3 @@
         }
     }
 }
-

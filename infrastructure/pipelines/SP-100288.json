@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100288 - ETL to copy rate_sheet data from staging_octane to history_octane",
+    "Comment": "SP-100288 - ETL to insert records into staging.history_octane.rate_sheet using staging.staging_octane.rate_sheet as the primary source",
     "StartAt": "SP-100288",
     "States": {
         "SP-100288": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100142 - ETL to copy circumstance_change data from staging_octane to history_octane",
+    "Comment": "SP-100142 - ETL to insert records into staging.history_octane.circumstance_change using staging.staging_octane.circumstance_change as the primary source",
     "StartAt": "SP-100142",
     "States": {
         "SP-100142": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100878 - ETL to copy org_lineage_tracker_custom_field_update data from staging_octane to history_octane",
+    "Comment": "SP-100878 - ETL to insert records into staging.history_octane.org_lineage_tracker_custom_field_update using staging.staging_octane.org_lineage_tracker_custom_field_update as the primary source",
     "StartAt": "SP-100878",
     "States": {
         "SP-100878": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100854 - ETL to copy workspace_type data from staging_octane to history_octane",
+    "Comment": "SP-100854 - ETL to insert records into staging.history_octane.workspace_type using staging.staging_octane.workspace_type as the primary source",
     "StartAt": "SP-100854",
     "States": {
         "SP-100854": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

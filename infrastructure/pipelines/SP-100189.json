@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100189 - ETL to copy trade_lock_filter data from staging_octane to history_octane",
+    "Comment": "SP-100189 - ETL to insert records into staging.history_octane.trade_lock_filter using staging.staging_octane.trade_lock_filter as the primary source",
     "StartAt": "SP-100189",
     "States": {
         "SP-100189": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

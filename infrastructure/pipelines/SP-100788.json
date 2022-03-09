@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100788 - ETL to copy report_request_status_type data from staging_octane to history_octane",
+    "Comment": "SP-100788 - ETL to insert records into staging.history_octane.report_request_status_type using staging.staging_octane.report_request_status_type as the primary source",
     "StartAt": "SP-100788",
     "States": {
         "SP-100788": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

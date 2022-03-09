@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100606 - ETL to copy payment_fulfill_type data from staging_octane to history_octane",
+    "Comment": "SP-100606 - ETL to insert records into staging.history_octane.payment_fulfill_type using staging.staging_octane.payment_fulfill_type as the primary source",
     "StartAt": "SP-100606",
     "States": {
         "SP-100606": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

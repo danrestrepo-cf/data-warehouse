@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100234 - ETL to copy role_config_export_permission data from staging_octane to history_octane",
+    "Comment": "SP-100234 - ETL to insert records into staging.history_octane.role_config_export_permission using staging.staging_octane.role_config_export_permission as the primary source",
     "StartAt": "SP-100234",
     "States": {
         "SP-100234": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

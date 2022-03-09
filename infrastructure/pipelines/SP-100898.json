@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100898 - ETL to copy deal_update_type data from staging_octane to history_octane",
+    "Comment": "SP-100898 - ETL to insert records into staging.history_octane.deal_update_type using staging.staging_octane.deal_update_type as the primary source",
     "StartAt": "SP-100898",
     "States": {
         "SP-100898": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

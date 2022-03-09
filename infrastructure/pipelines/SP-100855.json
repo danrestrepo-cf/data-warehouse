@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100855 - ETL to copy lender_user_location data from staging_octane to history_octane",
+    "Comment": "SP-100855 - ETL to insert records into staging.history_octane.lender_user_location using staging.staging_octane.lender_user_location as the primary source",
     "StartAt": "SP-100855",
     "States": {
         "SP-100855": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

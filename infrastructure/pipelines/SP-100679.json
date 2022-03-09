@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100679 - ETL to copy va_regional_loan_center_type data from staging_octane to history_octane",
+    "Comment": "SP-100679 - ETL to insert records into staging.history_octane.va_regional_loan_center_type using staging.staging_octane.va_regional_loan_center_type as the primary source",
     "StartAt": "SP-100679",
     "States": {
         "SP-100679": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

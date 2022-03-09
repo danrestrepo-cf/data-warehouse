@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100230 - ETL to copy price_processing_time data from staging_octane to history_octane",
+    "Comment": "SP-100230 - ETL to insert records into staging.history_octane.price_processing_time using staging.staging_octane.price_processing_time as the primary source",
     "StartAt": "SP-100230",
     "States": {
         "SP-100230": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

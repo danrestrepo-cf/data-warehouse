@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100832 - ETL to copy wf_prereq data from staging_octane to history_octane",
+    "Comment": "SP-100832 - ETL to insert records into staging.history_octane.wf_prereq using staging.staging_octane.wf_prereq as the primary source",
     "StartAt": "SP-100832",
     "States": {
         "SP-100832": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

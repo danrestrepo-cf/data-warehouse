@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100525 - ETL to copy gse_version_type data from staging_octane to history_octane",
+    "Comment": "SP-100525 - ETL to insert records into staging.history_octane.gse_version_type using staging.staging_octane.gse_version_type as the primary source",
     "StartAt": "SP-100525",
     "States": {
         "SP-100525": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

@@ -91,11 +91,11 @@ class TestStateMachineDefinitionMetadataComparisonFunctions(unittest.TestCase):
         expected = MetadataTable(key_fields=['process_name'])
         expected.add_rows([
             {'process_name': 'SP-1', 'state_machine_name': 'SP-1',
-             'state_machine_comment': 'ETL to copy table1 data from staging_octane to history_octane'},
+             'state_machine_comment': 'ETL to insert records into staging.history_octane.table1 using staging.staging_octane.table1 as the primary source'},
             {'process_name': 'SP-2', 'state_machine_name': 'SP-2',
-             'state_machine_comment': 'ETL to copy table2 data from staging_octane to history_octane'},
+             'state_machine_comment': 'ETL to insert records into staging.history_octane.table2 using staging.staging_octane.table2 as the primary source'},
             {'process_name': 'SP-3', 'state_machine_name': 'SP-3',
-             'state_machine_comment': 'table -> table-insert ETL from ingress.ingress_schema_1.table3 to ingress.ingress_schema_2.table3'}
+             'state_machine_comment': 'ETL to insert records into ingress.ingress_schema_2.table3 using ingress.ingress_schema_1.table3 as the primary source'}
         ])
         self.assertEqual(expected, StateMachineDefinitionMetadataComparisonFunctions().construct_metadata_table_from_source(dw_metadata))
 

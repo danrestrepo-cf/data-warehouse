@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-200001-insert - ETL to insert into loan_lender_user_access",
+    "Comment": "SP-200001-insert - ETL to insert records into staging.star_loan.loan_lender_user_access using staging.history_octane.deal_lender_user as the primary source",
     "StartAt": "SP-200001-insert",
     "States": {
         "SP-200001-insert": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

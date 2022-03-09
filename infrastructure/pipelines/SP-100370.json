@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100370 - ETL to copy loan_org_lineage data from staging_octane to history_octane",
+    "Comment": "SP-100370 - ETL to insert records into staging.history_octane.loan_org_lineage using staging.staging_octane.loan_org_lineage as the primary source",
     "StartAt": "SP-100370",
     "States": {
         "SP-100370": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

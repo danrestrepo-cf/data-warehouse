@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100445 - ETL to copy construction_cost_category_type data from staging_octane to history_octane",
+    "Comment": "SP-100445 - ETL to insert records into staging.history_octane.construction_cost_category_type using staging.staging_octane.construction_cost_category_type as the primary source",
     "StartAt": "SP-100445",
     "States": {
         "SP-100445": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

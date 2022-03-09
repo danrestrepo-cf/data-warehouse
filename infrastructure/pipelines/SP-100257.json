@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100257 - ETL to copy recording_district data from staging_octane to history_octane",
+    "Comment": "SP-100257 - ETL to insert records into staging.history_octane.recording_district using staging.staging_octane.recording_district as the primary source",
     "StartAt": "SP-100257",
     "States": {
         "SP-100257": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

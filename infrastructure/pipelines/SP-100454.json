@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100454 - ETL to copy credit_business_type data from staging_octane to history_octane",
+    "Comment": "SP-100454 - ETL to insert records into staging.history_octane.credit_business_type using staging.staging_octane.credit_business_type as the primary source",
     "StartAt": "SP-100454",
     "States": {
         "SP-100454": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

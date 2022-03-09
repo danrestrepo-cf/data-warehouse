@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100020 - ETL to copy admin_user_event data from staging_octane to history_octane",
+    "Comment": "SP-100020 - ETL to insert records into staging.history_octane.admin_user_event using staging.staging_octane.admin_user_event as the primary source",
     "StartAt": "SP-100020",
     "States": {
         "SP-100020": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

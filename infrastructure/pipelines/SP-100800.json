@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100800 - ETL to copy state_type data from staging_octane to history_octane",
+    "Comment": "SP-100800 - ETL to insert records into staging.history_octane.state_type using staging.staging_octane.state_type as the primary source",
     "StartAt": "SP-100800",
     "States": {
         "SP-100800": {
@@ -77,4 +77,3 @@
         }
     }
 }
-

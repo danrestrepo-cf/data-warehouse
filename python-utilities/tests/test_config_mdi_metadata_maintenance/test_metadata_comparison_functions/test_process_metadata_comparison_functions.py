@@ -90,10 +90,10 @@ class TestProcessMetadataComparisonFunctions(unittest.TestCase):
 
         expected = MetadataTable(key_fields=['process_name'])
         expected.add_rows([
-            {'process_name': 'SP-1', 'process_description': 'ETL to copy table1 data from staging_octane to history_octane'},
-            {'process_name': 'SP-2', 'process_description': 'ETL to copy table2 data from staging_octane to history_octane'},
+            {'process_name': 'SP-1', 'process_description': 'ETL to insert records into staging.history_octane.table1 using staging.staging_octane.table1 as the primary source'},
+            {'process_name': 'SP-2', 'process_description': 'ETL to insert records into staging.history_octane.table2 using staging.staging_octane.table2 as the primary source'},
             {'process_name': 'SP-3',
-             'process_description': 'table -> table-insert ETL from ingress.ingress_schema_1.table3 to ingress.ingress_schema_2.table3'}
+             'process_description': 'ETL to insert records into ingress.ingress_schema_2.table3 using ingress.ingress_schema_1.table3 as the primary source'}
         ])
         self.assertEqual(expected, ProcessMetadataComparisonFunctions().construct_metadata_table_from_source(dw_metadata))
 

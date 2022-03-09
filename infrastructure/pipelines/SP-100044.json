@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100044 - ETL to copy report_row data from staging_octane to history_octane",
+    "Comment": "SP-100044 - ETL to insert records into staging.history_octane.report_row using staging.staging_octane.report_row as the primary source",
     "StartAt": "SP-100044",
     "States": {
         "SP-100044": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

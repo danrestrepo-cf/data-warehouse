@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100737 - ETL to copy esign_package_status_type data from staging_octane to history_octane",
+    "Comment": "SP-100737 - ETL to insert records into staging.history_octane.esign_package_status_type using staging.staging_octane.esign_package_status_type as the primary source",
     "StartAt": "SP-100737",
     "States": {
         "SP-100737": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

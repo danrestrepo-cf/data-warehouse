@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100378 - ETL to copy construction_permit data from staging_octane to history_octane",
+    "Comment": "SP-100378 - ETL to insert records into staging.history_octane.construction_permit using staging.staging_octane.construction_permit as the primary source",
     "StartAt": "SP-100378",
     "States": {
         "SP-100378": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

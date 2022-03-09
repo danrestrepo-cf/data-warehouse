@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100428 - ETL to copy buydown_contributor_type data from staging_octane to history_octane",
+    "Comment": "SP-100428 - ETL to insert records into staging.history_octane.buydown_contributor_type using staging.staging_octane.buydown_contributor_type as the primary source",
     "StartAt": "SP-100428",
     "States": {
         "SP-100428": {
@@ -77,4 +77,3 @@
         }
     }
 }
-

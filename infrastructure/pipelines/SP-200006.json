@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-200006 - Dimension ETL to populate borrower_lending_profile_dim from history_octane",
+    "Comment": "SP-200006 - ETL to insert_update records into staging.star_loan.borrower_lending_profile_dim using staging.history_octane.borrower as the primary source",
     "StartAt": "SP-200006",
     "States": {
         "SP-200006": {
@@ -77,4 +77,3 @@
         }
     }
 }
-

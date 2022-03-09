@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100158 - ETL to copy borrower_residence data from staging_octane to history_octane",
+    "Comment": "SP-100158 - ETL to insert records into staging.history_octane.borrower_residence using staging.staging_octane.borrower_residence as the primary source",
     "StartAt": "SP-100158",
     "States": {
         "SP-100158": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

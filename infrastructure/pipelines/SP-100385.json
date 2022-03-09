@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100385 - ETL to copy origination_source_type data from staging_octane to history_octane",
+    "Comment": "SP-100385 - ETL to insert records into staging.history_octane.origination_source_type using staging.staging_octane.origination_source_type as the primary source",
     "StartAt": "SP-100385",
     "States": {
         "SP-100385": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

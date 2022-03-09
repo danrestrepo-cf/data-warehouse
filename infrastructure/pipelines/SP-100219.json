@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100219 - ETL to copy bid_pool data from staging_octane to history_octane",
+    "Comment": "SP-100219 - ETL to insert records into staging.history_octane.bid_pool using staging.staging_octane.bid_pool as the primary source",
     "StartAt": "SP-100219",
     "States": {
         "SP-100219": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

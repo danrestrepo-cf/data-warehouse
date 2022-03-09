@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100324 - ETL to copy lock_series data from staging_octane to history_octane",
+    "Comment": "SP-100324 - ETL to insert records into staging.history_octane.lock_series using staging.staging_octane.lock_series as the primary source",
     "StartAt": "SP-100324",
     "States": {
         "SP-100324": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

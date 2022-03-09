@@ -43,7 +43,7 @@ class ProcessMetadataComparisonFunctions(MetadataComparisonFunctions):
             for schema in database.schemas:
                 for table in schema.tables:
                     for etl in table.etls:
-                        description = self.construct_process_description(table.path, table.primary_source_table, etl)
+                        description = etl.construct_process_description(table)
                         metadata_table.add_row({'process_name': etl.process_name, 'process_description': description})
         return metadata_table
 

@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100559 - ETL to copy liability_disposition_type data from staging_octane to history_octane",
+    "Comment": "SP-100559 - ETL to insert records into staging.history_octane.liability_disposition_type using staging.staging_octane.liability_disposition_type as the primary source",
     "StartAt": "SP-100559",
     "States": {
         "SP-100559": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

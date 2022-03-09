@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100262 - ETL to copy trustee data from staging_octane to history_octane",
+    "Comment": "SP-100262 - ETL to insert records into staging.history_octane.trustee using staging.staging_octane.trustee as the primary source",
     "StartAt": "SP-100262",
     "States": {
         "SP-100262": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

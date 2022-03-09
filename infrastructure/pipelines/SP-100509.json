@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100509 - ETL to copy fha_va_bor_cert_sales_price_exceeds_type data from staging_octane to history_octane",
+    "Comment": "SP-100509 - ETL to insert records into staging.history_octane.fha_va_bor_cert_sales_price_exceeds_type using staging.staging_octane.fha_va_bor_cert_sales_price_exceeds_type as the primary source",
     "StartAt": "SP-100509",
     "States": {
         "SP-100509": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

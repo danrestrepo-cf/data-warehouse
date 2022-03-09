@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100074 - ETL to copy company data from staging_octane to history_octane",
+    "Comment": "SP-100074 - ETL to insert records into staging.history_octane.company using staging.staging_octane.company as the primary source",
     "StartAt": "SP-100074",
     "States": {
         "SP-100074": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

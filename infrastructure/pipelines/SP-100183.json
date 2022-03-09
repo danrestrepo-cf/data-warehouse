@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100183 - ETL to copy borrower_liability data from staging_octane to history_octane",
+    "Comment": "SP-100183 - ETL to insert records into staging.history_octane.borrower_liability using staging.staging_octane.borrower_liability as the primary source",
     "StartAt": "SP-100183",
     "States": {
         "SP-100183": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

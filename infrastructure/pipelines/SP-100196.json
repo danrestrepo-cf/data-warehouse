@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100196 - ETL to copy wf_deal_function_queue data from staging_octane to history_octane",
+    "Comment": "SP-100196 - ETL to insert records into staging.history_octane.wf_deal_function_queue using staging.staging_octane.wf_deal_function_queue as the primary source",
     "StartAt": "SP-100196",
     "States": {
         "SP-100196": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

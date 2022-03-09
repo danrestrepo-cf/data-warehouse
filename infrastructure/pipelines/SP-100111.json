@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100111 - ETL to copy product_eligibility_rule data from staging_octane to history_octane",
+    "Comment": "SP-100111 - ETL to insert records into staging.history_octane.product_eligibility_rule using staging.staging_octane.product_eligibility_rule as the primary source",
     "StartAt": "SP-100111",
     "States": {
         "SP-100111": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

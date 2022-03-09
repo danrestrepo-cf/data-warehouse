@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100489 - ETL to copy doc_permission_type data from staging_octane to history_octane",
+    "Comment": "SP-100489 - ETL to insert records into staging.history_octane.doc_permission_type using staging.staging_octane.doc_permission_type as the primary source",
     "StartAt": "SP-100489",
     "States": {
         "SP-100489": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

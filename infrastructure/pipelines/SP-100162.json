@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100162 - ETL to copy construction_draw_item data from staging_octane to history_octane",
+    "Comment": "SP-100162 - ETL to insert records into staging.history_octane.construction_draw_item using staging.staging_octane.construction_draw_item as the primary source",
     "StartAt": "SP-100162",
     "States": {
         "SP-100162": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

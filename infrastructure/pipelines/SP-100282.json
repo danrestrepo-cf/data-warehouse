@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100282 - ETL to copy product_maximum_rebate data from staging_octane to history_octane",
+    "Comment": "SP-100282 - ETL to insert records into staging.history_octane.product_maximum_rebate using staging.staging_octane.product_maximum_rebate as the primary source",
     "StartAt": "SP-100282",
     "States": {
         "SP-100282": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

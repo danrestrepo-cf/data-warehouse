@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-200011 - Dimension ETL to populate loan_beneficiary_dim from history_octane",
+    "Comment": "SP-200011 - ETL to insert_update records into staging.star_loan.loan_beneficiary_dim using staging.history_octane.loan_beneficiary as the primary source",
     "StartAt": "SP-200011",
     "States": {
         "SP-200011": {
@@ -77,4 +77,3 @@
         }
     }
 }
-

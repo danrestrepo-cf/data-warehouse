@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100228 - ETL to copy lead_supplemental_margin_row data from staging_octane to history_octane",
+    "Comment": "SP-100228 - ETL to insert records into staging.history_octane.lead_supplemental_margin_row using staging.staging_octane.lead_supplemental_margin_row as the primary source",
     "StartAt": "SP-100228",
     "States": {
         "SP-100228": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

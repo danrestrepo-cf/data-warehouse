@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100321 - ETL to copy bid_pool_lender_lock data from staging_octane to history_octane",
+    "Comment": "SP-100321 - ETL to insert records into staging.history_octane.bid_pool_lender_lock using staging.staging_octane.bid_pool_lender_lock as the primary source",
     "StartAt": "SP-100321",
     "States": {
         "SP-100321": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

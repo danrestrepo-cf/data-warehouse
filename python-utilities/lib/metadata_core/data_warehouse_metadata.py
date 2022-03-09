@@ -194,6 +194,24 @@ class ETLMetadata:
     container_memory: int = None
     input_sql: Optional[str] = None
 
+    def construct_process_description(self, target_table: 'TableMetadata') -> str:
+        """Construct a description string for a given ETL process, e.g.:
+
+            ETL to insert into history_octane.loan using staging_octane.loan as the primary source
+
+        """
+        if self.output_type in (ETLOutputType.INSERT, ETLOutputType.INSERT_UPDATE):
+            preposition = 'into'
+        elif self.output_type == ETLOutputType.DELETE:
+            preposition = 'from'
+        else:
+            preposition = ''
+
+        return f'ETL to {self.output_type.value} records {preposition} {target_table.path.database}' \
+               f'.{target_table.path.schema}.{target_table.path.table} using {target_table.primary_source_table.database}.' \
+               f'{target_table.primary_source_table.schema}.{target_table.primary_source_table.table} as the primary ' \
+               f'source'
+
 
 @dataclass(init=False)
 class ColumnMetadata:

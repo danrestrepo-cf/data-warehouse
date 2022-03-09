@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100210 - ETL to copy smart_ledger_plan data from staging_octane to history_octane",
+    "Comment": "SP-100210 - ETL to insert records into staging.history_octane.smart_ledger_plan using staging.staging_octane.smart_ledger_plan as the primary source",
     "StartAt": "SP-100210",
     "States": {
         "SP-100210": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

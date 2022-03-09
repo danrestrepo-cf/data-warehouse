@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100316 - ETL to copy docusign_package data from staging_octane to history_octane",
+    "Comment": "SP-100316 - ETL to insert records into staging.history_octane.docusign_package using staging.staging_octane.docusign_package as the primary source",
     "StartAt": "SP-100316",
     "States": {
         "SP-100316": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100344 - ETL to copy proposal_req data from staging_octane to history_octane",
+    "Comment": "SP-100344 - ETL to insert records into staging.history_octane.proposal_req using staging.staging_octane.proposal_req as the primary source",
     "StartAt": "SP-100344",
     "States": {
         "SP-100344": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

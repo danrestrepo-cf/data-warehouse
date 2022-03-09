@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100698 - ETL to copy ledger_book_type data from staging_octane to history_octane",
+    "Comment": "SP-100698 - ETL to insert records into staging.history_octane.ledger_book_type using staging.staging_octane.ledger_book_type as the primary source",
     "StartAt": "SP-100698",
     "States": {
         "SP-100698": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

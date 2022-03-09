@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100253 - ETL to copy disaster_declaration data from staging_octane to history_octane",
+    "Comment": "SP-100253 - ETL to insert records into staging.history_octane.disaster_declaration using staging.staging_octane.disaster_declaration as the primary source",
     "StartAt": "SP-100253",
     "States": {
         "SP-100253": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

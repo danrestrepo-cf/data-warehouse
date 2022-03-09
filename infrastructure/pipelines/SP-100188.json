@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100188 - ETL to copy trade_file data from staging_octane to history_octane",
+    "Comment": "SP-100188 - ETL to insert records into staging.history_octane.trade_file using staging.staging_octane.trade_file as the primary source",
     "StartAt": "SP-100188",
     "States": {
         "SP-100188": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

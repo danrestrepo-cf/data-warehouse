@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100869 - ETL to copy password_settings data from staging_octane to history_octane",
+    "Comment": "SP-100869 - ETL to insert records into staging.history_octane.password_settings using staging.staging_octane.password_settings as the primary source",
     "StartAt": "SP-100869",
     "States": {
         "SP-100869": {
@@ -46,4 +46,3 @@
         }
     }
 }
-
