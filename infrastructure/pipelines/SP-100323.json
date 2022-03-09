@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100323 - ETL to copy lender_lock_extension data from staging_octane to history_octane",
+    "Comment": "SP-100323 - ETL to insert records into staging.history_octane.lender_lock_extension using staging.staging_octane.lender_lock_extension as the primary source",
     "StartAt": "SP-100323",
     "States": {
         "SP-100323": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

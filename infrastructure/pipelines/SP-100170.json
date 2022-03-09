@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100170 - ETL to copy public_record data from staging_octane to history_octane",
+    "Comment": "SP-100170 - ETL to insert records into staging.history_octane.public_record using staging.staging_octane.public_record as the primary source",
     "StartAt": "SP-100170",
     "States": {
         "SP-100170": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

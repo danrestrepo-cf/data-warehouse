@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100735 - ETL to copy dw_export_request_status_type data from staging_octane to history_octane",
+    "Comment": "SP-100735 - ETL to insert records into staging.history_octane.dw_export_request_status_type using staging.staging_octane.dw_export_request_status_type as the primary source",
     "StartAt": "SP-100735",
     "States": {
         "SP-100735": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

@@ -20,7 +20,7 @@ class InsertUpdateKeyMetadataComparisonFunctions(MetadataComparisonFunctions):
                 FROM mdi.insert_update_key
                 JOIN mdi.insert_update_step
                     ON insert_update_key.insert_update_step_dwid = insert_update_step.dwid
-                        AND insert_update_step.schema_name = 'star_loan'
+                        AND insert_update_step.schema_name IN ('star_loan', 'data_mart_business_applications')
                 JOIN mdi.process
                     ON insert_update_step.process_dwid = process.dwid;
         """)

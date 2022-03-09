@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100389 - ETL to copy doc_req_fulfill_status_type data from staging_octane to history_octane",
+    "Comment": "SP-100389 - ETL to insert records into staging.history_octane.doc_req_fulfill_status_type using staging.staging_octane.doc_req_fulfill_status_type as the primary source",
     "StartAt": "SP-100389",
     "States": {
         "SP-100389": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

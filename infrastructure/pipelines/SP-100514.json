@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100514 - ETL to copy fnm_community_lending_product_type data from staging_octane to history_octane",
+    "Comment": "SP-100514 - ETL to insert records into staging.history_octane.fnm_community_lending_product_type using staging.staging_octane.fnm_community_lending_product_type as the primary source",
     "StartAt": "SP-100514",
     "States": {
         "SP-100514": {
@@ -77,4 +77,3 @@
         }
     }
 }
-

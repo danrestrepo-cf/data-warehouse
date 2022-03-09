@@ -1,0 +1,140 @@
+name: edw_current_parent_nodes
+primary_source_table: staging.history_octane.org_node
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+    update_flag: false
+  data_source_dwid:
+    data_type: BIGINT
+    update_flag: true
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: false
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  etl_batch_id:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_columns:
+    data_type: TEXT
+    update_flag: true
+  data_source_integration_id:
+    data_type: TEXT
+    update_flag: false
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+    update_flag: true
+  parent_node_id:
+    data_type: BIGINT
+    update_flag: true
+  parent_node_name:
+    data_type: VARCHAR(256)
+    update_flag: true
+  grandparent_node_id:
+    data_type: BIGINT
+    update_flag: true
+  grandparent_node_name:
+    data_type: VARCHAR(256)
+    update_flag: true
+etls:
+  SP-400002-insert-update:
+    input_type: table
+    output_type: insert_update
+    hardcoded_data_source: Octane
+    json_output_field: data_source_integration_id
+    insert_update_keys:
+    - data_source_integration_id
+    container_memory: 2048
+    input_sql: |-
+      --SP-400002-insert-update
+      SELECT 'on_pid~data_source_dwid' AS data_source_integration_columns
+           , COALESCE( CAST( parent_node.on_pid AS TEXT ), '<NULL>' ) || '~1' AS data_source_integration_id
+           , NOW( ) AS edw_created_datetime
+           , NOW( ) AS edw_modified_datetime
+           , parent_node.data_source_updated_datetime AS data_source_modified_datetime
+           , parent_node.on_org_node_id AS parent_node_id
+           , parent_node.on_org_node_name_latest AS parent_node_name
+           , grandparent_org_node.on_org_node_id AS grandparent_node_id
+           , grandparent_org_node.on_org_node_name_latest AS grandparent_node_name
+      FROM (
+          SELECT org_node.*
+          FROM history_octane.org_node
+          LEFT JOIN history_octane.org_node AS history_records
+                    ON org_node.on_pid = history_records.on_pid
+                        AND org_node.data_source_updated_datetime < history_records.data_source_updated_datetime
+          WHERE history_records.on_pid IS NULL
+            AND NOT org_node.data_source_deleted_flag
+            AND org_node.on_lender_user_pid IS NULL -- prevents user nodes from being listed as parent nodes
+      ) AS parent_node
+      --filter down to current org_node_version
+      JOIN (
+          SELECT org_node_version.*
+          FROM history_octane.org_node_version
+          LEFT JOIN history_octane.org_node_version AS history_records
+                    ON org_node_version.onv_pid = history_records.onv_pid
+                        AND org_node_version.data_source_updated_datetime < history_records.data_source_updated_datetime
+          WHERE history_records.onv_pid IS NULL
+            AND NOT org_node_version.data_source_deleted_flag
+            AND CURRENT_DATE BETWEEN org_node_version.onv_from_date
+              AND COALESCE( org_node_version.onv_through_date, CURRENT_DATE ) -- is current version
+      ) AS org_node_version
+           ON parent_node.on_pid = org_node_version.onv_org_node_pid
+      -- grandparent node
+      LEFT JOIN (
+          SELECT org_node.*
+          FROM history_octane.org_node
+          LEFT JOIN history_octane.org_node AS history_records
+                    ON org_node.on_pid = history_records.on_pid
+                        AND org_node.data_source_updated_datetime < history_records.data_source_updated_datetime
+          WHERE history_records.on_pid IS NULL
+            AND NOT org_node.data_source_deleted_flag
+      ) AS grandparent_org_node
+                ON org_node_version.onv_parent_org_node_pid = grandparent_org_node.on_pid
+      LEFT JOIN data_mart_business_applications.edw_current_parent_nodes
+                ON parent_node.on_org_node_id = edw_current_parent_nodes.parent_node_id
+                    AND parent_node.on_org_node_name_latest = edw_current_parent_nodes.parent_node_name
+                    AND grandparent_org_node.on_org_node_id = edw_current_parent_nodes.grandparent_node_id
+                    AND grandparent_org_node.on_org_node_name_latest = edw_current_parent_nodes.grandparent_node_name
+      WHERE edw_current_parent_nodes.dwid IS NULL;
+  SP-400002-delete:
+    input_type: table
+    output_type: delete
+    json_output_field: data_source_integration_id
+    delete_keys:
+    - data_source_integration_id
+    container_memory: 2048
+    input_sql: |-
+      --SP-400002-delete
+      SELECT edw_current_parent_nodes.data_source_integration_id
+      FROM data_mart_business_applications.edw_current_parent_nodes
+      LEFT JOIN (
+          SELECT *
+          FROM (
+              SELECT org_node.*
+              FROM history_octane.org_node
+              LEFT JOIN history_octane.org_node AS history_records
+                        ON org_node.on_pid = history_records.on_pid
+                            AND org_node.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.on_pid IS NULL
+                AND NOT org_node.data_source_deleted_flag
+                AND org_node.on_lender_user_pid IS NULL -- prevents user nodes from being listed as parent nodes
+          ) AS parent_node
+          JOIN (
+              SELECT org_node_version.*
+              FROM history_octane.org_node_version
+              LEFT JOIN history_octane.org_node_version AS history_records
+                        ON org_node_version.onv_pid = history_records.onv_pid
+                            AND org_node_version.data_source_updated_datetime < history_records.data_source_updated_datetime
+              WHERE history_records.onv_pid IS NULL
+                AND NOT org_node_version.data_source_deleted_flag
+                AND CURRENT_DATE BETWEEN org_node_version.onv_from_date
+                  AND COALESCE( org_node_version.onv_through_date, CURRENT_DATE ) -- is current version
+          ) AS org_node_version
+               ON parent_node.on_pid = org_node_version.onv_org_node_pid
+      ) AS current_data
+                ON edw_current_parent_nodes.data_source_integration_id =
+                   COALESCE( CAST( current_data.on_pid AS TEXT ), '<NULL>' ) || '~1'
+      WHERE current_data.on_pid IS NULL;

@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100332 - ETL to copy smart_doc_note data from staging_octane to history_octane",
+    "Comment": "SP-100332 - ETL to insert records into staging.history_octane.smart_doc_note using staging.staging_octane.smart_doc_note as the primary source",
     "StartAt": "SP-100332",
     "States": {
         "SP-100332": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

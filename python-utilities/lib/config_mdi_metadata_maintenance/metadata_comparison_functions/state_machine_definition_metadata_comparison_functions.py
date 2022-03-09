@@ -21,21 +21,21 @@ class StateMachineDefinitionMetadataComparisonFunctions(MetadataComparisonFuncti
                     FROM mdi.process
                     JOIN mdi.table_output_step
                          ON process.dwid = table_output_step.process_dwid
-                    WHERE table_output_step.target_schema IN ('history_octane', 'star_loan')
+                    WHERE table_output_step.target_schema IN ('history_octane', 'star_loan', 'data_mart_business_applications')
                     UNION ALL
                     SELECT process.dwid
                          , process.name
                     FROM mdi.process
                     JOIN mdi.insert_update_step
                          ON process.dwid = insert_update_step.process_dwid
-                    WHERE insert_update_step.schema_name = 'star_loan'
+                    WHERE insert_update_step.schema_name IN ('star_loan', 'data_mart_business_applications')
                     UNION ALL
                     SELECT process.dwid
                          , process.name
                     FROM mdi.process
                     JOIN mdi.delete_step
                          ON process.dwid = delete_step.process_dwid
-                    WHERE delete_step.schema_name = 'star_loan'
+                    WHERE delete_step.schema_name IN ('star_loan', 'data_mart_business_applications')
                 )
                 SELECT process.name AS process_name
                     , state_machine_definition.name AS state_machine_name
@@ -51,7 +51,7 @@ class StateMachineDefinitionMetadataComparisonFunctions(MetadataComparisonFuncti
             for schema in database.schemas:
                 for table in schema.tables:
                     for etl in table.etls:
-                        comment = self.construct_process_description(table.path, table.primary_source_table, etl)
+                        comment = etl.construct_process_description(table)
                         metadata_table.add_row({'process_name': etl.process_name, 'state_machine_name': etl.process_name,
                                                 'state_machine_comment': comment})
         return metadata_table

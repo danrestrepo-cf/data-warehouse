@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100309 - ETL to copy consumer_privacy_affected_borrower data from staging_octane to history_octane",
+    "Comment": "SP-100309 - ETL to insert records into staging.history_octane.consumer_privacy_affected_borrower using staging.staging_octane.consumer_privacy_affected_borrower as the primary source",
     "StartAt": "SP-100309",
     "States": {
         "SP-100309": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

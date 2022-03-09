@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100105 - ETL to copy product data from staging_octane to history_octane",
+    "Comment": "SP-100105 - ETL to insert records into staging.history_octane.product using staging.staging_octane.product as the primary source",
     "StartAt": "SP-100105",
     "States": {
         "SP-100105": {
@@ -77,4 +77,3 @@
         }
     }
 }
-

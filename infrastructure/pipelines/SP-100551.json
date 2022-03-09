@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100551 - ETL to copy lender_concession_request_type data from staging_octane to history_octane",
+    "Comment": "SP-100551 - ETL to insert records into staging.history_octane.lender_concession_request_type using staging.staging_octane.lender_concession_request_type as the primary source",
     "StartAt": "SP-100551",
     "States": {
         "SP-100551": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

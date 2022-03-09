@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100851 - ETL to copy company_location_type data from staging_octane to history_octane",
+    "Comment": "SP-100851 - ETL to insert records into staging.history_octane.company_location_type using staging.staging_octane.company_location_type as the primary source",
     "StartAt": "SP-100851",
     "States": {
         "SP-100851": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

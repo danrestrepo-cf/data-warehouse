@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100218 - ETL to copy arm_index_rate data from staging_octane to history_octane",
+    "Comment": "SP-100218 - ETL to insert records into staging.history_octane.arm_index_rate using staging.staging_octane.arm_index_rate as the primary source",
     "StartAt": "SP-100218",
     "States": {
         "SP-100218": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

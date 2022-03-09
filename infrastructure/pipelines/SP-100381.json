@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100381 - ETL to copy nfip_community_participation_status_type data from staging_octane to history_octane",
+    "Comment": "SP-100381 - ETL to insert records into staging.history_octane.nfip_community_participation_status_type using staging.staging_octane.nfip_community_participation_status_type as the primary source",
     "StartAt": "SP-100381",
     "States": {
         "SP-100381": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

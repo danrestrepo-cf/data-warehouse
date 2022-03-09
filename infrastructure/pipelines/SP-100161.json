@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100161 - ETL to copy construction_cost data from staging_octane to history_octane",
+    "Comment": "SP-100161 - ETL to insert records into staging.history_octane.construction_cost using staging.staging_octane.construction_cost as the primary source",
     "StartAt": "SP-100161",
     "States": {
         "SP-100161": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

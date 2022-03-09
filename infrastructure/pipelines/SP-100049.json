@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100049 - ETL to copy role_charge_permissions data from staging_octane to history_octane",
+    "Comment": "SP-100049 - ETL to insert records into staging.history_octane.role_charge_permissions using staging.staging_octane.role_charge_permissions as the primary source",
     "StartAt": "SP-100049",
     "States": {
         "SP-100049": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

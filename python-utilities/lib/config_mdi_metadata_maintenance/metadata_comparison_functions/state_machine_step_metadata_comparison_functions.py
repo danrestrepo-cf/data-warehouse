@@ -21,21 +21,21 @@ class StateMachineStepMetadataComparisonFunctions(MetadataComparisonFunctions):
                     FROM mdi.process
                     JOIN mdi.table_output_step
                          ON process.dwid = table_output_step.process_dwid
-                    WHERE table_output_step.target_schema IN ('history_octane', 'star_loan')
+                    WHERE table_output_step.target_schema IN ('history_octane', 'star_loan', 'data_mart_business_applications')
                     UNION ALL
                     SELECT process.dwid
                          , process.name
                     FROM mdi.process
                     JOIN mdi.insert_update_step
                          ON process.dwid = insert_update_step.process_dwid
-                    WHERE insert_update_step.schema_name = 'star_loan'
+                    WHERE insert_update_step.schema_name IN ('star_loan', 'data_mart_business_applications')
                     UNION ALL
                     SELECT process.dwid
                          , process.name
                     FROM mdi.process
                     JOIN mdi.delete_step
                          ON process.dwid = delete_step.process_dwid
-                    WHERE delete_step.schema_name = 'star_loan'
+                    WHERE delete_step.schema_name IN ('star_loan', 'data_mart_business_applications')
                 )
                 SELECT process.name AS process_name
                      , next_process.name AS next_process_name

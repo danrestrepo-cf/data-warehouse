@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100650 - ETL to copy servicing_transfer_type data from staging_octane to history_octane",
+    "Comment": "SP-100650 - ETL to insert records into staging.history_octane.servicing_transfer_type using staging.staging_octane.servicing_transfer_type as the primary source",
     "StartAt": "SP-100650",
     "States": {
         "SP-100650": {
@@ -77,4 +77,3 @@
         }
     }
 }
-

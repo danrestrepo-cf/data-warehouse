@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100493 - ETL to copy document_import_vendor_type data from staging_octane to history_octane",
+    "Comment": "SP-100493 - ETL to insert records into staging.history_octane.document_import_vendor_type using staging.staging_octane.document_import_vendor_type as the primary source",
     "StartAt": "SP-100493",
     "States": {
         "SP-100493": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

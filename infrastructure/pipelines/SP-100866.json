@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100866 - ETL to copy wf_process_note data from staging_octane to history_octane",
+    "Comment": "SP-100866 - ETL to insert records into staging.history_octane.wf_process_note using staging.staging_octane.wf_process_note as the primary source",
     "StartAt": "SP-100866",
     "States": {
         "SP-100866": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

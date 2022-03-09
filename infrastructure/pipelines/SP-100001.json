@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100001 - ETL to copy borrower_job_gap data from staging_octane to history_octane",
+    "Comment": "SP-100001 - ETL to insert records into staging.history_octane.borrower_job_gap using staging.staging_octane.borrower_job_gap as the primary source",
     "StartAt": "SP-100001",
     "States": {
         "SP-100001": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

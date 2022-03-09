@@ -85,6 +85,7 @@ def main():
     filterer.add_schema_criteria(SchemaPath('staging', 'history_octane'))
     filterer.add_schema_criteria(SchemaPath('staging', 'star_loan'))
     filterer.add_schema_criteria(SchemaPath('staging', 'star_common'))
+    filterer.add_schema_criteria(SchemaPath('staging', 'data_mart_business_applications'))
     data_warehouse_metadata = filterer.filter(data_warehouse_metadata)
 
     # set up SQL generator object

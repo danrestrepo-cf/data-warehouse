@@ -20,21 +20,21 @@ class ProcessMetadataComparisonFunctions(MetadataComparisonFunctions):
                 FROM mdi.process
                 JOIN mdi.table_output_step
                      ON process.dwid = table_output_step.process_dwid
-                WHERE table_output_step.target_schema IN ('history_octane', 'star_loan')
+                WHERE table_output_step.target_schema IN ('history_octane', 'star_loan', 'data_mart_business_applications')
                 UNION ALL
                 SELECT process.name AS process_name
                      , process.description AS process_description
                 FROM mdi.process
                 JOIN mdi.insert_update_step
                      ON process.dwid = insert_update_step.process_dwid
-                WHERE insert_update_step.schema_name = 'star_loan'
+                WHERE insert_update_step.schema_name IN ('star_loan', 'data_mart_business_applications')
                 UNION ALL
                 SELECT process.name AS process_name
                      , process.description AS process_description
                 FROM mdi.process
                 JOIN mdi.delete_step
                      ON process.dwid = delete_step.process_dwid
-                WHERE delete_step.schema_name = 'star_loan';
+                WHERE delete_step.schema_name IN ('star_loan', 'data_mart_business_applications');
             """)
 
     def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:
@@ -43,7 +43,7 @@ class ProcessMetadataComparisonFunctions(MetadataComparisonFunctions):
             for schema in database.schemas:
                 for table in schema.tables:
                     for etl in table.etls:
-                        description = self.construct_process_description(table.path, table.primary_source_table, etl)
+                        description = etl.construct_process_description(table)
                         metadata_table.add_row({'process_name': etl.process_name, 'process_description': description})
         return metadata_table
 

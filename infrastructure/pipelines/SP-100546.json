@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100546 - ETL to copy lava_zone_type data from staging_octane to history_octane",
+    "Comment": "SP-100546 - ETL to insert records into staging.history_octane.lava_zone_type using staging.staging_octane.lava_zone_type as the primary source",
     "StartAt": "SP-100546",
     "States": {
         "SP-100546": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

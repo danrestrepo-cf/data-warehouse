@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100641 - ETL to copy refinance_improvements_type data from staging_octane to history_octane",
+    "Comment": "SP-100641 - ETL to insert records into staging.history_octane.refinance_improvements_type using staging.staging_octane.refinance_improvements_type as the primary source",
     "StartAt": "SP-100641",
     "States": {
         "SP-100641": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

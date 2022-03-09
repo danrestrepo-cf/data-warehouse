@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100899 - ETL to copy proposal_review_request_type data from staging_octane to history_octane",
+    "Comment": "SP-100899 - ETL to insert records into staging.history_octane.proposal_review_request_type using staging.staging_octane.proposal_review_request_type as the primary source",
     "StartAt": "SP-100899",
     "States": {
         "SP-100899": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

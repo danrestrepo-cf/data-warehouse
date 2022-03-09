@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100029 - ETL to copy hoepa_thresholds data from staging_octane to history_octane",
+    "Comment": "SP-100029 - ETL to insert records into staging.history_octane.hoepa_thresholds using staging.staging_octane.hoepa_thresholds as the primary source",
     "StartAt": "SP-100029",
     "States": {
         "SP-100029": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

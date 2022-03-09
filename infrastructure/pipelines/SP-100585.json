@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100585 - ETL to copy manufactured_home_loan_purpose_type data from staging_octane to history_octane",
+    "Comment": "SP-100585 - ETL to insert records into staging.history_octane.manufactured_home_loan_purpose_type using staging.staging_octane.manufactured_home_loan_purpose_type as the primary source",
     "StartAt": "SP-100585",
     "States": {
         "SP-100585": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

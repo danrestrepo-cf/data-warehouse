@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-200020 - Dimension ETL to populate transaction_junk_dim from history_octane",
+    "Comment": "SP-200020 - ETL to insert_update records into staging.star_loan.transaction_junk_dim using staging.history_octane.proposal as the primary source",
     "StartAt": "SP-200020",
     "States": {
         "SP-200020": {
@@ -77,4 +77,3 @@
         }
     }
 }
-

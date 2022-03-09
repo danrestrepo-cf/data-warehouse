@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100054 - ETL to copy smart_charge data from staging_octane to history_octane",
+    "Comment": "SP-100054 - ETL to insert records into staging.history_octane.smart_charge using staging.staging_octane.smart_charge as the primary source",
     "StartAt": "SP-100054",
     "States": {
         "SP-100054": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

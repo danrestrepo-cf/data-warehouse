@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100834 - ETL to copy contractor_validation_status_type data from staging_octane to history_octane",
+    "Comment": "SP-100834 - ETL to insert records into staging.history_octane.contractor_validation_status_type using staging.staging_octane.contractor_validation_status_type as the primary source",
     "StartAt": "SP-100834",
     "States": {
         "SP-100834": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

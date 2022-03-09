@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100696 - ETL to copy org_node_type data from staging_octane to history_octane",
+    "Comment": "SP-100696 - ETL to insert records into staging.history_octane.org_node_type using staging.staging_octane.org_node_type as the primary source",
     "StartAt": "SP-100696",
     "States": {
         "SP-100696": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100861 - ETL to copy wf_deal_step_performer_unavailable data from staging_octane to history_octane",
+    "Comment": "SP-100861 - ETL to insert records into staging.history_octane.wf_deal_step_performer_unavailable using staging.staging_octane.wf_deal_step_performer_unavailable as the primary source",
     "StartAt": "SP-100861",
     "States": {
         "SP-100861": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

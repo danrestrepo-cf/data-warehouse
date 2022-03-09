@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100052 - ETL to copy google_sheet_export data from staging_octane to history_octane",
+    "Comment": "SP-100052 - ETL to insert records into staging.history_octane.google_sheet_export using staging.staging_octane.google_sheet_export as the primary source",
     "StartAt": "SP-100052",
     "States": {
         "SP-100052": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

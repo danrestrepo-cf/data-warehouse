@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100122 - ETL to copy flood_cert data from staging_octane to history_octane",
+    "Comment": "SP-100122 - ETL to insert records into staging.history_octane.flood_cert using staging.staging_octane.flood_cert as the primary source",
     "StartAt": "SP-100122",
     "States": {
         "SP-100122": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

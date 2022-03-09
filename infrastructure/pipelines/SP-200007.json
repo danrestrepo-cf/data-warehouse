@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-200007 - Dimension ETL to populate hmda_purchaser_of_loan_dim from history_octane",
+    "Comment": "SP-200007 - ETL to insert_update records into staging.star_loan.hmda_purchaser_of_loan_dim using staging.history_octane.loan as the primary source",
     "StartAt": "SP-200007",
     "States": {
         "SP-200007": {
@@ -77,4 +77,3 @@
         }
     }
 }
-

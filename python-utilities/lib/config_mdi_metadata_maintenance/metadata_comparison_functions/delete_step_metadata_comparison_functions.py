@@ -22,7 +22,7 @@ class DeleteStepMetadataComparisonFunctions(MetadataComparisonFunctions):
                 FROM mdi.delete_step
                 JOIN mdi.process
                     ON delete_step.process_dwid = process.dwid
-                WHERE delete_step.schema_name = 'star_loan';
+                WHERE delete_step.schema_name IN ('star_loan', 'data_mart_business_applications');
             """)
 
     def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:

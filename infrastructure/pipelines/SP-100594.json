@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100594 - ETL to copy mi_integration_vendor_request_status_type data from staging_octane to history_octane",
+    "Comment": "SP-100594 - ETL to insert records into staging.history_octane.mi_integration_vendor_request_status_type using staging.staging_octane.mi_integration_vendor_request_status_type as the primary source",
     "StartAt": "SP-100594",
     "States": {
         "SP-100594": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100646 - ETL to copy security_instrument_type data from staging_octane to history_octane",
+    "Comment": "SP-100646 - ETL to insert records into staging.history_octane.security_instrument_type using staging.staging_octane.security_instrument_type as the primary source",
     "StartAt": "SP-100646",
     "States": {
         "SP-100646": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

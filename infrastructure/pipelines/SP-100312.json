@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100312 - ETL to copy job_income data from staging_octane to history_octane",
+    "Comment": "SP-100312 - ETL to insert records into staging.history_octane.job_income using staging.staging_octane.job_income as the primary source",
     "StartAt": "SP-100312",
     "States": {
         "SP-100312": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

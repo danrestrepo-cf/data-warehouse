@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100615 - ETL to copy prepay_penalty_type data from staging_octane to history_octane",
+    "Comment": "SP-100615 - ETL to insert records into staging.history_octane.prepay_penalty_type using staging.staging_octane.prepay_penalty_type as the primary source",
     "StartAt": "SP-100615",
     "States": {
         "SP-100615": {
@@ -77,4 +77,3 @@
         }
     }
 }
-

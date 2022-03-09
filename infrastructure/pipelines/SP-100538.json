@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100538 - ETL to copy invoice_payer_type data from staging_octane to history_octane",
+    "Comment": "SP-100538 - ETL to insert records into staging.history_octane.invoice_payer_type using staging.staging_octane.invoice_payer_type as the primary source",
     "StartAt": "SP-100538",
     "States": {
         "SP-100538": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

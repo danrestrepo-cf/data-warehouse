@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100073 - ETL to copy creditor_lookup_name data from staging_octane to history_octane",
+    "Comment": "SP-100073 - ETL to insert records into staging.history_octane.creditor_lookup_name using staging.staging_octane.creditor_lookup_name as the primary source",
     "StartAt": "SP-100073",
     "States": {
         "SP-100073": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

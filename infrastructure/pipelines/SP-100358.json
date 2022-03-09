@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100358 - ETL to copy vendor_document_event data from staging_octane to history_octane",
+    "Comment": "SP-100358 - ETL to insert records into staging.history_octane.vendor_document_event using staging.staging_octane.vendor_document_event as the primary source",
     "StartAt": "SP-100358",
     "States": {
         "SP-100358": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

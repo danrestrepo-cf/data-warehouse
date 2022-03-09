@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100088 - ETL to copy investor_lock_extension_setting data from staging_octane to history_octane",
+    "Comment": "SP-100088 - ETL to insert records into staging.history_octane.investor_lock_extension_setting using staging.staging_octane.investor_lock_extension_setting as the primary source",
     "StartAt": "SP-100088",
     "States": {
         "SP-100088": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

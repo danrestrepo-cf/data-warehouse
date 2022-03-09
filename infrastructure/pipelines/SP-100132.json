@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100132 - ETL to copy mers_daily_report data from staging_octane to history_octane",
+    "Comment": "SP-100132 - ETL to insert records into staging.history_octane.mers_daily_report using staging.staging_octane.mers_daily_report as the primary source",
     "StartAt": "SP-100132",
     "States": {
         "SP-100132": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

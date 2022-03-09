@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100564 - ETL to copy lien_priority_type data from staging_octane to history_octane",
+    "Comment": "SP-100564 - ETL to insert records into staging.history_octane.lien_priority_type using staging.staging_octane.lien_priority_type as the primary source",
     "StartAt": "SP-100564",
     "States": {
         "SP-100564": {
@@ -112,4 +112,3 @@
         }
     }
 }
-

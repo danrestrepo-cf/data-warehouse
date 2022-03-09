@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100121 - ETL to copy du_special_feature_code data from staging_octane to history_octane",
+    "Comment": "SP-100121 - ETL to insert records into staging.history_octane.du_special_feature_code using staging.staging_octane.du_special_feature_code as the primary source",
     "StartAt": "SP-100121",
     "States": {
         "SP-100121": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

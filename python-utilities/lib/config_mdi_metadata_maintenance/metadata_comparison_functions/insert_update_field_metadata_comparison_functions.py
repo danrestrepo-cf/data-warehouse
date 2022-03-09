@@ -23,7 +23,7 @@ class InsertUpdateFieldMetadataComparisonFunctions(MetadataComparisonFunctions):
                     ON insert_update_field.insert_update_step_dwid = insert_update_step.dwid
                 JOIN mdi.process
                     ON insert_update_step.process_dwid = process.dwid
-                WHERE insert_update_step.schema_name = 'star_loan';
+                WHERE insert_update_step.schema_name IN ('star_loan', 'data_mart_business_applications');
             """)
 
     def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:

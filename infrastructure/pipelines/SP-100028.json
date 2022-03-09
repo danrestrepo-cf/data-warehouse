@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100028 - ETL to copy account_grant_program data from staging_octane to history_octane",
+    "Comment": "SP-100028 - ETL to insert records into staging.history_octane.account_grant_program using staging.staging_octane.account_grant_program as the primary source",
     "StartAt": "SP-100028",
     "States": {
         "SP-100028": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

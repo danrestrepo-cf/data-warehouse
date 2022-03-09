@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100051 - ETL to copy settlement_agent_office data from staging_octane to history_octane",
+    "Comment": "SP-100051 - ETL to insert records into staging.history_octane.settlement_agent_office using staging.staging_octane.settlement_agent_office as the primary source",
     "StartAt": "SP-100051",
     "States": {
         "SP-100051": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

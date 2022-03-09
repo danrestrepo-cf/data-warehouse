@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100397 - ETL to copy account_event_type data from staging_octane to history_octane",
+    "Comment": "SP-100397 - ETL to insert records into staging.history_octane.account_event_type using staging.staging_octane.account_event_type as the primary source",
     "StartAt": "SP-100397",
     "States": {
         "SP-100397": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

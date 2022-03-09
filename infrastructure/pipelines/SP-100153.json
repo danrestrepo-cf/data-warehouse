@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100153 - ETL to copy lender_lock_add_on data from staging_octane to history_octane",
+    "Comment": "SP-100153 - ETL to insert records into staging.history_octane.lender_lock_add_on using staging.staging_octane.lender_lock_add_on as the primary source",
     "StartAt": "SP-100153",
     "States": {
         "SP-100153": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

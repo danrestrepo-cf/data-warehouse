@@ -23,7 +23,7 @@ class TableOutputStepMetadataComparisonFunctions(MetadataComparisonFunctions):
                 FROM mdi.table_output_step
                 JOIN mdi.process
                      ON table_output_step.process_dwid = process.dwid
-                WHERE table_output_step.target_schema IN ('history_octane', 'star_loan');
+                WHERE table_output_step.target_schema IN ('history_octane', 'star_loan', 'data_mart_business_applications');
             """)
 
     def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:

@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100021 - ETL to copy area_median_income_table data from staging_octane to history_octane",
+    "Comment": "SP-100021 - ETL to insert records into staging.history_octane.area_median_income_table using staging.staging_octane.area_median_income_table as the primary source",
     "StartAt": "SP-100021",
     "States": {
         "SP-100021": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

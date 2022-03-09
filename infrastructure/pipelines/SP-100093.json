@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100093 - ETL to copy deal_performer_team_user data from staging_octane to history_octane",
+    "Comment": "SP-100093 - ETL to insert records into staging.history_octane.deal_performer_team_user using staging.staging_octane.deal_performer_team_user as the primary source",
     "StartAt": "SP-100093",
     "States": {
         "SP-100093": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

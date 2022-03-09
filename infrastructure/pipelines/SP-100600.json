@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100600 - ETL to copy military_branch_type data from staging_octane to history_octane",
+    "Comment": "SP-100600 - ETL to insert records into staging.history_octane.military_branch_type using staging.staging_octane.military_branch_type as the primary source",
     "StartAt": "SP-100600",
     "States": {
         "SP-100600": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

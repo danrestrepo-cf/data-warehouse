@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100129 - ETL to copy borrower_user_change_email data from staging_octane to history_octane",
+    "Comment": "SP-100129 - ETL to insert records into staging.history_octane.borrower_user_change_email using staging.staging_octane.borrower_user_change_email as the primary source",
     "StartAt": "SP-100129",
     "States": {
         "SP-100129": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

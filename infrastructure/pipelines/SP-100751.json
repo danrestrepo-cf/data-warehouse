@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100751 - ETL to copy investor_hmda_purchaser_of_loan_type data from staging_octane to history_octane",
+    "Comment": "SP-100751 - ETL to insert records into staging.history_octane.investor_hmda_purchaser_of_loan_type using staging.staging_octane.investor_hmda_purchaser_of_loan_type as the primary source",
     "StartAt": "SP-100751",
     "States": {
         "SP-100751": {
@@ -77,4 +77,3 @@
         }
     }
 }
-

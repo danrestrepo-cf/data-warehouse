@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100809 - ETL to copy veteran_status_type data from staging_octane to history_octane",
+    "Comment": "SP-100809 - ETL to insert records into staging.history_octane.veteran_status_type using staging.staging_octane.veteran_status_type as the primary source",
     "StartAt": "SP-100809",
     "States": {
         "SP-100809": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

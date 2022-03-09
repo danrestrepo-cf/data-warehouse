@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100554 - ETL to copy lender_user_interest_type data from staging_octane to history_octane",
+    "Comment": "SP-100554 - ETL to insert records into staging.history_octane.lender_user_interest_type using staging.staging_octane.lender_user_interest_type as the primary source",
     "StartAt": "SP-100554",
     "States": {
         "SP-100554": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

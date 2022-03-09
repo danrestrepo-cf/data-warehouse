@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100870 - ETL to copy company_license_contact data from staging_octane to history_octane",
+    "Comment": "SP-100870 - ETL to insert records into staging.history_octane.company_license_contact using staging.staging_octane.company_license_contact as the primary source",
     "StartAt": "SP-100870",
     "States": {
         "SP-100870": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100242 - ETL to copy settlement_agent_wire data from staging_octane to history_octane",
+    "Comment": "SP-100242 - ETL to insert records into staging.history_octane.settlement_agent_wire using staging.staging_octane.settlement_agent_wire as the primary source",
     "StartAt": "SP-100242",
     "States": {
         "SP-100242": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

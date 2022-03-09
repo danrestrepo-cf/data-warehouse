@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100232 - ETL to copy relock_fee_setting data from staging_octane to history_octane",
+    "Comment": "SP-100232 - ETL to insert records into staging.history_octane.relock_fee_setting using staging.staging_octane.relock_fee_setting as the primary source",
     "StartAt": "SP-100232",
     "States": {
         "SP-100232": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

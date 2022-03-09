@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100741 - ETL to copy fnm_investor_remittance_type data from staging_octane to history_octane",
+    "Comment": "SP-100741 - ETL to insert records into staging.history_octane.fnm_investor_remittance_type using staging.staging_octane.fnm_investor_remittance_type as the primary source",
     "StartAt": "SP-100741",
     "States": {
         "SP-100741": {
@@ -77,4 +77,3 @@
         }
     }
 }
-

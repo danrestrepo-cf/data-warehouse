@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100639 - ETL to copy realty_agent_scenario_type data from staging_octane to history_octane",
+    "Comment": "SP-100639 - ETL to insert records into staging.history_octane.realty_agent_scenario_type using staging.staging_octane.realty_agent_scenario_type as the primary source",
     "StartAt": "SP-100639",
     "States": {
         "SP-100639": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

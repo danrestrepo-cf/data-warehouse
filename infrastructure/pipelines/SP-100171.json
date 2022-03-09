@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100171 - ETL to copy rental_income data from staging_octane to history_octane",
+    "Comment": "SP-100171 - ETL to insert records into staging.history_octane.rental_income using staging.staging_octane.rental_income as the primary source",
     "StartAt": "SP-100171",
     "States": {
         "SP-100171": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

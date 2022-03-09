@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100841 - ETL to copy qualified_mortgage_rule_version_type data from staging_octane to history_octane",
+    "Comment": "SP-100841 - ETL to insert records into staging.history_octane.qualified_mortgage_rule_version_type using staging.staging_octane.qualified_mortgage_rule_version_type as the primary source",
     "StartAt": "SP-100841",
     "States": {
         "SP-100841": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

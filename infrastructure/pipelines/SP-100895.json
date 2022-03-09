@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100895 - ETL to copy qm_points_and_fees_thresholds data from staging_octane to history_octane",
+    "Comment": "SP-100895 - ETL to insert records into staging.history_octane.qm_points_and_fees_thresholds using staging.staging_octane.qm_points_and_fees_thresholds as the primary source",
     "StartAt": "SP-100895",
     "States": {
         "SP-100895": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

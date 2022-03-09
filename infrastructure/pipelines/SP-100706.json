@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100706 - ETL to copy smart_ledger_plan_case_group_calculation_type data from staging_octane to history_octane",
+    "Comment": "SP-100706 - ETL to insert records into staging.history_octane.smart_ledger_plan_case_group_calculation_type using staging.staging_octane.smart_ledger_plan_case_group_calculation_type as the primary source",
     "StartAt": "SP-100706",
     "States": {
         "SP-100706": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

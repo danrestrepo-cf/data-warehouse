@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100092 - ETL to copy deal_lender_user data from staging_octane to history_octane",
+    "Comment": "SP-100092 - ETL to insert records into staging.history_octane.deal_lender_user using staging.staging_octane.deal_lender_user as the primary source",
     "StartAt": "SP-100092",
     "States": {
         "SP-100092": {
@@ -63,29 +63,6 @@
             "End": true,
             "Branches": [
                 {
-                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200001-insert",
-                    "StartAt": "SP-200001-insert_message",
-                    "States": {
-                        "SP-200001-insert_message": {
-                            "Type": "Task",
-                            "Resource": "arn:aws:states:::sqs:sendMessage",
-                            "Parameters": {
-                                "QueueUrl": "${fullCheckQueueUrl}",
-                                "MessageGroupId": "loan_lender_user_access",
-                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
-                                "MessageAttributes": {
-                                    "ProcessId": {
-                                        "DataType": "String",
-                                        "StringValue": "SP-200001-insert"
-                                    }
-                                },
-                                "MessageBody.$": "States.JsonToString($)"
-                            },
-                            "End": true
-                        }
-                    }
-                },
-                {
                     "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200001-delete",
                     "StartAt": "SP-200001-delete_message",
                     "States": {
@@ -100,6 +77,29 @@
                                     "ProcessId": {
                                         "DataType": "String",
                                         "StringValue": "SP-200001-delete"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200001-insert",
+                    "StartAt": "SP-200001-insert_message",
+                    "States": {
+                        "SP-200001-insert_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "loan_lender_user_access",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-200001-insert"
                                     }
                                 },
                                 "MessageBody.$": "States.JsonToString($)"

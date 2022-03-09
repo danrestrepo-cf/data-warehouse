@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100448 - ETL to copy construction_draw_type data from staging_octane to history_octane",
+    "Comment": "SP-100448 - ETL to insert records into staging.history_octane.construction_draw_type using staging.staging_octane.construction_draw_type as the primary source",
     "StartAt": "SP-100448",
     "States": {
         "SP-100448": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

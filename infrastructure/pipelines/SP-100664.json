@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100664 - ETL to copy taxpayer_identifier_type data from staging_octane to history_octane",
+    "Comment": "SP-100664 - ETL to insert records into staging.history_octane.taxpayer_identifier_type using staging.staging_octane.taxpayer_identifier_type as the primary source",
     "StartAt": "SP-100664",
     "States": {
         "SP-100664": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

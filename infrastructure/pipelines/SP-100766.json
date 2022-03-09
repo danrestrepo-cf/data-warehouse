@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100766 - ETL to copy lock_commitment_type data from staging_octane to history_octane",
+    "Comment": "SP-100766 - ETL to insert records into staging.history_octane.lock_commitment_type using staging.staging_octane.lock_commitment_type as the primary source",
     "StartAt": "SP-100766",
     "States": {
         "SP-100766": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

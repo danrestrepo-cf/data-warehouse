@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100203 - ETL to copy wf_step_deal_check_dependency data from staging_octane to history_octane",
+    "Comment": "SP-100203 - ETL to insert records into staging.history_octane.wf_step_deal_check_dependency using staging.staging_octane.wf_step_deal_check_dependency as the primary source",
     "StartAt": "SP-100203",
     "States": {
         "SP-100203": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

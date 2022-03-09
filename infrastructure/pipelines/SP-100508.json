@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100508 - ETL to copy fha_non_arms_length_ltv_limit_exception_type data from staging_octane to history_octane",
+    "Comment": "SP-100508 - ETL to insert records into staging.history_octane.fha_non_arms_length_ltv_limit_exception_type using staging.staging_octane.fha_non_arms_length_ltv_limit_exception_type as the primary source",
     "StartAt": "SP-100508",
     "States": {
         "SP-100508": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

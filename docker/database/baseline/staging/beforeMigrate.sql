@@ -8,6 +8,7 @@ CREATE SCHEMA IF NOT EXISTS star_loan;
 CREATE SCHEMA IF NOT EXISTS history_octane;
 CREATE SCHEMA IF NOT EXISTS flyway;
 CREATE SCHEMA IF NOT EXISTS "flyway-permissions";
+CREATE SCHEMA IF NOT EXISTS data_mart_business_applications;
 
 GRANT USAGE, CREATE ON SCHEMA flyway TO deployer;
 GRANT USAGE, CREATE ON SCHEMA "flyway-permissions" TO deployer;
@@ -19,6 +20,7 @@ GRANT USAGE, CREATE ON SCHEMA staging_octane TO deployer;
 GRANT USAGE, CREATE ON SCHEMA history_octane TO deployer;
 GRANT USAGE, CREATE ON SCHEMA star_loan TO deployer;
 GRANT USAGE, CREATE ON SCHEMA star_common TO deployer;
+GRANT USAGE, CREATE ON SCHEMA data_mart_business_applications TO deployer;
 
 GRANT USAGE ON SCHEMA loan TO admin WITH GRANT OPTION;
 GRANT USAGE ON SCHEMA staging_compliance TO admin WITH GRANT OPTION;
@@ -28,6 +30,7 @@ GRANT USAGE ON SCHEMA staging_octane TO admin WITH GRANT OPTION;
 GRANT USAGE ON SCHEMA history_octane TO admin WITH GRANT OPTION;
 GRANT USAGE ON SCHEMA star_loan TO admin WITH GRANT OPTION;
 GRANT USAGE ON SCHEMA star_common TO admin WITH GRANT OPTION;
+GRANT USAGE ON SCHEMA data_mart_business_applications TO admin WITH GRANT OPTION;
 
 /*
 granting usage to readonly here since the superuser is the only user who should

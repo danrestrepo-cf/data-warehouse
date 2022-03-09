@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100014 - ETL to copy minimum_required_residual_income_row data from staging_octane to history_octane",
+    "Comment": "SP-100014 - ETL to insert records into staging.history_octane.minimum_required_residual_income_row using staging.staging_octane.minimum_required_residual_income_row as the primary source",
     "StartAt": "SP-100014",
     "States": {
         "SP-100014": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

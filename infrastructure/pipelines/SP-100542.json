@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100542 - ETL to copy ipc_property_usage_type data from staging_octane to history_octane",
+    "Comment": "SP-100542 - ETL to insert records into staging.history_octane.ipc_property_usage_type using staging.staging_octane.ipc_property_usage_type as the primary source",
     "StartAt": "SP-100542",
     "States": {
         "SP-100542": {
@@ -77,4 +77,3 @@
         }
     }
 }
-

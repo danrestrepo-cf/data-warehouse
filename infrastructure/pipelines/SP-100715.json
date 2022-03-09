@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100715 - ETL to copy borrower_income_category_type data from staging_octane to history_octane",
+    "Comment": "SP-100715 - ETL to insert records into staging.history_octane.borrower_income_category_type using staging.staging_octane.borrower_income_category_type as the primary source",
     "StartAt": "SP-100715",
     "States": {
         "SP-100715": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

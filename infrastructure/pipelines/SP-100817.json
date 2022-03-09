@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100817 - ETL to copy ledger_entry_review_reason_type data from staging_octane to history_octane",
+    "Comment": "SP-100817 - ETL to insert records into staging.history_octane.ledger_entry_review_reason_type using staging.staging_octane.ledger_entry_review_reason_type as the primary source",
     "StartAt": "SP-100817",
     "States": {
         "SP-100817": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100649 - ETL to copy servicer_loan_id_import_request_status_type data from staging_octane to history_octane",
+    "Comment": "SP-100649 - ETL to insert records into staging.history_octane.servicer_loan_id_import_request_status_type using staging.staging_octane.servicer_loan_id_import_request_status_type as the primary source",
     "StartAt": "SP-100649",
     "States": {
         "SP-100649": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

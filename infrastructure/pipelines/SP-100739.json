@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100739 - ETL to copy fha_rehab_program_type data from staging_octane to history_octane",
+    "Comment": "SP-100739 - ETL to insert records into staging.history_octane.fha_rehab_program_type using staging.staging_octane.fha_rehab_program_type as the primary source",
     "StartAt": "SP-100739",
     "States": {
         "SP-100739": {
@@ -77,4 +77,3 @@
         }
     }
 }
-

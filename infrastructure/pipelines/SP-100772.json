@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100772 - ETL to copy mi_input_type data from staging_octane to history_octane",
+    "Comment": "SP-100772 - ETL to insert records into staging.history_octane.mi_input_type using staging.staging_octane.mi_input_type as the primary source",
     "StartAt": "SP-100772",
     "States": {
         "SP-100772": {
@@ -77,4 +77,3 @@
         }
     }
 }
-

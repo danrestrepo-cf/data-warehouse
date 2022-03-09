@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-100686 - ETL to copy water_type data from staging_octane to history_octane",
+    "Comment": "SP-100686 - ETL to insert records into staging.history_octane.water_type using staging.staging_octane.water_type as the primary source",
     "StartAt": "SP-100686",
     "States": {
         "SP-100686": {
@@ -46,4 +46,3 @@
         }
     }
 }
-
