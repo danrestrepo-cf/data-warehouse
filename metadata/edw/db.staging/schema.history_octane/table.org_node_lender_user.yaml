@@ -106,3 +106,6 @@ etls:
           WHERE deleted_records.onlu_pid = history_table.onlu_pid
             AND deleted_records.data_source_deleted_flag = TRUE
           );
+next_etls:
+- SP-400003-delete
+- SP-400003-insert-update
