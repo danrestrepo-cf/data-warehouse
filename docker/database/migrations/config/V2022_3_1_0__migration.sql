@@ -2049,6 +2049,8 @@ FROM update_rows
 	JOIN mdi.process
 		ON process.name = update_rows.process_name
 WHERE process.dwid = state_machine_definition.process_dwid;
+
+--
 -- EDW | Business Applications data mart- build a data mart and provide Octane user hierarchy data
 -- https://app.asana.com/0/0/1201859471430286
 --
