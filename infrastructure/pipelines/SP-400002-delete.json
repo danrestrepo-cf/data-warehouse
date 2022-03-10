@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-400002-delete - table -> table-delete ETL from staging.history_octane.org_node to staging.data_mart_business_applications.edw_current_parent_nodes",
+    "Comment": "SP-400002-delete - ETL to delete records from staging.data_mart_business_applications.edw_current_parent_nodes using staging.history_octane.org_node as the primary source",
     "StartAt": "SP-400002-delete",
     "States": {
         "SP-400002-delete": {
@@ -46,4 +46,3 @@
         }
     }
 }
-
