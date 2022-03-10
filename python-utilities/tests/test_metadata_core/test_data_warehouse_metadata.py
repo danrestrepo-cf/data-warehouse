@@ -231,40 +231,40 @@ class TestTableMetadata(unittest.TestCase):
         self.assertTrue(table_metadata.contains_column('a_pid'))
         self.assertFalse(table_metadata.contains_column('a_version'))
 
-    def test_throws_error_if_user_tries_to_get_etl_that_doesnt_exist(self):
+    def test_throws_error_if_user_tries_to_get_step_function_that_doesnt_exist(self):
         table_metadata = TableMetadata('deal')
         with self.assertRaises(InvalidMetadataKeyException):
-            table_metadata.get_etl('SP-100000')
+            table_metadata.get_step_function('SP-100000')
 
-    def test_can_get_etl_metadata_by_etl_name_if_the_etl_has_been_added_to_the_metadata(self):
+    def test_can_get_step_function_metadata_by_step_function_name_if_the_step_function_has_been_added_to_the_metadata(self):
         table_metadata = TableMetadata('deal')
-        table_metadata.add_etl(ETLMetadata('SP-100000'))
-        self.assertEqual(ETLMetadata('SP-100000'), table_metadata.get_etl('SP-100000'))
+        table_metadata.add_step_function(StepFunctionMetadata('SP-100000'))
+        self.assertEqual(StepFunctionMetadata('SP-100000'), table_metadata.get_step_function('SP-100000'))
 
-    def test_can_iterate_through_all_added_etls(self):
+    def test_can_iterate_through_all_added_step_functions(self):
         table_metadata = TableMetadata('deal')
-        table_metadata.add_etl(ETLMetadata('SP-100000'))
-        table_metadata.add_etl(ETLMetadata('SP-100001'))
-        table_metadata.add_etl(ETLMetadata('SP-100002'))
-        expected = [ETLMetadata('SP-100000'), ETLMetadata('SP-100001'), ETLMetadata('SP-100002')]
-        self.assertEqual(expected, [etl for etl in table_metadata.etls])
+        table_metadata.add_step_function(StepFunctionMetadata('SP-100000'))
+        table_metadata.add_step_function(StepFunctionMetadata('SP-100001'))
+        table_metadata.add_step_function(StepFunctionMetadata('SP-100002'))
+        expected = [StepFunctionMetadata('SP-100000'), StepFunctionMetadata('SP-100001'), StepFunctionMetadata('SP-100002')]
+        self.assertEqual(expected, [step_function for step_function in table_metadata.step_functions])
 
-    def test_can_remove_etl_metadata(self):
+    def test_can_remove_step_function_metadata(self):
         table_metadata = TableMetadata('account')
-        table_metadata.add_etl(ETLMetadata('SP-100123'))
-        table_metadata.remove_etl('SP-100123')
-        self.assertEqual([], table_metadata.etls)
+        table_metadata.add_step_function(StepFunctionMetadata('SP-100123'))
+        table_metadata.remove_step_function('SP-100123')
+        self.assertEqual([], table_metadata.step_functions)
 
-    def test_removing_etl_that_doesnt_exist_does_nothing(self):
+    def test_removing_step_function_that_doesnt_exist_does_nothing(self):
         table_metadata = TableMetadata('account')
-        table_metadata.remove_etl('SP-100123')
-        self.assertEqual([], table_metadata.etls)
+        table_metadata.remove_step_function('SP-100123')
+        self.assertEqual([], table_metadata.step_functions)
 
     def test_can_indicate_whether_it_contains_a_given_etl_by_name(self):
         table_metadata = TableMetadata('account')
-        table_metadata.add_etl(ETLMetadata('SP-1'))
-        self.assertTrue(table_metadata.contains_etl('SP-1'))
-        self.assertFalse(table_metadata.contains_etl('SP-2'))
+        table_metadata.add_step_function(StepFunctionMetadata('SP-1'))
+        self.assertTrue(table_metadata.contains_step_function('SP-1'))
+        self.assertFalse(table_metadata.contains_step_function('SP-2'))
 
     def test_throws_error_if_user_tries_to_get_foreign_key_that_doesnt_exist(self):
         table_metadata = TableMetadata('deal')

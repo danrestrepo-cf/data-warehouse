@@ -25,7 +25,7 @@ manipulating its child nodes:
     - a @property method that simply returns a list of child objects of the specified type
 """
 from enum import Enum
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List, Optional
 
 from lib.metadata_core.metadata_object_path import DatabasePath, SchemaPath, TablePath, ColumnPath
@@ -184,6 +184,8 @@ class ETLMetadata:
         delete_keys: a list of table columns to be used as a delete key. Only used
         for ETLs with output_type DELETE
         container_memory: the amount of RAM (in MB) allocated to an ECS container to execute this ETL
+        next_step_functions: a list of server processes to be triggered following
+        the successful completion of this ETL
         input_sql: the SQL statement used as input to the ETL. Only used for ETLs
         with input_type TABLE
     """
@@ -198,6 +200,7 @@ class ETLMetadata:
     insert_update_keys: Optional[List[str]] = None
     delete_keys: Optional[List[str]] = None
     container_memory: int = None
+    next_step_functions: List[str] = field(default_factory=lambda: [])  # default to empty list
     input_sql: Optional[str] = None
 
     def construct_process_description(self, target_table: 'TableMetadata') -> str:
@@ -298,8 +301,7 @@ class TableMetadata:
         primary_key: a list of fields that constitue this table's primary key
         columns: a list of metadata objects describing the table's columns
         foreign_keys: a list of metadata objects describing the table's foreign_keys
-        etls: a list of metadata objects describing ETLs that populate/maintain the table
-        next_etls: a list of server processes to be triggered following any ETLs that maintain this table
+        step_functions: a list of metadata objects describing AWS step functions used to populate/maintain the table
     """
 
     def __init__(self, name: str, primary_source_table: Optional[TablePath] = None):
@@ -307,9 +309,8 @@ class TableMetadata:
         self.path = TablePath(database=None, schema=None, table=name)
         self.primary_source_table = primary_source_table
         self.primary_key = []
-        self.next_etls = []
         self._columns = {}
-        self._etls = {}
+        self._step_functions = {}
         self._foreign_keys = {}
 
     def add_column(self, column: ColumnMetadata):
@@ -318,8 +319,8 @@ class TableMetadata:
         column.path.schema = self.path.schema
         column.path.table = self.name
 
-    def add_etl(self, etl: ETLMetadata):
-        self._etls[etl.process_name] = etl
+    def add_step_function(self, step_function: StepFunctionMetadata):
+        self._step_functions[step_function.name] = step_function
 
     def add_foreign_key(self, foreign_key: ForeignKeyMetadata):
         self._foreign_keys[foreign_key.name] = foreign_key
@@ -330,11 +331,11 @@ class TableMetadata:
         else:
             return self._columns[column_name]
 
-    def get_etl(self, etl_process_name: str) -> ETLMetadata:
-        if etl_process_name not in self._etls:
-            raise InvalidMetadataKeyException('table', self.name, 'etl', etl_process_name)
+    def get_step_function(self, step_function_name: str) -> StepFunctionMetadata:
+        if step_function_name not in self._step_functions:
+            raise InvalidMetadataKeyException('table', self.name, 'step function', step_function_name)
         else:
-            return self._etls[etl_process_name]
+            return self._step_functions[step_function_name]
 
     def get_foreign_key(self, foreign_key_name: str) -> ForeignKeyMetadata:
         if foreign_key_name not in self._foreign_keys:
@@ -346,9 +347,9 @@ class TableMetadata:
         if column_name in self._columns:
             del self._columns[column_name]
 
-    def remove_etl(self, etl_name: str):
-        if etl_name in self._etls:
-            del self._etls[etl_name]
+    def remove_step_function(self, step_function_name: str):
+        if step_function_name in self._step_functions:
+            del self._step_functions[step_function_name]
 
     def remove_foreign_key(self, foreign_key_name: str):
         if foreign_key_name in self._foreign_keys:
@@ -357,8 +358,8 @@ class TableMetadata:
     def contains_column(self, column_name: str) -> bool:
         return column_name in self._columns
 
-    def contains_etl(self, process_name: str) -> bool:
-        return process_name in self._etls
+    def contains_step_function(self, step_function_name: str) -> bool:
+        return step_function_name in self._step_functions
 
     def contains_foreign_key(self, foreign_key_name: str) -> bool:
         return foreign_key_name in self._foreign_keys
@@ -382,8 +383,8 @@ class TableMetadata:
         return list(self._columns.values())
 
     @property
-    def etls(self) -> List[ETLMetadata]:
-        return list(self._etls.values())
+    def step_functions(self) -> List[StepFunctionMetadata]:
+        return list(self._step_functions.values())
 
     @property
     def foreign_keys(self) -> List[ForeignKeyMetadata]:
@@ -398,8 +399,7 @@ class TableMetadata:
                f'    primary_key={repr(self.primary_key)}\n' \
                f'    foreign_keys={repr(self.foreign_keys)}\n' \
                f'    columns={repr(self.columns)}\n' \
-               f'    etls={repr(self.etls)}\n' \
-               f'    next_etls={repr(self.next_etls)}\n' \
+               f'    step_functions={repr(self.step_functions)}\n' \
                f')'
 
     def __eq__(self, other: 'TableMetadata') -> bool:
@@ -410,8 +410,7 @@ class TableMetadata:
                self.primary_key == other.primary_key and \
                self.foreign_keys == other.foreign_keys and \
                self.columns == other.columns and \
-               self.etls == other.etls and \
-               self.next_etls == other.next_etls
+               self.step_functions == other.step_functions
 
 
 class SchemaMetadata:

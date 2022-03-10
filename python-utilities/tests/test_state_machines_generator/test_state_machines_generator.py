@@ -49,20 +49,22 @@ class TestSequentialOutputAndVaryingConfigAttributes(unittest.TestCase):
                                                 }
                                             }
                                         },
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-1': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert',
-                                                'json_output_field': 'column_1',
-                                                'truncate_table': False,
-                                                'container_memory': 2048,
-                                                'input_sql': 'SQL for SP-1'
+                                                'etls': {
+                                                    'ETL-1': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert',
+                                                        'json_output_field': 'column_1',
+                                                        'truncate_table': False,
+                                                        'container_memory': 2048,
+                                                        'next_step_functions': ['SP-2'],
+                                                        'input_sql': 'SQL for ETL-1'
+                                                    }
+                                                }
                                             }
                                         },
-                                        'next_etls': [
-                                            'SP-2'
-                                        ]
                                     }
                                 ]
                             },
@@ -83,20 +85,22 @@ class TestSequentialOutputAndVaryingConfigAttributes(unittest.TestCase):
                                                 }
                                             }
                                         },
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-2': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert_update',
-                                                'json_output_field': 'column_1',
-                                                'insert_update_keys': ['column_1'],
-                                                'container_memory': 2048,
-                                                'input_sql': 'SQL for SP-2'
+                                                'etls': {
+                                                    'ETL-2': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert_update',
+                                                        'json_output_field': 'column_1',
+                                                        'insert_update_keys': ['column_1'],
+                                                        'container_memory': 2048,
+                                                        'next_step_functions': ['SP-3'],
+                                                        'input_sql': 'SQL for ETL-2'
+                                                    }
+                                                }
                                             }
                                         },
-                                        'next_etls': [
-                                            'SP-3'
-                                        ]
                                     },
                                     {
                                         'name': 'table_3',
@@ -112,15 +116,19 @@ class TestSequentialOutputAndVaryingConfigAttributes(unittest.TestCase):
                                                 }
                                             }
                                         },
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-3': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert_update',
-                                                'json_output_field': 'column_1',
-                                                'insert_update_keys': ['column_1'],
-                                                'container_memory': 2048,
-                                                'input_sql': 'SQL for SP-3'
+                                                'etls': {
+                                                    'ETL-3': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert_update',
+                                                        'json_output_field': 'column_1',
+                                                        'insert_update_keys': ['column_1'],
+                                                        'container_memory': 2048,
+                                                        'input_sql': 'SQL for ETL-3'
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -154,7 +162,8 @@ class TestSequentialOutputAndVaryingConfigAttributes(unittest.TestCase):
         self.assertEqual('arn:aws:states:::ecs:runTask.sync', self.sp_3_config['States']['SP-3']['Resource'])
 
     def test_throws_error_if_next_process_not_included_in_provided_metadata(self):
-        self.dw_dict['databases'][0]['schemas'][2]['tables'][1]['next_etls'] = ['SP-4']
+        print(self.dw_dict['databases'][0]['schemas'][2]['tables'][1]['step_functions'])
+        self.dw_dict['databases'][0]['schemas'][2]['tables'][1]['step_functions']['SP-3']['etls']['ETL-3']['next_step_functions'] = ['SP-4']
         invalid_data_warehouse_metadata = construct_data_warehouse_metadata_from_dict(self.dw_dict)
         with self.assertRaises(KeyError):
             AllStateMachinesGenerator(invalid_data_warehouse_metadata, []).build_state_machines()
@@ -206,20 +215,22 @@ class TestParallelOutputStructure(unittest.TestCase):
                                                 }
                                             }
                                         },
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-1': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert',
-                                                'json_output_field': 'column_1',
-                                                'truncate_table': False,
-                                                'container_memory': 2048,
-                                                'input_sql': 'SQL for SP-1'
+                                                'etls': {
+                                                    'ETL-1': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert',
+                                                        'json_output_field': 'column_1',
+                                                        'truncate_table': False,
+                                                        'container_memory': 2048,
+                                                        'next_step_functions': ['SP-2', 'SP-3'],
+                                                        'input_sql': 'SQL for ETL-1'
+                                                    }
+                                                }
                                             }
                                         },
-                                        'next_etls': [
-                                            'SP-2', 'SP-3'
-                                        ]
                                     }
                                 ]
                             },
@@ -240,15 +251,19 @@ class TestParallelOutputStructure(unittest.TestCase):
                                                 }
                                             }
                                         },
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-2': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert_update',
-                                                'json_output_field': 'column_1',
-                                                'insert_update_keys': ['column_1'],
-                                                'container_memory': 2048,
-                                                'input_sql': 'SQL for SP-2'
+                                                'etls': {
+                                                    'ETL-2': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert_update',
+                                                        'json_output_field': 'column_1',
+                                                        'insert_update_keys': ['column_1'],
+                                                        'container_memory': 2048,
+                                                        'input_sql': 'SQL for ETL-2'
+                                                    }
+                                                }
                                             }
                                         }
                                     },
@@ -266,15 +281,19 @@ class TestParallelOutputStructure(unittest.TestCase):
                                                 }
                                             }
                                         },
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-3': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert_update',
-                                                'json_output_field': 'column_1',
-                                                'insert_update_keys': ['column_1'],
-                                                'container_memory': 2048,
-                                                'input_sql': 'SQL for SP-3'
+                                                'etls': {
+                                                    'ETL-3': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert_update',
+                                                        'json_output_field': 'column_1',
+                                                        'insert_update_keys': ['column_1'],
+                                                        'container_memory': 2048,
+                                                        'input_sql': 'SQL for ETL-3'
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -361,15 +380,19 @@ class TestETLStateMachinesGenerator(unittest.TestCase):
                                                 }
                                             }
                                         },
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-1': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert',
-                                                'json_output_field': 'column_1',
-                                                'truncate_table': False,
-                                                'container_memory': 2048,
-                                                'input_sql': 'SQL for SP-1'
+                                                'etls': {
+                                                    'ETL-1': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert',
+                                                        'json_output_field': 'column_1',
+                                                        'truncate_table': False,
+                                                        'container_memory': 2048,
+                                                        'input_sql': 'SQL for ETL-1'
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -392,18 +415,22 @@ class TestETLStateMachinesGenerator(unittest.TestCase):
                                                 }
                                             }
                                         },
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-2': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert_update',
-                                                'json_output_field': 'column_1',
-                                                'insert_update_keys': ['column_1'],
-                                                'container_memory': 2048,
-                                                'input_sql': 'SQL for SP-2'
+                                                'etls': {
+                                                    'ETL-2': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert_update',
+                                                        'json_output_field': 'column_1',
+                                                        'insert_update_keys': ['column_1'],
+                                                        'container_memory': 2048,
+                                                        'next_step_functions': ['SP-3'],
+                                                        'input_sql': 'SQL for ETL-2'
+                                                    }
+                                                }
                                             }
-                                        },
-                                        'next_etls': ['SP-3']
+                                        }
                                     },
                                     {
                                         'name': 'table_3',
@@ -419,18 +446,22 @@ class TestETLStateMachinesGenerator(unittest.TestCase):
                                                 }
                                             }
                                         },
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-3': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert_update',
-                                                'json_output_field': 'column_1',
-                                                'insert_update_keys': ['column_1'],
-                                                'container_memory': 4096,
-                                                'input_sql': 'SQL for SP-3'
+                                                'etls': {
+                                                    'ETL-3': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert_update',
+                                                        'json_output_field': 'column_1',
+                                                        'insert_update_keys': ['column_1'],
+                                                        'container_memory': 4096,
+                                                        'next_step_functions': ['SP-4', 'SP-5'],
+                                                        'input_sql': 'SQL for ETL-3'
+                                                    }
+                                                }
                                             }
                                         },
-                                        'next_etls': ['SP-4', 'SP-5']
                                     },
                                     {
                                         'name': 'table_4',
@@ -446,15 +477,19 @@ class TestETLStateMachinesGenerator(unittest.TestCase):
                                                 }
                                             }
                                         },
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-4': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert_update',
-                                                'json_output_field': 'column_1',
-                                                'insert_update_keys': ['column_1'],
-                                                'container_memory': 2048,
-                                                'input_sql': 'SQL for SP-4'
+                                                'etls': {
+                                                    'ETL-4': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert_update',
+                                                        'json_output_field': 'column_1',
+                                                        'insert_update_keys': ['column_1'],
+                                                        'container_memory': 2048,
+                                                        'input_sql': 'SQL for ETL-4'
+                                                    }
+                                                }
                                             }
                                         }
                                     },
@@ -472,15 +507,19 @@ class TestETLStateMachinesGenerator(unittest.TestCase):
                                                 }
                                             }
                                         },
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-5': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'delete',
-                                                'json_output_field': 'column_1',
-                                                'delete_keys': ['column_1'],
-                                                'container_memory': 2048,
-                                                'input_sql': 'SQL for SP-5'
+                                                'etls': {
+                                                    'ETL-5': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'delete',
+                                                        'json_output_field': 'column_1',
+                                                        'delete_keys': ['column_1'],
+                                                        'container_memory': 2048,
+                                                        'input_sql': 'SQL for ETL-5'
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -793,15 +832,19 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                                 }
                                             }
                                         },
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-1': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert',
-                                                'json_output_field': 'column_1',
-                                                'truncate_table': False,
-                                                'container_memory': 2048,
-                                                'input_sql': 'SQL for SP-1'
+                                                'etls': {
+                                                    'ETL-1': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert',
+                                                        'json_output_field': 'column_1',
+                                                        'truncate_table': False,
+                                                        'container_memory': 2048,
+                                                        'input_sql': 'SQL for ETL-1'
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -824,18 +867,22 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                                 }
                                             }
                                         },
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-2': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert_update',
-                                                'json_output_field': 'column_1',
-                                                'insert_update_keys': ['column_1'],
-                                                'container_memory': 2048,
-                                                'input_sql': 'SQL for SP-2'
+                                                'etls': {
+                                                    'ETL-2': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert_update',
+                                                        'json_output_field': 'column_1',
+                                                        'insert_update_keys': ['column_1'],
+                                                        'container_memory': 2048,
+                                                        'next_step_functions': ['SP-3'],
+                                                        'input_sql': 'SQL for ETL-2'
+                                                    }
+                                                }
                                             }
                                         },
-                                        'next_etls': ['SP-3']
                                     },
                                     {
                                         'name': 'table_3',
@@ -851,18 +898,22 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                                 }
                                             }
                                         },
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-3': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert_update',
-                                                'json_output_field': 'column_1',
-                                                'insert_update_keys': ['column_1'],
-                                                'container_memory': 4096,
-                                                'input_sql': 'SQL for SP-3'
+                                                'etls': {
+                                                    'ETL-3': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert_update',
+                                                        'json_output_field': 'column_1',
+                                                        'insert_update_keys': ['column_1'],
+                                                        'container_memory': 4096,
+                                                        'next_step_functions': ['SP-4', 'SP-5'],
+                                                        'input_sql': 'SQL for ETL-3'
+                                                    }
+                                                }
                                             }
                                         },
-                                        'next_etls': ['SP-4', 'SP-5']
                                     },
                                     {
                                         'name': 'table_4',
@@ -878,15 +929,19 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                                 }
                                             }
                                         },
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-4': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert_update',
-                                                'json_output_field': 'column_1',
-                                                'insert_update_keys': ['column_1'],
-                                                'container_memory': 2048,
-                                                'input_sql': 'SQL for SP-4'
+                                                'etls': {
+                                                    'SP-4': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert_update',
+                                                        'json_output_field': 'column_1',
+                                                        'insert_update_keys': ['column_1'],
+                                                        'container_memory': 2048,
+                                                        'input_sql': 'SQL for SP-4'
+                                                    }
+                                                }
                                             }
                                         }
                                     },
@@ -904,15 +959,19 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
                                                 }
                                             }
                                         },
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-5': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'delete',
-                                                'json_output_field': 'column_1',
-                                                'delete_keys': ['column_1'],
-                                                'container_memory': 2048,
-                                                'input_sql': 'SQL for SP-5'
+                                                'etls': {
+                                                    'ETL-5': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'delete',
+                                                        'json_output_field': 'column_1',
+                                                        'delete_keys': ['column_1'],
+                                                        'container_memory': 2048,
+                                                        'input_sql': 'SQL for ETL-5'
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -928,7 +987,8 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
         group_state_machines = [
             GroupStateMachineGenerator(lambda x: x, 1, 'SP-GROUP-A', 'Trigger all ETLs - group limit 1'),
             GroupStateMachineGenerator(lambda x: not x.has_dependency, 2, 'SP-GROUP-B', 'Trigger all standalone ETLs - group limit 2'),
-            GroupStateMachineGenerator(lambda x: x.target_schema == 'schema_3', 5, 'SP-GROUP-C', 'Trigger all schema_3 ETLs - group limit 5')
+            GroupStateMachineGenerator(lambda x: x.target_schema == 'schema_3', 5, 'SP-GROUP-C',
+                                       'Trigger all schema_3 ETLs - group limit 5')
         ]
 
         state_machines_generator = AllStateMachinesGenerator(self.data_warehouse_metadata, group_state_machines)

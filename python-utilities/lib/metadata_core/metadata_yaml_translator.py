@@ -24,53 +24,7 @@ For example:
             - table.account_contact.yaml
             - ...
 
-Each table.*.yaml file conforms to the following structure:
-
-name: table_name
-primary_source_table: database.schema.source_table_name
-primary_key:
-  - pk_column_1
-# - etc...
-foreign_keys:
-  t1_c2_fkey:
-    columns:
-      - c2
-    references:
-      columns:
-        - c21
-      schema: s1
-      table: t2
-columns:
-  column_1:
-    data_type: data_type_name (e.g. bigint)
-    source:  # only used for history_octane metadata
-      field: primary_source_table.foreign_keys.t1_c2_fkey.columns.column_name
-  column_2:
-    data_type: data_type_name (e.g. bigint)
-    source:  # only used for history_octane metadata
-      field: primary_source_table.columns.column2
-# etc…
-etls:  # only used for history_octane metadata
-  SP-xxxxxx:
-    hardcoded_data_source: Octane
-    input_type: table  # or CSV, EXCEL, etc
-    output_type: insert
-    json_output_field: column_1
-    # - etc
-    truncate_table: false  # for insert
-    insert_update_keys: # for insert update
-      - column_1
-      - etc
-    #      - etc…
-    delete_keys: # for delete
-      - column_1
-    input_sql: |  # for table input_type
-      SELECT *
-      FROM schema.source_table_name
-  # etc…
-next_etls:
-  - SP-yyyyyy
-  - SP-zzzzzz
+Each table.*.yaml file conforms to the structure defined in the [LINK TO ENGINEERING GUIDE TBA]
 """
 import pathlib
 import glob
@@ -85,6 +39,7 @@ from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        TableMetadata,
                                                        ColumnMetadata,
                                                        ETLMetadata,
+                                                       StepFunctionMetadata,
                                                        ForeignKeyMetadata,
                                                        SourceForeignKeyPath,
                                                        ColumnSourceComponents,
@@ -236,22 +191,27 @@ def construct_data_warehouse_metadata_from_dict(data_warehouse_dict: dict) -> Da
                                         }
                                     }
                                 },
-                                'etls': {
+                                'step_functions': {
                                     'SP-1': {
-                                        'hardcoded_data_source': 'Octane',
-                                        'input_type': 'table',
-                                        'output_type': 'insert',
-                                        'json_output_field': 'col1',
-                                        'truncate_table': False,
-                                        'insert_update_keys': ['col1', 'col2'],
-                                        'delete_keys': ['col2', 'col3'],
-                                        'container_memory': 2048,
-                                        'input_sql': 'SQL for SP-1'
+                                        'parallel_limit': 20
+                                        'etls': {
+                                            'ETL-1': {
+                                                'hardcoded_data_source': 'Octane',
+                                                'input_type': 'table',
+                                                'output_type': 'insert',
+                                                'output_table': 'database-name.schema-name.t1',
+                                                'primary_source_table': 'db2.sch2.t2'
+                                                'json_output_field': 'col1',
+                                                'truncate_table': False,
+                                                'insert_update_keys': ['col1', 'col2'],
+                                                'delete_keys': ['col2', 'col3'],
+                                                'container_memory': 2048,
+                                                'next_step_functions': ['SP-4', 'SP-5'],
+                                                'input_sql': 'SQL for SP-1'
+                                            }
+                                        }
                                     }
-                                },
-                                'next_etls': [
-                                    'SP-4', 'SP-5'
-                                ]
+                                }
                             }
                         ]
                     }
@@ -335,25 +295,33 @@ class DictToMetadataBuilder:
                 if 'source' in column_data:
                     column_metadata.source = self.parse_column_source_components(column_data['source'])
                 table.add_column(column_metadata)
-        if 'etls' in table_dict:
-            for etl_process_name, etl_data in table_dict['etls'].items():
-                if 'input_type' not in etl_data or 'output_type' not in etl_data:
-                    raise self.InvalidTableMetadataException(f'ETL "{etl_process_name}" is missing one or more required metadata fields')
-                table.add_etl(ETLMetadata(
-                    process_name=etl_process_name,
-                    hardcoded_data_source=self.parse_etl_data_source(etl_data.get('hardcoded_data_source')),
-                    input_type=self.parse_etl_input_type(etl_data.get('input_type')),
-                    output_type=self.parse_etl_output_type(etl_data.get('output_type')),
-                    json_output_field=etl_data.get('json_output_field'),
-                    truncate_table=etl_data.get('truncate_table'),
-                    insert_update_keys=etl_data.get('insert_update_keys'),
-                    delete_keys=etl_data.get('delete_keys'),
-                    container_memory=etl_data.get('container_memory'),
-                    input_sql=etl_data.get('input_sql')
-                ))
-        if 'next_etls' in table_dict:
-            for process_name in table_dict['next_etls']:
-                table.next_etls.append(process_name)
+        if 'step_functions' in table_dict:
+            for step_function_name, step_function_data in table_dict['step_functions'].items():
+                if 'etls' in step_function_data:
+                    step_function = StepFunctionMetadata(step_function_name)
+                    table.add_step_function(step_function)
+                    for etl_name, etl_data in step_function_data['etls'].items():
+                        if 'input_type' not in etl_data or 'output_type' not in etl_data:
+                            raise self.InvalidTableMetadataException(f'ETL "{etl_name}" is missing one or more required metadata fields')
+                        etl = ETLMetadata(
+                            process_name=etl_name,
+                            hardcoded_data_source=self.parse_etl_data_source(etl_data.get('hardcoded_data_source')),
+                            input_type=self.parse_etl_input_type(etl_data.get('input_type')),
+                            output_type=self.parse_etl_output_type(etl_data.get('output_type')),
+                            json_output_field=etl_data.get('json_output_field'),
+                            truncate_table=etl_data.get('truncate_table'),
+                            insert_update_keys=etl_data.get('insert_update_keys'),
+                            delete_keys=etl_data.get('delete_keys'),
+                            container_memory=etl_data.get('container_memory'),
+                            input_sql=etl_data.get('input_sql')
+                        )
+                        if 'next_step_functions' in etl_data:
+                            for next_step_function_name in etl_data['next_step_functions']:
+                                etl.next_step_functions.append(next_step_function_name)
+                        step_function.add_etl(etl)
+                else:
+                    raise self.InvalidTableMetadataException(
+                        f'Step Function "{step_function_name}" is missing one or more required metadata fields')
         return table
 
     def parse_source_foreign_key_path(self, path: str) -> SourceForeignKeyPath:
@@ -609,18 +577,22 @@ class MetadataWriter:
             } for foreign_key in table_metadata.foreign_keys},
             'columns': {column.name: self.column_metadata_to_dict(column) for column in sorted(
                 table_metadata.columns, key=lambda x: x.name)},
-            'etls': {etl.process_name: {
-                'hardcoded_data_source': self.hardcoded_data_source_to_str(etl.hardcoded_data_source),
-                'input_type': etl.input_type.value,
-                'output_type': etl.output_type.value,
-                'json_output_field': etl.json_output_field,
-                'truncate_table': etl.truncate_table,
-                'insert_update_keys': etl.insert_update_keys,
-                'delete_keys': etl.delete_keys,
-                'container_memory': etl.container_memory,
-                'input_sql': etl.input_sql
-            } for etl in table_metadata.etls},
-            'next_etls': table_metadata.next_etls
+            'step_functions': {step_function.name: {
+                'parallel_limit': step_function.parallel_limit,
+                'etls': {etl.process_name: {
+                    'hardcoded_data_source': self.hardcoded_data_source_to_str(etl.hardcoded_data_source),
+                    'input_type': etl.input_type.value,
+                    'output_type': etl.output_type.value,
+                    'output_table': etl.output_table,
+                    'json_output_field': etl.json_output_field,
+                    'truncate_table': etl.truncate_table,
+                    'insert_update_keys': sorted(etl.insert_update_keys),
+                    'delete_keys': sorted(etl.delete_keys),
+                    'container_memory': etl.container_memory,
+                    'next_step_functions': sorted(etl.next_step_functions),
+                    'input_sql': etl.input_sql
+                } for etl in step_function.etls}
+            } for step_function in table_metadata.step_functions}
         }
 
     @staticmethod

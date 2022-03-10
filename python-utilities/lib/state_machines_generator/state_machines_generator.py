@@ -24,7 +24,7 @@ class AllStateMachinesGenerator:
         for database in self.data_warehouse_metadata.databases:
             for schema in database.schemas:
                 for table in schema.tables:
-                    for etl in table.etls:
+                    for step_function in table.step_functions:
                         """NOTE: The below if statement is a temporary workaround for the KeyError exception that 
                         results from how the SP-200001-delete ETL(s) is/are defined (at the individual partition level) 
                         within its target table's yaml file vs. how it is called as a subsequent ETL (by just the 
@@ -32,23 +32,24 @@ class AllStateMachinesGenerator:
                         
                         The long-term fix for this issue will be implemented here: https://app.asana.com/0/0/1201843492068511
                         """
-                        if etl.process_name.startswith('SP-200001-delete') is True:
-                            parsed_process_name = '-'.join(etl.process_name.split('-')[0:3])
+                        if step_function.name.startswith('SP-200001-delete') is True:
+                            parsed_process_name = '-'.join(step_function.name.split('-')[0:3])
                         else:
-                            parsed_process_name = etl.process_name
-                        # parse DataWarehouseMetadata into structure needed to generate ETL state machines
-                        self.etl_state_machine_metadata[parsed_process_name] = ETLStateMachineComponentsMetadata(
-                            target_table=table.name,
-                            container_memory=etl.container_memory,
-                            comment=etl.construct_process_description(table),
-                            next_processes=sorted(table.next_etls)
-                        )
-                        self.group_state_machine_metadata.append(GroupStateMachinesComponentsMetadata(
-                            process_name=parsed_process_name,
-                            target_schema=schema.name,
-                            target_table=table.name,
-                            has_dependency=len(table.next_etls) > 0
-                        ))
+                            parsed_process_name = step_function.name
+                        for etl in step_function.etls:
+                            # parse DataWarehouseMetadata into structure needed to generate ETL state machines
+                            self.etl_state_machine_metadata[parsed_process_name] = ETLStateMachineComponentsMetadata(
+                                target_table=table.name,
+                                container_memory=etl.container_memory,
+                                comment=etl.construct_process_description(table),
+                                next_processes=sorted(etl.next_step_functions)
+                            )
+                            self.group_state_machine_metadata.append(GroupStateMachinesComponentsMetadata(
+                                process_name=parsed_process_name,
+                                target_schema=schema.name,
+                                target_table=table.name,
+                                has_dependency=len(etl.next_step_functions) > 0
+                            ))
         self.data_warehouse_metadata = data_warehouse_metadata
 
         self.etl_state_machine_generator = SingleETLStateMachineGenerator(self.etl_state_machine_metadata)
