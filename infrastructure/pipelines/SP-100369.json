@@ -4,7 +4,7 @@
     "States": {
         "SP-100369": {
             "Type": "Task",
-            "Resource": "arn:aws:states:::ecs:runTask.sync",
+            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
             "Parameters": {
                 "LaunchType": "FARGATE",
                 "Cluster": "${ecsClusterARN}",
@@ -42,7 +42,165 @@
                     ]
                 }
             },
-            "End": true
+            "Next": "Load_type_choice"
+        },
+        "Load_type_choice": {
+            "Type": "Choice",
+            "Choices": [
+                {
+                    "Variable": "$.load_type",
+                    "StringEquals": "NONE",
+                    "Next": "Success"
+                }
+            ],
+            "Default": "Parallel"
+        },
+        "Success": {
+            "Type": "Succeed"
+        },
+        "Parallel": {
+            "Type": "Parallel",
+            "End": true,
+            "Branches": [
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-400001-delete",
+                    "StartAt": "SP-400001-delete_message",
+                    "States": {
+                        "SP-400001-delete_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "edw_employee_user_details",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-400001-delete"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-400001-insert-update",
+                    "StartAt": "SP-400001-insert-update_message",
+                    "States": {
+                        "SP-400001-insert-update_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "edw_employee_user_details",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-400001-insert-update"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-400002-delete",
+                    "StartAt": "SP-400002-delete_message",
+                    "States": {
+                        "SP-400002-delete_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "edw_current_parent_nodes",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-400002-delete"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-400002-insert-update",
+                    "StartAt": "SP-400002-insert-update_message",
+                    "States": {
+                        "SP-400002-insert-update_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "edw_current_parent_nodes",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-400002-insert-update"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-400003-delete",
+                    "StartAt": "SP-400003-delete_message",
+                    "States": {
+                        "SP-400003-delete_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "edw_current_parent_node_employee_leaders",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-400003-delete"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-400003-insert-update",
+                    "StartAt": "SP-400003-insert-update_message",
+                    "States": {
+                        "SP-400003-insert-update_message": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::sqs:sendMessage",
+                            "Parameters": {
+                                "QueueUrl": "${fullCheckQueueUrl}",
+                                "MessageGroupId": "edw_current_parent_node_employee_leaders",
+                                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                                "MessageAttributes": {
+                                    "ProcessId": {
+                                        "DataType": "String",
+                                        "StringValue": "SP-400003-insert-update"
+                                    }
+                                },
+                                "MessageBody.$": "States.JsonToString($)"
+                            },
+                            "End": true
+                        }
+                    }
+                }
+            ]
         }
     }
 }

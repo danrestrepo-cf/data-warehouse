@@ -1,5 +1,5 @@
 {
-    "Comment": "Trigger history_octane ETLs that have one or more dependent ETLs - This should process all staging_octane data that feeds any star_* tables",
+    "Comment": "Trigger history_octane ETLs that have one or more dependent ETLs - This should process all staging_octane data that feeds any star_* or data_mart_* tables",
     "StartAt": "SP-GROUP-2",
     "States": {
         "SP-GROUP-2": {
