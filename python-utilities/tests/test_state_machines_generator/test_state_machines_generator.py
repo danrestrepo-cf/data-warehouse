@@ -162,7 +162,6 @@ class TestSequentialOutputAndVaryingConfigAttributes(unittest.TestCase):
         self.assertEqual('arn:aws:states:::ecs:runTask.sync', self.sp_3_config['States']['SP-3']['Resource'])
 
     def test_throws_error_if_next_process_not_included_in_provided_metadata(self):
-        print(self.dw_dict['databases'][0]['schemas'][2]['tables'][1]['step_functions'])
         self.dw_dict['databases'][0]['schemas'][2]['tables'][1]['step_functions']['SP-3']['etls']['ETL-3']['next_step_functions'] = ['SP-4']
         invalid_data_warehouse_metadata = construct_data_warehouse_metadata_from_dict(self.dw_dict)
         with self.assertRaises(KeyError):
