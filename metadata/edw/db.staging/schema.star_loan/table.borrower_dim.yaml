@@ -567,6 +567,36 @@ columns:
     source:
       field: primary_source_table.columns.b_usda_moderate_income_limit
     update_flag: true
+  current_residence_street1:
+    data_type: VARCHAR(128)
+    update_flag: true
+  current_residence_street2:
+    data_type: VARCHAR(128)
+    update_flag: true
+  current_residence_city:
+    data_type: VARCHAR(128)
+    update_flag: true
+  current_residence_postal_code:
+    data_type: VARCHAR(128)
+    update_flag: true
+  current_residence_county_name:
+    data_type: VARCHAR(128)
+    update_flag: true
+  current_residence_county_fips:
+    data_type: VARCHAR(16)
+    update_flag: true
+  current_residence_state:
+    data_type: VARCHAR(128)
+    update_flag: true
+  current_residence_state_fips:
+    data_type: VARCHAR(32)
+    update_flag: true
+  current_residence_country_code:
+    data_type: VARCHAR(128)
+    update_flag: true
+  current_residence_country:
+    data_type: VARCHAR(1024)
+    update_flag: true
 etls:
   SP-200005:
     input_type: table
@@ -692,10 +722,22 @@ etls:
                , t144.value AS prior_property_title
                , t145.value AS prior_property_usage
                , t141.value AS power_of_attorney
+               , current_borrower_residence_place.pl_street1 AS current_residence_street1
+               , current_borrower_residence_place.pl_street2 AS current_residence_street2
+               , current_borrower_residence_place.pl_city AS current_residence_city
+               , current_borrower_residence_place.pl_postal_code AS current_residence_postal_code
+               , county.c_name AS current_residence_county_name
+               , current_borrower_residence_place.pl_county_fips AS current_residence_county_fips
+               , current_borrower_residence_place.pl_state AS current_residence_state
+               , current_borrower_residence_place.pl_state_fips AS current_residence_state_fips
+               , current_borrower_residence_place.pl_country AS current_residence_country_code
+               , country_type.value AS current_residence_country
                , GREATEST( primary_table.etl_end_date_time, t114.etl_end_date_time, t115.etl_end_date_time, t149.etl_end_date_time,
                            t150.etl_end_date_time, t118.etl_end_date_time, t142.etl_end_date_time, t120.etl_end_date_time, t129.etl_end_date_time,
                            t130.etl_end_date_time, t132.etl_end_date_time, t144.etl_end_date_time, t145.etl_end_date_time,
-                           t141.etl_end_date_time ) AS max_source_etl_end_date_time
+                           t141.etl_end_date_time, current_borrower_residence.etl_end_date_time,
+						   current_borrower_residence_place.etl_end_date_time, county.etl_end_date_time,
+                   		   country_type.etl_end_date_time ) AS max_source_etl_end_date_time
           FROM (
               SELECT <<borrower_partial_load_condition>> AS include_record
                    , borrower.*
@@ -916,9 +958,72 @@ etls:
               ) AS primary_table
           ) AS t141
                      ON primary_table.b_power_of_attorney = t141.code
+          INNER JOIN (
+              SELECT *
+              FROM (
+                   SELECT <<borrower_residence_partial_load_condition>> AS include_record
+                   		, borrower_residence.*
+                  		, etl_log.etl_end_date_time
+                   FROM history_octane.borrower_residence
+                   LEFT JOIN history_octane.borrower_residence AS history_records
+                   		ON borrower_residence.bres_pid = history_records.bres_pid
+                  			AND borrower_residence.data_source_updated_datetime < history_records.data_source_updated_datetime
+                   JOIN star_common.etl_log
+                   		ON borrower_residence.etl_batch_id = etl_log.etl_batch_id
+                   WHERE history_records.bres_pid IS NULL
+			  ) AS primary_table
+		  ) AS current_borrower_residence ON primary_table.b_pid = current_borrower_residence.bres_borrower_pid
+		  	  AND current_borrower_residence.bres_current IS TRUE
+          INNER JOIN (
+              SELECT *
+              FROM (
+                   SELECT <<place_partial_load_condition>> AS include_record
+                  		, place.*
+                  		, etl_log.etl_end_date_time
+                   FROM history_octane.place
+                   LEFT JOIN history_octane.place AS history_records
+				   		ON place.pl_pid = history_records.pl_pid
+                  			AND place.data_source_updated_datetime < history_records.data_source_updated_datetime
+                   JOIN star_common.etl_log
+                        ON place.etl_batch_id = etl_log.etl_batch_id
+                   WHERE history_records.pl_pid IS NULL
+			  ) AS primary_table
+		  ) AS current_borrower_residence_place ON current_borrower_residence.bres_place_pid = current_borrower_residence_place.pl_pid
+          INNER JOIN (
+              SELECT *
+              FROM (
+                   SELECT <<county_partial_load_condition>> AS include_record
+                		, county.*
+                		, etl_log.etl_end_date_time
+                   FROM history_octane.county
+                   LEFT JOIN history_octane.county AS history_records
+                   		ON county.c_pid = history_records.c_pid
+                  			AND county.data_source_updated_datetime < history_records.data_source_updated_datetime
+                   JOIN star_common.etl_log
+                  		ON county.etl_batch_id = etl_log.etl_batch_id
+                   WHERE history_records.c_pid IS NULL
+			  ) AS primary_table
+		  ) AS county ON current_borrower_residence_place.pl_county_pid = county.c_pid
+          INNER JOIN (
+              SELECT *
+              FROM (
+                   SELECT <<country_type_partial_load_condition>> AS include_record
+                  		, country_type.*
+                  		, etl_log.etl_end_date_time
+                   FROM history_octane.country_type
+                   LEFT JOIN history_octane.country_type AS history_records
+                  		ON country_type.code = history_records.code
+                  			AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                   JOIN star_common.etl_log
+                  		ON country_type.etl_batch_id = etl_log.etl_batch_id
+                   WHERE history_records.code IS NULL
+			  ) AS primary_table
+		  ) AS country_type ON current_borrower_residence_place.pl_country = country_type.code
           WHERE GREATEST( primary_table.include_record, t114.include_record, t115.include_record, t149.include_record, t150.include_record,
                           t118.include_record, t142.include_record, t120.include_record, t129.include_record, t130.include_record,
-                          t132.include_record, t144.include_record, t145.include_record, t141.include_record ) IS TRUE
+                          t132.include_record, t144.include_record, t145.include_record, t141.include_record,
+              			  current_borrower_residence.include_record, current_borrower_residence_place.include_record,
+              			  county.include_record, country_type.include_record ) IS TRUE
       )
       --new records that should be inserted
       SELECT borrower_dim_incl_new_records.*
