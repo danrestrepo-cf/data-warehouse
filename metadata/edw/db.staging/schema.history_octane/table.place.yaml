@@ -1672,3 +1672,6 @@ etls:
           WHERE deleted_records.pl_pid = history_table.pl_pid
             AND deleted_records.data_source_deleted_flag = TRUE
           );
+next_etls:
+  - SP-200005
+  - SP-200019
