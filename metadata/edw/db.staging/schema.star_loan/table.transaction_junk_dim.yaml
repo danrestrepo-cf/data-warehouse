@@ -162,20 +162,20 @@ etls:
           ) AS t661
                      ON primary_table.prp_structure_type = t661.code
           INNER JOIN (
-              	SELECT *
-              	FROM (
-              	     SELECT <<property_usage_type_partial_load_condition>> AS include_record
-              	    	, property_usage_type.*
-              	    	, etl_log.etl_end_date_time
-              	     FROM history_octane.property_usage_type
-              	     LEFT JOIN history_octane.property_usage_type AS history_records
-              	     	ON property_usage_type.code = history_records.code
-              	    		AND property_usage_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-              	     JOIN star_common.etl_log
-              	    	ON property_usage_type.etl_batch_id = etl_log.etl_batch_id
-              	     WHERE history_records.code IS NULL
-					) AS primary_table
-				  ) AS property_usage ON primary_table.prp_property_usage_type = property_usage.code
+                  SELECT *
+                  FROM (
+                       SELECT <<property_usage_type_partial_load_condition>> AS include_record
+                          , property_usage_type.*
+                          , etl_log.etl_end_date_time
+                       FROM history_octane.property_usage_type
+                       LEFT JOIN history_octane.property_usage_type AS history_records
+                           ON property_usage_type.code = history_records.code
+                              AND property_usage_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                       JOIN star_common.etl_log
+                          ON property_usage_type.etl_batch_id = etl_log.etl_batch_id
+                       WHERE history_records.code IS NULL
+                    ) AS primary_table
+                  ) AS property_usage ON primary_table.prp_property_usage_type = property_usage.code
           WHERE GREATEST( primary_table.include_record, t1441.include_record, t649.include_record, t661.include_record,
             property_usage.include_record ) IS TRUE
           GROUP BY t1441.d_test_loan, primary_table.prp_structure_type, primary_table.prp_mi_required, t661.value

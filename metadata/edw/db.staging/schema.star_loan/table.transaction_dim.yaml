@@ -183,116 +183,116 @@ etls:
                         JOIN star_common.etl_log ON deal_stage_type.etl_batch_id = etl_log.etl_batch_id
                       WHERE history_records.code IS NULL
                   ) AS current_deal_stage_type_records ON current_deal_stage_records.dst_deal_stage_type = current_deal_stage_type_records.code
-          	  INNER JOIN (
-          	      SELECT *
-          	      FROM (
-          	           SELECT <<place_partial_load_condition>> AS include_record
-          	          		, place.*
-          	          		, etl_log.etl_end_date_time
-          	           FROM history_octane.place
-          	           LEFT JOIN history_octane.place AS history_records
-          	          		ON place.pl_pid = history_records.pl_pid
-          	          			AND place.data_source_updated_datetime < history_records.data_source_updated_datetime
-          	           JOIN star_common.etl_log
-          	          		ON place.etl_batch_id = etl_log.etl_batch_id
-          	           WHERE history_records.pl_pid IS NULL
-				  ) AS primary_table
-			  ) AS subject_property ON primary_table.prp_pid = subject_property.pl_proposal_pid
-          				AND subject_property.pl_subject_property IS TRUE
-          	  INNER JOIN (
-				  SELECT *
-				  FROM (
-					   SELECT <<county_partial_load_condition>> AS include_record
-							, county.*
-							, etl_log.etl_end_date_time
-					   FROM history_octane.county
-					   LEFT JOIN history_octane.county AS history_records
-							ON county.c_pid = history_records.c_pid
-								AND county.data_source_updated_datetime < history_records.data_source_updated_datetime
-					   JOIN star_common.etl_log
-							ON county.etl_batch_id = etl_log.etl_batch_id
-					   WHERE history_records.c_pid IS NULL
-				  ) AS primary_table
-		  	  ) AS county ON subject_property.pl_county_pid = county.c_pid
-			  INNER JOIN (
-				  SELECT *
-				  FROM (
-					   SELECT <<country_type_partial_load_condition>> AS include_record
-							, country_type.*
-							, etl_log.etl_end_date_time
-					   FROM history_octane.country_type
-					   LEFT JOIN history_octane.country_type AS history_records
-							ON country_type.code = history_records.code
-								AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-					   JOIN star_common.etl_log
-							ON country_type.etl_batch_id = etl_log.etl_batch_id
-					   WHERE history_records.code IS NULL
-				  ) AS primary_table
-			  ) AS country_type ON subject_property.pl_country = country_type.code
-          	 INNER JOIN (
-          	     SELECT *
-          	     FROM (
-          	          SELECT <<property_category_type_partial_load_condition>> AS include_record
-          	        	   , property_category_type.*
-          	         	   , etl_log.etl_end_date_time
-          	          FROM history_octane.property_category_type
-          	          LEFT JOIN history_octane.property_category_type AS history_records
-          	         		ON property_category_type.code = history_records.code
-          	         			AND property_category_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-          	          JOIN star_common.etl_log
-          	         		ON property_category_type.etl_batch_id = etl_log.etl_batch_id
-          	          WHERE history_records.code IS NULL
-				 ) AS primary_table
-			 ) AS property_category_type ON subject_property.pl_property_category_type = property_category_type.code
-          	INNER JOIN (
-          	    SELECT *
-          	    FROM (
-          	         SELECT <<building_status_type_partial_load_condition>> AS include_record
-          	         	   , building_status_type.*
-          	        	   , etl_log.etl_end_date_time
-          	         FROM history_octane.building_status_type
-          	         LEFT JOIN history_octane.building_status_type AS history_records
-          	        		ON building_status_type.code = history_records.code
-          	        			AND building_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-          	         JOIN star_common.etl_log
-          	        		ON building_status_type.etl_batch_id = etl_log.etl_batch_id
-          	         WHERE history_records.code IS NULL
-				) AS primary_table
-			) AS building_status_type ON subject_property.pl_building_status_type = building_status_type.code
-          	INNER JOIN (
-          	    SELECT *
-          	    FROM (
-          	         SELECT <<property_rights_type_partial_load_condition>> AS include_record
-          	               , property_rights_type.*
-          	        	   , etl_log.etl_end_date_time
-          	         FROM history_octane.property_rights_type
-          	         LEFT JOIN history_octane.property_rights_type AS history_records
-          	        		ON property_rights_type.code = history_records.code
-          	        			AND property_rights_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-          	         JOIN star_common.etl_log
-          	        		ON property_rights_type.etl_batch_id = etl_log.etl_batch_id
-          	         WHERE history_records.code IS NULL
-				) AS primary_table
-			) AS property_rights_type ON subject_property.pl_property_rights_type = property_rights_type.code
+                INNER JOIN (
+                    SELECT *
+                    FROM (
+                         SELECT <<place_partial_load_condition>> AS include_record
+                                , place.*
+                                , etl_log.etl_end_date_time
+                         FROM history_octane.place
+                         LEFT JOIN history_octane.place AS history_records
+                                ON place.pl_pid = history_records.pl_pid
+                                    AND place.data_source_updated_datetime < history_records.data_source_updated_datetime
+                         JOIN star_common.etl_log
+                                ON place.etl_batch_id = etl_log.etl_batch_id
+                         WHERE history_records.pl_pid IS NULL
+                  ) AS primary_table
+              ) AS subject_property ON primary_table.prp_pid = subject_property.pl_proposal_pid
+                          AND subject_property.pl_subject_property IS TRUE
+                INNER JOIN (
+                  SELECT *
+                  FROM (
+                       SELECT <<county_partial_load_condition>> AS include_record
+                            , county.*
+                            , etl_log.etl_end_date_time
+                       FROM history_octane.county
+                       LEFT JOIN history_octane.county AS history_records
+                            ON county.c_pid = history_records.c_pid
+                                AND county.data_source_updated_datetime < history_records.data_source_updated_datetime
+                       JOIN star_common.etl_log
+                            ON county.etl_batch_id = etl_log.etl_batch_id
+                       WHERE history_records.c_pid IS NULL
+                  ) AS primary_table
+                ) AS county ON subject_property.pl_county_pid = county.c_pid
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                       SELECT <<country_type_partial_load_condition>> AS include_record
+                            , country_type.*
+                            , etl_log.etl_end_date_time
+                       FROM history_octane.country_type
+                       LEFT JOIN history_octane.country_type AS history_records
+                            ON country_type.code = history_records.code
+                                AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                       JOIN star_common.etl_log
+                            ON country_type.etl_batch_id = etl_log.etl_batch_id
+                       WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS country_type ON subject_property.pl_country = country_type.code
+               INNER JOIN (
+                   SELECT *
+                   FROM (
+                        SELECT <<property_category_type_partial_load_condition>> AS include_record
+                             , property_category_type.*
+                              , etl_log.etl_end_date_time
+                        FROM history_octane.property_category_type
+                        LEFT JOIN history_octane.property_category_type AS history_records
+                               ON property_category_type.code = history_records.code
+                                   AND property_category_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                        JOIN star_common.etl_log
+                               ON property_category_type.etl_batch_id = etl_log.etl_batch_id
+                        WHERE history_records.code IS NULL
+                 ) AS primary_table
+             ) AS property_category_type ON subject_property.pl_property_category_type = property_category_type.code
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                       SELECT <<building_status_type_partial_load_condition>> AS include_record
+                              , building_status_type.*
+                             , etl_log.etl_end_date_time
+                       FROM history_octane.building_status_type
+                       LEFT JOIN history_octane.building_status_type AS history_records
+                              ON building_status_type.code = history_records.code
+                                  AND building_status_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                       JOIN star_common.etl_log
+                              ON building_status_type.etl_batch_id = etl_log.etl_batch_id
+                       WHERE history_records.code IS NULL
+                ) AS primary_table
+            ) AS building_status_type ON subject_property.pl_building_status_type = building_status_type.code
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                       SELECT <<property_rights_type_partial_load_condition>> AS include_record
+                             , property_rights_type.*
+                             , etl_log.etl_end_date_time
+                       FROM history_octane.property_rights_type
+                       LEFT JOIN history_octane.property_rights_type AS history_records
+                              ON property_rights_type.code = history_records.code
+                                  AND property_rights_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                       JOIN star_common.etl_log
+                              ON property_rights_type.etl_batch_id = etl_log.etl_batch_id
+                       WHERE history_records.code IS NULL
+                ) AS primary_table
+            ) AS property_rights_type ON subject_property.pl_property_rights_type = property_rights_type.code
            INNER JOIN (
                SELECT *
                FROM (
                     SELECT <<neighborhood_location_type_partial_load_condition>> AS include_record
-                   		  , neighborhood_location_type.*
-                   		  , etl_log.etl_end_date_time
+                             , neighborhood_location_type.*
+                             , etl_log.etl_end_date_time
                     FROM history_octane.neighborhood_location_type
                     LEFT JOIN history_octane.neighborhood_location_type AS history_records
-                   		ON neighborhood_location_type.code = history_records.code
-                   			AND neighborhood_location_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                           ON neighborhood_location_type.code = history_records.code
+                               AND neighborhood_location_type.data_source_updated_datetime < history_records.data_source_updated_datetime
                     JOIN star_common.etl_log ON neighborhood_location_type.etl_batch_id = etl_log.etl_batch_id
                     WHERE history_records.code IS NULL
-			   ) AS primary_table
-		   ) AS neighborhood_location_type ON subject_property.pl_neighborhood_location_type = neighborhood_location_type.code
-	  WHERE GREATEST( primary_table.include_record, t1441.include_record, current_deal_stage_records.include_record,
-	      current_deal_stage_type_records.include_record, subject_property.include_record, county.include_record,
-	      country_type.include_record, property_category_type.include_record, building_status_type.include_record,
-	      property_rights_type.include_record, neighborhood_location_type.include_record ) IS TRUE
-	  )
+               ) AS primary_table
+           ) AS neighborhood_location_type ON subject_property.pl_neighborhood_location_type = neighborhood_location_type.code
+      WHERE GREATEST( primary_table.include_record, t1441.include_record, current_deal_stage_records.include_record,
+          current_deal_stage_type_records.include_record, subject_property.include_record, county.include_record,
+          country_type.include_record, property_category_type.include_record, building_status_type.include_record,
+          property_rights_type.include_record, neighborhood_location_type.include_record ) IS TRUE
+      )
       --new records that should be inserted
       SELECT transaction_dim_incl_new_records.*
       FROM transaction_dim_incl_new_records
