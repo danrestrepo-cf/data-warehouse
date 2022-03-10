@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-400001-insert-update - table -> table-insert_update ETL from staging.history_octane.lender_user to staging.data_mart_business_applications.edw_employee_user_details",
+    "Comment": "SP-400001-insert-update - ETL to insert_update records into staging.data_mart_business_applications.edw_employee_user_details using staging.history_octane.lender_user as the primary source",
     "StartAt": "SP-400001-insert-update",
     "States": {
         "SP-400001-insert-update": {
@@ -46,4 +46,3 @@
         }
     }
 }
-

@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-400001-delete - table -> table-delete ETL from staging.history_octane.lender_user to staging.data_mart_business_applications.edw_employee_user_details",
+    "Comment": "SP-400001-delete - ETL to delete records from staging.data_mart_business_applications.edw_employee_user_details using staging.history_octane.lender_user as the primary source",
     "StartAt": "SP-400001-delete",
     "States": {
         "SP-400001-delete": {
@@ -46,4 +46,3 @@
         }
     }
 }
-
