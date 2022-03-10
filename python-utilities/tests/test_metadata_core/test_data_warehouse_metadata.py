@@ -6,6 +6,7 @@ from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        TableMetadata,
                                                        ColumnMetadata,
                                                        ETLMetadata,
+                                                       StepFunctionMetadata,
                                                        ForeignKeyMetadata,
                                                        InvalidMetadataKeyException)
 from lib.metadata_core.metadata_object_path import DatabasePath, SchemaPath, TablePath, ColumnPath
@@ -310,6 +311,67 @@ class TestTableMetadata(unittest.TestCase):
         table_metadata.add_foreign_key(ForeignKeyMetadata('fk1', TablePath('db', 'sch', 't'), [], []))
         self.assertTrue(table_metadata.contains_foreign_key('fk1'))
         self.assertFalse(table_metadata.contains_foreign_key('fk2'))
+
+
+class TestStepFunctionMetadata(unittest.TestCase):
+
+    def test_trying_to_get_a_nonexistent_etl_throws_an_error(self):
+        step_function = StepFunctionMetadata('SP-1')
+        with self.assertRaises(InvalidMetadataKeyException):
+            step_function.get_etl('ETL-1')
+
+    def test_can_get_etl_that_was_previously_added(self):
+        step_function = StepFunctionMetadata('SP-1')
+        etl = ETLMetadata(process_name='ETL-1')
+        step_function.add_etl(etl)
+        self.assertEqual(etl, step_function.get_etl('ETL-1'))
+
+    def test_can_get_list_of_all_previously_added_etls(self):
+        step_function = StepFunctionMetadata('SP-1')
+        etl1 = ETLMetadata(process_name='ETL-1')
+        step_function.add_etl(etl1)
+        etl2 = ETLMetadata(process_name='ETL-2')
+        step_function.add_etl(etl2)
+        self.assertEqual([etl1, etl2], step_function.etls)
+
+    def test_trying_to_get_a_removed_etl_throws_an_error(self):
+        step_function = StepFunctionMetadata('SP-1')
+        etl = ETLMetadata(process_name='ETL-1')
+        step_function.add_etl(etl)
+        step_function.remove_etl('ETL-1')
+        with self.assertRaises(InvalidMetadataKeyException):
+            step_function.get_etl('ETL-1')
+
+    def test_list_of_all_etls_does_not_include_removed_etls(self):
+        step_function = StepFunctionMetadata('SP-1')
+        etl1 = ETLMetadata(process_name='ETL-1')
+        step_function.add_etl(etl1)
+        etl2 = ETLMetadata(process_name='ETL-2')
+        step_function.add_etl(etl2)
+        step_function.remove_etl('ETL-1')
+        self.assertEqual([etl2], step_function.etls)
+
+    def test_trying_to_remove_a_nonexistent_etl_does_nothing(self):
+        step_function = StepFunctionMetadata('SP-1')
+        step_function.remove_etl('ETL-1')
+        # expect no error to be thrown
+
+    def test_has_parallel_limit_returns_false_if_limit_is_none_and_true_otherwise(self):
+        step_function = StepFunctionMetadata('SP-1')
+        self.assertFalse(step_function.has_parallel_limit)
+        step_function.parallel_limit = 20
+        self.assertTrue(step_function.has_parallel_limit)
+
+    def test_has_etl_returns_true_if_step_function_contains_etl_and_false_otherwise(self):
+        step_function = StepFunctionMetadata('SP-1')
+        self.assertFalse(step_function.has_etl('ETL-1'))
+
+        etl1 = ETLMetadata(process_name='ETL-1')
+        step_function.add_etl(etl1)
+        self.assertTrue(step_function.has_etl('ETL-1'))
+
+        step_function.remove_etl('ETL-1')
+        self.assertFalse(step_function.has_etl('ETL-1'))
 
 
 class TestTableMetadataCanGetColumnSourcePaths(unittest.TestCase):

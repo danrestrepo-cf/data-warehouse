@@ -63,6 +63,7 @@ class SourceForeignKeyPath:
         source_path_string += f'.columns.{self.column_name}'
         return source_path_string
 
+
 @dataclass
 class ColumnSourceComponents:
     """A data structure describing the components of a column's source, which may utilize foreign columns or a
@@ -171,6 +172,9 @@ class ETLMetadata:
         a hardcoded dwid value in some EDW ETL processes
         input_type: the format of data to be read in as input to this ETL
         output_type: the type of action to be taken as the output of this ETL
+        output_table: the target table of the ETL
+        primary_source_table: the primary source table used in the ETL query. Only
+        used for ETLs with input_type TABLE
         json_output_field: the key column to be used in the ETL's MDI-2 output json
         truncate_table: boolean indicating whether or not the ETL's target
         table should be truncated before insertion. Only used for ETLs with
@@ -187,6 +191,8 @@ class ETLMetadata:
     hardcoded_data_source: Optional[ETLDataSource] = None
     input_type: ETLInputType = ETLInputType.TABLE
     output_type: ETLOutputType = ETLOutputType.INSERT
+    output_table: Optional[TablePath] = None
+    primary_source_table: Optional[TablePath] = None
     json_output_field: Optional[str] = None
     truncate_table: Optional[bool] = None
     insert_update_keys: Optional[List[str]] = None
@@ -211,6 +217,49 @@ class ETLMetadata:
                f'.{target_table.path.schema}.{target_table.path.table} using {target_table.primary_source_table.database}.' \
                f'{target_table.primary_source_table.schema}.{target_table.primary_source_table.table} as the primary ' \
                f'source'
+
+
+@dataclass
+class StepFunctionMetadata:
+    """Metadata describing an AWS step function that executes ETLs.
+
+    Attributes:
+        name: the step function name. Should start with "SP-", e.g. "SP-100001"
+        parallel_limit: the maximum number of ETLs within this step function that
+        are allowed to run at any one time. Leaving this unspecified implies the
+        step function has no such limit/any number of ETLs can run in parallel
+        etls: a list of metadata objects describing ETLs executed as part of this
+        step function
+    """
+
+    def __init__(self, name: str, parallel_limit: Optional[int] = None):
+        self.name = name
+        self.parallel_limit = parallel_limit
+        self._etls = {}
+
+    def add_etl(self, etl: ETLMetadata):
+        self._etls[etl.process_name] = etl
+
+    def get_etl(self, etl_name: str) -> ETLMetadata:
+        if etl_name not in self._etls:
+            raise InvalidMetadataKeyException('step function', self.name, 'etl', etl_name)
+        else:
+            return self._etls[etl_name]
+
+    def remove_etl(self, etl_name: str):
+        if etl_name in self._etls:
+            del self._etls[etl_name]
+
+    @property
+    def etls(self) -> List[ETLMetadata]:
+        return list(self._etls.values())
+
+    @property
+    def has_parallel_limit(self) -> bool:
+        return self.parallel_limit is not None
+
+    def has_etl(self, etl_name: str) -> bool:
+        return etl_name in self._etls
 
 
 @dataclass(init=False)
