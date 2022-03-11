@@ -1,0 +1,100 @@
+name: config_note_comment
+primary_source_table: staging.staging_octane.config_note_comment
+primary_key:
+- cnc_pid
+- cnc_version
+foreign_keys:
+  fk_config_note_comment_1:
+    columns:
+    - cnc_config_note_pid
+    references:
+      columns:
+      - cn_pid
+      schema: history_octane
+      table: config_note
+  fk_config_note_comment_2:
+    columns:
+    - cnc_author_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+columns:
+  cnc_author_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cnc_author_lender_user_pid
+  cnc_author_unparsed_name:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.cnc_author_unparsed_name
+  cnc_config_note_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cnc_config_note_pid
+  cnc_content:
+    data_type: VARCHAR(16000)
+    source:
+      field: primary_source_table.columns.cnc_content
+  cnc_create_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.cnc_create_datetime
+  cnc_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cnc_pid
+  cnc_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.cnc_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100902:
+    input_type: table
+    output_type: insert
+    json_output_field: cnc_pid
+    truncate_table: false
+    container_memory: 2048
+    input_sql: |-
+      --finding records to insert into history_octane.config_note_comment
+      SELECT staging_table.cnc_pid
+           , staging_table.cnc_version
+           , staging_table.cnc_config_note_pid
+           , staging_table.cnc_create_datetime
+           , staging_table.cnc_content
+           , staging_table.cnc_author_unparsed_name
+           , staging_table.cnc_author_lender_user_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.config_note_comment staging_table
+      LEFT JOIN history_octane.config_note_comment history_table
+                ON staging_table.cnc_pid = history_table.cnc_pid
+                    AND staging_table.cnc_version = history_table.cnc_version
+      WHERE history_table.cnc_pid IS NULL
+      UNION ALL
+      SELECT history_table.cnc_pid
+           , history_table.cnc_version + 1
+           , history_table.cnc_config_note_pid
+           , history_table.cnc_create_datetime
+           , history_table.cnc_content
+           , history_table.cnc_author_unparsed_name
+           , history_table.cnc_author_lender_user_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.config_note_comment history_table
+      LEFT JOIN staging_octane.config_note_comment staging_table
+                ON staging_table.cnc_pid = history_table.cnc_pid
+      WHERE staging_table.cnc_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.config_note_comment deleted_records
+          WHERE deleted_records.cnc_pid = history_table.cnc_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

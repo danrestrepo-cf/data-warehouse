@@ -1,0 +1,82 @@
+name: config_note_monitor
+primary_source_table: staging.staging_octane.config_note_monitor
+primary_key:
+- cnm_pid
+- cnm_version
+foreign_keys:
+  fk_config_note_monitor_1:
+    columns:
+    - cnm_config_note_pid
+    references:
+      columns:
+      - cn_pid
+      schema: history_octane
+      table: config_note
+  fk_config_note_monitor_2:
+    columns:
+    - cnm_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: history_octane
+      table: lender_user
+columns:
+  cnm_config_note_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cnm_config_note_pid
+  cnm_lender_user_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cnm_lender_user_pid
+  cnm_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.cnm_pid
+  cnm_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.cnm_version
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+etls:
+  SP-100903:
+    input_type: table
+    output_type: insert
+    json_output_field: cnm_pid
+    truncate_table: false
+    container_memory: 2048
+    input_sql: |-
+      --finding records to insert into history_octane.config_note_monitor
+      SELECT staging_table.cnm_pid
+           , staging_table.cnm_version
+           , staging_table.cnm_config_note_pid
+           , staging_table.cnm_lender_user_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.config_note_monitor staging_table
+      LEFT JOIN history_octane.config_note_monitor history_table
+                ON staging_table.cnm_pid = history_table.cnm_pid
+                    AND staging_table.cnm_version = history_table.cnm_version
+      WHERE history_table.cnm_pid IS NULL
+      UNION ALL
+      SELECT history_table.cnm_pid
+           , history_table.cnm_version + 1
+           , history_table.cnm_config_note_pid
+           , history_table.cnm_lender_user_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.config_note_monitor history_table
+      LEFT JOIN staging_octane.config_note_monitor staging_table
+                ON staging_table.cnm_pid = history_table.cnm_pid
+      WHERE staging_table.cnm_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.config_note_monitor deleted_records
+          WHERE deleted_records.cnm_pid = history_table.cnm_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );

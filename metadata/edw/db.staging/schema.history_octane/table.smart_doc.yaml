@@ -163,6 +163,10 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.sd_action_entity_originator
+  sd_action_entity_production_manager:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.sd_action_entity_production_manager
   sd_action_entity_referring_associate:
     data_type: BOOLEAN
     source:
@@ -347,6 +351,7 @@ etls:
            , staging_table.sd_document_explanation_reference
            , staging_table.sd_action_entity_supplemental_originator
            , staging_table.sd_action_entity_referring_associate
+           , staging_table.sd_action_entity_production_manager
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.smart_doc staging_table
@@ -396,6 +401,7 @@ etls:
            , history_table.sd_document_explanation_reference
            , history_table.sd_action_entity_supplemental_originator
            , history_table.sd_action_entity_referring_associate
+           , history_table.sd_action_entity_production_manager
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.smart_doc history_table
