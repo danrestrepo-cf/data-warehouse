@@ -376,8 +376,6 @@ WITH insert_rows (process_name, json_output_field) AS (
          , ('SP-100901', 'cn_pid')
          , ('SP-100902', 'cnc_pid')
          , ('SP-100903', 'cnm_pid')
-         , ('SP-100369', 'SP-400003-delete') -- patch for issue introduced in 2022.3.1.2
-         , ('SP-100369', 'SP-400003-insert-update') -- patch for issue introduced in 2022.3.1.2
 )
 INSERT
 INTO mdi.json_output_field (process_dwid, field_name)
@@ -720,3 +718,17 @@ FROM update_rows
     JOIN mdi.process
         ON process.name = update_rows.process_name
 WHERE process.dwid = table_input_step.process_dwid;
+
+--state_machine_step
+WITH insert_rows (process_name, next_process_name) AS (
+    VALUES ('SP-100369', 'SP-400003-delete') -- patch for issue introduced in 2022.3.1.2
+         , ('SP-100369', 'SP-400003-insert-update') -- patch for issue introduced in 2022.3.1.2
+)
+INSERT
+INTO mdi.state_machine_step (process_dwid, next_process_dwid)
+SELECT process.dwid, next_process.dwid
+FROM insert_rows
+    JOIN mdi.process
+        ON process.name = insert_rows.process_name
+    JOIN mdi.process next_process
+        ON next_process.name = insert_rows.next_process_name;
