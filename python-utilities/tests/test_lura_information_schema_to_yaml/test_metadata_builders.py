@@ -811,9 +811,8 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
 
 
 class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
-
-    def setUp(self) -> None:
-        self.octane_metadata = construct_data_warehouse_metadata_from_dict({
+    def test_adding_field_to_staging_octane_schema(self):
+        octane_metadata = construct_data_warehouse_metadata_from_dict({
             'name': 'edw',
             'databases': [
                 {
@@ -824,130 +823,56 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                             'tables': [
                                 {
                                     'name': 'account',
-                                    'primary_key': ['rt_pid'],
+                                    'primary_key': ['pk_field'],
                                     'columns': {
-                                        'rt_pid': {
+                                        'pk_field': {
                                             'data_type': 'BIGINT'
                                         },
-                                        'rt_version': {
+                                        'old_field_1': {
                                             'data_type': 'INTEGER'
                                         },
-                                        'rt_normal_column': {
+                                        'old_field_2': {
                                             'data_type': 'TEXT'
                                         },
-                                        'rt_decoy_version': {
+                                        'old_field_3': {
                                             'data_type': 'TEXT'
                                         },
-                                        'rt_decoy_pid': {
+                                        'new_field_1': {
                                             'data_type': 'TEXT'
                                         }
                                     }
-                                },
-                                {
-                                    'name': 'regular_type_table',
-                                    'primary_key': ['code'],
-                                    'columns': {
-                                        'code': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'value': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'no_version_table',
-                                    'primary_key': ['nv_pid'],
-                                    'columns': {
-                                        'nv_pid': {
-                                            'data_type': 'BIGINT'
-                                        },
-                                        'nv_normal_column': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'extra_fields_type',
-                                    'primary_key': ['code'],
-                                    'columns': {
-                                        'code': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'value': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                },
+                                }
                             ]
                         },
                         {
                             'name': 'history_octane',
                             'tables': [
                                 {
-                                    'name': 'regular_table',
-                                    'primary_key': ['rt_pid'],
+                                    'name': 'account',
+                                    'primary_key': ['pk_field'],
                                     'columns': {
-                                        'rt_pid': {
+                                        'pk_field': {
                                             'data_type': 'BIGINT'
                                         },
-                                        'rt_version': {
+                                        'old_field_1': {
                                             'data_type': 'INTEGER'
                                         },
-                                        'rt_normal_column': {
+                                        'old_field_2': {
                                             'data_type': 'TEXT'
                                         },
-                                        'rt_decoy_version': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'rt_decoy_pid': {
+                                        'old_field_3': {
                                             'data_type': 'TEXT'
                                         }
                                     }
-                                },
-                                {
-                                    'name': 'regular_type_table',
-                                    'primary_key': ['code'],
-                                    'columns': {
-                                        'code': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'value': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'no_version_table',
-                                    'primary_key': ['nv_pid'],
-                                    'columns': {
-                                        'nv_pid': {
-                                            'data_type': 'BIGINT'
-                                        },
-                                        'nv_normal_column': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'extra_fields_type',
-                                    'primary_key': ['code'],
-                                    'columns': {
-                                        'code': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'value': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                },
+                                }
                             ]
                         }
                     ]
                 }
             ]
         })
-        self.current_yaml_metadata = construct_data_warehouse_metadata_from_dict({
+
+        current_yaml_metadata = construct_data_warehouse_metadata_from_dict({
             'name': 'edw',
             'databases': [
                 {
@@ -957,100 +882,22 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                             'name': 'staging_octane',
                             'tables': [
                                 {
-                                    'name': 'aregular_table2',
-                                    'primary_source_table': 'db2.sch2.t2',
-                                    'primary_key': ['rt_pid'],
-                                    'foreign_keys': {
-                                        'fk1': {
-                                            'columns': ['col3'],
-                                            'references': {
-                                                'columns': ['col3'],
-                                                'schema': 'sch2',
-                                                'table': 't2'
-                                            }
-                                        }
-                                    },
+                                    'name': 'account',
+                                    'primary_key': ['pk_field'],
                                     'columns': {
-                                        'rt_pid': {
+                                        'pk_field': {
                                             'data_type': 'BIGINT'
                                         },
-                                        'rt_version': {
+                                        'old_field_1': {
                                             'data_type': 'INTEGER'
                                         },
-                                        'rt_normal_column': {
+                                        'old_field_2': {
                                             'data_type': 'TEXT'
                                         },
-                                        'rt_decoy_version': {
+                                        'old_field_3': {
                                             'data_type': 'TEXT'
                                         },
-                                        'rt_decoy_pid': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    },
-                                    'etls': {
-                                        'SP-1': {
-                                            'hardcoded_data_source': 'Octane',
-                                            'input_type': 'table',
-                                            'output_type': 'insert',
-                                            'json_output_field': 'col1',
-                                            'truncate_table': False,
-                                            'insert_update_keys': ['col1', 'col2'],
-                                            'delete_keys': ['col2', 'col3'],
-                                            'container_memory': 2048,
-                                            'input_sql': 'SQL for SP-1'
-                                        }
-                                    },
-                                    'next_etls': [
-                                        'SP-4', 'SP-5'
-                                    ]
-                                },
-                                {
-                                    'name': 'regular_type_table',
-                                    'primary_key': ['code'],
-                                    'columns': {
-                                        'code': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'value': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'no_version_table',
-                                    'primary_key': ['nv_pid'],
-                                    'columns': {
-                                        'nv_pid': {
-                                            'data_type': 'BIGINT'
-                                        },
-                                        'nv_normal_column': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'some_id_sequence', # will be deleted
-                                    'primary_key': ['is_id'],
-                                    'columns': {
-                                        'is_id': {
-                                            'data_type': 'BIGINT'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'extra_fields_type',
-                                    'primary_key': ['code'],
-                                    'columns': {
-                                        'code': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'extra_field_1': {  # will be deleted
-                                            'data_type': 'TEXT'
-                                        },
-                                        'extra_field_2': {  # will be deleted
-                                            'data_type': 'TEXT'
-                                        },
-                                        'value': {
+                                        'new_field_1': {
                                             'data_type': 'TEXT'
                                         }
                                     }
@@ -1061,133 +908,19 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                             'name': 'history_octane',
                             'tables': [
                                 {
-                                    'name': 'aregular_table2',
-                                    'primary_source_table': 'db2.sch2.t2',
-                                    'primary_key': ['rt_pid'],
-                                    'foreign_keys': {
-                                        'fk1': {
-                                            'columns': ['col3'],
-                                            'references': {
-                                                'columns': ['col3'],
-                                                'schema': 'sch2',
-                                                'table': 't2'
-                                            }
-                                        }
-                                    },
+                                    'name': 'account',
+                                    'primary_key': ['pk_field'],
                                     'columns': {
-                                        'rt_pid': {
+                                        'pk_field': {
                                             'data_type': 'BIGINT'
                                         },
-                                        'rt_version': {
+                                        'old_field_1': {
                                             'data_type': 'INTEGER'
                                         },
-                                        'rt_normal_column': {
+                                        'old_field_2': {
                                             'data_type': 'TEXT'
                                         },
-                                        'rt_decoy_version': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'rt_decoy_pid': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    },
-                                    'etls': {
-                                        'SP-1': {
-                                            'hardcoded_data_source': 'Octane',
-                                            'input_type': 'table',
-                                            'output_type': 'insert',
-                                            'json_output_field': 'col1',
-                                            'truncate_table': False,
-                                            'insert_update_keys': ['col1', 'col2'],
-                                            'delete_keys': ['col2', 'col3'],
-                                            'container_memory': 2048,
-                                            'input_sql': 'SQL for SP-1'
-                                        }
-                                    },
-                                    'next_etls': [
-                                        'SP-4', 'SP-5'
-                                    ]
-                                },
-                                {
-                                    'name': 'regular_type_table',
-                                    'primary_key': ['code'],
-                                    'columns': {
-                                        'code': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'value': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'regular_table',
-                                    'primary_key': ['rt_pid'],
-                                    'columns': {
-                                        'rt_pid': {
-                                            'data_type': 'BIGINT'
-                                        },
-                                        'rt_version': {
-                                            'data_type': 'INTEGER'
-                                        },
-                                        'rt_normal_column': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'rt_decoy_version': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'rt_decoy_pid': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'regular_type_table',
-                                    'primary_key': ['code'],
-                                    'columns': {
-                                        'code': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'value': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'no_version_table',
-                                    'primary_key': ['nv_pid'],
-                                    'columns': {
-                                        'nv_pid': {
-                                            'data_type': 'BIGINT'
-                                        },
-                                        'nv_normal_column': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'some_id_sequence',  # deleted table
-                                    'primary_key': ['is_id'],
-                                    'columns': {
-                                        'is_id': {
-                                            'data_type': 'BIGINT'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'extra_fields_type',
-                                    'primary_key': ['code'],
-                                    'columns': {
-                                        'code': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'extra_field_1': {  # deleted field
-                                            'data_type': 'TEXT'
-                                        },
-                                        'extra_field_2': {  # deleted field
-                                            'data_type': 'TEXT'
-                                        },
-                                        'value': {
+                                        'old_field_3': {
                                             'data_type': 'TEXT'
                                         }
                                     }
@@ -1198,162 +931,157 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                 }
             ]
         })
-        self.expected_metadata = construct_data_warehouse_metadata_from_dict({
-            'name': 'edw',
-            'databases': [
-                {
-                    'name': 'staging',
-                    'schemas': [
-                        {
-                            'name': 'staging_octane',
-                            'tables': [
-                                {
-                                    'name': 'regular_table',
-                                    'primary_key': ['rt_pid'],
-                                    'columns': {
-                                        'rt_pid': {
-                                            'data_type': 'BIGINT'
-                                        },
-                                        'rt_version': {
-                                            'data_type': 'INTEGER'
-                                        },
-                                        'rt_normal_column': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'rt_decoy_version': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'rt_decoy_pid': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'regular_type_table',
-                                    'primary_key': ['code'],
-                                    'columns': {
-                                        'code': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'value': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'no_version_table',
-                                    'primary_key': ['nv_pid'],
-                                    'columns': {
-                                        'nv_pid': {
-                                            'data_type': 'BIGINT'
-                                        },
-                                        'nv_normal_column': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'extra_fields_type',
-                                    'primary_key': ['code'],
-                                    'columns': {
-                                        'code': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'value': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            'name': 'history_octane',
-                            'tables': [
-                                {
-                                    'name': 'regular_table',
-                                    'primary_key': ['rt_pid'],
-                                    'columns': {
-                                        'rt_pid': {
-                                            'data_type': 'BIGINT'
-                                        },
-                                        'rt_version': {
-                                            'data_type': 'INTEGER'
-                                        },
-                                        'rt_normal_column': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'rt_decoy_version': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'rt_decoy_pid': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'regular_type_table',
-                                    'primary_key': ['code'],
-                                    'columns': {
-                                        'code': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'value': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'no_version_table',
-                                    'primary_key': ['nv_pid'],
-                                    'columns': {
-                                        'nv_pid': {
-                                            'data_type': 'BIGINT'
-                                        },
-                                        'nv_normal_column': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'some_id_sequence',  # deleted table
-                                    'primary_key': ['is_id'],
-                                    'columns': {
-                                        'is_id': {
-                                            'data_type': 'BIGINT'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'extra_fields_type',
-                                    'primary_key': ['code'],
-                                    'columns': {
-                                        'code': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'extra_field_1': {  # deleted field
-                                            'data_type': 'TEXT'
-                                        },
-                                        'extra_field_2': {  # deleted field
-                                            'data_type': 'TEXT'
-                                        },
-                                        'value': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        })
+
+        print(add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, current_yaml_metadata))
+
+    def test_adding_field_removed_from_staging_octane_schema(self):
+        pass
+
+    def test_adding_table_to_staging_octane_schema(self):
+        pass
+
+    def test_adding_table_to_staging_octane_schema(self):
+        pass
 
     def test_incorporates_given_columns_and_tables_into_the_given_data_warehouse_metadata_structure_if_they_dont_already_exist(self):
         from lib.metadata_core.metadata_yaml_translator import (generate_data_warehouse_metadata_from_yaml)
         import os
-
+        octane_metadata = construct_data_warehouse_metadata_from_dict({
+    'name': 'edw',
+    'databases': [
+        {
+            'name': 'staging',
+            'schemas': [
+                {
+                    'name': 'staging_octane',
+                    'tables': [
+                        {
+                            'name': 'account',
+                            'primary_key': ['rt_pid'],
+                            'columns': {
+                                'rt_pid': {
+                                    'data_type': 'BIGINT'
+                                },
+                                'rt_version': {
+                                    'data_type': 'INTEGER'
+                                },
+                                'rt_normal_column': {
+                                    'data_type': 'TEXT'
+                                },
+                                'rt_decoy_version': {
+                                    'data_type': 'TEXT'
+                                },
+                                'rt_decoy_pid': {
+                                    'data_type': 'TEXT'
+                                }
+                            }
+                        },
+                        {
+                            'name': 'regular_type_table',
+                            'primary_key': ['code'],
+                            'columns': {
+                                'code': {
+                                    'data_type': 'TEXT'
+                                },
+                                'value': {
+                                    'data_type': 'TEXT'
+                                }
+                            }
+                        },
+                        {
+                            'name': 'no_version_table',
+                            'primary_key': ['nv_pid'],
+                            'columns': {
+                                'nv_pid': {
+                                    'data_type': 'BIGINT'
+                                },
+                                'nv_normal_column': {
+                                    'data_type': 'TEXT'
+                                }
+                            }
+                        },
+                        {
+                            'name': 'extra_fields_type',
+                            'primary_key': ['code'],
+                            'columns': {
+                                'code': {
+                                    'data_type': 'TEXT'
+                                },
+                                'value': {
+                                    'data_type': 'TEXT'
+                                }
+                            }
+                        },
+                    ]
+                },
+                {
+                    'name': 'history_octane',
+                    'tables': [
+                        {
+                            'name': 'regular_table',
+                            'primary_key': ['rt_pid'],
+                            'columns': {
+                                'rt_pid': {
+                                    'data_type': 'BIGINT'
+                                },
+                                'rt_version': {
+                                    'data_type': 'INTEGER'
+                                },
+                                'rt_normal_column': {
+                                    'data_type': 'TEXT'
+                                },
+                                'rt_decoy_version': {
+                                    'data_type': 'TEXT'
+                                },
+                                'rt_decoy_pid': {
+                                    'data_type': 'TEXT'
+                                }
+                            }
+                        },
+                        {
+                            'name': 'regular_type_table',
+                            'primary_key': ['code'],
+                            'columns': {
+                                'code': {
+                                    'data_type': 'TEXT'
+                                },
+                                'value': {
+                                    'data_type': 'TEXT'
+                                }
+                            }
+                        },
+                        {
+                            'name': 'no_version_table',
+                            'primary_key': ['nv_pid'],
+                            'columns': {
+                                'nv_pid': {
+                                    'data_type': 'BIGINT'
+                                },
+                                'nv_normal_column': {
+                                    'data_type': 'TEXT'
+                                }
+                            }
+                        },
+                        {
+                            'name': 'extra_fields_type',
+                            'primary_key': ['code'],
+                            'columns': {
+                                'code': {
+                                    'data_type': 'TEXT'
+                                },
+                                'value': {
+                                    'data_type': 'TEXT'
+                                }
+                            }
+                        },
+                    ]
+                }
+            ]
+        }
+    ]
+})
         current_yaml_metadata = generate_data_warehouse_metadata_from_yaml(os.path.abspath(os.path.join(os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..')), '../..', 'metadata/edw')))
-        print(add_deleted_tables_and_columns_to_history_octane_metadata(self.octane_metadata, current_yaml_metadata))
+        print(add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, current_yaml_metadata))
 
         # test now fails as a reminder to fix this after implementation
         # self.assertEqual(construct_data_warehouse_metadata_from_dict(self.expected_metadata), add_deleted_tables_and_columns_to_history_octane_metadata(self.octane_metadata, output))
