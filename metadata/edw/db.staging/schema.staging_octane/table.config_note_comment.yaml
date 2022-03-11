@@ -1,0 +1,35 @@
+name: config_note_comment
+primary_key:
+- cnc_pid
+foreign_keys:
+  fk_config_note_comment_1:
+    columns:
+    - cnc_config_note_pid
+    references:
+      columns:
+      - cn_pid
+      schema: staging_octane
+      table: config_note
+  fk_config_note_comment_2:
+    columns:
+    - cnc_author_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+columns:
+  cnc_author_lender_user_pid:
+    data_type: BIGINT
+  cnc_author_unparsed_name:
+    data_type: VARCHAR(128)
+  cnc_config_note_pid:
+    data_type: BIGINT
+  cnc_content:
+    data_type: VARCHAR(16000)
+  cnc_create_datetime:
+    data_type: TIMESTAMP
+  cnc_pid:
+    data_type: BIGINT
+  cnc_version:
+    data_type: INTEGER
