@@ -1,0 +1,29 @@
+name: config_note_monitor
+primary_key:
+- cnm_pid
+foreign_keys:
+  fk_config_note_monitor_1:
+    columns:
+    - cnm_config_note_pid
+    references:
+      columns:
+      - cn_pid
+      schema: staging_octane
+      table: config_note
+  fk_config_note_monitor_2:
+    columns:
+    - cnm_lender_user_pid
+    references:
+      columns:
+      - lu_pid
+      schema: staging_octane
+      table: lender_user
+columns:
+  cnm_config_note_pid:
+    data_type: BIGINT
+  cnm_lender_user_pid:
+    data_type: BIGINT
+  cnm_pid:
+    data_type: BIGINT
+  cnm_version:
+    data_type: INTEGER
