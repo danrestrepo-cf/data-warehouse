@@ -42,9 +42,10 @@ class ProcessMetadataComparisonFunctions(MetadataComparisonFunctions):
         for database in data_warehouse_metadata.databases:
             for schema in database.schemas:
                 for table in schema.tables:
-                    for etl in table.etls:
-                        description = etl.construct_process_description(table)
-                        metadata_table.add_row({'process_name': etl.process_name, 'process_description': description})
+                    for step_function in table.step_functions:
+                        for etl in step_function.etls:
+                            description = etl.construct_process_description(table)
+                            metadata_table.add_row({'process_name': etl.process_name, 'process_description': description})
         return metadata_table
 
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:

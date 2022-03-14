@@ -50,10 +50,11 @@ class StateMachineDefinitionMetadataComparisonFunctions(MetadataComparisonFuncti
         for database in data_warehouse_metadata.databases:
             for schema in database.schemas:
                 for table in schema.tables:
-                    for etl in table.etls:
-                        comment = etl.construct_process_description(table)
-                        metadata_table.add_row({'process_name': etl.process_name, 'state_machine_name': etl.process_name,
-                                                'state_machine_comment': comment})
+                    for step_function in table.step_functions:
+                        for etl in step_function.etls:
+                            comment = etl.construct_process_description(table)
+                            metadata_table.add_row({'process_name': etl.process_name, 'state_machine_name': etl.process_name,
+                                                    'state_machine_comment': comment})
         return metadata_table
 
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:

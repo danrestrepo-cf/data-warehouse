@@ -17,9 +17,9 @@ class TestJSONOutputFieldMetadataComparisonFunctions(unittest.TestCase):
         via other integration/system tests
         """
         test_data = [
-            {'process_name': 'SP-1', 'json_output_field': 't1_pid'},
-            {'process_name': 'SP-2', 'json_output_field': 't2_pid'},
-            {'process_name': 'SP-3', 'json_output_field': 't3_pid'}
+            {'process_name': 'ETL-1', 'json_output_field': 't1_pid'},
+            {'process_name': 'ETL-2', 'json_output_field': 't2_pid'},
+            {'process_name': 'ETL-3', 'json_output_field': 't3_pid'}
         ]
         db_conn = MockDBConnection(query_results=test_data)
         expected = MetadataTable(key_fields=['process_name'])
@@ -40,24 +40,32 @@ class TestJSONOutputFieldMetadataComparisonFunctions(unittest.TestCase):
                                     {
                                         'name': 'table1',
                                         'primary_source_table': 'staging.staging_octane.table1',
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-1': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert',
-                                                'json_output_field': 't1_pid'
+                                                'etls': {
+                                                    'ETL-1': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert',
+                                                        'json_output_field': 't1_pid'
+                                                    }
+                                                }
                                             }
                                         }
                                     },
                                     {
                                         'name': 'table2',
                                         'primary_source_table': 'staging.staging_octane.table2',
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-2': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert',
-                                                'json_output_field': 't2_pid'
+                                                'etls': {
+                                                    'ETL-2': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert',
+                                                        'json_output_field': 't2_pid'
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -74,12 +82,16 @@ class TestJSONOutputFieldMetadataComparisonFunctions(unittest.TestCase):
                                     {
                                         'name': 'table3',
                                         'primary_source_table': 'ingress.ingress_schema_1.table3',
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-3': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert',
-                                                'json_output_field': 't3_pid'
+                                                'etls': {
+                                                    'ETL-3': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert',
+                                                        'json_output_field': 't3_pid'
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -93,40 +105,40 @@ class TestJSONOutputFieldMetadataComparisonFunctions(unittest.TestCase):
 
         expected = MetadataTable(key_fields=['process_name'])
         expected.add_rows([
-            {'process_name': 'SP-1', 'json_output_field': 't1_pid'},
-            {'process_name': 'SP-2', 'json_output_field': 't2_pid'},
-            {'process_name': 'SP-3', 'json_output_field': 't3_pid'}
+            {'process_name': 'ETL-1', 'json_output_field': 't1_pid'},
+            {'process_name': 'ETL-2', 'json_output_field': 't2_pid'},
+            {'process_name': 'ETL-3', 'json_output_field': 't3_pid'}
         ])
         self.assertEqual(expected, JSONOutputFieldMetadataComparisonFunctions().construct_metadata_table_from_source(dw_metadata))
 
     def test_construct_insert_row_grouper(self):
         test_data = [
-            Row(key={'process_name': 'SP-1'}, attributes={'json_output_field': 't1_pid'}),
-            Row(key={'process_name': 'SP-2'}, attributes={'json_output_field': 't2_pid'}),
-            Row(key={'process_name': 'SP-3'}, attributes={'json_output_field': 't3_pid'})
+            Row(key={'process_name': 'ETL-1'}, attributes={'json_output_field': 't1_pid'}),
+            Row(key={'process_name': 'ETL-2'}, attributes={'json_output_field': 't2_pid'}),
+            Row(key={'process_name': 'ETL-3'}, attributes={'json_output_field': 't3_pid'})
         ]
         row_grouper = JSONOutputFieldMetadataComparisonFunctions().construct_insert_row_grouper(DataWarehouseMetadata('dw'))
         self.assertEqual([test_data], row_grouper.group_rows(test_data))
 
     def test_construct_delete_row_grouper(self):
         test_data = [
-            Row(key={'process_name': 'SP-1'}, attributes={'json_output_field': 't1_pid'}),
-            Row(key={'process_name': 'SP-2'}, attributes={'json_output_field': 't2_pid'}),
-            Row(key={'process_name': 'SP-3'}, attributes={'json_output_field': 't3_pid'})
+            Row(key={'process_name': 'ETL-1'}, attributes={'json_output_field': 't1_pid'}),
+            Row(key={'process_name': 'ETL-2'}, attributes={'json_output_field': 't2_pid'}),
+            Row(key={'process_name': 'ETL-3'}, attributes={'json_output_field': 't3_pid'})
         ]
         row_grouper = JSONOutputFieldMetadataComparisonFunctions().construct_delete_row_grouper(MetadataTable([]))
         self.assertEqual([test_data], row_grouper.group_rows(test_data))
 
     def test_generate_insert_sql(self):
         test_data = [
-            Row(key={'process_name': 'SP-1'}, attributes={'json_output_field': 't1_pid'}),
-            Row(key={'process_name': 'SP-2'}, attributes={'json_output_field': 't2_pid'}),
-            Row(key={'process_name': 'SP-3'}, attributes={'json_output_field': 't3_pid'})
+            Row(key={'process_name': 'ETL-1'}, attributes={'json_output_field': 't1_pid'}),
+            Row(key={'process_name': 'ETL-2'}, attributes={'json_output_field': 't2_pid'}),
+            Row(key={'process_name': 'ETL-3'}, attributes={'json_output_field': 't3_pid'})
         ]
         expected = "WITH insert_rows (process_name, json_output_field) AS (\n" + \
-                   "    VALUES ('SP-1', 't1_pid')\n" + \
-                   "         , ('SP-2', 't2_pid')\n" + \
-                   "         , ('SP-3', 't3_pid')\n" + \
+                   "    VALUES ('ETL-1', 't1_pid')\n" + \
+                   "         , ('ETL-2', 't2_pid')\n" + \
+                   "         , ('ETL-3', 't3_pid')\n" + \
                    ")\n" + \
                    "INSERT\n" + \
                    "INTO mdi.json_output_field (process_dwid, field_name)\n" + \
@@ -138,14 +150,14 @@ class TestJSONOutputFieldMetadataComparisonFunctions(unittest.TestCase):
 
     def test_generate_update_sql(self):
         test_data = [
-            Row(key={'process_name': 'SP-1'}, attributes={'json_output_field': 't1_pid'}),
-            Row(key={'process_name': 'SP-2'}, attributes={'json_output_field': 't2_pid'}),
-            Row(key={'process_name': 'SP-3'}, attributes={'json_output_field': 't3_pid'})
+            Row(key={'process_name': 'ETL-1'}, attributes={'json_output_field': 't1_pid'}),
+            Row(key={'process_name': 'ETL-2'}, attributes={'json_output_field': 't2_pid'}),
+            Row(key={'process_name': 'ETL-3'}, attributes={'json_output_field': 't3_pid'})
         ]
         expected = "WITH update_rows (process_name, json_output_field) AS (\n" + \
-                   "    VALUES ('SP-1', 't1_pid')\n" + \
-                   "         , ('SP-2', 't2_pid')\n" + \
-                   "         , ('SP-3', 't3_pid')\n" + \
+                   "    VALUES ('ETL-1', 't1_pid')\n" + \
+                   "         , ('ETL-2', 't2_pid')\n" + \
+                   "         , ('ETL-3', 't3_pid')\n" + \
                    ")\n" + \
                    "UPDATE mdi.json_output_field\n" + \
                    "SET field_name = update_rows.json_output_field\n" + \
@@ -157,14 +169,14 @@ class TestJSONOutputFieldMetadataComparisonFunctions(unittest.TestCase):
 
     def test_generate_delete_sql(self):
         test_data = [
-            Row(key={'process_name': 'SP-1'}, attributes={'json_output_field': 't1_pid'}),
-            Row(key={'process_name': 'SP-2'}, attributes={'json_output_field': 't2_pid'}),
-            Row(key={'process_name': 'SP-3'}, attributes={'json_output_field': 't3_pid'})
+            Row(key={'process_name': 'ETL-1'}, attributes={'json_output_field': 't1_pid'}),
+            Row(key={'process_name': 'ETL-2'}, attributes={'json_output_field': 't2_pid'}),
+            Row(key={'process_name': 'ETL-3'}, attributes={'json_output_field': 't3_pid'})
         ]
         expected = "WITH delete_keys (process_name) AS (\n" + \
-                   "    VALUES ('SP-1')\n" + \
-                   "         , ('SP-2')\n" + \
-                   "         , ('SP-3')\n" + \
+                   "    VALUES ('ETL-1')\n" + \
+                   "         , ('ETL-2')\n" + \
+                   "         , ('ETL-3')\n" + \
                    ")\n" + \
                    "DELETE\n" + \
                    "FROM mdi.json_output_field\n" + \

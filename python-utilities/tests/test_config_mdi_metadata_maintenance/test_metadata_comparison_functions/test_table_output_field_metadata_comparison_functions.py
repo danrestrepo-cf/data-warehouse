@@ -17,9 +17,9 @@ class TestTableOutputFieldMetadataComparisonFunctions(unittest.TestCase):
         via other integration/system tests
         """
         test_data = [
-            {'process_name': 'SP-1', 'database_field_name': 't1_col1'},
-            {'process_name': 'SP-1', 'database_field_name': 't1_col2'},
-            {'process_name': 'SP-2', 'database_field_name': 't2_col1'}
+            {'process_name': 'ETL-1', 'database_field_name': 't1_col1'},
+            {'process_name': 'ETL-1', 'database_field_name': 't1_col2'},
+            {'process_name': 'ETL-2', 'database_field_name': 't2_col1'}
         ]
         db_conn = MockDBConnection(query_results=test_data)
         expected = MetadataTable(key_fields=['process_name', 'database_field_name'])
@@ -57,11 +57,15 @@ class TestTableOutputFieldMetadataComparisonFunctions(unittest.TestCase):
                                                 'data_type': 'TEXT'
                                             }
                                         },
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-1': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert'
+                                                'etls': {
+                                                    'ETL-1': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert'
+                                                    }
+                                                }
                                             }
                                         }
                                     },
@@ -76,11 +80,15 @@ class TestTableOutputFieldMetadataComparisonFunctions(unittest.TestCase):
                                                 }
                                             }
                                         },
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-2': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert'
+                                                'etls': {
+                                                    'ETL-2': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert'
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -94,9 +102,9 @@ class TestTableOutputFieldMetadataComparisonFunctions(unittest.TestCase):
 
         expected = MetadataTable(key_fields=['process_name', 'database_field_name'])
         expected.add_rows([
-            {'process_name': 'SP-1', 'database_field_name': 't1_col1'},
-            {'process_name': 'SP-1', 'database_field_name': 't1_col2'},
-            {'process_name': 'SP-2', 'database_field_name': 't2_col1'}
+            {'process_name': 'ETL-1', 'database_field_name': 't1_col1'},
+            {'process_name': 'ETL-1', 'database_field_name': 't1_col2'},
+            {'process_name': 'ETL-2', 'database_field_name': 't2_col1'}
         ])
         self.assertEqual(expected, TableOutputFieldMetadataComparisonFunctions().construct_metadata_table_from_source(dw_metadata))
 
@@ -125,11 +133,15 @@ class TestTableOutputFieldMetadataComparisonFunctions(unittest.TestCase):
                                                 'data_type': 'TEXT'
                                             }
                                         },
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-1': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert'
+                                                'etls': {
+                                                    'ETL-1': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert'
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -143,40 +155,40 @@ class TestTableOutputFieldMetadataComparisonFunctions(unittest.TestCase):
 
         expected = MetadataTable(key_fields=['process_name', 'database_field_name'])
         expected.add_rows([
-            {'process_name': 'SP-1', 'database_field_name': 'data_source_updated_datetime'},
-            {'process_name': 'SP-1', 'database_field_name': 'data_source_deleted_flag'},
-            {'process_name': 'SP-1', 'database_field_name': 'etl_batch_id'}
+            {'process_name': 'ETL-1', 'database_field_name': 'data_source_updated_datetime'},
+            {'process_name': 'ETL-1', 'database_field_name': 'data_source_deleted_flag'},
+            {'process_name': 'ETL-1', 'database_field_name': 'etl_batch_id'}
         ])
         self.assertEqual(expected, TableOutputFieldMetadataComparisonFunctions().construct_metadata_table_from_source(dw_metadata))
 
     def test_construct_insert_row_grouper(self):
         test_data = [
-            Row(key={'process_name': 'SP-1', 'database_field_name': 't1_col1'}, attributes={}),
-            Row(key={'process_name': 'SP-1', 'database_field_name': 't1_col2'}, attributes={}),
-            Row(key={'process_name': 'SP-2', 'database_field_name': 't2_col1'}, attributes={})
+            Row(key={'process_name': 'ETL-1', 'database_field_name': 't1_col1'}, attributes={}),
+            Row(key={'process_name': 'ETL-1', 'database_field_name': 't1_col2'}, attributes={}),
+            Row(key={'process_name': 'ETL-2', 'database_field_name': 't2_col1'}, attributes={})
         ]
         row_grouper = TableOutputFieldMetadataComparisonFunctions().construct_insert_row_grouper(DataWarehouseMetadata('dw'))
         self.assertEqual([test_data], row_grouper.group_rows(test_data))
 
     def test_construct_delete_row_grouper(self):
         test_data = [
-            Row(key={'process_name': 'SP-1', 'database_field_name': 't1_col1'}, attributes={}),
-            Row(key={'process_name': 'SP-1', 'database_field_name': 't1_col2'}, attributes={}),
-            Row(key={'process_name': 'SP-2', 'database_field_name': 't2_col1'}, attributes={})
+            Row(key={'process_name': 'ETL-1', 'database_field_name': 't1_col1'}, attributes={}),
+            Row(key={'process_name': 'ETL-1', 'database_field_name': 't1_col2'}, attributes={}),
+            Row(key={'process_name': 'ETL-2', 'database_field_name': 't2_col1'}, attributes={})
         ]
         row_grouper = TableOutputFieldMetadataComparisonFunctions().construct_delete_row_grouper(MetadataTable([]))
         self.assertEqual([test_data], row_grouper.group_rows(test_data))
 
     def test_generate_insert_sql(self):
         test_data = [
-            Row(key={'process_name': 'SP-1', 'database_field_name': 't1_col1'}, attributes={}),
-            Row(key={'process_name': 'SP-1', 'database_field_name': 't1_col2'}, attributes={}),
-            Row(key={'process_name': 'SP-2', 'database_field_name': 't2_col1'}, attributes={})
+            Row(key={'process_name': 'ETL-1', 'database_field_name': 't1_col1'}, attributes={}),
+            Row(key={'process_name': 'ETL-1', 'database_field_name': 't1_col2'}, attributes={}),
+            Row(key={'process_name': 'ETL-2', 'database_field_name': 't2_col1'}, attributes={})
         ]
         expected = "WITH insert_rows (process_name, database_field_name) AS (\n" + \
-                   "    VALUES ('SP-1', 't1_col1')\n" + \
-                   "         , ('SP-1', 't1_col2')\n" + \
-                   "         , ('SP-2', 't2_col1')\n" + \
+                   "    VALUES ('ETL-1', 't1_col1')\n" + \
+                   "         , ('ETL-1', 't1_col2')\n" + \
+                   "         , ('ETL-2', 't2_col1')\n" + \
                    ")\n" + \
                    "INSERT\n" + \
                    "INTO mdi.table_output_field (table_output_step_dwid, database_field_name, database_stream_name, field_order, is_sensitive)\n" + \
@@ -190,23 +202,23 @@ class TestTableOutputFieldMetadataComparisonFunctions(unittest.TestCase):
 
     def test_generate_update_sql(self):
         test_data = [
-            Row(key={'process_name': 'SP-1', 'database_field_name': 't1_col1'}, attributes={}),
-            Row(key={'process_name': 'SP-1', 'database_field_name': 't1_col2'}, attributes={}),
-            Row(key={'process_name': 'SP-2', 'database_field_name': 't2_col1'}, attributes={})
+            Row(key={'process_name': 'ETL-1', 'database_field_name': 't1_col1'}, attributes={}),
+            Row(key={'process_name': 'ETL-1', 'database_field_name': 't1_col2'}, attributes={}),
+            Row(key={'process_name': 'ETL-2', 'database_field_name': 't2_col1'}, attributes={})
         ]
         expected = ""
         self.assertEqual(expected, TableOutputFieldMetadataComparisonFunctions().generate_update_sql(test_data))
 
     def test_generate_delete_sql(self):
         test_data = [
-            Row(key={'process_name': 'SP-1', 'database_field_name': 't1_col1'}, attributes={}),
-            Row(key={'process_name': 'SP-1', 'database_field_name': 't1_col2'}, attributes={}),
-            Row(key={'process_name': 'SP-2', 'database_field_name': 't2_col1'}, attributes={})
+            Row(key={'process_name': 'ETL-1', 'database_field_name': 't1_col1'}, attributes={}),
+            Row(key={'process_name': 'ETL-1', 'database_field_name': 't1_col2'}, attributes={}),
+            Row(key={'process_name': 'ETL-2', 'database_field_name': 't2_col1'}, attributes={})
         ]
         expected = "WITH delete_keys (process_name, database_field_name) AS (\n" + \
-                   "    VALUES ('SP-1', 't1_col1')\n" + \
-                   "         , ('SP-1', 't1_col2')\n" + \
-                   "         , ('SP-2', 't2_col1')\n" + \
+                   "    VALUES ('ETL-1', 't1_col1')\n" + \
+                   "         , ('ETL-1', 't1_col2')\n" + \
+                   "         , ('ETL-2', 't2_col1')\n" + \
                    ")\n" + \
                    "DELETE\n" + \
                    "FROM mdi.table_output_field\n" + \

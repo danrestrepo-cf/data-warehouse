@@ -51,15 +51,16 @@ class TableInputStepMetadataComparisonFunctions(MetadataComparisonFunctions):
         for database in data_warehouse_metadata.databases:
             for schema in database.schemas:
                 for table in schema.tables:
-                    for etl in table.etls:
-                        if etl.input_type == ETLInputType.TABLE:
-                            data_source_dwid = etl.hardcoded_data_source.value if etl.hardcoded_data_source else 0
-                            metadata_table.add_row({
-                                'process_name': etl.process_name,
-                                'data_source_dwid': data_source_dwid,
-                                'sql': etl.input_sql,
-                                'connectionname': self.get_connection_name(database.name)
-                            })
+                    for step_function in table.step_functions:
+                        for etl in step_function.etls:
+                            if etl.input_type == ETLInputType.TABLE:
+                                data_source_dwid = etl.hardcoded_data_source.value if etl.hardcoded_data_source else 0
+                                metadata_table.add_row({
+                                    'process_name': etl.process_name,
+                                    'data_source_dwid': data_source_dwid,
+                                    'sql': etl.input_sql,
+                                    'connectionname': self.get_connection_name(database.name)
+                                })
         return metadata_table
 
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:

@@ -29,13 +29,14 @@ class DeleteKeyMetadataComparisonFunctions(MetadataComparisonFunctions):
         for database in data_warehouse_metadata.databases:
             for schema in database.schemas:
                 for table in schema.tables:
-                    for etl in table.etls:
-                        if etl.output_type == ETLOutputType.DELETE:
-                            for delete_key in etl.delete_keys:
-                                metadata_table.add_row({
-                                    'process_name': etl.process_name,
-                                    'table_name_field': delete_key
-                                })
+                    for step_function in table.step_functions:
+                        for etl in step_function.etls:
+                            if etl.output_type == ETLOutputType.DELETE:
+                                for delete_key in etl.delete_keys:
+                                    metadata_table.add_row({
+                                        'process_name': etl.process_name,
+                                        'table_name_field': delete_key
+                                    })
         return metadata_table
 
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:

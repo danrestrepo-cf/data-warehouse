@@ -31,16 +31,17 @@ class TableOutputStepMetadataComparisonFunctions(MetadataComparisonFunctions):
         for database in data_warehouse_metadata.databases:
             for schema in database.schemas:
                 for table in schema.tables:
-                    for etl in table.etls:
-                        if etl.output_type == ETLOutputType.INSERT:
-                            truncate_table = 'Y' if etl.truncate_table else 'N'
-                            metadata_table.add_row({
-                                'process_name': etl.process_name,
-                                'target_schema': schema.name,
-                                'target_table': table.name,
-                                'truncate_table': truncate_table,
-                                'connectionname': self.get_connection_name(database.name)
-                            })
+                    for step_function in table.step_functions:
+                        for etl in step_function.etls:
+                            if etl.output_type == ETLOutputType.INSERT:
+                                truncate_table = 'Y' if etl.truncate_table else 'N'
+                                metadata_table.add_row({
+                                    'process_name': etl.process_name,
+                                    'target_schema': schema.name,
+                                    'target_table': table.name,
+                                    'truncate_table': truncate_table,
+                                    'connectionname': self.get_connection_name(database.name)
+                                })
         return metadata_table
 
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:

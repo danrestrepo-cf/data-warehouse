@@ -17,9 +17,9 @@ class TestStateMachineDefinitionMetadataComparisonFunctions(unittest.TestCase):
         via other integration/system tests
         """
         test_data = [
-            {'process_name': 'SP-1', 'state_machine_name': 'SP-1', 'state_machine_comment': 'State Machine for SP-1'},
-            {'process_name': 'SP-2', 'state_machine_name': 'SP-2', 'state_machine_comment': 'State Machine for SP-2'},
-            {'process_name': 'SP-3', 'state_machine_name': 'SP-3', 'state_machine_comment': 'State Machine for SP-3'}
+            {'process_name': 'ETL-1', 'state_machine_name': 'SP-1', 'state_machine_comment': 'State Machine for SP-1'},
+            {'process_name': 'ETL-2', 'state_machine_name': 'SP-2', 'state_machine_comment': 'State Machine for SP-2'},
+            {'process_name': 'ETL-3', 'state_machine_name': 'SP-3', 'state_machine_comment': 'State Machine for SP-3'}
         ]
         db_conn = MockDBConnection(query_results=test_data)
         expected = MetadataTable(key_fields=['process_name'])
@@ -40,22 +40,30 @@ class TestStateMachineDefinitionMetadataComparisonFunctions(unittest.TestCase):
                                     {
                                         'name': 'table1',
                                         'primary_source_table': 'staging.staging_octane.table1',
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-1': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert',
+                                                'etls': {
+                                                    'ETL-1': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert',
+                                                    }
+                                                }
                                             }
                                         }
                                     },
                                     {
                                         'name': 'table2',
                                         'primary_source_table': 'staging.staging_octane.table2',
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-2': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert',
+                                                'etls': {
+                                                    'ETL-2': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert',
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -72,11 +80,15 @@ class TestStateMachineDefinitionMetadataComparisonFunctions(unittest.TestCase):
                                     {
                                         'name': 'table3',
                                         'primary_source_table': 'ingress.ingress_schema_1.table3',
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-3': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert',
+                                                'etls': {
+                                                    'ETL-3': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert',
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -90,43 +102,49 @@ class TestStateMachineDefinitionMetadataComparisonFunctions(unittest.TestCase):
 
         expected = MetadataTable(key_fields=['process_name'])
         expected.add_rows([
-            {'process_name': 'SP-1', 'state_machine_name': 'SP-1',
+            {'process_name': 'ETL-1', 'state_machine_name': 'SP-1',
              'state_machine_comment': 'ETL to insert records into staging.history_octane.table1 using staging.staging_octane.table1 as the primary source'},
-            {'process_name': 'SP-2', 'state_machine_name': 'SP-2',
+            {'process_name': 'ETL-2', 'state_machine_name': 'SP-2',
              'state_machine_comment': 'ETL to insert records into staging.history_octane.table2 using staging.staging_octane.table2 as the primary source'},
-            {'process_name': 'SP-3', 'state_machine_name': 'SP-3',
+            {'process_name': 'ETL-3', 'state_machine_name': 'SP-3',
              'state_machine_comment': 'ETL to insert records into ingress.ingress_schema_2.table3 using ingress.ingress_schema_1.table3 as the primary source'}
         ])
         self.assertEqual(expected, StateMachineDefinitionMetadataComparisonFunctions().construct_metadata_table_from_source(dw_metadata))
 
     def test_construct_insert_row_grouper(self):
         test_data = [
-            Row(key={'process_name': 'SP-1'}, attributes={'state_machine_name': 'SP-1', 'state_machine_comment': 'State Machine for SP-1'}),
-            Row(key={'process_name': 'SP-2'}, attributes={'state_machine_name': 'SP-2', 'state_machine_comment': 'State Machine for SP-2'}),
-            Row(key={'process_name': 'SP-3'}, attributes={'state_machine_name': 'SP-3', 'state_machine_comment': 'State Machine for SP-3'})
+            Row(key={'process_name': 'ETL-1'},
+                attributes={'state_machine_name': 'SP-1', 'state_machine_comment': 'State Machine for SP-1'}),
+            Row(key={'process_name': 'ETL-2'},
+                attributes={'state_machine_name': 'SP-2', 'state_machine_comment': 'State Machine for SP-2'}),
+            Row(key={'process_name': 'ETL-3'}, attributes={'state_machine_name': 'SP-3', 'state_machine_comment': 'State Machine for SP-3'})
         ]
         row_grouper = StateMachineDefinitionMetadataComparisonFunctions().construct_insert_row_grouper(DataWarehouseMetadata('dw'))
         self.assertEqual([test_data], row_grouper.group_rows(test_data))
 
     def test_construct_delete_row_grouper(self):
         test_data = [
-            Row(key={'process_name': 'SP-1'}, attributes={'state_machine_name': 'SP-1', 'state_machine_comment': 'State Machine for SP-1'}),
-            Row(key={'process_name': 'SP-2'}, attributes={'state_machine_name': 'SP-2', 'state_machine_comment': 'State Machine for SP-2'}),
-            Row(key={'process_name': 'SP-3'}, attributes={'state_machine_name': 'SP-3', 'state_machine_comment': 'State Machine for SP-3'})
+            Row(key={'process_name': 'ETL-1'},
+                attributes={'state_machine_name': 'SP-1', 'state_machine_comment': 'State Machine for SP-1'}),
+            Row(key={'process_name': 'ETL-2'},
+                attributes={'state_machine_name': 'SP-2', 'state_machine_comment': 'State Machine for SP-2'}),
+            Row(key={'process_name': 'ETL-3'}, attributes={'state_machine_name': 'SP-3', 'state_machine_comment': 'State Machine for SP-3'})
         ]
         row_grouper = StateMachineDefinitionMetadataComparisonFunctions().construct_delete_row_grouper(MetadataTable([]))
         self.assertEqual([test_data], row_grouper.group_rows(test_data))
 
     def test_generate_insert_sql(self):
         test_data = [
-            Row(key={'process_name': 'SP-1'}, attributes={'state_machine_name': 'SP-1', 'state_machine_comment': 'State Machine for SP-1'}),
-            Row(key={'process_name': 'SP-2'}, attributes={'state_machine_name': 'SP-2', 'state_machine_comment': 'State Machine for SP-2'}),
-            Row(key={'process_name': 'SP-3'}, attributes={'state_machine_name': 'SP-3', 'state_machine_comment': 'State Machine for SP-3'})
+            Row(key={'process_name': 'ETL-1'},
+                attributes={'state_machine_name': 'SP-1', 'state_machine_comment': 'State Machine for SP-1'}),
+            Row(key={'process_name': 'ETL-2'},
+                attributes={'state_machine_name': 'SP-2', 'state_machine_comment': 'State Machine for SP-2'}),
+            Row(key={'process_name': 'ETL-3'}, attributes={'state_machine_name': 'SP-3', 'state_machine_comment': 'State Machine for SP-3'})
         ]
         expected = "WITH insert_rows (process_name, state_machine_name, state_machine_comment) AS (\n" + \
-                   "    VALUES ('SP-1', 'SP-1', 'State Machine for SP-1')\n" + \
-                   "         , ('SP-2', 'SP-2', 'State Machine for SP-2')\n" + \
-                   "         , ('SP-3', 'SP-3', 'State Machine for SP-3')\n" + \
+                   "    VALUES ('ETL-1', 'SP-1', 'State Machine for SP-1')\n" + \
+                   "         , ('ETL-2', 'SP-2', 'State Machine for SP-2')\n" + \
+                   "         , ('ETL-3', 'SP-3', 'State Machine for SP-3')\n" + \
                    ")\n" + \
                    "INSERT\n" + \
                    "INTO mdi.state_machine_definition (process_dwid, name, comment)\n" + \
@@ -138,14 +156,16 @@ class TestStateMachineDefinitionMetadataComparisonFunctions(unittest.TestCase):
 
     def test_generate_update_sql(self):
         test_data = [
-            Row(key={'process_name': 'SP-1'}, attributes={'state_machine_name': 'SP-1', 'state_machine_comment': 'State Machine for SP-1'}),
-            Row(key={'process_name': 'SP-2'}, attributes={'state_machine_name': 'SP-2', 'state_machine_comment': 'State Machine for SP-2'}),
-            Row(key={'process_name': 'SP-3'}, attributes={'state_machine_name': 'SP-3', 'state_machine_comment': 'State Machine for SP-3'})
+            Row(key={'process_name': 'ETL-1'},
+                attributes={'state_machine_name': 'SP-1', 'state_machine_comment': 'State Machine for SP-1'}),
+            Row(key={'process_name': 'ETL-2'},
+                attributes={'state_machine_name': 'SP-2', 'state_machine_comment': 'State Machine for SP-2'}),
+            Row(key={'process_name': 'ETL-3'}, attributes={'state_machine_name': 'SP-3', 'state_machine_comment': 'State Machine for SP-3'})
         ]
         expected = "WITH update_rows (process_name, state_machine_name, state_machine_comment) AS (\n" + \
-                   "    VALUES ('SP-1', 'SP-1', 'State Machine for SP-1')\n" + \
-                   "         , ('SP-2', 'SP-2', 'State Machine for SP-2')\n" + \
-                   "         , ('SP-3', 'SP-3', 'State Machine for SP-3')\n" + \
+                   "    VALUES ('ETL-1', 'SP-1', 'State Machine for SP-1')\n" + \
+                   "         , ('ETL-2', 'SP-2', 'State Machine for SP-2')\n" + \
+                   "         , ('ETL-3', 'SP-3', 'State Machine for SP-3')\n" + \
                    ")\n" + \
                    "UPDATE mdi.state_machine_definition\n" + \
                    "SET name = update_rows.state_machine_name\n" + \
@@ -158,14 +178,16 @@ class TestStateMachineDefinitionMetadataComparisonFunctions(unittest.TestCase):
 
     def test_generate_delete_sql(self):
         test_data = [
-            Row(key={'process_name': 'SP-1'}, attributes={'state_machine_name': 'SP-1', 'state_machine_comment': 'State Machine for SP-1'}),
-            Row(key={'process_name': 'SP-2'}, attributes={'state_machine_name': 'SP-2', 'state_machine_comment': 'State Machine for SP-2'}),
-            Row(key={'process_name': 'SP-3'}, attributes={'state_machine_name': 'SP-3', 'state_machine_comment': 'State Machine for SP-3'})
+            Row(key={'process_name': 'ETL-1'},
+                attributes={'state_machine_name': 'SP-1', 'state_machine_comment': 'State Machine for SP-1'}),
+            Row(key={'process_name': 'ETL-2'},
+                attributes={'state_machine_name': 'SP-2', 'state_machine_comment': 'State Machine for SP-2'}),
+            Row(key={'process_name': 'ETL-3'}, attributes={'state_machine_name': 'SP-3', 'state_machine_comment': 'State Machine for SP-3'})
         ]
         expected = "WITH delete_keys (process_name) AS (\n" + \
-                   "    VALUES ('SP-1')\n" + \
-                   "         , ('SP-2')\n" + \
-                   "         , ('SP-3')\n" + \
+                   "    VALUES ('ETL-1')\n" + \
+                   "         , ('ETL-2')\n" + \
+                   "         , ('ETL-3')\n" + \
                    ")\n" + \
                    "DELETE\n" + \
                    "FROM mdi.state_machine_definition\n" + \

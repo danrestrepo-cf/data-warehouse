@@ -17,9 +17,9 @@ class TestTableInputStepMetadataComparisonFunctions(unittest.TestCase):
         via other integration/system tests
         """
         test_data = [
-            {'process_name': 'SP-1', 'data_source_dwid': 1, 'sql': 'SQL for SP-1', 'connectionname': 'Staging DB Connection'},
-            {'process_name': 'SP-2', 'data_source_dwid': 1, 'sql': 'SQL for SP-2', 'connectionname': 'Staging DB Connection'},
-            {'process_name': 'SP-3', 'data_source_dwid': 1, 'sql': 'SQL for SP-3', 'connectionname': 'Staging DB Connection'}
+            {'process_name': 'ETL-1', 'data_source_dwid': 1, 'sql': 'SQL for ETL-1', 'connectionname': 'Staging DB Connection'},
+            {'process_name': 'ETL-2', 'data_source_dwid': 1, 'sql': 'SQL for ETL-2', 'connectionname': 'Staging DB Connection'},
+            {'process_name': 'ETL-3', 'data_source_dwid': 1, 'sql': 'SQL for ETL-3', 'connectionname': 'Staging DB Connection'}
         ]
         db_conn = MockDBConnection(query_results=test_data)
         expected = MetadataTable(key_fields=['process_name'])
@@ -40,24 +40,32 @@ class TestTableInputStepMetadataComparisonFunctions(unittest.TestCase):
                                     {
                                         'name': 'table1',
                                         'primary_source_table': 'staging.staging_octane.table1',
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-1': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert',
-                                                'input_sql': 'SQL for SP-1'
+                                                'etls': {
+                                                    'ETL-1': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert',
+                                                        'input_sql': 'SQL for ETL-1'
+                                                    }
+                                                }
                                             }
                                         }
                                     },
                                     {
                                         'name': 'table2',
                                         'primary_source_table': 'staging.staging_octane.table2',
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-2': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert',
-                                                'input_sql': 'SQL for SP-2'
+                                                'etls': {
+                                                    'ETL-2': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert',
+                                                        'input_sql': 'SQL for ETL-2'
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -74,12 +82,16 @@ class TestTableInputStepMetadataComparisonFunctions(unittest.TestCase):
                                     {
                                         'name': 'table3',
                                         'primary_source_table': 'ingress.ingress_schema_1.table3',
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-3': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert',
-                                                'input_sql': 'SQL for SP-3'
+                                                'etls': {
+                                                    'ETL-3': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert',
+                                                        'input_sql': 'SQL for ETL-3'
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -93,9 +105,9 @@ class TestTableInputStepMetadataComparisonFunctions(unittest.TestCase):
 
         expected = MetadataTable(key_fields=['process_name'])
         expected.add_rows([
-            {'process_name': 'SP-1', 'data_source_dwid': 1, 'sql': 'SQL for SP-1', 'connectionname': 'Staging DB Connection'},
-            {'process_name': 'SP-2', 'data_source_dwid': 1, 'sql': 'SQL for SP-2', 'connectionname': 'Staging DB Connection'},
-            {'process_name': 'SP-3', 'data_source_dwid': 1, 'sql': 'SQL for SP-3', 'connectionname': 'Ingress DB Connection'}
+            {'process_name': 'ETL-1', 'data_source_dwid': 1, 'sql': 'SQL for ETL-1', 'connectionname': 'Staging DB Connection'},
+            {'process_name': 'ETL-2', 'data_source_dwid': 1, 'sql': 'SQL for ETL-2', 'connectionname': 'Staging DB Connection'},
+            {'process_name': 'ETL-3', 'data_source_dwid': 1, 'sql': 'SQL for ETL-3', 'connectionname': 'Ingress DB Connection'}
         ])
         self.assertEqual(expected, TableInputStepMetadataComparisonFunctions().construct_metadata_table_from_source(dw_metadata))
 
@@ -113,13 +125,17 @@ class TestTableInputStepMetadataComparisonFunctions(unittest.TestCase):
                                     {
                                         'name': 'table1',
                                         'primary_source_table': 'staging.staging_octane.table1',
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-1': {
-                                                'data_type': 'TEXT',
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert',
-                                                'input_sql': 'SQL for SP-1'
+                                                'etls': {
+                                                    'ETL-1': {
+                                                        'data_type': 'TEXT',
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert',
+                                                        'input_sql': 'SQL for ETL-1'
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -135,41 +151,41 @@ class TestTableInputStepMetadataComparisonFunctions(unittest.TestCase):
 
     def test_construct_insert_row_grouper(self):
         test_data = [
-            Row(key={'process_name': 'SP-1'},
-                attributes={'data_source_dwid': 1, 'sql': 'SQL for SP-1', 'connectionname': 'Staging DB Connection'}),
-            Row(key={'process_name': 'SP-2'},
-                attributes={'data_source_dwid': 1, 'sql': 'SQL for SP-2', 'connectionname': 'Staging DB Connection'}),
-            Row(key={'process_name': 'SP-3'},
-                attributes={'data_source_dwid': 1, 'sql': 'SQL for SP-3', 'connectionname': 'Staging DB Connection'}),
+            Row(key={'process_name': 'ETL-1'},
+                attributes={'data_source_dwid': 1, 'sql': 'SQL for ETL-1', 'connectionname': 'Staging DB Connection'}),
+            Row(key={'process_name': 'ETL-2'},
+                attributes={'data_source_dwid': 1, 'sql': 'SQL for ETL-2', 'connectionname': 'Staging DB Connection'}),
+            Row(key={'process_name': 'ETL-3'},
+                attributes={'data_source_dwid': 1, 'sql': 'SQL for ETL-3', 'connectionname': 'Staging DB Connection'}),
         ]
         row_grouper = TableInputStepMetadataComparisonFunctions().construct_insert_row_grouper(DataWarehouseMetadata('dw'))
         self.assertEqual([test_data], row_grouper.group_rows(test_data))
 
     def test_construct_delete_row_grouper(self):
         test_data = [
-            Row(key={'process_name': 'SP-1'},
-                attributes={'data_source_dwid': 1, 'sql': 'SQL for SP-1', 'connectionname': 'Staging DB Connection'}),
-            Row(key={'process_name': 'SP-2'},
-                attributes={'data_source_dwid': 1, 'sql': 'SQL for SP-2', 'connectionname': 'Staging DB Connection'}),
-            Row(key={'process_name': 'SP-3'},
-                attributes={'data_source_dwid': 1, 'sql': 'SQL for SP-3', 'connectionname': 'Staging DB Connection'}),
+            Row(key={'process_name': 'ETL-1'},
+                attributes={'data_source_dwid': 1, 'sql': 'SQL for ETL-1', 'connectionname': 'Staging DB Connection'}),
+            Row(key={'process_name': 'ETL-2'},
+                attributes={'data_source_dwid': 1, 'sql': 'SQL for ETL-2', 'connectionname': 'Staging DB Connection'}),
+            Row(key={'process_name': 'ETL-3'},
+                attributes={'data_source_dwid': 1, 'sql': 'SQL for ETL-3', 'connectionname': 'Staging DB Connection'}),
         ]
         row_grouper = TableInputStepMetadataComparisonFunctions().construct_delete_row_grouper(MetadataTable([]))
         self.assertEqual([test_data], row_grouper.group_rows(test_data))
 
     def test_generate_insert_sql(self):
         test_data = [
-            Row(key={'process_name': 'SP-1'},
-                attributes={'data_source_dwid': 1, 'sql': 'SQL for SP-1', 'connectionname': 'Staging DB Connection'}),
-            Row(key={'process_name': 'SP-2'},
-                attributes={'data_source_dwid': 1, 'sql': 'SQL for SP-2', 'connectionname': 'Staging DB Connection'}),
-            Row(key={'process_name': 'SP-3'},
-                attributes={'data_source_dwid': 1, 'sql': 'SQL for SP-3', 'connectionname': 'Staging DB Connection'}),
+            Row(key={'process_name': 'ETL-1'},
+                attributes={'data_source_dwid': 1, 'sql': 'SQL for ETL-1', 'connectionname': 'Staging DB Connection'}),
+            Row(key={'process_name': 'ETL-2'},
+                attributes={'data_source_dwid': 1, 'sql': 'SQL for ETL-2', 'connectionname': 'Staging DB Connection'}),
+            Row(key={'process_name': 'ETL-3'},
+                attributes={'data_source_dwid': 1, 'sql': 'SQL for ETL-3', 'connectionname': 'Staging DB Connection'}),
         ]
         expected = "WITH insert_rows (process_name, data_source_dwid, sql, connectionname) AS (\n" + \
-                   "    VALUES ('SP-1', 1, 'SQL for SP-1', 'Staging DB Connection')\n" + \
-                   "         , ('SP-2', 1, 'SQL for SP-2', 'Staging DB Connection')\n" + \
-                   "         , ('SP-3', 1, 'SQL for SP-3', 'Staging DB Connection')\n" + \
+                   "    VALUES ('ETL-1', 1, 'SQL for ETL-1', 'Staging DB Connection')\n" + \
+                   "         , ('ETL-2', 1, 'SQL for ETL-2', 'Staging DB Connection')\n" + \
+                   "         , ('ETL-3', 1, 'SQL for ETL-3', 'Staging DB Connection')\n" + \
                    ")\n" + \
                    "INSERT\n" + \
                    "INTO mdi.table_input_step (process_dwid, data_source_dwid, sql, limit_size, execute_for_each_row, replace_variables, enable_lazy_conversion, cached_row_meta, connectionname)\n" + \
@@ -182,17 +198,17 @@ class TestTableInputStepMetadataComparisonFunctions(unittest.TestCase):
 
     def test_generate_update_sql(self):
         test_data = [
-            Row(key={'process_name': 'SP-1'},
-                attributes={'data_source_dwid': 1, 'sql': 'SQL for SP-1', 'connectionname': 'Staging DB Connection'}),
-            Row(key={'process_name': 'SP-2'},
-                attributes={'data_source_dwid': 1, 'sql': 'SQL for SP-2', 'connectionname': 'Staging DB Connection'}),
-            Row(key={'process_name': 'SP-3'},
-                attributes={'data_source_dwid': 1, 'sql': 'SQL for SP-3', 'connectionname': 'Staging DB Connection'}),
+            Row(key={'process_name': 'ETL-1'},
+                attributes={'data_source_dwid': 1, 'sql': 'SQL for ETL-1', 'connectionname': 'Staging DB Connection'}),
+            Row(key={'process_name': 'ETL-2'},
+                attributes={'data_source_dwid': 1, 'sql': 'SQL for ETL-2', 'connectionname': 'Staging DB Connection'}),
+            Row(key={'process_name': 'ETL-3'},
+                attributes={'data_source_dwid': 1, 'sql': 'SQL for ETL-3', 'connectionname': 'Staging DB Connection'}),
         ]
         expected = "WITH update_rows (process_name, data_source_dwid, sql, connectionname) AS (\n" + \
-                   "    VALUES ('SP-1', 1, 'SQL for SP-1', 'Staging DB Connection')\n" + \
-                   "         , ('SP-2', 1, 'SQL for SP-2', 'Staging DB Connection')\n" + \
-                   "         , ('SP-3', 1, 'SQL for SP-3', 'Staging DB Connection')\n" + \
+                   "    VALUES ('ETL-1', 1, 'SQL for ETL-1', 'Staging DB Connection')\n" + \
+                   "         , ('ETL-2', 1, 'SQL for ETL-2', 'Staging DB Connection')\n" + \
+                   "         , ('ETL-3', 1, 'SQL for ETL-3', 'Staging DB Connection')\n" + \
                    ")\n" + \
                    "UPDATE mdi.table_input_step\n" + \
                    "SET data_source_dwid = update_rows.data_source_dwid\n" + \
@@ -206,17 +222,17 @@ class TestTableInputStepMetadataComparisonFunctions(unittest.TestCase):
 
     def test_generate_delete_sql(self):
         test_data = [
-            Row(key={'process_name': 'SP-1'},
-                attributes={'data_source_dwid': 1, 'sql': 'SQL for SP-1', 'connectionname': 'Staging DB Connection'}),
-            Row(key={'process_name': 'SP-2'},
-                attributes={'data_source_dwid': 1, 'sql': 'SQL for SP-2', 'connectionname': 'Staging DB Connection'}),
-            Row(key={'process_name': 'SP-3'},
-                attributes={'data_source_dwid': 1, 'sql': 'SQL for SP-3', 'connectionname': 'Staging DB Connection'}),
+            Row(key={'process_name': 'ETL-1'},
+                attributes={'data_source_dwid': 1, 'sql': 'SQL for ETL-1', 'connectionname': 'Staging DB Connection'}),
+            Row(key={'process_name': 'ETL-2'},
+                attributes={'data_source_dwid': 1, 'sql': 'SQL for ETL-2', 'connectionname': 'Staging DB Connection'}),
+            Row(key={'process_name': 'ETL-3'},
+                attributes={'data_source_dwid': 1, 'sql': 'SQL for ETL-3', 'connectionname': 'Staging DB Connection'}),
         ]
         expected = "WITH delete_keys (process_name) AS (\n" + \
-                   "    VALUES ('SP-1')\n" + \
-                   "         , ('SP-2')\n" + \
-                   "         , ('SP-3')\n" + \
+                   "    VALUES ('ETL-1')\n" + \
+                   "         , ('ETL-2')\n" + \
+                   "         , ('ETL-3')\n" + \
                    ")\n" + \
                    "DELETE\n" + \
                    "FROM mdi.table_input_step\n" + \

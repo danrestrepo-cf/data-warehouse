@@ -17,9 +17,9 @@ class TestInsertUpdateKeyMetadataComparisonFunctions(unittest.TestCase):
         via other integration/system tests
         """
         test_data = [
-            {'process_name': 'SP-1', 'key_lookup': 'column1'},
-            {'process_name': 'SP-2', 'key_lookup': 'column2'},
-            {'process_name': 'SP-3', 'key_lookup': 'column3'},
+            {'process_name': 'ETL-1', 'key_lookup': 'column1'},
+            {'process_name': 'ETL-2', 'key_lookup': 'column2'},
+            {'process_name': 'ETL-3', 'key_lookup': 'column3'},
         ]
         db_conn = MockDBConnection(query_results=test_data)
         expected = MetadataTable(key_fields=['process_name', 'key_lookup'])
@@ -40,29 +40,37 @@ class TestInsertUpdateKeyMetadataComparisonFunctions(unittest.TestCase):
                                     {
                                         'name': 'table1_dim',
                                         'primary_source_table': 'staging.history_octane.table1',
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-1': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert_update',
-                                                'insert_update_keys': [
-                                                    'column1'
-                                                ]
+                                                'etls': {
+                                                    'ETL-1': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert_update',
+                                                        'insert_update_keys': [
+                                                            'column1'
+                                                        ]
+                                                    }
+                                                }
                                             }
                                         }
                                     },
                                     {
                                         'name': 'table2_dim',
                                         'primary_source_table': 'staging.history_octane.table2',
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-2': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert_update',
-                                                'insert_update_keys': [
-                                                    'column2',
-                                                    'column3'
-                                                ]
+                                                'etls': {
+                                                    'ETL-2': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert_update',
+                                                        'insert_update_keys': [
+                                                            'column2',
+                                                            'column3'
+                                                        ]
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -79,14 +87,18 @@ class TestInsertUpdateKeyMetadataComparisonFunctions(unittest.TestCase):
                                     {
                                         'name': 'table3',
                                         'primary_source_table': 'ingress.ingress_schema_1.table3',
-                                        'etls': {
+                                        'step_functions': {
                                             'SP-3': {
-                                                'hardcoded_data_source': 'Octane',
-                                                'input_type': 'table',
-                                                'output_type': 'insert_update',
-                                                'insert_update_keys': [
-                                                    'column4'
-                                                ]
+                                                'etls': {
+                                                    'ETL-3': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert_update',
+                                                        'insert_update_keys': [
+                                                            'column4'
+                                                        ]
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -100,41 +112,41 @@ class TestInsertUpdateKeyMetadataComparisonFunctions(unittest.TestCase):
 
         expected = MetadataTable(key_fields=['process_name', 'key_lookup'])
         expected.add_rows([
-            {'process_name': 'SP-1', 'key_lookup': 'column1'},
-            {'process_name': 'SP-2', 'key_lookup': 'column2'},
-            {'process_name': 'SP-2', 'key_lookup': 'column3'},
-            {'process_name': 'SP-3', 'key_lookup': 'column4'},
+            {'process_name': 'ETL-1', 'key_lookup': 'column1'},
+            {'process_name': 'ETL-2', 'key_lookup': 'column2'},
+            {'process_name': 'ETL-2', 'key_lookup': 'column3'},
+            {'process_name': 'ETL-3', 'key_lookup': 'column4'},
         ])
         self.assertEqual(expected, InsertUpdateKeyMetadataComparisonFunctions().construct_metadata_table_from_source(dw_metadata))
 
     def test_construct_insert_row_grouper(self):
         test_data = [
-            Row(key={'process_name': 'SP-1', 'key_lookup': 'column1'}, attributes={}),
-            Row(key={'process_name': 'SP-1', 'key_lookup': 'column2'}, attributes={}),
-            Row(key={'process_name': 'SP-2', 'key_lookup': 'column3'}, attributes={})
+            Row(key={'process_name': 'ETL-1', 'key_lookup': 'column1'}, attributes={}),
+            Row(key={'process_name': 'ETL-1', 'key_lookup': 'column2'}, attributes={}),
+            Row(key={'process_name': 'ETL-2', 'key_lookup': 'column3'}, attributes={})
         ]
         row_grouper = InsertUpdateKeyMetadataComparisonFunctions().construct_insert_row_grouper(DataWarehouseMetadata('dw'))
         self.assertEqual([test_data], row_grouper.group_rows(test_data))
 
     def test_construct_delete_row_grouper(self):
         test_data = [
-            Row(key={'process_name': 'SP-1', 'key_lookup': 'column1'}, attributes={}),
-            Row(key={'process_name': 'SP-1', 'key_lookup': 'column2'}, attributes={}),
-            Row(key={'process_name': 'SP-2', 'key_lookup': 'column3'}, attributes={})
+            Row(key={'process_name': 'ETL-1', 'key_lookup': 'column1'}, attributes={}),
+            Row(key={'process_name': 'ETL-1', 'key_lookup': 'column2'}, attributes={}),
+            Row(key={'process_name': 'ETL-2', 'key_lookup': 'column3'}, attributes={})
         ]
         row_grouper = InsertUpdateKeyMetadataComparisonFunctions().construct_delete_row_grouper(MetadataTable([]))
         self.assertEqual([test_data], row_grouper.group_rows(test_data))
 
     def test_generate_insert_sql(self):
         test_data = [
-            Row(key={'process_name': 'SP-1', 'key_lookup': 'column1'}, attributes={}),
-            Row(key={'process_name': 'SP-1', 'key_lookup': 'column2'}, attributes={}),
-            Row(key={'process_name': 'SP-2', 'key_lookup': 'column3'}, attributes={})
+            Row(key={'process_name': 'ETL-1', 'key_lookup': 'column1'}, attributes={}),
+            Row(key={'process_name': 'ETL-1', 'key_lookup': 'column2'}, attributes={}),
+            Row(key={'process_name': 'ETL-2', 'key_lookup': 'column3'}, attributes={})
         ]
         expected = "WITH insert_rows (process_name, key_lookup) AS (\n" + \
-                   "    VALUES ('SP-1', 'column1')\n" + \
-                   "         , ('SP-1', 'column2')\n" + \
-                   "         , ('SP-2', 'column3')\n" + \
+                   "    VALUES ('ETL-1', 'column1')\n" + \
+                   "         , ('ETL-1', 'column2')\n" + \
+                   "         , ('ETL-2', 'column3')\n" + \
                    ")\n" + \
                    "INSERT INTO mdi.insert_update_key (insert_update_step_dwid, key_lookup, key_stream1, key_stream2, key_condition)\n" + \
                    "SELECT insert_update_step.dwid, insert_rows.key_lookup, insert_rows.key_lookup, NULL, '='\n" + \
@@ -147,23 +159,23 @@ class TestInsertUpdateKeyMetadataComparisonFunctions(unittest.TestCase):
 
     def test_generate_update_sql(self):
         test_data = [
-            Row(key={'process_name': 'SP-1', 'key_lookup': 'column1'}, attributes={}),
-            Row(key={'process_name': 'SP-1', 'key_lookup': 'column2'}, attributes={}),
-            Row(key={'process_name': 'SP-2', 'key_lookup': 'column3'}, attributes={})
+            Row(key={'process_name': 'ETL-1', 'key_lookup': 'column1'}, attributes={}),
+            Row(key={'process_name': 'ETL-1', 'key_lookup': 'column2'}, attributes={}),
+            Row(key={'process_name': 'ETL-2', 'key_lookup': 'column3'}, attributes={})
         ]
         expected = ""
         self.assertEqual(expected, InsertUpdateKeyMetadataComparisonFunctions().generate_update_sql(test_data))
 
     def test_generate_delete_sql(self):
         test_data = [
-            Row(key={'process_name': 'SP-1', 'key_lookup': 'column1'}, attributes={}),
-            Row(key={'process_name': 'SP-1', 'key_lookup': 'column2'}, attributes={}),
-            Row(key={'process_name': 'SP-2', 'key_lookup': 'column3'}, attributes={})
+            Row(key={'process_name': 'ETL-1', 'key_lookup': 'column1'}, attributes={}),
+            Row(key={'process_name': 'ETL-1', 'key_lookup': 'column2'}, attributes={}),
+            Row(key={'process_name': 'ETL-2', 'key_lookup': 'column3'}, attributes={})
         ]
         expected = "WITH delete_keys (process_name) AS (\n" + \
-                   "    VALUES ('SP-1', 'column1')\n" + \
-                   "         , ('SP-1', 'column2')\n" + \
-                   "         , ('SP-2', 'column3')\n" + \
+                   "    VALUES ('ETL-1', 'column1')\n" + \
+                   "         , ('ETL-1', 'column2')\n" + \
+                   "         , ('ETL-2', 'column3')\n" + \
                    ")\n" + \
                    "DELETE\n" + \
                    "FROM mdi.insert_update_key\n" + \

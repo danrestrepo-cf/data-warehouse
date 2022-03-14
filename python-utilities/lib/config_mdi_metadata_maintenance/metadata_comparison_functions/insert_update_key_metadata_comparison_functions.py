@@ -30,13 +30,14 @@ class InsertUpdateKeyMetadataComparisonFunctions(MetadataComparisonFunctions):
         for database in data_warehouse_metadata.databases:
             for schema in database.schemas:
                 for table in schema.tables:
-                    for etl in table.etls:
-                        if etl.output_type == ETLOutputType.INSERT_UPDATE:
-                            for insert_update_key in etl.insert_update_keys:
-                                metadata_table.add_row({
-                                    'process_name': etl.process_name,
-                                    'key_lookup': insert_update_key,
-                            })
+                    for step_function in table.step_functions:
+                        for etl in step_function.etls:
+                            if etl.output_type == ETLOutputType.INSERT_UPDATE:
+                                for insert_update_key in etl.insert_update_keys:
+                                    metadata_table.add_row({
+                                        'process_name': etl.process_name,
+                                        'key_lookup': insert_update_key,
+                                })
         return metadata_table
 
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:

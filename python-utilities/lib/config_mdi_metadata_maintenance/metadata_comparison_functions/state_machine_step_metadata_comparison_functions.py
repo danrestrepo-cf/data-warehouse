@@ -51,9 +51,10 @@ class StateMachineStepMetadataComparisonFunctions(MetadataComparisonFunctions):
         for database in data_warehouse_metadata.databases:
             for schema in database.schemas:
                 for table in schema.tables:
-                    for etl in table.etls:
-                        for next_etl_process_name in table.next_etls:
-                            metadata_table.add_row({'process_name': etl.process_name, 'next_process_name': next_etl_process_name})
+                    for step_function in table.step_functions:
+                        for etl in step_function.etls:
+                            for next_step_function_name in etl.next_step_functions:
+                                metadata_table.add_row({'process_name': etl.process_name, 'next_process_name': next_step_function_name})
         return metadata_table
 
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:

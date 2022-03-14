@@ -38,14 +38,15 @@ class TableOutputFieldMetadataComparisonFunctions(MetadataComparisonFunctions):
         for database in data_warehouse_metadata.databases:
             for schema in database.schemas:
                 for table in schema.tables:
-                    for etl in table.etls:
-                        if etl.output_type == ETLOutputType.INSERT:
-                            for column in table.columns:
-                                if column.source is not None or column.name in standard_sourceless_fields:
-                                    metadata_table.add_row({
-                                        'process_name': etl.process_name,
-                                        'database_field_name': column.name
-                                    })
+                    for step_function in table.step_functions:
+                        for etl in step_function.etls:
+                            if etl.output_type == ETLOutputType.INSERT:
+                                for column in table.columns:
+                                    if column.source is not None or column.name in standard_sourceless_fields:
+                                        metadata_table.add_row({
+                                            'process_name': etl.process_name,
+                                            'database_field_name': column.name
+                                        })
         return metadata_table
 
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:
