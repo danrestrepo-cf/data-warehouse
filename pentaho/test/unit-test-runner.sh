@@ -243,8 +243,6 @@ execute_edw_metadata_unit_test "test_32"
 execute_edw_metadata_unit_test "test_33"
 execute_edw_metadata_unit_test "test_34"
 execute_edw_metadata_unit_test "test_35"
-execute_edw_metadata_unit_test "test_36"
-execute_edw_metadata_unit_test "test_37"
 
 # If any EDW metadata unit tests fail, print the failures and ask the user whether to proceed with remaining unit tests
 # Otherwise, proceed with remaining unit tests
