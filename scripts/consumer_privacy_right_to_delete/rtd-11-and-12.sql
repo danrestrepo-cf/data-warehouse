@@ -1155,7 +1155,8 @@ SET data_source_updated_datetime = NOW()
 	, prpr_residence_place_pid = 66955927
 	, prpr_deal_child_name = ''
 FROM history_octane.deal
-WHERE proposal_req.prpr_deal_pid = deal.d_pid;
+WHERE proposal_req.prpr_deal_pid = deal.d_pid
+	AND deal.d_los_loan_id_main = 1401318407;
 
 
 -- proposal_review
@@ -2601,7 +2602,7 @@ SET data_source_updated_datetime = NOW()
 	, prpr_deal_child_name = ''
 FROM history_octane.deal
 WHERE proposal_req.prpr_deal_pid = deal.d_pid
-	AND deal.d_los_loan_id_main = 1401487039
+	AND deal.d_los_loan_id_main = 1401487039;
 
 
 -- proposal_review
@@ -2685,8 +2686,8 @@ SET data_source_updated_datetime = NOW()
 	, pr_credit_report_identifier = ''
 FROM history_octane.proposal
 	JOIN history_octane.deal ON proposal.prp_deal_pid = deal.d_pid
-WHERE public_record.pr_proposal_pid = proposal.prp_pid
-	AND deal.d_los_loan_id_main = 1401487039;
+		AND deal.d_los_loan_id_main = 1401487039
+WHERE public_record.pr_proposal_pid = proposal.prp_pid;
 
 
 -- rental_income
