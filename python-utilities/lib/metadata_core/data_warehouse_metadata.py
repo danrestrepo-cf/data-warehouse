@@ -222,7 +222,6 @@ class ETLMetadata:
                f'source'
 
 
-@dataclass
 class StepFunctionMetadata:
     """Metadata describing an AWS step function that executes ETLs.
 
@@ -263,6 +262,19 @@ class StepFunctionMetadata:
 
     def has_etl(self, etl_name: str) -> bool:
         return etl_name in self._etls
+
+    def __repr__(self) -> str:
+        return f'StepFunctionMetadata(\n' \
+               f'    name={self.name},\n' \
+               f'    parallel_limit={self.parallel_limit}\n' \
+               f'    etls={generate_collection_repr(self.etls)}\n' \
+               f')'
+
+    def __eq__(self, other: 'StepFunctionMetadata') -> bool:
+        return isinstance(other, StepFunctionMetadata) and \
+               self.name == other.name and \
+               self.parallel_limit == other.parallel_limit and \
+               self.etls == other.etls
 
 
 @dataclass(init=False)
@@ -399,7 +411,7 @@ class TableMetadata:
                f'    primary_key={repr(self.primary_key)}\n' \
                f'    foreign_keys={repr(self.foreign_keys)}\n' \
                f'    columns={repr(self.columns)}\n' \
-               f'    step_functions={repr(self.step_functions)}\n' \
+               f'    step_functions={generate_collection_repr(self.step_functions)}\n' \
                f')'
 
     def __eq__(self, other: 'TableMetadata') -> bool:
@@ -559,4 +571,4 @@ def indent_multiline_str(s: str, indent: int = 4) -> str:
 def generate_collection_repr(collection: list) -> str:
     """Generate an easy-to-read repr for a list of repr-able objects."""
     reprs = "\n".join([indent_multiline_str(repr(item), indent=8) for item in collection])
-    return f'[\n{reprs}\n]'
+    return f'[\n{reprs}\n    ]'
