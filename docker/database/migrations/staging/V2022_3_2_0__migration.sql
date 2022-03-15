@@ -43,3 +43,9 @@ ALTER TABLE star_loan.transaction_dim
 ALTER TABLE star_loan.transaction_junk_dim
 	ADD COLUMN property_usage_code VARCHAR(128)
 	, ADD COLUMN property_usage VARCHAR(1024);
+
+UPDATE star_loan.transaction_junk_dim
+	SET data_source_integration_columns = 'is_test_loan_flag~structure_code~mi_required_flag~loan_purpose_code~data_source_dwid~piggyback_flag~property_usage_code'
+	, data_source_integration_id = '<NULL>~<NULL>~<NULL>~<NULL>~0~<NULL>~<NULL>'
+	, edw_modified_datetime = NOW()
+WHERE dwid = 0;
