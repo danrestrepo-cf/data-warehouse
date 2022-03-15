@@ -36,8 +36,8 @@ class DeleteStepMetadataComparisonFunctions(MetadataComparisonFunctions):
                                 metadata_table.add_row({
                                     'process_name': etl.process_name,
                                     'connectionname': self.get_connection_name(database.name),
-                                    'schema_name': schema.name,
-                                    'table_name': table.name
+                                    'schema_name': etl.output_table.schema,
+                                    'table_name': etl.output_table.table
                                 })
         return metadata_table
 

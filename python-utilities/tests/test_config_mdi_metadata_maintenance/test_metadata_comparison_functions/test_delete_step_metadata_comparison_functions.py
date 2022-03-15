@@ -50,6 +50,7 @@ class TestDeleteStepMetadataComparisonFunctions(unittest.TestCase):
                                                         'hardcoded_data_source': 'Octane',
                                                         'input_type': 'table',
                                                         'output_type': 'delete',
+                                                        'output_table': 'staging.star_loan.table1'
                                                     }
                                                 }
                                             }
@@ -65,6 +66,7 @@ class TestDeleteStepMetadataComparisonFunctions(unittest.TestCase):
                                                         'hardcoded_data_source': 'Octane',
                                                         'input_type': 'table',
                                                         'output_type': 'delete',
+                                                        'output_table': 'staging.star_loan.table22'
                                                     }
                                                 }
                                             }
@@ -90,6 +92,7 @@ class TestDeleteStepMetadataComparisonFunctions(unittest.TestCase):
                                                         'hardcoded_data_source': 'Octane',
                                                         'input_type': 'table',
                                                         'output_type': 'delete',
+                                                        'output_table': 'ingress.ingress_schema_2.table3'
                                                     }
                                                 }
                                             }
@@ -108,7 +111,7 @@ class TestDeleteStepMetadataComparisonFunctions(unittest.TestCase):
             {'process_name': 'ETL-1', 'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan',
              'table_name': 'table1'},
             {'process_name': 'ETL-2', 'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan',
-             'table_name': 'table2'},
+             'table_name': 'table22'},
             {'process_name': 'ETL-3', 'connectionname': 'Ingress DB Connection', 'schema_name': 'ingress_schema_2',
              'table_name': 'table3'},
         ])
@@ -121,7 +124,7 @@ class TestDeleteStepMetadataComparisonFunctions(unittest.TestCase):
                     'table1'}),
             Row(key={'process_name': 'ETL-2'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
-                    'table2'}),
+                    'table22'}),
             Row(key={'process_name': 'ETL-3'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
                     'table3'})
@@ -137,7 +140,7 @@ class TestDeleteStepMetadataComparisonFunctions(unittest.TestCase):
                     'table1'}),
             Row(key={'process_name': 'ETL-2'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
-                    'table2'}),
+                    'table22'}),
             Row(key={'process_name': 'ETL-3'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
                     'table3'})
@@ -152,14 +155,14 @@ class TestDeleteStepMetadataComparisonFunctions(unittest.TestCase):
                     'table1'}),
             Row(key={'process_name': 'ETL-2'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
-                    'table2'}),
+                    'table22'}),
             Row(key={'process_name': 'ETL-3'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
                     'table3'})
         ]
         expected = "WITH insert_rows (process_name, connectionname, schema_name, table_name) AS (\n" + \
                    "    VALUES ('ETL-1', 'Staging DB Connection', 'star_loan', 'table1')\n" + \
-                   "         , ('ETL-2', 'Staging DB Connection', 'star_loan', 'table2')\n" + \
+                   "         , ('ETL-2', 'Staging DB Connection', 'star_loan', 'table22')\n" + \
                    "         , ('ETL-3', 'Staging DB Connection', 'star_loan', 'table3')\n" + \
                    ")\n" + \
                    "INSERT INTO mdi.delete_step (process_dwid, connectionname, schema_name, table_name, commit_size)\n" + \
@@ -176,14 +179,14 @@ class TestDeleteStepMetadataComparisonFunctions(unittest.TestCase):
                     'table1'}),
             Row(key={'process_name': 'ETL-2'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
-                    'table2'}),
+                    'table22'}),
             Row(key={'process_name': 'ETL-3'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
                     'table3'})
         ]
         expected = "WITH update_rows (process_name, connectionname, schema_name, table_name) AS (\n" + \
                    "    VALUES ('ETL-1', 'Staging DB Connection', 'star_loan', 'table1')\n" + \
-                   "         , ('ETL-2', 'Staging DB Connection', 'star_loan', 'table2')\n" + \
+                   "         , ('ETL-2', 'Staging DB Connection', 'star_loan', 'table22')\n" + \
                    "         , ('ETL-3', 'Staging DB Connection', 'star_loan', 'table3')\n" + \
                    ")\n" + \
                    "UPDATE mdi.delete_step\n" + \
@@ -203,7 +206,7 @@ class TestDeleteStepMetadataComparisonFunctions(unittest.TestCase):
                     'table1'}),
             Row(key={'process_name': 'ETL-2'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
-                    'table2'}),
+                    'table22'}),
             Row(key={'process_name': 'ETL-3'},
                 attributes={'connectionname': 'Staging DB Connection', 'schema_name': 'star_loan', 'table_name':
                     'table3'})

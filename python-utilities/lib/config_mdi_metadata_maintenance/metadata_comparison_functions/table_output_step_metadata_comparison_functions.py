@@ -37,8 +37,8 @@ class TableOutputStepMetadataComparisonFunctions(MetadataComparisonFunctions):
                                 truncate_table = 'Y' if etl.truncate_table else 'N'
                                 metadata_table.add_row({
                                     'process_name': etl.process_name,
-                                    'target_schema': schema.name,
-                                    'target_table': table.name,
+                                    'target_schema': etl.output_table.schema,
+                                    'target_table': etl.output_table.table,
                                     'truncate_table': truncate_table,
                                     'connectionname': self.get_connection_name(database.name)
                                 })

@@ -50,6 +50,7 @@ class TestTableOutputStepMetadataComparisonFunctions(unittest.TestCase):
                                                         'hardcoded_data_source': 'Octane',
                                                         'input_type': 'table',
                                                         'output_type': 'insert',
+                                                        'output_table': 'staging.history_octane.table1',
                                                         'truncate_table': True
                                                     }
                                                 }
@@ -66,6 +67,7 @@ class TestTableOutputStepMetadataComparisonFunctions(unittest.TestCase):
                                                         'hardcoded_data_source': 'Octane',
                                                         'input_type': 'table',
                                                         'output_type': 'insert',
+                                                        'output_table': 'staging.history_octane.table22',
                                                         'truncate_table': False
                                                     }
                                                 }
@@ -92,6 +94,7 @@ class TestTableOutputStepMetadataComparisonFunctions(unittest.TestCase):
                                                         'hardcoded_data_source': 'Octane',
                                                         'input_type': 'table',
                                                         'output_type': 'insert',
+                                                        'output_table': 'ingress.ingress_schema_2.table3',
                                                         'truncate_table': False
                                                     }
                                                 }
@@ -110,7 +113,7 @@ class TestTableOutputStepMetadataComparisonFunctions(unittest.TestCase):
         expected.add_rows([
             {'process_name': 'ETL-1', 'target_schema': 'history_octane', 'target_table': 'table1', 'truncate_table': 'Y',
              'connectionname': 'Staging DB Connection'},
-            {'process_name': 'ETL-2', 'target_schema': 'history_octane', 'target_table': 'table2', 'truncate_table': 'N',
+            {'process_name': 'ETL-2', 'target_schema': 'history_octane', 'target_table': 'table22', 'truncate_table': 'N',
              'connectionname': 'Staging DB Connection'},
             {'process_name': 'ETL-3', 'target_schema': 'ingress_schema_2', 'target_table': 'table3', 'truncate_table': 'N',
              'connectionname': 'Ingress DB Connection'},
@@ -123,7 +126,7 @@ class TestTableOutputStepMetadataComparisonFunctions(unittest.TestCase):
                 attributes={'target_schema': 'history_octane', 'target_table': 'table1', 'truncate_table': 'Y',
                             'connectionname': 'Staging DB Connection'}),
             Row(key={'process_name': 'ETL-2'},
-                attributes={'target_schema': 'history_octane', 'target_table': 'table2', 'truncate_table': 'Y',
+                attributes={'target_schema': 'history_octane', 'target_table': 'table22', 'truncate_table': 'Y',
                             'connectionname': 'Staging DB Connection'}),
             Row(key={'process_name': 'ETL-3'},
                 attributes={'target_schema': 'history_octane', 'target_table': 'table3', 'truncate_table': 'Y',
@@ -138,7 +141,7 @@ class TestTableOutputStepMetadataComparisonFunctions(unittest.TestCase):
                 attributes={'target_schema': 'history_octane', 'target_table': 'table1', 'truncate_table': 'Y',
                             'connectionname': 'Staging DB Connection'}),
             Row(key={'process_name': 'ETL-2'},
-                attributes={'target_schema': 'history_octane', 'target_table': 'table2', 'truncate_table': 'Y',
+                attributes={'target_schema': 'history_octane', 'target_table': 'table22', 'truncate_table': 'Y',
                             'connectionname': 'Staging DB Connection'}),
             Row(key={'process_name': 'ETL-3'},
                 attributes={'target_schema': 'history_octane', 'target_table': 'table3', 'truncate_table': 'Y',
@@ -153,7 +156,7 @@ class TestTableOutputStepMetadataComparisonFunctions(unittest.TestCase):
                 attributes={'target_schema': 'history_octane', 'target_table': 'table1', 'truncate_table': 'Y',
                             'connectionname': 'Staging DB Connection'}),
             Row(key={'process_name': 'ETL-2'},
-                attributes={'target_schema': 'history_octane', 'target_table': 'table2', 'truncate_table': 'Y',
+                attributes={'target_schema': 'history_octane', 'target_table': 'table22', 'truncate_table': 'Y',
                             'connectionname': 'Staging DB Connection'}),
             Row(key={'process_name': 'ETL-3'},
                 attributes={'target_schema': 'history_octane', 'target_table': 'table3', 'truncate_table': 'Y',
@@ -161,7 +164,7 @@ class TestTableOutputStepMetadataComparisonFunctions(unittest.TestCase):
         ]
         expected = "WITH insert_rows (process_name, target_schema, target_table, truncate_table, connectionname) AS (\n" + \
                    "    VALUES ('ETL-1', 'history_octane', 'table1', 'Y', 'Staging DB Connection')\n" + \
-                   "         , ('ETL-2', 'history_octane', 'table2', 'Y', 'Staging DB Connection')\n" + \
+                   "         , ('ETL-2', 'history_octane', 'table22', 'Y', 'Staging DB Connection')\n" + \
                    "         , ('ETL-3', 'history_octane', 'table3', 'Y', 'Staging DB Connection')\n" + \
                    ")\n" + \
                    "INSERT INTO mdi.table_output_step (process_dwid, target_schema, target_table, commit_size, partitioning_field, table_name_field, auto_generated_key_field, partition_data_per, table_name_defined_in_field, return_auto_generated_key_field, truncate_table, connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors, use_batch_update)\n" + \
@@ -177,7 +180,7 @@ class TestTableOutputStepMetadataComparisonFunctions(unittest.TestCase):
                 attributes={'target_schema': 'history_octane', 'target_table': 'table1', 'truncate_table': 'Y',
                             'connectionname': 'Staging DB Connection'}),
             Row(key={'process_name': 'ETL-2'},
-                attributes={'target_schema': 'history_octane', 'target_table': 'table2', 'truncate_table': 'Y',
+                attributes={'target_schema': 'history_octane', 'target_table': 'table22', 'truncate_table': 'Y',
                             'connectionname': 'Staging DB Connection'}),
             Row(key={'process_name': 'ETL-3'},
                 attributes={'target_schema': 'history_octane', 'target_table': 'table3', 'truncate_table': 'Y',
@@ -185,7 +188,7 @@ class TestTableOutputStepMetadataComparisonFunctions(unittest.TestCase):
         ]
         expected = "WITH update_rows (process_name, target_schema, target_table, truncate_table, connectionname) AS (\n" + \
                    "    VALUES ('ETL-1', 'history_octane', 'table1', 'Y', 'Staging DB Connection')\n" + \
-                   "         , ('ETL-2', 'history_octane', 'table2', 'Y', 'Staging DB Connection')\n" + \
+                   "         , ('ETL-2', 'history_octane', 'table22', 'Y', 'Staging DB Connection')\n" + \
                    "         , ('ETL-3', 'history_octane', 'table3', 'Y', 'Staging DB Connection')\n" + \
                    ")\n" + \
                    "UPDATE mdi.table_output_step\n" + \
@@ -205,7 +208,7 @@ class TestTableOutputStepMetadataComparisonFunctions(unittest.TestCase):
                 attributes={'target_schema': 'history_octane', 'target_table': 'table1', 'truncate_table': 'Y',
                             'connectionname': 'Staging DB Connection'}),
             Row(key={'process_name': 'ETL-2'},
-                attributes={'target_schema': 'history_octane', 'target_table': 'table2', 'truncate_table': 'Y',
+                attributes={'target_schema': 'history_octane', 'target_table': 'table22', 'truncate_table': 'Y',
                             'connectionname': 'Staging DB Connection'}),
             Row(key={'process_name': 'ETL-3'},
                 attributes={'target_schema': 'history_octane', 'target_table': 'table3', 'truncate_table': 'Y',
