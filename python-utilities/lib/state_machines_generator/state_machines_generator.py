@@ -41,7 +41,7 @@ class AllStateMachinesGenerator:
                             self.etl_state_machine_metadata[parsed_process_name] = ETLStateMachineComponentsMetadata(
                                 target_table=table.name,
                                 container_memory=etl.container_memory,
-                                comment=etl.construct_process_description(table),
+                                comment=etl.description,
                                 next_processes=sorted(etl.next_step_functions)
                             )
                             self.group_state_machine_metadata.append(GroupStateMachinesComponentsMetadata(

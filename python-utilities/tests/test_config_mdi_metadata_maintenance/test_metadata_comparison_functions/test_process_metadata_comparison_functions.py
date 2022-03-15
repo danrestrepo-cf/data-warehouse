@@ -46,7 +46,8 @@ class TestProcessMetadataComparisonFunctions(unittest.TestCase):
                                                     'ETL-1': {
                                                         'hardcoded_data_source': 'Octane',
                                                         'input_type': 'table',
-                                                        'output_type': 'insert'
+                                                        'output_type': 'insert',
+                                                        'output_table': 'staging.history_octane.table1'
                                                     }
                                                 }
                                             }
@@ -61,7 +62,8 @@ class TestProcessMetadataComparisonFunctions(unittest.TestCase):
                                                     'ETL-2': {
                                                         'hardcoded_data_source': 'Octane',
                                                         'input_type': 'table',
-                                                        'output_type': 'insert'
+                                                        'output_type': 'insert',
+                                                        'output_table': 'staging.history_octane.table2'
                                                     }
                                                 }
                                             }
@@ -86,7 +88,8 @@ class TestProcessMetadataComparisonFunctions(unittest.TestCase):
                                                     'ETL-3': {
                                                         'hardcoded_data_source': 'Octane',
                                                         'input_type': 'table',
-                                                        'output_type': 'insert'
+                                                        'output_type': 'insert',
+                                                        'output_table': 'ingress.ingress_schema_2.table3'
                                                     }
                                                 }
                                             }

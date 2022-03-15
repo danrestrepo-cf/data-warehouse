@@ -203,7 +203,8 @@ class ETLMetadata:
     next_step_functions: List[str] = field(default_factory=lambda: [])  # default to empty list
     input_sql: Optional[str] = None
 
-    def construct_process_description(self, target_table: 'TableMetadata') -> str:
+    @property
+    def description(self) -> str:
         """Construct a description string for a given ETL process, e.g.:
 
             ETL to insert into history_octane.loan using staging_octane.loan as the primary source
@@ -216,9 +217,9 @@ class ETLMetadata:
         else:
             preposition = ''
 
-        return f'ETL to {self.output_type.value} records {preposition} {target_table.path.database}' \
-               f'.{target_table.path.schema}.{target_table.path.table} using {target_table.primary_source_table.database}.' \
-               f'{target_table.primary_source_table.schema}.{target_table.primary_source_table.table} as the primary ' \
+        return f'ETL to {self.output_type.value} records {preposition} {self.output_table.database}' \
+               f'.{self.output_table.schema}.{self.output_table.table} using {self.primary_source_table.database}.' \
+               f'{self.primary_source_table.schema}.{self.primary_source_table.table} as the primary ' \
                f'source'
 
 
