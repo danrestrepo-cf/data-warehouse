@@ -598,6 +598,27 @@ JOIN (
         , primary_table.prp_pid AS active_proposal_pid
         , current_deal_stage_records.dst_deal_stage_type as current_transaction_stage_code
         , current_deal_stage_type_records.value as current_transaction_stage
+        , subject_property.pl_street1 AS subject_property_street1
+        , subject_property.pl_street2 AS subject_property_street2
+        , subject_property.pl_city subject_property_city
+        , subject_property.pl_property_tax_id AS subject_property_tax_id
+        , subject_property.pl_postal_code AS subject_property_postal_code
+        , county.c_name AS subject_property_county_name
+        , subject_property.pl_county_fips AS subject_property_county_fips
+        , subject_property.pl_state AS subject_property_state
+        , subject_property.pl_state_fips subject_property_state_fips
+        , subject_property.pl_country AS subject_property_country_code
+        , country_type.value AS subject_property_country
+        , subject_property.pl_structure_built_year AS subject_property_year_built
+        , subject_property.pl_property_category_type AS subject_property_category_code
+        , property_category_type.value AS subject_property_category
+        , subject_property.pl_building_status_type AS subject_property_building_status_code
+        , building_status_type.value AS subject_property_building_status
+        , subject_property.pl_rental AS subject_property_rental_flag
+        , subject_property.pl_property_rights_type AS subject_property_rights_code
+        , property_rights_type.value AS subject_property_rights
+        , subject_property.pl_neighborhood_location_type AS subject_property_neighborhood_location_code
+        , neighborhood_location_type.value AS subject_property_neighborhood_location
         , GREATEST( primary_table.etl_end_date_time, t1441.etl_end_date_time, current_deal_stage_records.etl_end_date_time,
             current_deal_stage_type_records.etl_end_date_time, subject_property.etl_end_date_time, county.etl_end_date_time,
             country_type.etl_end_date_time, property_category_type.etl_end_date_time, building_status_type.etl_end_date_time,
