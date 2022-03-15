@@ -27,18 +27,14 @@ class DeleteStepMetadataComparisonFunctions(MetadataComparisonFunctions):
 
     def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:
         metadata_table = self.construct_empty_metadata_table()
-        for database in data_warehouse_metadata.databases:
-            for schema in database.schemas:
-                for table in schema.tables:
-                    for step_function in table.step_functions:
-                        for etl in step_function.etls:
-                            if etl.output_type == ETLOutputType.DELETE:
-                                metadata_table.add_row({
-                                    'process_name': etl.process_name,
-                                    'connectionname': self.get_connection_name(database.name),
-                                    'schema_name': etl.output_table.schema,
-                                    'table_name': etl.output_table.table
-                                })
+        for etl in data_warehouse_metadata.get_etls(filter_func=lambda etl: etl.output_type == ETLOutputType.DELETE):
+            if etl.output_type == ETLOutputType.DELETE:
+                metadata_table.add_row({
+                    'process_name': etl.process_name,
+                    'connectionname': self.get_connection_name(etl.output_table.database),
+                    'schema_name': etl.output_table.schema,
+                    'table_name': etl.output_table.table
+                })
         return metadata_table
 
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:

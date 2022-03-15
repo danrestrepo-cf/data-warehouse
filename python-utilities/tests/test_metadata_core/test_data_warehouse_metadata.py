@@ -8,7 +8,10 @@ from lib.metadata_core.data_warehouse_metadata import (DataWarehouseMetadata,
                                                        ETLMetadata,
                                                        StepFunctionMetadata,
                                                        ForeignKeyMetadata,
-                                                       InvalidMetadataKeyException)
+                                                       InvalidMetadataKeyException,
+                                                       ETLInputType,
+                                                       ETLOutputType,
+                                                       ETLDataSource)
 from lib.metadata_core.metadata_object_path import DatabasePath, SchemaPath, TablePath, ColumnPath
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
 
@@ -79,6 +82,129 @@ class TestDataWarehouseMetadataGetByPath(unittest.TestCase):
     def test_can_get_column_metadata_object_by_path(self):
         column_path = ColumnPath('db1', 'schema1', 'table1', 'col1')
         self.assertEqual(self.column_metadata, self.dw_metadata.get_column_by_path(column_path))
+
+
+class TestDataWarehouseMetadataGetETLs(unittest.TestCase):
+
+    def setUp(self):
+        self.dw_metadata = construct_data_warehouse_metadata_from_dict(
+            {
+                'name': 'edw',
+                'databases': [
+                    {
+                        'name': 'staging',
+                        'schemas': [
+                            {
+                                'name': 'history_octane',
+                                'tables': [
+                                    {
+                                        'name': 'table1',
+                                        'primary_source_table': 'staging.staging_octane.table1',
+                                        'step_functions': {
+                                            'SP-1': {
+                                                'etls': {
+                                                    'ETL-1': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert',
+                                                        'output_table': 'staging.history_octane.table1'
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        'name': 'table2',
+                                        'primary_source_table': 'staging.staging_octane.table2',
+                                        'step_functions': {
+                                            'SP-2': {
+                                                'etls': {
+                                                    'ETL-2': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert_update',
+                                                        'output_table': 'staging.history_octane.table2'
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        'name': 'ingress',
+                        'schemas': [
+                            {
+                                'name': 'ingress_schema_2',
+                                'tables': [
+                                    {
+                                        'name': 'table3',
+                                        'primary_source_table': 'ingress.ingress_schema_1.table3',
+                                        'step_functions': {
+                                            'SP-3': {
+                                                'etls': {
+                                                    'ETL-3': {
+                                                        'hardcoded_data_source': 'Octane',
+                                                        'input_type': 'table',
+                                                        'output_type': 'insert',
+                                                        'output_table': 'ingress.ingress_schema_2.table3'
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        )
+
+        self.expected_etl_1 = ETLMetadata(
+            process_name='ETL-1',
+            hardcoded_data_source=ETLDataSource.OCTANE,
+            input_type=ETLInputType.TABLE,
+            output_type=ETLOutputType.INSERT,
+            output_table=TablePath(database='staging', schema='history_octane', table='table1'),
+            primary_source_table=TablePath(database='staging', schema='staging_octane', table='table1')
+        )
+
+        self.expected_etl_2 = ETLMetadata(
+            process_name='ETL-2',
+            hardcoded_data_source=ETLDataSource.OCTANE,
+            input_type=ETLInputType.TABLE,
+            output_type=ETLOutputType.INSERT_UPDATE,
+            output_table=TablePath(database='staging', schema='history_octane', table='table2'),
+            primary_source_table=TablePath(database='staging', schema='staging_octane', table='table2')
+        )
+
+        self.expected_etl_3 = ETLMetadata(
+            process_name='ETL-3',
+            hardcoded_data_source=ETLDataSource.OCTANE,
+            input_type=ETLInputType.TABLE,
+            output_type=ETLOutputType.INSERT,
+            output_table=TablePath(database='ingress', schema='ingress_schema_2', table='table3'),
+            primary_source_table=TablePath(database='ingress', schema='ingress_schema_1', table='table3')
+        )
+
+    def test_gets_all_etls_when_no_filter_is_supplied(self):
+        self.assertEqual([self.expected_etl_1, self.expected_etl_2, self.expected_etl_3], list(self.dw_metadata.get_etls()))
+
+    def test_returns_empty_iterable_if_no_etls_match_condition(self):
+        self.assertEqual([], list(self.dw_metadata.get_etls(filter_func=lambda x: False)))
+
+    def test_returns_only_those_etls_matching_the_given_filter(self):
+        self.assertEqual(
+            [self.expected_etl_2],
+            list(self.dw_metadata.get_etls(filter_func=lambda x: x.output_type == ETLOutputType.INSERT_UPDATE))
+        )
+        self.assertEqual(
+            [self.expected_etl_1, self.expected_etl_2],
+            list(self.dw_metadata.get_etls(filter_func=lambda x: x.output_table.schema == 'history_octane'))
+        )
 
 
 class TestDatabaseMetadata(unittest.TestCase):

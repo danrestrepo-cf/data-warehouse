@@ -124,7 +124,7 @@ class TestTableInputStepMetadataComparisonFunctions(unittest.TestCase):
                                 'tables': [
                                     {
                                         'name': 'table1',
-                                        'primary_source_table': 'staging.staging_octane.table1',
+                                        'primary_source_table': 'other_db.staging_schema.table1',
                                         'step_functions': {
                                             'SP-1': {
                                                 'etls': {

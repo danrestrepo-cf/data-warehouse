@@ -28,20 +28,15 @@ class TableOutputStepMetadataComparisonFunctions(MetadataComparisonFunctions):
 
     def construct_metadata_table_from_source(self, data_warehouse_metadata: DataWarehouseMetadata) -> MetadataTable:
         metadata_table = self.construct_empty_metadata_table()
-        for database in data_warehouse_metadata.databases:
-            for schema in database.schemas:
-                for table in schema.tables:
-                    for step_function in table.step_functions:
-                        for etl in step_function.etls:
-                            if etl.output_type == ETLOutputType.INSERT:
-                                truncate_table = 'Y' if etl.truncate_table else 'N'
-                                metadata_table.add_row({
-                                    'process_name': etl.process_name,
-                                    'target_schema': etl.output_table.schema,
-                                    'target_table': etl.output_table.table,
-                                    'truncate_table': truncate_table,
-                                    'connectionname': self.get_connection_name(database.name)
-                                })
+        for etl in data_warehouse_metadata.get_etls(filter_func=lambda etl: etl.output_type == ETLOutputType.INSERT):
+            truncate_table = 'Y' if etl.truncate_table else 'N'
+            metadata_table.add_row({
+                'process_name': etl.process_name,
+                'target_schema': etl.output_table.schema,
+                'target_table': etl.output_table.table,
+                'truncate_table': truncate_table,
+                'connectionname': self.get_connection_name(etl.output_table.database)
+            })
         return metadata_table
 
     def construct_insert_row_grouper(self, data_warehouse_metadata: DataWarehouseMetadata) -> RowGrouper:

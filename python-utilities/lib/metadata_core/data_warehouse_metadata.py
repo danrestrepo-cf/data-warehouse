@@ -26,7 +26,7 @@ manipulating its child nodes:
 """
 from enum import Enum
 from dataclasses import dataclass, field
-from typing import List, Optional
+from typing import List, Optional, Callable, Iterable
 
 from lib.metadata_core.metadata_object_path import DatabasePath, SchemaPath, TablePath, ColumnPath
 
@@ -545,6 +545,15 @@ class DataWarehouseMetadata:
 
     def get_column_by_path(self, path: ColumnPath) -> ColumnMetadata:
         return self.get_database(path.database).get_schema(path.schema).get_table(path.table).get_column(path.column)
+
+    def get_etls(self, filter_func: Callable[[ETLMetadata], bool] = lambda x: True) -> Iterable[ETLMetadata]:
+        for database in self.databases:
+            for schema in database.schemas:
+                for table in schema.tables:
+                    for step_function in table.step_functions:
+                        for etl in step_function.etls:
+                            if filter_func(etl):
+                                yield etl
 
     def __repr__(self) -> str:
         return f'DataWarehouseMetadata(\n' \
