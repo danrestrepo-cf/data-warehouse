@@ -256,17 +256,7 @@ class DictToMetadataBuilder:
         table = TableMetadata(name=table_dict['name'])
         table.path.database = database_name
         table.path.schema = schema_name
-        if 'primary_source_table' in table_dict:
-            if not table_dict['primary_source_table'] or table_dict['primary_source_table'].count('.') != 2:
-                raise self.InvalidTableMetadataException(
-                    f'Primary source table for table "{table_dict["name"]}" is not in the format "database.schema.table"'
-                )
-            source_table_components = table_dict['primary_source_table'].split('.')
-            table.primary_source_table = TablePath(
-                database=source_table_components[0],
-                schema=source_table_components[1],
-                table=source_table_components[2]
-            )
+        table.primary_source_table = self.parse_table_path_str(table_dict.get('primary_source_table'))
         if 'primary_key' in table_dict:
             for key_field in table_dict['primary_key']:
                 table.primary_key.append(key_field)
@@ -299,6 +289,8 @@ class DictToMetadataBuilder:
             for step_function_name, step_function_data in table_dict['step_functions'].items():
                 if 'etls' in step_function_data:
                     step_function = StepFunctionMetadata(step_function_name)
+                    if 'parallel_limit' in step_function_data:
+                        step_function.parallel_limit = step_function_data['parallel_limit']
                     table.add_step_function(step_function)
                     for etl_name, etl_data in step_function_data['etls'].items():
                         if 'input_type' not in etl_data or 'output_type' not in etl_data:
@@ -308,6 +300,8 @@ class DictToMetadataBuilder:
                             hardcoded_data_source=self.parse_etl_data_source(etl_data.get('hardcoded_data_source')),
                             input_type=self.parse_etl_input_type(etl_data.get('input_type')),
                             output_type=self.parse_etl_output_type(etl_data.get('output_type')),
+                            output_table=self.parse_table_path_str(etl_data.get('output_table')),
+                            primary_source_table=table.primary_source_table,
                             json_output_field=etl_data.get('json_output_field'),
                             truncate_table=etl_data.get('truncate_table'),
                             insert_update_keys=etl_data.get('insert_update_keys'),
@@ -467,6 +461,20 @@ class DictToMetadataBuilder:
         else:
             raise self.InvalidTableMetadataException(f'Invalid ETL output type: {raw_output_type}')
 
+    def parse_table_path_str(self, raw_path: Optional[str]) -> Optional[TablePath]:
+        """Convert a string of the form 'database.schema.table' into a TablePath object."""
+        if raw_path is None:
+            return None
+        elif raw_path.count('.') != 2:
+            raise self.InvalidTableMetadataException(f'Invalid table path string format: "{raw_path}"')
+        else:
+            parsed_path_components = raw_path.split('.')
+            return TablePath(
+                database=parsed_path_components[0],
+                schema=parsed_path_components[1],
+                table=parsed_path_components[2]
+            )
+
     class InvalidTableMetadataException(Exception):
         pass
 
@@ -583,11 +591,11 @@ class MetadataWriter:
                     'hardcoded_data_source': self.hardcoded_data_source_to_str(etl.hardcoded_data_source),
                     'input_type': etl.input_type.value,
                     'output_type': etl.output_type.value,
-                    'output_table': etl.output_table,
+                    'output_table': self.table_path_to_string(etl.output_table),
                     'json_output_field': etl.json_output_field,
                     'truncate_table': etl.truncate_table,
-                    'insert_update_keys': sorted(etl.insert_update_keys),
-                    'delete_keys': sorted(etl.delete_keys),
+                    'insert_update_keys': etl.insert_update_keys,
+                    'delete_keys': etl.delete_keys,
                     'container_memory': etl.container_memory,
                     'next_step_functions': sorted(etl.next_step_functions),
                     'input_sql': etl.input_sql
