@@ -231,12 +231,18 @@ def add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata: D
     # causing side effects.
     import copy
     output_database_metadata = copy.deepcopy(octane_metadata)
-    print(f"output_database_metadata: {output_database_metadata}")
 
     # this SchemaMetadata object contains only history_octane metadata read from yamls.
     # it will be modified to remove anything needed and then added to the DataWarehouseMetadata object to create the
     # full set of data needed to write a new set of yamls.
     history_octane_metadata = copy.deepcopy(current_history_octane_metadata)
+
+    # add tables that are not in the current yamls to the history_octane schema
+    for octane_metadata_table in output_database_metadata.get_database('staging').get_schema('history_octane').tables:
+        if not history_octane_metadata.contains_table(octane_metadata_table.name):
+
+            history_octane_metadata.add_table(octane_metadata_table)
+
     print("Now checking to see if tables/fields from history_octane exist in staging_octane...")
     for current_metadata_table in history_octane_metadata.tables:
         print(f"    Now processing table: history_octane.{current_metadata_table.name}")
@@ -247,22 +253,25 @@ def add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata: D
             print(f"        Table not found in Octane's metadata. Removing source table and ETLs.")
             # remove the table source and next etls
             current_metadata_table.primary_source_table = None
-            current_metadata_table.next_etls = None
-
+            current_metadata_table.next_etls = []
+            for current_metadata_table_fk in current_metadata_table.foreign_keys:
+                current_metadata_table.remove_foreign_key(current_metadata_table_fk.name)
             # remove all ETLs in the current table
             for etl in current_metadata_table.etls:
                 current_metadata_table.remove_etl(etl.process_name)
 
         # detect if field is deleted from staging_octane
         for current_metadata_table_column in current_metadata_table.columns:
-            if not octane_metadata.get_database('staging').get_schema('staging_octane').get_table(current_metadata_table.name).get_column(current_metadata_table_column.name):
-                # column deleted (not found on octane's metadata)
-                print(f"            Column {current_metadata_table_column.name} does not exist in staging_octane schema! Removing source and update_flag.")
-                current_metadata_table_column.source = None
-                current_metadata_table_column.update_flag = False
+            if octane_metadata.get_database('staging').get_schema('staging_octane').contains_table(current_metadata_table.name):
+                if not octane_metadata.get_database('staging').get_schema('staging_octane').get_table(current_metadata_table.name).contains_column(current_metadata_table_column.name):
+                    # column deleted (not found on octane's metadata)
+                    print(f"            Column {current_metadata_table_column.name} does not exist in staging_octane schema! Removing source and update_flag.")
+                    current_metadata_table_column.source = None
+                    current_metadata_table_column.update_flag = None
 
         # add any new fields from octane's history_octane schema to the output
         for octane_metadata_table in octane_metadata.get_database('staging').get_schema('history_octane').tables:
+            # check for columns that need to be added from octane's metadata to the output
             for octane_metadata_table_column in octane_metadata_table.columns:
                 if not current_metadata_table.contains_column(octane_metadata_table_column.name):
                     current_metadata_table.add_column(octane_metadata_table_column)
