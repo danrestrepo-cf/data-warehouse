@@ -214,10 +214,8 @@ def add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata: D
     :param octane_metadata: a DataWarehouseMetadata object that already contains history_octane metadata within it.
     :param current_yaml_metadata:  a DataWarehouseMetadata object that already contains history_octane metadata within it.
     """
-    print(f"octane_metadata: {octane_metadata}")
-    print(f"current_yaml_metadata: {current_yaml_metadata}")
 
-# verify the staging database has a schema named history_octane in the DataWarehouseMetadata object read from the yaml files
+    # verify the staging database has a schema named history_octane in the DataWarehouseMetadata object read from the yaml files
     try:
         current_history_octane_metadata = current_yaml_metadata.get_database('staging').get_schema('history_octane')
     except InvalidMetadataKeyException:
@@ -233,6 +231,7 @@ def add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata: D
     # causing side effects.
     import copy
     output_database_metadata = copy.deepcopy(octane_metadata)
+    print(f"output_database_metadata: {output_database_metadata}")
 
     # this SchemaMetadata object contains only history_octane metadata read from yamls.
     # it will be modified to remove anything needed and then added to the DataWarehouseMetadata object to create the
@@ -243,10 +242,7 @@ def add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata: D
         print(f"    Now processing table: history_octane.{current_metadata_table.name}")
 
         # detect if table is deleted from octane
-        try:
-            octane_metadata.get_database('staging').get_schema('staging_octane').get_table(current_metadata_table.name)
-            # table not deleted, ETLs/primary source needed
-        except InvalidMetadataKeyException:
+        if not octane_metadata.get_database('staging').get_schema('staging_octane').contains_table(current_metadata_table.name):
             # table deleted (not found in octane's metadata)
             print(f"        Table not found in Octane's metadata. Removing source table and ETLs.")
             # remove the table source and next etls
@@ -259,18 +255,20 @@ def add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata: D
 
         # detect if field is deleted from staging_octane
         for current_metadata_table_column in current_metadata_table.columns:
-            try:
-                octane_metadata.get_database('staging').get_schema('staging_octane').get_table(current_metadata_table.name).get_column(current_metadata_table_column.name)
-                # column found
-                print(f"            Column {current_metadata_table_column.name} exists in staging_octane schema.")
-            except InvalidMetadataKeyException:
+            if not octane_metadata.get_database('staging').get_schema('staging_octane').get_table(current_metadata_table.name).get_column(current_metadata_table_column.name):
                 # column deleted (not found on octane's metadata)
                 print(f"            Column {current_metadata_table_column.name} does not exist in staging_octane schema! Removing source and update_flag.")
                 current_metadata_table_column.source = None
                 current_metadata_table_column.update_flag = False
 
-    output_database_metadata.get_database('staging').add_schema(history_octane_metadata)
+        # add any new fields from octane's history_octane schema to the output
+        for octane_metadata_table in octane_metadata.get_database('staging').get_schema('history_octane').tables:
+            for octane_metadata_table_column in octane_metadata_table.columns:
+                if not current_metadata_table.contains_column(octane_metadata_table_column.name):
+                    current_metadata_table.add_column(octane_metadata_table_column)
 
+    output_database_metadata.get_database('staging').remove_schema('history_octane')
+    output_database_metadata.get_database('staging').add_schema(history_octane_metadata)
     return output_database_metadata
 
 
