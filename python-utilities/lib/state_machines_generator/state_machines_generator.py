@@ -1,6 +1,6 @@
 import math
 from typing import Optional, List, Callable, Dict
-from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, StepFunctionMetadata
+from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, StepFunctionMetadata, ETLMetadata
 from lib.state_machines_generator.state_machines_metadata import ETLStateMachineComponentsMetadata, GroupStateMachinesComponentsMetadata
 
 
@@ -165,86 +165,68 @@ class NewStateMachineGenerator:
 
     def build_etl_state_machines(self) -> Dict[str, dict]:
         all_state_machines = {}
-        for step_function_name, step_function in self.state_machine_metadata.items():
+        for step_function in self.state_machine_metadata.values():
             if not step_function.etls:
                 continue  # if a step function has no ETLs, don't include it in the output at all
             elif len(step_function.etls) == 1:
                 etl = step_function.etls[0]
-                state_machine_config = create_state_machine_scaffold(
-                    comment=f'{step_function_name} - {etl.description}',
-                    start_at=etl.process_name
-                )
-                if etl.next_step_functions:
-                    next_state_name = 'Load_type_choice'
-                    state_machine_config['States']['Success'] = create_success_state()
-                    if len(etl.next_step_functions) > 1:
-                        parallel_state_name = f'{etl.process_name} Next Step Functions'
-                        state_machine_config['States']['Load_type_choice'] = create_choice_state(parallel_state_name)
-                        state_machine_config['States'][parallel_state_name] = create_parallel_state()
-                        for next_step_function_name in etl.next_step_functions:
-                            message_state_name = f'{next_step_function_name}_message'
-                            child_state_machine_config = create_state_machine_scaffold(
-                                comment=f'Send message to bi-managed-mdi-2-full-check-queue for {next_step_function_name}',
-                                start_at=message_state_name
-                            )
-                            next_step_function = self.state_machine_metadata[next_step_function_name]
-                            child_state_machine_config['States'][message_state_name] = create_message_state(next_step_function)
-                            state_machine_config['States'][parallel_state_name]['Branches'].append(child_state_machine_config)
-                    else:
-                        message_state_name = f'{etl.next_step_functions[0]}_message'
-                        state_machine_config['States']['Load_type_choice'] = create_choice_state(message_state_name)
-                        next_step_function = self.state_machine_metadata[etl.next_step_functions[0]]
-                        state_machine_config['States'][message_state_name] = create_message_state(next_step_function)
-                else:
-                    next_state_name = None
-                state_machine_config['States'][etl.process_name] = create_task_state(
-                    etl_name=etl.process_name,
-                    ecs_memory=etl.container_memory,
-                    next_state_name=next_state_name
+                state_machine_config = self.create_single_etl_state_machine(
+                    comment=f'{step_function.name} - {etl.description}',
+                    start_at_etl=etl
                 )
             else:  # multiple initial ETLs
                 target_table_str = f'{step_function.primary_target_table.database}.{step_function.primary_target_table.schema}.{step_function.primary_target_table.table}'
                 state_machine_config = create_state_machine_scaffold(
-                    comment=f'{step_function_name} - Multiple ETLs affecting {target_table_str}',
+                    comment=f'{step_function.name} - Multiple ETLs affecting {target_table_str}',
                     start_at='StartAt Parallel'
                 )
                 state_machine_config['States']['StartAt Parallel'] = create_parallel_state()
                 for etl in sorted(step_function.etls, key=lambda etl: etl.process_name):
-                    child_state_machine_config = create_state_machine_scaffold(
+                    child_state_machine_config = self.create_single_etl_state_machine(
                         comment=f'{etl.process_name} - {etl.description}',
-                        start_at=etl.process_name
-                    )
-                    if etl.next_step_functions:
-                        next_state_name = 'Load_type_choice'
-                        child_state_machine_config['States']['Success'] = create_success_state()
-                        if len(etl.next_step_functions) > 1:
-                            parallel_state_name = f'{etl.process_name} Next Step Functions'
-                            child_state_machine_config['States']['Load_type_choice'] = create_choice_state(parallel_state_name)
-                            child_state_machine_config['States'][parallel_state_name] = create_parallel_state()
-                            for next_step_function_name in etl.next_step_functions:
-                                message_state_name = f'{next_step_function_name}_message'
-                                child_msg_state_machine_config = create_state_machine_scaffold(
-                                    comment=f'Send message to bi-managed-mdi-2-full-check-queue for {next_step_function_name}',
-                                    start_at=message_state_name
-                                )
-                                next_step_function = self.state_machine_metadata[next_step_function_name]
-                                child_msg_state_machine_config['States'][message_state_name] = create_message_state(next_step_function)
-                                child_state_machine_config['States'][parallel_state_name]['Branches'].append(child_msg_state_machine_config)
-                        else:
-                            message_state_name = f'{etl.next_step_functions[0]}_message'
-                            child_state_machine_config['States']['Load_type_choice'] = create_choice_state(message_state_name)
-                            next_step_function = self.state_machine_metadata[etl.next_step_functions[0]]
-                            child_state_machine_config['States'][message_state_name] = create_message_state(next_step_function)
-                    else:
-                        next_state_name = None
-                    child_state_machine_config['States'][etl.process_name] = create_task_state(
-                        etl_name=etl.process_name,
-                        ecs_memory=etl.container_memory,
-                        next_state_name=next_state_name
+                        start_at_etl=etl
                     )
                     state_machine_config['States']['StartAt Parallel']['Branches'].append(child_state_machine_config)
-            all_state_machines[step_function_name] = state_machine_config
+            all_state_machines[step_function.name] = state_machine_config
         return all_state_machines
+
+    def create_single_etl_state_machine(self, comment: str, start_at_etl: ETLMetadata) -> dict:
+        state_machine = create_state_machine_scaffold(
+            comment=comment,
+            start_at=start_at_etl.process_name
+        )
+        if start_at_etl.next_step_functions:
+            next_state_name = 'Load_type_choice'
+            self.add_next_step_functions_message_states(start_at_etl, state_machine)
+        else:
+            next_state_name = None
+        state_machine['States'][start_at_etl.process_name] = create_task_state(
+            etl_name=start_at_etl.process_name,
+            ecs_memory=start_at_etl.container_memory,
+            next_state_name=next_state_name
+        )
+        return state_machine
+
+    def add_next_step_functions_message_states(self, etl: ETLMetadata, state_machine: dict):
+        state_machine['States']['Success'] = create_success_state()
+        if len(etl.next_step_functions) > 1:
+            parallel_state_name = f'{etl.process_name} Next Step Functions'
+            state_machine['States']['Load_type_choice'] = create_choice_state(parallel_state_name)
+            state_machine['States'][parallel_state_name] = create_parallel_state()
+            for next_step_function_name in etl.next_step_functions:
+                message_state_name = f'{next_step_function_name}_message'
+                message_state_machine_config = create_state_machine_scaffold(
+                    comment=f'Send message to bi-managed-mdi-2-full-check-queue for {next_step_function_name}',
+                    start_at=message_state_name
+                )
+                next_step_function = self.state_machine_metadata[next_step_function_name]
+                message_state_machine_config['States'][message_state_name] = create_message_state(next_step_function)
+                state_machine['States'][parallel_state_name]['Branches'].append(message_state_machine_config)
+        else:
+            message_state_name = f'{etl.next_step_functions[0]}_message'
+            state_machine['States']['Load_type_choice'] = create_choice_state(message_state_name)
+            next_step_function = self.state_machine_metadata[etl.next_step_functions[0]]
+            state_machine['States'][message_state_name] = create_message_state(next_step_function)
 
 
 class SingleETLStateMachineGenerator:
