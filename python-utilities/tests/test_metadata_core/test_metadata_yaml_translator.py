@@ -300,7 +300,13 @@ class TestGenerateDataWarehouseWithFullYAMLFile(MetadataDirectoryTestCase):
 
     def test_translates_missing_keys_into_null_values(self):
         expected_cols = [ColumnMetadata(name='col0', data_type=None, source=None)]
-        expected_step_functions = [StepFunctionMetadata(name='SP-100', parallel_limit=None)]
+        expected_step_functions = [
+            StepFunctionMetadata(
+                name='SP-100',
+                primary_target_table=TablePath(database='db1', schema='sch1', table='table2'),
+                parallel_limit=None
+            )
+        ]
         expected_step_functions[0].add_etl(
             ETLMetadata(
                 process_name='ETL-100',

@@ -364,20 +364,28 @@ class TestTableMetadata(unittest.TestCase):
 
     def test_can_get_step_function_metadata_by_step_function_name_if_the_step_function_has_been_added_to_the_metadata(self):
         table_metadata = TableMetadata('deal')
-        table_metadata.add_step_function(StepFunctionMetadata('SP-100000'))
-        self.assertEqual(StepFunctionMetadata('SP-100000'), table_metadata.get_step_function('SP-100000'))
+        table_metadata.add_step_function(
+            StepFunctionMetadata('SP-100000', TablePath(database='staging', schema='staging_octane', table='deal')))
+        self.assertEqual(StepFunctionMetadata('SP-100000', TablePath(database='staging', schema='staging_octane', table='deal')),
+                         table_metadata.get_step_function('SP-100000'))
 
     def test_can_iterate_through_all_added_step_functions(self):
         table_metadata = TableMetadata('deal')
-        table_metadata.add_step_function(StepFunctionMetadata('SP-100000'))
-        table_metadata.add_step_function(StepFunctionMetadata('SP-100001'))
-        table_metadata.add_step_function(StepFunctionMetadata('SP-100002'))
-        expected = [StepFunctionMetadata('SP-100000'), StepFunctionMetadata('SP-100001'), StepFunctionMetadata('SP-100002')]
+        table_metadata.add_step_function(StepFunctionMetadata('SP-100000',
+                                                              TablePath(database='staging', schema='staging_octane', table='deal')))
+        table_metadata.add_step_function(StepFunctionMetadata('SP-100001',
+                                                              TablePath(database='staging', schema='staging_octane', table='deal')))
+        table_metadata.add_step_function(StepFunctionMetadata('SP-100002',
+                                                              TablePath(database='staging', schema='staging_octane', table='deal')))
+        expected = [StepFunctionMetadata('SP-100000', TablePath(database='staging', schema='staging_octane', table='deal')),
+                    StepFunctionMetadata('SP-100001', TablePath(database='staging', schema='staging_octane', table='deal')),
+                    StepFunctionMetadata('SP-100002', TablePath(database='staging', schema='staging_octane', table='deal'))]
         self.assertEqual(expected, [step_function for step_function in table_metadata.step_functions])
 
     def test_can_remove_step_function_metadata(self):
         table_metadata = TableMetadata('account')
-        table_metadata.add_step_function(StepFunctionMetadata('SP-100123'))
+        table_metadata.add_step_function(
+            StepFunctionMetadata('SP-100123', TablePath(database='staging', schema='staging_octane', table='account')))
         table_metadata.remove_step_function('SP-100123')
         self.assertEqual([], table_metadata.step_functions)
 
@@ -388,7 +396,8 @@ class TestTableMetadata(unittest.TestCase):
 
     def test_can_indicate_whether_it_contains_a_given_etl_by_name(self):
         table_metadata = TableMetadata('account')
-        table_metadata.add_step_function(StepFunctionMetadata('SP-1'))
+        table_metadata.add_step_function(
+            StepFunctionMetadata('SP-1', TablePath(database='staging', schema='staging_octane', table='account')))
         self.assertTrue(table_metadata.contains_step_function('SP-1'))
         self.assertFalse(table_metadata.contains_step_function('SP-2'))
 
@@ -442,18 +451,18 @@ class TestTableMetadata(unittest.TestCase):
 class TestStepFunctionMetadata(unittest.TestCase):
 
     def test_trying_to_get_a_nonexistent_etl_throws_an_error(self):
-        step_function = StepFunctionMetadata('SP-1')
+        step_function = StepFunctionMetadata('SP-1', TablePath(database='db1', schema='sch1', table='table1'))
         with self.assertRaises(InvalidMetadataKeyException):
             step_function.get_etl('ETL-1')
 
     def test_can_get_etl_that_was_previously_added(self):
-        step_function = StepFunctionMetadata('SP-1')
+        step_function = StepFunctionMetadata('SP-1', TablePath(database='db1', schema='sch1', table='table1'))
         etl = ETLMetadata(process_name='ETL-1')
         step_function.add_etl(etl)
         self.assertEqual(etl, step_function.get_etl('ETL-1'))
 
     def test_can_get_list_of_all_previously_added_etls(self):
-        step_function = StepFunctionMetadata('SP-1')
+        step_function = StepFunctionMetadata('SP-1', TablePath(database='db1', schema='sch1', table='table1'))
         etl1 = ETLMetadata(process_name='ETL-1')
         step_function.add_etl(etl1)
         etl2 = ETLMetadata(process_name='ETL-2')
@@ -461,7 +470,7 @@ class TestStepFunctionMetadata(unittest.TestCase):
         self.assertEqual([etl1, etl2], step_function.etls)
 
     def test_trying_to_get_a_removed_etl_throws_an_error(self):
-        step_function = StepFunctionMetadata('SP-1')
+        step_function = StepFunctionMetadata('SP-1', TablePath(database='db1', schema='sch1', table='table1'))
         etl = ETLMetadata(process_name='ETL-1')
         step_function.add_etl(etl)
         step_function.remove_etl('ETL-1')
@@ -469,7 +478,7 @@ class TestStepFunctionMetadata(unittest.TestCase):
             step_function.get_etl('ETL-1')
 
     def test_list_of_all_etls_does_not_include_removed_etls(self):
-        step_function = StepFunctionMetadata('SP-1')
+        step_function = StepFunctionMetadata('SP-1', TablePath(database='db1', schema='sch1', table='table1'))
         etl1 = ETLMetadata(process_name='ETL-1')
         step_function.add_etl(etl1)
         etl2 = ETLMetadata(process_name='ETL-2')
@@ -478,18 +487,18 @@ class TestStepFunctionMetadata(unittest.TestCase):
         self.assertEqual([etl2], step_function.etls)
 
     def test_trying_to_remove_a_nonexistent_etl_does_nothing(self):
-        step_function = StepFunctionMetadata('SP-1')
+        step_function = StepFunctionMetadata('SP-1', TablePath(database='db1', schema='sch1', table='table1'))
         step_function.remove_etl('ETL-1')
         # expect no error to be thrown
 
     def test_has_parallel_limit_returns_false_if_limit_is_none_and_true_otherwise(self):
-        step_function = StepFunctionMetadata('SP-1')
+        step_function = StepFunctionMetadata('SP-1', TablePath(database='db1', schema='sch1', table='table1'))
         self.assertFalse(step_function.has_parallel_limit)
         step_function.parallel_limit = 20
         self.assertTrue(step_function.has_parallel_limit)
 
     def test_has_etl_returns_true_if_step_function_contains_etl_and_false_otherwise(self):
-        step_function = StepFunctionMetadata('SP-1')
+        step_function = StepFunctionMetadata('SP-1', TablePath(database='db1', schema='sch1', table='table1'))
         self.assertFalse(step_function.has_etl('ETL-1'))
 
         etl1 = ETLMetadata(process_name='ETL-1')

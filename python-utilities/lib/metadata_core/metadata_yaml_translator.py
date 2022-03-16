@@ -288,7 +288,7 @@ class DictToMetadataBuilder:
         if 'step_functions' in table_dict:
             for step_function_name, step_function_data in table_dict['step_functions'].items():
                 if 'etls' in step_function_data:
-                    step_function = StepFunctionMetadata(step_function_name)
+                    step_function = StepFunctionMetadata(step_function_name, table.path)
                     if 'parallel_limit' in step_function_data:
                         step_function.parallel_limit = step_function_data['parallel_limit']
                     table.add_step_function(step_function)

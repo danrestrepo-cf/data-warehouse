@@ -228,15 +228,18 @@ class StepFunctionMetadata:
 
     Attributes:
         name: the step function name. Should start with "SP-", e.g. "SP-100001"
+        primary_target_table: the main, overall table targeted by this step function.
+        Individual ETLs within the step function may have different target tables.
+        In YAML, the primary_target_table is not specified directly, but is implied
+        to be the table described by the YAML in which the step function is defined.
         parallel_limit: the maximum number of ETLs within this step function that
         are allowed to run at any one time. Leaving this unspecified implies the
         step function has no such limit/any number of ETLs can run in parallel
-        etls: a list of metadata objects describing ETLs executed as part of this
-        step function
     """
 
-    def __init__(self, name: str, parallel_limit: Optional[int] = None):
+    def __init__(self, name: str, primary_target_table: TablePath, parallel_limit: Optional[int] = None):
         self.name = name
+        self.primary_target_table = primary_target_table
         self.parallel_limit = parallel_limit
         self._etls = {}
 
