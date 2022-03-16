@@ -3,6 +3,13 @@
 -- https://app.asana.com/0/0/1201928616867107
 --
 
+/*
+The addition of new columns to transaction_junk_dim is going to result in a set of deprecated records in that
+table, since it will receive a whole new set of records with non-null values in the new columns. The deprecated
+records will need to be cleaned up; there is a task for implementing a deprecated record cleanup solution here:
+https://app.asana.com/0/0/1201977896323414
+*/
+
 ALTER TABLE star_loan.borrower_dim
     ADD COLUMN current_residence_street1 VARCHAR(128)
 	, ADD COLUMN current_residence_street2 VARCHAR(128)
