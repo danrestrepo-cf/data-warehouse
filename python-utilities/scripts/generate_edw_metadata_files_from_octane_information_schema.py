@@ -50,7 +50,7 @@ def main():
         octane_foreign_key_metadata = get_octane_foreign_key_metadata(octane_db_connection)
         etl_process_metadata = get_history_octane_etl_process_metadata(config_edw_connection)
         current_max_process_number = get_max_staging_to_history_server_process_number(config_edw_connection)
-        current_edw_metadata = generate_data_warehouse_metadata_from_yaml(os.path.abspath(os.path.join(constants.PROJECT_DIR_PATH, '..', 'metadata/edw')))
+        current_edw_metadata = generate_data_warehouse_metadata_from_yaml(os.path.abspath(os.path.join(constants.PROJECT_DIR_PATH, '..', 'metadata', 'edw')))
 
         # build metadata filterer
         metadata_filterer = build_octane_metadata_filterer()
