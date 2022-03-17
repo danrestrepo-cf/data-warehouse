@@ -211,15 +211,17 @@ def add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata: D
     still exist in Octane. However, EDW's history_octane schema contains tables/columns that no longer
     exist in Octane but should still be included in the generated metadata.
 
-    :param octane_metadata: a DataWarehouseMetadata object that already contains history_octane metadata within it.
-    :param current_yaml_metadata:  a DataWarehouseMetadata object that already contains history_octane metadata within it.
+    :param octane_metadata: a DataWarehouseMetadata object that already contains history_octane metadata within it that is generated
+        from Octane's database and then has the history_octane metadata added to it.
+    :param current_yaml_metadata:  a DataWarehouseMetadata object that already contains history_octane metadata within that is
+        generated from reading the EDW's metadata yaml files.
     """
 
     # verify the staging database has a schema named history_octane in the DataWarehouseMetadata object read from the yaml files
     try:
-        current_history_octane_metadata = current_yaml_metadata.get_database('staging').get_schema('history_octane')
+        current_yaml_history_octane_metadata = current_yaml_metadata.get_database('staging').get_schema('history_octane')
     except InvalidMetadataKeyException:
-        raise ValueError('Schema "history_octane" in database "staging" must be present in parameter "current_history_octane_metadata" in order to incorporate deleted tables and columns')
+        raise ValueError('Schema "history_octane" in database "staging" must be present in parameter "current_yaml_history_octane_metadata" in order to incorporate deleted tables and columns')
 
     # verify the staging database has a schema named history_octane in the DataWarehouse Metadata created from octane's database
     try:
@@ -234,12 +236,11 @@ def add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata: D
     # this SchemaMetadata object contains only history_octane metadata read from yamls.
     # it will be modified to remove anything needed and then added to the DataWarehouseMetadata object to create the
     # full set of data needed to write a new set of yamls.
-    history_octane_metadata = copy.deepcopy(current_history_octane_metadata)
+    history_octane_metadata = copy.deepcopy(current_yaml_history_octane_metadata)
 
     # add tables that are not in the current yamls to the history_octane schema
     for octane_metadata_table in output_database_metadata.get_database('staging').get_schema('history_octane').tables:
         if not history_octane_metadata.contains_table(octane_metadata_table.name):
-
             history_octane_metadata.add_table(octane_metadata_table)
 
     print("Now checking to see if tables/fields from history_octane exist in staging_octane...")
