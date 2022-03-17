@@ -1,4 +1,5 @@
 import math
+from dataclasses import dataclass
 from typing import Optional, List, Callable, Dict
 from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, StepFunctionMetadata, ETLMetadata
 from lib.state_machines_generator.state_machines_metadata import ETLStateMachineComponentsMetadata, GroupStateMachinesComponentsMetadata
@@ -177,26 +178,69 @@ class NewStateMachineGenerator:
             # state machine has 1 ETL (e.g. a standard history_octane step function)
             elif len(step_function.etls) == 1:
                 etl = step_function.etls[0]
-                state_machine_config = self.create_single_etl_state_machine(
+                state_machine = self.create_single_etl_state_machine(
                     comment=f'{step_function.name} - {etl.description}',
                     start_at_etl=etl
                 )
             # state machine has multiple ETLs which need to be triggered in parallel
             else:
                 target_table_str = f'{step_function.primary_target_table.database}.{step_function.primary_target_table.schema}.{step_function.primary_target_table.table}'
-                state_machine_config = create_state_machine_scaffold(
+                state_machine = create_state_machine_scaffold(
                     comment=f'{step_function.name} - Multiple ETLs affecting {target_table_str}',
                     start_at='StartAt Parallel'
                 )
-                state_machine_config['States']['StartAt Parallel'] = create_parallel_state()
-                for etl in sorted(step_function.etls, key=lambda etl: etl.process_name):
-                    child_state_machine_config = self.create_single_etl_state_machine(
-                        comment=f'{etl.process_name} - {etl.description}',
-                        start_at_etl=etl
-                    )
-                    state_machine_config['States']['StartAt Parallel']['Branches'].append(child_state_machine_config)
-            all_state_machines[step_function.name] = state_machine_config
+                start_at_parallel_state = create_parallel_state()
+                state_machine['States']['StartAt Parallel'] = start_at_parallel_state
+                sorted_etls = sorted(step_function.etls, key=lambda etl: etl.process_name)
+                # number of ETLs exceed the parallel_limit and the ETLs must be broken out into parallelized chains of sequential ETLs
+                if step_function.parallel_limit and (len(sorted_etls) > step_function.parallel_limit):
+                    next_state_lookup = self.ETLLatticeNextStateLookup(etls=sorted_etls, parallel_limit=step_function.parallel_limit)
+                    for i, etl in enumerate(sorted_etls):
+                        if etl.next_step_functions:
+                            raise ValueError(
+                                'The behavior of a parallel-limited/latticed ETL with next_step_functions is undefined. Unable to proceed.')
+                        etl_group_number = i % step_function.parallel_limit
+                        # if the child state machine for a given parallel sub-group doesn't exist yet, create it
+                        if len(start_at_parallel_state['Branches']) <= etl_group_number:
+                            start_at_parallel_state['Branches'].append(create_state_machine_scaffold(
+                                comment=f'Sequential ETL chain beginning with {etl.process_name} ({etl.description})',
+                                start_at=etl.process_name
+                            ))
+                        start_at_parallel_state['Branches'][etl_group_number]['States'][etl.process_name] = self.create_etl_task_state(
+                            etl=etl,
+                            next_state_name=next_state_lookup.get_next_state_name(etl.process_name),
+                            pass_state_input_as_output=True
+                        )
+                # number of ETLs is within parallel_limit (or limit is not defined)
+                else:
+                    for etl in sorted_etls:
+                        child_state_machine_config = self.create_single_etl_state_machine(
+                            comment=f'{etl.process_name} - {etl.description}',
+                            start_at_etl=etl
+                        )
+                        start_at_parallel_state['Branches'].append(child_state_machine_config)
+            all_state_machines[step_function.name] = state_machine
         return all_state_machines
+
+    class ETLLatticeNextStateLookup:
+        """A map-like class facilitating lookup of the next ETL state in a sequential chain given the name of the current state.
+
+        For use in constructing "latticed" ETL structures when a step function's ETL count exceeds its parallel_limit.
+        """
+
+        def __init__(self, etls: List[ETLMetadata], parallel_limit: int):
+            if not parallel_limit or parallel_limit < 1:
+                raise ValueError('Parallel limit must be at least 1')
+            self._lookup = {}
+            for i, etl in enumerate(etls):
+                next_etl_index = i + parallel_limit
+                if next_etl_index < len(etls):  # index maps to a valid ETL, therefore there *is* a next state
+                    self._lookup[etl.process_name] = etls[next_etl_index].process_name
+                else:  # the loop is on the last "row" of etls in the lattice, and there is no next state
+                    self._lookup[etl.process_name] = None
+
+        def get_next_state_name(self, current_state_name: str) -> str:
+            return self._lookup[current_state_name]
 
     def create_single_etl_state_machine(self, comment: str, start_at_etl: ETLMetadata) -> dict:
         """Create a dict defining an AWS state machine that executes a single ETL.
@@ -226,11 +270,7 @@ class NewStateMachineGenerator:
         :param comment: the comment to be placed at the head of the state machine
         :param start_at_etl: ETL metdata used to define this state machine's "StartAt" state
         """
-        state_machine = create_state_machine_scaffold(
-            comment=comment,
-            start_at=start_at_etl.process_name
-        )
-
+        state_machine = create_state_machine_scaffold(comment=comment, start_at=start_at_etl.process_name)
         if start_at_etl.next_step_functions:
             next_state_name = 'Load_type_choice'
             # this success state is used as the state machine "off ramp" by the Load_type_choice state
@@ -238,15 +278,10 @@ class NewStateMachineGenerator:
             self.add_states_to_trigger_next_step_functions(start_at_etl, state_machine)
         else:
             next_state_name = None
-
-        state_machine['States'][start_at_etl.process_name] = create_task_state(
-            etl_name=start_at_etl.process_name,
-            ecs_memory=start_at_etl.container_memory,
-            next_state_name=next_state_name
-        )
+        state_machine['States'][start_at_etl.process_name] = self.create_etl_task_state(etl=start_at_etl, next_state_name=next_state_name)
         return state_machine
 
-    def add_states_to_trigger_next_step_functions(self, etl: ETLMetadata, state_machine: dict):
+    def add_states_to_trigger_next_step_functions(self, etl: ETLMetadata, state_machine: dict) -> None:
         """Update the given state machine dict with any additional states needed to ensure the given ETL's next step functions are triggered.
 
         This method always adds a load type choice state which will exit the state
@@ -262,7 +297,7 @@ class NewStateMachineGenerator:
         if len(etl.next_step_functions) == 1:  # directly trigger the single message state after the choice state
             message_state_name = f'{etl.next_step_functions[0]}_message'
             state_machine['States']['Load_type_choice'] = create_choice_state(message_state_name)
-            next_step_function = self.state_machine_metadata[etl.next_step_functions[0]]
+            next_step_function = self.get_step_function_metadata(etl.next_step_functions[0])
             state_machine['States'][message_state_name] = create_message_state(next_step_function)
         else:  # there are multiple next_step_functions which need to be wrapped in a parallel state
             parallel_state_name = f'{etl.process_name} Next Step Functions'
@@ -274,99 +309,84 @@ class NewStateMachineGenerator:
                     comment=f'Send message to bi-managed-mdi-2-full-check-queue for {next_step_function_name}',
                     start_at=message_state_name
                 )
-                next_step_function = self.state_machine_metadata[next_step_function_name]
+                next_step_function = self.get_step_function_metadata(next_step_function_name)
                 message_state_machine_config['States'][message_state_name] = create_message_state(next_step_function)
                 state_machine['States'][parallel_state_name]['Branches'].append(message_state_machine_config)
 
+    def get_step_function_metadata(self, step_function_name: str) -> StepFunctionMetadata:
+        """Retrieve the StepFunctionMetadata object with the given name, throwing an error if it can't be found."""
+        if step_function_name not in self.state_machine_metadata:
+            raise ValueError(f'Step function "{step_function_name}" not defined in given metadata')
+        return self.state_machine_metadata[step_function_name]
 
-class SingleETLStateMachineGenerator:
-    """Generates a single state machine configuration dict to trigger a given ETL"""
+    @staticmethod
+    def create_etl_task_state(etl: ETLMetadata, next_state_name: Optional[str] = None, pass_state_input_as_output: bool = False) -> dict:
+        """Create an AWS Task state configuration that triggers an MDI-2 Pentaho process (ETL).
 
-    def __init__(self, state_machine_metadata: Dict[str, StepFunctionMetadata]):
-        self.all_state_machine_metadata = state_machine_metadata
-        self.parent_state_machine_metadata = {k: v for (k, v) in self.all_state_machine_metadata.items()
-                                              if len(v.next_processes) > 0}
-
-    def build_etl_state_machine(self, root_process: str) -> dict:
-        """Build a full ETL state machine configuration dict that can be output to a json file"""
-        return self.create_step_tree(root_process)
-
-    def create_step_tree(self, start_at_state_name: str) -> dict:
-        """Initiate the recursive step tree creator function with the state machine's top-level root process
-
-        Note: this method can be triggered by either:
-         - creating the top-level structure of an entire state machine, in which
-           case "root_process" is the root of the entire machine
-         - creating parallel execution branches, in which case "root_process" is
-           just one of many child processes being executed in parallel
-
-        :param start_at_state_name: the root process of this state machine config
-        :return the full state machine configuration tree starting from the given
-                 root process
+        :param etl: an ETLMetadata object describing the ETL to be executed by this task state
+        :param next_state_name: the name of the next state after this one in the state machine.
+               If None, then this task state is treated as a terminal state.
+        :param pass_state_input_as_output: a flag indicating whether or not to discard
+               the "normal" output of the task state and instead pass on the state's *input*
+               to the next state in the state machine. Only used for step functions which
+               kick off more ETLs than their parallel_limit allows to execute at once.
         """
+        task_state = {
+            'Type': 'Task',
+            'Resource': 'arn:aws:states:::ecs:runTask',
+            'Parameters': {
+                'LaunchType': 'FARGATE',
+                'Cluster': '${ecsClusterARN}',
+                'TaskDefinition': '${mdi_2_arn}',
+                'NetworkConfiguration': {
+                    'AwsvpcConfiguration': {
+                        'AssignPublicIp': 'DISABLED',
+                        'SecurityGroups': [
+                            '${securityGroupId}'
+                        ],
+                        'Subnets': '${subnetIDs}'
+                    }
+                },
+                'Overrides': {
+                    'Memory': str(etl.container_memory),
+                    'ContainerOverrides': [
+                        {
+                            'Memory': etl.container_memory,
+                            'Environment': [
+                                {
+                                    'Name': 'PROCESS_NAME',
+                                    'Value': etl.process_name
+                                },
+                                {
+                                    'Name': 'INPUT_DATA',
+                                    'Value.$': "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
+                                },
+                                {
+                                    'Name': 'TOKEN_ID',
+                                    'Value.$': "$$.Task.Token"
+                                }
+                            ],
+                            'Name': '${mdi_2_container}'
+                        }
+                    ]
+                }
+            },
+        }
 
-        state_name = start_at_state_name
-        comment = self.determine_state_machine_header_comment(start_at_state_name, state_name)
-        root_config = create_state_machine_scaffold(
-            comment=comment,
-            start_at=state_name
-        )
-        root_config_states = root_config['States']
-        ecs_memory = self.all_state_machine_metadata[start_at_state_name].container_memory
-
-        # process has no children
-        if start_at_state_name not in self.parent_state_machine_metadata:
-            root_config_states[state_name] = create_task_state(
-                etl_name=start_at_state_name,
-                next_state_name=None,
-                ecs_memory=ecs_memory)
-            return root_config
-        # process has one sequential child
-        elif len(self.parent_state_machine_metadata[start_at_state_name].next_processes) == 1:
-            next_process = self.parent_state_machine_metadata[start_at_state_name].next_processes[0]
-            next_process_target_table = self.all_state_machine_metadata[next_process].target_table
-            root_config_states[state_name] = create_task_state(
-                etl_name=start_at_state_name,
-                next_state_name=next_process,
-                ecs_memory=ecs_memory)
-            root_config_states['Load_type_choice'] = create_choice_state(f'{next_process}_message')
-            root_config_states['Success'] = create_success_state()
-            root_config_states[f'{next_process}_message'] = create_message_state(
-                process_name=next_process,
-                target_table=next_process_target_table)
-            return root_config
-        # process has multiple children which should run in parallel
+        if next_state_name is None:
+            task_state['End'] = True
+            task_state['Resource'] += '.sync'
         else:
-            next_processes = self.parent_state_machine_metadata[start_at_state_name].next_processes
-            root_config_states[state_name] = create_task_state(
-                etl_name=start_at_state_name,
-                next_state_name=next_processes,
-                ecs_memory=ecs_memory)
-            root_config_states['Load_type_choice'] = create_choice_state('Parallel')
-            root_config_states['Success'] = create_success_state()
-            root_config_states['Parallel'] = create_parallel_state()
-            for next_process in next_processes:
-                next_process_target_table = self.all_state_machine_metadata[next_process].target_table
-                next_process_message_state_name = f'{next_process}_message'
-                root_config_states['Parallel']['Branches'].append(
-                    create_state_machine_scaffold(
-                        comment=f'Send message to bi-managed-mdi-2-full-check-queue for {next_process}',
-                        start_at=next_process_message_state_name,
-                        states={next_process_message_state_name: create_message_state(
-                            process_name=next_process,
-                            target_table=next_process_target_table
-                        )}
-                    )
-                )
-            return root_config
+            task_state['Next'] = next_state_name
+            task_state['Resource'] += '.waitForTaskToken'
 
-    def determine_state_machine_header_comment(self, process: str, state_name: str) -> str:
-        """Create a state machine header comment based on whether the root process is a true root or just a sub-root in a parallel step"""
-        if process in self.all_state_machine_metadata.keys():  # process is a top-level root
-            root_metadata = self.all_state_machine_metadata[process]
-            return process + ' - ' + root_metadata.comment
-        else:  # process is a child process being executed in parallel
-            return f'Parallel - {state_name}'
+        if pass_state_input_as_output:
+            task_state['ResultPath'] = None
+
+        return task_state
+
+
+# State machine utility functions used by multiple classes in this library
 
 
 def create_state_machine_scaffold(comment: str, start_at: str, states: Optional[dict] = None) -> dict:
@@ -378,58 +398,6 @@ def create_state_machine_scaffold(comment: str, start_at: str, states: Optional[
         'States': states
     }
     return root_config
-
-
-def create_task_state(etl_name: str, ecs_memory: int, next_state_name: Optional[str] = None) -> dict:
-    """Create an AWS Task state configuration that triggers an MDI-2 Pentaho process"""
-    state_config = {
-        'Type': 'Task',
-        'Resource': 'arn:aws:states:::ecs:runTask',
-        'Parameters': {
-            'LaunchType': 'FARGATE',
-            'Cluster': '${ecsClusterARN}',
-            'TaskDefinition': '${mdi_2_arn}',
-            'NetworkConfiguration': {
-                'AwsvpcConfiguration': {
-                    'AssignPublicIp': 'DISABLED',
-                    'SecurityGroups': [
-                        '${securityGroupId}'
-                    ],
-                    'Subnets': '${subnetIDs}'
-                }
-            },
-            'Overrides': {
-                'Memory': str(ecs_memory),
-                'ContainerOverrides': [
-                    {
-                        'Memory': ecs_memory,
-                        'Environment': [
-                            {
-                                'Name': 'PROCESS_NAME',
-                                'Value': etl_name
-                            },
-                            {
-                                'Name': 'INPUT_DATA',
-                                'Value.$': "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
-                            },
-                            {
-                                'Name': 'TOKEN_ID',
-                                'Value.$': "$$.Task.Token"
-                            }
-                        ],
-                        'Name': '${mdi_2_container}'
-                    }
-                ]
-            }
-        },
-    }
-    if next_state_name is None:
-        state_config['End'] = True
-        state_config['Resource'] += '.sync'
-    else:
-        state_config['Next'] = next_state_name
-        state_config['Resource'] += '.waitForTaskToken'
-    return state_config
 
 
 def create_message_state(next_step_function: StepFunctionMetadata) -> dict:
@@ -476,13 +444,6 @@ def create_choice_state(next_state_name: str) -> dict:
             }
         ],
         'Default': next_state_name
-    }
-
-
-def create_success_state() -> dict:
-    """Create an AWS Succeed state configuration"""
-    return {
-        'Type': 'Succeed'
     }
 
 

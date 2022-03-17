@@ -8,7 +8,7 @@ class StateMachineTestCase(unittest.TestCase):
     """TestCase subclass with custom assertions related to state machines."""
 
     def assertTaskStateEquals(self, expected_etl_name: str, expected_ecs_memory: int, expected_next_state: Optional[str],
-                              expected_resource_suffix: str, expect_to_have_end: bool, actual_state: dict):
+                              expected_resource_suffix: str, expect_to_have_end: bool, null_result_path: bool, actual_state: dict):
         expected_task_config = {
             'Type': 'Task',
             'Resource': f'arn:aws:states:::ecs:runTask{expected_resource_suffix}',
@@ -54,6 +54,8 @@ class StateMachineTestCase(unittest.TestCase):
             expected_task_config['End'] = True
         if expected_next_state:
             expected_task_config['Next'] = expected_next_state
+        if null_result_path:
+            expected_task_config['ResultPath'] = None
         self.assertEqual(expected_task_config, actual_state)
 
     def assertChoiceStateEquals(self, expected_next_state_name: str, actual_state: dict):
@@ -150,6 +152,8 @@ class TestNonGroupStateMachines(StateMachineTestCase):
                                     'step_functions': {
                                         # SFN kicking off 1 ETL with 0 "next_step_functions"
                                         'SP-20': {
+                                            'parallel_limit': 30,
+                                            # show that nothing special happens if parallel_limit is defined, but larger than # of ETLs
                                             'etls': {
                                                 'ETL-200': {
                                                     'input_type': 'table',
@@ -179,7 +183,7 @@ class TestNonGroupStateMachines(StateMachineTestCase):
                                                     'input_type': 'table',
                                                     'output_type': 'insert',
                                                     'output_table': 'db1.sch1.table2-3',
-                                                    'container_memory': 2048
+                                                    'container_memory': 4096
                                                 },
                                                 'ETL-201-4': {
                                                     'input_type': 'table',
@@ -249,6 +253,7 @@ class TestNonGroupStateMachines(StateMachineTestCase):
             expected_next_state=None,
             expected_resource_suffix='.sync',
             expect_to_have_end=True,
+            null_result_path=False,
             actual_state=self.state_machines['SP-20']['States']['ETL-200']
         )
 
@@ -259,6 +264,7 @@ class TestNonGroupStateMachines(StateMachineTestCase):
             expected_next_state='Load_type_choice',
             expected_resource_suffix='.waitForTaskToken',
             expect_to_have_end=False,
+            null_result_path=False,
             actual_state=self.state_machines['SP-10']['States']['ETL-100']
         )
 
@@ -286,6 +292,7 @@ class TestNonGroupStateMachines(StateMachineTestCase):
             expected_next_state='Load_type_choice',
             expected_resource_suffix='.waitForTaskToken',
             expect_to_have_end=False,
+            null_result_path=False,
             actual_state=self.state_machines['SP-11']['States']['StartAt Parallel']['Branches'][0]['States']['ETL-101']
         )
         self.assertTaskStateEquals(
@@ -294,6 +301,7 @@ class TestNonGroupStateMachines(StateMachineTestCase):
             expected_next_state='Load_type_choice',
             expected_resource_suffix='.waitForTaskToken',
             expect_to_have_end=False,
+            null_result_path=False,
             actual_state=self.state_machines['SP-11']['States']['StartAt Parallel']['Branches'][1]['States']['ETL-102']
         )
 
@@ -341,6 +349,163 @@ class TestNonGroupStateMachines(StateMachineTestCase):
             expected_step_function_name='SP-22',
             actual_state=etl101['States']['ETL-101 Next Step Functions']['Branches'][1]['States']['SP-22_message']
         )
+
+    def test_sfn_with_more_etls_than_its_parallel_limit_splits_etls_into_parallel_groups_that_each_run_in_series(self):
+        # SP-21 triggers 5 ETLs but has a parallel limit of 2, so there should be 2 parallel tracks of 3 and 2 sequential ETLs, respectively
+        #
+        #    StartAtParallel
+        #   /               \
+        #  1                 2
+        #  3                 4
+        #  5
+        self.assertEqual('StartAt Parallel', self.state_machines['SP-21']['StartAt'])
+        self.assertEqual('Parallel', self.state_machines['SP-21']['States']['StartAt Parallel']['Type'])
+        self.assertTrue(self.state_machines['SP-21']['States']['StartAt Parallel']['End'])
+        self.assertEqual(2, len(self.state_machines['SP-21']['States']['StartAt Parallel']['Branches']))
+        self.assertEqual('ETL-201-1', self.state_machines['SP-21']['States']['StartAt Parallel']['Branches'][0]['StartAt'])
+        self.assertEqual('ETL-201-2', self.state_machines['SP-21']['States']['StartAt Parallel']['Branches'][1]['StartAt'])
+        self.assertTaskStateEquals(
+            expected_etl_name='ETL-201-1',
+            expected_ecs_memory=2048,
+            expected_next_state='ETL-201-3',
+            expected_resource_suffix='.waitForTaskToken',
+            expect_to_have_end=False,
+            null_result_path=True,
+            actual_state=self.state_machines['SP-21']['States']['StartAt Parallel']['Branches'][0]['States']['ETL-201-1']
+        )
+        self.assertTaskStateEquals(
+            expected_etl_name='ETL-201-2',
+            expected_ecs_memory=2048,
+            expected_next_state='ETL-201-4',
+            expected_resource_suffix='.waitForTaskToken',
+            expect_to_have_end=False,
+            null_result_path=True,
+            actual_state=self.state_machines['SP-21']['States']['StartAt Parallel']['Branches'][1]['States']['ETL-201-2']
+        )
+        self.assertTaskStateEquals(
+            expected_etl_name='ETL-201-3',
+            expected_ecs_memory=4096,
+            expected_next_state='ETL-201-5',
+            expected_resource_suffix='.waitForTaskToken',
+            expect_to_have_end=False,
+            null_result_path=True,
+            actual_state=self.state_machines['SP-21']['States']['StartAt Parallel']['Branches'][0]['States']['ETL-201-3']
+        )
+        self.assertTaskStateEquals(  # group 2 terminal state
+            expected_etl_name='ETL-201-4',
+            expected_ecs_memory=2048,
+            expected_next_state=None,
+            expected_resource_suffix='.sync',
+            expect_to_have_end=True,
+            null_result_path=True,
+            actual_state=self.state_machines['SP-21']['States']['StartAt Parallel']['Branches'][1]['States']['ETL-201-4']
+        )
+        self.assertTaskStateEquals(  # group 1 terminal state
+            expected_etl_name='ETL-201-5',
+            expected_ecs_memory=2048,
+            expected_next_state=None,
+            expected_resource_suffix='.sync',
+            expect_to_have_end=True,
+            null_result_path=True,
+            actual_state=self.state_machines['SP-21']['States']['StartAt Parallel']['Branches'][0]['States']['ETL-201-5']
+        )
+
+    def test_throws_error_if_ETL_points_to_nonexistent_next_step_function(self):
+        data_warehouse_metadata = construct_data_warehouse_metadata_from_dict({
+            'name': 'dw',
+            'databases': [
+                {
+                    'name': 'db1',
+                    'schemas': [
+                        {
+                            'name': 'sch1',
+                            'tables': [
+                                {
+                                    'name': 'table1',
+                                    'primary_source_table': 'db1.sch1.table0',
+                                    'step_functions': {
+                                        'SP-10': {
+                                            'etls': {
+                                                'ETL-100': {
+                                                    'input_type': 'table',
+                                                    'output_type': 'insert',
+                                                    'output_table': 'db1.sch1.table1',
+                                                    'container_memory': 2048,
+                                                    # SP-20 not defined anywhere in the overall metadata
+                                                    'next_step_functions': ['SP-20']
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
+        with self.assertRaises(ValueError):
+            AllStateMachinesGenerator(data_warehouse_metadata, []).build_state_machines()
+
+    def test_throws_error_if_latticed_etl_has_next_step_function(self):
+        data_warehouse_metadata = construct_data_warehouse_metadata_from_dict({
+            'name': 'dw',
+            'databases': [
+                {
+                    'name': 'db1',
+                    'schemas': [
+                        {
+                            'name': 'sch1',
+                            'tables': [
+                                {
+                                    'name': 'table2',
+                                    'primary_source_table': 'db1.sch1.table1',
+                                    'step_functions': {
+                                        'SP-21': {
+                                            'parallel_limit': 2,
+                                            'etls': {
+                                                'ETL-201-1': {
+                                                    'input_type': 'table',
+                                                    'output_type': 'insert',
+                                                    'output_table': 'db1.sch1.table2-1',
+                                                    'container_memory': 2048
+                                                },
+                                                'ETL-201-2': {
+                                                    'input_type': 'table',
+                                                    'output_type': 'insert',
+                                                    'output_table': 'db1.sch1.table2-2',
+                                                    'container_memory': 2048,
+                                                    'next_step_functions': ['SP-22']
+                                                },
+                                                'ETL-201-3': {
+                                                    'input_type': 'table',
+                                                    'output_type': 'insert',
+                                                    'output_table': 'db1.sch1.table2-3',
+                                                    'container_memory': 4096
+                                                }
+                                            }
+                                        },
+                                        # SFN kicking off 1 ETL with multiple "next_step_functions"
+                                        'SP-22': {
+                                            'etls': {
+                                                'ETL-202': {
+                                                    'input_type': 'table',
+                                                    'output_type': 'insert',
+                                                    'output_table': 'db1.sch1.table2',
+                                                    'container_memory': 2048
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
+        with self.assertRaises(ValueError):
+            AllStateMachinesGenerator(data_warehouse_metadata, []).build_state_machines()
 #
 # class TestSequentialOutputAndVaryingConfigAttributes(unittest.TestCase):
 #
