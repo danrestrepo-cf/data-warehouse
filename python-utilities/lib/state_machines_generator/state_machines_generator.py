@@ -164,17 +164,25 @@ class NewStateMachineGenerator:
         self.state_machine_metadata = state_machine_metadata
 
     def build_etl_state_machines(self) -> Dict[str, dict]:
+        """Generate AWS state machine config dicts for all step functions defined in the given state_machine_metadata.
+
+        Generated state machines will execute one-to-many ETLs and cause zero-to-many subsequent messages to be placed
+        on the EDW SQS queue to trigger "next step functions" as described in the provided metadata.
+        """
         all_state_machines = {}
         for step_function in self.state_machine_metadata.values():
+            # if a non-group step function has no ETLs (which, admittedly, probably won't happen), don't include it in the output
             if not step_function.etls:
-                continue  # if a step function has no ETLs, don't include it in the output at all
+                continue
+            # state machine has 1 ETL (e.g. a standard history_octane step function)
             elif len(step_function.etls) == 1:
                 etl = step_function.etls[0]
                 state_machine_config = self.create_single_etl_state_machine(
                     comment=f'{step_function.name} - {etl.description}',
                     start_at_etl=etl
                 )
-            else:  # multiple initial ETLs
+            # state machine has multiple ETLs which need to be triggered in parallel
+            else:
                 target_table_str = f'{step_function.primary_target_table.database}.{step_function.primary_target_table.schema}.{step_function.primary_target_table.table}'
                 state_machine_config = create_state_machine_scaffold(
                     comment=f'{step_function.name} - Multiple ETLs affecting {target_table_str}',
@@ -191,15 +199,46 @@ class NewStateMachineGenerator:
         return all_state_machines
 
     def create_single_etl_state_machine(self, comment: str, start_at_etl: ETLMetadata) -> dict:
+        """Create a dict defining an AWS state machine that executes a single ETL.
+
+        In this context, a "state machine" means a dict with the following structure:
+
+            {
+                'Comment': '...',
+                'StartAt': 'ETL-123456',
+                'States': {
+                    'ETL-123456': {
+                        ...
+                    },
+                    ...
+                }
+            }
+
+        In other words, a "top level" state machine structure of the kind initiated
+        by the create_single_etl_state_machine method, but fleshed out with an
+        ETL task state and any following SQS Message states required to trigger
+        the ETL's next step functions.
+
+        Such a structure could be the actual top level of an overall AWS step function,
+        or it could appear as a child state machine within a Parallel-type state.
+        This method is invoked in both contexts.
+
+        :param comment: the comment to be placed at the head of the state machine
+        :param start_at_etl: ETL metdata used to define this state machine's "StartAt" state
+        """
         state_machine = create_state_machine_scaffold(
             comment=comment,
             start_at=start_at_etl.process_name
         )
+
         if start_at_etl.next_step_functions:
             next_state_name = 'Load_type_choice'
-            self.add_next_step_functions_message_states(start_at_etl, state_machine)
+            # this success state is used as the state machine "off ramp" by the Load_type_choice state
+            state_machine['States']['Success'] = {'Type': 'Succeed'}
+            self.add_states_to_trigger_next_step_functions(start_at_etl, state_machine)
         else:
             next_state_name = None
+
         state_machine['States'][start_at_etl.process_name] = create_task_state(
             etl_name=start_at_etl.process_name,
             ecs_memory=start_at_etl.container_memory,
@@ -207,9 +246,25 @@ class NewStateMachineGenerator:
         )
         return state_machine
 
-    def add_next_step_functions_message_states(self, etl: ETLMetadata, state_machine: dict):
-        state_machine['States']['Success'] = create_success_state()
-        if len(etl.next_step_functions) > 1:
+    def add_states_to_trigger_next_step_functions(self, etl: ETLMetadata, state_machine: dict):
+        """Update the given state machine dict with any additional states needed to ensure the given ETL's next step functions are triggered.
+
+        This method always adds a load type choice state which will exit the state
+        machine early if the previous ETL produced no output. If the ETL has a single
+        "next step function", the choice state directly triggers the appropriate
+        SQS message state. If the ETL has multiple "next step funcitons", then the
+        choice state triggers a parallel state, which in turn triggers all appropriate
+        SQS message states.
+
+        :param etl: ETL metadata defining a list of next_step_functions to be triggered
+        :param state_machine: the state machine to which to add the new states
+        """
+        if len(etl.next_step_functions) == 1:  # directly trigger the single message state after the choice state
+            message_state_name = f'{etl.next_step_functions[0]}_message'
+            state_machine['States']['Load_type_choice'] = create_choice_state(message_state_name)
+            next_step_function = self.state_machine_metadata[etl.next_step_functions[0]]
+            state_machine['States'][message_state_name] = create_message_state(next_step_function)
+        else:  # there are multiple next_step_functions which need to be wrapped in a parallel state
             parallel_state_name = f'{etl.process_name} Next Step Functions'
             state_machine['States']['Load_type_choice'] = create_choice_state(parallel_state_name)
             state_machine['States'][parallel_state_name] = create_parallel_state()
@@ -222,11 +277,6 @@ class NewStateMachineGenerator:
                 next_step_function = self.state_machine_metadata[next_step_function_name]
                 message_state_machine_config['States'][message_state_name] = create_message_state(next_step_function)
                 state_machine['States'][parallel_state_name]['Branches'].append(message_state_machine_config)
-        else:
-            message_state_name = f'{etl.next_step_functions[0]}_message'
-            state_machine['States']['Load_type_choice'] = create_choice_state(message_state_name)
-            next_step_function = self.state_machine_metadata[etl.next_step_functions[0]]
-            state_machine['States'][message_state_name] = create_message_state(next_step_function)
 
 
 class SingleETLStateMachineGenerator:
@@ -251,7 +301,7 @@ class SingleETLStateMachineGenerator:
            just one of many child processes being executed in parallel
 
         :param start_at_state_name: the root process of this state machine config
-        :return: the full state machine configuration tree starting from the given
+        :return the full state machine configuration tree starting from the given
                  root process
         """
 
