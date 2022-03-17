@@ -17,8 +17,7 @@ from lib.db_connections import DBConnectionFactory
 from lib.metadata_core.metadata_filter import ExclusiveMetadataFilterer
 from lib.metadata_core.metadata_object_path import TablePath, ColumnPath
 from lib.metadata_core.metadata_yaml_translator import (write_data_warehouse_metadata_to_yaml,
-                                                        generate_data_warehouse_metadata_from_yaml,
-                                                        construct_dict_from_data_warehouse_yaml)
+                                                        generate_data_warehouse_metadata_from_yaml)
 from lib.lura_information_schema_to_yaml.sql_queries import (get_octane_column_metadata,
                                                              get_octane_foreign_key_metadata,
                                                              get_history_octane_etl_process_metadata,
