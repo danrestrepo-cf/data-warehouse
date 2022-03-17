@@ -1,6 +1,6 @@
 import unittest
 from typing import Optional
-from lib.state_machines_generator.state_machines_generator import AllStateMachinesGenerator, GroupStateMachineGenerator
+from lib.state_machines_generator.state_machines_generator import generate_all_state_machines, GroupStateMachineGenerator
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
 
 
@@ -240,7 +240,7 @@ class TestNonGroupStateMachines(StateMachineTestCase):
                 }
             ]
         })
-        self.state_machines = AllStateMachinesGenerator(data_warehouse_metadata, []).build_state_machines()
+        self.state_machines = generate_all_state_machines(data_warehouse_metadata, [])
 
     def test_sfn_with_one_etl_starts_at_that_etl(self):
         self.assertEqual('ETL-100', self.state_machines['SP-10']['StartAt'])
@@ -445,7 +445,7 @@ class TestNonGroupStateMachines(StateMachineTestCase):
             ]
         })
         with self.assertRaises(ValueError):
-            AllStateMachinesGenerator(data_warehouse_metadata, []).build_state_machines()
+            generate_all_state_machines(data_warehouse_metadata, [])
 
     def test_throws_error_if_latticed_etl_has_next_step_function(self):
         data_warehouse_metadata = construct_data_warehouse_metadata_from_dict({
@@ -505,7 +505,7 @@ class TestNonGroupStateMachines(StateMachineTestCase):
             ]
         })
         with self.assertRaises(ValueError):
-            AllStateMachinesGenerator(data_warehouse_metadata, []).build_state_machines()
+            generate_all_state_machines(data_warehouse_metadata, [])
 
 
 class TestGroupStateMachinesGenerator(unittest.TestCase):
@@ -714,13 +714,13 @@ class TestGroupStateMachinesGenerator(unittest.TestCase):
     def test_generate_various_group_step_function_configurations(self):
         group_state_machines = [
             GroupStateMachineGenerator(lambda x: x, 1, 'SP-GROUP-A', 'Trigger all ETLs - group limit 1'),
-            GroupStateMachineGenerator(lambda x: not x.etls_have_next_step_functions, 2, 'SP-GROUP-B', 'Trigger all standalone ETLs - group limit 2'),
+            GroupStateMachineGenerator(lambda x: not x.etls_have_next_step_functions, 2, 'SP-GROUP-B',
+                                       'Trigger all standalone ETLs - group limit 2'),
             GroupStateMachineGenerator(lambda x: x.primary_target_table.schema == 'schema_3', 5, 'SP-GROUP-C',
                                        'Trigger all schema_3 ETLs - group limit 5')
         ]
 
-        state_machines_generator = AllStateMachinesGenerator(self.data_warehouse_metadata, group_state_machines)
-        state_machines_result = state_machines_generator.build_state_machines()
+        state_machines_result = generate_all_state_machines(self.data_warehouse_metadata, group_state_machines)
         # state_machines_result includes entries for five ETL state machines that we don't care about for this test
         # so we'll manually remove those entries here
         unwanted_keys = ['SP-1', 'SP-2', 'SP-3', 'SP-4', 'SP-5']

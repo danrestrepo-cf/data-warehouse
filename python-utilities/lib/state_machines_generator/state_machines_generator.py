@@ -3,39 +3,38 @@ from typing import Optional, List, Callable, Dict
 from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, StepFunctionMetadata, ETLMetadata
 
 
-class AllStateMachinesGenerator:
-    """Generates a state machine configuration dict for all ETL processes defined in yaml metadata"""
+def generate_all_state_machines(data_warehouse_metadata: DataWarehouseMetadata,
+                                group_generators: List['GroupStateMachineGenerator']) -> dict:
+    """
+    Generate a dict with all AWS state machine configurations used by EDW, including SP-GROUP and regular ETL state machines.
 
-    def __init__(self, data_warehouse_metadata: DataWarehouseMetadata, group_generators: List['GroupStateMachineGenerator']):
-        """
-        Initialize SingleETLStateMachineGenerator and GroupStateMachinesGenerator with a DataWarehouseMetadata
-        object, which is then parsed into ETLStateMachineComponentsMetadata and GroupStateMachinesComponentsMetadata
-        objects.
-
-        :param data_warehouse_metadata: a DataWarehouseMetadata object.
-        """
-
-        self.data_warehouse_metadata = data_warehouse_metadata
-        self.group_generators = group_generators
-
-        self.step_functions = {}
-        for database in self.data_warehouse_metadata.databases:
-            for schema in database.schemas:
-                for table in schema.tables:
-                    for step_function in table.step_functions:
-                        self.step_functions[step_function.name] = step_function
-        self.etl_state_machine_generator = ETLStateMachineGenerator(self.step_functions)
-
-    def build_state_machines(self) -> dict:
-        """Build ETL and group state machine configuration dicts for given metadata"""
-        etl_state_machines = self.etl_state_machine_generator.build_etl_state_machines()
-        group_state_machines = {}
-        group_state_machines_list = [group_state_machine_generator.create_grouped_config(list(self.step_functions.values()))
-                                     for group_state_machine_generator in self.group_generators]
-        for entry in group_state_machines_list:
-            group_state_machines.update(entry)
-
-        return {**etl_state_machines, **group_state_machines}
+    :param data_warehouse_metadata: a DataWarehouseMetadata object defining the AWS
+    step functions/ETLs used to generate state machine configuration dicts
+    :param group_generators: a list of generator objects that create SP-GROUP state
+    machines from the given data warehouse metadata. All group/subgroup configurations
+    generated in this way are included together in the final output alongside any
+    ETL state machines.
+    :returns a dict of the form:
+        {
+            "state_machine_name": {
+                ...state machine configuration...
+            },
+            ...
+        }
+    """
+    # build a StepFunctionMetadata look-up dict of the form {step_function_name: StepFunctionMetadata object}
+    step_functions = {}
+    for database in data_warehouse_metadata.databases:
+        for schema in database.schemas:
+            for table in schema.tables:
+                for step_function in table.step_functions:
+                    step_functions[step_function.name] = step_function
+    # generate all ETL and GROUP state machine dicts
+    all_state_machines = ETLStateMachineGenerator(step_functions).generate()
+    for group_state_machine_generator in group_generators:
+        subgroup_collection = group_state_machine_generator.generate(list(step_functions.values()))
+        all_state_machines.update(subgroup_collection)
+    return all_state_machines
 
 
 class GroupStateMachineGenerator:
@@ -57,7 +56,7 @@ class GroupStateMachineGenerator:
         self.base_name = base_name
         self.comment = comment
 
-    def create_grouped_config(self, step_functions: List[StepFunctionMetadata]) -> dict:
+    def generate(self, step_functions: List[StepFunctionMetadata]) -> dict:
         """Create a grouped state machine configuration dict for sending SQS queue messages in parallel for state
         machines in the provided group metadata"""
         result_config = {}
@@ -97,6 +96,7 @@ class GroupStateMachineGenerator:
             return lambda group_number: f'{self.comment} - group {group_number + 1}'
 
     def create_parallel_message_state_branches(self, step_functions: List[StepFunctionMetadata], sub_group_number: int) -> List[dict]:
+        """Create child state machines to populate a Parallel state which trigger the given step functions via SQS message."""
         parallel_branches = []
         metadata_index_start = sub_group_number * self.group_state_limit
         metadata_index_end = metadata_index_start + self.group_state_limit
@@ -116,7 +116,7 @@ class ETLStateMachineGenerator:
     def __init__(self, state_machine_metadata: Dict[str, StepFunctionMetadata]):
         self.state_machine_metadata = state_machine_metadata
 
-    def build_etl_state_machines(self) -> Dict[str, dict]:
+    def generate(self) -> Dict[str, dict]:
         """Generate AWS state machine config dicts for all step functions defined in the given state_machine_metadata.
 
         Generated state machines will execute one-to-many ETLs and cause zero-to-many subsequent messages to be placed
@@ -350,7 +350,7 @@ class ETLStateMachineGenerator:
 #
 
 def create_state_machine_scaffold(comment: str, start_at: str, states: Optional[dict] = None) -> dict:
-    """"""
+    """Create a bare-minimum state machine structure including a comment, start-at, and sub-dict of states."""
     return {
         'Comment': comment,
         'StartAt': start_at,
@@ -386,6 +386,7 @@ def create_message_state(triggered_step_function: StepFunctionMetadata, include_
         },
         'End': True
     }
+    # see comment about ResultPath on create_etl_task_state method above
     if not include_results_selector:
         del message_config['ResultSelector']
     return message_config

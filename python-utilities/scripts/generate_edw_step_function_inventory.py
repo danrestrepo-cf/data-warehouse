@@ -8,7 +8,7 @@ PROJECT_DIR_PATH = os.path.realpath(os.path.join(os.path.dirname(os.path.realpat
 sys.path.append(PROJECT_DIR_PATH)
 
 from lib.metadata_core.metadata_yaml_translator import generate_data_warehouse_metadata_from_yaml
-from lib.state_machines_generator.state_machines_generator import AllStateMachinesGenerator, GroupStateMachineGenerator
+from lib.state_machines_generator.state_machines_generator import generate_all_state_machines, GroupStateMachineGenerator
 
 
 def main():
@@ -44,8 +44,7 @@ def main():
     ]
 
     # generate state machines
-    state_machine_generator = AllStateMachinesGenerator(data_warehouse_metadata, group_state_machines)
-    state_machine_configs = state_machine_generator.build_state_machines()
+    state_machine_configs = generate_all_state_machines(data_warehouse_metadata, group_state_machines)
     formatted_config_strings = format_data_for_outputting(state_machine_configs)
     # output config files
     for name, config in formatted_config_strings.items():
