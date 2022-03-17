@@ -2074,6 +2074,7 @@ etls:
               AND deal.d_test_loan IS NOT DISTINCT FROM transaction_junk_dim.is_test_loan_flag
               AND proposal.prp_structure_type IS NOT DISTINCT FROM transaction_junk_dim.structure_code
               AND proposal.prp_loan_purpose_type IS NOT DISTINCT FROM transaction_junk_dim.loan_purpose_code
+              AND proposal.prp_property_usage_type IS NOT DISTINCT FROM transaction_junk_dim.property_usage_code
               AND transaction_junk_dim.data_source_dwid = 1
           -- star_loan.transaction_dim
           LEFT JOIN (
