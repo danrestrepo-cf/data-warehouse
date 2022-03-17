@@ -256,6 +256,9 @@ class StepFunctionMetadata:
         if etl_name in self._etls:
             del self._etls[etl_name]
 
+    def has_etl(self, etl_name: str) -> bool:
+        return etl_name in self._etls
+
     @property
     def etls(self) -> List[ETLMetadata]:
         return list(self._etls.values())
@@ -264,8 +267,12 @@ class StepFunctionMetadata:
     def has_parallel_limit(self) -> bool:
         return self.parallel_limit is not None
 
-    def has_etl(self, etl_name: str) -> bool:
-        return etl_name in self._etls
+    @property
+    def etls_have_next_step_functions(self) -> bool:
+        for etl in self._etls.values():
+            if etl.next_step_functions:
+                return True
+        return False
 
     def __repr__(self) -> str:
         return f'StepFunctionMetadata(\n' \

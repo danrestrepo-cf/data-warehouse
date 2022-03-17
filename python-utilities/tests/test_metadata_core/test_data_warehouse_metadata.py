@@ -508,6 +508,15 @@ class TestStepFunctionMetadata(unittest.TestCase):
         step_function.remove_etl('ETL-1')
         self.assertFalse(step_function.has_etl('ETL-1'))
 
+    def test_etls_have_next_step_functions_returns_true_if_any_etls_has_next_sfns_and_false_otherwise(self):
+        step_function = StepFunctionMetadata('SP-1', TablePath(database='db1', schema='sch1', table='table1'))
+        etl1 = ETLMetadata(process_name='ETL-1')
+        step_function.add_etl(etl1)
+        self.assertFalse(step_function.etls_have_next_step_functions)
+        etl2 = ETLMetadata(process_name='ETL-2', next_step_functions=['SP-10'])
+        step_function.add_etl(etl2)
+        self.assertTrue(step_function.etls_have_next_step_functions)
+
 
 class TestTableMetadataCanGetColumnSourcePaths(unittest.TestCase):
 
