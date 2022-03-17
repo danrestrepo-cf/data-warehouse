@@ -54,12 +54,7 @@ def main():
 
         # build metadata filterer
         metadata_filterer = build_octane_metadata_filterer()
-        print(metadata_filterer.filter(
-            build_staging_octane_metadata(
-                octane_column_metadata,
-                octane_foreign_key_metadata
-            )
-        ))
+
         # generate metadata
         metadata = add_deleted_tables_and_columns_to_history_octane_metadata(
             generate_history_octane_metadata( # this generates what will be the new history_octane metadata from octane's metadata
