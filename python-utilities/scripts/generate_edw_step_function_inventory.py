@@ -29,13 +29,14 @@ def main():
     # define group state machines
     group_state_machines = [
         GroupStateMachineGenerator(
-            group_criteria_function=lambda x: x.target_schema == 'history_octane',
+            group_criteria_function=lambda step_function: step_function.primary_target_table.schema == 'history_octane',
             group_state_limit=max_states,
             base_name='SP-GROUP-1',
             comment='Trigger every history_octane ETL - This should process all staging_octane data into '
                     'history_octane and will trigger any downstream processes'),
         GroupStateMachineGenerator(
-            group_criteria_function=lambda x: x.target_schema == 'history_octane' and x.has_dependency,
+            group_criteria_function=lambda step_function: step_function.primary_target_table.schema == 'history_octane' and
+                                                          step_function.etls_have_next_step_functions,
             group_state_limit=max_states,
             base_name='SP-GROUP-2',
             comment='Trigger history_octane ETLs that have one or more dependent ETLs - This should process all '
@@ -55,7 +56,8 @@ def main():
 def delete_prior_state_machine_configurations(directory: str, state_machine_file_extension: str):
     non_state_machine_files = list(filter(lambda x: not x.endswith(f'.{state_machine_file_extension}'), os.listdir(directory)))
     if non_state_machine_files:
-        raise RuntimeError(f'Output directory contains unexpected non-{state_machine_file_extension} files, and may be invalid. Now exiting.')
+        raise RuntimeError(
+            f'Output directory contains unexpected non-{state_machine_file_extension} files, and may be invalid. Now exiting.')
     deleted_files_count = 0
     for file in os.listdir(directory):
         if file.endswith(state_machine_file_extension):

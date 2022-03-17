@@ -1,8 +1,6 @@
 import math
-from dataclasses import dataclass
 from typing import Optional, List, Callable, Dict
 from lib.metadata_core.data_warehouse_metadata import DataWarehouseMetadata, StepFunctionMetadata, ETLMetadata
-from lib.state_machines_generator.state_machines_metadata import ETLStateMachineComponentsMetadata, GroupStateMachinesComponentsMetadata
 
 
 class AllStateMachinesGenerator:
@@ -20,48 +18,19 @@ class AllStateMachinesGenerator:
         self.data_warehouse_metadata = data_warehouse_metadata
         self.group_generators = group_generators
 
-        self.state_machine_metadata = {}
-        self.group_state_machine_metadata = []
+        self.step_functions = {}
         for database in self.data_warehouse_metadata.databases:
             for schema in database.schemas:
                 for table in schema.tables:
                     for step_function in table.step_functions:
-                        self.state_machine_metadata[step_function.name] = step_function
-
-                        # """NOTE: The below if statement is a temporary workaround for the KeyError exception that
-                        # results from how the SP-200001-delete ETL(s) is/are defined (at the individual partition level)
-                        # within its target table's yaml file vs. how it is called as a subsequent ETL (by just the
-                        # parent name SP-200001-delete) in other yaml files.
-                        #
-                        # The long-term fix for this issue will be implemented here: https://app.asana.com/0/0/1201843492068511
-                        # """
-                        # if step_function.name.startswith('SP-200001-delete') is True:
-                        #     parsed_process_name = '-'.join(step_function.name.split('-')[0:3])
-                        # else:
-                        #     parsed_process_name = step_function.name
-                        #
-                        # for etl in step_function.etls:
-                        #     # parse DataWarehouseMetadata into structure needed to generate ETL state machines
-                        #     self.etl_state_machine_metadata[parsed_process_name] = ETLStateMachineComponentsMetadata(
-                        #         target_table=etl.output_table.table,
-                        #         container_memory=etl.container_memory,
-                        #         comment=etl.description,
-                        #         next_processes=sorted(etl.next_step_functions)
-                        #     )
-                        #     self.group_state_machine_metadata.append(GroupStateMachinesComponentsMetadata(
-                        #         process_name=parsed_process_name,
-                        #         target_schema=schema.name,
-                        #         target_table=etl.output_table.table,
-                        #         has_dependency=len(etl.next_step_functions) > 0
-                        #     ))
-
-        self.etl_state_machine_generator = NewStateMachineGenerator(self.state_machine_metadata)
+                        self.step_functions[step_function.name] = step_function
+        self.etl_state_machine_generator = ETLStateMachineGenerator(self.step_functions)
 
     def build_state_machines(self) -> dict:
         """Build ETL and group state machine configuration dicts for given metadata"""
         etl_state_machines = self.etl_state_machine_generator.build_etl_state_machines()
         group_state_machines = {}
-        group_state_machines_list = [group_state_machine_generator.create_grouped_config(self.group_state_machine_metadata)
+        group_state_machines_list = [group_state_machine_generator.create_grouped_config(list(self.step_functions.values()))
                                      for group_state_machine_generator in self.group_generators]
         for entry in group_state_machines_list:
             group_state_machines.update(entry)
@@ -72,34 +41,34 @@ class AllStateMachinesGenerator:
 class GroupStateMachineGenerator:
     """Generates a group state machine configuration dict for the provided metadata"""
 
-    def __init__(self, group_criteria_function: Callable[[GroupStateMachinesComponentsMetadata], bool],
-                 group_state_limit: int, base_name: str,
+    def __init__(self, group_criteria_function: Callable[[StepFunctionMetadata], bool], group_state_limit: int, base_name: str,
                  comment: str):
         """
-        :param group_criteria_function: A function for specifying which ETL state machines will be triggered by
-        the group state machine.
+        :param group_criteria_function: A function which should return True if the given step
+        function should be triggered by the group state machine, and False otherwise.
         :param group_state_limit: The maximum number of message states allowed within a given subgroup of a group state
         machine. If the number of message states allocated to the group exceeds this limit, then the overall group
         will be split into two or more subgroups.
         :param base_name: The parent identifier of the group state machine, e.g. SP-GROUP-1
-        :param comment: A description of the ETL state machine population that is triggered by the group state machine
+        :param comment: A description of the step function population that is triggered by the group state machine
         """
         self.group_criteria_function = group_criteria_function
         self.group_state_limit = group_state_limit
         self.base_name = base_name
         self.comment = comment
 
-    def create_grouped_config(self, group_state_machine_metadata: List[GroupStateMachinesComponentsMetadata]) -> dict:
+    def create_grouped_config(self, step_functions: List[StepFunctionMetadata]) -> dict:
         """Create a grouped state machine configuration dict for sending SQS queue messages in parallel for state
         machines in the provided group metadata"""
         result_config = {}
         # filter group state machine metadata according to group_criteria function
-        filtered_metadata = \
-            sorted([entry for entry in group_state_machine_metadata if self.group_criteria_function(entry)],
-                   key=lambda x: x.process_name)
-        make_state_machine_name = self.get_state_machine_name_maker(filtered_metadata)
-        make_state_machine_comment = self.get_state_machine_comment_maker(filtered_metadata)
-        sub_group_count = math.ceil(len(filtered_metadata) / self.group_state_limit)
+        filtered_step_functions = sorted(
+            [step_function for step_function in step_functions if self.group_criteria_function(step_function)],
+            key=lambda step_function: step_function.name
+        )
+        make_state_machine_name = self.get_state_machine_name_maker(filtered_step_functions)
+        make_state_machine_comment = self.get_state_machine_comment_maker(filtered_step_functions)
+        sub_group_count = math.ceil(len(filtered_step_functions) / self.group_state_limit)
         for sub_group in range(0, sub_group_count):  # only executes once if # of state machines is within limit
             state_machine_comment = make_state_machine_comment(sub_group)
             state_machine_name = make_state_machine_name(sub_group)
@@ -108,58 +77,41 @@ class GroupStateMachineGenerator:
                 start_at=state_machine_name,
                 states={state_machine_name: create_parallel_state()}
             )
-            parallel_state['States'][state_machine_name]['Branches'] = \
-                self.create_parallel_message_state_branches(filtered_metadata, sub_group)
+            parallel_state['States'][state_machine_name]['Branches'] = self.create_parallel_message_state_branches(filtered_step_functions,
+                                                                                                                   sub_group)
             result_config[state_machine_name] = parallel_state
         return result_config
 
-    def get_state_machine_name_maker(self, group_state_machine_metadata: List[GroupStateMachinesComponentsMetadata]) -> Callable[
-        [int], str]:
-        if len(group_state_machine_metadata) <= self.group_state_limit:
+    def get_state_machine_name_maker(self, step_functions: List[StepFunctionMetadata]) -> Callable[[int], str]:
+        """Generate a function that creates a state machine name given a group number."""
+        if len(step_functions) <= self.group_state_limit:
             return lambda group_number: self.base_name
         else:
             return lambda group_number: f'{self.base_name}-{group_number + 1}'
 
-    def get_state_machine_comment_maker(self, group_state_machine_metadata: List[GroupStateMachinesComponentsMetadata]) -> Callable[
-        [int], str]:
-        if len(group_state_machine_metadata) <= self.group_state_limit:
+    def get_state_machine_comment_maker(self, step_functions: List[StepFunctionMetadata]) -> Callable[[int], str]:
+        """Generate a function that creates a state machine comment given a group number."""
+        if len(step_functions) <= self.group_state_limit:
             return lambda group_number: self.comment
         else:
             return lambda group_number: f'{self.comment} - group {group_number + 1}'
 
-    def create_parallel_message_state_branches(self, group_state_machine_metadata: List[GroupStateMachinesComponentsMetadata],
-                                               sub_group_number: int) -> List[dict]:
+    def create_parallel_message_state_branches(self, step_functions: List[StepFunctionMetadata], sub_group_number: int) -> List[dict]:
         parallel_branches = []
         metadata_index_start = sub_group_number * self.group_state_limit
-        metadata_index_end = (sub_group_number + 1) * self.group_state_limit
-        for entry in group_state_machine_metadata[metadata_index_start:metadata_index_end]:
-            process_name = entry.process_name
-            target_table = entry.target_table
-            message_state_name = f'{process_name}_message'
+        metadata_index_end = metadata_index_start + self.group_state_limit
+        for step_function in step_functions[metadata_index_start:metadata_index_end]:
+            message_state_name = make_message_state_name(step_function.name)
             message_state = create_state_machine_scaffold(
-                comment=f'Send message to bi-managed-mdi-2-full-check-queue for {process_name}',
+                comment=f'Send message to bi-managed-mdi-2-full-check-queue for {step_function.name}',
                 start_at=message_state_name,
-                states={message_state_name: create_message_state(
-                    process_name=process_name,
-                    target_table=target_table)}
+                states={message_state_name: create_message_state(step_function, include_results_selector=True)}
             )
-
-            # insert ResultSelector attribute into message state's attributes before the 'End' attribute
-            # this is needed to filter out unnecessary result information from successful message states
-            message_state_attributes = message_state['States'][message_state_name]
-            result_selector_position = list(message_state_attributes.keys()).index('End')
-            message_state_attributes_items = list(message_state_attributes.items())
-            message_state_attributes_items.insert(
-                result_selector_position, ('ResultSelector', create_result_selector_attribute_config(message_state_name))
-            )
-            message_state_attributes = dict(message_state_attributes_items)
-            message_state['States'][message_state_name] = message_state_attributes
-
             parallel_branches.append(message_state)
         return parallel_branches
 
 
-class NewStateMachineGenerator:
+class ETLStateMachineGenerator:
 
     def __init__(self, state_machine_metadata: Dict[str, StepFunctionMetadata]):
         self.state_machine_metadata = state_machine_metadata
@@ -193,7 +145,7 @@ class NewStateMachineGenerator:
                 state_machine['States']['StartAt Parallel'] = start_at_parallel_state
                 sorted_etls = sorted(step_function.etls, key=lambda etl: etl.process_name)
                 # number of ETLs exceed the parallel_limit and the ETLs must be broken out into parallelized chains of sequential ETLs
-                if step_function.parallel_limit and (len(sorted_etls) > step_function.parallel_limit):
+                if step_function.has_parallel_limit and (len(sorted_etls) > step_function.parallel_limit):
                     next_state_lookup = self.ETLLatticeNextStateLookup(etls=sorted_etls, parallel_limit=step_function.parallel_limit)
                     for i, etl in enumerate(sorted_etls):
                         if etl.next_step_functions:
@@ -295,7 +247,7 @@ class NewStateMachineGenerator:
         :param state_machine: the state machine to which to add the new states
         """
         if len(etl.next_step_functions) == 1:  # directly trigger the single message state after the choice state
-            message_state_name = f'{etl.next_step_functions[0]}_message'
+            message_state_name = make_message_state_name(etl.next_step_functions[0])
             state_machine['States']['Load_type_choice'] = create_choice_state(message_state_name)
             next_step_function = self.get_step_function_metadata(etl.next_step_functions[0])
             state_machine['States'][message_state_name] = create_message_state(next_step_function)
@@ -304,7 +256,7 @@ class NewStateMachineGenerator:
             state_machine['States']['Load_type_choice'] = create_choice_state(parallel_state_name)
             state_machine['States'][parallel_state_name] = create_parallel_state()
             for next_step_function_name in etl.next_step_functions:
-                message_state_name = f'{next_step_function_name}_message'
+                message_state_name = make_message_state_name(next_step_function_name)
                 message_state_machine_config = create_state_machine_scaffold(
                     comment=f'Send message to bi-managed-mdi-2-full-check-queue for {next_step_function_name}',
                     start_at=message_state_name
@@ -334,6 +286,7 @@ class NewStateMachineGenerator:
         task_state = {
             'Type': 'Task',
             'Resource': 'arn:aws:states:::ecs:runTask',
+            'ResultPath': None,
             'Parameters': {
                 'LaunchType': 'FARGATE',
                 'Cluster': '${ecsClusterARN}',
@@ -380,56 +333,71 @@ class NewStateMachineGenerator:
             task_state['Next'] = next_state_name
             task_state['Resource'] += '.waitForTaskToken'
 
-        if pass_state_input_as_output:
-            task_state['ResultPath'] = None
+        # Even though "ResultPath": None is not needed for *most* task states,
+        # it is included by default and then actively *removed* if it isn't needed
+        # in order to more easily specify where in the final state output the key appears.
+        # If we instead omitted it by default and then only *included* it if needed,
+        # it would appear at the bottom of the JSON unless other more complicated
+        # steps were taken.
+        if not pass_state_input_as_output:
+            del task_state['ResultPath']
 
         return task_state
 
 
+#
 # State machine utility functions used by multiple classes in this library
-
+#
 
 def create_state_machine_scaffold(comment: str, start_at: str, states: Optional[dict] = None) -> dict:
-    if states is None:
-        states = {}
-    root_config = {
+    """"""
+    return {
         'Comment': comment,
         'StartAt': start_at,
-        'States': states
+        'States': states or {}
     }
-    return root_config
 
 
-def create_message_state(next_step_function: StepFunctionMetadata) -> dict:
+def make_message_state_name(step_function_name: str) -> str:
+    """Return a standardized name for a SQS message state which triggers a step function of the given name."""
+    return f'{step_function_name}_message'
+
+
+def create_message_state(triggered_step_function: StepFunctionMetadata, include_results_selector: bool = False) -> dict:
     """Create an AWS Task state configuration that sends a message to an AWS SQS queue"""
     message_config = {
         'Type': 'Task',
         'Resource': 'arn:aws:states:::sqs:sendMessage',
         'Parameters': {
             'QueueUrl': '${fullCheckQueueUrl}',
-            'MessageGroupId': next_step_function.primary_target_table.table,
+            'MessageGroupId': triggered_step_function.primary_target_table.table,
             'MessageDeduplicationId.$': "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
             'MessageAttributes': {
                 'ProcessId': {
                     'DataType': 'String',
-                    'StringValue': next_step_function.name
+                    'StringValue': triggered_step_function.name
                 }
             },
             'MessageBody.$': "States.JsonToString($)"
         },
+        'ResultSelector': {
+            'StateName': make_message_state_name(triggered_step_function.name),
+            'HttpHeadersDate.$': '$.SdkHttpMetadata.HttpHeaders.Date'
+        },
         'End': True
     }
+    if not include_results_selector:
+        del message_config['ResultSelector']
     return message_config
 
 
 def create_parallel_state() -> dict:
     """Create an empty AWS Parallel state configuration for processes that send multiple SQS messages"""
-    parallel_config = {
+    return {
         'Type': 'Parallel',
         'End': True,
         'Branches': []
     }
-    return parallel_config
 
 
 def create_choice_state(next_state_name: str) -> dict:
@@ -445,12 +413,3 @@ def create_choice_state(next_state_name: str) -> dict:
         ],
         'Default': next_state_name
     }
-
-
-def create_result_selector_attribute_config(state_name: str) -> dict:
-    """Create an AWS ResultSelector attribute configuration"""
-    result_selector_config = {
-        'StateName': state_name,
-        'HttpHeadersDate.$': '$.SdkHttpMetadata.HttpHeaders.Date'
-    }
-    return result_selector_config
