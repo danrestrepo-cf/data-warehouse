@@ -229,7 +229,6 @@ def add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata: D
 
     # python passes by reference so use the copy library to create a copy of objects so we can modify them without
     # causing side effects.
-    import copy
     output_database_metadata = copy.deepcopy(octane_metadata)
 
     # this SchemaMetadata object contains only history_octane metadata read from yamls.
