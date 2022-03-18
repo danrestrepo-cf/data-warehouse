@@ -1,0 +1,98 @@
+name: borrower_hmda_collection_dim
+primary_source_table: staging.history_octane.borrower
+primary_key:
+- dwid
+columns:
+  dwid:
+    data_type: BIGINT
+  data_source_dwid:
+    data_type: BIGINT
+  edw_created_datetime:
+    data_type: TIMESTAMPTZ
+  edw_modified_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  data_source_integration_columns:
+    data_type: TEXT
+  data_source_integration_id:
+    data_type: TEXT
+  data_source_modified_datetime:
+    data_type: TIMESTAMPTZ
+  ethnicity_collected_visual_or_surname:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_ethnicity_collected_visual_or_surname.columns.value
+  ethnicity_collected_visual_or_surname_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_ethnicity_collected_visual_or_surname
+  ethnicity_not_obtainable_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_ethnicity_not_obtainable
+  ethnicity_refused:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_ethnicity_refused.columns.value
+  ethnicity_refused_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_ethnicity_refused
+  race_collected_visual_or_surname:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_race_collected_visual_or_surname.columns.value
+  race_collected_visual_or_surname_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_race_collected_visual_or_surname
+  race_information_not_provided_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_information_not_provided
+  race_national_origin_refusal_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_national_origin_refusal
+  race_not_obtainable_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_race_not_obtainable
+  race_refused:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_race_refused.columns.value
+  race_refused_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_race_refused
+  sex_collected_visual_or_surname:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_sex_collected_visual_or_surname.columns.value
+  sex_collected_visual_or_surname_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_sex_collected_visual_or_surname
+  sex_not_obtainable_flag:
+    data_type: BOOLEAN
+    source:
+      field: primary_source_table.columns.b_sex_not_obtainable
+  sex_refused:
+    data_type: VARCHAR(1024)
+    source:
+      field: primary_source_table.foreign_keys.fkt_b_sex_refused.columns.value
+  sex_refused_code:
+    data_type: VARCHAR(128)
+    source:
+      field: primary_source_table.columns.b_sex_refused
+etls:
+  SP-200021:
+    input_type: table
+    output_type: insert
+    hardcoded_data_source: Octane
+    json_output_field: data_source_integration_id
+    truncate_table: false
+    input_sql: |-
+      SELECT * FROM history_octane.borrower; --SQL PLACEHOLDER
