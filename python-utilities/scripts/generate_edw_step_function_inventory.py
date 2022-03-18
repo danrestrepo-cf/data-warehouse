@@ -55,8 +55,8 @@ def main():
 def delete_prior_state_machine_configurations(directory: str, state_machine_file_extension: str):
     non_state_machine_files = list(filter(lambda x: not x.endswith(f'.{state_machine_file_extension}'), os.listdir(directory)))
     if non_state_machine_files:
-        raise RuntimeError(
-            f'Output directory contains unexpected non-{state_machine_file_extension} files, and may be invalid. Now exiting.')
+        raise RuntimeError(f'Output directory contains unexpected non-{state_machine_file_extension} files, and may be invalid. '
+                           f'Now exiting.')
     deleted_files_count = 0
     for file in os.listdir(directory):
         if file.endswith(state_machine_file_extension):
