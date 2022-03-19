@@ -69,8 +69,13 @@ CREATE TABLE history_octane.business_income_borrower_title_type (
                                                                     code varchar(128),
                                                                     value varchar(1024),
                                                                     data_source_updated_datetime timestamptz,
-                                                                    data_source_deleted_flag boolean
+                                                                    data_source_deleted_flag boolean,
+                                                                    etl_batch_id text
 );
+
+CREATE INDEX idx_business_income_borrower_title_type__code ON history_octane.business_income_borrower_title_type (code);
+
+CREATE INDEX idx_business_income_borrower_title_type__etl_batch_id ON history_octane.business_income_borrower_title_type (etl_batch_id);
 
 CREATE INDEX idx_898065ca79b025eefdcd6f0ca5afc58f ON history_octane.business_income_borrower_title_type (data_source_updated_datetime);
 
@@ -107,8 +112,12 @@ CREATE TABLE history_octane.lender_user_role_org_node (
                                                           luron_lender_user_role_pid bigint,
                                                           luron_org_node_pid bigint,
                                                           data_source_updated_datetime timestamptz,
-                                                          data_source_deleted_flag boolean
+                                                          data_source_deleted_flag boolean,
+                                                          etl_batch_id text
 );
+
+CREATE INDEX idx_lender_user_role_org_node__etl_batch_id ON history_octane.lender_user_role_org_node (etl_batch_id);
+
 
 CREATE INDEX idx_lender_user_role_org_node__pid ON history_octane.lender_user_role_org_node (luron_pid);
 
