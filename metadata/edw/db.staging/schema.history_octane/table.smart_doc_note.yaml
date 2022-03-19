@@ -1,25 +1,7 @@
 name: smart_doc_note
-primary_source_table: staging.staging_octane.smart_doc_note
 primary_key:
 - sdn_pid
 - sdn_version
-foreign_keys:
-  fk_smart_doc_note_1:
-    columns:
-    - sdn_smart_doc_pid
-    references:
-      columns:
-      - sd_pid
-      schema: history_octane
-      table: smart_doc
-  fk_smart_doc_note_2:
-    columns:
-    - sdn_author_lender_user_pid
-    references:
-      columns:
-      - lu_pid
-      schema: history_octane
-      table: lender_user
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
@@ -29,72 +11,15 @@ columns:
     data_type: TEXT
   sdn_author_lender_user_pid:
     data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sdn_author_lender_user_pid
   sdn_author_unparsed_name:
     data_type: VARCHAR(128)
-    source:
-      field: primary_source_table.columns.sdn_author_unparsed_name
   sdn_content:
     data_type: VARCHAR(16000)
-    source:
-      field: primary_source_table.columns.sdn_content
   sdn_create_datetime:
     data_type: TIMESTAMP
-    source:
-      field: primary_source_table.columns.sdn_create_datetime
   sdn_pid:
     data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sdn_pid
   sdn_smart_doc_pid:
     data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sdn_smart_doc_pid
   sdn_version:
     data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sdn_version
-etls:
-  SP-100332:
-    input_type: table
-    output_type: insert
-    json_output_field: sdn_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.smart_doc_note
-      SELECT staging_table.sdn_pid
-           , staging_table.sdn_version
-           , staging_table.sdn_smart_doc_pid
-           , staging_table.sdn_create_datetime
-           , staging_table.sdn_content
-           , staging_table.sdn_author_lender_user_pid
-           , staging_table.sdn_author_unparsed_name
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.smart_doc_note staging_table
-      LEFT JOIN history_octane.smart_doc_note history_table
-                ON staging_table.sdn_pid = history_table.sdn_pid
-                    AND staging_table.sdn_version = history_table.sdn_version
-      WHERE history_table.sdn_pid IS NULL
-      UNION ALL
-      SELECT history_table.sdn_pid
-           , history_table.sdn_version + 1
-           , history_table.sdn_smart_doc_pid
-           , history_table.sdn_create_datetime
-           , history_table.sdn_content
-           , history_table.sdn_author_lender_user_pid
-           , history_table.sdn_author_unparsed_name
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.smart_doc_note history_table
-      LEFT JOIN staging_octane.smart_doc_note staging_table
-                ON staging_table.sdn_pid = history_table.sdn_pid
-      WHERE staging_table.sdn_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.smart_doc_note deleted_records
-          WHERE deleted_records.sdn_pid = history_table.sdn_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );

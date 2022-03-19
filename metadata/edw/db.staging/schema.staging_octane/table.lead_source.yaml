@@ -28,21 +28,21 @@ foreign_keys:
       table: mortech_account
   fkt_lds_broker_compensation_type:
     columns:
-    - lds_broker_compensation_type
+    - lds_compensation_type
     references:
       columns:
       - code
       schema: staging_octane
-      table: broker_compensation_type
+      table: compensation_type
 columns:
   lds_account_pid:
     data_type: BIGINT
   lds_active:
     data_type: BOOLEAN
-  lds_broker_compensation_type:
-    data_type: VARCHAR(128)
   lds_channel_pid:
     data_type: BIGINT
+  lds_compensation_type:
+    data_type: VARCHAR(128)
   lds_lead_id_required:
     data_type: BOOLEAN
   lds_lead_source_id:
