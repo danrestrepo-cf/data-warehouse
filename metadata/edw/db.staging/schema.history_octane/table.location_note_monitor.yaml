@@ -1,25 +1,7 @@
 name: location_note_monitor
-primary_source_table: staging.staging_octane.location_note_monitor
 primary_key:
 - locnm_pid
 - locnm_version
-foreign_keys:
-  fk_location_note_monitor_1:
-    columns:
-    - locnm_location_note_pid
-    references:
-      columns:
-      - locn_pid
-      schema: history_octane
-      table: location_note
-  fk_location_note_monitor_2:
-    columns:
-    - locnm_lender_user_pid
-    references:
-      columns:
-      - lu_pid
-      schema: history_octane
-      table: lender_user
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
@@ -29,54 +11,9 @@ columns:
     data_type: TEXT
   locnm_lender_user_pid:
     data_type: BIGINT
-    source:
-      field: primary_source_table.columns.locnm_lender_user_pid
   locnm_location_note_pid:
     data_type: BIGINT
-    source:
-      field: primary_source_table.columns.locnm_location_note_pid
   locnm_pid:
     data_type: BIGINT
-    source:
-      field: primary_source_table.columns.locnm_pid
   locnm_version:
     data_type: INTEGER
-    source:
-      field: primary_source_table.columns.locnm_version
-etls:
-  SP-100859:
-    input_type: table
-    output_type: insert
-    json_output_field: locnm_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.location_note_monitor
-      SELECT staging_table.locnm_pid
-           , staging_table.locnm_version
-           , staging_table.locnm_location_note_pid
-           , staging_table.locnm_lender_user_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.location_note_monitor staging_table
-      LEFT JOIN history_octane.location_note_monitor history_table
-                ON staging_table.locnm_pid = history_table.locnm_pid
-                    AND staging_table.locnm_version = history_table.locnm_version
-      WHERE history_table.locnm_pid IS NULL
-      UNION ALL
-      SELECT history_table.locnm_pid
-           , history_table.locnm_version + 1
-           , history_table.locnm_location_note_pid
-           , history_table.locnm_lender_user_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.location_note_monitor history_table
-      LEFT JOIN staging_octane.location_note_monitor staging_table
-                ON staging_table.locnm_pid = history_table.locnm_pid
-      WHERE staging_table.locnm_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.location_note_monitor deleted_records
-          WHERE deleted_records.locnm_pid = history_table.locnm_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );

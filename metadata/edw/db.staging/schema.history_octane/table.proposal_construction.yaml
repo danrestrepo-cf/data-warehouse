@@ -51,6 +51,10 @@ columns:
     data_type: BOOLEAN
     source:
       field: primary_source_table.columns.prpc_contingency_reserve_required
+  prpc_effective_construction_completion_date:
+    data_type: DATE
+    source:
+      field: primary_source_table.columns.prpc_effective_construction_completion_date
   prpc_estimated_permit_amount_applicable:
     data_type: BOOLEAN
     source:
@@ -134,6 +138,7 @@ etls:
            , staging_table.prpc_estimated_permit_amount_applicable
            , staging_table.prpc_contingency_reserve_required
            , staging_table.prpc_extension_period_days
+           , staging_table.prpc_effective_construction_completion_date
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.proposal_construction staging_table
@@ -160,6 +165,7 @@ etls:
            , history_table.prpc_estimated_permit_amount_applicable
            , history_table.prpc_contingency_reserve_required
            , history_table.prpc_extension_period_days
+           , history_table.prpc_effective_construction_completion_date
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.proposal_construction history_table

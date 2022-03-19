@@ -1,25 +1,7 @@
 name: smart_doc_note_monitor
-primary_source_table: staging.staging_octane.smart_doc_note_monitor
 primary_key:
 - sdnm_pid
 - sdnm_version
-foreign_keys:
-  fk_smart_doc_note_monitor_1:
-    columns:
-    - sdnm_smart_doc_note_pid
-    references:
-      columns:
-      - sdn_pid
-      schema: history_octane
-      table: smart_doc_note
-  fk_smart_doc_note_monitor_2:
-    columns:
-    - sdnm_lender_user_pid
-    references:
-      columns:
-      - lu_pid
-      schema: history_octane
-      table: lender_user
 columns:
   data_source_deleted_flag:
     data_type: BOOLEAN
@@ -29,54 +11,9 @@ columns:
     data_type: TEXT
   sdnm_lender_user_pid:
     data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sdnm_lender_user_pid
   sdnm_pid:
     data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sdnm_pid
   sdnm_smart_doc_note_pid:
     data_type: BIGINT
-    source:
-      field: primary_source_table.columns.sdnm_smart_doc_note_pid
   sdnm_version:
     data_type: INTEGER
-    source:
-      field: primary_source_table.columns.sdnm_version
-etls:
-  SP-100177:
-    input_type: table
-    output_type: insert
-    json_output_field: sdnm_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.smart_doc_note_monitor
-      SELECT staging_table.sdnm_pid
-           , staging_table.sdnm_version
-           , staging_table.sdnm_smart_doc_note_pid
-           , staging_table.sdnm_lender_user_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.smart_doc_note_monitor staging_table
-      LEFT JOIN history_octane.smart_doc_note_monitor history_table
-                ON staging_table.sdnm_pid = history_table.sdnm_pid
-                    AND staging_table.sdnm_version = history_table.sdnm_version
-      WHERE history_table.sdnm_pid IS NULL
-      UNION ALL
-      SELECT history_table.sdnm_pid
-           , history_table.sdnm_version + 1
-           , history_table.sdnm_smart_doc_note_pid
-           , history_table.sdnm_lender_user_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.smart_doc_note_monitor history_table
-      LEFT JOIN staging_octane.smart_doc_note_monitor staging_table
-                ON staging_table.sdnm_pid = history_table.sdnm_pid
-      WHERE staging_table.sdnm_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.smart_doc_note_monitor deleted_records
-          WHERE deleted_records.sdnm_pid = history_table.sdnm_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
