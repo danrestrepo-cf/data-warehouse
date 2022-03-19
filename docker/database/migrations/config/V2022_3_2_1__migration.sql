@@ -8,8 +8,8 @@ INSERTIONS
 
 --edw_table_definition
 WITH insert_rows (database_name, schema_name, table_name, source_database_name, source_schema_name, source_table_name) AS (
-    VALUES ('staging', 'staging_octane', 'compensation_type', NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'business_income_borrower_title_type', NULL, NULL, NULL)
+    VALUES ('staging', 'staging_octane', 'business_income_borrower_title_type', NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'compensation_type', NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'lender_user_role_org_node', NULL, NULL, NULL)
 )
 INSERT
@@ -22,8 +22,8 @@ FROM insert_rows
             AND insert_rows.source_table_name = source_table_definition.table_name;
 
 WITH insert_rows (database_name, schema_name, table_name, source_database_name, source_schema_name, source_table_name) AS (
-    VALUES ('staging', 'history_octane', 'compensation_type', 'staging', 'staging_octane', 'compensation_type')
-         , ('staging', 'history_octane', 'business_income_borrower_title_type', 'staging', 'staging_octane', 'business_income_borrower_title_type')
+    VALUES ('staging', 'history_octane', 'business_income_borrower_title_type', 'staging', 'staging_octane', 'business_income_borrower_title_type')
+         , ('staging', 'history_octane', 'compensation_type', 'staging', 'staging_octane', 'compensation_type')
          , ('staging', 'history_octane', 'lender_user_role_org_node', 'staging', 'staging_octane', 'lender_user_role_org_node')
 )
 INSERT
@@ -37,35 +37,35 @@ FROM insert_rows
 
 --edw_field_definition
 WITH insert_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name, source_table_name, source_field_name) AS (
-    VALUES ('staging', 'history_octane', 'compensation_type', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'compensation_type', 'data_source_updated_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'compensation_type', 'etl_batch_id', 'TEXT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'business_income_borrower_title_type', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
+    VALUES ('staging', 'history_octane', 'business_income_borrower_title_type', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'business_income_borrower_title_type', 'data_source_updated_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'business_income_borrower_title_type', 'etl_batch_id', 'TEXT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'compensation_type', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'compensation_type', 'data_source_updated_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'compensation_type', 'etl_batch_id', 'TEXT', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'lender_user_role_org_node', 'data_source_deleted_flag', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'lender_user_role_org_node', 'data_source_updated_datetime', 'TIMESTAMPTZ', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'lender_user_role_org_node', 'etl_batch_id', 'TEXT', NULL, NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'compensation_type', 'code', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'compensation_type', 'value', 'VARCHAR(1024)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'business_income', 'bui_borrower_title_other_description', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'business_income', 'bui_borrower_title_type', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'business_income_borrower_title_type', 'code', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'business_income_borrower_title_type', 'value', 'VARCHAR(1024)', NULL, NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'proposal_construction', 'prpc_effective_construction_completion_date', 'DATE', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'compensation_type', 'code', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'compensation_type', 'value', 'VARCHAR(1024)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'deal_key_roles', 'dkrs_contract_processor_fmls', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'deal_key_roles', 'dkrs_contract_processor_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'lead_source', 'lds_compensation_type', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'lender_user_role_org_node', 'luron_lender_user_role_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'lender_user_role_org_node', 'luron_org_node_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'lender_user_role_org_node', 'luron_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'lender_user_role_org_node', 'luron_version', 'INTEGER', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'proposal', 'prp_loan_modification_agreement_executed_received_datetime', 'TIMESTAMP', NULL, NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'deal_key_roles', 'dkrs_contract_processor_fmls', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'deal_key_roles', 'dkrs_contract_processor_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'business_income', 'bui_borrower_title_other_description', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'business_income', 'bui_borrower_title_type', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'proposal_construction', 'prpc_effective_construction_completion_date', 'DATE', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'tax_transcript_request', 'ttr_business_income_borrower_title', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'tax_transcript_request', 'ttr_include_1120s', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'tax_transcript_request', 'ttr_include_1120s_account_transcript', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'tax_transcript_request', 'ttr_include_1120s_record_of_account', 'BOOLEAN', NULL, NULL, NULL, NULL)
          , ('staging', 'staging_octane', 'tax_transcript_request', 'ttr_include_1120s_return_transcript', 'BOOLEAN', NULL, NULL, NULL, NULL)
-         , ('staging', 'staging_octane', 'lead_source', 'lds_compensation_type', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
 )
 INSERT
 INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
@@ -84,26 +84,26 @@ FROM insert_rows
             AND insert_rows.source_field_name = source_field_definition.field_name;
 
 WITH insert_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name, source_table_name, source_field_name) AS (
-    VALUES ('staging', 'history_octane', 'compensation_type', 'code', 'VARCHAR(128)', 'staging', 'staging_octane', 'compensation_type', 'code')
-         , ('staging', 'history_octane', 'compensation_type', 'value', 'VARCHAR(1024)', 'staging', 'staging_octane', 'compensation_type', 'value')
+    VALUES ('staging', 'history_octane', 'business_income', 'bui_borrower_title_other_description', 'VARCHAR(128)', 'staging', 'staging_octane', 'business_income', 'bui_borrower_title_other_description')
+         , ('staging', 'history_octane', 'business_income', 'bui_borrower_title_type', 'VARCHAR(128)', 'staging', 'staging_octane', 'business_income', 'bui_borrower_title_type')
          , ('staging', 'history_octane', 'business_income_borrower_title_type', 'code', 'VARCHAR(128)', 'staging', 'staging_octane', 'business_income_borrower_title_type', 'code')
          , ('staging', 'history_octane', 'business_income_borrower_title_type', 'value', 'VARCHAR(1024)', 'staging', 'staging_octane', 'business_income_borrower_title_type', 'value')
-         , ('staging', 'history_octane', 'proposal_construction', 'prpc_effective_construction_completion_date', 'DATE', 'staging', 'staging_octane', 'proposal_construction', 'prpc_effective_construction_completion_date')
+         , ('staging', 'history_octane', 'compensation_type', 'code', 'VARCHAR(128)', 'staging', 'staging_octane', 'compensation_type', 'code')
+         , ('staging', 'history_octane', 'compensation_type', 'value', 'VARCHAR(1024)', 'staging', 'staging_octane', 'compensation_type', 'value')
+         , ('staging', 'history_octane', 'deal_key_roles', 'dkrs_contract_processor_fmls', 'VARCHAR(128)', 'staging', 'staging_octane', 'deal_key_roles', 'dkrs_contract_processor_fmls')
+         , ('staging', 'history_octane', 'deal_key_roles', 'dkrs_contract_processor_lender_user_pid', 'BIGINT', 'staging', 'staging_octane', 'deal_key_roles', 'dkrs_contract_processor_lender_user_pid')
+         , ('staging', 'history_octane', 'lead_source', 'lds_compensation_type', 'VARCHAR(128)', 'staging', 'staging_octane', 'lead_source', 'lds_compensation_type')
          , ('staging', 'history_octane', 'lender_user_role_org_node', 'luron_lender_user_role_pid', 'BIGINT', 'staging', 'staging_octane', 'lender_user_role_org_node', 'luron_lender_user_role_pid')
          , ('staging', 'history_octane', 'lender_user_role_org_node', 'luron_org_node_pid', 'BIGINT', 'staging', 'staging_octane', 'lender_user_role_org_node', 'luron_org_node_pid')
          , ('staging', 'history_octane', 'lender_user_role_org_node', 'luron_pid', 'BIGINT', 'staging', 'staging_octane', 'lender_user_role_org_node', 'luron_pid')
          , ('staging', 'history_octane', 'lender_user_role_org_node', 'luron_version', 'INTEGER', 'staging', 'staging_octane', 'lender_user_role_org_node', 'luron_version')
          , ('staging', 'history_octane', 'proposal', 'prp_loan_modification_agreement_executed_received_datetime', 'TIMESTAMP', 'staging', 'staging_octane', 'proposal', 'prp_loan_modification_agreement_executed_received_datetime')
-         , ('staging', 'history_octane', 'deal_key_roles', 'dkrs_contract_processor_fmls', 'VARCHAR(128)', 'staging', 'staging_octane', 'deal_key_roles', 'dkrs_contract_processor_fmls')
-         , ('staging', 'history_octane', 'deal_key_roles', 'dkrs_contract_processor_lender_user_pid', 'BIGINT', 'staging', 'staging_octane', 'deal_key_roles', 'dkrs_contract_processor_lender_user_pid')
-         , ('staging', 'history_octane', 'business_income', 'bui_borrower_title_other_description', 'VARCHAR(128)', 'staging', 'staging_octane', 'business_income', 'bui_borrower_title_other_description')
-         , ('staging', 'history_octane', 'business_income', 'bui_borrower_title_type', 'VARCHAR(128)', 'staging', 'staging_octane', 'business_income', 'bui_borrower_title_type')
+         , ('staging', 'history_octane', 'proposal_construction', 'prpc_effective_construction_completion_date', 'DATE', 'staging', 'staging_octane', 'proposal_construction', 'prpc_effective_construction_completion_date')
          , ('staging', 'history_octane', 'tax_transcript_request', 'ttr_business_income_borrower_title', 'VARCHAR(128)', 'staging', 'staging_octane', 'tax_transcript_request', 'ttr_business_income_borrower_title')
          , ('staging', 'history_octane', 'tax_transcript_request', 'ttr_include_1120s', 'BOOLEAN', 'staging', 'staging_octane', 'tax_transcript_request', 'ttr_include_1120s')
          , ('staging', 'history_octane', 'tax_transcript_request', 'ttr_include_1120s_account_transcript', 'BOOLEAN', 'staging', 'staging_octane', 'tax_transcript_request', 'ttr_include_1120s_account_transcript')
          , ('staging', 'history_octane', 'tax_transcript_request', 'ttr_include_1120s_record_of_account', 'BOOLEAN', 'staging', 'staging_octane', 'tax_transcript_request', 'ttr_include_1120s_record_of_account')
          , ('staging', 'history_octane', 'tax_transcript_request', 'ttr_include_1120s_return_transcript', 'BOOLEAN', 'staging', 'staging_octane', 'tax_transcript_request', 'ttr_include_1120s_return_transcript')
-         , ('staging', 'history_octane', 'lead_source', 'lds_compensation_type', 'VARCHAR(128)', 'staging', 'staging_octane', 'lead_source', 'lds_compensation_type')
 )
 INSERT
 INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
@@ -124,29 +124,29 @@ FROM insert_rows
 --process
 INSERT
     INTO mdi.process (name, description)
-VALUES ('SP-100906', 'ETL to insert records into staging.history_octane.compensation_type using staging.staging_octane.compensation_type as the primary source')
-     , ('SP-100905', 'ETL to insert records into staging.history_octane.business_income_borrower_title_type using staging.staging_octane.business_income_borrower_title_type as the primary source')
+VALUES ('SP-100905', 'ETL to insert records into staging.history_octane.business_income_borrower_title_type using staging.staging_octane.business_income_borrower_title_type as the primary source')
+     , ('SP-100906', 'ETL to insert records into staging.history_octane.compensation_type using staging.staging_octane.compensation_type as the primary source')
      , ('SP-100907', 'ETL to insert records into staging.history_octane.lender_user_role_org_node using staging.staging_octane.lender_user_role_org_node as the primary source');
 
 --table_input_step
 WITH insert_rows (process_name, data_source_dwid, sql, connectionname) AS (
-    VALUES ('SP-100906', 0, '--finding records to insert into history_octane.compensation_type
-SELECT staging_table.code
-     , staging_table.value
-     , FALSE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM staging_octane.compensation_type staging_table
-LEFT JOIN history_octane.compensation_type history_table
-          ON staging_table.code = history_table.code
-              AND staging_table.value = history_table.value
-WHERE history_table.code IS NULL;', 'Staging DB Connection')
-         , ('SP-100905', 0, '--finding records to insert into history_octane.business_income_borrower_title_type
+    VALUES ('SP-100905', 0, '--finding records to insert into history_octane.business_income_borrower_title_type
 SELECT staging_table.code
      , staging_table.value
      , FALSE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
 FROM staging_octane.business_income_borrower_title_type staging_table
 LEFT JOIN history_octane.business_income_borrower_title_type history_table
+          ON staging_table.code = history_table.code
+              AND staging_table.value = history_table.value
+WHERE history_table.code IS NULL;', 'Staging DB Connection')
+         , ('SP-100906', 0, '--finding records to insert into history_octane.compensation_type
+SELECT staging_table.code
+     , staging_table.value
+     , FALSE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM staging_octane.compensation_type staging_table
+LEFT JOIN history_octane.compensation_type history_table
           ON staging_table.code = history_table.code
               AND staging_table.value = history_table.value
 WHERE history_table.code IS NULL;', 'Staging DB Connection')
@@ -189,8 +189,8 @@ FROM insert_rows
 
 --table_output_step
 WITH insert_rows (process_name, target_schema, target_table, truncate_table, connectionname) AS (
-    VALUES ('SP-100906', 'history_octane', 'compensation_type', 'N', 'Staging DB Connection')
-         , ('SP-100905', 'history_octane', 'business_income_borrower_title_type', 'N', 'Staging DB Connection')
+    VALUES ('SP-100905', 'history_octane', 'business_income_borrower_title_type', 'N', 'Staging DB Connection')
+         , ('SP-100906', 'history_octane', 'compensation_type', 'N', 'Staging DB Connection')
          , ('SP-100907', 'history_octane', 'lender_user_role_org_node', 'N', 'Staging DB Connection')
 )
 INSERT INTO mdi.table_output_step (process_dwid, target_schema, target_table, commit_size, partitioning_field, table_name_field, auto_generated_key_field, partition_data_per, table_name_defined_in_field, return_auto_generated_key_field, truncate_table, connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors, use_batch_update)
@@ -201,17 +201,21 @@ FROM insert_rows
 
 --table_output_field
 WITH insert_rows (process_name, database_field_name) AS (
-    VALUES ('SP-100906', 'code')
-         , ('SP-100906', 'data_source_deleted_flag')
-         , ('SP-100906', 'data_source_updated_datetime')
-         , ('SP-100906', 'etl_batch_id')
-         , ('SP-100906', 'value')
+    VALUES ('SP-100130', 'bui_borrower_title_other_description')
+         , ('SP-100130', 'bui_borrower_title_type')
          , ('SP-100905', 'code')
          , ('SP-100905', 'data_source_deleted_flag')
          , ('SP-100905', 'data_source_updated_datetime')
          , ('SP-100905', 'etl_batch_id')
          , ('SP-100905', 'value')
-         , ('SP-100826', 'prpc_effective_construction_completion_date')
+         , ('SP-100906', 'code')
+         , ('SP-100906', 'data_source_deleted_flag')
+         , ('SP-100906', 'data_source_updated_datetime')
+         , ('SP-100906', 'etl_batch_id')
+         , ('SP-100906', 'value')
+         , ('SP-100017', 'dkrs_contract_processor_fmls')
+         , ('SP-100017', 'dkrs_contract_processor_lender_user_pid')
+         , ('SP-100038', 'lds_compensation_type')
          , ('SP-100907', 'data_source_deleted_flag')
          , ('SP-100907', 'data_source_updated_datetime')
          , ('SP-100907', 'etl_batch_id')
@@ -220,16 +224,12 @@ WITH insert_rows (process_name, database_field_name) AS (
          , ('SP-100907', 'luron_pid')
          , ('SP-100907', 'luron_version')
          , ('SP-100317', 'prp_loan_modification_agreement_executed_received_datetime')
-         , ('SP-100017', 'dkrs_contract_processor_fmls')
-         , ('SP-100017', 'dkrs_contract_processor_lender_user_pid')
-         , ('SP-100130', 'bui_borrower_title_other_description')
-         , ('SP-100130', 'bui_borrower_title_type')
+         , ('SP-100826', 'prpc_effective_construction_completion_date')
          , ('SP-100340', 'ttr_business_income_borrower_title')
          , ('SP-100340', 'ttr_include_1120s')
          , ('SP-100340', 'ttr_include_1120s_account_transcript')
          , ('SP-100340', 'ttr_include_1120s_record_of_account')
          , ('SP-100340', 'ttr_include_1120s_return_transcript')
-         , ('SP-100038', 'lds_compensation_type')
 )
 INSERT
 INTO mdi.table_output_field (table_output_step_dwid, database_field_name, database_stream_name, field_order, is_sensitive)
@@ -243,8 +243,8 @@ FROM insert_rows
 
 --json_output_field
 WITH insert_rows (process_name, json_output_field) AS (
-    VALUES ('SP-100906', 'code')
-         , ('SP-100905', 'code')
+    VALUES ('SP-100905', 'code')
+         , ('SP-100906', 'code')
          , ('SP-100907', 'luron_pid')
 )
 INSERT
@@ -256,8 +256,8 @@ FROM insert_rows
 
 --state_machine_definition
 WITH insert_rows (process_name, state_machine_name, state_machine_comment) AS (
-    VALUES ('SP-100906', 'SP-100906', 'ETL to insert records into staging.history_octane.compensation_type using staging.staging_octane.compensation_type as the primary source')
-         , ('SP-100905', 'SP-100905', 'ETL to insert records into staging.history_octane.business_income_borrower_title_type using staging.staging_octane.business_income_borrower_title_type as the primary source')
+    VALUES ('SP-100905', 'SP-100905', 'ETL to insert records into staging.history_octane.business_income_borrower_title_type using staging.staging_octane.business_income_borrower_title_type as the primary source')
+         , ('SP-100906', 'SP-100906', 'ETL to insert records into staging.history_octane.compensation_type using staging.staging_octane.compensation_type as the primary source')
          , ('SP-100907', 'SP-100907', 'ETL to insert records into staging.history_octane.lender_user_role_org_node using staging.staging_octane.lender_user_role_org_node as the primary source')
 )
 INSERT
@@ -267,39 +267,24 @@ FROM insert_rows
     JOIN mdi.process
         ON process.name = insert_rows.process_name;
 
---state_machine_step
-WITH insert_rows (process_name, next_process_name) AS (
-    VALUES ('SP-300001-insert-update', 'SP-200001-delete')
-         , ('SP-300001-delete', 'SP-200001-delete')
-)
-INSERT
-INTO mdi.state_machine_step (process_dwid, next_process_dwid)
-SELECT process.dwid, next_process.dwid
-FROM insert_rows
-    JOIN mdi.process
-        ON process.name = insert_rows.process_name
-    JOIN mdi.process next_process
-        ON next_process.name = insert_rows.next_process_name;
-
 /*
 UPDATES
 */
 
 --edw_table_definition
 WITH update_rows (database_name, schema_name, table_name, source_database_name, source_schema_name, source_table_name) AS (
-    VALUES ('staging', 'history_octane', 'broker_compensation_type', NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'location_note', NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_process_note', NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'smart_doc_note_comment', NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_step_note', NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'smart_doc_note', NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'location_note_monitor', NULL, NULL, NULL)
+    VALUES ('staging', 'history_octane', 'location_note', NULL, NULL, NULL)
          , ('staging', 'history_octane', 'location_note_comment', NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_process_note_comment', NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'location_note_monitor', NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'smart_doc_note', NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'smart_doc_note_comment', NULL, NULL, NULL)
          , ('staging', 'history_octane', 'smart_doc_note_monitor', NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_step_note_monitor', NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_step_note_comment', NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_process_note', NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_process_note_comment', NULL, NULL, NULL)
          , ('staging', 'history_octane', 'wf_process_note_monitor', NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_step_note', NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_step_note_comment', NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_step_note_monitor', NULL, NULL, NULL)
 )
 UPDATE mdi.edw_table_definition
 SET primary_source_edw_table_definition_dwid = source_table_definition.dwid
@@ -314,8 +299,10 @@ WHERE update_rows.database_name = edw_table_definition.database_name
 
 --edw_field_definition
 WITH update_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name, source_table_name, source_field_name) AS (
-    VALUES ('staging', 'history_octane', 'broker_compensation_type', 'code', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'broker_compensation_type', 'value', 'VARCHAR(1024)', NULL, NULL, NULL, NULL)
+    VALUES ('staging', 'history_octane', 'config_note', 'cn_old_location_note_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'config_note', 'cn_old_smart_doc_note_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'config_note', 'cn_old_wf_process_note_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'config_note', 'cn_old_wf_step_note_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'location_note', 'locn_author_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'location_note', 'locn_author_unparsed_name', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'location_note', 'locn_content', 'VARCHAR(16000)', NULL, NULL, NULL, NULL)
@@ -323,38 +310,6 @@ WITH update_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'history_octane', 'location_note', 'locn_location_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'location_note', 'locn_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'location_note', 'locn_version', 'INTEGER', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_process_note', 'wfpn_author_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_process_note', 'wfpn_author_unparsed_name', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_process_note', 'wfpn_content', 'VARCHAR(16000)', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_process_note', 'wfpn_create_datetime', 'TIMESTAMP', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_process_note', 'wfpn_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_process_note', 'wfpn_version', 'INTEGER', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_process_note', 'wfpn_wf_process_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'smart_doc_note_comment', 'sdnc_author_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'smart_doc_note_comment', 'sdnc_author_unparsed_name', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'smart_doc_note_comment', 'sdnc_content', 'VARCHAR(16000)', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'smart_doc_note_comment', 'sdnc_create_datetime', 'TIMESTAMP', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'smart_doc_note_comment', 'sdnc_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'smart_doc_note_comment', 'sdnc_smart_doc_note_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'smart_doc_note_comment', 'sdnc_version', 'INTEGER', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_step_note', 'wfsn_author_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_step_note', 'wfsn_author_unparsed_name', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_step_note', 'wfsn_content', 'VARCHAR(16000)', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_step_note', 'wfsn_create_datetime', 'TIMESTAMP', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_step_note', 'wfsn_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_step_note', 'wfsn_version', 'INTEGER', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_step_note', 'wfsn_wf_step_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'smart_doc_note', 'sdn_author_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'smart_doc_note', 'sdn_author_unparsed_name', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'smart_doc_note', 'sdn_content', 'VARCHAR(16000)', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'smart_doc_note', 'sdn_create_datetime', 'TIMESTAMP', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'smart_doc_note', 'sdn_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'smart_doc_note', 'sdn_smart_doc_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'smart_doc_note', 'sdn_version', 'INTEGER', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'location_note_monitor', 'locnm_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'location_note_monitor', 'locnm_location_note_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'location_note_monitor', 'locnm_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'location_note_monitor', 'locnm_version', 'INTEGER', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'location_note_comment', 'locnc_author_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'location_note_comment', 'locnc_author_unparsed_name', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'location_note_comment', 'locnc_content', 'VARCHAR(16000)', NULL, NULL, NULL, NULL)
@@ -362,6 +317,35 @@ WITH update_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'history_octane', 'location_note_comment', 'locnc_location_note_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'location_note_comment', 'locnc_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'location_note_comment', 'locnc_version', 'INTEGER', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'location_note_monitor', 'locnm_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'location_note_monitor', 'locnm_location_note_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'location_note_monitor', 'locnm_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'location_note_monitor', 'locnm_version', 'INTEGER', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'smart_doc_note', 'sdn_author_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'smart_doc_note', 'sdn_author_unparsed_name', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'smart_doc_note', 'sdn_content', 'VARCHAR(16000)', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'smart_doc_note', 'sdn_create_datetime', 'TIMESTAMP', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'smart_doc_note', 'sdn_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'smart_doc_note', 'sdn_smart_doc_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'smart_doc_note', 'sdn_version', 'INTEGER', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'smart_doc_note_comment', 'sdnc_author_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'smart_doc_note_comment', 'sdnc_author_unparsed_name', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'smart_doc_note_comment', 'sdnc_content', 'VARCHAR(16000)', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'smart_doc_note_comment', 'sdnc_create_datetime', 'TIMESTAMP', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'smart_doc_note_comment', 'sdnc_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'smart_doc_note_comment', 'sdnc_smart_doc_note_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'smart_doc_note_comment', 'sdnc_version', 'INTEGER', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'smart_doc_note_monitor', 'sdnm_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'smart_doc_note_monitor', 'sdnm_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'smart_doc_note_monitor', 'sdnm_smart_doc_note_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'smart_doc_note_monitor', 'sdnm_version', 'INTEGER', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_process_note', 'wfpn_author_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_process_note', 'wfpn_author_unparsed_name', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_process_note', 'wfpn_content', 'VARCHAR(16000)', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_process_note', 'wfpn_create_datetime', 'TIMESTAMP', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_process_note', 'wfpn_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_process_note', 'wfpn_version', 'INTEGER', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_process_note', 'wfpn_wf_process_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'wf_process_note_comment', 'wfpnc_author_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'wf_process_note_comment', 'wfpnc_author_unparsed_name', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'wf_process_note_comment', 'wfpnc_content', 'VARCHAR(16000)', NULL, NULL, NULL, NULL)
@@ -369,18 +353,17 @@ WITH update_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'history_octane', 'wf_process_note_comment', 'wfpnc_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'wf_process_note_comment', 'wfpnc_version', 'INTEGER', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'wf_process_note_comment', 'wfpnc_wf_process_note_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'config_note', 'cn_old_location_note_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'config_note', 'cn_old_smart_doc_note_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'config_note', 'cn_old_wf_process_note_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'config_note', 'cn_old_wf_step_note_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'smart_doc_note_monitor', 'sdnm_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'smart_doc_note_monitor', 'sdnm_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'smart_doc_note_monitor', 'sdnm_smart_doc_note_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'smart_doc_note_monitor', 'sdnm_version', 'INTEGER', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_step_note_monitor', 'wfsnm_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_step_note_monitor', 'wfsnm_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_step_note_monitor', 'wfsnm_version', 'INTEGER', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_step_note_monitor', 'wfsnm_wf_step_note_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_process_note_monitor', 'wfpnm_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_process_note_monitor', 'wfpnm_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_process_note_monitor', 'wfpnm_version', 'INTEGER', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_process_note_monitor', 'wfpnm_wf_process_note_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_step_note', 'wfsn_author_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_step_note', 'wfsn_author_unparsed_name', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_step_note', 'wfsn_content', 'VARCHAR(16000)', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_step_note', 'wfsn_create_datetime', 'TIMESTAMP', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_step_note', 'wfsn_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_step_note', 'wfsn_version', 'INTEGER', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_step_note', 'wfsn_wf_step_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'wf_step_note_comment', 'wfsnc_author_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'wf_step_note_comment', 'wfsnc_author_unparsed_name', 'VARCHAR(128)', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'wf_step_note_comment', 'wfsnc_content', 'VARCHAR(16000)', NULL, NULL, NULL, NULL)
@@ -388,10 +371,10 @@ WITH update_rows (database_name, schema_name, table_name, field_name, data_type,
          , ('staging', 'history_octane', 'wf_step_note_comment', 'wfsnc_pid', 'BIGINT', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'wf_step_note_comment', 'wfsnc_version', 'INTEGER', NULL, NULL, NULL, NULL)
          , ('staging', 'history_octane', 'wf_step_note_comment', 'wfsnc_wf_step_note_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_process_note_monitor', 'wfpnm_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_process_note_monitor', 'wfpnm_pid', 'BIGINT', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_process_note_monitor', 'wfpnm_version', 'INTEGER', NULL, NULL, NULL, NULL)
-         , ('staging', 'history_octane', 'wf_process_note_monitor', 'wfpnm_wf_process_note_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_step_note_monitor', 'wfsnm_lender_user_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_step_note_monitor', 'wfsnm_pid', 'BIGINT', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_step_note_monitor', 'wfsnm_version', 'INTEGER', NULL, NULL, NULL, NULL)
+         , ('staging', 'history_octane', 'wf_step_note_monitor', 'wfsnm_wf_step_note_pid', 'BIGINT', NULL, NULL, NULL, NULL)
 )
 UPDATE mdi.edw_field_definition
 SET data_type = update_rows.data_type
@@ -413,63 +396,431 @@ WHERE edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
 
 --table_input_step
 WITH update_rows (process_name, data_source_dwid, sql, connectionname) AS (
-    VALUES ('SP-100826', 0, '--finding records to insert into history_octane.proposal_construction
-SELECT staging_table.prpc_pid
-     , staging_table.prpc_version
-     , staging_table.prpc_proposal_pid
-     , staging_table.prpc_architectural_exhibits
-     , staging_table.prpc_feasibility_study
-     , staging_table.prpc_expected_months_to_complete
-     , staging_table.prpc_extension_needed
-     , staging_table.prpc_extension_period_months
-     , staging_table.prpc_any_utilities_inoperable
-     , staging_table.prpc_non_habitable_months
-     , staging_table.prpc_non_habitable_units
-     , staging_table.prpc_number_of_draws
-     , staging_table.prpc_construction_confirmed_start_date
-     , staging_table.prpc_loan_in_process_account_closed_date
-     , staging_table.prpc_mortgage_payment_reserves_required
-     , staging_table.prpc_estimated_permit_amount_applicable
-     , staging_table.prpc_contingency_reserve_required
-     , staging_table.prpc_extension_period_days
-     , staging_table.prpc_effective_construction_completion_date
+    VALUES ('SP-100130', 0, '--finding records to insert into history_octane.business_income
+SELECT staging_table.bui_pid
+     , staging_table.bui_version
+     , staging_table.bui_borrower_income_pid
+     , staging_table.bui_business_income_type
+     , staging_table.bui_business_disposition_type
+     , staging_table.bui_company_ein
+     , staging_table.bui_estimated_net_income_amount
+     , staging_table.bui_estimated_mode
+     , staging_table.bui_worksheet_monthly_total_amount
+     , staging_table.bui_monthly_total_amount
+     , staging_table.bui_borrower_income_percent
+     , staging_table.bui_calc_method_type
+     , staging_table.bui_common_year1_year
+     , staging_table.bui_common_year1_year_include
+     , staging_table.bui_common_year1_from_date
+     , staging_table.bui_common_year1_through_date
+     , staging_table.bui_common_year1_months
+     , staging_table.bui_common_year1_annual_total_amount
+     , staging_table.bui_common_year1_monthly_total_amount
+     , staging_table.bui_common_year2_year
+     , staging_table.bui_common_year2_year_include
+     , staging_table.bui_common_year2_from_date
+     , staging_table.bui_common_year2_through_date
+     , staging_table.bui_common_year2_months
+     , staging_table.bui_common_year2_annual_total_amount
+     , staging_table.bui_common_year2_monthly_total_amount
+     , staging_table.bui_common_year3_year
+     , staging_table.bui_common_year3_year_include
+     , staging_table.bui_common_year3_from_date
+     , staging_table.bui_common_year3_through_date
+     , staging_table.bui_common_year3_months
+     , staging_table.bui_common_year3_annual_total_amount
+     , staging_table.bui_common_year3_monthly_total_amount
+     , staging_table.bui_sole_year1_gross_receipts
+     , staging_table.bui_sole_year1_other_income_loss_exp
+     , staging_table.bui_sole_year1_depletion
+     , staging_table.bui_sole_year1_depreciation
+     , staging_table.bui_sole_year1_meal_exclusions
+     , staging_table.bui_sole_year1_business_use_home
+     , staging_table.bui_sole_year1_amortization_loss
+     , staging_table.bui_sole_year1_business_miles
+     , staging_table.bui_sole_year1_depreciation_mile
+     , staging_table.bui_sole_year1_mileage_depreciation
+     , staging_table.bui_sole_year2_gross_receipts
+     , staging_table.bui_sole_year2_other_income_loss_exp
+     , staging_table.bui_sole_year2_depletion
+     , staging_table.bui_sole_year2_depreciation
+     , staging_table.bui_sole_year2_meal_exclusions
+     , staging_table.bui_sole_year2_business_use_home
+     , staging_table.bui_sole_year2_amortization_loss
+     , staging_table.bui_sole_year2_business_miles
+     , staging_table.bui_sole_year2_depreciation_mile
+     , staging_table.bui_sole_year2_mileage_depreciation
+     , staging_table.bui_sole_year3_gross_receipts
+     , staging_table.bui_sole_year3_other_income_loss_exp
+     , staging_table.bui_sole_year3_depletion
+     , staging_table.bui_sole_year3_depreciation
+     , staging_table.bui_sole_year3_meal_exclusions
+     , staging_table.bui_sole_year3_business_use_home
+     , staging_table.bui_sole_year3_amortization_loss
+     , staging_table.bui_sole_year3_business_miles
+     , staging_table.bui_sole_year3_depreciation_mile
+     , staging_table.bui_sole_year3_mileage_depreciation
+     , staging_table.bui_partner_year1_amortization_loss
+     , staging_table.bui_partner_year1_depletion
+     , staging_table.bui_partner_year1_depreciation
+     , staging_table.bui_partner_year1_guaranteed_payments
+     , staging_table.bui_partner_year1_meals_exclusion
+     , staging_table.bui_partner_year1_net_rental_income_loss
+     , staging_table.bui_partner_year1_notes_payable_less_year
+     , staging_table.bui_partner_year1_ordinary_income_loss
+     , staging_table.bui_partner_year1_other_income_loss
+     , staging_table.bui_partner_year1_ownership_percent
+     , staging_table.bui_partner_year1_form_k_1_total
+     , staging_table.bui_partner_year1_form_1065_subtotal
+     , staging_table.bui_partner_year1_form_1065_total
+     , staging_table.bui_partner_year2_amortization_loss
+     , staging_table.bui_partner_year2_depletion
+     , staging_table.bui_partner_year2_depreciation
+     , staging_table.bui_partner_year2_guaranteed_payments
+     , staging_table.bui_partner_year2_meals_exclusion
+     , staging_table.bui_partner_year2_net_rental_income_loss
+     , staging_table.bui_partner_year2_notes_payable_less_year
+     , staging_table.bui_partner_year2_ordinary_income_loss
+     , staging_table.bui_partner_year2_other_income_loss
+     , staging_table.bui_partner_year2_ownership_percent
+     , staging_table.bui_partner_year2_form_k_1_total
+     , staging_table.bui_partner_year2_form_1065_subtotal
+     , staging_table.bui_partner_year2_form_1065_total
+     , staging_table.bui_partner_year3_amortization_loss
+     , staging_table.bui_partner_year3_depletion
+     , staging_table.bui_partner_year3_depreciation
+     , staging_table.bui_partner_year3_guaranteed_payments
+     , staging_table.bui_partner_year3_meals_exclusion
+     , staging_table.bui_partner_year3_net_rental_income_loss
+     , staging_table.bui_partner_year3_notes_payable_less_year
+     , staging_table.bui_partner_year3_ordinary_income_loss
+     , staging_table.bui_partner_year3_other_income_loss
+     , staging_table.bui_partner_year3_ownership_percent
+     , staging_table.bui_partner_year3_form_k_1_total
+     , staging_table.bui_partner_year3_form_1065_subtotal
+     , staging_table.bui_partner_year3_form_1065_total
+     , staging_table.bui_form_1065_available
+     , staging_table.bui_scorp_year1_ordinary_income_loss
+     , staging_table.bui_scorp_year1_net_rental_income_loss
+     , staging_table.bui_scorp_year1_other_income_loss
+     , staging_table.bui_scorp_year1_depletion
+     , staging_table.bui_scorp_year1_depreciation
+     , staging_table.bui_scorp_year1_amortization_loss
+     , staging_table.bui_scorp_year1_notes_payable_less_year
+     , staging_table.bui_scorp_year1_meals_exclusion
+     , staging_table.bui_scorp_year1_ownership_percent
+     , staging_table.bui_scorp_year1_form_k_1_total
+     , staging_table.bui_scorp_year1_form_1120s_subtotal
+     , staging_table.bui_scorp_year1_form_1120s_total
+     , staging_table.bui_scorp_year2_ordinary_income_loss
+     , staging_table.bui_scorp_year2_net_rental_income_loss
+     , staging_table.bui_scorp_year2_other_income_loss
+     , staging_table.bui_scorp_year2_depletion
+     , staging_table.bui_scorp_year2_depreciation
+     , staging_table.bui_scorp_year2_amortization_loss
+     , staging_table.bui_scorp_year2_notes_payable_less_year
+     , staging_table.bui_scorp_year2_meals_exclusion
+     , staging_table.bui_scorp_year2_ownership_percent
+     , staging_table.bui_scorp_year2_form_k_1_total
+     , staging_table.bui_scorp_year2_form_1120s_subtotal
+     , staging_table.bui_scorp_year2_form_1120s_total
+     , staging_table.bui_scorp_year3_ordinary_income_loss
+     , staging_table.bui_scorp_year3_net_rental_income_loss
+     , staging_table.bui_scorp_year3_other_income_loss
+     , staging_table.bui_scorp_year3_depletion
+     , staging_table.bui_scorp_year3_depreciation
+     , staging_table.bui_scorp_year3_amortization_loss
+     , staging_table.bui_scorp_year3_notes_payable_less_year
+     , staging_table.bui_scorp_year3_meals_exclusion
+     , staging_table.bui_scorp_year3_ownership_percent
+     , staging_table.bui_scorp_year3_form_k_1_total
+     , staging_table.bui_scorp_year3_form_1120s_subtotal
+     , staging_table.bui_scorp_year3_form_1120s_total
+     , staging_table.bui_form_1120s_available
+     , staging_table.bui_corp_year1_taxable_income
+     , staging_table.bui_corp_year1_total_tax
+     , staging_table.bui_corp_year1_gain_loss
+     , staging_table.bui_corp_year1_other_income_loss
+     , staging_table.bui_corp_year1_depreciation
+     , staging_table.bui_corp_year1_depletion
+     , staging_table.bui_corp_year1_domestic_production_activities
+     , staging_table.bui_corp_year1_other_deductions
+     , staging_table.bui_corp_year1_net_operating_loss_special_deductions
+     , staging_table.bui_corp_year1_notes_payable_less_one_year
+     , staging_table.bui_corp_year1_meals_exclusion
+     , staging_table.bui_corp_year1_dividends_paid_to_borrower
+     , staging_table.bui_corp_year1_annual_subtotal
+     , staging_table.bui_corp_year1_ownership_percent
+     , staging_table.bui_corp_year1_annual_subtotal_ownership_applied
+     , staging_table.bui_corp_year2_taxable_income
+     , staging_table.bui_corp_year2_total_tax
+     , staging_table.bui_corp_year2_gain_loss
+     , staging_table.bui_corp_year2_other_income_loss
+     , staging_table.bui_corp_year2_depreciation
+     , staging_table.bui_corp_year2_depletion
+     , staging_table.bui_corp_year2_domestic_production_activities
+     , staging_table.bui_corp_year2_other_deductions
+     , staging_table.bui_corp_year2_net_operating_loss_special_deductions
+     , staging_table.bui_corp_year2_notes_payable_less_one_year
+     , staging_table.bui_corp_year2_meals_exclusion
+     , staging_table.bui_corp_year2_dividends_paid_to_borrower
+     , staging_table.bui_corp_year2_annual_subtotal
+     , staging_table.bui_corp_year2_ownership_percent
+     , staging_table.bui_corp_year2_annual_subtotal_ownership_applied
+     , staging_table.bui_corp_year3_taxable_income
+     , staging_table.bui_corp_year3_total_tax
+     , staging_table.bui_corp_year3_gain_loss
+     , staging_table.bui_corp_year3_other_income_loss
+     , staging_table.bui_corp_year3_depreciation
+     , staging_table.bui_corp_year3_depletion
+     , staging_table.bui_corp_year3_domestic_production_activities
+     , staging_table.bui_corp_year3_other_deductions
+     , staging_table.bui_corp_year3_net_operating_loss_special_deductions
+     , staging_table.bui_corp_year3_notes_payable_less_one_year
+     , staging_table.bui_corp_year3_meals_exclusion
+     , staging_table.bui_corp_year3_dividends_paid_to_borrower
+     , staging_table.bui_corp_year3_annual_subtotal
+     , staging_table.bui_corp_year3_ownership_percent
+     , staging_table.bui_corp_year3_annual_subtotal_ownership_applied
+     , staging_table.bui_sch_f_year1_specific_income_loss
+     , staging_table.bui_sch_f_year1_nonrecurring_income_loss
+     , staging_table.bui_sch_f_year1_depreciation
+     , staging_table.bui_sch_f_year1_amortization_loss_depletion
+     , staging_table.bui_sch_f_year1_business_use_home
+     , staging_table.bui_sch_f_year2_specific_income_loss
+     , staging_table.bui_sch_f_year2_nonrecurring_income_loss
+     , staging_table.bui_sch_f_year2_depreciation
+     , staging_table.bui_sch_f_year2_amortization_loss_depletion
+     , staging_table.bui_sch_f_year2_business_use_home
+     , staging_table.bui_sch_f_year3_specific_income_loss
+     , staging_table.bui_sch_f_year3_nonrecurring_income_loss
+     , staging_table.bui_sch_f_year3_depreciation
+     , staging_table.bui_sch_f_year3_amortization_loss_depletion
+     , staging_table.bui_sch_f_year3_business_use_home
+     , staging_table.bui_underwriter_comments
+     , staging_table.bui_borrower_title_type
+     , staging_table.bui_borrower_title_other_description
      , FALSE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
-FROM staging_octane.proposal_construction staging_table
-LEFT JOIN history_octane.proposal_construction history_table
-          ON staging_table.prpc_pid = history_table.prpc_pid
-              AND staging_table.prpc_version = history_table.prpc_version
-WHERE history_table.prpc_pid IS NULL
+FROM staging_octane.business_income staging_table
+LEFT JOIN history_octane.business_income history_table
+          ON staging_table.bui_pid = history_table.bui_pid
+              AND staging_table.bui_version = history_table.bui_version
+WHERE history_table.bui_pid IS NULL
 UNION ALL
-SELECT history_table.prpc_pid
-     , history_table.prpc_version + 1
-     , history_table.prpc_proposal_pid
-     , history_table.prpc_architectural_exhibits
-     , history_table.prpc_feasibility_study
-     , history_table.prpc_expected_months_to_complete
-     , history_table.prpc_extension_needed
-     , history_table.prpc_extension_period_months
-     , history_table.prpc_any_utilities_inoperable
-     , history_table.prpc_non_habitable_months
-     , history_table.prpc_non_habitable_units
-     , history_table.prpc_number_of_draws
-     , history_table.prpc_construction_confirmed_start_date
-     , history_table.prpc_loan_in_process_account_closed_date
-     , history_table.prpc_mortgage_payment_reserves_required
-     , history_table.prpc_estimated_permit_amount_applicable
-     , history_table.prpc_contingency_reserve_required
-     , history_table.prpc_extension_period_days
-     , history_table.prpc_effective_construction_completion_date
+SELECT history_table.bui_pid
+     , history_table.bui_version + 1
+     , history_table.bui_borrower_income_pid
+     , history_table.bui_business_income_type
+     , history_table.bui_business_disposition_type
+     , history_table.bui_company_ein
+     , history_table.bui_estimated_net_income_amount
+     , history_table.bui_estimated_mode
+     , history_table.bui_worksheet_monthly_total_amount
+     , history_table.bui_monthly_total_amount
+     , history_table.bui_borrower_income_percent
+     , history_table.bui_calc_method_type
+     , history_table.bui_common_year1_year
+     , history_table.bui_common_year1_year_include
+     , history_table.bui_common_year1_from_date
+     , history_table.bui_common_year1_through_date
+     , history_table.bui_common_year1_months
+     , history_table.bui_common_year1_annual_total_amount
+     , history_table.bui_common_year1_monthly_total_amount
+     , history_table.bui_common_year2_year
+     , history_table.bui_common_year2_year_include
+     , history_table.bui_common_year2_from_date
+     , history_table.bui_common_year2_through_date
+     , history_table.bui_common_year2_months
+     , history_table.bui_common_year2_annual_total_amount
+     , history_table.bui_common_year2_monthly_total_amount
+     , history_table.bui_common_year3_year
+     , history_table.bui_common_year3_year_include
+     , history_table.bui_common_year3_from_date
+     , history_table.bui_common_year3_through_date
+     , history_table.bui_common_year3_months
+     , history_table.bui_common_year3_annual_total_amount
+     , history_table.bui_common_year3_monthly_total_amount
+     , history_table.bui_sole_year1_gross_receipts
+     , history_table.bui_sole_year1_other_income_loss_exp
+     , history_table.bui_sole_year1_depletion
+     , history_table.bui_sole_year1_depreciation
+     , history_table.bui_sole_year1_meal_exclusions
+     , history_table.bui_sole_year1_business_use_home
+     , history_table.bui_sole_year1_amortization_loss
+     , history_table.bui_sole_year1_business_miles
+     , history_table.bui_sole_year1_depreciation_mile
+     , history_table.bui_sole_year1_mileage_depreciation
+     , history_table.bui_sole_year2_gross_receipts
+     , history_table.bui_sole_year2_other_income_loss_exp
+     , history_table.bui_sole_year2_depletion
+     , history_table.bui_sole_year2_depreciation
+     , history_table.bui_sole_year2_meal_exclusions
+     , history_table.bui_sole_year2_business_use_home
+     , history_table.bui_sole_year2_amortization_loss
+     , history_table.bui_sole_year2_business_miles
+     , history_table.bui_sole_year2_depreciation_mile
+     , history_table.bui_sole_year2_mileage_depreciation
+     , history_table.bui_sole_year3_gross_receipts
+     , history_table.bui_sole_year3_other_income_loss_exp
+     , history_table.bui_sole_year3_depletion
+     , history_table.bui_sole_year3_depreciation
+     , history_table.bui_sole_year3_meal_exclusions
+     , history_table.bui_sole_year3_business_use_home
+     , history_table.bui_sole_year3_amortization_loss
+     , history_table.bui_sole_year3_business_miles
+     , history_table.bui_sole_year3_depreciation_mile
+     , history_table.bui_sole_year3_mileage_depreciation
+     , history_table.bui_partner_year1_amortization_loss
+     , history_table.bui_partner_year1_depletion
+     , history_table.bui_partner_year1_depreciation
+     , history_table.bui_partner_year1_guaranteed_payments
+     , history_table.bui_partner_year1_meals_exclusion
+     , history_table.bui_partner_year1_net_rental_income_loss
+     , history_table.bui_partner_year1_notes_payable_less_year
+     , history_table.bui_partner_year1_ordinary_income_loss
+     , history_table.bui_partner_year1_other_income_loss
+     , history_table.bui_partner_year1_ownership_percent
+     , history_table.bui_partner_year1_form_k_1_total
+     , history_table.bui_partner_year1_form_1065_subtotal
+     , history_table.bui_partner_year1_form_1065_total
+     , history_table.bui_partner_year2_amortization_loss
+     , history_table.bui_partner_year2_depletion
+     , history_table.bui_partner_year2_depreciation
+     , history_table.bui_partner_year2_guaranteed_payments
+     , history_table.bui_partner_year2_meals_exclusion
+     , history_table.bui_partner_year2_net_rental_income_loss
+     , history_table.bui_partner_year2_notes_payable_less_year
+     , history_table.bui_partner_year2_ordinary_income_loss
+     , history_table.bui_partner_year2_other_income_loss
+     , history_table.bui_partner_year2_ownership_percent
+     , history_table.bui_partner_year2_form_k_1_total
+     , history_table.bui_partner_year2_form_1065_subtotal
+     , history_table.bui_partner_year2_form_1065_total
+     , history_table.bui_partner_year3_amortization_loss
+     , history_table.bui_partner_year3_depletion
+     , history_table.bui_partner_year3_depreciation
+     , history_table.bui_partner_year3_guaranteed_payments
+     , history_table.bui_partner_year3_meals_exclusion
+     , history_table.bui_partner_year3_net_rental_income_loss
+     , history_table.bui_partner_year3_notes_payable_less_year
+     , history_table.bui_partner_year3_ordinary_income_loss
+     , history_table.bui_partner_year3_other_income_loss
+     , history_table.bui_partner_year3_ownership_percent
+     , history_table.bui_partner_year3_form_k_1_total
+     , history_table.bui_partner_year3_form_1065_subtotal
+     , history_table.bui_partner_year3_form_1065_total
+     , history_table.bui_form_1065_available
+     , history_table.bui_scorp_year1_ordinary_income_loss
+     , history_table.bui_scorp_year1_net_rental_income_loss
+     , history_table.bui_scorp_year1_other_income_loss
+     , history_table.bui_scorp_year1_depletion
+     , history_table.bui_scorp_year1_depreciation
+     , history_table.bui_scorp_year1_amortization_loss
+     , history_table.bui_scorp_year1_notes_payable_less_year
+     , history_table.bui_scorp_year1_meals_exclusion
+     , history_table.bui_scorp_year1_ownership_percent
+     , history_table.bui_scorp_year1_form_k_1_total
+     , history_table.bui_scorp_year1_form_1120s_subtotal
+     , history_table.bui_scorp_year1_form_1120s_total
+     , history_table.bui_scorp_year2_ordinary_income_loss
+     , history_table.bui_scorp_year2_net_rental_income_loss
+     , history_table.bui_scorp_year2_other_income_loss
+     , history_table.bui_scorp_year2_depletion
+     , history_table.bui_scorp_year2_depreciation
+     , history_table.bui_scorp_year2_amortization_loss
+     , history_table.bui_scorp_year2_notes_payable_less_year
+     , history_table.bui_scorp_year2_meals_exclusion
+     , history_table.bui_scorp_year2_ownership_percent
+     , history_table.bui_scorp_year2_form_k_1_total
+     , history_table.bui_scorp_year2_form_1120s_subtotal
+     , history_table.bui_scorp_year2_form_1120s_total
+     , history_table.bui_scorp_year3_ordinary_income_loss
+     , history_table.bui_scorp_year3_net_rental_income_loss
+     , history_table.bui_scorp_year3_other_income_loss
+     , history_table.bui_scorp_year3_depletion
+     , history_table.bui_scorp_year3_depreciation
+     , history_table.bui_scorp_year3_amortization_loss
+     , history_table.bui_scorp_year3_notes_payable_less_year
+     , history_table.bui_scorp_year3_meals_exclusion
+     , history_table.bui_scorp_year3_ownership_percent
+     , history_table.bui_scorp_year3_form_k_1_total
+     , history_table.bui_scorp_year3_form_1120s_subtotal
+     , history_table.bui_scorp_year3_form_1120s_total
+     , history_table.bui_form_1120s_available
+     , history_table.bui_corp_year1_taxable_income
+     , history_table.bui_corp_year1_total_tax
+     , history_table.bui_corp_year1_gain_loss
+     , history_table.bui_corp_year1_other_income_loss
+     , history_table.bui_corp_year1_depreciation
+     , history_table.bui_corp_year1_depletion
+     , history_table.bui_corp_year1_domestic_production_activities
+     , history_table.bui_corp_year1_other_deductions
+     , history_table.bui_corp_year1_net_operating_loss_special_deductions
+     , history_table.bui_corp_year1_notes_payable_less_one_year
+     , history_table.bui_corp_year1_meals_exclusion
+     , history_table.bui_corp_year1_dividends_paid_to_borrower
+     , history_table.bui_corp_year1_annual_subtotal
+     , history_table.bui_corp_year1_ownership_percent
+     , history_table.bui_corp_year1_annual_subtotal_ownership_applied
+     , history_table.bui_corp_year2_taxable_income
+     , history_table.bui_corp_year2_total_tax
+     , history_table.bui_corp_year2_gain_loss
+     , history_table.bui_corp_year2_other_income_loss
+     , history_table.bui_corp_year2_depreciation
+     , history_table.bui_corp_year2_depletion
+     , history_table.bui_corp_year2_domestic_production_activities
+     , history_table.bui_corp_year2_other_deductions
+     , history_table.bui_corp_year2_net_operating_loss_special_deductions
+     , history_table.bui_corp_year2_notes_payable_less_one_year
+     , history_table.bui_corp_year2_meals_exclusion
+     , history_table.bui_corp_year2_dividends_paid_to_borrower
+     , history_table.bui_corp_year2_annual_subtotal
+     , history_table.bui_corp_year2_ownership_percent
+     , history_table.bui_corp_year2_annual_subtotal_ownership_applied
+     , history_table.bui_corp_year3_taxable_income
+     , history_table.bui_corp_year3_total_tax
+     , history_table.bui_corp_year3_gain_loss
+     , history_table.bui_corp_year3_other_income_loss
+     , history_table.bui_corp_year3_depreciation
+     , history_table.bui_corp_year3_depletion
+     , history_table.bui_corp_year3_domestic_production_activities
+     , history_table.bui_corp_year3_other_deductions
+     , history_table.bui_corp_year3_net_operating_loss_special_deductions
+     , history_table.bui_corp_year3_notes_payable_less_one_year
+     , history_table.bui_corp_year3_meals_exclusion
+     , history_table.bui_corp_year3_dividends_paid_to_borrower
+     , history_table.bui_corp_year3_annual_subtotal
+     , history_table.bui_corp_year3_ownership_percent
+     , history_table.bui_corp_year3_annual_subtotal_ownership_applied
+     , history_table.bui_sch_f_year1_specific_income_loss
+     , history_table.bui_sch_f_year1_nonrecurring_income_loss
+     , history_table.bui_sch_f_year1_depreciation
+     , history_table.bui_sch_f_year1_amortization_loss_depletion
+     , history_table.bui_sch_f_year1_business_use_home
+     , history_table.bui_sch_f_year2_specific_income_loss
+     , history_table.bui_sch_f_year2_nonrecurring_income_loss
+     , history_table.bui_sch_f_year2_depreciation
+     , history_table.bui_sch_f_year2_amortization_loss_depletion
+     , history_table.bui_sch_f_year2_business_use_home
+     , history_table.bui_sch_f_year3_specific_income_loss
+     , history_table.bui_sch_f_year3_nonrecurring_income_loss
+     , history_table.bui_sch_f_year3_depreciation
+     , history_table.bui_sch_f_year3_amortization_loss_depletion
+     , history_table.bui_sch_f_year3_business_use_home
+     , history_table.bui_underwriter_comments
+     , history_table.bui_borrower_title_type
+     , history_table.bui_borrower_title_other_description
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
-FROM history_octane.proposal_construction history_table
-LEFT JOIN staging_octane.proposal_construction staging_table
-          ON staging_table.prpc_pid = history_table.prpc_pid
-WHERE staging_table.prpc_pid IS NULL
+FROM history_octane.business_income history_table
+LEFT JOIN staging_octane.business_income staging_table
+          ON staging_table.bui_pid = history_table.bui_pid
+WHERE staging_table.bui_pid IS NULL
   AND NOT EXISTS(
     SELECT 1
-    FROM history_octane.proposal_construction deleted_records
-    WHERE deleted_records.prpc_pid = history_table.prpc_pid
+    FROM history_octane.business_income deleted_records
+    WHERE deleted_records.bui_pid = history_table.bui_pid
       AND deleted_records.data_source_deleted_flag = TRUE
     );', 'Staging DB Connection')
          , ('SP-100901', 0, '--finding records to insert into history_octane.config_note
@@ -517,6 +868,256 @@ WHERE staging_table.cn_pid IS NULL
     SELECT 1
     FROM history_octane.config_note deleted_records
     WHERE deleted_records.cn_pid = history_table.cn_pid
+      AND deleted_records.data_source_deleted_flag = TRUE
+    );', 'Staging DB Connection')
+         , ('SP-100017', 0, '--finding records to insert into history_octane.deal_key_roles
+SELECT staging_table.dkrs_pid
+     , staging_table.dkrs_version
+     , staging_table.dkrs_deal_pid
+     , staging_table.dkrs_originator_lender_user_pid
+     , staging_table.dkrs_originator_first_name
+     , staging_table.dkrs_originator_last_name
+     , staging_table.dkrs_originator_middle_name
+     , staging_table.dkrs_originator_fmls_basic
+     , staging_table.dkrs_originator_nmls_id
+     , staging_table.dkrs_supplemental_originator_lender_user_pid
+     , staging_table.dkrs_supplemental_originator_fmls
+     , staging_table.dkrs_account_executive_lender_user_pid
+     , staging_table.dkrs_account_executive_fmls
+     , staging_table.dkrs_investor_conditions_lender_user_pid
+     , staging_table.dkrs_investor_conditions_fmls
+     , staging_table.dkrs_investor_stack_to_investor_lender_user_pid
+     , staging_table.dkrs_investor_stack_to_investor_fmls
+     , staging_table.dkrs_collateral_to_custodian_lender_user_pid
+     , staging_table.dkrs_collateral_to_custodian_fmls
+     , staging_table.dkrs_collateral_to_investor_lender_user_pid
+     , staging_table.dkrs_collateral_to_investor_fmls
+     , staging_table.dkrs_transaction_assistant_lender_user_pid
+     , staging_table.dkrs_transaction_assistant_fmls
+     , staging_table.dkrs_final_documents_to_investor_lender_user_pid
+     , staging_table.dkrs_final_documents_to_investor_fmls
+     , staging_table.dkrs_government_insurance_lender_user_pid
+     , staging_table.dkrs_government_insurance_fmls
+     , staging_table.dkrs_funder_lender_user_pid
+     , staging_table.dkrs_funder_fmls
+     , staging_table.dkrs_processor_lender_user_pid
+     , staging_table.dkrs_processor_fmls
+     , staging_table.dkrs_underwriter_lender_user_pid
+     , staging_table.dkrs_underwriter_fmls
+     , staging_table.dkrs_project_underwriter_lender_user_pid
+     , staging_table.dkrs_project_underwriter_fmls
+     , staging_table.dkrs_closing_doc_specialist_lender_user_pid
+     , staging_table.dkrs_closing_doc_specialist_fmls
+     , staging_table.dkrs_wholesale_client_advocate_lender_user_pid
+     , staging_table.dkrs_wholesale_client_advocate_fmls
+     , staging_table.dkrs_closing_scheduler_lender_user_pid
+     , staging_table.dkrs_closing_scheduler_fmls
+     , staging_table.dkrs_collateral_underwriter_lender_user_pid
+     , staging_table.dkrs_collateral_underwriter_fmls
+     , staging_table.dkrs_correspondent_client_advocate_lender_user_pid
+     , staging_table.dkrs_correspondent_client_advocate_fmls
+     , staging_table.dkrs_flood_insurance_specialist_lender_user_pid
+     , staging_table.dkrs_flood_insurance_specialist_fmls
+     , staging_table.dkrs_hoa_specialist_lender_user_pid
+     , staging_table.dkrs_hoa_specialist_fmls
+     , staging_table.dkrs_hoi_specialist_lender_user_pid
+     , staging_table.dkrs_hoi_specialist_fmls
+     , staging_table.dkrs_ho6_specialist_lender_user_pid
+     , staging_table.dkrs_ho6_specialist_fmls
+     , staging_table.dkrs_hud_va_lender_officer_lender_user_pid
+     , staging_table.dkrs_hud_va_lender_officer_fmls
+     , staging_table.dkrs_loan_officer_assistant_lender_user_pid
+     , staging_table.dkrs_loan_officer_assistant_fmls
+     , staging_table.dkrs_loan_payoff_specialist_lender_user_pid
+     , staging_table.dkrs_loan_payoff_specialist_fmls
+     , staging_table.dkrs_subordination_specialist_lender_user_pid
+     , staging_table.dkrs_subordination_specialist_fmls
+     , staging_table.dkrs_title_specialist_lender_user_pid
+     , staging_table.dkrs_title_specialist_fmls
+     , staging_table.dkrs_underwriting_manager_lender_user_pid
+     , staging_table.dkrs_underwriting_manager_fmls
+     , staging_table.dkrs_va_specialist_lender_user_pid
+     , staging_table.dkrs_va_specialist_fmls
+     , staging_table.dkrs_verbal_voe_specialist_lender_user_pid
+     , staging_table.dkrs_verbal_voe_specialist_fmls
+     , staging_table.dkrs_voe_specialist_lender_user_pid
+     , staging_table.dkrs_voe_specialist_fmls
+     , staging_table.dkrs_wire_specialist_lender_user_pid
+     , staging_table.dkrs_wire_specialist_fmls
+     , staging_table.dkrs_internal_construction_manager_lender_user_pid
+     , staging_table.dkrs_internal_construction_manager_fmls
+     , staging_table.dkrs_review_requester_1_lender_user_pid
+     , staging_table.dkrs_review_requester_1_fmls
+     , staging_table.dkrs_review_requester_2_lender_user_pid
+     , staging_table.dkrs_review_requester_2_fmls
+     , staging_table.dkrs_review_requester_3_lender_user_pid
+     , staging_table.dkrs_review_requester_3_fmls
+     , staging_table.dkrs_review_requester_4_lender_user_pid
+     , staging_table.dkrs_review_requester_4_fmls
+     , staging_table.dkrs_review_requester_5_lender_user_pid
+     , staging_table.dkrs_review_requester_5_fmls
+     , staging_table.dkrs_referring_associate_lender_user_pid
+     , staging_table.dkrs_referring_associate_fmls
+     , staging_table.dkrs_production_manager_lender_user_pid
+     , staging_table.dkrs_production_manager_fmls
+     , staging_table.dkrs_contract_processor_lender_user_pid
+     , staging_table.dkrs_contract_processor_fmls
+     , FALSE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM staging_octane.deal_key_roles staging_table
+LEFT JOIN history_octane.deal_key_roles history_table
+          ON staging_table.dkrs_pid = history_table.dkrs_pid
+              AND staging_table.dkrs_version = history_table.dkrs_version
+WHERE history_table.dkrs_pid IS NULL
+UNION ALL
+SELECT history_table.dkrs_pid
+     , history_table.dkrs_version + 1
+     , history_table.dkrs_deal_pid
+     , history_table.dkrs_originator_lender_user_pid
+     , history_table.dkrs_originator_first_name
+     , history_table.dkrs_originator_last_name
+     , history_table.dkrs_originator_middle_name
+     , history_table.dkrs_originator_fmls_basic
+     , history_table.dkrs_originator_nmls_id
+     , history_table.dkrs_supplemental_originator_lender_user_pid
+     , history_table.dkrs_supplemental_originator_fmls
+     , history_table.dkrs_account_executive_lender_user_pid
+     , history_table.dkrs_account_executive_fmls
+     , history_table.dkrs_investor_conditions_lender_user_pid
+     , history_table.dkrs_investor_conditions_fmls
+     , history_table.dkrs_investor_stack_to_investor_lender_user_pid
+     , history_table.dkrs_investor_stack_to_investor_fmls
+     , history_table.dkrs_collateral_to_custodian_lender_user_pid
+     , history_table.dkrs_collateral_to_custodian_fmls
+     , history_table.dkrs_collateral_to_investor_lender_user_pid
+     , history_table.dkrs_collateral_to_investor_fmls
+     , history_table.dkrs_transaction_assistant_lender_user_pid
+     , history_table.dkrs_transaction_assistant_fmls
+     , history_table.dkrs_final_documents_to_investor_lender_user_pid
+     , history_table.dkrs_final_documents_to_investor_fmls
+     , history_table.dkrs_government_insurance_lender_user_pid
+     , history_table.dkrs_government_insurance_fmls
+     , history_table.dkrs_funder_lender_user_pid
+     , history_table.dkrs_funder_fmls
+     , history_table.dkrs_processor_lender_user_pid
+     , history_table.dkrs_processor_fmls
+     , history_table.dkrs_underwriter_lender_user_pid
+     , history_table.dkrs_underwriter_fmls
+     , history_table.dkrs_project_underwriter_lender_user_pid
+     , history_table.dkrs_project_underwriter_fmls
+     , history_table.dkrs_closing_doc_specialist_lender_user_pid
+     , history_table.dkrs_closing_doc_specialist_fmls
+     , history_table.dkrs_wholesale_client_advocate_lender_user_pid
+     , history_table.dkrs_wholesale_client_advocate_fmls
+     , history_table.dkrs_closing_scheduler_lender_user_pid
+     , history_table.dkrs_closing_scheduler_fmls
+     , history_table.dkrs_collateral_underwriter_lender_user_pid
+     , history_table.dkrs_collateral_underwriter_fmls
+     , history_table.dkrs_correspondent_client_advocate_lender_user_pid
+     , history_table.dkrs_correspondent_client_advocate_fmls
+     , history_table.dkrs_flood_insurance_specialist_lender_user_pid
+     , history_table.dkrs_flood_insurance_specialist_fmls
+     , history_table.dkrs_hoa_specialist_lender_user_pid
+     , history_table.dkrs_hoa_specialist_fmls
+     , history_table.dkrs_hoi_specialist_lender_user_pid
+     , history_table.dkrs_hoi_specialist_fmls
+     , history_table.dkrs_ho6_specialist_lender_user_pid
+     , history_table.dkrs_ho6_specialist_fmls
+     , history_table.dkrs_hud_va_lender_officer_lender_user_pid
+     , history_table.dkrs_hud_va_lender_officer_fmls
+     , history_table.dkrs_loan_officer_assistant_lender_user_pid
+     , history_table.dkrs_loan_officer_assistant_fmls
+     , history_table.dkrs_loan_payoff_specialist_lender_user_pid
+     , history_table.dkrs_loan_payoff_specialist_fmls
+     , history_table.dkrs_subordination_specialist_lender_user_pid
+     , history_table.dkrs_subordination_specialist_fmls
+     , history_table.dkrs_title_specialist_lender_user_pid
+     , history_table.dkrs_title_specialist_fmls
+     , history_table.dkrs_underwriting_manager_lender_user_pid
+     , history_table.dkrs_underwriting_manager_fmls
+     , history_table.dkrs_va_specialist_lender_user_pid
+     , history_table.dkrs_va_specialist_fmls
+     , history_table.dkrs_verbal_voe_specialist_lender_user_pid
+     , history_table.dkrs_verbal_voe_specialist_fmls
+     , history_table.dkrs_voe_specialist_lender_user_pid
+     , history_table.dkrs_voe_specialist_fmls
+     , history_table.dkrs_wire_specialist_lender_user_pid
+     , history_table.dkrs_wire_specialist_fmls
+     , history_table.dkrs_internal_construction_manager_lender_user_pid
+     , history_table.dkrs_internal_construction_manager_fmls
+     , history_table.dkrs_review_requester_1_lender_user_pid
+     , history_table.dkrs_review_requester_1_fmls
+     , history_table.dkrs_review_requester_2_lender_user_pid
+     , history_table.dkrs_review_requester_2_fmls
+     , history_table.dkrs_review_requester_3_lender_user_pid
+     , history_table.dkrs_review_requester_3_fmls
+     , history_table.dkrs_review_requester_4_lender_user_pid
+     , history_table.dkrs_review_requester_4_fmls
+     , history_table.dkrs_review_requester_5_lender_user_pid
+     , history_table.dkrs_review_requester_5_fmls
+     , history_table.dkrs_referring_associate_lender_user_pid
+     , history_table.dkrs_referring_associate_fmls
+     , history_table.dkrs_production_manager_lender_user_pid
+     , history_table.dkrs_production_manager_fmls
+     , history_table.dkrs_contract_processor_lender_user_pid
+     , history_table.dkrs_contract_processor_fmls
+     , TRUE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM history_octane.deal_key_roles history_table
+LEFT JOIN staging_octane.deal_key_roles staging_table
+          ON staging_table.dkrs_pid = history_table.dkrs_pid
+WHERE staging_table.dkrs_pid IS NULL
+  AND NOT EXISTS(
+    SELECT 1
+    FROM history_octane.deal_key_roles deleted_records
+    WHERE deleted_records.dkrs_pid = history_table.dkrs_pid
+      AND deleted_records.data_source_deleted_flag = TRUE
+    );', 'Staging DB Connection')
+         , ('SP-100038', 0, '--finding records to insert into history_octane.lead_source
+SELECT staging_table.lds_pid
+     , staging_table.lds_version
+     , staging_table.lds_account_pid
+     , staging_table.lds_channel_pid
+     , staging_table.lds_lead_source_name
+     , staging_table.lds_mortech_lead_source_id
+     , staging_table.lds_lead_source_id
+     , staging_table.lds_active
+     , staging_table.lds_lead_id_required
+     , staging_table.lds_zero_margin_allowed
+     , staging_table.lds_mortech_account_pid
+     , staging_table.lds_training_only
+     , staging_table.lds_compensation_type
+     , FALSE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM staging_octane.lead_source staging_table
+LEFT JOIN history_octane.lead_source history_table
+          ON staging_table.lds_pid = history_table.lds_pid
+              AND staging_table.lds_version = history_table.lds_version
+WHERE history_table.lds_pid IS NULL
+UNION ALL
+SELECT history_table.lds_pid
+     , history_table.lds_version + 1
+     , history_table.lds_account_pid
+     , history_table.lds_channel_pid
+     , history_table.lds_lead_source_name
+     , history_table.lds_mortech_lead_source_id
+     , history_table.lds_lead_source_id
+     , history_table.lds_active
+     , history_table.lds_lead_id_required
+     , history_table.lds_zero_margin_allowed
+     , history_table.lds_mortech_account_pid
+     , history_table.lds_training_only
+     , history_table.lds_compensation_type
+     , TRUE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM history_octane.lead_source history_table
+LEFT JOIN staging_octane.lead_source staging_table
+          ON staging_table.lds_pid = history_table.lds_pid
+WHERE staging_table.lds_pid IS NULL
+  AND NOT EXISTS(
+    SELECT 1
+    FROM history_octane.lead_source deleted_records
+    WHERE deleted_records.lds_pid = history_table.lds_pid
       AND deleted_records.data_source_deleted_flag = TRUE
     );', 'Staging DB Connection')
          , ('SP-100317', 0, '--finding records to insert into history_octane.proposal
@@ -1024,634 +1625,63 @@ WHERE staging_table.prp_pid IS NULL
     WHERE deleted_records.prp_pid = history_table.prp_pid
       AND deleted_records.data_source_deleted_flag = TRUE
     );', 'Staging DB Connection')
-         , ('SP-100017', 0, '--finding records to insert into history_octane.deal_key_roles
-SELECT staging_table.dkrs_pid
-     , staging_table.dkrs_version
-     , staging_table.dkrs_deal_pid
-     , staging_table.dkrs_originator_lender_user_pid
-     , staging_table.dkrs_originator_first_name
-     , staging_table.dkrs_originator_last_name
-     , staging_table.dkrs_originator_middle_name
-     , staging_table.dkrs_originator_fmls_basic
-     , staging_table.dkrs_originator_nmls_id
-     , staging_table.dkrs_supplemental_originator_lender_user_pid
-     , staging_table.dkrs_supplemental_originator_fmls
-     , staging_table.dkrs_account_executive_lender_user_pid
-     , staging_table.dkrs_account_executive_fmls
-     , staging_table.dkrs_investor_conditions_lender_user_pid
-     , staging_table.dkrs_investor_conditions_fmls
-     , staging_table.dkrs_investor_stack_to_investor_lender_user_pid
-     , staging_table.dkrs_investor_stack_to_investor_fmls
-     , staging_table.dkrs_collateral_to_custodian_lender_user_pid
-     , staging_table.dkrs_collateral_to_custodian_fmls
-     , staging_table.dkrs_collateral_to_investor_lender_user_pid
-     , staging_table.dkrs_collateral_to_investor_fmls
-     , staging_table.dkrs_transaction_assistant_lender_user_pid
-     , staging_table.dkrs_transaction_assistant_fmls
-     , staging_table.dkrs_final_documents_to_investor_lender_user_pid
-     , staging_table.dkrs_final_documents_to_investor_fmls
-     , staging_table.dkrs_government_insurance_lender_user_pid
-     , staging_table.dkrs_government_insurance_fmls
-     , staging_table.dkrs_funder_lender_user_pid
-     , staging_table.dkrs_funder_fmls
-     , staging_table.dkrs_processor_lender_user_pid
-     , staging_table.dkrs_processor_fmls
-     , staging_table.dkrs_underwriter_lender_user_pid
-     , staging_table.dkrs_underwriter_fmls
-     , staging_table.dkrs_project_underwriter_lender_user_pid
-     , staging_table.dkrs_project_underwriter_fmls
-     , staging_table.dkrs_closing_doc_specialist_lender_user_pid
-     , staging_table.dkrs_closing_doc_specialist_fmls
-     , staging_table.dkrs_wholesale_client_advocate_lender_user_pid
-     , staging_table.dkrs_wholesale_client_advocate_fmls
-     , staging_table.dkrs_closing_scheduler_lender_user_pid
-     , staging_table.dkrs_closing_scheduler_fmls
-     , staging_table.dkrs_collateral_underwriter_lender_user_pid
-     , staging_table.dkrs_collateral_underwriter_fmls
-     , staging_table.dkrs_correspondent_client_advocate_lender_user_pid
-     , staging_table.dkrs_correspondent_client_advocate_fmls
-     , staging_table.dkrs_flood_insurance_specialist_lender_user_pid
-     , staging_table.dkrs_flood_insurance_specialist_fmls
-     , staging_table.dkrs_hoa_specialist_lender_user_pid
-     , staging_table.dkrs_hoa_specialist_fmls
-     , staging_table.dkrs_hoi_specialist_lender_user_pid
-     , staging_table.dkrs_hoi_specialist_fmls
-     , staging_table.dkrs_ho6_specialist_lender_user_pid
-     , staging_table.dkrs_ho6_specialist_fmls
-     , staging_table.dkrs_hud_va_lender_officer_lender_user_pid
-     , staging_table.dkrs_hud_va_lender_officer_fmls
-     , staging_table.dkrs_loan_officer_assistant_lender_user_pid
-     , staging_table.dkrs_loan_officer_assistant_fmls
-     , staging_table.dkrs_loan_payoff_specialist_lender_user_pid
-     , staging_table.dkrs_loan_payoff_specialist_fmls
-     , staging_table.dkrs_subordination_specialist_lender_user_pid
-     , staging_table.dkrs_subordination_specialist_fmls
-     , staging_table.dkrs_title_specialist_lender_user_pid
-     , staging_table.dkrs_title_specialist_fmls
-     , staging_table.dkrs_underwriting_manager_lender_user_pid
-     , staging_table.dkrs_underwriting_manager_fmls
-     , staging_table.dkrs_va_specialist_lender_user_pid
-     , staging_table.dkrs_va_specialist_fmls
-     , staging_table.dkrs_verbal_voe_specialist_lender_user_pid
-     , staging_table.dkrs_verbal_voe_specialist_fmls
-     , staging_table.dkrs_voe_specialist_lender_user_pid
-     , staging_table.dkrs_voe_specialist_fmls
-     , staging_table.dkrs_wire_specialist_lender_user_pid
-     , staging_table.dkrs_wire_specialist_fmls
-     , staging_table.dkrs_internal_construction_manager_lender_user_pid
-     , staging_table.dkrs_internal_construction_manager_fmls
-     , staging_table.dkrs_review_requester_1_lender_user_pid
-     , staging_table.dkrs_review_requester_1_fmls
-     , staging_table.dkrs_review_requester_2_lender_user_pid
-     , staging_table.dkrs_review_requester_2_fmls
-     , staging_table.dkrs_review_requester_3_lender_user_pid
-     , staging_table.dkrs_review_requester_3_fmls
-     , staging_table.dkrs_review_requester_4_lender_user_pid
-     , staging_table.dkrs_review_requester_4_fmls
-     , staging_table.dkrs_review_requester_5_lender_user_pid
-     , staging_table.dkrs_review_requester_5_fmls
-     , staging_table.dkrs_referring_associate_lender_user_pid
-     , staging_table.dkrs_referring_associate_fmls
-     , staging_table.dkrs_production_manager_lender_user_pid
-     , staging_table.dkrs_production_manager_fmls
-     , staging_table.dkrs_contract_processor_lender_user_pid
-     , staging_table.dkrs_contract_processor_fmls
+         , ('SP-100826', 0, '--finding records to insert into history_octane.proposal_construction
+SELECT staging_table.prpc_pid
+     , staging_table.prpc_version
+     , staging_table.prpc_proposal_pid
+     , staging_table.prpc_architectural_exhibits
+     , staging_table.prpc_feasibility_study
+     , staging_table.prpc_expected_months_to_complete
+     , staging_table.prpc_extension_needed
+     , staging_table.prpc_extension_period_months
+     , staging_table.prpc_any_utilities_inoperable
+     , staging_table.prpc_non_habitable_months
+     , staging_table.prpc_non_habitable_units
+     , staging_table.prpc_number_of_draws
+     , staging_table.prpc_construction_confirmed_start_date
+     , staging_table.prpc_loan_in_process_account_closed_date
+     , staging_table.prpc_mortgage_payment_reserves_required
+     , staging_table.prpc_estimated_permit_amount_applicable
+     , staging_table.prpc_contingency_reserve_required
+     , staging_table.prpc_extension_period_days
+     , staging_table.prpc_effective_construction_completion_date
      , FALSE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
-FROM staging_octane.deal_key_roles staging_table
-LEFT JOIN history_octane.deal_key_roles history_table
-          ON staging_table.dkrs_pid = history_table.dkrs_pid
-              AND staging_table.dkrs_version = history_table.dkrs_version
-WHERE history_table.dkrs_pid IS NULL
+FROM staging_octane.proposal_construction staging_table
+LEFT JOIN history_octane.proposal_construction history_table
+          ON staging_table.prpc_pid = history_table.prpc_pid
+              AND staging_table.prpc_version = history_table.prpc_version
+WHERE history_table.prpc_pid IS NULL
 UNION ALL
-SELECT history_table.dkrs_pid
-     , history_table.dkrs_version + 1
-     , history_table.dkrs_deal_pid
-     , history_table.dkrs_originator_lender_user_pid
-     , history_table.dkrs_originator_first_name
-     , history_table.dkrs_originator_last_name
-     , history_table.dkrs_originator_middle_name
-     , history_table.dkrs_originator_fmls_basic
-     , history_table.dkrs_originator_nmls_id
-     , history_table.dkrs_supplemental_originator_lender_user_pid
-     , history_table.dkrs_supplemental_originator_fmls
-     , history_table.dkrs_account_executive_lender_user_pid
-     , history_table.dkrs_account_executive_fmls
-     , history_table.dkrs_investor_conditions_lender_user_pid
-     , history_table.dkrs_investor_conditions_fmls
-     , history_table.dkrs_investor_stack_to_investor_lender_user_pid
-     , history_table.dkrs_investor_stack_to_investor_fmls
-     , history_table.dkrs_collateral_to_custodian_lender_user_pid
-     , history_table.dkrs_collateral_to_custodian_fmls
-     , history_table.dkrs_collateral_to_investor_lender_user_pid
-     , history_table.dkrs_collateral_to_investor_fmls
-     , history_table.dkrs_transaction_assistant_lender_user_pid
-     , history_table.dkrs_transaction_assistant_fmls
-     , history_table.dkrs_final_documents_to_investor_lender_user_pid
-     , history_table.dkrs_final_documents_to_investor_fmls
-     , history_table.dkrs_government_insurance_lender_user_pid
-     , history_table.dkrs_government_insurance_fmls
-     , history_table.dkrs_funder_lender_user_pid
-     , history_table.dkrs_funder_fmls
-     , history_table.dkrs_processor_lender_user_pid
-     , history_table.dkrs_processor_fmls
-     , history_table.dkrs_underwriter_lender_user_pid
-     , history_table.dkrs_underwriter_fmls
-     , history_table.dkrs_project_underwriter_lender_user_pid
-     , history_table.dkrs_project_underwriter_fmls
-     , history_table.dkrs_closing_doc_specialist_lender_user_pid
-     , history_table.dkrs_closing_doc_specialist_fmls
-     , history_table.dkrs_wholesale_client_advocate_lender_user_pid
-     , history_table.dkrs_wholesale_client_advocate_fmls
-     , history_table.dkrs_closing_scheduler_lender_user_pid
-     , history_table.dkrs_closing_scheduler_fmls
-     , history_table.dkrs_collateral_underwriter_lender_user_pid
-     , history_table.dkrs_collateral_underwriter_fmls
-     , history_table.dkrs_correspondent_client_advocate_lender_user_pid
-     , history_table.dkrs_correspondent_client_advocate_fmls
-     , history_table.dkrs_flood_insurance_specialist_lender_user_pid
-     , history_table.dkrs_flood_insurance_specialist_fmls
-     , history_table.dkrs_hoa_specialist_lender_user_pid
-     , history_table.dkrs_hoa_specialist_fmls
-     , history_table.dkrs_hoi_specialist_lender_user_pid
-     , history_table.dkrs_hoi_specialist_fmls
-     , history_table.dkrs_ho6_specialist_lender_user_pid
-     , history_table.dkrs_ho6_specialist_fmls
-     , history_table.dkrs_hud_va_lender_officer_lender_user_pid
-     , history_table.dkrs_hud_va_lender_officer_fmls
-     , history_table.dkrs_loan_officer_assistant_lender_user_pid
-     , history_table.dkrs_loan_officer_assistant_fmls
-     , history_table.dkrs_loan_payoff_specialist_lender_user_pid
-     , history_table.dkrs_loan_payoff_specialist_fmls
-     , history_table.dkrs_subordination_specialist_lender_user_pid
-     , history_table.dkrs_subordination_specialist_fmls
-     , history_table.dkrs_title_specialist_lender_user_pid
-     , history_table.dkrs_title_specialist_fmls
-     , history_table.dkrs_underwriting_manager_lender_user_pid
-     , history_table.dkrs_underwriting_manager_fmls
-     , history_table.dkrs_va_specialist_lender_user_pid
-     , history_table.dkrs_va_specialist_fmls
-     , history_table.dkrs_verbal_voe_specialist_lender_user_pid
-     , history_table.dkrs_verbal_voe_specialist_fmls
-     , history_table.dkrs_voe_specialist_lender_user_pid
-     , history_table.dkrs_voe_specialist_fmls
-     , history_table.dkrs_wire_specialist_lender_user_pid
-     , history_table.dkrs_wire_specialist_fmls
-     , history_table.dkrs_internal_construction_manager_lender_user_pid
-     , history_table.dkrs_internal_construction_manager_fmls
-     , history_table.dkrs_review_requester_1_lender_user_pid
-     , history_table.dkrs_review_requester_1_fmls
-     , history_table.dkrs_review_requester_2_lender_user_pid
-     , history_table.dkrs_review_requester_2_fmls
-     , history_table.dkrs_review_requester_3_lender_user_pid
-     , history_table.dkrs_review_requester_3_fmls
-     , history_table.dkrs_review_requester_4_lender_user_pid
-     , history_table.dkrs_review_requester_4_fmls
-     , history_table.dkrs_review_requester_5_lender_user_pid
-     , history_table.dkrs_review_requester_5_fmls
-     , history_table.dkrs_referring_associate_lender_user_pid
-     , history_table.dkrs_referring_associate_fmls
-     , history_table.dkrs_production_manager_lender_user_pid
-     , history_table.dkrs_production_manager_fmls
-     , history_table.dkrs_contract_processor_lender_user_pid
-     , history_table.dkrs_contract_processor_fmls
+SELECT history_table.prpc_pid
+     , history_table.prpc_version + 1
+     , history_table.prpc_proposal_pid
+     , history_table.prpc_architectural_exhibits
+     , history_table.prpc_feasibility_study
+     , history_table.prpc_expected_months_to_complete
+     , history_table.prpc_extension_needed
+     , history_table.prpc_extension_period_months
+     , history_table.prpc_any_utilities_inoperable
+     , history_table.prpc_non_habitable_months
+     , history_table.prpc_non_habitable_units
+     , history_table.prpc_number_of_draws
+     , history_table.prpc_construction_confirmed_start_date
+     , history_table.prpc_loan_in_process_account_closed_date
+     , history_table.prpc_mortgage_payment_reserves_required
+     , history_table.prpc_estimated_permit_amount_applicable
+     , history_table.prpc_contingency_reserve_required
+     , history_table.prpc_extension_period_days
+     , history_table.prpc_effective_construction_completion_date
      , TRUE AS data_source_deleted_flag
      , NOW( ) AS data_source_updated_datetime
-FROM history_octane.deal_key_roles history_table
-LEFT JOIN staging_octane.deal_key_roles staging_table
-          ON staging_table.dkrs_pid = history_table.dkrs_pid
-WHERE staging_table.dkrs_pid IS NULL
+FROM history_octane.proposal_construction history_table
+LEFT JOIN staging_octane.proposal_construction staging_table
+          ON staging_table.prpc_pid = history_table.prpc_pid
+WHERE staging_table.prpc_pid IS NULL
   AND NOT EXISTS(
     SELECT 1
-    FROM history_octane.deal_key_roles deleted_records
-    WHERE deleted_records.dkrs_pid = history_table.dkrs_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
-         , ('SP-100130', 0, '--finding records to insert into history_octane.business_income
-SELECT staging_table.bui_pid
-     , staging_table.bui_version
-     , staging_table.bui_borrower_income_pid
-     , staging_table.bui_business_income_type
-     , staging_table.bui_business_disposition_type
-     , staging_table.bui_company_ein
-     , staging_table.bui_estimated_net_income_amount
-     , staging_table.bui_estimated_mode
-     , staging_table.bui_worksheet_monthly_total_amount
-     , staging_table.bui_monthly_total_amount
-     , staging_table.bui_borrower_income_percent
-     , staging_table.bui_calc_method_type
-     , staging_table.bui_common_year1_year
-     , staging_table.bui_common_year1_year_include
-     , staging_table.bui_common_year1_from_date
-     , staging_table.bui_common_year1_through_date
-     , staging_table.bui_common_year1_months
-     , staging_table.bui_common_year1_annual_total_amount
-     , staging_table.bui_common_year1_monthly_total_amount
-     , staging_table.bui_common_year2_year
-     , staging_table.bui_common_year2_year_include
-     , staging_table.bui_common_year2_from_date
-     , staging_table.bui_common_year2_through_date
-     , staging_table.bui_common_year2_months
-     , staging_table.bui_common_year2_annual_total_amount
-     , staging_table.bui_common_year2_monthly_total_amount
-     , staging_table.bui_common_year3_year
-     , staging_table.bui_common_year3_year_include
-     , staging_table.bui_common_year3_from_date
-     , staging_table.bui_common_year3_through_date
-     , staging_table.bui_common_year3_months
-     , staging_table.bui_common_year3_annual_total_amount
-     , staging_table.bui_common_year3_monthly_total_amount
-     , staging_table.bui_sole_year1_gross_receipts
-     , staging_table.bui_sole_year1_other_income_loss_exp
-     , staging_table.bui_sole_year1_depletion
-     , staging_table.bui_sole_year1_depreciation
-     , staging_table.bui_sole_year1_meal_exclusions
-     , staging_table.bui_sole_year1_business_use_home
-     , staging_table.bui_sole_year1_amortization_loss
-     , staging_table.bui_sole_year1_business_miles
-     , staging_table.bui_sole_year1_depreciation_mile
-     , staging_table.bui_sole_year1_mileage_depreciation
-     , staging_table.bui_sole_year2_gross_receipts
-     , staging_table.bui_sole_year2_other_income_loss_exp
-     , staging_table.bui_sole_year2_depletion
-     , staging_table.bui_sole_year2_depreciation
-     , staging_table.bui_sole_year2_meal_exclusions
-     , staging_table.bui_sole_year2_business_use_home
-     , staging_table.bui_sole_year2_amortization_loss
-     , staging_table.bui_sole_year2_business_miles
-     , staging_table.bui_sole_year2_depreciation_mile
-     , staging_table.bui_sole_year2_mileage_depreciation
-     , staging_table.bui_sole_year3_gross_receipts
-     , staging_table.bui_sole_year3_other_income_loss_exp
-     , staging_table.bui_sole_year3_depletion
-     , staging_table.bui_sole_year3_depreciation
-     , staging_table.bui_sole_year3_meal_exclusions
-     , staging_table.bui_sole_year3_business_use_home
-     , staging_table.bui_sole_year3_amortization_loss
-     , staging_table.bui_sole_year3_business_miles
-     , staging_table.bui_sole_year3_depreciation_mile
-     , staging_table.bui_sole_year3_mileage_depreciation
-     , staging_table.bui_partner_year1_amortization_loss
-     , staging_table.bui_partner_year1_depletion
-     , staging_table.bui_partner_year1_depreciation
-     , staging_table.bui_partner_year1_guaranteed_payments
-     , staging_table.bui_partner_year1_meals_exclusion
-     , staging_table.bui_partner_year1_net_rental_income_loss
-     , staging_table.bui_partner_year1_notes_payable_less_year
-     , staging_table.bui_partner_year1_ordinary_income_loss
-     , staging_table.bui_partner_year1_other_income_loss
-     , staging_table.bui_partner_year1_ownership_percent
-     , staging_table.bui_partner_year1_form_k_1_total
-     , staging_table.bui_partner_year1_form_1065_subtotal
-     , staging_table.bui_partner_year1_form_1065_total
-     , staging_table.bui_partner_year2_amortization_loss
-     , staging_table.bui_partner_year2_depletion
-     , staging_table.bui_partner_year2_depreciation
-     , staging_table.bui_partner_year2_guaranteed_payments
-     , staging_table.bui_partner_year2_meals_exclusion
-     , staging_table.bui_partner_year2_net_rental_income_loss
-     , staging_table.bui_partner_year2_notes_payable_less_year
-     , staging_table.bui_partner_year2_ordinary_income_loss
-     , staging_table.bui_partner_year2_other_income_loss
-     , staging_table.bui_partner_year2_ownership_percent
-     , staging_table.bui_partner_year2_form_k_1_total
-     , staging_table.bui_partner_year2_form_1065_subtotal
-     , staging_table.bui_partner_year2_form_1065_total
-     , staging_table.bui_partner_year3_amortization_loss
-     , staging_table.bui_partner_year3_depletion
-     , staging_table.bui_partner_year3_depreciation
-     , staging_table.bui_partner_year3_guaranteed_payments
-     , staging_table.bui_partner_year3_meals_exclusion
-     , staging_table.bui_partner_year3_net_rental_income_loss
-     , staging_table.bui_partner_year3_notes_payable_less_year
-     , staging_table.bui_partner_year3_ordinary_income_loss
-     , staging_table.bui_partner_year3_other_income_loss
-     , staging_table.bui_partner_year3_ownership_percent
-     , staging_table.bui_partner_year3_form_k_1_total
-     , staging_table.bui_partner_year3_form_1065_subtotal
-     , staging_table.bui_partner_year3_form_1065_total
-     , staging_table.bui_form_1065_available
-     , staging_table.bui_scorp_year1_ordinary_income_loss
-     , staging_table.bui_scorp_year1_net_rental_income_loss
-     , staging_table.bui_scorp_year1_other_income_loss
-     , staging_table.bui_scorp_year1_depletion
-     , staging_table.bui_scorp_year1_depreciation
-     , staging_table.bui_scorp_year1_amortization_loss
-     , staging_table.bui_scorp_year1_notes_payable_less_year
-     , staging_table.bui_scorp_year1_meals_exclusion
-     , staging_table.bui_scorp_year1_ownership_percent
-     , staging_table.bui_scorp_year1_form_k_1_total
-     , staging_table.bui_scorp_year1_form_1120s_subtotal
-     , staging_table.bui_scorp_year1_form_1120s_total
-     , staging_table.bui_scorp_year2_ordinary_income_loss
-     , staging_table.bui_scorp_year2_net_rental_income_loss
-     , staging_table.bui_scorp_year2_other_income_loss
-     , staging_table.bui_scorp_year2_depletion
-     , staging_table.bui_scorp_year2_depreciation
-     , staging_table.bui_scorp_year2_amortization_loss
-     , staging_table.bui_scorp_year2_notes_payable_less_year
-     , staging_table.bui_scorp_year2_meals_exclusion
-     , staging_table.bui_scorp_year2_ownership_percent
-     , staging_table.bui_scorp_year2_form_k_1_total
-     , staging_table.bui_scorp_year2_form_1120s_subtotal
-     , staging_table.bui_scorp_year2_form_1120s_total
-     , staging_table.bui_scorp_year3_ordinary_income_loss
-     , staging_table.bui_scorp_year3_net_rental_income_loss
-     , staging_table.bui_scorp_year3_other_income_loss
-     , staging_table.bui_scorp_year3_depletion
-     , staging_table.bui_scorp_year3_depreciation
-     , staging_table.bui_scorp_year3_amortization_loss
-     , staging_table.bui_scorp_year3_notes_payable_less_year
-     , staging_table.bui_scorp_year3_meals_exclusion
-     , staging_table.bui_scorp_year3_ownership_percent
-     , staging_table.bui_scorp_year3_form_k_1_total
-     , staging_table.bui_scorp_year3_form_1120s_subtotal
-     , staging_table.bui_scorp_year3_form_1120s_total
-     , staging_table.bui_form_1120s_available
-     , staging_table.bui_corp_year1_taxable_income
-     , staging_table.bui_corp_year1_total_tax
-     , staging_table.bui_corp_year1_gain_loss
-     , staging_table.bui_corp_year1_other_income_loss
-     , staging_table.bui_corp_year1_depreciation
-     , staging_table.bui_corp_year1_depletion
-     , staging_table.bui_corp_year1_domestic_production_activities
-     , staging_table.bui_corp_year1_other_deductions
-     , staging_table.bui_corp_year1_net_operating_loss_special_deductions
-     , staging_table.bui_corp_year1_notes_payable_less_one_year
-     , staging_table.bui_corp_year1_meals_exclusion
-     , staging_table.bui_corp_year1_dividends_paid_to_borrower
-     , staging_table.bui_corp_year1_annual_subtotal
-     , staging_table.bui_corp_year1_ownership_percent
-     , staging_table.bui_corp_year1_annual_subtotal_ownership_applied
-     , staging_table.bui_corp_year2_taxable_income
-     , staging_table.bui_corp_year2_total_tax
-     , staging_table.bui_corp_year2_gain_loss
-     , staging_table.bui_corp_year2_other_income_loss
-     , staging_table.bui_corp_year2_depreciation
-     , staging_table.bui_corp_year2_depletion
-     , staging_table.bui_corp_year2_domestic_production_activities
-     , staging_table.bui_corp_year2_other_deductions
-     , staging_table.bui_corp_year2_net_operating_loss_special_deductions
-     , staging_table.bui_corp_year2_notes_payable_less_one_year
-     , staging_table.bui_corp_year2_meals_exclusion
-     , staging_table.bui_corp_year2_dividends_paid_to_borrower
-     , staging_table.bui_corp_year2_annual_subtotal
-     , staging_table.bui_corp_year2_ownership_percent
-     , staging_table.bui_corp_year2_annual_subtotal_ownership_applied
-     , staging_table.bui_corp_year3_taxable_income
-     , staging_table.bui_corp_year3_total_tax
-     , staging_table.bui_corp_year3_gain_loss
-     , staging_table.bui_corp_year3_other_income_loss
-     , staging_table.bui_corp_year3_depreciation
-     , staging_table.bui_corp_year3_depletion
-     , staging_table.bui_corp_year3_domestic_production_activities
-     , staging_table.bui_corp_year3_other_deductions
-     , staging_table.bui_corp_year3_net_operating_loss_special_deductions
-     , staging_table.bui_corp_year3_notes_payable_less_one_year
-     , staging_table.bui_corp_year3_meals_exclusion
-     , staging_table.bui_corp_year3_dividends_paid_to_borrower
-     , staging_table.bui_corp_year3_annual_subtotal
-     , staging_table.bui_corp_year3_ownership_percent
-     , staging_table.bui_corp_year3_annual_subtotal_ownership_applied
-     , staging_table.bui_sch_f_year1_specific_income_loss
-     , staging_table.bui_sch_f_year1_nonrecurring_income_loss
-     , staging_table.bui_sch_f_year1_depreciation
-     , staging_table.bui_sch_f_year1_amortization_loss_depletion
-     , staging_table.bui_sch_f_year1_business_use_home
-     , staging_table.bui_sch_f_year2_specific_income_loss
-     , staging_table.bui_sch_f_year2_nonrecurring_income_loss
-     , staging_table.bui_sch_f_year2_depreciation
-     , staging_table.bui_sch_f_year2_amortization_loss_depletion
-     , staging_table.bui_sch_f_year2_business_use_home
-     , staging_table.bui_sch_f_year3_specific_income_loss
-     , staging_table.bui_sch_f_year3_nonrecurring_income_loss
-     , staging_table.bui_sch_f_year3_depreciation
-     , staging_table.bui_sch_f_year3_amortization_loss_depletion
-     , staging_table.bui_sch_f_year3_business_use_home
-     , staging_table.bui_underwriter_comments
-     , staging_table.bui_borrower_title_type
-     , staging_table.bui_borrower_title_other_description
-     , FALSE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM staging_octane.business_income staging_table
-LEFT JOIN history_octane.business_income history_table
-          ON staging_table.bui_pid = history_table.bui_pid
-              AND staging_table.bui_version = history_table.bui_version
-WHERE history_table.bui_pid IS NULL
-UNION ALL
-SELECT history_table.bui_pid
-     , history_table.bui_version + 1
-     , history_table.bui_borrower_income_pid
-     , history_table.bui_business_income_type
-     , history_table.bui_business_disposition_type
-     , history_table.bui_company_ein
-     , history_table.bui_estimated_net_income_amount
-     , history_table.bui_estimated_mode
-     , history_table.bui_worksheet_monthly_total_amount
-     , history_table.bui_monthly_total_amount
-     , history_table.bui_borrower_income_percent
-     , history_table.bui_calc_method_type
-     , history_table.bui_common_year1_year
-     , history_table.bui_common_year1_year_include
-     , history_table.bui_common_year1_from_date
-     , history_table.bui_common_year1_through_date
-     , history_table.bui_common_year1_months
-     , history_table.bui_common_year1_annual_total_amount
-     , history_table.bui_common_year1_monthly_total_amount
-     , history_table.bui_common_year2_year
-     , history_table.bui_common_year2_year_include
-     , history_table.bui_common_year2_from_date
-     , history_table.bui_common_year2_through_date
-     , history_table.bui_common_year2_months
-     , history_table.bui_common_year2_annual_total_amount
-     , history_table.bui_common_year2_monthly_total_amount
-     , history_table.bui_common_year3_year
-     , history_table.bui_common_year3_year_include
-     , history_table.bui_common_year3_from_date
-     , history_table.bui_common_year3_through_date
-     , history_table.bui_common_year3_months
-     , history_table.bui_common_year3_annual_total_amount
-     , history_table.bui_common_year3_monthly_total_amount
-     , history_table.bui_sole_year1_gross_receipts
-     , history_table.bui_sole_year1_other_income_loss_exp
-     , history_table.bui_sole_year1_depletion
-     , history_table.bui_sole_year1_depreciation
-     , history_table.bui_sole_year1_meal_exclusions
-     , history_table.bui_sole_year1_business_use_home
-     , history_table.bui_sole_year1_amortization_loss
-     , history_table.bui_sole_year1_business_miles
-     , history_table.bui_sole_year1_depreciation_mile
-     , history_table.bui_sole_year1_mileage_depreciation
-     , history_table.bui_sole_year2_gross_receipts
-     , history_table.bui_sole_year2_other_income_loss_exp
-     , history_table.bui_sole_year2_depletion
-     , history_table.bui_sole_year2_depreciation
-     , history_table.bui_sole_year2_meal_exclusions
-     , history_table.bui_sole_year2_business_use_home
-     , history_table.bui_sole_year2_amortization_loss
-     , history_table.bui_sole_year2_business_miles
-     , history_table.bui_sole_year2_depreciation_mile
-     , history_table.bui_sole_year2_mileage_depreciation
-     , history_table.bui_sole_year3_gross_receipts
-     , history_table.bui_sole_year3_other_income_loss_exp
-     , history_table.bui_sole_year3_depletion
-     , history_table.bui_sole_year3_depreciation
-     , history_table.bui_sole_year3_meal_exclusions
-     , history_table.bui_sole_year3_business_use_home
-     , history_table.bui_sole_year3_amortization_loss
-     , history_table.bui_sole_year3_business_miles
-     , history_table.bui_sole_year3_depreciation_mile
-     , history_table.bui_sole_year3_mileage_depreciation
-     , history_table.bui_partner_year1_amortization_loss
-     , history_table.bui_partner_year1_depletion
-     , history_table.bui_partner_year1_depreciation
-     , history_table.bui_partner_year1_guaranteed_payments
-     , history_table.bui_partner_year1_meals_exclusion
-     , history_table.bui_partner_year1_net_rental_income_loss
-     , history_table.bui_partner_year1_notes_payable_less_year
-     , history_table.bui_partner_year1_ordinary_income_loss
-     , history_table.bui_partner_year1_other_income_loss
-     , history_table.bui_partner_year1_ownership_percent
-     , history_table.bui_partner_year1_form_k_1_total
-     , history_table.bui_partner_year1_form_1065_subtotal
-     , history_table.bui_partner_year1_form_1065_total
-     , history_table.bui_partner_year2_amortization_loss
-     , history_table.bui_partner_year2_depletion
-     , history_table.bui_partner_year2_depreciation
-     , history_table.bui_partner_year2_guaranteed_payments
-     , history_table.bui_partner_year2_meals_exclusion
-     , history_table.bui_partner_year2_net_rental_income_loss
-     , history_table.bui_partner_year2_notes_payable_less_year
-     , history_table.bui_partner_year2_ordinary_income_loss
-     , history_table.bui_partner_year2_other_income_loss
-     , history_table.bui_partner_year2_ownership_percent
-     , history_table.bui_partner_year2_form_k_1_total
-     , history_table.bui_partner_year2_form_1065_subtotal
-     , history_table.bui_partner_year2_form_1065_total
-     , history_table.bui_partner_year3_amortization_loss
-     , history_table.bui_partner_year3_depletion
-     , history_table.bui_partner_year3_depreciation
-     , history_table.bui_partner_year3_guaranteed_payments
-     , history_table.bui_partner_year3_meals_exclusion
-     , history_table.bui_partner_year3_net_rental_income_loss
-     , history_table.bui_partner_year3_notes_payable_less_year
-     , history_table.bui_partner_year3_ordinary_income_loss
-     , history_table.bui_partner_year3_other_income_loss
-     , history_table.bui_partner_year3_ownership_percent
-     , history_table.bui_partner_year3_form_k_1_total
-     , history_table.bui_partner_year3_form_1065_subtotal
-     , history_table.bui_partner_year3_form_1065_total
-     , history_table.bui_form_1065_available
-     , history_table.bui_scorp_year1_ordinary_income_loss
-     , history_table.bui_scorp_year1_net_rental_income_loss
-     , history_table.bui_scorp_year1_other_income_loss
-     , history_table.bui_scorp_year1_depletion
-     , history_table.bui_scorp_year1_depreciation
-     , history_table.bui_scorp_year1_amortization_loss
-     , history_table.bui_scorp_year1_notes_payable_less_year
-     , history_table.bui_scorp_year1_meals_exclusion
-     , history_table.bui_scorp_year1_ownership_percent
-     , history_table.bui_scorp_year1_form_k_1_total
-     , history_table.bui_scorp_year1_form_1120s_subtotal
-     , history_table.bui_scorp_year1_form_1120s_total
-     , history_table.bui_scorp_year2_ordinary_income_loss
-     , history_table.bui_scorp_year2_net_rental_income_loss
-     , history_table.bui_scorp_year2_other_income_loss
-     , history_table.bui_scorp_year2_depletion
-     , history_table.bui_scorp_year2_depreciation
-     , history_table.bui_scorp_year2_amortization_loss
-     , history_table.bui_scorp_year2_notes_payable_less_year
-     , history_table.bui_scorp_year2_meals_exclusion
-     , history_table.bui_scorp_year2_ownership_percent
-     , history_table.bui_scorp_year2_form_k_1_total
-     , history_table.bui_scorp_year2_form_1120s_subtotal
-     , history_table.bui_scorp_year2_form_1120s_total
-     , history_table.bui_scorp_year3_ordinary_income_loss
-     , history_table.bui_scorp_year3_net_rental_income_loss
-     , history_table.bui_scorp_year3_other_income_loss
-     , history_table.bui_scorp_year3_depletion
-     , history_table.bui_scorp_year3_depreciation
-     , history_table.bui_scorp_year3_amortization_loss
-     , history_table.bui_scorp_year3_notes_payable_less_year
-     , history_table.bui_scorp_year3_meals_exclusion
-     , history_table.bui_scorp_year3_ownership_percent
-     , history_table.bui_scorp_year3_form_k_1_total
-     , history_table.bui_scorp_year3_form_1120s_subtotal
-     , history_table.bui_scorp_year3_form_1120s_total
-     , history_table.bui_form_1120s_available
-     , history_table.bui_corp_year1_taxable_income
-     , history_table.bui_corp_year1_total_tax
-     , history_table.bui_corp_year1_gain_loss
-     , history_table.bui_corp_year1_other_income_loss
-     , history_table.bui_corp_year1_depreciation
-     , history_table.bui_corp_year1_depletion
-     , history_table.bui_corp_year1_domestic_production_activities
-     , history_table.bui_corp_year1_other_deductions
-     , history_table.bui_corp_year1_net_operating_loss_special_deductions
-     , history_table.bui_corp_year1_notes_payable_less_one_year
-     , history_table.bui_corp_year1_meals_exclusion
-     , history_table.bui_corp_year1_dividends_paid_to_borrower
-     , history_table.bui_corp_year1_annual_subtotal
-     , history_table.bui_corp_year1_ownership_percent
-     , history_table.bui_corp_year1_annual_subtotal_ownership_applied
-     , history_table.bui_corp_year2_taxable_income
-     , history_table.bui_corp_year2_total_tax
-     , history_table.bui_corp_year2_gain_loss
-     , history_table.bui_corp_year2_other_income_loss
-     , history_table.bui_corp_year2_depreciation
-     , history_table.bui_corp_year2_depletion
-     , history_table.bui_corp_year2_domestic_production_activities
-     , history_table.bui_corp_year2_other_deductions
-     , history_table.bui_corp_year2_net_operating_loss_special_deductions
-     , history_table.bui_corp_year2_notes_payable_less_one_year
-     , history_table.bui_corp_year2_meals_exclusion
-     , history_table.bui_corp_year2_dividends_paid_to_borrower
-     , history_table.bui_corp_year2_annual_subtotal
-     , history_table.bui_corp_year2_ownership_percent
-     , history_table.bui_corp_year2_annual_subtotal_ownership_applied
-     , history_table.bui_corp_year3_taxable_income
-     , history_table.bui_corp_year3_total_tax
-     , history_table.bui_corp_year3_gain_loss
-     , history_table.bui_corp_year3_other_income_loss
-     , history_table.bui_corp_year3_depreciation
-     , history_table.bui_corp_year3_depletion
-     , history_table.bui_corp_year3_domestic_production_activities
-     , history_table.bui_corp_year3_other_deductions
-     , history_table.bui_corp_year3_net_operating_loss_special_deductions
-     , history_table.bui_corp_year3_notes_payable_less_one_year
-     , history_table.bui_corp_year3_meals_exclusion
-     , history_table.bui_corp_year3_dividends_paid_to_borrower
-     , history_table.bui_corp_year3_annual_subtotal
-     , history_table.bui_corp_year3_ownership_percent
-     , history_table.bui_corp_year3_annual_subtotal_ownership_applied
-     , history_table.bui_sch_f_year1_specific_income_loss
-     , history_table.bui_sch_f_year1_nonrecurring_income_loss
-     , history_table.bui_sch_f_year1_depreciation
-     , history_table.bui_sch_f_year1_amortization_loss_depletion
-     , history_table.bui_sch_f_year1_business_use_home
-     , history_table.bui_sch_f_year2_specific_income_loss
-     , history_table.bui_sch_f_year2_nonrecurring_income_loss
-     , history_table.bui_sch_f_year2_depreciation
-     , history_table.bui_sch_f_year2_amortization_loss_depletion
-     , history_table.bui_sch_f_year2_business_use_home
-     , history_table.bui_sch_f_year3_specific_income_loss
-     , history_table.bui_sch_f_year3_nonrecurring_income_loss
-     , history_table.bui_sch_f_year3_depreciation
-     , history_table.bui_sch_f_year3_amortization_loss_depletion
-     , history_table.bui_sch_f_year3_business_use_home
-     , history_table.bui_underwriter_comments
-     , history_table.bui_borrower_title_type
-     , history_table.bui_borrower_title_other_description
-     , TRUE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM history_octane.business_income history_table
-LEFT JOIN staging_octane.business_income staging_table
-          ON staging_table.bui_pid = history_table.bui_pid
-WHERE staging_table.bui_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.business_income deleted_records
-    WHERE deleted_records.bui_pid = history_table.bui_pid
+    FROM history_octane.proposal_construction deleted_records
+    WHERE deleted_records.prpc_pid = history_table.prpc_pid
       AND deleted_records.data_source_deleted_flag = TRUE
     );', 'Staging DB Connection')
          , ('SP-100340', 0, '--finding records to insert into history_octane.tax_transcript_request
@@ -1855,53 +1885,6 @@ WHERE staging_table.ttr_pid IS NULL
     WHERE deleted_records.ttr_pid = history_table.ttr_pid
       AND deleted_records.data_source_deleted_flag = TRUE
     );', 'Staging DB Connection')
-         , ('SP-100038', 0, '--finding records to insert into history_octane.lead_source
-SELECT staging_table.lds_pid
-     , staging_table.lds_version
-     , staging_table.lds_account_pid
-     , staging_table.lds_channel_pid
-     , staging_table.lds_lead_source_name
-     , staging_table.lds_mortech_lead_source_id
-     , staging_table.lds_lead_source_id
-     , staging_table.lds_active
-     , staging_table.lds_lead_id_required
-     , staging_table.lds_zero_margin_allowed
-     , staging_table.lds_mortech_account_pid
-     , staging_table.lds_training_only
-     , staging_table.lds_compensation_type
-     , FALSE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM staging_octane.lead_source staging_table
-LEFT JOIN history_octane.lead_source history_table
-          ON staging_table.lds_pid = history_table.lds_pid
-              AND staging_table.lds_version = history_table.lds_version
-WHERE history_table.lds_pid IS NULL
-UNION ALL
-SELECT history_table.lds_pid
-     , history_table.lds_version + 1
-     , history_table.lds_account_pid
-     , history_table.lds_channel_pid
-     , history_table.lds_lead_source_name
-     , history_table.lds_mortech_lead_source_id
-     , history_table.lds_lead_source_id
-     , history_table.lds_active
-     , history_table.lds_lead_id_required
-     , history_table.lds_zero_margin_allowed
-     , history_table.lds_mortech_account_pid
-     , history_table.lds_training_only
-     , history_table.lds_compensation_type
-     , TRUE AS data_source_deleted_flag
-     , NOW( ) AS data_source_updated_datetime
-FROM history_octane.lead_source history_table
-LEFT JOIN staging_octane.lead_source staging_table
-          ON staging_table.lds_pid = history_table.lds_pid
-WHERE staging_table.lds_pid IS NULL
-  AND NOT EXISTS(
-    SELECT 1
-    FROM history_octane.lead_source deleted_records
-    WHERE deleted_records.lds_pid = history_table.lds_pid
-      AND deleted_records.data_source_deleted_flag = TRUE
-    );', 'Staging DB Connection')
 )
 UPDATE mdi.table_input_step
 SET data_source_dwid = update_rows.data_source_dwid
@@ -1911,7 +1894,6 @@ FROM update_rows
     JOIN mdi.process
         ON process.name = update_rows.process_name
 WHERE process.dwid = table_input_step.process_dwid;
-
 
 /*
 DELETIONS
@@ -2157,7 +2139,12 @@ WHERE process.name = delete_keys.process_name;
 
 --edw_field_definition
 WITH delete_keys (database_name, schema_name, table_name, field_name) AS (
-    VALUES ('staging', 'history_octane', 'lead_source', 'lds_broker_compensation_type')
+    VALUES ('staging', 'history_octane', 'broker_compensation_type', 'code')
+         , ('staging', 'history_octane', 'broker_compensation_type', 'value')
+         , ('staging', 'history_octane', 'broker_compensation_type', 'data_source_updated_datetime')
+         , ('staging', 'history_octane', 'broker_compensation_type', 'data_source_deleted_flag')
+         , ('staging', 'history_octane', 'lead_source', 'lds_broker_compensation_type')
+         , ('staging', 'history_octane', 'broker_compensation_type', 'etl_batch_id')
 )
 DELETE
 FROM mdi.edw_field_definition
@@ -2172,7 +2159,6 @@ WITH delete_keys (database_name, schema_name, table_name, field_name) AS (
     VALUES ('staging', 'staging_octane', 'broker_compensation_type', 'code')
          , ('staging', 'staging_octane', 'broker_compensation_type', 'value')
          , ('staging', 'staging_octane', 'lead_source', 'lds_broker_compensation_type')
-         , ('staging', 'staging_octane', 'wf_step_note', 'wfsn_content')
          , ('staging', 'staging_octane', 'wf_process_note_monitor', 'wfpnm_pid')
          , ('staging', 'staging_octane', 'wf_process_note_monitor', 'wfpnm_version')
          , ('staging', 'staging_octane', 'wf_process_note_monitor', 'wfpnm_wf_process_note_pid')
@@ -2192,6 +2178,7 @@ WITH delete_keys (database_name, schema_name, table_name, field_name) AS (
          , ('staging', 'staging_octane', 'wf_step_note_comment', 'wfsnc_author_lender_user_pid')
          , ('staging', 'staging_octane', 'wf_step_note', 'wfsn_pid')
          , ('staging', 'staging_octane', 'wf_step_note', 'wfsn_version')
+         , ('staging', 'staging_octane', 'wf_step_note', 'wfsn_content')
          , ('staging', 'staging_octane', 'wf_step_note', 'wfsn_author_lender_user_pid')
          , ('staging', 'staging_octane', 'wf_step_note', 'wfsn_author_unparsed_name')
          , ('staging', 'staging_octane', 'location_note_monitor', 'locnm_version')
@@ -2221,7 +2208,6 @@ WITH delete_keys (database_name, schema_name, table_name, field_name) AS (
          , ('staging', 'staging_octane', 'location_note', 'locn_create_datetime')
          , ('staging', 'staging_octane', 'location_note', 'locn_content')
          , ('staging', 'staging_octane', 'location_note', 'locn_author_lender_user_pid')
-         , ('staging', 'staging_octane', 'wf_step_note_comment', 'wfsnc_pid')
          , ('staging', 'staging_octane', 'wf_process_note_monitor', 'wfpnm_lender_user_pid')
          , ('staging', 'staging_octane', 'wf_process_note_comment', 'wfpnc_wf_process_note_pid')
          , ('staging', 'staging_octane', 'wf_process_note_comment', 'wfpnc_create_datetime')
@@ -2231,6 +2217,7 @@ WITH delete_keys (database_name, schema_name, table_name, field_name) AS (
          , ('staging', 'staging_octane', 'wf_process_note', 'wfpn_content')
          , ('staging', 'staging_octane', 'wf_step_note_monitor', 'wfsnm_pid')
          , ('staging', 'staging_octane', 'wf_step_note_monitor', 'wfsnm_wf_step_note_pid')
+         , ('staging', 'staging_octane', 'wf_step_note_comment', 'wfsnc_pid')
          , ('staging', 'staging_octane', 'wf_step_note_comment', 'wfsnc_content')
          , ('staging', 'staging_octane', 'wf_step_note_comment', 'wfsnc_author_unparsed_name')
          , ('staging', 'staging_octane', 'wf_step_note', 'wfsn_wf_step_pid')
@@ -2258,7 +2245,26 @@ WHERE edw_table_definition.database_name = delete_keys.database_name
     AND edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
     AND edw_field_definition.field_name = delete_keys.field_name;
 
+--edw_join_definition (MANUALLY ADDED to prevent referential integrity error in auto-generated script)
+DELETE
+FROM mdi.edw_join_definition
+    USING mdi.edw_table_definition primary_table, mdi.edw_table_definition target_table
+WHERE edw_join_definition.primary_edw_table_definition_dwid = primary_table.dwid
+    AND edw_join_definition.target_edw_table_definition_dwid = target_table.dwid
+    AND (primary_table.table_name = 'broker_compensation_type'
+    OR target_table.table_name = 'broker_compensation_type');
+
 --edw_table_definition
+WITH delete_keys (database_name, schema_name, table_name) AS (
+    VALUES ('staging', 'history_octane', 'broker_compensation_type')
+)
+DELETE
+FROM mdi.edw_table_definition
+    USING delete_keys
+WHERE edw_table_definition.database_name = delete_keys.database_name
+    AND edw_table_definition.schema_name = delete_keys.schema_name
+    AND edw_table_definition.table_name = delete_keys.table_name;
+
 WITH delete_keys (database_name, schema_name, table_name) AS (
     VALUES ('staging', 'staging_octane', 'smart_doc_note')
          , ('staging', 'staging_octane', 'smart_doc_note_comment')
@@ -2273,39 +2279,6 @@ WITH delete_keys (database_name, schema_name, table_name) AS (
          , ('staging', 'staging_octane', 'wf_process_note_comment')
          , ('staging', 'staging_octane', 'wf_process_note_monitor')
          , ('staging', 'staging_octane', 'broker_compensation_type')
-)
-DELETE
-FROM mdi.edw_table_definition
-    USING delete_keys
-WHERE edw_table_definition.database_name = delete_keys.database_name
-    AND edw_table_definition.schema_name = delete_keys.schema_name
-    AND edw_table_definition.table_name = delete_keys.table_name;
-/*
-DELETIONS
-*/
-
---edw_field_definition
-WITH delete_keys (database_name, schema_name, table_name, field_name) AS (
-    VALUES ('staging', 'history_octane', 'broker_compensation_type', 'data_source_updated_datetime')
-         , ('staging', 'history_octane', 'broker_compensation_type', 'data_source_deleted_flag')
-         , ('staging', 'history_octane', 'broker_compensation_type', 'etl_batch_id')
-         , ('staging', 'history_octane', 'broker_compensation_type', 'code')
-         , ('staging', 'history_octane', 'broker_compensation_type', 'value')
-)
-DELETE
-FROM mdi.edw_field_definition
-    USING delete_keys, mdi.edw_table_definition
-WHERE edw_table_definition.database_name = delete_keys.database_name
-    AND edw_table_definition.schema_name = delete_keys.schema_name
-    AND edw_table_definition.table_name = delete_keys.table_name
-    AND edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
-    AND edw_field_definition.field_name = delete_keys.field_name;
-
-delete from mdi.edw_join_definition where target_edw_table_definition_dwid in (select dwid from mdi.edw_table_definition where table_name='broker_compensation_type');
-
---edw_table_definition
-WITH delete_keys (database_name, schema_name, table_name) AS (
-    VALUES ('staging', 'history_octane', 'broker_compensation_type')
 )
 DELETE
 FROM mdi.edw_table_definition
