@@ -2280,3 +2280,34 @@ FROM mdi.edw_table_definition
 WHERE edw_table_definition.database_name = delete_keys.database_name
     AND edw_table_definition.schema_name = delete_keys.schema_name
     AND edw_table_definition.table_name = delete_keys.table_name;
+/*
+DELETIONS
+*/
+
+--edw_field_definition
+WITH delete_keys (database_name, schema_name, table_name, field_name) AS (
+    VALUES ('staging', 'history_octane', 'broker_compensation_type', 'data_source_updated_datetime')
+         , ('staging', 'history_octane', 'broker_compensation_type', 'data_source_deleted_flag')
+         , ('staging', 'history_octane', 'broker_compensation_type', 'etl_batch_id')
+         , ('staging', 'history_octane', 'broker_compensation_type', 'code')
+         , ('staging', 'history_octane', 'broker_compensation_type', 'value')
+)
+DELETE
+FROM mdi.edw_field_definition
+    USING delete_keys, mdi.edw_table_definition
+WHERE edw_table_definition.database_name = delete_keys.database_name
+    AND edw_table_definition.schema_name = delete_keys.schema_name
+    AND edw_table_definition.table_name = delete_keys.table_name
+    AND edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
+    AND edw_field_definition.field_name = delete_keys.field_name;
+
+--edw_table_definition
+WITH delete_keys (database_name, schema_name, table_name) AS (
+    VALUES ('staging', 'history_octane', 'broker_compensation_type')
+)
+DELETE
+FROM mdi.edw_table_definition
+    USING delete_keys
+WHERE edw_table_definition.database_name = delete_keys.database_name
+    AND edw_table_definition.schema_name = delete_keys.schema_name
+    AND edw_table_definition.table_name = delete_keys.table_name;
