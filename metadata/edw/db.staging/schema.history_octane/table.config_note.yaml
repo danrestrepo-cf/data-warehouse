@@ -91,20 +91,12 @@ columns:
       field: primary_source_table.columns.cn_location_pid
   cn_old_location_note_pid:
     data_type: BIGINT
-    source:
-      field: primary_source_table.columns.cn_old_location_note_pid
   cn_old_smart_doc_note_pid:
     data_type: BIGINT
-    source:
-      field: primary_source_table.columns.cn_old_smart_doc_note_pid
   cn_old_wf_process_note_pid:
     data_type: BIGINT
-    source:
-      field: primary_source_table.columns.cn_old_wf_process_note_pid
   cn_old_wf_step_note_pid:
     data_type: BIGINT
-    source:
-      field: primary_source_table.columns.cn_old_wf_step_note_pid
   cn_pid:
     data_type: BIGINT
     source:
@@ -157,10 +149,6 @@ etls:
            , staging_table.cn_smart_doc_pid
            , staging_table.cn_wf_process_pid
            , staging_table.cn_wf_step_pid
-           , staging_table.cn_old_location_note_pid
-           , staging_table.cn_old_smart_doc_note_pid
-           , staging_table.cn_old_wf_process_note_pid
-           , staging_table.cn_old_wf_step_note_pid
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.config_note staging_table
@@ -182,10 +170,6 @@ etls:
            , history_table.cn_smart_doc_pid
            , history_table.cn_wf_process_pid
            , history_table.cn_wf_step_pid
-           , history_table.cn_old_location_note_pid
-           , history_table.cn_old_smart_doc_note_pid
-           , history_table.cn_old_wf_process_note_pid
-           , history_table.cn_old_wf_step_note_pid
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.config_note history_table

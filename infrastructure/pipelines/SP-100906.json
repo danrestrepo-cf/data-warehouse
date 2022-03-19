@@ -1,8 +1,8 @@
 {
-    "Comment": "SP-100858 - ETL to insert records into staging.history_octane.location_note_comment using staging.staging_octane.location_note_comment as the primary source",
-    "StartAt": "SP-100858",
+    "Comment": "SP-100906 - ETL to insert records into staging.history_octane.compensation_type using staging.staging_octane.compensation_type as the primary source",
+    "StartAt": "SP-100906",
     "States": {
-        "SP-100858": {
+        "SP-100906": {
             "Type": "Task",
             "Resource": "arn:aws:states:::ecs:runTask.sync",
             "Parameters": {
@@ -26,7 +26,7 @@
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
-                                    "Value": "SP-100858"
+                                    "Value": "SP-100906"
                                 },
                                 {
                                     "Name": "INPUT_DATA",

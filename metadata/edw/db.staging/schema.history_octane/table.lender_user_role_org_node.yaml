@@ -1,0 +1,82 @@
+name: lender_user_role_org_node
+primary_source_table: staging.staging_octane.lender_user_role_org_node
+primary_key:
+- luron_pid
+- luron_version
+foreign_keys:
+  fk_lender_user_role_org_node_1:
+    columns:
+    - luron_lender_user_role_pid
+    references:
+      columns:
+      - lur_pid
+      schema: history_octane
+      table: lender_user_role
+  fk_lender_user_role_org_node_2:
+    columns:
+    - luron_org_node_pid
+    references:
+      columns:
+      - on_pid
+      schema: history_octane
+      table: org_node
+columns:
+  data_source_deleted_flag:
+    data_type: BOOLEAN
+  data_source_updated_datetime:
+    data_type: TIMESTAMPTZ
+  etl_batch_id:
+    data_type: TEXT
+  luron_lender_user_role_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.luron_lender_user_role_pid
+  luron_org_node_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.luron_org_node_pid
+  luron_pid:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.luron_pid
+  luron_version:
+    data_type: INTEGER
+    source:
+      field: primary_source_table.columns.luron_version
+etls:
+  SP-100907:
+    input_type: table
+    output_type: insert
+    json_output_field: luron_pid
+    truncate_table: false
+    container_memory: 2048
+    input_sql: |-
+      --finding records to insert into history_octane.lender_user_role_org_node
+      SELECT staging_table.luron_pid
+           , staging_table.luron_version
+           , staging_table.luron_lender_user_role_pid
+           , staging_table.luron_org_node_pid
+           , FALSE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM staging_octane.lender_user_role_org_node staging_table
+      LEFT JOIN history_octane.lender_user_role_org_node history_table
+                ON staging_table.luron_pid = history_table.luron_pid
+                    AND staging_table.luron_version = history_table.luron_version
+      WHERE history_table.luron_pid IS NULL
+      UNION ALL
+      SELECT history_table.luron_pid
+           , history_table.luron_version + 1
+           , history_table.luron_lender_user_role_pid
+           , history_table.luron_org_node_pid
+           , TRUE AS data_source_deleted_flag
+           , NOW( ) AS data_source_updated_datetime
+      FROM history_octane.lender_user_role_org_node history_table
+      LEFT JOIN staging_octane.lender_user_role_org_node staging_table
+                ON staging_table.luron_pid = history_table.luron_pid
+      WHERE staging_table.luron_pid IS NULL
+        AND NOT EXISTS(
+          SELECT 1
+          FROM history_octane.lender_user_role_org_node deleted_records
+          WHERE deleted_records.luron_pid = history_table.luron_pid
+            AND deleted_records.data_source_deleted_flag = TRUE
+          );
