@@ -10,6 +10,14 @@ foreign_keys:
       - bi_pid
       schema: staging_octane
       table: borrower_income
+  fkt_bui_borrower_title_type:
+    columns:
+    - bui_borrower_title_type
+    references:
+      columns:
+      - code
+      schema: staging_octane
+      table: business_income_borrower_title_type
   fkt_bui_business_disposition_type:
     columns:
     - bui_business_disposition_type
@@ -39,6 +47,10 @@ columns:
     data_type: NUMERIC(11,9)
   bui_borrower_income_pid:
     data_type: BIGINT
+  bui_borrower_title_other_description:
+    data_type: VARCHAR(128)
+  bui_borrower_title_type:
+    data_type: VARCHAR(128)
   bui_business_disposition_type:
     data_type: VARCHAR(128)
   bui_business_income_type:

@@ -1,0 +1,29 @@
+name: lender_user_role_org_node
+primary_key:
+- luron_pid
+foreign_keys:
+  fk_lender_user_role_org_node_1:
+    columns:
+    - luron_lender_user_role_pid
+    references:
+      columns:
+      - lur_pid
+      schema: staging_octane
+      table: lender_user_role
+  fk_lender_user_role_org_node_2:
+    columns:
+    - luron_org_node_pid
+    references:
+      columns:
+      - on_pid
+      schema: staging_octane
+      table: org_node
+columns:
+  luron_lender_user_role_pid:
+    data_type: BIGINT
+  luron_org_node_pid:
+    data_type: BIGINT
+  luron_pid:
+    data_type: BIGINT
+  luron_version:
+    data_type: INTEGER

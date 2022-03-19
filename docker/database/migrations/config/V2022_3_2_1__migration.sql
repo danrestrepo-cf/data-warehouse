@@ -2301,6 +2301,8 @@ WHERE edw_table_definition.database_name = delete_keys.database_name
     AND edw_field_definition.edw_table_definition_dwid = edw_table_definition.dwid
     AND edw_field_definition.field_name = delete_keys.field_name;
 
+delete from mdi.edw_join_definition where target_edw_table_definition_dwid in (select dwid from mdi.edw_table_definition where table_name='broker_compensation_type');
+
 --edw_table_definition
 WITH delete_keys (database_name, schema_name, table_name) AS (
     VALUES ('staging', 'history_octane', 'broker_compensation_type')
@@ -2311,5 +2313,3 @@ FROM mdi.edw_table_definition
 WHERE edw_table_definition.database_name = delete_keys.database_name
     AND edw_table_definition.schema_name = delete_keys.schema_name
     AND edw_table_definition.table_name = delete_keys.table_name;
-
-delete from mdi.edw_join_definition where target_edw_table_definition_dwid = (select dwid from mdi.edw_table_definition where table_name='broker_compensation_type');
