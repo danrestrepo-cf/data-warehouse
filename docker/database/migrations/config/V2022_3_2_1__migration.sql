@@ -2311,3 +2311,5 @@ FROM mdi.edw_table_definition
 WHERE edw_table_definition.database_name = delete_keys.database_name
     AND edw_table_definition.schema_name = delete_keys.schema_name
     AND edw_table_definition.table_name = delete_keys.table_name;
+
+delete from mdi.edw_join_definition where target_edw_table_definition_dwid = (select dwid from mdi.edw_table_definition where table_name='broker_compensation_type');
