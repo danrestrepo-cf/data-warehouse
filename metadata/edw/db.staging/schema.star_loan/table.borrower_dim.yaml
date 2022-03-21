@@ -737,7 +737,18 @@ etls:
                            t130.etl_end_date_time, t132.etl_end_date_time, t144.etl_end_date_time, t145.etl_end_date_time,
                            t141.etl_end_date_time, current_borrower_residence.etl_end_date_time,
                            current_borrower_residence_place.etl_end_date_time, county.etl_end_date_time,
-                              country_type.etl_end_date_time ) AS max_source_etl_end_date_time
+                           country_type.etl_end_date_time ) AS max_source_etl_end_date_time
+               , COALESCE( CAST( b_ethnicity_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( b_ethnicity_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( b_ethnicity_refused AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( b_race_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( b_race_information_not_provided AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( b_race_national_origin_refusal AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( b_race_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( b_race_refused AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( b_sex_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( b_sex_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
+                 COALESCE( CAST( b_sex_refused AS TEXT ), '<NULL>' ) || '~1' AS borrower_hmda_collection_dim_integration_id
           FROM (
               SELECT <<borrower_partial_load_condition>> AS include_record
                    , borrower.*
@@ -961,87 +972,99 @@ etls:
           INNER JOIN (
               SELECT *
               FROM (
-                   SELECT <<borrower_residence_partial_load_condition>> AS include_record
-                           , borrower_residence.*
-                          , etl_log.etl_end_date_time
-                   FROM history_octane.borrower_residence
-                   LEFT JOIN history_octane.borrower_residence AS history_records
-                           ON borrower_residence.bres_pid = history_records.bres_pid
-                              AND borrower_residence.data_source_updated_datetime < history_records.data_source_updated_datetime
-                   JOIN star_common.etl_log
-                           ON borrower_residence.etl_batch_id = etl_log.etl_batch_id
-                   WHERE history_records.bres_pid IS NULL
+                  SELECT <<borrower_residence_partial_load_condition>> AS include_record
+                       , borrower_residence.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.borrower_residence
+                  LEFT JOIN history_octane.borrower_residence AS history_records
+                            ON borrower_residence.bres_pid = history_records.bres_pid
+                                AND borrower_residence.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON borrower_residence.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.bres_pid IS NULL
               ) AS primary_table
-          ) AS current_borrower_residence ON primary_table.b_pid = current_borrower_residence.bres_borrower_pid
-                AND current_borrower_residence.bres_current IS TRUE
+          ) AS current_borrower_residence
+                     ON primary_table.b_pid = current_borrower_residence.bres_borrower_pid
+                         AND current_borrower_residence.bres_current IS TRUE
           INNER JOIN (
               SELECT *
               FROM (
-                   SELECT <<place_partial_load_condition>> AS include_record
-                          , place.*
-                          , etl_log.etl_end_date_time
-                   FROM history_octane.place
-                   LEFT JOIN history_octane.place AS history_records
-                           ON place.pl_pid = history_records.pl_pid
-                              AND place.data_source_updated_datetime < history_records.data_source_updated_datetime
-                   JOIN star_common.etl_log
-                        ON place.etl_batch_id = etl_log.etl_batch_id
-                   WHERE history_records.pl_pid IS NULL
+                  SELECT <<place_partial_load_condition>> AS include_record
+                       , place.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.place
+                  LEFT JOIN history_octane.place AS history_records
+                            ON place.pl_pid = history_records.pl_pid
+                                AND place.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON place.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.pl_pid IS NULL
               ) AS primary_table
-          ) AS current_borrower_residence_place ON current_borrower_residence.bres_place_pid = current_borrower_residence_place.pl_pid
+          ) AS current_borrower_residence_place
+                     ON current_borrower_residence.bres_place_pid = current_borrower_residence_place.pl_pid
           INNER JOIN (
               SELECT *
               FROM (
-                   SELECT <<county_partial_load_condition>> AS include_record
-                        , county.*
-                        , etl_log.etl_end_date_time
-                   FROM history_octane.county
-                   LEFT JOIN history_octane.county AS history_records
-                           ON county.c_pid = history_records.c_pid
-                              AND county.data_source_updated_datetime < history_records.data_source_updated_datetime
-                   JOIN star_common.etl_log
-                          ON county.etl_batch_id = etl_log.etl_batch_id
-                   WHERE history_records.c_pid IS NULL
+                  SELECT <<county_partial_load_condition>> AS include_record
+                       , county.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.county
+                  LEFT JOIN history_octane.county AS history_records
+                            ON county.c_pid = history_records.c_pid
+                                AND county.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON county.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.c_pid IS NULL
               ) AS primary_table
-          ) AS county ON current_borrower_residence_place.pl_county_pid = county.c_pid
+          ) AS county
+                     ON current_borrower_residence_place.pl_county_pid = county.c_pid
           INNER JOIN (
               SELECT *
               FROM (
-                   SELECT <<country_type_partial_load_condition>> AS include_record
-                          , country_type.*
-                          , etl_log.etl_end_date_time
-                   FROM history_octane.country_type
-                   LEFT JOIN history_octane.country_type AS history_records
-                          ON country_type.code = history_records.code
-                              AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                   JOIN star_common.etl_log
-                          ON country_type.etl_batch_id = etl_log.etl_batch_id
-                   WHERE history_records.code IS NULL
+                  SELECT <<country_type_partial_load_condition>> AS include_record
+                       , country_type.*
+                       , etl_log.etl_end_date_time
+                  FROM history_octane.country_type
+                  LEFT JOIN history_octane.country_type AS history_records
+                            ON country_type.code = history_records.code
+                                AND country_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  JOIN star_common.etl_log
+                       ON country_type.etl_batch_id = etl_log.etl_batch_id
+                  WHERE history_records.code IS NULL
               ) AS primary_table
-          ) AS country_type ON current_borrower_residence_place.pl_country = country_type.code
+          ) AS country_type
+                     ON current_borrower_residence_place.pl_country = country_type.code
           WHERE GREATEST( primary_table.include_record, t114.include_record, t115.include_record, t149.include_record, t150.include_record,
                           t118.include_record, t142.include_record, t120.include_record, t129.include_record, t130.include_record,
                           t132.include_record, t144.include_record, t145.include_record, t141.include_record,
-                            current_borrower_residence.include_record, current_borrower_residence_place.include_record,
-                            county.include_record, country_type.include_record ) IS TRUE
+                          current_borrower_residence.include_record, current_borrower_residence_place.include_record,
+                          county.include_record, country_type.include_record ) IS TRUE
       )
+         , borrower_dim_inserts_and_updates AS (
       --new records that should be inserted
-      SELECT borrower_dim_incl_new_records.*
-      FROM borrower_dim_incl_new_records
-      LEFT JOIN star_loan.borrower_dim
-                ON borrower_dim_incl_new_records.data_source_integration_id = borrower_dim.data_source_integration_id
-      WHERE borrower_dim.dwid IS NULL
-      UNION ALL
+          SELECT borrower_dim_incl_new_records.*
+          FROM borrower_dim_incl_new_records
+          LEFT JOIN star_loan.borrower_dim
+                    ON borrower_dim_incl_new_records.data_source_integration_id = borrower_dim.data_source_integration_id
+          WHERE borrower_dim.dwid IS NULL
+          UNION ALL
       --existing records that need to be updated
-      SELECT borrower_dim_incl_new_records.*
-      FROM borrower_dim_incl_new_records
-      JOIN (
-          SELECT borrower_dim.data_source_integration_id, etl_log.etl_start_date_time
-          FROM star_loan.borrower_dim
-          JOIN star_common.etl_log
-               ON borrower_dim.etl_batch_id = etl_log.etl_batch_id
-      ) AS borrower_dim_etl_start_times
-           ON borrower_dim_incl_new_records.data_source_integration_id = borrower_dim_etl_start_times.data_source_integration_id
-               AND borrower_dim_incl_new_records.max_source_etl_end_date_time >= borrower_dim_etl_start_times.etl_start_date_time;
+          SELECT borrower_dim_incl_new_records.*
+          FROM borrower_dim_incl_new_records
+          JOIN (
+              SELECT borrower_dim.data_source_integration_id, etl_log.etl_start_date_time
+              FROM star_loan.borrower_dim
+              JOIN star_common.etl_log
+                   ON borrower_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS borrower_dim_etl_start_times
+               ON borrower_dim_incl_new_records.data_source_integration_id = borrower_dim_etl_start_times.data_source_integration_id
+                   AND borrower_dim_incl_new_records.max_source_etl_end_date_time >= borrower_dim_etl_start_times.etl_start_date_time
+      )
+      SELECT borrower_dim_inserts_and_updates.*
+           , COALESCE( borrower_hmda_collection_dim.dwid, 0 ) AS borrower_hmda_collection_dwid
+      FROM borrower_dim_inserts_and_updates
+      LEFT JOIN star_loan.borrower_hmda_collection_dim
+                ON borrower_dim_inserts_and_updates.borrower_hmda_collection_dim_integration_id =
+                   borrower_hmda_collection_dim.data_source_integration_id;
 next_etls:
   - SP-300001-insert-update
