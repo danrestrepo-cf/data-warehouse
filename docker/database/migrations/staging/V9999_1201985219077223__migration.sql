@@ -47,3 +47,16 @@ ALTER TABLE star_loan.borrower_dim
     ADD COLUMN borrower_hmda_collection_dwid BIGINT;
 
 CREATE INDEX idx_borrower_dim__borrower_hmda_collection_dwid ON star_loan.borrower_dim (borrower_hmda_collection_dwid);
+
+--create index on concatenation of borrower_hmda_collection_dim integration ID source columns
+CREATE INDEX idx_borrower__borrower_hmda_collection_dim_integration_id ON history_octane.borrower ((COALESCE( CAST( b_ethnicity_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
+                                                                                                    COALESCE( CAST( b_ethnicity_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
+                                                                                                    COALESCE( CAST( b_ethnicity_refused AS TEXT ), '<NULL>' ) || '~' ||
+                                                                                                    COALESCE( CAST( b_race_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
+                                                                                                    COALESCE( CAST( b_race_information_not_provided AS TEXT ), '<NULL>' ) || '~' ||
+                                                                                                    COALESCE( CAST( b_race_national_origin_refusal AS TEXT ), '<NULL>' ) || '~' ||
+                                                                                                    COALESCE( CAST( b_race_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
+                                                                                                    COALESCE( CAST( b_race_refused AS TEXT ), '<NULL>' ) || '~' ||
+                                                                                                    COALESCE( CAST( b_sex_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
+                                                                                                    COALESCE( CAST( b_sex_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
+                                                                                                    COALESCE( CAST( b_sex_refused AS TEXT ), '<NULL>' ) || '~1'));
