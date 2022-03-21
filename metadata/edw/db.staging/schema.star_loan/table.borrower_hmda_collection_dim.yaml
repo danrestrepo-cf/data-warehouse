@@ -97,23 +97,17 @@ etls:
     input_sql: |-
       WITH borrower_hmda_collection_dim_new_records AS (
           SELECT 'ethnicity_collected_visual_or_surname_code~ethnicity_not_obtainable_flag~ethnicity_refused_code~race_collected_visual_or_surname_code~race_information_not_provided_flag~race_national_origin_refusal_flag~race_not_obtainable_flag~race_refused_code~sex_collected_visual_or_surname_code~sex_not_obtainable_flag~sex_refused_code~data_source_dwid' AS data_source_integration_columns
-               , COALESCE( CAST( ethnicity_collected_visual_or_surname_type.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( borrower.b_ethnicity_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
+               , COALESCE( CAST( borrower.b_ethnicity_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( borrower.b_ethnicity_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( ethnicity_refused_type.value AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( borrower.b_ethnicity_refused AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( race_collected_visual_or_surname_type.value AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( borrower.b_race_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( borrower.b_race_information_not_provided AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( borrower.b_race_national_origin_refusal AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( borrower.b_race_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( race_refused_type.value AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( borrower.b_race_refused AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( sex_collected_visual_or_surname_type.value AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( borrower.b_sex_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
                  COALESCE( CAST( borrower.b_sex_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( sex_refused_type.value AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( borrower.b_sex_refused AS TEXT ), '<NULL>' ) AS data_source_integration_id
+                 COALESCE( CAST( borrower.b_sex_refused AS TEXT ), '<NULL>' ) || '~1' AS data_source_integration_id
                , NOW( ) AS edw_created_datetime
                , NOW( ) AS edw_modified_datetime
                , MAX( borrower.data_source_updated_datetime ) AS data_source_modified_datetime
