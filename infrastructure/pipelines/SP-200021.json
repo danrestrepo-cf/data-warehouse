@@ -1,5 +1,5 @@
 {
-    "Comment": "SP-200021 - ETL to insert records into staging.star_loan.borrower_hmda_collection_dim using staging.history_octane.borrower as the primary source",
+    "Comment": "SP-200021 - ETL to insert_update records into staging.star_loan.borrower_hmda_collection_dim using staging.history_octane.borrower as the primary source",
     "StartAt": "SP-200021",
     "States": {
         "SP-200021": {
@@ -19,10 +19,10 @@
                     }
                 },
                 "Overrides": {
-                    "Memory": "None",
+                    "Memory": "2048",
                     "ContainerOverrides": [
                         {
-                            "Memory": null,
+                            "Memory": 2048,
                             "Environment": [
                                 {
                                     "Name": "PROCESS_NAME",
