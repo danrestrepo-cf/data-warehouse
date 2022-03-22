@@ -88,7 +88,7 @@ INSERT
 INTO mdi.process (name, description)
 VALUES ('SP-200005-insert-update', 'ETL to insert_update records into staging.star_loan.borrower_dim using staging.history_octane.borrower as the primary source')
      , ('SP-200005-update', 'ETL to insert_update records into staging.star_loan.borrower_dim using staging.history_octane.borrower as the primary source')
-     , ('SP-200021', 'ETL to insert records into staging.star_loan.borrower_hmda_collection_dim using staging.history_octane.borrower as the primary source');
+     , ('SP-200021', 'ETL to insert_update records into staging.star_loan.borrower_hmda_collection_dim using staging.history_octane.borrower as the primary source');
 
 --table_input_step
 WITH insert_rows (process_name, data_source_dwid, sql, connectionname) AS (
@@ -882,57 +882,11 @@ FROM insert_rows
 JOIN mdi.process
      ON process.name = insert_rows.process_name;
 
---table_output_step
-WITH insert_rows (process_name, target_schema, target_table, truncate_table, connectionname) AS (
-    VALUES ('SP-200021', 'star_loan', 'borrower_hmda_collection_dim', 'N', 'Staging DB Connection')
-)
-INSERT INTO mdi.table_output_step (process_dwid, target_schema, target_table, commit_size, partitioning_field, table_name_field, auto_generated_key_field, partition_data_per, table_name_defined_in_field, return_auto_generated_key_field, truncate_table, connectionname, partition_over_tables, specify_database_fields, ignore_insert_errors, use_batch_update)
-SELECT process.dwid, insert_rows.target_schema, insert_rows.target_table, 1000, NULL, NULL, NULL, NULL, 'N', NULL, insert_rows.truncate_table::mdi.pentaho_y_or_n, insert_rows.connectionname, 'N', 'Y', 'N', 'N'
-FROM insert_rows
-JOIN mdi.process
-     ON process.name = insert_rows.process_name;
-
---table_output_field
-WITH insert_rows (process_name, database_field_name) AS (
-    VALUES ('SP-200021', 'data_source_dwid')
-         , ('SP-200021', 'edw_created_datetime')
-         , ('SP-200021', 'edw_modified_datetime')
-         , ('SP-200021', 'etl_batch_id')
-         , ('SP-200021', 'data_source_integration_columns')
-         , ('SP-200021', 'data_source_integration_id')
-         , ('SP-200021', 'data_source_modified_datetime')
-         , ('SP-200021', 'ethnicity_collected_visual_or_surname')
-         , ('SP-200021', 'ethnicity_collected_visual_or_surname_code')
-         , ('SP-200021', 'ethnicity_not_obtainable_flag')
-         , ('SP-200021', 'ethnicity_refused')
-         , ('SP-200021', 'ethnicity_refused_code')
-         , ('SP-200021', 'race_collected_visual_or_surname')
-         , ('SP-200021', 'race_collected_visual_or_surname_code')
-         , ('SP-200021', 'race_information_not_provided_flag')
-         , ('SP-200021', 'race_national_origin_refusal_flag')
-         , ('SP-200021', 'race_not_obtainable_flag')
-         , ('SP-200021', 'race_refused')
-         , ('SP-200021', 'race_refused_code')
-         , ('SP-200021', 'sex_collected_visual_or_surname')
-         , ('SP-200021', 'sex_collected_visual_or_surname_code')
-         , ('SP-200021', 'sex_not_obtainable_flag')
-         , ('SP-200021', 'sex_refused')
-         , ('SP-200021', 'sex_refused_code')
-)
-INSERT
-INTO mdi.table_output_field (table_output_step_dwid, database_field_name, database_stream_name, field_order, is_sensitive)
-SELECT table_output_step.dwid, insert_rows.database_field_name, insert_rows.database_field_name, 0, FALSE
-FROM insert_rows
-JOIN mdi.process
-     ON process.name = insert_rows.process_name
-JOIN mdi.table_output_step
-     ON process.dwid = table_output_step.process_dwid;
-
-
 --insert_update_step
 WITH insert_rows (process_name, connectionname, schema_name, table_name) AS (
     VALUES ('SP-200005-insert-update', 'Staging DB Connection', 'star_loan', 'borrower_dim')
          , ('SP-200005-update', 'Staging DB Connection', 'star_loan', 'borrower_dim')
+         , ('SP-200021', 'Staging DB Connection', 'star_loan', 'borrower_hmda_collection_dim')
 )
 INSERT INTO mdi.insert_update_step (process_dwid, connectionname, schema_name, table_name, commit_size, do_not)
 SELECT process.dwid, insert_rows.connectionname, insert_rows.schema_name, insert_rows.table_name, 1000, 'N'::mdi.pentaho_y_or_n
@@ -944,6 +898,7 @@ JOIN mdi.process
 WITH insert_rows (process_name, key_lookup) AS (
     VALUES ('SP-200005-insert-update', 'data_source_integration_id')
          , ('SP-200005-update', 'data_source_integration_id')
+         , ('SP-200021', 'data_source_integration_id')
 )
 INSERT INTO mdi.insert_update_key (insert_update_step_dwid, key_lookup, key_stream1, key_stream2, key_condition)
 SELECT insert_update_step.dwid, insert_rows.key_lookup, insert_rows.key_lookup, NULL, '='
@@ -1207,6 +1162,30 @@ WITH insert_rows (process_name, update_lookup, update_flag) AS (
          , ('SP-200005-update', 'current_residence_country_code', 'Y')
          , ('SP-200005-update', 'current_residence_country', 'Y')
          , ('SP-200005-update', 'borrower_hmda_collection_dwid', 'Y')
+         , ('SP-200021', 'data_source_dwid', 'N')
+         , ('SP-200021', 'edw_created_datetime', 'N')
+         , ('SP-200021', 'edw_modified_datetime', 'Y')
+         , ('SP-200021', 'etl_batch_id', 'Y')
+         , ('SP-200021', 'data_source_integration_columns', 'N')
+         , ('SP-200021', 'data_source_integration_id', 'N')
+         , ('SP-200021', 'data_source_modified_datetime', 'Y')
+         , ('SP-200021', 'ethnicity_collected_visual_or_surname', 'Y')
+         , ('SP-200021', 'ethnicity_collected_visual_or_surname_code', 'N')
+         , ('SP-200021', 'ethnicity_not_obtainable_flag', 'N')
+         , ('SP-200021', 'ethnicity_refused', 'Y')
+         , ('SP-200021', 'ethnicity_refused_code', 'N')
+         , ('SP-200021', 'race_collected_visual_or_surname', 'Y')
+         , ('SP-200021', 'race_collected_visual_or_surname_code', 'N')
+         , ('SP-200021', 'race_information_not_provided_flag', 'N')
+         , ('SP-200021', 'race_national_origin_refusal_flag', 'N')
+         , ('SP-200021', 'race_not_obtainable_flag', 'N')
+         , ('SP-200021', 'race_refused', 'Y')
+         , ('SP-200021', 'race_refused_code', 'N')
+         , ('SP-200021', 'sex_collected_visual_or_surname', 'Y')
+         , ('SP-200021', 'sex_collected_visual_or_surname_code', 'N')
+         , ('SP-200021', 'sex_not_obtainable_flag', 'N')
+         , ('SP-200021', 'sex_refused', 'Y')
+         , ('SP-200021', 'sex_refused_code', 'N')
 )
 INSERT
 INTO mdi.insert_update_field (insert_update_step_dwid, update_lookup, update_stream, update_flag, is_sensitive)
@@ -1235,7 +1214,7 @@ JOIN mdi.process
 WITH insert_rows (process_name, state_machine_name, state_machine_comment) AS (
     VALUES ('SP-200005-insert-update', 'SP-200005-insert-update', 'ETL to insert_update records into staging.star_loan.borrower_dim using staging.history_octane.borrower as the primary source')
          , ('SP-200005-update', 'SP-200005-update', 'ETL to insert_update records into staging.star_loan.borrower_dim using staging.history_octane.borrower as the primary source')
-         , ('SP-200021', 'SP-200021', 'ETL to insert records into staging.star_loan.borrower_hmda_collection_dim using staging.history_octane.borrower as the primary source')
+         , ('SP-200021', 'SP-200021', 'ETL to insert_update records into staging.star_loan.borrower_hmda_collection_dim using staging.history_octane.borrower as the primary source')
 )
 INSERT
 INTO mdi.state_machine_definition (process_dwid, name, comment)
