@@ -48,6 +48,11 @@ ALTER TABLE star_loan.borrower_dim
 
 CREATE INDEX idx_borrower_dim__borrower_hmda_collection_dwid ON star_loan.borrower_dim (borrower_hmda_collection_dwid);
 
+--set the new dwid column to 0 in the zero row to ensure referential integrity
+UPDATE star_loan.borrower_dim
+SET borrower_hmda_collection_dwid = 0
+WHERE borrower_dim.dwid = 0;
+
 --create index on concatenation of borrower_hmda_collection_dim integration ID source columns
 CREATE INDEX idx_borrower__borrower_hmda_collection_dim_integration_id ON history_octane.borrower ((COALESCE( CAST( b_ethnicity_collected_visual_or_surname AS TEXT ), '<NULL>' ) || '~' ||
                                                                                                     COALESCE( CAST( b_ethnicity_not_obtainable AS TEXT ), '<NULL>' ) || '~' ||
