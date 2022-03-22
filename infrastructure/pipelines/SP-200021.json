@@ -1,0 +1,79 @@
+{
+    "Comment": "SP-200021 - ETL to insert records into staging.star_loan.borrower_hmda_collection_dim using staging.history_octane.borrower as the primary source",
+    "StartAt": "SP-200021",
+    "States": {
+        "SP-200021": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
+            "Parameters": {
+                "LaunchType": "FARGATE",
+                "Cluster": "${ecsClusterARN}",
+                "TaskDefinition": "${mdi_2_arn}",
+                "NetworkConfiguration": {
+                    "AwsvpcConfiguration": {
+                        "AssignPublicIp": "DISABLED",
+                        "SecurityGroups": [
+                            "${securityGroupId}"
+                        ],
+                        "Subnets": ${subnetIDs}
+                    }
+                },
+                "Overrides": {
+                    "Memory": "None",
+                    "ContainerOverrides": [
+                        {
+                            "Memory": null,
+                            "Environment": [
+                                {
+                                    "Name": "PROCESS_NAME",
+                                    "Value": "SP-200021"
+                                },
+                                {
+                                    "Name": "INPUT_DATA",
+                                    "Value.$": "States.Format('\\{\"token_id\":\"{}\",\"mdi_input_json\":{}\\}', $$.Task.Token, States.JsonToString($))"
+                                },
+                                {
+                                    "Name": "TOKEN_ID",
+                                    "Value.$": "$$.Task.Token"
+                                }
+                            ],
+                            "Name": "${mdi_2_container}"
+                        }
+                    ]
+                }
+            },
+            "Next": "Load_type_choice"
+        },
+        "Load_type_choice": {
+            "Type": "Choice",
+            "Choices": [
+                {
+                    "Variable": "$.load_type",
+                    "StringEquals": "NONE",
+                    "Next": "Success"
+                }
+            ],
+            "Default": "SP-200005-update_message"
+        },
+        "Success": {
+            "Type": "Succeed"
+        },
+        "SP-200005-update_message": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::sqs:sendMessage",
+            "Parameters": {
+                "QueueUrl": "${fullCheckQueueUrl}",
+                "MessageGroupId": "borrower_dim",
+                "MessageDeduplicationId.$": "States.Format('{}_{}', $$.State.Name, $$.State.EnteredTime)",
+                "MessageAttributes": {
+                    "ProcessId": {
+                        "DataType": "String",
+                        "StringValue": "SP-200005-update"
+                    }
+                },
+                "MessageBody.$": "States.JsonToString($)"
+            },
+            "End": true
+        }
+    }
+}

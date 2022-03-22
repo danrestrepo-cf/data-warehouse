@@ -53,12 +53,12 @@
                     "Next": "Success"
                 }
             ],
-            "Default": "SP-200005_message"
+            "Default": "SP-200005-insert-update_message"
         },
         "Success": {
             "Type": "Succeed"
         },
-        "SP-200005_message": {
+        "SP-200005-insert-update_message": {
             "Type": "Task",
             "Resource": "arn:aws:states:::sqs:sendMessage",
             "Parameters": {
@@ -68,7 +68,7 @@
                 "MessageAttributes": {
                     "ProcessId": {
                         "DataType": "String",
-                        "StringValue": "SP-200005"
+                        "StringValue": "SP-200005-insert-update"
                     }
                 },
                 "MessageBody.$": "States.JsonToString($)"
