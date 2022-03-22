@@ -932,7 +932,9 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
                                         'f3': {
                                             'data_type': 'TEXT'
                                         }
-                                    }
+                                    },
+                                    'next_etls': ['SP-1'],
+                                    'primary_source_table':'staging.staging_octane.t1'
                                 }
                             ]
                         },
