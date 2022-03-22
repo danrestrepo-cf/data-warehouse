@@ -43,7 +43,6 @@ def main():
         connection_factory = DBConnectionFactory()
         octane_db_connection = connection_factory.get_connection('octane-local')
         config_edw_connection = connection_factory.get_connection('edw-local-config')
-        staging_edw_connection = connection_factory.get_connection('edw-local-staging')
 
         # pull source data
         octane_column_metadata = get_octane_column_metadata(octane_db_connection)

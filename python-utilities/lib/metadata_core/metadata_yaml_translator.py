@@ -703,6 +703,3 @@ def get_subdir_paths_with_prefix(root_dir: str, prefix: str) -> List[str]:
 def get_yaml_paths_with_prefix(root_dir: str, prefix: str) -> List[str]:
     """Get a list of files paths for all files the given directory that have the given prefix."""
     return [item for item in glob.glob(os.path.join(root_dir, f'{prefix}.*.yaml')) if os.path.isfile(item)]
-
-def read_data_warehouse_yaml_files_into_dict():
-    pass
