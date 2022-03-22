@@ -597,6 +597,9 @@ columns:
   current_residence_country:
     data_type: VARCHAR(1024)
     update_flag: true
+  borrower_hmda_collection_dwid:
+    data_type: BIGINT
+    update_flag: true
 etls:
   SP-200005:
     input_type: table
