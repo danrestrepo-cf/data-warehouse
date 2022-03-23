@@ -252,9 +252,11 @@ def add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata: D
     except InvalidMetadataKeyException:
         raise ValueError('Schema "history_octane" in database "staging" must be present in parameter "current_yaml_history_octane_metadata" in order to incorporate deleted tables and columns')
 
+    output_metadata = copy.deepcopy(octane_metadata)
+
     # verify the staging database has a schema named history_octane in the DataWarehouse Metadata created from octane's database
     try:
-        combined_history_octane_metadata = copy.deepcopy(octane_metadata.get_database('staging').get_schema('history_octane'))
+        combined_history_octane_metadata = copy.deepcopy(output_metadata.get_database('staging').get_schema('history_octane'))
     except InvalidMetadataKeyException:
         raise ValueError('Schema "history_octane" in database "staging" must be present in parameter "octane_metadata" in  order to incorporate deleted tables and columns')
 
@@ -279,9 +281,9 @@ def add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata: D
                     combined_history_octane_metadata.get_table(current_yaml_history_octane_metadata_table.name).add_column(remove_deleted_column_metadata_from_column(current_yaml_history_octane_metadata_table_column))
 
     # remove the history_octane schema from the generated octane metadata and replace it with the enriched deepcopy
-    octane_metadata.get_database('staging').remove_schema('history_octane')
-    octane_metadata.get_database('staging').add_schema(combined_history_octane_metadata)
-    return octane_metadata
+    output_metadata.get_database('staging').remove_schema('history_octane')
+    output_metadata.get_database('staging').add_schema(combined_history_octane_metadata)
+    return output_metadata
 
 
 def is_type_table(table: TableMetadata) -> str:
