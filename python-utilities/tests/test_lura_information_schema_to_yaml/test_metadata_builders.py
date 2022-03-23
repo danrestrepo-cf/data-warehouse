@@ -4,10 +4,14 @@ from lib.lura_information_schema_to_yaml.metadata_builders import (build_staging
                                                                    map_msql_data_type,
                                                                    generate_history_octane_metadata,
                                                                    add_deleted_tables_and_columns_to_history_octane_metadata,
-                                                                   generate_history_octane_table_input_sql)
+                                                                   remove_deleted_column_metadata_from_column,
+                                                                   remove_deleted_table_metadata_from_table)
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
-from lib.metadata_core.metadata_object_path import TablePath
-
+from lib.metadata_core.data_warehouse_metadata import (TableMetadata,
+                                                       ColumnMetadata,
+                                                       ColumnSourceComponents,
+                                                       SourceForeignKeyPath,
+                                                       TablePath)
 
 class TestBuildStagingOctaneMetadata(unittest.TestCase):
 
@@ -811,6 +815,20 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
 
 
 class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
+    def test_remove_deleted_column_metadata_from_column(self):
+        source_column = ColumnMetadata(name = 'c1'
+                                       , data_type = 'TEXT'
+                                       ,source = None
+                                       ,update_flag = True)
+
+        expected_column = ColumnMetadata(name = 'c1'
+                                         ,data_type = 'TEXT'
+                                         ,source = None
+                                         ,update_flag = None)
+
+        self.assertEqual(expected_column, remove_deleted_column_metadata_from_column(source_column))
+
+
     def test_renaming_field_in_staging_octane_schema(self):
         octane_metadata = construct_data_warehouse_metadata_from_dict({
             'name': 'edw',
@@ -879,7 +897,7 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
             ]
         })
 
-        current_yaml_metadata = construct_data_warehouse_metadata_from_dict({
+        yaml_metadata = construct_data_warehouse_metadata_from_dict({
             'name': 'edw',
             'databases': [
                 {
@@ -1046,7 +1064,7 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
             ]
         })
 
-        self.assertEqual(expected_datawarehouse_metadata, add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, current_yaml_metadata))
+        self.assertEqual(expected_datawarehouse_metadata, add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, yaml_metadata))
 
     def test_renaming_table_in_staging_octane_schema(self):
         octane_metadata = construct_data_warehouse_metadata_from_dict({
@@ -1116,7 +1134,7 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
             ]
         })
 
-        current_yaml_metadata = construct_data_warehouse_metadata_from_dict({
+        yaml_metadata = construct_data_warehouse_metadata_from_dict({
             'name': 'edw',
             'databases': [
                 {
@@ -1269,7 +1287,7 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
             ]
         })
 
-        self.assertEqual(expected_datawarehouse_metadata, add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, current_yaml_metadata))
+        self.assertEqual(expected_datawarehouse_metadata, add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, yaml_metadata))
 
     def test_adding_field_to_staging_octane_schema(self):
         octane_metadata = construct_data_warehouse_metadata_from_dict({
@@ -1353,7 +1371,7 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
             ]
         })
 
-        current_yaml_metadata = construct_data_warehouse_metadata_from_dict({
+        yaml_metadata = construct_data_warehouse_metadata_from_dict({
             'name': 'edw',
             'databases': [
                 {
@@ -1509,7 +1527,7 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
             ]
         })
 
-        self.assertEqual(expected_datawarehouse_metadata, add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, current_yaml_metadata))
+        self.assertEqual(expected_datawarehouse_metadata, add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, yaml_metadata))
 
     def test_removing_field_from_staging_octane_schema(self):
         octane_metadata = construct_data_warehouse_metadata_from_dict({
@@ -1573,7 +1591,7 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
             ]
         })
 
-        current_yaml_metadata = construct_data_warehouse_metadata_from_dict({
+        yaml_metadata = construct_data_warehouse_metadata_from_dict({
             'name': 'edw',
             'databases': [
                 {
@@ -1752,7 +1770,7 @@ class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
             ]
         })
 
-        self.assertEqual(add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, current_yaml_metadata), expected_datawarehouse_metadata)
+        self.assertEqual(add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, yaml_metadata), expected_datawarehouse_metadata)
 
 if __name__ == '__main__':
     unittest.main()
