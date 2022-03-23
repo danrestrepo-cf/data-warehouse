@@ -107,39 +107,3 @@ def get_max_staging_to_history_server_process_number(edw_connection: DBConnectio
             FROM mdi.process
             WHERE process.name LIKE 'SP-1_____';
         """)[0]['max_process_number']
-
-
-def get_history_octane_metadata_for_deleted_columns(edw_connection: DBConnection) -> List[dict]:
-    """Get metadata about all history_octane columns (and their tables) from EDW's staging database information_schema.
-
-    Returns a list of dicts, each with the following structure:
-    {
-        'table_name': <table_name>,
-        'column_name': <column_name>,
-        'data_type': <data_type>,
-    }
-    """
-    with edw_connection as cursor:
-        return cursor.execute_and_fetch_all_results("""
-            SELECT history_columns.table_name
-                 , history_columns.column_name
-                 , CASE
-                       WHEN history_columns.data_type = 'numeric'
-                           THEN 'NUMERIC(' || history_columns.numeric_precision || ',' || history_columns.numeric_scale || ')'
-                       WHEN history_columns.data_type = 'character varying'
-                           THEN 'VARCHAR(' || history_columns.character_maximum_length || ')'
-                       WHEN history_columns.data_type = 'timestamp with time zone'
-                           THEN 'TIMESTAMPTZ'
-                       WHEN history_columns.data_type = 'timestamp without time zone'
-                           THEN 'TIMESTAMP'
-                       WHEN history_columns.data_type = 'time with time zone'
-                           THEN 'TIMETZ'
-                       WHEN history_columns.data_type = 'time without time zone'
-                           THEN 'TIME'
-                       ELSE
-                           UPPER( history_columns.data_type )
-                END AS data_type
-            FROM information_schema.columns history_columns
-            WHERE history_columns.table_schema = 'history_octane'
-            ORDER BY history_columns.table_name, history_columns.ordinal_position;
-""")

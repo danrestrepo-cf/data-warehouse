@@ -4,10 +4,14 @@ from lib.lura_information_schema_to_yaml.metadata_builders import (build_staging
                                                                    map_msql_data_type,
                                                                    generate_history_octane_metadata,
                                                                    add_deleted_tables_and_columns_to_history_octane_metadata,
-                                                                   generate_history_octane_table_input_sql)
+                                                                   remove_deleted_column_metadata_from_column,
+                                                                   remove_deleted_table_metadata_from_table)
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
-from lib.metadata_core.metadata_object_path import TablePath
-
+from lib.metadata_core.data_warehouse_metadata import (TableMetadata,
+                                                       ColumnMetadata,
+                                                       ColumnSourceComponents,
+                                                       SourceForeignKeyPath,
+                                                       TablePath)
 
 class TestBuildStagingOctaneMetadata(unittest.TestCase):
 
@@ -811,107 +815,22 @@ class TestGenerateHistoryOctaneMetadata(unittest.TestCase):
 
 
 class TestAddDeletedTablesAndColumnsToHistoryOctaneMetadata(unittest.TestCase):
+    def test_remove_deleted_column_metadata_from_column(self):
+        source_column = ColumnMetadata(name = 'c1'
+                                       , data_type = 'TEXT'
+                                       ,source = None
+                                       ,update_flag = True)
 
-    def test_incorporates_given_columns_and_tables_into_the_given_data_warehouse_metadata_structure_if_they_dont_already_exist(self):
-        history_column_metadata = [
-            {'table_name': 'account', 'column_name': 'a_pid', 'data_type': 'BIGINT'},
-            {'table_name': 'account', 'column_name': 'a_version', 'data_type': 'INTEGER'},
-            {'table_name': 'account', 'column_name': 'a_deleted_column', 'data_type': 'TEXT'},
-            {'table_name': 'deleted_table', 'column_name': 'dt_pid', 'data_type': 'BIGINT'},
-            {'table_name': 'deleted_table', 'column_name': 'dt_version', 'data_type': 'INTEGER'},
-            {'table_name': 'deleted_type_table', 'column_name': 'code', 'data_type': 'TEXT'},
-            {'table_name': 'deleted_type_table', 'column_name': 'value', 'data_type': 'TEXT'}
-        ]
+        expected_column = ColumnMetadata(name = 'c1'
+                                         ,data_type = 'TEXT'
+                                         ,source = None
+                                         ,update_flag = None)
 
-        input_metadata = construct_data_warehouse_metadata_from_dict({
-            'name': 'edw',
-            'databases': [
-                {
-                    'name': 'staging',
-                    'schemas': [
-                        {
-                            'name': 'history_octane',
-                            'tables': [
-                                {
-                                    'name': 'account',
-                                    'primary_key': ['a_pid'],
-                                    'columns': {
-                                        'a_pid': {
-                                            'data_type': 'BIGINT'
-                                        },
-                                        'a_version': {
-                                            'data_type': 'INTEGER'
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        })
-
-        expected = construct_data_warehouse_metadata_from_dict({
-            'name': 'edw',
-            'databases': [
-                {
-                    'name': 'staging',
-                    'schemas': [
-                        {
-                            'name': 'history_octane',
-                            'tables': [
-                                {
-                                    'name': 'account',
-                                    'primary_key': ['a_pid'],
-                                    'columns': {
-                                        'a_pid': {
-                                            'data_type': 'BIGINT'
-                                        },
-                                        'a_version': {
-                                            'data_type': 'INTEGER'
-                                        },
-                                        'a_deleted_column': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'deleted_table',
-                                    'primary_key': ['dt_pid', 'dt_version'],
-                                    'columns': {
-                                        'dt_pid': {
-                                            'data_type': 'BIGINT'
-                                        },
-                                        'dt_version': {
-                                            'data_type': 'INTEGER'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'deleted_type_table',
-                                    'primary_key': ['code'],
-                                    'columns': {
-                                        'code': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'value': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        })
-        self.assertEqual(expected, add_deleted_tables_and_columns_to_history_octane_metadata(input_metadata, history_column_metadata))
+        self.assertEqual(expected_column, remove_deleted_column_metadata_from_column(source_column))
 
 
-class TestGenerateTableInputSQL(unittest.TestCase):
-
-    def setUp(self) -> None:
-        self.metadata = construct_data_warehouse_metadata_from_dict({
+    def test_renaming_field_in_staging_octane_schema(self):
+        octane_metadata = construct_data_warehouse_metadata_from_dict({
             'name': 'edw',
             'databases': [
                 {
@@ -921,77 +840,56 @@ class TestGenerateTableInputSQL(unittest.TestCase):
                             'name': 'staging_octane',
                             'tables': [
                                 {
-                                    'name': 'regular_table',
-                                    'primary_key': ['rt_pid'],
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
                                     'columns': {
-                                        'rt_pid': {
+                                        'pk1': {
                                             'data_type': 'BIGINT'
                                         },
-                                        'rt_version': {
+                                        'f1': {
                                             'data_type': 'INTEGER'
                                         },
-                                        'rt_normal_column': {
+                                        'f2': {
                                             'data_type': 'TEXT'
                                         },
-                                        'rt_decoy_version': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'rt_decoy_pid': {
+                                        'f3_rename': {
                                             'data_type': 'TEXT'
                                         }
                                     }
-                                },
+                                }
+                            ]
+                        },
+                        {
+                            'name': 'history_octane',
+                            'tables': [
                                 {
-                                    'name': 'regular_type',
-                                    'primary_key': ['code'],
-                                    'columns': {
-                                        'code': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'value': {
-                                            'data_type': 'TEXT'
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'foreign_keys': {
+                                        'fk1': {
+                                            'columns': ['f1'],
+                                            'references': {
+                                                'columns': ['f1'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1'
+                                            }
                                         }
-                                    }
-                                },
-                                {
-                                    'name': 'no_version_table',
-                                    'primary_key': ['nv_pid'],
+                                    },
                                     'columns': {
-                                        'nv_pid': {
+                                        'pk1': {
                                             'data_type': 'BIGINT'
                                         },
-                                        'nv_normal_column': {
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3_rename': {
                                             'data_type': 'TEXT'
                                         }
                                     }
-                                },
-                                {
-                                    'name': 'some_id_sequence',
-                                    'primary_key': ['is_id'],
-                                    'columns': {
-                                        'is_id': {
-                                            'data_type': 'BIGINT'
-                                        }
-                                    }
-                                },
-                                {
-                                    'name': 'extra_fields_type',
-                                    'primary_key': ['code'],
-                                    'columns': {
-                                        'code': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'extra_field_1': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'extra_field_2': {
-                                            'data_type': 'TEXT'
-                                        },
-                                        'value': {
-                                            'data_type': 'TEXT'
-                                        }
-                                    }
-                                },
+                                }
                             ]
                         }
                     ]
@@ -999,113 +897,880 @@ class TestGenerateTableInputSQL(unittest.TestCase):
             ]
         })
 
-    def test_produces_correct_sql_for_regular_table(self):
-        table = self.metadata.get_table_by_path(TablePath('staging', 'staging_octane', 'regular_table'))
-        expected = ("--finding records to insert into history_octane.regular_table\n" +
-                    "SELECT staging_table.rt_pid\n" +
-                    "     , staging_table.rt_version\n" +
-                    "     , staging_table.rt_normal_column\n" +
-                    "     , staging_table.rt_decoy_version\n" +
-                    "     , staging_table.rt_decoy_pid\n" +
-                    "     , FALSE AS data_source_deleted_flag\n" +
-                    "     , NOW( ) AS data_source_updated_datetime\n" +
-                    "FROM staging_octane.regular_table staging_table\n" +
-                    "LEFT JOIN history_octane.regular_table history_table\n" +
-                    "          ON staging_table.rt_pid = history_table.rt_pid\n" +
-                    "              AND staging_table.rt_version = history_table.rt_version\n" +
-                    "WHERE history_table.rt_pid IS NULL\n" +
-                    "UNION ALL\n" +
-                    "SELECT history_table.rt_pid\n" +
-                    "     , history_table.rt_version + 1\n" +
-                    "     , history_table.rt_normal_column\n" +
-                    "     , history_table.rt_decoy_version\n" +
-                    "     , history_table.rt_decoy_pid\n" +
-                    "     , TRUE AS data_source_deleted_flag\n" +
-                    "     , NOW( ) AS data_source_updated_datetime\n" +
-                    "FROM history_octane.regular_table history_table\n" +
-                    "LEFT JOIN staging_octane.regular_table staging_table\n" +
-                    "          ON staging_table.rt_pid = history_table.rt_pid\n" +
-                    "WHERE staging_table.rt_pid IS NULL\n" +
-                    "  AND NOT EXISTS(\n" +
-                    "    SELECT 1\n" +
-                    "    FROM history_octane.regular_table deleted_records\n" +
-                    "    WHERE deleted_records.rt_pid = history_table.rt_pid\n" +
-                    "      AND deleted_records.data_source_deleted_flag = TRUE\n" +
-                    "    );")
-        self.assertEqual(expected, generate_history_octane_table_input_sql(table))
+        yaml_metadata = construct_data_warehouse_metadata_from_dict({
+            'name': 'edw',
+            'databases': [
+                {
+                    'name': 'staging',
+                    'schemas': [
+                        {
+                            'name': 'staging_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                },
+                                {
+                                    'name': 't2',
+                                    'primary_key': ['pk1'],
+                                    'foreign_keys': {
+                                        'fk1': {
+                                            'columns': ['f1'],
+                                            'references': {
+                                                'columns': ['f1'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1'
+                                            }
+                                        }
+                                    },
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    },
+                                    'next_etls': ['SP-1'],
+                                    'primary_source_table':'staging.staging_octane.t1'
+                                }
+                            ]
+                        },
+                        {
+                            'name': 'history_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'foreign_keys': {
+                                        'fk1': {
+                                            'columns': ['f1'],
+                                            'references': {
+                                                'columns': ['f1'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1'
+                                            }
+                                        }
+                                    },
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
 
-    def test_produces_correct_sql_for_regular_type_table(self):
-        table = self.metadata.get_table_by_path(TablePath('staging', 'staging_octane', 'regular_type'))
-        expected = ("--finding records to insert into history_octane.regular_type\n" +
-                    "SELECT staging_table.code\n" +
-                    "     , staging_table.value\n" +
-                    "     , FALSE AS data_source_deleted_flag\n" +
-                    "     , NOW( ) AS data_source_updated_datetime\n" +
-                    "FROM staging_octane.regular_type staging_table\n" +
-                    "LEFT JOIN history_octane.regular_type history_table\n" +
-                    "          ON staging_table.code = history_table.code\n" +
-                    "              AND staging_table.value = history_table.value\n" +
-                    "WHERE history_table.code IS NULL;")
-        self.assertEqual(expected, generate_history_octane_table_input_sql(table))
+        expected_datawarehouse_metadata = construct_data_warehouse_metadata_from_dict({
+            'name': 'edw',
+            'databases': [
+                {
+                    'name': 'staging',
+                    'schemas': [
+                        {
+                            'name': 'staging_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3_rename': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            'name': 'history_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'foreign_keys': {
+                                        'fk1': {
+                                            'columns': ['f1'],
+                                            'references': {
+                                                'columns': ['f1'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1'
+                                            }
+                                        }
+                                    },
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3_rename': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
 
-    def test_produces_correct_sql_for_table_without_a_version_column(self):
-        table = self.metadata.get_table_by_path(TablePath('staging', 'staging_octane', 'no_version_table'))
-        expected = ("--finding records to insert into history_octane.no_version_table\n" +
-                    "SELECT staging_table.nv_pid\n" +
-                    "     , staging_table.nv_normal_column\n" +
-                    "     , FALSE AS data_source_deleted_flag\n" +
-                    "     , NOW( ) AS data_source_updated_datetime\n" +
-                    "FROM staging_octane.no_version_table staging_table\n" +
-                    "LEFT JOIN history_octane.no_version_table history_table\n" +
-                    "          ON staging_table.nv_pid = history_table.nv_pid\n" +
-                    "WHERE history_table.nv_pid IS NULL\n" +
-                    "UNION ALL\n" +
-                    "SELECT history_table.nv_pid\n" +
-                    "     , history_table.nv_normal_column\n" +
-                    "     , TRUE AS data_source_deleted_flag\n" +
-                    "     , NOW( ) AS data_source_updated_datetime\n" +
-                    "FROM history_octane.no_version_table history_table\n" +
-                    "LEFT JOIN staging_octane.no_version_table staging_table\n" +
-                    "          ON staging_table.nv_pid = history_table.nv_pid\n" +
-                    "WHERE staging_table.nv_pid IS NULL\n" +
-                    "  AND NOT EXISTS(\n" +
-                    "    SELECT 1\n" +
-                    "    FROM history_octane.no_version_table deleted_records\n" +
-                    "    WHERE deleted_records.nv_pid = history_table.nv_pid\n" +
-                    "      AND deleted_records.data_source_deleted_flag = TRUE\n" +
-                    "    );")
-        self.assertEqual(expected, generate_history_octane_table_input_sql(table))
+        self.assertEqual(expected_datawarehouse_metadata, add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, yaml_metadata))
 
-    def test_produces_correct_sql_for_id_sequence_table(self):
-        table = self.metadata.get_table_by_path(TablePath('staging', 'staging_octane', 'some_id_sequence'))
-        expected = ("--finding records to insert into history_octane.some_id_sequence\n" +
-                    "SELECT staging_table.is_id\n" +
-                    "     , FALSE AS data_source_deleted_flag\n" +
-                    "     , NOW( ) AS data_source_updated_datetime\n" +
-                    "FROM staging_octane.some_id_sequence staging_table\n" +
-                    "LEFT JOIN history_octane.some_id_sequence history_table\n" +
-                    "          ON staging_table.is_id = history_table.is_id\n" +
-                    "WHERE history_table.is_id IS NULL;")
-        self.assertEqual(expected, generate_history_octane_table_input_sql(table))
+    def test_renaming_table_in_staging_octane_schema(self):
+        octane_metadata = construct_data_warehouse_metadata_from_dict({
+            'name': 'edw',
+            'databases': [
+                {
+                    'name': 'staging',
+                    'schemas': [
+                        {
+                            'name': 'staging_octane',
+                            'tables': [
+                                {
+                                    'name': 't1_rename',
+                                    'primary_key': ['pk1'],
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            'name': 'history_octane',
+                            'tables': [
+                                {
+                                    'name': 't1_rename',
+                                    'primary_key': ['pk1'],
+                                    'foreign_keys': {
+                                        'fk1': {
+                                            'columns': ['f1'],
+                                            'references': {
+                                                'columns': ['f1'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1_rename'
+                                            }
+                                        }
+                                    },
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
 
-    def test_produces_correct_sql_for_type_table_with_extra_fields(self):
-        table = self.metadata.get_table_by_path(TablePath('staging', 'staging_octane', 'extra_fields_type'))
-        expected = ("--finding records to insert into history_octane.extra_fields_type\n" +
-                    "SELECT staging_table.code\n" +
-                    "     , staging_table.extra_field_1\n" +
-                    "     , staging_table.extra_field_2\n" +
-                    "     , staging_table.value\n" +
-                    "     , FALSE AS data_source_deleted_flag\n" +
-                    "     , NOW( ) AS data_source_updated_datetime\n" +
-                    "FROM staging_octane.extra_fields_type staging_table\n" +
-                    "LEFT JOIN history_octane.extra_fields_type history_table\n" +
-                    "          ON staging_table.code = history_table.code\n" +
-                    "              AND staging_table.extra_field_1 = history_table.extra_field_1\n" +
-                    "              AND staging_table.extra_field_2 = history_table.extra_field_2\n" +
-                    "              AND staging_table.value = history_table.value\n" +
-                    "WHERE history_table.code IS NULL;")
-        self.assertEqual(expected, generate_history_octane_table_input_sql(table))
+        yaml_metadata = construct_data_warehouse_metadata_from_dict({
+            'name': 'edw',
+            'databases': [
+                {
+                    'name': 'staging',
+                    'schemas': [
+                        {
+                            'name': 'staging_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            'name': 'history_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'foreign_keys': {
+                                        'fk1': {
+                                            'columns': ['f1'],
+                                            'references': {
+                                                'columns': ['f1'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1'
+                                            }
+                                        }
+                                    },
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
 
+        expected_datawarehouse_metadata = construct_data_warehouse_metadata_from_dict({
+            'name': 'edw',
+            'databases': [
+                {
+                    'name': 'staging',
+                    'schemas': [
+                        {
+                            'name': 'staging_octane',
+                            'tables': [
+                                {
+                                    'name': 't1_rename',
+                                    'primary_key': ['pk1'],
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            'name': 'history_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                },
+                                {
+                                    'name': 't1_rename',
+                                    'primary_key': ['pk1'],
+                                    'foreign_keys': {
+                                        'fk1': {
+                                            'columns': ['f1'],
+                                            'references': {
+                                                'columns': ['f1'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1_rename'
+                                            }
+                                        }
+                                    },
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    },
+                                    'next_etls': []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
+
+        self.assertEqual(expected_datawarehouse_metadata, add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, yaml_metadata))
+
+    def test_adding_field_to_staging_octane_schema(self):
+        octane_metadata = construct_data_warehouse_metadata_from_dict({
+            'name': 'edw',
+            'databases': [
+                {
+                    'name': 'staging',
+                    'schemas': [
+                        {
+                            'name': 'staging_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f4': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            'name': 'history_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'foreign_keys': {
+                                        'fk1': {
+                                            'columns': ['f1'],
+                                            'references': {
+                                                'columns': ['f1'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1'
+                                            }
+                                        },
+                                        'fk2': {
+                                            'columns': ['f4'],
+                                            'references': {
+                                                'columns': ['f4'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1'
+                                            }
+                                        }
+                                    },
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f4': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
+
+        yaml_metadata = construct_data_warehouse_metadata_from_dict({
+            'name': 'edw',
+            'databases': [
+                {
+                    'name': 'staging',
+                    'schemas': [
+                        {
+                            'name': 'staging_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            'name': 'history_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'foreign_keys': {
+                                        'fk1': {
+                                            'columns': ['f1'],
+                                            'references': {
+                                                'columns': ['f1'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1'
+                                            }
+                                        },
+                                        'fk2': {
+                                            'columns': ['f4'],
+                                            'references': {
+                                                'columns': ['f4'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1'
+                                            }
+                                        }
+                                    },
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
+
+        expected_datawarehouse_metadata = construct_data_warehouse_metadata_from_dict({
+            'name': 'edw',
+            'databases': [
+                {
+                    'name': 'staging',
+                    'schemas': [
+                        {
+                            'name': 'staging_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f4': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            'name': 'history_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'foreign_keys': {
+                                        'fk1': {
+                                            'columns': ['f1'],
+                                            'references': {
+                                                'columns': ['f1'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1'
+                                            }
+                                        },
+                                        'fk2': {
+                                            'columns': ['f4'],
+                                            'references': {
+                                                'columns': ['f4'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1'
+                                            }
+                                        }
+                                    },
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f4': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
+
+        self.assertEqual(expected_datawarehouse_metadata, add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, yaml_metadata))
+
+    def test_removing_field_from_staging_octane_schema(self):
+        octane_metadata = construct_data_warehouse_metadata_from_dict({
+            'name': 'edw',
+            'databases': [
+                {
+                    'name': 'staging',
+                    'schemas': [
+                        {
+                            'name': 'staging_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            'name': 'history_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'foreign_keys': {
+                                        'fk1': {
+                                            'columns': ['f1'],
+                                            'references': {
+                                                'columns': ['f1'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1'
+                                            }
+                                        }
+                                    },
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
+
+        yaml_metadata = construct_data_warehouse_metadata_from_dict({
+            'name': 'edw',
+            'databases': [
+                {
+                    'name': 'staging',
+                    'schemas': [
+                        {
+                            'name': 'staging_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            'name': 'history_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'foreign_keys': {
+                                        'fk1': {
+                                            'columns': ['f1'],
+                                            'references': {
+                                                'columns': ['f1'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1'
+                                            }
+                                        }
+                                    },
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                },
+                                {
+                                    'name': 't2',
+                                    'primary_key': ['pk1'],
+                                    'foreign_keys': {
+                                        'fk1': {
+                                            'columns': ['f1'],
+                                            'references': {
+                                                'columns': ['f1'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1'
+                                            }
+                                        }
+                                    },
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT',
+                                            'source': 'test',
+                                            'update_flag': True
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
+
+        expected_datawarehouse_metadata = construct_data_warehouse_metadata_from_dict({
+            'name': 'edw',
+            'databases': [
+                {
+                    'name': 'staging',
+                    'schemas': [
+                        {
+                            'name': 'staging_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            'name': 'history_octane',
+                            'tables': [
+                                {
+                                    'name': 't1',
+                                    'primary_key': ['pk1'],
+                                    'foreign_keys': {
+                                        'fk1': {
+                                            'columns': ['f1'],
+                                            'references': {
+                                                'columns': ['f1'],
+                                                'schema': 'staging_octane',
+                                                'table': 't1'
+                                            }
+                                        }
+                                    },
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                },
+                                {
+                                    'name': 't2',
+                                    'primary_key': ['pk1'],
+                                    'columns': {
+                                        'pk1': {
+                                            'data_type': 'BIGINT'
+                                        },
+                                        'f1': {
+                                            'data_type': 'INTEGER'
+                                        },
+                                        'f2': {
+                                            'data_type': 'TEXT'
+                                        },
+                                        'f3': {
+                                            'data_type': 'TEXT'
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
+
+        self.assertEqual(add_deleted_tables_and_columns_to_history_octane_metadata(octane_metadata, yaml_metadata), expected_datawarehouse_metadata)
 
 if __name__ == '__main__':
     unittest.main()
