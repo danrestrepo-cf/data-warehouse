@@ -1,6 +1,6 @@
 import unittest
 
-from tests.test_utils import MockDBConnection
+from tests.testing_utils import MockDBConnection
 
 from lib.config_mdi_metadata_maintenance.metadata_table import MetadataTable, Row
 from lib.metadata_core.metadata_yaml_translator import construct_data_warehouse_metadata_from_dict
