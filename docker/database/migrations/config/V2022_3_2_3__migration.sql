@@ -232,6 +232,7 @@ FROM update_rows
         ON process.name = update_rows.process_name
 WHERE process.dwid = table_input_step.process_dwid;
 
+
 --
 -- EDW | star_loan ETLs: Switch JOINs to county table to LEFT JOINs, backfill missing data
 -- https://app.asana.com/0/0/1202015403592063
@@ -898,9 +899,9 @@ FROM transaction_dim_incl_new_records
 )
 UPDATE mdi.table_input_step
 SET data_source_dwid = update_rows.data_source_dwid
-  , sql = update_rows.sql
-  , connectionname = update_rows.connectionname::mdi.pentaho_db_connection_name
+    , sql = update_rows.sql
+    , connectionname = update_rows.connectionname::mdi.pentaho_db_connection_name
 FROM update_rows
-JOIN mdi.process
-     ON process.name = update_rows.process_name
+    JOIN mdi.process
+        ON process.name = update_rows.process_name
 WHERE process.dwid = table_input_step.process_dwid;
