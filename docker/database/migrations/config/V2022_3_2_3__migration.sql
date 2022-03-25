@@ -1,4 +1,238 @@
 --
+--
+--
+
+/*
+INSERTIONS
+*/
+
+--edw_field_definition
+WITH insert_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name, source_table_name, source_field_name) AS (
+    VALUES ('staging', 'staging_octane', 'borrower_user', 'bu_activation_datetime', 'TIMESTAMP', NULL, NULL, NULL, NULL)
+         , ('staging', 'staging_octane', 'deal_change_updater_time', 'dcut_proposal_updates_after_proposal_save_ms', 'BIGINT', NULL, NULL, NULL, NULL)
+)
+INSERT
+INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
+SELECT edw_table_definition.dwid, insert_rows.field_name, FALSE, source_field_definition.dwid, NULL, insert_rows.data_type, NULL, NULL, NULL, NULL
+FROM insert_rows
+    JOIN mdi.edw_table_definition
+        ON insert_rows.database_name = edw_table_definition.database_name
+            AND insert_rows.schema_name = edw_table_definition.schema_name
+            AND insert_rows.table_name = edw_table_definition.table_name
+    LEFT JOIN mdi.edw_table_definition source_table_definition
+        ON insert_rows.source_database_name = source_table_definition.database_name
+            AND insert_rows.source_schema_name = source_table_definition.schema_name
+            AND insert_rows.source_table_name = source_table_definition.table_name
+    LEFT JOIN mdi.edw_field_definition source_field_definition
+        ON source_table_definition.dwid = source_field_definition.edw_table_definition_dwid
+            AND insert_rows.source_field_name = source_field_definition.field_name;
+
+WITH insert_rows (database_name, schema_name, table_name, field_name, data_type, source_database_name, source_schema_name, source_table_name, source_field_name) AS (
+    VALUES ('staging', 'history_octane', 'borrower_user', 'bu_activation_datetime', 'TIMESTAMP', 'staging', 'staging_octane', 'borrower_user', 'bu_activation_datetime')
+         , ('staging', 'history_octane', 'deal_change_updater_time', 'dcut_proposal_updates_after_proposal_save_ms', 'BIGINT', 'staging', 'staging_octane', 'deal_change_updater_time', 'dcut_proposal_updates_after_proposal_save_ms')
+)
+INSERT
+INTO mdi.edw_field_definition (edw_table_definition_dwid, field_name, key_field_flag, source_edw_field_definition_dwid, field_source_calculation, data_type, reporting_label, reporting_description, reporting_hidden, reporting_key_flag)
+SELECT edw_table_definition.dwid, insert_rows.field_name, FALSE, source_field_definition.dwid, NULL, insert_rows.data_type, NULL, NULL, NULL, NULL
+FROM insert_rows
+    JOIN mdi.edw_table_definition
+        ON insert_rows.database_name = edw_table_definition.database_name
+            AND insert_rows.schema_name = edw_table_definition.schema_name
+            AND insert_rows.table_name = edw_table_definition.table_name
+    LEFT JOIN mdi.edw_table_definition source_table_definition
+        ON insert_rows.source_database_name = source_table_definition.database_name
+            AND insert_rows.source_schema_name = source_table_definition.schema_name
+            AND insert_rows.source_table_name = source_table_definition.table_name
+    LEFT JOIN mdi.edw_field_definition source_field_definition
+        ON source_table_definition.dwid = source_field_definition.edw_table_definition_dwid
+            AND insert_rows.source_field_name = source_field_definition.field_name;
+
+--table_output_field
+WITH insert_rows (process_name, database_field_name) AS (
+    VALUES ('SP-100065', 'bu_activation_datetime')
+         , ('SP-100025', 'dcut_proposal_updates_after_proposal_save_ms')
+)
+INSERT
+INTO mdi.table_output_field (table_output_step_dwid, database_field_name, database_stream_name, field_order, is_sensitive)
+SELECT table_output_step.dwid, insert_rows.database_field_name, insert_rows.database_field_name, 0, FALSE
+FROM insert_rows
+    JOIN mdi.process
+        ON process.name = insert_rows.process_name
+    JOIN mdi.table_output_step
+        ON process.dwid = table_output_step.process_dwid;
+
+
+/*
+UPDATES
+*/
+
+--table_input_step
+WITH update_rows (process_name, data_source_dwid, sql, connectionname) AS (
+    VALUES ('SP-100065', 0, '--finding records to insert into history_octane.borrower_user
+SELECT staging_table.bu_pid
+     , staging_table.bu_version
+     , staging_table.bu_account_pid
+     , staging_table.bu_create_datetime
+     , staging_table.bu_email
+     , staging_table.bu_last_sign_on_datetime
+     , staging_table.bu_time_zone
+     , staging_table.bu_first_name
+     , staging_table.bu_middle_name
+     , staging_table.bu_last_name
+     , staging_table.bu_name_suffix
+     , staging_table.bu_unparsed_name
+     , staging_table.bu_borrower_activation_id
+     , staging_table.bu_challenge_question_type
+     , staging_table.bu_challenge_question_answer
+     , staging_table.bu_borrower_user_account_status_type
+     , staging_table.bu_public_quote_request_cache_id
+     , staging_table.bu_create_sap_on_activation
+     , staging_table.bu_nickname
+     , staging_table.bu_plain_text_email
+     , staging_table.bu_preferred_first_name
+     , staging_table.bu_activation_datetime
+     , FALSE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM staging_octane.borrower_user staging_table
+LEFT JOIN history_octane.borrower_user history_table
+          ON staging_table.bu_pid = history_table.bu_pid
+              AND staging_table.bu_version = history_table.bu_version
+WHERE history_table.bu_pid IS NULL
+UNION ALL
+SELECT history_table.bu_pid
+     , history_table.bu_version + 1
+     , history_table.bu_account_pid
+     , history_table.bu_create_datetime
+     , history_table.bu_email
+     , history_table.bu_last_sign_on_datetime
+     , history_table.bu_time_zone
+     , history_table.bu_first_name
+     , history_table.bu_middle_name
+     , history_table.bu_last_name
+     , history_table.bu_name_suffix
+     , history_table.bu_unparsed_name
+     , history_table.bu_borrower_activation_id
+     , history_table.bu_challenge_question_type
+     , history_table.bu_challenge_question_answer
+     , history_table.bu_borrower_user_account_status_type
+     , history_table.bu_public_quote_request_cache_id
+     , history_table.bu_create_sap_on_activation
+     , history_table.bu_nickname
+     , history_table.bu_plain_text_email
+     , history_table.bu_preferred_first_name
+     , history_table.bu_activation_datetime
+     , TRUE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM history_octane.borrower_user history_table
+LEFT JOIN staging_octane.borrower_user staging_table
+          ON staging_table.bu_pid = history_table.bu_pid
+WHERE staging_table.bu_pid IS NULL
+  AND NOT EXISTS(
+    SELECT 1
+    FROM history_octane.borrower_user deleted_records
+    WHERE deleted_records.bu_pid = history_table.bu_pid
+      AND deleted_records.data_source_deleted_flag = TRUE
+    );', 'Staging DB Connection')
+         , ('SP-100025', 0, '--finding records to insert into history_octane.deal_change_updater_time
+SELECT staging_table.dcut_pid
+     , staging_table.dcut_version
+     , staging_table.dcut_account_pid
+     , staging_table.dcut_los_loan_id_main
+     , staging_table.dcut_start_time
+     , staging_table.dcut_start_date
+     , staging_table.dcut_overall_duration_ms
+     , staging_table.dcut_deal_checks_ms
+     , staging_table.dcut_deal_updates_ms
+     , staging_table.dcut_proposal_updates_ms
+     , staging_table.dcut_num_proposal_updates
+     , staging_table.dcut_application_updates_ms
+     , staging_table.dcut_num_application_updates
+     , staging_table.dcut_borrower_updates_ms
+     , staging_table.dcut_num_borrower_updates
+     , staging_table.dcut_place_updates_ms
+     , staging_table.dcut_num_place_updates
+     , staging_table.dcut_loan_updates_ms
+     , staging_table.dcut_num_loan_updates
+     , staging_table.dcut_proposal_updates_after_loan_updates_ms
+     , staging_table.dcut_updates_after_proposal_updates_ms
+     , staging_table.dcut_proposal_summary_updates_ms
+     , staging_table.dcut_deal_updates_after_all_proposal_updates_ms
+     , staging_table.dcut_smart_charge_update_ms
+     , staging_table.dcut_circumstance_change_updates_ms
+     , staging_table.dcut_num_circumstance_change_updates
+     , staging_table.dcut_tolerance_cure_update_ms
+     , staging_table.dcut_proposal_summary_updates_after_smart_charge_updates_ms
+     , staging_table.dcut_update_doc_sets_ms
+     , staging_table.dcut_closing_funds_itemization_ms
+     , staging_table.dcut_update_ribbon_for_deal_ms
+     , staging_table.dcut_num_construction_draw_updates
+     , staging_table.dcut_construction_draw_updates_ms
+     , staging_table.dcut_proposal_updates_after_proposal_save_ms
+     , FALSE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM staging_octane.deal_change_updater_time staging_table
+LEFT JOIN history_octane.deal_change_updater_time history_table
+          ON staging_table.dcut_pid = history_table.dcut_pid
+              AND staging_table.dcut_version = history_table.dcut_version
+WHERE history_table.dcut_pid IS NULL
+UNION ALL
+SELECT history_table.dcut_pid
+     , history_table.dcut_version + 1
+     , history_table.dcut_account_pid
+     , history_table.dcut_los_loan_id_main
+     , history_table.dcut_start_time
+     , history_table.dcut_start_date
+     , history_table.dcut_overall_duration_ms
+     , history_table.dcut_deal_checks_ms
+     , history_table.dcut_deal_updates_ms
+     , history_table.dcut_proposal_updates_ms
+     , history_table.dcut_num_proposal_updates
+     , history_table.dcut_application_updates_ms
+     , history_table.dcut_num_application_updates
+     , history_table.dcut_borrower_updates_ms
+     , history_table.dcut_num_borrower_updates
+     , history_table.dcut_place_updates_ms
+     , history_table.dcut_num_place_updates
+     , history_table.dcut_loan_updates_ms
+     , history_table.dcut_num_loan_updates
+     , history_table.dcut_proposal_updates_after_loan_updates_ms
+     , history_table.dcut_updates_after_proposal_updates_ms
+     , history_table.dcut_proposal_summary_updates_ms
+     , history_table.dcut_deal_updates_after_all_proposal_updates_ms
+     , history_table.dcut_smart_charge_update_ms
+     , history_table.dcut_circumstance_change_updates_ms
+     , history_table.dcut_num_circumstance_change_updates
+     , history_table.dcut_tolerance_cure_update_ms
+     , history_table.dcut_proposal_summary_updates_after_smart_charge_updates_ms
+     , history_table.dcut_update_doc_sets_ms
+     , history_table.dcut_closing_funds_itemization_ms
+     , history_table.dcut_update_ribbon_for_deal_ms
+     , history_table.dcut_num_construction_draw_updates
+     , history_table.dcut_construction_draw_updates_ms
+     , history_table.dcut_proposal_updates_after_proposal_save_ms
+     , TRUE AS data_source_deleted_flag
+     , NOW( ) AS data_source_updated_datetime
+FROM history_octane.deal_change_updater_time history_table
+LEFT JOIN staging_octane.deal_change_updater_time staging_table
+          ON staging_table.dcut_pid = history_table.dcut_pid
+WHERE staging_table.dcut_pid IS NULL
+  AND NOT EXISTS(
+    SELECT 1
+    FROM history_octane.deal_change_updater_time deleted_records
+    WHERE deleted_records.dcut_pid = history_table.dcut_pid
+      AND deleted_records.data_source_deleted_flag = TRUE
+    );', 'Staging DB Connection')
+)
+UPDATE mdi.table_input_step
+SET data_source_dwid = update_rows.data_source_dwid
+    , sql = update_rows.sql
+    , connectionname = update_rows.connectionname::mdi.pentaho_db_connection_name
+FROM update_rows
+    JOIN mdi.process
+        ON process.name = update_rows.process_name
+WHERE process.dwid = table_input_step.process_dwid;
+
+--
 -- EDW | star_loan ETLs: Switch JOINs to county table to LEFT JOINs, backfill missing data
 -- https://app.asana.com/0/0/1202015403592063
 --

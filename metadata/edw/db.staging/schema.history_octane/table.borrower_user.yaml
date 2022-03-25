@@ -41,6 +41,10 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.bu_account_pid
+  bu_activation_datetime:
+    data_type: TIMESTAMP
+    source:
+      field: primary_source_table.columns.bu_activation_datetime
   bu_borrower_activation_id:
     data_type: VARCHAR(128)
     source:
@@ -157,6 +161,7 @@ etls:
            , staging_table.bu_nickname
            , staging_table.bu_plain_text_email
            , staging_table.bu_preferred_first_name
+           , staging_table.bu_activation_datetime
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.borrower_user staging_table
@@ -186,6 +191,7 @@ etls:
            , history_table.bu_nickname
            , history_table.bu_plain_text_email
            , history_table.bu_preferred_first_name
+           , history_table.bu_activation_datetime
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.borrower_user history_table

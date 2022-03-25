@@ -113,6 +113,10 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.dcut_proposal_updates_after_loan_updates_ms
+  dcut_proposal_updates_after_proposal_save_ms:
+    data_type: BIGINT
+    source:
+      field: primary_source_table.columns.dcut_proposal_updates_after_proposal_save_ms
   dcut_proposal_updates_ms:
     data_type: BIGINT
     source:
@@ -193,6 +197,7 @@ etls:
            , staging_table.dcut_update_ribbon_for_deal_ms
            , staging_table.dcut_num_construction_draw_updates
            , staging_table.dcut_construction_draw_updates_ms
+           , staging_table.dcut_proposal_updates_after_proposal_save_ms
            , FALSE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM staging_octane.deal_change_updater_time staging_table
@@ -234,6 +239,7 @@ etls:
            , history_table.dcut_update_ribbon_for_deal_ms
            , history_table.dcut_num_construction_draw_updates
            , history_table.dcut_construction_draw_updates_ms
+           , history_table.dcut_proposal_updates_after_proposal_save_ms
            , TRUE AS data_source_deleted_flag
            , NOW( ) AS data_source_updated_datetime
       FROM history_octane.deal_change_updater_time history_table
