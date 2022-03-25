@@ -1,4 +1,23 @@
 --
+--
+--
+
+-- staging
+ALTER TABLE staging_octane.borrower_user
+    ADD COLUMN bu_activation_datetime timestamp;
+
+ALTER TABLE staging_octane.deal_change_updater_time
+    ADD COLUMN dcut_proposal_updates_after_proposal_save_ms bigint;
+
+
+-- history
+ALTER TABLE history_octane.borrower_user
+    ADD COLUMN bu_activation_datetime timestamp;
+
+ALTER TABLE history_octane.deal_change_updater_time
+    ADD COLUMN dcut_proposal_updates_after_proposal_save_ms bigint;
+
+--
 -- EDW | star_loan ETLs: Switch JOINs to county table to LEFT JOINs, backfill missing data
 -- https://app.asana.com/0/0/1202015403592063
 --
