@@ -220,7 +220,7 @@ etls:
                   ) AS primary_table
               ) AS subject_property ON primary_table.prp_pid = subject_property.pl_proposal_pid
                           AND subject_property.pl_subject_property IS TRUE
-                INNER JOIN (
+                LEFT JOIN (
                   SELECT *
                   FROM (
                        SELECT <<county_partial_load_condition>> AS include_record
