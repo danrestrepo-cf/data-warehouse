@@ -4,7 +4,8 @@
 --
 
 UPDATE star_loan.borrower_dim
-SET current_residence_street1 = current_borrower_residence_place.pl_street1
+SET edw_modified_datetime = NOW()
+    , current_residence_street1 = current_borrower_residence_place.pl_street1
 	, current_residence_street2 = current_borrower_residence_place.pl_street2
 	, current_residence_city = current_borrower_residence_place.pl_city
 	, current_residence_postal_code = current_borrower_residence_place.pl_postal_code
@@ -193,7 +194,8 @@ WHERE borrower_dim.borrower_pid = borrower.b_pid
 
 
 UPDATE star_loan.transaction_dim
-SET subject_property_street1 = subject_property.pl_street1
+SET edw_modified_datetime = NOW()
+    , subject_property_street1 = subject_property.pl_street1
 	, subject_property_street2 = subject_property.pl_street2
 	, subject_property_city = subject_property.pl_city
 	, subject_property_tax_id = subject_property.pl_property_tax_id
@@ -343,8 +345,8 @@ WHERE transaction_dim.deal_pid = deal.d_pid
 
 DELETE
 FROM star_loan.transaction_junk_dim
-WHERE transaction_junk_dim.property_usage_code IS NULL
-	AND transaction_junk_dim.dwid != 0
+WHERE transaction_junk_dim.dwid != 0
+	AND transaction_junk_dim.property_usage_code IS NULL
   	AND transaction_junk_dim.property_usage IS NULL
 	AND transaction_junk_dim.dwid NOT IN (
 	    SELECT loan_fact.transaction_junk_dwid
