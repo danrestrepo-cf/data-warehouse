@@ -1,5 +1,5 @@
 --
---
+-- Main | EDW | Octane schema synchronization for v2022.3.4.0 (2022-03-25) (https://app.asana.com/0/0/1201991021737532 )
 --
 
 -- staging
