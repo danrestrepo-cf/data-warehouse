@@ -19,9 +19,7 @@ from lib.metadata_core.metadata_object_path import TablePath, ColumnPath
 from lib.metadata_core.metadata_yaml_translator import (write_data_warehouse_metadata_to_yaml,
                                                         generate_data_warehouse_metadata_from_yaml)
 from lib.lura_information_schema_to_yaml.sql_queries import (get_octane_column_metadata,
-                                                             get_octane_foreign_key_metadata,
-                                                             get_history_octane_etl_process_metadata,
-                                                             get_max_staging_to_history_server_process_number)
+                                                             get_octane_foreign_key_metadata)
 from lib.lura_information_schema_to_yaml.metadata_builders import (build_staging_octane_metadata,
                                                                    generate_history_octane_metadata,
                                                                    add_deleted_tables_and_columns_to_history_octane_metadata)
@@ -47,8 +45,6 @@ def main():
         # pull source data
         octane_column_metadata = get_octane_column_metadata(octane_db_connection)
         octane_foreign_key_metadata = get_octane_foreign_key_metadata(octane_db_connection)
-        etl_process_metadata = get_history_octane_etl_process_metadata(config_edw_connection)
-        current_max_process_number = get_max_staging_to_history_server_process_number(config_edw_connection)
         current_edw_metadata = generate_data_warehouse_metadata_from_yaml(os.path.abspath(os.path.join(constants.PROJECT_DIR_PATH, '..', 'metadata', 'edw')))
 
         # build metadata filterer
@@ -56,15 +52,14 @@ def main():
 
         # generate metadata
         metadata = add_deleted_tables_and_columns_to_history_octane_metadata(
-            generate_history_octane_metadata( # this generates what will be the new history_octane metadata from octane's metadata
+            generate_history_octane_metadata(  # this generates what will be the new history_octane metadata from octane's metadata
                 metadata_filterer.filter(
                     build_staging_octane_metadata(
                         octane_column_metadata,
                         octane_foreign_key_metadata
                     )
                 ),
-                etl_process_metadata,
-                current_max_process_number
+                current_edw_metadata
             ),
             current_edw_metadata
         )
