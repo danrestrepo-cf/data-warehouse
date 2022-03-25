@@ -48,7 +48,7 @@ def main():
                 if schema_dir.is_dir():
                     schema = schema_dir.name.split('.')[1]
                     for table_file in os.scandir(schema_dir):
-                        if table_file.is_file() and table_file.name in ('table.deal.yaml', 'table.account.yaml', 'table.loan_fact.yaml'):
+                        if table_file.is_file():
                             # read in current state of yaml file
                             with open(table_file.path, 'r') as file:
                                 table_yaml = yaml.safe_load(file)
