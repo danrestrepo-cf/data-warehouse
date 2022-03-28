@@ -223,10 +223,10 @@ class ETLStateMachineGenerator:
         :param start_at_etl: ETL metdata used to define this state machine's "StartAt" state
         """
         state_machine = create_state_machine_scaffold(comment=comment, start_at=start_at_etl.process_name)
+        # add key for main ETL first (but don't populate it yet) to ensure human-friendly state ordering in final output
+        state_machine['States'][start_at_etl.process_name] = None
         if start_at_etl.next_step_functions:
             next_state_name = 'Load_type_choice'
-            # this success state is used as the state machine "off ramp" by the Load_type_choice state
-            state_machine['States']['Success'] = {'Type': 'Succeed'}
             self.add_states_to_trigger_next_step_functions(start_at_etl, state_machine)
         else:
             next_state_name = None
@@ -248,14 +248,14 @@ class ETLStateMachineGenerator:
         """
         if len(etl.next_step_functions) == 1:  # directly trigger the single message state after the choice state
             message_state_name = make_message_state_name(etl.next_step_functions[0])
-            state_machine['States']['Load_type_choice'] = create_choice_state(message_state_name)
+            self.add_load_type_choice(state_machine, next_state_name=message_state_name)
             next_step_function = self.get_step_function_metadata(etl.next_step_functions[0])
             state_machine['States'][message_state_name] = create_message_state(next_step_function)
         else:  # there are multiple next_step_functions which need to be wrapped in a parallel state
             parallel_state_name = f'{etl.process_name} Next Step Functions'
-            state_machine['States']['Load_type_choice'] = create_choice_state(parallel_state_name)
+            self.add_load_type_choice(state_machine, next_state_name=parallel_state_name)
             state_machine['States'][parallel_state_name] = create_parallel_state()
-            for next_step_function_name in etl.next_step_functions:
+            for next_step_function_name in sorted(etl.next_step_functions):
                 message_state_name = make_message_state_name(next_step_function_name)
                 message_state_machine_config = create_state_machine_scaffold(
                     comment=f'Send message to bi-managed-mdi-2-full-check-queue for {next_step_function_name}',
@@ -344,6 +344,27 @@ class ETLStateMachineGenerator:
 
         return task_state
 
+    @staticmethod
+    def add_load_type_choice(state_machine: dict, next_state_name: str) -> None:
+        """Create an AWS Choice state configuration that branches to a Success state if the previous step outputted a load_type of NONE.
+
+        :param state_machine: a state machine dict to which to add the Choice and Success states
+        :param next_state_name: the state to branch to if the preceding ETL *did*
+        have output
+        """
+        state_machine['States']['Load_type_choice'] = {
+            'Type': 'Choice',
+            'Choices': [
+                {
+                    'Variable': '$.load_type',
+                    'StringEquals': 'NONE',
+                    'Next': 'Success'
+                }
+            ],
+            'Default': next_state_name
+        }
+        state_machine['States']['Success'] = {'Type': 'Succeed'}
+
 
 #
 # State machine utility functions used by multiple classes in this library
@@ -398,19 +419,4 @@ def create_parallel_state() -> dict:
         'Type': 'Parallel',
         'End': True,
         'Branches': []
-    }
-
-
-def create_choice_state(next_state_name: str) -> dict:
-    """Create an AWS Choice state configuration that branches to a Success state if the previous step outputted a load_type of NONE"""
-    return {
-        'Type': 'Choice',
-        'Choices': [
-            {
-                'Variable': '$.load_type',
-                'StringEquals': 'NONE',
-                'Next': 'Success'
-            }
-        ],
-        'Default': next_state_name
     }
