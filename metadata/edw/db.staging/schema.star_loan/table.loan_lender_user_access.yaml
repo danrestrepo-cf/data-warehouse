@@ -33,6 +33,7 @@ step_functions:
       ETL-200001-insert:
         input_type: table
         output_type: insert
+        output_table: staging.star_loan.loan_lender_user_access
         hardcoded_data_source: Octane
         json_output_field: loan_dwid
         truncate_table: false
