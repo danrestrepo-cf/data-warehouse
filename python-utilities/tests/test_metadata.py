@@ -54,6 +54,6 @@ class TestYAMLMetadata(unittest.TestCase):
             self.fail(f'Triggering loops detected involving step functions: {", ".join(sfns_with_looping_descendants)}')
 
     def test_etl_names_contain_only_valid_characters(self):
-        bad_etls = list(self.metadata.get_etls(filter_func=lambda etl: bool(re.match(r'^[a-zA-Z0-9_-]+$', etl.process_name))))
+        bad_etls = list(self.metadata.get_etls(filter_func=lambda etl: not re.match(r'^[a-zA-Z0-9_-]+$', etl.process_name)))
         if bad_etls:
             self.fail(f'Invalid ETL names: {", ".join([etl.process_name for etl in bad_etls])}')
