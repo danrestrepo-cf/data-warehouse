@@ -63,10 +63,10 @@
             "End": true,
             "Branches": [
                 {
-                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200005",
-                    "StartAt": "SP-200005_message",
+                    "Comment": "Send message to bi-managed-mdi-2-full-check-queue for SP-200005-insert-update",
+                    "StartAt": "SP-200005-insert-update_message",
                     "States": {
-                        "SP-200005_message": {
+                        "SP-200005-insert-update_message": {
                             "Type": "Task",
                             "Resource": "arn:aws:states:::sqs:sendMessage",
                             "Parameters": {
@@ -76,7 +76,7 @@
                                 "MessageAttributes": {
                                     "ProcessId": {
                                         "DataType": "String",
-                                        "StringValue": "SP-200005"
+                                        "StringValue": "SP-200005-insert-update"
                                     }
                                 },
                                 "MessageBody.$": "States.JsonToString($)"

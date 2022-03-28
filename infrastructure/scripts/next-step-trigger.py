@@ -29,7 +29,7 @@ to determine which action to take, using the following logic:
 
 
 def execute(event, context):
-    valid_etl_type_suffixes = ['', '-insert', '-insert-update', '-delete']
+    valid_etl_type_suffixes = ['', '-insert', '-insert-update', '-update', '-delete']
 
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)

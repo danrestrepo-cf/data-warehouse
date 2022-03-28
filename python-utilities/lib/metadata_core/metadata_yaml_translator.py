@@ -245,7 +245,7 @@ def construct_data_warehouse_metadata_from_dict(data_warehouse_dict: dict) -> Da
                                         'truncate_table': False,
                                         'insert_update_keys': ['col1', 'col2'],
                                         'delete_keys': ['col2', 'col3'],
-                                        'container_memory': 2048
+                                        'container_memory': 2048,
                                         'input_sql': 'SQL for SP-1'
                                     }
                                 },
@@ -262,6 +262,8 @@ def construct_data_warehouse_metadata_from_dict(data_warehouse_dict: dict) -> Da
     """
     return DictToMetadataBuilder().build_metadata(data_warehouse_dict)
 
+def construct_dict_from_data_warehouse_yaml(parent_dir_file_path: str) -> dict:
+    return MetadataReader(root_dir_file_path=parent_dir_file_path).read_data_warehouse_yaml_files_into_dict()
 
 # internal classes/functions
 
