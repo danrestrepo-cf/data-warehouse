@@ -1165,7 +1165,6 @@ step_functions:
         - data_source_integration_id
         container_memory: 4096
         next_step_functions:
-        - SP-200001-delete
         - SP-200001-insert
         input_sql: |-
           SELECT loan_fact_incl_new_records.edw_created_datetime
@@ -2907,7 +2906,6 @@ step_functions:
         container_memory: 2048
         next_step_functions:
         - SP-200001-delete
-        - SP-200001-insert
         input_sql: |-
           /*
           First half of UNION ALL query returns the following:

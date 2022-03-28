@@ -1085,8 +1085,6 @@ step_functions:
         insert_update_keys:
         - data_source_integration_id
         container_memory: 4096
-        next_step_functions:
-        - SP-300001-insert-update
         input_sql: |-
           --SP-200005-update
           SELECT borrower_dim.data_source_integration_columns
