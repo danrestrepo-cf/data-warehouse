@@ -487,7 +487,7 @@ WITH insert_rows (process_name, data_source_dwid, sql, connectionname) AS (
         ) AS primary_table
     ) AS current_borrower_residence_place
                ON current_borrower_residence.bres_place_pid = current_borrower_residence_place.pl_pid
-    INNER JOIN (
+    LEFT JOIN (
         SELECT *
         FROM (
             SELECT <<county_partial_load_condition>> AS include_record
