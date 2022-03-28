@@ -43,44 +43,47 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.rsr_version
-etls:
+step_functions:
   SP-100289:
-    input_type: table
-    output_type: insert
-    json_output_field: rsr_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.rate_sheet_rate
-      SELECT staging_table.rsr_pid
-           , staging_table.rsr_version
-           , staging_table.rsr_rate_sheet_pid
-           , staging_table.rsr_rate_percent
-           , staging_table.rsr_arm_margin_percent
-           , staging_table.rsr_available
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.rate_sheet_rate staging_table
-      LEFT JOIN history_octane.rate_sheet_rate history_table
-                ON staging_table.rsr_pid = history_table.rsr_pid
-                    AND staging_table.rsr_version = history_table.rsr_version
-      WHERE history_table.rsr_pid IS NULL
-      UNION ALL
-      SELECT history_table.rsr_pid
-           , history_table.rsr_version + 1
-           , history_table.rsr_rate_sheet_pid
-           , history_table.rsr_rate_percent
-           , history_table.rsr_arm_margin_percent
-           , history_table.rsr_available
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.rate_sheet_rate history_table
-      LEFT JOIN staging_octane.rate_sheet_rate staging_table
-                ON staging_table.rsr_pid = history_table.rsr_pid
-      WHERE staging_table.rsr_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.rate_sheet_rate deleted_records
-          WHERE deleted_records.rsr_pid = history_table.rsr_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100289:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.rate_sheet_rate
+        json_output_field: rsr_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.rate_sheet_rate
+          SELECT staging_table.rsr_pid
+               , staging_table.rsr_version
+               , staging_table.rsr_rate_sheet_pid
+               , staging_table.rsr_rate_percent
+               , staging_table.rsr_arm_margin_percent
+               , staging_table.rsr_available
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.rate_sheet_rate staging_table
+          LEFT JOIN history_octane.rate_sheet_rate history_table
+                    ON staging_table.rsr_pid = history_table.rsr_pid
+                        AND staging_table.rsr_version = history_table.rsr_version
+          WHERE history_table.rsr_pid IS NULL
+          UNION ALL
+          SELECT history_table.rsr_pid
+               , history_table.rsr_version + 1
+               , history_table.rsr_rate_sheet_pid
+               , history_table.rsr_rate_percent
+               , history_table.rsr_arm_margin_percent
+               , history_table.rsr_available
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.rate_sheet_rate history_table
+          LEFT JOIN staging_octane.rate_sheet_rate staging_table
+                    ON staging_table.rsr_pid = history_table.rsr_pid
+          WHERE staging_table.rsr_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.rate_sheet_rate deleted_records
+              WHERE deleted_records.rsr_pid = history_table.rsr_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

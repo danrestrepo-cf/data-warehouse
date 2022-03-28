@@ -34,44 +34,47 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.metb_version
-etls:
+step_functions:
   SP-100036:
-    input_type: table
-    output_type: insert
-    json_output_field: metb_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.mers_transfer_batch
-      SELECT staging_table.metb_pid
-           , staging_table.metb_version
-           , staging_table.metb_account_pid
-           , staging_table.metb_create_datetime
-           , staging_table.metb_sent_datetime
-           , staging_table.metb_batch_id
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.mers_transfer_batch staging_table
-      LEFT JOIN history_octane.mers_transfer_batch history_table
-                ON staging_table.metb_pid = history_table.metb_pid
-                    AND staging_table.metb_version = history_table.metb_version
-      WHERE history_table.metb_pid IS NULL
-      UNION ALL
-      SELECT history_table.metb_pid
-           , history_table.metb_version + 1
-           , history_table.metb_account_pid
-           , history_table.metb_create_datetime
-           , history_table.metb_sent_datetime
-           , history_table.metb_batch_id
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.mers_transfer_batch history_table
-      LEFT JOIN staging_octane.mers_transfer_batch staging_table
-                ON staging_table.metb_pid = history_table.metb_pid
-      WHERE staging_table.metb_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.mers_transfer_batch deleted_records
-          WHERE deleted_records.metb_pid = history_table.metb_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100036:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.mers_transfer_batch
+        json_output_field: metb_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.mers_transfer_batch
+          SELECT staging_table.metb_pid
+               , staging_table.metb_version
+               , staging_table.metb_account_pid
+               , staging_table.metb_create_datetime
+               , staging_table.metb_sent_datetime
+               , staging_table.metb_batch_id
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.mers_transfer_batch staging_table
+          LEFT JOIN history_octane.mers_transfer_batch history_table
+                    ON staging_table.metb_pid = history_table.metb_pid
+                        AND staging_table.metb_version = history_table.metb_version
+          WHERE history_table.metb_pid IS NULL
+          UNION ALL
+          SELECT history_table.metb_pid
+               , history_table.metb_version + 1
+               , history_table.metb_account_pid
+               , history_table.metb_create_datetime
+               , history_table.metb_sent_datetime
+               , history_table.metb_batch_id
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.mers_transfer_batch history_table
+          LEFT JOIN staging_octane.mers_transfer_batch staging_table
+                    ON staging_table.metb_pid = history_table.metb_pid
+          WHERE staging_table.metb_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.mers_transfer_batch deleted_records
+              WHERE deleted_records.metb_pid = history_table.metb_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

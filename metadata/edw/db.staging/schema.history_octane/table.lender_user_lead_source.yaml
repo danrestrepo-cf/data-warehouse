@@ -43,40 +43,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.lulds_version
-etls:
+step_functions:
   SP-100098:
-    input_type: table
-    output_type: insert
-    json_output_field: lulds_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.lender_user_lead_source
-      SELECT staging_table.lulds_pid
-           , staging_table.lulds_version
-           , staging_table.lulds_lender_user_pid
-           , staging_table.lulds_lead_source_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.lender_user_lead_source staging_table
-      LEFT JOIN history_octane.lender_user_lead_source history_table
-                ON staging_table.lulds_pid = history_table.lulds_pid
-                    AND staging_table.lulds_version = history_table.lulds_version
-      WHERE history_table.lulds_pid IS NULL
-      UNION ALL
-      SELECT history_table.lulds_pid
-           , history_table.lulds_version + 1
-           , history_table.lulds_lender_user_pid
-           , history_table.lulds_lead_source_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.lender_user_lead_source history_table
-      LEFT JOIN staging_octane.lender_user_lead_source staging_table
-                ON staging_table.lulds_pid = history_table.lulds_pid
-      WHERE staging_table.lulds_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.lender_user_lead_source deleted_records
-          WHERE deleted_records.lulds_pid = history_table.lulds_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100098:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.lender_user_lead_source
+        json_output_field: lulds_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.lender_user_lead_source
+          SELECT staging_table.lulds_pid
+               , staging_table.lulds_version
+               , staging_table.lulds_lender_user_pid
+               , staging_table.lulds_lead_source_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.lender_user_lead_source staging_table
+          LEFT JOIN history_octane.lender_user_lead_source history_table
+                    ON staging_table.lulds_pid = history_table.lulds_pid
+                        AND staging_table.lulds_version = history_table.lulds_version
+          WHERE history_table.lulds_pid IS NULL
+          UNION ALL
+          SELECT history_table.lulds_pid
+               , history_table.lulds_version + 1
+               , history_table.lulds_lender_user_pid
+               , history_table.lulds_lead_source_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.lender_user_lead_source history_table
+          LEFT JOIN staging_octane.lender_user_lead_source staging_table
+                    ON staging_table.lulds_pid = history_table.lulds_pid
+          WHERE staging_table.lulds_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.lender_user_lead_source deleted_records
+              WHERE deleted_records.lulds_pid = history_table.lulds_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

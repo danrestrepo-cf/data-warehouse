@@ -193,82 +193,85 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.slpcv_version
-etls:
+step_functions:
   SP-100213:
-    input_type: table
-    output_type: insert
-    json_output_field: slpcv_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.smart_ledger_plan_case_version
-      SELECT staging_table.slpcv_pid
-           , staging_table.slpcv_version
-           , staging_table.slpcv_account_pid
-           , staging_table.slpcv_smart_ledger_plan_case_pid
-           , staging_table.slpcv_payer_org_node_pid
-           , staging_table.slpcv_active
-           , staging_table.slpcv_synthetic_unique
-           , staging_table.slpcv_case_name
-           , staging_table.slpcv_smart_ledger_plan_case_level_type
-           , staging_table.slpcv_smart_ledger_pay_frequency_type
-           , staging_table.slpcv_from_date
-           , staging_table.slpcv_through_date
-           , staging_table.slpcv_base_amount
-           , staging_table.slpcv_basis_points
-           , staging_table.slpcv_min_amount
-           , staging_table.slpcv_max_amount
-           , staging_table.slpcv_ledger_basis_points_input_type
-           , staging_table.slpcv_criteria_pid
-           , staging_table.slpcv_last_modified_by
-           , staging_table.slpcv_last_modified_datetime
-           , staging_table.slpcv_smart_ledger_plan_case_measure_type
-           , staging_table.slpcv_smart_ledger_plan_case_measure_source_date_type
-           , staging_table.slpcv_smart_ledger_plan_case_population_period_type
-           , staging_table.slpcv_measure_criteria_from_date
-           , staging_table.slpcv_measure_criteria_through_date
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.smart_ledger_plan_case_version staging_table
-      LEFT JOIN history_octane.smart_ledger_plan_case_version history_table
-                ON staging_table.slpcv_pid = history_table.slpcv_pid
-                    AND staging_table.slpcv_version = history_table.slpcv_version
-      WHERE history_table.slpcv_pid IS NULL
-      UNION ALL
-      SELECT history_table.slpcv_pid
-           , history_table.slpcv_version + 1
-           , history_table.slpcv_account_pid
-           , history_table.slpcv_smart_ledger_plan_case_pid
-           , history_table.slpcv_payer_org_node_pid
-           , history_table.slpcv_active
-           , history_table.slpcv_synthetic_unique
-           , history_table.slpcv_case_name
-           , history_table.slpcv_smart_ledger_plan_case_level_type
-           , history_table.slpcv_smart_ledger_pay_frequency_type
-           , history_table.slpcv_from_date
-           , history_table.slpcv_through_date
-           , history_table.slpcv_base_amount
-           , history_table.slpcv_basis_points
-           , history_table.slpcv_min_amount
-           , history_table.slpcv_max_amount
-           , history_table.slpcv_ledger_basis_points_input_type
-           , history_table.slpcv_criteria_pid
-           , history_table.slpcv_last_modified_by
-           , history_table.slpcv_last_modified_datetime
-           , history_table.slpcv_smart_ledger_plan_case_measure_type
-           , history_table.slpcv_smart_ledger_plan_case_measure_source_date_type
-           , history_table.slpcv_smart_ledger_plan_case_population_period_type
-           , history_table.slpcv_measure_criteria_from_date
-           , history_table.slpcv_measure_criteria_through_date
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.smart_ledger_plan_case_version history_table
-      LEFT JOIN staging_octane.smart_ledger_plan_case_version staging_table
-                ON staging_table.slpcv_pid = history_table.slpcv_pid
-      WHERE staging_table.slpcv_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.smart_ledger_plan_case_version deleted_records
-          WHERE deleted_records.slpcv_pid = history_table.slpcv_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100213:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.smart_ledger_plan_case_version
+        json_output_field: slpcv_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.smart_ledger_plan_case_version
+          SELECT staging_table.slpcv_pid
+               , staging_table.slpcv_version
+               , staging_table.slpcv_account_pid
+               , staging_table.slpcv_smart_ledger_plan_case_pid
+               , staging_table.slpcv_payer_org_node_pid
+               , staging_table.slpcv_active
+               , staging_table.slpcv_synthetic_unique
+               , staging_table.slpcv_case_name
+               , staging_table.slpcv_smart_ledger_plan_case_level_type
+               , staging_table.slpcv_smart_ledger_pay_frequency_type
+               , staging_table.slpcv_from_date
+               , staging_table.slpcv_through_date
+               , staging_table.slpcv_base_amount
+               , staging_table.slpcv_basis_points
+               , staging_table.slpcv_min_amount
+               , staging_table.slpcv_max_amount
+               , staging_table.slpcv_ledger_basis_points_input_type
+               , staging_table.slpcv_criteria_pid
+               , staging_table.slpcv_last_modified_by
+               , staging_table.slpcv_last_modified_datetime
+               , staging_table.slpcv_smart_ledger_plan_case_measure_type
+               , staging_table.slpcv_smart_ledger_plan_case_measure_source_date_type
+               , staging_table.slpcv_smart_ledger_plan_case_population_period_type
+               , staging_table.slpcv_measure_criteria_from_date
+               , staging_table.slpcv_measure_criteria_through_date
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.smart_ledger_plan_case_version staging_table
+          LEFT JOIN history_octane.smart_ledger_plan_case_version history_table
+                    ON staging_table.slpcv_pid = history_table.slpcv_pid
+                        AND staging_table.slpcv_version = history_table.slpcv_version
+          WHERE history_table.slpcv_pid IS NULL
+          UNION ALL
+          SELECT history_table.slpcv_pid
+               , history_table.slpcv_version + 1
+               , history_table.slpcv_account_pid
+               , history_table.slpcv_smart_ledger_plan_case_pid
+               , history_table.slpcv_payer_org_node_pid
+               , history_table.slpcv_active
+               , history_table.slpcv_synthetic_unique
+               , history_table.slpcv_case_name
+               , history_table.slpcv_smart_ledger_plan_case_level_type
+               , history_table.slpcv_smart_ledger_pay_frequency_type
+               , history_table.slpcv_from_date
+               , history_table.slpcv_through_date
+               , history_table.slpcv_base_amount
+               , history_table.slpcv_basis_points
+               , history_table.slpcv_min_amount
+               , history_table.slpcv_max_amount
+               , history_table.slpcv_ledger_basis_points_input_type
+               , history_table.slpcv_criteria_pid
+               , history_table.slpcv_last_modified_by
+               , history_table.slpcv_last_modified_datetime
+               , history_table.slpcv_smart_ledger_plan_case_measure_type
+               , history_table.slpcv_smart_ledger_plan_case_measure_source_date_type
+               , history_table.slpcv_smart_ledger_plan_case_population_period_type
+               , history_table.slpcv_measure_criteria_from_date
+               , history_table.slpcv_measure_criteria_through_date
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.smart_ledger_plan_case_version history_table
+          LEFT JOIN staging_octane.smart_ledger_plan_case_version staging_table
+                    ON staging_table.slpcv_pid = history_table.slpcv_pid
+          WHERE staging_table.slpcv_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.smart_ledger_plan_case_version deleted_records
+              WHERE deleted_records.slpcv_pid = history_table.slpcv_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

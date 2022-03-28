@@ -43,40 +43,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.pdce_version
-etls:
+step_functions:
   SP-100110:
-    input_type: table
-    output_type: insert
-    json_output_field: pdce_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.product_deal_check_exclusion
-      SELECT staging_table.pdce_pid
-           , staging_table.pdce_version
-           , staging_table.pdce_product_pid
-           , staging_table.pdce_deal_check_type
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.product_deal_check_exclusion staging_table
-      LEFT JOIN history_octane.product_deal_check_exclusion history_table
-                ON staging_table.pdce_pid = history_table.pdce_pid
-                    AND staging_table.pdce_version = history_table.pdce_version
-      WHERE history_table.pdce_pid IS NULL
-      UNION ALL
-      SELECT history_table.pdce_pid
-           , history_table.pdce_version + 1
-           , history_table.pdce_product_pid
-           , history_table.pdce_deal_check_type
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.product_deal_check_exclusion history_table
-      LEFT JOIN staging_octane.product_deal_check_exclusion staging_table
-                ON staging_table.pdce_pid = history_table.pdce_pid
-      WHERE staging_table.pdce_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.product_deal_check_exclusion deleted_records
-          WHERE deleted_records.pdce_pid = history_table.pdce_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100110:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.product_deal_check_exclusion
+        json_output_field: pdce_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.product_deal_check_exclusion
+          SELECT staging_table.pdce_pid
+               , staging_table.pdce_version
+               , staging_table.pdce_product_pid
+               , staging_table.pdce_deal_check_type
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.product_deal_check_exclusion staging_table
+          LEFT JOIN history_octane.product_deal_check_exclusion history_table
+                    ON staging_table.pdce_pid = history_table.pdce_pid
+                        AND staging_table.pdce_version = history_table.pdce_version
+          WHERE history_table.pdce_pid IS NULL
+          UNION ALL
+          SELECT history_table.pdce_pid
+               , history_table.pdce_version + 1
+               , history_table.pdce_product_pid
+               , history_table.pdce_deal_check_type
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.product_deal_check_exclusion history_table
+          LEFT JOIN staging_octane.product_deal_check_exclusion staging_table
+                    ON staging_table.pdce_pid = history_table.pdce_pid
+          WHERE staging_table.pdce_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.product_deal_check_exclusion deleted_records
+              WHERE deleted_records.pdce_pid = history_table.pdce_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

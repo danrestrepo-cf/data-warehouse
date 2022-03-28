@@ -43,40 +43,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.rcep_version
-etls:
+step_functions:
   SP-100234:
-    input_type: table
-    output_type: insert
-    json_output_field: rcep_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.role_config_export_permission
-      SELECT staging_table.rcep_pid
-           , staging_table.rcep_version
-           , staging_table.rcep_role_pid
-           , staging_table.rcep_config_export_permission_type
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.role_config_export_permission staging_table
-      LEFT JOIN history_octane.role_config_export_permission history_table
-                ON staging_table.rcep_pid = history_table.rcep_pid
-                    AND staging_table.rcep_version = history_table.rcep_version
-      WHERE history_table.rcep_pid IS NULL
-      UNION ALL
-      SELECT history_table.rcep_pid
-           , history_table.rcep_version + 1
-           , history_table.rcep_role_pid
-           , history_table.rcep_config_export_permission_type
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.role_config_export_permission history_table
-      LEFT JOIN staging_octane.role_config_export_permission staging_table
-                ON staging_table.rcep_pid = history_table.rcep_pid
-      WHERE staging_table.rcep_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.role_config_export_permission deleted_records
-          WHERE deleted_records.rcep_pid = history_table.rcep_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100234:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.role_config_export_permission
+        json_output_field: rcep_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.role_config_export_permission
+          SELECT staging_table.rcep_pid
+               , staging_table.rcep_version
+               , staging_table.rcep_role_pid
+               , staging_table.rcep_config_export_permission_type
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.role_config_export_permission staging_table
+          LEFT JOIN history_octane.role_config_export_permission history_table
+                    ON staging_table.rcep_pid = history_table.rcep_pid
+                        AND staging_table.rcep_version = history_table.rcep_version
+          WHERE history_table.rcep_pid IS NULL
+          UNION ALL
+          SELECT history_table.rcep_pid
+               , history_table.rcep_version + 1
+               , history_table.rcep_role_pid
+               , history_table.rcep_config_export_permission_type
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.role_config_export_permission history_table
+          LEFT JOIN staging_octane.role_config_export_permission staging_table
+                    ON staging_table.rcep_pid = history_table.rcep_pid
+          WHERE staging_table.rcep_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.role_config_export_permission deleted_records
+              WHERE deleted_records.rcep_pid = history_table.rcep_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

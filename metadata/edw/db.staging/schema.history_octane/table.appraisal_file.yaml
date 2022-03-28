@@ -55,42 +55,45 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100295:
-    input_type: table
-    output_type: insert
-    json_output_field: aprf_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.appraisal_file
-      SELECT staging_table.aprf_pid
-           , staging_table.aprf_version
-           , staging_table.aprf_appraisal_pid
-           , staging_table.aprf_deal_file_pid
-           , staging_table.aprf_appraisal_file_type
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.appraisal_file staging_table
-      LEFT JOIN history_octane.appraisal_file history_table
-                ON staging_table.aprf_pid = history_table.aprf_pid
-                    AND staging_table.aprf_version = history_table.aprf_version
-      WHERE history_table.aprf_pid IS NULL
-      UNION ALL
-      SELECT history_table.aprf_pid
-           , history_table.aprf_version + 1
-           , history_table.aprf_appraisal_pid
-           , history_table.aprf_deal_file_pid
-           , history_table.aprf_appraisal_file_type
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.appraisal_file history_table
-      LEFT JOIN staging_octane.appraisal_file staging_table
-                ON staging_table.aprf_pid = history_table.aprf_pid
-      WHERE staging_table.aprf_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.appraisal_file deleted_records
-          WHERE deleted_records.aprf_pid = history_table.aprf_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100295:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.appraisal_file
+        json_output_field: aprf_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.appraisal_file
+          SELECT staging_table.aprf_pid
+               , staging_table.aprf_version
+               , staging_table.aprf_appraisal_pid
+               , staging_table.aprf_deal_file_pid
+               , staging_table.aprf_appraisal_file_type
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.appraisal_file staging_table
+          LEFT JOIN history_octane.appraisal_file history_table
+                    ON staging_table.aprf_pid = history_table.aprf_pid
+                        AND staging_table.aprf_version = history_table.aprf_version
+          WHERE history_table.aprf_pid IS NULL
+          UNION ALL
+          SELECT history_table.aprf_pid
+               , history_table.aprf_version + 1
+               , history_table.aprf_appraisal_pid
+               , history_table.aprf_deal_file_pid
+               , history_table.aprf_appraisal_file_type
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.appraisal_file history_table
+          LEFT JOIN staging_octane.appraisal_file staging_table
+                    ON staging_table.aprf_pid = history_table.aprf_pid
+          WHERE staging_table.aprf_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.appraisal_file deleted_records
+              WHERE deleted_records.aprf_pid = history_table.aprf_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

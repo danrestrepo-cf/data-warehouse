@@ -43,44 +43,47 @@ columns:
     data_type: TIMESTAMP
     source:
       field: primary_source_table.columns.wdfq_worker_start_datetime
-etls:
+step_functions:
   SP-100196:
-    input_type: table
-    output_type: insert
-    json_output_field: wdfq_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.wf_deal_function_queue
-      SELECT staging_table.wdfq_pid
-           , staging_table.wdfq_version
-           , staging_table.wdfq_wf_deal_step_pid
-           , staging_table.wdfq_worker_start_datetime
-           , staging_table.wdfq_halted
-           , staging_table.wdfq_retry_count
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.wf_deal_function_queue staging_table
-      LEFT JOIN history_octane.wf_deal_function_queue history_table
-                ON staging_table.wdfq_pid = history_table.wdfq_pid
-                    AND staging_table.wdfq_version = history_table.wdfq_version
-      WHERE history_table.wdfq_pid IS NULL
-      UNION ALL
-      SELECT history_table.wdfq_pid
-           , history_table.wdfq_version + 1
-           , history_table.wdfq_wf_deal_step_pid
-           , history_table.wdfq_worker_start_datetime
-           , history_table.wdfq_halted
-           , history_table.wdfq_retry_count
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.wf_deal_function_queue history_table
-      LEFT JOIN staging_octane.wf_deal_function_queue staging_table
-                ON staging_table.wdfq_pid = history_table.wdfq_pid
-      WHERE staging_table.wdfq_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.wf_deal_function_queue deleted_records
-          WHERE deleted_records.wdfq_pid = history_table.wdfq_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100196:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.wf_deal_function_queue
+        json_output_field: wdfq_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.wf_deal_function_queue
+          SELECT staging_table.wdfq_pid
+               , staging_table.wdfq_version
+               , staging_table.wdfq_wf_deal_step_pid
+               , staging_table.wdfq_worker_start_datetime
+               , staging_table.wdfq_halted
+               , staging_table.wdfq_retry_count
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.wf_deal_function_queue staging_table
+          LEFT JOIN history_octane.wf_deal_function_queue history_table
+                    ON staging_table.wdfq_pid = history_table.wdfq_pid
+                        AND staging_table.wdfq_version = history_table.wdfq_version
+          WHERE history_table.wdfq_pid IS NULL
+          UNION ALL
+          SELECT history_table.wdfq_pid
+               , history_table.wdfq_version + 1
+               , history_table.wdfq_wf_deal_step_pid
+               , history_table.wdfq_worker_start_datetime
+               , history_table.wdfq_halted
+               , history_table.wdfq_retry_count
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.wf_deal_function_queue history_table
+          LEFT JOIN staging_octane.wf_deal_function_queue staging_table
+                    ON staging_table.wdfq_pid = history_table.wdfq_pid
+          WHERE staging_table.wdfq_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.wf_deal_function_queue deleted_records
+              WHERE deleted_records.wdfq_pid = history_table.wdfq_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

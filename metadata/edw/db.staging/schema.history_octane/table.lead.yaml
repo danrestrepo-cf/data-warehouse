@@ -291,168 +291,171 @@ columns:
     data_type: VARCHAR(256)
     source:
       field: primary_source_table.columns.ld_zillow_zq
-etls:
+step_functions:
   SP-100089:
-    input_type: table
-    output_type: insert
-    json_output_field: ld_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.lead
-      SELECT staging_table.ld_pid
-           , staging_table.ld_version
-           , staging_table.ld_deal_pid
-           , staging_table.ld_lead_datetime
-           , staging_table.ld_velocify_campaign_id
-           , staging_table.ld_velocify_campaign_title
-           , staging_table.ld_originator_email
-           , staging_table.ld_customer_service_rep_name
-           , staging_table.ld_velocify_lead_id
-           , staging_table.ld_tracking_id
-           , staging_table.ld_zillow_zq
-           , staging_table.ld_reference_id
-           , staging_table.ld_apr_percent
-           , staging_table.ld_interest_rate
-           , staging_table.ld_rate_type
-           , staging_table.ld_fico_score
-           , staging_table.ld_loan_type
-           , staging_table.ld_notes
-           , staging_table.ld_loan_purpose_type
-           , staging_table.ld_purchase_price
-           , staging_table.ld_existing_home_value
-           , staging_table.ld_loan_amount
-           , staging_table.ld_property_use
-           , staging_table.ld_subject_property_street
-           , staging_table.ld_subject_property_city
-           , staging_table.ld_subject_property_state
-           , staging_table.ld_subject_property_postal_code
-           , staging_table.ld_subject_property_type
-           , staging_table.ld_borrower_first_name
-           , staging_table.ld_borrower_last_name
-           , staging_table.ld_borrower_home_phone
-           , staging_table.ld_borrower_mobile_phone
-           , staging_table.ld_borrower_email
-           , staging_table.ld_borrower_birth_date
-           , staging_table.ld_borrower_residence_street
-           , staging_table.ld_borrower_residence_city
-           , staging_table.ld_borrower_residence_state
-           , staging_table.ld_borrower_residence_postal_code
-           , staging_table.ld_coborrower_first_name
-           , staging_table.ld_coborrower_middle_name
-           , staging_table.ld_coborrower_last_name
-           , staging_table.ld_coborrower_email
-           , staging_table.ld_coborrower_birth_date
-           , staging_table.ld_borrower_current_job_employer_name
-           , staging_table.ld_borrower_current_job_position
-           , staging_table.ld_borrower_years_on_job
-           , staging_table.ld_borrower_gross_monthly_income
-           , staging_table.ld_borrower_job_employer_phone
-           , staging_table.ld_borrower_job_income_start_date
-           , staging_table.ld_borrower_job_income_end_date
-           , staging_table.ld_borrower_job_bonus_monthly_income
-           , staging_table.ld_borrower_job_2_employer_name
-           , staging_table.ld_borrower_job_2_position
-           , staging_table.ld_borrower_job_2_employer_phone
-           , staging_table.ld_borrower_job_2_income_start_date
-           , staging_table.ld_borrower_job_2_income_end_date
-           , staging_table.ld_borrower_job_2_gross_monthly_income
-           , staging_table.ld_borrower_job_2_bonus_monthly_income
-           , staging_table.ld_borrower_job_3_employer_name
-           , staging_table.ld_borrower_job_3_position
-           , staging_table.ld_borrower_job_3_employer_phone
-           , staging_table.ld_borrower_job_3_income_start_date
-           , staging_table.ld_borrower_job_3_income_end_date
-           , staging_table.ld_borrower_job_3_gross_monthly_income
-           , staging_table.ld_borrower_job_3_bonus_monthly_income
-           , staging_table.ld_borrower_residency_basis_type
-           , staging_table.ld_borrower_residence_from_date
-           , staging_table.ld_borrower_residence_through_date
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.lead staging_table
-      LEFT JOIN history_octane.lead history_table
-                ON staging_table.ld_pid = history_table.ld_pid
-                    AND staging_table.ld_version = history_table.ld_version
-      WHERE history_table.ld_pid IS NULL
-      UNION ALL
-      SELECT history_table.ld_pid
-           , history_table.ld_version + 1
-           , history_table.ld_deal_pid
-           , history_table.ld_lead_datetime
-           , history_table.ld_velocify_campaign_id
-           , history_table.ld_velocify_campaign_title
-           , history_table.ld_originator_email
-           , history_table.ld_customer_service_rep_name
-           , history_table.ld_velocify_lead_id
-           , history_table.ld_tracking_id
-           , history_table.ld_zillow_zq
-           , history_table.ld_reference_id
-           , history_table.ld_apr_percent
-           , history_table.ld_interest_rate
-           , history_table.ld_rate_type
-           , history_table.ld_fico_score
-           , history_table.ld_loan_type
-           , history_table.ld_notes
-           , history_table.ld_loan_purpose_type
-           , history_table.ld_purchase_price
-           , history_table.ld_existing_home_value
-           , history_table.ld_loan_amount
-           , history_table.ld_property_use
-           , history_table.ld_subject_property_street
-           , history_table.ld_subject_property_city
-           , history_table.ld_subject_property_state
-           , history_table.ld_subject_property_postal_code
-           , history_table.ld_subject_property_type
-           , history_table.ld_borrower_first_name
-           , history_table.ld_borrower_last_name
-           , history_table.ld_borrower_home_phone
-           , history_table.ld_borrower_mobile_phone
-           , history_table.ld_borrower_email
-           , history_table.ld_borrower_birth_date
-           , history_table.ld_borrower_residence_street
-           , history_table.ld_borrower_residence_city
-           , history_table.ld_borrower_residence_state
-           , history_table.ld_borrower_residence_postal_code
-           , history_table.ld_coborrower_first_name
-           , history_table.ld_coborrower_middle_name
-           , history_table.ld_coborrower_last_name
-           , history_table.ld_coborrower_email
-           , history_table.ld_coborrower_birth_date
-           , history_table.ld_borrower_current_job_employer_name
-           , history_table.ld_borrower_current_job_position
-           , history_table.ld_borrower_years_on_job
-           , history_table.ld_borrower_gross_monthly_income
-           , history_table.ld_borrower_job_employer_phone
-           , history_table.ld_borrower_job_income_start_date
-           , history_table.ld_borrower_job_income_end_date
-           , history_table.ld_borrower_job_bonus_monthly_income
-           , history_table.ld_borrower_job_2_employer_name
-           , history_table.ld_borrower_job_2_position
-           , history_table.ld_borrower_job_2_employer_phone
-           , history_table.ld_borrower_job_2_income_start_date
-           , history_table.ld_borrower_job_2_income_end_date
-           , history_table.ld_borrower_job_2_gross_monthly_income
-           , history_table.ld_borrower_job_2_bonus_monthly_income
-           , history_table.ld_borrower_job_3_employer_name
-           , history_table.ld_borrower_job_3_position
-           , history_table.ld_borrower_job_3_employer_phone
-           , history_table.ld_borrower_job_3_income_start_date
-           , history_table.ld_borrower_job_3_income_end_date
-           , history_table.ld_borrower_job_3_gross_monthly_income
-           , history_table.ld_borrower_job_3_bonus_monthly_income
-           , history_table.ld_borrower_residency_basis_type
-           , history_table.ld_borrower_residence_from_date
-           , history_table.ld_borrower_residence_through_date
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.lead history_table
-      LEFT JOIN staging_octane.lead staging_table
-                ON staging_table.ld_pid = history_table.ld_pid
-      WHERE staging_table.ld_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.lead deleted_records
-          WHERE deleted_records.ld_pid = history_table.ld_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100089:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.lead
+        json_output_field: ld_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.lead
+          SELECT staging_table.ld_pid
+               , staging_table.ld_version
+               , staging_table.ld_deal_pid
+               , staging_table.ld_lead_datetime
+               , staging_table.ld_velocify_campaign_id
+               , staging_table.ld_velocify_campaign_title
+               , staging_table.ld_originator_email
+               , staging_table.ld_customer_service_rep_name
+               , staging_table.ld_velocify_lead_id
+               , staging_table.ld_tracking_id
+               , staging_table.ld_zillow_zq
+               , staging_table.ld_reference_id
+               , staging_table.ld_apr_percent
+               , staging_table.ld_interest_rate
+               , staging_table.ld_rate_type
+               , staging_table.ld_fico_score
+               , staging_table.ld_loan_type
+               , staging_table.ld_notes
+               , staging_table.ld_loan_purpose_type
+               , staging_table.ld_purchase_price
+               , staging_table.ld_existing_home_value
+               , staging_table.ld_loan_amount
+               , staging_table.ld_property_use
+               , staging_table.ld_subject_property_street
+               , staging_table.ld_subject_property_city
+               , staging_table.ld_subject_property_state
+               , staging_table.ld_subject_property_postal_code
+               , staging_table.ld_subject_property_type
+               , staging_table.ld_borrower_first_name
+               , staging_table.ld_borrower_last_name
+               , staging_table.ld_borrower_home_phone
+               , staging_table.ld_borrower_mobile_phone
+               , staging_table.ld_borrower_email
+               , staging_table.ld_borrower_birth_date
+               , staging_table.ld_borrower_residence_street
+               , staging_table.ld_borrower_residence_city
+               , staging_table.ld_borrower_residence_state
+               , staging_table.ld_borrower_residence_postal_code
+               , staging_table.ld_coborrower_first_name
+               , staging_table.ld_coborrower_middle_name
+               , staging_table.ld_coborrower_last_name
+               , staging_table.ld_coborrower_email
+               , staging_table.ld_coborrower_birth_date
+               , staging_table.ld_borrower_current_job_employer_name
+               , staging_table.ld_borrower_current_job_position
+               , staging_table.ld_borrower_years_on_job
+               , staging_table.ld_borrower_gross_monthly_income
+               , staging_table.ld_borrower_job_employer_phone
+               , staging_table.ld_borrower_job_income_start_date
+               , staging_table.ld_borrower_job_income_end_date
+               , staging_table.ld_borrower_job_bonus_monthly_income
+               , staging_table.ld_borrower_job_2_employer_name
+               , staging_table.ld_borrower_job_2_position
+               , staging_table.ld_borrower_job_2_employer_phone
+               , staging_table.ld_borrower_job_2_income_start_date
+               , staging_table.ld_borrower_job_2_income_end_date
+               , staging_table.ld_borrower_job_2_gross_monthly_income
+               , staging_table.ld_borrower_job_2_bonus_monthly_income
+               , staging_table.ld_borrower_job_3_employer_name
+               , staging_table.ld_borrower_job_3_position
+               , staging_table.ld_borrower_job_3_employer_phone
+               , staging_table.ld_borrower_job_3_income_start_date
+               , staging_table.ld_borrower_job_3_income_end_date
+               , staging_table.ld_borrower_job_3_gross_monthly_income
+               , staging_table.ld_borrower_job_3_bonus_monthly_income
+               , staging_table.ld_borrower_residency_basis_type
+               , staging_table.ld_borrower_residence_from_date
+               , staging_table.ld_borrower_residence_through_date
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.lead staging_table
+          LEFT JOIN history_octane.lead history_table
+                    ON staging_table.ld_pid = history_table.ld_pid
+                        AND staging_table.ld_version = history_table.ld_version
+          WHERE history_table.ld_pid IS NULL
+          UNION ALL
+          SELECT history_table.ld_pid
+               , history_table.ld_version + 1
+               , history_table.ld_deal_pid
+               , history_table.ld_lead_datetime
+               , history_table.ld_velocify_campaign_id
+               , history_table.ld_velocify_campaign_title
+               , history_table.ld_originator_email
+               , history_table.ld_customer_service_rep_name
+               , history_table.ld_velocify_lead_id
+               , history_table.ld_tracking_id
+               , history_table.ld_zillow_zq
+               , history_table.ld_reference_id
+               , history_table.ld_apr_percent
+               , history_table.ld_interest_rate
+               , history_table.ld_rate_type
+               , history_table.ld_fico_score
+               , history_table.ld_loan_type
+               , history_table.ld_notes
+               , history_table.ld_loan_purpose_type
+               , history_table.ld_purchase_price
+               , history_table.ld_existing_home_value
+               , history_table.ld_loan_amount
+               , history_table.ld_property_use
+               , history_table.ld_subject_property_street
+               , history_table.ld_subject_property_city
+               , history_table.ld_subject_property_state
+               , history_table.ld_subject_property_postal_code
+               , history_table.ld_subject_property_type
+               , history_table.ld_borrower_first_name
+               , history_table.ld_borrower_last_name
+               , history_table.ld_borrower_home_phone
+               , history_table.ld_borrower_mobile_phone
+               , history_table.ld_borrower_email
+               , history_table.ld_borrower_birth_date
+               , history_table.ld_borrower_residence_street
+               , history_table.ld_borrower_residence_city
+               , history_table.ld_borrower_residence_state
+               , history_table.ld_borrower_residence_postal_code
+               , history_table.ld_coborrower_first_name
+               , history_table.ld_coborrower_middle_name
+               , history_table.ld_coborrower_last_name
+               , history_table.ld_coborrower_email
+               , history_table.ld_coborrower_birth_date
+               , history_table.ld_borrower_current_job_employer_name
+               , history_table.ld_borrower_current_job_position
+               , history_table.ld_borrower_years_on_job
+               , history_table.ld_borrower_gross_monthly_income
+               , history_table.ld_borrower_job_employer_phone
+               , history_table.ld_borrower_job_income_start_date
+               , history_table.ld_borrower_job_income_end_date
+               , history_table.ld_borrower_job_bonus_monthly_income
+               , history_table.ld_borrower_job_2_employer_name
+               , history_table.ld_borrower_job_2_position
+               , history_table.ld_borrower_job_2_employer_phone
+               , history_table.ld_borrower_job_2_income_start_date
+               , history_table.ld_borrower_job_2_income_end_date
+               , history_table.ld_borrower_job_2_gross_monthly_income
+               , history_table.ld_borrower_job_2_bonus_monthly_income
+               , history_table.ld_borrower_job_3_employer_name
+               , history_table.ld_borrower_job_3_position
+               , history_table.ld_borrower_job_3_employer_phone
+               , history_table.ld_borrower_job_3_income_start_date
+               , history_table.ld_borrower_job_3_income_end_date
+               , history_table.ld_borrower_job_3_gross_monthly_income
+               , history_table.ld_borrower_job_3_bonus_monthly_income
+               , history_table.ld_borrower_residency_basis_type
+               , history_table.ld_borrower_residence_from_date
+               , history_table.ld_borrower_residence_through_date
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.lead history_table
+          LEFT JOIN staging_octane.lead staging_table
+                    ON staging_table.ld_pid = history_table.ld_pid
+          WHERE staging_table.ld_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.lead deleted_records
+              WHERE deleted_records.ld_pid = history_table.ld_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

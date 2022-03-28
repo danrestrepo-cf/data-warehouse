@@ -35,40 +35,43 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100137:
-    input_type: table
-    output_type: insert
-    json_output_field: cdnt_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.construction_draw_number_ticker
-      SELECT staging_table.cdnt_pid
-           , staging_table.cdnt_version
-           , staging_table.cdnt_proposal_pid
-           , staging_table.cdnt_next_construction_draw_number
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.construction_draw_number_ticker staging_table
-      LEFT JOIN history_octane.construction_draw_number_ticker history_table
-                ON staging_table.cdnt_pid = history_table.cdnt_pid
-                    AND staging_table.cdnt_version = history_table.cdnt_version
-      WHERE history_table.cdnt_pid IS NULL
-      UNION ALL
-      SELECT history_table.cdnt_pid
-           , history_table.cdnt_version + 1
-           , history_table.cdnt_proposal_pid
-           , history_table.cdnt_next_construction_draw_number
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.construction_draw_number_ticker history_table
-      LEFT JOIN staging_octane.construction_draw_number_ticker staging_table
-                ON staging_table.cdnt_pid = history_table.cdnt_pid
-      WHERE staging_table.cdnt_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.construction_draw_number_ticker deleted_records
-          WHERE deleted_records.cdnt_pid = history_table.cdnt_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100137:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.construction_draw_number_ticker
+        json_output_field: cdnt_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.construction_draw_number_ticker
+          SELECT staging_table.cdnt_pid
+               , staging_table.cdnt_version
+               , staging_table.cdnt_proposal_pid
+               , staging_table.cdnt_next_construction_draw_number
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.construction_draw_number_ticker staging_table
+          LEFT JOIN history_octane.construction_draw_number_ticker history_table
+                    ON staging_table.cdnt_pid = history_table.cdnt_pid
+                        AND staging_table.cdnt_version = history_table.cdnt_version
+          WHERE history_table.cdnt_pid IS NULL
+          UNION ALL
+          SELECT history_table.cdnt_pid
+               , history_table.cdnt_version + 1
+               , history_table.cdnt_proposal_pid
+               , history_table.cdnt_next_construction_draw_number
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.construction_draw_number_ticker history_table
+          LEFT JOIN staging_octane.construction_draw_number_ticker staging_table
+                    ON staging_table.cdnt_pid = history_table.cdnt_pid
+          WHERE staging_table.cdnt_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.construction_draw_number_ticker deleted_records
+              WHERE deleted_records.cdnt_pid = history_table.cdnt_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

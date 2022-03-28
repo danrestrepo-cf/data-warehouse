@@ -43,40 +43,43 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100126:
-    input_type: table
-    output_type: insert
-    json_output_field: bas_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.borrower_asset
-      SELECT staging_table.bas_pid
-           , staging_table.bas_version
-           , staging_table.bas_borrower_pid
-           , staging_table.bas_asset_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.borrower_asset staging_table
-      LEFT JOIN history_octane.borrower_asset history_table
-                ON staging_table.bas_pid = history_table.bas_pid
-                    AND staging_table.bas_version = history_table.bas_version
-      WHERE history_table.bas_pid IS NULL
-      UNION ALL
-      SELECT history_table.bas_pid
-           , history_table.bas_version + 1
-           , history_table.bas_borrower_pid
-           , history_table.bas_asset_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.borrower_asset history_table
-      LEFT JOIN staging_octane.borrower_asset staging_table
-                ON staging_table.bas_pid = history_table.bas_pid
-      WHERE staging_table.bas_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.borrower_asset deleted_records
-          WHERE deleted_records.bas_pid = history_table.bas_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100126:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.borrower_asset
+        json_output_field: bas_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.borrower_asset
+          SELECT staging_table.bas_pid
+               , staging_table.bas_version
+               , staging_table.bas_borrower_pid
+               , staging_table.bas_asset_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.borrower_asset staging_table
+          LEFT JOIN history_octane.borrower_asset history_table
+                    ON staging_table.bas_pid = history_table.bas_pid
+                        AND staging_table.bas_version = history_table.bas_version
+          WHERE history_table.bas_pid IS NULL
+          UNION ALL
+          SELECT history_table.bas_pid
+               , history_table.bas_version + 1
+               , history_table.bas_borrower_pid
+               , history_table.bas_asset_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.borrower_asset history_table
+          LEFT JOIN staging_octane.borrower_asset staging_table
+                    ON staging_table.bas_pid = history_table.bas_pid
+          WHERE staging_table.bas_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.borrower_asset deleted_records
+              WHERE deleted_records.bas_pid = history_table.bas_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -183,70 +183,73 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.lip_version
-etls:
+step_functions:
   SP-100823:
-    input_type: table
-    output_type: insert
-    json_output_field: lip_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.liability_place
-      SELECT staging_table.lip_pid
-           , staging_table.lip_version
-           , staging_table.lip_liability_pid
-           , staging_table.lip_creditor_pid
-           , staging_table.lip_place_pid
-           , staging_table.lip_lien_priority_type
-           , staging_table.lip_liability_financing_type
-           , staging_table.lip_liability_foreclosure_exception_type
-           , staging_table.lip_liability_mi_type
-           , staging_table.lip_original_loan_amount
-           , staging_table.lip_property_taxes_escrowed
-           , staging_table.lip_property_insurance_escrowed
-           , staging_table.lip_senior_lien_restriction_type
-           , staging_table.lip_senior_lien_restriction_amount
-           , staging_table.lip_texas_equity
-           , staging_table.lip_texas_equity_conversion
-           , staging_table.lip_texas_equity_locked
-           , staging_table.lip_third_party_community_second_program_pid
-           , staging_table.lip_mortgage_delinquency_exception_type
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.liability_place staging_table
-      LEFT JOIN history_octane.liability_place history_table
-                ON staging_table.lip_pid = history_table.lip_pid
-                    AND staging_table.lip_version = history_table.lip_version
-      WHERE history_table.lip_pid IS NULL
-      UNION ALL
-      SELECT history_table.lip_pid
-           , history_table.lip_version + 1
-           , history_table.lip_liability_pid
-           , history_table.lip_creditor_pid
-           , history_table.lip_place_pid
-           , history_table.lip_lien_priority_type
-           , history_table.lip_liability_financing_type
-           , history_table.lip_liability_foreclosure_exception_type
-           , history_table.lip_liability_mi_type
-           , history_table.lip_original_loan_amount
-           , history_table.lip_property_taxes_escrowed
-           , history_table.lip_property_insurance_escrowed
-           , history_table.lip_senior_lien_restriction_type
-           , history_table.lip_senior_lien_restriction_amount
-           , history_table.lip_texas_equity
-           , history_table.lip_texas_equity_conversion
-           , history_table.lip_texas_equity_locked
-           , history_table.lip_third_party_community_second_program_pid
-           , history_table.lip_mortgage_delinquency_exception_type
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.liability_place history_table
-      LEFT JOIN staging_octane.liability_place staging_table
-                ON staging_table.lip_pid = history_table.lip_pid
-      WHERE staging_table.lip_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.liability_place deleted_records
-          WHERE deleted_records.lip_pid = history_table.lip_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100823:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.liability_place
+        json_output_field: lip_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.liability_place
+          SELECT staging_table.lip_pid
+               , staging_table.lip_version
+               , staging_table.lip_liability_pid
+               , staging_table.lip_creditor_pid
+               , staging_table.lip_place_pid
+               , staging_table.lip_lien_priority_type
+               , staging_table.lip_liability_financing_type
+               , staging_table.lip_liability_foreclosure_exception_type
+               , staging_table.lip_liability_mi_type
+               , staging_table.lip_original_loan_amount
+               , staging_table.lip_property_taxes_escrowed
+               , staging_table.lip_property_insurance_escrowed
+               , staging_table.lip_senior_lien_restriction_type
+               , staging_table.lip_senior_lien_restriction_amount
+               , staging_table.lip_texas_equity
+               , staging_table.lip_texas_equity_conversion
+               , staging_table.lip_texas_equity_locked
+               , staging_table.lip_third_party_community_second_program_pid
+               , staging_table.lip_mortgage_delinquency_exception_type
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.liability_place staging_table
+          LEFT JOIN history_octane.liability_place history_table
+                    ON staging_table.lip_pid = history_table.lip_pid
+                        AND staging_table.lip_version = history_table.lip_version
+          WHERE history_table.lip_pid IS NULL
+          UNION ALL
+          SELECT history_table.lip_pid
+               , history_table.lip_version + 1
+               , history_table.lip_liability_pid
+               , history_table.lip_creditor_pid
+               , history_table.lip_place_pid
+               , history_table.lip_lien_priority_type
+               , history_table.lip_liability_financing_type
+               , history_table.lip_liability_foreclosure_exception_type
+               , history_table.lip_liability_mi_type
+               , history_table.lip_original_loan_amount
+               , history_table.lip_property_taxes_escrowed
+               , history_table.lip_property_insurance_escrowed
+               , history_table.lip_senior_lien_restriction_type
+               , history_table.lip_senior_lien_restriction_amount
+               , history_table.lip_texas_equity
+               , history_table.lip_texas_equity_conversion
+               , history_table.lip_texas_equity_locked
+               , history_table.lip_third_party_community_second_program_pid
+               , history_table.lip_mortgage_delinquency_exception_type
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.liability_place history_table
+          LEFT JOIN staging_octane.liability_place staging_table
+                    ON staging_table.lip_pid = history_table.lip_pid
+          WHERE staging_table.lip_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.liability_place deleted_records
+              WHERE deleted_records.lip_pid = history_table.lip_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -35,40 +35,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.ss_version
-etls:
+step_functions:
   SP-100250:
-    input_type: table
-    output_type: insert
-    json_output_field: ss_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.smart_stack
-      SELECT staging_table.ss_pid
-           , staging_table.ss_version
-           , staging_table.ss_account_pid
-           , staging_table.ss_name
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.smart_stack staging_table
-      LEFT JOIN history_octane.smart_stack history_table
-                ON staging_table.ss_pid = history_table.ss_pid
-                    AND staging_table.ss_version = history_table.ss_version
-      WHERE history_table.ss_pid IS NULL
-      UNION ALL
-      SELECT history_table.ss_pid
-           , history_table.ss_version + 1
-           , history_table.ss_account_pid
-           , history_table.ss_name
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.smart_stack history_table
-      LEFT JOIN staging_octane.smart_stack staging_table
-                ON staging_table.ss_pid = history_table.ss_pid
-      WHERE staging_table.ss_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.smart_stack deleted_records
-          WHERE deleted_records.ss_pid = history_table.ss_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100250:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.smart_stack
+        json_output_field: ss_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.smart_stack
+          SELECT staging_table.ss_pid
+               , staging_table.ss_version
+               , staging_table.ss_account_pid
+               , staging_table.ss_name
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.smart_stack staging_table
+          LEFT JOIN history_octane.smart_stack history_table
+                    ON staging_table.ss_pid = history_table.ss_pid
+                        AND staging_table.ss_version = history_table.ss_version
+          WHERE history_table.ss_pid IS NULL
+          UNION ALL
+          SELECT history_table.ss_pid
+               , history_table.ss_version + 1
+               , history_table.ss_account_pid
+               , history_table.ss_name
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.smart_stack history_table
+          LEFT JOIN staging_octane.smart_stack staging_table
+                    ON staging_table.ss_pid = history_table.ss_pid
+          WHERE staging_table.ss_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.smart_stack deleted_records
+              WHERE deleted_records.ss_pid = history_table.ss_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

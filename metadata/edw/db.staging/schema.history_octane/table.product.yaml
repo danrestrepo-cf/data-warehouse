@@ -107,62 +107,65 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.p_version
-etls:
+step_functions:
   SP-100105:
-    input_type: table
-    output_type: insert
-    json_output_field: p_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.product
-      SELECT staging_table.p_pid
-           , staging_table.p_version
-           , staging_table.p_account_pid
-           , staging_table.p_investor_pid
-           , staging_table.p_fund_source_type
-           , staging_table.p_investor_product_id
-           , staging_table.p_investor_product_name
-           , staging_table.p_from_date
-           , staging_table.p_through_date
-           , staging_table.p_fnm_product_name
-           , staging_table.p_lock_auto_confirm
-           , staging_table.p_description
-           , staging_table.p_product_side_type
-           , staging_table.p_parent_product_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.product staging_table
-      LEFT JOIN history_octane.product history_table
-                ON staging_table.p_pid = history_table.p_pid
-                    AND staging_table.p_version = history_table.p_version
-      WHERE history_table.p_pid IS NULL
-      UNION ALL
-      SELECT history_table.p_pid
-           , history_table.p_version + 1
-           , history_table.p_account_pid
-           , history_table.p_investor_pid
-           , history_table.p_fund_source_type
-           , history_table.p_investor_product_id
-           , history_table.p_investor_product_name
-           , history_table.p_from_date
-           , history_table.p_through_date
-           , history_table.p_fnm_product_name
-           , history_table.p_lock_auto_confirm
-           , history_table.p_description
-           , history_table.p_product_side_type
-           , history_table.p_parent_product_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.product history_table
-      LEFT JOIN staging_octane.product staging_table
-                ON staging_table.p_pid = history_table.p_pid
-      WHERE staging_table.p_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.product deleted_records
-          WHERE deleted_records.p_pid = history_table.p_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
-next_etls:
-- SP-200017
+    etls:
+      ETL-100105:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.product
+        json_output_field: p_pid
+        truncate_table: false
+        container_memory: 2048
+        next_step_functions:
+        - SP-200017
+        input_sql: |-
+          --finding records to insert into history_octane.product
+          SELECT staging_table.p_pid
+               , staging_table.p_version
+               , staging_table.p_account_pid
+               , staging_table.p_investor_pid
+               , staging_table.p_fund_source_type
+               , staging_table.p_investor_product_id
+               , staging_table.p_investor_product_name
+               , staging_table.p_from_date
+               , staging_table.p_through_date
+               , staging_table.p_fnm_product_name
+               , staging_table.p_lock_auto_confirm
+               , staging_table.p_description
+               , staging_table.p_product_side_type
+               , staging_table.p_parent_product_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.product staging_table
+          LEFT JOIN history_octane.product history_table
+                    ON staging_table.p_pid = history_table.p_pid
+                        AND staging_table.p_version = history_table.p_version
+          WHERE history_table.p_pid IS NULL
+          UNION ALL
+          SELECT history_table.p_pid
+               , history_table.p_version + 1
+               , history_table.p_account_pid
+               , history_table.p_investor_pid
+               , history_table.p_fund_source_type
+               , history_table.p_investor_product_id
+               , history_table.p_investor_product_name
+               , history_table.p_from_date
+               , history_table.p_through_date
+               , history_table.p_fnm_product_name
+               , history_table.p_lock_auto_confirm
+               , history_table.p_description
+               , history_table.p_product_side_type
+               , history_table.p_parent_product_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.product history_table
+          LEFT JOIN staging_octane.product staging_table
+                    ON staging_table.p_pid = history_table.p_pid
+          WHERE staging_table.p_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.product deleted_records
+              WHERE deleted_records.p_pid = history_table.p_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

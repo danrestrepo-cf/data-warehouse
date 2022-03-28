@@ -291,116 +291,119 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.fc_version
-etls:
+step_functions:
   SP-100122:
-    input_type: table
-    output_type: insert
-    json_output_field: fc_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.flood_cert
-      SELECT staging_table.fc_pid
-           , staging_table.fc_version
-           , staging_table.fc_deal_pid
-           , staging_table.fc_flood_certificate_type
-           , staging_table.fc_flood_cert_vendor_type
-           , staging_table.fc_flood_certification_reference_number
-           , staging_table.fc_flood_cert_effective_date
-           , staging_table.fc_nfip_community_name
-           , staging_table.fc_nfip_counties
-           , staging_table.fc_nfip_state
-           , staging_table.fc_nfip_community_number
-           , staging_table.fc_nfip_community_firm_date
-           , staging_table.fc_nfip_community_participation_start_date
-           , staging_table.fc_flood_partial
-           , staging_table.fc_nfip_map_number
-           , staging_table.fc_nfip_map_panel
-           , staging_table.fc_nfip_map_panel_suffix
-           , staging_table.fc_nfip_map_panel_date
-           , staging_table.fc_nfip_map_exists
-           , staging_table.fc_nfip_letter_of_map_date
-           , staging_table.fc_nfip_letter_of_map_case_number
-           , staging_table.fc_fema_flood_zone_designation_type
-           , staging_table.fc_nfip_community_participation_status_type
-           , staging_table.fc_protected_area
-           , staging_table.fc_protected_area_designation_date
-           , staging_table.fc_special_flood_hazard_area
-           , staging_table.fc_property_county_fips
-           , staging_table.fc_property_state_fips
-           , staging_table.fc_flood_cert_deal_file_pid
-           , staging_table.fc_property_address_city
-           , staging_table.fc_property_address_country
-           , staging_table.fc_property_address_postal_code
-           , staging_table.fc_property_address_state
-           , staging_table.fc_property_address_street1
-           , staging_table.fc_property_address_street2
-           , staging_table.fc_property_county_name
-           , staging_table.fc_clg_flood_cert_messages
-           , staging_table.fc_clg_flood_cert_status_type
-           , staging_table.fc_clg_flood_cert_request_datetime
-           , staging_table.fc_clg_flood_cert_requester_agent_type
-           , staging_table.fc_clg_flood_cert_requester_lender_user_pid
-           , staging_table.fc_clg_flood_cert_requester_unparsed_name
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.flood_cert staging_table
-      LEFT JOIN history_octane.flood_cert history_table
-                ON staging_table.fc_pid = history_table.fc_pid
-                    AND staging_table.fc_version = history_table.fc_version
-      WHERE history_table.fc_pid IS NULL
-      UNION ALL
-      SELECT history_table.fc_pid
-           , history_table.fc_version + 1
-           , history_table.fc_deal_pid
-           , history_table.fc_flood_certificate_type
-           , history_table.fc_flood_cert_vendor_type
-           , history_table.fc_flood_certification_reference_number
-           , history_table.fc_flood_cert_effective_date
-           , history_table.fc_nfip_community_name
-           , history_table.fc_nfip_counties
-           , history_table.fc_nfip_state
-           , history_table.fc_nfip_community_number
-           , history_table.fc_nfip_community_firm_date
-           , history_table.fc_nfip_community_participation_start_date
-           , history_table.fc_flood_partial
-           , history_table.fc_nfip_map_number
-           , history_table.fc_nfip_map_panel
-           , history_table.fc_nfip_map_panel_suffix
-           , history_table.fc_nfip_map_panel_date
-           , history_table.fc_nfip_map_exists
-           , history_table.fc_nfip_letter_of_map_date
-           , history_table.fc_nfip_letter_of_map_case_number
-           , history_table.fc_fema_flood_zone_designation_type
-           , history_table.fc_nfip_community_participation_status_type
-           , history_table.fc_protected_area
-           , history_table.fc_protected_area_designation_date
-           , history_table.fc_special_flood_hazard_area
-           , history_table.fc_property_county_fips
-           , history_table.fc_property_state_fips
-           , history_table.fc_flood_cert_deal_file_pid
-           , history_table.fc_property_address_city
-           , history_table.fc_property_address_country
-           , history_table.fc_property_address_postal_code
-           , history_table.fc_property_address_state
-           , history_table.fc_property_address_street1
-           , history_table.fc_property_address_street2
-           , history_table.fc_property_county_name
-           , history_table.fc_clg_flood_cert_messages
-           , history_table.fc_clg_flood_cert_status_type
-           , history_table.fc_clg_flood_cert_request_datetime
-           , history_table.fc_clg_flood_cert_requester_agent_type
-           , history_table.fc_clg_flood_cert_requester_lender_user_pid
-           , history_table.fc_clg_flood_cert_requester_unparsed_name
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.flood_cert history_table
-      LEFT JOIN staging_octane.flood_cert staging_table
-                ON staging_table.fc_pid = history_table.fc_pid
-      WHERE staging_table.fc_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.flood_cert deleted_records
-          WHERE deleted_records.fc_pid = history_table.fc_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100122:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.flood_cert
+        json_output_field: fc_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.flood_cert
+          SELECT staging_table.fc_pid
+               , staging_table.fc_version
+               , staging_table.fc_deal_pid
+               , staging_table.fc_flood_certificate_type
+               , staging_table.fc_flood_cert_vendor_type
+               , staging_table.fc_flood_certification_reference_number
+               , staging_table.fc_flood_cert_effective_date
+               , staging_table.fc_nfip_community_name
+               , staging_table.fc_nfip_counties
+               , staging_table.fc_nfip_state
+               , staging_table.fc_nfip_community_number
+               , staging_table.fc_nfip_community_firm_date
+               , staging_table.fc_nfip_community_participation_start_date
+               , staging_table.fc_flood_partial
+               , staging_table.fc_nfip_map_number
+               , staging_table.fc_nfip_map_panel
+               , staging_table.fc_nfip_map_panel_suffix
+               , staging_table.fc_nfip_map_panel_date
+               , staging_table.fc_nfip_map_exists
+               , staging_table.fc_nfip_letter_of_map_date
+               , staging_table.fc_nfip_letter_of_map_case_number
+               , staging_table.fc_fema_flood_zone_designation_type
+               , staging_table.fc_nfip_community_participation_status_type
+               , staging_table.fc_protected_area
+               , staging_table.fc_protected_area_designation_date
+               , staging_table.fc_special_flood_hazard_area
+               , staging_table.fc_property_county_fips
+               , staging_table.fc_property_state_fips
+               , staging_table.fc_flood_cert_deal_file_pid
+               , staging_table.fc_property_address_city
+               , staging_table.fc_property_address_country
+               , staging_table.fc_property_address_postal_code
+               , staging_table.fc_property_address_state
+               , staging_table.fc_property_address_street1
+               , staging_table.fc_property_address_street2
+               , staging_table.fc_property_county_name
+               , staging_table.fc_clg_flood_cert_messages
+               , staging_table.fc_clg_flood_cert_status_type
+               , staging_table.fc_clg_flood_cert_request_datetime
+               , staging_table.fc_clg_flood_cert_requester_agent_type
+               , staging_table.fc_clg_flood_cert_requester_lender_user_pid
+               , staging_table.fc_clg_flood_cert_requester_unparsed_name
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.flood_cert staging_table
+          LEFT JOIN history_octane.flood_cert history_table
+                    ON staging_table.fc_pid = history_table.fc_pid
+                        AND staging_table.fc_version = history_table.fc_version
+          WHERE history_table.fc_pid IS NULL
+          UNION ALL
+          SELECT history_table.fc_pid
+               , history_table.fc_version + 1
+               , history_table.fc_deal_pid
+               , history_table.fc_flood_certificate_type
+               , history_table.fc_flood_cert_vendor_type
+               , history_table.fc_flood_certification_reference_number
+               , history_table.fc_flood_cert_effective_date
+               , history_table.fc_nfip_community_name
+               , history_table.fc_nfip_counties
+               , history_table.fc_nfip_state
+               , history_table.fc_nfip_community_number
+               , history_table.fc_nfip_community_firm_date
+               , history_table.fc_nfip_community_participation_start_date
+               , history_table.fc_flood_partial
+               , history_table.fc_nfip_map_number
+               , history_table.fc_nfip_map_panel
+               , history_table.fc_nfip_map_panel_suffix
+               , history_table.fc_nfip_map_panel_date
+               , history_table.fc_nfip_map_exists
+               , history_table.fc_nfip_letter_of_map_date
+               , history_table.fc_nfip_letter_of_map_case_number
+               , history_table.fc_fema_flood_zone_designation_type
+               , history_table.fc_nfip_community_participation_status_type
+               , history_table.fc_protected_area
+               , history_table.fc_protected_area_designation_date
+               , history_table.fc_special_flood_hazard_area
+               , history_table.fc_property_county_fips
+               , history_table.fc_property_state_fips
+               , history_table.fc_flood_cert_deal_file_pid
+               , history_table.fc_property_address_city
+               , history_table.fc_property_address_country
+               , history_table.fc_property_address_postal_code
+               , history_table.fc_property_address_state
+               , history_table.fc_property_address_street1
+               , history_table.fc_property_address_street2
+               , history_table.fc_property_county_name
+               , history_table.fc_clg_flood_cert_messages
+               , history_table.fc_clg_flood_cert_status_type
+               , history_table.fc_clg_flood_cert_request_datetime
+               , history_table.fc_clg_flood_cert_requester_agent_type
+               , history_table.fc_clg_flood_cert_requester_lender_user_pid
+               , history_table.fc_clg_flood_cert_requester_unparsed_name
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.flood_cert history_table
+          LEFT JOIN staging_octane.flood_cert staging_table
+                    ON staging_table.fc_pid = history_table.fc_pid
+          WHERE staging_table.fc_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.flood_cert deleted_records
+              WHERE deleted_records.fc_pid = history_table.fc_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

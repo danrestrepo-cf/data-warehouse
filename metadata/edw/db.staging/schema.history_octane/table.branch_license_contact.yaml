@@ -51,44 +51,47 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100883:
-    input_type: table
-    output_type: insert
-    json_output_field: brlc_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.branch_license_contact
-      SELECT staging_table.brlc_pid
-           , staging_table.brlc_version
-           , staging_table.brlc_lender_user_pid
-           , staging_table.brlc_branch_license_pid
-           , staging_table.brlc_from_date
-           , staging_table.brlc_through_date
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.branch_license_contact staging_table
-      LEFT JOIN history_octane.branch_license_contact history_table
-                ON staging_table.brlc_pid = history_table.brlc_pid
-                    AND staging_table.brlc_version = history_table.brlc_version
-      WHERE history_table.brlc_pid IS NULL
-      UNION ALL
-      SELECT history_table.brlc_pid
-           , history_table.brlc_version + 1
-           , history_table.brlc_lender_user_pid
-           , history_table.brlc_branch_license_pid
-           , history_table.brlc_from_date
-           , history_table.brlc_through_date
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.branch_license_contact history_table
-      LEFT JOIN staging_octane.branch_license_contact staging_table
-                ON staging_table.brlc_pid = history_table.brlc_pid
-      WHERE staging_table.brlc_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.branch_license_contact deleted_records
-          WHERE deleted_records.brlc_pid = history_table.brlc_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100883:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.branch_license_contact
+        json_output_field: brlc_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.branch_license_contact
+          SELECT staging_table.brlc_pid
+               , staging_table.brlc_version
+               , staging_table.brlc_lender_user_pid
+               , staging_table.brlc_branch_license_pid
+               , staging_table.brlc_from_date
+               , staging_table.brlc_through_date
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.branch_license_contact staging_table
+          LEFT JOIN history_octane.branch_license_contact history_table
+                    ON staging_table.brlc_pid = history_table.brlc_pid
+                        AND staging_table.brlc_version = history_table.brlc_version
+          WHERE history_table.brlc_pid IS NULL
+          UNION ALL
+          SELECT history_table.brlc_pid
+               , history_table.brlc_version + 1
+               , history_table.brlc_lender_user_pid
+               , history_table.brlc_branch_license_pid
+               , history_table.brlc_from_date
+               , history_table.brlc_through_date
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.branch_license_contact history_table
+          LEFT JOIN staging_octane.branch_license_contact staging_table
+                    ON staging_table.brlc_pid = history_table.brlc_pid
+          WHERE staging_table.brlc_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.branch_license_contact deleted_records
+              WHERE deleted_records.brlc_pid = history_table.brlc_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

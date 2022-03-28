@@ -159,78 +159,81 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100138:
-    input_type: table
-    output_type: insert
-    json_output_field: ci_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.credit_inquiry
-      SELECT staging_table.ci_pid
-           , staging_table.ci_version
-           , staging_table.ci_proposal_pid
-           , staging_table.ci_credit_request_pid
-           , staging_table.ci_inquiry_date
-           , staging_table.ci_name
-           , staging_table.ci_address_street1
-           , staging_table.ci_address_street2
-           , staging_table.ci_address_city
-           , staging_table.ci_address_state
-           , staging_table.ci_address_postal_code
-           , staging_table.ci_address_country
-           , staging_table.ci_phone
-           , staging_table.ci_credit_inquiry_result_type
-           , staging_table.ci_credit_business_type
-           , staging_table.ci_credit_loan_type
-           , staging_table.ci_equifax_included
-           , staging_table.ci_experian_included
-           , staging_table.ci_trans_union_included
-           , staging_table.ci_explanation_type
-           , staging_table.ci_explanation_info
-           , staging_table.ci_credit_report_identifier
-           , staging_table.ci_inquiry_date_provided
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.credit_inquiry staging_table
-      LEFT JOIN history_octane.credit_inquiry history_table
-                ON staging_table.ci_pid = history_table.ci_pid
-                    AND staging_table.ci_version = history_table.ci_version
-      WHERE history_table.ci_pid IS NULL
-      UNION ALL
-      SELECT history_table.ci_pid
-           , history_table.ci_version + 1
-           , history_table.ci_proposal_pid
-           , history_table.ci_credit_request_pid
-           , history_table.ci_inquiry_date
-           , history_table.ci_name
-           , history_table.ci_address_street1
-           , history_table.ci_address_street2
-           , history_table.ci_address_city
-           , history_table.ci_address_state
-           , history_table.ci_address_postal_code
-           , history_table.ci_address_country
-           , history_table.ci_phone
-           , history_table.ci_credit_inquiry_result_type
-           , history_table.ci_credit_business_type
-           , history_table.ci_credit_loan_type
-           , history_table.ci_equifax_included
-           , history_table.ci_experian_included
-           , history_table.ci_trans_union_included
-           , history_table.ci_explanation_type
-           , history_table.ci_explanation_info
-           , history_table.ci_credit_report_identifier
-           , history_table.ci_inquiry_date_provided
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.credit_inquiry history_table
-      LEFT JOIN staging_octane.credit_inquiry staging_table
-                ON staging_table.ci_pid = history_table.ci_pid
-      WHERE staging_table.ci_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.credit_inquiry deleted_records
-          WHERE deleted_records.ci_pid = history_table.ci_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100138:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.credit_inquiry
+        json_output_field: ci_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.credit_inquiry
+          SELECT staging_table.ci_pid
+               , staging_table.ci_version
+               , staging_table.ci_proposal_pid
+               , staging_table.ci_credit_request_pid
+               , staging_table.ci_inquiry_date
+               , staging_table.ci_name
+               , staging_table.ci_address_street1
+               , staging_table.ci_address_street2
+               , staging_table.ci_address_city
+               , staging_table.ci_address_state
+               , staging_table.ci_address_postal_code
+               , staging_table.ci_address_country
+               , staging_table.ci_phone
+               , staging_table.ci_credit_inquiry_result_type
+               , staging_table.ci_credit_business_type
+               , staging_table.ci_credit_loan_type
+               , staging_table.ci_equifax_included
+               , staging_table.ci_experian_included
+               , staging_table.ci_trans_union_included
+               , staging_table.ci_explanation_type
+               , staging_table.ci_explanation_info
+               , staging_table.ci_credit_report_identifier
+               , staging_table.ci_inquiry_date_provided
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.credit_inquiry staging_table
+          LEFT JOIN history_octane.credit_inquiry history_table
+                    ON staging_table.ci_pid = history_table.ci_pid
+                        AND staging_table.ci_version = history_table.ci_version
+          WHERE history_table.ci_pid IS NULL
+          UNION ALL
+          SELECT history_table.ci_pid
+               , history_table.ci_version + 1
+               , history_table.ci_proposal_pid
+               , history_table.ci_credit_request_pid
+               , history_table.ci_inquiry_date
+               , history_table.ci_name
+               , history_table.ci_address_street1
+               , history_table.ci_address_street2
+               , history_table.ci_address_city
+               , history_table.ci_address_state
+               , history_table.ci_address_postal_code
+               , history_table.ci_address_country
+               , history_table.ci_phone
+               , history_table.ci_credit_inquiry_result_type
+               , history_table.ci_credit_business_type
+               , history_table.ci_credit_loan_type
+               , history_table.ci_equifax_included
+               , history_table.ci_experian_included
+               , history_table.ci_trans_union_included
+               , history_table.ci_explanation_type
+               , history_table.ci_explanation_info
+               , history_table.ci_credit_report_identifier
+               , history_table.ci_inquiry_date_provided
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.credit_inquiry history_table
+          LEFT JOIN staging_octane.credit_inquiry staging_table
+                    ON staging_table.ci_pid = history_table.ci_pid
+          WHERE staging_table.ci_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.credit_inquiry deleted_records
+              WHERE deleted_records.ci_pid = history_table.ci_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

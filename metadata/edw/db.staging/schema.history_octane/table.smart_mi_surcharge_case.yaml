@@ -53,44 +53,47 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.smsc_version
-etls:
+step_functions:
   SP-100249:
-    input_type: table
-    output_type: insert
-    json_output_field: smsc_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.smart_mi_surcharge_case
-      SELECT staging_table.smsc_pid
-           , staging_table.smsc_version
-           , staging_table.smsc_smart_mi_surcharge_pid
-           , staging_table.smsc_criteria_pid
-           , staging_table.smsc_government_surcharge_percent
-           , staging_table.smsc_minimum_surcharge_amount
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.smart_mi_surcharge_case staging_table
-      LEFT JOIN history_octane.smart_mi_surcharge_case history_table
-                ON staging_table.smsc_pid = history_table.smsc_pid
-                    AND staging_table.smsc_version = history_table.smsc_version
-      WHERE history_table.smsc_pid IS NULL
-      UNION ALL
-      SELECT history_table.smsc_pid
-           , history_table.smsc_version + 1
-           , history_table.smsc_smart_mi_surcharge_pid
-           , history_table.smsc_criteria_pid
-           , history_table.smsc_government_surcharge_percent
-           , history_table.smsc_minimum_surcharge_amount
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.smart_mi_surcharge_case history_table
-      LEFT JOIN staging_octane.smart_mi_surcharge_case staging_table
-                ON staging_table.smsc_pid = history_table.smsc_pid
-      WHERE staging_table.smsc_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.smart_mi_surcharge_case deleted_records
-          WHERE deleted_records.smsc_pid = history_table.smsc_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100249:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.smart_mi_surcharge_case
+        json_output_field: smsc_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.smart_mi_surcharge_case
+          SELECT staging_table.smsc_pid
+               , staging_table.smsc_version
+               , staging_table.smsc_smart_mi_surcharge_pid
+               , staging_table.smsc_criteria_pid
+               , staging_table.smsc_government_surcharge_percent
+               , staging_table.smsc_minimum_surcharge_amount
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.smart_mi_surcharge_case staging_table
+          LEFT JOIN history_octane.smart_mi_surcharge_case history_table
+                    ON staging_table.smsc_pid = history_table.smsc_pid
+                        AND staging_table.smsc_version = history_table.smsc_version
+          WHERE history_table.smsc_pid IS NULL
+          UNION ALL
+          SELECT history_table.smsc_pid
+               , history_table.smsc_version + 1
+               , history_table.smsc_smart_mi_surcharge_pid
+               , history_table.smsc_criteria_pid
+               , history_table.smsc_government_surcharge_percent
+               , history_table.smsc_minimum_surcharge_amount
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.smart_mi_surcharge_case history_table
+          LEFT JOIN staging_octane.smart_mi_surcharge_case staging_table
+                    ON staging_table.smsc_pid = history_table.smsc_pid
+          WHERE staging_table.smsc_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.smart_mi_surcharge_case deleted_records
+              WHERE deleted_records.smsc_pid = history_table.smsc_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -223,86 +223,89 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.le_version
-etls:
+step_functions:
   SP-100214:
-    input_type: table
-    output_type: insert
-    json_output_field: le_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.ledger_entry
-      SELECT staging_table.le_pid
-           , staging_table.le_version
-           , staging_table.le_account_pid
-           , staging_table.le_ledger_entry_type
-           , staging_table.le_ledger_entry_source_type
-           , staging_table.le_estimate
-           , staging_table.le_ledger_entry_decision_status_type
-           , staging_table.le_create_datetime
-           , staging_table.le_entry_amount
-           , staging_table.le_source_org_node_pid
-           , staging_table.le_payee_org_node_pid
-           , staging_table.le_payee_org_lineage_pid
-           , staging_table.le_source_org_lineage_pid
-           , staging_table.le_org_lineage_source_date
-           , staging_table.le_deal_pid
-           , staging_table.le_loan_position_type
-           , staging_table.le_los_loan_id
-           , staging_table.le_notes
-           , staging_table.le_monthly_ledger_book_pid
-           , staging_table.le_payroll_ledger_book_pid
-           , staging_table.le_ledger_book_datetime
-           , staging_table.le_expense_date
-           , staging_table.le_reversal
-           , staging_table.le_passthrough
-           , staging_table.le_smart_ledger_plan_case_version_pid
-           , staging_table.le_synthetic_unique
-           , staging_table.le_smart_adjustment
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.ledger_entry staging_table
-      LEFT JOIN history_octane.ledger_entry history_table
-                ON staging_table.le_pid = history_table.le_pid
-                    AND staging_table.le_version = history_table.le_version
-      WHERE history_table.le_pid IS NULL
-      UNION ALL
-      SELECT history_table.le_pid
-           , history_table.le_version + 1
-           , history_table.le_account_pid
-           , history_table.le_ledger_entry_type
-           , history_table.le_ledger_entry_source_type
-           , history_table.le_estimate
-           , history_table.le_ledger_entry_decision_status_type
-           , history_table.le_create_datetime
-           , history_table.le_entry_amount
-           , history_table.le_source_org_node_pid
-           , history_table.le_payee_org_node_pid
-           , history_table.le_payee_org_lineage_pid
-           , history_table.le_source_org_lineage_pid
-           , history_table.le_org_lineage_source_date
-           , history_table.le_deal_pid
-           , history_table.le_loan_position_type
-           , history_table.le_los_loan_id
-           , history_table.le_notes
-           , history_table.le_monthly_ledger_book_pid
-           , history_table.le_payroll_ledger_book_pid
-           , history_table.le_ledger_book_datetime
-           , history_table.le_expense_date
-           , history_table.le_reversal
-           , history_table.le_passthrough
-           , history_table.le_smart_ledger_plan_case_version_pid
-           , history_table.le_synthetic_unique
-           , history_table.le_smart_adjustment
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.ledger_entry history_table
-      LEFT JOIN staging_octane.ledger_entry staging_table
-                ON staging_table.le_pid = history_table.le_pid
-      WHERE staging_table.le_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.ledger_entry deleted_records
-          WHERE deleted_records.le_pid = history_table.le_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100214:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.ledger_entry
+        json_output_field: le_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.ledger_entry
+          SELECT staging_table.le_pid
+               , staging_table.le_version
+               , staging_table.le_account_pid
+               , staging_table.le_ledger_entry_type
+               , staging_table.le_ledger_entry_source_type
+               , staging_table.le_estimate
+               , staging_table.le_ledger_entry_decision_status_type
+               , staging_table.le_create_datetime
+               , staging_table.le_entry_amount
+               , staging_table.le_source_org_node_pid
+               , staging_table.le_payee_org_node_pid
+               , staging_table.le_payee_org_lineage_pid
+               , staging_table.le_source_org_lineage_pid
+               , staging_table.le_org_lineage_source_date
+               , staging_table.le_deal_pid
+               , staging_table.le_loan_position_type
+               , staging_table.le_los_loan_id
+               , staging_table.le_notes
+               , staging_table.le_monthly_ledger_book_pid
+               , staging_table.le_payroll_ledger_book_pid
+               , staging_table.le_ledger_book_datetime
+               , staging_table.le_expense_date
+               , staging_table.le_reversal
+               , staging_table.le_passthrough
+               , staging_table.le_smart_ledger_plan_case_version_pid
+               , staging_table.le_synthetic_unique
+               , staging_table.le_smart_adjustment
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.ledger_entry staging_table
+          LEFT JOIN history_octane.ledger_entry history_table
+                    ON staging_table.le_pid = history_table.le_pid
+                        AND staging_table.le_version = history_table.le_version
+          WHERE history_table.le_pid IS NULL
+          UNION ALL
+          SELECT history_table.le_pid
+               , history_table.le_version + 1
+               , history_table.le_account_pid
+               , history_table.le_ledger_entry_type
+               , history_table.le_ledger_entry_source_type
+               , history_table.le_estimate
+               , history_table.le_ledger_entry_decision_status_type
+               , history_table.le_create_datetime
+               , history_table.le_entry_amount
+               , history_table.le_source_org_node_pid
+               , history_table.le_payee_org_node_pid
+               , history_table.le_payee_org_lineage_pid
+               , history_table.le_source_org_lineage_pid
+               , history_table.le_org_lineage_source_date
+               , history_table.le_deal_pid
+               , history_table.le_loan_position_type
+               , history_table.le_los_loan_id
+               , history_table.le_notes
+               , history_table.le_monthly_ledger_book_pid
+               , history_table.le_payroll_ledger_book_pid
+               , history_table.le_ledger_book_datetime
+               , history_table.le_expense_date
+               , history_table.le_reversal
+               , history_table.le_passthrough
+               , history_table.le_smart_ledger_plan_case_version_pid
+               , history_table.le_synthetic_unique
+               , history_table.le_smart_adjustment
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.ledger_entry history_table
+          LEFT JOIN staging_octane.ledger_entry staging_table
+                    ON staging_table.le_pid = history_table.le_pid
+          WHERE staging_table.le_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.ledger_entry deleted_records
+              WHERE deleted_records.le_pid = history_table.le_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -71,50 +71,53 @@ columns:
     data_type: VARCHAR(128)
     source:
       field: primary_source_table.columns.wdo_wf_outcome_type
-etls:
+step_functions:
   SP-100197:
-    input_type: table
-    output_type: insert
-    json_output_field: wdo_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.wf_deal_outcome
-      SELECT staging_table.wdo_pid
-           , staging_table.wdo_version
-           , staging_table.wdo_wf_deal_step_pid
-           , staging_table.wdo_wf_outcome_type
-           , staging_table.wdo_outcome_name
-           , staging_table.wdo_borrower_message
-           , staging_table.wdo_lender_description
-           , staging_table.wdo_incomplete_outcome
-           , staging_table.wdo_transition_wf_deal_step_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.wf_deal_outcome staging_table
-      LEFT JOIN history_octane.wf_deal_outcome history_table
-                ON staging_table.wdo_pid = history_table.wdo_pid
-                    AND staging_table.wdo_version = history_table.wdo_version
-      WHERE history_table.wdo_pid IS NULL
-      UNION ALL
-      SELECT history_table.wdo_pid
-           , history_table.wdo_version + 1
-           , history_table.wdo_wf_deal_step_pid
-           , history_table.wdo_wf_outcome_type
-           , history_table.wdo_outcome_name
-           , history_table.wdo_borrower_message
-           , history_table.wdo_lender_description
-           , history_table.wdo_incomplete_outcome
-           , history_table.wdo_transition_wf_deal_step_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.wf_deal_outcome history_table
-      LEFT JOIN staging_octane.wf_deal_outcome staging_table
-                ON staging_table.wdo_pid = history_table.wdo_pid
-      WHERE staging_table.wdo_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.wf_deal_outcome deleted_records
-          WHERE deleted_records.wdo_pid = history_table.wdo_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100197:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.wf_deal_outcome
+        json_output_field: wdo_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.wf_deal_outcome
+          SELECT staging_table.wdo_pid
+               , staging_table.wdo_version
+               , staging_table.wdo_wf_deal_step_pid
+               , staging_table.wdo_wf_outcome_type
+               , staging_table.wdo_outcome_name
+               , staging_table.wdo_borrower_message
+               , staging_table.wdo_lender_description
+               , staging_table.wdo_incomplete_outcome
+               , staging_table.wdo_transition_wf_deal_step_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.wf_deal_outcome staging_table
+          LEFT JOIN history_octane.wf_deal_outcome history_table
+                    ON staging_table.wdo_pid = history_table.wdo_pid
+                        AND staging_table.wdo_version = history_table.wdo_version
+          WHERE history_table.wdo_pid IS NULL
+          UNION ALL
+          SELECT history_table.wdo_pid
+               , history_table.wdo_version + 1
+               , history_table.wdo_wf_deal_step_pid
+               , history_table.wdo_wf_outcome_type
+               , history_table.wdo_outcome_name
+               , history_table.wdo_borrower_message
+               , history_table.wdo_lender_description
+               , history_table.wdo_incomplete_outcome
+               , history_table.wdo_transition_wf_deal_step_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.wf_deal_outcome history_table
+          LEFT JOIN staging_octane.wf_deal_outcome staging_table
+                    ON staging_table.wdo_pid = history_table.wdo_pid
+          WHERE staging_table.wdo_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.wf_deal_outcome deleted_records
+              WHERE deleted_records.wdo_pid = history_table.wdo_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

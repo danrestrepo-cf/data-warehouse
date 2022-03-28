@@ -87,50 +87,53 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.slpcg_version
-etls:
+step_functions:
   SP-100211:
-    input_type: table
-    output_type: insert
-    json_output_field: slpcg_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.smart_ledger_plan_case_group
-      SELECT staging_table.slpcg_pid
-           , staging_table.slpcg_version
-           , staging_table.slpcg_account_pid
-           , staging_table.slpcg_smart_ledger_plan_pid
-           , staging_table.slpcg_group_name
-           , staging_table.slpcg_group_id
-           , staging_table.slpcg_payer_org_node_pid
-           , staging_table.slpcg_smart_ledger_plan_case_group_calculation_type
-           , staging_table.slpcg_smart_ledger_plan_case_group_type
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.smart_ledger_plan_case_group staging_table
-      LEFT JOIN history_octane.smart_ledger_plan_case_group history_table
-                ON staging_table.slpcg_pid = history_table.slpcg_pid
-                    AND staging_table.slpcg_version = history_table.slpcg_version
-      WHERE history_table.slpcg_pid IS NULL
-      UNION ALL
-      SELECT history_table.slpcg_pid
-           , history_table.slpcg_version + 1
-           , history_table.slpcg_account_pid
-           , history_table.slpcg_smart_ledger_plan_pid
-           , history_table.slpcg_group_name
-           , history_table.slpcg_group_id
-           , history_table.slpcg_payer_org_node_pid
-           , history_table.slpcg_smart_ledger_plan_case_group_calculation_type
-           , history_table.slpcg_smart_ledger_plan_case_group_type
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.smart_ledger_plan_case_group history_table
-      LEFT JOIN staging_octane.smart_ledger_plan_case_group staging_table
-                ON staging_table.slpcg_pid = history_table.slpcg_pid
-      WHERE staging_table.slpcg_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.smart_ledger_plan_case_group deleted_records
-          WHERE deleted_records.slpcg_pid = history_table.slpcg_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100211:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.smart_ledger_plan_case_group
+        json_output_field: slpcg_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.smart_ledger_plan_case_group
+          SELECT staging_table.slpcg_pid
+               , staging_table.slpcg_version
+               , staging_table.slpcg_account_pid
+               , staging_table.slpcg_smart_ledger_plan_pid
+               , staging_table.slpcg_group_name
+               , staging_table.slpcg_group_id
+               , staging_table.slpcg_payer_org_node_pid
+               , staging_table.slpcg_smart_ledger_plan_case_group_calculation_type
+               , staging_table.slpcg_smart_ledger_plan_case_group_type
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.smart_ledger_plan_case_group staging_table
+          LEFT JOIN history_octane.smart_ledger_plan_case_group history_table
+                    ON staging_table.slpcg_pid = history_table.slpcg_pid
+                        AND staging_table.slpcg_version = history_table.slpcg_version
+          WHERE history_table.slpcg_pid IS NULL
+          UNION ALL
+          SELECT history_table.slpcg_pid
+               , history_table.slpcg_version + 1
+               , history_table.slpcg_account_pid
+               , history_table.slpcg_smart_ledger_plan_pid
+               , history_table.slpcg_group_name
+               , history_table.slpcg_group_id
+               , history_table.slpcg_payer_org_node_pid
+               , history_table.slpcg_smart_ledger_plan_case_group_calculation_type
+               , history_table.slpcg_smart_ledger_plan_case_group_type
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.smart_ledger_plan_case_group history_table
+          LEFT JOIN staging_octane.smart_ledger_plan_case_group staging_table
+                    ON staging_table.slpcg_pid = history_table.slpcg_pid
+          WHERE staging_table.slpcg_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.smart_ledger_plan_case_group deleted_records
+              WHERE deleted_records.slpcg_pid = history_table.slpcg_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

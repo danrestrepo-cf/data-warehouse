@@ -115,56 +115,59 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.frc_version
-etls:
+step_functions:
   SP-100045:
-    input_type: table
-    output_type: insert
-    json_output_field: frc_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.formula_report_column
-      SELECT staging_table.frc_pid
-           , staging_table.frc_version
-           , staging_table.frc_report_row_pid
-           , staging_table.frc_header
-           , staging_table.frc_formula
-           , staging_table.frc_field_type_1
-           , staging_table.frc_field_type_2
-           , staging_table.frc_field_type_3
-           , staging_table.frc_field_type_4
-           , staging_table.frc_field_type_5
-           , staging_table.frc_field_type_6
-           , staging_table.frc_ordinal
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.formula_report_column staging_table
-      LEFT JOIN history_octane.formula_report_column history_table
-                ON staging_table.frc_pid = history_table.frc_pid
-                    AND staging_table.frc_version = history_table.frc_version
-      WHERE history_table.frc_pid IS NULL
-      UNION ALL
-      SELECT history_table.frc_pid
-           , history_table.frc_version + 1
-           , history_table.frc_report_row_pid
-           , history_table.frc_header
-           , history_table.frc_formula
-           , history_table.frc_field_type_1
-           , history_table.frc_field_type_2
-           , history_table.frc_field_type_3
-           , history_table.frc_field_type_4
-           , history_table.frc_field_type_5
-           , history_table.frc_field_type_6
-           , history_table.frc_ordinal
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.formula_report_column history_table
-      LEFT JOIN staging_octane.formula_report_column staging_table
-                ON staging_table.frc_pid = history_table.frc_pid
-      WHERE staging_table.frc_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.formula_report_column deleted_records
-          WHERE deleted_records.frc_pid = history_table.frc_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100045:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.formula_report_column
+        json_output_field: frc_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.formula_report_column
+          SELECT staging_table.frc_pid
+               , staging_table.frc_version
+               , staging_table.frc_report_row_pid
+               , staging_table.frc_header
+               , staging_table.frc_formula
+               , staging_table.frc_field_type_1
+               , staging_table.frc_field_type_2
+               , staging_table.frc_field_type_3
+               , staging_table.frc_field_type_4
+               , staging_table.frc_field_type_5
+               , staging_table.frc_field_type_6
+               , staging_table.frc_ordinal
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.formula_report_column staging_table
+          LEFT JOIN history_octane.formula_report_column history_table
+                    ON staging_table.frc_pid = history_table.frc_pid
+                        AND staging_table.frc_version = history_table.frc_version
+          WHERE history_table.frc_pid IS NULL
+          UNION ALL
+          SELECT history_table.frc_pid
+               , history_table.frc_version + 1
+               , history_table.frc_report_row_pid
+               , history_table.frc_header
+               , history_table.frc_formula
+               , history_table.frc_field_type_1
+               , history_table.frc_field_type_2
+               , history_table.frc_field_type_3
+               , history_table.frc_field_type_4
+               , history_table.frc_field_type_5
+               , history_table.frc_field_type_6
+               , history_table.frc_ordinal
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.formula_report_column history_table
+          LEFT JOIN staging_octane.formula_report_column staging_table
+                    ON staging_table.frc_pid = history_table.frc_pid
+          WHERE staging_table.frc_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.formula_report_column deleted_records
+              WHERE deleted_records.frc_pid = history_table.frc_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

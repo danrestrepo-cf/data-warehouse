@@ -35,40 +35,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.scg_version
-etls:
+step_functions:
   SP-100243:
-    input_type: table
-    output_type: insert
-    json_output_field: scg_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.smart_charge_group
-      SELECT staging_table.scg_pid
-           , staging_table.scg_version
-           , staging_table.scg_smart_charge_pid
-           , staging_table.scg_group_name
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.smart_charge_group staging_table
-      LEFT JOIN history_octane.smart_charge_group history_table
-                ON staging_table.scg_pid = history_table.scg_pid
-                    AND staging_table.scg_version = history_table.scg_version
-      WHERE history_table.scg_pid IS NULL
-      UNION ALL
-      SELECT history_table.scg_pid
-           , history_table.scg_version + 1
-           , history_table.scg_smart_charge_pid
-           , history_table.scg_group_name
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.smart_charge_group history_table
-      LEFT JOIN staging_octane.smart_charge_group staging_table
-                ON staging_table.scg_pid = history_table.scg_pid
-      WHERE staging_table.scg_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.smart_charge_group deleted_records
-          WHERE deleted_records.scg_pid = history_table.scg_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100243:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.smart_charge_group
+        json_output_field: scg_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.smart_charge_group
+          SELECT staging_table.scg_pid
+               , staging_table.scg_version
+               , staging_table.scg_smart_charge_pid
+               , staging_table.scg_group_name
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.smart_charge_group staging_table
+          LEFT JOIN history_octane.smart_charge_group history_table
+                    ON staging_table.scg_pid = history_table.scg_pid
+                        AND staging_table.scg_version = history_table.scg_version
+          WHERE history_table.scg_pid IS NULL
+          UNION ALL
+          SELECT history_table.scg_pid
+               , history_table.scg_version + 1
+               , history_table.scg_smart_charge_pid
+               , history_table.scg_group_name
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.smart_charge_group history_table
+          LEFT JOIN staging_octane.smart_charge_group staging_table
+                    ON staging_table.scg_pid = history_table.scg_pid
+          WHERE staging_table.scg_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.smart_charge_group deleted_records
+              WHERE deleted_records.scg_pid = history_table.scg_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

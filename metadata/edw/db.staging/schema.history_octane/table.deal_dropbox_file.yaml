@@ -31,38 +31,41 @@ columns:
       field: primary_source_table.columns.ddf_version
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100296:
-    input_type: table
-    output_type: insert
-    json_output_field: ddf_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.deal_dropbox_file
-      SELECT staging_table.ddf_pid
-           , staging_table.ddf_version
-           , staging_table.ddf_deal_file_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.deal_dropbox_file staging_table
-      LEFT JOIN history_octane.deal_dropbox_file history_table
-                ON staging_table.ddf_pid = history_table.ddf_pid
-                    AND staging_table.ddf_version = history_table.ddf_version
-      WHERE history_table.ddf_pid IS NULL
-      UNION ALL
-      SELECT history_table.ddf_pid
-           , history_table.ddf_version + 1
-           , history_table.ddf_deal_file_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.deal_dropbox_file history_table
-      LEFT JOIN staging_octane.deal_dropbox_file staging_table
-                ON staging_table.ddf_pid = history_table.ddf_pid
-      WHERE staging_table.ddf_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.deal_dropbox_file deleted_records
-          WHERE deleted_records.ddf_pid = history_table.ddf_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100296:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.deal_dropbox_file
+        json_output_field: ddf_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.deal_dropbox_file
+          SELECT staging_table.ddf_pid
+               , staging_table.ddf_version
+               , staging_table.ddf_deal_file_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.deal_dropbox_file staging_table
+          LEFT JOIN history_octane.deal_dropbox_file history_table
+                    ON staging_table.ddf_pid = history_table.ddf_pid
+                        AND staging_table.ddf_version = history_table.ddf_version
+          WHERE history_table.ddf_pid IS NULL
+          UNION ALL
+          SELECT history_table.ddf_pid
+               , history_table.ddf_version + 1
+               , history_table.ddf_deal_file_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.deal_dropbox_file history_table
+          LEFT JOIN staging_octane.deal_dropbox_file staging_table
+                    ON staging_table.ddf_pid = history_table.ddf_pid
+          WHERE staging_table.ddf_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.deal_dropbox_file deleted_records
+              WHERE deleted_records.ddf_pid = history_table.ddf_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

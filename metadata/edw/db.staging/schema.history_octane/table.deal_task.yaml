@@ -63,50 +63,53 @@ columns:
       field: primary_source_table.columns.dt_wf_deal_step_pid
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100364:
-    input_type: table
-    output_type: insert
-    json_output_field: dt_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.deal_task
-      SELECT staging_table.dt_pid
-           , staging_table.dt_version
-           , staging_table.dt_wf_deal_step_pid
-           , staging_table.dt_create_lender_user_name
-           , staging_table.dt_create_datetime
-           , staging_table.dt_description
-           , staging_table.dt_complete_datetime
-           , staging_table.dt_deal_task_status_type
-           , staging_table.dt_smart_task
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.deal_task staging_table
-      LEFT JOIN history_octane.deal_task history_table
-                ON staging_table.dt_pid = history_table.dt_pid
-                    AND staging_table.dt_version = history_table.dt_version
-      WHERE history_table.dt_pid IS NULL
-      UNION ALL
-      SELECT history_table.dt_pid
-           , history_table.dt_version + 1
-           , history_table.dt_wf_deal_step_pid
-           , history_table.dt_create_lender_user_name
-           , history_table.dt_create_datetime
-           , history_table.dt_description
-           , history_table.dt_complete_datetime
-           , history_table.dt_deal_task_status_type
-           , history_table.dt_smart_task
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.deal_task history_table
-      LEFT JOIN staging_octane.deal_task staging_table
-                ON staging_table.dt_pid = history_table.dt_pid
-      WHERE staging_table.dt_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.deal_task deleted_records
-          WHERE deleted_records.dt_pid = history_table.dt_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100364:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.deal_task
+        json_output_field: dt_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.deal_task
+          SELECT staging_table.dt_pid
+               , staging_table.dt_version
+               , staging_table.dt_wf_deal_step_pid
+               , staging_table.dt_create_lender_user_name
+               , staging_table.dt_create_datetime
+               , staging_table.dt_description
+               , staging_table.dt_complete_datetime
+               , staging_table.dt_deal_task_status_type
+               , staging_table.dt_smart_task
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.deal_task staging_table
+          LEFT JOIN history_octane.deal_task history_table
+                    ON staging_table.dt_pid = history_table.dt_pid
+                        AND staging_table.dt_version = history_table.dt_version
+          WHERE history_table.dt_pid IS NULL
+          UNION ALL
+          SELECT history_table.dt_pid
+               , history_table.dt_version + 1
+               , history_table.dt_wf_deal_step_pid
+               , history_table.dt_create_lender_user_name
+               , history_table.dt_create_datetime
+               , history_table.dt_description
+               , history_table.dt_complete_datetime
+               , history_table.dt_deal_task_status_type
+               , history_table.dt_smart_task
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.deal_task history_table
+          LEFT JOIN staging_octane.deal_task staging_table
+                    ON staging_table.dt_pid = history_table.dt_pid
+          WHERE staging_table.dt_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.deal_task deleted_records
+              WHERE deleted_records.dt_pid = history_table.dt_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

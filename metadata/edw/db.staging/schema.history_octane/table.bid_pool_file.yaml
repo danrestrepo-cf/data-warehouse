@@ -43,40 +43,43 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100292:
-    input_type: table
-    output_type: insert
-    json_output_field: bpf_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.bid_pool_file
-      SELECT staging_table.bpf_pid
-           , staging_table.bpf_version
-           , staging_table.bpf_bid_pool_pid
-           , staging_table.bpf_repository_file_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.bid_pool_file staging_table
-      LEFT JOIN history_octane.bid_pool_file history_table
-                ON staging_table.bpf_pid = history_table.bpf_pid
-                    AND staging_table.bpf_version = history_table.bpf_version
-      WHERE history_table.bpf_pid IS NULL
-      UNION ALL
-      SELECT history_table.bpf_pid
-           , history_table.bpf_version + 1
-           , history_table.bpf_bid_pool_pid
-           , history_table.bpf_repository_file_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.bid_pool_file history_table
-      LEFT JOIN staging_octane.bid_pool_file staging_table
-                ON staging_table.bpf_pid = history_table.bpf_pid
-      WHERE staging_table.bpf_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.bid_pool_file deleted_records
-          WHERE deleted_records.bpf_pid = history_table.bpf_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100292:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.bid_pool_file
+        json_output_field: bpf_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.bid_pool_file
+          SELECT staging_table.bpf_pid
+               , staging_table.bpf_version
+               , staging_table.bpf_bid_pool_pid
+               , staging_table.bpf_repository_file_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.bid_pool_file staging_table
+          LEFT JOIN history_octane.bid_pool_file history_table
+                    ON staging_table.bpf_pid = history_table.bpf_pid
+                        AND staging_table.bpf_version = history_table.bpf_version
+          WHERE history_table.bpf_pid IS NULL
+          UNION ALL
+          SELECT history_table.bpf_pid
+               , history_table.bpf_version + 1
+               , history_table.bpf_bid_pool_pid
+               , history_table.bpf_repository_file_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.bid_pool_file history_table
+          LEFT JOIN staging_octane.bid_pool_file staging_table
+                    ON staging_table.bpf_pid = history_table.bpf_pid
+          WHERE staging_table.bpf_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.bid_pool_file deleted_records
+              WHERE deleted_records.bpf_pid = history_table.bpf_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

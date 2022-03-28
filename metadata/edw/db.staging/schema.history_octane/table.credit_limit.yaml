@@ -59,48 +59,51 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100031:
-    input_type: table
-    output_type: insert
-    json_output_field: cl_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.credit_limit
-      SELECT staging_table.cl_pid
-           , staging_table.cl_version
-           , staging_table.cl_interim_funder_pid
-           , staging_table.cl_credit_limit_name
-           , staging_table.cl_credit_limit_amount
-           , staging_table.cl_credit_limit_type
-           , staging_table.cl_from_date
-           , staging_table.cl_through_date
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.credit_limit staging_table
-      LEFT JOIN history_octane.credit_limit history_table
-                ON staging_table.cl_pid = history_table.cl_pid
-                    AND staging_table.cl_version = history_table.cl_version
-      WHERE history_table.cl_pid IS NULL
-      UNION ALL
-      SELECT history_table.cl_pid
-           , history_table.cl_version + 1
-           , history_table.cl_interim_funder_pid
-           , history_table.cl_credit_limit_name
-           , history_table.cl_credit_limit_amount
-           , history_table.cl_credit_limit_type
-           , history_table.cl_from_date
-           , history_table.cl_through_date
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.credit_limit history_table
-      LEFT JOIN staging_octane.credit_limit staging_table
-                ON staging_table.cl_pid = history_table.cl_pid
-      WHERE staging_table.cl_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.credit_limit deleted_records
-          WHERE deleted_records.cl_pid = history_table.cl_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100031:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.credit_limit
+        json_output_field: cl_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.credit_limit
+          SELECT staging_table.cl_pid
+               , staging_table.cl_version
+               , staging_table.cl_interim_funder_pid
+               , staging_table.cl_credit_limit_name
+               , staging_table.cl_credit_limit_amount
+               , staging_table.cl_credit_limit_type
+               , staging_table.cl_from_date
+               , staging_table.cl_through_date
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.credit_limit staging_table
+          LEFT JOIN history_octane.credit_limit history_table
+                    ON staging_table.cl_pid = history_table.cl_pid
+                        AND staging_table.cl_version = history_table.cl_version
+          WHERE history_table.cl_pid IS NULL
+          UNION ALL
+          SELECT history_table.cl_pid
+               , history_table.cl_version + 1
+               , history_table.cl_interim_funder_pid
+               , history_table.cl_credit_limit_name
+               , history_table.cl_credit_limit_amount
+               , history_table.cl_credit_limit_type
+               , history_table.cl_from_date
+               , history_table.cl_through_date
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.credit_limit history_table
+          LEFT JOIN staging_octane.credit_limit staging_table
+                    ON staging_table.cl_pid = history_table.cl_pid
+          WHERE staging_table.cl_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.credit_limit deleted_records
+              WHERE deleted_records.cl_pid = history_table.cl_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

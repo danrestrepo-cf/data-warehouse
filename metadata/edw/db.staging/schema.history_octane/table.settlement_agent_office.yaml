@@ -87,62 +87,65 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.sao_version
-etls:
+step_functions:
   SP-100051:
-    input_type: table
-    output_type: insert
-    json_output_field: sao_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.settlement_agent_office
-      SELECT staging_table.sao_pid
-           , staging_table.sao_version
-           , staging_table.sao_settlement_agent_pid
-           , staging_table.sao_active
-           , staging_table.sao_address_street1
-           , staging_table.sao_address_street2
-           , staging_table.sao_address_city
-           , staging_table.sao_address_state
-           , staging_table.sao_address_postal_code
-           , staging_table.sao_address_country
-           , staging_table.sao_phone
-           , staging_table.sao_fax
-           , staging_table.sao_docs_email
-           , staging_table.sao_fund_email
-           , staging_table.sao_schedule_email
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.settlement_agent_office staging_table
-      LEFT JOIN history_octane.settlement_agent_office history_table
-                ON staging_table.sao_pid = history_table.sao_pid
-                    AND staging_table.sao_version = history_table.sao_version
-      WHERE history_table.sao_pid IS NULL
-      UNION ALL
-      SELECT history_table.sao_pid
-           , history_table.sao_version + 1
-           , history_table.sao_settlement_agent_pid
-           , history_table.sao_active
-           , history_table.sao_address_street1
-           , history_table.sao_address_street2
-           , history_table.sao_address_city
-           , history_table.sao_address_state
-           , history_table.sao_address_postal_code
-           , history_table.sao_address_country
-           , history_table.sao_phone
-           , history_table.sao_fax
-           , history_table.sao_docs_email
-           , history_table.sao_fund_email
-           , history_table.sao_schedule_email
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.settlement_agent_office history_table
-      LEFT JOIN staging_octane.settlement_agent_office staging_table
-                ON staging_table.sao_pid = history_table.sao_pid
-      WHERE staging_table.sao_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.settlement_agent_office deleted_records
-          WHERE deleted_records.sao_pid = history_table.sao_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100051:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.settlement_agent_office
+        json_output_field: sao_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.settlement_agent_office
+          SELECT staging_table.sao_pid
+               , staging_table.sao_version
+               , staging_table.sao_settlement_agent_pid
+               , staging_table.sao_active
+               , staging_table.sao_address_street1
+               , staging_table.sao_address_street2
+               , staging_table.sao_address_city
+               , staging_table.sao_address_state
+               , staging_table.sao_address_postal_code
+               , staging_table.sao_address_country
+               , staging_table.sao_phone
+               , staging_table.sao_fax
+               , staging_table.sao_docs_email
+               , staging_table.sao_fund_email
+               , staging_table.sao_schedule_email
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.settlement_agent_office staging_table
+          LEFT JOIN history_octane.settlement_agent_office history_table
+                    ON staging_table.sao_pid = history_table.sao_pid
+                        AND staging_table.sao_version = history_table.sao_version
+          WHERE history_table.sao_pid IS NULL
+          UNION ALL
+          SELECT history_table.sao_pid
+               , history_table.sao_version + 1
+               , history_table.sao_settlement_agent_pid
+               , history_table.sao_active
+               , history_table.sao_address_street1
+               , history_table.sao_address_street2
+               , history_table.sao_address_city
+               , history_table.sao_address_state
+               , history_table.sao_address_postal_code
+               , history_table.sao_address_country
+               , history_table.sao_phone
+               , history_table.sao_fax
+               , history_table.sao_docs_email
+               , history_table.sao_fund_email
+               , history_table.sao_schedule_email
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.settlement_agent_office history_table
+          LEFT JOIN staging_octane.settlement_agent_office staging_table
+                    ON staging_table.sao_pid = history_table.sao_pid
+          WHERE staging_table.sao_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.settlement_agent_office deleted_records
+              WHERE deleted_records.sao_pid = history_table.sao_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

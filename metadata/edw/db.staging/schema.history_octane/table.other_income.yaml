@@ -287,154 +287,157 @@ columns:
     data_type: NUMERIC(15,2)
     source:
       field: primary_source_table.columns.oi_worksheet_monthly_total_amount
-etls:
+step_functions:
   SP-100131:
-    input_type: table
-    output_type: insert
-    json_output_field: oi_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.other_income
-      SELECT staging_table.oi_pid
-           , staging_table.oi_version
-           , staging_table.oi_other_income_type
-           , staging_table.oi_borrower_income_pid
-           , staging_table.oi_estimated_net_income_amount
-           , staging_table.oi_estimated_mode
-           , staging_table.oi_worksheet_monthly_total_amount
-           , staging_table.oi_monthly_total_amount
-           , staging_table.oi_borrower_income_percent
-           , staging_table.oi_description
-           , staging_table.oi_calc_method_type
-           , staging_table.oi_common_year1_year
-           , staging_table.oi_common_year1_year_include
-           , staging_table.oi_common_year1_from_date
-           , staging_table.oi_common_year1_through_date
-           , staging_table.oi_common_year1_months
-           , staging_table.oi_common_year1_annual_total_amount
-           , staging_table.oi_common_year1_monthly_total_amount
-           , staging_table.oi_common_year2_year
-           , staging_table.oi_common_year2_year_include
-           , staging_table.oi_common_year2_from_date
-           , staging_table.oi_common_year2_through_date
-           , staging_table.oi_common_year2_months
-           , staging_table.oi_common_year2_annual_total_amount
-           , staging_table.oi_common_year2_monthly_total_amount
-           , staging_table.oi_common_year3_year
-           , staging_table.oi_common_year3_year_include
-           , staging_table.oi_common_year3_from_date
-           , staging_table.oi_common_year3_through_date
-           , staging_table.oi_common_year3_months
-           , staging_table.oi_common_year3_annual_total_amount
-           , staging_table.oi_common_year3_monthly_total_amount
-           , staging_table.oi_simple_year1_unadjusted_amount
-           , staging_table.oi_simple_year1_income_federal_tax_exempt
-           , staging_table.oi_simple_year1_tax_exempt_tax_rate_percent
-           , staging_table.oi_simple_year1_tax_exempt_amount
-           , staging_table.oi_simple_year2_unadjusted_amount
-           , staging_table.oi_simple_year2_income_federal_tax_exempt
-           , staging_table.oi_simple_year2_tax_exempt_tax_rate_percent
-           , staging_table.oi_simple_year2_tax_exempt_amount
-           , staging_table.oi_simple_year3_unadjusted_amount
-           , staging_table.oi_simple_year3_income_federal_tax_exempt
-           , staging_table.oi_simple_year3_tax_exempt_tax_rate_percent
-           , staging_table.oi_simple_year3_tax_exempt_amount
-           , staging_table.oi_simple_unadjusted_monthly_amount
-           , staging_table.oi_simple_income_federal_tax_exempt
-           , staging_table.oi_simple_tax_exempt_tax_rate_percent
-           , staging_table.oi_simple_tax_exempt_amount
-           , staging_table.oi_simple_calculated_monthly_amount
-           , staging_table.oi_underwriter_comments
-           , staging_table.oi_mortgage_credit_certificate_issuer_pid
-           , staging_table.oi_mcc_reservation_number
-           , staging_table.oi_mcc_reservation_date
-           , staging_table.oi_mcc_reservation_expiration_date
-           , staging_table.oi_mcc_commitment_number
-           , staging_table.oi_mcc_underwriting_certification_deadline_date
-           , staging_table.oi_mcc_delivered_by_date
-           , staging_table.oi_unadjusted_monthly_total_amount
-           , staging_table.oi_simple_year1_unadjusted_monthly_amount
-           , staging_table.oi_simple_year2_unadjusted_monthly_amount
-           , staging_table.oi_simple_year3_unadjusted_monthly_amount
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.other_income staging_table
-      LEFT JOIN history_octane.other_income history_table
-                ON staging_table.oi_pid = history_table.oi_pid
-                    AND staging_table.oi_version = history_table.oi_version
-      WHERE history_table.oi_pid IS NULL
-      UNION ALL
-      SELECT history_table.oi_pid
-           , history_table.oi_version + 1
-           , history_table.oi_other_income_type
-           , history_table.oi_borrower_income_pid
-           , history_table.oi_estimated_net_income_amount
-           , history_table.oi_estimated_mode
-           , history_table.oi_worksheet_monthly_total_amount
-           , history_table.oi_monthly_total_amount
-           , history_table.oi_borrower_income_percent
-           , history_table.oi_description
-           , history_table.oi_calc_method_type
-           , history_table.oi_common_year1_year
-           , history_table.oi_common_year1_year_include
-           , history_table.oi_common_year1_from_date
-           , history_table.oi_common_year1_through_date
-           , history_table.oi_common_year1_months
-           , history_table.oi_common_year1_annual_total_amount
-           , history_table.oi_common_year1_monthly_total_amount
-           , history_table.oi_common_year2_year
-           , history_table.oi_common_year2_year_include
-           , history_table.oi_common_year2_from_date
-           , history_table.oi_common_year2_through_date
-           , history_table.oi_common_year2_months
-           , history_table.oi_common_year2_annual_total_amount
-           , history_table.oi_common_year2_monthly_total_amount
-           , history_table.oi_common_year3_year
-           , history_table.oi_common_year3_year_include
-           , history_table.oi_common_year3_from_date
-           , history_table.oi_common_year3_through_date
-           , history_table.oi_common_year3_months
-           , history_table.oi_common_year3_annual_total_amount
-           , history_table.oi_common_year3_monthly_total_amount
-           , history_table.oi_simple_year1_unadjusted_amount
-           , history_table.oi_simple_year1_income_federal_tax_exempt
-           , history_table.oi_simple_year1_tax_exempt_tax_rate_percent
-           , history_table.oi_simple_year1_tax_exempt_amount
-           , history_table.oi_simple_year2_unadjusted_amount
-           , history_table.oi_simple_year2_income_federal_tax_exempt
-           , history_table.oi_simple_year2_tax_exempt_tax_rate_percent
-           , history_table.oi_simple_year2_tax_exempt_amount
-           , history_table.oi_simple_year3_unadjusted_amount
-           , history_table.oi_simple_year3_income_federal_tax_exempt
-           , history_table.oi_simple_year3_tax_exempt_tax_rate_percent
-           , history_table.oi_simple_year3_tax_exempt_amount
-           , history_table.oi_simple_unadjusted_monthly_amount
-           , history_table.oi_simple_income_federal_tax_exempt
-           , history_table.oi_simple_tax_exempt_tax_rate_percent
-           , history_table.oi_simple_tax_exempt_amount
-           , history_table.oi_simple_calculated_monthly_amount
-           , history_table.oi_underwriter_comments
-           , history_table.oi_mortgage_credit_certificate_issuer_pid
-           , history_table.oi_mcc_reservation_number
-           , history_table.oi_mcc_reservation_date
-           , history_table.oi_mcc_reservation_expiration_date
-           , history_table.oi_mcc_commitment_number
-           , history_table.oi_mcc_underwriting_certification_deadline_date
-           , history_table.oi_mcc_delivered_by_date
-           , history_table.oi_unadjusted_monthly_total_amount
-           , history_table.oi_simple_year1_unadjusted_monthly_amount
-           , history_table.oi_simple_year2_unadjusted_monthly_amount
-           , history_table.oi_simple_year3_unadjusted_monthly_amount
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.other_income history_table
-      LEFT JOIN staging_octane.other_income staging_table
-                ON staging_table.oi_pid = history_table.oi_pid
-      WHERE staging_table.oi_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.other_income deleted_records
-          WHERE deleted_records.oi_pid = history_table.oi_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100131:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.other_income
+        json_output_field: oi_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.other_income
+          SELECT staging_table.oi_pid
+               , staging_table.oi_version
+               , staging_table.oi_other_income_type
+               , staging_table.oi_borrower_income_pid
+               , staging_table.oi_estimated_net_income_amount
+               , staging_table.oi_estimated_mode
+               , staging_table.oi_worksheet_monthly_total_amount
+               , staging_table.oi_monthly_total_amount
+               , staging_table.oi_borrower_income_percent
+               , staging_table.oi_description
+               , staging_table.oi_calc_method_type
+               , staging_table.oi_common_year1_year
+               , staging_table.oi_common_year1_year_include
+               , staging_table.oi_common_year1_from_date
+               , staging_table.oi_common_year1_through_date
+               , staging_table.oi_common_year1_months
+               , staging_table.oi_common_year1_annual_total_amount
+               , staging_table.oi_common_year1_monthly_total_amount
+               , staging_table.oi_common_year2_year
+               , staging_table.oi_common_year2_year_include
+               , staging_table.oi_common_year2_from_date
+               , staging_table.oi_common_year2_through_date
+               , staging_table.oi_common_year2_months
+               , staging_table.oi_common_year2_annual_total_amount
+               , staging_table.oi_common_year2_monthly_total_amount
+               , staging_table.oi_common_year3_year
+               , staging_table.oi_common_year3_year_include
+               , staging_table.oi_common_year3_from_date
+               , staging_table.oi_common_year3_through_date
+               , staging_table.oi_common_year3_months
+               , staging_table.oi_common_year3_annual_total_amount
+               , staging_table.oi_common_year3_monthly_total_amount
+               , staging_table.oi_simple_year1_unadjusted_amount
+               , staging_table.oi_simple_year1_income_federal_tax_exempt
+               , staging_table.oi_simple_year1_tax_exempt_tax_rate_percent
+               , staging_table.oi_simple_year1_tax_exempt_amount
+               , staging_table.oi_simple_year2_unadjusted_amount
+               , staging_table.oi_simple_year2_income_federal_tax_exempt
+               , staging_table.oi_simple_year2_tax_exempt_tax_rate_percent
+               , staging_table.oi_simple_year2_tax_exempt_amount
+               , staging_table.oi_simple_year3_unadjusted_amount
+               , staging_table.oi_simple_year3_income_federal_tax_exempt
+               , staging_table.oi_simple_year3_tax_exempt_tax_rate_percent
+               , staging_table.oi_simple_year3_tax_exempt_amount
+               , staging_table.oi_simple_unadjusted_monthly_amount
+               , staging_table.oi_simple_income_federal_tax_exempt
+               , staging_table.oi_simple_tax_exempt_tax_rate_percent
+               , staging_table.oi_simple_tax_exempt_amount
+               , staging_table.oi_simple_calculated_monthly_amount
+               , staging_table.oi_underwriter_comments
+               , staging_table.oi_mortgage_credit_certificate_issuer_pid
+               , staging_table.oi_mcc_reservation_number
+               , staging_table.oi_mcc_reservation_date
+               , staging_table.oi_mcc_reservation_expiration_date
+               , staging_table.oi_mcc_commitment_number
+               , staging_table.oi_mcc_underwriting_certification_deadline_date
+               , staging_table.oi_mcc_delivered_by_date
+               , staging_table.oi_unadjusted_monthly_total_amount
+               , staging_table.oi_simple_year1_unadjusted_monthly_amount
+               , staging_table.oi_simple_year2_unadjusted_monthly_amount
+               , staging_table.oi_simple_year3_unadjusted_monthly_amount
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.other_income staging_table
+          LEFT JOIN history_octane.other_income history_table
+                    ON staging_table.oi_pid = history_table.oi_pid
+                        AND staging_table.oi_version = history_table.oi_version
+          WHERE history_table.oi_pid IS NULL
+          UNION ALL
+          SELECT history_table.oi_pid
+               , history_table.oi_version + 1
+               , history_table.oi_other_income_type
+               , history_table.oi_borrower_income_pid
+               , history_table.oi_estimated_net_income_amount
+               , history_table.oi_estimated_mode
+               , history_table.oi_worksheet_monthly_total_amount
+               , history_table.oi_monthly_total_amount
+               , history_table.oi_borrower_income_percent
+               , history_table.oi_description
+               , history_table.oi_calc_method_type
+               , history_table.oi_common_year1_year
+               , history_table.oi_common_year1_year_include
+               , history_table.oi_common_year1_from_date
+               , history_table.oi_common_year1_through_date
+               , history_table.oi_common_year1_months
+               , history_table.oi_common_year1_annual_total_amount
+               , history_table.oi_common_year1_monthly_total_amount
+               , history_table.oi_common_year2_year
+               , history_table.oi_common_year2_year_include
+               , history_table.oi_common_year2_from_date
+               , history_table.oi_common_year2_through_date
+               , history_table.oi_common_year2_months
+               , history_table.oi_common_year2_annual_total_amount
+               , history_table.oi_common_year2_monthly_total_amount
+               , history_table.oi_common_year3_year
+               , history_table.oi_common_year3_year_include
+               , history_table.oi_common_year3_from_date
+               , history_table.oi_common_year3_through_date
+               , history_table.oi_common_year3_months
+               , history_table.oi_common_year3_annual_total_amount
+               , history_table.oi_common_year3_monthly_total_amount
+               , history_table.oi_simple_year1_unadjusted_amount
+               , history_table.oi_simple_year1_income_federal_tax_exempt
+               , history_table.oi_simple_year1_tax_exempt_tax_rate_percent
+               , history_table.oi_simple_year1_tax_exempt_amount
+               , history_table.oi_simple_year2_unadjusted_amount
+               , history_table.oi_simple_year2_income_federal_tax_exempt
+               , history_table.oi_simple_year2_tax_exempt_tax_rate_percent
+               , history_table.oi_simple_year2_tax_exempt_amount
+               , history_table.oi_simple_year3_unadjusted_amount
+               , history_table.oi_simple_year3_income_federal_tax_exempt
+               , history_table.oi_simple_year3_tax_exempt_tax_rate_percent
+               , history_table.oi_simple_year3_tax_exempt_amount
+               , history_table.oi_simple_unadjusted_monthly_amount
+               , history_table.oi_simple_income_federal_tax_exempt
+               , history_table.oi_simple_tax_exempt_tax_rate_percent
+               , history_table.oi_simple_tax_exempt_amount
+               , history_table.oi_simple_calculated_monthly_amount
+               , history_table.oi_underwriter_comments
+               , history_table.oi_mortgage_credit_certificate_issuer_pid
+               , history_table.oi_mcc_reservation_number
+               , history_table.oi_mcc_reservation_date
+               , history_table.oi_mcc_reservation_expiration_date
+               , history_table.oi_mcc_commitment_number
+               , history_table.oi_mcc_underwriting_certification_deadline_date
+               , history_table.oi_mcc_delivered_by_date
+               , history_table.oi_unadjusted_monthly_total_amount
+               , history_table.oi_simple_year1_unadjusted_monthly_amount
+               , history_table.oi_simple_year2_unadjusted_monthly_amount
+               , history_table.oi_simple_year3_unadjusted_monthly_amount
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.other_income history_table
+          LEFT JOIN staging_octane.other_income staging_table
+                    ON staging_table.oi_pid = history_table.oi_pid
+          WHERE staging_table.oi_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.other_income deleted_records
+              WHERE deleted_records.oi_pid = history_table.oi_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

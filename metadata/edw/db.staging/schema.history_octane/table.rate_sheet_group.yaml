@@ -63,46 +63,49 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.rsg_version
-etls:
+step_functions:
   SP-100881:
-    input_type: table
-    output_type: insert
-    json_output_field: rsg_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.rate_sheet_group
-      SELECT staging_table.rsg_pid
-           , staging_table.rsg_version
-           , staging_table.rsg_account_pid
-           , staging_table.rsg_rate_sheet_group_id
-           , staging_table.rsg_rate_sheet_group_name
-           , staging_table.rsg_investor_pid
-           , staging_table.rsg_loan_amortization_type
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.rate_sheet_group staging_table
-      LEFT JOIN history_octane.rate_sheet_group history_table
-                ON staging_table.rsg_pid = history_table.rsg_pid
-                    AND staging_table.rsg_version = history_table.rsg_version
-      WHERE history_table.rsg_pid IS NULL
-      UNION ALL
-      SELECT history_table.rsg_pid
-           , history_table.rsg_version + 1
-           , history_table.rsg_account_pid
-           , history_table.rsg_rate_sheet_group_id
-           , history_table.rsg_rate_sheet_group_name
-           , history_table.rsg_investor_pid
-           , history_table.rsg_loan_amortization_type
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.rate_sheet_group history_table
-      LEFT JOIN staging_octane.rate_sheet_group staging_table
-                ON staging_table.rsg_pid = history_table.rsg_pid
-      WHERE staging_table.rsg_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.rate_sheet_group deleted_records
-          WHERE deleted_records.rsg_pid = history_table.rsg_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100881:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.rate_sheet_group
+        json_output_field: rsg_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.rate_sheet_group
+          SELECT staging_table.rsg_pid
+               , staging_table.rsg_version
+               , staging_table.rsg_account_pid
+               , staging_table.rsg_rate_sheet_group_id
+               , staging_table.rsg_rate_sheet_group_name
+               , staging_table.rsg_investor_pid
+               , staging_table.rsg_loan_amortization_type
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.rate_sheet_group staging_table
+          LEFT JOIN history_octane.rate_sheet_group history_table
+                    ON staging_table.rsg_pid = history_table.rsg_pid
+                        AND staging_table.rsg_version = history_table.rsg_version
+          WHERE history_table.rsg_pid IS NULL
+          UNION ALL
+          SELECT history_table.rsg_pid
+               , history_table.rsg_version + 1
+               , history_table.rsg_account_pid
+               , history_table.rsg_rate_sheet_group_id
+               , history_table.rsg_rate_sheet_group_name
+               , history_table.rsg_investor_pid
+               , history_table.rsg_loan_amortization_type
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.rate_sheet_group history_table
+          LEFT JOIN staging_octane.rate_sheet_group staging_table
+                    ON staging_table.rsg_pid = history_table.rsg_pid
+          WHERE staging_table.rsg_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.rate_sheet_group deleted_records
+              WHERE deleted_records.rsg_pid = history_table.rsg_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

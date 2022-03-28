@@ -171,96 +171,99 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.saw_version
-etls:
+step_functions:
   SP-100242:
-    input_type: table
-    output_type: insert
-    json_output_field: saw_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.settlement_agent_wire
-      SELECT staging_table.saw_pid
-           , staging_table.saw_version
-           , staging_table.saw_settlement_agent_pid
-           , staging_table.saw_active
-           , staging_table.saw_create_datetime
-           , staging_table.saw_bank_name
-           , staging_table.saw_address_street1
-           , staging_table.saw_address_street2
-           , staging_table.saw_address_city
-           , staging_table.saw_address_state
-           , staging_table.saw_address_postal_code
-           , staging_table.saw_address_country
-           , staging_table.saw_for_credit_to
-           , staging_table.saw_for_further_credit_fixed_text
-           , staging_table.saw_for_further_credit_prompt_text
-           , staging_table.saw_verified_from_date
-           , staging_table.saw_verified_through_date
-           , staging_table.saw_verifier
-           , staging_table.saw_notes
-           , staging_table.saw_for_further_credit_type
-           , staging_table.saw_beneficiary_bank_name
-           , staging_table.saw_beneficiary_address_street1
-           , staging_table.saw_beneficiary_address_street2
-           , staging_table.saw_beneficiary_address_city
-           , staging_table.saw_beneficiary_address_state
-           , staging_table.saw_beneficiary_address_postal_code
-           , staging_table.saw_beneficiary_address_country
-           , staging_table.saw_beneficiary_for_credit_to
-           , staging_table.saw_beneficiary_for_further_credit_fixed_text
-           , staging_table.saw_beneficiary_for_further_credit_prompt_text
-           , staging_table.saw_beneficiary_for_further_credit_type
-           , staging_table.saw_beneficiary_notes
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.settlement_agent_wire staging_table
-      LEFT JOIN history_octane.settlement_agent_wire history_table
-                ON staging_table.saw_pid = history_table.saw_pid
-                    AND staging_table.saw_version = history_table.saw_version
-      WHERE history_table.saw_pid IS NULL
-      UNION ALL
-      SELECT history_table.saw_pid
-           , history_table.saw_version + 1
-           , history_table.saw_settlement_agent_pid
-           , history_table.saw_active
-           , history_table.saw_create_datetime
-           , history_table.saw_bank_name
-           , history_table.saw_address_street1
-           , history_table.saw_address_street2
-           , history_table.saw_address_city
-           , history_table.saw_address_state
-           , history_table.saw_address_postal_code
-           , history_table.saw_address_country
-           , history_table.saw_for_credit_to
-           , history_table.saw_for_further_credit_fixed_text
-           , history_table.saw_for_further_credit_prompt_text
-           , history_table.saw_verified_from_date
-           , history_table.saw_verified_through_date
-           , history_table.saw_verifier
-           , history_table.saw_notes
-           , history_table.saw_for_further_credit_type
-           , history_table.saw_beneficiary_bank_name
-           , history_table.saw_beneficiary_address_street1
-           , history_table.saw_beneficiary_address_street2
-           , history_table.saw_beneficiary_address_city
-           , history_table.saw_beneficiary_address_state
-           , history_table.saw_beneficiary_address_postal_code
-           , history_table.saw_beneficiary_address_country
-           , history_table.saw_beneficiary_for_credit_to
-           , history_table.saw_beneficiary_for_further_credit_fixed_text
-           , history_table.saw_beneficiary_for_further_credit_prompt_text
-           , history_table.saw_beneficiary_for_further_credit_type
-           , history_table.saw_beneficiary_notes
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.settlement_agent_wire history_table
-      LEFT JOIN staging_octane.settlement_agent_wire staging_table
-                ON staging_table.saw_pid = history_table.saw_pid
-      WHERE staging_table.saw_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.settlement_agent_wire deleted_records
-          WHERE deleted_records.saw_pid = history_table.saw_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100242:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.settlement_agent_wire
+        json_output_field: saw_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.settlement_agent_wire
+          SELECT staging_table.saw_pid
+               , staging_table.saw_version
+               , staging_table.saw_settlement_agent_pid
+               , staging_table.saw_active
+               , staging_table.saw_create_datetime
+               , staging_table.saw_bank_name
+               , staging_table.saw_address_street1
+               , staging_table.saw_address_street2
+               , staging_table.saw_address_city
+               , staging_table.saw_address_state
+               , staging_table.saw_address_postal_code
+               , staging_table.saw_address_country
+               , staging_table.saw_for_credit_to
+               , staging_table.saw_for_further_credit_fixed_text
+               , staging_table.saw_for_further_credit_prompt_text
+               , staging_table.saw_verified_from_date
+               , staging_table.saw_verified_through_date
+               , staging_table.saw_verifier
+               , staging_table.saw_notes
+               , staging_table.saw_for_further_credit_type
+               , staging_table.saw_beneficiary_bank_name
+               , staging_table.saw_beneficiary_address_street1
+               , staging_table.saw_beneficiary_address_street2
+               , staging_table.saw_beneficiary_address_city
+               , staging_table.saw_beneficiary_address_state
+               , staging_table.saw_beneficiary_address_postal_code
+               , staging_table.saw_beneficiary_address_country
+               , staging_table.saw_beneficiary_for_credit_to
+               , staging_table.saw_beneficiary_for_further_credit_fixed_text
+               , staging_table.saw_beneficiary_for_further_credit_prompt_text
+               , staging_table.saw_beneficiary_for_further_credit_type
+               , staging_table.saw_beneficiary_notes
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.settlement_agent_wire staging_table
+          LEFT JOIN history_octane.settlement_agent_wire history_table
+                    ON staging_table.saw_pid = history_table.saw_pid
+                        AND staging_table.saw_version = history_table.saw_version
+          WHERE history_table.saw_pid IS NULL
+          UNION ALL
+          SELECT history_table.saw_pid
+               , history_table.saw_version + 1
+               , history_table.saw_settlement_agent_pid
+               , history_table.saw_active
+               , history_table.saw_create_datetime
+               , history_table.saw_bank_name
+               , history_table.saw_address_street1
+               , history_table.saw_address_street2
+               , history_table.saw_address_city
+               , history_table.saw_address_state
+               , history_table.saw_address_postal_code
+               , history_table.saw_address_country
+               , history_table.saw_for_credit_to
+               , history_table.saw_for_further_credit_fixed_text
+               , history_table.saw_for_further_credit_prompt_text
+               , history_table.saw_verified_from_date
+               , history_table.saw_verified_through_date
+               , history_table.saw_verifier
+               , history_table.saw_notes
+               , history_table.saw_for_further_credit_type
+               , history_table.saw_beneficiary_bank_name
+               , history_table.saw_beneficiary_address_street1
+               , history_table.saw_beneficiary_address_street2
+               , history_table.saw_beneficiary_address_city
+               , history_table.saw_beneficiary_address_state
+               , history_table.saw_beneficiary_address_postal_code
+               , history_table.saw_beneficiary_address_country
+               , history_table.saw_beneficiary_for_credit_to
+               , history_table.saw_beneficiary_for_further_credit_fixed_text
+               , history_table.saw_beneficiary_for_further_credit_prompt_text
+               , history_table.saw_beneficiary_for_further_credit_type
+               , history_table.saw_beneficiary_notes
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.settlement_agent_wire history_table
+          LEFT JOIN staging_octane.settlement_agent_wire staging_table
+                    ON staging_table.saw_pid = history_table.saw_pid
+          WHERE staging_table.saw_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.settlement_agent_wire deleted_records
+              WHERE deleted_records.saw_pid = history_table.saw_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

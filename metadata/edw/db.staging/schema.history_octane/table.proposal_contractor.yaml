@@ -43,40 +43,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.pctr_version
-etls:
+step_functions:
   SP-100160:
-    input_type: table
-    output_type: insert
-    json_output_field: pctr_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.proposal_contractor
-      SELECT staging_table.pctr_pid
-           , staging_table.pctr_version
-           , staging_table.pctr_proposal_pid
-           , staging_table.pctr_contractor_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.proposal_contractor staging_table
-      LEFT JOIN history_octane.proposal_contractor history_table
-                ON staging_table.pctr_pid = history_table.pctr_pid
-                    AND staging_table.pctr_version = history_table.pctr_version
-      WHERE history_table.pctr_pid IS NULL
-      UNION ALL
-      SELECT history_table.pctr_pid
-           , history_table.pctr_version + 1
-           , history_table.pctr_proposal_pid
-           , history_table.pctr_contractor_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.proposal_contractor history_table
-      LEFT JOIN staging_octane.proposal_contractor staging_table
-                ON staging_table.pctr_pid = history_table.pctr_pid
-      WHERE staging_table.pctr_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.proposal_contractor deleted_records
-          WHERE deleted_records.pctr_pid = history_table.pctr_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100160:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.proposal_contractor
+        json_output_field: pctr_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.proposal_contractor
+          SELECT staging_table.pctr_pid
+               , staging_table.pctr_version
+               , staging_table.pctr_proposal_pid
+               , staging_table.pctr_contractor_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.proposal_contractor staging_table
+          LEFT JOIN history_octane.proposal_contractor history_table
+                    ON staging_table.pctr_pid = history_table.pctr_pid
+                        AND staging_table.pctr_version = history_table.pctr_version
+          WHERE history_table.pctr_pid IS NULL
+          UNION ALL
+          SELECT history_table.pctr_pid
+               , history_table.pctr_version + 1
+               , history_table.pctr_proposal_pid
+               , history_table.pctr_contractor_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.proposal_contractor history_table
+          LEFT JOIN staging_octane.proposal_contractor staging_table
+                    ON staging_table.pctr_pid = history_table.pctr_pid
+          WHERE staging_table.pctr_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.proposal_contractor deleted_records
+              WHERE deleted_records.pctr_pid = history_table.pctr_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -239,74 +239,77 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100013:
-    input_type: table
-    output_type: insert
-    json_output_field: bdec_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.borrower_declarations
-      SELECT staging_table.bdec_pid
-           , staging_table.bdec_version
-           , staging_table.bdec_borrower_pid
-           , staging_table.bdec_fha_secondary_residence
-           , staging_table.bdec_relationship_with_seller
-           , staging_table.bdec_borrowed_funds_undisclosed
-           , staging_table.bdec_borrowed_funds_undisclosed_amount
-           , staging_table.bdec_other_mortgage_in_progress_before_closing
-           , staging_table.bdec_applying_for_credit_before_closing
-           , staging_table.bdec_priority_given_to_another_lien
-           , staging_table.bdec_cosigner_undisclosed
-           , staging_table.bdec_currently_delinquent_federal_debt
-           , staging_table.bdec_party_to_lawsuit
-           , staging_table.bdec_conveyed_title_in_lieu_of_foreclosure
-           , staging_table.bdec_completed_pre_foreclosure_short_sale
-           , staging_table.bdec_property_foreclosure
-           , staging_table.bdec_bankruptcy_chapter_7
-           , staging_table.bdec_bankruptcy_chapter_11
-           , staging_table.bdec_bankruptcy_chapter_12
-           , staging_table.bdec_bankruptcy_chapter_13
-           , staging_table.bdec_intend_to_occupy_more_than_14_days
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.borrower_declarations staging_table
-      LEFT JOIN history_octane.borrower_declarations history_table
-                ON staging_table.bdec_pid = history_table.bdec_pid
-                    AND staging_table.bdec_version = history_table.bdec_version
-      WHERE history_table.bdec_pid IS NULL
-      UNION ALL
-      SELECT history_table.bdec_pid
-           , history_table.bdec_version + 1
-           , history_table.bdec_borrower_pid
-           , history_table.bdec_fha_secondary_residence
-           , history_table.bdec_relationship_with_seller
-           , history_table.bdec_borrowed_funds_undisclosed
-           , history_table.bdec_borrowed_funds_undisclosed_amount
-           , history_table.bdec_other_mortgage_in_progress_before_closing
-           , history_table.bdec_applying_for_credit_before_closing
-           , history_table.bdec_priority_given_to_another_lien
-           , history_table.bdec_cosigner_undisclosed
-           , history_table.bdec_currently_delinquent_federal_debt
-           , history_table.bdec_party_to_lawsuit
-           , history_table.bdec_conveyed_title_in_lieu_of_foreclosure
-           , history_table.bdec_completed_pre_foreclosure_short_sale
-           , history_table.bdec_property_foreclosure
-           , history_table.bdec_bankruptcy_chapter_7
-           , history_table.bdec_bankruptcy_chapter_11
-           , history_table.bdec_bankruptcy_chapter_12
-           , history_table.bdec_bankruptcy_chapter_13
-           , history_table.bdec_intend_to_occupy_more_than_14_days
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.borrower_declarations history_table
-      LEFT JOIN staging_octane.borrower_declarations staging_table
-                ON staging_table.bdec_pid = history_table.bdec_pid
-      WHERE staging_table.bdec_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.borrower_declarations deleted_records
-          WHERE deleted_records.bdec_pid = history_table.bdec_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100013:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.borrower_declarations
+        json_output_field: bdec_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.borrower_declarations
+          SELECT staging_table.bdec_pid
+               , staging_table.bdec_version
+               , staging_table.bdec_borrower_pid
+               , staging_table.bdec_fha_secondary_residence
+               , staging_table.bdec_relationship_with_seller
+               , staging_table.bdec_borrowed_funds_undisclosed
+               , staging_table.bdec_borrowed_funds_undisclosed_amount
+               , staging_table.bdec_other_mortgage_in_progress_before_closing
+               , staging_table.bdec_applying_for_credit_before_closing
+               , staging_table.bdec_priority_given_to_another_lien
+               , staging_table.bdec_cosigner_undisclosed
+               , staging_table.bdec_currently_delinquent_federal_debt
+               , staging_table.bdec_party_to_lawsuit
+               , staging_table.bdec_conveyed_title_in_lieu_of_foreclosure
+               , staging_table.bdec_completed_pre_foreclosure_short_sale
+               , staging_table.bdec_property_foreclosure
+               , staging_table.bdec_bankruptcy_chapter_7
+               , staging_table.bdec_bankruptcy_chapter_11
+               , staging_table.bdec_bankruptcy_chapter_12
+               , staging_table.bdec_bankruptcy_chapter_13
+               , staging_table.bdec_intend_to_occupy_more_than_14_days
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.borrower_declarations staging_table
+          LEFT JOIN history_octane.borrower_declarations history_table
+                    ON staging_table.bdec_pid = history_table.bdec_pid
+                        AND staging_table.bdec_version = history_table.bdec_version
+          WHERE history_table.bdec_pid IS NULL
+          UNION ALL
+          SELECT history_table.bdec_pid
+               , history_table.bdec_version + 1
+               , history_table.bdec_borrower_pid
+               , history_table.bdec_fha_secondary_residence
+               , history_table.bdec_relationship_with_seller
+               , history_table.bdec_borrowed_funds_undisclosed
+               , history_table.bdec_borrowed_funds_undisclosed_amount
+               , history_table.bdec_other_mortgage_in_progress_before_closing
+               , history_table.bdec_applying_for_credit_before_closing
+               , history_table.bdec_priority_given_to_another_lien
+               , history_table.bdec_cosigner_undisclosed
+               , history_table.bdec_currently_delinquent_federal_debt
+               , history_table.bdec_party_to_lawsuit
+               , history_table.bdec_conveyed_title_in_lieu_of_foreclosure
+               , history_table.bdec_completed_pre_foreclosure_short_sale
+               , history_table.bdec_property_foreclosure
+               , history_table.bdec_bankruptcy_chapter_7
+               , history_table.bdec_bankruptcy_chapter_11
+               , history_table.bdec_bankruptcy_chapter_12
+               , history_table.bdec_bankruptcy_chapter_13
+               , history_table.bdec_intend_to_occupy_more_than_14_days
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.borrower_declarations history_table
+          LEFT JOIN staging_octane.borrower_declarations staging_table
+                    ON staging_table.bdec_pid = history_table.bdec_pid
+          WHERE staging_table.bdec_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.borrower_declarations deleted_records
+              WHERE deleted_records.bdec_pid = history_table.bdec_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

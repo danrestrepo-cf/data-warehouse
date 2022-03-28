@@ -35,40 +35,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.lsmt_version
-etls:
+step_functions:
   SP-100040:
-    input_type: table
-    output_type: insert
-    json_output_field: lsmt_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.lead_supplemental_margin_table
-      SELECT staging_table.lsmt_pid
-           , staging_table.lsmt_version
-           , staging_table.lsmt_lead_source_pid
-           , staging_table.lsmt_effective_datetime
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.lead_supplemental_margin_table staging_table
-      LEFT JOIN history_octane.lead_supplemental_margin_table history_table
-                ON staging_table.lsmt_pid = history_table.lsmt_pid
-                    AND staging_table.lsmt_version = history_table.lsmt_version
-      WHERE history_table.lsmt_pid IS NULL
-      UNION ALL
-      SELECT history_table.lsmt_pid
-           , history_table.lsmt_version + 1
-           , history_table.lsmt_lead_source_pid
-           , history_table.lsmt_effective_datetime
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.lead_supplemental_margin_table history_table
-      LEFT JOIN staging_octane.lead_supplemental_margin_table staging_table
-                ON staging_table.lsmt_pid = history_table.lsmt_pid
-      WHERE staging_table.lsmt_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.lead_supplemental_margin_table deleted_records
-          WHERE deleted_records.lsmt_pid = history_table.lsmt_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100040:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.lead_supplemental_margin_table
+        json_output_field: lsmt_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.lead_supplemental_margin_table
+          SELECT staging_table.lsmt_pid
+               , staging_table.lsmt_version
+               , staging_table.lsmt_lead_source_pid
+               , staging_table.lsmt_effective_datetime
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.lead_supplemental_margin_table staging_table
+          LEFT JOIN history_octane.lead_supplemental_margin_table history_table
+                    ON staging_table.lsmt_pid = history_table.lsmt_pid
+                        AND staging_table.lsmt_version = history_table.lsmt_version
+          WHERE history_table.lsmt_pid IS NULL
+          UNION ALL
+          SELECT history_table.lsmt_pid
+               , history_table.lsmt_version + 1
+               , history_table.lsmt_lead_source_pid
+               , history_table.lsmt_effective_datetime
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.lead_supplemental_margin_table history_table
+          LEFT JOIN staging_octane.lead_supplemental_margin_table staging_table
+                    ON staging_table.lsmt_pid = history_table.lsmt_pid
+          WHERE staging_table.lsmt_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.lead_supplemental_margin_table deleted_records
+              WHERE deleted_records.lsmt_pid = history_table.lsmt_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

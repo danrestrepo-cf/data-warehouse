@@ -33,7 +33,7 @@ columns:
       calculation:
         string: $1 = 'COMBO'
         using:
-          - primary_source_table.columns.prp_structure_type
+        - primary_source_table.columns.prp_structure_type
     update_flag: false
   mi_required_flag:
     data_type: BOOLEAN
@@ -75,130 +75,133 @@ columns:
     source:
       field: primary_source_table.foreign_keys.fkt_prp_property_usage_type.columns.value
     update_flag: true
-etls:
+step_functions:
   SP-200020:
-    input_type: table
-    output_type: insert_update
-    hardcoded_data_source: Octane
-    json_output_field: data_source_integration_id
-    insert_update_keys:
-      - data_source_integration_id
-    container_memory: 2048
-    input_sql: |-
-      WITH transaction_junk_dim_new_records AS (
-          SELECT 'is_test_loan_flag~structure_code~mi_required_flag~loan_purpose_code~data_source_dwid~piggyback_flag~property_usage_code' AS data_source_integration_columns
-               , COALESCE( CAST( t1441.d_test_loan AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( primary_table.prp_structure_type AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( primary_table.prp_mi_required AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( primary_table.prp_loan_purpose_type AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( primary_table.prp_structure_type = 'COMBO' AS TEXT ), '<NULL>' ) || '~' ||
-                 COALESCE( CAST( primary_table.prp_property_usage_type AS TEXT ), '<NULL>') AS data_source_integration_id
-               , NOW( ) AS edw_created_datetime
-               , NOW( ) AS edw_modified_datetime
-               , MAX( primary_table.data_source_updated_datetime ) AS data_source_modified_datetime
-               , t1441.d_test_loan AS is_test_loan_flag
-               , t649.value AS loan_purpose
-               , primary_table.prp_structure_type AS structure_code
-               , primary_table.prp_mi_required AS mi_required_flag
-               , primary_table.prp_loan_purpose_type AS loan_purpose_code
-               , t661.value AS structure
-               , primary_table.prp_structure_type = 'COMBO' AS piggyback_flag
-               , primary_table.prp_property_usage_type AS property_usage_code
-               , property_usage.value AS property_usage
-               , MAX( GREATEST( t649.etl_end_date_time, t661.etl_end_date_time, property_usage.etl_end_date_time ) ) AS max_source_etl_end_date_time
-          FROM (
-              SELECT <<proposal_partial_load_condition>> AS include_record
-                   , proposal.*
-              FROM history_octane.proposal
-              LEFT JOIN history_octane.proposal AS history_records
-                        ON proposal.prp_pid = history_records.prp_pid
-                            AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
-              WHERE history_records.prp_pid IS NULL
-          ) AS primary_table
-          INNER JOIN (
-              SELECT *
+    etls:
+      ETL-200020:
+        input_type: table
+        output_type: insert_update
+        output_table: staging.star_loan.transaction_junk_dim
+        hardcoded_data_source: Octane
+        json_output_field: data_source_integration_id
+        insert_update_keys:
+        - data_source_integration_id
+        container_memory: 2048
+        next_step_functions:
+        - SP-300001-insert-update
+        input_sql: |-
+          WITH transaction_junk_dim_new_records AS (
+              SELECT 'is_test_loan_flag~structure_code~mi_required_flag~loan_purpose_code~data_source_dwid~piggyback_flag~property_usage_code' AS data_source_integration_columns
+                   , COALESCE( CAST( t1441.d_test_loan AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( primary_table.prp_structure_type AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( primary_table.prp_mi_required AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( primary_table.prp_loan_purpose_type AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( 1 AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( primary_table.prp_structure_type = 'COMBO' AS TEXT ), '<NULL>' ) || '~' ||
+                     COALESCE( CAST( primary_table.prp_property_usage_type AS TEXT ), '<NULL>') AS data_source_integration_id
+                   , NOW( ) AS edw_created_datetime
+                   , NOW( ) AS edw_modified_datetime
+                   , MAX( primary_table.data_source_updated_datetime ) AS data_source_modified_datetime
+                   , t1441.d_test_loan AS is_test_loan_flag
+                   , t649.value AS loan_purpose
+                   , primary_table.prp_structure_type AS structure_code
+                   , primary_table.prp_mi_required AS mi_required_flag
+                   , primary_table.prp_loan_purpose_type AS loan_purpose_code
+                   , t661.value AS structure
+                   , primary_table.prp_structure_type = 'COMBO' AS piggyback_flag
+                   , primary_table.prp_property_usage_type AS property_usage_code
+                   , property_usage.value AS property_usage
+                   , MAX( GREATEST( t649.etl_end_date_time, t661.etl_end_date_time, property_usage.etl_end_date_time ) ) AS max_source_etl_end_date_time
               FROM (
-                  SELECT <<deal_partial_load_condition>> AS include_record
-                       , deal.*
-                  FROM history_octane.deal
-                  LEFT JOIN history_octane.deal AS history_records
-                            ON deal.d_pid = history_records.d_pid
-                                AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  WHERE history_records.d_pid IS NULL
+                  SELECT <<proposal_partial_load_condition>> AS include_record
+                       , proposal.*
+                  FROM history_octane.proposal
+                  LEFT JOIN history_octane.proposal AS history_records
+                            ON proposal.prp_pid = history_records.prp_pid
+                                AND proposal.data_source_updated_datetime < history_records.data_source_updated_datetime
+                  WHERE history_records.prp_pid IS NULL
               ) AS primary_table
-          ) AS t1441
-                     ON primary_table.prp_deal_pid = t1441.d_pid
-          INNER JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<loan_purpose_type_partial_load_condition>> AS include_record
-                       , loan_purpose_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.loan_purpose_type
-                  LEFT JOIN history_octane.loan_purpose_type AS history_records
-                            ON loan_purpose_type.code = history_records.code
-                                AND loan_purpose_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON loan_purpose_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS t649
-                     ON primary_table.prp_loan_purpose_type = t649.code
-          INNER JOIN (
-              SELECT *
-              FROM (
-                  SELECT <<proposal_structure_type_partial_load_condition>> AS include_record
-                       , proposal_structure_type.*
-                       , etl_log.etl_end_date_time
-                  FROM history_octane.proposal_structure_type
-                  LEFT JOIN history_octane.proposal_structure_type AS history_records
-                            ON proposal_structure_type.code = history_records.code
-                                AND proposal_structure_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                  JOIN star_common.etl_log
-                       ON proposal_structure_type.etl_batch_id = etl_log.etl_batch_id
-                  WHERE history_records.code IS NULL
-              ) AS primary_table
-          ) AS t661
-                     ON primary_table.prp_structure_type = t661.code
-          INNER JOIN (
+              INNER JOIN (
                   SELECT *
                   FROM (
-                       SELECT <<property_usage_type_partial_load_condition>> AS include_record
-                          , property_usage_type.*
-                          , etl_log.etl_end_date_time
-                       FROM history_octane.property_usage_type
-                       LEFT JOIN history_octane.property_usage_type AS history_records
-                           ON property_usage_type.code = history_records.code
-                              AND property_usage_type.data_source_updated_datetime < history_records.data_source_updated_datetime
-                       JOIN star_common.etl_log
-                          ON property_usage_type.etl_batch_id = etl_log.etl_batch_id
-                       WHERE history_records.code IS NULL
-                    ) AS primary_table
-                  ) AS property_usage ON primary_table.prp_property_usage_type = property_usage.code
-          WHERE GREATEST( primary_table.include_record, t1441.include_record, t649.include_record, t661.include_record,
-            property_usage.include_record ) IS TRUE
-          GROUP BY t1441.d_test_loan, primary_table.prp_structure_type, primary_table.prp_mi_required, t661.value
-                 , primary_table.prp_structure_type, t649.value, primary_table.prp_loan_purpose_type, primary_table
-                     .prp_property_usage_type, property_usage.value
-      )
-      --new records that should be inserted
-      SELECT transaction_junk_dim_new_records.*
-      FROM transaction_junk_dim_new_records
-      LEFT JOIN star_loan.transaction_junk_dim
-                ON transaction_junk_dim_new_records.data_source_integration_id = transaction_junk_dim.data_source_integration_id
-      WHERE transaction_junk_dim.dwid IS NULL
-      UNION ALL
-      --existing records that need to be updated
-      SELECT transaction_junk_dim_new_records.*
-      FROM transaction_junk_dim_new_records
-      JOIN (
-          SELECT transaction_junk_dim.data_source_integration_id, etl_log.etl_start_date_time
-          FROM star_loan.transaction_junk_dim
-          JOIN star_common.etl_log
-               ON transaction_junk_dim.etl_batch_id = etl_log.etl_batch_id
-      ) AS transaction_junk_dim_etl_start_times
-           ON transaction_junk_dim_new_records.data_source_integration_id = transaction_junk_dim_etl_start_times.data_source_integration_id
-               AND transaction_junk_dim_new_records.max_source_etl_end_date_time >= transaction_junk_dim_etl_start_times.etl_start_date_time;
-next_etls:
-  - SP-300001-insert-update
+                      SELECT <<deal_partial_load_condition>> AS include_record
+                           , deal.*
+                      FROM history_octane.deal
+                      LEFT JOIN history_octane.deal AS history_records
+                                ON deal.d_pid = history_records.d_pid
+                                    AND deal.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      WHERE history_records.d_pid IS NULL
+                  ) AS primary_table
+              ) AS t1441
+                         ON primary_table.prp_deal_pid = t1441.d_pid
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<loan_purpose_type_partial_load_condition>> AS include_record
+                           , loan_purpose_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.loan_purpose_type
+                      LEFT JOIN history_octane.loan_purpose_type AS history_records
+                                ON loan_purpose_type.code = history_records.code
+                                    AND loan_purpose_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON loan_purpose_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS t649
+                         ON primary_table.prp_loan_purpose_type = t649.code
+              INNER JOIN (
+                  SELECT *
+                  FROM (
+                      SELECT <<proposal_structure_type_partial_load_condition>> AS include_record
+                           , proposal_structure_type.*
+                           , etl_log.etl_end_date_time
+                      FROM history_octane.proposal_structure_type
+                      LEFT JOIN history_octane.proposal_structure_type AS history_records
+                                ON proposal_structure_type.code = history_records.code
+                                    AND proposal_structure_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                      JOIN star_common.etl_log
+                           ON proposal_structure_type.etl_batch_id = etl_log.etl_batch_id
+                      WHERE history_records.code IS NULL
+                  ) AS primary_table
+              ) AS t661
+                         ON primary_table.prp_structure_type = t661.code
+              INNER JOIN (
+                      SELECT *
+                      FROM (
+                           SELECT <<property_usage_type_partial_load_condition>> AS include_record
+                              , property_usage_type.*
+                              , etl_log.etl_end_date_time
+                           FROM history_octane.property_usage_type
+                           LEFT JOIN history_octane.property_usage_type AS history_records
+                               ON property_usage_type.code = history_records.code
+                                  AND property_usage_type.data_source_updated_datetime < history_records.data_source_updated_datetime
+                           JOIN star_common.etl_log
+                              ON property_usage_type.etl_batch_id = etl_log.etl_batch_id
+                           WHERE history_records.code IS NULL
+                        ) AS primary_table
+                      ) AS property_usage ON primary_table.prp_property_usage_type = property_usage.code
+              WHERE GREATEST( primary_table.include_record, t1441.include_record, t649.include_record, t661.include_record,
+                property_usage.include_record ) IS TRUE
+              GROUP BY t1441.d_test_loan, primary_table.prp_structure_type, primary_table.prp_mi_required, t661.value
+                     , primary_table.prp_structure_type, t649.value, primary_table.prp_loan_purpose_type, primary_table
+                         .prp_property_usage_type, property_usage.value
+          )
+          --new records that should be inserted
+          SELECT transaction_junk_dim_new_records.*
+          FROM transaction_junk_dim_new_records
+          LEFT JOIN star_loan.transaction_junk_dim
+                    ON transaction_junk_dim_new_records.data_source_integration_id = transaction_junk_dim.data_source_integration_id
+          WHERE transaction_junk_dim.dwid IS NULL
+          UNION ALL
+          --existing records that need to be updated
+          SELECT transaction_junk_dim_new_records.*
+          FROM transaction_junk_dim_new_records
+          JOIN (
+              SELECT transaction_junk_dim.data_source_integration_id, etl_log.etl_start_date_time
+              FROM star_loan.transaction_junk_dim
+              JOIN star_common.etl_log
+                   ON transaction_junk_dim.etl_batch_id = etl_log.etl_batch_id
+          ) AS transaction_junk_dim_etl_start_times
+               ON transaction_junk_dim_new_records.data_source_integration_id = transaction_junk_dim_etl_start_times.data_source_integration_id
+                   AND transaction_junk_dim_new_records.max_source_etl_end_date_time >= transaction_junk_dim_etl_start_times.etl_start_date_time;

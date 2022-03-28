@@ -43,40 +43,43 @@ columns:
     data_type: BIGINT
     source:
       field: primary_source_table.columns.wdfp_wf_deal_step_pid
-etls:
+step_functions:
   SP-100195:
-    input_type: table
-    output_type: insert
-    json_output_field: wdfp_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.wf_deal_fork_process
-      SELECT staging_table.wdfp_pid
-           , staging_table.wdfp_version
-           , staging_table.wdfp_wf_deal_step_pid
-           , staging_table.wdfp_wf_deal_process_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.wf_deal_fork_process staging_table
-      LEFT JOIN history_octane.wf_deal_fork_process history_table
-                ON staging_table.wdfp_pid = history_table.wdfp_pid
-                    AND staging_table.wdfp_version = history_table.wdfp_version
-      WHERE history_table.wdfp_pid IS NULL
-      UNION ALL
-      SELECT history_table.wdfp_pid
-           , history_table.wdfp_version + 1
-           , history_table.wdfp_wf_deal_step_pid
-           , history_table.wdfp_wf_deal_process_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.wf_deal_fork_process history_table
-      LEFT JOIN staging_octane.wf_deal_fork_process staging_table
-                ON staging_table.wdfp_pid = history_table.wdfp_pid
-      WHERE staging_table.wdfp_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.wf_deal_fork_process deleted_records
-          WHERE deleted_records.wdfp_pid = history_table.wdfp_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100195:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.wf_deal_fork_process
+        json_output_field: wdfp_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.wf_deal_fork_process
+          SELECT staging_table.wdfp_pid
+               , staging_table.wdfp_version
+               , staging_table.wdfp_wf_deal_step_pid
+               , staging_table.wdfp_wf_deal_process_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.wf_deal_fork_process staging_table
+          LEFT JOIN history_octane.wf_deal_fork_process history_table
+                    ON staging_table.wdfp_pid = history_table.wdfp_pid
+                        AND staging_table.wdfp_version = history_table.wdfp_version
+          WHERE history_table.wdfp_pid IS NULL
+          UNION ALL
+          SELECT history_table.wdfp_pid
+               , history_table.wdfp_version + 1
+               , history_table.wdfp_wf_deal_step_pid
+               , history_table.wdfp_wf_deal_process_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.wf_deal_fork_process history_table
+          LEFT JOIN staging_octane.wf_deal_fork_process staging_table
+                    ON staging_table.wdfp_pid = history_table.wdfp_pid
+          WHERE staging_table.wdfp_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.wf_deal_fork_process deleted_records
+              WHERE deleted_records.wdfp_pid = history_table.wdfp_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

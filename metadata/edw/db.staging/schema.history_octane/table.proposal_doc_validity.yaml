@@ -127,62 +127,65 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.prpdv_warning_days
-etls:
+step_functions:
   SP-100843:
-    input_type: table
-    output_type: insert
-    json_output_field: prpdv_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.proposal_doc_validity
-      SELECT staging_table.prpdv_pid
-           , staging_table.prpdv_version
-           , staging_table.prpdv_proposal_doc_pid
-           , staging_table.prpdv_smart_doc_validity_date_case_pid
-           , staging_table.prpdv_deal_pid
-           , staging_table.prpdv_proposal_pid
-           , staging_table.prpdv_valid_from_date
-           , staging_table.prpdv_valid_through_date
-           , staging_table.prpdv_key_date
-           , staging_table.prpdv_doc_validity_type
-           , staging_table.prpdv_doc_key_date_type
-           , staging_table.prpdv_expiration_calendar_rule_type
-           , staging_table.prpdv_days_before_key_date
-           , staging_table.prpdv_warning_days
-           , staging_table.prpdv_criteria_html
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.proposal_doc_validity staging_table
-      LEFT JOIN history_octane.proposal_doc_validity history_table
-                ON staging_table.prpdv_pid = history_table.prpdv_pid
-                    AND staging_table.prpdv_version = history_table.prpdv_version
-      WHERE history_table.prpdv_pid IS NULL
-      UNION ALL
-      SELECT history_table.prpdv_pid
-           , history_table.prpdv_version + 1
-           , history_table.prpdv_proposal_doc_pid
-           , history_table.prpdv_smart_doc_validity_date_case_pid
-           , history_table.prpdv_deal_pid
-           , history_table.prpdv_proposal_pid
-           , history_table.prpdv_valid_from_date
-           , history_table.prpdv_valid_through_date
-           , history_table.prpdv_key_date
-           , history_table.prpdv_doc_validity_type
-           , history_table.prpdv_doc_key_date_type
-           , history_table.prpdv_expiration_calendar_rule_type
-           , history_table.prpdv_days_before_key_date
-           , history_table.prpdv_warning_days
-           , history_table.prpdv_criteria_html
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.proposal_doc_validity history_table
-      LEFT JOIN staging_octane.proposal_doc_validity staging_table
-                ON staging_table.prpdv_pid = history_table.prpdv_pid
-      WHERE staging_table.prpdv_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.proposal_doc_validity deleted_records
-          WHERE deleted_records.prpdv_pid = history_table.prpdv_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100843:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.proposal_doc_validity
+        json_output_field: prpdv_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.proposal_doc_validity
+          SELECT staging_table.prpdv_pid
+               , staging_table.prpdv_version
+               , staging_table.prpdv_proposal_doc_pid
+               , staging_table.prpdv_smart_doc_validity_date_case_pid
+               , staging_table.prpdv_deal_pid
+               , staging_table.prpdv_proposal_pid
+               , staging_table.prpdv_valid_from_date
+               , staging_table.prpdv_valid_through_date
+               , staging_table.prpdv_key_date
+               , staging_table.prpdv_doc_validity_type
+               , staging_table.prpdv_doc_key_date_type
+               , staging_table.prpdv_expiration_calendar_rule_type
+               , staging_table.prpdv_days_before_key_date
+               , staging_table.prpdv_warning_days
+               , staging_table.prpdv_criteria_html
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.proposal_doc_validity staging_table
+          LEFT JOIN history_octane.proposal_doc_validity history_table
+                    ON staging_table.prpdv_pid = history_table.prpdv_pid
+                        AND staging_table.prpdv_version = history_table.prpdv_version
+          WHERE history_table.prpdv_pid IS NULL
+          UNION ALL
+          SELECT history_table.prpdv_pid
+               , history_table.prpdv_version + 1
+               , history_table.prpdv_proposal_doc_pid
+               , history_table.prpdv_smart_doc_validity_date_case_pid
+               , history_table.prpdv_deal_pid
+               , history_table.prpdv_proposal_pid
+               , history_table.prpdv_valid_from_date
+               , history_table.prpdv_valid_through_date
+               , history_table.prpdv_key_date
+               , history_table.prpdv_doc_validity_type
+               , history_table.prpdv_doc_key_date_type
+               , history_table.prpdv_expiration_calendar_rule_type
+               , history_table.prpdv_days_before_key_date
+               , history_table.prpdv_warning_days
+               , history_table.prpdv_criteria_html
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.proposal_doc_validity history_table
+          LEFT JOIN staging_octane.proposal_doc_validity staging_table
+                    ON staging_table.prpdv_pid = history_table.prpdv_pid
+          WHERE staging_table.prpdv_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.proposal_doc_validity deleted_records
+              WHERE deleted_records.prpdv_pid = history_table.prpdv_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

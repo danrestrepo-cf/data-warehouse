@@ -287,150 +287,153 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.ob_version
-etls:
+step_functions:
   SP-100155:
-    input_type: table
-    output_type: insert
-    json_output_field: ob_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.obligation
-      SELECT staging_table.ob_pid
-           , staging_table.ob_version
-           , staging_table.ob_proposal_pid
-           , staging_table.ob_obligation_type
-           , staging_table.ob_amount_input_type
-           , staging_table.ob_factor_percent
-           , staging_table.ob_factor_percent_base_amount
-           , staging_table.ob_annual_payment_amount
-           , staging_table.ob_monthly_payment_amount
-           , staging_table.ob_pte_annual_tax_installment_amount
-           , staging_table.ob_pte_annual_preferred_tax_amount
-           , staging_table.ob_pte_annual_homeowner_occupied_estimated_tax_amount
-           , staging_table.ob_pte_annual_exemption_free_estimated_tax_amount
-           , staging_table.ob_payment_date_1
-           , staging_table.ob_payment_date_2
-           , staging_table.ob_payment_date_3
-           , staging_table.ob_payment_date_4
-           , staging_table.ob_payment_date_5
-           , staging_table.ob_payment_date_6
-           , staging_table.ob_payment_amount_1
-           , staging_table.ob_payment_amount_2
-           , staging_table.ob_payment_amount_3
-           , staging_table.ob_payment_amount_4
-           , staging_table.ob_payment_amount_5
-           , staging_table.ob_payment_amount_6
-           , staging_table.ob_total_dated_payment_amount
-           , staging_table.ob_vendor_first_name
-           , staging_table.ob_vendor_last_name
-           , staging_table.ob_vendor_middle_name
-           , staging_table.ob_vendor_name_suffix
-           , staging_table.ob_vendor_company_name
-           , staging_table.ob_vendor_title
-           , staging_table.ob_vendor_office_phone
-           , staging_table.ob_vendor_office_phone_extension
-           , staging_table.ob_vendor_mobile_phone
-           , staging_table.ob_vendor_email
-           , staging_table.ob_vendor_fax
-           , staging_table.ob_vendor_city
-           , staging_table.ob_vendor_country
-           , staging_table.ob_vendor_postal_code
-           , staging_table.ob_vendor_state
-           , staging_table.ob_vendor_street1
-           , staging_table.ob_vendor_street2
-           , staging_table.ob_vendor_reference_id
-           , staging_table.ob_name
-           , staging_table.ob_payment_amount_1_warning
-           , staging_table.ob_payment_amount_2_warning
-           , staging_table.ob_payment_amount_3_warning
-           , staging_table.ob_payment_amount_4_warning
-           , staging_table.ob_payment_amount_5_warning
-           , staging_table.ob_payment_amount_6_warning
-           , staging_table.ob_tax_auto_compute
-           , staging_table.ob_policy_dwelling_coverage_amount
-           , staging_table.ob_policy_extended_coverage_amount
-           , staging_table.ob_policy_deductible_amount
-           , staging_table.ob_policy_effective_date
-           , staging_table.ob_policy_expiration_date
-           , staging_table.ob_escrow_waiver
-           , staging_table.ob_insurance_transferred
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.obligation staging_table
-      LEFT JOIN history_octane.obligation history_table
-                ON staging_table.ob_pid = history_table.ob_pid
-                    AND staging_table.ob_version = history_table.ob_version
-      WHERE history_table.ob_pid IS NULL
-      UNION ALL
-      SELECT history_table.ob_pid
-           , history_table.ob_version + 1
-           , history_table.ob_proposal_pid
-           , history_table.ob_obligation_type
-           , history_table.ob_amount_input_type
-           , history_table.ob_factor_percent
-           , history_table.ob_factor_percent_base_amount
-           , history_table.ob_annual_payment_amount
-           , history_table.ob_monthly_payment_amount
-           , history_table.ob_pte_annual_tax_installment_amount
-           , history_table.ob_pte_annual_preferred_tax_amount
-           , history_table.ob_pte_annual_homeowner_occupied_estimated_tax_amount
-           , history_table.ob_pte_annual_exemption_free_estimated_tax_amount
-           , history_table.ob_payment_date_1
-           , history_table.ob_payment_date_2
-           , history_table.ob_payment_date_3
-           , history_table.ob_payment_date_4
-           , history_table.ob_payment_date_5
-           , history_table.ob_payment_date_6
-           , history_table.ob_payment_amount_1
-           , history_table.ob_payment_amount_2
-           , history_table.ob_payment_amount_3
-           , history_table.ob_payment_amount_4
-           , history_table.ob_payment_amount_5
-           , history_table.ob_payment_amount_6
-           , history_table.ob_total_dated_payment_amount
-           , history_table.ob_vendor_first_name
-           , history_table.ob_vendor_last_name
-           , history_table.ob_vendor_middle_name
-           , history_table.ob_vendor_name_suffix
-           , history_table.ob_vendor_company_name
-           , history_table.ob_vendor_title
-           , history_table.ob_vendor_office_phone
-           , history_table.ob_vendor_office_phone_extension
-           , history_table.ob_vendor_mobile_phone
-           , history_table.ob_vendor_email
-           , history_table.ob_vendor_fax
-           , history_table.ob_vendor_city
-           , history_table.ob_vendor_country
-           , history_table.ob_vendor_postal_code
-           , history_table.ob_vendor_state
-           , history_table.ob_vendor_street1
-           , history_table.ob_vendor_street2
-           , history_table.ob_vendor_reference_id
-           , history_table.ob_name
-           , history_table.ob_payment_amount_1_warning
-           , history_table.ob_payment_amount_2_warning
-           , history_table.ob_payment_amount_3_warning
-           , history_table.ob_payment_amount_4_warning
-           , history_table.ob_payment_amount_5_warning
-           , history_table.ob_payment_amount_6_warning
-           , history_table.ob_tax_auto_compute
-           , history_table.ob_policy_dwelling_coverage_amount
-           , history_table.ob_policy_extended_coverage_amount
-           , history_table.ob_policy_deductible_amount
-           , history_table.ob_policy_effective_date
-           , history_table.ob_policy_expiration_date
-           , history_table.ob_escrow_waiver
-           , history_table.ob_insurance_transferred
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.obligation history_table
-      LEFT JOIN staging_octane.obligation staging_table
-                ON staging_table.ob_pid = history_table.ob_pid
-      WHERE staging_table.ob_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.obligation deleted_records
-          WHERE deleted_records.ob_pid = history_table.ob_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100155:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.obligation
+        json_output_field: ob_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.obligation
+          SELECT staging_table.ob_pid
+               , staging_table.ob_version
+               , staging_table.ob_proposal_pid
+               , staging_table.ob_obligation_type
+               , staging_table.ob_amount_input_type
+               , staging_table.ob_factor_percent
+               , staging_table.ob_factor_percent_base_amount
+               , staging_table.ob_annual_payment_amount
+               , staging_table.ob_monthly_payment_amount
+               , staging_table.ob_pte_annual_tax_installment_amount
+               , staging_table.ob_pte_annual_preferred_tax_amount
+               , staging_table.ob_pte_annual_homeowner_occupied_estimated_tax_amount
+               , staging_table.ob_pte_annual_exemption_free_estimated_tax_amount
+               , staging_table.ob_payment_date_1
+               , staging_table.ob_payment_date_2
+               , staging_table.ob_payment_date_3
+               , staging_table.ob_payment_date_4
+               , staging_table.ob_payment_date_5
+               , staging_table.ob_payment_date_6
+               , staging_table.ob_payment_amount_1
+               , staging_table.ob_payment_amount_2
+               , staging_table.ob_payment_amount_3
+               , staging_table.ob_payment_amount_4
+               , staging_table.ob_payment_amount_5
+               , staging_table.ob_payment_amount_6
+               , staging_table.ob_total_dated_payment_amount
+               , staging_table.ob_vendor_first_name
+               , staging_table.ob_vendor_last_name
+               , staging_table.ob_vendor_middle_name
+               , staging_table.ob_vendor_name_suffix
+               , staging_table.ob_vendor_company_name
+               , staging_table.ob_vendor_title
+               , staging_table.ob_vendor_office_phone
+               , staging_table.ob_vendor_office_phone_extension
+               , staging_table.ob_vendor_mobile_phone
+               , staging_table.ob_vendor_email
+               , staging_table.ob_vendor_fax
+               , staging_table.ob_vendor_city
+               , staging_table.ob_vendor_country
+               , staging_table.ob_vendor_postal_code
+               , staging_table.ob_vendor_state
+               , staging_table.ob_vendor_street1
+               , staging_table.ob_vendor_street2
+               , staging_table.ob_vendor_reference_id
+               , staging_table.ob_name
+               , staging_table.ob_payment_amount_1_warning
+               , staging_table.ob_payment_amount_2_warning
+               , staging_table.ob_payment_amount_3_warning
+               , staging_table.ob_payment_amount_4_warning
+               , staging_table.ob_payment_amount_5_warning
+               , staging_table.ob_payment_amount_6_warning
+               , staging_table.ob_tax_auto_compute
+               , staging_table.ob_policy_dwelling_coverage_amount
+               , staging_table.ob_policy_extended_coverage_amount
+               , staging_table.ob_policy_deductible_amount
+               , staging_table.ob_policy_effective_date
+               , staging_table.ob_policy_expiration_date
+               , staging_table.ob_escrow_waiver
+               , staging_table.ob_insurance_transferred
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.obligation staging_table
+          LEFT JOIN history_octane.obligation history_table
+                    ON staging_table.ob_pid = history_table.ob_pid
+                        AND staging_table.ob_version = history_table.ob_version
+          WHERE history_table.ob_pid IS NULL
+          UNION ALL
+          SELECT history_table.ob_pid
+               , history_table.ob_version + 1
+               , history_table.ob_proposal_pid
+               , history_table.ob_obligation_type
+               , history_table.ob_amount_input_type
+               , history_table.ob_factor_percent
+               , history_table.ob_factor_percent_base_amount
+               , history_table.ob_annual_payment_amount
+               , history_table.ob_monthly_payment_amount
+               , history_table.ob_pte_annual_tax_installment_amount
+               , history_table.ob_pte_annual_preferred_tax_amount
+               , history_table.ob_pte_annual_homeowner_occupied_estimated_tax_amount
+               , history_table.ob_pte_annual_exemption_free_estimated_tax_amount
+               , history_table.ob_payment_date_1
+               , history_table.ob_payment_date_2
+               , history_table.ob_payment_date_3
+               , history_table.ob_payment_date_4
+               , history_table.ob_payment_date_5
+               , history_table.ob_payment_date_6
+               , history_table.ob_payment_amount_1
+               , history_table.ob_payment_amount_2
+               , history_table.ob_payment_amount_3
+               , history_table.ob_payment_amount_4
+               , history_table.ob_payment_amount_5
+               , history_table.ob_payment_amount_6
+               , history_table.ob_total_dated_payment_amount
+               , history_table.ob_vendor_first_name
+               , history_table.ob_vendor_last_name
+               , history_table.ob_vendor_middle_name
+               , history_table.ob_vendor_name_suffix
+               , history_table.ob_vendor_company_name
+               , history_table.ob_vendor_title
+               , history_table.ob_vendor_office_phone
+               , history_table.ob_vendor_office_phone_extension
+               , history_table.ob_vendor_mobile_phone
+               , history_table.ob_vendor_email
+               , history_table.ob_vendor_fax
+               , history_table.ob_vendor_city
+               , history_table.ob_vendor_country
+               , history_table.ob_vendor_postal_code
+               , history_table.ob_vendor_state
+               , history_table.ob_vendor_street1
+               , history_table.ob_vendor_street2
+               , history_table.ob_vendor_reference_id
+               , history_table.ob_name
+               , history_table.ob_payment_amount_1_warning
+               , history_table.ob_payment_amount_2_warning
+               , history_table.ob_payment_amount_3_warning
+               , history_table.ob_payment_amount_4_warning
+               , history_table.ob_payment_amount_5_warning
+               , history_table.ob_payment_amount_6_warning
+               , history_table.ob_tax_auto_compute
+               , history_table.ob_policy_dwelling_coverage_amount
+               , history_table.ob_policy_extended_coverage_amount
+               , history_table.ob_policy_deductible_amount
+               , history_table.ob_policy_effective_date
+               , history_table.ob_policy_expiration_date
+               , history_table.ob_escrow_waiver
+               , history_table.ob_insurance_transferred
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.obligation history_table
+          LEFT JOIN staging_octane.obligation staging_table
+                    ON staging_table.ob_pid = history_table.ob_pid
+          WHERE staging_table.ob_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.obligation deleted_records
+              WHERE deleted_records.ob_pid = history_table.ob_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

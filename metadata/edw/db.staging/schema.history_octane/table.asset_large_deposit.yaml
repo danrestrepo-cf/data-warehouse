@@ -43,44 +43,47 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100071:
-    input_type: table
-    output_type: insert
-    json_output_field: ald_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.asset_large_deposit
-      SELECT staging_table.ald_pid
-           , staging_table.ald_version
-           , staging_table.ald_asset_pid
-           , staging_table.ald_deposit_amount
-           , staging_table.ald_deposit_date
-           , staging_table.ald_snapshotted_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.asset_large_deposit staging_table
-      LEFT JOIN history_octane.asset_large_deposit history_table
-                ON staging_table.ald_pid = history_table.ald_pid
-                    AND staging_table.ald_version = history_table.ald_version
-      WHERE history_table.ald_pid IS NULL
-      UNION ALL
-      SELECT history_table.ald_pid
-           , history_table.ald_version + 1
-           , history_table.ald_asset_pid
-           , history_table.ald_deposit_amount
-           , history_table.ald_deposit_date
-           , history_table.ald_snapshotted_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.asset_large_deposit history_table
-      LEFT JOIN staging_octane.asset_large_deposit staging_table
-                ON staging_table.ald_pid = history_table.ald_pid
-      WHERE staging_table.ald_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.asset_large_deposit deleted_records
-          WHERE deleted_records.ald_pid = history_table.ald_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100071:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.asset_large_deposit
+        json_output_field: ald_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.asset_large_deposit
+          SELECT staging_table.ald_pid
+               , staging_table.ald_version
+               , staging_table.ald_asset_pid
+               , staging_table.ald_deposit_amount
+               , staging_table.ald_deposit_date
+               , staging_table.ald_snapshotted_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.asset_large_deposit staging_table
+          LEFT JOIN history_octane.asset_large_deposit history_table
+                    ON staging_table.ald_pid = history_table.ald_pid
+                        AND staging_table.ald_version = history_table.ald_version
+          WHERE history_table.ald_pid IS NULL
+          UNION ALL
+          SELECT history_table.ald_pid
+               , history_table.ald_version + 1
+               , history_table.ald_asset_pid
+               , history_table.ald_deposit_amount
+               , history_table.ald_deposit_date
+               , history_table.ald_snapshotted_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.asset_large_deposit history_table
+          LEFT JOIN staging_octane.asset_large_deposit staging_table
+                    ON staging_table.ald_pid = history_table.ald_pid
+          WHERE staging_table.ald_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.asset_large_deposit deleted_records
+              WHERE deleted_records.ald_pid = history_table.ald_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

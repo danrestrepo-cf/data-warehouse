@@ -331,88 +331,91 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100365:
-    input_type: table
-    output_type: insert
-    json_output_field: crpo_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.criteria_pid_operand
-      SELECT staging_table.crpo_pid
-           , staging_table.crpo_version
-           , staging_table.crpo_criteria_pid
-           , staging_table.crpo_criteria_pid_operand_type
-           , staging_table.crpo_lender_user_pid
-           , staging_table.crpo_role_pid
-           , staging_table.crpo_branch_pid
-           , staging_table.crpo_wf_step_pid
-           , staging_table.crpo_wf_phase_pid
-           , staging_table.crpo_county_pid
-           , staging_table.crpo_investor_pid
-           , staging_table.crpo_product_pid
-           , staging_table.crpo_lead_source_pid
-           , staging_table.crpo_company_pid
-           , staging_table.crpo_deal_tag_definition_pid
-           , staging_table.crpo_creditor_pid
-           , staging_table.crpo_interim_funder_pid
-           , staging_table.crpo_settlement_agent_pid
-           , staging_table.crpo_performer_team_pid
-           , staging_table.crpo_third_party_community_second_program_pid
-           , staging_table.crpo_offering_pid
-           , staging_table.crpo_channel_pid
-           , staging_table.crpo_account_grant_program_pid
-           , staging_table.crpo_mortgage_credit_certificate_issuer_pid
-           , staging_table.crpo_criteria_snippet_pid
-           , staging_table.crpo_smart_doc_pid
-           , staging_table.crpo_org_node_pid
-           , staging_table.crpo_trustee_pid
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.criteria_pid_operand staging_table
-      LEFT JOIN history_octane.criteria_pid_operand history_table
-                ON staging_table.crpo_pid = history_table.crpo_pid
-                    AND staging_table.crpo_version = history_table.crpo_version
-      WHERE history_table.crpo_pid IS NULL
-      UNION ALL
-      SELECT history_table.crpo_pid
-           , history_table.crpo_version + 1
-           , history_table.crpo_criteria_pid
-           , history_table.crpo_criteria_pid_operand_type
-           , history_table.crpo_lender_user_pid
-           , history_table.crpo_role_pid
-           , history_table.crpo_branch_pid
-           , history_table.crpo_wf_step_pid
-           , history_table.crpo_wf_phase_pid
-           , history_table.crpo_county_pid
-           , history_table.crpo_investor_pid
-           , history_table.crpo_product_pid
-           , history_table.crpo_lead_source_pid
-           , history_table.crpo_company_pid
-           , history_table.crpo_deal_tag_definition_pid
-           , history_table.crpo_creditor_pid
-           , history_table.crpo_interim_funder_pid
-           , history_table.crpo_settlement_agent_pid
-           , history_table.crpo_performer_team_pid
-           , history_table.crpo_third_party_community_second_program_pid
-           , history_table.crpo_offering_pid
-           , history_table.crpo_channel_pid
-           , history_table.crpo_account_grant_program_pid
-           , history_table.crpo_mortgage_credit_certificate_issuer_pid
-           , history_table.crpo_criteria_snippet_pid
-           , history_table.crpo_smart_doc_pid
-           , history_table.crpo_org_node_pid
-           , history_table.crpo_trustee_pid
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.criteria_pid_operand history_table
-      LEFT JOIN staging_octane.criteria_pid_operand staging_table
-                ON staging_table.crpo_pid = history_table.crpo_pid
-      WHERE staging_table.crpo_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.criteria_pid_operand deleted_records
-          WHERE deleted_records.crpo_pid = history_table.crpo_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100365:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.criteria_pid_operand
+        json_output_field: crpo_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.criteria_pid_operand
+          SELECT staging_table.crpo_pid
+               , staging_table.crpo_version
+               , staging_table.crpo_criteria_pid
+               , staging_table.crpo_criteria_pid_operand_type
+               , staging_table.crpo_lender_user_pid
+               , staging_table.crpo_role_pid
+               , staging_table.crpo_branch_pid
+               , staging_table.crpo_wf_step_pid
+               , staging_table.crpo_wf_phase_pid
+               , staging_table.crpo_county_pid
+               , staging_table.crpo_investor_pid
+               , staging_table.crpo_product_pid
+               , staging_table.crpo_lead_source_pid
+               , staging_table.crpo_company_pid
+               , staging_table.crpo_deal_tag_definition_pid
+               , staging_table.crpo_creditor_pid
+               , staging_table.crpo_interim_funder_pid
+               , staging_table.crpo_settlement_agent_pid
+               , staging_table.crpo_performer_team_pid
+               , staging_table.crpo_third_party_community_second_program_pid
+               , staging_table.crpo_offering_pid
+               , staging_table.crpo_channel_pid
+               , staging_table.crpo_account_grant_program_pid
+               , staging_table.crpo_mortgage_credit_certificate_issuer_pid
+               , staging_table.crpo_criteria_snippet_pid
+               , staging_table.crpo_smart_doc_pid
+               , staging_table.crpo_org_node_pid
+               , staging_table.crpo_trustee_pid
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.criteria_pid_operand staging_table
+          LEFT JOIN history_octane.criteria_pid_operand history_table
+                    ON staging_table.crpo_pid = history_table.crpo_pid
+                        AND staging_table.crpo_version = history_table.crpo_version
+          WHERE history_table.crpo_pid IS NULL
+          UNION ALL
+          SELECT history_table.crpo_pid
+               , history_table.crpo_version + 1
+               , history_table.crpo_criteria_pid
+               , history_table.crpo_criteria_pid_operand_type
+               , history_table.crpo_lender_user_pid
+               , history_table.crpo_role_pid
+               , history_table.crpo_branch_pid
+               , history_table.crpo_wf_step_pid
+               , history_table.crpo_wf_phase_pid
+               , history_table.crpo_county_pid
+               , history_table.crpo_investor_pid
+               , history_table.crpo_product_pid
+               , history_table.crpo_lead_source_pid
+               , history_table.crpo_company_pid
+               , history_table.crpo_deal_tag_definition_pid
+               , history_table.crpo_creditor_pid
+               , history_table.crpo_interim_funder_pid
+               , history_table.crpo_settlement_agent_pid
+               , history_table.crpo_performer_team_pid
+               , history_table.crpo_third_party_community_second_program_pid
+               , history_table.crpo_offering_pid
+               , history_table.crpo_channel_pid
+               , history_table.crpo_account_grant_program_pid
+               , history_table.crpo_mortgage_credit_certificate_issuer_pid
+               , history_table.crpo_criteria_snippet_pid
+               , history_table.crpo_smart_doc_pid
+               , history_table.crpo_org_node_pid
+               , history_table.crpo_trustee_pid
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.criteria_pid_operand history_table
+          LEFT JOIN staging_octane.criteria_pid_operand staging_table
+                    ON staging_table.crpo_pid = history_table.crpo_pid
+          WHERE staging_table.crpo_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.criteria_pid_operand deleted_records
+              WHERE deleted_records.crpo_pid = history_table.crpo_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

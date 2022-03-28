@@ -35,40 +35,43 @@ columns:
     data_type: TIMESTAMPTZ
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100007:
-    input_type: table
-    output_type: insert
-    json_output_field: aprtk_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.appraisal_id_ticker
-      SELECT staging_table.aprtk_pid
-           , staging_table.aprtk_version
-           , staging_table.aprtk_deal_pid
-           , staging_table.aprtk_next_id
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.appraisal_id_ticker staging_table
-      LEFT JOIN history_octane.appraisal_id_ticker history_table
-                ON staging_table.aprtk_pid = history_table.aprtk_pid
-                    AND staging_table.aprtk_version = history_table.aprtk_version
-      WHERE history_table.aprtk_pid IS NULL
-      UNION ALL
-      SELECT history_table.aprtk_pid
-           , history_table.aprtk_version + 1
-           , history_table.aprtk_deal_pid
-           , history_table.aprtk_next_id
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.appraisal_id_ticker history_table
-      LEFT JOIN staging_octane.appraisal_id_ticker staging_table
-                ON staging_table.aprtk_pid = history_table.aprtk_pid
-      WHERE staging_table.aprtk_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.appraisal_id_ticker deleted_records
-          WHERE deleted_records.aprtk_pid = history_table.aprtk_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100007:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.appraisal_id_ticker
+        json_output_field: aprtk_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.appraisal_id_ticker
+          SELECT staging_table.aprtk_pid
+               , staging_table.aprtk_version
+               , staging_table.aprtk_deal_pid
+               , staging_table.aprtk_next_id
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.appraisal_id_ticker staging_table
+          LEFT JOIN history_octane.appraisal_id_ticker history_table
+                    ON staging_table.aprtk_pid = history_table.aprtk_pid
+                        AND staging_table.aprtk_version = history_table.aprtk_version
+          WHERE history_table.aprtk_pid IS NULL
+          UNION ALL
+          SELECT history_table.aprtk_pid
+               , history_table.aprtk_version + 1
+               , history_table.aprtk_deal_pid
+               , history_table.aprtk_next_id
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.appraisal_id_ticker history_table
+          LEFT JOIN staging_octane.appraisal_id_ticker staging_table
+                    ON staging_table.aprtk_pid = history_table.aprtk_pid
+          WHERE staging_table.aprtk_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.appraisal_id_ticker deleted_records
+              WHERE deleted_records.aprtk_pid = history_table.aprtk_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

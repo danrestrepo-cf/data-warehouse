@@ -35,40 +35,43 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.pao_version
-etls:
+step_functions:
   SP-100107:
-    input_type: table
-    output_type: insert
-    json_output_field: pao_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.product_add_on
-      SELECT staging_table.pao_pid
-           , staging_table.pao_version
-           , staging_table.pao_product_pid
-           , staging_table.pao_from_date
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.product_add_on staging_table
-      LEFT JOIN history_octane.product_add_on history_table
-                ON staging_table.pao_pid = history_table.pao_pid
-                    AND staging_table.pao_version = history_table.pao_version
-      WHERE history_table.pao_pid IS NULL
-      UNION ALL
-      SELECT history_table.pao_pid
-           , history_table.pao_version + 1
-           , history_table.pao_product_pid
-           , history_table.pao_from_date
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.product_add_on history_table
-      LEFT JOIN staging_octane.product_add_on staging_table
-                ON staging_table.pao_pid = history_table.pao_pid
-      WHERE staging_table.pao_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.product_add_on deleted_records
-          WHERE deleted_records.pao_pid = history_table.pao_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100107:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.product_add_on
+        json_output_field: pao_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.product_add_on
+          SELECT staging_table.pao_pid
+               , staging_table.pao_version
+               , staging_table.pao_product_pid
+               , staging_table.pao_from_date
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.product_add_on staging_table
+          LEFT JOIN history_octane.product_add_on history_table
+                    ON staging_table.pao_pid = history_table.pao_pid
+                        AND staging_table.pao_version = history_table.pao_version
+          WHERE history_table.pao_pid IS NULL
+          UNION ALL
+          SELECT history_table.pao_pid
+               , history_table.pao_version + 1
+               , history_table.pao_product_pid
+               , history_table.pao_from_date
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.product_add_on history_table
+          LEFT JOIN staging_octane.product_add_on staging_table
+                    ON staging_table.pao_pid = history_table.pao_pid
+          WHERE staging_table.pao_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.product_add_on deleted_records
+              WHERE deleted_records.pao_pid = history_table.pao_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

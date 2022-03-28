@@ -59,44 +59,47 @@ columns:
     data_type: INTEGER
     source:
       field: primary_source_table.columns.ssp_version
-etls:
+step_functions:
   SP-100335:
-    input_type: table
-    output_type: insert
-    json_output_field: ssp_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.smart_separator
-      SELECT staging_table.ssp_pid
-           , staging_table.ssp_version
-           , staging_table.ssp_account_pid
-           , staging_table.ssp_custom_form_pid
-           , staging_table.ssp_criteria_pid
-           , staging_table.ssp_separator_name
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.smart_separator staging_table
-      LEFT JOIN history_octane.smart_separator history_table
-                ON staging_table.ssp_pid = history_table.ssp_pid
-                    AND staging_table.ssp_version = history_table.ssp_version
-      WHERE history_table.ssp_pid IS NULL
-      UNION ALL
-      SELECT history_table.ssp_pid
-           , history_table.ssp_version + 1
-           , history_table.ssp_account_pid
-           , history_table.ssp_custom_form_pid
-           , history_table.ssp_criteria_pid
-           , history_table.ssp_separator_name
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.smart_separator history_table
-      LEFT JOIN staging_octane.smart_separator staging_table
-                ON staging_table.ssp_pid = history_table.ssp_pid
-      WHERE staging_table.ssp_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.smart_separator deleted_records
-          WHERE deleted_records.ssp_pid = history_table.ssp_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100335:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.smart_separator
+        json_output_field: ssp_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.smart_separator
+          SELECT staging_table.ssp_pid
+               , staging_table.ssp_version
+               , staging_table.ssp_account_pid
+               , staging_table.ssp_custom_form_pid
+               , staging_table.ssp_criteria_pid
+               , staging_table.ssp_separator_name
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.smart_separator staging_table
+          LEFT JOIN history_octane.smart_separator history_table
+                    ON staging_table.ssp_pid = history_table.ssp_pid
+                        AND staging_table.ssp_version = history_table.ssp_version
+          WHERE history_table.ssp_pid IS NULL
+          UNION ALL
+          SELECT history_table.ssp_pid
+               , history_table.ssp_version + 1
+               , history_table.ssp_account_pid
+               , history_table.ssp_custom_form_pid
+               , history_table.ssp_criteria_pid
+               , history_table.ssp_separator_name
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.smart_separator history_table
+          LEFT JOIN staging_octane.smart_separator staging_table
+                    ON staging_table.ssp_pid = history_table.ssp_pid
+          WHERE staging_table.ssp_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.smart_separator deleted_records
+              WHERE deleted_records.ssp_pid = history_table.ssp_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

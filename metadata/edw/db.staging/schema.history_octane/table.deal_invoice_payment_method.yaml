@@ -155,64 +155,67 @@ columns:
       field: primary_source_table.columns.dipm_version
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100277:
-    input_type: table
-    output_type: insert
-    json_output_field: dipm_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.deal_invoice_payment_method
-      SELECT staging_table.dipm_pid
-           , staging_table.dipm_version
-           , staging_table.dipm_deal_invoice_pid
-           , staging_table.dipm_payer_type
-           , staging_table.dipm_configured_payer_type
-           , staging_table.dipm_payer_unparsed_name
-           , staging_table.dipm_payment_fulfill_type
-           , staging_table.dipm_payment_transfer_los_loan_id_main
-           , staging_table.dipm_payment_processing_company_type
-           , staging_table.dipm_stripe_payment_pid
-           , staging_table.dipm_stripe_payment_refund_pid
-           , staging_table.dipm_requester_agent_type
-           , staging_table.dipm_requester_lender_user_pid
-           , staging_table.dipm_requester_unparsed_name
-           , staging_table.dipm_payment_submission_type
-           , staging_table.dipm_payment_completed_date
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.deal_invoice_payment_method staging_table
-      LEFT JOIN history_octane.deal_invoice_payment_method history_table
-                ON staging_table.dipm_pid = history_table.dipm_pid
-                    AND staging_table.dipm_version = history_table.dipm_version
-      WHERE history_table.dipm_pid IS NULL
-      UNION ALL
-      SELECT history_table.dipm_pid
-           , history_table.dipm_version + 1
-           , history_table.dipm_deal_invoice_pid
-           , history_table.dipm_payer_type
-           , history_table.dipm_configured_payer_type
-           , history_table.dipm_payer_unparsed_name
-           , history_table.dipm_payment_fulfill_type
-           , history_table.dipm_payment_transfer_los_loan_id_main
-           , history_table.dipm_payment_processing_company_type
-           , history_table.dipm_stripe_payment_pid
-           , history_table.dipm_stripe_payment_refund_pid
-           , history_table.dipm_requester_agent_type
-           , history_table.dipm_requester_lender_user_pid
-           , history_table.dipm_requester_unparsed_name
-           , history_table.dipm_payment_submission_type
-           , history_table.dipm_payment_completed_date
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.deal_invoice_payment_method history_table
-      LEFT JOIN staging_octane.deal_invoice_payment_method staging_table
-                ON staging_table.dipm_pid = history_table.dipm_pid
-      WHERE staging_table.dipm_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.deal_invoice_payment_method deleted_records
-          WHERE deleted_records.dipm_pid = history_table.dipm_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100277:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.deal_invoice_payment_method
+        json_output_field: dipm_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.deal_invoice_payment_method
+          SELECT staging_table.dipm_pid
+               , staging_table.dipm_version
+               , staging_table.dipm_deal_invoice_pid
+               , staging_table.dipm_payer_type
+               , staging_table.dipm_configured_payer_type
+               , staging_table.dipm_payer_unparsed_name
+               , staging_table.dipm_payment_fulfill_type
+               , staging_table.dipm_payment_transfer_los_loan_id_main
+               , staging_table.dipm_payment_processing_company_type
+               , staging_table.dipm_stripe_payment_pid
+               , staging_table.dipm_stripe_payment_refund_pid
+               , staging_table.dipm_requester_agent_type
+               , staging_table.dipm_requester_lender_user_pid
+               , staging_table.dipm_requester_unparsed_name
+               , staging_table.dipm_payment_submission_type
+               , staging_table.dipm_payment_completed_date
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.deal_invoice_payment_method staging_table
+          LEFT JOIN history_octane.deal_invoice_payment_method history_table
+                    ON staging_table.dipm_pid = history_table.dipm_pid
+                        AND staging_table.dipm_version = history_table.dipm_version
+          WHERE history_table.dipm_pid IS NULL
+          UNION ALL
+          SELECT history_table.dipm_pid
+               , history_table.dipm_version + 1
+               , history_table.dipm_deal_invoice_pid
+               , history_table.dipm_payer_type
+               , history_table.dipm_configured_payer_type
+               , history_table.dipm_payer_unparsed_name
+               , history_table.dipm_payment_fulfill_type
+               , history_table.dipm_payment_transfer_los_loan_id_main
+               , history_table.dipm_payment_processing_company_type
+               , history_table.dipm_stripe_payment_pid
+               , history_table.dipm_stripe_payment_refund_pid
+               , history_table.dipm_requester_agent_type
+               , history_table.dipm_requester_lender_user_pid
+               , history_table.dipm_requester_unparsed_name
+               , history_table.dipm_payment_submission_type
+               , history_table.dipm_payment_completed_date
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.deal_invoice_payment_method history_table
+          LEFT JOIN staging_octane.deal_invoice_payment_method staging_table
+                    ON staging_table.dipm_pid = history_table.dipm_pid
+          WHERE staging_table.dipm_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.deal_invoice_payment_method deleted_records
+              WHERE deleted_records.dipm_pid = history_table.dipm_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

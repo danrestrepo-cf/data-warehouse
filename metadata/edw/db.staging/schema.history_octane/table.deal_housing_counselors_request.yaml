@@ -67,52 +67,55 @@ columns:
       field: primary_source_table.columns.dhcr_version
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100079:
-    input_type: table
-    output_type: insert
-    json_output_field: dhcr_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.deal_housing_counselors_request
-      SELECT staging_table.dhcr_pid
-           , staging_table.dhcr_version
-           , staging_table.dhcr_deal_pid
-           , staging_table.dhcr_centroid_address_street1
-           , staging_table.dhcr_centroid_address_street2
-           , staging_table.dhcr_centroid_address_city
-           , staging_table.dhcr_centroid_address_state
-           , staging_table.dhcr_centroid_address_postal_code
-           , staging_table.dhcr_centroid_address_country
-           , staging_table.dhcr_error_messages
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.deal_housing_counselors_request staging_table
-      LEFT JOIN history_octane.deal_housing_counselors_request history_table
-                ON staging_table.dhcr_pid = history_table.dhcr_pid
-                    AND staging_table.dhcr_version = history_table.dhcr_version
-      WHERE history_table.dhcr_pid IS NULL
-      UNION ALL
-      SELECT history_table.dhcr_pid
-           , history_table.dhcr_version + 1
-           , history_table.dhcr_deal_pid
-           , history_table.dhcr_centroid_address_street1
-           , history_table.dhcr_centroid_address_street2
-           , history_table.dhcr_centroid_address_city
-           , history_table.dhcr_centroid_address_state
-           , history_table.dhcr_centroid_address_postal_code
-           , history_table.dhcr_centroid_address_country
-           , history_table.dhcr_error_messages
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.deal_housing_counselors_request history_table
-      LEFT JOIN staging_octane.deal_housing_counselors_request staging_table
-                ON staging_table.dhcr_pid = history_table.dhcr_pid
-      WHERE staging_table.dhcr_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.deal_housing_counselors_request deleted_records
-          WHERE deleted_records.dhcr_pid = history_table.dhcr_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100079:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.deal_housing_counselors_request
+        json_output_field: dhcr_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.deal_housing_counselors_request
+          SELECT staging_table.dhcr_pid
+               , staging_table.dhcr_version
+               , staging_table.dhcr_deal_pid
+               , staging_table.dhcr_centroid_address_street1
+               , staging_table.dhcr_centroid_address_street2
+               , staging_table.dhcr_centroid_address_city
+               , staging_table.dhcr_centroid_address_state
+               , staging_table.dhcr_centroid_address_postal_code
+               , staging_table.dhcr_centroid_address_country
+               , staging_table.dhcr_error_messages
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.deal_housing_counselors_request staging_table
+          LEFT JOIN history_octane.deal_housing_counselors_request history_table
+                    ON staging_table.dhcr_pid = history_table.dhcr_pid
+                        AND staging_table.dhcr_version = history_table.dhcr_version
+          WHERE history_table.dhcr_pid IS NULL
+          UNION ALL
+          SELECT history_table.dhcr_pid
+               , history_table.dhcr_version + 1
+               , history_table.dhcr_deal_pid
+               , history_table.dhcr_centroid_address_street1
+               , history_table.dhcr_centroid_address_street2
+               , history_table.dhcr_centroid_address_city
+               , history_table.dhcr_centroid_address_state
+               , history_table.dhcr_centroid_address_postal_code
+               , history_table.dhcr_centroid_address_country
+               , history_table.dhcr_error_messages
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.deal_housing_counselors_request history_table
+          LEFT JOIN staging_octane.deal_housing_counselors_request staging_table
+                    ON staging_table.dhcr_pid = history_table.dhcr_pid
+          WHERE staging_table.dhcr_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.deal_housing_counselors_request deleted_records
+              WHERE deleted_records.dhcr_pid = history_table.dhcr_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );

@@ -79,50 +79,53 @@ columns:
       field: primary_source_table.columns.dsap_version
   etl_batch_id:
     data_type: TEXT
-etls:
+step_functions:
   SP-100346:
-    input_type: table
-    output_type: insert
-    json_output_field: dsap_pid
-    truncate_table: false
-    container_memory: 2048
-    input_sql: |-
-      --finding records to insert into history_octane.deal_sap
-      SELECT staging_table.dsap_pid
-           , staging_table.dsap_version
-           , staging_table.dsap_deal_pid
-           , staging_table.dsap_last_sap_deal_step_pid
-           , staging_table.dsap_last_sap_step_type
-           , staging_table.dsap_credit_pull_attempts
-           , staging_table.dsap_retry_credit_pull
-           , staging_table.dsap_borrower_step_type
-           , staging_table.dsap_sap_status_type
-           , FALSE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM staging_octane.deal_sap staging_table
-      LEFT JOIN history_octane.deal_sap history_table
-                ON staging_table.dsap_pid = history_table.dsap_pid
-                    AND staging_table.dsap_version = history_table.dsap_version
-      WHERE history_table.dsap_pid IS NULL
-      UNION ALL
-      SELECT history_table.dsap_pid
-           , history_table.dsap_version + 1
-           , history_table.dsap_deal_pid
-           , history_table.dsap_last_sap_deal_step_pid
-           , history_table.dsap_last_sap_step_type
-           , history_table.dsap_credit_pull_attempts
-           , history_table.dsap_retry_credit_pull
-           , history_table.dsap_borrower_step_type
-           , history_table.dsap_sap_status_type
-           , TRUE AS data_source_deleted_flag
-           , NOW( ) AS data_source_updated_datetime
-      FROM history_octane.deal_sap history_table
-      LEFT JOIN staging_octane.deal_sap staging_table
-                ON staging_table.dsap_pid = history_table.dsap_pid
-      WHERE staging_table.dsap_pid IS NULL
-        AND NOT EXISTS(
-          SELECT 1
-          FROM history_octane.deal_sap deleted_records
-          WHERE deleted_records.dsap_pid = history_table.dsap_pid
-            AND deleted_records.data_source_deleted_flag = TRUE
-          );
+    etls:
+      ETL-100346:
+        input_type: table
+        output_type: insert
+        output_table: staging.history_octane.deal_sap
+        json_output_field: dsap_pid
+        truncate_table: false
+        container_memory: 2048
+        input_sql: |-
+          --finding records to insert into history_octane.deal_sap
+          SELECT staging_table.dsap_pid
+               , staging_table.dsap_version
+               , staging_table.dsap_deal_pid
+               , staging_table.dsap_last_sap_deal_step_pid
+               , staging_table.dsap_last_sap_step_type
+               , staging_table.dsap_credit_pull_attempts
+               , staging_table.dsap_retry_credit_pull
+               , staging_table.dsap_borrower_step_type
+               , staging_table.dsap_sap_status_type
+               , FALSE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM staging_octane.deal_sap staging_table
+          LEFT JOIN history_octane.deal_sap history_table
+                    ON staging_table.dsap_pid = history_table.dsap_pid
+                        AND staging_table.dsap_version = history_table.dsap_version
+          WHERE history_table.dsap_pid IS NULL
+          UNION ALL
+          SELECT history_table.dsap_pid
+               , history_table.dsap_version + 1
+               , history_table.dsap_deal_pid
+               , history_table.dsap_last_sap_deal_step_pid
+               , history_table.dsap_last_sap_step_type
+               , history_table.dsap_credit_pull_attempts
+               , history_table.dsap_retry_credit_pull
+               , history_table.dsap_borrower_step_type
+               , history_table.dsap_sap_status_type
+               , TRUE AS data_source_deleted_flag
+               , NOW( ) AS data_source_updated_datetime
+          FROM history_octane.deal_sap history_table
+          LEFT JOIN staging_octane.deal_sap staging_table
+                    ON staging_table.dsap_pid = history_table.dsap_pid
+          WHERE staging_table.dsap_pid IS NULL
+            AND NOT EXISTS(
+              SELECT 1
+              FROM history_octane.deal_sap deleted_records
+              WHERE deleted_records.dsap_pid = history_table.dsap_pid
+                AND deleted_records.data_source_deleted_flag = TRUE
+              );
