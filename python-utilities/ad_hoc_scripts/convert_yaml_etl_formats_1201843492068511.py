@@ -52,7 +52,8 @@ def main():
                             # read in current state of yaml file
                             with open(table_file.path, 'r') as file:
                                 table_yaml = yaml.safe_load(file)
-                            if 'etls' in table_yaml:
+                            # loan_lender_user_access needs special consideration, shouldn't be part of this automated migration
+                            if 'etls' in table_yaml and table_yaml['name'] != 'loan_lender_user_access':
                                 # modify metadata to adhere to new structure
                                 update_structure(table_yaml, database, schema)
                                 # overwrite file with new structure
